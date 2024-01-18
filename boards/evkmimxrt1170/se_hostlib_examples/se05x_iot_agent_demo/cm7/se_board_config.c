@@ -16,13 +16,11 @@
 
 void se05x_host_configure()
 {
-   gpio_pin_config_t reset_pin_cfg = {kGPIO_DigitalOutput, SE_RESET_LOGIC, kGPIO_NoIntmode};
-   GPIO_PinInit(SE05X_ENA_HOST_PORT, SE05X_ENA_HOST_PIN, &reset_pin_cfg);
-   IOMUXC_SetPinMux(
-        IOMUXC_GPIO_AD_05_GPIO9_IO04,           /* GPIO_AD_05 is configured as GPIO9_IO04 */
-        0U);
+    gpio_pin_config_t reset_pin_cfg = {kGPIO_DigitalOutput, SE_RESET_LOGIC, kGPIO_NoIntmode};
+    GPIO_PinInit(SE05X_ENA_HOST_PORT, SE05X_ENA_HOST_PIN, &reset_pin_cfg);
+    IOMUXC_SetPinMux(IOMUXC_GPIO_AD_05_GPIO9_IO04, /* GPIO_AD_05 is configured as GPIO9_IO04 */
+                     0U);
     return;
-
 }
 
 /*

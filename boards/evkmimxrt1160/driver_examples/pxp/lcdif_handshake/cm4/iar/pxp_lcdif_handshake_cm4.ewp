@@ -4417,7 +4417,7 @@
   <group>
     <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
   <group>
@@ -4540,6 +4540,9 @@
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/cm4/fsl_cache.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/fsl_soc_mipi_dsi.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/fsl_soc_mipi_csi2rx.h</name>
     </file>
     <file>
@@ -4571,6 +4574,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite/fsl_assert.h</name>
     </file>
   </group>
   <group>

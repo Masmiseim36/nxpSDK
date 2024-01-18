@@ -11,10 +11,10 @@ var searchData=
   ['iee_5flockregionconfig',['IEE_LockRegionConfig',['../a00052.html#ga10093cf63c2c2503214f0f66cb85e1dd',1,'fsl_iee.h']]],
   ['iee_5fsetregionconfig',['IEE_SetRegionConfig',['../a00052.html#ga053537ed6702316207a96c286d540ceb',1,'fsl_iee.h']]],
   ['iee_5fsetregionkey',['IEE_SetRegionKey',['../a00052.html#ga3548e651083d0b428ce402ca92158f4a',1,'fsl_iee.h']]],
-  ['iomuxc_5fmqsconfig',['IOMUXC_MQSConfig',['../a00053.html#gafab34e7bfa5e484026e28addd0daa418',1,'fsl_iomuxc.h']]],
-  ['iomuxc_5fmqsenable',['IOMUXC_MQSEnable',['../a00053.html#ga252dddec1e615b8efc9a1771e5de0f3c',1,'fsl_iomuxc.h']]],
-  ['iomuxc_5fmqsentersoftwarereset',['IOMUXC_MQSEnterSoftwareReset',['../a00053.html#gab11fd4c56268fce42153f1a9b310f6a5',1,'fsl_iomuxc.h']]],
-  ['iomuxc_5fsetpinconfig',['IOMUXC_SetPinConfig',['../a00053.html#gab7a6f9e42bd00d9e80457b53712748de',1,'fsl_iomuxc.h']]],
-  ['iomuxc_5fsetpinmux',['IOMUXC_SetPinMux',['../a00053.html#gaff65bf655b0d541b868b4a9d15415ce8',1,'fsl_iomuxc.h']]],
-  ['iomuxc_5fsetsaimclkclocksource',['IOMUXC_SetSaiMClkClockSource',['../a00053.html#ga540a7b7a45e2c47b277acc52b6fe045b',1,'fsl_iomuxc.h']]]
+  ['iomuxc_5fmqsconfig',['IOMUXC_MQSConfig',['../a00319.html#gafab34e7bfa5e484026e28addd0daa418',1,'fsl_iomuxc.h']]],
+  ['iomuxc_5fmqsenable',['IOMUXC_MQSEnable',['../a00319.html#ga252dddec1e615b8efc9a1771e5de0f3c',1,'fsl_iomuxc.h']]],
+  ['iomuxc_5fmqsentersoftwarereset',['IOMUXC_MQSEnterSoftwareReset',['../a00319.html#gab11fd4c56268fce42153f1a9b310f6a5',1,'fsl_iomuxc.h']]],
+  ['iomuxc_5fsetpinconfig',['IOMUXC_SetPinConfig',['../a00319.html#gab7a6f9e42bd00d9e80457b53712748de',1,'fsl_iomuxc.h']]],
+  ['iomuxc_5fsetpinmux',['IOMUXC_SetPinMux',['../a00319.html#gaff65bf655b0d541b868b4a9d15415ce8',1,'fsl_iomuxc.h']]],
+  ['iomuxc_5fsetsaimclkclocksource',['IOMUXC_SetSaiMClkClockSource',['../a00319.html#ga540a7b7a45e2c47b277acc52b6fe045b',1,'fsl_iomuxc.h']]]
 ];

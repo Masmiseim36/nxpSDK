@@ -3,7 +3,7 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-if((CONFIG_DEVICE_ID STREQUAL MIMXRT1176xxxxx))
+if(CONFIG_USE_middleware_sdmmc_host_usdhc AND CONFIG_USE_middleware_sdmmc_sdio AND CONFIG_USE_middleware_sdmmc_host_usdhc_freertos AND CONFIG_USE_component_igpio_adapter AND (CONFIG_DEVICE_ID STREQUAL MIMXRT1176xxxxx) AND (CONFIG_BOARD STREQUAL evkbmimxrt1170))
 
 else()
 

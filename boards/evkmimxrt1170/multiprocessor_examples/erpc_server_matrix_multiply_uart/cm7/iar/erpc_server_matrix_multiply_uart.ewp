@@ -346,8 +346,6 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../erpc_common</state>
-          <state>$PROJ_DIR$/../../../erpc_common/erpc_matrix_multiply/service</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/cmsis_drivers</state>
@@ -355,12 +353,15 @@
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/setup</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/transports</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/port</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
@@ -1444,8 +1445,6 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../erpc_common</state>
-          <state>$PROJ_DIR$/../../../erpc_common/erpc_matrix_multiply/service</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/cmsis_drivers</state>
@@ -1453,12 +1452,15 @@
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/setup</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/transports</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/port</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
@@ -2542,8 +2544,6 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../erpc_common</state>
-          <state>$PROJ_DIR$/../../../erpc_common/erpc_matrix_multiply/service</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/cmsis_drivers</state>
@@ -2551,12 +2551,15 @@
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/setup</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/transports</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/port</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
@@ -3638,8 +3641,6 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../erpc_common</state>
-          <state>$PROJ_DIR$/../../../erpc_common/erpc_matrix_multiply/service</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/cmsis_drivers</state>
@@ -3647,12 +3648,15 @@
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/setup</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/transports</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/port</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
@@ -4736,8 +4740,6 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../erpc_common</state>
-          <state>$PROJ_DIR$/../../../erpc_common/erpc_matrix_multiply/service</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/cmsis_drivers</state>
@@ -4745,12 +4747,15 @@
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/setup</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/transports</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/port</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
@@ -5834,8 +5839,6 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../erpc_common</state>
-          <state>$PROJ_DIR$/../../../erpc_common/erpc_matrix_multiply/service</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/cmsis_drivers</state>
@@ -5843,12 +5846,15 @@
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/setup</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/transports</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/port</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
@@ -6588,35 +6594,167 @@
   <group>
     <name>source</name>
     <file>
-      <name>$PROJ_DIR$/../../../erpc_common/erpc_error_handler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../erpc_common/erpc_error_handler.cpp</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../main_server.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../erpc_config.h</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_error_handler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_error_handler.cpp</name>
+    </file>
+  </group>
+  <group>
+    <name>board</name>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../RTE_Device.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../board.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../board.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../dcd.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../dcd.h</name>
+    </file>
+  </group>
+  <group>
+    <name>doc</name>
+    <file>
+      <name>$PROJ_DIR$/../readme.md</name>
+    </file>
+  </group>
+  <group>
+    <name>evkmimxrt1170</name>
+    <file>
+      <name>$PROJ_DIR$/../evkmimxrt1170_connect_cm4_cm7side.jlinkscript</name>
+    </file>
+  </group>
+  <group>
+    <name>drivers</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart_edma.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart_edma.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/cmsis_drivers/fsl_lpuart_cmsis.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/cmsis_drivers/fsl_lpuart_cmsis.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_edma.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_edma.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_dmamux.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_dmamux.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_clock.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_clock.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_mu.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_mu.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_iomuxc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_gpio.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_gpio.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_pmu.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_pmu.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_dcdc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_dcdc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7/fsl_cache.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7/fsl_cache.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</name>
+    </file>
   </group>
   <group>
     <name>erpc</name>
-    <group>
-      <name>service</name>
-      <file>
-        <name>$PROJ_DIR$/../../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply.erpc</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_server.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_server.cpp</name>
-      </file>
-    </group>
     <group>
       <name>infra</name>
       <file>
@@ -6685,6 +6823,12 @@
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_pre_post_action.cpp</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_utils.hpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_utils.cpp</name>
+      </file>
     </group>
     <group>
       <name>setup</name>
@@ -6737,135 +6881,36 @@
         <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/port/erpc_endianness_undefined.h</name>
       </file>
     </group>
-  </group>
-  <group>
-    <name>board</name>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../RTE_Device.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../board.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../board.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../dcd.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../dcd.h</name>
-    </file>
-  </group>
-  <group>
-    <name>doc</name>
-    <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
-    </file>
-  </group>
-  <group>
-    <name>evkmimxrt1170</name>
-    <file>
-      <name>$PROJ_DIR$/../evkmimxrt1170_connect_cm4_cm7side.jlinkscript</name>
-    </file>
-  </group>
-  <group>
-    <name>drivers</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart_edma.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart_edma.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/cmsis_drivers/fsl_lpuart_cmsis.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/cmsis_drivers/fsl_lpuart_cmsis.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_edma.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_edma.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_dmamux.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_dmamux.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_clock.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_clock.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_iomuxc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_gpio.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_gpio.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_pmu.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_pmu.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_dcdc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_dcdc.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7/fsl_cache.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7/fsl_cache.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</name>
-    </file>
+    <group>
+      <name>service</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply.erpc</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_common.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_common.hpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_server.hpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_server.cpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_interface.hpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_interface.cpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/c_erpc_matrix_multiply_server.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/c_erpc_matrix_multiply_server.cpp</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>device</name>
@@ -6904,6 +6949,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/fsl_assert.h</name>
     </file>
   </group>
   <group>

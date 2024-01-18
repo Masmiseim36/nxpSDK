@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: CAAM Non-blocking RNG driver</title>
+<title>MCUXpresso SDK API Reference Manual: CAAM Key Blankening driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -101,25 +101,25 @@ $(document).ready(function(){initNavTree('a00333.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">CAAM Non-blocking RNG driver<div class="ingroups"><a class="el" href="a00330.html">CAAM Non-blocking APIs</a></div></div>  </div>
+<div class="title">CAAM Key Blankening driver<div class="ingroups"><a class="el" href="a00013.html">CAAM: Cryptographic Acceleration and Assurance Module</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>This section describes the programming interface of the CAAM Non-blocking RNG driver. </p>
+<p>This function constructs a job descriptor capable of performing a key blackening operation on a plaintext secure memory resident object. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga904a52e58fe49d7c1efc9f78fb9d04db"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00333.html#ga904a52e58fe49d7c1efc9f78fb9d04db">CAAM_RNG_GetRandomDataNonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00440">caam_handle_t</a> *handle, <a class="el" href="a00015.html#gac8715372b5093623f61243996919c93f">caam_rng_state_handle_t</a> stateHandle, <a class="el" href="a00013.html#ga6b38feaf2c1aa50ff3f305de0af71dd4">caam_desc_rng_t</a> descriptor, void *data, size_t dataSize, <a class="el" href="a00015.html#ga1f25abb0f8c635658b2be73c765a7ec4">caam_rng_random_type_t</a> dataType, <a class="el" href="a00015.html#ga371b4e5ecd7c166a03ed11613007bb12">caam_rng_generic256_t</a> additionalEntropy)</td></tr>
-<tr class="memdesc:ga904a52e58fe49d7c1efc9f78fb9d04db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request random data.  <a href="#ga904a52e58fe49d7c1efc9f78fb9d04db">More...</a><br/></td></tr>
-<tr class="separator:ga904a52e58fe49d7c1efc9f78fb9d04db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad422f1c6b651ded80a57173d50582f1d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00333.html#gad422f1c6b651ded80a57173d50582f1d">CAAM_BLACK_GetKeyBlacken</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, const uint8_t *data, size_t dataSize, <a class="el" href="a00334.html#ga878fc65e38e70f81bb76f8f17f49b874">caam_fifost_type_t</a> fifostType, uint8_t *blackdata)</td></tr>
+<tr class="memdesc:gad422f1c6b651ded80a57173d50582f1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a black key.  <a href="#gad422f1c6b651ded80a57173d50582f1d">More...</a><br/></td></tr>
+<tr class="separator:gad422f1c6b651ded80a57173d50582f1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga904a52e58fe49d7c1efc9f78fb9d04db"></a>
+<a class="anchor" id="gad422f1c6b651ded80a57173d50582f1d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_RNG_GetRandomDataNonBlocking </td>
+          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_BLACK_GetKeyBlacken </td>
           <td>(</td>
           <td class="paramtype">CAAM_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -127,25 +127,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#a00440">caam_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00015.html#gac8715372b5093623f61243996919c93f">caam_rng_state_handle_t</a>&#160;</td>
-          <td class="paramname"><em>stateHandle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#ga6b38feaf2c1aa50ff3f305de0af71dd4">caam_desc_rng_t</a>&#160;</td>
-          <td class="paramname"><em>descriptor</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *&#160;</td>
+          <td class="paramtype">const uint8_t *&#160;</td>
           <td class="paramname"><em>data</em>, </td>
         </tr>
         <tr>
@@ -157,14 +145,14 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00015.html#ga1f25abb0f8c635658b2be73c765a7ec4">caam_rng_random_type_t</a>&#160;</td>
-          <td class="paramname"><em>dataType</em>, </td>
+          <td class="paramtype"><a class="el" href="a00334.html#ga878fc65e38e70f81bb76f8f17f49b874">caam_fifost_type_t</a>&#160;</td>
+          <td class="paramname"><em>fifostType</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00015.html#ga371b4e5ecd7c166a03ed11613007bb12">caam_rng_generic256_t</a>&#160;</td>
-          <td class="paramname"><em>additionalEntropy</em>&#160;</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>blackdata</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -173,21 +161,19 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function schedules the request for random data from CAAM RNG. Memory at memory pointers will be accessed by CAAM shortly after this function returns, according to actual CAAM schedule.</p>
+<p>This function constructs a job descriptor capable of performing a key blackening operation on a plaintext secure memory resident object.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>RNG handle used for this request </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">stateHandle</td><td>RNG state handle used to generate random data </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>memory for CAAM commands </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">data</td><td>Pointer address used to store random data </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">dataSize</td><td>Size of the buffer pointed by the data parameter, in bytes. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">dataType</td><td>Type of random data to be generated. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">additionalEntropy</td><td>NULL or Pointer to optional 256-bit additional entropy. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>jobRing used for this request </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">data</td><td>Pointer address uses to pointed the plaintext. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">dataSize</td><td>Size of the buffer pointed by the data parameter </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">fifostType</td><td>Type of AES-CBC or AEC-CCM to encrypt plaintext </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">blackdata</td><td>Pointer address uses to pointed the black key </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>status of the request </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Status of the request </dd></dl>
 
 </div>
 </div>

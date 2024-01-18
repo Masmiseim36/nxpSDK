@@ -227,6 +227,7 @@
           <state>_DEBUG=1</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
           <state>HAL_AUDIO_ISR_PRIORITY=0</state>
+          <state>USB_DEVICE_AUDIO_SPEAKER_DEDICATED_INTERVAL=1</state>
           <state>USB_STACK_FREERTOS</state>
           <state>USB_STACK_FREERTOS_HEAP_SIZE=32768</state>
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
@@ -381,6 +382,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
@@ -1339,6 +1341,7 @@
           <state>DEBUG</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
           <state>HAL_AUDIO_ISR_PRIORITY=0</state>
+          <state>USB_DEVICE_AUDIO_SPEAKER_DEDICATED_INTERVAL=1</state>
           <state>USB_STACK_FREERTOS</state>
           <state>USB_STACK_FREERTOS_HEAP_SIZE=32768</state>
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
@@ -1493,6 +1496,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
@@ -2452,6 +2456,7 @@
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
           <state>HAL_AUDIO_ISR_PRIORITY=0</state>
+          <state>USB_DEVICE_AUDIO_SPEAKER_DEDICATED_INTERVAL=1</state>
           <state>USB_STACK_FREERTOS</state>
           <state>USB_STACK_FREERTOS_HEAP_SIZE=32768</state>
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
@@ -2606,6 +2611,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
@@ -3564,6 +3570,7 @@
           <state>_DEBUG=0</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
           <state>HAL_AUDIO_ISR_PRIORITY=0</state>
+          <state>USB_DEVICE_AUDIO_SPEAKER_DEDICATED_INTERVAL=1</state>
           <state>USB_STACK_FREERTOS</state>
           <state>USB_STACK_FREERTOS_HEAP_SIZE=32768</state>
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
@@ -3718,6 +3725,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
@@ -4676,6 +4684,7 @@
           <state>USE_SDRAM</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
           <state>HAL_AUDIO_ISR_PRIORITY=0</state>
+          <state>USB_DEVICE_AUDIO_SPEAKER_DEDICATED_INTERVAL=1</state>
           <state>USB_STACK_FREERTOS</state>
           <state>USB_STACK_FREERTOS_HEAP_SIZE=32768</state>
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
@@ -4830,6 +4839,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
@@ -5789,6 +5799,7 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
           <state>HAL_AUDIO_ISR_PRIORITY=0</state>
+          <state>USB_DEVICE_AUDIO_SPEAKER_DEDICATED_INTERVAL=1</state>
           <state>USB_STACK_FREERTOS</state>
           <state>USB_STACK_FREERTOS_HEAP_SIZE=32768</state>
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
@@ -5943,6 +5954,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
@@ -7198,6 +7210,9 @@
     <name>utilities</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/fsl_assert.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.c</name>

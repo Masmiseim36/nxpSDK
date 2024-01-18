@@ -1,22 +1,23 @@
 var a00041 =
 [
-    [ "flexio_mculcd_edma_handle_t", "a00041.html#a00396", [
-      [ "base", "a00041.html#a6d139101616d571cc3d157b2138439c9", null ],
-      [ "txShifterNum", "a00041.html#a4d5ed6bed94dd3bcc5d53b2b56b95642", null ],
-      [ "rxShifterNum", "a00041.html#ace9a7113a197323f7cb44ebd8b278185", null ],
-      [ "minorLoopBytes", "a00041.html#a4967aaadff85f05a9e075bdf22da742c", null ],
-      [ "txEdmaModulo", "a00041.html#a82ab30b2cc3f7d1cfa0b1a38aee3def0", null ],
-      [ "rxEdmaModulo", "a00041.html#a8a01409a578e1fc64f8b9e82d2afec52", null ],
-      [ "dataAddrOrSameValue", "a00041.html#a685619ed4068d85777d8102126510154", null ],
-      [ "dataCount", "a00041.html#aee8e4df793142436ac6bac704bde0afa", null ],
-      [ "remainingCount", "a00041.html#aaa96b975d4e1bb1d4f1c79b2a2ea4fff", null ],
-      [ "state", "a00041.html#a6be2a9baa9aed3cc7c9fedf93297d2d2", null ],
-      [ "txDmaHandle", "a00041.html#a9fb5da6185f4778f9b76e1bb975f6277", null ],
-      [ "rxDmaHandle", "a00041.html#a6c4a9b88d04d7f4a1c2f4780ea080cd1", null ],
-      [ "completionCallback", "a00041.html#acb45e0f119d593a049be8a5f55d202b7", null ],
-      [ "userData", "a00041.html#a0813cb660919c0c6f9dabddaaf3fc86a", null ]
+    [ "_flexio_mculcd_edma_handle", "a00041.html#a00518", [
+      [ "base", "a00041.html#aa6f50147768a9d1e07312513100ddd21", null ],
+      [ "txShifterNum", "a00041.html#a29ccba377109ac14f1bdc8509401c869", null ],
+      [ "rxShifterNum", "a00041.html#af5ab6ef58841f1b9d86f1714d289480e", null ],
+      [ "minorLoopBytes", "a00041.html#a71d0a236888398014d58fefe3b494441", null ],
+      [ "txEdmaModulo", "a00041.html#a75f13aad670f4a588aa471b9afb6b07f", null ],
+      [ "rxEdmaModulo", "a00041.html#af1ded325d630d26acdf5981f7162a659", null ],
+      [ "dataAddrOrSameValue", "a00041.html#ae44362c374931983ad9713f7c1aa90d3", null ],
+      [ "dataCount", "a00041.html#aa4abb1dbb1f7d25681698c7d545de27a", null ],
+      [ "remainingCount", "a00041.html#ac9b37c6ae9872884366b489ede6512cd", null ],
+      [ "state", "a00041.html#a07394b039f6069b9f527466d9b61ef80", null ],
+      [ "txDmaHandle", "a00041.html#a543ee9aaa7b71860ca42692cf3e196af", null ],
+      [ "rxDmaHandle", "a00041.html#a35d7693e3ddfdcc166131c1b90c10b5a", null ],
+      [ "completionCallback", "a00041.html#acbb4a12571517c418fac275011a0ce99", null ],
+      [ "userData", "a00041.html#a0ffcd66ea86bbbac29829c8d815d8998", null ]
     ] ],
     [ "FSL_FLEXIO_MCULCD_EDMA_DRIVER_VERSION", "a00041.html#gab31d982ac91400f71ea59496340671e4", null ],
+    [ "flexio_mculcd_edma_handle_t", "a00041.html#ga06394ac5186488aaa4c3dbb684ef125a", null ],
     [ "flexio_mculcd_edma_transfer_callback_t", "a00041.html#gae50013e184e31a590a8d33392247da5b", null ],
     [ "FLEXIO_MCULCD_TransferCreateHandleEDMA", "a00041.html#ga85591b49350acb3819419ce3b493cc0c", null ],
     [ "FLEXIO_MCULCD_TransferEDMA", "a00041.html#ga3f8c95db53247d512507e9d1db5b0aae", null ],

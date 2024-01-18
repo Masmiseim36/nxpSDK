@@ -6,7 +6,7 @@
  */
 
 #include "board.h"
-#include "streamer_pcm_app.h"
+#include "streamer_pcm.h"
 #include "fsl_codec_common.h"
 #include "app_definitions.h"
 #if (defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U))
@@ -53,9 +53,8 @@ void SAI1_IRQHandler(void)
  */
 static void saiTxCallback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData)
 {
-    pcm_rtos_t *pcm       = (pcm_rtos_t *)userData;
     BaseType_t reschedule = -1;
-    xSemaphoreGiveFromISR(pcm->semaphoreTX, &reschedule);
+    xSemaphoreGiveFromISR(pcmHandle.semaphoreTX, &reschedule);
     portYIELD_FROM_ISR(reschedule);
 }
 
@@ -64,17 +63,16 @@ void streamer_pcm_init(void)
     edma_config_t dmaConfig;
 
     /* Interrupt and DMA initialization */
-    NVIC_SetPriority(LPI2C1_IRQn, 5);
+    NVIC_SetPriority(DEMO_I2C_IRQ, 5);
 
-    NVIC_SetPriority(DEMO_SAI_TX_IRQ, 5U);
+    NVIC_SetPriority(DEMO_SAI_IRQ, 5U);
 
-    NVIC_SetPriority(DMA1_DMA17_IRQn, 4U);
-    NVIC_SetPriority(DMA0_DMA16_IRQn, 4U);
+    NVIC_SetPriority(DEMO_DMA_TX_IRQ, 4U);
 
     EDMA_GetDefaultConfig(&dmaConfig);
     EDMA_Init(DEMO_DMA, &dmaConfig);
     /* Create DMA handle. */
-    EDMA_CreateHandle(&pcmHandle.dmaTxHandle, DEMO_DMA, DEMO_DMA_TX_CHANNEL);
+    EDMA_CreateHandle(&(pcmHandle.dmaTxHandle), DEMO_DMA, DEMO_DMA_TX_CHANNEL);
 #if defined(FSL_FEATURE_EDMA_HAS_CHANNEL_MUX) && FSL_FEATURE_EDMA_HAS_CHANNEL_MUX
     EDMA_SetChannelMux(DEMO_DMA, DEMO_DMA_TX_CHANNEL, DEMO_SAI_TX_SOURCE);
 #endif
@@ -86,28 +84,17 @@ void streamer_pcm_init(void)
     EnableIRQ(DEMO_SAI_IRQ);
 }
 
-pcm_rtos_t *streamer_pcm_open(uint32_t num_buffers)
+int streamer_pcm_tx_open(uint32_t num_buffers)
 {
-    SAI_TransferTxCreateHandleEDMA(DEMO_SAI, &pcmHandle.saiTxHandle, saiTxCallback, (void *)&pcmHandle,
-                                   &pcmHandle.dmaTxHandle);
-    return &pcmHandle;
+    SAI_TransferTxCreateHandleEDMA(DEMO_SAI, &(pcmHandle.saiTxHandle), saiTxCallback, (void *)&pcmHandle,
+                                   &(pcmHandle.dmaTxHandle));
+    return 0;
 }
 
-pcm_rtos_t *streamer_pcm_rx_open(uint32_t num_buffers)
-{
-    return &pcmHandle;
-}
-
-void streamer_pcm_start(pcm_rtos_t *pcm)
-{
-    /* Interrupts already enabled - nothing to do.
-     * App/streamer can begin writing data to SAI. */
-}
-
-void streamer_pcm_close(pcm_rtos_t *pcm)
+void streamer_pcm_tx_close(void)
 {
     /* Stop playback.  This will flush the SAI transmit buffers. */
-    SAI_TransferTerminateSendEDMA(DEMO_SAI, &pcm->saiTxHandle);
+    SAI_TransferTerminateSendEDMA(DEMO_SAI, &(pcmHandle.saiTxHandle));
 #if defined(FSL_FEATURE_EDMA_HAS_CHANNEL_MUX) && FSL_FEATURE_EDMA_HAS_CHANNEL_MUX
     /* Release the DMA channel mux */
     EDMA_SetChannelMux(DEMO_DMA, DEMO_DMA_TX_CHANNEL, DEMO_SAI_TX_SOURCE);
@@ -115,27 +102,22 @@ void streamer_pcm_close(pcm_rtos_t *pcm)
     vSemaphoreDelete(pcmHandle.semaphoreTX);
 }
 
-void streamer_pcm_rx_close(pcm_rtos_t *pcm)
-{
-    return;
-}
-
-int streamer_pcm_write(pcm_rtos_t *pcm, uint8_t *data, uint32_t size)
+int streamer_pcm_write(uint8_t *data, uint32_t size)
 {
     /* Ensure write size is a multiple of 32, otherwise EDMA will assert
      * failure.  Round down for the last chunk of a file/stream. */
-    pcm->saiTx.dataSize = size - (size % 32);
-    pcm->saiTx.data     = data;
+    pcmHandle.saiTx.dataSize = size - (size % 32);
+    pcmHandle.saiTx.data     = data;
 
 #if (defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U))
-    DCACHE_CleanByRange((uint32_t)pcm->saiTx.data, pcm->saiTx.dataSize);
+    DCACHE_CleanByRange((uint32_t)(pcmHandle.saiTx.data), pcmHandle.saiTx.dataSize);
 #endif
 
     /* Start the consecutive transfer */
-    while (SAI_TransferSendEDMA(DEMO_SAI, &pcm->saiTxHandle, &pcm->saiTx) == kStatus_SAI_QueueFull)
+    while (SAI_TransferSendEDMA(DEMO_SAI, &(pcmHandle.saiTxHandle), &(pcmHandle.saiTx)) == kStatus_SAI_QueueFull)
     {
         /* Wait for transfer to finish */
-        if (xSemaphoreTake(pcm->semaphoreTX, portMAX_DELAY) != pdTRUE)
+        if (xSemaphoreTake(pcmHandle.semaphoreTX, portMAX_DELAY) != pdTRUE)
         {
             return -1;
         }
@@ -144,7 +126,7 @@ int streamer_pcm_write(pcm_rtos_t *pcm, uint8_t *data, uint32_t size)
     return 0;
 }
 
-int streamer_pcm_read(pcm_rtos_t *pcm, uint8_t *data, uint32_t size)
+int streamer_pcm_read(uint8_t *data, uint32_t size)
 {
     uint32_t audioSpeakerPreReadDataCount = 0U;
     uint32_t preAudioSendCount            = 0U;
@@ -255,22 +237,18 @@ static sai_mono_stereo_t _pcm_map_channels(uint8_t num_channels)
         return kSAI_MonoRight;
 }
 
-int streamer_pcm_setparams(pcm_rtos_t *pcm,
-                           uint32_t sample_rate,
-                           uint32_t bit_width,
-                           uint8_t num_channels,
-                           bool transfer,
-                           bool dummy_tx,
-                           int volume)
+int streamer_pcm_setparams(
+    uint32_t sample_rate, uint32_t bit_width, uint8_t num_channels, bool transfer, bool dummy_tx, int volume)
 {
     sai_transfer_format_t format = {0};
     sai_transceiver_t saiConfig;
     uint32_t masterClockHz = 0U;
 
-    pcm->sample_rate  = sample_rate;
-    pcm->bit_width    = bit_width;
-    pcm->num_channels = num_channels;
+    pcmHandle.sample_rate  = sample_rate;
+    pcmHandle.bit_width    = bit_width;
+    pcmHandle.num_channels = num_channels;
 
+#if (!defined(CODEC_DA7212_ENABLE))
     if (sample_rate % 8000 == 0 || sample_rate % 6000 == 0)
     {
         /* Configure Audio PLL clock to 786.432 MHz to  to be divisible by 48000 Hz */
@@ -293,6 +271,7 @@ int streamer_pcm_setparams(pcm_rtos_t *pcm,
         };
         CLOCK_InitAudioPll(&audioPllConfig);
     }
+#endif
 
 #if (defined FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER && FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) || \
     (defined FSL_FEATURE_PCC_HAS_SAI_DIVIDER && FSL_FEATURE_PCC_HAS_SAI_DIVIDER)
@@ -312,51 +291,49 @@ int streamer_pcm_setparams(pcm_rtos_t *pcm,
     /* I2S transfer mode configurations */
     if (transfer)
     {
-        SAI_TransferTerminateSendEDMA(DEMO_SAI, &pcm->saiTxHandle);
+        SAI_TransferTerminateSendEDMA(DEMO_SAI, &(pcmHandle.saiTxHandle));
         SAI_GetClassicI2SConfig(&saiConfig, _pcm_map_word_width(bit_width), format.stereo, 1U << DEMO_SAI_CHANNEL);
 
         saiConfig.syncMode    = kSAI_ModeAsync;
         saiConfig.masterSlave = DEMO_SAI_MASTER_SLAVE;
 
-        SAI_TransferTxSetConfigEDMA(DEMO_SAI, &pcmHandle.saiTxHandle, &saiConfig);
+        SAI_TransferTxSetConfigEDMA(DEMO_SAI, &(pcmHandle.saiTxHandle), &saiConfig);
         /* set bit clock divider */
         SAI_TxSetBitClockRate(DEMO_SAI, masterClockHz, _pcm_map_sample_rate(sample_rate),
                               _pcm_map_word_width(bit_width), DEMO_CHANNEL_NUM);
         /* Enable SAI transmit and FIFO error interrupts. */
         SAI_TxEnableInterrupts(DEMO_SAI, kSAI_FIFOErrorInterruptEnable);
 
-#ifdef BOARD_MASTER_CLOCK_CONFIG
         /* master clock configurations */
         BOARD_MASTER_CLOCK_CONFIG();
-#endif
 
-        streamer_pcm_mute(pcm, true);
+        streamer_pcm_mute(true);
 #if (defined(DEMO_CODEC_WM8962) && (DEMO_CODEC_WM8962 == 1))
         CODEC_Init(&codecHandle, &boardCodecConfig);
 #endif
         CODEC_SetFormat(&codecHandle, masterClockHz, format.sampleRate_Hz, format.bitWidth);
 
-        streamer_pcm_set_volume(pcm, volume);
+        streamer_pcm_set_volume(volume);
     }
 
     return 0;
 }
 
-void streamer_pcm_getparams(pcm_rtos_t *pcm, uint32_t *sample_rate, uint32_t *bit_width, uint8_t *num_channels)
+void streamer_pcm_getparams(uint32_t *sample_rate, uint32_t *bit_width, uint8_t *num_channels)
 {
-    *sample_rate  = pcm->sample_rate;
-    *bit_width    = pcm->bit_width;
-    *num_channels = pcm->num_channels;
+    *sample_rate  = pcmHandle.sample_rate;
+    *bit_width    = pcmHandle.bit_width;
+    *num_channels = pcmHandle.num_channels;
 }
 
-int streamer_pcm_mute(pcm_rtos_t *pcm, bool mute)
+int streamer_pcm_mute(bool mute)
 {
     CODEC_SetMute(&codecHandle, kCODEC_PlayChannelHeadphoneRight | kCODEC_PlayChannelHeadphoneLeft, mute);
 
     return 0;
 }
 
-int streamer_pcm_set_volume(pcm_rtos_t *pcm, int volume)
+int streamer_pcm_set_volume(int volume)
 {
     if (volume <= 0)
         CODEC_SetMute(&codecHandle, kCODEC_PlayChannelHeadphoneRight | kCODEC_PlayChannelHeadphoneLeft, true);

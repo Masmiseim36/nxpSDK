@@ -1,115 +1,138 @@
 var a00056 =
 [
-    [ "lpadc_config_t", "a00056.html#a00568", [
-      [ "enableInDozeMode", "a00056.html#ac47a5a50ba40ca3b021b4be239a048f3", null ],
-      [ "enableAnalogPreliminary", "a00056.html#ab62dd78747ca5df971c30ad59d0127ba", null ],
-      [ "powerUpDelay", "a00056.html#a05885e7359e788bfee8bee8b1b7e17ac", null ],
-      [ "referenceVoltageSource", "a00056.html#af2a2e2e253efb0a783435fe171091b3f", null ],
-      [ "powerLevelMode", "a00056.html#aa95f676c2ce209a53e411045a118b7d7", null ],
-      [ "triggerPriorityPolicy", "a00056.html#a6790dea9cdf41dbe47a312f46d046d39", null ],
-      [ "enableConvPause", "a00056.html#a54cc3c1d27305b3916a0ce2fc1f86af0", null ],
-      [ "convPauseDelay", "a00056.html#a95cd7bea05bf46e0f5444762aba38fbe", null ],
-      [ "FIFOWatermark", "a00056.html#aeb5cae2223bf1d49e13332308ceae79b", null ]
+    [ "_lpi2c_master_config", "a00056.html#a00560", [
+      [ "enableMaster", "a00056.html#a75ff7ea48d319fe03c2ade2e28d278e7", null ],
+      [ "enableDoze", "a00056.html#a3c92d69d65e736a88589908cb56e35db", null ],
+      [ "debugEnable", "a00056.html#ad64e790c7a7cfebd662f9b6dd4aec46d", null ],
+      [ "ignoreAck", "a00056.html#a3d4d6c1b7d2427194fe8b0e84279feb8", null ],
+      [ "pinConfig", "a00056.html#a0fbba946515ef5f33335fb651dce8228", null ],
+      [ "baudRate_Hz", "a00056.html#acb2fc8cea1adcd9615733f4d7a1638c0", null ],
+      [ "busIdleTimeout_ns", "a00056.html#a753e34a46f65b03347a0f7d3e237d0ce", null ],
+      [ "pinLowTimeout_ns", "a00056.html#a4a8ce7b57ccc4d67ce935aeb555feaa1", null ],
+      [ "sdaGlitchFilterWidth_ns", "a00056.html#a4f2df611dc2e263bfdf4dc44c379aaef", null ],
+      [ "sclGlitchFilterWidth_ns", "a00056.html#a6255f470466b44d028de44d82e463c6d", null ],
+      [ "enable", "a00056.html#a25e1417deacf0de8e3f7e761123d93a3", null ],
+      [ "source", "a00056.html#a838f77075b78812da990e220d0b4df3a", null ],
+      [ "polarity", "a00056.html#ac54e4718ad691c1b3f93e0846948a96e", null ],
+      [ "hostRequest", "a00056.html#a87d17f0be0b1db20c4fc1881183a82b9", null ]
     ] ],
-    [ "lpadc_conv_command_config_t", "a00056.html#a00569", [
-      [ "sampleChannelMode", "a00056.html#ad83d6cc054bd648551aa7a875e5e8a58", null ],
-      [ "channelNumber", "a00056.html#a34b3392e374a496930b09d8c5a410d7b", null ],
-      [ "chainedNextCommandNumber", "a00056.html#adcf04257bab0b975b7667a25bf4cbcdf", null ],
-      [ "enableAutoChannelIncrement", "a00056.html#a66e3347e2c2f96cadd5805bca6409646", null ],
-      [ "loopCount", "a00056.html#a7ce69c5cf297a804b5510d779036c867", null ],
-      [ "hardwareAverageMode", "a00056.html#a1c44cc7c4a60d180e6a9aae0501e8752", null ],
-      [ "sampleTimeMode", "a00056.html#a24deb3ab5d573ce3b17ed48987350b65", null ],
-      [ "hardwareCompareMode", "a00056.html#a5bb19c6af0abf963655462a350c53ce4", null ],
-      [ "hardwareCompareValueHigh", "a00056.html#a4bc748a87503d1d30fce8652296a21a1", null ],
-      [ "hardwareCompareValueLow", "a00056.html#aded6fd827d36d7f20693cf5f361ec57e", null ]
+    [ "_lpi2c_match_config", "a00056.html#a00564", [
+      [ "matchMode", "a00056.html#ae95ba41c4d8ee32cdf1071f079fe0f88", null ],
+      [ "rxDataMatchOnly", "a00056.html#a8e8ae391cfc6d74a8dd65bf196aae1da", null ],
+      [ "match0", "a00056.html#a883539a05fa595ccf0cbb8836d8f9f24", null ],
+      [ "match1", "a00056.html#a660d00fcd9fb6e619fb597cf1fbd0fcb", null ]
     ] ],
-    [ "lpadc_conv_trigger_config_t", "a00056.html#a00571", [
-      [ "targetCommandId", "a00056.html#ae1c77e5afcb5c9d2b80ac92cc5de597e", null ],
-      [ "delayPower", "a00056.html#a33fd3b422ca9c26c1eb915ef8fdc3c3e", null ],
-      [ "priority", "a00056.html#a2e4d3a907597cd2c8c712ae967c5ac2f", null ],
-      [ "enableHardwareTrigger", "a00056.html#a32a44ab0d65a0666b659027b93738c95", null ]
+    [ "_lpi2c_master_transfer", "a00056.html#a00563", [
+      [ "flags", "a00056.html#a6533bfb1994c17b45346c97e504d6eb1", null ],
+      [ "slaveAddress", "a00056.html#a1048f987d2c513d653030a2faccb0390", null ],
+      [ "direction", "a00056.html#ad52448e432e47716a97df6ab134c57f6", null ],
+      [ "subaddress", "a00056.html#ad1d27ee9c1424b3fd181bb9c5467f710", null ],
+      [ "subaddressSize", "a00056.html#a5f85337350f82c7ea71a977b597af292", null ],
+      [ "data", "a00056.html#a5d334c7862e9bf45ddb6a6d7d0a8ca49", null ],
+      [ "dataSize", "a00056.html#aebb7d33eb8e627c56540b43a891f3989", null ]
     ] ],
-    [ "lpadc_conv_result_t", "a00056.html#a00570", [
-      [ "commandIdSource", "a00056.html#a7ed6dcbf44ad017014525335013c817b", null ],
-      [ "loopCountIndex", "a00056.html#a87e1ee666c960928797ca574f1bcae1b", null ],
-      [ "triggerIdSource", "a00056.html#ad3b63c03e1c136e4293dd82a443f1de2", null ],
-      [ "convValue", "a00056.html#a4add4f13e761e8048d4434eb195f44d5", null ]
+    [ "_lpi2c_master_handle", "a00056.html#a00562", [
+      [ "state", "a00056.html#ab71bbb48ee02d9ba9a916f7290c42654", null ],
+      [ "remainingBytes", "a00056.html#a0237592c3efb422804845a8900dcf525", null ],
+      [ "buf", "a00056.html#a7874ac02bba45dab209194265a6cc74a", null ],
+      [ "commandBuffer", "a00056.html#a7c0013419d0b545cfd8a66354939d9b6", null ],
+      [ "transfer", "a00056.html#a6e186a52f27436c46817ec3f3b882e51", null ],
+      [ "completionCallback", "a00056.html#a77a26f20a00a02b8bbdd0eb97ce98fd0", null ],
+      [ "userData", "a00056.html#ac800269ff647403735c1012a106fef48", null ]
     ] ],
-    [ "FSL_LPADC_DRIVER_VERSION", "a00056.html#gab8a795637177dc9973e0fd2f5b29b6c3", null ],
-    [ "LPADC_GET_ACTIVE_COMMAND_STATUS", "a00056.html#gae305eca1c95975e49ea88d0d39aeb3e0", null ],
-    [ "LPADC_GET_ACTIVE_TRIGGER_STATUE", "a00056.html#ga48a0c8b6bac1e45cc7bdc93ccc288786", null ],
-    [ "_lpadc_status_flags", "a00056.html#gaf40ddd93026be88551f23b9428e98e22", [
-      [ "kLPADC_ResultFIFOOverflowFlag", "a00056.html#ggaf40ddd93026be88551f23b9428e98e22aa52211bffea2def3062daff07532cb28", null ],
-      [ "kLPADC_ResultFIFOReadyFlag", "a00056.html#ggaf40ddd93026be88551f23b9428e98e22a7bd75ce7f5f38970c10f03c77075fc5d", null ]
+    [ "lpi2c_direction_t", "a00056.html#ga1f7d7abfaf3f3b927dc0c3cac2ca4247", null ],
+    [ "lpi2c_master_pin_config_t", "a00056.html#gae138f6ef3c0bf321fbb91d3282757c4b", null ],
+    [ "lpi2c_host_request_source_t", "a00056.html#gafb08c31c073d73cb9f4b4ec9355e5ce3", null ],
+    [ "lpi2c_host_request_polarity_t", "a00056.html#ga5ba05d38f59653bf8ae998d12e6908af", null ],
+    [ "lpi2c_master_config_t", "a00056.html#ga7c66f4eea3a073f257429d57dc4cd2c0", null ],
+    [ "lpi2c_data_match_config_mode_t", "a00056.html#ga4bf8bf623faecb12226ffae053509876", null ],
+    [ "lpi2c_data_match_config_t", "a00056.html#ga454ba39e5b8274ff98ea4db8fabd9ac2", null ],
+    [ "lpi2c_master_transfer_t", "a00056.html#ga3ca84881363fc4223677496feefecb93", null ],
+    [ "lpi2c_master_handle_t", "a00056.html#ga5244060eefa022eab46035e93b993b1f", null ],
+    [ "lpi2c_master_transfer_callback_t", "a00056.html#ga62ccf3faece8d48363807833b8c58bf2", null ],
+    [ "lpi2c_master_isr_t", "a00056.html#gafec474a625b178e148fcc930f230be75", null ],
+    [ "_lpi2c_master_flags", "a00056.html#ga830bba7ea584a7f98d3fb6afd946d739", [
+      [ "kLPI2C_MasterTxReadyFlag", "a00056.html#gga830bba7ea584a7f98d3fb6afd946d739af3208f156244a4b1c520db35b147ee33", null ],
+      [ "kLPI2C_MasterRxReadyFlag", "a00056.html#gga830bba7ea584a7f98d3fb6afd946d739ae09650509ffef3de4ede348c4ac66be5", null ],
+      [ "kLPI2C_MasterEndOfPacketFlag", "a00056.html#gga830bba7ea584a7f98d3fb6afd946d739adf431b1a9475437d7089df5abcea7122", null ],
+      [ "kLPI2C_MasterStopDetectFlag", "a00056.html#gga830bba7ea584a7f98d3fb6afd946d739aad8d90df6216a4d27680fd530c42710d", null ],
+      [ "kLPI2C_MasterNackDetectFlag", "a00056.html#gga830bba7ea584a7f98d3fb6afd946d739a3ea7b4560b395c82e5293678228fff81", null ],
+      [ "kLPI2C_MasterArbitrationLostFlag", "a00056.html#gga830bba7ea584a7f98d3fb6afd946d739a9e012e945342b8f0333e59060affb0b1", null ],
+      [ "kLPI2C_MasterFifoErrFlag", "a00056.html#gga830bba7ea584a7f98d3fb6afd946d739aac4e2ec9c92ea22b5246bb62000f93a9", null ],
+      [ "kLPI2C_MasterPinLowTimeoutFlag", "a00056.html#gga830bba7ea584a7f98d3fb6afd946d739a37ceb9a9bdaa1ec7261d7265a51a5f17", null ],
+      [ "kLPI2C_MasterDataMatchFlag", "a00056.html#gga830bba7ea584a7f98d3fb6afd946d739aaaad4c02a63dcf7d021baa5c4a9dcf2e", null ],
+      [ "kLPI2C_MasterBusyFlag", "a00056.html#gga830bba7ea584a7f98d3fb6afd946d739ac1de9e29d8ffe76b10b8425f81db1368", null ],
+      [ "kLPI2C_MasterBusBusyFlag", "a00056.html#gga830bba7ea584a7f98d3fb6afd946d739a408ed7773539a17625803f6c9d3a6629", null ],
+      [ "kLPI2C_MasterClearFlags", "a00056.html#gga830bba7ea584a7f98d3fb6afd946d739acdc753a79a4f88e35035bfec194ef8d3", null ],
+      [ "kLPI2C_MasterIrqFlags", "a00056.html#gga830bba7ea584a7f98d3fb6afd946d739a05b681a219360ade22758c0a73b98593", null ],
+      [ "kLPI2C_MasterErrorFlags", "a00056.html#gga830bba7ea584a7f98d3fb6afd946d739af7ace370cb49c849f12c878eefa23118", null ]
     ] ],
-    [ "_lpadc_interrupt_enable", "a00056.html#gaeba33be014c52b093d5e7815dcf8e6b3", [
-      [ "kLPADC_ResultFIFOOverflowInterruptEnable", "a00056.html#ggaeba33be014c52b093d5e7815dcf8e6b3a487f293b5443e2b9c39412f4476f7638", null ],
-      [ "kLPADC_FIFOWatermarkInterruptEnable", "a00056.html#ggaeba33be014c52b093d5e7815dcf8e6b3a90f6e2b2819d89b685281a440b10b8b5", null ]
+    [ "_lpi2c_direction", "a00056.html#ga3af0809d0dd890e9cf71012c87f2d9ab", [
+      [ "kLPI2C_Write", "a00056.html#gga3af0809d0dd890e9cf71012c87f2d9aba4a913c200cf54c773380ea8271e7b42b", null ],
+      [ "kLPI2C_Read", "a00056.html#gga3af0809d0dd890e9cf71012c87f2d9aba50ba3a53d79baed347bb8fa07d7884ab", null ]
     ] ],
-    [ "lpadc_sample_scale_mode_t", "a00056.html#gaa0d71fb3a1bd431af8cf5aacc2e8fc6c", [
-      [ "kLPADC_SamplePartScale", "a00056.html#ggaa0d71fb3a1bd431af8cf5aacc2e8fc6ca2d5ef37dc371402d7b50992f6724f2fd", null ],
-      [ "kLPADC_SampleFullScale", "a00056.html#ggaa0d71fb3a1bd431af8cf5aacc2e8fc6cacf9a7acbde288c4de0a60d0018457721", null ]
+    [ "_lpi2c_master_pin_config", "a00056.html#gadb22011c36ba20a78a165da294a7f5f9", [
+      [ "kLPI2C_2PinOpenDrain", "a00056.html#ggadb22011c36ba20a78a165da294a7f5f9ada174b660785782567aee14c05918d89", null ],
+      [ "kLPI2C_2PinOutputOnly", "a00056.html#ggadb22011c36ba20a78a165da294a7f5f9a9a8053876d619b3beeb745b212b9a1fb", null ],
+      [ "kLPI2C_2PinPushPull", "a00056.html#ggadb22011c36ba20a78a165da294a7f5f9a53f8d0708cfc2ea887abb2e2d440d29e", null ],
+      [ "kLPI2C_4PinPushPull", "a00056.html#ggadb22011c36ba20a78a165da294a7f5f9a9642890d09eeb5ed0b8d9e59aac6e3b7", null ],
+      [ "kLPI2C_2PinOpenDrainWithSeparateSlave", "a00056.html#ggadb22011c36ba20a78a165da294a7f5f9ad809117a74ffea333e273e97dc93aff7", null ],
+      [ "kLPI2C_2PinOutputOnlyWithSeparateSlave", "a00056.html#ggadb22011c36ba20a78a165da294a7f5f9a297f630d584519da05064b2962596ee5", null ],
+      [ "kLPI2C_2PinPushPullWithSeparateSlave", "a00056.html#ggadb22011c36ba20a78a165da294a7f5f9a5e8d93f3f8f55f5c9a47c7cddd4df495", null ],
+      [ "kLPI2C_4PinPushPullWithInvertedOutput", "a00056.html#ggadb22011c36ba20a78a165da294a7f5f9acb4290916ade8b65741bc18d632acbd6", null ]
     ] ],
-    [ "lpadc_sample_channel_mode_t", "a00056.html#ga03c78bd98bf88df854e5a67e86521e7a", [
-      [ "kLPADC_SampleChannelSingleEndSideA", "a00056.html#gga03c78bd98bf88df854e5a67e86521e7aae511411bd331e3049a5c9583163e4fe2", null ],
-      [ "kLPADC_SampleChannelSingleEndSideB", "a00056.html#gga03c78bd98bf88df854e5a67e86521e7aab477a25f4b1cef6b47115b7bb4b9583c", null ]
+    [ "_lpi2c_host_request_source", "a00056.html#ga53b91f9a7a24bd114109c4a707c04e1f", [
+      [ "kLPI2C_HostRequestExternalPin", "a00056.html#gga53b91f9a7a24bd114109c4a707c04e1fa4634268e7c377ffd2e7db9a93b2776eb", null ],
+      [ "kLPI2C_HostRequestInputTrigger", "a00056.html#gga53b91f9a7a24bd114109c4a707c04e1fa1a8773fbec157bc1a069826af08a2aae", null ]
     ] ],
-    [ "lpadc_hardware_average_mode_t", "a00056.html#gabb529e856c73d606ce37f7da01a0f6f3", [
-      [ "kLPADC_HardwareAverageCount1", "a00056.html#ggabb529e856c73d606ce37f7da01a0f6f3adeae8ae097545482c1942926119d968c", null ],
-      [ "kLPADC_HardwareAverageCount2", "a00056.html#ggabb529e856c73d606ce37f7da01a0f6f3a03e731d3d2e024623fd22145c484b797", null ],
-      [ "kLPADC_HardwareAverageCount4", "a00056.html#ggabb529e856c73d606ce37f7da01a0f6f3a0eda65451db63f4a0c1d154f851f9353", null ],
-      [ "kLPADC_HardwareAverageCount8", "a00056.html#ggabb529e856c73d606ce37f7da01a0f6f3a3cc487e2f5720a5c45318f69028c32cc", null ],
-      [ "kLPADC_HardwareAverageCount16", "a00056.html#ggabb529e856c73d606ce37f7da01a0f6f3ad5fece9b31b47f741c413fe7445df855", null ],
-      [ "kLPADC_HardwareAverageCount32", "a00056.html#ggabb529e856c73d606ce37f7da01a0f6f3a4cfb338bc49982bc7e58a7f0949bf425", null ],
-      [ "kLPADC_HardwareAverageCount64", "a00056.html#ggabb529e856c73d606ce37f7da01a0f6f3a081530884310024c8d2750735b6295ea", null ],
-      [ "kLPADC_HardwareAverageCount128", "a00056.html#ggabb529e856c73d606ce37f7da01a0f6f3a4f86910a33fa9874108753b6de1947ce", null ]
+    [ "_lpi2c_host_request_polarity", "a00056.html#ga65e6dbe3f418c915ccdd9236f3648939", [
+      [ "kLPI2C_HostRequestPinActiveLow", "a00056.html#gga65e6dbe3f418c915ccdd9236f3648939aab540d2690ea7446d68f0106e46cfb36", null ],
+      [ "kLPI2C_HostRequestPinActiveHigh", "a00056.html#gga65e6dbe3f418c915ccdd9236f3648939a1f72f10b4bfe685cc57e8994df237a16", null ]
     ] ],
-    [ "lpadc_sample_time_mode_t", "a00056.html#gac70e2c24ba9ef059ee2487d821136e85", [
-      [ "kLPADC_SampleTimeADCK3", "a00056.html#ggac70e2c24ba9ef059ee2487d821136e85abfd94e19de3d57b94fae9baded5804db", null ],
-      [ "kLPADC_SampleTimeADCK5", "a00056.html#ggac70e2c24ba9ef059ee2487d821136e85a441c59d3df7a1ad5b64416e6a08dd246", null ],
-      [ "kLPADC_SampleTimeADCK7", "a00056.html#ggac70e2c24ba9ef059ee2487d821136e85aa2a17502f50e36de117b337994c21dc2", null ],
-      [ "kLPADC_SampleTimeADCK11", "a00056.html#ggac70e2c24ba9ef059ee2487d821136e85a4a980813baf6845d528db2a265475905", null ],
-      [ "kLPADC_SampleTimeADCK19", "a00056.html#ggac70e2c24ba9ef059ee2487d821136e85a7f5bb84adb8783fd6fa8d3ce5ed31f3a", null ],
-      [ "kLPADC_SampleTimeADCK35", "a00056.html#ggac70e2c24ba9ef059ee2487d821136e85a9d59f3e6e9335223746533051f83a20b", null ],
-      [ "kLPADC_SampleTimeADCK67", "a00056.html#ggac70e2c24ba9ef059ee2487d821136e85a653e653b0ee479f6b42ff4b8ffea49ac", null ],
-      [ "kLPADC_SampleTimeADCK131", "a00056.html#ggac70e2c24ba9ef059ee2487d821136e85ae327cbad1ded4882cbcd53ad5e6c2262", null ]
+    [ "_lpi2c_data_match_config_mode", "a00056.html#ga7dcb50f2abdbbcf0d4fd0618659c34d8", [
+      [ "kLPI2C_MatchDisabled", "a00056.html#gga7dcb50f2abdbbcf0d4fd0618659c34d8a00ef085f1047daf41240a7c9daa7aee5", null ],
+      [ "kLPI2C_1stWordEqualsM0OrM1", "a00056.html#gga7dcb50f2abdbbcf0d4fd0618659c34d8ae41fc9d1480c995ecab8be9afc489108", null ],
+      [ "kLPI2C_AnyWordEqualsM0OrM1", "a00056.html#gga7dcb50f2abdbbcf0d4fd0618659c34d8af994783c76b2008af82fa9209d1fb746", null ],
+      [ "kLPI2C_1stWordEqualsM0And2ndWordEqualsM1", "a00056.html#gga7dcb50f2abdbbcf0d4fd0618659c34d8a309463f537d290dc18770d4245e0046e", null ],
+      [ "kLPI2C_AnyWordEqualsM0AndNextWordEqualsM1", "a00056.html#gga7dcb50f2abdbbcf0d4fd0618659c34d8a747cdb86ebade4b5d09fc25a0f199aee", null ],
+      [ "kLPI2C_1stWordAndM1EqualsM0AndM1", "a00056.html#gga7dcb50f2abdbbcf0d4fd0618659c34d8a1b963126207a01049b68b0fd7645ff4a", null ],
+      [ "kLPI2C_AnyWordAndM1EqualsM0AndM1", "a00056.html#gga7dcb50f2abdbbcf0d4fd0618659c34d8a37e28fca69438b64be9ca862bade372b", null ]
     ] ],
-    [ "lpadc_hardware_compare_mode_t", "a00056.html#gad7a09557254487374b1b125f2146ba22", [
-      [ "kLPADC_HardwareCompareDisabled", "a00056.html#ggad7a09557254487374b1b125f2146ba22ab205c4a4aa1cd79f38be81e6469f2fd2", null ],
-      [ "kLPADC_HardwareCompareStoreOnTrue", "a00056.html#ggad7a09557254487374b1b125f2146ba22a0e30824c70217e386a1dfbaaecbd7b67", null ],
-      [ "kLPADC_HardwareCompareRepeatUntilTrue", "a00056.html#ggad7a09557254487374b1b125f2146ba22a11bc71ef00c5e95a18431947fe0362e1", null ]
+    [ "_lpi2c_master_transfer_flags", "a00056.html#ga6d8e7ad8c6f187673a91247a23a52dc1", [
+      [ "kLPI2C_TransferDefaultFlag", "a00056.html#gga6d8e7ad8c6f187673a91247a23a52dc1a413ec0da1a0be18365a3ba1285fe78f4", null ],
+      [ "kLPI2C_TransferNoStartFlag", "a00056.html#gga6d8e7ad8c6f187673a91247a23a52dc1adc9924923c68af7960d4b8cf43e5609e", null ],
+      [ "kLPI2C_TransferRepeatedStartFlag", "a00056.html#gga6d8e7ad8c6f187673a91247a23a52dc1a2d6fdbacf571dc6eea70ef0349c73ccb", null ],
+      [ "kLPI2C_TransferNoStopFlag", "a00056.html#gga6d8e7ad8c6f187673a91247a23a52dc1a56c1abdffee0978f6d5aeedba30971c3", null ]
     ] ],
-    [ "lpadc_reference_voltage_source_t", "a00056.html#gac8bce529fe3a77c5a22136eac3c7d626", [
-      [ "kLPADC_ReferenceVoltageAlt1", "a00056.html#ggac8bce529fe3a77c5a22136eac3c7d626a8d40316bc847f29e588ff1a50775ab11", null ],
-      [ "kLPADC_ReferenceVoltageAlt2", "a00056.html#ggac8bce529fe3a77c5a22136eac3c7d626a7f45d8cf9f4a252f22d52b8a82db304a", null ],
-      [ "kLPADC_ReferenceVoltageAlt3", "a00056.html#ggac8bce529fe3a77c5a22136eac3c7d626a8c41f94955b5b1141956d61fc2feb44c", null ]
-    ] ],
-    [ "lpadc_power_level_mode_t", "a00056.html#gab930081517abc866eaa456e58fd365aa", [
-      [ "kLPADC_PowerLevelAlt1", "a00056.html#ggab930081517abc866eaa456e58fd365aaac88970640320826c36101d8e7fa5a9c9", null ],
-      [ "kLPADC_PowerLevelAlt2", "a00056.html#ggab930081517abc866eaa456e58fd365aaaca71931306fe195df044d6a889639919", null ],
-      [ "kLPADC_PowerLevelAlt3", "a00056.html#ggab930081517abc866eaa456e58fd365aaaed7771e49eeec9fee65726c600956d6d", null ],
-      [ "kLPADC_PowerLevelAlt4", "a00056.html#ggab930081517abc866eaa456e58fd365aaa2f34a351174cf34ee124ccfc7f2bf9d2", null ]
-    ] ],
-    [ "lpadc_trigger_priority_policy_t", "a00056.html#ga4c65872fd8d9cca041a6d668473537c3", [
-      [ "kLPADC_TriggerPriorityPreemptImmediately", "a00056.html#gga4c65872fd8d9cca041a6d668473537c3a0fec3ebd14c77fc5a1711cb3ed7a2ab5", null ],
-      [ "kLPADC_TriggerPriorityPreemptSoftly", "a00056.html#gga4c65872fd8d9cca041a6d668473537c3a406eb5620e19a0cad27c10211c548a46", null ]
-    ] ],
-    [ "LPADC_Init", "a00056.html#gaf13dbab92e7a26afb07b3bb2cbaab793", null ],
-    [ "LPADC_GetDefaultConfig", "a00056.html#ga94c79af85a28c45bc642226292b14d1c", null ],
-    [ "LPADC_Deinit", "a00056.html#gabc10ae5663788ea5c7f77e2f3517a677", null ],
-    [ "LPADC_Enable", "a00056.html#gaf76592d9f392cd30b738f599b2e71344", null ],
-    [ "LPADC_DoResetFIFO", "a00056.html#gab6e4218842365ee6c620cfc59db213c4", null ],
-    [ "LPADC_DoResetConfig", "a00056.html#ga3d6911f2f9ad7fd2fdf93c3b5d1e80f7", null ],
-    [ "LPADC_GetStatusFlags", "a00056.html#gaa2793911f11091179bfcd8e9b1860300", null ],
-    [ "LPADC_ClearStatusFlags", "a00056.html#ga77ba72fad1e0f84b42809da6918e6532", null ],
-    [ "LPADC_EnableInterrupts", "a00056.html#ga2c147558843514556795fd52f86aca56", null ],
-    [ "LPADC_DisableInterrupts", "a00056.html#ga5c633af2aeab39c215d3b5aa6172ccb7", null ],
-    [ "LPADC_EnableFIFOWatermarkDMA", "a00056.html#gacaaa33bc4d9cfd8fad4fac8f1475d97c", null ],
-    [ "LPADC_GetConvResultCount", "a00056.html#ga51b39db4ab530f900aa3a88a3047daf3", null ],
-    [ "LPADC_GetConvResult", "a00056.html#ga1862883b3c4ce8365ad1f1a6c64043cc", null ],
-    [ "LPADC_SetConvTriggerConfig", "a00056.html#ga67927722ab525eda9e31d1f7554f02a4", null ],
-    [ "LPADC_GetDefaultConvTriggerConfig", "a00056.html#ga44e286bc27b1e8fee3f4796ca9196a27", null ],
-    [ "LPADC_DoSoftwareTrigger", "a00056.html#gacaef94ac48a3e0a34f9235f88767b7a3", null ],
-    [ "LPADC_SetConvCommandConfig", "a00056.html#ga500d8b7b0323136353e10fdfad2e40c7", null ],
-    [ "LPADC_GetDefaultConvCommandConfig", "a00056.html#gaa3f7fd90bdbd65fbc4e5b88e904173f9", null ]
+    [ "LPI2C_MasterGetDefaultConfig", "a00056.html#gaf1753f02b6a39bb4391250c646236eae", null ],
+    [ "LPI2C_MasterInit", "a00056.html#ga31c7e21bae74602cb831109e7de33ade", null ],
+    [ "LPI2C_MasterDeinit", "a00056.html#ga1e5ac26414d36018ac33f31332026b82", null ],
+    [ "LPI2C_MasterConfigureDataMatch", "a00056.html#ga050bfe41a14a866968dbf8e88d4a7159", null ],
+    [ "LPI2C_MasterCheckAndClearError", "a00056.html#ga3f45d7022fbebbf34ca852e2b61ddb14", null ],
+    [ "LPI2C_CheckForBusyBus", "a00056.html#ga699f43147cfc18f479f8dad8bbefc973", null ],
+    [ "LPI2C_MasterReset", "a00056.html#ga75ac46a8612bfb21b52699a3feb2cd03", null ],
+    [ "LPI2C_MasterEnable", "a00056.html#ga46bd9c4d6579fa0273c3a1cc1c94b65a", null ],
+    [ "LPI2C_MasterGetStatusFlags", "a00056.html#ga02cab0c6281b9532bd6f8e2b04e5a2ba", null ],
+    [ "LPI2C_MasterClearStatusFlags", "a00056.html#ga27324dea42cdddefdfdf53a034118522", null ],
+    [ "LPI2C_MasterEnableInterrupts", "a00056.html#ga41f9e18b131a5a3ed0f0573c468c3123", null ],
+    [ "LPI2C_MasterDisableInterrupts", "a00056.html#ga50ab891c01b147071d465138b144fce7", null ],
+    [ "LPI2C_MasterGetEnabledInterrupts", "a00056.html#ga8894194d00537fa3a5bae2b88910790c", null ],
+    [ "LPI2C_MasterEnableDMA", "a00056.html#ga682c0d77de6725eb842b8bf26d70ef6e", null ],
+    [ "LPI2C_MasterGetTxFifoAddress", "a00056.html#ga5350c8b782a982c3a2a7103a32a55569", null ],
+    [ "LPI2C_MasterGetRxFifoAddress", "a00056.html#ga84da0ad9e383e1b06ddfce53a52f2777", null ],
+    [ "LPI2C_MasterSetWatermarks", "a00056.html#gaf0eb7016afbb3ab6bf8d624dbc95347d", null ],
+    [ "LPI2C_MasterGetFifoCounts", "a00056.html#ga485117a5769985079d759dbf083450fd", null ],
+    [ "LPI2C_MasterSetBaudRate", "a00056.html#ga7f9f7d0d1c86fb7ee26d84dba706bc9a", null ],
+    [ "LPI2C_MasterGetBusIdleState", "a00056.html#ga5b26965efb8b28aeedaf4d8e4491fb50", null ],
+    [ "LPI2C_MasterStart", "a00056.html#gad5ec3758566b673bdec4f7030395b863", null ],
+    [ "LPI2C_MasterRepeatedStart", "a00056.html#gacd57806adaf72ea3c3506414c3984f84", null ],
+    [ "LPI2C_MasterSend", "a00056.html#gaec5397831ec8c6099ce7fb1162821fd0", null ],
+    [ "LPI2C_MasterReceive", "a00056.html#ga6a80cb5c1ccdbac0c753f86e8dd4d00d", null ],
+    [ "LPI2C_MasterStop", "a00056.html#ga63d65ab0751f91adecb03944b117f3df", null ],
+    [ "LPI2C_MasterTransferBlocking", "a00056.html#ga96a4f46d70cf913dbd5c552ce89d2e2c", null ],
+    [ "LPI2C_MasterTransferCreateHandle", "a00056.html#gafa1c62e098fb418bca7cfbe1ffa6aeaf", null ],
+    [ "LPI2C_MasterTransferNonBlocking", "a00056.html#ga2b0c04b87bd15fcaeac176993969bc29", null ],
+    [ "LPI2C_MasterTransferGetCount", "a00056.html#ga5d69127f2ea64b803c67861adea21413", null ],
+    [ "LPI2C_MasterTransferAbort", "a00056.html#gae0d4f78a7d8c34d85bea368822cdbbce", null ],
+    [ "LPI2C_MasterTransferHandleIRQ", "a00056.html#ga25d1c6f8210d300bbedfa3f8a5575c16", null ]
 ];

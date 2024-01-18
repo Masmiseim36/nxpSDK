@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>CORE1_IMAGE_COPY_TO_RAM, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL=1, PM_PM_DUAL_CORE_USED=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1, GENERIC_LIST_LIGHT=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/power_manager/devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../components/power_manager/core;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/power_manager/devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/utilities;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../components/power_manager/core;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -434,9 +434,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -524,6 +524,26 @@
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_gpc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_soc_src.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_soc_src.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_iomuxc.h</FilePath>
@@ -559,16 +579,6 @@
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/cm7/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_pgmc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_pgmc.h</FilePath>
@@ -577,16 +587,6 @@
               <FileName>fsl_pgmc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_pgmc.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_soc_src.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_soc_src.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.c</FilePath>
             </File>
             <File>
               <FileName>fsl_anatop_ai.h</FileName>
@@ -649,6 +649,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1185,7 +1190,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>CORE1_IMAGE_COPY_TO_RAM, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL=1, PM_PM_DUAL_CORE_USED=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1, GENERIC_LIST_LIGHT=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/power_manager/devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../components/power_manager/core;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/power_manager/devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/utilities;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../components/power_manager/core;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1285,9 +1290,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -1375,6 +1380,26 @@
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_gpc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_soc_src.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_soc_src.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_iomuxc.h</FilePath>
@@ -1410,16 +1435,6 @@
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/cm7/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_pgmc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_pgmc.h</FilePath>
@@ -1428,16 +1443,6 @@
               <FileName>fsl_pgmc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_pgmc.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_soc_src.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_soc_src.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.c</FilePath>
             </File>
             <File>
               <FileName>fsl_anatop_ai.h</FileName>
@@ -1500,6 +1505,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>

@@ -1,14 +1,15 @@
 var a00034 =
 [
-    [ "flexio_camera_edma_handle_t", "a00034.html#a00394", [
-      [ "callback", "a00034.html#aa6a47749cad9e09b544d2a4038b6e420", null ],
-      [ "userData", "a00034.html#ad1efb23fc99dcbde281ccca7fcbe5d1f", null ],
-      [ "rxSize", "a00034.html#a9560b4e1d59b1cce760c8a49616ee5a4", null ],
-      [ "rxEdmaHandle", "a00034.html#a9cc34504566bb70be81ce06129c45988", null ],
-      [ "nbytes", "a00034.html#a12a81c4048e7c1cc3d82b9030631a049", null ],
-      [ "rxState", "a00034.html#a4e5b67ad139f90a05551fe80506c8df9", null ]
+    [ "_flexio_camera_edma_handle", "a00034.html#a00498", [
+      [ "callback", "a00034.html#a84f7c9c43050bfdbddd870fec5d5e5c0", null ],
+      [ "userData", "a00034.html#a89f9d809ee822b651deb2db2df1344fa", null ],
+      [ "rxSize", "a00034.html#a7222f238b52f4bf7230616b8c5158a65", null ],
+      [ "rxEdmaHandle", "a00034.html#aa7e4007809195607deb3e6754186fc32", null ],
+      [ "nbytes", "a00034.html#a310ccb52e90227a84cbb06104dde79d5", null ],
+      [ "rxState", "a00034.html#ad669ec4bf3022d35787b390d518f0d10", null ]
     ] ],
     [ "FSL_FLEXIO_CAMERA_EDMA_DRIVER_VERSION", "a00034.html#ga52394c208ce319682c96e0f1516e57fb", null ],
+    [ "flexio_camera_edma_handle_t", "a00034.html#ga4a99ca6dc45194b18fcc8439baa48bac", null ],
     [ "flexio_camera_edma_transfer_callback_t", "a00034.html#gabb60fe8b364fd7236b89905639ea4b0c", null ],
     [ "FLEXIO_CAMERA_TransferCreateHandleEDMA", "a00034.html#gafcfbdd57ed04df3dc16ef839c1b94b36", null ],
     [ "FLEXIO_CAMERA_TransferReceiveEDMA", "a00034.html#ga0d33545dd2a68785b201ab14903cd93f", null ],

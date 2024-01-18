@@ -177,7 +177,8 @@ static void DEMO_SetLcdColorPalette(void)
     /* RGB332 map to RGB888 */
     for (int i = 0; i < 256U; i++)
     {
-        palette[i] = ((uint32_t)color.ch.blue << 6U) | ((uint32_t)color.ch.green << 13U) | ((uint32_t)color.ch.red << 21U);
+        palette[i] =
+            ((uint32_t)color.ch.blue << 6U) | ((uint32_t)color.ch.green << 13U) | ((uint32_t)color.ch.red << 21U);
         color.full++;
     }
 
@@ -407,8 +408,9 @@ static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv
         .y2 = DEMO_BUFFER_WIDTH - 1,
     };
 
-    lv_gpu_nxp_pxp_blit(((lv_color_t *)inactiveFrameBuffer), &dest_area, DEMO_BUFFER_WIDTH, color_p, area, lv_area_get_width(area),
-                        LV_OPA_COVER, LV_DISP_ROT_270);
+    lv_gpu_nxp_pxp_blit(((lv_color_t *)inactiveFrameBuffer), &dest_area, DEMO_BUFFER_WIDTH, color_p, area,
+                        lv_area_get_width(area), LV_OPA_COVER, LV_DISP_ROT_270);
+    lv_gpu_nxp_pxp_wait();
 
 #else /* Use CPU to rotate the panel. */
     for (uint32_t y = 0; y < LVGL_BUFFER_HEIGHT; y++)

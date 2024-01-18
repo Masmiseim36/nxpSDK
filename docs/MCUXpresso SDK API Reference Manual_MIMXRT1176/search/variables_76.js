@@ -1,16 +1,16 @@
 var searchData=
 [
-  ['validityconfig',['validityConfig',['../a00093.html#a662ae617d9706faedff59b4e7ebfc563',1,'spdif_config_t']]],
-  ['vbp',['vbp',['../a00026.html#af9417e4064481c8cec99ee1a99943334',1,'elcdif_rgb_mode_config_t::vbp()'],['../a00055.html#a6b463d9ada1df3d86da20d41e94f5634',1,'lcdifv2_display_config_t::vbp()'],['../a00024.html#a26359e9ae0028a971dc6a48430c9655e',1,'dsi_dpi_config_t::vbp()']]],
-  ['vcc',['vcc',['../a00090.html#a1cac169f286acf5c11230c97854fab4e',1,'smartcard_interface_config_t']]],
-  ['version',['version',['../a00047.html#aa49ced79294c5520ed442d6260b5b821',1,'flexspi_mem_config_t::version()'],['../a00081.html#a23b8ed9688825316750d697b524c7d18',1,'sd_card_t::version()']]],
-  ['vfp',['vfp',['../a00026.html#aa9f8c974832854bd77a63626f73d661b',1,'elcdif_rgb_mode_config_t::vfp()'],['../a00055.html#a290f4c49afab32f16d47a08a20679267',1,'lcdifv2_display_config_t::vfp()'],['../a00024.html#ab15a4ea1f0ee6b011eae8f4b613dd9dd',1,'dsi_dpi_config_t::vfp()']]],
-  ['videomode',['videoMode',['../a00024.html#af5421373fe2f019a9c2593c92d58f87c',1,'dsi_dpi_config_t']]],
-  ['virtualchannel',['virtualChannel',['../a00024.html#aed7f73cea1dd587c4f4bcd47d8e1d988',1,'dsi_dpi_config_t::virtualChannel()'],['../a00024.html#a93aa7b6fa356becffcf5112514d47cf4',1,'dsi_transfer_t::virtualChannel()']]],
-  ['voltagesteptime',['voltageStepTime',['../a00073.html#a155fc75f7daea3955f23a7c74a7c5e47',1,'pmu_static_lpsr_dig_config_t']]],
-  ['vsel0pin',['vsel0Pin',['../a00090.html#a46717701f7542f479d82929d401714da',1,'smartcard_interface_config_t']]],
-  ['vsel0port',['vsel0Port',['../a00090.html#a578366a06d6229bc1b8d4e9ae904532c',1,'smartcard_interface_config_t']]],
-  ['vsel1pin',['vsel1Pin',['../a00090.html#a8e8dd30d2f0e89c46a4d0c6aeebe7720',1,'smartcard_interface_config_t']]],
-  ['vsel1port',['vsel1Port',['../a00090.html#a074048f689285fe2ba82d3ecdb9f1eba',1,'smartcard_interface_config_t']]],
-  ['vsw',['vsw',['../a00026.html#a2f99bee706b550c304a8a4e65153a614',1,'elcdif_rgb_mode_config_t::vsw()'],['../a00055.html#a289ecf406c34a4c05c84b651ff21b5a7',1,'lcdifv2_display_config_t::vsw()']]]
+  ['validityconfig',['validityConfig',['../a00090.html#a9a83edf589636900df9dc414f5c0641d',1,'_spdif_config']]],
+  ['vbp',['vbp',['../a00026.html#ae5f50ba1a7e6822cefdc623a01861379',1,'_elcdif_rgb_mode_config::vbp()'],['../a00054.html#ad1d6ac5bbb1c641df309388a0669daa8',1,'_lcdifv2_display_config::vbp()'],['../a00024.html#afd0c424c48024603cbd9281fb23cd00f',1,'_dsi_dpi_config::vbp()']]],
+  ['vcc',['vcc',['../a00087.html#a2c6d266ce225b4754c442a20edfdf5e5',1,'_smartcard_interface_config']]],
+  ['version',['version',['../a00048.html#a621a8797dc305e19afcacf3ee5b9d9eb',1,'_flexspi_mem_config::version()'],['../a00078.html#ad4ece3439221109deec6dfe993de246d',1,'_sd_card::version()']]],
+  ['vfp',['vfp',['../a00026.html#a2c0a758b444a6fe49c7003d690571357',1,'_elcdif_rgb_mode_config::vfp()'],['../a00054.html#a27477b9afd7aeaddc9d6930dfe862e7b',1,'_lcdifv2_display_config::vfp()'],['../a00024.html#acd47b3aee971f742955479087a7b5235',1,'_dsi_dpi_config::vfp()']]],
+  ['videomode',['videoMode',['../a00024.html#ab03f4492432837d78f72142148943395',1,'_dsi_dpi_config']]],
+  ['virtualchannel',['virtualChannel',['../a00024.html#a8dabf8347559868b419f90879fb795b3',1,'_dsi_dpi_config::virtualChannel()'],['../a00024.html#a31e7affb3297549e63d05915a8085f0c',1,'_dsi_transfer::virtualChannel()']]],
+  ['voltagesteptime',['voltageStepTime',['../a00071.html#a693c6e93778d420cd813c250bf720faa',1,'_pmu_static_lpsr_dig_config']]],
+  ['vsel0pin',['vsel0Pin',['../a00087.html#a4a9a3d59cba3b238b082a4d5aaca3918',1,'_smartcard_interface_config']]],
+  ['vsel0port',['vsel0Port',['../a00087.html#a2c511f6eb9711791338e5d816531c8f0',1,'_smartcard_interface_config']]],
+  ['vsel1pin',['vsel1Pin',['../a00087.html#a86233dfd5924bbefa63ee941b518c39c',1,'_smartcard_interface_config']]],
+  ['vsel1port',['vsel1Port',['../a00087.html#ae474494c84a27d807fc3f72d70ab6a66',1,'_smartcard_interface_config']]],
+  ['vsw',['vsw',['../a00026.html#af254d03e2662114669907924dc8db1a7',1,'_elcdif_rgb_mode_config::vsw()'],['../a00054.html#af9371f75ccd78637adacf5adca081d02',1,'_lcdifv2_display_config::vsw()']]]
 ];

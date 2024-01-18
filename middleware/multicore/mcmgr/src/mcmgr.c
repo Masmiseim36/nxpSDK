@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2014-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2023 NXP
  * All rights reserved.
  *
  *
@@ -112,6 +112,10 @@ static void MCMGR_FeedStartupDataEventHandler(uint16_t startupDataChunk, void *c
 
 mcmgr_status_t MCMGR_EarlyInit(void)
 {
+    /* This function is intended to be called as close to the reset entry as possible,
+       (within the startup sequence in SystemInitHook) to allow CoreUp event triggering.
+       Avoid using uninitialized data here. */
+
     mcmgr_core_t coreNum = MCMGR_GetCurrentCore();
     if ((uint32_t)coreNum < g_mcmgrSystem.coreCount)
     {

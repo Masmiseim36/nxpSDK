@@ -1,60 +1,64 @@
 var a00043 =
 [
     [ "FlexIO eDMA UART Driver", "a00044.html", "a00044" ],
-    [ "FLEXIO_UART_Type", "a00043.html#a00551", [
-      [ "flexioBase", "a00043.html#ad80f1e208b704cc3719933e2448826c4", null ],
-      [ "TxPinIndex", "a00043.html#ab6df247340eafe9076c6ac3a20f0d81c", null ],
-      [ "RxPinIndex", "a00043.html#a21879d73921f1cd42601b0a80d029a6a", null ],
-      [ "shifterIndex", "a00043.html#a36f31f0641373f903d2371aafe42ee67", null ],
-      [ "timerIndex", "a00043.html#a69c6696d06f94527af4280dc2921022b", null ]
+    [ "_flexio_uart_type", "a00043.html#a00529", [
+      [ "flexioBase", "a00043.html#ae80333106e2b3ed8723a1ba780e3db0e", null ],
+      [ "TxPinIndex", "a00043.html#aa876273f088e8eebc92c3ae4be4614a1", null ],
+      [ "RxPinIndex", "a00043.html#a85438b6f4b7d88017d4c05dba6f3d83e", null ],
+      [ "shifterIndex", "a00043.html#a6881347e0fb8615205715d39066d4965", null ],
+      [ "timerIndex", "a00043.html#af763098e90a19b0fb54079bffc418c22", null ]
     ] ],
-    [ "flexio_uart_config_t", "a00043.html#a00549", [
-      [ "enableUart", "a00043.html#aa2daf1e1468130631b21f73e9dcc2e95", null ],
-      [ "enableInDoze", "a00043.html#ad2752bcddb3b5e9d987eb9d74f3e034b", null ],
-      [ "enableInDebug", "a00043.html#ac5bf2792d85a76b3652dee457e580218", null ],
-      [ "enableFastAccess", "a00043.html#a51bdfc0b1d8493123f1be71343c9f070", null ],
-      [ "baudRate_Bps", "a00043.html#a082e38cf0edf524602d1d7a578949fd6", null ],
-      [ "bitCountPerChar", "a00043.html#a31835537405f9f15cd37a10b17211990", null ]
+    [ "_flexio_uart_config", "a00043.html#a00525", [
+      [ "enableUart", "a00043.html#aed8115cbc75de0df22c5dba0f0875291", null ],
+      [ "enableInDoze", "a00043.html#ada3d4a23a3c835d20a2477886dd9a282", null ],
+      [ "enableInDebug", "a00043.html#aa5fccdf7ef415464341bd923023ce85d", null ],
+      [ "enableFastAccess", "a00043.html#a03e80a4e0bb6d8b967424d3db194cb8c", null ],
+      [ "baudRate_Bps", "a00043.html#a64b1a3cad4cefb854fb89bb0159fe47a", null ],
+      [ "bitCountPerChar", "a00043.html#a6595a9f387022b3561c7fe1314e59150", null ]
     ] ],
-    [ "flexio_uart_transfer_t", "a00043.html#a00550", [
-      [ "data", "a00043.html#a38416ca93058d1875ae13843c6a63827", null ],
-      [ "rxData", "a00043.html#a0bd75aa05139bc278313efc2871c9d2e", null ],
-      [ "txData", "a00043.html#abe751737642b273833ad3abdd4f2fc81", null ],
-      [ "dataSize", "a00043.html#a4d962516ae6cc6a2358c4175c154b5b8", null ]
+    [ "_flexio_uart_transfer", "a00043.html#a00528", [
+      [ "data", "a00043.html#a9e9b2de91956c9b4b118fb7b43a99a27", null ],
+      [ "rxData", "a00043.html#a6f8647dc4309a84459e92ac486409e15", null ],
+      [ "txData", "a00043.html#a150732435e866d36bdfaa37e4b9d4a20", null ],
+      [ "dataSize", "a00043.html#aa4c221e57175b9ef6882283f202acb41", null ]
     ] ],
-    [ "flexio_uart_handle_t", "a00043.html#a00403", [
-      [ "txData", "a00043.html#a1569356e818eea29940ad3f087a438b2", null ],
-      [ "txDataSize", "a00043.html#ad464d30fa2304bbd122747ce92d88268", null ],
-      [ "rxData", "a00043.html#aed331dee4e91b4554acc26b625cbe63f", null ],
-      [ "rxDataSize", "a00043.html#a0aa6001272b9d5637fa272208489837b", null ],
-      [ "txDataSizeAll", "a00043.html#ad4b82a12ba3e8d747eb78819e2862252", null ],
-      [ "rxDataSizeAll", "a00043.html#a1ff5b94af87893988884a53ff8b212ce", null ],
-      [ "rxRingBuffer", "a00043.html#af29ffdc8a03366ed88354e23466a3f83", null ],
-      [ "rxRingBufferSize", "a00043.html#ac1e6450bbc80511733aaa4b1839c7479", null ],
-      [ "rxRingBufferHead", "a00043.html#ac4be17b9c7516934956489b6c65f35f1", null ],
-      [ "rxRingBufferTail", "a00043.html#a1b27a83bb89be05c44cf32184ad9bfb2", null ],
-      [ "callback", "a00043.html#ae19e57fc92931bc751bc4c142c6335a6", null ],
-      [ "userData", "a00043.html#ae547f7e39c3448956c7496801a7a853a", null ],
-      [ "txState", "a00043.html#a8cb8e5214de0990c540ae29202773a72", null ],
-      [ "rxState", "a00043.html#a7f4b0bf16597c2799d5f97eaa14168c7", null ]
+    [ "_flexio_uart_handle", "a00043.html#a00527", [
+      [ "txData", "a00043.html#a3a1998eca5506e4c4cd4f7c719e04911", null ],
+      [ "txDataSize", "a00043.html#a99ff65a22c359bc978b7b6315595124b", null ],
+      [ "rxData", "a00043.html#ab0c9d76cedee59dc8f0c352eee94ae5c", null ],
+      [ "rxDataSize", "a00043.html#ae9f3dde77d2fc9047a58095f19a80cb9", null ],
+      [ "txDataSizeAll", "a00043.html#a8cb9d22dc7633c16b0f54c5315a6611a", null ],
+      [ "rxDataSizeAll", "a00043.html#a3d7c107772ba9dc3e700e11bfe67a12f", null ],
+      [ "rxRingBuffer", "a00043.html#ac2b712572f62e436b5651c7c8056e6ad", null ],
+      [ "rxRingBufferSize", "a00043.html#a7c2ced8bc92f2445f6c5880132738a58", null ],
+      [ "rxRingBufferHead", "a00043.html#a22f29f51f9083c4514c26016a320d3ad", null ],
+      [ "rxRingBufferTail", "a00043.html#a61c1052b93e2613f5276091e98fb42b8", null ],
+      [ "callback", "a00043.html#a9ac9a9cd0024d6103a468685c804f736", null ],
+      [ "userData", "a00043.html#a228e878644ad785e5bf56055bd052bb0", null ],
+      [ "txState", "a00043.html#aff1d8c22c51647163392bc6b12ef717c", null ],
+      [ "rxState", "a00043.html#a3bb96c5ee20f71404b4c01928943717a", null ]
     ] ],
     [ "FSL_FLEXIO_UART_DRIVER_VERSION", "a00043.html#gaa668f10e7e0820c4d504f124ef506b59", null ],
     [ "UART_RETRY_TIMES", "a00043.html#gac0f88b67f77fd05f186a5ec940c340bd", null ],
+    [ "flexio_uart_bit_count_per_char_t", "a00043.html#ga570c5a5d74da006d4a6da255ed4eed13", null ],
+    [ "FLEXIO_UART_Type", "a00043.html#ga30185969a31768efa7b63fe6abda7b95", null ],
+    [ "flexio_uart_config_t", "a00043.html#ga2a19c298dba82980c3f1c8063f02a3d1", null ],
+    [ "flexio_uart_transfer_t", "a00043.html#ga92f01e08c15b9853ff72059fcbd1c64c", null ],
     [ "flexio_uart_transfer_callback_t", "a00043.html#ga47ba0f819db72b1dc4c043205ba7cb18", [
-      [ "kStatus_FLEXIO_UART_TxBusy", "a00043.html#gga900dca9b26de42491763226e12dcd47ba741e184e1ca8ef870d70da2be537a6ab", null ],
-      [ "kStatus_FLEXIO_UART_RxBusy", "a00043.html#gga900dca9b26de42491763226e12dcd47ba8dcfa64158a113e9ed598ac23c9df021", null ],
-      [ "kStatus_FLEXIO_UART_TxIdle", "a00043.html#gga900dca9b26de42491763226e12dcd47ba828da21609507716299bfc8640c57ec3", null ],
-      [ "kStatus_FLEXIO_UART_RxIdle", "a00043.html#gga900dca9b26de42491763226e12dcd47ba451ebbdc82bffc6c0205c7c9bd539046", null ],
-      [ "kStatus_FLEXIO_UART_ERROR", "a00043.html#gga900dca9b26de42491763226e12dcd47ba3b7dca7a2a8364d24c686bbfc22aa2bc", null ],
-      [ "kStatus_FLEXIO_UART_RxRingBufferOverrun", "a00043.html#gga900dca9b26de42491763226e12dcd47ba565cdecf3ec56df0f889e2e49d31b34f", null ],
-      [ "kStatus_FLEXIO_UART_RxHardwareOverrun", "a00043.html#gga900dca9b26de42491763226e12dcd47bab892c50df6c586138fe1b37fde07e4ca", null ],
-      [ "kStatus_FLEXIO_UART_Timeout", "a00043.html#gga900dca9b26de42491763226e12dcd47ba71d490f8194635bf02969343de023a71", null ],
-      [ "kStatus_FLEXIO_UART_BaudrateNotSupport", "a00043.html#gga900dca9b26de42491763226e12dcd47ba0b5de1470583ff444473745f1888fa14", null ]
+      [ "kStatus_FLEXIO_UART_TxBusy", "a00043.html#gga8628933cde20921c453a6d2607bdad62a741e184e1ca8ef870d70da2be537a6ab", null ],
+      [ "kStatus_FLEXIO_UART_RxBusy", "a00043.html#gga8628933cde20921c453a6d2607bdad62a8dcfa64158a113e9ed598ac23c9df021", null ],
+      [ "kStatus_FLEXIO_UART_TxIdle", "a00043.html#gga8628933cde20921c453a6d2607bdad62a828da21609507716299bfc8640c57ec3", null ],
+      [ "kStatus_FLEXIO_UART_RxIdle", "a00043.html#gga8628933cde20921c453a6d2607bdad62a451ebbdc82bffc6c0205c7c9bd539046", null ],
+      [ "kStatus_FLEXIO_UART_ERROR", "a00043.html#gga8628933cde20921c453a6d2607bdad62a3b7dca7a2a8364d24c686bbfc22aa2bc", null ],
+      [ "kStatus_FLEXIO_UART_RxRingBufferOverrun", "a00043.html#gga8628933cde20921c453a6d2607bdad62a565cdecf3ec56df0f889e2e49d31b34f", null ],
+      [ "kStatus_FLEXIO_UART_RxHardwareOverrun", "a00043.html#gga8628933cde20921c453a6d2607bdad62ab892c50df6c586138fe1b37fde07e4ca", null ],
+      [ "kStatus_FLEXIO_UART_Timeout", "a00043.html#gga8628933cde20921c453a6d2607bdad62a71d490f8194635bf02969343de023a71", null ],
+      [ "kStatus_FLEXIO_UART_BaudrateNotSupport", "a00043.html#gga8628933cde20921c453a6d2607bdad62a0b5de1470583ff444473745f1888fa14", null ]
     ] ],
-    [ "flexio_uart_bit_count_per_char_t", "a00043.html#ga3298baaedfdeb4df8ad44ce716abca7e", [
-      [ "kFLEXIO_UART_7BitsPerChar", "a00043.html#gga3298baaedfdeb4df8ad44ce716abca7ead9818673f2a8abacdb73e6f323fa4c42", null ],
-      [ "kFLEXIO_UART_8BitsPerChar", "a00043.html#gga3298baaedfdeb4df8ad44ce716abca7eaa2563f1b9bbacb425bd892eedda0a161", null ],
-      [ "kFLEXIO_UART_9BitsPerChar", "a00043.html#gga3298baaedfdeb4df8ad44ce716abca7ea8f9d374fa26cfa27dff950fca3e404a5", null ]
+    [ "_flexio_uart_bit_count_per_char", "a00043.html#gab9e78879dcbbeda98283f2ab8914b501", [
+      [ "kFLEXIO_UART_7BitsPerChar", "a00043.html#ggab9e78879dcbbeda98283f2ab8914b501ad9818673f2a8abacdb73e6f323fa4c42", null ],
+      [ "kFLEXIO_UART_8BitsPerChar", "a00043.html#ggab9e78879dcbbeda98283f2ab8914b501aa2563f1b9bbacb425bd892eedda0a161", null ],
+      [ "kFLEXIO_UART_9BitsPerChar", "a00043.html#ggab9e78879dcbbeda98283f2ab8914b501a8f9d374fa26cfa27dff950fca3e404a5", null ]
     ] ],
     [ "_flexio_uart_interrupt_enable", "a00043.html#gaacbc60527c13c7135ab8cdeb379e72fb", [
       [ "kFLEXIO_UART_TxDataRegEmptyInterruptEnable", "a00043.html#ggaacbc60527c13c7135ab8cdeb379e72fba41d4cc3f3cf42008e68fe819a9a3da14", null ],
@@ -90,5 +94,6 @@ var a00043 =
     [ "FLEXIO_UART_TransferReceiveNonBlocking", "a00043.html#gab42bbc26c0a6a8186d7b0d7373861bd4", null ],
     [ "FLEXIO_UART_TransferAbortReceive", "a00043.html#ga3530ff683b0a4a0c2c2822c1e3626aab", null ],
     [ "FLEXIO_UART_TransferGetReceiveCount", "a00043.html#ga3bc3658a7fb5825e12d2a74e879b9930", null ],
-    [ "FLEXIO_UART_TransferHandleIRQ", "a00043.html#ga3c30d66f4471bfebd2021a8a3f1a1f04", null ]
+    [ "FLEXIO_UART_TransferHandleIRQ", "a00043.html#ga3c30d66f4471bfebd2021a8a3f1a1f04", null ],
+    [ "FLEXIO_UART_FlushShifters", "a00043.html#ga4825d566bedb5d350a95f08fe926085b", null ]
 ];

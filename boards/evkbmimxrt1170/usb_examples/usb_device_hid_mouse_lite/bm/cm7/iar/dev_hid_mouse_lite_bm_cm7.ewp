@@ -359,8 +359,9 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/dcd</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176</state>
@@ -1453,8 +1454,9 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/dcd</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176</state>
@@ -2548,8 +2550,9 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/dcd</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176</state>
@@ -3643,8 +3646,9 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/dcd</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176</state>
@@ -4737,8 +4741,9 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/dcd</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176</state>
@@ -5832,8 +5837,9 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/dcd</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176</state>
@@ -6636,75 +6642,6 @@
     </file>
   </group>
   <group>
-    <name>usb</name>
-    <group>
-      <name>dcd</name>
-      <file>
-        <name>$PROJ_DIR$/../usb_hsdcd.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../usb_hsdcd.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../usb_charger_detect.h</name>
-      </file>
-    </group>
-    <group>
-      <name>device</name>
-      <group>
-        <name>source</name>
-        <group>
-          <name>ehci</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/usb/device/usb_device_ehci.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/usb/device/usb_device_ehci.h</name>
-          </file>
-        </group>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/usb/device/usb_device_dci.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/usb/device/usb_device_dci.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/usb/device/usb_device_dci.h</name>
-        </file>
-      </group>
-      <group>
-        <name>include</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/usb/device/usb_device.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/usb/device/usb_device.h</name>
-        </file>
-      </group>
-    </group>
-    <group>
-      <name>phy</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/usb/phy/usb_phy.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/usb/phy/usb_phy.h</name>
-      </file>
-    </group>
-    <group>
-      <name>include</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/usb/include/usb.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/usb/include/usb_misc.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/usb/include/usb_spec.h</name>
-      </file>
-    </group>
-  </group>
-  <group>
     <name>component</name>
     <group>
       <name>timer</name>
@@ -6819,9 +6756,81 @@
     </file>
   </group>
   <group>
+    <name>usb</name>
+    <group>
+      <name>device</name>
+      <group>
+        <name>source</name>
+        <group>
+          <name>ehci</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../../middleware/usb/device/usb_device_ehci.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../../middleware/usb/device/usb_device_ehci.h</name>
+          </file>
+        </group>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../../middleware/usb/device/usb_device_dci.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../../middleware/usb/device/usb_device_dci.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../../middleware/usb/device/usb_device_dci.h</name>
+        </file>
+      </group>
+      <group>
+        <name>include</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../../middleware/usb/device/usb_device.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../../middleware/usb/device/usb_device.h</name>
+        </file>
+      </group>
+    </group>
+    <group>
+      <name>phy</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/usb/phy/usb_phy.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/usb/phy/usb_phy.h</name>
+      </file>
+    </group>
+    <group>
+      <name>dcd</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/usb/dcd/usb_hsdcd.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/usb/dcd/usb_hsdcd.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/usb/dcd/usb_charger_detect.h</name>
+      </file>
+    </group>
+    <group>
+      <name>include</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/usb/include/usb.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/usb/include/usb_misc.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/usb/include/usb_spec.h</name>
+      </file>
+    </group>
+  </group>
+  <group>
     <name>utilities</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</name>

@@ -14,11 +14,11 @@
 /* clang-format off */
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Peripherals v11.0
+product: Peripherals v14.0
 processor: MIMXRT1176xxxxx
 package_id: MIMXRT1176DVMAA
 mcu_data: ksdk2_0
-processor_version: 0.13.1
+processor_version: 0.15.10
 functionalGroups:
 - name: BOARD_InitPeripherals
   UUID: e6284d15-619c-4414-9a55-c92278f7aa04
@@ -33,6 +33,7 @@ component:
 - global_system_definitions:
   - user_definitions: ''
   - user_includes: ''
+  - global_init: ''
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
@@ -80,7 +81,9 @@ instance:
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
 
-/* Empty initialization function (commented out) */
+/* Empty initialization function (commented out)
+static void NVIC_init(void) {
+} */
 
 /***********************************************************************************************************************
  * LPUART1 initialization code

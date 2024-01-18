@@ -66,6 +66,7 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${SdkRootDirPath}/boards/evkmimxrt1170/demo_apps/nand_flash_management/semc
 )
 
+set_source_files_properties("${ProjDirPath}/../dhara_nand_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_fatfs_template_nand")
 set_source_files_properties("${ProjDirPath}/../ffconf.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_fatfs_template_nand")
 set_source_files_properties("${ProjDirPath}/../FreeRTOSConfig.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_template")
 

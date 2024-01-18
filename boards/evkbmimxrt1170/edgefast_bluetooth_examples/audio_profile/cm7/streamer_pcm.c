@@ -31,7 +31,7 @@ void streamer_pcm_init(void)
 {
 }
 
-pcm_rtos_t *streamer_pcm_open(uint32_t num_buffers)
+int streamer_pcm_open(uint32_t num_buffers)
 {
     s_StreamerBufferCount = num_buffers;
     for (uint32_t index = 0U; index < s_StreamerBufferCount; ++index)
@@ -48,7 +48,7 @@ pcm_rtos_t *streamer_pcm_open(uint32_t num_buffers)
         vSemaphoreDelete(stream_write_wait);
     }
     stream_write_wait = xSemaphoreCreateCounting(0xFFu, s_StreamerBufferCount);
-    return &pcmHandle;
+    return 0;
 }
 
 pcm_rtos_t *streamer_pcm_rx_open(uint32_t num_buffers)
@@ -68,7 +68,7 @@ void streamer_pcm_rx_close(pcm_rtos_t *pcm)
 {
 }
 
-int streamer_pcm_write(pcm_rtos_t *pcm, uint8_t *data, uint32_t size)
+int streamer_pcm_write(uint8_t *data, uint32_t size)
 {
     s_StreamerBufferArray[s_StreamerBufferWriteIndex] = data;
     s_StreamerBufferDataLengthArray[s_StreamerBufferWriteIndex] = size;
@@ -98,26 +98,25 @@ int streamer_pcm_read(pcm_rtos_t *pcm, uint8_t *data, uint32_t size)
     return 0;
 }
 
-int streamer_pcm_setparams(pcm_rtos_t *pcm,
-                           uint32_t sample_rate,
+int streamer_pcm_setparams(uint32_t sample_rate,
                            uint32_t bit_width,
                            uint8_t num_channels,
                            bool transfer,
                            bool dummy_tx,
                            int volume)
 {
-    pcm->sample_rate  = sample_rate;
-    pcm->bit_width    = bit_width;
-    pcm->num_channels = num_channels;
+    pcmHandle.sample_rate  = sample_rate;
+    pcmHandle.bit_width    = bit_width;
+    pcmHandle.num_channels = num_channels;
 
     return 0;
 }
 
-void streamer_pcm_getparams(pcm_rtos_t *pcm, uint32_t *sample_rate, uint32_t *bit_width, uint8_t *num_channels)
+void streamer_pcm_getparams(uint32_t *sample_rate, uint32_t *bit_width, uint8_t *num_channels)
 {
-    *sample_rate  = pcm->sample_rate;
-    *bit_width    = pcm->bit_width;
-    *num_channels = pcm->num_channels;
+    *sample_rate  = pcmHandle.sample_rate;
+    *bit_width    = pcmHandle.bit_width;
+    *num_channels = pcmHandle.num_channels;
 }
 
 int streamer_pcm_mute(pcm_rtos_t *pcm, bool mute)

@@ -45,40 +45,40 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
-"${ProjDirPath}/../main.c"
-"${ProjDirPath}/../clock_config.c"
-"${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../pin_mux.c"
-"${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../freemaster_cfg.h"
-"${SdkRootDirPath}/boards/evkmimxrt1160/freemaster_examples/common/fmstr_example/freemaster_example.c"
-"${SdkRootDirPath}/boards/evkmimxrt1160/freemaster_examples/common/fmstr_example/freemaster_example.h"
-"${ProjDirPath}/../network.c"
-"${ProjDirPath}/../network.h"
-"${ProjDirPath}/../FreeRTOSConfig.h"
-"${ProjDirPath}/../FreeRTOSConfigBoard.h"
-"${ProjDirPath}/../lwipopts.h"
-"${ProjDirPath}/../network_enet.c"
-"${ProjDirPath}/../board.c"
-"${ProjDirPath}/../board.h"
-"${SdkRootDirPath}/boards/evkmimxrt1160/freemaster_examples/common/fmstr_example/data_example_pmp.h"
-"${SdkRootDirPath}/boards/evkmimxrt1160/freemaster_examples/common/fmstr_example/data_img_logo.h"
-"${SdkRootDirPath}/boards/evkmimxrt1160/freemaster_examples/common/fmstr_example/data_img_file.h"
-"${SdkRootDirPath}/boards/evkmimxrt1160/freemaster_examples/common/fmstr_example/data_img_fmstrlogo.h"
-"${SdkRootDirPath}/boards/evkmimxrt1160/freemaster_examples/common/fmstr_example/data_html_index.h"
-"${SdkRootDirPath}/boards/evkmimxrt1160/freemaster_examples/common/fmstr_example/example_data.h"
-"${ProjDirPath}/../dcd.c"
-"${ProjDirPath}/../dcd.h"
+"${ProjDirPath}/../source/main.c"
+"${ProjDirPath}/../source/board/clock_config.c"
+"${ProjDirPath}/../source/board/clock_config.h"
+"${ProjDirPath}/../source/board/pin_mux.c"
+"${ProjDirPath}/../source/board/pin_mux.h"
+"${ProjDirPath}/../source/freemaster_cfg.h"
+"${ProjDirPath}/../source/freemaster_example.c"
+"${ProjDirPath}/../source/freemaster_example.h"
+"${ProjDirPath}/../source/network.c"
+"${ProjDirPath}/../source/network.h"
+"${ProjDirPath}/../source/FreeRTOSConfig.h"
+"${ProjDirPath}/../source/board/FreeRTOSConfigBoard.h"
+"${ProjDirPath}/../source/lwipopts.h"
+"${ProjDirPath}/../source/network_enet.c"
+"${ProjDirPath}/../source/board/board.c"
+"${ProjDirPath}/../source/board/board.h"
+"${ProjDirPath}/../source/example_data/data_example_pmp.h"
+"${ProjDirPath}/../source/example_data/data_img_logo.h"
+"${ProjDirPath}/../source/example_data/data_img_file.h"
+"${ProjDirPath}/../source/example_data/data_img_fmstrlogo.h"
+"${ProjDirPath}/../source/example_data/data_html_index.h"
+"${ProjDirPath}/../source/example_data/example_data.h"
+"${ProjDirPath}/../source/board/dcd.c"
+"${ProjDirPath}/../source/board/dcd.h"
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/..
-    ${SdkRootDirPath}/boards/evkmimxrt1160/freemaster_examples/common/fmstr_example
+    ${ProjDirPath}/../source
+    ${ProjDirPath}/../source/board
+    ${ProjDirPath}/../source/example_data
 )
 
-set_source_files_properties("${ProjDirPath}/../freemaster_cfg.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_fmstr_npw_cfg_gen32le")
-set_source_files_properties("${ProjDirPath}/../FreeRTOSConfig.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_template")
-set_source_files_properties("${ProjDirPath}/../lwipopts.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_lwip_template")
+set_source_files_properties("${ProjDirPath}/../source/FreeRTOSConfig.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_template")
+set_source_files_properties("${ProjDirPath}/../source/lwipopts.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_lwip_template")
 
 include(${SdkRootDirPath}/devices/MIMXRT1166/all_lib_device.cmake)
 

@@ -45,17 +45,22 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
     -DUSE_RTOS=1 \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
+    -DDISABLE_LOGGING \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
     -DMCUXPRESSO_SDK \
     -DCRYPTO_USE_DRIVER_CAAM \
     -DCACHE_MODE_WRITE_THROUGH=1 \
     -DLWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1 \
+    -DCHECKSUM_GEN_ICMP6=1 \
+    -DCHECKSUM_CHECK_ICMP6=1 \
     -DLWIP_TIMEVAL_PRIVATE=0 \
     -DMFLASH_FILE_BASEADDR=14221312 \
     -DMQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG \
     -DSDK_OS_FREE_RTOS \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DLWIP_DNS=1 \
+    -DMBEDTLS_THREADING_ALT \
+    -DMBEDTLS_THREADING_C \
     -g \
     -O0 \
     -mcpu=cortex-m7 \
@@ -70,6 +75,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -fomit-frame-pointer \
+    -Wno-unused-function \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -88,17 +95,22 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
     -DUSE_RTOS=1 \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
+    -DDISABLE_LOGGING \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
     -DMCUXPRESSO_SDK \
     -DCRYPTO_USE_DRIVER_CAAM \
     -DCACHE_MODE_WRITE_THROUGH=1 \
     -DLWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1 \
+    -DCHECKSUM_GEN_ICMP6=1 \
+    -DCHECKSUM_CHECK_ICMP6=1 \
     -DLWIP_TIMEVAL_PRIVATE=0 \
     -DMFLASH_FILE_BASEADDR=14221312 \
     -DMQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG \
     -DSDK_OS_FREE_RTOS \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DLWIP_DNS=1 \
+    -DMBEDTLS_THREADING_ALT \
+    -DMBEDTLS_THREADING_C \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \
@@ -112,6 +124,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -fomit-frame-pointer \
+    -Wno-unused-function \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -191,7 +205,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     --defsym=__heap_size__=0x200 \
     ${FPU} \
     ${SPECS} \
-    -T${ProjDirPath}/MIMXRT1166xxxxx_cm7_flexspi_nor_sdram.ld -static \
+    -T\"${ProjDirPath}/MIMXRT1166xxxxx_cm7_flexspi_nor_sdram.ld\" -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     ${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} \
@@ -221,5 +235,5 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     --defsym=__heap_size__=0x200 \
     ${FPU} \
     ${SPECS} \
-    -T${ProjDirPath}/MIMXRT1166xxxxx_cm7_flexspi_nor_sdram.ld -static \
+    -T\"${ProjDirPath}/MIMXRT1166xxxxx_cm7_flexspi_nor_sdram.ld\" -static \
 ")

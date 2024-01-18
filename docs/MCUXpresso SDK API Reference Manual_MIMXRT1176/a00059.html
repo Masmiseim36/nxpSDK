@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: LPI2C Slave Driver</title>
+<title>MCUXpresso SDK API Reference Manual: LPSPI eDMA Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -101,1535 +101,856 @@ $(document).ready(function(){initNavTree('a00059.html','');});
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">LPI2C Slave Driver<div class="ingroups"><a class="el" href="a00344.html">LPI2C: Low Power Inter-Integrated Circuit Driver</a></div></div>  </div>
+<div class="title">LPSPI eDMA Driver<div class="ingroups"><a class="el" href="a00345.html">LPSPI: Low Power Serial Peripheral Interface</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00578"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a00578">lpi2c_slave_config_t</a></td></tr>
-<tr class="memdesc:a00578"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure with settings to initialize the LPI2C slave module.  <a href="a00059.html#a00578">More...</a><br/></td></tr>
-<tr class="separator:a00578"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00579"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a00579">lpi2c_slave_transfer_t</a></td></tr>
-<tr class="memdesc:a00579"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPI2C slave transfer structure.  <a href="a00059.html#a00579">More...</a><br/></td></tr>
-<tr class="separator:a00579"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00409"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a00409">lpi2c_slave_handle_t</a></td></tr>
-<tr class="memdesc:a00409"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPI2C slave handle structure.  <a href="a00059.html#a00409">More...</a><br/></td></tr>
-<tr class="separator:a00409"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00564"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a00564">_lpspi_master_edma_handle</a></td></tr>
+<tr class="memdesc:a00564"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI master eDMA transfer handle structure used for transactional API.  <a href="a00059.html#a00564">More...</a><br/></td></tr>
+<tr class="separator:a00564"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00567"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a00567">_lpspi_slave_edma_handle</a></td></tr>
+<tr class="memdesc:a00567"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI slave eDMA transfer handle structure used for transactional API.  <a href="a00059.html#a00567">More...</a><br/></td></tr>
+<tr class="separator:a00567"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga2640285a708842a5e0e7c4c0090a2f58"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ga2640285a708842a5e0e7c4c0090a2f58">lpi2c_slave_transfer_callback_t</a> )(LPI2C_Type *base, <a class="el" href="a00059.html#a00579">lpi2c_slave_transfer_t</a> *transfer, void *userData)</td></tr>
-<tr class="memdesc:ga2640285a708842a5e0e7c4c0090a2f58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slave event callback function pointer type.  <a href="#ga2640285a708842a5e0e7c4c0090a2f58">More...</a><br/></td></tr>
-<tr class="separator:ga2640285a708842a5e0e7c4c0090a2f58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5e5059737abd91565874d70c4a74e6ea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5e5059737abd91565874d70c4a74e6ea"></a>
+typedef struct <br class="typebreak"/>
+<a class="el" href="a00059.html#a00564">_lpspi_master_edma_handle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ga5e5059737abd91565874d70c4a74e6ea">lpspi_master_edma_handle_t</a></td></tr>
+<tr class="memdesc:ga5e5059737abd91565874d70c4a74e6ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forward declaration of the <a class="el" href="a00059.html#a00564" title="LPSPI master eDMA transfer handle structure used for transactional API. ">_lpspi_master_edma_handle</a> typedefs. <br/></td></tr>
+<tr class="separator:ga5e5059737abd91565874d70c4a74e6ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadcc74e390971e456d935c86389d51835"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gadcc74e390971e456d935c86389d51835"></a>
+typedef struct <br class="typebreak"/>
+<a class="el" href="a00059.html#a00567">_lpspi_slave_edma_handle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#gadcc74e390971e456d935c86389d51835">lpspi_slave_edma_handle_t</a></td></tr>
+<tr class="memdesc:gadcc74e390971e456d935c86389d51835"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forward declaration of the <a class="el" href="a00059.html#a00567" title="LPSPI slave eDMA transfer handle structure used for transactional API. ">_lpspi_slave_edma_handle</a> typedefs. <br/></td></tr>
+<tr class="separator:gadcc74e390971e456d935c86389d51835"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac7830d169e650c0f0239bfe22fe044f0"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#gac7830d169e650c0f0239bfe22fe044f0">lpspi_master_edma_transfer_callback_t</a> )(LPSPI_Type *base, <a class="el" href="a00059.html#ga5e5059737abd91565874d70c4a74e6ea">lpspi_master_edma_handle_t</a> *handle, <a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
+<tr class="memdesc:gac7830d169e650c0f0239bfe22fe044f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Completion callback function pointer type.  <a href="#gac7830d169e650c0f0239bfe22fe044f0">More...</a><br/></td></tr>
+<tr class="separator:gac7830d169e650c0f0239bfe22fe044f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafab27c360b0c9a27c0c3f2327cdf8fd8"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#gafab27c360b0c9a27c0c3f2327cdf8fd8">lpspi_slave_edma_transfer_callback_t</a> )(LPSPI_Type *base, <a class="el" href="a00059.html#gadcc74e390971e456d935c86389d51835">lpspi_slave_edma_handle_t</a> *handle, <a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
+<tr class="memdesc:gafab27c360b0c9a27c0c3f2327cdf8fd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Completion callback function pointer type.  <a href="#gafab27c360b0c9a27c0c3f2327cdf8fd8">More...</a><br/></td></tr>
+<tr class="separator:gafab27c360b0c9a27c0c3f2327cdf8fd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:gabd50effc706692c03b42faa72c34269b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#gabd50effc706692c03b42faa72c34269b">_lpi2c_slave_flags</a> { <br/>
-&#160;&#160;<a class="el" href="a00059.html#ggabd50effc706692c03b42faa72c34269ba80486f66e12276c945b8813269b90c0e">kLPI2C_SlaveTxReadyFlag</a> = LPI2C_SSR_TDF_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00059.html#ggabd50effc706692c03b42faa72c34269ba01265ce6645e4a978b823b1f130a419f">kLPI2C_SlaveRxReadyFlag</a> = LPI2C_SSR_RDF_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00059.html#ggabd50effc706692c03b42faa72c34269baf34a60fee419e0b3d387b353a38b4772">kLPI2C_SlaveAddressValidFlag</a> = LPI2C_SSR_AVF_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00059.html#ggabd50effc706692c03b42faa72c34269ba37386d33a28e37352a8e3151f027fdff">kLPI2C_SlaveTransmitAckFlag</a> = LPI2C_SSR_TAF_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00059.html#ggabd50effc706692c03b42faa72c34269ba5c5dcad526309c44aa390c13ae53ca3e">kLPI2C_SlaveRepeatedStartDetectFlag</a> = LPI2C_SSR_RSF_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00059.html#ggabd50effc706692c03b42faa72c34269baaaa1d719607915d0b1251727900018a7">kLPI2C_SlaveStopDetectFlag</a> = LPI2C_SSR_SDF_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00059.html#ggabd50effc706692c03b42faa72c34269ba41375eeb82c399aff15daba1e8bbff03">kLPI2C_SlaveBitErrFlag</a> = LPI2C_SSR_BEF_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00059.html#ggabd50effc706692c03b42faa72c34269ba6eb9dd96bad287dcb7e2f23f73d961a8">kLPI2C_SlaveFifoErrFlag</a> = LPI2C_SSR_FEF_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00059.html#ggabd50effc706692c03b42faa72c34269ba9fb3f57d810e280effee1dae37d062bb">kLPI2C_SlaveAddressMatch0Flag</a> = LPI2C_SSR_AM0F_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00059.html#ggabd50effc706692c03b42faa72c34269ba62cc9694d6891b21af074122eeedca85">kLPI2C_SlaveAddressMatch1Flag</a> = LPI2C_SSR_AM1F_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00059.html#ggabd50effc706692c03b42faa72c34269ba6a0fa821b530336ea8d1f19aadcbe1dc">kLPI2C_SlaveGeneralCallFlag</a> = LPI2C_SSR_GCF_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00059.html#ggabd50effc706692c03b42faa72c34269baffa3195deae58fc6ea15d062b465ac5d">kLPI2C_SlaveBusyFlag</a> = LPI2C_SSR_SBF_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00059.html#ggabd50effc706692c03b42faa72c34269ba2531ffa96faa3086714e8a069508867b">kLPI2C_SlaveBusBusyFlag</a> = LPI2C_SSR_BBF_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00059.html#ggabd50effc706692c03b42faa72c34269ba67a26ff8ddd90c39e772518636f4e832">kLPI2C_SlaveClearFlags</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00059.html#ggabd50effc706692c03b42faa72c34269baaf5e40570c34c37fd532dad21b1dca1f">kLPI2C_SlaveIrqFlags</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00059.html#ggabd50effc706692c03b42faa72c34269bacb3e0258d950773e55c13829e787de36">kLPI2C_SlaveErrorFlags</a> = kLPI2C_SlaveFifoErrFlag | kLPI2C_SlaveBitErrFlag
-<br/>
- }</td></tr>
-<tr class="memdesc:gabd50effc706692c03b42faa72c34269b"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPI2C slave peripheral flags.  <a href="a00059.html#gabd50effc706692c03b42faa72c34269b">More...</a><br/></td></tr>
-<tr class="separator:gabd50effc706692c03b42faa72c34269b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac3564395ccab19eb1ce6ab46b36bb5bb"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#gac3564395ccab19eb1ce6ab46b36bb5bb">lpi2c_slave_address_match_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00059.html#ggac3564395ccab19eb1ce6ab46b36bb5bbaaa16a731881882d10f48ebde416f54c5">kLPI2C_MatchAddress0</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00059.html#ggac3564395ccab19eb1ce6ab46b36bb5bba2941f8a06a17205294e7d0fa5f305675">kLPI2C_MatchAddress0OrAddress1</a> = 2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00059.html#ggac3564395ccab19eb1ce6ab46b36bb5bba59e460fdd7075191f69e047ef35557eb">kLPI2C_MatchAddress0ThroughAddress1</a> = 6U
-<br/>
- }</td></tr>
-<tr class="memdesc:gac3564395ccab19eb1ce6ab46b36bb5bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPI2C slave address match options.  <a href="a00059.html#gac3564395ccab19eb1ce6ab46b36bb5bb">More...</a><br/></td></tr>
-<tr class="separator:gac3564395ccab19eb1ce6ab46b36bb5bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0d99b4dba3841a4e02f7c431a59006c8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ga0d99b4dba3841a4e02f7c431a59006c8">lpi2c_slave_transfer_event_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00059.html#gga0d99b4dba3841a4e02f7c431a59006c8a10fb8d9bb6ba9cd44fde85466e6eabef">kLPI2C_SlaveAddressMatchEvent</a> = 0x01U, 
-<br/>
-&#160;&#160;<a class="el" href="a00059.html#gga0d99b4dba3841a4e02f7c431a59006c8a976c8c9aa85026224a46cf5ec742eb49">kLPI2C_SlaveTransmitEvent</a> = 0x02U, 
-<br/>
-&#160;&#160;<a class="el" href="a00059.html#gga0d99b4dba3841a4e02f7c431a59006c8ac737ba9e4e62880a6e2d8aac98ae8f18">kLPI2C_SlaveReceiveEvent</a> = 0x04U, 
-<br/>
-&#160;&#160;<a class="el" href="a00059.html#gga0d99b4dba3841a4e02f7c431a59006c8a112af4cf8f8a374407d7c784f024b8e0">kLPI2C_SlaveTransmitAckEvent</a> = 0x08U, 
-<br/>
-&#160;&#160;<a class="el" href="a00059.html#gga0d99b4dba3841a4e02f7c431a59006c8ae0995aac6808b3726b7577c2d283e4c4">kLPI2C_SlaveRepeatedStartEvent</a> = 0x10U, 
-<br/>
-&#160;&#160;<a class="el" href="a00059.html#gga0d99b4dba3841a4e02f7c431a59006c8a06ef7422d9edf9b914864a2d689f042c">kLPI2C_SlaveCompletionEvent</a> = 0x20U, 
-<br/>
-&#160;&#160;<a class="el" href="a00059.html#gga0d99b4dba3841a4e02f7c431a59006c8aeed0927f4e909cb161b44434b6f01aec">kLPI2C_SlaveAllEvents</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:ga0d99b4dba3841a4e02f7c431a59006c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set of events sent to the callback for non blocking slave transfers.  <a href="a00059.html#ga0d99b4dba3841a4e02f7c431a59006c8">More...</a><br/></td></tr>
-<tr class="separator:ga0d99b4dba3841a4e02f7c431a59006c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga0e311cb35cbf6f7d4c8027773214c75e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ga0e311cb35cbf6f7d4c8027773214c75e">LPSPI_MasterTransferCreateHandleEDMA</a> (LPSPI_Type *base, <a class="el" href="a00059.html#ga5e5059737abd91565874d70c4a74e6ea">lpspi_master_edma_handle_t</a> *handle, <a class="el" href="a00059.html#gac7830d169e650c0f0239bfe22fe044f0">lpspi_master_edma_transfer_callback_t</a> callback, void *userData, <a class="el" href="a00025.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *edmaRxRegToRxDataHandle, <a class="el" href="a00025.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *edmaTxDataToTxRegHandle)</td></tr>
+<tr class="memdesc:ga0e311cb35cbf6f7d4c8027773214c75e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the LPSPI master eDMA handle.  <a href="#ga0e311cb35cbf6f7d4c8027773214c75e">More...</a><br/></td></tr>
+<tr class="separator:ga0e311cb35cbf6f7d4c8027773214c75e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabcd43b45998e6fe655192d9b7f0d641c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#gabcd43b45998e6fe655192d9b7f0d641c">LPSPI_MasterTransferEDMA</a> (LPSPI_Type *base, <a class="el" href="a00059.html#ga5e5059737abd91565874d70c4a74e6ea">lpspi_master_edma_handle_t</a> *handle, <a class="el" href="a00058.html#ga9e5674e4c10c43e897588cb02b92e0fe">lpspi_transfer_t</a> *transfer)</td></tr>
+<tr class="memdesc:gabcd43b45998e6fe655192d9b7f0d641c"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI master transfer data using eDMA.  <a href="#gabcd43b45998e6fe655192d9b7f0d641c">More...</a><br/></td></tr>
+<tr class="separator:gabcd43b45998e6fe655192d9b7f0d641c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6c4f28559a68d96e00b7c11be92e225f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ga6c4f28559a68d96e00b7c11be92e225f">LPSPI_MasterTransferPrepareEDMALite</a> (LPSPI_Type *base, <a class="el" href="a00059.html#ga5e5059737abd91565874d70c4a74e6ea">lpspi_master_edma_handle_t</a> *handle, uint32_t configFlags)</td></tr>
+<tr class="memdesc:ga6c4f28559a68d96e00b7c11be92e225f"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI master config transfer parameter while using eDMA.  <a href="#ga6c4f28559a68d96e00b7c11be92e225f">More...</a><br/></td></tr>
+<tr class="separator:ga6c4f28559a68d96e00b7c11be92e225f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga119d8a1202b226e3714c72d6d7be9dfb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ga119d8a1202b226e3714c72d6d7be9dfb">LPSPI_MasterTransferEDMALite</a> (LPSPI_Type *base, <a class="el" href="a00059.html#ga5e5059737abd91565874d70c4a74e6ea">lpspi_master_edma_handle_t</a> *handle, <a class="el" href="a00058.html#ga9e5674e4c10c43e897588cb02b92e0fe">lpspi_transfer_t</a> *transfer)</td></tr>
+<tr class="memdesc:ga119d8a1202b226e3714c72d6d7be9dfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI master transfer data using eDMA without configs.  <a href="#ga119d8a1202b226e3714c72d6d7be9dfb">More...</a><br/></td></tr>
+<tr class="separator:ga119d8a1202b226e3714c72d6d7be9dfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabe586c4f55bdf08b9e2e1f9c708f7cfc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#gabe586c4f55bdf08b9e2e1f9c708f7cfc">LPSPI_MasterTransferAbortEDMA</a> (LPSPI_Type *base, <a class="el" href="a00059.html#ga5e5059737abd91565874d70c4a74e6ea">lpspi_master_edma_handle_t</a> *handle)</td></tr>
+<tr class="memdesc:gabe586c4f55bdf08b9e2e1f9c708f7cfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI master aborts a transfer which is using eDMA.  <a href="#gabe586c4f55bdf08b9e2e1f9c708f7cfc">More...</a><br/></td></tr>
+<tr class="separator:gabe586c4f55bdf08b9e2e1f9c708f7cfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga002238d5b9e570fb8a0afb6fcbc04be6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ga002238d5b9e570fb8a0afb6fcbc04be6">LPSPI_MasterTransferGetCountEDMA</a> (LPSPI_Type *base, <a class="el" href="a00059.html#ga5e5059737abd91565874d70c4a74e6ea">lpspi_master_edma_handle_t</a> *handle, size_t *count)</td></tr>
+<tr class="memdesc:ga002238d5b9e570fb8a0afb6fcbc04be6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the master eDMA transfer remaining bytes.  <a href="#ga002238d5b9e570fb8a0afb6fcbc04be6">More...</a><br/></td></tr>
+<tr class="separator:ga002238d5b9e570fb8a0afb6fcbc04be6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac41d24f3bffe0f4fb09f59fa632c793f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#gac41d24f3bffe0f4fb09f59fa632c793f">LPSPI_SlaveTransferCreateHandleEDMA</a> (LPSPI_Type *base, <a class="el" href="a00059.html#gadcc74e390971e456d935c86389d51835">lpspi_slave_edma_handle_t</a> *handle, <a class="el" href="a00059.html#gafab27c360b0c9a27c0c3f2327cdf8fd8">lpspi_slave_edma_transfer_callback_t</a> callback, void *userData, <a class="el" href="a00025.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *edmaRxRegToRxDataHandle, <a class="el" href="a00025.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *edmaTxDataToTxRegHandle)</td></tr>
+<tr class="memdesc:gac41d24f3bffe0f4fb09f59fa632c793f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the LPSPI slave eDMA handle.  <a href="#gac41d24f3bffe0f4fb09f59fa632c793f">More...</a><br/></td></tr>
+<tr class="separator:gac41d24f3bffe0f4fb09f59fa632c793f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac4b006dcf6f81a13249bd18a991e5c9d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#gac4b006dcf6f81a13249bd18a991e5c9d">LPSPI_SlaveTransferEDMA</a> (LPSPI_Type *base, <a class="el" href="a00059.html#gadcc74e390971e456d935c86389d51835">lpspi_slave_edma_handle_t</a> *handle, <a class="el" href="a00058.html#ga9e5674e4c10c43e897588cb02b92e0fe">lpspi_transfer_t</a> *transfer)</td></tr>
+<tr class="memdesc:gac4b006dcf6f81a13249bd18a991e5c9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI slave transfers data using eDMA.  <a href="#gac4b006dcf6f81a13249bd18a991e5c9d">More...</a><br/></td></tr>
+<tr class="separator:gac4b006dcf6f81a13249bd18a991e5c9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga56077376e3e8eae57c110ecde471d6f0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ga56077376e3e8eae57c110ecde471d6f0">LPSPI_SlaveTransferAbortEDMA</a> (LPSPI_Type *base, <a class="el" href="a00059.html#gadcc74e390971e456d935c86389d51835">lpspi_slave_edma_handle_t</a> *handle)</td></tr>
+<tr class="memdesc:ga56077376e3e8eae57c110ecde471d6f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI slave aborts a transfer which is using eDMA.  <a href="#ga56077376e3e8eae57c110ecde471d6f0">More...</a><br/></td></tr>
+<tr class="separator:ga56077376e3e8eae57c110ecde471d6f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacd05a23bb61b471d2e1c289ce076148e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#gacd05a23bb61b471d2e1c289ce076148e">LPSPI_SlaveTransferGetCountEDMA</a> (LPSPI_Type *base, <a class="el" href="a00059.html#gadcc74e390971e456d935c86389d51835">lpspi_slave_edma_handle_t</a> *handle, size_t *count)</td></tr>
+<tr class="memdesc:gacd05a23bb61b471d2e1c289ce076148e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the slave eDMA transfer remaining bytes.  <a href="#gacd05a23bb61b471d2e1c289ce076148e">More...</a><br/></td></tr>
+<tr class="separator:gacd05a23bb61b471d2e1c289ce076148e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Slave initialization and deinitialization</h2></td></tr>
-<tr class="memitem:gadf34085d4557ceb3081fff9fe0e3189a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#gadf34085d4557ceb3081fff9fe0e3189a">LPI2C_SlaveGetDefaultConfig</a> (<a class="el" href="a00059.html#a00578">lpi2c_slave_config_t</a> *slaveConfig)</td></tr>
-<tr class="memdesc:gadf34085d4557ceb3081fff9fe0e3189a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides a default configuration for the LPI2C slave peripheral.  <a href="#gadf34085d4557ceb3081fff9fe0e3189a">More...</a><br/></td></tr>
-<tr class="separator:gadf34085d4557ceb3081fff9fe0e3189a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae5cc8a03c784a99bb58b69852dfda5a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#gae5cc8a03c784a99bb58b69852dfda5a5">LPI2C_SlaveInit</a> (LPI2C_Type *base, const <a class="el" href="a00059.html#a00578">lpi2c_slave_config_t</a> *slaveConfig, uint32_t sourceClock_Hz)</td></tr>
-<tr class="memdesc:gae5cc8a03c784a99bb58b69852dfda5a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the LPI2C slave peripheral.  <a href="#gae5cc8a03c784a99bb58b69852dfda5a5">More...</a><br/></td></tr>
-<tr class="separator:gae5cc8a03c784a99bb58b69852dfda5a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa1a5cfe78acec0e1f8dd4af63a0f87f8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#gaa1a5cfe78acec0e1f8dd4af63a0f87f8">LPI2C_SlaveDeinit</a> (LPI2C_Type *base)</td></tr>
-<tr class="memdesc:gaa1a5cfe78acec0e1f8dd4af63a0f87f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the LPI2C slave peripheral.  <a href="#gaa1a5cfe78acec0e1f8dd4af63a0f87f8">More...</a><br/></td></tr>
-<tr class="separator:gaa1a5cfe78acec0e1f8dd4af63a0f87f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf58f9ebf437d62936c45c201a68fb5d7"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#gaf58f9ebf437d62936c45c201a68fb5d7">LPI2C_SlaveReset</a> (LPI2C_Type *base)</td></tr>
-<tr class="memdesc:gaf58f9ebf437d62936c45c201a68fb5d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a software reset of the LPI2C slave peripheral.  <a href="#gaf58f9ebf437d62936c45c201a68fb5d7">More...</a><br/></td></tr>
-<tr class="separator:gaf58f9ebf437d62936c45c201a68fb5d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae83a936eb8303218278cd704d8238a08"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#gae83a936eb8303218278cd704d8238a08">LPI2C_SlaveEnable</a> (LPI2C_Type *base, bool enable)</td></tr>
-<tr class="memdesc:gae83a936eb8303218278cd704d8238a08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables the LPI2C module as slave.  <a href="#gae83a936eb8303218278cd704d8238a08">More...</a><br/></td></tr>
-<tr class="separator:gae83a936eb8303218278cd704d8238a08"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Slave status</h2></td></tr>
-<tr class="memitem:ga18055724e510f601f35cc00940e9155c"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ga18055724e510f601f35cc00940e9155c">LPI2C_SlaveGetStatusFlags</a> (LPI2C_Type *base)</td></tr>
-<tr class="memdesc:ga18055724e510f601f35cc00940e9155c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the LPI2C slave status flags.  <a href="#ga18055724e510f601f35cc00940e9155c">More...</a><br/></td></tr>
-<tr class="separator:ga18055724e510f601f35cc00940e9155c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3b5306231d96d7fa38ef26d9ca6526b1"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ga3b5306231d96d7fa38ef26d9ca6526b1">LPI2C_SlaveClearStatusFlags</a> (LPI2C_Type *base, uint32_t statusMask)</td></tr>
-<tr class="memdesc:ga3b5306231d96d7fa38ef26d9ca6526b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the LPI2C status flag state.  <a href="#ga3b5306231d96d7fa38ef26d9ca6526b1">More...</a><br/></td></tr>
-<tr class="separator:ga3b5306231d96d7fa38ef26d9ca6526b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Slave interrupts</h2></td></tr>
-<tr class="memitem:gaf5b7a33a341fd95ca77dcb6fe7f1bf3c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#gaf5b7a33a341fd95ca77dcb6fe7f1bf3c">LPI2C_SlaveEnableInterrupts</a> (LPI2C_Type *base, uint32_t interruptMask)</td></tr>
-<tr class="memdesc:gaf5b7a33a341fd95ca77dcb6fe7f1bf3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the LPI2C slave interrupt requests.  <a href="#gaf5b7a33a341fd95ca77dcb6fe7f1bf3c">More...</a><br/></td></tr>
-<tr class="separator:gaf5b7a33a341fd95ca77dcb6fe7f1bf3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9422103623a9866f350dd03aea984741"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ga9422103623a9866f350dd03aea984741">LPI2C_SlaveDisableInterrupts</a> (LPI2C_Type *base, uint32_t interruptMask)</td></tr>
-<tr class="memdesc:ga9422103623a9866f350dd03aea984741"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the LPI2C slave interrupt requests.  <a href="#ga9422103623a9866f350dd03aea984741">More...</a><br/></td></tr>
-<tr class="separator:ga9422103623a9866f350dd03aea984741"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3d1fb84d337b8eb5cc19cbeced06c2a1"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ga3d1fb84d337b8eb5cc19cbeced06c2a1">LPI2C_SlaveGetEnabledInterrupts</a> (LPI2C_Type *base)</td></tr>
-<tr class="memdesc:ga3d1fb84d337b8eb5cc19cbeced06c2a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the set of currently enabled LPI2C slave interrupt requests.  <a href="#ga3d1fb84d337b8eb5cc19cbeced06c2a1">More...</a><br/></td></tr>
-<tr class="separator:ga3d1fb84d337b8eb5cc19cbeced06c2a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Slave DMA control</h2></td></tr>
-<tr class="memitem:gaa13d0c04083818cf91af19a6add0e08f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#gaa13d0c04083818cf91af19a6add0e08f">LPI2C_SlaveEnableDMA</a> (LPI2C_Type *base, bool enableAddressValid, bool enableRx, bool enableTx)</td></tr>
-<tr class="memdesc:gaa13d0c04083818cf91af19a6add0e08f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables the LPI2C slave peripheral DMA requests.  <a href="#gaa13d0c04083818cf91af19a6add0e08f">More...</a><br/></td></tr>
-<tr class="separator:gaa13d0c04083818cf91af19a6add0e08f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Slave bus operations</h2></td></tr>
-<tr class="memitem:ga155ee1b5bc8c621b60b349b191c078fc"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ga155ee1b5bc8c621b60b349b191c078fc">LPI2C_SlaveGetBusIdleState</a> (LPI2C_Type *base)</td></tr>
-<tr class="memdesc:ga155ee1b5bc8c621b60b349b191c078fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the bus is idle.  <a href="#ga155ee1b5bc8c621b60b349b191c078fc">More...</a><br/></td></tr>
-<tr class="separator:ga155ee1b5bc8c621b60b349b191c078fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga417e07e45369a955f7fecaa26e13b335"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ga417e07e45369a955f7fecaa26e13b335">LPI2C_SlaveTransmitAck</a> (LPI2C_Type *base, bool ackOrNack)</td></tr>
-<tr class="memdesc:ga417e07e45369a955f7fecaa26e13b335"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmits either an ACK or NAK on the I2C bus in response to a byte from the master.  <a href="#ga417e07e45369a955f7fecaa26e13b335">More...</a><br/></td></tr>
-<tr class="separator:ga417e07e45369a955f7fecaa26e13b335"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga417e42a46e81c8e95225df9424099243"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ga417e42a46e81c8e95225df9424099243">LPI2C_SlaveEnableAckStall</a> (LPI2C_Type *base, bool enable)</td></tr>
-<tr class="memdesc:ga417e42a46e81c8e95225df9424099243"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables ACKSTALL.  <a href="#ga417e42a46e81c8e95225df9424099243">More...</a><br/></td></tr>
-<tr class="separator:ga417e42a46e81c8e95225df9424099243"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8219a79b748dc59c982c7c3a8470c3a6"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ga8219a79b748dc59c982c7c3a8470c3a6">LPI2C_SlaveGetReceivedAddress</a> (LPI2C_Type *base)</td></tr>
-<tr class="memdesc:ga8219a79b748dc59c982c7c3a8470c3a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the slave address sent by the I2C master.  <a href="#ga8219a79b748dc59c982c7c3a8470c3a6">More...</a><br/></td></tr>
-<tr class="separator:ga8219a79b748dc59c982c7c3a8470c3a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacb2d085904e83ee63ee84f7c8402024c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#gacb2d085904e83ee63ee84f7c8402024c">LPI2C_SlaveSend</a> (LPI2C_Type *base, void *txBuff, size_t txSize, size_t *actualTxSize)</td></tr>
-<tr class="memdesc:gacb2d085904e83ee63ee84f7c8402024c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a polling send transfer on the I2C bus.  <a href="#gacb2d085904e83ee63ee84f7c8402024c">More...</a><br/></td></tr>
-<tr class="separator:gacb2d085904e83ee63ee84f7c8402024c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga36dd1b211a7fe488bfc062a1d8e74fc8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ga36dd1b211a7fe488bfc062a1d8e74fc8">LPI2C_SlaveReceive</a> (LPI2C_Type *base, void *rxBuff, size_t rxSize, size_t *actualRxSize)</td></tr>
-<tr class="memdesc:ga36dd1b211a7fe488bfc062a1d8e74fc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a polling receive transfer on the I2C bus.  <a href="#ga36dd1b211a7fe488bfc062a1d8e74fc8">More...</a><br/></td></tr>
-<tr class="separator:ga36dd1b211a7fe488bfc062a1d8e74fc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Slave non-blocking</h2></td></tr>
-<tr class="memitem:ga6afdc286db9c700bc057038518a19285"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ga6afdc286db9c700bc057038518a19285">LPI2C_SlaveTransferCreateHandle</a> (LPI2C_Type *base, lpi2c_slave_handle_t *handle, <a class="el" href="a00059.html#ga2640285a708842a5e0e7c4c0090a2f58">lpi2c_slave_transfer_callback_t</a> callback, void *userData)</td></tr>
-<tr class="memdesc:ga6afdc286db9c700bc057038518a19285"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new handle for the LPI2C slave non-blocking APIs.  <a href="#ga6afdc286db9c700bc057038518a19285">More...</a><br/></td></tr>
-<tr class="separator:ga6afdc286db9c700bc057038518a19285"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1ba7c9d0c254de8fe8c04091c007edff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ga1ba7c9d0c254de8fe8c04091c007edff">LPI2C_SlaveTransferNonBlocking</a> (LPI2C_Type *base, lpi2c_slave_handle_t *handle, uint32_t eventMask)</td></tr>
-<tr class="memdesc:ga1ba7c9d0c254de8fe8c04091c007edff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts accepting slave transfers.  <a href="#ga1ba7c9d0c254de8fe8c04091c007edff">More...</a><br/></td></tr>
-<tr class="separator:ga1ba7c9d0c254de8fe8c04091c007edff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga755b38638cbade1b05587146e9f7267d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ga755b38638cbade1b05587146e9f7267d">LPI2C_SlaveTransferGetCount</a> (LPI2C_Type *base, lpi2c_slave_handle_t *handle, size_t *count)</td></tr>
-<tr class="memdesc:ga755b38638cbade1b05587146e9f7267d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the slave transfer status during a non-blocking transfer.  <a href="#ga755b38638cbade1b05587146e9f7267d">More...</a><br/></td></tr>
-<tr class="separator:ga755b38638cbade1b05587146e9f7267d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7d46d488aa043ab93bfa1574277a3985"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ga7d46d488aa043ab93bfa1574277a3985">LPI2C_SlaveTransferAbort</a> (LPI2C_Type *base, lpi2c_slave_handle_t *handle)</td></tr>
-<tr class="memdesc:ga7d46d488aa043ab93bfa1574277a3985"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the slave non-blocking transfers.  <a href="#ga7d46d488aa043ab93bfa1574277a3985">More...</a><br/></td></tr>
-<tr class="separator:ga7d46d488aa043ab93bfa1574277a3985"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Slave IRQ handler</h2></td></tr>
-<tr class="memitem:ga712654857bc4490644b46220c0c460bf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ga712654857bc4490644b46220c0c460bf">LPI2C_SlaveTransferHandleIRQ</a> (LPI2C_Type *base, lpi2c_slave_handle_t *handle)</td></tr>
-<tr class="memdesc:ga712654857bc4490644b46220c0c460bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reusable routine to handle slave interrupts.  <a href="#ga712654857bc4490644b46220c0c460bf">More...</a><br/></td></tr>
-<tr class="separator:ga712654857bc4490644b46220c0c460bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Driver version</h2></td></tr>
+<tr class="memitem:gaa083089fda62238f6cdcd9b6289913c7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#gaa083089fda62238f6cdcd9b6289913c7">FSL_LPSPI_EDMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00336.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 4, 2))</td></tr>
+<tr class="memdesc:gaa083089fda62238f6cdcd9b6289913c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI EDMA driver version.  <a href="#gaa083089fda62238f6cdcd9b6289913c7">More...</a><br/></td></tr>
+<tr class="separator:gaa083089fda62238f6cdcd9b6289913c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00578" id="a00578"></a>
+<a name="a00564" id="a00564"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct lpi2c_slave_config_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"><p>This structure holds configuration settings for the LPI2C slave peripheral. To initialize this structure to reasonable defaults, call the <a class="el" href="a00059.html#gadf34085d4557ceb3081fff9fe0e3189a" title="Provides a default configuration for the LPI2C slave peripheral. ">LPI2C_SlaveGetDefaultConfig()</a> function and pass a pointer to your configuration structure instance.</p>
-<p>The configuration structure can be made constant so it resides in flash. </p>
-</div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:ad220cfa81b4117fd1d952b43ff0d5511"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ad220cfa81b4117fd1d952b43ff0d5511">enableSlave</a></td></tr>
-<tr class="memdesc:ad220cfa81b4117fd1d952b43ff0d5511"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable slave mode.  <a href="#ad220cfa81b4117fd1d952b43ff0d5511">More...</a><br/></td></tr>
-<tr class="separator:ad220cfa81b4117fd1d952b43ff0d5511"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16f171990f815872142d3fe73eb74ff4"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a16f171990f815872142d3fe73eb74ff4">address0</a></td></tr>
-<tr class="memdesc:a16f171990f815872142d3fe73eb74ff4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slave's 7-bit address.  <a href="#a16f171990f815872142d3fe73eb74ff4">More...</a><br/></td></tr>
-<tr class="separator:a16f171990f815872142d3fe73eb74ff4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb3035cd87a9746bdbe5c6618a492034"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#afb3035cd87a9746bdbe5c6618a492034">address1</a></td></tr>
-<tr class="memdesc:afb3035cd87a9746bdbe5c6618a492034"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alternate slave 7-bit address.  <a href="#afb3035cd87a9746bdbe5c6618a492034">More...</a><br/></td></tr>
-<tr class="separator:afb3035cd87a9746bdbe5c6618a492034"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1dc82ff6416b69128c0d6d78d533b093"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00059.html#gac3564395ccab19eb1ce6ab46b36bb5bb">lpi2c_slave_address_match_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a1dc82ff6416b69128c0d6d78d533b093">addressMatchMode</a></td></tr>
-<tr class="memdesc:a1dc82ff6416b69128c0d6d78d533b093"><td class="mdescLeft">&#160;</td><td class="mdescRight">Address matching options.  <a href="#a1dc82ff6416b69128c0d6d78d533b093">More...</a><br/></td></tr>
-<tr class="separator:a1dc82ff6416b69128c0d6d78d533b093"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4cbbafe55351cb52d25b3de1a71e2231"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a4cbbafe55351cb52d25b3de1a71e2231">filterDozeEnable</a></td></tr>
-<tr class="memdesc:a4cbbafe55351cb52d25b3de1a71e2231"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable digital glitch filter in doze mode.  <a href="#a4cbbafe55351cb52d25b3de1a71e2231">More...</a><br/></td></tr>
-<tr class="separator:a4cbbafe55351cb52d25b3de1a71e2231"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6fcca02d50a48b5a3a2923ea449316ce"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a6fcca02d50a48b5a3a2923ea449316ce">filterEnable</a></td></tr>
-<tr class="memdesc:a6fcca02d50a48b5a3a2923ea449316ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable digital glitch filter.  <a href="#a6fcca02d50a48b5a3a2923ea449316ce">More...</a><br/></td></tr>
-<tr class="separator:a6fcca02d50a48b5a3a2923ea449316ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a061ed35a72d6e8ffe9a02be00f633f87"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a061ed35a72d6e8ffe9a02be00f633f87">enableGeneralCall</a></td></tr>
-<tr class="memdesc:a061ed35a72d6e8ffe9a02be00f633f87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable general call address matching.  <a href="#a061ed35a72d6e8ffe9a02be00f633f87">More...</a><br/></td></tr>
-<tr class="separator:a061ed35a72d6e8ffe9a02be00f633f87"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae68493537f90f7bff4a421ff534fb7a1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ae68493537f90f7bff4a421ff534fb7a1">ignoreAck</a></td></tr>
-<tr class="memdesc:ae68493537f90f7bff4a421ff534fb7a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Continue transfers after a NACK is detected.  <a href="#ae68493537f90f7bff4a421ff534fb7a1">More...</a><br/></td></tr>
-<tr class="separator:ae68493537f90f7bff4a421ff534fb7a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac273a825233fe937aa16d98e38664812"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ac273a825233fe937aa16d98e38664812">enableReceivedAddressRead</a></td></tr>
-<tr class="memdesc:ac273a825233fe937aa16d98e38664812"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable reading the address received address as the first byte of data.  <a href="#ac273a825233fe937aa16d98e38664812">More...</a><br/></td></tr>
-<tr class="separator:ac273a825233fe937aa16d98e38664812"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c28ef56af23d2e059942e8d80e5cd15"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a7c28ef56af23d2e059942e8d80e5cd15">sdaGlitchFilterWidth_ns</a></td></tr>
-<tr class="memdesc:a7c28ef56af23d2e059942e8d80e5cd15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Width in nanoseconds of the digital filter on the SDA signal.  <a href="#a7c28ef56af23d2e059942e8d80e5cd15">More...</a><br/></td></tr>
-<tr class="separator:a7c28ef56af23d2e059942e8d80e5cd15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a793ea7dd26bfb1f68daae2523e70d5a5"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a793ea7dd26bfb1f68daae2523e70d5a5">sclGlitchFilterWidth_ns</a></td></tr>
-<tr class="memdesc:a793ea7dd26bfb1f68daae2523e70d5a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Width in nanoseconds of the digital filter on the SCL signal.  <a href="#a793ea7dd26bfb1f68daae2523e70d5a5">More...</a><br/></td></tr>
-<tr class="separator:a793ea7dd26bfb1f68daae2523e70d5a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a920288e7667b3b363f019384ebc58606"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a920288e7667b3b363f019384ebc58606">dataValidDelay_ns</a></td></tr>
-<tr class="memdesc:a920288e7667b3b363f019384ebc58606"><td class="mdescLeft">&#160;</td><td class="mdescRight">Width in nanoseconds of the data valid delay.  <a href="#a920288e7667b3b363f019384ebc58606">More...</a><br/></td></tr>
-<tr class="separator:a920288e7667b3b363f019384ebc58606"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e672f5446e7d86eb9d74bdc785df0fb"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a2e672f5446e7d86eb9d74bdc785df0fb">clockHoldTime_ns</a></td></tr>
-<tr class="memdesc:a2e672f5446e7d86eb9d74bdc785df0fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Width in nanoseconds of the clock hold time.  <a href="#a2e672f5446e7d86eb9d74bdc785df0fb">More...</a><br/></td></tr>
-<tr class="separator:a2e672f5446e7d86eb9d74bdc785df0fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2cd4a19f68523031122851dd0ab1386"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ab2cd4a19f68523031122851dd0ab1386">enableAck</a></td></tr>
-<tr class="memdesc:ab2cd4a19f68523031122851dd0ab1386"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables SCL clock stretching during slave-transmit address byte(s) and slave-receiver address and data byte(s) to allow software to write the Transmit ACK Register before the ACK or NACK is transmitted.  <a href="#ab2cd4a19f68523031122851dd0ab1386">More...</a><br/></td></tr>
-<tr class="separator:ab2cd4a19f68523031122851dd0ab1386"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad0fea92e29e7afff3d7072ab3c722bc8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ad0fea92e29e7afff3d7072ab3c722bc8">enableTx</a></td></tr>
-<tr class="memdesc:ad0fea92e29e7afff3d7072ab3c722bc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables SCL clock stretching when the transmit data flag is set during a slave-transmit transfer.  <a href="#ad0fea92e29e7afff3d7072ab3c722bc8">More...</a><br/></td></tr>
-<tr class="separator:ad0fea92e29e7afff3d7072ab3c722bc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff856d2084ff0ede49f0ff25e6cf5529"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#aff856d2084ff0ede49f0ff25e6cf5529">enableRx</a></td></tr>
-<tr class="memdesc:aff856d2084ff0ede49f0ff25e6cf5529"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables SCL clock stretching when receive data flag is set during a slave-receive transfer.  <a href="#aff856d2084ff0ede49f0ff25e6cf5529">More...</a><br/></td></tr>
-<tr class="separator:aff856d2084ff0ede49f0ff25e6cf5529"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ec794389bd9fb5e51c802bb0b9ee26b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a6ec794389bd9fb5e51c802bb0b9ee26b">enableAddress</a></td></tr>
-<tr class="memdesc:a6ec794389bd9fb5e51c802bb0b9ee26b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables SCL clock stretching when the address valid flag is asserted.  <a href="#a6ec794389bd9fb5e51c802bb0b9ee26b">More...</a><br/></td></tr>
-<tr class="separator:a6ec794389bd9fb5e51c802bb0b9ee26b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="ad220cfa81b4117fd1d952b43ff0d5511"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool lpi2c_slave_config_t::enableSlave</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a16f171990f815872142d3fe73eb74ff4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t lpi2c_slave_config_t::address0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="afb3035cd87a9746bdbe5c6618a492034"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t lpi2c_slave_config_t::address1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a1dc82ff6416b69128c0d6d78d533b093"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00059.html#gac3564395ccab19eb1ce6ab46b36bb5bb">lpi2c_slave_address_match_t</a> lpi2c_slave_config_t::addressMatchMode</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a4cbbafe55351cb52d25b3de1a71e2231"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool lpi2c_slave_config_t::filterDozeEnable</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a6fcca02d50a48b5a3a2923ea449316ce"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool lpi2c_slave_config_t::filterEnable</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a061ed35a72d6e8ffe9a02be00f633f87"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool lpi2c_slave_config_t::enableGeneralCall</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ab2cd4a19f68523031122851dd0ab1386"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool lpi2c_slave_config_t::enableAck</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Clock stretching occurs when transmitting the 9th bit. When enableAckSCLStall is enabled, there is no need to set either enableRxDataSCLStall or enableAddressSCLStall. </p>
-
-</div>
-</div>
-<a class="anchor" id="ad0fea92e29e7afff3d7072ab3c722bc8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool lpi2c_slave_config_t::enableTx</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="aff856d2084ff0ede49f0ff25e6cf5529"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool lpi2c_slave_config_t::enableRx</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a6ec794389bd9fb5e51c802bb0b9ee26b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool lpi2c_slave_config_t::enableAddress</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ae68493537f90f7bff4a421ff534fb7a1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool lpi2c_slave_config_t::ignoreAck</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ac273a825233fe937aa16d98e38664812"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool lpi2c_slave_config_t::enableReceivedAddressRead</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a7c28ef56af23d2e059942e8d80e5cd15"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t lpi2c_slave_config_t::sdaGlitchFilterWidth_ns</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Set to 0 to disable. </p>
-
-</div>
-</div>
-<a class="anchor" id="a793ea7dd26bfb1f68daae2523e70d5a5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t lpi2c_slave_config_t::sclGlitchFilterWidth_ns</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Set to 0 to disable. </p>
-
-</div>
-</div>
-<a class="anchor" id="a920288e7667b3b363f019384ebc58606"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t lpi2c_slave_config_t::dataValidDelay_ns</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a2e672f5446e7d86eb9d74bdc785df0fb"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t lpi2c_slave_config_t::clockHoldTime_ns</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-
-</div>
-</div>
-<a name="a00579" id="a00579"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct lpi2c_slave_transfer_t</td>
+          <td class="memname">struct _lpspi_master_edma_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a19df3bc5c35ed8ae03a927dcc89daa48"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00059.html#ga0d99b4dba3841a4e02f7c431a59006c8">lpi2c_slave_transfer_event_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a19df3bc5c35ed8ae03a927dcc89daa48">event</a></td></tr>
-<tr class="memdesc:a19df3bc5c35ed8ae03a927dcc89daa48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reason the callback is being invoked.  <a href="#a19df3bc5c35ed8ae03a927dcc89daa48">More...</a><br/></td></tr>
-<tr class="separator:a19df3bc5c35ed8ae03a927dcc89daa48"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a336e15a483043ed7ace990517fff6686"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a336e15a483043ed7ace990517fff6686">receivedAddress</a></td></tr>
-<tr class="memdesc:a336e15a483043ed7ace990517fff6686"><td class="mdescLeft">&#160;</td><td class="mdescRight">Matching address send by master.  <a href="#a336e15a483043ed7ace990517fff6686">More...</a><br/></td></tr>
-<tr class="separator:a336e15a483043ed7ace990517fff6686"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54436075594000b4d56471b29dd6734f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a54436075594000b4d56471b29dd6734f"></a>
-uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a54436075594000b4d56471b29dd6734f">data</a></td></tr>
-<tr class="memdesc:a54436075594000b4d56471b29dd6734f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer buffer. <br/></td></tr>
-<tr class="separator:a54436075594000b4d56471b29dd6734f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afcd4de20f8efd725bd93d72180b32f2d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afcd4de20f8efd725bd93d72180b32f2d"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#afcd4de20f8efd725bd93d72180b32f2d">dataSize</a></td></tr>
-<tr class="memdesc:afcd4de20f8efd725bd93d72180b32f2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer size. <br/></td></tr>
-<tr class="separator:afcd4de20f8efd725bd93d72180b32f2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aafd14bc835c1c23de6bf06834d1a0b3c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#aafd14bc835c1c23de6bf06834d1a0b3c">completionStatus</a></td></tr>
-<tr class="memdesc:aafd14bc835c1c23de6bf06834d1a0b3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Success or error code describing how the transfer completed.  <a href="#aafd14bc835c1c23de6bf06834d1a0b3c">More...</a><br/></td></tr>
-<tr class="separator:aafd14bc835c1c23de6bf06834d1a0b3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67e03ab90367cb1d48d42b718e6438f5"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a67e03ab90367cb1d48d42b718e6438f5">transferredCount</a></td></tr>
-<tr class="memdesc:a67e03ab90367cb1d48d42b718e6438f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bytes actually transferred since start or last repeated start.  <a href="#a67e03ab90367cb1d48d42b718e6438f5">More...</a><br/></td></tr>
-<tr class="separator:a67e03ab90367cb1d48d42b718e6438f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa41a139d51a18f9189b8257b7deded08"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#aa41a139d51a18f9189b8257b7deded08">isPcsContinuous</a></td></tr>
+<tr class="memdesc:aa41a139d51a18f9189b8257b7deded08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is PCS continuous in transfer.  <a href="#aa41a139d51a18f9189b8257b7deded08">More...</a><br/></td></tr>
+<tr class="separator:aa41a139d51a18f9189b8257b7deded08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bd05ddf3d2cbf2b5a35ba827726b30b"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a3bd05ddf3d2cbf2b5a35ba827726b30b">isByteSwap</a></td></tr>
+<tr class="memdesc:a3bd05ddf3d2cbf2b5a35ba827726b30b"><td class="mdescLeft">&#160;</td><td class="mdescRight">A flag that whether should byte swap.  <a href="#a3bd05ddf3d2cbf2b5a35ba827726b30b">More...</a><br/></td></tr>
+<tr class="separator:a3bd05ddf3d2cbf2b5a35ba827726b30b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a411a8aeb23f712370f9c2ca84464f5"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a1a411a8aeb23f712370f9c2ca84464f5">fifoSize</a></td></tr>
+<tr class="memdesc:a1a411a8aeb23f712370f9c2ca84464f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">FIFO dataSize.  <a href="#a1a411a8aeb23f712370f9c2ca84464f5">More...</a><br/></td></tr>
+<tr class="separator:a1a411a8aeb23f712370f9c2ca84464f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6edd56462b841848db93cbac96999193"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a6edd56462b841848db93cbac96999193">rxWatermark</a></td></tr>
+<tr class="memdesc:a6edd56462b841848db93cbac96999193"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rx watermark.  <a href="#a6edd56462b841848db93cbac96999193">More...</a><br/></td></tr>
+<tr class="separator:a6edd56462b841848db93cbac96999193"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ccf9b683e0b71a6e4bafa029893d32c"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a2ccf9b683e0b71a6e4bafa029893d32c">bytesEachWrite</a></td></tr>
+<tr class="memdesc:a2ccf9b683e0b71a6e4bafa029893d32c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bytes for each write TDR.  <a href="#a2ccf9b683e0b71a6e4bafa029893d32c">More...</a><br/></td></tr>
+<tr class="separator:a2ccf9b683e0b71a6e4bafa029893d32c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8dc44727556a6cd69e1525d3f7f0495e"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a8dc44727556a6cd69e1525d3f7f0495e">bytesEachRead</a></td></tr>
+<tr class="memdesc:a8dc44727556a6cd69e1525d3f7f0495e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bytes for each read RDR.  <a href="#a8dc44727556a6cd69e1525d3f7f0495e">More...</a><br/></td></tr>
+<tr class="separator:a8dc44727556a6cd69e1525d3f7f0495e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ef8ff1198d478cc77dcb15b44c1ee28"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a5ef8ff1198d478cc77dcb15b44c1ee28">bytesLastRead</a></td></tr>
+<tr class="memdesc:a5ef8ff1198d478cc77dcb15b44c1ee28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bytes for last read RDR.  <a href="#a5ef8ff1198d478cc77dcb15b44c1ee28">More...</a><br/></td></tr>
+<tr class="separator:a5ef8ff1198d478cc77dcb15b44c1ee28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f8c45daac2507df2e132b26e0b3bc36"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a8f8c45daac2507df2e132b26e0b3bc36">isThereExtraRxBytes</a></td></tr>
+<tr class="memdesc:a8f8c45daac2507df2e132b26e0b3bc36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is there extra RX byte.  <a href="#a8f8c45daac2507df2e132b26e0b3bc36">More...</a><br/></td></tr>
+<tr class="separator:a8f8c45daac2507df2e132b26e0b3bc36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d53c745d07f3b681734d37305b3b960"><td class="memItemLeft" align="right" valign="top">uint8_t *volatile&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a4d53c745d07f3b681734d37305b3b960">txData</a></td></tr>
+<tr class="memdesc:a4d53c745d07f3b681734d37305b3b960"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send buffer.  <a href="#a4d53c745d07f3b681734d37305b3b960">More...</a><br/></td></tr>
+<tr class="separator:a4d53c745d07f3b681734d37305b3b960"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9683cefe7426a92dfbd36d73135fab66"><td class="memItemLeft" align="right" valign="top">uint8_t *volatile&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a9683cefe7426a92dfbd36d73135fab66">rxData</a></td></tr>
+<tr class="memdesc:a9683cefe7426a92dfbd36d73135fab66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive buffer.  <a href="#a9683cefe7426a92dfbd36d73135fab66">More...</a><br/></td></tr>
+<tr class="separator:a9683cefe7426a92dfbd36d73135fab66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac905a6d74fbc2e7b2d608dfea6616367"><td class="memItemLeft" align="right" valign="top">volatile size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ac905a6d74fbc2e7b2d608dfea6616367">txRemainingByteCount</a></td></tr>
+<tr class="memdesc:ac905a6d74fbc2e7b2d608dfea6616367"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bytes remaining to send.  <a href="#ac905a6d74fbc2e7b2d608dfea6616367">More...</a><br/></td></tr>
+<tr class="separator:ac905a6d74fbc2e7b2d608dfea6616367"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c90791ec14cb935974f17c430b86416"><td class="memItemLeft" align="right" valign="top">volatile size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a6c90791ec14cb935974f17c430b86416">rxRemainingByteCount</a></td></tr>
+<tr class="memdesc:a6c90791ec14cb935974f17c430b86416"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bytes remaining to receive.  <a href="#a6c90791ec14cb935974f17c430b86416">More...</a><br/></td></tr>
+<tr class="separator:a6c90791ec14cb935974f17c430b86416"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b292c2724d5b2c99b16ceef8f60fe77"><td class="memItemLeft" align="right" valign="top">volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a4b292c2724d5b2c99b16ceef8f60fe77">writeRegRemainingTimes</a></td></tr>
+<tr class="memdesc:a4b292c2724d5b2c99b16ceef8f60fe77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write TDR register remaining times.  <a href="#a4b292c2724d5b2c99b16ceef8f60fe77">More...</a><br/></td></tr>
+<tr class="separator:a4b292c2724d5b2c99b16ceef8f60fe77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43ad846fccb80f7915e3028c2e705863"><td class="memItemLeft" align="right" valign="top">volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a43ad846fccb80f7915e3028c2e705863">readRegRemainingTimes</a></td></tr>
+<tr class="memdesc:a43ad846fccb80f7915e3028c2e705863"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read RDR register remaining times.  <a href="#a43ad846fccb80f7915e3028c2e705863">More...</a><br/></td></tr>
+<tr class="separator:a43ad846fccb80f7915e3028c2e705863"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae91291c4b4a99e346c1e72a0177b814a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae91291c4b4a99e346c1e72a0177b814a"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ae91291c4b4a99e346c1e72a0177b814a">totalByteCount</a></td></tr>
+<tr class="memdesc:ae91291c4b4a99e346c1e72a0177b814a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of transfer bytes. <br/></td></tr>
+<tr class="separator:ae91291c4b4a99e346c1e72a0177b814a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26c737cc99c3729020ab95f44fae7ca8"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a26c737cc99c3729020ab95f44fae7ca8">txBuffIfNull</a></td></tr>
+<tr class="memdesc:a26c737cc99c3729020ab95f44fae7ca8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used if there is not txData for DMA purpose.  <a href="#a26c737cc99c3729020ab95f44fae7ca8">More...</a><br/></td></tr>
+<tr class="separator:a26c737cc99c3729020ab95f44fae7ca8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab96df245c21726d54f4d6d9dfb16d377"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ab96df245c21726d54f4d6d9dfb16d377">rxBuffIfNull</a></td></tr>
+<tr class="memdesc:ab96df245c21726d54f4d6d9dfb16d377"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used if there is not rxData for DMA purpose.  <a href="#ab96df245c21726d54f4d6d9dfb16d377">More...</a><br/></td></tr>
+<tr class="separator:ab96df245c21726d54f4d6d9dfb16d377"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50fd9f76ef5f709202ad695200af83fe"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a50fd9f76ef5f709202ad695200af83fe">transmitCommand</a></td></tr>
+<tr class="memdesc:a50fd9f76ef5f709202ad695200af83fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to write TCR for DMA purpose.  <a href="#a50fd9f76ef5f709202ad695200af83fe">More...</a><br/></td></tr>
+<tr class="separator:a50fd9f76ef5f709202ad695200af83fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a242147fbf556caf04fe1de8ce86b0572"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a242147fbf556caf04fe1de8ce86b0572">state</a></td></tr>
+<tr class="memdesc:a242147fbf556caf04fe1de8ce86b0572"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI transfer state , _lpspi_transfer_state.  <a href="#a242147fbf556caf04fe1de8ce86b0572">More...</a><br/></td></tr>
+<tr class="separator:a242147fbf556caf04fe1de8ce86b0572"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5f995d95b3dd80cfb40c242fcd2210b"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ac5f995d95b3dd80cfb40c242fcd2210b">nbytes</a></td></tr>
+<tr class="memdesc:ac5f995d95b3dd80cfb40c242fcd2210b"><td class="mdescLeft">&#160;</td><td class="mdescRight">eDMA minor byte transfer count initially configured.  <a href="#ac5f995d95b3dd80cfb40c242fcd2210b">More...</a><br/></td></tr>
+<tr class="separator:ac5f995d95b3dd80cfb40c242fcd2210b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06ffd32721b86901b352cc7865fc9cf4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00059.html#gac7830d169e650c0f0239bfe22fe044f0">lpspi_master_edma_transfer_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a06ffd32721b86901b352cc7865fc9cf4">callback</a></td></tr>
+<tr class="memdesc:a06ffd32721b86901b352cc7865fc9cf4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Completion callback.  <a href="#a06ffd32721b86901b352cc7865fc9cf4">More...</a><br/></td></tr>
+<tr class="separator:a06ffd32721b86901b352cc7865fc9cf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acba2b98f25d234a28016d9f85f5f271d"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#acba2b98f25d234a28016d9f85f5f271d">userData</a></td></tr>
+<tr class="memdesc:acba2b98f25d234a28016d9f85f5f271d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback user data.  <a href="#acba2b98f25d234a28016d9f85f5f271d">More...</a><br/></td></tr>
+<tr class="separator:acba2b98f25d234a28016d9f85f5f271d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4b826e5ed9bd3e55752d7de6f038eb3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac4b826e5ed9bd3e55752d7de6f038eb3"></a>
+<a class="el" href="a00025.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ac4b826e5ed9bd3e55752d7de6f038eb3">edmaRxRegToRxDataHandle</a></td></tr>
+<tr class="memdesc:ac4b826e5ed9bd3e55752d7de6f038eb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">edma_handle_t handle point used for RxReg to RxData buff <br/></td></tr>
+<tr class="separator:ac4b826e5ed9bd3e55752d7de6f038eb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa170b87557f01e8d56ca5028f6c96df6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa170b87557f01e8d56ca5028f6c96df6"></a>
+<a class="el" href="a00025.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#aa170b87557f01e8d56ca5028f6c96df6">edmaTxDataToTxRegHandle</a></td></tr>
+<tr class="memdesc:aa170b87557f01e8d56ca5028f6c96df6"><td class="mdescLeft">&#160;</td><td class="mdescRight">edma_handle_t handle point used for TxData to TxReg buff <br/></td></tr>
+<tr class="separator:aa170b87557f01e8d56ca5028f6c96df6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02c5f5413fb96f62919456e66f5056ff"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a02c5f5413fb96f62919456e66f5056ff"></a>
+<a class="el" href="a00025.html#gacff054f9816fb678fc49f5e66a4d7649">edma_tcd_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a02c5f5413fb96f62919456e66f5056ff">lpspiSoftwareTCD</a> [3]</td></tr>
+<tr class="memdesc:a02c5f5413fb96f62919456e66f5056ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">SoftwareTCD, internal used. <br/></td></tr>
+<tr class="separator:a02c5f5413fb96f62919456e66f5056ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a19df3bc5c35ed8ae03a927dcc89daa48"></a>
+<a class="anchor" id="aa41a139d51a18f9189b8257b7deded08"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00059.html#ga0d99b4dba3841a4e02f7c431a59006c8">lpi2c_slave_transfer_event_t</a> lpi2c_slave_transfer_t::event</td>
+          <td class="memname">volatile bool _lpspi_master_edma_handle::isPcsContinuous</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a336e15a483043ed7ace990517fff6686"></a>
+<a class="anchor" id="a3bd05ddf3d2cbf2b5a35ba827726b30b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t lpi2c_slave_transfer_t::receivedAddress</td>
+          <td class="memname">volatile bool _lpspi_master_edma_handle::isByteSwap</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="aafd14bc835c1c23de6bf06834d1a0b3c"></a>
+<a class="anchor" id="a1a411a8aeb23f712370f9c2ca84464f5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> lpi2c_slave_transfer_t::completionStatus</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Only applies for <a class="el" href="a00059.html#gga0d99b4dba3841a4e02f7c431a59006c8a06ef7422d9edf9b914864a2d689f042c" title="A stop was detected, completing the transfer. ">kLPI2C_SlaveCompletionEvent</a>. </p>
-
-</div>
-</div>
-<a class="anchor" id="a67e03ab90367cb1d48d42b718e6438f5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_t lpi2c_slave_transfer_t::transferredCount</td>
+          <td class="memname">volatile uint8_t _lpspi_master_edma_handle::fifoSize</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-
-</div>
-</div>
-<a name="a00409" id="a00409"></a>
+<a class="anchor" id="a6edd56462b841848db93cbac96999193"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct _lpi2c_slave_handle</td>
+          <td class="memname">volatile uint8_t _lpspi_master_edma_handle::rxWatermark</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><dl class="section note"><dt>Note</dt><dd>The contents of this structure are private and subject to change. </dd></dl>
-</div><table class="memberdecls">
+
+</div>
+</div>
+<a class="anchor" id="a2ccf9b683e0b71a6e4bafa029893d32c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile uint8_t _lpspi_master_edma_handle::bytesEachWrite</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a8dc44727556a6cd69e1525d3f7f0495e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile uint8_t _lpspi_master_edma_handle::bytesEachRead</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a5ef8ff1198d478cc77dcb15b44c1ee28"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile uint8_t _lpspi_master_edma_handle::bytesLastRead</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a8f8c45daac2507df2e132b26e0b3bc36"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile bool _lpspi_master_edma_handle::isThereExtraRxBytes</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a4d53c745d07f3b681734d37305b3b960"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t* volatile _lpspi_master_edma_handle::txData</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a9683cefe7426a92dfbd36d73135fab66"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t* volatile _lpspi_master_edma_handle::rxData</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ac905a6d74fbc2e7b2d608dfea6616367"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile size_t _lpspi_master_edma_handle::txRemainingByteCount</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a6c90791ec14cb935974f17c430b86416"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile size_t _lpspi_master_edma_handle::rxRemainingByteCount</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a4b292c2724d5b2c99b16ceef8f60fe77"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile uint32_t _lpspi_master_edma_handle::writeRegRemainingTimes</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a43ad846fccb80f7915e3028c2e705863"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile uint32_t _lpspi_master_edma_handle::readRegRemainingTimes</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a26c737cc99c3729020ab95f44fae7ca8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t _lpspi_master_edma_handle::txBuffIfNull</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ab96df245c21726d54f4d6d9dfb16d377"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t _lpspi_master_edma_handle::rxBuffIfNull</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a50fd9f76ef5f709202ad695200af83fe"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t _lpspi_master_edma_handle::transmitCommand</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a242147fbf556caf04fe1de8ce86b0572"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile uint8_t _lpspi_master_edma_handle::state</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ac5f995d95b3dd80cfb40c242fcd2210b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t _lpspi_master_edma_handle::nbytes</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a06ffd32721b86901b352cc7865fc9cf4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00059.html#gac7830d169e650c0f0239bfe22fe044f0">lpspi_master_edma_transfer_callback_t</a> _lpspi_master_edma_handle::callback</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="acba2b98f25d234a28016d9f85f5f271d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* _lpspi_master_edma_handle::userData</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="a00567" id="a00567"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct _lpspi_slave_edma_handle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:aed2dec763e40c6caa129c082603852d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00059.html#a00579">lpi2c_slave_transfer_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#aed2dec763e40c6caa129c082603852d5">transfer</a></td></tr>
-<tr class="memdesc:aed2dec763e40c6caa129c082603852d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPI2C slave transfer copy.  <a href="#aed2dec763e40c6caa129c082603852d5">More...</a><br/></td></tr>
-<tr class="separator:aed2dec763e40c6caa129c082603852d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f0662c2c78df7b8e8b5ed4c1119823d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a8f0662c2c78df7b8e8b5ed4c1119823d">isBusy</a></td></tr>
-<tr class="memdesc:a8f0662c2c78df7b8e8b5ed4c1119823d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether transfer is busy.  <a href="#a8f0662c2c78df7b8e8b5ed4c1119823d">More...</a><br/></td></tr>
-<tr class="separator:a8f0662c2c78df7b8e8b5ed4c1119823d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0a187d43f251bc67fb9c34dedbf9253"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#af0a187d43f251bc67fb9c34dedbf9253">wasTransmit</a></td></tr>
-<tr class="memdesc:af0a187d43f251bc67fb9c34dedbf9253"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether the last transfer was a transmit.  <a href="#af0a187d43f251bc67fb9c34dedbf9253">More...</a><br/></td></tr>
-<tr class="separator:af0a187d43f251bc67fb9c34dedbf9253"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5bceee16dd6f07c8cb6918580e45e540"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a5bceee16dd6f07c8cb6918580e45e540">eventMask</a></td></tr>
-<tr class="memdesc:a5bceee16dd6f07c8cb6918580e45e540"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mask of enabled events.  <a href="#a5bceee16dd6f07c8cb6918580e45e540">More...</a><br/></td></tr>
-<tr class="separator:a5bceee16dd6f07c8cb6918580e45e540"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac9f4d0665e8ec4c56eb89e816c4b5324"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ac9f4d0665e8ec4c56eb89e816c4b5324">transferredCount</a></td></tr>
-<tr class="memdesc:ac9f4d0665e8ec4c56eb89e816c4b5324"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of bytes transferred.  <a href="#ac9f4d0665e8ec4c56eb89e816c4b5324">More...</a><br/></td></tr>
-<tr class="separator:ac9f4d0665e8ec4c56eb89e816c4b5324"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0e16ba71a57adfe84058af632a604e40"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00059.html#ga2640285a708842a5e0e7c4c0090a2f58">lpi2c_slave_transfer_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a0e16ba71a57adfe84058af632a604e40">callback</a></td></tr>
-<tr class="memdesc:a0e16ba71a57adfe84058af632a604e40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function called at transfer event.  <a href="#a0e16ba71a57adfe84058af632a604e40">More...</a><br/></td></tr>
-<tr class="separator:a0e16ba71a57adfe84058af632a604e40"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa394f46d8677c977aa39b64fb0c353ce"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#aa394f46d8677c977aa39b64fb0c353ce">userData</a></td></tr>
-<tr class="memdesc:aa394f46d8677c977aa39b64fb0c353ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback parameter passed to callback.  <a href="#aa394f46d8677c977aa39b64fb0c353ce">More...</a><br/></td></tr>
-<tr class="separator:aa394f46d8677c977aa39b64fb0c353ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01e8c39ff805fe2976c87cdfe72a9ce7"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a01e8c39ff805fe2976c87cdfe72a9ce7">isByteSwap</a></td></tr>
+<tr class="memdesc:a01e8c39ff805fe2976c87cdfe72a9ce7"><td class="mdescLeft">&#160;</td><td class="mdescRight">A flag that whether should byte swap.  <a href="#a01e8c39ff805fe2976c87cdfe72a9ce7">More...</a><br/></td></tr>
+<tr class="separator:a01e8c39ff805fe2976c87cdfe72a9ce7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8bbcdd6904a0582149a6bbc934b7efb7"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a8bbcdd6904a0582149a6bbc934b7efb7">fifoSize</a></td></tr>
+<tr class="memdesc:a8bbcdd6904a0582149a6bbc934b7efb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">FIFO dataSize.  <a href="#a8bbcdd6904a0582149a6bbc934b7efb7">More...</a><br/></td></tr>
+<tr class="separator:a8bbcdd6904a0582149a6bbc934b7efb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68a5e2d91a877ea183f389f1193b0b4a"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a68a5e2d91a877ea183f389f1193b0b4a">rxWatermark</a></td></tr>
+<tr class="memdesc:a68a5e2d91a877ea183f389f1193b0b4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rx watermark.  <a href="#a68a5e2d91a877ea183f389f1193b0b4a">More...</a><br/></td></tr>
+<tr class="separator:a68a5e2d91a877ea183f389f1193b0b4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c091eb491b971c38537cae919967d79"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a6c091eb491b971c38537cae919967d79">bytesEachWrite</a></td></tr>
+<tr class="memdesc:a6c091eb491b971c38537cae919967d79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bytes for each write TDR.  <a href="#a6c091eb491b971c38537cae919967d79">More...</a><br/></td></tr>
+<tr class="separator:a6c091eb491b971c38537cae919967d79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32f66de5f0f4aea3b0e10f98ee582085"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a32f66de5f0f4aea3b0e10f98ee582085">bytesEachRead</a></td></tr>
+<tr class="memdesc:a32f66de5f0f4aea3b0e10f98ee582085"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bytes for each read RDR.  <a href="#a32f66de5f0f4aea3b0e10f98ee582085">More...</a><br/></td></tr>
+<tr class="separator:a32f66de5f0f4aea3b0e10f98ee582085"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5b31fa5b7bbec87da6e394e25dab60e"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#af5b31fa5b7bbec87da6e394e25dab60e">bytesLastRead</a></td></tr>
+<tr class="memdesc:af5b31fa5b7bbec87da6e394e25dab60e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bytes for last read RDR.  <a href="#af5b31fa5b7bbec87da6e394e25dab60e">More...</a><br/></td></tr>
+<tr class="separator:af5b31fa5b7bbec87da6e394e25dab60e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae30ca6b517a9ab8ff903d4f49de67f87"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ae30ca6b517a9ab8ff903d4f49de67f87">isThereExtraRxBytes</a></td></tr>
+<tr class="memdesc:ae30ca6b517a9ab8ff903d4f49de67f87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is there extra RX byte.  <a href="#ae30ca6b517a9ab8ff903d4f49de67f87">More...</a><br/></td></tr>
+<tr class="separator:ae30ca6b517a9ab8ff903d4f49de67f87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a062641d46358cc81299b44f13e954bea"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a062641d46358cc81299b44f13e954bea">nbytes</a></td></tr>
+<tr class="memdesc:a062641d46358cc81299b44f13e954bea"><td class="mdescLeft">&#160;</td><td class="mdescRight">eDMA minor byte transfer count initially configured.  <a href="#a062641d46358cc81299b44f13e954bea">More...</a><br/></td></tr>
+<tr class="separator:a062641d46358cc81299b44f13e954bea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69a6dbe79088a4203aa206df1ef11998"><td class="memItemLeft" align="right" valign="top">uint8_t *volatile&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a69a6dbe79088a4203aa206df1ef11998">txData</a></td></tr>
+<tr class="memdesc:a69a6dbe79088a4203aa206df1ef11998"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send buffer.  <a href="#a69a6dbe79088a4203aa206df1ef11998">More...</a><br/></td></tr>
+<tr class="separator:a69a6dbe79088a4203aa206df1ef11998"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50c5068aec3bb0e9f31c02ea441b14cf"><td class="memItemLeft" align="right" valign="top">uint8_t *volatile&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a50c5068aec3bb0e9f31c02ea441b14cf">rxData</a></td></tr>
+<tr class="memdesc:a50c5068aec3bb0e9f31c02ea441b14cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive buffer.  <a href="#a50c5068aec3bb0e9f31c02ea441b14cf">More...</a><br/></td></tr>
+<tr class="separator:a50c5068aec3bb0e9f31c02ea441b14cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad62145e0aa8a875374cc3325cf2867ed"><td class="memItemLeft" align="right" valign="top">volatile size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ad62145e0aa8a875374cc3325cf2867ed">txRemainingByteCount</a></td></tr>
+<tr class="memdesc:ad62145e0aa8a875374cc3325cf2867ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bytes remaining to send.  <a href="#ad62145e0aa8a875374cc3325cf2867ed">More...</a><br/></td></tr>
+<tr class="separator:ad62145e0aa8a875374cc3325cf2867ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac03996666ed1a9781f56508c07a17108"><td class="memItemLeft" align="right" valign="top">volatile size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ac03996666ed1a9781f56508c07a17108">rxRemainingByteCount</a></td></tr>
+<tr class="memdesc:ac03996666ed1a9781f56508c07a17108"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bytes remaining to receive.  <a href="#ac03996666ed1a9781f56508c07a17108">More...</a><br/></td></tr>
+<tr class="separator:ac03996666ed1a9781f56508c07a17108"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8dc68d46f48bd0d65d6297cb6f14e128"><td class="memItemLeft" align="right" valign="top">volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a8dc68d46f48bd0d65d6297cb6f14e128">writeRegRemainingTimes</a></td></tr>
+<tr class="memdesc:a8dc68d46f48bd0d65d6297cb6f14e128"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write TDR register remaining times.  <a href="#a8dc68d46f48bd0d65d6297cb6f14e128">More...</a><br/></td></tr>
+<tr class="separator:a8dc68d46f48bd0d65d6297cb6f14e128"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb88b47a23df5db98e90d805e66ce360"><td class="memItemLeft" align="right" valign="top">volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#acb88b47a23df5db98e90d805e66ce360">readRegRemainingTimes</a></td></tr>
+<tr class="memdesc:acb88b47a23df5db98e90d805e66ce360"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read RDR register remaining times.  <a href="#acb88b47a23df5db98e90d805e66ce360">More...</a><br/></td></tr>
+<tr class="separator:acb88b47a23df5db98e90d805e66ce360"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedeef780f8b4c315d32899f310b754f8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aedeef780f8b4c315d32899f310b754f8"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#aedeef780f8b4c315d32899f310b754f8">totalByteCount</a></td></tr>
+<tr class="memdesc:aedeef780f8b4c315d32899f310b754f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of transfer bytes. <br/></td></tr>
+<tr class="separator:aedeef780f8b4c315d32899f310b754f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a213a6bf5cc799e39a1aa41fd29bc4d92"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a213a6bf5cc799e39a1aa41fd29bc4d92">txBuffIfNull</a></td></tr>
+<tr class="memdesc:a213a6bf5cc799e39a1aa41fd29bc4d92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used if there is not txData for DMA purpose.  <a href="#a213a6bf5cc799e39a1aa41fd29bc4d92">More...</a><br/></td></tr>
+<tr class="separator:a213a6bf5cc799e39a1aa41fd29bc4d92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f274f23a77823b57d44681bd96b2e4a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a4f274f23a77823b57d44681bd96b2e4a">rxBuffIfNull</a></td></tr>
+<tr class="memdesc:a4f274f23a77823b57d44681bd96b2e4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used if there is not rxData for DMA purpose.  <a href="#a4f274f23a77823b57d44681bd96b2e4a">More...</a><br/></td></tr>
+<tr class="separator:a4f274f23a77823b57d44681bd96b2e4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60f61ed66ea020991ae79edf4828c019"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a60f61ed66ea020991ae79edf4828c019">state</a></td></tr>
+<tr class="memdesc:a60f61ed66ea020991ae79edf4828c019"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI transfer state.  <a href="#a60f61ed66ea020991ae79edf4828c019">More...</a><br/></td></tr>
+<tr class="separator:a60f61ed66ea020991ae79edf4828c019"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a884fefbcb8953283264bf23f3041d54e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a884fefbcb8953283264bf23f3041d54e">errorCount</a></td></tr>
+<tr class="memdesc:a884fefbcb8953283264bf23f3041d54e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Error count for slave transfer.  <a href="#a884fefbcb8953283264bf23f3041d54e">More...</a><br/></td></tr>
+<tr class="separator:a884fefbcb8953283264bf23f3041d54e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a798930df84fc8d7610661f2a11280eef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00059.html#gafab27c360b0c9a27c0c3f2327cdf8fd8">lpspi_slave_edma_transfer_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a798930df84fc8d7610661f2a11280eef">callback</a></td></tr>
+<tr class="memdesc:a798930df84fc8d7610661f2a11280eef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Completion callback.  <a href="#a798930df84fc8d7610661f2a11280eef">More...</a><br/></td></tr>
+<tr class="separator:a798930df84fc8d7610661f2a11280eef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53121e1dce5bbd72ea9321fde33fdc21"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a53121e1dce5bbd72ea9321fde33fdc21">userData</a></td></tr>
+<tr class="memdesc:a53121e1dce5bbd72ea9321fde33fdc21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback user data.  <a href="#a53121e1dce5bbd72ea9321fde33fdc21">More...</a><br/></td></tr>
+<tr class="separator:a53121e1dce5bbd72ea9321fde33fdc21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e2542b60cc87774f12c728cf994f827"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3e2542b60cc87774f12c728cf994f827"></a>
+<a class="el" href="a00025.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a3e2542b60cc87774f12c728cf994f827">edmaRxRegToRxDataHandle</a></td></tr>
+<tr class="memdesc:a3e2542b60cc87774f12c728cf994f827"><td class="mdescLeft">&#160;</td><td class="mdescRight">edma_handle_t handle point used for RxReg to RxData buff <br/></td></tr>
+<tr class="separator:a3e2542b60cc87774f12c728cf994f827"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a026dd2bb58661017d5ae3e15637c65c5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a026dd2bb58661017d5ae3e15637c65c5"></a>
+<a class="el" href="a00025.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a026dd2bb58661017d5ae3e15637c65c5">edmaTxDataToTxRegHandle</a></td></tr>
+<tr class="memdesc:a026dd2bb58661017d5ae3e15637c65c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">edma_handle_t handle point used for TxData to TxReg <br/></td></tr>
+<tr class="separator:a026dd2bb58661017d5ae3e15637c65c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c1424903ecaad4939aa568c694a83c7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3c1424903ecaad4939aa568c694a83c7"></a>
+<a class="el" href="a00025.html#gacff054f9816fb678fc49f5e66a4d7649">edma_tcd_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a3c1424903ecaad4939aa568c694a83c7">lpspiSoftwareTCD</a> [2]</td></tr>
+<tr class="memdesc:a3c1424903ecaad4939aa568c694a83c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">SoftwareTCD, internal used. <br/></td></tr>
+<tr class="separator:a3c1424903ecaad4939aa568c694a83c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="aed2dec763e40c6caa129c082603852d5"></a>
+<a class="anchor" id="a01e8c39ff805fe2976c87cdfe72a9ce7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00059.html#a00579">lpi2c_slave_transfer_t</a> lpi2c_slave_handle_t::transfer</td>
+          <td class="memname">volatile bool _lpspi_slave_edma_handle::isByteSwap</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a8f0662c2c78df7b8e8b5ed4c1119823d"></a>
+<a class="anchor" id="a8bbcdd6904a0582149a6bbc934b7efb7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool lpi2c_slave_handle_t::isBusy</td>
+          <td class="memname">volatile uint8_t _lpspi_slave_edma_handle::fifoSize</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="af0a187d43f251bc67fb9c34dedbf9253"></a>
+<a class="anchor" id="a68a5e2d91a877ea183f389f1193b0b4a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool lpi2c_slave_handle_t::wasTransmit</td>
+          <td class="memname">volatile uint8_t _lpspi_slave_edma_handle::rxWatermark</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a5bceee16dd6f07c8cb6918580e45e540"></a>
+<a class="anchor" id="a6c091eb491b971c38537cae919967d79"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t lpi2c_slave_handle_t::eventMask</td>
+          <td class="memname">volatile uint8_t _lpspi_slave_edma_handle::bytesEachWrite</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ac9f4d0665e8ec4c56eb89e816c4b5324"></a>
+<a class="anchor" id="a32f66de5f0f4aea3b0e10f98ee582085"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t lpi2c_slave_handle_t::transferredCount</td>
+          <td class="memname">volatile uint8_t _lpspi_slave_edma_handle::bytesEachRead</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a0e16ba71a57adfe84058af632a604e40"></a>
+<a class="anchor" id="af5b31fa5b7bbec87da6e394e25dab60e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00059.html#ga2640285a708842a5e0e7c4c0090a2f58">lpi2c_slave_transfer_callback_t</a> lpi2c_slave_handle_t::callback</td>
+          <td class="memname">volatile uint8_t _lpspi_slave_edma_handle::bytesLastRead</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="aa394f46d8677c977aa39b64fb0c353ce"></a>
+<a class="anchor" id="ae30ca6b517a9ab8ff903d4f49de67f87"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void* lpi2c_slave_handle_t::userData</td>
+          <td class="memname">volatile bool _lpspi_slave_edma_handle::isThereExtraRxBytes</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
+<a class="anchor" id="a062641d46358cc81299b44f13e954bea"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t _lpspi_slave_edma_handle::nbytes</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a69a6dbe79088a4203aa206df1ef11998"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t* volatile _lpspi_slave_edma_handle::txData</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a50c5068aec3bb0e9f31c02ea441b14cf"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t* volatile _lpspi_slave_edma_handle::rxData</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ad62145e0aa8a875374cc3325cf2867ed"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile size_t _lpspi_slave_edma_handle::txRemainingByteCount</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ac03996666ed1a9781f56508c07a17108"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile size_t _lpspi_slave_edma_handle::rxRemainingByteCount</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a8dc68d46f48bd0d65d6297cb6f14e128"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile uint32_t _lpspi_slave_edma_handle::writeRegRemainingTimes</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="acb88b47a23df5db98e90d805e66ce360"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile uint32_t _lpspi_slave_edma_handle::readRegRemainingTimes</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a213a6bf5cc799e39a1aa41fd29bc4d92"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t _lpspi_slave_edma_handle::txBuffIfNull</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a4f274f23a77823b57d44681bd96b2e4a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t _lpspi_slave_edma_handle::rxBuffIfNull</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a60f61ed66ea020991ae79edf4828c019"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile uint8_t _lpspi_slave_edma_handle::state</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a884fefbcb8953283264bf23f3041d54e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t _lpspi_slave_edma_handle::errorCount</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a798930df84fc8d7610661f2a11280eef"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00059.html#gafab27c360b0c9a27c0c3f2327cdf8fd8">lpspi_slave_edma_transfer_callback_t</a> _lpspi_slave_edma_handle::callback</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a53121e1dce5bbd72ea9321fde33fdc21"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* _lpspi_slave_edma_handle::userData</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="gaa083089fda62238f6cdcd9b6289913c7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FSL_LPSPI_EDMA_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00336.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 4, 2))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
 <h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="ga2640285a708842a5e0e7c4c0090a2f58"></a>
+<a class="anchor" id="gac7830d169e650c0f0239bfe22fe044f0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* lpi2c_slave_transfer_callback_t)(LPI2C_Type *base, <a class="el" href="a00059.html#a00579">lpi2c_slave_transfer_t</a> *transfer, void *userData)</td>
+          <td class="memname">typedef void(* lpspi_master_edma_transfer_callback_t)(LPSPI_Type *base, <a class="el" href="a00059.html#ga5e5059737abd91565874d70c4a74e6ea">lpspi_master_edma_handle_t</a> *handle, <a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This callback is used only for the slave non-blocking transfer API. To install a callback, use the LPI2C_SlaveSetCallback() function after you have created a handle.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Base address for the LPI2C instance on which the event occurred. </td></tr>
-    <tr><td class="paramname">transfer</td><td>Pointer to transfer descriptor containing values passed to and/or from the callback. </td></tr>
-    <tr><td class="paramname">userData</td><td>Arbitrary pointer-sized value passed from the application. </td></tr>
+    <tr><td class="paramname">base</td><td>LPSPI peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>Pointer to the handle for the LPSPI master. </td></tr>
+    <tr><td class="paramname">status</td><td>Success or error code describing whether the transfer completed. </td></tr>
+    <tr><td class="paramname">userData</td><td>Arbitrary pointer-dataSized value passed from the application. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gabd50effc706692c03b42faa72c34269b"></a>
+<a class="anchor" id="gafab27c360b0c9a27c0c3f2327cdf8fd8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00059.html#gabd50effc706692c03b42faa72c34269b">_lpi2c_slave_flags</a></td>
+          <td class="memname">typedef void(* lpspi_slave_edma_transfer_callback_t)(LPSPI_Type *base, <a class="el" href="a00059.html#gadcc74e390971e456d935c86389d51835">lpspi_slave_edma_handle_t</a> *handle, <a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The following status register flags can be cleared:</p>
-<ul>
-<li><a class="el" href="a00059.html#ggabd50effc706692c03b42faa72c34269ba5c5dcad526309c44aa390c13ae53ca3e" title="Repeated start detect flag. ">kLPI2C_SlaveRepeatedStartDetectFlag</a></li>
-<li><a class="el" href="a00059.html#ggabd50effc706692c03b42faa72c34269baaaa1d719607915d0b1251727900018a7" title="Stop detect flag. ">kLPI2C_SlaveStopDetectFlag</a></li>
-<li><a class="el" href="a00059.html#ggabd50effc706692c03b42faa72c34269ba41375eeb82c399aff15daba1e8bbff03" title="Bit error flag. ">kLPI2C_SlaveBitErrFlag</a></li>
-<li><a class="el" href="a00059.html#ggabd50effc706692c03b42faa72c34269ba6eb9dd96bad287dcb7e2f23f73d961a8" title="FIFO error flag. ">kLPI2C_SlaveFifoErrFlag</a></li>
-</ul>
-<p>All flags except <a class="el" href="a00059.html#ggabd50effc706692c03b42faa72c34269baffa3195deae58fc6ea15d062b465ac5d" title="Master busy flag. ">kLPI2C_SlaveBusyFlag</a> and <a class="el" href="a00059.html#ggabd50effc706692c03b42faa72c34269ba2531ffa96faa3086714e8a069508867b" title="Bus busy flag. ">kLPI2C_SlaveBusBusyFlag</a> can be enabled as interrupts.</p>
-<dl class="section note"><dt>Note</dt><dd>These enumerations are meant to be OR'd together to form a bit mask. </dd></dl>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggabd50effc706692c03b42faa72c34269ba80486f66e12276c945b8813269b90c0e"></a>kLPI2C_SlaveTxReadyFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Transmit data flag. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd50effc706692c03b42faa72c34269ba01265ce6645e4a978b823b1f130a419f"></a>kLPI2C_SlaveRxReadyFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Receive data flag. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd50effc706692c03b42faa72c34269baf34a60fee419e0b3d387b353a38b4772"></a>kLPI2C_SlaveAddressValidFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Address valid flag. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd50effc706692c03b42faa72c34269ba37386d33a28e37352a8e3151f027fdff"></a>kLPI2C_SlaveTransmitAckFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Transmit ACK flag. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd50effc706692c03b42faa72c34269ba5c5dcad526309c44aa390c13ae53ca3e"></a>kLPI2C_SlaveRepeatedStartDetectFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Repeated start detect flag. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd50effc706692c03b42faa72c34269baaaa1d719607915d0b1251727900018a7"></a>kLPI2C_SlaveStopDetectFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Stop detect flag. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd50effc706692c03b42faa72c34269ba41375eeb82c399aff15daba1e8bbff03"></a>kLPI2C_SlaveBitErrFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Bit error flag. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd50effc706692c03b42faa72c34269ba6eb9dd96bad287dcb7e2f23f73d961a8"></a>kLPI2C_SlaveFifoErrFlag</em>&nbsp;</td><td class="fielddoc">
-<p>FIFO error flag. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd50effc706692c03b42faa72c34269ba9fb3f57d810e280effee1dae37d062bb"></a>kLPI2C_SlaveAddressMatch0Flag</em>&nbsp;</td><td class="fielddoc">
-<p>Address match 0 flag. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd50effc706692c03b42faa72c34269ba62cc9694d6891b21af074122eeedca85"></a>kLPI2C_SlaveAddressMatch1Flag</em>&nbsp;</td><td class="fielddoc">
-<p>Address match 1 flag. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd50effc706692c03b42faa72c34269ba6a0fa821b530336ea8d1f19aadcbe1dc"></a>kLPI2C_SlaveGeneralCallFlag</em>&nbsp;</td><td class="fielddoc">
-<p>General call flag. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd50effc706692c03b42faa72c34269baffa3195deae58fc6ea15d062b465ac5d"></a>kLPI2C_SlaveBusyFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Master busy flag. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd50effc706692c03b42faa72c34269ba2531ffa96faa3086714e8a069508867b"></a>kLPI2C_SlaveBusBusyFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Bus busy flag. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd50effc706692c03b42faa72c34269ba67a26ff8ddd90c39e772518636f4e832"></a>kLPI2C_SlaveClearFlags</em>&nbsp;</td><td class="fielddoc">
-<p>All flags which are cleared by the driver upon starting a transfer. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd50effc706692c03b42faa72c34269baaf5e40570c34c37fd532dad21b1dca1f"></a>kLPI2C_SlaveIrqFlags</em>&nbsp;</td><td class="fielddoc">
-<p>IRQ sources enabled by the non-blocking transactional API. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd50effc706692c03b42faa72c34269bacb3e0258d950773e55c13829e787de36"></a>kLPI2C_SlaveErrorFlags</em>&nbsp;</td><td class="fielddoc">
-<p>Errors to check for. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gac3564395ccab19eb1ce6ab46b36bb5bb"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00059.html#gac3564395ccab19eb1ce6ab46b36bb5bb">lpi2c_slave_address_match_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggac3564395ccab19eb1ce6ab46b36bb5bbaaa16a731881882d10f48ebde416f54c5"></a>kLPI2C_MatchAddress0</em>&nbsp;</td><td class="fielddoc">
-<p>Match only address 0. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggac3564395ccab19eb1ce6ab46b36bb5bba2941f8a06a17205294e7d0fa5f305675"></a>kLPI2C_MatchAddress0OrAddress1</em>&nbsp;</td><td class="fielddoc">
-<p>Match either address 0 or address 1. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggac3564395ccab19eb1ce6ab46b36bb5bba59e460fdd7075191f69e047ef35557eb"></a>kLPI2C_MatchAddress0ThroughAddress1</em>&nbsp;</td><td class="fielddoc">
-<p>Match a range of slave addresses from address 0 through address 1. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga0d99b4dba3841a4e02f7c431a59006c8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00059.html#ga0d99b4dba3841a4e02f7c431a59006c8">lpi2c_slave_transfer_event_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>These event enumerations are used for two related purposes. First, a bit mask created by OR'ing together events is passed to <a class="el" href="a00059.html#ga1ba7c9d0c254de8fe8c04091c007edff" title="Starts accepting slave transfers. ">LPI2C_SlaveTransferNonBlocking()</a> in order to specify which events to enable. Then, when the slave callback is invoked, it is passed the current event through its <em>transfer</em> parameter.</p>
-<dl class="section note"><dt>Note</dt><dd>These enumerations are meant to be OR'd together to form a bit mask of events. </dd></dl>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga0d99b4dba3841a4e02f7c431a59006c8a10fb8d9bb6ba9cd44fde85466e6eabef"></a>kLPI2C_SlaveAddressMatchEvent</em>&nbsp;</td><td class="fielddoc">
-<p>Received the slave address after a start or repeated start. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0d99b4dba3841a4e02f7c431a59006c8a976c8c9aa85026224a46cf5ec742eb49"></a>kLPI2C_SlaveTransmitEvent</em>&nbsp;</td><td class="fielddoc">
-<p>Callback is requested to provide data to transmit (slave-transmitter role). </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0d99b4dba3841a4e02f7c431a59006c8ac737ba9e4e62880a6e2d8aac98ae8f18"></a>kLPI2C_SlaveReceiveEvent</em>&nbsp;</td><td class="fielddoc">
-<p>Callback is requested to provide a buffer in which to place received data (slave-receiver role). </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0d99b4dba3841a4e02f7c431a59006c8a112af4cf8f8a374407d7c784f024b8e0"></a>kLPI2C_SlaveTransmitAckEvent</em>&nbsp;</td><td class="fielddoc">
-<p>Callback needs to either transmit an ACK or NACK. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0d99b4dba3841a4e02f7c431a59006c8ae0995aac6808b3726b7577c2d283e4c4"></a>kLPI2C_SlaveRepeatedStartEvent</em>&nbsp;</td><td class="fielddoc">
-<p>A repeated start was detected. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0d99b4dba3841a4e02f7c431a59006c8a06ef7422d9edf9b914864a2d689f042c"></a>kLPI2C_SlaveCompletionEvent</em>&nbsp;</td><td class="fielddoc">
-<p>A stop was detected, completing the transfer. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0d99b4dba3841a4e02f7c431a59006c8aeed0927f4e909cb161b44434b6f01aec"></a>kLPI2C_SlaveAllEvents</em>&nbsp;</td><td class="fielddoc">
-<p>Bit mask of all available events. </p>
-</td></tr>
-</table>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>LPSPI peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>Pointer to the handle for the LPSPI slave. </td></tr>
+    <tr><td class="paramname">status</td><td>Success or error code describing whether the transfer completed. </td></tr>
+    <tr><td class="paramname">userData</td><td>Arbitrary pointer-dataSized value passed from the application. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gadf34085d4557ceb3081fff9fe0e3189a"></a>
+<a class="anchor" id="ga0e311cb35cbf6f7d4c8027773214c75e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void LPI2C_SlaveGetDefaultConfig </td>
+          <td class="memname">void LPSPI_MasterTransferCreateHandleEDMA </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00059.html#a00578">lpi2c_slave_config_t</a> *&#160;</td>
-          <td class="paramname"><em>slaveConfig</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function provides the following default configuration for the LPI2C slave peripheral: </p>
-<div class="fragment"><div class="line">*  slaveConfig-&gt;enableSlave               = <span class="keyword">true</span>;</div>
-<div class="line">*  slaveConfig-&gt;address0                  = 0U;</div>
-<div class="line">*  slaveConfig-&gt;address1                  = 0U;</div>
-<div class="line">*  slaveConfig-&gt;addressMatchMode          = <a class="code" href="a00059.html#ggac3564395ccab19eb1ce6ab46b36bb5bbaaa16a731881882d10f48ebde416f54c5">kLPI2C_MatchAddress0</a>;</div>
-<div class="line">*  slaveConfig-&gt;filterDozeEnable          = <span class="keyword">true</span>;</div>
-<div class="line">*  slaveConfig-&gt;filterEnable              = <span class="keyword">true</span>;</div>
-<div class="line">*  slaveConfig-&gt;enableGeneralCall         = <span class="keyword">false</span>;</div>
-<div class="line">*  slaveConfig-&gt;sclStall.enableAck        = <span class="keyword">false</span>;</div>
-<div class="line">*  slaveConfig-&gt;sclStall.enableTx         = <span class="keyword">true</span>;</div>
-<div class="line">*  slaveConfig-&gt;sclStall.enableRx         = <span class="keyword">true</span>;</div>
-<div class="line">*  slaveConfig-&gt;sclStall.enableAddress    = <span class="keyword">true</span>;</div>
-<div class="line">*  slaveConfig-&gt;ignoreAck                 = <span class="keyword">false</span>;</div>
-<div class="line">*  slaveConfig-&gt;enableReceivedAddressRead = <span class="keyword">false</span>;</div>
-<div class="line">*  slaveConfig-&gt;sdaGlitchFilterWidth_ns   = 0;</div>
-<div class="line">*  slaveConfig-&gt;sclGlitchFilterWidth_ns   = 0;</div>
-<div class="line">*  slaveConfig-&gt;dataValidDelay_ns         = 0;</div>
-<div class="line">*  slaveConfig-&gt;clockHoldTime_ns          = 0;</div>
-<div class="line">* </div>
-</div><!-- fragment --><p>After calling this function, override any settings to customize the configuration, prior to initializing the master driver with <a class="el" href="a00059.html#gae5cc8a03c784a99bb58b69852dfda5a5" title="Initializes the LPI2C slave peripheral. ">LPI2C_SlaveInit()</a>. Be sure to override at least the <em>address0</em> member of the configuration structure with the desired slave address.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">slaveConfig</td><td>User provided configuration structure that is set to default values. Refer to <a class="el" href="a00059.html#a00578" title="Structure with settings to initialize the LPI2C slave module. ">lpi2c_slave_config_t</a>. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gae5cc8a03c784a99bb58b69852dfda5a5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void LPI2C_SlaveInit </td>
-          <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
+          <td class="paramtype">LPSPI_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00059.html#a00578">lpi2c_slave_config_t</a> *&#160;</td>
-          <td class="paramname"><em>slaveConfig</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>sourceClock_Hz</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function enables the peripheral clock and initializes the LPI2C slave peripheral as described by the user provided configuration.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-    <tr><td class="paramname">slaveConfig</td><td>User provided peripheral configuration. Use <a class="el" href="a00059.html#gadf34085d4557ceb3081fff9fe0e3189a" title="Provides a default configuration for the LPI2C slave peripheral. ">LPI2C_SlaveGetDefaultConfig()</a> to get a set of defaults that you can override. </td></tr>
-    <tr><td class="paramname">sourceClock_Hz</td><td>Frequency in Hertz of the LPI2C functional clock. Used to calculate the filter widths, data valid delay, and clock hold time. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa1a5cfe78acec0e1f8dd4af63a0f87f8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void LPI2C_SlaveDeinit </td>
-          <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function disables the LPI2C slave peripheral and gates the clock. It also performs a software reset to restore the peripheral to reset conditions.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaf58f9ebf437d62936c45c201a68fb5d7"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void LPI2C_SlaveReset </td>
-          <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gae83a936eb8303218278cd704d8238a08"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void LPI2C_SlaveEnable </td>
-          <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-    <tr><td class="paramname">enable</td><td>Pass true to enable or false to disable the specified LPI2C as slave. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga18055724e510f601f35cc00940e9155c"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t LPI2C_SlaveGetStatusFlags </td>
-          <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>A bit mask with the state of all LPI2C slave status flags is returned. For each flag, the corresponding bit in the return value is set if the flag is asserted.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>State of the status flags:<ul>
-<li>1: related status flag is set.</li>
-<li>0: related status flag is not set. </li>
-</ul>
-</dd></dl>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00059.html#gabd50effc706692c03b42faa72c34269b" title="LPI2C slave peripheral flags. ">_lpi2c_slave_flags</a> </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga3b5306231d96d7fa38ef26d9ca6526b1"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void LPI2C_SlaveClearStatusFlags </td>
-          <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>statusMask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>The following status register flags can be cleared:</p>
-<ul>
-<li><a class="el" href="a00059.html#ggabd50effc706692c03b42faa72c34269ba5c5dcad526309c44aa390c13ae53ca3e" title="Repeated start detect flag. ">kLPI2C_SlaveRepeatedStartDetectFlag</a></li>
-<li><a class="el" href="a00059.html#ggabd50effc706692c03b42faa72c34269baaaa1d719607915d0b1251727900018a7" title="Stop detect flag. ">kLPI2C_SlaveStopDetectFlag</a></li>
-<li><a class="el" href="a00059.html#ggabd50effc706692c03b42faa72c34269ba41375eeb82c399aff15daba1e8bbff03" title="Bit error flag. ">kLPI2C_SlaveBitErrFlag</a></li>
-<li><a class="el" href="a00059.html#ggabd50effc706692c03b42faa72c34269ba6eb9dd96bad287dcb7e2f23f73d961a8" title="FIFO error flag. ">kLPI2C_SlaveFifoErrFlag</a></li>
-</ul>
-<p>Attempts to clear other flags has no effect.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-    <tr><td class="paramname">statusMask</td><td>A bitmask of status flags that are to be cleared. The mask is composed of <a class="el" href="a00059.html#gabd50effc706692c03b42faa72c34269b" title="LPI2C slave peripheral flags. ">_lpi2c_slave_flags</a> enumerators OR'd together. You may pass the result of a previous call to <a class="el" href="a00059.html#ga18055724e510f601f35cc00940e9155c" title="Gets the LPI2C slave status flags. ">LPI2C_SlaveGetStatusFlags()</a>. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00059.html#gabd50effc706692c03b42faa72c34269b" title="LPI2C slave peripheral flags. ">_lpi2c_slave_flags</a>. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gaf5b7a33a341fd95ca77dcb6fe7f1bf3c"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void LPI2C_SlaveEnableInterrupts </td>
-          <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>interruptMask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>All flags except <a class="el" href="a00059.html#ggabd50effc706692c03b42faa72c34269baffa3195deae58fc6ea15d062b465ac5d" title="Master busy flag. ">kLPI2C_SlaveBusyFlag</a> and <a class="el" href="a00059.html#ggabd50effc706692c03b42faa72c34269ba2531ffa96faa3086714e8a069508867b" title="Bus busy flag. ">kLPI2C_SlaveBusBusyFlag</a> can be enabled as interrupts.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-    <tr><td class="paramname">interruptMask</td><td>Bit mask of interrupts to enable. See <a class="el" href="a00059.html#gabd50effc706692c03b42faa72c34269b" title="LPI2C slave peripheral flags. ">_lpi2c_slave_flags</a> for the set of constants that should be OR'd together to form the bit mask. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga9422103623a9866f350dd03aea984741"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void LPI2C_SlaveDisableInterrupts </td>
-          <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>interruptMask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>All flags except <a class="el" href="a00059.html#ggabd50effc706692c03b42faa72c34269baffa3195deae58fc6ea15d062b465ac5d" title="Master busy flag. ">kLPI2C_SlaveBusyFlag</a> and <a class="el" href="a00059.html#ggabd50effc706692c03b42faa72c34269ba2531ffa96faa3086714e8a069508867b" title="Bus busy flag. ">kLPI2C_SlaveBusBusyFlag</a> can be enabled as interrupts.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-    <tr><td class="paramname">interruptMask</td><td>Bit mask of interrupts to disable. See <a class="el" href="a00059.html#gabd50effc706692c03b42faa72c34269b" title="LPI2C slave peripheral flags. ">_lpi2c_slave_flags</a> for the set of constants that should be OR'd together to form the bit mask. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga3d1fb84d337b8eb5cc19cbeced06c2a1"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t LPI2C_SlaveGetEnabledInterrupts </td>
-          <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A bitmask composed of <a class="el" href="a00059.html#gabd50effc706692c03b42faa72c34269b" title="LPI2C slave peripheral flags. ">_lpi2c_slave_flags</a> enumerators OR'd together to indicate the set of enabled interrupts. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa13d0c04083818cf91af19a6add0e08f"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void LPI2C_SlaveEnableDMA </td>
-          <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enableAddressValid</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enableRx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enableTx</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-    <tr><td class="paramname">enableAddressValid</td><td>Enable flag for the address valid DMA request. Pass true for enable, false for disable. The address valid DMA request is shared with the receive data DMA request. </td></tr>
-    <tr><td class="paramname">enableRx</td><td>Enable flag for the receive data DMA request. Pass true for enable, false for disable. </td></tr>
-    <tr><td class="paramname">enableTx</td><td>Enable flag for the transmit data DMA request. Pass true for enable, false for disable. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga155ee1b5bc8c621b60b349b191c078fc"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static bool LPI2C_SlaveGetBusIdleState </td>
-          <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Requires the slave mode to be enabled.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">true</td><td>Bus is busy. </td></tr>
-    <tr><td class="paramname">false</td><td>Bus is idle. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga417e07e45369a955f7fecaa26e13b335"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void LPI2C_SlaveTransmitAck </td>
-          <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>ackOrNack</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Use this function to send an ACK or NAK when the <a class="el" href="a00059.html#ggabd50effc706692c03b42faa72c34269ba37386d33a28e37352a8e3151f027fdff" title="Transmit ACK flag. ">kLPI2C_SlaveTransmitAckFlag</a> is asserted. This only happens if you enable the sclStall.enableAck field of the <a class="el" href="a00059.html#a00578" title="Structure with settings to initialize the LPI2C slave module. ">lpi2c_slave_config_t</a> configuration structure used to initialize the slave peripheral.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-    <tr><td class="paramname">ackOrNack</td><td>Pass true for an ACK or false for a NAK. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga417e42a46e81c8e95225df9424099243"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void LPI2C_SlaveEnableAckStall </td>
-          <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>When enables ACKSTALL, software can transmit either an ACK or NAK on the I2C bus in response to a byte from the master.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-    <tr><td class="paramname">enable</td><td>True will enable ACKSTALL,false will disable ACKSTALL. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga8219a79b748dc59c982c7c3a8470c3a6"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t LPI2C_SlaveGetReceivedAddress </td>
-          <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function should only be called if the <a class="el" href="a00059.html#ggabd50effc706692c03b42faa72c34269baf34a60fee419e0b3d387b353a38b4772" title="Address valid flag. ">kLPI2C_SlaveAddressValidFlag</a> is asserted.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The 8-bit address matched by the LPI2C slave. Bit 0 contains the R/w direction bit, and the 7-bit slave address is in the upper 7 bits. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gacb2d085904e83ee63ee84f7c8402024c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPI2C_SlaveSend </td>
-          <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>txBuff</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>txSize</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>actualTxSize</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">txBuff</td><td>The pointer to the data to be transferred. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">txSize</td><td>The length in bytes of the data to be transferred. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">actualTxSize</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Error or success status returned by API. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga36dd1b211a7fe488bfc062a1d8e74fc8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPI2C_SlaveReceive </td>
-          <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>rxBuff</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>rxSize</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>actualRxSize</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">rxBuff</td><td>The pointer to the data to be transferred. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">rxSize</td><td>The length in bytes of the data to be transferred. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">actualRxSize</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Error or success status returned by API. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga6afdc286db9c700bc057038518a19285"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void LPI2C_SlaveTransferCreateHandle </td>
-          <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">lpi2c_slave_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00059.html#ga5e5059737abd91565874d70c4a74e6ea">lpspi_master_edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00059.html#ga2640285a708842a5e0e7c4c0090a2f58">lpi2c_slave_transfer_callback_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00059.html#gac7830d169e650c0f0239bfe22fe044f0">lpspi_master_edma_transfer_callback_t</a>&#160;</td>
           <td class="paramname"><em>callback</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>userData</em>&#160;</td>
+          <td class="paramname"><em>userData</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00025.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>edmaRxRegToRxDataHandle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00025.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>edmaTxDataToTxRegHandle</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1638,41 +959,86 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The creation of a handle is for use with the non-blocking APIs. Once a handle is created, there is not a corresponding destroy handle. If the user wants to terminate a transfer, the <a class="el" href="a00059.html#ga7d46d488aa043ab93bfa1574277a3985" title="Aborts the slave non-blocking transfers. ">LPI2C_SlaveTransferAbort()</a> API shall be called.</p>
-<dl class="section note"><dt>Note</dt><dd>The function also enables the NVIC IRQ for the input LPI2C. Need to notice that on some SoCs the LPI2C IRQ is connected to INTMUX, in this case user needs to enable the associated INTMUX IRQ in application.</dd></dl>
+<p>This function initializes the LPSPI eDMA handle which can be used for other LPSPI transactional APIs. Usually, for a specified LPSPI instance, call this API once to get the initialized handle.</p>
+<p>Note that the LPSPI eDMA has a separated (Rx and Tx as two sources) or shared (Rx and Tx are the same source) DMA request source. (1) For a separated DMA request source, enable and set the Rx DMAMUX source for edmaRxRegToRxDataHandle and Tx DMAMUX source for edmaTxDataToTxRegHandle. (2) For a shared DMA request source, enable and set the Rx/Tx DMAMUX source for edmaRxRegToRxDataHandle.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">handle</td><td>Pointer to the LPI2C slave driver handle. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">callback</td><td>User provided pointer to the asynchronous callback function. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">userData</td><td>User provided pointer to the application callback data. </td></tr>
+    <tr><td class="paramname">base</td><td>LPSPI peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>LPSPI handle pointer to lpspi_master_edma_handle_t. </td></tr>
+    <tr><td class="paramname">callback</td><td>LPSPI callback. </td></tr>
+    <tr><td class="paramname">userData</td><td>callback function parameter. </td></tr>
+    <tr><td class="paramname">edmaRxRegToRxDataHandle</td><td>edmaRxRegToRxDataHandle pointer to edma_handle_t. </td></tr>
+    <tr><td class="paramname">edmaTxDataToTxRegHandle</td><td>edmaTxDataToTxRegHandle pointer to edma_handle_t. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga1ba7c9d0c254de8fe8c04091c007edff"></a>
+<a class="anchor" id="gabcd43b45998e6fe655192d9b7f0d641c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPI2C_SlaveTransferNonBlocking </td>
+          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPSPI_MasterTransferEDMA </td>
           <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
+          <td class="paramtype">LPSPI_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpi2c_slave_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00059.html#ga5e5059737abd91565874d70c4a74e6ea">lpspi_master_edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00058.html#ga9e5674e4c10c43e897588cb02b92e0fe">lpspi_transfer_t</a> *&#160;</td>
+          <td class="paramname"><em>transfer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function transfers data using eDMA. This is a non-blocking function, which returns right away. When all data is transferred, the callback function is called.</p>
+<p>Note: The transfer data size should be an integer multiple of bytesPerFrame if bytesPerFrame is less than or equal to 4. For bytesPerFrame greater than 4: The transfer data size should be equal to bytesPerFrame if the bytesPerFrame is not an integer multiple of 4. Otherwise, the transfer data size can be an integer multiple of bytesPerFrame.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>LPSPI peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>pointer to lpspi_master_edma_handle_t structure which stores the transfer state. </td></tr>
+    <tr><td class="paramname">transfer</td><td>pointer to lpspi_transfer_t structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>status of status_t. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga6c4f28559a68d96e00b7c11be92e225f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPSPI_MasterTransferPrepareEDMALite </td>
+          <td>(</td>
+          <td class="paramtype">LPSPI_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00059.html#ga5e5059737abd91565874d70c4a74e6ea">lpspi_master_edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>eventMask</em>&#160;</td>
+          <td class="paramname"><em>configFlags</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1681,40 +1047,125 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Call this API after calling I2C_SlaveInit() and <a class="el" href="a00059.html#ga6afdc286db9c700bc057038518a19285" title="Creates a new handle for the LPI2C slave non-blocking APIs. ">LPI2C_SlaveTransferCreateHandle()</a> to start processing transactions driven by an I2C master. The slave monitors the I2C bus and pass events to the callback that was passed into the call to <a class="el" href="a00059.html#ga6afdc286db9c700bc057038518a19285" title="Creates a new handle for the LPI2C slave non-blocking APIs. ">LPI2C_SlaveTransferCreateHandle()</a>. The callback is always invoked from the interrupt context.</p>
-<p>The set of events received by the callback is customizable. To do so, set the <em>eventMask</em> parameter to the OR'd combination of <a class="el" href="a00059.html#ga0d99b4dba3841a4e02f7c431a59006c8" title="Set of events sent to the callback for non blocking slave transfers. ">lpi2c_slave_transfer_event_t</a> enumerators for the events you wish to receive. The <a class="el" href="a00059.html#gga0d99b4dba3841a4e02f7c431a59006c8a976c8c9aa85026224a46cf5ec742eb49" title="Callback is requested to provide data to transmit (slave-transmitter role). ">kLPI2C_SlaveTransmitEvent</a> and <a class="el" href="a00059.html#gga0d99b4dba3841a4e02f7c431a59006c8ac737ba9e4e62880a6e2d8aac98ae8f18" title="Callback is requested to provide a buffer in which to place received data (slave-receiver role)...">kLPI2C_SlaveReceiveEvent</a> events are always enabled and do not need to be included in the mask. Alternatively, you can pass 0 to get a default set of only the transmit and receive events that are always enabled. In addition, the <a class="el" href="a00059.html#gga0d99b4dba3841a4e02f7c431a59006c8aeed0927f4e909cb161b44434b6f01aec" title="Bit mask of all available events. ">kLPI2C_SlaveAllEvents</a> constant is provided as a convenient way to enable all events.</p>
+<p>This function is preparing to transfer data using eDMA, work with LPSPI_MasterTransferEDMALite.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>Pointer to lpi2c_slave_handle_t structure which stores the transfer state. </td></tr>
-    <tr><td class="paramname">eventMask</td><td>Bit mask formed by OR'ing together <a class="el" href="a00059.html#ga0d99b4dba3841a4e02f7c431a59006c8" title="Set of events sent to the callback for non blocking slave transfers. ">lpi2c_slave_transfer_event_t</a> enumerators to specify which events to send to the callback. Other accepted values are 0 to get a default set of only the transmit and receive events, and <a class="el" href="a00059.html#gga0d99b4dba3841a4e02f7c431a59006c8aeed0927f4e909cb161b44434b6f01aec" title="Bit mask of all available events. ">kLPI2C_SlaveAllEvents</a> to enable all events.</td></tr>
+    <tr><td class="paramname">base</td><td>LPSPI peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>pointer to lpspi_master_edma_handle_t structure which stores the transfer state. </td></tr>
+    <tr><td class="paramname">configFlags</td><td>transfer configuration flags. <a class="el" href="a00058.html#ga8c2566783079ecdbb478f06658375005">_lpspi_transfer_config_flag_for_master</a>. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>Indicates whether LPSPI master transfer was successful or not. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td>Slave transfers were successfully started. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00344.html#gga531c35e38ede3ea4e5ba5afb24b29493af52a270e301641b8855edf3fcc843814" title="The master is already performing a transfer. ">kStatus_LPI2C_Busy</a></td><td>Slave transfers have already been started on this handle. </td></tr>
+    <tr><td class="paramname">kStatus_Success</td><td>Execution successfully. </td></tr>
+    <tr><td class="paramname">kStatus_LPSPI_Busy</td><td>The LPSPI device is busy. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga755b38638cbade1b05587146e9f7267d"></a>
+<a class="anchor" id="ga119d8a1202b226e3714c72d6d7be9dfb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPI2C_SlaveTransferGetCount </td>
+          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPSPI_MasterTransferEDMALite </td>
           <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
+          <td class="paramtype">LPSPI_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpi2c_slave_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00059.html#ga5e5059737abd91565874d70c4a74e6ea">lpspi_master_edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00058.html#ga9e5674e4c10c43e897588cb02b92e0fe">lpspi_transfer_t</a> *&#160;</td>
+          <td class="paramname"><em>transfer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function transfers data using eDMA. This is a non-blocking function, which returns right away. When all data is transferred, the callback function is called.</p>
+<p>Note: This API is only for transfer through DMA without configuration. Before calling this API, you must call LPSPI_MasterTransferPrepareEDMALite to configure it once. The transfer data size should be an integer multiple of bytesPerFrame if bytesPerFrame is less than or equal to 4. For bytesPerFrame greater than 4: The transfer data size should be equal to bytesPerFrame if the bytesPerFrame is not an integer multiple of 4. Otherwise, the transfer data size can be an integer multiple of bytesPerFrame.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>LPSPI peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>pointer to lpspi_master_edma_handle_t structure which stores the transfer state. </td></tr>
+    <tr><td class="paramname">transfer</td><td>pointer to lpspi_transfer_t structure, config field is not uesed. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Indicates whether LPSPI master transfer was successful or not. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Execution successfully. </td></tr>
+    <tr><td class="paramname">kStatus_LPSPI_Busy</td><td>The LPSPI device is busy. </td></tr>
+    <tr><td class="paramname">kStatus_InvalidArgument</td><td>The transfer structure is invalid. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gabe586c4f55bdf08b9e2e1f9c708f7cfc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LPSPI_MasterTransferAbortEDMA </td>
+          <td>(</td>
+          <td class="paramtype">LPSPI_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00059.html#ga5e5059737abd91565874d70c4a74e6ea">lpspi_master_edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function aborts a transfer which is using eDMA.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>LPSPI peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>pointer to lpspi_master_edma_handle_t structure which stores the transfer state. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga002238d5b9e570fb8a0afb6fcbc04be6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPSPI_MasterTransferGetCountEDMA </td>
+          <td>(</td>
+          <td class="paramtype">LPSPI_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00059.html#ga5e5059737abd91565874d70c4a74e6ea">lpspi_master_edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -1730,38 +1181,140 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         </tr>
       </table>
 </div><div class="memdoc">
+<p>This function gets the master eDMA transfer remaining bytes.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Pointer to i2c_slave_handle_t structure. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">count</td><td>Pointer to a value to hold the number of bytes transferred. May be NULL if the count is not required. </td></tr>
+    <tr><td class="paramname">base</td><td>LPSPI peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>pointer to lpspi_master_edma_handle_t structure which stores the transfer state. </td></tr>
+    <tr><td class="paramname">count</td><td>Number of bytes transferred so far by the EDMA transaction. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
-    <tr><td class="paramname">kStatus_NoTransferInProgress</td><td></td></tr>
+<dl class="section return"><dt>Returns</dt><dd>status of status_t. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gac41d24f3bffe0f4fb09f59fa632c793f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LPSPI_SlaveTransferCreateHandleEDMA </td>
+          <td>(</td>
+          <td class="paramtype">LPSPI_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00059.html#gadcc74e390971e456d935c86389d51835">lpspi_slave_edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00059.html#gafab27c360b0c9a27c0c3f2327cdf8fd8">lpspi_slave_edma_transfer_callback_t</a>&#160;</td>
+          <td class="paramname"><em>callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>userData</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00025.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>edmaRxRegToRxDataHandle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00025.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>edmaTxDataToTxRegHandle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function initializes the LPSPI eDMA handle which can be used for other LPSPI transactional APIs. Usually, for a specified LPSPI instance, call this API once to get the initialized handle.</p>
+<p>Note that LPSPI eDMA has a separated (Rx and Tx as two sources) or shared (Rx and Tx as the same source) DMA request source.</p>
+<p>(1) For a separated DMA request source, enable and set the Rx DMAMUX source for edmaRxRegToRxDataHandle and Tx DMAMUX source for edmaTxDataToTxRegHandle. (2) For a shared DMA request source, enable and set the Rx/Rx DMAMUX source for edmaRxRegToRxDataHandle .</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>LPSPI peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>LPSPI handle pointer to lpspi_slave_edma_handle_t. </td></tr>
+    <tr><td class="paramname">callback</td><td>LPSPI callback. </td></tr>
+    <tr><td class="paramname">userData</td><td>callback function parameter. </td></tr>
+    <tr><td class="paramname">edmaRxRegToRxDataHandle</td><td>edmaRxRegToRxDataHandle pointer to edma_handle_t. </td></tr>
+    <tr><td class="paramname">edmaTxDataToTxRegHandle</td><td>edmaTxDataToTxRegHandle pointer to edma_handle_t. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga7d46d488aa043ab93bfa1574277a3985"></a>
+<a class="anchor" id="gac4b006dcf6f81a13249bd18a991e5c9d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void LPI2C_SlaveTransferAbort </td>
+          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPSPI_SlaveTransferEDMA </td>
           <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
+          <td class="paramtype">LPSPI_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpi2c_slave_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00059.html#gadcc74e390971e456d935c86389d51835">lpspi_slave_edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00058.html#ga9e5674e4c10c43e897588cb02b92e0fe">lpspi_transfer_t</a> *&#160;</td>
+          <td class="paramname"><em>transfer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function transfers data using eDMA. This is a non-blocking function, which return right away. When all data is transferred, the callback function is called.</p>
+<p>Note: The transfer data size should be an integer multiple of bytesPerFrame if bytesPerFrame is less than or equal to 4. For bytesPerFrame greater than 4: The transfer data size should be equal to bytesPerFrame if the bytesPerFrame is not an integer multiple of 4. Otherwise, the transfer data size can be an integer multiple of bytesPerFrame.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>LPSPI peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>pointer to lpspi_slave_edma_handle_t structure which stores the transfer state. </td></tr>
+    <tr><td class="paramname">transfer</td><td>pointer to lpspi_transfer_t structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>status of status_t. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga56077376e3e8eae57c110ecde471d6f0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LPSPI_SlaveTransferAbortEDMA </td>
+          <td>(</td>
+          <td class="paramtype">LPSPI_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00059.html#gadcc74e390971e456d935c86389d51835">lpspi_slave_edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>&#160;</td>
         </tr>
         <tr>
@@ -1771,39 +1324,38 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>This API could be called at any time to stop slave for handling the bus events. </dd></dl>
+<p>This function aborts a transfer which is using eDMA.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>Pointer to lpi2c_slave_handle_t structure which stores the transfer state. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
-    <tr><td class="paramname"><a class="el" href="a00344.html#gga531c35e38ede3ea4e5ba5afb24b29493a6603ec1135f58532c9d4accc3661bc27" title="The slave driver is idle. ">kStatus_LPI2C_Idle</a></td><td></td></tr>
+    <tr><td class="paramname">base</td><td>LPSPI peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>pointer to lpspi_slave_edma_handle_t structure which stores the transfer state. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga712654857bc4490644b46220c0c460bf"></a>
+<a class="anchor" id="gacd05a23bb61b471d2e1c289ce076148e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void LPI2C_SlaveTransferHandleIRQ </td>
+          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPSPI_SlaveTransferGetCountEDMA </td>
           <td>(</td>
-          <td class="paramtype">LPI2C_Type *&#160;</td>
+          <td class="paramtype">LPSPI_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpi2c_slave_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00059.html#gadcc74e390971e456d935c86389d51835">lpspi_slave_edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1812,14 +1364,16 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>This function does not need to be called unless you are reimplementing the non blocking API's interrupt handler routines to add special functionality. </dd></dl>
+<p>This function gets the slave eDMA transfer remaining bytes.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>Pointer to lpi2c_slave_handle_t structure which stores the transfer state. </td></tr>
+    <tr><td class="paramname">base</td><td>LPSPI peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>pointer to lpspi_slave_edma_handle_t structure which stores the transfer state. </td></tr>
+    <tr><td class="paramname">count</td><td>Number of bytes transferred so far by the eDMA transaction. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>status of status_t. </dd></dl>
 
 </div>
 </div>

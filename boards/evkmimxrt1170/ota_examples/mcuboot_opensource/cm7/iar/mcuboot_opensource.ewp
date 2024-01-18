@@ -271,7 +271,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state>Pa082,Pa050,Pa167,Pe177,Pe191,Pe546</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -308,11 +308,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa167,Pe177,Pe191,Pe546</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -356,8 +356,8 @@
           <state>$PROJ_DIR$/../include</state>
           <state>$PROJ_DIR$/../include/mcuboot_config</state>
           <state>$PROJ_DIR$/../include/sysflash</state>
-          <state>$PROJ_DIR$/../flashapi</state>
           <state>$PROJ_DIR$/../keys</state>
+          <state>$PROJ_DIR$/../flash</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls/port/ksdk</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/mflash/mimxrt1170</state>
@@ -372,6 +372,7 @@
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/mflash</state>
@@ -1372,7 +1373,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state>Pa082,Pa050,Pa167,Pe177,Pe191,Pe546</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1409,11 +1410,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa167,Pe177,Pe191,Pe546</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -1457,8 +1458,8 @@
           <state>$PROJ_DIR$/../include</state>
           <state>$PROJ_DIR$/../include/mcuboot_config</state>
           <state>$PROJ_DIR$/../include/sysflash</state>
-          <state>$PROJ_DIR$/../flashapi</state>
           <state>$PROJ_DIR$/../keys</state>
+          <state>$PROJ_DIR$/../flash</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mbedtls/port/ksdk</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/mflash/mimxrt1170</state>
@@ -1473,6 +1474,7 @@
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/mflash</state>
@@ -2270,10 +2272,25 @@
     </group>
   </group>
   <group>
-    <name>flashapi</name>
+    <name>flash</name>
     <file>
-      <name>$PROJ_DIR$/../flashapi/flash_api.c</name>
+      <name>$PROJ_DIR$/../flash/flash_api.c</name>
     </file>
+    <group>
+      <name>mflash</name>
+      <group>
+        <name>mimxrt1170</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../components/flash/mflash/mimxrt1170/mflash_drv.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../components/flash/mflash/mimxrt1170/mflash_drv.c</name>
+        </file>
+      </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/flash/mflash/mflash_common.h</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>board</name>
@@ -2314,7 +2331,7 @@
   <group>
     <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
   <group>
@@ -2354,6 +2371,24 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_mu.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_mu.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_iomuxc.h</name>
@@ -3116,24 +3151,6 @@
     </group>
   </group>
   <group>
-    <name>flash</name>
-    <group>
-      <name>mflash</name>
-      <group>
-        <name>mimxrt1170</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../components/flash/mflash/mimxrt1170/mflash_drv.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../components/flash/mflash/mimxrt1170/mflash_drv.c</name>
-        </file>
-      </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/flash/mflash/mflash_common.h</name>
-      </file>
-    </group>
-  </group>
-  <group>
     <name>bootutil</name>
     <group>
       <name>include</name>
@@ -3196,6 +3213,9 @@
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/ramload.h</name>
         </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/mcuboot_status.h</name>
+        </file>
         <group>
           <name>crypto</name>
           <file>
@@ -3232,6 +3252,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/bootutil_misc.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/bootutil_misc.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/mcuboot_opensource/boot/bootutil/src/bootutil_public.c</name>
@@ -3323,6 +3346,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/fsl_assert.h</name>
     </file>
   </group>
   <group>

@@ -46,7 +46,6 @@ include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../config_files/FreeRTOSConfig.h"
-"${ProjDirPath}/../config_files/aws_mbedtls_config.h"
 "${ProjDirPath}/../config_files/core_mqtt_config.h"
 "${ProjDirPath}/../config_files/core_pkcs11_config.h"
 "${ProjDirPath}/../config_files/demo_config.h"
@@ -55,6 +54,7 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../aws_clientcredential.h"
 "${ProjDirPath}/../aws_clientcredential_keys.h"
 "${ProjDirPath}/../freertos_tasks_c_additions.h"
+"${ProjDirPath}/../config_files/aws_mbedtls_config.h"
 "${ProjDirPath}/../aws_dev_mode_key_provisioning.h"
 "${ProjDirPath}/../aws_dev_mode_key_provisioning.c"
 "${ProjDirPath}/../main_enet.c"

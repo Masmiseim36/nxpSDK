@@ -205,6 +205,8 @@ void InitADC(void)
     lpadcTriggerConfig.enableHardwareTrigger = true;
     LPADC_SetConvTriggerConfig(LPADC2, 0U, &lpadcTriggerConfig); // trigger from TCTRL[number]
 
+    
+    
     /* Set conversion CMD configuration. */
     LPADC_GetDefaultConvCommandConfig(&lpadcCommandConfig);
     lpadcCommandConfig.channelNumber = g_sM1AdcSensor.ui16ChanNumAux;
@@ -281,10 +283,10 @@ void M1_InitPWM(void)
     /* PWM base pointer (affects the entire initialization) */
     PWM_Type *PWMBase = (PWM_Type *)PWM1;
 
-    /* Full cycle reload */
-    PWMBase->SM[0].CTRL |= PWM_CTRL_FULL_MASK;
-    PWMBase->SM[1].CTRL |= PWM_CTRL_FULL_MASK;
-    PWMBase->SM[2].CTRL |= PWM_CTRL_FULL_MASK;
+    /* Full and Half cycle reload */
+    PWMBase->SM[0].CTRL |= PWM_CTRL_FULL_MASK|PWM_CTRL_HALF_MASK;
+    PWMBase->SM[1].CTRL |= PWM_CTRL_FULL_MASK|PWM_CTRL_HALF_MASK;
+    PWMBase->SM[2].CTRL |= PWM_CTRL_FULL_MASK|PWM_CTRL_HALF_MASK;
 
     /* Value register initial values, duty cycle 50% */
     PWMBase->SM[0].INIT = PWM_INIT_INIT((uint16_t)(-(g_sClockSetup.ui16M1PwmModulo / 2)));
@@ -308,7 +310,7 @@ void M1_InitPWM(void)
     PWMBase->SM[2].VAL3 = PWM_VAL3_VAL3((uint16_t)(g_sClockSetup.ui16M1PwmModulo / 4));
 
     /* Trigger for ADC synchronization */
-    PWMBase->SM[0].VAL4 = PWM_VAL4_VAL4((uint16_t)((-(g_sClockSetup.ui16M1PwmModulo / 2) + 10)));
+    PWMBase->SM[0].VAL4 = PWM_VAL4_VAL4((uint16_t)((-(g_sClockSetup.ui16M1PwmModulo / 2) + (g_sClockSetup.ui16M1PwmDeadTime/2))));
     PWMBase->SM[1].VAL4 = PWM_VAL4_VAL4((uint16_t)(0));
     PWMBase->SM[2].VAL4 = PWM_VAL4_VAL4((uint16_t)(0));
 
@@ -364,15 +366,11 @@ void M1_InitPWM(void)
        samples to activate */
     PWMBase->FFILT = (PWMBase->FFILT & ~PWM_FFILT_FILT_PER_MASK) | PWM_FFILT_FILT_PER(5);
     PWMBase->FFILT = (PWMBase->FFILT & ~PWM_FFILT_FILT_CNT_MASK) | PWM_FFILT_FILT_CNT(5);
-
-    /* Enable A&B PWM outputs for submodules zero, one and three */
-    PWMBase->OUTEN = (PWMBase->OUTEN & ~PWM_OUTEN_PWMA_EN_MASK) | PWM_OUTEN_PWMA_EN(0xB);
-    PWMBase->OUTEN = (PWMBase->OUTEN & ~PWM_OUTEN_PWMB_EN_MASK) | PWM_OUTEN_PWMB_EN(0xB);
-
+       
     /* Start PWMs (set load OK flags and run) */
     PWMBase->MCTRL = (PWMBase->MCTRL & ~PWM_MCTRL_CLDOK_MASK) | PWM_MCTRL_CLDOK(0xF);
     PWMBase->MCTRL = (PWMBase->MCTRL & ~PWM_MCTRL_LDOK_MASK) | PWM_MCTRL_LDOK(0xF);
-    PWMBase->MCTRL = (PWMBase->MCTRL & ~PWM_MCTRL_RUN_MASK) | PWM_MCTRL_RUN(0xF);
+    PWMBase->MCTRL = (PWMBase->MCTRL & ~PWM_MCTRL_RUN_MASK) | PWM_MCTRL_RUN(0x0);
 
     /* Initialize MC driver */
     g_sM1Pwm3ph.pui32PwmBaseAddress = (PWM_Type *)PWMBase;
@@ -499,10 +497,10 @@ void M1_InitQD(void)
     g_sM1Enc.bDirection    = M1_POSPE_ENC_DIRECTION;
     g_sM1Enc.fltSpdEncMin  = M1_POSPE_ENC_N_MIN;
     g_sM1Enc.ui16PulseNumber = M1_POSPE_ENC_PULSES;
-    MCDRV_QdEncSetDirection(&g_sM1Enc);
-
+    M1_MCDRV_QD_SET_DIRECTION(&g_sM1Enc);
+      
     /* Initialization modulo counter*/
-    MCDRV_QdEncSetPulses(&g_sM1Enc);
+    M1_MCDRV_QD_SET_PULSES(&g_sM1Enc);
 
     /* Enable modulo counting and revolution counter increment on roll-over */
     ENC1->CTRL2 = (ENC_CTRL2_MOD_MASK | ENC_CTRL2_REVMOD_MASK);

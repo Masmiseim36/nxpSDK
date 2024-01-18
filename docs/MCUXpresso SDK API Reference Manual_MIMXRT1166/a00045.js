@@ -1,15 +1,15 @@
 var a00045 =
 [
-    [ "flexio_uart_edma_handle_t", "a00045.html#a00400", [
-      [ "callback", "a00045.html#a51c14c68c9c8fe8880ce0266d0fb517f", null ],
-      [ "userData", "a00045.html#a776db0493a197eba59938811591e6610", null ],
-      [ "txDataSizeAll", "a00045.html#a731d5bd7e8955a5b19fed52a9d8ce0d4", null ],
-      [ "rxDataSizeAll", "a00045.html#a9108ad6de559bd14d3b4bb25b08796f6", null ],
-      [ "txEdmaHandle", "a00045.html#afc8e317c4730e3225433e1328fa73d3d", null ],
-      [ "rxEdmaHandle", "a00045.html#abf875faf83b61232522aa9766657c5dc", null ],
-      [ "nbytes", "a00045.html#a31c522fa133f42dc19a10ce3707a3546", null ],
-      [ "txState", "a00045.html#a565d9e6fef4177d522cb29a55c9fc13d", null ],
-      [ "rxState", "a00045.html#a41a55d8ad49ffbf71884686e64b62677", null ]
+    [ "_flexio_uart_edma_handle", "a00045.html#a00531", [
+      [ "callback", "a00045.html#aef83e978f70e106922c6a720590cdae9", null ],
+      [ "userData", "a00045.html#a0d83eec0c65da6fa5ed583d1ab0a35e1", null ],
+      [ "txDataSizeAll", "a00045.html#a45256d7196f9b31fe7e77c72f2ca8c1a", null ],
+      [ "rxDataSizeAll", "a00045.html#a6127da74811a5723b6c7fcf9ee3ad793", null ],
+      [ "txEdmaHandle", "a00045.html#a0424ba23043913b6825196c27fa5863c", null ],
+      [ "rxEdmaHandle", "a00045.html#addf127a2e5ad1aef6f63d352cee25810", null ],
+      [ "nbytes", "a00045.html#aae237261bf33afdcd17114cd2b2bde92", null ],
+      [ "txState", "a00045.html#a048c435d538782320171effed4444e98", null ],
+      [ "rxState", "a00045.html#ae1725e1b2282f1d0f9f47ab36247af11", null ]
     ] ],
     [ "FSL_FLEXIO_UART_EDMA_DRIVER_VERSION", "a00045.html#ga27242859be8ca56fdd8d82d7610f4a03", null ],
     [ "flexio_uart_edma_transfer_callback_t", "a00045.html#gab5c1a2db5ce578862b1c444884f72355", null ],

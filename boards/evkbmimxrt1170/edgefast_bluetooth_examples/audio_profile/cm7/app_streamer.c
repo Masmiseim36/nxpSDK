@@ -138,6 +138,15 @@ status_t STREAMER_file_Create(streamer_handle_t *handle, char *filename)
     STREAMER_CREATE_PARAM params;
     ELEMENT_PROPERTY_T prop;
     osa_task_def_t thread_attr;
+    ElementIndex element_ids[] = {ELEMENT_FILE_SRC_INDEX,
+                                  ELEMENT_DECODER_INDEX,
+#ifdef SSRC_PROC
+                                  ELEMENT_SRC_INDEX,
+#endif
+                                  ELEMENT_SPEAKER_INDEX};
+    int num_elements = sizeof(element_ids)/sizeof(ElementIndex);
+    PipelineElements pipelineElements = {element_ids, num_elements};
+	
     int ret;
 
     /* Create message process thread */
@@ -154,10 +163,10 @@ status_t STREAMER_file_Create(streamer_handle_t *handle, char *filename)
     /* Create streamer */
     strcpy(params.out_mq_name, APP_STREAMER_MSG_QUEUE);
     params.stack_size    = STREAMER_TASK_STACK_SIZE;
-    params.pipeline_type = STREAM_PIPELINE_FILESYSTEM;
     params.task_name     = STREAMER_TASK_NAME;
     params.in_dev_name   = "";
     params.out_dev_name  = "";
+    params.elements = pipelineElements;
 
     handle->streamer = streamer_create(&params);
     if (!handle->streamer)
@@ -166,6 +175,20 @@ status_t STREAMER_file_Create(streamer_handle_t *handle, char *filename)
     }
 
     streamer_set_file(handle->streamer, 0, filename, STATE_NULL, true);
+	
+    EXT_AUDIOELEMENT_DESC_T appFunctions = {
+        .open_func      = streamer_pcm_open,
+        .close_func     = NULL,
+        .start_func     = NULL,
+        .process_func   = streamer_pcm_write,
+        .set_param_func = streamer_pcm_setparams,
+        .get_param_func = streamer_pcm_getparams,
+        .mute_func      = NULL,
+        .volume_func    = NULL,
+    };
+    prop.prop = PROP_SPEAKER_SET_APP_FUNCTIONS;
+    prop.val  = (uintptr_t)&appFunctions;
+    streamer_set_property(handle->streamer, 0, prop, true);
 
     handle->audioPlaying = false;
 

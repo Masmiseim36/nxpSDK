@@ -32,9 +32,6 @@ typedef struct _clock_setup
     uint16_t ui16M1PwmDeadTime;
 } clock_setup_t;
 
-/* macro used for TSA table */
-#define PMSM_SNSLESS_ENC
-
 /******************************************************************************
  * Clock & PWM definition for motor 1
  ******************************************************************************/
@@ -142,6 +139,7 @@ typedef struct _clock_setup
 #define M1_MCDRV_QD_PERIPH_INIT() M1_InitQD()
 #define M1_MCDRV_QD_GET(par) (MCDRV_QdEncGet(par))
 #define M1_MCDRV_QD_SET_DIRECTION(par) (MCDRV_QdEncSetDirection(par))
+#define M1_MCDRV_QD_SET_PULSES(par) (MCDRV_QdEncSetPulses(par))
 #define M1_MCDRV_QD_CLEAR(par) (MCDRV_QdEncClear(par))
 
 /******************************************************************************

@@ -50,7 +50,7 @@ int32_t inference(int32_t ifm, int32_t ofm)
     }
     else
     {
-        codec->startWriteMessage(kInvocationMessage, kSecureMLService_service_id, kSecureMLService_inference_id, request.getSequence());
+        codec->startWriteMessage(message_type_t::kInvocationMessage, kSecureMLService_service_id, kSecureMLService_inference_id, request.getSequence());
 
         codec->write(ifm);
 

@@ -45,11 +45,10 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
-"${SdkRootDirPath}/middleware/motor_control/freemaster/pmsm_float_enc.pmpx"
-"${SdkRootDirPath}/middleware/motor_control/docs/PMSMRT1170B.pdf"
-"${SdkRootDirPath}/middleware/motor_control/docs/Release_notes.pdf"
+"${ProjDirPath}/../PMSMRT1170B.pdf"
 "${ProjDirPath}/../main.c"
 "${ProjDirPath}/../m1_pmsm_appconfig.h"
+"${ProjDirPath}/../m2_pmsm_appconfig.h"
 "${ProjDirPath}/../mc_periph_init.c"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
@@ -59,7 +58,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../peripherals.c"
 "${ProjDirPath}/../freemaster_cfg.h"
 "${ProjDirPath}/../mc_periph_init.h"
-"${SdkRootDirPath}/middleware/motor_control/docs/readme.txt"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../dcd.c"
@@ -71,8 +69,8 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 set_source_files_properties("${ProjDirPath}/../m1_pmsm_appconfig.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_motor_control_pmsm_float_template")
+set_source_files_properties("${ProjDirPath}/../m2_pmsm_appconfig.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_motor_control_pmsm_float_template")
 set_source_files_properties("${ProjDirPath}/../mc_periph_init.c" PROPERTIES COMPONENT_CONFIG_FILE "middleware_motor_control_pmsm_float_template")
-set_source_files_properties("${ProjDirPath}/../freemaster_cfg.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_fmstr_npw_cfg_gen32le")
 set_source_files_properties("${ProjDirPath}/../mc_periph_init.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_motor_control_pmsm_float_template")
 
 include(${SdkRootDirPath}/devices/MIMXRT1176/all_lib_device.cmake)

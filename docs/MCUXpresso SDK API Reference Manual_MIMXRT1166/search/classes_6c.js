@@ -1,20 +1,7 @@
 var searchData=
 [
-  ['lcdifv2_5fblend_5fconfig_5ft',['lcdifv2_blend_config_t',['../a00055.html#a00565',1,'']]],
-  ['lcdifv2_5fbuffer_5fconfig_5ft',['lcdifv2_buffer_config_t',['../a00055.html#a00566',1,'']]],
-  ['lcdifv2_5fdisplay_5fconfig_5ft',['lcdifv2_display_config_t',['../a00055.html#a00567',1,'']]],
-  ['lpadc_5fconfig_5ft',['lpadc_config_t',['../a00056.html#a00568',1,'']]],
-  ['lpadc_5fconv_5fcommand_5fconfig_5ft',['lpadc_conv_command_config_t',['../a00056.html#a00569',1,'']]],
-  ['lpadc_5fconv_5fresult_5ft',['lpadc_conv_result_t',['../a00056.html#a00570',1,'']]],
-  ['lpadc_5fconv_5ftrigger_5fconfig_5ft',['lpadc_conv_trigger_config_t',['../a00056.html#a00571',1,'']]],
-  ['lpi2c_5fdata_5fmatch_5fconfig_5ft',['lpi2c_data_match_config_t',['../a00057.html#a00572',1,'']]],
-  ['lpi2c_5fmaster_5fconfig_5ft',['lpi2c_master_config_t',['../a00057.html#a00573',1,'']]],
-  ['lpi2c_5fslave_5fconfig_5ft',['lpi2c_slave_config_t',['../a00059.html#a00574',1,'']]],
-  ['lpi2c_5fslave_5ftransfer_5ft',['lpi2c_slave_transfer_t',['../a00059.html#a00575',1,'']]],
-  ['lpspi_5fmaster_5fconfig_5ft',['lpspi_master_config_t',['../a00060.html#a00576',1,'']]],
-  ['lpspi_5fslave_5fconfig_5ft',['lpspi_slave_config_t',['../a00060.html#a00577',1,'']]],
-  ['lpspi_5ftransfer_5ft',['lpspi_transfer_t',['../a00060.html#a00578',1,'']]],
-  ['lpuart_5fconfig_5ft',['lpuart_config_t',['../a00062.html#a00579',1,'']]],
-  ['lpuart_5frtos_5fconfig_5ft',['lpuart_rtos_config_t',['../a00064.html#a00580',1,'']]],
-  ['lpuart_5ftransfer_5ft',['lpuart_transfer_t',['../a00062.html#a00581',1,'']]]
+  ['lpadc_5fconfig_5ft',['lpadc_config_t',['../a00101.html#a00730',1,'']]],
+  ['lpadc_5fconv_5fcommand_5fconfig_5ft',['lpadc_conv_command_config_t',['../a00101.html#a00731',1,'']]],
+  ['lpadc_5fconv_5fresult_5ft',['lpadc_conv_result_t',['../a00101.html#a00732',1,'']]],
+  ['lpadc_5fconv_5ftrigger_5fconfig_5ft',['lpadc_conv_trigger_config_t',['../a00101.html#a00733',1,'']]]
 ];

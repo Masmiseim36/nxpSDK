@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CORE1_IMAGE_COPY_TO_RAM, CPU_MIMXRT1176DVMAA_cm7, __USE_SHMEM, MCUXPRESSO_SDK, MULTICORE_APP=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../erpc_common;../../../erpc_common/erpc_two_way_rpc/service;../..;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt1170;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/mcmgr/src;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../middleware/multicore/erpc/erpc_c;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../..;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt1170;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/mcmgr/src;../../../../../../middleware/multicore/example/multicore_examples/erpc_common;../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../middleware/multicore/erpc/erpc_c;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -424,16 +424,6 @@
           <GroupName>source</GroupName>
           <Files>
             <File>
-              <FileName>erpc_error_handler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../erpc_common/erpc_error_handler.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_error_handler.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../../../erpc_common/erpc_error_handler.cpp</FilePath>
-            </File>
-            <File>
               <FileName>main_core0.c</FileName>
               <FileType>1</FileType>
               <FilePath>../main_core0.c</FilePath>
@@ -453,40 +443,15 @@
               <FileType>5</FileType>
               <FilePath>../FreeRTOSConfig.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>erpc/service</GroupName>
-          <Files>
             <File>
-              <FileName>erpc_two_way_rpc.erpc</FileName>
+              <FileName>erpc_error_handler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc.erpc</FilePath>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_error_handler.h</FilePath>
             </File>
             <File>
-              <FileName>erpc_two_way_rpc_Core0Interface.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core0Interface.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_two_way_rpc_Core0Interface_client.cpp</FileName>
+              <FileName>erpc_error_handler.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core0Interface_client.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_two_way_rpc_Core1Interface.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core1Interface.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_two_way_rpc_Core1Interface_server.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core1Interface_server.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_two_way_rpc_Core1Interface_server.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../../../erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core1Interface_server.cpp</FilePath>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_error_handler.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -494,9 +459,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -699,6 +664,11 @@
               <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_incbin.S</FileName>
               <FileType>2</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/utilities/incbin/fsl_incbin.S</FilePath>
@@ -761,6 +731,36 @@
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_gpc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_soc_src.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_soc_src.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_mu.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_mu.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_iomuxc.h</FilePath>
@@ -804,16 +804,6 @@
               <FileName>fsl_cache.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/cm7/fsl_cache.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mu.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_mu.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mu.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_mu.c</FilePath>
             </File>
             <File>
               <FileName>fsl_anatop_ai.h</FileName>
@@ -960,6 +950,16 @@
               <FileType>8</FileType>
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_pre_post_action.cpp</FilePath>
             </File>
+            <File>
+              <FileName>erpc_utils.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_utils.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_utils.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_utils.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1076,9 +1076,9 @@
           <GroupName>erpc/transports</GroupName>
           <Files>
             <File>
-              <FileName>erpc_rpmsg_lite_base_transport.hpp</FileName>
+              <FileName>erpc_rpmsg_lite_base.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_rpmsg_lite_base_transport.hpp</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_rpmsg_lite_base.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_rpmsg_lite_rtos_transport.hpp</FileName>
@@ -1104,6 +1104,96 @@
               <FileName>ReadMe.url</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>erpc/service</GroupName>
+          <Files>
+            <File>
+              <FileName>erpc_two_way_rpc.erpc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc.erpc</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_two_way_rpc_Core0Interface_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core0Interface_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_two_way_rpc_Core0Interface_common.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core0Interface_common.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_two_way_rpc_Core0Interface_client.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core0Interface_client.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_two_way_rpc_Core0Interface_client.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core0Interface_client.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>c_erpc_two_way_rpc_Core0Interface_client.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service/c_erpc_two_way_rpc_Core0Interface_client.h</FilePath>
+            </File>
+            <File>
+              <FileName>c_erpc_two_way_rpc_Core0Interface_client.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service/c_erpc_two_way_rpc_Core0Interface_client.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_two_way_rpc_Core0Interface_interface.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core0Interface_interface.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_two_way_rpc_Core0Interface_interface.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core0Interface_interface.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_two_way_rpc_Core1Interface_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core1Interface_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_two_way_rpc_Core1Interface_common.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core1Interface_common.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_two_way_rpc_Core1Interface_server.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core1Interface_server.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_two_way_rpc_Core1Interface_server.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core1Interface_server.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>c_erpc_two_way_rpc_Core1Interface_server.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service/c_erpc_two_way_rpc_Core1Interface_server.h</FilePath>
+            </File>
+            <File>
+              <FileName>c_erpc_two_way_rpc_Core1Interface_server.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service/c_erpc_two_way_rpc_Core1Interface_server.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_two_way_rpc_Core1Interface_interface.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core1Interface_interface.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_two_way_rpc_Core1Interface_interface.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core1Interface_interface.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -1745,7 +1835,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CORE1_IMAGE_COPY_TO_RAM, CPU_MIMXRT1176DVMAA_cm7, __USE_SHMEM, MCUXPRESSO_SDK, MULTICORE_APP=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../erpc_common;../../../erpc_common/erpc_two_way_rpc/service;../..;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt1170;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/mcmgr/src;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../middleware/multicore/erpc/erpc_c;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../..;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt1170;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/mcmgr/src;../../../../../../middleware/multicore/example/multicore_examples/erpc_common;../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../middleware/multicore/erpc/erpc_c;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1835,16 +1925,6 @@
           <GroupName>source</GroupName>
           <Files>
             <File>
-              <FileName>erpc_error_handler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../erpc_common/erpc_error_handler.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_error_handler.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../../../erpc_common/erpc_error_handler.cpp</FilePath>
-            </File>
-            <File>
               <FileName>main_core0.c</FileName>
               <FileType>1</FileType>
               <FilePath>../main_core0.c</FilePath>
@@ -1864,40 +1944,15 @@
               <FileType>5</FileType>
               <FilePath>../FreeRTOSConfig.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>erpc/service</GroupName>
-          <Files>
             <File>
-              <FileName>erpc_two_way_rpc.erpc</FileName>
+              <FileName>erpc_error_handler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc.erpc</FilePath>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_error_handler.h</FilePath>
             </File>
             <File>
-              <FileName>erpc_two_way_rpc_Core0Interface.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core0Interface.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_two_way_rpc_Core0Interface_client.cpp</FileName>
+              <FileName>erpc_error_handler.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core0Interface_client.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_two_way_rpc_Core1Interface.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core1Interface.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_two_way_rpc_Core1Interface_server.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core1Interface_server.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_two_way_rpc_Core1Interface_server.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../../../erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core1Interface_server.cpp</FilePath>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_error_handler.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -1905,9 +1960,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -2110,6 +2165,11 @@
               <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_incbin.S</FileName>
               <FileType>2</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/utilities/incbin/fsl_incbin.S</FilePath>
@@ -2172,6 +2232,36 @@
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_gpc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_soc_src.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_soc_src.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_mu.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_mu.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_iomuxc.h</FilePath>
@@ -2215,16 +2305,6 @@
               <FileName>fsl_cache.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/cm7/fsl_cache.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mu.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_mu.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mu.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_mu.c</FilePath>
             </File>
             <File>
               <FileName>fsl_anatop_ai.h</FileName>
@@ -2371,6 +2451,16 @@
               <FileType>8</FileType>
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_pre_post_action.cpp</FilePath>
             </File>
+            <File>
+              <FileName>erpc_utils.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_utils.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_utils.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_utils.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2487,9 +2577,9 @@
           <GroupName>erpc/transports</GroupName>
           <Files>
             <File>
-              <FileName>erpc_rpmsg_lite_base_transport.hpp</FileName>
+              <FileName>erpc_rpmsg_lite_base.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_rpmsg_lite_base_transport.hpp</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_rpmsg_lite_base.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_rpmsg_lite_rtos_transport.hpp</FileName>
@@ -2515,6 +2605,96 @@
               <FileName>ReadMe.url</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos-kernel/portable/MemMang/ReadMe.url</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>erpc/service</GroupName>
+          <Files>
+            <File>
+              <FileName>erpc_two_way_rpc.erpc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc.erpc</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_two_way_rpc_Core0Interface_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core0Interface_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_two_way_rpc_Core0Interface_common.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core0Interface_common.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_two_way_rpc_Core0Interface_client.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core0Interface_client.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_two_way_rpc_Core0Interface_client.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core0Interface_client.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>c_erpc_two_way_rpc_Core0Interface_client.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service/c_erpc_two_way_rpc_Core0Interface_client.h</FilePath>
+            </File>
+            <File>
+              <FileName>c_erpc_two_way_rpc_Core0Interface_client.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service/c_erpc_two_way_rpc_Core0Interface_client.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_two_way_rpc_Core0Interface_interface.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core0Interface_interface.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_two_way_rpc_Core0Interface_interface.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core0Interface_interface.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_two_way_rpc_Core1Interface_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core1Interface_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_two_way_rpc_Core1Interface_common.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core1Interface_common.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_two_way_rpc_Core1Interface_server.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core1Interface_server.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_two_way_rpc_Core1Interface_server.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core1Interface_server.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>c_erpc_two_way_rpc_Core1Interface_server.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service/c_erpc_two_way_rpc_Core1Interface_server.h</FilePath>
+            </File>
+            <File>
+              <FileName>c_erpc_two_way_rpc_Core1Interface_server.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service/c_erpc_two_way_rpc_Core1Interface_server.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_two_way_rpc_Core1Interface_interface.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core1Interface_interface.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_two_way_rpc_Core1Interface_interface.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../../middleware/multicore/example/multicore_examples/erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc_Core1Interface_interface.cpp</FilePath>
             </File>
           </Files>
         </Group>

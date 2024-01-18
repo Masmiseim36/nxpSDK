@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: LPUART eDMA Driver</title>
+<title>MCUXpresso SDK API Reference Manual: MECC: internal error correction code</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -100,206 +100,410 @@ $(document).ready(function(){initNavTree('a00063.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">LPUART eDMA Driver<div class="ingroups"><a class="el" href="a00350.html">LPUART:  Low Power Universal Asynchronous Receiver/Transmitter Driver</a></div></div>  </div>
+<div class="title">MECC: internal error correction code</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
+<p>The MCUXpresso SDK provides a driver for the MECC module of MCUXpresso SDK devices.</p>
+<p>The MECC64 module supports Single Error Correction and Double Error Detection(SECDED) ECC function to provide reliability for 4 banks On-Chip RAM(OCRAM) access.</p>
+<p>This example code shows how to correct single error and detect multiple error using the MECC driver.</p>
+<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/mecc </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00414"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a00414">lpuart_edma_handle_t</a></td></tr>
-<tr class="memdesc:a00414"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART eDMA handle.  <a href="a00063.html#a00414">More...</a><br/></td></tr>
-<tr class="separator:a00414"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00575"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a00575">_mecc_config</a></td></tr>
+<tr class="memdesc:a00575"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC user configuration.  <a href="a00063.html#a00575">More...</a><br/></td></tr>
+<tr class="separator:a00575"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00577"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a00577">_mecc_single_error_info</a></td></tr>
+<tr class="memdesc:a00577"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC ocram single error information, including single error address, ECC code, error data and error bit position.  <a href="a00063.html#a00577">More...</a><br/></td></tr>
+<tr class="separator:a00577"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00576"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a00576">_mecc_multi_error_info</a></td></tr>
+<tr class="memdesc:a00576"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC ocram multiple error information, including multiple error address, ECC code, error data.  <a href="a00063.html#a00576">More...</a><br/></td></tr>
+<tr class="separator:a00576"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:gaed2bf1ac041ea4526ccf5ab0eba4da73"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#gaed2bf1ac041ea4526ccf5ab0eba4da73">lpuart_edma_transfer_callback_t</a> )(LPUART_Type *base, lpuart_edma_handle_t *handle, <a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
-<tr class="memdesc:gaed2bf1ac041ea4526ccf5ab0eba4da73"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART transfer callback function.  <a href="#gaed2bf1ac041ea4526ccf5ab0eba4da73">More...</a><br/></td></tr>
-<tr class="separator:gaed2bf1ac041ea4526ccf5ab0eba4da73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacf5f4016477962dde987413058421550"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00063.html#a00575">_mecc_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#gacf5f4016477962dde987413058421550">mecc_config_t</a></td></tr>
+<tr class="memdesc:gacf5f4016477962dde987413058421550"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC user configuration.  <a href="#gacf5f4016477962dde987413058421550">More...</a><br/></td></tr>
+<tr class="separator:gacf5f4016477962dde987413058421550"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga64799de9201b71d8ce00470a68b04193"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga64799de9201b71d8ce00470a68b04193"></a>
+typedef struct <br class="typebreak"/>
+<a class="el" href="a00063.html#a00577">_mecc_single_error_info</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga64799de9201b71d8ce00470a68b04193">mecc_single_error_info_t</a></td></tr>
+<tr class="memdesc:ga64799de9201b71d8ce00470a68b04193"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC ocram single error information, including single error address, ECC code, error data and error bit position. <br/></td></tr>
+<tr class="separator:ga64799de9201b71d8ce00470a68b04193"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2af5b8d1a2429ee64553ca9c676b2079"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2af5b8d1a2429ee64553ca9c676b2079"></a>
+typedef struct <br class="typebreak"/>
+<a class="el" href="a00063.html#a00576">_mecc_multi_error_info</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga2af5b8d1a2429ee64553ca9c676b2079">mecc_multi_error_info_t</a></td></tr>
+<tr class="memdesc:ga2af5b8d1a2429ee64553ca9c676b2079"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC ocram multiple error information, including multiple error address, ECC code, error data. <br/></td></tr>
+<tr class="separator:ga2af5b8d1a2429ee64553ca9c676b2079"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gaa491173a6b1628f4ff82067b2e1ceaa9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <a class="el" href="a00063.html#ggaa491173a6b1628f4ff82067b2e1ceaa9ad54935f1c4685bb65ae950b7cd31fb88">kStatus_MECC_BankMiss</a> = MAKE_STATUS(kStatusGroup_MECC, 0)
+ }</td></tr>
+<tr class="memdesc:gaa491173a6b1628f4ff82067b2e1ceaa9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Error codes for the MECC driver.  <a href="a00063.html#gaa491173a6b1628f4ff82067b2e1ceaa9">More...</a><br/></td></tr>
+<tr class="separator:gaa491173a6b1628f4ff82067b2e1ceaa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3babbf89cae9b856a12864a41506efbd"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<a class="el" href="a00063.html#gga3babbf89cae9b856a12864a41506efbda60386e532a4432bdacac6b1b335689fb">kMECC_SingleError0InterruptEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga3babbf89cae9b856a12864a41506efbdaee220e9fea566ee845257d397334c6e5">kMECC_SingleError1InterruptEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga3babbf89cae9b856a12864a41506efbda65533ce34c9d817cbc7e004f1338998a">kMECC_SingleError2InterruptEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga3babbf89cae9b856a12864a41506efbda2e921c7bf7687ed285c3a14841dfa72b">kMECC_SingleError3InterruptEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga3babbf89cae9b856a12864a41506efbda33c1cd216a6b6e2d9f2a812597f0eb16">kMECC_MultiError0InterruptEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga3babbf89cae9b856a12864a41506efbda5b205daa036fa09d53bba5b0dcc90b3e">kMECC_MultiError1InterruptEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga3babbf89cae9b856a12864a41506efbda0f1f86c38aec4924ea2718b965eb1b95">kMECC_MultiError2InterruptEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga3babbf89cae9b856a12864a41506efbda73fd6dcecc1dcb1949bd06563316d59c">kMECC_MultiError3InterruptEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga3babbf89cae9b856a12864a41506efbda0ae1033db8b31de149663cbe8b3d7981">kMECC_StrobeError0InterruptEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga3babbf89cae9b856a12864a41506efbda65b9c6c2b76c569479c38046c19c2d02">kMECC_StrobeError1InterruptEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga3babbf89cae9b856a12864a41506efbda5221708daa8ae1fce221e50fe51e2137">kMECC_StrobeError2InterruptEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga3babbf89cae9b856a12864a41506efbdadaf078eec4ff8f20c033549eb43c615a">kMECC_StrobeError3InterruptEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga3babbf89cae9b856a12864a41506efbda8d8e449f321ddbd300ea205cd4a00ef1">kMECC_AccessError0InterruptEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga3babbf89cae9b856a12864a41506efbda2f7202fb545ab1461f83bb82861ce829">kMECC_AccessError1InterruptEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga3babbf89cae9b856a12864a41506efbdadaf61d5a22b9e8f0f9ef158772fd4974">kMECC_AccessError2InterruptEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga3babbf89cae9b856a12864a41506efbda37b942d39cafde4c0eee07bd6106e230">kMECC_AccessError3InterruptEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga3babbf89cae9b856a12864a41506efbdad36e96df8d16f7ef1c598c86e4b76719">kMECC_AllInterruptsEnable</a> = 0xFFFF
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga3babbf89cae9b856a12864a41506efbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC interrupt configuration structure, default settings all disabled.  <a href="a00063.html#ga3babbf89cae9b856a12864a41506efbd">More...</a><br/></td></tr>
+<tr class="separator:ga3babbf89cae9b856a12864a41506efbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa57e16cd48de3b9a989056ff8df26f84"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<a class="el" href="a00063.html#ggaa57e16cd48de3b9a989056ff8df26f84acae2d283f0d93ad8f95a07ffaad4a4c9">kMECC_SingleError0InterruptStatusEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggaa57e16cd48de3b9a989056ff8df26f84a53c64b1d2d26e05615542e35ec7aeece">kMECC_SingleError1InterruptStatusEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggaa57e16cd48de3b9a989056ff8df26f84a3b0f91ec5c5b7ff20a8316d4cc5938f7">kMECC_SingleError2InterruptStatusEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggaa57e16cd48de3b9a989056ff8df26f84aa3a7263fd019e2f84439b5987c4e3e1f">kMECC_SingleError3InterruptStatusEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggaa57e16cd48de3b9a989056ff8df26f84a01b238a7313c76b9f2863d6cbd441a11">kMECC_MultiError0InterruptStatusEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggaa57e16cd48de3b9a989056ff8df26f84aff426d2f793e65e4d3bc482b95d9948b">kMECC_MultiError1InterruptStatusEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggaa57e16cd48de3b9a989056ff8df26f84aa9b3da1e0b963b62bc07ee5b71a77e97">kMECC_MultiError2InterruptStatusEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggaa57e16cd48de3b9a989056ff8df26f84ae9eb43a3ba49a8cb1a4a216c796772c3">kMECC_MultiError3InterruptStatusEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggaa57e16cd48de3b9a989056ff8df26f84a629e23be3ff3c23a3a07337bd8ecccae">kMECC_StrobeError0InterruptStatusEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggaa57e16cd48de3b9a989056ff8df26f84a715705722e7b0bd1cd67a4d5f3ddcd93">kMECC_StrobeError1InterruptStatusEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggaa57e16cd48de3b9a989056ff8df26f84a4411b3b02533ada7cfe29e3f284b9b98">kMECC_StrobeError2InterruptStatusEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggaa57e16cd48de3b9a989056ff8df26f84abf9fcb24fbdf942895b0e609b3934e62">kMECC_StrobeError3InterruptStatusEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggaa57e16cd48de3b9a989056ff8df26f84a9866106ad109217f41e9460ae644f0b9">kMECC_AccessError0InterruptStatusEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggaa57e16cd48de3b9a989056ff8df26f84a576e9bfb470b35056c079ef1cd74b27e">kMECC_AccessError1InterruptStatusEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggaa57e16cd48de3b9a989056ff8df26f84ae00d10368d03231b9a4b8cc7f473f84f">kMECC_AccessError2InterruptStatusEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggaa57e16cd48de3b9a989056ff8df26f84aca8726fa8c65753f5c6fa6f0dcd766c5">kMECC_AccessError3InterruptStatusEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggaa57e16cd48de3b9a989056ff8df26f84afd3243e9ef2e593117a814cfa36f6750">kMECC_AllInterruptsStatusEnable</a> = 0xFFFF
+<br/>
+ }</td></tr>
+<tr class="memdesc:gaa57e16cd48de3b9a989056ff8df26f84"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC interrupt status configuration structure, default settings all disabled.  <a href="a00063.html#gaa57e16cd48de3b9a989056ff8df26f84">More...</a><br/></td></tr>
+<tr class="separator:gaa57e16cd48de3b9a989056ff8df26f84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga634f9f55e799f3052a34590f08100017"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<a class="el" href="a00063.html#gga634f9f55e799f3052a34590f08100017a86dd1ab8cba24cb2cff9c50156c6597d">kMECC_SingleError0InterruptFlag</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga634f9f55e799f3052a34590f08100017ae3ecf474b2785e71ec9987138f1657ca">kMECC_SingleError1InterruptFlag</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga634f9f55e799f3052a34590f08100017adde8e391ea706c16e3c87150f2599e5c">kMECC_SingleError2InterruptFlag</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga634f9f55e799f3052a34590f08100017a11329502b8da5277e17030e5a7875457">kMECC_SingleError3InterruptFlag</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga634f9f55e799f3052a34590f08100017aa31b66d286e8c368fd6be5d1a519a777">kMECC_MultiError0InterruptFlag</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga634f9f55e799f3052a34590f08100017ac1ca262d428c3580c384f8bc0d6dec03">kMECC_MultiError1InterruptFlag</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga634f9f55e799f3052a34590f08100017a706b134e9a2a96f9aae83907cef0e244">kMECC_MultiError2InterruptFlag</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga634f9f55e799f3052a34590f08100017a724cfb2fe9e6be717dc122d5fffe727e">kMECC_MultiError3InterruptFlag</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga634f9f55e799f3052a34590f08100017a8fc11c23ff0c0f46854567becfec3114">kMECC_StrobeError0InterruptFlag</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga634f9f55e799f3052a34590f08100017a9cbbb0c7093be87ed79ea1bf43443510">kMECC_StrobeError1InterruptFlag</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga634f9f55e799f3052a34590f08100017a5c2f504d00dfa6b8bbf51b6b5da7d35d">kMECC_StrobeError2InterruptFlag</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga634f9f55e799f3052a34590f08100017abb63acd151ebd2e9e9ce537a746725d1">kMECC_StrobeError3InterruptFlag</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga634f9f55e799f3052a34590f08100017a1586a7269a31a523cd8f95cc7e4f9a4b">kMECC_AccessError0InterruptFlag</a> = MECC_ERR_STATUS_ADDR_ERR0_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga634f9f55e799f3052a34590f08100017a9561369b9ee437c73efd7c953eaa4ee3">kMECC_AccessError1InterruptFlag</a> = MECC_ERR_STATUS_ADDR_ERR1_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga634f9f55e799f3052a34590f08100017a2a14b7b11694d188cc8993e543458db3">kMECC_AccessError2InterruptFlag</a> = MECC_ERR_STATUS_ADDR_ERR2_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga634f9f55e799f3052a34590f08100017a5943a7e154c3a6cd43cc910de4f2aa2d">kMECC_AccessError3InterruptFlag</a> = MECC_ERR_STATUS_ADDR_ERR3_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#gga634f9f55e799f3052a34590f08100017a080bc792af3a79294d9d6df63671e522">kMECC_AllInterruptsFlag</a> = 0xFFFF
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga634f9f55e799f3052a34590f08100017"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC status flags.  <a href="a00063.html#ga634f9f55e799f3052a34590f08100017">More...</a><br/></td></tr>
+<tr class="separator:ga634f9f55e799f3052a34590f08100017"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab39a415800ebd0d977c477376649649b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<a class="el" href="a00063.html#ggab39a415800ebd0d977c477376649649ba0eb35ef82a6ca87fd3a0ea522645b914">kMECC_OcramBank0</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggab39a415800ebd0d977c477376649649bacb88eb77d6365c5f53d8a030d5602231">kMECC_OcramBank1</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggab39a415800ebd0d977c477376649649ba175329c36e59cfe6731efe5d7873ad9e">kMECC_OcramBank2</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggab39a415800ebd0d977c477376649649ba2824bf84711bfa206d4be2104ed37a7a">kMECC_OcramBank3</a> = 3U
+<br/>
+ }</td></tr>
+<tr class="memdesc:gab39a415800ebd0d977c477376649649b"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC ocram bank number.  <a href="a00063.html#gab39a415800ebd0d977c477376649649b">More...</a><br/></td></tr>
+<tr class="separator:gab39a415800ebd0d977c477376649649b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae33c78feb670de33d2abf21ec0624531"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<a class="el" href="a00063.html#ggae33c78feb670de33d2abf21ec0624531ae00e394ef57da8de557c15db4ee2e818">kMECC_Instance0</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00063.html#ggae33c78feb670de33d2abf21ec0624531a8d76be2f588aa57923168b302739a9a9">kMECC_Instance1</a> = 1U
+<br/>
+ }</td></tr>
+<tr class="memdesc:gae33c78feb670de33d2abf21ec0624531"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC instance.  <a href="a00063.html#gae33c78feb670de33d2abf21ec0624531">More...</a><br/></td></tr>
+<tr class="separator:gae33c78feb670de33d2abf21ec0624531"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga9bfcb92913944fb359c4544b4cdee5d3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga9bfcb92913944fb359c4544b4cdee5d3">FSL_LPUART_EDMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00338.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 6, 0))</td></tr>
-<tr class="memdesc:ga9bfcb92913944fb359c4544b4cdee5d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART EDMA driver version.  <a href="#ga9bfcb92913944fb359c4544b4cdee5d3">More...</a><br/></td></tr>
-<tr class="separator:ga9bfcb92913944fb359c4544b4cdee5d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6cbe383d929a1d77a9820f5e5a592f98"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga6cbe383d929a1d77a9820f5e5a592f98">FSL_MECC_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00336.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2U, 0U, 2U))</td></tr>
+<tr class="memdesc:ga6cbe383d929a1d77a9820f5e5a592f98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver version 2.0.2.  <a href="#ga6cbe383d929a1d77a9820f5e5a592f98">More...</a><br/></td></tr>
+<tr class="separator:ga6cbe383d929a1d77a9820f5e5a592f98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-eDMA transactional</h2></td></tr>
-<tr class="memitem:ga4891d980e0e489932e8d3b5c52588c2e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga4891d980e0e489932e8d3b5c52588c2e">LPUART_TransferCreateHandleEDMA</a> (LPUART_Type *base, lpuart_edma_handle_t *handle, <a class="el" href="a00063.html#gaed2bf1ac041ea4526ccf5ab0eba4da73">lpuart_edma_transfer_callback_t</a> callback, void *userData, <a class="el" href="a00025.html#a00476">edma_handle_t</a> *txEdmaHandle, <a class="el" href="a00025.html#a00476">edma_handle_t</a> *rxEdmaHandle)</td></tr>
-<tr class="memdesc:ga4891d980e0e489932e8d3b5c52588c2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the LPUART handle which is used in transactional functions.  <a href="#ga4891d980e0e489932e8d3b5c52588c2e">More...</a><br/></td></tr>
-<tr class="separator:ga4891d980e0e489932e8d3b5c52588c2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga24c9dff9f142243ed5ffb3112a356386"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga24c9dff9f142243ed5ffb3112a356386">LPUART_SendEDMA</a> (LPUART_Type *base, lpuart_edma_handle_t *handle, <a class="el" href="a00062.html#a00585">lpuart_transfer_t</a> *xfer)</td></tr>
-<tr class="memdesc:ga24c9dff9f142243ed5ffb3112a356386"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends data using eDMA.  <a href="#ga24c9dff9f142243ed5ffb3112a356386">More...</a><br/></td></tr>
-<tr class="separator:ga24c9dff9f142243ed5ffb3112a356386"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga57b356ccc56276a557b3ddf53f6a7c0f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga57b356ccc56276a557b3ddf53f6a7c0f">LPUART_ReceiveEDMA</a> (LPUART_Type *base, lpuart_edma_handle_t *handle, <a class="el" href="a00062.html#a00585">lpuart_transfer_t</a> *xfer)</td></tr>
-<tr class="memdesc:ga57b356ccc56276a557b3ddf53f6a7c0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives data using eDMA.  <a href="#ga57b356ccc56276a557b3ddf53f6a7c0f">More...</a><br/></td></tr>
-<tr class="separator:ga57b356ccc56276a557b3ddf53f6a7c0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga48033a0651d1e68133bbb73ded3d9309"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga48033a0651d1e68133bbb73ded3d9309">LPUART_TransferAbortSendEDMA</a> (LPUART_Type *base, lpuart_edma_handle_t *handle)</td></tr>
-<tr class="memdesc:ga48033a0651d1e68133bbb73ded3d9309"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the sent data using eDMA.  <a href="#ga48033a0651d1e68133bbb73ded3d9309">More...</a><br/></td></tr>
-<tr class="separator:ga48033a0651d1e68133bbb73ded3d9309"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf4160e8481b5d0861fa2f4ea14ccc13e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#gaf4160e8481b5d0861fa2f4ea14ccc13e">LPUART_TransferAbortReceiveEDMA</a> (LPUART_Type *base, lpuart_edma_handle_t *handle)</td></tr>
-<tr class="memdesc:gaf4160e8481b5d0861fa2f4ea14ccc13e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the received data using eDMA.  <a href="#gaf4160e8481b5d0861fa2f4ea14ccc13e">More...</a><br/></td></tr>
-<tr class="separator:gaf4160e8481b5d0861fa2f4ea14ccc13e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0369d8b3a9238d88f2ef527b2cdbf152"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga0369d8b3a9238d88f2ef527b2cdbf152">LPUART_TransferGetSendCountEDMA</a> (LPUART_Type *base, lpuart_edma_handle_t *handle, uint32_t *count)</td></tr>
-<tr class="memdesc:ga0369d8b3a9238d88f2ef527b2cdbf152"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of bytes written to the LPUART TX register.  <a href="#ga0369d8b3a9238d88f2ef527b2cdbf152">More...</a><br/></td></tr>
-<tr class="separator:ga0369d8b3a9238d88f2ef527b2cdbf152"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga433b9163c0d46f0e8b65b5ded880a1f8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga433b9163c0d46f0e8b65b5ded880a1f8">LPUART_TransferGetReceiveCountEDMA</a> (LPUART_Type *base, lpuart_edma_handle_t *handle, uint32_t *count)</td></tr>
-<tr class="memdesc:ga433b9163c0d46f0e8b65b5ded880a1f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of received bytes.  <a href="#ga433b9163c0d46f0e8b65b5ded880a1f8">More...</a><br/></td></tr>
-<tr class="separator:ga433b9163c0d46f0e8b65b5ded880a1f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga898e2e544106c928c6930605ff59fc43"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga898e2e544106c928c6930605ff59fc43">LPUART_TransferEdmaHandleIRQ</a> (LPUART_Type *base, void *lpuartEdmaHandle)</td></tr>
-<tr class="memdesc:ga898e2e544106c928c6930605ff59fc43"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART eDMA IRQ handle function.  <a href="#ga898e2e544106c928c6930605ff59fc43">More...</a><br/></td></tr>
-<tr class="separator:ga898e2e544106c928c6930605ff59fc43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Initialization and deinitialization</h2></td></tr>
+<tr class="memitem:ga562b7b9f4042b41c7c5afadb7d329dca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga562b7b9f4042b41c7c5afadb7d329dca">MECC_Init</a> (MECC_Type *base, <a class="el" href="a00063.html#gacf5f4016477962dde987413058421550">mecc_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga562b7b9f4042b41c7c5afadb7d329dca"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC module initialization function.  <a href="#ga562b7b9f4042b41c7c5afadb7d329dca">More...</a><br/></td></tr>
+<tr class="separator:ga562b7b9f4042b41c7c5afadb7d329dca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga759c34dd29609bc871063f6b2c87afe0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga759c34dd29609bc871063f6b2c87afe0">MECC_Deinit</a> (MECC_Type *base)</td></tr>
+<tr class="memdesc:ga759c34dd29609bc871063f6b2c87afe0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the MECC.  <a href="#ga759c34dd29609bc871063f6b2c87afe0">More...</a><br/></td></tr>
+<tr class="separator:ga759c34dd29609bc871063f6b2c87afe0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaafa877e4326d0a9ad6b4a8fa6480b2d6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#gaafa877e4326d0a9ad6b4a8fa6480b2d6">MECC_GetDefaultConfig</a> (<a class="el" href="a00063.html#gacf5f4016477962dde987413058421550">mecc_config_t</a> *config)</td></tr>
+<tr class="memdesc:gaafa877e4326d0a9ad6b4a8fa6480b2d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the MECC configuration structure to default values.  <a href="#gaafa877e4326d0a9ad6b4a8fa6480b2d6">More...</a><br/></td></tr>
+<tr class="separator:gaafa877e4326d0a9ad6b4a8fa6480b2d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Status</h2></td></tr>
+<tr class="memitem:ga973eedfb451e35fb87e0d05557dd0f90"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga973eedfb451e35fb87e0d05557dd0f90">MECC_GetStatusFlags</a> (MECC_Type *base)</td></tr>
+<tr class="memdesc:ga973eedfb451e35fb87e0d05557dd0f90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets MECC status flags.  <a href="#ga973eedfb451e35fb87e0d05557dd0f90">More...</a><br/></td></tr>
+<tr class="separator:ga973eedfb451e35fb87e0d05557dd0f90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac52bfc1af00491bec9b10320dd1e74cf"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#gac52bfc1af00491bec9b10320dd1e74cf">MECC_ClearStatusFlags</a> (MECC_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:gac52bfc1af00491bec9b10320dd1e74cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC module clear interrupt status.  <a href="#gac52bfc1af00491bec9b10320dd1e74cf">More...</a><br/></td></tr>
+<tr class="separator:gac52bfc1af00491bec9b10320dd1e74cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa4673878c298f67c057ddc2502b7d5c2"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#gaa4673878c298f67c057ddc2502b7d5c2">MECC_EnableInterruptStatus</a> (MECC_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:gaa4673878c298f67c057ddc2502b7d5c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC module enable interrupt status.  <a href="#gaa4673878c298f67c057ddc2502b7d5c2">More...</a><br/></td></tr>
+<tr class="separator:gaa4673878c298f67c057ddc2502b7d5c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga53af3f1621fb97420058332d3231b8da"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga53af3f1621fb97420058332d3231b8da">MECC_DisableInterruptStatus</a> (MECC_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:ga53af3f1621fb97420058332d3231b8da"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC module disable interrupt status.  <a href="#ga53af3f1621fb97420058332d3231b8da">More...</a><br/></td></tr>
+<tr class="separator:ga53af3f1621fb97420058332d3231b8da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Interrupts</h2></td></tr>
+<tr class="memitem:ga617c4b544b93fcfe66a39fb76ef7108e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga617c4b544b93fcfe66a39fb76ef7108e">MECC_EnableInterrupts</a> (MECC_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:ga617c4b544b93fcfe66a39fb76ef7108e"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC module enable interrupt.  <a href="#ga617c4b544b93fcfe66a39fb76ef7108e">More...</a><br/></td></tr>
+<tr class="separator:ga617c4b544b93fcfe66a39fb76ef7108e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa51a4489ca6b308f899d7697a2b67a31"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#gaa51a4489ca6b308f899d7697a2b67a31">MECC_DisableInterrupts</a> (MECC_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:gaa51a4489ca6b308f899d7697a2b67a31"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC module disable interrupt.  <a href="#gaa51a4489ca6b308f899d7697a2b67a31">More...</a><br/></td></tr>
+<tr class="separator:gaa51a4489ca6b308f899d7697a2b67a31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+functional</h2></td></tr>
+<tr class="memitem:gae044b54f211cfc47f80dd50e8ab61479"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#gae044b54f211cfc47f80dd50e8ab61479">MECC_ErrorInjection</a> (MECC_Type *base, uint32_t lowerrordata, uint32_t higherrordata, uint8_t eccdata, uint8_t banknumber)</td></tr>
+<tr class="memdesc:gae044b54f211cfc47f80dd50e8ab61479"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC module error injection.  <a href="#gae044b54f211cfc47f80dd50e8ab61479">More...</a><br/></td></tr>
+<tr class="separator:gae044b54f211cfc47f80dd50e8ab61479"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2b8c6f2bbd7af719f299580eedf1abac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga2b8c6f2bbd7af719f299580eedf1abac">MECC_GetSingleErrorInfo</a> (MECC_Type *base, <a class="el" href="a00063.html#ga64799de9201b71d8ce00470a68b04193">mecc_single_error_info_t</a> *info, uint8_t banknumber)</td></tr>
+<tr class="memdesc:ga2b8c6f2bbd7af719f299580eedf1abac"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC module get single error information.  <a href="#ga2b8c6f2bbd7af719f299580eedf1abac">More...</a><br/></td></tr>
+<tr class="separator:ga2b8c6f2bbd7af719f299580eedf1abac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga139805c09a0024ad023d5b5e1d11a0f3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ga139805c09a0024ad023d5b5e1d11a0f3">MECC_GetMultiErrorInfo</a> (MECC_Type *base, <a class="el" href="a00063.html#ga2af5b8d1a2429ee64553ca9c676b2079">mecc_multi_error_info_t</a> *info, uint8_t banknumber)</td></tr>
+<tr class="memdesc:ga139805c09a0024ad023d5b5e1d11a0f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">MECC module get multiple error information.  <a href="#ga139805c09a0024ad023d5b5e1d11a0f3">More...</a><br/></td></tr>
+<tr class="separator:ga139805c09a0024ad023d5b5e1d11a0f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00414" id="a00414"></a>
+<a name="a00575" id="a00575"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct _lpuart_edma_handle</td>
+          <td class="memname">struct _mecc_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a90af06bca6fa1c835176bb2f7baae37c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00063.html#gaed2bf1ac041ea4526ccf5ab0eba4da73">lpuart_edma_transfer_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a90af06bca6fa1c835176bb2f7baae37c">callback</a></td></tr>
-<tr class="memdesc:a90af06bca6fa1c835176bb2f7baae37c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function.  <a href="#a90af06bca6fa1c835176bb2f7baae37c">More...</a><br/></td></tr>
-<tr class="separator:a90af06bca6fa1c835176bb2f7baae37c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac699f5a5123647eefb2aebb1b1a35c4a"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ac699f5a5123647eefb2aebb1b1a35c4a">userData</a></td></tr>
-<tr class="memdesc:ac699f5a5123647eefb2aebb1b1a35c4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART callback function parameter.  <a href="#ac699f5a5123647eefb2aebb1b1a35c4a">More...</a><br/></td></tr>
-<tr class="separator:ac699f5a5123647eefb2aebb1b1a35c4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6cbb7a1abb602e48f3dcf355ad94ff14"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a6cbb7a1abb602e48f3dcf355ad94ff14">rxDataSizeAll</a></td></tr>
-<tr class="memdesc:a6cbb7a1abb602e48f3dcf355ad94ff14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the data to receive.  <a href="#a6cbb7a1abb602e48f3dcf355ad94ff14">More...</a><br/></td></tr>
-<tr class="separator:a6cbb7a1abb602e48f3dcf355ad94ff14"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d4461a68ee1f14850ac4d341afb8080"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a1d4461a68ee1f14850ac4d341afb8080">txDataSizeAll</a></td></tr>
-<tr class="memdesc:a1d4461a68ee1f14850ac4d341afb8080"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the data to send out.  <a href="#a1d4461a68ee1f14850ac4d341afb8080">More...</a><br/></td></tr>
-<tr class="separator:a1d4461a68ee1f14850ac4d341afb8080"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1748fd406d158b129b40430218be3372"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00025.html#a00476">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a1748fd406d158b129b40430218be3372">txEdmaHandle</a></td></tr>
-<tr class="memdesc:a1748fd406d158b129b40430218be3372"><td class="mdescLeft">&#160;</td><td class="mdescRight">The eDMA TX channel used.  <a href="#a1748fd406d158b129b40430218be3372">More...</a><br/></td></tr>
-<tr class="separator:a1748fd406d158b129b40430218be3372"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa365980412bd8d507718e3bdb6991983"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00025.html#a00476">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#aa365980412bd8d507718e3bdb6991983">rxEdmaHandle</a></td></tr>
-<tr class="memdesc:aa365980412bd8d507718e3bdb6991983"><td class="mdescLeft">&#160;</td><td class="mdescRight">The eDMA RX channel used.  <a href="#aa365980412bd8d507718e3bdb6991983">More...</a><br/></td></tr>
-<tr class="separator:aa365980412bd8d507718e3bdb6991983"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ffb3be259d932a6a9f7e86aed4cc790"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a7ffb3be259d932a6a9f7e86aed4cc790">nbytes</a></td></tr>
-<tr class="memdesc:a7ffb3be259d932a6a9f7e86aed4cc790"><td class="mdescLeft">&#160;</td><td class="mdescRight">eDMA minor byte transfer count initially configured.  <a href="#a7ffb3be259d932a6a9f7e86aed4cc790">More...</a><br/></td></tr>
-<tr class="separator:a7ffb3be259d932a6a9f7e86aed4cc790"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a17fd779099d5f3707693ac7c1212dc8a"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a17fd779099d5f3707693ac7c1212dc8a">txState</a></td></tr>
-<tr class="memdesc:a17fd779099d5f3707693ac7c1212dc8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX transfer state.  <a href="#a17fd779099d5f3707693ac7c1212dc8a">More...</a><br/></td></tr>
-<tr class="separator:a17fd779099d5f3707693ac7c1212dc8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2a62eb17faa4b16b47cb7ca6992c9980"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2a62eb17faa4b16b47cb7ca6992c9980"></a>
-volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a2a62eb17faa4b16b47cb7ca6992c9980">rxState</a></td></tr>
-<tr class="memdesc:a2a62eb17faa4b16b47cb7ca6992c9980"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX transfer state. <br/></td></tr>
-<tr class="separator:a2a62eb17faa4b16b47cb7ca6992c9980"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b034964b81e843b33745a9f9ffc095d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a6b034964b81e843b33745a9f9ffc095d">enableMecc</a></td></tr>
+<tr class="memdesc:a6b034964b81e843b33745a9f9ffc095d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the MECC function.  <a href="#a6b034964b81e843b33745a9f9ffc095d">More...</a><br/></td></tr>
+<tr class="separator:a6b034964b81e843b33745a9f9ffc095d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86735c44a8c21c653f40ab9c6ab0487a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a86735c44a8c21c653f40ab9c6ab0487a">Ocram1StartAddress</a></td></tr>
+<tr class="memdesc:a86735c44a8c21c653f40ab9c6ab0487a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ocram 1 start address.  <a href="#a86735c44a8c21c653f40ab9c6ab0487a">More...</a><br/></td></tr>
+<tr class="separator:a86735c44a8c21c653f40ab9c6ab0487a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad36afb6398861c12567ebf577f08b497"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ad36afb6398861c12567ebf577f08b497">Ocram1EndAddress</a></td></tr>
+<tr class="memdesc:ad36afb6398861c12567ebf577f08b497"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ocram 1 end address.  <a href="#ad36afb6398861c12567ebf577f08b497">More...</a><br/></td></tr>
+<tr class="separator:ad36afb6398861c12567ebf577f08b497"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b440360393f8f778156490632e7050f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a5b440360393f8f778156490632e7050f">Ocram2StartAddress</a></td></tr>
+<tr class="memdesc:a5b440360393f8f778156490632e7050f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ocram 2 start address.  <a href="#a5b440360393f8f778156490632e7050f">More...</a><br/></td></tr>
+<tr class="separator:a5b440360393f8f778156490632e7050f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1759740af1354bfaf63d899c99ee8d3c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a1759740af1354bfaf63d899c99ee8d3c">Ocram2EndAddress</a></td></tr>
+<tr class="memdesc:a1759740af1354bfaf63d899c99ee8d3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ocram 2 end address.  <a href="#a1759740af1354bfaf63d899c99ee8d3c">More...</a><br/></td></tr>
+<tr class="separator:a1759740af1354bfaf63d899c99ee8d3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a90af06bca6fa1c835176bb2f7baae37c"></a>
+<a class="anchor" id="a6b034964b81e843b33745a9f9ffc095d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00063.html#gaed2bf1ac041ea4526ccf5ab0eba4da73">lpuart_edma_transfer_callback_t</a> lpuart_edma_handle_t::callback</td>
+          <td class="memname">bool _mecc_config::enableMecc</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ac699f5a5123647eefb2aebb1b1a35c4a"></a>
+<a class="anchor" id="a86735c44a8c21c653f40ab9c6ab0487a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void* lpuart_edma_handle_t::userData</td>
+          <td class="memname">uint32_t _mecc_config::Ocram1StartAddress</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a6cbb7a1abb602e48f3dcf355ad94ff14"></a>
+<a class="anchor" id="ad36afb6398861c12567ebf577f08b497"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">size_t lpuart_edma_handle_t::rxDataSizeAll</td>
+          <td class="memname">uint32_t _mecc_config::Ocram1EndAddress</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a1d4461a68ee1f14850ac4d341afb8080"></a>
+<a class="anchor" id="a5b440360393f8f778156490632e7050f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">size_t lpuart_edma_handle_t::txDataSizeAll</td>
+          <td class="memname">uint32_t _mecc_config::Ocram2StartAddress</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a1748fd406d158b129b40430218be3372"></a>
+<a class="anchor" id="a1759740af1354bfaf63d899c99ee8d3c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00025.html#a00476">edma_handle_t</a>* lpuart_edma_handle_t::txEdmaHandle</td>
+          <td class="memname">uint32_t _mecc_config::Ocram2EndAddress</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="aa365980412bd8d507718e3bdb6991983"></a>
+
+</div>
+</div>
+<a name="a00577" id="a00577"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00025.html#a00476">edma_handle_t</a>* lpuart_edma_handle_t::rxEdmaHandle</td>
+          <td class="memname">struct _mecc_single_error_info</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a8c3f4e65a79aaab023f9fcf0cdbe43b8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8c3f4e65a79aaab023f9fcf0cdbe43b8"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a8c3f4e65a79aaab023f9fcf0cdbe43b8">singleErrorAddress</a></td></tr>
+<tr class="memdesc:a8c3f4e65a79aaab023f9fcf0cdbe43b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Single error address on Ocram bank n. <br/></td></tr>
+<tr class="separator:a8c3f4e65a79aaab023f9fcf0cdbe43b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8615e99730cfb8207a09cdefd04603e2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8615e99730cfb8207a09cdefd04603e2"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a8615e99730cfb8207a09cdefd04603e2">singleErrorDataLow</a></td></tr>
+<tr class="memdesc:a8615e99730cfb8207a09cdefd04603e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Single error low 32 bits uncorrected read data on Ocram bank n. <br/></td></tr>
+<tr class="separator:a8615e99730cfb8207a09cdefd04603e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a630686ce49ee93d3f8b372eb990b88a1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a630686ce49ee93d3f8b372eb990b88a1"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a630686ce49ee93d3f8b372eb990b88a1">singleErrorDataHigh</a></td></tr>
+<tr class="memdesc:a630686ce49ee93d3f8b372eb990b88a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Single error high 32 bits uncorrected read data on Ocram bank n. <br/></td></tr>
+<tr class="separator:a630686ce49ee93d3f8b372eb990b88a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1055cf71f91dbea5c86f77ddf1abde19"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1055cf71f91dbea5c86f77ddf1abde19"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a1055cf71f91dbea5c86f77ddf1abde19">singleErrorPosLow</a></td></tr>
+<tr class="memdesc:a1055cf71f91dbea5c86f77ddf1abde19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Single error bit postion of low 32 bits read data on Ocram bank n. <br/></td></tr>
+<tr class="separator:a1055cf71f91dbea5c86f77ddf1abde19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3061c1491172d0c8525dda28dea84b52"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3061c1491172d0c8525dda28dea84b52"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a3061c1491172d0c8525dda28dea84b52">singleErrorPosHigh</a></td></tr>
+<tr class="memdesc:a3061c1491172d0c8525dda28dea84b52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Single error bit postion of high 32 bits read data on Ocram bank n. <br/></td></tr>
+<tr class="separator:a3061c1491172d0c8525dda28dea84b52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab26914abeab68dc0c5f4bc72a1663e2c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab26914abeab68dc0c5f4bc72a1663e2c"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ab26914abeab68dc0c5f4bc72a1663e2c">singleErrorEccCode</a></td></tr>
+<tr class="memdesc:ab26914abeab68dc0c5f4bc72a1663e2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Single error ECC code on Ocram bank n. <br/></td></tr>
+<tr class="separator:ab26914abeab68dc0c5f4bc72a1663e2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 
 </div>
 </div>
-<a class="anchor" id="a7ffb3be259d932a6a9f7e86aed4cc790"></a>
+<a name="a00576" id="a00576"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t lpuart_edma_handle_t::nbytes</td>
+          <td class="memname">struct _mecc_multi_error_info</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a17fd779099d5f3707693ac7c1212dc8a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">volatile uint8_t lpuart_edma_handle_t::txState</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:ae96761d3c691abdd444c7e629147cf65"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae96761d3c691abdd444c7e629147cf65"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#ae96761d3c691abdd444c7e629147cf65">multiErrorAddress</a></td></tr>
+<tr class="memdesc:ae96761d3c691abdd444c7e629147cf65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiple error address on Ocram bank n. <br/></td></tr>
+<tr class="separator:ae96761d3c691abdd444c7e629147cf65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a229274ce25d734200879cf1bf9bae7f3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a229274ce25d734200879cf1bf9bae7f3"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a229274ce25d734200879cf1bf9bae7f3">multiErrorDataLow</a></td></tr>
+<tr class="memdesc:a229274ce25d734200879cf1bf9bae7f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiple error low 32 bits read data on Ocram bank n. <br/></td></tr>
+<tr class="separator:a229274ce25d734200879cf1bf9bae7f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7ddbc275673cd586454a63c757be0eb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af7ddbc275673cd586454a63c757be0eb"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#af7ddbc275673cd586454a63c757be0eb">multiErrorDataHigh</a></td></tr>
+<tr class="memdesc:af7ddbc275673cd586454a63c757be0eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiple error high 32 bits read data on Ocram bank n. <br/></td></tr>
+<tr class="separator:af7ddbc275673cd586454a63c757be0eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b4cc8d1367729017defe67e1e426841"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6b4cc8d1367729017defe67e1e426841"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00063.html#a6b4cc8d1367729017defe67e1e426841">multiErrorEccCode</a></td></tr>
+<tr class="memdesc:a6b4cc8d1367729017defe67e1e426841"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiple error ECC code on Ocram bank n. <br/></td></tr>
+<tr class="separator:a6b4cc8d1367729017defe67e1e426841"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 
 </div>
 </div>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga9bfcb92913944fb359c4544b4cdee5d3"></a>
+<a class="anchor" id="ga6cbe383d929a1d77a9820f5e5a592f98"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_LPUART_EDMA_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00338.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 6, 0))</td>
+          <td class="memname">#define FSL_MECC_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00336.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2U, 0U, 2U))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -307,58 +511,296 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 </div>
 </div>
 <h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="gaed2bf1ac041ea4526ccf5ab0eba4da73"></a>
+<a class="anchor" id="gacf5f4016477962dde987413058421550"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* lpuart_edma_transfer_callback_t)(LPUART_Type *base, lpuart_edma_handle_t *handle, <a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
+          <td class="memname">typedef struct <a class="el" href="a00063.html#a00575">_mecc_config</a>  <a class="el" href="a00063.html#gacf5f4016477962dde987413058421550">mecc_config_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="gaa491173a6b1628f4ff82067b2e1ceaa9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">anonymous enum</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaa491173a6b1628f4ff82067b2e1ceaa9ad54935f1c4685bb65ae950b7cd31fb88"></a>kStatus_MECC_BankMiss</em>&nbsp;</td><td class="fielddoc">
+<p>Ocram bank miss. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga3babbf89cae9b856a12864a41506efbd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">anonymous enum</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This structure contains the settings for all of the MECC interrupt configurations. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga3babbf89cae9b856a12864a41506efbda60386e532a4432bdacac6b1b335689fb"></a>kMECC_SingleError0InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Single Bit Error On Ocram Bank0 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga3babbf89cae9b856a12864a41506efbdaee220e9fea566ee845257d397334c6e5"></a>kMECC_SingleError1InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Single Bit Error On Ocram Bank1 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga3babbf89cae9b856a12864a41506efbda65533ce34c9d817cbc7e004f1338998a"></a>kMECC_SingleError2InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Single Bit Error On Ocram Bank2 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga3babbf89cae9b856a12864a41506efbda2e921c7bf7687ed285c3a14841dfa72b"></a>kMECC_SingleError3InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Single Bit Error On Ocram Bank3 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga3babbf89cae9b856a12864a41506efbda33c1cd216a6b6e2d9f2a812597f0eb16"></a>kMECC_MultiError0InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Multiple Bits Error On Ocram Bank0 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga3babbf89cae9b856a12864a41506efbda5b205daa036fa09d53bba5b0dcc90b3e"></a>kMECC_MultiError1InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Multiple Bits Error On Ocram Bank1 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga3babbf89cae9b856a12864a41506efbda0f1f86c38aec4924ea2718b965eb1b95"></a>kMECC_MultiError2InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Multiple Bits Error On Ocram Bank2 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga3babbf89cae9b856a12864a41506efbda73fd6dcecc1dcb1949bd06563316d59c"></a>kMECC_MultiError3InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Multiple Bits Error On Ocram Bank3 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga3babbf89cae9b856a12864a41506efbda0ae1033db8b31de149663cbe8b3d7981"></a>kMECC_StrobeError0InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>AXI Strobe Error On Ocram Bank0 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga3babbf89cae9b856a12864a41506efbda65b9c6c2b76c569479c38046c19c2d02"></a>kMECC_StrobeError1InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>AXI Strobe Error On Ocram Bank1 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga3babbf89cae9b856a12864a41506efbda5221708daa8ae1fce221e50fe51e2137"></a>kMECC_StrobeError2InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>AXI Strobe Error On Ocram Bank2 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga3babbf89cae9b856a12864a41506efbdadaf078eec4ff8f20c033549eb43c615a"></a>kMECC_StrobeError3InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>AXI Strobe Error On Ocram Bank3 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga3babbf89cae9b856a12864a41506efbda8d8e449f321ddbd300ea205cd4a00ef1"></a>kMECC_AccessError0InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Ocram Access Error On Bank0 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga3babbf89cae9b856a12864a41506efbda2f7202fb545ab1461f83bb82861ce829"></a>kMECC_AccessError1InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Ocram Access Error On Bank1 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga3babbf89cae9b856a12864a41506efbdadaf61d5a22b9e8f0f9ef158772fd4974"></a>kMECC_AccessError2InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Ocram Access Error On Bank2 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga3babbf89cae9b856a12864a41506efbda37b942d39cafde4c0eee07bd6106e230"></a>kMECC_AccessError3InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Ocram Access Error On Bank3 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga3babbf89cae9b856a12864a41506efbdad36e96df8d16f7ef1c598c86e4b76719"></a>kMECC_AllInterruptsEnable</em>&nbsp;</td><td class="fielddoc">
+<p>all interrupts enable </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gaa57e16cd48de3b9a989056ff8df26f84"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">anonymous enum</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This structure contains the settings for all of the MECC interrupt status configurations. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaa57e16cd48de3b9a989056ff8df26f84acae2d283f0d93ad8f95a07ffaad4a4c9"></a>kMECC_SingleError0InterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Single Bit Error On Ocram Bank0 interrupt status enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa57e16cd48de3b9a989056ff8df26f84a53c64b1d2d26e05615542e35ec7aeece"></a>kMECC_SingleError1InterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Single Bit Error On Ocram Bank1 interrupt status enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa57e16cd48de3b9a989056ff8df26f84a3b0f91ec5c5b7ff20a8316d4cc5938f7"></a>kMECC_SingleError2InterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Single Bit Error On Ocram Bank2 interrupt status enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa57e16cd48de3b9a989056ff8df26f84aa3a7263fd019e2f84439b5987c4e3e1f"></a>kMECC_SingleError3InterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Single Bit Error On Ocram Bank3 interrupt status enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa57e16cd48de3b9a989056ff8df26f84a01b238a7313c76b9f2863d6cbd441a11"></a>kMECC_MultiError0InterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Multiple Bits Error On Ocram Bank0 interrupt status enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa57e16cd48de3b9a989056ff8df26f84aff426d2f793e65e4d3bc482b95d9948b"></a>kMECC_MultiError1InterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Multiple Bits Error On Ocram Bank1 interrupt status enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa57e16cd48de3b9a989056ff8df26f84aa9b3da1e0b963b62bc07ee5b71a77e97"></a>kMECC_MultiError2InterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Multiple Bits Error On Ocram Bank2 interrupt status enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa57e16cd48de3b9a989056ff8df26f84ae9eb43a3ba49a8cb1a4a216c796772c3"></a>kMECC_MultiError3InterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Multiple Bits Error On Ocram Bank3 interrupt status enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa57e16cd48de3b9a989056ff8df26f84a629e23be3ff3c23a3a07337bd8ecccae"></a>kMECC_StrobeError0InterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
+<p>AXI Strobe Error On Ocram Bank0 interrupt status enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa57e16cd48de3b9a989056ff8df26f84a715705722e7b0bd1cd67a4d5f3ddcd93"></a>kMECC_StrobeError1InterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
+<p>AXI Strobe Error On Ocram Bank1 interrupt status enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa57e16cd48de3b9a989056ff8df26f84a4411b3b02533ada7cfe29e3f284b9b98"></a>kMECC_StrobeError2InterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
+<p>AXI Strobe Error On Ocram Bank2 interrupt status enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa57e16cd48de3b9a989056ff8df26f84abf9fcb24fbdf942895b0e609b3934e62"></a>kMECC_StrobeError3InterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
+<p>AXI Strobe Error On Ocram Bank3 interrupt status enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa57e16cd48de3b9a989056ff8df26f84a9866106ad109217f41e9460ae644f0b9"></a>kMECC_AccessError0InterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Ocram Access Error On Bank0 interrupt status enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa57e16cd48de3b9a989056ff8df26f84a576e9bfb470b35056c079ef1cd74b27e"></a>kMECC_AccessError1InterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Ocram Access Error On Bank1 interrupt status enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa57e16cd48de3b9a989056ff8df26f84ae00d10368d03231b9a4b8cc7f473f84f"></a>kMECC_AccessError2InterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Ocram Access Error On Bank2 interrupt status enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa57e16cd48de3b9a989056ff8df26f84aca8726fa8c65753f5c6fa6f0dcd766c5"></a>kMECC_AccessError3InterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Ocram Access Error On Bank3 interrupt status enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa57e16cd48de3b9a989056ff8df26f84afd3243e9ef2e593117a814cfa36f6750"></a>kMECC_AllInterruptsStatusEnable</em>&nbsp;</td><td class="fielddoc">
+<p>all interrupts enable </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga634f9f55e799f3052a34590f08100017"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">anonymous enum</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This provides constants for the MECC status flags for use in the MECC functions. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga634f9f55e799f3052a34590f08100017a86dd1ab8cba24cb2cff9c50156c6597d"></a>kMECC_SingleError0InterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Single Bit Error On Ocram Bank0 interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga634f9f55e799f3052a34590f08100017ae3ecf474b2785e71ec9987138f1657ca"></a>kMECC_SingleError1InterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Single Bit Error On Ocram Bank1 interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga634f9f55e799f3052a34590f08100017adde8e391ea706c16e3c87150f2599e5c"></a>kMECC_SingleError2InterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Single Bit Error On Ocram Bank2 interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga634f9f55e799f3052a34590f08100017a11329502b8da5277e17030e5a7875457"></a>kMECC_SingleError3InterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Single Bit Error On Ocram Bank3 interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga634f9f55e799f3052a34590f08100017aa31b66d286e8c368fd6be5d1a519a777"></a>kMECC_MultiError0InterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Multiple Bits Error On Ocram Bank0 interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga634f9f55e799f3052a34590f08100017ac1ca262d428c3580c384f8bc0d6dec03"></a>kMECC_MultiError1InterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Multiple Bits Error On Ocram Bank1 interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga634f9f55e799f3052a34590f08100017a706b134e9a2a96f9aae83907cef0e244"></a>kMECC_MultiError2InterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Multiple Bits Error On Ocram Bank2 interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga634f9f55e799f3052a34590f08100017a724cfb2fe9e6be717dc122d5fffe727e"></a>kMECC_MultiError3InterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Multiple Bits Error On Ocram Bank3 interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga634f9f55e799f3052a34590f08100017a8fc11c23ff0c0f46854567becfec3114"></a>kMECC_StrobeError0InterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>AXI Strobe Error On Ocram Bank0 interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga634f9f55e799f3052a34590f08100017a9cbbb0c7093be87ed79ea1bf43443510"></a>kMECC_StrobeError1InterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>AXI Strobe Error On Ocram Bank1 interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga634f9f55e799f3052a34590f08100017a5c2f504d00dfa6b8bbf51b6b5da7d35d"></a>kMECC_StrobeError2InterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>AXI Strobe Error On Ocram Bank2 interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga634f9f55e799f3052a34590f08100017abb63acd151ebd2e9e9ce537a746725d1"></a>kMECC_StrobeError3InterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>AXI Strobe Error On Ocram Bank3 interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga634f9f55e799f3052a34590f08100017a1586a7269a31a523cd8f95cc7e4f9a4b"></a>kMECC_AccessError0InterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Ocram Access Error On Bank0 interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga634f9f55e799f3052a34590f08100017a9561369b9ee437c73efd7c953eaa4ee3"></a>kMECC_AccessError1InterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Ocram Access Error On Bank1 interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga634f9f55e799f3052a34590f08100017a2a14b7b11694d188cc8993e543458db3"></a>kMECC_AccessError2InterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Ocram Access Error On Bank2 interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga634f9f55e799f3052a34590f08100017a5943a7e154c3a6cd43cc910de4f2aa2d"></a>kMECC_AccessError3InterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Ocram Access Error On Bank3 interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga634f9f55e799f3052a34590f08100017a080bc792af3a79294d9d6df63671e522"></a>kMECC_AllInterruptsFlag</em>&nbsp;</td><td class="fielddoc">
+<p>all interrupts interrupt flag </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gab39a415800ebd0d977c477376649649b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">anonymous enum</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab39a415800ebd0d977c477376649649ba0eb35ef82a6ca87fd3a0ea522645b914"></a>kMECC_OcramBank0</em>&nbsp;</td><td class="fielddoc">
+<p>ocram bank number 0: ocram_base_address+0x20*i </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab39a415800ebd0d977c477376649649bacb88eb77d6365c5f53d8a030d5602231"></a>kMECC_OcramBank1</em>&nbsp;</td><td class="fielddoc">
+<p>ocram bank number 1: ocram_base_address+0x20*i+0x8 </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab39a415800ebd0d977c477376649649ba175329c36e59cfe6731efe5d7873ad9e"></a>kMECC_OcramBank2</em>&nbsp;</td><td class="fielddoc">
+<p>ocram bank number 2: ocram_base_address+0x20*i+0x10 </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab39a415800ebd0d977c477376649649ba2824bf84711bfa206d4be2104ed37a7a"></a>kMECC_OcramBank3</em>&nbsp;</td><td class="fielddoc">
+<p>ocram bank number 3: ocram_base_address+0x20*i+0x18 </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gae33c78feb670de33d2abf21ec0624531"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">anonymous enum</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggae33c78feb670de33d2abf21ec0624531ae00e394ef57da8de557c15db4ee2e818"></a>kMECC_Instance0</em>&nbsp;</td><td class="fielddoc">
+<p>Peripheral MECC1 base. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae33c78feb670de33d2abf21ec0624531a8d76be2f588aa57923168b302739a9a9"></a>kMECC_Instance1</em>&nbsp;</td><td class="fielddoc">
+<p>Peripheral MECC2 base. </p>
+</td></tr>
+</table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga4891d980e0e489932e8d3b5c52588c2e"></a>
+<a class="anchor" id="ga562b7b9f4042b41c7c5afadb7d329dca"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void LPUART_TransferCreateHandleEDMA </td>
+          <td class="memname">void MECC_Init </td>
           <td>(</td>
-          <td class="paramtype">LPUART_Type *&#160;</td>
+          <td class="paramtype">MECC_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpuart_edma_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00063.html#gaed2bf1ac041ea4526ccf5ab0eba4da73">lpuart_edma_transfer_callback_t</a>&#160;</td>
-          <td class="paramname"><em>callback</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>userData</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00025.html#a00476">edma_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>txEdmaHandle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00025.html#a00476">edma_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>rxEdmaHandle</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00063.html#gacf5f4016477962dde987413058421550">mecc_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -367,42 +809,329 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>This function disables all LPUART interrupts.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>LPUART peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>Pointer to lpuart_edma_handle_t structure. </td></tr>
-    <tr><td class="paramname">callback</td><td>Callback function. </td></tr>
-    <tr><td class="paramname">userData</td><td>User data. </td></tr>
-    <tr><td class="paramname">txEdmaHandle</td><td>User requested DMA handle for TX DMA transfer. </td></tr>
-    <tr><td class="paramname">rxEdmaHandle</td><td>User requested DMA handle for RX DMA transfer. </td></tr>
+    <tr><td class="paramname">base</td><td>MECC base address. </td></tr>
+    <tr><td class="paramname">config</td><td>pointer to the MECC configuration structure. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga24c9dff9f142243ed5ffb3112a356386"></a>
+<a class="anchor" id="ga759c34dd29609bc871063f6b2c87afe0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPUART_SendEDMA </td>
+          <td class="memname">void MECC_Deinit </td>
           <td>(</td>
-          <td class="paramtype">LPUART_Type *&#160;</td>
+          <td class="paramtype">MECC_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>MECC base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaafa877e4326d0a9ad6b4a8fa6480b2d6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MECC_GetDefaultConfig </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00063.html#gacf5f4016477962dde987413058421550">mecc_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">config</td><td>pointer to the MECC configuration structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga973eedfb451e35fb87e0d05557dd0f90"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t MECC_GetStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">MECC_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>MECC peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>MECC status flags. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gac52bfc1af00491bec9b10320dd1e74cf"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void MECC_ClearStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">MECC_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpuart_edma_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>MECC base address. </td></tr>
+    <tr><td class="paramname">mask</td><td>status to clear. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa4673878c298f67c057ddc2502b7d5c2"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void MECC_EnableInterruptStatus </td>
+          <td>(</td>
+          <td class="paramtype">MECC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00062.html#a00585">lpuart_transfer_t</a> *&#160;</td>
-          <td class="paramname"><em>xfer</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>MECC base address. </td></tr>
+    <tr><td class="paramname">mask</td><td>status to enable. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga53af3f1621fb97420058332d3231b8da"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void MECC_DisableInterruptStatus </td>
+          <td>(</td>
+          <td class="paramtype">MECC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>MECC base address. </td></tr>
+    <tr><td class="paramname">mask</td><td>status to disable. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga617c4b544b93fcfe66a39fb76ef7108e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void MECC_EnableInterrupts </td>
+          <td>(</td>
+          <td class="paramtype">MECC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>MECC base address. </td></tr>
+    <tr><td class="paramname">mask</td><td>The interrupts to enable. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa51a4489ca6b308f899d7697a2b67a31"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void MECC_DisableInterrupts </td>
+          <td>(</td>
+          <td class="paramtype">MECC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>MECC base address. </td></tr>
+    <tr><td class="paramname">mask</td><td>The interrupts to disable. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gae044b54f211cfc47f80dd50e8ab61479"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> MECC_ErrorInjection </td>
+          <td>(</td>
+          <td class="paramtype">MECC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>lowerrordata</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>higherrordata</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>eccdata</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>banknumber</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -411,47 +1140,46 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function sends data using eDMA. This is a non-blocking function, which returns right away. When all data is sent, the send callback function is called.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>LPUART peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>LPUART handle pointer. </td></tr>
-    <tr><td class="paramname">xfer</td><td>LPUART eDMA transfer structure. See <a class="el" href="a00062.html#a00585" title="LPUART transfer structure. ">lpuart_transfer_t</a>. </td></tr>
+    <tr><td class="paramname">base</td><td>MECC base address. </td></tr>
+    <tr><td class="paramname">lowerrordata</td><td>low 32 bits data. </td></tr>
+    <tr><td class="paramname">higherrordata</td><td>high 32 bits data. </td></tr>
+    <tr><td class="paramname">eccdata</td><td>ecc code. </td></tr>
+    <tr><td class="paramname">banknumber</td><td>ocram bank number. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td>if succeed, others failed. </td></tr>
-    <tr><td class="paramname">kStatus_LPUART_TxBusy</td><td>Previous transfer on going. </td></tr>
-    <tr><td class="paramname">kStatus_InvalidArgument</td><td>Invalid argument. </td></tr>
+    <tr><td class="paramname">kStatus_Success.</td><td>Bank0: ocram_base_address+0x20*i Bank1: ocram_base_address+0x20*i+0x8 Bank2: ocram_base_address+0x20*i+0x10 Bank3: ocram_base_address+0x20*i+0x18 i = 0,1,2,3,4..... </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga57b356ccc56276a557b3ddf53f6a7c0f"></a>
+<a class="anchor" id="ga2b8c6f2bbd7af719f299580eedf1abac"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPUART_ReceiveEDMA </td>
+          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> MECC_GetSingleErrorInfo </td>
           <td>(</td>
-          <td class="paramtype">LPUART_Type *&#160;</td>
+          <td class="paramtype">MECC_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpuart_edma_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
+          <td class="paramtype"><a class="el" href="a00063.html#ga64799de9201b71d8ce00470a68b04193">mecc_single_error_info_t</a> *&#160;</td>
+          <td class="paramname"><em>info</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00062.html#a00585">lpuart_transfer_t</a> *&#160;</td>
-          <td class="paramname"><em>xfer</em>&#160;</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>banknumber</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -460,41 +1188,45 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function receives data using eDMA. This is non-blocking function, which returns right away. When all data is received, the receive callback function is called.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>LPUART peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>Pointer to lpuart_edma_handle_t structure. </td></tr>
-    <tr><td class="paramname">xfer</td><td>LPUART eDMA transfer structure, see <a class="el" href="a00062.html#a00585" title="LPUART transfer structure. ">lpuart_transfer_t</a>. </td></tr>
+    <tr><td class="paramname">base</td><td>MECC base address. </td></tr>
+    <tr><td class="paramname">info</td><td>single error information. </td></tr>
+    <tr><td class="paramname">banknumber</td><td>ocram bank number. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td>if succeed, others fail. </td></tr>
-    <tr><td class="paramname">kStatus_LPUART_RxBusy</td><td>Previous transfer ongoing. </td></tr>
-    <tr><td class="paramname">kStatus_InvalidArgument</td><td>Invalid argument. </td></tr>
+    <tr><td class="paramname">kStatus_Success.</td><td></td></tr>
+    <tr><td class="paramname">kStatus_MECC_BankMiss.</td><td>Bank0: ocram_base_address+0x20*i Bank1: ocram_base_address+0x20*i+0x8 Bank2: ocram_base_address+0x20*i+0x10 Bank3: ocram_base_address+0x20*i+0x18 i = 0,1,2,3,4..... </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga48033a0651d1e68133bbb73ded3d9309"></a>
+<a class="anchor" id="ga139805c09a0024ad023d5b5e1d11a0f3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void LPUART_TransferAbortSendEDMA </td>
+          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> MECC_GetMultiErrorInfo </td>
           <td>(</td>
-          <td class="paramtype">LPUART_Type *&#160;</td>
+          <td class="paramtype">MECC_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpuart_edma_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00063.html#ga2af5b8d1a2429ee64553ca9c676b2079">mecc_multi_error_info_t</a> *&#160;</td>
+          <td class="paramname"><em>info</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>banknumber</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -503,178 +1235,18 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function aborts the sent data using eDMA.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>LPUART peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>Pointer to lpuart_edma_handle_t structure. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaf4160e8481b5d0861fa2f4ea14ccc13e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void LPUART_TransferAbortReceiveEDMA </td>
-          <td>(</td>
-          <td class="paramtype">LPUART_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">lpuart_edma_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function aborts the received data using eDMA.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>LPUART peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>Pointer to lpuart_edma_handle_t structure. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga0369d8b3a9238d88f2ef527b2cdbf152"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPUART_TransferGetSendCountEDMA </td>
-          <td>(</td>
-          <td class="paramtype">LPUART_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">lpuart_edma_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>count</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function gets the number of bytes written to the LPUART TX register by DMA.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>LPUART peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>LPUART handle pointer. </td></tr>
-    <tr><td class="paramname">count</td><td>Send bytes count. </td></tr>
+    <tr><td class="paramname">base</td><td>MECC base address. </td></tr>
+    <tr><td class="paramname">info</td><td>multiple error information. </td></tr>
+    <tr><td class="paramname">banknumber</td><td>ocram bank number. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">kStatus_NoTransferInProgress</td><td>No send in progress. </td></tr>
-    <tr><td class="paramname">kStatus_InvalidArgument</td><td>Parameter is invalid. </td></tr>
-    <tr><td class="paramname">kStatus_Success</td><td>Get successfully through the parameter <code>count</code>; </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga433b9163c0d46f0e8b65b5ded880a1f8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPUART_TransferGetReceiveCountEDMA </td>
-          <td>(</td>
-          <td class="paramtype">LPUART_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">lpuart_edma_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>count</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function gets the number of received bytes.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>LPUART peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>LPUART handle pointer. </td></tr>
-    <tr><td class="paramname">count</td><td>Receive bytes count. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_NoTransferInProgress</td><td>No receive in progress. </td></tr>
-    <tr><td class="paramname">kStatus_InvalidArgument</td><td>Parameter is invalid. </td></tr>
-    <tr><td class="paramname">kStatus_Success</td><td>Get successfully through the parameter <code>count</code>; </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga898e2e544106c928c6930605ff59fc43"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void LPUART_TransferEdmaHandleIRQ </td>
-          <td>(</td>
-          <td class="paramtype">LPUART_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>lpuartEdmaHandle</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function handles the LPUART tx complete IRQ request and invoke user callback. It is not set to static so that it can be used in user application. </p>
-<dl class="section note"><dt>Note</dt><dd>This function is used as default IRQ handler by double weak mechanism. If user's specific IRQ handler is implemented, make sure this function is invoked in the handler.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>LPUART peripheral base address. </td></tr>
-    <tr><td class="paramname">lpuartEdmaHandle</td><td>LPUART handle pointer. </td></tr>
+    <tr><td class="paramname">kStatus_Success.</td><td></td></tr>
+    <tr><td class="paramname">kStatus_MECC_BankMiss.</td><td>Bank0: ocram_base_address+0x20*i Bank1: ocram_base_address+0x20*i+0x8 Bank2: ocram_base_address+0x20*i+0x10 Bank3: ocram_base_address+0x20*i+0x18 i = 0,1,2,3,4..... </td></tr>
   </table>
   </dd>
 </dl>

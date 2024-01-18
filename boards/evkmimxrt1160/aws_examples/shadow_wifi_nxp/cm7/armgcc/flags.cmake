@@ -43,6 +43,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -DCPU_MIMXRT1166DVM6A_cm7 \
     -DUSE_RTOS=1 \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
+    -DDISABLE_LOGGING \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
     -DMCUXPRESSO_SDK \
     -DCRYPTO_USE_DRIVER_CAAM \
@@ -57,6 +58,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -DLWIP_NETIF_HOSTNAME=1 \
     -DLWIP_NETIF_STATUS_CALLBACK=1 \
     -DLWIP_IGMP=1 \
+    -DMBEDTLS_THREADING_ALT \
+    -DMBEDTLS_THREADING_C \
     -g \
     -O0 \
     -mcpu=cortex-m7 \
@@ -71,6 +74,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -fomit-frame-pointer \
+    -Wno-unused-function \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -87,6 +92,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -DCPU_MIMXRT1166DVM6A_cm7 \
     -DUSE_RTOS=1 \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
+    -DDISABLE_LOGGING \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
     -DMCUXPRESSO_SDK \
     -DCRYPTO_USE_DRIVER_CAAM \
@@ -101,6 +107,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -DLWIP_NETIF_HOSTNAME=1 \
     -DLWIP_NETIF_STATUS_CALLBACK=1 \
     -DLWIP_IGMP=1 \
+    -DMBEDTLS_THREADING_ALT \
+    -DMBEDTLS_THREADING_C \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \
@@ -114,6 +122,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -fomit-frame-pointer \
+    -Wno-unused-function \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -193,7 +203,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     --defsym=__heap_size__=0x200 \
     ${FPU} \
     ${SPECS} \
-    -T${ProjDirPath}/MIMXRT1166xxxxx_cm7_flexspi_nor_sdram.ld -static \
+    -T\"${ProjDirPath}/MIMXRT1166xxxxx_cm7_flexspi_nor_sdram.ld\" -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     ${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} \
@@ -223,5 +233,5 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     --defsym=__heap_size__=0x200 \
     ${FPU} \
     ${SPECS} \
-    -T${ProjDirPath}/MIMXRT1166xxxxx_cm7_flexspi_nor_sdram.ld -static \
+    -T\"${ProjDirPath}/MIMXRT1166xxxxx_cm7_flexspi_nor_sdram.ld\" -static \
 ")

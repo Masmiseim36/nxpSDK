@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: TEMPSENSOR: Temperature Sensor Module</title>
+<title>MCUXpresso SDK API Reference Manual: WDOG: Watchdog Timer Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,322 +99,326 @@ $(document).ready(function(){initNavTree('a00097.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#files">Files</a> &#124;
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">TEMPSENSOR: Temperature Sensor Module</div>  </div>
+<div class="title">WDOG: Watchdog Timer Driver</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a peripheral driver for the Temperature Sensor Module (TEMPSENSOR) module of MCUXpresso SDK devices.</p>
-<h1><a class="anchor" id="TEMPMONOperation"></a>
-TEMPSENSOR Operations</h1>
-<p>The function TEMPMON_Init() will initialize the TEMPSENSOR peripheral operation.</p>
-<p>The function TEMPMON_Deinit() will deinitialize the TEMPSENSOR peripheral operation.</p>
-<p>The function TEMPMON_GetDefaultConfig() will get default configuration.</p>
-<p>The function TEMPMON_StartMeasure() will start the temperature measurement process.</p>
-<p>The function TEMPMON_StopMeasure() will stop the temperature measurement process.</p>
-<p>The function TEMPMON_GetCurrentTemp() will get the current temperature.</p>
-<p>The function TEMPMON_SetTempAlarm() will set the temperature count that will generate an alarm interrupt. </p>
+<p>The MCUXpresso SDK provides a peripheral driver for the Watchdog module (WDOG) of MCUXpresso SDK devices.</p>
+<h1><a class="anchor" id="WDOGTypUC"></a>
+Typical use case</h1>
+<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/wdog </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
-Files</h2></td></tr>
-<tr class="memitem:a00297"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00297.html">fsl_tempsensor.h</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00696"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#a00696">tmpsns_config_t</a></td></tr>
-<tr class="memdesc:a00696"><td class="mdescLeft">&#160;</td><td class="mdescRight">TMPSNS temperature structure.  <a href="a00097.html#a00696">More...</a><br/></td></tr>
-<tr class="separator:a00696"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00712"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#a00712">_wdog_work_mode</a></td></tr>
+<tr class="memdesc:a00712"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines WDOG work mode.  <a href="a00097.html#a00712">More...</a><br/></td></tr>
+<tr class="separator:a00712"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00711"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#a00711">_wdog_config</a></td></tr>
+<tr class="memdesc:a00711"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describes WDOG configuration structure.  <a href="a00097.html#a00711">More...</a><br/></td></tr>
+<tr class="separator:a00711"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga4c03cba4ef6445904c5733f9859cf3cb"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00097.html#a00712">_wdog_work_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#ga4c03cba4ef6445904c5733f9859cf3cb">wdog_work_mode_t</a></td></tr>
+<tr class="memdesc:ga4c03cba4ef6445904c5733f9859cf3cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines WDOG work mode.  <a href="#ga4c03cba4ef6445904c5733f9859cf3cb">More...</a><br/></td></tr>
+<tr class="separator:ga4c03cba4ef6445904c5733f9859cf3cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga843869e99770392d4679ba26609548b2"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00097.html#a00711">_wdog_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#ga843869e99770392d4679ba26609548b2">wdog_config_t</a></td></tr>
+<tr class="memdesc:ga843869e99770392d4679ba26609548b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describes WDOG configuration structure.  <a href="#ga843869e99770392d4679ba26609548b2">More...</a><br/></td></tr>
+<tr class="separator:ga843869e99770392d4679ba26609548b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga2d5492e116eebd5075f247d21fb9db26"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00097.html#gga2d5492e116eebd5075f247d21fb9db26a9affc3126f1bfbee13be834be9737027">kTEMPSENSOR_HighTempInterruptStatusEnable</a>, 
+<tr class="memitem:ga568a59a02c40c87ed791f569c68e3617"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#ga568a59a02c40c87ed791f569c68e3617">_wdog_interrupt_enable</a> { <a class="el" href="a00097.html#gga568a59a02c40c87ed791f569c68e3617a8c358d55c0101eaa0a580d867572ec8d">kWDOG_InterruptEnable</a> = WDOG_WICR_WIE_MASK
+ }</td></tr>
+<tr class="memdesc:ga568a59a02c40c87ed791f569c68e3617"><td class="mdescLeft">&#160;</td><td class="mdescRight">WDOG interrupt configuration structure, default settings all disabled.  <a href="a00097.html#ga568a59a02c40c87ed791f569c68e3617">More...</a><br/></td></tr>
+<tr class="separator:ga568a59a02c40c87ed791f569c68e3617"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0b88468681d9540ae2932b8863df21da"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#ga0b88468681d9540ae2932b8863df21da">_wdog_status_flags</a> { <br/>
+&#160;&#160;<a class="el" href="a00097.html#gga0b88468681d9540ae2932b8863df21daa36d15132390c05315cadcd7531d16235">kWDOG_RunningFlag</a> = WDOG_WCR_WDE_MASK, 
 <br/>
-&#160;&#160;<a class="el" href="a00097.html#gga2d5492e116eebd5075f247d21fb9db26a78d8a8a3d30bb68989b1466078b57f99">kTEMPSENSOR_LowTempInterruptStatusEnable</a>, 
+&#160;&#160;<a class="el" href="a00097.html#gga0b88468681d9540ae2932b8863df21daac5e2f745cea700526fddf869bead3e7f">kWDOG_PowerOnResetFlag</a> = WDOG_WRSR_POR_MASK, 
 <br/>
-&#160;&#160;<a class="el" href="a00097.html#gga2d5492e116eebd5075f247d21fb9db26a1b91c3de6cc3b99f94d84cd63e7f4017">kTEMPSENSOR_PanicTempInterruptStatusEnable</a>, 
+&#160;&#160;<a class="el" href="a00097.html#gga0b88468681d9540ae2932b8863df21daa3e7218cabdb8b98afb859e5e5bb10c2b">kWDOG_TimeoutResetFlag</a> = WDOG_WRSR_TOUT_MASK, 
 <br/>
-&#160;&#160;<a class="el" href="a00097.html#gga2d5492e116eebd5075f247d21fb9db26a439fffacc508b883d75ce73c714a7440">kTEMPSENSOR_FinishInterruptStatusEnable</a> = TMPSNS_CTRL1_FINISH_IE_MASK
+&#160;&#160;<a class="el" href="a00097.html#gga0b88468681d9540ae2932b8863df21daab8d3e9351b38a6c2070e168e794cbe04">kWDOG_SoftwareResetFlag</a> = WDOG_WRSR_SFTW_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00097.html#gga0b88468681d9540ae2932b8863df21daac1277a2936555249acf7a516e6af1f78">kWDOG_InterruptFlag</a> = WDOG_WICR_WTIS_MASK
 <br/>
  }</td></tr>
-<tr class="memdesc:ga2d5492e116eebd5075f247d21fb9db26"><td class="mdescLeft">&#160;</td><td class="mdescRight">TMPSNS interrupt status enable type, tmpsns_interrupt_status_enable_t.  <a href="a00097.html#ga2d5492e116eebd5075f247d21fb9db26">More...</a><br/></td></tr>
-<tr class="separator:ga2d5492e116eebd5075f247d21fb9db26"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga73c53bacb25588538843a1dcfe5f382b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00097.html#gga73c53bacb25588538843a1dcfe5f382ba5ac16dd2b8227e097383306faaf19755">kTEMPSENSOR_HighTempInterruptStatus</a> = TMPSNS_STATUS0_HIGH_TEMP_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00097.html#gga73c53bacb25588538843a1dcfe5f382baf79110936a2f09e0db6458bbac36b9f9">kTEMPSENSOR_LowTempInterruptStatus</a> = TMPSNS_STATUS0_LOW_TEMP_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00097.html#gga73c53bacb25588538843a1dcfe5f382ba4bc5d9f3712e1f1b7e9856760f3dc919">kTEMPSENSOR_PanicTempInterruptStatus</a> = TMPSNS_STATUS0_PANIC_TEMP_MASK
-<br/>
- }</td></tr>
-<tr class="memdesc:ga73c53bacb25588538843a1dcfe5f382b"><td class="mdescLeft">&#160;</td><td class="mdescRight">TMPSNS interrupt status type, tmpsns_interrupt_status_t.  <a href="a00097.html#ga73c53bacb25588538843a1dcfe5f382b">More...</a><br/></td></tr>
-<tr class="separator:ga73c53bacb25588538843a1dcfe5f382b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga62c065c9eb85eef00636c0f30c023419"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#ga62c065c9eb85eef00636c0f30c023419">tmpsns_measure_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00097.html#gga62c065c9eb85eef00636c0f30c023419a3b0aa53a65baee59ee6895f9c3985d94">kTEMPSENSOR_SingleMode</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00097.html#gga62c065c9eb85eef00636c0f30c023419aa2d35eedf32dd41c87d2480b0087ab93">kTEMPSENSOR_ContinuousMode</a> = 1U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga62c065c9eb85eef00636c0f30c023419"><td class="mdescLeft">&#160;</td><td class="mdescRight">TMPSNS measure mode, tempsensor_measure_mode.  <a href="a00097.html#ga62c065c9eb85eef00636c0f30c023419">More...</a><br/></td></tr>
-<tr class="separator:ga62c065c9eb85eef00636c0f30c023419"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3bb34ca12c4c7006a2ae650b73254859"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#ga3bb34ca12c4c7006a2ae650b73254859">tmpsns_alarm_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00097.html#gga3bb34ca12c4c7006a2ae650b73254859a6c34f34b411e7f880a5782d0329f732f">kTEMPMON_HighAlarmMode</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00097.html#gga3bb34ca12c4c7006a2ae650b73254859a3cafbb2449dbb58abb5ef078907ba6b0">kTEMPMON_PanicAlarmMode</a> = 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00097.html#gga3bb34ca12c4c7006a2ae650b73254859a3b1e1531c3d0529cba956f38568140f5">kTEMPMON_LowAlarmMode</a> = 2U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga3bb34ca12c4c7006a2ae650b73254859"><td class="mdescLeft">&#160;</td><td class="mdescRight">TMPSNS alarm mode.  <a href="a00097.html#ga3bb34ca12c4c7006a2ae650b73254859">More...</a><br/></td></tr>
-<tr class="separator:ga3bb34ca12c4c7006a2ae650b73254859"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gacfa0235216db97e822f1698fa945fff7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#gacfa0235216db97e822f1698fa945fff7">TMPSNS_Init</a> (TMPSNS_Type *base, const <a class="el" href="a00097.html#a00696">tmpsns_config_t</a> *config)</td></tr>
-<tr class="memdesc:gacfa0235216db97e822f1698fa945fff7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the TMPSNS module.  <a href="#gacfa0235216db97e822f1698fa945fff7">More...</a><br/></td></tr>
-<tr class="separator:gacfa0235216db97e822f1698fa945fff7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga93237703e80fa60d70ed4508d1b3aadb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#ga93237703e80fa60d70ed4508d1b3aadb">TMPSNS_Deinit</a> (TMPSNS_Type *base)</td></tr>
-<tr class="memdesc:ga93237703e80fa60d70ed4508d1b3aadb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the TMPSNS module.  <a href="#ga93237703e80fa60d70ed4508d1b3aadb">More...</a><br/></td></tr>
-<tr class="separator:ga93237703e80fa60d70ed4508d1b3aadb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga225247c2ce1e6780fc02ea5dffc75496"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#ga225247c2ce1e6780fc02ea5dffc75496">TMPSNS_GetDefaultConfig</a> (<a class="el" href="a00097.html#a00696">tmpsns_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga225247c2ce1e6780fc02ea5dffc75496"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the default configuration structure.  <a href="#ga225247c2ce1e6780fc02ea5dffc75496">More...</a><br/></td></tr>
-<tr class="separator:ga225247c2ce1e6780fc02ea5dffc75496"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga867ba5fd2b1d4781ddef4f33d30d6251"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#ga867ba5fd2b1d4781ddef4f33d30d6251">TMPSNS_StartMeasure</a> (TMPSNS_Type *base)</td></tr>
-<tr class="memdesc:ga867ba5fd2b1d4781ddef4f33d30d6251"><td class="mdescLeft">&#160;</td><td class="mdescRight">start the temperature measurement process.  <a href="#ga867ba5fd2b1d4781ddef4f33d30d6251">More...</a><br/></td></tr>
-<tr class="separator:ga867ba5fd2b1d4781ddef4f33d30d6251"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga031571a6533ae58039981d16ad855d57"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#ga031571a6533ae58039981d16ad855d57">TMPSNS_StopMeasure</a> (TMPSNS_Type *base)</td></tr>
-<tr class="memdesc:ga031571a6533ae58039981d16ad855d57"><td class="mdescLeft">&#160;</td><td class="mdescRight">stop the measurement process.  <a href="#ga031571a6533ae58039981d16ad855d57">More...</a><br/></td></tr>
-<tr class="separator:ga031571a6533ae58039981d16ad855d57"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0068226e481f233103a4048ee1d86515"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#ga0068226e481f233103a4048ee1d86515">TMPSNS_GetCurrentTemperature</a> (TMPSNS_Type *base)</td></tr>
-<tr class="memdesc:ga0068226e481f233103a4048ee1d86515"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current temperature with the fused temperature calibration data.  <a href="#ga0068226e481f233103a4048ee1d86515">More...</a><br/></td></tr>
-<tr class="separator:ga0068226e481f233103a4048ee1d86515"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8cadd42e168377f6995cec4150c377b7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#ga8cadd42e168377f6995cec4150c377b7">TMPSNS_SetTempAlarm</a> (TMPSNS_Type *base, int32_t tempVal, <a class="el" href="a00097.html#ga3bb34ca12c4c7006a2ae650b73254859">tmpsns_alarm_mode_t</a> alarmMode)</td></tr>
-<tr class="memdesc:ga8cadd42e168377f6995cec4150c377b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the temperature count (raw sensor output) that will generate an alarm interrupt.  <a href="#ga8cadd42e168377f6995cec4150c377b7">More...</a><br/></td></tr>
-<tr class="separator:ga8cadd42e168377f6995cec4150c377b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa811156f865545b268e2021f29e8b2a4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#gaa811156f865545b268e2021f29e8b2a4">TMPSNS_EnableInterrupt</a> (TMPSNS_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:gaa811156f865545b268e2021f29e8b2a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable interrupt status.  <a href="#gaa811156f865545b268e2021f29e8b2a4">More...</a><br/></td></tr>
-<tr class="separator:gaa811156f865545b268e2021f29e8b2a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6974d54ee4e41325f4b4fbb72911899e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#ga6974d54ee4e41325f4b4fbb72911899e">TMPSNS_DisableInterrupt</a> (TMPSNS_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:ga6974d54ee4e41325f4b4fbb72911899e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable interrupt status.  <a href="#ga6974d54ee4e41325f4b4fbb72911899e">More...</a><br/></td></tr>
-<tr class="separator:ga6974d54ee4e41325f4b4fbb72911899e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gade2f9f57a5d187f0bb8a85638831c981"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#gade2f9f57a5d187f0bb8a85638831c981">TMPSNS_GetInterruptFlags</a> (TMPSNS_Type *base)</td></tr>
-<tr class="memdesc:gade2f9f57a5d187f0bb8a85638831c981"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get interrupt status flag.  <a href="#gade2f9f57a5d187f0bb8a85638831c981">More...</a><br/></td></tr>
-<tr class="separator:gade2f9f57a5d187f0bb8a85638831c981"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga78c3557000863d5faa73bab738f60252"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#ga78c3557000863d5faa73bab738f60252">TMPSNS_ClearInterruptFlags</a> (TMPSNS_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:ga78c3557000863d5faa73bab738f60252"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear interrupt status flag.  <a href="#ga78c3557000863d5faa73bab738f60252">More...</a><br/></td></tr>
-<tr class="separator:ga78c3557000863d5faa73bab738f60252"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga0b88468681d9540ae2932b8863df21da"><td class="mdescLeft">&#160;</td><td class="mdescRight">WDOG status flags.  <a href="a00097.html#ga0b88468681d9540ae2932b8863df21da">More...</a><br/></td></tr>
+<tr class="separator:ga0b88468681d9540ae2932b8863df21da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga44da7b35bdce91cff88cd89e08c90377"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga44da7b35bdce91cff88cd89e08c90377"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>FSL_TMPSNS_DRIVER_VERSION</b>&#160;&#160;&#160;(<a class="el" href="a00336.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 1))</td></tr>
-<tr class="separator:ga44da7b35bdce91cff88cd89e08c90377"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5baa4ad349ae3c543938d4ee773df43e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5baa4ad349ae3c543938d4ee773df43e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#ga5baa4ad349ae3c543938d4ee773df43e">FSL_WDOG_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00337.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 0))</td></tr>
+<tr class="memdesc:ga5baa4ad349ae3c543938d4ee773df43e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines WDOG driver version. <br/></td></tr>
+<tr class="separator:ga5baa4ad349ae3c543938d4ee773df43e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Refresh sequence</h2></td></tr>
+<tr class="memitem:gab5cfe6028bed718cc5072e6b4c0ebe72"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab5cfe6028bed718cc5072e6b4c0ebe72"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>WDOG_REFRESH_KEY</b>&#160;&#160;&#160;(0xAAAA5555U)</td></tr>
+<tr class="separator:gab5cfe6028bed718cc5072e6b4c0ebe72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+WDOG Initialization and De-initialization.</h2></td></tr>
+<tr class="memitem:gaad5ad72d4eaf90ade6be3c976e8bc3f7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#gaad5ad72d4eaf90ade6be3c976e8bc3f7">WDOG_GetDefaultConfig</a> (<a class="el" href="a00097.html#ga843869e99770392d4679ba26609548b2">wdog_config_t</a> *config)</td></tr>
+<tr class="memdesc:gaad5ad72d4eaf90ade6be3c976e8bc3f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the WDOG configuration structure.  <a href="#gaad5ad72d4eaf90ade6be3c976e8bc3f7">More...</a><br/></td></tr>
+<tr class="separator:gaad5ad72d4eaf90ade6be3c976e8bc3f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga50d46daf10ab46c6c696e8807c8e913b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#ga50d46daf10ab46c6c696e8807c8e913b">WDOG_Init</a> (WDOG_Type *base, const <a class="el" href="a00097.html#ga843869e99770392d4679ba26609548b2">wdog_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga50d46daf10ab46c6c696e8807c8e913b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the WDOG.  <a href="#ga50d46daf10ab46c6c696e8807c8e913b">More...</a><br/></td></tr>
+<tr class="separator:ga50d46daf10ab46c6c696e8807c8e913b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa6667780dc3dcd9579f0689178c3b0d9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#gaa6667780dc3dcd9579f0689178c3b0d9">WDOG_Deinit</a> (WDOG_Type *base)</td></tr>
+<tr class="memdesc:gaa6667780dc3dcd9579f0689178c3b0d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shuts down the WDOG.  <a href="#gaa6667780dc3dcd9579f0689178c3b0d9">More...</a><br/></td></tr>
+<tr class="separator:gaa6667780dc3dcd9579f0689178c3b0d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab4deee569751728b2bd3a74f3c51e51e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#gab4deee569751728b2bd3a74f3c51e51e">WDOG_Enable</a> (WDOG_Type *base)</td></tr>
+<tr class="memdesc:gab4deee569751728b2bd3a74f3c51e51e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the WDOG module.  <a href="#gab4deee569751728b2bd3a74f3c51e51e">More...</a><br/></td></tr>
+<tr class="separator:gab4deee569751728b2bd3a74f3c51e51e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac50451a963f16a891a365df27305dcca"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#gac50451a963f16a891a365df27305dcca">WDOG_Disable</a> (WDOG_Type *base)</td></tr>
+<tr class="memdesc:gac50451a963f16a891a365df27305dcca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the WDOG module.  <a href="#gac50451a963f16a891a365df27305dcca">More...</a><br/></td></tr>
+<tr class="separator:gac50451a963f16a891a365df27305dcca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga148420ea7de00bc3c60c40abffcdf1cb"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#ga148420ea7de00bc3c60c40abffcdf1cb">WDOG_TriggerSystemSoftwareReset</a> (WDOG_Type *base)</td></tr>
+<tr class="memdesc:ga148420ea7de00bc3c60c40abffcdf1cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Trigger the system software reset.  <a href="#ga148420ea7de00bc3c60c40abffcdf1cb">More...</a><br/></td></tr>
+<tr class="separator:ga148420ea7de00bc3c60c40abffcdf1cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaedd7386f165e4750bc1aa72544122995"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#gaedd7386f165e4750bc1aa72544122995">WDOG_TriggerSoftwareSignal</a> (WDOG_Type *base)</td></tr>
+<tr class="memdesc:gaedd7386f165e4750bc1aa72544122995"><td class="mdescLeft">&#160;</td><td class="mdescRight">Trigger an output assertion.  <a href="#gaedd7386f165e4750bc1aa72544122995">More...</a><br/></td></tr>
+<tr class="separator:gaedd7386f165e4750bc1aa72544122995"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac10aa3550c0824493f112a02ffd955b1"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#gac10aa3550c0824493f112a02ffd955b1">WDOG_EnableInterrupts</a> (WDOG_Type *base, uint16_t mask)</td></tr>
+<tr class="memdesc:gac10aa3550c0824493f112a02ffd955b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the WDOG interrupt.  <a href="#gac10aa3550c0824493f112a02ffd955b1">More...</a><br/></td></tr>
+<tr class="separator:gac10aa3550c0824493f112a02ffd955b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga420a7d120956521faf8a40993014d6fa"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#ga420a7d120956521faf8a40993014d6fa">WDOG_GetStatusFlags</a> (WDOG_Type *base)</td></tr>
+<tr class="memdesc:ga420a7d120956521faf8a40993014d6fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the WDOG all reset status flags.  <a href="#ga420a7d120956521faf8a40993014d6fa">More...</a><br/></td></tr>
+<tr class="separator:ga420a7d120956521faf8a40993014d6fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga45d1ddf1d8f4aeb8a87657f275050594"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#ga45d1ddf1d8f4aeb8a87657f275050594">WDOG_ClearInterruptStatus</a> (WDOG_Type *base, uint16_t mask)</td></tr>
+<tr class="memdesc:ga45d1ddf1d8f4aeb8a87657f275050594"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the WDOG flag.  <a href="#ga45d1ddf1d8f4aeb8a87657f275050594">More...</a><br/></td></tr>
+<tr class="separator:ga45d1ddf1d8f4aeb8a87657f275050594"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7744339b66fc64cf4088f0a413e53b08"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#ga7744339b66fc64cf4088f0a413e53b08">WDOG_SetTimeoutValue</a> (WDOG_Type *base, uint16_t timeoutCount)</td></tr>
+<tr class="memdesc:ga7744339b66fc64cf4088f0a413e53b08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the WDOG timeout value.  <a href="#ga7744339b66fc64cf4088f0a413e53b08">More...</a><br/></td></tr>
+<tr class="separator:ga7744339b66fc64cf4088f0a413e53b08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga18bcb8843c59834b6ae275c58fcf2cd3"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#ga18bcb8843c59834b6ae275c58fcf2cd3">WDOG_SetInterrputTimeoutValue</a> (WDOG_Type *base, uint16_t timeoutCount)</td></tr>
+<tr class="memdesc:ga18bcb8843c59834b6ae275c58fcf2cd3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the WDOG interrupt count timeout value.  <a href="#ga18bcb8843c59834b6ae275c58fcf2cd3">More...</a><br/></td></tr>
+<tr class="separator:ga18bcb8843c59834b6ae275c58fcf2cd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9c50304e7d819199df178ae26e12f1a8"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#ga9c50304e7d819199df178ae26e12f1a8">WDOG_DisablePowerDownEnable</a> (WDOG_Type *base)</td></tr>
+<tr class="memdesc:ga9c50304e7d819199df178ae26e12f1a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable the WDOG power down enable bit.  <a href="#ga9c50304e7d819199df178ae26e12f1a8">More...</a><br/></td></tr>
+<tr class="separator:ga9c50304e7d819199df178ae26e12f1a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1d307a7df8f2b926c306dc8714dda3f5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#ga1d307a7df8f2b926c306dc8714dda3f5">WDOG_Refresh</a> (WDOG_Type *base)</td></tr>
+<tr class="memdesc:ga1d307a7df8f2b926c306dc8714dda3f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Refreshes the WDOG timer.  <a href="#ga1d307a7df8f2b926c306dc8714dda3f5">More...</a><br/></td></tr>
+<tr class="separator:ga1d307a7df8f2b926c306dc8714dda3f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00696" id="a00696"></a>
+<a name="a00712" id="a00712"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct tmpsns_config_t</td>
+          <td class="memname">struct _wdog_work_mode</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:ad171d2aae12e8878a49fd7cc2f53ef99"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00097.html#ga62c065c9eb85eef00636c0f30c023419">tmpsns_measure_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#ad171d2aae12e8878a49fd7cc2f53ef99">measureMode</a></td></tr>
-<tr class="memdesc:ad171d2aae12e8878a49fd7cc2f53ef99"><td class="mdescLeft">&#160;</td><td class="mdescRight">The temperature measure mode.  <a href="#ad171d2aae12e8878a49fd7cc2f53ef99">More...</a><br/></td></tr>
-<tr class="separator:ad171d2aae12e8878a49fd7cc2f53ef99"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab34271c040c63ca30757af0c880664a5"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#ab34271c040c63ca30757af0c880664a5">frequency</a></td></tr>
-<tr class="memdesc:ab34271c040c63ca30757af0c880664a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The temperature measure frequency.  <a href="#ab34271c040c63ca30757af0c880664a5">More...</a><br/></td></tr>
-<tr class="separator:ab34271c040c63ca30757af0c880664a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa1a6a5c4f3f97e50b1d0e8259971373e"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#aa1a6a5c4f3f97e50b1d0e8259971373e">highAlarmTemp</a></td></tr>
-<tr class="memdesc:aa1a6a5c4f3f97e50b1d0e8259971373e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The high alarm temperature.  <a href="#aa1a6a5c4f3f97e50b1d0e8259971373e">More...</a><br/></td></tr>
-<tr class="separator:aa1a6a5c4f3f97e50b1d0e8259971373e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a26773464d03e816edd9eb9f9905a2537"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#a26773464d03e816edd9eb9f9905a2537">panicAlarmTemp</a></td></tr>
-<tr class="memdesc:a26773464d03e816edd9eb9f9905a2537"><td class="mdescLeft">&#160;</td><td class="mdescRight">The panic alarm temperature.  <a href="#a26773464d03e816edd9eb9f9905a2537">More...</a><br/></td></tr>
-<tr class="separator:a26773464d03e816edd9eb9f9905a2537"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a72d3964a20d2f851cbf6d462fdf522af"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#a72d3964a20d2f851cbf6d462fdf522af">lowAlarmTemp</a></td></tr>
-<tr class="memdesc:a72d3964a20d2f851cbf6d462fdf522af"><td class="mdescLeft">&#160;</td><td class="mdescRight">The low alarm temperature.  <a href="#a72d3964a20d2f851cbf6d462fdf522af">More...</a><br/></td></tr>
-<tr class="separator:a72d3964a20d2f851cbf6d462fdf522af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55c6154d576db274039be997e3ec71b3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a55c6154d576db274039be997e3ec71b3"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#a55c6154d576db274039be997e3ec71b3">enableWait</a></td></tr>
+<tr class="memdesc:a55c6154d576db274039be997e3ec71b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">If set to true, WDOG continues in wait mode. <br/></td></tr>
+<tr class="separator:a55c6154d576db274039be997e3ec71b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87af9a89b5059c8ff3e6f96c8d388986"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a87af9a89b5059c8ff3e6f96c8d388986"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#a87af9a89b5059c8ff3e6f96c8d388986">enableStop</a></td></tr>
+<tr class="memdesc:a87af9a89b5059c8ff3e6f96c8d388986"><td class="mdescLeft">&#160;</td><td class="mdescRight">If set to true, WDOG continues in stop mode. <br/></td></tr>
+<tr class="separator:a87af9a89b5059c8ff3e6f96c8d388986"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6288ae1c1343579214e0cd1394cc910d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6288ae1c1343579214e0cd1394cc910d"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#a6288ae1c1343579214e0cd1394cc910d">enableDebug</a></td></tr>
+<tr class="memdesc:a6288ae1c1343579214e0cd1394cc910d"><td class="mdescLeft">&#160;</td><td class="mdescRight">If set to true, WDOG continues in debug mode. <br/></td></tr>
+<tr class="separator:a6288ae1c1343579214e0cd1394cc910d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+
+</div>
+</div>
+<a name="a00711" id="a00711"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct _wdog_config</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a4b7049723790cbd8a8d1e7e3971a5950"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4b7049723790cbd8a8d1e7e3971a5950"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#a4b7049723790cbd8a8d1e7e3971a5950">enableWdog</a></td></tr>
+<tr class="memdesc:a4b7049723790cbd8a8d1e7e3971a5950"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables WDOG. <br/></td></tr>
+<tr class="separator:a4b7049723790cbd8a8d1e7e3971a5950"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6c23332b53f68b3d82dd2b8b15d4b85"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af6c23332b53f68b3d82dd2b8b15d4b85"></a>
+<a class="el" href="a00097.html#ga4c03cba4ef6445904c5733f9859cf3cb">wdog_work_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#af6c23332b53f68b3d82dd2b8b15d4b85">workMode</a></td></tr>
+<tr class="memdesc:af6c23332b53f68b3d82dd2b8b15d4b85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures WDOG work mode in debug stop and wait mode. <br/></td></tr>
+<tr class="separator:af6c23332b53f68b3d82dd2b8b15d4b85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3aa77209befd691717bbf92d3d6368d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae3aa77209befd691717bbf92d3d6368d"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#ae3aa77209befd691717bbf92d3d6368d">enableInterrupt</a></td></tr>
+<tr class="memdesc:ae3aa77209befd691717bbf92d3d6368d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables WDOG interrupt. <br/></td></tr>
+<tr class="separator:ae3aa77209befd691717bbf92d3d6368d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ab2fcc87bafca5e24cc69a3be364997"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3ab2fcc87bafca5e24cc69a3be364997"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#a3ab2fcc87bafca5e24cc69a3be364997">timeoutValue</a></td></tr>
+<tr class="memdesc:a3ab2fcc87bafca5e24cc69a3be364997"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timeout value. <br/></td></tr>
+<tr class="separator:a3ab2fcc87bafca5e24cc69a3be364997"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa26228198b7d2406719385d112c265a2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa26228198b7d2406719385d112c265a2"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#aa26228198b7d2406719385d112c265a2">interruptTimeValue</a></td></tr>
+<tr class="memdesc:aa26228198b7d2406719385d112c265a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interrupt count timeout value. <br/></td></tr>
+<tr class="separator:aa26228198b7d2406719385d112c265a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a417d0ccf18d5c31afececb0ba239bed7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a417d0ccf18d5c31afececb0ba239bed7"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#a417d0ccf18d5c31afececb0ba239bed7">softwareResetExtension</a></td></tr>
+<tr class="memdesc:a417d0ccf18d5c31afececb0ba239bed7"><td class="mdescLeft">&#160;</td><td class="mdescRight">software reset extension <br/></td></tr>
+<tr class="separator:a417d0ccf18d5c31afececb0ba239bed7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7620ff7aaea29c44469ba62103ad527"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af7620ff7aaea29c44469ba62103ad527"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#af7620ff7aaea29c44469ba62103ad527">enablePowerDown</a></td></tr>
+<tr class="memdesc:af7620ff7aaea29c44469ba62103ad527"><td class="mdescLeft">&#160;</td><td class="mdescRight">power down enable bit <br/></td></tr>
+<tr class="separator:af7620ff7aaea29c44469ba62103ad527"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d63a952eb0bce621ba7ddcebeb89456"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#a6d63a952eb0bce621ba7ddcebeb89456">enableTimeOutAssert</a></td></tr>
+<tr class="memdesc:a6d63a952eb0bce621ba7ddcebeb89456"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable WDOG_B timeout assertion.  <a href="#a6d63a952eb0bce621ba7ddcebeb89456">More...</a><br/></td></tr>
+<tr class="separator:a6d63a952eb0bce621ba7ddcebeb89456"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="ad171d2aae12e8878a49fd7cc2f53ef99"></a>
+<a class="anchor" id="a6d63a952eb0bce621ba7ddcebeb89456"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00097.html#ga62c065c9eb85eef00636c0f30c023419">tmpsns_measure_mode_t</a> tmpsns_config_t::measureMode</td>
+          <td class="memname">bool _wdog_config::enableTimeOutAssert</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ab34271c040c63ca30757af0c880664a5"></a>
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga4c03cba4ef6445904c5733f9859cf3cb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t tmpsns_config_t::frequency</td>
+          <td class="memname">typedef struct <a class="el" href="a00097.html#a00712">_wdog_work_mode</a>  <a class="el" href="a00097.html#ga4c03cba4ef6445904c5733f9859cf3cb">wdog_work_mode_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="aa1a6a5c4f3f97e50b1d0e8259971373e"></a>
+<a class="anchor" id="ga843869e99770392d4679ba26609548b2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int32_t tmpsns_config_t::highAlarmTemp</td>
+          <td class="memname">typedef struct <a class="el" href="a00097.html#a00711">_wdog_config</a>  <a class="el" href="a00097.html#ga843869e99770392d4679ba26609548b2">wdog_config_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a26773464d03e816edd9eb9f9905a2537"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int32_t tmpsns_config_t::panicAlarmTemp</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a72d3964a20d2f851cbf6d462fdf522af"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int32_t tmpsns_config_t::lowAlarmTemp</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga2d5492e116eebd5075f247d21fb9db26"></a>
+<a class="anchor" id="ga568a59a02c40c87ed791f569c68e3617"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">anonymous enum</td>
+          <td class="memname">enum <a class="el" href="a00097.html#ga568a59a02c40c87ed791f569c68e3617">_wdog_interrupt_enable</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>This structure contains the settings for all of the WDOG interrupt configurations. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga2d5492e116eebd5075f247d21fb9db26a9affc3126f1bfbee13be834be9737027"></a>kTEMPSENSOR_HighTempInterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
-<p>High temperature interrupt status enable. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga2d5492e116eebd5075f247d21fb9db26a78d8a8a3d30bb68989b1466078b57f99"></a>kTEMPSENSOR_LowTempInterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
-<p>Low temperature interrupt status enable. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga2d5492e116eebd5075f247d21fb9db26a1b91c3de6cc3b99f94d84cd63e7f4017"></a>kTEMPSENSOR_PanicTempInterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
-<p>Panic temperature interrupt status enable. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga2d5492e116eebd5075f247d21fb9db26a439fffacc508b883d75ce73c714a7440"></a>kTEMPSENSOR_FinishInterruptStatusEnable</em>&nbsp;</td><td class="fielddoc">
-<p>Finish interrupt enable. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga568a59a02c40c87ed791f569c68e3617a8c358d55c0101eaa0a580d867572ec8d"></a>kWDOG_InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>WDOG timeout generates an interrupt before reset. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga73c53bacb25588538843a1dcfe5f382b"></a>
+<a class="anchor" id="ga0b88468681d9540ae2932b8863df21da"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">anonymous enum</td>
+          <td class="memname">enum <a class="el" href="a00097.html#ga0b88468681d9540ae2932b8863df21da">_wdog_status_flags</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>This structure contains the WDOG status flags for use in the WDOG functions. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga73c53bacb25588538843a1dcfe5f382ba5ac16dd2b8227e097383306faaf19755"></a>kTEMPSENSOR_HighTempInterruptStatus</em>&nbsp;</td><td class="fielddoc">
-<p>High temperature interrupt status. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga0b88468681d9540ae2932b8863df21daa36d15132390c05315cadcd7531d16235"></a>kWDOG_RunningFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Running flag, set when WDOG is enabled. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga73c53bacb25588538843a1dcfe5f382baf79110936a2f09e0db6458bbac36b9f9"></a>kTEMPSENSOR_LowTempInterruptStatus</em>&nbsp;</td><td class="fielddoc">
-<p>Low temperature interrupt status. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0b88468681d9540ae2932b8863df21daac5e2f745cea700526fddf869bead3e7f"></a>kWDOG_PowerOnResetFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Power On flag, set when reset is the result of a powerOnReset. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga73c53bacb25588538843a1dcfe5f382ba4bc5d9f3712e1f1b7e9856760f3dc919"></a>kTEMPSENSOR_PanicTempInterruptStatus</em>&nbsp;</td><td class="fielddoc">
-<p>Panic temperature interrupt status. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0b88468681d9540ae2932b8863df21daa3e7218cabdb8b98afb859e5e5bb10c2b"></a>kWDOG_TimeoutResetFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Timeout flag, set when reset is the result of a timeout. </p>
 </td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga62c065c9eb85eef00636c0f30c023419"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00097.html#ga62c065c9eb85eef00636c0f30c023419">tmpsns_measure_mode_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga62c065c9eb85eef00636c0f30c023419a3b0aa53a65baee59ee6895f9c3985d94"></a>kTEMPSENSOR_SingleMode</em>&nbsp;</td><td class="fielddoc">
-<p>Single measurement mode. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0b88468681d9540ae2932b8863df21daab8d3e9351b38a6c2070e168e794cbe04"></a>kWDOG_SoftwareResetFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Software flag, set when reset is the result of a software. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga62c065c9eb85eef00636c0f30c023419aa2d35eedf32dd41c87d2480b0087ab93"></a>kTEMPSENSOR_ContinuousMode</em>&nbsp;</td><td class="fielddoc">
-<p>Continuous measurement mode. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga3bb34ca12c4c7006a2ae650b73254859"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00097.html#ga3bb34ca12c4c7006a2ae650b73254859">tmpsns_alarm_mode_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga3bb34ca12c4c7006a2ae650b73254859a6c34f34b411e7f880a5782d0329f732f"></a>kTEMPMON_HighAlarmMode</em>&nbsp;</td><td class="fielddoc">
-<p>The high alarm temperature interrupt mode. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga3bb34ca12c4c7006a2ae650b73254859a3cafbb2449dbb58abb5ef078907ba6b0"></a>kTEMPMON_PanicAlarmMode</em>&nbsp;</td><td class="fielddoc">
-<p>The panic alarm temperature interrupt mode. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga3bb34ca12c4c7006a2ae650b73254859a3b1e1531c3d0529cba956f38568140f5"></a>kTEMPMON_LowAlarmMode</em>&nbsp;</td><td class="fielddoc">
-<p>The low alarm temperature interrupt mode. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0b88468681d9540ae2932b8863df21daac1277a2936555249acf7a516e6af1f78"></a>kWDOG_InterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<p>interrupt flag,whether interrupt has occurred or not </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gacfa0235216db97e822f1698fa945fff7"></a>
+<a class="anchor" id="gaad5ad72d4eaf90ade6be3c976e8bc3f7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void TMPSNS_Init </td>
+          <td class="memname">void WDOG_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype">TMPSNS_Type *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00097.html#ga843869e99770392d4679ba26609548b2">wdog_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function initializes the WDOG configuration structure to default values. The default values are as follows. </p>
+<div class="fragment"><div class="line">*   wdogConfig-&gt;enableWdog = <span class="keyword">true</span>;</div>
+<div class="line">*   wdogConfig-&gt;workMode.enableWait = <span class="keyword">true</span>;</div>
+<div class="line">*   wdogConfig-&gt;workMode.enableStop = <span class="keyword">true</span>;</div>
+<div class="line">*   wdogConfig-&gt;workMode.enableDebug = <span class="keyword">true</span>;</div>
+<div class="line">*   wdogConfig-&gt;enableInterrupt = <span class="keyword">false</span>;</div>
+<div class="line">*   wdogConfig-&gt;enablePowerdown = <span class="keyword">false</span>;</div>
+<div class="line">*   wdogConfig-&gt;resetExtension = flase;</div>
+<div class="line">*   wdogConfig-&gt;timeoutValue = 0xFFU;</div>
+<div class="line">*   wdogConfig-&gt;interruptTimeValue = 0x04u;</div>
+<div class="line">* </div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">config</td><td>Pointer to the WDOG configuration structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00097.html#ga843869e99770392d4679ba26609548b2" title="Describes WDOG configuration structure. ">wdog_config_t</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga50d46daf10ab46c6c696e8807c8e913b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void WDOG_Init </td>
+          <td>(</td>
+          <td class="paramtype">WDOG_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00097.html#a00696">tmpsns_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00097.html#ga843869e99770392d4679ba26609548b2">wdog_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -424,235 +428,42 @@ Driver version</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
+<p>This function initializes the WDOG. When called, the WDOG runs according to the configuration.</p>
+<p>This is an example. </p>
+<div class="fragment"><div class="line">*   <a class="code" href="a00097.html#a00711">wdog_config_t</a> config;</div>
+<div class="line">*   <a class="code" href="a00097.html#gaad5ad72d4eaf90ade6be3c976e8bc3f7">WDOG_GetDefaultConfig</a>(&amp;config);</div>
+<div class="line">*   config.<a class="code" href="a00097.html#a3ab2fcc87bafca5e24cc69a3be364997">timeoutValue</a> = 0xffU;</div>
+<div class="line">*   config-&gt;<a class="code" href="a00097.html#aa26228198b7d2406719385d112c265a2">interruptTimeValue</a> = 0x04u;</div>
+<div class="line">*   <a class="code" href="a00097.html#ga50d46daf10ab46c6c696e8807c8e913b">WDOG_Init</a>(wdog_base,&amp;config);</div>
+<div class="line">* </div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>TMPSNS base pointer </td></tr>
-    <tr><td class="paramname">config</td><td>Pointer to configuration structure. </td></tr>
+    <tr><td class="paramname">base</td><td>WDOG peripheral base address </td></tr>
+    <tr><td class="paramname">config</td><td>The configuration of WDOG </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga93237703e80fa60d70ed4508d1b3aadb"></a>
+<a class="anchor" id="gaa6667780dc3dcd9579f0689178c3b0d9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void TMPSNS_Deinit </td>
+          <td class="memname">void WDOG_Deinit </td>
           <td>(</td>
-          <td class="paramtype">TMPSNS_Type *&#160;</td>
+          <td class="paramtype">WDOG_Type *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>TMPSNS base pointer </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>This function shuts down the WDOG. Watchdog Enable bit is a write one once only bit. It is not possible to clear this bit by a software write, once the bit is set. This bit(WDE) can be set/reset only in debug mode(exception). </p>
 
 </div>
 </div>
-<a class="anchor" id="ga225247c2ce1e6780fc02ea5dffc75496"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void TMPSNS_GetDefaultConfig </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00097.html#a00696">tmpsns_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function initializes the TMPSNS configuration structure to a default value. The default values are: tempmonConfig-&gt;frequency = 0x02U; tempmonConfig-&gt;highAlarmTemp = 44U; tempmonConfig-&gt;panicAlarmTemp = 90U; tempmonConfig-&gt;lowAlarmTemp = 39U;</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">config</td><td>Pointer to a configuration structure. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga867ba5fd2b1d4781ddef4f33d30d6251"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void TMPSNS_StartMeasure </td>
-          <td>(</td>
-          <td class="paramtype">TMPSNS_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>TMPSNS base pointer. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga031571a6533ae58039981d16ad855d57"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void TMPSNS_StopMeasure </td>
-          <td>(</td>
-          <td class="paramtype">TMPSNS_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>TMPSNS base pointer </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga0068226e481f233103a4048ee1d86515"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">float TMPSNS_GetCurrentTemperature </td>
-          <td>(</td>
-          <td class="paramtype">TMPSNS_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>TMPSNS base pointer </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>current temperature with degrees Celsius. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga8cadd42e168377f6995cec4150c377b7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void TMPSNS_SetTempAlarm </td>
-          <td>(</td>
-          <td class="paramtype">TMPSNS_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int32_t&#160;</td>
-          <td class="paramname"><em>tempVal</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00097.html#ga3bb34ca12c4c7006a2ae650b73254859">tmpsns_alarm_mode_t</a>&#160;</td>
-          <td class="paramname"><em>alarmMode</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>TMPSNS base pointer </td></tr>
-    <tr><td class="paramname">tempVal</td><td>The alarm temperature with degrees Celsius </td></tr>
-    <tr><td class="paramname">alarmMode</td><td>The alarm mode. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa811156f865545b268e2021f29e8b2a4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void TMPSNS_EnableInterrupt </td>
-          <td>(</td>
-          <td class="paramtype">TMPSNS_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>TMPSNS base pointer </td></tr>
-    <tr><td class="paramname">mask</td><td>The interrupts to enable from tmpsns_interrupt_status_enable_t. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga6974d54ee4e41325f4b4fbb72911899e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void TMPSNS_DisableInterrupt </td>
-          <td>(</td>
-          <td class="paramtype">TMPSNS_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>TMPSNS base pointer </td></tr>
-    <tr><td class="paramname">mask</td><td>The interrupts to disable from tmpsns_interrupt_status_enable_t. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gade2f9f57a5d187f0bb8a85638831c981"></a>
+<a class="anchor" id="gab4deee569751728b2bd3a74f3c51e51e"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -660,9 +471,9 @@ Driver version</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static uint32_t TMPSNS_GetInterruptFlags </td>
+          <td class="memname">static void WDOG_Enable </td>
           <td>(</td>
-          <td class="paramtype">TMPSNS_Type *&#160;</td>
+          <td class="paramtype">WDOG_Type *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
@@ -673,17 +484,17 @@ Driver version</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>This function writes a value into the WDOG_WCR register to enable the WDOG. This is a write one once only bit. It is not possible to clear this bit by a software write, once the bit is set. only debug mode exception. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>TMPSNS base pointer </td></tr>
-    <tr><td class="paramname">mask</td><td>The interrupts to disable from tmpsns_interrupt_status_t. </td></tr>
+    <tr><td class="paramname">base</td><td>WDOG peripheral base address </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga78c3557000863d5faa73bab738f60252"></a>
+<a class="anchor" id="gac50451a963f16a891a365df27305dcca"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -691,15 +502,108 @@ Driver version</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void TMPSNS_ClearInterruptFlags </td>
+          <td class="memname">static void WDOG_Disable </td>
           <td>(</td>
-          <td class="paramtype">TMPSNS_Type *&#160;</td>
+          <td class="paramtype">WDOG_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function writes a value into the WDOG_WCR register to disable the WDOG. This is a write one once only bit. It is not possible to clear this bit by a software write,once the bit is set. only debug mode exception </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>WDOG peripheral base address </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga148420ea7de00bc3c60c40abffcdf1cb"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void WDOG_TriggerSystemSoftwareReset </td>
+          <td>(</td>
+          <td class="paramtype">WDOG_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function will write to the WCR[SRS] bit to trigger a software system reset. This bit will automatically resets to "1" after it has been asserted to "0". Note: Calling this API will reset the system right now, please using it with more attention.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>WDOG peripheral base address </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaedd7386f165e4750bc1aa72544122995"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void WDOG_TriggerSoftwareSignal </td>
+          <td>(</td>
+          <td class="paramtype">WDOG_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function will write to the WCR[WDA] bit to trigger WDOG_B signal assertion. The WDOG_B signal can be routed to external pin of the chip, the output pin will turn to assertion along with WDOG_B signal. Note: The WDOG_B signal will remain assert until a power on reset occurred, so, please take more attention while calling it.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>WDOG peripheral base address </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gac10aa3550c0824493f112a02ffd955b1"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void WDOG_EnableInterrupts </td>
+          <td>(</td>
+          <td class="paramtype">WDOG_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramtype">uint16_t&#160;</td>
           <td class="paramname"><em>mask</em>&#160;</td>
         </tr>
         <tr>
@@ -714,10 +618,221 @@ Driver version</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>This bit is a write once only bit. Once the software does a write access to this bit, it will get locked and cannot be reprogrammed until the next system reset assertion</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>TMPSNS base pointer </td></tr>
-    <tr><td class="paramname">mask</td><td>The interrupts to disable from tmpsns_interrupt_status_t. </td></tr>
+    <tr><td class="paramname">base</td><td>WDOG peripheral base address </td></tr>
+    <tr><td class="paramname">mask</td><td>The interrupts to enable The parameter can be combination of the following source if defined. <ul>
+<li>kWDOG_InterruptEnable </li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga420a7d120956521faf8a40993014d6fa"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t WDOG_GetStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">WDOG_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function gets all reset status flags.</p>
+<div class="fragment"><div class="line">* uint16_t status;</div>
+<div class="line">* status = <a class="code" href="a00097.html#ga420a7d120956521faf8a40993014d6fa">WDOG_GetStatusFlags</a> (wdog_base);</div>
+<div class="line">* </div>
+</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>WDOG peripheral base address </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>State of the status flag: asserted (true) or not-asserted (false).</dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00097.html#ga0b88468681d9540ae2932b8863df21da" title="WDOG status flags. ">_wdog_status_flags</a><ul>
+<li>true: a related status flag has been set.</li>
+<li>false: a related status flag is not set. </li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga45d1ddf1d8f4aeb8a87657f275050594"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void WDOG_ClearInterruptStatus </td>
+          <td>(</td>
+          <td class="paramtype">WDOG_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function clears the WDOG status flag.</p>
+<p>This is an example for clearing the interrupt flag. </p>
+<div class="fragment"><div class="line">*   WDOG_ClearStatusFlags(wdog_base,KWDOG_InterruptFlag);</div>
+<div class="line">* </div>
+</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>WDOG peripheral base address </td></tr>
+    <tr><td class="paramname">mask</td><td>The status flags to clear. The parameter could be any combination of the following values. kWDOG_TimeoutFlag </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga7744339b66fc64cf4088f0a413e53b08"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void WDOG_SetTimeoutValue </td>
+          <td>(</td>
+          <td class="paramtype">WDOG_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>timeoutCount</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function sets the timeout value. This function writes a value into WCR registers. The time-out value can be written at any point of time but it is loaded to the counter at the time when WDOG is enabled or after the service routine has been performed.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>WDOG peripheral base address </td></tr>
+    <tr><td class="paramname">timeoutCount</td><td>WDOG timeout value; count of WDOG clock tick. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga18bcb8843c59834b6ae275c58fcf2cd3"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void WDOG_SetInterrputTimeoutValue </td>
+          <td>(</td>
+          <td class="paramtype">WDOG_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>timeoutCount</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function sets the interrupt count timeout value. This function writes a value into WIC registers which are wirte-once. This field is write once only. Once the software does a write access to this field, it will get locked and cannot be reprogrammed until the next system reset assertion. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>WDOG peripheral base address </td></tr>
+    <tr><td class="paramname">timeoutCount</td><td>WDOG timeout value; count of WDOG clock tick. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9c50304e7d819199df178ae26e12f1a8"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void WDOG_DisablePowerDownEnable </td>
+          <td>(</td>
+          <td class="paramtype">WDOG_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function disable the WDOG power down enable(PDE). This function writes a value into WMCR registers which are wirte-once. This field is write once only. Once software sets this bit it cannot be reset until the next system reset. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>WDOG peripheral base address </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga1d307a7df8f2b926c306dc8714dda3f5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void WDOG_Refresh </td>
+          <td>(</td>
+          <td class="paramtype">WDOG_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function feeds the WDOG. This function should be called before the WDOG timer is in timeout. Otherwise, a reset is asserted.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>WDOG peripheral base address </td></tr>
   </table>
   </dd>
 </dl>

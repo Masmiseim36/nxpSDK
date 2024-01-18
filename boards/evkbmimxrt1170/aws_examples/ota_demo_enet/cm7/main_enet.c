@@ -32,7 +32,15 @@
 #include "pin_mux.h"
 #include "board.h"
 
+#if defined(MBEDTLS_MCUX_ELE_S400_API)
+#include "ele_mbedtls.h"
+#elif defined(MBEDTLS_MCUX_ELS_PKC_API)
+#include "platform_hw_ip.h"
+#include "els_pkc_mbedtls.h"
+#else
 #include "ksdk_mbedtls.h"
+#endif
+
 #include "mflash_file.h"
 #include "kvstore.h"
 
@@ -146,7 +154,7 @@ void BOARD_InitModuleClock(void)
     clock_root_config_t rootCfg = {.mux = 4, .div = 10}; /* Generate 50M root clock. */
     CLOCK_SetRootClock(kCLOCK_Root_Enet1, &rootCfg);
 #else
-    clock_root_config_t rootCfg = {.mux = 4, .div = 4}; /* Generate 125M root clock. */
+    clock_root_config_t rootCfg = {.mux = 4, .div = 4};       /* Generate 125M root clock. */
     CLOCK_SetRootClock(kCLOCK_Root_Enet2, &rootCfg);
 #endif
 
@@ -448,12 +456,13 @@ int init_network(void)
         .phyOps      = EXAMPLE_PHY_OPS,
         .phyResource = EXAMPLE_PHY_RESOURCE,
         .srcClockHz  = EXAMPLE_CLOCK_FREQ,
+#ifdef configMAC_ADDR
+        .macAddress = configMAC_ADDR
+#endif
     };
 
     /* Set MAC address. */
-#ifdef configMAC_ADDR
-    enet_config.macAddress = configMAC_ADDR,
-#else
+#ifndef configMAC_ADDR
     (void)SILICONID_ConvertToMacAddr(&enet_config.macAddress);
 #endif
 

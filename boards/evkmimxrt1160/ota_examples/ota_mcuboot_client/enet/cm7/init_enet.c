@@ -109,18 +109,16 @@ int initNetwork(void)
     }
 #endif
 
-    LWIP_PLATFORM_DIAG(("\r\n************************************************"));
-    LWIP_PLATFORM_DIAG((EXAMPLE_BANNER));
-    LWIP_PLATFORM_DIAG(("************************************************"));
-    LWIP_PLATFORM_DIAG((" IPv4 Address     : %u.%u.%u.%u", ((u8_t *)&netif.ip_addr.addr)[0],
-                        ((u8_t *)&netif.ip_addr.addr)[1], ((u8_t *)&netif.ip_addr.addr)[2],
-                        ((u8_t *)&netif.ip_addr.addr)[3]));
-    LWIP_PLATFORM_DIAG((" IPv4 Subnet mask : %u.%u.%u.%u", ((u8_t *)&netif.netmask.addr)[0],
-                        ((u8_t *)&netif.netmask.addr)[1], ((u8_t *)&netif.netmask.addr)[2],
-                        ((u8_t *)&netif.netmask.addr)[3]));
-    LWIP_PLATFORM_DIAG((" IPv4 Gateway     : %u.%u.%u.%u", ((u8_t *)&netif.gw.addr)[0], ((u8_t *)&netif.gw.addr)[1],
-                        ((u8_t *)&netif.gw.addr)[2], ((u8_t *)&netif.gw.addr)[3]));
-    LWIP_PLATFORM_DIAG(("************************************************"));
+    PRINTF("\r\n************************************************\r\n");
+    PRINTF(EXAMPLE_BANNER "\r\n");
+    PRINTF("************************************************\r\n");
+    PRINTF(" IPv4 Address     : %u.%u.%u.%u\r\n", ((u8_t *)&netif.ip_addr.addr)[0], ((u8_t *)&netif.ip_addr.addr)[1],
+           ((u8_t *)&netif.ip_addr.addr)[2], ((u8_t *)&netif.ip_addr.addr)[3]);
+    PRINTF(" IPv4 Subnet mask : %u.%u.%u.%u\r\n", ((u8_t *)&netif.netmask.addr)[0], ((u8_t *)&netif.netmask.addr)[1],
+           ((u8_t *)&netif.netmask.addr)[2], ((u8_t *)&netif.netmask.addr)[3]);
+    PRINTF(" IPv4 Gateway     : %u.%u.%u.%u\r\n", ((u8_t *)&netif.gw.addr)[0], ((u8_t *)&netif.gw.addr)[1],
+           ((u8_t *)&netif.gw.addr)[2], ((u8_t *)&netif.gw.addr)[3]);
+    PRINTF("************************************************\r\n");
 
     return INIT_SUCCESS;
 }

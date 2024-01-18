@@ -82,6 +82,8 @@ SET(CMAKE_C_FLAGS_SDRAM_DEBUG " \
     -std=gnu99 \
     -g \
     -O1 \
+    -fomit-frame-pointer \
+    -Wno-unused-function \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -98,8 +100,6 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -DCACHE_MODE_WRITE_THROUGH=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
     -Os \
-    -fomit-frame-pointer \
-    -Wno-unused-function \
     -mcpu=cortex-m7 \
     -Wall \
     -mthumb \
@@ -112,6 +112,8 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -fomit-frame-pointer \
+    -Wno-unused-function \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -130,8 +132,6 @@ SET(CMAKE_C_FLAGS_SDRAM_RELEASE " \
     -DCACHE_MODE_WRITE_THROUGH=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
     -Os \
-    -fomit-frame-pointer \
-    -Wno-unused-function \
     -mcpu=cortex-m7 \
     -Wall \
     -mthumb \
@@ -144,6 +144,8 @@ SET(CMAKE_C_FLAGS_SDRAM_RELEASE " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -fomit-frame-pointer \
+    -Wno-unused-function \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -163,8 +165,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DSERIAL_PORT_TYPE_UART=1 \
     -g \
     -O0 \
-    -fomit-frame-pointer \
-    -Wno-unused-function \
     -mcpu=cortex-m7 \
     -Wall \
     -mthumb \
@@ -177,6 +177,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -fomit-frame-pointer \
+    -Wno-unused-function \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -195,8 +197,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DCACHE_MODE_WRITE_THROUGH=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
     -Os \
-    -fomit-frame-pointer \
-    -Wno-unused-function \
     -mcpu=cortex-m7 \
     -Wall \
     -mthumb \
@@ -209,6 +209,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -fomit-frame-pointer \
+    -Wno-unused-function \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -357,7 +359,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG " \
     --defsym=__heap_size__=0x8000 \
     ${FPU} \
     ${SPECS} \
-    -T${ProjDirPath}/MIMXRT1176xxxxx_cm7_sdram.ld -static \
+    -T\"${ProjDirPath}/MIMXRT1176xxxxx_cm7_sdram.ld\" -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     ${CMAKE_EXE_LINKER_FLAGS_RELEASE} \
@@ -387,7 +389,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     --defsym=__heap_size__=0x8000 \
     ${FPU} \
     ${SPECS} \
-    -T${ProjDirPath}/MIMXRT1176xxxxx_cm7_ram_ocram.ld -static \
+    -T\"${ProjDirPath}/MIMXRT1176xxxxx_cm7_ram_ocram.ld\" -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE " \
     ${CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE} \
@@ -417,7 +419,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE " \
     --defsym=__heap_size__=0x8000 \
     ${FPU} \
     ${SPECS} \
-    -T${ProjDirPath}/MIMXRT1176xxxxx_cm7_sdram.ld -static \
+    -T\"${ProjDirPath}/MIMXRT1176xxxxx_cm7_sdram.ld\" -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} \
@@ -450,7 +452,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     --defsym=__heap_size__=0x8000 \
     ${FPU} \
     ${SPECS} \
-    -T${ProjDirPath}/MIMXRT1176xxxxx_cm7_flexspi_nor_ocram.ld -static \
+    -T\"${ProjDirPath}/MIMXRT1176xxxxx_cm7_flexspi_nor_ocram.ld\" -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} \
@@ -482,5 +484,5 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     --defsym=__heap_size__=0x8000 \
     ${FPU} \
     ${SPECS} \
-    -T${ProjDirPath}/MIMXRT1176xxxxx_cm7_flexspi_nor_ocram.ld -static \
+    -T\"${ProjDirPath}/MIMXRT1176xxxxx_cm7_flexspi_nor_ocram.ld\" -static \
 ")

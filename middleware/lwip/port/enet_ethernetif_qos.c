@@ -95,7 +95,7 @@
 #endif
 
 #ifndef ENET_TXBUFF_SIZE
-#define ENET_TXBUFF_SIZE (ENET_QOS_FRAME_MAX_FRAMELEN)
+#define ENET_TXBUFF_SIZE (ENET_QOS_FRAME_MAX_FRAMELEN - ENET_QOS_FCS_LEN)
 #endif
 
 /* BD address must be 8 bytes alignment (64 bytes alignment for optimal performance) */
@@ -128,9 +128,9 @@
 #endif
 
 /* The number of ENET buffers needed to receive frame of maximum length. */
-#define MAX_BUFFERS_PER_FRAME \
-                              \
-    ((ENET_QOS_FRAME_MAX_FRAMELEN / ENET_RXBUFF_SIZE) + ((ENET_QOS_FRAME_MAX_FRAMELEN % ENET_RXBUFF_SIZE == 0) ? 0 : 1))
+#define MAX_BUFFERS_PER_FRAME                                                                        \
+    ((ENET_QOS_FRAME_MAX_FRAMELEN / CONSTANT_SIZEALIGN(ENET_RXBUFF_SIZE, FSL_ENET_BUFF_ALIGNMENT)) + \
+     ((ENET_QOS_FRAME_MAX_FRAMELEN % CONSTANT_SIZEALIGN(ENET_RXBUFF_SIZE, FSL_ENET_BUFF_ALIGNMENT) == 0) ? 0 : 1))
 
 /* At least ENET_RXBD_NUM number of buffers is always held by ENET driver for RX.
  * Some additional buffers are needed to pass at least one frame zero-copy data to lwIP. */
@@ -138,7 +138,9 @@
 #error "ENET_RXBUFF_NUM < (ENET_RXBD_NUM + MAX_BUFFERS_PER_FRAME)"
 #endif
 
-#include "enet_sanitychecks.h"
+#include "enet_configchecks.h"
+
+#define ENET_HW_CHKSUM (CHECKSUM_GEN_IP == 0)
 
 typedef uint8_t rx_buffer_t[SDK_SIZEALIGN(ENET_RXBUFF_SIZE, FSL_ENET_BUFF_ALIGNMENT)];
 typedef uint8_t tx_buffer_t[SDK_SIZEALIGN(ENET_TXBUFF_SIZE, FSL_ENET_BUFF_ALIGNMENT)];
@@ -179,6 +181,8 @@ struct ethernetif
     phy_speed_t last_speed;
     phy_duplex_t last_duplex;
     bool last_link_up;
+
+    uint32_t intGpioHdl[((HAL_GPIO_HANDLE_SIZE + sizeof(uint32_t) - 1U) / sizeof(uint32_t))];
 };
 
 /*******************************************************************************
@@ -359,6 +363,15 @@ static void *ethernetif_rx_alloc(ENET_QOS_Type *base, void *userData, uint8_t ch
         }
     }
 
+#if ENET_DISABLE_RX_INT_WHEN_OUT_OF_BUFFERS
+    if (buffer == NULL)
+    {
+        ENET_QOS_DisableInterrupts(base, (uint32_t)kENET_QOS_DmaRx);
+    }
+#else
+    (void)base;
+#endif
+
     SYS_ARCH_UNPROTECT(old_level);
 
     return buffer;
@@ -379,6 +392,12 @@ static void ethernetif_rx_free(ENET_QOS_Type *base, void *buffer, void *userData
 
     LWIP_ASSERT("ethernetif_rx_free: freeing unallocated buffer", ethernetif->RxPbufs[idx].buffer_used);
     ethernetif->RxPbufs[idx].buffer_used = false;
+
+#if ENET_DISABLE_RX_INT_WHEN_OUT_OF_BUFFERS
+    ENET_QOS_EnableInterrupts(base, (uint32_t)kENET_QOS_DmaRx);
+#else
+    (void)base;
+#endif
 
     SYS_ARCH_UNPROTECT(old_level);
 }
@@ -423,21 +442,21 @@ void ethernetif_plat_init(struct netif *netif,
 #endif /* !NO_SYS */
 
     /* prepare the buffer configuration. */
-    buffCfg[0].rxRingLen = ENET_RXBD_NUM; /* The length of receive buffer descriptor ring. */
-    buffCfg[0].txRingLen = ENET_TXBD_NUM; /* The length of transmit buffer descriptor ring. */
+    buffCfg[0].rxRingLen = ENET_RXBD_NUM;       /* The length of receive buffer descriptor ring. */
+    buffCfg[0].txRingLen = ENET_TXBD_NUM;       /* The length of transmit buffer descriptor ring. */
     buffCfg[0].txDescStartAddrAlign =
         ethernetif_get_tx_desc(ethernetif, 0U); /* Aligned transmit descriptor start address. */
     buffCfg[0].txDescTailAddrAlign =
         ethernetif_get_tx_desc(ethernetif, 0U); /* Aligned transmit descriptor tail address. */
     buffCfg[0].txDirtyStartAddr = &ethernetif->txDirty[0];
     buffCfg[0].rxDescStartAddrAlign =
-        ethernetif_get_rx_desc(ethernetif, 0U); /* Aligned receive descriptor start address. */
+        ethernetif_get_rx_desc(ethernetif, 0U);                   /* Aligned receive descriptor start address. */
     buffCfg[0].rxDescTailAddrAlign =
         ethernetif_get_rx_desc(ethernetif, ENET_RXBD_NUM);        /* Aligned receive descriptor tail address. */
     buffCfg[0].rxBufferStartAddr = ethernetif->rxBufferStartAddr; /* Start addresses of the rx buffers. */
     buffCfg[0].rxBuffSizeAlign   = sizeof(rx_buffer_t);           /* Aligned receive data buffer size. */
 #ifdef FSL_ETH_ENABLE_CACHE_CONTROL
-    buffCfg[0].rxBuffNeedMaintain = true; /* Whether receive data buffer need cache maintain. */
+    buffCfg[0].rxBuffNeedMaintain = true;                         /* Whether receive data buffer need cache maintain. */
 #else
     buffCfg[0].rxBuffNeedMaintain = false; /* Whether receive data buffer need cache maintain. */
 #endif
@@ -463,6 +482,10 @@ void ethernetif_plat_init(struct netif *netif,
     config.specialControl = kENET_QOS_HashMulticastEnable | kENET_QOS_StoreAndForward;
     config.rxBuffAlloc    = ethernetif_rx_alloc;
     config.rxBuffFree     = ethernetif_rx_free;
+
+#if ENET_HW_CHKSUM == 1
+    config.specialControl |= kENET_QOS_RxChecksumOffloadEnable;
+#endif
 
 #if !NO_SYS
     ptpConfig.tsRollover = kENET_QOS_DigitalRollover;
@@ -504,6 +527,24 @@ phy_handle_t *ethernetif_get_phy(struct netif *netif_)
 {
     struct ethernetif *eif = netif_->state;
     return eif->phyHandle;
+}
+
+hal_gpio_handle_t ethernetif_get_int_gpio_hdl(struct netif *netif_)
+{
+    struct ethernetif *eif = netif_->state;
+    return (hal_gpio_handle_t)eif->intGpioHdl;
+}
+
+phy_speed_t ethernetif_get_link_speed(struct netif *netif_)
+{
+    struct ethernetif *eif = netif_->state;
+    return eif->last_speed;
+}
+
+phy_duplex_t ethernetif_get_link_duplex(struct netif *netif_)
+{
+    struct ethernetif *eif = netif_->state;
+    return eif->last_duplex;
 }
 
 void ethernetif_on_link_up(struct netif *netif_, phy_speed_t speed, phy_duplex_t duplex)
@@ -578,9 +619,16 @@ static err_t ethernetif_send_frame(struct ethernetif *ethernetif, unsigned char 
     DCACHE_CleanByRange((uint32_t)data, sizeof(tx_buffer_t));
 #endif
 
+#if ENET_HW_CHKSUM == 1
+    enet_qos_tx_offload_t offloadConfig = kENET_QOS_TxOffloadAll;
+#else
+    enet_qos_tx_offload_t offloadConfig = kENET_QOS_TxOffloadDisable;
+#endif
+
     do
     {
-        result = ENET_QOS_SendFrame(ethernetif->base, &ethernetif->handle, data, length, 0U, false, NULL, kENET_QOS_TxOffloadDisable);
+        result =
+            ENET_QOS_SendFrame(ethernetif->base, &ethernetif->handle, data, length, 0U, false, NULL, offloadConfig);
 
 #if !NO_SYS
         if (result == kStatus_ENET_QOS_TxFrameBusy)
@@ -737,29 +785,29 @@ err_t ethernetif_linkoutput(struct netif *netif, struct pbuf *p)
     pbuf_header(p, -ETH_PAD_SIZE); /* drop the padding word */
 #endif
 
-    if (p->len == p->tot_len)
+    if (p->len > sizeof(tx_buffer_t))
     {
-        /* No pbuf chain, still have to copy as pbuf could be reclaimed early. */
-        memcpy(pucBuffer, p->payload, p->len);
+        /* ENET_QOS_SendFrame takes single buffer */
+        result = ERR_BUF;
     }
     else
     {
-        /* pbuf chain, copy into contiguous ucBuffer. */
-        if (p->tot_len > ENET_QOS_FRAME_MAX_FRAMELEN)
+        if (p->len == p->tot_len)
         {
-            return ERR_BUF;
+            /* No pbuf chain, still have to copy as pbuf could be reclaimed early. */
+            memcpy(pucBuffer, p->payload, p->len);
         }
         else
         {
+            /* pbuf chain, copy into contiguous ucBuffer. */
             uCopied = pbuf_copy_partial(p, pucBuffer, p->tot_len, 0);
             LWIP_ASSERT("uCopied != p->tot_len", uCopied == p->tot_len);
         }
+
+        /* Send frame. */
+        result = ethernetif_send_frame(ethernetif, pucBuffer, p->tot_len);
     }
 
-    /* Send frame. */
-    result = ethernetif_send_frame(ethernetif, pucBuffer, p->tot_len);
-
-    MIB2_STATS_NETIF_ADD(netif, ifoutoctets, p->tot_len);
     if (((u8_t *)p->payload)[0] & 1)
     {
         /* broadcast or multicast packet*/
@@ -776,7 +824,17 @@ err_t ethernetif_linkoutput(struct netif *netif, struct pbuf *p)
     pbuf_header(p, ETH_PAD_SIZE); /* reclaim the padding word */
 #endif
 
-    LINK_STATS_INC(link.xmit);
+    /* Increment statistics counters accordingly. */
+    if (result != ERR_OK)
+    {
+        LINK_STATS_INC(link.err);
+        MIB2_STATS_NETIF_INC(netif, ifouterrors);
+    }
+    else
+    {
+        LINK_STATS_INC(link.xmit);
+        MIB2_STATS_NETIF_ADD(netif, ifoutoctets, p->tot_len);
+    }
 
     return result;
 }

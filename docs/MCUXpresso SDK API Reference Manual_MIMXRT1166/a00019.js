@@ -1,10 +1,12 @@
 var a00019 =
 [
-    [ "csi2rx_config_t", "a00019.html#a00456", [
-      [ "laneNum", "a00019.html#a8c48cfe43718cd091e125fc1d0249e34", null ],
-      [ "tHsSettle_EscClk", "a00019.html#a7697a6ffdfa3c514e1c6957c139db740", null ]
+    [ "_csi2rx_config", "a00019.html#a00427", [
+      [ "laneNum", "a00019.html#af9a710004aaa18659503d6885aae54dc", null ],
+      [ "tHsSettle_EscClk", "a00019.html#acab5dd4df5bb236878fa82850e416a8a", null ]
     ] ],
     [ "FSL_CSI2RX_DRIVER_VERSION", "a00019.html#gaffbb4f7758b6c71ab4554d9fc5a7e78e", null ],
+    [ "csi2rx_config_t", "a00019.html#gace0d48dedee8d70320c173f73a83325f", null ],
+    [ "csi2rx_ppi_error_t", "a00019.html#gafa366acf13006cdce07ff74ad26756d5", null ],
     [ "_csi2rx_data_lane", "a00019.html#gaa98bd117eab907317957525093b00c69", [
       [ "kCSI2RX_DataLane0", "a00019.html#ggaa98bd117eab907317957525093b00c69a9e0e5f49327b98c44561c519d03909b6", null ],
       [ "kCSI2RX_DataLane1", "a00019.html#ggaa98bd117eab907317957525093b00c69a3b28fe49008772f70bae24316524f24b", null ],
@@ -42,12 +44,12 @@ var a00019 =
       [ "kCSI2RX_BitErrorEccTwoBit", "a00019.html#ggac09981ba951008d2e884696723005ceea92a8aa855e1ed90bf44e1bcf24411300", null ],
       [ "kCSI2RX_BitErrorEccOneBit", "a00019.html#ggac09981ba951008d2e884696723005ceea0835e74fec68c0cda85a2d3962e63665", null ]
     ] ],
-    [ "csi2rx_ppi_error_t", "a00019.html#ga2963fa8b17219246d0acd61eebe2516f", [
-      [ "kCSI2RX_PpiErrorSotHs", "a00019.html#gga2963fa8b17219246d0acd61eebe2516fa7c5ada677468327867bceae04a4c2389", null ],
-      [ "kCSI2RX_PpiErrorSotSyncHs", "a00019.html#gga2963fa8b17219246d0acd61eebe2516fa03df88a490360f42d8be41c178ef7a8c", null ],
-      [ "kCSI2RX_PpiErrorEsc", "a00019.html#gga2963fa8b17219246d0acd61eebe2516fa2e5334b97d99027523f1d70387cb3fb6", null ],
-      [ "kCSI2RX_PpiErrorSyncEsc", "a00019.html#gga2963fa8b17219246d0acd61eebe2516fae495d8d20804d4a4a9f96e36020b1593", null ],
-      [ "kCSI2RX_PpiErrorControl", "a00019.html#gga2963fa8b17219246d0acd61eebe2516fa736000de97463e69f17b57cf5abad715", null ]
+    [ "_csi2rx_ppi_error", "a00019.html#ga2aedc09eb5ca61c1eefc712bd922c454", [
+      [ "kCSI2RX_PpiErrorSotHs", "a00019.html#gga2aedc09eb5ca61c1eefc712bd922c454a7c5ada677468327867bceae04a4c2389", null ],
+      [ "kCSI2RX_PpiErrorSotSyncHs", "a00019.html#gga2aedc09eb5ca61c1eefc712bd922c454a03df88a490360f42d8be41c178ef7a8c", null ],
+      [ "kCSI2RX_PpiErrorEsc", "a00019.html#gga2aedc09eb5ca61c1eefc712bd922c454a2e5334b97d99027523f1d70387cb3fb6", null ],
+      [ "kCSI2RX_PpiErrorSyncEsc", "a00019.html#gga2aedc09eb5ca61c1eefc712bd922c454ae495d8d20804d4a4a9f96e36020b1593", null ],
+      [ "kCSI2RX_PpiErrorControl", "a00019.html#gga2aedc09eb5ca61c1eefc712bd922c454a736000de97463e69f17b57cf5abad715", null ]
     ] ],
     [ "_csi2rx_interrupt", "a00019.html#ga53559ab998e2fdd4b04686b5b6653025", null ],
     [ "_csi2rx_ulps_status", "a00019.html#ga0cd7f28798b5b26d61e4b2c82a4a834c", [

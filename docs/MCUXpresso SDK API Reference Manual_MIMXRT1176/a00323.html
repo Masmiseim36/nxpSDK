@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: PGMC Driver</title>
+<title>MCUXpresso SDK API Reference Manual: ASRC: Asynchronous sample rate converter</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -98,20 +98,24 @@ $(document).ready(function(){initNavTree('a00323.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">PGMC Driver</div>  </div>
+<div class="title">ASRC: Asynchronous sample rate converter</div>  </div>
 </div><!--header-->
 <div class="contents">
-<p>The MCUXpresso SDK provides APIs for MCUXpresso SDK devices' src operation.</p>
-<p>The Power Gating and Memory Controller(PGMC) block is a power management component that controls power gating of power domains and memory low power mode. There are four sub modules in the PGMC block, they are:</p>
-<ul>
-<li>Basic Power Controller(BPC): To control power domains with simple isolation and power switch;</li>
-<li>CPU Power Controller(CPC): To control CPU platform with complex power domain and sequence requirement;</li>
-<li>PMIC Power Controller(PPC): To control PMIC standby mode outside of the chip;</li>
-<li>Memory Interface(MIF): Designed for dedicated technology of memory;</li>
-</ul>
-<p>For the BPC sub module, the APIs in "Basic Power Controller Related Interfaces" function group are provided. For the CPC sub module, the APIs in "CPU Power Controller Related Interfaces" function group are provided. For the PPC sub module, the APIs in "PMIC Power Related Interfaces" function group are provided. For the MIF sub module, the APIs in "MIF Module
-Related APIs" are provided. </p>
+<a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
+<p>The MCUXpresso SDK provides a peripheral driver for the Asynchronous sample rate converter module of MCUXpresso SDK devices.</p>
+<p>The ASRC supports up to three sampling rate pairs, the ASRC supports concurrent sample rate conversion of up to 10 channels. The incoming audio data to this chip may be received from various sources at different sampling rates. The outgoing audio data of this chip may have different sampling rates and it can also be associated with output clocks that are asynchronous to the input clocks. When the input sampling clock is not physically available, the rate conversion can still work by setting ideal-ratio values into ASRC interface registers. When both the input sampling clock and the output sampling clock are physically available, the rate conversion can work by configuring the physical clocks.</p>
+<p>The Asynchronous sample rate converter support convert between sample rate: kASRC_SampleRate_8000HZ = 8000U, /*!&lt; asrc sample rate 8KHZ </p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a00011"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00011.html">ASRC Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00012"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00012.html">ASRC EDMA Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->

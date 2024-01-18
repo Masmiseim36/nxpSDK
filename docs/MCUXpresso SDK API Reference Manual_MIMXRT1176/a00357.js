@@ -1,16 +1,19 @@
 var a00357 =
 [
-    [ "FSL_RDC_SEMA42_DRIVER_VERSION", "a00357.html#gaa6cac37b3ebec11ac45076d374d6a93e", null ],
-    [ "RDC_SEMA42_GATE_NUM_RESET_ALL", "a00357.html#ga2e1384ab2be0f1a97f5e4eda2d12ceaf", null ],
-    [ "RDC_SEMA42_GATEn", "a00357.html#ga857f01bed307b5d333bd793429b59037", null ],
-    [ "RDC_SEMA42_GATE_COUNT", "a00357.html#ga09a33a01fde064c69b0ee9eec91b0c1a", null ],
-    [ "RDC_SEMA42_Init", "a00357.html#ga5b8154d8b24ac1dfd1b1d2bb10158ec0", null ],
-    [ "RDC_SEMA42_Deinit", "a00357.html#ga1a2c1f1889cdd9c2d4410a9fffe226d9", null ],
-    [ "RDC_SEMA42_TryLock", "a00357.html#ga85fb981fbe35995485b419091c06583c", null ],
-    [ "RDC_SEMA42_Lock", "a00357.html#ga55f710fde1530472af83d2192a1003d6", null ],
-    [ "RDC_SEMA42_Unlock", "a00357.html#ga24343ed74b1ac14f1ef6ee2bf9981787", null ],
-    [ "RDC_SEMA42_GetLockMasterIndex", "a00357.html#ga0335914d7ba08830da16f7110d2e2ddc", null ],
-    [ "RDC_SEMA42_GetLockDomainID", "a00357.html#gac2bc50ca8bb908c88f0eedba0bc2f3f2", null ],
-    [ "RDC_SEMA42_ResetGate", "a00357.html#ga756f7f9c12750a30c2ab26271371108d", null ],
-    [ "RDC_SEMA42_ResetAllGates", "a00357.html#gae72a0e282cf4c612ff7f2e55954cd2fd", null ]
+    [ "FSL_SEMA4_DRIVER_VERSION", "a00357.html#ga1bb7148a101cd7925e5271374862802e", null ],
+    [ "SEMA4_GATE_NUM_RESET_ALL", "a00357.html#gacb7a70c49148b0186f0eaa3fe910ba79", null ],
+    [ "SEMA4_GATEn", "a00357.html#gaf1811869c70952983fa9cbd5aef3e933", null ],
+    [ "SEMA4_Init", "a00357.html#gac6380ed053744f451c5175db29f9f3d9", null ],
+    [ "SEMA4_Deinit", "a00357.html#gafc7188cb89c7522813d6be66f97c7e35", null ],
+    [ "SEMA4_TryLock", "a00357.html#ga30d848a2ce959c29af0f13bf8f0ee1dc", null ],
+    [ "SEMA4_Lock", "a00357.html#gae5ca0fa4f34ac84b2c3df0abeeadd9c0", null ],
+    [ "SEMA4_Unlock", "a00357.html#ga1c34c4b2eca52767539b73647e866e7f", null ],
+    [ "SEMA4_GetLockProc", "a00357.html#ga9869fbc634dce9bd292f85bd09661d37", null ],
+    [ "SEMA4_ResetGate", "a00357.html#gae5c7bc935b02303f51a8254886acff76", null ],
+    [ "SEMA4_ResetAllGates", "a00357.html#ga4d466ad087825369aeaa611140dccf55", null ],
+    [ "SEMA4_EnableGateNotifyInterrupt", "a00357.html#ga06ad2e8a81e220aefac8c9a2b49ce1cb", null ],
+    [ "SEMA4_DisableGateNotifyInterrupt", "a00357.html#gac3168fbde7570fc0ce56a92a8eb335fb", null ],
+    [ "SEMA4_GetGateNotifyStatus", "a00357.html#ga0ed4770fa9e88d5abb4b94a775e7db2b", null ],
+    [ "SEMA4_ResetGateNotify", "a00357.html#gab648c6d8479df0890ba2d654f0193f7a", null ],
+    [ "SEMA4_ResetAllGateNotify", "a00357.html#gaef68d23981bfc1c2fbbb823b28976353", null ]
 ];

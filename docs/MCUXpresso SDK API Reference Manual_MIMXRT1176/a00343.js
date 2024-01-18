@@ -1,10 +1,7 @@
 var a00343 =
 [
-    [ "FlexIO Camera Driver", "a00033.html", "a00033" ],
-    [ "FlexIO Driver", "a00035.html", "a00035" ],
-    [ "FlexIO I2C Master Driver", "a00036.html", "a00036" ],
-    [ "FlexIO I2S Driver", "a00037.html", "a00037" ],
-    [ "FlexIO MCU Interface LCD Driver", "a00039.html", "a00039" ],
-    [ "FlexIO SPI Driver", "a00041.html", "a00041" ],
-    [ "FlexIO UART Driver", "a00043.html", "a00043" ]
+    [ "FSL_LPI2C_FREERTOS_DRIVER_VERSION", "a00343.html#gabe1b685d26560cdb8a3eccf81d013a3f", null ],
+    [ "LPI2C_RTOS_Init", "a00343.html#ga537a8859c9c83c8a8ccf6e0188cc8b5c", null ],
+    [ "LPI2C_RTOS_Deinit", "a00343.html#gacacb0612bfdcd7913be1cef8ad19fb9c", null ],
+    [ "LPI2C_RTOS_Transfer", "a00343.html#gab5359e4f864d7f21eebcab8d3229e963", null ]
 ];

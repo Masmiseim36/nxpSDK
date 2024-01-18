@@ -32,7 +32,7 @@ define symbol m_interrupts_end         = 0x300407FF;
 
 define symbol m_text_start             = 0x30040800;
 define symbol m_text_end               = 0x3023FFFF;
-/* NOTE: Flash in range 0x30D9_0000 - 0x30FF_FFFF is reserved for data */
+/* NOTE: The last 0x230000 bytes in flash is reserved for data */
 
 define symbol m_interrupts_ram_start   = 0x20000000;
 define symbol m_interrupts_ram_end     = 0x20000000 + __ram_vector_table_offset__;
@@ -60,8 +60,13 @@ if (isdefinedsymbol(__use_shmem__)) {
   define exported symbol __NCACHE_REGION_SIZE    = m_ncache_end - m_ncache_start + 1;
 }
 
+if (isdefinedsymbol(__use_flash64MB__)) {
+define exported symbol core1_image_start     = 0x33FC0000;
+define exported symbol core1_image_end       = 0x33FFFFFF;
+} else{
 define exported symbol core1_image_start     = 0x30FC0000;
 define exported symbol core1_image_end       = 0x30FFFFFF;
+}
 
 /* Sizes */
 if (isdefinedsymbol(__stack_size__)) {

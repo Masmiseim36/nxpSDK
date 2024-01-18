@@ -3,19 +3,13 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-if(CONFIG_USE_middleware_lwip AND CONFIG_USE_middleware_lwip_template AND CONFIG_USE_driver_phy-common AND (CONFIG_USE_driver_enet OR CONFIG_USE_driver_lpc_enet OR CONFIG_USE_driver_enet_qos))
+if(CONFIG_USE_middleware_lwip AND CONFIG_USE_middleware_lwip_template AND CONFIG_USE_driver_phy-common AND (CONFIG_USE_component_rt_gpio_adapter OR CONFIG_USE_component_lpc_gpio_adapter OR CONFIG_USE_component_igpio_adapter OR CONFIG_USE_component_rgpio_adapter OR CONFIG_USE_component_gpio_adapter) AND (CONFIG_USE_driver_lpc_enet OR CONFIG_USE_driver_enet_qos))
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/port/enet_ethernetif.c
   ${CMAKE_CURRENT_LIST_DIR}/port/ethernetif.c
   ${CMAKE_CURRENT_LIST_DIR}/port/ethernetif_mmac.c
 )
-
-if(CONFIG_USE_driver_enet)
-  target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-      ${CMAKE_CURRENT_LIST_DIR}/port/enet_ethernetif_kinetis.c
-  )
-endif()
 
 if(CONFIG_USE_driver_lpc_enet)
   target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE

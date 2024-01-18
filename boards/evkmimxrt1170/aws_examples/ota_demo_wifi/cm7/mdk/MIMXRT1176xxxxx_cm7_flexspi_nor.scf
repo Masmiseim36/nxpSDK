@@ -61,8 +61,13 @@
   #define m_data2_size                 0x0007E000
 #endif
 
+#if (defined(__use_flash64MB__))
+#define m_core1_image_start            0x33FC0000
+#define m_core1_image_size             0x00040000
+#else
 #define m_core1_image_start            0x30FC0000
 #define m_core1_image_size             0x00040000
+#endif
 
 /* Sizes */
 #if (defined(__stack_size__))

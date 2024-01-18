@@ -276,7 +276,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pe111,Pe191,Pe167,Pe177,Pe236,Pe546,Pe550</state>
+          <state>Pe111,Pe191,Pe167,Pe177,Pe236,Pe546,Pe550,Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -313,11 +313,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -368,6 +368,7 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1176/utilities</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
@@ -1375,7 +1376,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pe111,Pe191,Pe167,Pe177,Pe236,Pe546,Pe550</state>
+          <state>Pe111,Pe191,Pe167,Pe177,Pe236,Pe546,Pe550,Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1412,11 +1413,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -1467,6 +1468,7 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1176/utilities</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
@@ -2238,12 +2240,6 @@
       <name>$PROJ_DIR$/../board_init.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../clock_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/retarget.c</name>
     </file>
     <file>
@@ -2263,12 +2259,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../board.h</name>
-    </file>
-  </group>
-  <group>
-    <name>doc</name>
-    <file>
-      <name>$PROJ_DIR$/../doc/readme.txt</name>
     </file>
   </group>
   <group>
@@ -2454,6 +2444,9 @@
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/utilities/fsl_assert.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</name>
     </file>
     <file>
@@ -2488,6 +2481,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/mpu_armv7.h</name>
+    </file>
+  </group>
+  <group>
+    <name>doc</name>
+    <file>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
 </project>

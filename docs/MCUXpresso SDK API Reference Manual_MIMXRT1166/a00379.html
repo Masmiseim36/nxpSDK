@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: Soc_mipi_csi2rx</title>
+<title>MCUXpresso SDK API Reference Manual: USB Device Configuration</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -98,144 +98,10 @@ $(document).ready(function(){initNavTree('a00379.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#files">Files</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Soc_mipi_csi2rx</div>  </div>
+<div class="title">USB Device Configuration<div class="ingroups"><a class="el" href="a00086.html">Serial Port USB</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
-Files</h2></td></tr>
-<tr class="memitem:a00123"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00123.html">fsl_soc_mipi_csi2rx.h</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga4624f6b163f34f63a649c3fa7cfcb968"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00379.html#ga4624f6b163f34f63a649c3fa7cfcb968">FSL_SOC_MIPI_CSI2RX_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00336.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 2))</td></tr>
-<tr class="memdesc:ga4624f6b163f34f63a649c3fa7cfcb968"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver version.  <a href="#ga4624f6b163f34f63a649c3fa7cfcb968">More...</a><br/></td></tr>
-<tr class="separator:ga4624f6b163f34f63a649c3fa7cfcb968"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gad34b7d079b3c741539a0c9c631f232a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00379.html#gad34b7d079b3c741539a0c9c631f232a5">MIPI_CSI2RX_SoftwareReset</a> (MIPI_CSI2RX_Type *base, bool reset)</td></tr>
-<tr class="memdesc:gad34b7d079b3c741539a0c9c631f232a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assert or deassert CSI2RX reset in system level.  <a href="#gad34b7d079b3c741539a0c9c631f232a5">More...</a><br/></td></tr>
-<tr class="separator:gad34b7d079b3c741539a0c9c631f232a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5a0b2b8c52fd27c026eec32a2182753d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00379.html#ga5a0b2b8c52fd27c026eec32a2182753d">MIPI_CSI2RX_InitInterface</a> (MIPI_CSI2RX_Type *base, uint8_t tHsSettle_EscClk)</td></tr>
-<tr class="memdesc:ga5a0b2b8c52fd27c026eec32a2182753d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the CSI2RX interface.  <a href="#ga5a0b2b8c52fd27c026eec32a2182753d">More...</a><br/></td></tr>
-<tr class="separator:ga5a0b2b8c52fd27c026eec32a2182753d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga41744b30bd77a53258065288f3e35a1d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00379.html#ga41744b30bd77a53258065288f3e35a1d">MIPI_CSI2RX_DeinitInterface</a> (MIPI_CSI2RX_Type *base)</td></tr>
-<tr class="memdesc:ga41744b30bd77a53258065288f3e35a1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitialize the CSI2RX interface.  <a href="#ga41744b30bd77a53258065288f3e35a1d">More...</a><br/></td></tr>
-<tr class="separator:ga41744b30bd77a53258065288f3e35a1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga4624f6b163f34f63a649c3fa7cfcb968"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FSL_SOC_MIPI_CSI2RX_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00336.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 2))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gad34b7d079b3c741539a0c9c631f232a5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void MIPI_CSI2RX_SoftwareReset </td>
-          <td>(</td>
-          <td class="paramtype">MIPI_CSI2RX_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>reset</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>The CSI2RX peripheral base address. </td></tr>
-    <tr><td class="paramname">reset</td><td>Pass in true to set to reset state, false to release reset. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>Don't call this function directly. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga5a0b2b8c52fd27c026eec32a2182753d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void MIPI_CSI2RX_InitInterface </td>
-          <td>(</td>
-          <td class="paramtype">MIPI_CSI2RX_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>tHsSettle_EscClk</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>The CSI2RX peripheral base address. </td></tr>
-    <tr><td class="paramname">tHsSettle_EscClk</td><td>t-HS_SETTLE in esc clock period. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>Don't call this function directly. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga41744b30bd77a53258065288f3e35a1d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void MIPI_CSI2RX_DeinitInterface </td>
-          <td>(</td>
-          <td class="paramtype">MIPI_CSI2RX_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>The CSI2RX peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>Don't call this function directly. </dd></dl>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->

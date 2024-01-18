@@ -32,7 +32,7 @@ int32_t coreHttp_send(NetworkContext_t *pNetworkContext, const void *pBuffer, si
 {
     int cnt;
 
-    cnt = mbedtls_ssl_write(pNetworkContext->sslCtx, (unsigned char *)pBuffer, bytesToSend);
+    cnt = mbedtls_ssl_write(pNetworkContext->sslCtx, (const unsigned char *)pBuffer, bytesToSend);
 
     if (cnt == MBEDTLS_ERR_SSL_WANT_READ || cnt == MBEDTLS_ERR_SSL_WANT_WRITE)
     {

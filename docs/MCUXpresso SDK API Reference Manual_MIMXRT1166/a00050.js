@@ -1,11 +1,20 @@
 var a00050 =
 [
-    [ "gpc_tran_step_config_t", "a00050.html#a00560", [
-      [ "stepCount", "a00050.html#a7c5bf80256d94ecdb63e37254fdf1084", null ],
-      [ "cntMode", "a00050.html#a9b45f8360c05a5d13031d2ad8cd4725c", null ],
-      [ "enableStep", "a00050.html#a7b6b0a586fc3c3caa3389ee26f2a5623", null ]
+    [ "_gpc_tran_step_config", "a00050.html#a00552", [
+      [ "stepCount", "a00050.html#aec32ab013bb9c59891e627fd9880ca07", null ],
+      [ "cntMode", "a00050.html#a6204c130e0df337e6ffba7393c5146f4", null ],
+      [ "enableStep", "a00050.html#a831fe80bd5e6cd10a994ebb81f216714", null ]
     ] ],
-    [ "FSL_GPC_RIVER_VERSION", "a00050.html#ga52ecad5c0b40daae3c9e709403098821", [
+    [ "FSL_GPC_RIVER_VERSION", "a00050.html#ga52ecad5c0b40daae3c9e709403098821", null ],
+    [ "gpc_cm_standby_mode_status_t", "a00050.html#ga093ab3b3a103f8d711211220f051183a", null ],
+    [ "gpc_cm_tran_step_t", "a00050.html#gaa6f049ba9ef89c54e327512b93a5de9e", null ],
+    [ "gpc_tran_step_counter_mode_t", "a00050.html#gafc02fb845976ad1901d56033e39e7592", null ],
+    [ "gpc_sp_tran_step_t", "a00050.html#gac92d00d1720372b0c6a734493d22ab6a", null ],
+    [ "gpc_cpu_mode_t", "a00050.html#ga1d6e1ead8c399a76400e5fa295c73ca6", null ],
+    [ "gpc_tran_step_config_t", "a00050.html#gaac1e1e73703d2118ca2035bdc2b8b168", null ],
+    [ "gpc_cm_wakeup_sp_sel_t", "a00050.html#ga2902f04383435dc1d1802390baa53ec1", null ],
+    [ "gpc_stby_tran_step_t", "a00050.html#ga1f2324f408a5ef06ac0523e1686f7ffd", null ],
+    [ "gpc_cpu_domain_name_t", "a00050.html#ga9aeaa52c08ff17c23e02712d711fc70e", [
       [ "kGPC_CM_EventWakeupRequest", "a00050.html#ggadf764cbdea00d65edcd07bb9953ad2b7aa43a0119c863fe10f0b516e158bf2e32", null ],
       [ "kGPC_CM_DebugWakeupRequest", "a00050.html#ggadf764cbdea00d65edcd07bb9953ad2b7a897316a336a3a7647636ce4116fc91e8", null ],
       [ "kGPC_SetPoint0", "a00050.html#gga99fb83031ce9923c84392b4e92f956b5a0efa477120c89c17403fcf6ed1797185", null ],
@@ -25,91 +34,91 @@ var a00050 =
       [ "kGPC_SetPoint14", "a00050.html#gga99fb83031ce9923c84392b4e92f956b5a236da2d38501003405d1f08585688557", null ],
       [ "kGPC_SetPoint15", "a00050.html#gga99fb83031ce9923c84392b4e92f956b5a78ce5547f31b9ccfef347128316dbc1c", null ]
     ] ],
-    [ "gpc_cm_standby_mode_status_t", "a00050.html#gabf1b3d7cbe484ad170b60e399dcac9fb", [
-      [ "kGPC_CM_SleepBusy", "a00050.html#ggabf1b3d7cbe484ad170b60e399dcac9fba0ec425b1b86fd24092ee13c21f581ba3", null ],
-      [ "kGPC_CM_WakeupBusy", "a00050.html#ggabf1b3d7cbe484ad170b60e399dcac9fba9de78e75708a4958128a503c6ade0963", null ]
+    [ "_gpc_cm_standby_mode_status", "a00050.html#ga7eb59c3a494e9e65869d81b2fee59411", [
+      [ "kGPC_CM_SleepBusy", "a00050.html#gga7eb59c3a494e9e65869d81b2fee59411a0ec425b1b86fd24092ee13c21f581ba3", null ],
+      [ "kGPC_CM_WakeupBusy", "a00050.html#gga7eb59c3a494e9e65869d81b2fee59411a9de78e75708a4958128a503c6ade0963", null ]
     ] ],
-    [ "gpc_cm_tran_step_t", "a00050.html#gad20ec4e66edb59d9f67c1ec5ac75b945", [
-      [ "kGPC_CM_SleepSsar", "a00050.html#ggad20ec4e66edb59d9f67c1ec5ac75b945af5c252b0e31921d27416f8d2a4a5228b", null ],
-      [ "kGPC_CM_SleepLpcg", "a00050.html#ggad20ec4e66edb59d9f67c1ec5ac75b945a5f661b9ea2e5d386f8b741d4a3d71b1e", null ],
-      [ "kGPC_CM_SleepPll", "a00050.html#ggad20ec4e66edb59d9f67c1ec5ac75b945ac24901d78dbb0b9d091ca27beeec5b4d", null ],
-      [ "kGPC_CM_SleepIso", "a00050.html#ggad20ec4e66edb59d9f67c1ec5ac75b945ab67818ca137f0ff1800c8bbee273231c", null ],
-      [ "kGPC_CM_SleepReset", "a00050.html#ggad20ec4e66edb59d9f67c1ec5ac75b945a352945049c5b1ed8485d72b0abec2014", null ],
-      [ "kGPC_CM_SleepPower", "a00050.html#ggad20ec4e66edb59d9f67c1ec5ac75b945a67e387ae2d5783ce2a0a4e0b4e92d60a", null ],
-      [ "kGPC_CM_SleepSP", "a00050.html#ggad20ec4e66edb59d9f67c1ec5ac75b945a4b154de90e5883cb2c7495c5bac26326", null ],
-      [ "kGPC_CM_SleepSTBY", "a00050.html#ggad20ec4e66edb59d9f67c1ec5ac75b945ae8e18697babdc2b12f95d5474a44626a", null ],
-      [ "kGPC_CM_WakeupSTBY", "a00050.html#ggad20ec4e66edb59d9f67c1ec5ac75b945a4c471ea34d6623487a10630e765c4462", null ],
-      [ "kGPC_CM_WakeupSP", "a00050.html#ggad20ec4e66edb59d9f67c1ec5ac75b945aee9d77d02b8e81716e313b43570eb427", null ],
-      [ "kGPC_CM_WakeupPower", "a00050.html#ggad20ec4e66edb59d9f67c1ec5ac75b945abd18a9d675d64c80c8e0b0571c5158d9", null ],
-      [ "kGPC_CM_WakeupReset", "a00050.html#ggad20ec4e66edb59d9f67c1ec5ac75b945ac9b405ce092896110bd913e0193735e6", null ],
-      [ "kGPC_CM_WakeupIso", "a00050.html#ggad20ec4e66edb59d9f67c1ec5ac75b945abbf0293c0b99cbfc3e87ebfe6bb4af86", null ],
-      [ "kGPC_CM_WakeupPll", "a00050.html#ggad20ec4e66edb59d9f67c1ec5ac75b945a8dbea40f973c6c8024d6caecd851b868", null ],
-      [ "kGPC_CM_WakeupLpcg", "a00050.html#ggad20ec4e66edb59d9f67c1ec5ac75b945acbadf3575d1c21573966c32bc966d6ea", null ],
-      [ "kGPC_CM_WakeupSsar", "a00050.html#ggad20ec4e66edb59d9f67c1ec5ac75b945a626fb6dc66630d418193f89912849e50", null ]
+    [ "_gpc_cm_tran_step", "a00050.html#ga1a6ae84c5840bfabd567062c2d07fb9f", [
+      [ "kGPC_CM_SleepSsar", "a00050.html#gga1a6ae84c5840bfabd567062c2d07fb9faf5c252b0e31921d27416f8d2a4a5228b", null ],
+      [ "kGPC_CM_SleepLpcg", "a00050.html#gga1a6ae84c5840bfabd567062c2d07fb9fa5f661b9ea2e5d386f8b741d4a3d71b1e", null ],
+      [ "kGPC_CM_SleepPll", "a00050.html#gga1a6ae84c5840bfabd567062c2d07fb9fac24901d78dbb0b9d091ca27beeec5b4d", null ],
+      [ "kGPC_CM_SleepIso", "a00050.html#gga1a6ae84c5840bfabd567062c2d07fb9fab67818ca137f0ff1800c8bbee273231c", null ],
+      [ "kGPC_CM_SleepReset", "a00050.html#gga1a6ae84c5840bfabd567062c2d07fb9fa352945049c5b1ed8485d72b0abec2014", null ],
+      [ "kGPC_CM_SleepPower", "a00050.html#gga1a6ae84c5840bfabd567062c2d07fb9fa67e387ae2d5783ce2a0a4e0b4e92d60a", null ],
+      [ "kGPC_CM_SleepSP", "a00050.html#gga1a6ae84c5840bfabd567062c2d07fb9fa4b154de90e5883cb2c7495c5bac26326", null ],
+      [ "kGPC_CM_SleepSTBY", "a00050.html#gga1a6ae84c5840bfabd567062c2d07fb9fae8e18697babdc2b12f95d5474a44626a", null ],
+      [ "kGPC_CM_WakeupSTBY", "a00050.html#gga1a6ae84c5840bfabd567062c2d07fb9fa4c471ea34d6623487a10630e765c4462", null ],
+      [ "kGPC_CM_WakeupSP", "a00050.html#gga1a6ae84c5840bfabd567062c2d07fb9faee9d77d02b8e81716e313b43570eb427", null ],
+      [ "kGPC_CM_WakeupPower", "a00050.html#gga1a6ae84c5840bfabd567062c2d07fb9fabd18a9d675d64c80c8e0b0571c5158d9", null ],
+      [ "kGPC_CM_WakeupReset", "a00050.html#gga1a6ae84c5840bfabd567062c2d07fb9fac9b405ce092896110bd913e0193735e6", null ],
+      [ "kGPC_CM_WakeupIso", "a00050.html#gga1a6ae84c5840bfabd567062c2d07fb9fabbf0293c0b99cbfc3e87ebfe6bb4af86", null ],
+      [ "kGPC_CM_WakeupPll", "a00050.html#gga1a6ae84c5840bfabd567062c2d07fb9fa8dbea40f973c6c8024d6caecd851b868", null ],
+      [ "kGPC_CM_WakeupLpcg", "a00050.html#gga1a6ae84c5840bfabd567062c2d07fb9facbadf3575d1c21573966c32bc966d6ea", null ],
+      [ "kGPC_CM_WakeupSsar", "a00050.html#gga1a6ae84c5840bfabd567062c2d07fb9fa626fb6dc66630d418193f89912849e50", null ]
     ] ],
-    [ "gpc_tran_step_counter_mode_t", "a00050.html#gae54f651ee9e2d065a2eda4d3223bb91f", [
-      [ "kGPC_StepCounterDisableMode", "a00050.html#ggae54f651ee9e2d065a2eda4d3223bb91fa95ef23173b5d6ee37ddad01732ffa7cc", null ],
-      [ "kGPC_StepCounterDelayMode", "a00050.html#ggae54f651ee9e2d065a2eda4d3223bb91fad17856334f1237823122e30b45443d40", null ],
-      [ "kGPC_StepCounterIgnoreResponseMode", "a00050.html#ggae54f651ee9e2d065a2eda4d3223bb91fa1bf4671276472833a94b3aede885ca62", null ],
-      [ "kGPC_StepCounterTimeOutMode", "a00050.html#ggae54f651ee9e2d065a2eda4d3223bb91fa92d23850c09c4d8976d9ef9e5ffe1a7b", null ]
+    [ "_gpc_tran_step_counter_mode", "a00050.html#ga9383a41dbf9ba494c77fbcb10886ddb4", [
+      [ "kGPC_StepCounterDisableMode", "a00050.html#gga9383a41dbf9ba494c77fbcb10886ddb4a95ef23173b5d6ee37ddad01732ffa7cc", null ],
+      [ "kGPC_StepCounterDelayMode", "a00050.html#gga9383a41dbf9ba494c77fbcb10886ddb4ad17856334f1237823122e30b45443d40", null ],
+      [ "kGPC_StepCounterIgnoreResponseMode", "a00050.html#gga9383a41dbf9ba494c77fbcb10886ddb4a1bf4671276472833a94b3aede885ca62", null ],
+      [ "kGPC_StepCounterTimeOutMode", "a00050.html#gga9383a41dbf9ba494c77fbcb10886ddb4a92d23850c09c4d8976d9ef9e5ffe1a7b", null ]
     ] ],
-    [ "gpc_sp_tran_step_t", "a00050.html#gae09c6a10fa64ad79133ca530ead13fa4", [
-      [ "kGPC_SP_SsarSave", "a00050.html#ggae09c6a10fa64ad79133ca530ead13fa4ab380396da5ec730d08ea6954817db838", null ],
-      [ "kGPC_SP_LpcgOff", "a00050.html#ggae09c6a10fa64ad79133ca530ead13fa4a399137e33add5f145757cd8246910a07", null ],
-      [ "kGPC_SP_GroupDown", "a00050.html#ggae09c6a10fa64ad79133ca530ead13fa4a2a6616952b2d1cff4b47dac1e99d563e", null ],
-      [ "kGPC_SP_RootDown", "a00050.html#ggae09c6a10fa64ad79133ca530ead13fa4a9ab798439dbbc3722ce1990e7174fda8", null ],
-      [ "kGPC_SP_PllOff", "a00050.html#ggae09c6a10fa64ad79133ca530ead13fa4a4a2f529c0128f0c30e2f4fb8bf23931c", null ],
-      [ "kGPC_SP_IsoOn", "a00050.html#ggae09c6a10fa64ad79133ca530ead13fa4adf7452fd57bd3b13b35853569779a424", null ],
-      [ "kGPC_SP_ResetEarly", "a00050.html#ggae09c6a10fa64ad79133ca530ead13fa4a5feb77898d7bf56a61391fc5fc3cd99a", null ],
-      [ "kGPC_SP_PowerOff", "a00050.html#ggae09c6a10fa64ad79133ca530ead13fa4a638cd8a5d414caec5287ff3dac84426a", null ],
-      [ "kGPC_SP_BiasOff", "a00050.html#ggae09c6a10fa64ad79133ca530ead13fa4a36260bb61a2c18ba435dd95caf1d83d2", null ],
-      [ "kGPC_SP_BandgapPllLdoOff", "a00050.html#ggae09c6a10fa64ad79133ca530ead13fa4a1adb397bece303296338d4378e502a34", null ],
-      [ "kGPC_SP_LdoPre", "a00050.html#ggae09c6a10fa64ad79133ca530ead13fa4a364f2b5a87645464fb0301b19d690390", null ],
-      [ "kGPC_SP_DcdcDown", "a00050.html#ggae09c6a10fa64ad79133ca530ead13fa4a3ba874ffd08aa2366508a9c42ee8a4ee", null ],
-      [ "kGPC_SP_DcdcUp", "a00050.html#ggae09c6a10fa64ad79133ca530ead13fa4a92480e5b7ed786376ce35057aec5e730", null ],
-      [ "kGPC_SP_LdoPost", "a00050.html#ggae09c6a10fa64ad79133ca530ead13fa4a269da76d67433b1b3cc0346cb117a581", null ],
-      [ "kGPC_SP_BandgapPllLdoOn", "a00050.html#ggae09c6a10fa64ad79133ca530ead13fa4a9705f174b5641e22ab8438cc9af5fd38", null ],
-      [ "kGPC_SP_BiasOn", "a00050.html#ggae09c6a10fa64ad79133ca530ead13fa4ae1452d1a3987b75c837052a235e407a3", null ],
-      [ "kGPC_SP_PowerOn", "a00050.html#ggae09c6a10fa64ad79133ca530ead13fa4ad1e6e3bc3d161ba0014bd3022fdda546", null ],
-      [ "kGPC_SP_ResetLate", "a00050.html#ggae09c6a10fa64ad79133ca530ead13fa4af6f38c149dd6197a00802a4c388837bb", null ],
-      [ "kGPC_SP_IsoOff", "a00050.html#ggae09c6a10fa64ad79133ca530ead13fa4acde35932281a5bb2004173ed320c270c", null ],
-      [ "kGPC_SP_PllOn", "a00050.html#ggae09c6a10fa64ad79133ca530ead13fa4aa1da5117ec5d00cf2b176a3f9b0d02c1", null ],
-      [ "kGPC_SP_RootUp", "a00050.html#ggae09c6a10fa64ad79133ca530ead13fa4acdfccd0f075effd84e212be9c6dc935c", null ],
-      [ "kGPC_SP_GroupUp", "a00050.html#ggae09c6a10fa64ad79133ca530ead13fa4aa83cb4c50c999982f737ce53e07c2212", null ],
-      [ "kGPC_SP_LpcgOn", "a00050.html#ggae09c6a10fa64ad79133ca530ead13fa4a4be31643880bd08b7f3e114d19f73668", null ],
-      [ "kGPC_SP_SsarRestore", "a00050.html#ggae09c6a10fa64ad79133ca530ead13fa4ade8bd7c0a05e1e6d4080281da590f308", null ]
+    [ "_gpc_sp_tran_step", "a00050.html#ga5042c06702c294658083e0752d9027b1", [
+      [ "kGPC_SP_SsarSave", "a00050.html#gga5042c06702c294658083e0752d9027b1ab380396da5ec730d08ea6954817db838", null ],
+      [ "kGPC_SP_LpcgOff", "a00050.html#gga5042c06702c294658083e0752d9027b1a399137e33add5f145757cd8246910a07", null ],
+      [ "kGPC_SP_GroupDown", "a00050.html#gga5042c06702c294658083e0752d9027b1a2a6616952b2d1cff4b47dac1e99d563e", null ],
+      [ "kGPC_SP_RootDown", "a00050.html#gga5042c06702c294658083e0752d9027b1a9ab798439dbbc3722ce1990e7174fda8", null ],
+      [ "kGPC_SP_PllOff", "a00050.html#gga5042c06702c294658083e0752d9027b1a4a2f529c0128f0c30e2f4fb8bf23931c", null ],
+      [ "kGPC_SP_IsoOn", "a00050.html#gga5042c06702c294658083e0752d9027b1adf7452fd57bd3b13b35853569779a424", null ],
+      [ "kGPC_SP_ResetEarly", "a00050.html#gga5042c06702c294658083e0752d9027b1a5feb77898d7bf56a61391fc5fc3cd99a", null ],
+      [ "kGPC_SP_PowerOff", "a00050.html#gga5042c06702c294658083e0752d9027b1a638cd8a5d414caec5287ff3dac84426a", null ],
+      [ "kGPC_SP_BiasOff", "a00050.html#gga5042c06702c294658083e0752d9027b1a36260bb61a2c18ba435dd95caf1d83d2", null ],
+      [ "kGPC_SP_BandgapPllLdoOff", "a00050.html#gga5042c06702c294658083e0752d9027b1a1adb397bece303296338d4378e502a34", null ],
+      [ "kGPC_SP_LdoPre", "a00050.html#gga5042c06702c294658083e0752d9027b1a364f2b5a87645464fb0301b19d690390", null ],
+      [ "kGPC_SP_DcdcDown", "a00050.html#gga5042c06702c294658083e0752d9027b1a3ba874ffd08aa2366508a9c42ee8a4ee", null ],
+      [ "kGPC_SP_DcdcUp", "a00050.html#gga5042c06702c294658083e0752d9027b1a92480e5b7ed786376ce35057aec5e730", null ],
+      [ "kGPC_SP_LdoPost", "a00050.html#gga5042c06702c294658083e0752d9027b1a269da76d67433b1b3cc0346cb117a581", null ],
+      [ "kGPC_SP_BandgapPllLdoOn", "a00050.html#gga5042c06702c294658083e0752d9027b1a9705f174b5641e22ab8438cc9af5fd38", null ],
+      [ "kGPC_SP_BiasOn", "a00050.html#gga5042c06702c294658083e0752d9027b1ae1452d1a3987b75c837052a235e407a3", null ],
+      [ "kGPC_SP_PowerOn", "a00050.html#gga5042c06702c294658083e0752d9027b1ad1e6e3bc3d161ba0014bd3022fdda546", null ],
+      [ "kGPC_SP_ResetLate", "a00050.html#gga5042c06702c294658083e0752d9027b1af6f38c149dd6197a00802a4c388837bb", null ],
+      [ "kGPC_SP_IsoOff", "a00050.html#gga5042c06702c294658083e0752d9027b1acde35932281a5bb2004173ed320c270c", null ],
+      [ "kGPC_SP_PllOn", "a00050.html#gga5042c06702c294658083e0752d9027b1aa1da5117ec5d00cf2b176a3f9b0d02c1", null ],
+      [ "kGPC_SP_RootUp", "a00050.html#gga5042c06702c294658083e0752d9027b1acdfccd0f075effd84e212be9c6dc935c", null ],
+      [ "kGPC_SP_GroupUp", "a00050.html#gga5042c06702c294658083e0752d9027b1aa83cb4c50c999982f737ce53e07c2212", null ],
+      [ "kGPC_SP_LpcgOn", "a00050.html#gga5042c06702c294658083e0752d9027b1a4be31643880bd08b7f3e114d19f73668", null ],
+      [ "kGPC_SP_SsarRestore", "a00050.html#gga5042c06702c294658083e0752d9027b1ade8bd7c0a05e1e6d4080281da590f308", null ]
     ] ],
-    [ "gpc_cpu_mode_t", "a00050.html#ga71701b99728ccade17597179c6db006a", [
-      [ "kGPC_RunMode", "a00050.html#gga71701b99728ccade17597179c6db006aa7da7d3bf71b7a4f724b672ba5534fdbc", null ],
-      [ "kGPC_WaitMode", "a00050.html#gga71701b99728ccade17597179c6db006aadf1f22df0717e6ed38156e05ce2244a1", null ],
-      [ "kGPC_StopMode", "a00050.html#gga71701b99728ccade17597179c6db006aa49a546f006f76aa68c89e2321a46faf6", null ],
-      [ "kGPC_SuspendMode", "a00050.html#gga71701b99728ccade17597179c6db006aacfcf05e83791467c21a180fa06938b5b", null ]
+    [ "_gpc_cpu_mode", "a00050.html#ga85ae918da3c8841b125117be400b6e31", [
+      [ "kGPC_RunMode", "a00050.html#gga85ae918da3c8841b125117be400b6e31a7da7d3bf71b7a4f724b672ba5534fdbc", null ],
+      [ "kGPC_WaitMode", "a00050.html#gga85ae918da3c8841b125117be400b6e31adf1f22df0717e6ed38156e05ce2244a1", null ],
+      [ "kGPC_StopMode", "a00050.html#gga85ae918da3c8841b125117be400b6e31a49a546f006f76aa68c89e2321a46faf6", null ],
+      [ "kGPC_SuspendMode", "a00050.html#gga85ae918da3c8841b125117be400b6e31acfcf05e83791467c21a180fa06938b5b", null ]
     ] ],
-    [ "gpc_cm_wakeup_sp_sel_t", "a00050.html#ga369fcf06a104943c5a66739f18e161da", [
-      [ "kGPC_CM_WakeupSetpoint", "a00050.html#gga369fcf06a104943c5a66739f18e161daa86ce7122648ba5faa74eebdbde740a56", null ],
-      [ "kGPC_CM_RequestPreviousSetpoint", "a00050.html#gga369fcf06a104943c5a66739f18e161daaa04afd0c446c0d481c88b8c019eaf74b", null ]
+    [ "_gpc_cm_wakeup_sp_sel", "a00050.html#ga617127afcfc46b730af314129e9eef02", [
+      [ "kGPC_CM_WakeupSetpoint", "a00050.html#gga617127afcfc46b730af314129e9eef02a86ce7122648ba5faa74eebdbde740a56", null ],
+      [ "kGPC_CM_RequestPreviousSetpoint", "a00050.html#gga617127afcfc46b730af314129e9eef02aa04afd0c446c0d481c88b8c019eaf74b", null ]
     ] ],
-    [ "gpc_stby_tran_step_t", "a00050.html#gaa82feb4574bf5b73455f0e92cd3e9023", [
-      [ "kGPC_STBY_LpcgIn", "a00050.html#ggaa82feb4574bf5b73455f0e92cd3e9023ae0e9bc424b7325cf238e8cd8a3de5118", null ],
-      [ "kGPC_STBY_PllIn", "a00050.html#ggaa82feb4574bf5b73455f0e92cd3e9023acd098f6bc0557b31907c8e5fcda7e0a7", null ],
-      [ "kGPC_STBY_BiasIn", "a00050.html#ggaa82feb4574bf5b73455f0e92cd3e9023a49daa9972d38d62dc89622ab4b80dfd3", null ],
-      [ "kGPC_STBY_PldoIn", "a00050.html#ggaa82feb4574bf5b73455f0e92cd3e9023a1c0464bd5b7c57115fd11a00bb62a033", null ],
-      [ "kGPC_STBY_BandgapIn", "a00050.html#ggaa82feb4574bf5b73455f0e92cd3e9023acf0f595210f76781ab1dbf58450b1e47", null ],
-      [ "kGPC_STBY_LdoIn", "a00050.html#ggaa82feb4574bf5b73455f0e92cd3e9023a594fee8bd97aaec51b19f2eee5033c9c", null ],
-      [ "kGPC_STBY_DcdcIn", "a00050.html#ggaa82feb4574bf5b73455f0e92cd3e9023af048c84d8104280f7799b40ce7270202", null ],
-      [ "kGPC_STBY_PmicIn", "a00050.html#ggaa82feb4574bf5b73455f0e92cd3e9023a3ac0ba26a6c40adad484d142cdc6a361", null ],
-      [ "kGPC_STBY_PmicOut", "a00050.html#ggaa82feb4574bf5b73455f0e92cd3e9023acc2eb7739b56b04f6040fadc697fe29c", null ],
-      [ "kGPC_STBY_DcdcOut", "a00050.html#ggaa82feb4574bf5b73455f0e92cd3e9023a1aa7c85ff0361618766417c1b0e0e5ea", null ],
-      [ "kGPC_STBY_LdoOut", "a00050.html#ggaa82feb4574bf5b73455f0e92cd3e9023a671cab1405257bd6745e616b6224cbc6", null ],
-      [ "kGPC_STBY_BandgapOut", "a00050.html#ggaa82feb4574bf5b73455f0e92cd3e9023a9c87ad66c03e0852aca19f02ad72d532", null ],
-      [ "kGPC_STBY_PldoOut", "a00050.html#ggaa82feb4574bf5b73455f0e92cd3e9023a0efface0edd63f5fc0f54fed5b252636", null ],
-      [ "kGPC_STBY_BiasOut", "a00050.html#ggaa82feb4574bf5b73455f0e92cd3e9023a10922ceaf8fc106c199b332d568edd58", null ],
-      [ "kGPC_STBY_PllOut", "a00050.html#ggaa82feb4574bf5b73455f0e92cd3e9023acd41fcb23303e8806623a3e7a78b6d53", null ],
-      [ "kGPC_STBY_LpcgOut", "a00050.html#ggaa82feb4574bf5b73455f0e92cd3e9023af81e940f574ce908481ac40bd8ca92d8", null ]
+    [ "_gpc_stby_tran_step", "a00050.html#ga5e3af766b415d0025cab9f0e6c90ef8c", [
+      [ "kGPC_STBY_LpcgIn", "a00050.html#gga5e3af766b415d0025cab9f0e6c90ef8cae0e9bc424b7325cf238e8cd8a3de5118", null ],
+      [ "kGPC_STBY_PllIn", "a00050.html#gga5e3af766b415d0025cab9f0e6c90ef8cacd098f6bc0557b31907c8e5fcda7e0a7", null ],
+      [ "kGPC_STBY_BiasIn", "a00050.html#gga5e3af766b415d0025cab9f0e6c90ef8ca49daa9972d38d62dc89622ab4b80dfd3", null ],
+      [ "kGPC_STBY_PldoIn", "a00050.html#gga5e3af766b415d0025cab9f0e6c90ef8ca1c0464bd5b7c57115fd11a00bb62a033", null ],
+      [ "kGPC_STBY_BandgapIn", "a00050.html#gga5e3af766b415d0025cab9f0e6c90ef8cacf0f595210f76781ab1dbf58450b1e47", null ],
+      [ "kGPC_STBY_LdoIn", "a00050.html#gga5e3af766b415d0025cab9f0e6c90ef8ca594fee8bd97aaec51b19f2eee5033c9c", null ],
+      [ "kGPC_STBY_DcdcIn", "a00050.html#gga5e3af766b415d0025cab9f0e6c90ef8caf048c84d8104280f7799b40ce7270202", null ],
+      [ "kGPC_STBY_PmicIn", "a00050.html#gga5e3af766b415d0025cab9f0e6c90ef8ca3ac0ba26a6c40adad484d142cdc6a361", null ],
+      [ "kGPC_STBY_PmicOut", "a00050.html#gga5e3af766b415d0025cab9f0e6c90ef8cacc2eb7739b56b04f6040fadc697fe29c", null ],
+      [ "kGPC_STBY_DcdcOut", "a00050.html#gga5e3af766b415d0025cab9f0e6c90ef8ca1aa7c85ff0361618766417c1b0e0e5ea", null ],
+      [ "kGPC_STBY_LdoOut", "a00050.html#gga5e3af766b415d0025cab9f0e6c90ef8ca671cab1405257bd6745e616b6224cbc6", null ],
+      [ "kGPC_STBY_BandgapOut", "a00050.html#gga5e3af766b415d0025cab9f0e6c90ef8ca9c87ad66c03e0852aca19f02ad72d532", null ],
+      [ "kGPC_STBY_PldoOut", "a00050.html#gga5e3af766b415d0025cab9f0e6c90ef8ca0efface0edd63f5fc0f54fed5b252636", null ],
+      [ "kGPC_STBY_BiasOut", "a00050.html#gga5e3af766b415d0025cab9f0e6c90ef8ca10922ceaf8fc106c199b332d568edd58", null ],
+      [ "kGPC_STBY_PllOut", "a00050.html#gga5e3af766b415d0025cab9f0e6c90ef8cacd41fcb23303e8806623a3e7a78b6d53", null ],
+      [ "kGPC_STBY_LpcgOut", "a00050.html#gga5e3af766b415d0025cab9f0e6c90ef8caf81e940f574ce908481ac40bd8ca92d8", null ]
     ] ],
-    [ "gpc_cpu_domain_name_t", "a00050.html#gae671625d0ce450e92311e0ad66f52da5", [
-      [ "kGPC_CM7Core", "a00050.html#ggae671625d0ce450e92311e0ad66f52da5a5f8802189e8a9a9121d796bf9124e02a", null ],
-      [ "kGPC_CM4Core", "a00050.html#ggae671625d0ce450e92311e0ad66f52da5ab244eb9b7e1e187d5a856eb02e11141a", null ]
+    [ "_gpc_cpu_domain_name", "a00050.html#gae8ea18a0e70a3447b7cb27293f390657", [
+      [ "kGPC_CM7Core", "a00050.html#ggae8ea18a0e70a3447b7cb27293f390657a5f8802189e8a9a9121d796bf9124e02a", null ],
+      [ "kGPC_CM4Core", "a00050.html#ggae8ea18a0e70a3447b7cb27293f390657ab244eb9b7e1e187d5a856eb02e11141a", null ]
     ] ],
     [ "GPC_CM_SetNextCpuMode", "a00050.html#gaac4ce9e5ac154856a17715f961374c07", null ],
     [ "GPC_CM_GetCurrentCpuMode", "a00050.html#ga4a3f5a11b72ad7ab846e045ce44599cc", null ],

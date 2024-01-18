@@ -6,7 +6,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 if((CONFIG_BOARD STREQUAL evkmimxrt1170) AND CONFIG_USE_driver_common AND CONFIG_USE_driver_flexspi)
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-  ${CMAKE_CURRENT_LIST_DIR}/fsl_adapter_flexspi_nor_flash.c
+  ${CMAKE_CURRENT_LIST_DIR}/mimxrt1170/fsl_adapter_flexspi_nor_flash.c
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC

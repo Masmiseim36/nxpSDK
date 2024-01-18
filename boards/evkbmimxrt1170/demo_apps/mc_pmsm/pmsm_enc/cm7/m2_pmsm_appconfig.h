@@ -6,7 +6,7 @@
 
 /*
     * FILE NAME: ../boards/evkbmimxrt1170/mc_pmsm/pmsm_enc/m2_pmsm_appconfig.h
-    * DATE: Tue Apr 25 2023, 08:04:40
+    * DATE: Tue Dec 12 2023, 13:10:07
 */
 
 /*
@@ -65,7 +65,7 @@
         "sensorObsrvParSampleTime": 0.0000625,
         "sensorObsrvParF0": 100,
         "sensorObsrvParKsi": 1,
-        "positionLoopPLKp": 0.12
+        "positionLoopPLKp": 0.035
     },
     "sensorless": {
         "sensorlessBemfObsrvF0": 300,
@@ -83,7 +83,7 @@
 
 /*
 {
-    "motorName": "Teknic",
+    "motorName": "Teknic M-2310P-LN-04K",
     "motorDescription": "Configuration for the Teknic motor."
 }
 */
@@ -142,7 +142,7 @@
 #define M1_POSPE_ENC_DIRECTION (0)
 #define M1_POSPE_ENC_N_MIN (0.0F)
 #define M1_POSPE_MECH_POS_GAIN ACC32(16.384)
-#define M1_POS_P_PROP_GAIN FRAC16(0.12)
+#define M1_POS_P_PROP_GAIN FRAC16(0.035)
 #define M1_POSPE_TO_KP_GAIN (1256.64F)
 #define M1_POSPE_TO_KI_GAIN (24.6740F)
 #define M1_POSPE_TO_THETA_GAIN (0.0000198944F)

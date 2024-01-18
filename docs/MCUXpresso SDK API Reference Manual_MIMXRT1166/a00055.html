@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -101,6 +101,7 @@ $(document).ready(function(){initNavTree('a00055.html','');});
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">LCDIFv2: LCD Interface v2</div>  </div>
@@ -118,15 +119,15 @@ Typical use case</h1>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00567"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a00567">lcdifv2_display_config_t</a></td></tr>
-<tr class="memdesc:a00567"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 display configure structure.  <a href="a00055.html#a00567">More...</a><br/></td></tr>
-<tr class="separator:a00567"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00566"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a00566">lcdifv2_buffer_config_t</a></td></tr>
-<tr class="memdesc:a00566"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 source buffer configuration.  <a href="a00055.html#a00566">More...</a><br/></td></tr>
-<tr class="separator:a00566"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00565"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a00565">lcdifv2_blend_config_t</a></td></tr>
-<tr class="memdesc:a00565"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 layer alpha blending configuration.  <a href="a00055.html#a00565">More...</a><br/></td></tr>
-<tr class="separator:a00565"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00559"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a00559">_lcdifv2_display_config</a></td></tr>
+<tr class="memdesc:a00559"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 display configure structure.  <a href="a00055.html#a00559">More...</a><br/></td></tr>
+<tr class="separator:a00559"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00558"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a00558">_lcdifv2_buffer_config</a></td></tr>
+<tr class="memdesc:a00558"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 source buffer configuration.  <a href="a00055.html#a00558">More...</a><br/></td></tr>
+<tr class="separator:a00558"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00557"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a00557">_lcdifv2_blend_config</a></td></tr>
+<tr class="memdesc:a00557"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 layer alpha blending configuration.  <a href="a00055.html#a00557">More...</a><br/></td></tr>
+<tr class="separator:a00557"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
@@ -139,6 +140,60 @@ Macros</h2></td></tr>
 <tr class="memitem:ga9dfe40d044ec28c4418d2372e9862a9b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga9dfe40d044ec28c4418d2372e9862a9b">LCDIFV2_MAKE_DMA_ERROR_INTERRUPT</a>(layer)&#160;&#160;&#160;(1UL &lt;&lt; ((uint32_t)(layer) + 8U))</td></tr>
 <tr class="memdesc:ga9dfe40d044ec28c4418d2372e9862a9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 DMA error interrupt.  <a href="#ga9dfe40d044ec28c4418d2372e9862a9b">More...</a><br/></td></tr>
 <tr class="separator:ga9dfe40d044ec28c4418d2372e9862a9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga241243076b8d7f8db85ba11aca4b1d41"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00055.html#ga5183d9c6f64a02b0336543802c56a72f">_lcdifv2_line_order</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga241243076b8d7f8db85ba11aca4b1d41">lcdifv2_line_order_t</a></td></tr>
+<tr class="memdesc:ga241243076b8d7f8db85ba11aca4b1d41"><td class="mdescLeft">&#160;</td><td class="mdescRight">The LCDIF v2 output line order.  <a href="#ga241243076b8d7f8db85ba11aca4b1d41">More...</a><br/></td></tr>
+<tr class="separator:ga241243076b8d7f8db85ba11aca4b1d41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3b425cc6027e8a48f653130d1fb701ab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3b425cc6027e8a48f653130d1fb701ab"></a>
+typedef struct <br class="typebreak"/>
+<a class="el" href="a00055.html#a00559">_lcdifv2_display_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga3b425cc6027e8a48f653130d1fb701ab">lcdifv2_display_config_t</a></td></tr>
+<tr class="memdesc:ga3b425cc6027e8a48f653130d1fb701ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 display configure structure. <br/></td></tr>
+<tr class="separator:ga3b425cc6027e8a48f653130d1fb701ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga987a58cf1b819da7908511b957c4a3af"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00055.html#ga99039755eb3794c625f35b88c473c489">_lcdifv2_csc_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga987a58cf1b819da7908511b957c4a3af">lcdifv2_csc_mode_t</a></td></tr>
+<tr class="memdesc:ga987a58cf1b819da7908511b957c4a3af"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 color space conversion mode.  <a href="#ga987a58cf1b819da7908511b957c4a3af">More...</a><br/></td></tr>
+<tr class="separator:ga987a58cf1b819da7908511b957c4a3af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga18ea3c4728d85e5f29b42254e91423b6"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00055.html#ga796070866ebd33bc200edc9de8b7eb99">_lcdifv2_pixel_format</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga18ea3c4728d85e5f29b42254e91423b6">lcdifv2_pixel_format_t</a></td></tr>
+<tr class="memdesc:ga18ea3c4728d85e5f29b42254e91423b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 pixel format.  <a href="#ga18ea3c4728d85e5f29b42254e91423b6">More...</a><br/></td></tr>
+<tr class="separator:ga18ea3c4728d85e5f29b42254e91423b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7a6d39859b97f0d473c1bad8bdfee58e"><td class="memItemLeft" align="right" valign="top">typedef struct <br class="typebreak"/>
+<a class="el" href="a00055.html#a00558">_lcdifv2_buffer_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga7a6d39859b97f0d473c1bad8bdfee58e">lcdifv2_buffer_config_t</a></td></tr>
+<tr class="memdesc:ga7a6d39859b97f0d473c1bad8bdfee58e"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 source buffer configuration.  <a href="#ga7a6d39859b97f0d473c1bad8bdfee58e">More...</a><br/></td></tr>
+<tr class="separator:ga7a6d39859b97f0d473c1bad8bdfee58e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga35cbec9ffec4572b9b0ad3330020c1c1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga35cbec9ffec4572b9b0ad3330020c1c1"></a>
+typedef enum <a class="el" href="a00055.html#ga47c0ad3bb7717f9294a089af6a5c4cf0">_lcdifv2_alpha_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga35cbec9ffec4572b9b0ad3330020c1c1">lcdifv2_alpha_mode_t</a></td></tr>
+<tr class="memdesc:ga35cbec9ffec4572b9b0ad3330020c1c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 layer alpha blending mode. <br/></td></tr>
+<tr class="separator:ga35cbec9ffec4572b9b0ad3330020c1c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3a0961a70a23621c996a0f1b6ff74047"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3a0961a70a23621c996a0f1b6ff74047"></a>
+typedef enum <a class="el" href="a00055.html#ga546a77aa4043bdb98f4c5b2874848d30">_lcdifv2_pd_alpha_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga3a0961a70a23621c996a0f1b6ff74047">lcdifv2_pd_alpha_mode_t</a></td></tr>
+<tr class="memdesc:ga3a0961a70a23621c996a0f1b6ff74047"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 PoterDuff alpha mode. <br/></td></tr>
+<tr class="separator:ga3a0961a70a23621c996a0f1b6ff74047"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1ac7cd75162d2e89488ab8f306aa7015"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1ac7cd75162d2e89488ab8f306aa7015"></a>
+typedef enum <a class="el" href="a00055.html#ga810450a0e9c73d97b76ea06ebf17aeb3">_lcdifv2_pd_color_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga1ac7cd75162d2e89488ab8f306aa7015">lcdifv2_pd_color_mode_t</a></td></tr>
+<tr class="memdesc:ga1ac7cd75162d2e89488ab8f306aa7015"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 PoterDuff color mode. <br/></td></tr>
+<tr class="separator:ga1ac7cd75162d2e89488ab8f306aa7015"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafa7db172fb06d80e02028880b282fd94"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafa7db172fb06d80e02028880b282fd94"></a>
+typedef enum <br class="typebreak"/>
+<a class="el" href="a00055.html#gabb0d312b362733f1caa798340937e954">_lcdifv2_pd_global_alpha_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gafa7db172fb06d80e02028880b282fd94">lcdifv2_pd_global_alpha_mode_t</a></td></tr>
+<tr class="memdesc:gafa7db172fb06d80e02028880b282fd94"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 PoterDuff global alpha mode. <br/></td></tr>
+<tr class="separator:gafa7db172fb06d80e02028880b282fd94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa40d3c513d287cd18b264326d7360904"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa40d3c513d287cd18b264326d7360904"></a>
+typedef enum <br class="typebreak"/>
+<a class="el" href="a00055.html#gabf934057abdc05ec6db6d3a3acd705b3">_lcdifv2_pd_factor_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gaa40d3c513d287cd18b264326d7360904">lcdifv2_pd_factor_mode_t</a></td></tr>
+<tr class="memdesc:gaa40d3c513d287cd18b264326d7360904"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 PoterDuff factor mode. <br/></td></tr>
+<tr class="separator:gaa40d3c513d287cd18b264326d7360904"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1bc32c09ddd12fea3a5efdd50978f93d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1bc32c09ddd12fea3a5efdd50978f93d"></a>
+typedef struct <br class="typebreak"/>
+<a class="el" href="a00055.html#a00557">_lcdifv2_blend_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga1bc32c09ddd12fea3a5efdd50978f93d">lcdifv2_blend_config_t</a></td></tr>
+<tr class="memdesc:ga1bc32c09ddd12fea3a5efdd50978f93d"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 layer alpha blending configuration. <br/></td></tr>
+<tr class="separator:ga1bc32c09ddd12fea3a5efdd50978f93d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga162a81389832980d7564b8b8f36d66e9"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00055.html#gaf2b2e3c9b5ad0883ef8b0c0ef2462921">_lcdifv2_pd_blend_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga162a81389832980d7564b8b8f36d66e9">lcdifv2_pd_blend_mode_t</a></td></tr>
+<tr class="memdesc:ga162a81389832980d7564b8b8f36d66e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIFv2 Porter Duff blend mode.  <a href="#ga162a81389832980d7564b8b8f36d66e9">More...</a><br/></td></tr>
+<tr class="separator:ga162a81389832980d7564b8b8f36d66e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1df8d376b53c393f270852a7a6676905"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00055.html#ga5605db1f81ff4f2262d517e712e1c720">_lcdifv2_pd_layer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga1df8d376b53c393f270852a7a6676905">lcdifv2_pd_layer_t</a></td></tr>
+<tr class="memdesc:ga1df8d376b53c393f270852a7a6676905"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIFv2 Porter Duff layer.  <a href="#ga1df8d376b53c393f270852a7a6676905">More...</a><br/></td></tr>
+<tr class="separator:ga1df8d376b53c393f270852a7a6676905"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -224,159 +279,159 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:ga06d944793a2798723283074283620cb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The LCDIF v2 interrupts.  <a href="a00055.html#ga06d944793a2798723283074283620cb5">More...</a><br/></td></tr>
 <tr class="separator:ga06d944793a2798723283074283620cb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1e1d1a0792672d18b62eb27ee7cebfb1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga1e1d1a0792672d18b62eb27ee7cebfb1">lcdifv2_line_order_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00055.html#gga1e1d1a0792672d18b62eb27ee7cebfb1af4213d6bdd4299e3a3dfc16c8963effe">kLCDIFV2_LineOrderRGB</a> = 0, 
+<tr class="memitem:ga5183d9c6f64a02b0336543802c56a72f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga5183d9c6f64a02b0336543802c56a72f">_lcdifv2_line_order</a> { <br/>
+&#160;&#160;<a class="el" href="a00055.html#gga5183d9c6f64a02b0336543802c56a72faf4213d6bdd4299e3a3dfc16c8963effe">kLCDIFV2_LineOrderRGB</a> = 0, 
 <br/>
-&#160;&#160;<a class="el" href="a00055.html#gga1e1d1a0792672d18b62eb27ee7cebfb1a3fa18445eb8b7c0fd99e28c53897409b">kLCDIFV2_LineOrderRBG</a>, 
+&#160;&#160;<a class="el" href="a00055.html#gga5183d9c6f64a02b0336543802c56a72fa3fa18445eb8b7c0fd99e28c53897409b">kLCDIFV2_LineOrderRBG</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00055.html#gga1e1d1a0792672d18b62eb27ee7cebfb1a2fe56f80f3ebe6d9e8c18c10b7b6aaec">kLCDIFV2_LineOrderGBR</a>, 
+&#160;&#160;<a class="el" href="a00055.html#gga5183d9c6f64a02b0336543802c56a72fa2fe56f80f3ebe6d9e8c18c10b7b6aaec">kLCDIFV2_LineOrderGBR</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00055.html#gga1e1d1a0792672d18b62eb27ee7cebfb1a38b4f6a2efa86fc9952dc9fb0c6c0fee">kLCDIFV2_LineOrderGRB</a>, 
+&#160;&#160;<a class="el" href="a00055.html#gga5183d9c6f64a02b0336543802c56a72fa38b4f6a2efa86fc9952dc9fb0c6c0fee">kLCDIFV2_LineOrderGRB</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00055.html#gga1e1d1a0792672d18b62eb27ee7cebfb1a5ebb7eb6ab63e2a1dbbc897d3d67b5dd">kLCDIFV2_LineOrderBRG</a>, 
+&#160;&#160;<a class="el" href="a00055.html#gga5183d9c6f64a02b0336543802c56a72fa5ebb7eb6ab63e2a1dbbc897d3d67b5dd">kLCDIFV2_LineOrderBRG</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00055.html#gga1e1d1a0792672d18b62eb27ee7cebfb1a30a7ef64eb0626718f429a573b47d256">kLCDIFV2_LineOrderBGR</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:ga1e1d1a0792672d18b62eb27ee7cebfb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The LCDIF v2 output line order.  <a href="a00055.html#ga1e1d1a0792672d18b62eb27ee7cebfb1">More...</a><br/></td></tr>
-<tr class="separator:ga1e1d1a0792672d18b62eb27ee7cebfb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaebf78f91cbd1e0b5481222b3674ff7f2"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gaebf78f91cbd1e0b5481222b3674ff7f2">lcdifv2_csc_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00055.html#ggaebf78f91cbd1e0b5481222b3674ff7f2a1cfc7c84aedad754f8e6b9b721f57698">kLCDIFV2_CscDisable</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00055.html#ggaebf78f91cbd1e0b5481222b3674ff7f2ade991636de25f6dafd821b64b58025a2">kLCDIFV2_CscYUV2RGB</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00055.html#ggaebf78f91cbd1e0b5481222b3674ff7f2aad5824f1100284cabd1def56067a3b5e">kLCDIFV2_CscYCbCr2RGB</a>
+&#160;&#160;<a class="el" href="a00055.html#gga5183d9c6f64a02b0336543802c56a72fa30a7ef64eb0626718f429a573b47d256">kLCDIFV2_LineOrderBGR</a>
 <br/>
  }</td></tr>
-<tr class="memdesc:gaebf78f91cbd1e0b5481222b3674ff7f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 color space conversion mode.  <a href="a00055.html#gaebf78f91cbd1e0b5481222b3674ff7f2">More...</a><br/></td></tr>
-<tr class="separator:gaebf78f91cbd1e0b5481222b3674ff7f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1442c94926ed6c64013b0cdd022220c1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga1442c94926ed6c64013b0cdd022220c1">lcdifv2_pixel_format_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00055.html#gga1442c94926ed6c64013b0cdd022220c1ae2cd0cd0e002e40f7f41811da5c56587">kLCDIFV2_PixelFormatIndex1BPP</a> = LCDIFV2_CTRLDESCL5_BPP(0U), 
+<tr class="memdesc:ga5183d9c6f64a02b0336543802c56a72f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The LCDIF v2 output line order.  <a href="a00055.html#ga5183d9c6f64a02b0336543802c56a72f">More...</a><br/></td></tr>
+<tr class="separator:ga5183d9c6f64a02b0336543802c56a72f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga99039755eb3794c625f35b88c473c489"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga99039755eb3794c625f35b88c473c489">_lcdifv2_csc_mode</a> { <br/>
+&#160;&#160;<a class="el" href="a00055.html#gga99039755eb3794c625f35b88c473c489a1cfc7c84aedad754f8e6b9b721f57698">kLCDIFV2_CscDisable</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00055.html#gga1442c94926ed6c64013b0cdd022220c1a95a27b802bc2ac4c5de184945ce9bd62">kLCDIFV2_PixelFormatIndex2BPP</a> = LCDIFV2_CTRLDESCL5_BPP(1U), 
+&#160;&#160;<a class="el" href="a00055.html#gga99039755eb3794c625f35b88c473c489ade991636de25f6dafd821b64b58025a2">kLCDIFV2_CscYUV2RGB</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00055.html#gga1442c94926ed6c64013b0cdd022220c1ab097e18568d12dae043b40e055d5151d">kLCDIFV2_PixelFormatIndex4BPP</a> = LCDIFV2_CTRLDESCL5_BPP(2U), 
-<br/>
-&#160;&#160;<a class="el" href="a00055.html#gga1442c94926ed6c64013b0cdd022220c1a8697d5ef873260fc398f7aa5f23a3ed4">kLCDIFV2_PixelFormatIndex8BPP</a> = LCDIFV2_CTRLDESCL5_BPP(3U), 
-<br/>
-&#160;&#160;<a class="el" href="a00055.html#gga1442c94926ed6c64013b0cdd022220c1a9c8f5db60ae5638b4fcb7e2b9d9b882b">kLCDIFV2_PixelFormatRGB565</a> = LCDIFV2_CTRLDESCL5_BPP(4U), 
-<br/>
-&#160;&#160;<a class="el" href="a00055.html#gga1442c94926ed6c64013b0cdd022220c1ad19de5e7280f906121ba817200013d61">kLCDIFV2_PixelFormatARGB1555</a> = LCDIFV2_CTRLDESCL5_BPP(5U), 
-<br/>
-&#160;&#160;<a class="el" href="a00055.html#gga1442c94926ed6c64013b0cdd022220c1a121a661c7e7b81859cee249b014e0e60">kLCDIFV2_PixelFormatARGB4444</a> = LCDIFV2_CTRLDESCL5_BPP(6U), 
-<br/>
-&#160;&#160;<a class="el" href="a00055.html#gga1442c94926ed6c64013b0cdd022220c1a59688fab7667821cd58c1cc602182ba2">kLCDIFV2_PixelFormatUYVY</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00055.html#gga1442c94926ed6c64013b0cdd022220c1a5186649e30618cc6ec0580080e2f72e0">kLCDIFV2_PixelFormatVYUY</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00055.html#gga1442c94926ed6c64013b0cdd022220c1a00f31ec92111694ee0483f26e91699b1">kLCDIFV2_PixelFormatYUYV</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00055.html#gga1442c94926ed6c64013b0cdd022220c1a93c27c029471bff12bef91cd5dc65053">kLCDIFV2_PixelFormatYVYU</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00055.html#gga1442c94926ed6c64013b0cdd022220c1a29996c9bad7022c92c53637061aaa030">kLCDIFV2_PixelFormatRGB888</a> = LCDIFV2_CTRLDESCL5_BPP(8U), 
-<br/>
-&#160;&#160;<a class="el" href="a00055.html#gga1442c94926ed6c64013b0cdd022220c1a3947606784aceb0d6fe0ad9a055626a2">kLCDIFV2_PixelFormatARGB8888</a> = LCDIFV2_CTRLDESCL5_BPP(9U), 
-<br/>
-&#160;&#160;<a class="el" href="a00055.html#gga1442c94926ed6c64013b0cdd022220c1a3878c086c2569764d3eaf4835183038d">kLCDIFV2_PixelFormatABGR8888</a> = LCDIFV2_CTRLDESCL5_BPP(10U)
+&#160;&#160;<a class="el" href="a00055.html#gga99039755eb3794c625f35b88c473c489aad5824f1100284cabd1def56067a3b5e">kLCDIFV2_CscYCbCr2RGB</a>
 <br/>
  }</td></tr>
-<tr class="memdesc:ga1442c94926ed6c64013b0cdd022220c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 pixel format.  <a href="a00055.html#ga1442c94926ed6c64013b0cdd022220c1">More...</a><br/></td></tr>
-<tr class="separator:ga1442c94926ed6c64013b0cdd022220c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3255e95343f51d86a9cf9e917e2d4627"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga3255e95343f51d86a9cf9e917e2d4627">lcdifv2_alpha_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00055.html#gga3255e95343f51d86a9cf9e917e2d4627a5ae362bf99048e7e4c9accd351809923">kLCDIFV2_AlphaDisable</a>, 
+<tr class="memdesc:ga99039755eb3794c625f35b88c473c489"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 color space conversion mode.  <a href="a00055.html#ga99039755eb3794c625f35b88c473c489">More...</a><br/></td></tr>
+<tr class="separator:ga99039755eb3794c625f35b88c473c489"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga796070866ebd33bc200edc9de8b7eb99"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga796070866ebd33bc200edc9de8b7eb99">_lcdifv2_pixel_format</a> { <br/>
+&#160;&#160;<a class="el" href="a00055.html#gga796070866ebd33bc200edc9de8b7eb99ae2cd0cd0e002e40f7f41811da5c56587">kLCDIFV2_PixelFormatIndex1BPP</a> = LCDIFV2_CTRLDESCL5_BPP(0U), 
 <br/>
-&#160;&#160;<a class="el" href="a00055.html#gga3255e95343f51d86a9cf9e917e2d4627aab53c6c6ed0432cdfc3557e37dea21b4">kLCDIFV2_AlphaOverride</a>, 
+&#160;&#160;<a class="el" href="a00055.html#gga796070866ebd33bc200edc9de8b7eb99a95a27b802bc2ac4c5de184945ce9bd62">kLCDIFV2_PixelFormatIndex2BPP</a> = LCDIFV2_CTRLDESCL5_BPP(1U), 
 <br/>
-&#160;&#160;<a class="el" href="a00055.html#gga3255e95343f51d86a9cf9e917e2d4627a1d3df4de72898b228a8103945154fdc2">kLCDIFV2_AlphaEmbedded</a>, 
+&#160;&#160;<a class="el" href="a00055.html#gga796070866ebd33bc200edc9de8b7eb99ab097e18568d12dae043b40e055d5151d">kLCDIFV2_PixelFormatIndex4BPP</a> = LCDIFV2_CTRLDESCL5_BPP(2U), 
 <br/>
-&#160;&#160;<a class="el" href="a00055.html#gga3255e95343f51d86a9cf9e917e2d4627aff85a840c4d8c530f9da8319f028d163">kLCDIFV2_AlphaPoterDuff</a>
+&#160;&#160;<a class="el" href="a00055.html#gga796070866ebd33bc200edc9de8b7eb99a8697d5ef873260fc398f7aa5f23a3ed4">kLCDIFV2_PixelFormatIndex8BPP</a> = LCDIFV2_CTRLDESCL5_BPP(3U), 
 <br/>
- }</td></tr>
-<tr class="memdesc:ga3255e95343f51d86a9cf9e917e2d4627"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 layer alpha blending mode.  <a href="a00055.html#ga3255e95343f51d86a9cf9e917e2d4627">More...</a><br/></td></tr>
-<tr class="separator:ga3255e95343f51d86a9cf9e917e2d4627"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaf235923feb878bb9561ba36c1109ca2"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gaaf235923feb878bb9561ba36c1109ca2">lcdifv2_pd_alpha_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00055.html#ggaaf235923feb878bb9561ba36c1109ca2a29f2f46932474f2c9c81a543b3188838">kLCDIFV2_PD_AlphaStraight</a> = 0, 
+&#160;&#160;<a class="el" href="a00055.html#gga796070866ebd33bc200edc9de8b7eb99a9c8f5db60ae5638b4fcb7e2b9d9b882b">kLCDIFV2_PixelFormatRGB565</a> = LCDIFV2_CTRLDESCL5_BPP(4U), 
 <br/>
-&#160;&#160;<a class="el" href="a00055.html#ggaaf235923feb878bb9561ba36c1109ca2a5d6fe28d8e3abb1edd6d9ad3ec4e6559">kLCDIFV2_PD_AlphaInversed</a> = 1
+&#160;&#160;<a class="el" href="a00055.html#gga796070866ebd33bc200edc9de8b7eb99ad19de5e7280f906121ba817200013d61">kLCDIFV2_PixelFormatARGB1555</a> = LCDIFV2_CTRLDESCL5_BPP(5U), 
 <br/>
- }</td></tr>
-<tr class="memdesc:gaaf235923feb878bb9561ba36c1109ca2"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 PoterDuff alpha mode.  <a href="a00055.html#gaaf235923feb878bb9561ba36c1109ca2">More...</a><br/></td></tr>
-<tr class="separator:gaaf235923feb878bb9561ba36c1109ca2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafc3f67c057d01321b6dc03ddb050ff9b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gafc3f67c057d01321b6dc03ddb050ff9b">lcdifv2_pd_color_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00055.html#ggafc3f67c057d01321b6dc03ddb050ff9ba09258131e98536b90993d81c619e9db2">kLCDIFV2_PD_ColorNoAlpha</a> = 0, 
+&#160;&#160;<a class="el" href="a00055.html#gga796070866ebd33bc200edc9de8b7eb99a121a661c7e7b81859cee249b014e0e60">kLCDIFV2_PixelFormatARGB4444</a> = LCDIFV2_CTRLDESCL5_BPP(6U), 
 <br/>
-&#160;&#160;<a class="el" href="a00055.html#ggafc3f67c057d01321b6dc03ddb050ff9ba170deabb35e69781f01fe609ed3415df">kLCDIFV2_PD_ColorWithAlpha</a> = 1
+&#160;&#160;<a class="el" href="a00055.html#gga796070866ebd33bc200edc9de8b7eb99a59688fab7667821cd58c1cc602182ba2">kLCDIFV2_PixelFormatUYVY</a>, 
 <br/>
- }</td></tr>
-<tr class="memdesc:gafc3f67c057d01321b6dc03ddb050ff9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 PoterDuff color mode.  <a href="a00055.html#gafc3f67c057d01321b6dc03ddb050ff9b">More...</a><br/></td></tr>
-<tr class="separator:gafc3f67c057d01321b6dc03ddb050ff9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga93df8af4b8ccfc3e6e9f5e010917fa7c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga93df8af4b8ccfc3e6e9f5e010917fa7c">lcdifv2_pd_global_alpha_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00055.html#gga93df8af4b8ccfc3e6e9f5e010917fa7ca418cf170521d57240a0ac4c2f688419b">kLCDIFV2_PD_GlobalAlpha</a> = 0, 
+&#160;&#160;<a class="el" href="a00055.html#gga796070866ebd33bc200edc9de8b7eb99a5186649e30618cc6ec0580080e2f72e0">kLCDIFV2_PixelFormatVYUY</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00055.html#gga93df8af4b8ccfc3e6e9f5e010917fa7ca1fb00274650c85f83ac7067d8b262249">kLCDIFV2_PD_LocalAlpha</a> = 1, 
+&#160;&#160;<a class="el" href="a00055.html#gga796070866ebd33bc200edc9de8b7eb99a00f31ec92111694ee0483f26e91699b1">kLCDIFV2_PixelFormatYUYV</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00055.html#gga93df8af4b8ccfc3e6e9f5e010917fa7ca92eb8a17af538ea3e84d3c1764e68d4d">kLCDIFV2_PD_ScaledAlpha</a> = 2
+&#160;&#160;<a class="el" href="a00055.html#gga796070866ebd33bc200edc9de8b7eb99a93c27c029471bff12bef91cd5dc65053">kLCDIFV2_PixelFormatYVYU</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00055.html#gga796070866ebd33bc200edc9de8b7eb99a29996c9bad7022c92c53637061aaa030">kLCDIFV2_PixelFormatRGB888</a> = LCDIFV2_CTRLDESCL5_BPP(8U), 
+<br/>
+&#160;&#160;<a class="el" href="a00055.html#gga796070866ebd33bc200edc9de8b7eb99a3947606784aceb0d6fe0ad9a055626a2">kLCDIFV2_PixelFormatARGB8888</a> = LCDIFV2_CTRLDESCL5_BPP(9U), 
+<br/>
+&#160;&#160;<a class="el" href="a00055.html#gga796070866ebd33bc200edc9de8b7eb99a3878c086c2569764d3eaf4835183038d">kLCDIFV2_PixelFormatABGR8888</a> = LCDIFV2_CTRLDESCL5_BPP(10U)
 <br/>
  }</td></tr>
-<tr class="memdesc:ga93df8af4b8ccfc3e6e9f5e010917fa7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 PoterDuff global alpha mode.  <a href="a00055.html#ga93df8af4b8ccfc3e6e9f5e010917fa7c">More...</a><br/></td></tr>
-<tr class="separator:ga93df8af4b8ccfc3e6e9f5e010917fa7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad7fb10422c5e1f86366d9ef3ba2fc43a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gad7fb10422c5e1f86366d9ef3ba2fc43a">lcdifv2_pd_factor_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00055.html#ggad7fb10422c5e1f86366d9ef3ba2fc43aac4a7ef9b2c94d126859fdf9492d0028c">kLCDIFV2_PD_FactorOne</a> = 0, 
+<tr class="memdesc:ga796070866ebd33bc200edc9de8b7eb99"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 pixel format.  <a href="a00055.html#ga796070866ebd33bc200edc9de8b7eb99">More...</a><br/></td></tr>
+<tr class="separator:ga796070866ebd33bc200edc9de8b7eb99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga47c0ad3bb7717f9294a089af6a5c4cf0"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga47c0ad3bb7717f9294a089af6a5c4cf0">_lcdifv2_alpha_mode</a> { <br/>
+&#160;&#160;<a class="el" href="a00055.html#gga47c0ad3bb7717f9294a089af6a5c4cf0a5ae362bf99048e7e4c9accd351809923">kLCDIFV2_AlphaDisable</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00055.html#ggad7fb10422c5e1f86366d9ef3ba2fc43aa4c3c6d7482ce134f1a3d2e84249d2104">kLCDIFV2_PD_FactorZero</a> = 1, 
+&#160;&#160;<a class="el" href="a00055.html#gga47c0ad3bb7717f9294a089af6a5c4cf0aab53c6c6ed0432cdfc3557e37dea21b4">kLCDIFV2_AlphaOverride</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00055.html#ggad7fb10422c5e1f86366d9ef3ba2fc43aab3e71e7130918e4bd1c14e27874c0511">kLCDIFV2_PD_FactorStraightAlpha</a> = 2, 
+&#160;&#160;<a class="el" href="a00055.html#gga47c0ad3bb7717f9294a089af6a5c4cf0a1d3df4de72898b228a8103945154fdc2">kLCDIFV2_AlphaEmbedded</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00055.html#ggad7fb10422c5e1f86366d9ef3ba2fc43aa254d64809671ab76ee53065d9f054262">kLCDIFV2_PD_FactorInversedAlpha</a> = 3
-<br/>
- }</td></tr>
-<tr class="memdesc:gad7fb10422c5e1f86366d9ef3ba2fc43a"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 PoterDuff factor mode.  <a href="a00055.html#gad7fb10422c5e1f86366d9ef3ba2fc43a">More...</a><br/></td></tr>
-<tr class="separator:gad7fb10422c5e1f86366d9ef3ba2fc43a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4078f51a5317cfb7aed7fb4935909e15"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga4078f51a5317cfb7aed7fb4935909e15">lcdifv2_pd_blend_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00055.html#gga4078f51a5317cfb7aed7fb4935909e15a850dd9f30ed07da380b8e9aba9445f1a">kLCDIFV2_PD_Src</a> = 0, 
-<br/>
-&#160;&#160;<a class="el" href="a00055.html#gga4078f51a5317cfb7aed7fb4935909e15a8590a5bef98c7d607635773662ae5d97">kLCDIFV2_PD_Atop</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00055.html#gga4078f51a5317cfb7aed7fb4935909e15ac22476686760aaae3d7364cbf7fa6c8c">kLCDIFV2_PD_Over</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00055.html#gga4078f51a5317cfb7aed7fb4935909e15abc17caa6c93daa2390948e97f9ad693a">kLCDIFV2_PD_In</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00055.html#gga4078f51a5317cfb7aed7fb4935909e15a377452a01102655eed11d8091ba9977c">kLCDIFV2_PD_Out</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00055.html#gga4078f51a5317cfb7aed7fb4935909e15ada73dd3132a91f67329e551f478f3d44">kLCDIFV2_PD_Dst</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00055.html#gga4078f51a5317cfb7aed7fb4935909e15ac3b5ede05274e9e20f81dd86ff9eddb3">kLCDIFV2_PD_DstAtop</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00055.html#gga4078f51a5317cfb7aed7fb4935909e15a763347e9d290ebaa39cc8bfdd8a3ad04">kLCDIFV2_PD_DstOver</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00055.html#gga4078f51a5317cfb7aed7fb4935909e15a7bed31b4ebbf83175f84a4a6970aaabb">kLCDIFV2_PD_DstIn</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00055.html#gga4078f51a5317cfb7aed7fb4935909e15aa119ccd5f23e92fdd2f34fb81cf3f8ea">kLCDIFV2_PD_DstOut</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00055.html#gga4078f51a5317cfb7aed7fb4935909e15a5d30d76fc503b93f3a34c3120a889241">kLCDIFV2_PD_Xor</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00055.html#gga4078f51a5317cfb7aed7fb4935909e15a1956c9e9fb68a123eebfc7272e830259">kLCDIFV2_PD_Clear</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00055.html#gga4078f51a5317cfb7aed7fb4935909e15a4bf302411133320165da0a86ad51af7e">kLCDIFV2_PD_Max</a>
+&#160;&#160;<a class="el" href="a00055.html#gga47c0ad3bb7717f9294a089af6a5c4cf0aff85a840c4d8c530f9da8319f028d163">kLCDIFV2_AlphaPoterDuff</a>
 <br/>
  }</td></tr>
-<tr class="memdesc:ga4078f51a5317cfb7aed7fb4935909e15"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIFv2 Porter Duff blend mode.  <a href="a00055.html#ga4078f51a5317cfb7aed7fb4935909e15">More...</a><br/></td></tr>
-<tr class="separator:ga4078f51a5317cfb7aed7fb4935909e15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac34c8f53d468df33b2a212e450c76eaa"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gac34c8f53d468df33b2a212e450c76eaa">lcdifv2_pd_layer_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00055.html#ggac34c8f53d468df33b2a212e450c76eaaaed5f7456a61b1c66e0005b128cc4b2c7">kLCDIFV2_PD_SrcLayer</a> = 0, 
+<tr class="memdesc:ga47c0ad3bb7717f9294a089af6a5c4cf0"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 layer alpha blending mode.  <a href="a00055.html#ga47c0ad3bb7717f9294a089af6a5c4cf0">More...</a><br/></td></tr>
+<tr class="separator:ga47c0ad3bb7717f9294a089af6a5c4cf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga546a77aa4043bdb98f4c5b2874848d30"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga546a77aa4043bdb98f4c5b2874848d30">_lcdifv2_pd_alpha_mode</a> { <br/>
+&#160;&#160;<a class="el" href="a00055.html#gga546a77aa4043bdb98f4c5b2874848d30a29f2f46932474f2c9c81a543b3188838">kLCDIFV2_PD_AlphaStraight</a> = 0, 
 <br/>
-&#160;&#160;<a class="el" href="a00055.html#ggac34c8f53d468df33b2a212e450c76eaaa90a82a97985a80021886518adb0ee226">kLCDIFV2_PD_DestLayer</a> = 1, 
-<br/>
-&#160;&#160;<a class="el" href="a00055.html#ggac34c8f53d468df33b2a212e450c76eaaa3f3c217de644fe9e4e1700377dde4354">kLCDIFV2_PD_LayerMax</a> = 2
+&#160;&#160;<a class="el" href="a00055.html#gga546a77aa4043bdb98f4c5b2874848d30a5d6fe28d8e3abb1edd6d9ad3ec4e6559">kLCDIFV2_PD_AlphaInversed</a> = 1
 <br/>
  }</td></tr>
-<tr class="memdesc:gac34c8f53d468df33b2a212e450c76eaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIFv2 Porter Duff layer.  <a href="a00055.html#gac34c8f53d468df33b2a212e450c76eaa">More...</a><br/></td></tr>
-<tr class="separator:gac34c8f53d468df33b2a212e450c76eaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga546a77aa4043bdb98f4c5b2874848d30"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 PoterDuff alpha mode.  <a href="a00055.html#ga546a77aa4043bdb98f4c5b2874848d30">More...</a><br/></td></tr>
+<tr class="separator:ga546a77aa4043bdb98f4c5b2874848d30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga810450a0e9c73d97b76ea06ebf17aeb3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga810450a0e9c73d97b76ea06ebf17aeb3">_lcdifv2_pd_color_mode</a> { <br/>
+&#160;&#160;<a class="el" href="a00055.html#gga810450a0e9c73d97b76ea06ebf17aeb3a09258131e98536b90993d81c619e9db2">kLCDIFV2_PD_ColorNoAlpha</a> = 0, 
+<br/>
+&#160;&#160;<a class="el" href="a00055.html#gga810450a0e9c73d97b76ea06ebf17aeb3a170deabb35e69781f01fe609ed3415df">kLCDIFV2_PD_ColorWithAlpha</a> = 1
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga810450a0e9c73d97b76ea06ebf17aeb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 PoterDuff color mode.  <a href="a00055.html#ga810450a0e9c73d97b76ea06ebf17aeb3">More...</a><br/></td></tr>
+<tr class="separator:ga810450a0e9c73d97b76ea06ebf17aeb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabb0d312b362733f1caa798340937e954"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gabb0d312b362733f1caa798340937e954">_lcdifv2_pd_global_alpha_mode</a> { <br/>
+&#160;&#160;<a class="el" href="a00055.html#ggabb0d312b362733f1caa798340937e954a418cf170521d57240a0ac4c2f688419b">kLCDIFV2_PD_GlobalAlpha</a> = 0, 
+<br/>
+&#160;&#160;<a class="el" href="a00055.html#ggabb0d312b362733f1caa798340937e954a1fb00274650c85f83ac7067d8b262249">kLCDIFV2_PD_LocalAlpha</a> = 1, 
+<br/>
+&#160;&#160;<a class="el" href="a00055.html#ggabb0d312b362733f1caa798340937e954a92eb8a17af538ea3e84d3c1764e68d4d">kLCDIFV2_PD_ScaledAlpha</a> = 2
+<br/>
+ }</td></tr>
+<tr class="memdesc:gabb0d312b362733f1caa798340937e954"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 PoterDuff global alpha mode.  <a href="a00055.html#gabb0d312b362733f1caa798340937e954">More...</a><br/></td></tr>
+<tr class="separator:gabb0d312b362733f1caa798340937e954"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabf934057abdc05ec6db6d3a3acd705b3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gabf934057abdc05ec6db6d3a3acd705b3">_lcdifv2_pd_factor_mode</a> { <br/>
+&#160;&#160;<a class="el" href="a00055.html#ggabf934057abdc05ec6db6d3a3acd705b3ac4a7ef9b2c94d126859fdf9492d0028c">kLCDIFV2_PD_FactorOne</a> = 0, 
+<br/>
+&#160;&#160;<a class="el" href="a00055.html#ggabf934057abdc05ec6db6d3a3acd705b3a4c3c6d7482ce134f1a3d2e84249d2104">kLCDIFV2_PD_FactorZero</a> = 1, 
+<br/>
+&#160;&#160;<a class="el" href="a00055.html#ggabf934057abdc05ec6db6d3a3acd705b3ab3e71e7130918e4bd1c14e27874c0511">kLCDIFV2_PD_FactorStraightAlpha</a> = 2, 
+<br/>
+&#160;&#160;<a class="el" href="a00055.html#ggabf934057abdc05ec6db6d3a3acd705b3a254d64809671ab76ee53065d9f054262">kLCDIFV2_PD_FactorInversedAlpha</a> = 3
+<br/>
+ }</td></tr>
+<tr class="memdesc:gabf934057abdc05ec6db6d3a3acd705b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 PoterDuff factor mode.  <a href="a00055.html#gabf934057abdc05ec6db6d3a3acd705b3">More...</a><br/></td></tr>
+<tr class="separator:gabf934057abdc05ec6db6d3a3acd705b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf2b2e3c9b5ad0883ef8b0c0ef2462921"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gaf2b2e3c9b5ad0883ef8b0c0ef2462921">_lcdifv2_pd_blend_mode</a> { <br/>
+&#160;&#160;<a class="el" href="a00055.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921a850dd9f30ed07da380b8e9aba9445f1a">kLCDIFV2_PD_Src</a> = 0, 
+<br/>
+&#160;&#160;<a class="el" href="a00055.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921a8590a5bef98c7d607635773662ae5d97">kLCDIFV2_PD_Atop</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00055.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921ac22476686760aaae3d7364cbf7fa6c8c">kLCDIFV2_PD_Over</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00055.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921abc17caa6c93daa2390948e97f9ad693a">kLCDIFV2_PD_In</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00055.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921a377452a01102655eed11d8091ba9977c">kLCDIFV2_PD_Out</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00055.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921ada73dd3132a91f67329e551f478f3d44">kLCDIFV2_PD_Dst</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00055.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921ac3b5ede05274e9e20f81dd86ff9eddb3">kLCDIFV2_PD_DstAtop</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00055.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921a763347e9d290ebaa39cc8bfdd8a3ad04">kLCDIFV2_PD_DstOver</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00055.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921a7bed31b4ebbf83175f84a4a6970aaabb">kLCDIFV2_PD_DstIn</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00055.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921aa119ccd5f23e92fdd2f34fb81cf3f8ea">kLCDIFV2_PD_DstOut</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00055.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921a5d30d76fc503b93f3a34c3120a889241">kLCDIFV2_PD_Xor</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00055.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921a1956c9e9fb68a123eebfc7272e830259">kLCDIFV2_PD_Clear</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00055.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921a4bf302411133320165da0a86ad51af7e">kLCDIFV2_PD_Max</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:gaf2b2e3c9b5ad0883ef8b0c0ef2462921"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIFv2 Porter Duff blend mode.  <a href="a00055.html#gaf2b2e3c9b5ad0883ef8b0c0ef2462921">More...</a><br/></td></tr>
+<tr class="separator:gaf2b2e3c9b5ad0883ef8b0c0ef2462921"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5605db1f81ff4f2262d517e712e1c720"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga5605db1f81ff4f2262d517e712e1c720">_lcdifv2_pd_layer</a> { <br/>
+&#160;&#160;<a class="el" href="a00055.html#gga5605db1f81ff4f2262d517e712e1c720aed5f7456a61b1c66e0005b128cc4b2c7">kLCDIFV2_PD_SrcLayer</a> = 0, 
+<br/>
+&#160;&#160;<a class="el" href="a00055.html#gga5605db1f81ff4f2262d517e712e1c720a90a82a97985a80021886518adb0ee226">kLCDIFV2_PD_DestLayer</a> = 1, 
+<br/>
+&#160;&#160;<a class="el" href="a00055.html#gga5605db1f81ff4f2262d517e712e1c720a3f3c217de644fe9e4e1700377dde4354">kLCDIFV2_PD_LayerMax</a> = 2
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga5605db1f81ff4f2262d517e712e1c720"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIFv2 Porter Duff layer.  <a href="a00055.html#ga5605db1f81ff4f2262d517e712e1c720">More...</a><br/></td></tr>
+<tr class="separator:ga5605db1f81ff4f2262d517e712e1c720"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
 <tr class="memitem:ga6e1d2ba9a5303fd29a8f78702a82895e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6e1d2ba9a5303fd29a8f78702a82895e"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga6e1d2ba9a5303fd29a8f78702a82895e">FSL_LCDIFV2_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00336.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 2))</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga6e1d2ba9a5303fd29a8f78702a82895e">FSL_LCDIFV2_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00337.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 2))</td></tr>
 <tr class="memdesc:ga6e1d2ba9a5303fd29a8f78702a82895e"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF v2 driver version. <br/></td></tr>
 <tr class="separator:ga6e1d2ba9a5303fd29a8f78702a82895e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -394,10 +449,10 @@ LCDIF v2 initialization and de-initialization</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Display</h2></td></tr>
-<tr class="memitem:gabed37700087de4e0029bcbbfebac7b59"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gabed37700087de4e0029bcbbfebac7b59">LCDIFV2_DisplayGetDefaultConfig</a> (<a class="el" href="a00055.html#a00567">lcdifv2_display_config_t</a> *config)</td></tr>
+<tr class="memitem:gabed37700087de4e0029bcbbfebac7b59"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gabed37700087de4e0029bcbbfebac7b59">LCDIFV2_DisplayGetDefaultConfig</a> (<a class="el" href="a00055.html#ga3b425cc6027e8a48f653130d1fb701ab">lcdifv2_display_config_t</a> *config)</td></tr>
 <tr class="memdesc:gabed37700087de4e0029bcbbfebac7b59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the LCDIF display default configuration structure.  <a href="#gabed37700087de4e0029bcbbfebac7b59">More...</a><br/></td></tr>
 <tr class="separator:gabed37700087de4e0029bcbbfebac7b59"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacead64f9e9366e70b3536628f9870564"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gacead64f9e9366e70b3536628f9870564">LCDIFV2_SetDisplayConfig</a> (LCDIFV2_Type *base, const <a class="el" href="a00055.html#a00567">lcdifv2_display_config_t</a> *config)</td></tr>
+<tr class="memitem:gacead64f9e9366e70b3536628f9870564"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gacead64f9e9366e70b3536628f9870564">LCDIFV2_SetDisplayConfig</a> (LCDIFV2_Type *base, const <a class="el" href="a00055.html#ga3b425cc6027e8a48f653130d1fb701ab">lcdifv2_display_config_t</a> *config)</td></tr>
 <tr class="memdesc:gacead64f9e9366e70b3536628f9870564"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the LCDIF v2 display configurations.  <a href="#gacead64f9e9366e70b3536628f9870564">More...</a><br/></td></tr>
 <tr class="separator:gacead64f9e9366e70b3536628f9870564"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaabe85f1639111a0fd6d1522a201e54a8"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gaabe85f1639111a0fd6d1522a201e54a8">LCDIFV2_EnableDisplay</a> (LCDIFV2_Type *base, bool enable)</td></tr>
@@ -421,7 +476,7 @@ Interrupts</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 LUT</h2></td></tr>
-<tr class="memitem:ga290ea115f86cc1bfef9328067fba224a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga290ea115f86cc1bfef9328067fba224a">LCDIFV2_SetLut</a> (LCDIFV2_Type *base, uint8_t layerIndex, const uint32_t *lutData, uint16_t count, bool useShadowLoad)</td></tr>
+<tr class="memitem:ga290ea115f86cc1bfef9328067fba224a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga290ea115f86cc1bfef9328067fba224a">LCDIFV2_SetLut</a> (LCDIFV2_Type *base, uint8_t layerIndex, const uint32_t *lutData, uint16_t count, bool useShadowLoad)</td></tr>
 <tr class="memdesc:ga290ea115f86cc1bfef9328067fba224a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the LUT data.  <a href="#ga290ea115f86cc1bfef9328067fba224a">More...</a><br/></td></tr>
 <tr class="separator:ga290ea115f86cc1bfef9328067fba224a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -433,7 +488,7 @@ Layer operation</h2></td></tr>
 <tr class="memitem:ga8fd876343654535defa3a7e2908103ec"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga8fd876343654535defa3a7e2908103ec">LCDIFV2_SetLayerOffset</a> (LCDIFV2_Type *base, uint8_t layerIndex, uint16_t offsetX, uint16_t offsetY)</td></tr>
 <tr class="memdesc:ga8fd876343654535defa3a7e2908103ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the layer position in output frame.  <a href="#ga8fd876343654535defa3a7e2908103ec">More...</a><br/></td></tr>
 <tr class="separator:ga8fd876343654535defa3a7e2908103ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5eee64e6c0e6e944802c63bf8723247d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga5eee64e6c0e6e944802c63bf8723247d">LCDIFV2_SetLayerBufferConfig</a> (LCDIFV2_Type *base, uint8_t layerIndex, const <a class="el" href="a00055.html#a00566">lcdifv2_buffer_config_t</a> *config)</td></tr>
+<tr class="memitem:ga5eee64e6c0e6e944802c63bf8723247d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga5eee64e6c0e6e944802c63bf8723247d">LCDIFV2_SetLayerBufferConfig</a> (LCDIFV2_Type *base, uint8_t layerIndex, const <a class="el" href="a00055.html#ga7a6d39859b97f0d473c1bad8bdfee58e">lcdifv2_buffer_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga5eee64e6c0e6e944802c63bf8723247d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the layer source buffer configuration.  <a href="#ga5eee64e6c0e6e944802c63bf8723247d">More...</a><br/></td></tr>
 <tr class="separator:ga5eee64e6c0e6e944802c63bf8723247d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga44b1c8c192b0711fcb43d4d55a1d35e9"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga44b1c8c192b0711fcb43d4d55a1d35e9">LCDIFV2_SetLayerBufferAddr</a> (LCDIFV2_Type *base, uint8_t layerIndex, uint32_t addr)</td></tr>
@@ -448,183 +503,183 @@ Layer operation</h2></td></tr>
 <tr class="memitem:gaf3ce7445b7b1882b509e005b3a022941"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gaf3ce7445b7b1882b509e005b3a022941">LCDIFV2_SetLayerBackGroundColor</a> (LCDIFV2_Type *base, uint8_t layerIndex, uint32_t backGroundColor)</td></tr>
 <tr class="memdesc:gaf3ce7445b7b1882b509e005b3a022941"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the layer back ground color.  <a href="#gaf3ce7445b7b1882b509e005b3a022941">More...</a><br/></td></tr>
 <tr class="separator:gaf3ce7445b7b1882b509e005b3a022941"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad8fa66c5933a819853b533da9eacbe2f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gad8fa66c5933a819853b533da9eacbe2f">LCDIFV2_SetLayerBlendConfig</a> (LCDIFV2_Type *base, uint8_t layerIndex, const <a class="el" href="a00055.html#a00565">lcdifv2_blend_config_t</a> *config)</td></tr>
+<tr class="memitem:gad8fa66c5933a819853b533da9eacbe2f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gad8fa66c5933a819853b533da9eacbe2f">LCDIFV2_SetLayerBlendConfig</a> (LCDIFV2_Type *base, uint8_t layerIndex, const <a class="el" href="a00055.html#ga1bc32c09ddd12fea3a5efdd50978f93d">lcdifv2_blend_config_t</a> *config)</td></tr>
 <tr class="memdesc:gad8fa66c5933a819853b533da9eacbe2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the layer alpha blend mode.  <a href="#gad8fa66c5933a819853b533da9eacbe2f">More...</a><br/></td></tr>
 <tr class="separator:gad8fa66c5933a819853b533da9eacbe2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1fdda10ffad58347fea2fd7c8329d11a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga1fdda10ffad58347fea2fd7c8329d11a">LCDIFV2_SetCscMode</a> (LCDIFV2_Type *base, uint8_t layerIndex, <a class="el" href="a00055.html#gaebf78f91cbd1e0b5481222b3674ff7f2">lcdifv2_csc_mode_t</a> mode)</td></tr>
+<tr class="memitem:ga1fdda10ffad58347fea2fd7c8329d11a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ga1fdda10ffad58347fea2fd7c8329d11a">LCDIFV2_SetCscMode</a> (LCDIFV2_Type *base, uint8_t layerIndex, <a class="el" href="a00055.html#ga987a58cf1b819da7908511b957c4a3af">lcdifv2_csc_mode_t</a> mode)</td></tr>
 <tr class="memdesc:ga1fdda10ffad58347fea2fd7c8329d11a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the color space conversion mode.  <a href="#ga1fdda10ffad58347fea2fd7c8329d11a">More...</a><br/></td></tr>
 <tr class="separator:ga1fdda10ffad58347fea2fd7c8329d11a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Porter Duff</h2></td></tr>
-<tr class="memitem:gaa2c722736c01796f61c67681a4eb0656"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gaa2c722736c01796f61c67681a4eb0656">LCDIFV2_GetPorterDuffConfig</a> (<a class="el" href="a00055.html#ga4078f51a5317cfb7aed7fb4935909e15">lcdifv2_pd_blend_mode_t</a> mode, <a class="el" href="a00055.html#gac34c8f53d468df33b2a212e450c76eaa">lcdifv2_pd_layer_t</a> layer, <a class="el" href="a00055.html#a00565">lcdifv2_blend_config_t</a> *config)</td></tr>
+<tr class="memitem:gaa2c722736c01796f61c67681a4eb0656"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gaa2c722736c01796f61c67681a4eb0656">LCDIFV2_GetPorterDuffConfig</a> (<a class="el" href="a00055.html#ga162a81389832980d7564b8b8f36d66e9">lcdifv2_pd_blend_mode_t</a> mode, <a class="el" href="a00055.html#ga1df8d376b53c393f270852a7a6676905">lcdifv2_pd_layer_t</a> layer, <a class="el" href="a00055.html#ga1bc32c09ddd12fea3a5efdd50978f93d">lcdifv2_blend_config_t</a> *config)</td></tr>
 <tr class="memdesc:gaa2c722736c01796f61c67681a4eb0656"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the blend configuration for Porter Duff blend.  <a href="#gaa2c722736c01796f61c67681a4eb0656">More...</a><br/></td></tr>
 <tr class="separator:gaa2c722736c01796f61c67681a4eb0656"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Misc</h2></td></tr>
-<tr class="memitem:gafde98fd72f7510c363728aa9624ee1b3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gafde98fd72f7510c363728aa9624ee1b3">LCDIFV2_GetMultiLayerGlobalAlpha</a> (const uint8_t blendedAlpha[], uint8_t globalAlpha[], uint8_t layerCount)</td></tr>
+<tr class="memitem:gafde98fd72f7510c363728aa9624ee1b3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#gafde98fd72f7510c363728aa9624ee1b3">LCDIFV2_GetMultiLayerGlobalAlpha</a> (const uint8_t blendedAlpha[], uint8_t globalAlpha[], uint8_t layerCount)</td></tr>
 <tr class="memdesc:gafde98fd72f7510c363728aa9624ee1b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the global alpha values for multiple layer blend.  <a href="#gafde98fd72f7510c363728aa9624ee1b3">More...</a><br/></td></tr>
 <tr class="separator:gafde98fd72f7510c363728aa9624ee1b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00567" id="a00567"></a>
+<a name="a00559" id="a00559"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct lcdifv2_display_config_t</td>
+          <td class="memname">struct _lcdifv2_display_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a644ef05df1993a4215a2f6e6bfe1a54b"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a644ef05df1993a4215a2f6e6bfe1a54b">panelWidth</a></td></tr>
-<tr class="memdesc:a644ef05df1993a4215a2f6e6bfe1a54b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Display panel width, pixels per line.  <a href="#a644ef05df1993a4215a2f6e6bfe1a54b">More...</a><br/></td></tr>
-<tr class="separator:a644ef05df1993a4215a2f6e6bfe1a54b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac6df59b7f9ad6ccf22d3211cbeaa6d77"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ac6df59b7f9ad6ccf22d3211cbeaa6d77">panelHeight</a></td></tr>
-<tr class="memdesc:ac6df59b7f9ad6ccf22d3211cbeaa6d77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Display panel height, how many lines per panel.  <a href="#ac6df59b7f9ad6ccf22d3211cbeaa6d77">More...</a><br/></td></tr>
-<tr class="separator:ac6df59b7f9ad6ccf22d3211cbeaa6d77"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaeeadc9061767b3d0db813b20e82c90a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#aaeeadc9061767b3d0db813b20e82c90a">hsw</a></td></tr>
-<tr class="memdesc:aaeeadc9061767b3d0db813b20e82c90a"><td class="mdescLeft">&#160;</td><td class="mdescRight">HSYNC pulse width.  <a href="#aaeeadc9061767b3d0db813b20e82c90a">More...</a><br/></td></tr>
-<tr class="separator:aaeeadc9061767b3d0db813b20e82c90a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af91de0bca028faa4c91be67529beddab"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#af91de0bca028faa4c91be67529beddab">hfp</a></td></tr>
-<tr class="memdesc:af91de0bca028faa4c91be67529beddab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Horizontal front porch.  <a href="#af91de0bca028faa4c91be67529beddab">More...</a><br/></td></tr>
-<tr class="separator:af91de0bca028faa4c91be67529beddab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a55f15a87f6906ec4ffedee41f34f6a20"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a55f15a87f6906ec4ffedee41f34f6a20">hbp</a></td></tr>
-<tr class="memdesc:a55f15a87f6906ec4ffedee41f34f6a20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Horizontal back porch.  <a href="#a55f15a87f6906ec4ffedee41f34f6a20">More...</a><br/></td></tr>
-<tr class="separator:a55f15a87f6906ec4ffedee41f34f6a20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a289ecf406c34a4c05c84b651ff21b5a7"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a289ecf406c34a4c05c84b651ff21b5a7">vsw</a></td></tr>
-<tr class="memdesc:a289ecf406c34a4c05c84b651ff21b5a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">VSYNC pulse width.  <a href="#a289ecf406c34a4c05c84b651ff21b5a7">More...</a><br/></td></tr>
-<tr class="separator:a289ecf406c34a4c05c84b651ff21b5a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a290f4c49afab32f16d47a08a20679267"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a290f4c49afab32f16d47a08a20679267">vfp</a></td></tr>
-<tr class="memdesc:a290f4c49afab32f16d47a08a20679267"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vrtical front porch.  <a href="#a290f4c49afab32f16d47a08a20679267">More...</a><br/></td></tr>
-<tr class="separator:a290f4c49afab32f16d47a08a20679267"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b463d9ada1df3d86da20d41e94f5634"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a6b463d9ada1df3d86da20d41e94f5634">vbp</a></td></tr>
-<tr class="memdesc:a6b463d9ada1df3d86da20d41e94f5634"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vertical back porch.  <a href="#a6b463d9ada1df3d86da20d41e94f5634">More...</a><br/></td></tr>
-<tr class="separator:a6b463d9ada1df3d86da20d41e94f5634"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa80eedd06dda3b5cfeb393a40c1de365"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#aa80eedd06dda3b5cfeb393a40c1de365">polarityFlags</a></td></tr>
-<tr class="memdesc:aa80eedd06dda3b5cfeb393a40c1de365"><td class="mdescLeft">&#160;</td><td class="mdescRight">OR'ed value of <a class="el" href="a00055.html#ga79dc11f5ab25c5d06bbf2233a6fef875">_lcdifv2_polarity_flags</a>, used to contol the signal polarity.  <a href="#aa80eedd06dda3b5cfeb393a40c1de365">More...</a><br/></td></tr>
-<tr class="separator:aa80eedd06dda3b5cfeb393a40c1de365"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3a949880303eb1ed75f6d32ca57084f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00055.html#ga1e1d1a0792672d18b62eb27ee7cebfb1">lcdifv2_line_order_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ac3a949880303eb1ed75f6d32ca57084f">lineOrder</a></td></tr>
-<tr class="memdesc:ac3a949880303eb1ed75f6d32ca57084f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Line order.  <a href="#ac3a949880303eb1ed75f6d32ca57084f">More...</a><br/></td></tr>
-<tr class="separator:ac3a949880303eb1ed75f6d32ca57084f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d604f80c32d04b8729ba72c93fdf6ed"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a9d604f80c32d04b8729ba72c93fdf6ed">panelWidth</a></td></tr>
+<tr class="memdesc:a9d604f80c32d04b8729ba72c93fdf6ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Display panel width, pixels per line.  <a href="#a9d604f80c32d04b8729ba72c93fdf6ed">More...</a><br/></td></tr>
+<tr class="separator:a9d604f80c32d04b8729ba72c93fdf6ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84ab9cc7b9ad9b6254bb00533874f7e2"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a84ab9cc7b9ad9b6254bb00533874f7e2">panelHeight</a></td></tr>
+<tr class="memdesc:a84ab9cc7b9ad9b6254bb00533874f7e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Display panel height, how many lines per panel.  <a href="#a84ab9cc7b9ad9b6254bb00533874f7e2">More...</a><br/></td></tr>
+<tr class="separator:a84ab9cc7b9ad9b6254bb00533874f7e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a827d70c05f0260098f0c9a8662d9be76"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a827d70c05f0260098f0c9a8662d9be76">hsw</a></td></tr>
+<tr class="memdesc:a827d70c05f0260098f0c9a8662d9be76"><td class="mdescLeft">&#160;</td><td class="mdescRight">HSYNC pulse width.  <a href="#a827d70c05f0260098f0c9a8662d9be76">More...</a><br/></td></tr>
+<tr class="separator:a827d70c05f0260098f0c9a8662d9be76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9227b50bcb0a4a4c3ce27e3a69ddcb9"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ac9227b50bcb0a4a4c3ce27e3a69ddcb9">hfp</a></td></tr>
+<tr class="memdesc:ac9227b50bcb0a4a4c3ce27e3a69ddcb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Horizontal front porch.  <a href="#ac9227b50bcb0a4a4c3ce27e3a69ddcb9">More...</a><br/></td></tr>
+<tr class="separator:ac9227b50bcb0a4a4c3ce27e3a69ddcb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a541de0462cbd264eafc403252ae66e30"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a541de0462cbd264eafc403252ae66e30">hbp</a></td></tr>
+<tr class="memdesc:a541de0462cbd264eafc403252ae66e30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Horizontal back porch.  <a href="#a541de0462cbd264eafc403252ae66e30">More...</a><br/></td></tr>
+<tr class="separator:a541de0462cbd264eafc403252ae66e30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9371f75ccd78637adacf5adca081d02"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#af9371f75ccd78637adacf5adca081d02">vsw</a></td></tr>
+<tr class="memdesc:af9371f75ccd78637adacf5adca081d02"><td class="mdescLeft">&#160;</td><td class="mdescRight">VSYNC pulse width.  <a href="#af9371f75ccd78637adacf5adca081d02">More...</a><br/></td></tr>
+<tr class="separator:af9371f75ccd78637adacf5adca081d02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27477b9afd7aeaddc9d6930dfe862e7b"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a27477b9afd7aeaddc9d6930dfe862e7b">vfp</a></td></tr>
+<tr class="memdesc:a27477b9afd7aeaddc9d6930dfe862e7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vrtical front porch.  <a href="#a27477b9afd7aeaddc9d6930dfe862e7b">More...</a><br/></td></tr>
+<tr class="separator:a27477b9afd7aeaddc9d6930dfe862e7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1d6ac5bbb1c641df309388a0669daa8"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ad1d6ac5bbb1c641df309388a0669daa8">vbp</a></td></tr>
+<tr class="memdesc:ad1d6ac5bbb1c641df309388a0669daa8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vertical back porch.  <a href="#ad1d6ac5bbb1c641df309388a0669daa8">More...</a><br/></td></tr>
+<tr class="separator:ad1d6ac5bbb1c641df309388a0669daa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a19e6b49af670b92501bc332d7fecef"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a0a19e6b49af670b92501bc332d7fecef">polarityFlags</a></td></tr>
+<tr class="memdesc:a0a19e6b49af670b92501bc332d7fecef"><td class="mdescLeft">&#160;</td><td class="mdescRight">OR'ed value of <a class="el" href="a00055.html#ga79dc11f5ab25c5d06bbf2233a6fef875">_lcdifv2_polarity_flags</a>, used to contol the signal polarity.  <a href="#a0a19e6b49af670b92501bc332d7fecef">More...</a><br/></td></tr>
+<tr class="separator:a0a19e6b49af670b92501bc332d7fecef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ea50e8d05a41cee97ed95e1b411af75"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00055.html#ga241243076b8d7f8db85ba11aca4b1d41">lcdifv2_line_order_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a2ea50e8d05a41cee97ed95e1b411af75">lineOrder</a></td></tr>
+<tr class="memdesc:a2ea50e8d05a41cee97ed95e1b411af75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Line order.  <a href="#a2ea50e8d05a41cee97ed95e1b411af75">More...</a><br/></td></tr>
+<tr class="separator:a2ea50e8d05a41cee97ed95e1b411af75"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a644ef05df1993a4215a2f6e6bfe1a54b"></a>
+<a class="anchor" id="a9d604f80c32d04b8729ba72c93fdf6ed"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t lcdifv2_display_config_t::panelWidth</td>
+          <td class="memname">uint16_t _lcdifv2_display_config::panelWidth</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ac6df59b7f9ad6ccf22d3211cbeaa6d77"></a>
+<a class="anchor" id="a84ab9cc7b9ad9b6254bb00533874f7e2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t lcdifv2_display_config_t::panelHeight</td>
+          <td class="memname">uint16_t _lcdifv2_display_config::panelHeight</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="aaeeadc9061767b3d0db813b20e82c90a"></a>
+<a class="anchor" id="a827d70c05f0260098f0c9a8662d9be76"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t lcdifv2_display_config_t::hsw</td>
+          <td class="memname">uint8_t _lcdifv2_display_config::hsw</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="af91de0bca028faa4c91be67529beddab"></a>
+<a class="anchor" id="ac9227b50bcb0a4a4c3ce27e3a69ddcb9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t lcdifv2_display_config_t::hfp</td>
+          <td class="memname">uint8_t _lcdifv2_display_config::hfp</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a55f15a87f6906ec4ffedee41f34f6a20"></a>
+<a class="anchor" id="a541de0462cbd264eafc403252ae66e30"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t lcdifv2_display_config_t::hbp</td>
+          <td class="memname">uint8_t _lcdifv2_display_config::hbp</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a289ecf406c34a4c05c84b651ff21b5a7"></a>
+<a class="anchor" id="af9371f75ccd78637adacf5adca081d02"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t lcdifv2_display_config_t::vsw</td>
+          <td class="memname">uint8_t _lcdifv2_display_config::vsw</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a290f4c49afab32f16d47a08a20679267"></a>
+<a class="anchor" id="a27477b9afd7aeaddc9d6930dfe862e7b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t lcdifv2_display_config_t::vfp</td>
+          <td class="memname">uint8_t _lcdifv2_display_config::vfp</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a6b463d9ada1df3d86da20d41e94f5634"></a>
+<a class="anchor" id="ad1d6ac5bbb1c641df309388a0669daa8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t lcdifv2_display_config_t::vbp</td>
+          <td class="memname">uint8_t _lcdifv2_display_config::vbp</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="aa80eedd06dda3b5cfeb393a40c1de365"></a>
+<a class="anchor" id="a0a19e6b49af670b92501bc332d7fecef"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t lcdifv2_display_config_t::polarityFlags</td>
+          <td class="memname">uint32_t _lcdifv2_display_config::polarityFlags</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ac3a949880303eb1ed75f6d32ca57084f"></a>
+<a class="anchor" id="a2ea50e8d05a41cee97ed95e1b411af75"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00055.html#ga1e1d1a0792672d18b62eb27ee7cebfb1">lcdifv2_line_order_t</a> lcdifv2_display_config_t::lineOrder</td>
+          <td class="memname"><a class="el" href="a00055.html#ga241243076b8d7f8db85ba11aca4b1d41">lcdifv2_line_order_t</a> _lcdifv2_display_config::lineOrder</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -634,43 +689,43 @@ Misc</h2></td></tr>
 
 </div>
 </div>
-<a name="a00566" id="a00566"></a>
+<a name="a00558" id="a00558"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct lcdifv2_buffer_config_t</td>
+          <td class="memname">struct _lcdifv2_buffer_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a4161dde9c1b640c4c1d40e21094ad057"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a4161dde9c1b640c4c1d40e21094ad057">strideBytes</a></td></tr>
-<tr class="memdesc:a4161dde9c1b640c4c1d40e21094ad057"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bytes between two vertically adjacent pixels, suggest 64-bit aligned.  <a href="#a4161dde9c1b640c4c1d40e21094ad057">More...</a><br/></td></tr>
-<tr class="separator:a4161dde9c1b640c4c1d40e21094ad057"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c1d0fe932febb725db1403276a1804e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00055.html#ga1442c94926ed6c64013b0cdd022220c1">lcdifv2_pixel_format_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a7c1d0fe932febb725db1403276a1804e">pixelFormat</a></td></tr>
-<tr class="memdesc:a7c1d0fe932febb725db1403276a1804e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Source buffer pixel format.  <a href="#a7c1d0fe932febb725db1403276a1804e">More...</a><br/></td></tr>
-<tr class="separator:a7c1d0fe932febb725db1403276a1804e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f2b74087de20779c54487011f42b764"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a0f2b74087de20779c54487011f42b764">strideBytes</a></td></tr>
+<tr class="memdesc:a0f2b74087de20779c54487011f42b764"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bytes between two vertically adjacent pixels, suggest 64-bit aligned.  <a href="#a0f2b74087de20779c54487011f42b764">More...</a><br/></td></tr>
+<tr class="separator:a0f2b74087de20779c54487011f42b764"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76ab3a9ef2f5f3dd257015f5d7946fa9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00055.html#ga18ea3c4728d85e5f29b42254e91423b6">lcdifv2_pixel_format_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a76ab3a9ef2f5f3dd257015f5d7946fa9">pixelFormat</a></td></tr>
+<tr class="memdesc:a76ab3a9ef2f5f3dd257015f5d7946fa9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Source buffer pixel format.  <a href="#a76ab3a9ef2f5f3dd257015f5d7946fa9">More...</a><br/></td></tr>
+<tr class="separator:a76ab3a9ef2f5f3dd257015f5d7946fa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a4161dde9c1b640c4c1d40e21094ad057"></a>
+<a class="anchor" id="a0f2b74087de20779c54487011f42b764"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t lcdifv2_buffer_config_t::strideBytes</td>
+          <td class="memname">uint16_t _lcdifv2_buffer_config::strideBytes</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a7c1d0fe932febb725db1403276a1804e"></a>
+<a class="anchor" id="a76ab3a9ef2f5f3dd257015f5d7946fa9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00055.html#ga1442c94926ed6c64013b0cdd022220c1">lcdifv2_pixel_format_t</a> lcdifv2_buffer_config_t::pixelFormat</td>
+          <td class="memname"><a class="el" href="a00055.html#ga18ea3c4728d85e5f29b42254e91423b6">lcdifv2_pixel_format_t</a> _lcdifv2_buffer_config::pixelFormat</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -680,50 +735,50 @@ Misc</h2></td></tr>
 
 </div>
 </div>
-<a name="a00565" id="a00565"></a>
+<a name="a00557" id="a00557"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct lcdifv2_blend_config_t</td>
+          <td class="memname">struct _lcdifv2_blend_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:afd135efecc632a888671a9d00ad5f887"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afd135efecc632a888671a9d00ad5f887"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#afd135efecc632a888671a9d00ad5f887">globalAlpha</a></td></tr>
-<tr class="memdesc:afd135efecc632a888671a9d00ad5f887"><td class="mdescLeft">&#160;</td><td class="mdescRight">Global alpha value, only used when <a class="el" href="a00055.html#ad7326e15a49e9c16d357bd31a12640e9">alphaMode</a> is <a class="el" href="a00055.html#gga3255e95343f51d86a9cf9e917e2d4627aab53c6c6ed0432cdfc3557e37dea21b4">kLCDIFV2_AlphaOverride</a> or <a class="el" href="a00055.html#gga3255e95343f51d86a9cf9e917e2d4627aff85a840c4d8c530f9da8319f028d163">kLCDIFV2_AlphaPoterDuff</a>. <br/></td></tr>
-<tr class="separator:afd135efecc632a888671a9d00ad5f887"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad7326e15a49e9c16d357bd31a12640e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00055.html#ga3255e95343f51d86a9cf9e917e2d4627">lcdifv2_alpha_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ad7326e15a49e9c16d357bd31a12640e9">alphaMode</a></td></tr>
-<tr class="memdesc:ad7326e15a49e9c16d357bd31a12640e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alpha mode.  <a href="#ad7326e15a49e9c16d357bd31a12640e9">More...</a><br/></td></tr>
-<tr class="separator:ad7326e15a49e9c16d357bd31a12640e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0e052fccc7cf8ec0ce9ee91f05775c98"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0e052fccc7cf8ec0ce9ee91f05775c98"></a>
-<a class="el" href="a00055.html#gaaf235923feb878bb9561ba36c1109ca2">lcdifv2_pd_alpha_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a0e052fccc7cf8ec0ce9ee91f05775c98">pdAlphaMode</a></td></tr>
-<tr class="memdesc:a0e052fccc7cf8ec0ce9ee91f05775c98"><td class="mdescLeft">&#160;</td><td class="mdescRight">PoterDuff alpha mode, only used when <a class="el" href="a00055.html#ad7326e15a49e9c16d357bd31a12640e9">alphaMode</a> is <a class="el" href="a00055.html#gga3255e95343f51d86a9cf9e917e2d4627aff85a840c4d8c530f9da8319f028d163">kLCDIFV2_AlphaPoterDuff</a>. <br/></td></tr>
-<tr class="separator:a0e052fccc7cf8ec0ce9ee91f05775c98"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae0f1e15147db1e15e8bd9d8cc9de1f99"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae0f1e15147db1e15e8bd9d8cc9de1f99"></a>
-<a class="el" href="a00055.html#gafc3f67c057d01321b6dc03ddb050ff9b">lcdifv2_pd_color_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ae0f1e15147db1e15e8bd9d8cc9de1f99">pdColorMode</a></td></tr>
-<tr class="memdesc:ae0f1e15147db1e15e8bd9d8cc9de1f99"><td class="mdescLeft">&#160;</td><td class="mdescRight">PoterDuff color mode, only used when <a class="el" href="a00055.html#ad7326e15a49e9c16d357bd31a12640e9">alphaMode</a> is <a class="el" href="a00055.html#gga3255e95343f51d86a9cf9e917e2d4627aff85a840c4d8c530f9da8319f028d163">kLCDIFV2_AlphaPoterDuff</a>. <br/></td></tr>
-<tr class="separator:ae0f1e15147db1e15e8bd9d8cc9de1f99"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeeed7a0ccc62c7f026566af8170e62cc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeeed7a0ccc62c7f026566af8170e62cc"></a>
-<a class="el" href="a00055.html#ga93df8af4b8ccfc3e6e9f5e010917fa7c">lcdifv2_pd_global_alpha_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#aeeed7a0ccc62c7f026566af8170e62cc">pdGlobalAlphaMode</a></td></tr>
-<tr class="memdesc:aeeed7a0ccc62c7f026566af8170e62cc"><td class="mdescLeft">&#160;</td><td class="mdescRight"><pre class="fragment">            PoterDuff global alpha mode, only used when @ref alphaMode is
-</pre><p> <a class="el" href="a00055.html#gga3255e95343f51d86a9cf9e917e2d4627aff85a840c4d8c530f9da8319f028d163">kLCDIFV2_AlphaPoterDuff</a> <br/></td></tr>
-<tr class="separator:aeeed7a0ccc62c7f026566af8170e62cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb48ec7e6c6ec270981ceaf841738bcf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeb48ec7e6c6ec270981ceaf841738bcf"></a>
-<a class="el" href="a00055.html#gad7fb10422c5e1f86366d9ef3ba2fc43a">lcdifv2_pd_factor_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#aeb48ec7e6c6ec270981ceaf841738bcf">pdFactorMode</a></td></tr>
-<tr class="memdesc:aeb48ec7e6c6ec270981ceaf841738bcf"><td class="mdescLeft">&#160;</td><td class="mdescRight"><pre class="fragment"> PoterDuff factor mode, only used when @ref alphaMode is @ref
+<tr class="memitem:adb03566cbdf4110bfc9b170cf32f9e4b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adb03566cbdf4110bfc9b170cf32f9e4b"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#adb03566cbdf4110bfc9b170cf32f9e4b">globalAlpha</a></td></tr>
+<tr class="memdesc:adb03566cbdf4110bfc9b170cf32f9e4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Global alpha value, only used when <a class="el" href="a00055.html#a04dfa9cab136d198d47c694afca2505b">alphaMode</a> is <a class="el" href="a00055.html#gga47c0ad3bb7717f9294a089af6a5c4cf0aab53c6c6ed0432cdfc3557e37dea21b4">kLCDIFV2_AlphaOverride</a> or <a class="el" href="a00055.html#gga47c0ad3bb7717f9294a089af6a5c4cf0aff85a840c4d8c530f9da8319f028d163">kLCDIFV2_AlphaPoterDuff</a>. <br/></td></tr>
+<tr class="separator:adb03566cbdf4110bfc9b170cf32f9e4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04dfa9cab136d198d47c694afca2505b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00055.html#ga35cbec9ffec4572b9b0ad3330020c1c1">lcdifv2_alpha_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a04dfa9cab136d198d47c694afca2505b">alphaMode</a></td></tr>
+<tr class="memdesc:a04dfa9cab136d198d47c694afca2505b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alpha mode.  <a href="#a04dfa9cab136d198d47c694afca2505b">More...</a><br/></td></tr>
+<tr class="separator:a04dfa9cab136d198d47c694afca2505b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a871185cac19ea882de48e55fef15615a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a871185cac19ea882de48e55fef15615a"></a>
+<a class="el" href="a00055.html#ga3a0961a70a23621c996a0f1b6ff74047">lcdifv2_pd_alpha_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a871185cac19ea882de48e55fef15615a">pdAlphaMode</a></td></tr>
+<tr class="memdesc:a871185cac19ea882de48e55fef15615a"><td class="mdescLeft">&#160;</td><td class="mdescRight">PoterDuff alpha mode, only used when <a class="el" href="a00055.html#a04dfa9cab136d198d47c694afca2505b">alphaMode</a> is <a class="el" href="a00055.html#gga47c0ad3bb7717f9294a089af6a5c4cf0aff85a840c4d8c530f9da8319f028d163">kLCDIFV2_AlphaPoterDuff</a>. <br/></td></tr>
+<tr class="separator:a871185cac19ea882de48e55fef15615a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0229e703c5506b468249cc423bca391"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae0229e703c5506b468249cc423bca391"></a>
+<a class="el" href="a00055.html#ga1ac7cd75162d2e89488ab8f306aa7015">lcdifv2_pd_color_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#ae0229e703c5506b468249cc423bca391">pdColorMode</a></td></tr>
+<tr class="memdesc:ae0229e703c5506b468249cc423bca391"><td class="mdescLeft">&#160;</td><td class="mdescRight">PoterDuff color mode, only used when <a class="el" href="a00055.html#a04dfa9cab136d198d47c694afca2505b">alphaMode</a> is <a class="el" href="a00055.html#gga47c0ad3bb7717f9294a089af6a5c4cf0aff85a840c4d8c530f9da8319f028d163">kLCDIFV2_AlphaPoterDuff</a>. <br/></td></tr>
+<tr class="separator:ae0229e703c5506b468249cc423bca391"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86a9da1ceb0a4d5c7fd55133043b1c17"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a86a9da1ceb0a4d5c7fd55133043b1c17"></a>
+<a class="el" href="a00055.html#gafa7db172fb06d80e02028880b282fd94">lcdifv2_pd_global_alpha_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a86a9da1ceb0a4d5c7fd55133043b1c17">pdGlobalAlphaMode</a></td></tr>
+<tr class="memdesc:a86a9da1ceb0a4d5c7fd55133043b1c17"><td class="mdescLeft">&#160;</td><td class="mdescRight"><pre class="fragment">            PoterDuff global alpha mode, only used when @ref alphaMode is
+</pre><p> <a class="el" href="a00055.html#gga47c0ad3bb7717f9294a089af6a5c4cf0aff85a840c4d8c530f9da8319f028d163">kLCDIFV2_AlphaPoterDuff</a> <br/></td></tr>
+<tr class="separator:a86a9da1ceb0a4d5c7fd55133043b1c17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04c0ecd7c9c4480b5fbb2edd3ed69c0c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a04c0ecd7c9c4480b5fbb2edd3ed69c0c"></a>
+<a class="el" href="a00055.html#gaa40d3c513d287cd18b264326d7360904">lcdifv2_pd_factor_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html#a04c0ecd7c9c4480b5fbb2edd3ed69c0c">pdFactorMode</a></td></tr>
+<tr class="memdesc:a04c0ecd7c9c4480b5fbb2edd3ed69c0c"><td class="mdescLeft">&#160;</td><td class="mdescRight"><pre class="fragment"> PoterDuff factor mode, only used when @ref alphaMode is @ref
 </pre><p> kLCDIFV2_AlphaPoterDuff <br/></td></tr>
-<tr class="separator:aeb48ec7e6c6ec270981ceaf841738bcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a04c0ecd7c9c4480b5fbb2edd3ed69c0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="ad7326e15a49e9c16d357bd31a12640e9"></a>
+<a class="anchor" id="a04dfa9cab136d198d47c694afca2505b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00055.html#ga3255e95343f51d86a9cf9e917e2d4627">lcdifv2_alpha_mode_t</a> lcdifv2_blend_config_t::alphaMode</td>
+          <td class="memname"><a class="el" href="a00055.html#ga35cbec9ffec4572b9b0ad3330020c1c1">lcdifv2_alpha_mode_t</a> _lcdifv2_blend_config::alphaMode</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -779,6 +834,81 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga241243076b8d7f8db85ba11aca4b1d41"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00055.html#ga5183d9c6f64a02b0336543802c56a72f">_lcdifv2_line_order</a>  <a class="el" href="a00055.html#ga241243076b8d7f8db85ba11aca4b1d41">lcdifv2_line_order_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga987a58cf1b819da7908511b957c4a3af"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00055.html#ga99039755eb3794c625f35b88c473c489">_lcdifv2_csc_mode</a>  <a class="el" href="a00055.html#ga987a58cf1b819da7908511b957c4a3af">lcdifv2_csc_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga18ea3c4728d85e5f29b42254e91423b6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00055.html#ga796070866ebd33bc200edc9de8b7eb99">_lcdifv2_pixel_format</a>  <a class="el" href="a00055.html#ga18ea3c4728d85e5f29b42254e91423b6">lcdifv2_pixel_format_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga7a6d39859b97f0d473c1bad8bdfee58e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00055.html#a00558">_lcdifv2_buffer_config</a>  <a class="el" href="a00055.html#ga7a6d39859b97f0d473c1bad8bdfee58e">lcdifv2_buffer_config_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga162a81389832980d7564b8b8f36d66e9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00055.html#gaf2b2e3c9b5ad0883ef8b0c0ef2462921">_lcdifv2_pd_blend_mode</a>  <a class="el" href="a00055.html#ga162a81389832980d7564b8b8f36d66e9">lcdifv2_pd_blend_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Note: Don't change the enum item value </p>
+
+</div>
+</div>
+<a class="anchor" id="ga1df8d376b53c393f270852a7a6676905"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00055.html#ga5605db1f81ff4f2262d517e712e1c720">_lcdifv2_pd_layer</a>  <a class="el" href="a00055.html#ga1df8d376b53c393f270852a7a6676905">lcdifv2_pd_layer_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Note: Don't change the enum item value </p>
 
 </div>
 </div>
@@ -922,304 +1052,304 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 
 </div>
 </div>
-<a class="anchor" id="ga1e1d1a0792672d18b62eb27ee7cebfb1"></a>
+<a class="anchor" id="ga5183d9c6f64a02b0336543802c56a72f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00055.html#ga1e1d1a0792672d18b62eb27ee7cebfb1">lcdifv2_line_order_t</a></td>
+          <td class="memname">enum <a class="el" href="a00055.html#ga5183d9c6f64a02b0336543802c56a72f">_lcdifv2_line_order</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga1e1d1a0792672d18b62eb27ee7cebfb1af4213d6bdd4299e3a3dfc16c8963effe"></a>kLCDIFV2_LineOrderRGB</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga5183d9c6f64a02b0336543802c56a72faf4213d6bdd4299e3a3dfc16c8963effe"></a>kLCDIFV2_LineOrderRGB</em>&nbsp;</td><td class="fielddoc">
 <p>RGB. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1e1d1a0792672d18b62eb27ee7cebfb1a3fa18445eb8b7c0fd99e28c53897409b"></a>kLCDIFV2_LineOrderRBG</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga5183d9c6f64a02b0336543802c56a72fa3fa18445eb8b7c0fd99e28c53897409b"></a>kLCDIFV2_LineOrderRBG</em>&nbsp;</td><td class="fielddoc">
 <p>RBG. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1e1d1a0792672d18b62eb27ee7cebfb1a2fe56f80f3ebe6d9e8c18c10b7b6aaec"></a>kLCDIFV2_LineOrderGBR</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga5183d9c6f64a02b0336543802c56a72fa2fe56f80f3ebe6d9e8c18c10b7b6aaec"></a>kLCDIFV2_LineOrderGBR</em>&nbsp;</td><td class="fielddoc">
 <p>GBR. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1e1d1a0792672d18b62eb27ee7cebfb1a38b4f6a2efa86fc9952dc9fb0c6c0fee"></a>kLCDIFV2_LineOrderGRB</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga5183d9c6f64a02b0336543802c56a72fa38b4f6a2efa86fc9952dc9fb0c6c0fee"></a>kLCDIFV2_LineOrderGRB</em>&nbsp;</td><td class="fielddoc">
 <p>GRB. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1e1d1a0792672d18b62eb27ee7cebfb1a5ebb7eb6ab63e2a1dbbc897d3d67b5dd"></a>kLCDIFV2_LineOrderBRG</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga5183d9c6f64a02b0336543802c56a72fa5ebb7eb6ab63e2a1dbbc897d3d67b5dd"></a>kLCDIFV2_LineOrderBRG</em>&nbsp;</td><td class="fielddoc">
 <p>BRG. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1e1d1a0792672d18b62eb27ee7cebfb1a30a7ef64eb0626718f429a573b47d256"></a>kLCDIFV2_LineOrderBGR</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga5183d9c6f64a02b0336543802c56a72fa30a7ef64eb0626718f429a573b47d256"></a>kLCDIFV2_LineOrderBGR</em>&nbsp;</td><td class="fielddoc">
 <p>BGR. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gaebf78f91cbd1e0b5481222b3674ff7f2"></a>
+<a class="anchor" id="ga99039755eb3794c625f35b88c473c489"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00055.html#gaebf78f91cbd1e0b5481222b3674ff7f2">lcdifv2_csc_mode_t</a></td>
+          <td class="memname">enum <a class="el" href="a00055.html#ga99039755eb3794c625f35b88c473c489">_lcdifv2_csc_mode</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaebf78f91cbd1e0b5481222b3674ff7f2a1cfc7c84aedad754f8e6b9b721f57698"></a>kLCDIFV2_CscDisable</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga99039755eb3794c625f35b88c473c489a1cfc7c84aedad754f8e6b9b721f57698"></a>kLCDIFV2_CscDisable</em>&nbsp;</td><td class="fielddoc">
 <p>Disable the CSC. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaebf78f91cbd1e0b5481222b3674ff7f2ade991636de25f6dafd821b64b58025a2"></a>kLCDIFV2_CscYUV2RGB</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga99039755eb3794c625f35b88c473c489ade991636de25f6dafd821b64b58025a2"></a>kLCDIFV2_CscYUV2RGB</em>&nbsp;</td><td class="fielddoc">
 <p>YUV to RGB. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaebf78f91cbd1e0b5481222b3674ff7f2aad5824f1100284cabd1def56067a3b5e"></a>kLCDIFV2_CscYCbCr2RGB</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga99039755eb3794c625f35b88c473c489aad5824f1100284cabd1def56067a3b5e"></a>kLCDIFV2_CscYCbCr2RGB</em>&nbsp;</td><td class="fielddoc">
 <p>YCbCr to RGB. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga1442c94926ed6c64013b0cdd022220c1"></a>
+<a class="anchor" id="ga796070866ebd33bc200edc9de8b7eb99"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00055.html#ga1442c94926ed6c64013b0cdd022220c1">lcdifv2_pixel_format_t</a></td>
+          <td class="memname">enum <a class="el" href="a00055.html#ga796070866ebd33bc200edc9de8b7eb99">_lcdifv2_pixel_format</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga1442c94926ed6c64013b0cdd022220c1ae2cd0cd0e002e40f7f41811da5c56587"></a>kLCDIFV2_PixelFormatIndex1BPP</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga796070866ebd33bc200edc9de8b7eb99ae2cd0cd0e002e40f7f41811da5c56587"></a>kLCDIFV2_PixelFormatIndex1BPP</em>&nbsp;</td><td class="fielddoc">
 <p>LUT index 1 bit. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1442c94926ed6c64013b0cdd022220c1a95a27b802bc2ac4c5de184945ce9bd62"></a>kLCDIFV2_PixelFormatIndex2BPP</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga796070866ebd33bc200edc9de8b7eb99a95a27b802bc2ac4c5de184945ce9bd62"></a>kLCDIFV2_PixelFormatIndex2BPP</em>&nbsp;</td><td class="fielddoc">
 <p>LUT index 2 bit. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1442c94926ed6c64013b0cdd022220c1ab097e18568d12dae043b40e055d5151d"></a>kLCDIFV2_PixelFormatIndex4BPP</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga796070866ebd33bc200edc9de8b7eb99ab097e18568d12dae043b40e055d5151d"></a>kLCDIFV2_PixelFormatIndex4BPP</em>&nbsp;</td><td class="fielddoc">
 <p>LUT index 4 bit. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1442c94926ed6c64013b0cdd022220c1a8697d5ef873260fc398f7aa5f23a3ed4"></a>kLCDIFV2_PixelFormatIndex8BPP</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga796070866ebd33bc200edc9de8b7eb99a8697d5ef873260fc398f7aa5f23a3ed4"></a>kLCDIFV2_PixelFormatIndex8BPP</em>&nbsp;</td><td class="fielddoc">
 <p>LUT index 8 bit. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1442c94926ed6c64013b0cdd022220c1a9c8f5db60ae5638b4fcb7e2b9d9b882b"></a>kLCDIFV2_PixelFormatRGB565</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga796070866ebd33bc200edc9de8b7eb99a9c8f5db60ae5638b4fcb7e2b9d9b882b"></a>kLCDIFV2_PixelFormatRGB565</em>&nbsp;</td><td class="fielddoc">
 <p>RGB565, two pixels use 32 bits. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1442c94926ed6c64013b0cdd022220c1ad19de5e7280f906121ba817200013d61"></a>kLCDIFV2_PixelFormatARGB1555</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga796070866ebd33bc200edc9de8b7eb99ad19de5e7280f906121ba817200013d61"></a>kLCDIFV2_PixelFormatARGB1555</em>&nbsp;</td><td class="fielddoc">
 <p>ARGB1555, two pixels use 32 bits. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1442c94926ed6c64013b0cdd022220c1a121a661c7e7b81859cee249b014e0e60"></a>kLCDIFV2_PixelFormatARGB4444</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga796070866ebd33bc200edc9de8b7eb99a121a661c7e7b81859cee249b014e0e60"></a>kLCDIFV2_PixelFormatARGB4444</em>&nbsp;</td><td class="fielddoc">
 <p>ARGB4444, two pixels use 32 bits. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1442c94926ed6c64013b0cdd022220c1a59688fab7667821cd58c1cc602182ba2"></a>kLCDIFV2_PixelFormatUYVY</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga796070866ebd33bc200edc9de8b7eb99a59688fab7667821cd58c1cc602182ba2"></a>kLCDIFV2_PixelFormatUYVY</em>&nbsp;</td><td class="fielddoc">
 <p>UYVY, only layer 0 and layer 1 support this. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1442c94926ed6c64013b0cdd022220c1a5186649e30618cc6ec0580080e2f72e0"></a>kLCDIFV2_PixelFormatVYUY</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga796070866ebd33bc200edc9de8b7eb99a5186649e30618cc6ec0580080e2f72e0"></a>kLCDIFV2_PixelFormatVYUY</em>&nbsp;</td><td class="fielddoc">
 <p>VYUY, only layer 0 and layer 1 support this. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1442c94926ed6c64013b0cdd022220c1a00f31ec92111694ee0483f26e91699b1"></a>kLCDIFV2_PixelFormatYUYV</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga796070866ebd33bc200edc9de8b7eb99a00f31ec92111694ee0483f26e91699b1"></a>kLCDIFV2_PixelFormatYUYV</em>&nbsp;</td><td class="fielddoc">
 <p>YUYV, only layer 0 and layer 1 support this. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1442c94926ed6c64013b0cdd022220c1a93c27c029471bff12bef91cd5dc65053"></a>kLCDIFV2_PixelFormatYVYU</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga796070866ebd33bc200edc9de8b7eb99a93c27c029471bff12bef91cd5dc65053"></a>kLCDIFV2_PixelFormatYVYU</em>&nbsp;</td><td class="fielddoc">
 <p>YVYU, only layer 0 and layer 1 support this. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1442c94926ed6c64013b0cdd022220c1a29996c9bad7022c92c53637061aaa030"></a>kLCDIFV2_PixelFormatRGB888</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga796070866ebd33bc200edc9de8b7eb99a29996c9bad7022c92c53637061aaa030"></a>kLCDIFV2_PixelFormatRGB888</em>&nbsp;</td><td class="fielddoc">
 <p>RGB888 packed, one pixel uses 24 bits. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1442c94926ed6c64013b0cdd022220c1a3947606784aceb0d6fe0ad9a055626a2"></a>kLCDIFV2_PixelFormatARGB8888</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga796070866ebd33bc200edc9de8b7eb99a3947606784aceb0d6fe0ad9a055626a2"></a>kLCDIFV2_PixelFormatARGB8888</em>&nbsp;</td><td class="fielddoc">
 <p>ARGB8888 unpacked, one pixel uses 32 bits. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1442c94926ed6c64013b0cdd022220c1a3878c086c2569764d3eaf4835183038d"></a>kLCDIFV2_PixelFormatABGR8888</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga796070866ebd33bc200edc9de8b7eb99a3878c086c2569764d3eaf4835183038d"></a>kLCDIFV2_PixelFormatABGR8888</em>&nbsp;</td><td class="fielddoc">
 <p>ABGR8888 unpacked, one pixel uses 32 bits. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga3255e95343f51d86a9cf9e917e2d4627"></a>
+<a class="anchor" id="ga47c0ad3bb7717f9294a089af6a5c4cf0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00055.html#ga3255e95343f51d86a9cf9e917e2d4627">lcdifv2_alpha_mode_t</a></td>
+          <td class="memname">enum <a class="el" href="a00055.html#ga47c0ad3bb7717f9294a089af6a5c4cf0">_lcdifv2_alpha_mode</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga3255e95343f51d86a9cf9e917e2d4627a5ae362bf99048e7e4c9accd351809923"></a>kLCDIFV2_AlphaDisable</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga47c0ad3bb7717f9294a089af6a5c4cf0a5ae362bf99048e7e4c9accd351809923"></a>kLCDIFV2_AlphaDisable</em>&nbsp;</td><td class="fielddoc">
 <p>Disable alpha blend. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga3255e95343f51d86a9cf9e917e2d4627aab53c6c6ed0432cdfc3557e37dea21b4"></a>kLCDIFV2_AlphaOverride</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga47c0ad3bb7717f9294a089af6a5c4cf0aab53c6c6ed0432cdfc3557e37dea21b4"></a>kLCDIFV2_AlphaOverride</em>&nbsp;</td><td class="fielddoc">
 <p>Use the gobal alpha value, pixel defined alpha value is overridden. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga3255e95343f51d86a9cf9e917e2d4627a1d3df4de72898b228a8103945154fdc2"></a>kLCDIFV2_AlphaEmbedded</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga47c0ad3bb7717f9294a089af6a5c4cf0a1d3df4de72898b228a8103945154fdc2"></a>kLCDIFV2_AlphaEmbedded</em>&nbsp;</td><td class="fielddoc">
 <p>Use the pixel defined alpha value. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga3255e95343f51d86a9cf9e917e2d4627aff85a840c4d8c530f9da8319f028d163"></a>kLCDIFV2_AlphaPoterDuff</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga47c0ad3bb7717f9294a089af6a5c4cf0aff85a840c4d8c530f9da8319f028d163"></a>kLCDIFV2_AlphaPoterDuff</em>&nbsp;</td><td class="fielddoc">
 <p>Use the PoterDuff alpha blending. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gaaf235923feb878bb9561ba36c1109ca2"></a>
+<a class="anchor" id="ga546a77aa4043bdb98f4c5b2874848d30"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00055.html#gaaf235923feb878bb9561ba36c1109ca2">lcdifv2_pd_alpha_mode_t</a></td>
+          <td class="memname">enum <a class="el" href="a00055.html#ga546a77aa4043bdb98f4c5b2874848d30">_lcdifv2_pd_alpha_mode</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaaf235923feb878bb9561ba36c1109ca2a29f2f46932474f2c9c81a543b3188838"></a>kLCDIFV2_PD_AlphaStraight</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga546a77aa4043bdb98f4c5b2874848d30a29f2f46932474f2c9c81a543b3188838"></a>kLCDIFV2_PD_AlphaStraight</em>&nbsp;</td><td class="fielddoc">
 <p>Straight mode. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaaf235923feb878bb9561ba36c1109ca2a5d6fe28d8e3abb1edd6d9ad3ec4e6559"></a>kLCDIFV2_PD_AlphaInversed</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga546a77aa4043bdb98f4c5b2874848d30a5d6fe28d8e3abb1edd6d9ad3ec4e6559"></a>kLCDIFV2_PD_AlphaInversed</em>&nbsp;</td><td class="fielddoc">
 <p>Inversed mode. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gafc3f67c057d01321b6dc03ddb050ff9b"></a>
+<a class="anchor" id="ga810450a0e9c73d97b76ea06ebf17aeb3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00055.html#gafc3f67c057d01321b6dc03ddb050ff9b">lcdifv2_pd_color_mode_t</a></td>
+          <td class="memname">enum <a class="el" href="a00055.html#ga810450a0e9c73d97b76ea06ebf17aeb3">_lcdifv2_pd_color_mode</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggafc3f67c057d01321b6dc03ddb050ff9ba09258131e98536b90993d81c619e9db2"></a>kLCDIFV2_PD_ColorNoAlpha</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga810450a0e9c73d97b76ea06ebf17aeb3a09258131e98536b90993d81c619e9db2"></a>kLCDIFV2_PD_ColorNoAlpha</em>&nbsp;</td><td class="fielddoc">
 <p>Output color directly. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggafc3f67c057d01321b6dc03ddb050ff9ba170deabb35e69781f01fe609ed3415df"></a>kLCDIFV2_PD_ColorWithAlpha</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga810450a0e9c73d97b76ea06ebf17aeb3a170deabb35e69781f01fe609ed3415df"></a>kLCDIFV2_PD_ColorWithAlpha</em>&nbsp;</td><td class="fielddoc">
 <p>Output color multiples alpha. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga93df8af4b8ccfc3e6e9f5e010917fa7c"></a>
+<a class="anchor" id="gabb0d312b362733f1caa798340937e954"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00055.html#ga93df8af4b8ccfc3e6e9f5e010917fa7c">lcdifv2_pd_global_alpha_mode_t</a></td>
+          <td class="memname">enum <a class="el" href="a00055.html#gabb0d312b362733f1caa798340937e954">_lcdifv2_pd_global_alpha_mode</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga93df8af4b8ccfc3e6e9f5e010917fa7ca418cf170521d57240a0ac4c2f688419b"></a>kLCDIFV2_PD_GlobalAlpha</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggabb0d312b362733f1caa798340937e954a418cf170521d57240a0ac4c2f688419b"></a>kLCDIFV2_PD_GlobalAlpha</em>&nbsp;</td><td class="fielddoc">
 <p>Use global alpha. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga93df8af4b8ccfc3e6e9f5e010917fa7ca1fb00274650c85f83ac7067d8b262249"></a>kLCDIFV2_PD_LocalAlpha</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggabb0d312b362733f1caa798340937e954a1fb00274650c85f83ac7067d8b262249"></a>kLCDIFV2_PD_LocalAlpha</em>&nbsp;</td><td class="fielddoc">
 <p>Use local alpha. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga93df8af4b8ccfc3e6e9f5e010917fa7ca92eb8a17af538ea3e84d3c1764e68d4d"></a>kLCDIFV2_PD_ScaledAlpha</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggabb0d312b362733f1caa798340937e954a92eb8a17af538ea3e84d3c1764e68d4d"></a>kLCDIFV2_PD_ScaledAlpha</em>&nbsp;</td><td class="fielddoc">
 <p>Use scaled alpha. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gad7fb10422c5e1f86366d9ef3ba2fc43a"></a>
+<a class="anchor" id="gabf934057abdc05ec6db6d3a3acd705b3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00055.html#gad7fb10422c5e1f86366d9ef3ba2fc43a">lcdifv2_pd_factor_mode_t</a></td>
+          <td class="memname">enum <a class="el" href="a00055.html#gabf934057abdc05ec6db6d3a3acd705b3">_lcdifv2_pd_factor_mode</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggad7fb10422c5e1f86366d9ef3ba2fc43aac4a7ef9b2c94d126859fdf9492d0028c"></a>kLCDIFV2_PD_FactorOne</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggabf934057abdc05ec6db6d3a3acd705b3ac4a7ef9b2c94d126859fdf9492d0028c"></a>kLCDIFV2_PD_FactorOne</em>&nbsp;</td><td class="fielddoc">
 <p>Use 1. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad7fb10422c5e1f86366d9ef3ba2fc43aa4c3c6d7482ce134f1a3d2e84249d2104"></a>kLCDIFV2_PD_FactorZero</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggabf934057abdc05ec6db6d3a3acd705b3a4c3c6d7482ce134f1a3d2e84249d2104"></a>kLCDIFV2_PD_FactorZero</em>&nbsp;</td><td class="fielddoc">
 <p>Use 0. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad7fb10422c5e1f86366d9ef3ba2fc43aab3e71e7130918e4bd1c14e27874c0511"></a>kLCDIFV2_PD_FactorStraightAlpha</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggabf934057abdc05ec6db6d3a3acd705b3ab3e71e7130918e4bd1c14e27874c0511"></a>kLCDIFV2_PD_FactorStraightAlpha</em>&nbsp;</td><td class="fielddoc">
 <p>Use straight alpha. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad7fb10422c5e1f86366d9ef3ba2fc43aa254d64809671ab76ee53065d9f054262"></a>kLCDIFV2_PD_FactorInversedAlpha</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggabf934057abdc05ec6db6d3a3acd705b3a254d64809671ab76ee53065d9f054262"></a>kLCDIFV2_PD_FactorInversedAlpha</em>&nbsp;</td><td class="fielddoc">
 <p>Use inversed alpha. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga4078f51a5317cfb7aed7fb4935909e15"></a>
+<a class="anchor" id="gaf2b2e3c9b5ad0883ef8b0c0ef2462921"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00055.html#ga4078f51a5317cfb7aed7fb4935909e15">lcdifv2_pd_blend_mode_t</a></td>
+          <td class="memname">enum <a class="el" href="a00055.html#gaf2b2e3c9b5ad0883ef8b0c0ef2462921">_lcdifv2_pd_blend_mode</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Note: Don't change the enum item value </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga4078f51a5317cfb7aed7fb4935909e15a850dd9f30ed07da380b8e9aba9445f1a"></a>kLCDIFV2_PD_Src</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaf2b2e3c9b5ad0883ef8b0c0ef2462921a850dd9f30ed07da380b8e9aba9445f1a"></a>kLCDIFV2_PD_Src</em>&nbsp;</td><td class="fielddoc">
 <p>Source Only. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga4078f51a5317cfb7aed7fb4935909e15a8590a5bef98c7d607635773662ae5d97"></a>kLCDIFV2_PD_Atop</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf2b2e3c9b5ad0883ef8b0c0ef2462921a8590a5bef98c7d607635773662ae5d97"></a>kLCDIFV2_PD_Atop</em>&nbsp;</td><td class="fielddoc">
 <p>Source Atop. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga4078f51a5317cfb7aed7fb4935909e15ac22476686760aaae3d7364cbf7fa6c8c"></a>kLCDIFV2_PD_Over</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf2b2e3c9b5ad0883ef8b0c0ef2462921ac22476686760aaae3d7364cbf7fa6c8c"></a>kLCDIFV2_PD_Over</em>&nbsp;</td><td class="fielddoc">
 <p>Source Over. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga4078f51a5317cfb7aed7fb4935909e15abc17caa6c93daa2390948e97f9ad693a"></a>kLCDIFV2_PD_In</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf2b2e3c9b5ad0883ef8b0c0ef2462921abc17caa6c93daa2390948e97f9ad693a"></a>kLCDIFV2_PD_In</em>&nbsp;</td><td class="fielddoc">
 <p>Source In. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga4078f51a5317cfb7aed7fb4935909e15a377452a01102655eed11d8091ba9977c"></a>kLCDIFV2_PD_Out</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf2b2e3c9b5ad0883ef8b0c0ef2462921a377452a01102655eed11d8091ba9977c"></a>kLCDIFV2_PD_Out</em>&nbsp;</td><td class="fielddoc">
 <p>Source Out. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga4078f51a5317cfb7aed7fb4935909e15ada73dd3132a91f67329e551f478f3d44"></a>kLCDIFV2_PD_Dst</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf2b2e3c9b5ad0883ef8b0c0ef2462921ada73dd3132a91f67329e551f478f3d44"></a>kLCDIFV2_PD_Dst</em>&nbsp;</td><td class="fielddoc">
 <p>Destination Only. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga4078f51a5317cfb7aed7fb4935909e15ac3b5ede05274e9e20f81dd86ff9eddb3"></a>kLCDIFV2_PD_DstAtop</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf2b2e3c9b5ad0883ef8b0c0ef2462921ac3b5ede05274e9e20f81dd86ff9eddb3"></a>kLCDIFV2_PD_DstAtop</em>&nbsp;</td><td class="fielddoc">
 <p>Destination Atop. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga4078f51a5317cfb7aed7fb4935909e15a763347e9d290ebaa39cc8bfdd8a3ad04"></a>kLCDIFV2_PD_DstOver</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf2b2e3c9b5ad0883ef8b0c0ef2462921a763347e9d290ebaa39cc8bfdd8a3ad04"></a>kLCDIFV2_PD_DstOver</em>&nbsp;</td><td class="fielddoc">
 <p>Destination Over. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga4078f51a5317cfb7aed7fb4935909e15a7bed31b4ebbf83175f84a4a6970aaabb"></a>kLCDIFV2_PD_DstIn</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf2b2e3c9b5ad0883ef8b0c0ef2462921a7bed31b4ebbf83175f84a4a6970aaabb"></a>kLCDIFV2_PD_DstIn</em>&nbsp;</td><td class="fielddoc">
 <p>Destination In. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga4078f51a5317cfb7aed7fb4935909e15aa119ccd5f23e92fdd2f34fb81cf3f8ea"></a>kLCDIFV2_PD_DstOut</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf2b2e3c9b5ad0883ef8b0c0ef2462921aa119ccd5f23e92fdd2f34fb81cf3f8ea"></a>kLCDIFV2_PD_DstOut</em>&nbsp;</td><td class="fielddoc">
 <p>Destination Out. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga4078f51a5317cfb7aed7fb4935909e15a5d30d76fc503b93f3a34c3120a889241"></a>kLCDIFV2_PD_Xor</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf2b2e3c9b5ad0883ef8b0c0ef2462921a5d30d76fc503b93f3a34c3120a889241"></a>kLCDIFV2_PD_Xor</em>&nbsp;</td><td class="fielddoc">
 <p>XOR. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga4078f51a5317cfb7aed7fb4935909e15a1956c9e9fb68a123eebfc7272e830259"></a>kLCDIFV2_PD_Clear</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf2b2e3c9b5ad0883ef8b0c0ef2462921a1956c9e9fb68a123eebfc7272e830259"></a>kLCDIFV2_PD_Clear</em>&nbsp;</td><td class="fielddoc">
 <p>Clear. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga4078f51a5317cfb7aed7fb4935909e15a4bf302411133320165da0a86ad51af7e"></a>kLCDIFV2_PD_Max</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf2b2e3c9b5ad0883ef8b0c0ef2462921a4bf302411133320165da0a86ad51af7e"></a>kLCDIFV2_PD_Max</em>&nbsp;</td><td class="fielddoc">
 <p>Used for boarder detection. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gac34c8f53d468df33b2a212e450c76eaa"></a>
+<a class="anchor" id="ga5605db1f81ff4f2262d517e712e1c720"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00055.html#gac34c8f53d468df33b2a212e450c76eaa">lcdifv2_pd_layer_t</a></td>
+          <td class="memname">enum <a class="el" href="a00055.html#ga5605db1f81ff4f2262d517e712e1c720">_lcdifv2_pd_layer</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Note: Don't change the enum item value </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggac34c8f53d468df33b2a212e450c76eaaaed5f7456a61b1c66e0005b128cc4b2c7"></a>kLCDIFV2_PD_SrcLayer</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga5605db1f81ff4f2262d517e712e1c720aed5f7456a61b1c66e0005b128cc4b2c7"></a>kLCDIFV2_PD_SrcLayer</em>&nbsp;</td><td class="fielddoc">
 <p>Source layer. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggac34c8f53d468df33b2a212e450c76eaaa90a82a97985a80021886518adb0ee226"></a>kLCDIFV2_PD_DestLayer</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga5605db1f81ff4f2262d517e712e1c720a90a82a97985a80021886518adb0ee226"></a>kLCDIFV2_PD_DestLayer</em>&nbsp;</td><td class="fielddoc">
 <p>Destination layer. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggac34c8f53d468df33b2a212e450c76eaaa3f3c217de644fe9e4e1700377dde4354"></a>kLCDIFV2_PD_LayerMax</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga5605db1f81ff4f2262d517e712e1c720a3f3c217de644fe9e4e1700377dde4354"></a>kLCDIFV2_PD_LayerMax</em>&nbsp;</td><td class="fielddoc">
 <p>Used for boarder detection. </p>
 </td></tr>
 </table>
@@ -1301,7 +1431,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname">void LCDIFV2_DisplayGetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00055.html#a00567">lcdifv2_display_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00055.html#ga3b425cc6027e8a48f653130d1fb701ab">lcdifv2_display_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1318,7 +1448,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="line">config-&gt;vbp           = 3U;</div>
 <div class="line">config-&gt;polarityFlags = <a class="code" href="a00055.html#gga79dc11f5ab25c5d06bbf2233a6fef875aff940f5ac0021e784d5b32070b9e8750">kLCDIFV2_VsyncActiveHigh</a> | <a class="code" href="a00055.html#gga79dc11f5ab25c5d06bbf2233a6fef875a3998d632b82ecac7474b1698334375cf">kLCDIFV2_HsyncActiveHigh</a> | <a class="code" href="a00055.html#gga79dc11f5ab25c5d06bbf2233a6fef875ac2b7e8fe2434f50df72d4678f50c95ec">kLCDIFV2_DataEnableActiveHigh</a> |</div>
 <div class="line">                        <a class="code" href="a00055.html#gga79dc11f5ab25c5d06bbf2233a6fef875a954ef56b636c596d6bf2849228eb09b8">kLCDIFV2_DriveDataOnRisingClkEdge</a> | <a class="code" href="a00055.html#gga79dc11f5ab25c5d06bbf2233a6fef875a132310cbc91d6fb224b2e9c32a3f67fc">kLCDIFV2_DataActiveHigh</a>;</div>
-<div class="line">config-&gt;lineOrder       = <a class="code" href="a00055.html#gga1e1d1a0792672d18b62eb27ee7cebfb1af4213d6bdd4299e3a3dfc16c8963effe">kLCDIFV2_LineOrderRGB</a>;</div>
+<div class="line">config-&gt;lineOrder       = <a class="code" href="a00055.html#gga5183d9c6f64a02b0336543802c56a72faf4213d6bdd4299e3a3dfc16c8963effe">kLCDIFV2_LineOrderRGB</a>;</div>
 </div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">config</td><td>Pointer to the LCDIF configuration structure. </td></tr>
@@ -1341,7 +1471,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00055.html#a00567">lcdifv2_display_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00055.html#ga3b425cc6027e8a48f653130d1fb701ab">lcdifv2_display_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -1593,7 +1723,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LCDIFV2_SetLut </td>
+          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LCDIFV2_SetLut </td>
           <td>(</td>
           <td class="paramtype">LCDIFV2_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1780,7 +1910,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00055.html#a00566">lcdifv2_buffer_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00055.html#ga7a6d39859b97f0d473c1bad8bdfee58e">lcdifv2_buffer_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -2008,7 +2138,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00055.html#a00565">lcdifv2_blend_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00055.html#ga1bc32c09ddd12fea3a5efdd50978f93d">lcdifv2_blend_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -2048,7 +2178,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00055.html#gaebf78f91cbd1e0b5481222b3674ff7f2">lcdifv2_csc_mode_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00055.html#ga987a58cf1b819da7908511b957c4a3af">lcdifv2_csc_mode_t</a>&#160;</td>
           <td class="paramname"><em>mode</em>&#160;</td>
         </tr>
         <tr>
@@ -2075,21 +2205,21 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LCDIFV2_GetPorterDuffConfig </td>
+          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LCDIFV2_GetPorterDuffConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00055.html#ga4078f51a5317cfb7aed7fb4935909e15">lcdifv2_pd_blend_mode_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00055.html#ga162a81389832980d7564b8b8f36d66e9">lcdifv2_pd_blend_mode_t</a>&#160;</td>
           <td class="paramname"><em>mode</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00055.html#gac34c8f53d468df33b2a212e450c76eaa">lcdifv2_pd_layer_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00055.html#ga1df8d376b53c393f270852a7a6676905">lcdifv2_pd_layer_t</a>&#160;</td>
           <td class="paramname"><em>layer</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00055.html#a00565">lcdifv2_blend_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00055.html#ga1bc32c09ddd12fea3a5efdd50978f93d">lcdifv2_blend_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -2100,10 +2230,10 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
       </table>
 </div><div class="memdoc">
 <p>This function gets the blend configuration for Porter Duff blend, config-&gt;pdFactorMode is set according to <code>layer</code> and <code>mode</code>, other blend configurations are set to:</p>
-<div class="fragment"><div class="line">config-&gt;pdAlphaMode = <a class="code" href="a00055.html#ggaaf235923feb878bb9561ba36c1109ca2a29f2f46932474f2c9c81a543b3188838">kLCDIFV2_PD_AlphaStraight</a>;</div>
+<div class="fragment"><div class="line">config-&gt;pdAlphaMode = <a class="code" href="a00055.html#gga546a77aa4043bdb98f4c5b2874848d30a29f2f46932474f2c9c81a543b3188838">kLCDIFV2_PD_AlphaStraight</a>;</div>
 <div class="line">config-&gt;pdColorMode = kLCDIFV2_PD_ColorStraight;</div>
-<div class="line">config-&gt;pdGlobalAlphaMode = <a class="code" href="a00055.html#gga93df8af4b8ccfc3e6e9f5e010917fa7ca1fb00274650c85f83ac7067d8b262249">kLCDIFV2_PD_LocalAlpha</a>;</div>
-<div class="line">config-&gt;alphaMode = <a class="code" href="a00055.html#gga3255e95343f51d86a9cf9e917e2d4627aff85a840c4d8c530f9da8319f028d163">kLCDIFV2_AlphaPoterDuff</a>;</div>
+<div class="line">config-&gt;pdGlobalAlphaMode = <a class="code" href="a00055.html#ggabb0d312b362733f1caa798340937e954a1fb00274650c85f83ac7067d8b262249">kLCDIFV2_PD_LocalAlpha</a>;</div>
+<div class="line">config-&gt;alphaMode = <a class="code" href="a00055.html#gga47c0ad3bb7717f9294a089af6a5c4cf0aff85a840c4d8c530f9da8319f028d163">kLCDIFV2_AlphaPoterDuff</a>;</div>
 </div><!-- fragment --><p>This is the basic Porter Duff blend configuration, user still could modify the configurations after this function.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -2128,7 +2258,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LCDIFV2_GetMultiLayerGlobalAlpha </td>
+          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LCDIFV2_GetMultiLayerGlobalAlpha </td>
           <td>(</td>
           <td class="paramtype">const uint8_t&#160;</td>
           <td class="paramname"><em>blendedAlpha</em>[], </td>

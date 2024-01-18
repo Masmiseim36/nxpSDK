@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: DMAMUX: Direct Memory Access Multiplexer Driver</title>
+<title>MCUXpresso SDK API Reference Manual: EQOS-TSN: Ethernet QoS with TSN Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,237 +99,31 @@ $(document).ready(function(){initNavTree('a00339.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">DMAMUX: Direct Memory Access Multiplexer Driver</div>  </div>
+<div class="title">EQOS-TSN: Ethernet QoS with TSN Driver</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a peripheral driver for the Direct Memory Access Multiplexer (DMAMUX) of MCUXpresso SDK devices.</p>
-<h1><a class="anchor" id="DMAMUXTypicalUseCase"></a>
-Typical use case</h1>
-<h2><a class="anchor" id="DMAMUXOper"></a>
-DMAMUX Operation</h2>
-<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/dmamux </p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Driver version</h2></td></tr>
-<tr class="memitem:ga52b927e4f978ddf42faf0acf6de3df57"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00339.html#ga52b927e4f978ddf42faf0acf6de3df57">FSL_DMAMUX_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00338.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 0))</td></tr>
-<tr class="memdesc:ga52b927e4f978ddf42faf0acf6de3df57"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMAMUX driver version 2.1.0.  <a href="#ga52b927e4f978ddf42faf0acf6de3df57">More...</a><br/></td></tr>
-<tr class="separator:ga52b927e4f978ddf42faf0acf6de3df57"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-DMAMUX Initialization and de-initialization</h2></td></tr>
-<tr class="memitem:ga850545ac61a004df8ca312db2ca9db73"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00339.html#ga850545ac61a004df8ca312db2ca9db73">DMAMUX_Init</a> (DMAMUX_Type *base)</td></tr>
-<tr class="memdesc:ga850545ac61a004df8ca312db2ca9db73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the DMAMUX peripheral.  <a href="#ga850545ac61a004df8ca312db2ca9db73">More...</a><br/></td></tr>
-<tr class="separator:ga850545ac61a004df8ca312db2ca9db73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab663257d094b9b7b6fa1b894fbf8000b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00339.html#gab663257d094b9b7b6fa1b894fbf8000b">DMAMUX_Deinit</a> (DMAMUX_Type *base)</td></tr>
-<tr class="memdesc:gab663257d094b9b7b6fa1b894fbf8000b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the DMAMUX peripheral.  <a href="#gab663257d094b9b7b6fa1b894fbf8000b">More...</a><br/></td></tr>
-<tr class="separator:gab663257d094b9b7b6fa1b894fbf8000b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-DMAMUX Channel Operation</h2></td></tr>
-<tr class="memitem:gaecac68802d961c31a06389caa97387f5"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00339.html#gaecac68802d961c31a06389caa97387f5">DMAMUX_EnableChannel</a> (DMAMUX_Type *base, uint32_t channel)</td></tr>
-<tr class="memdesc:gaecac68802d961c31a06389caa97387f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the DMAMUX channel.  <a href="#gaecac68802d961c31a06389caa97387f5">More...</a><br/></td></tr>
-<tr class="separator:gaecac68802d961c31a06389caa97387f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4d68cf7796e4a6a9cd0c4289712ca120"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00339.html#ga4d68cf7796e4a6a9cd0c4289712ca120">DMAMUX_DisableChannel</a> (DMAMUX_Type *base, uint32_t channel)</td></tr>
-<tr class="memdesc:ga4d68cf7796e4a6a9cd0c4289712ca120"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the DMAMUX channel.  <a href="#ga4d68cf7796e4a6a9cd0c4289712ca120">More...</a><br/></td></tr>
-<tr class="separator:ga4d68cf7796e4a6a9cd0c4289712ca120"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab4cfa329d636dc52dffb7fedef84367e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00339.html#gab4cfa329d636dc52dffb7fedef84367e">DMAMUX_SetSource</a> (DMAMUX_Type *base, uint32_t channel, int32_t source)</td></tr>
-<tr class="memdesc:gab4cfa329d636dc52dffb7fedef84367e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the DMAMUX channel source.  <a href="#gab4cfa329d636dc52dffb7fedef84367e">More...</a><br/></td></tr>
-<tr class="separator:gab4cfa329d636dc52dffb7fedef84367e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga52b927e4f978ddf42faf0acf6de3df57"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FSL_DMAMUX_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00338.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 0))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga850545ac61a004df8ca312db2ca9db73"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void DMAMUX_Init </td>
-          <td>(</td>
-          <td class="paramtype">DMAMUX_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function ungates the DMAMUX clock.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>DMAMUX peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gab663257d094b9b7b6fa1b894fbf8000b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void DMAMUX_Deinit </td>
-          <td>(</td>
-          <td class="paramtype">DMAMUX_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function gates the DMAMUX clock.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>DMAMUX peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaecac68802d961c31a06389caa97387f5"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void DMAMUX_EnableChannel </td>
-          <td>(</td>
-          <td class="paramtype">DMAMUX_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>channel</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function enables the DMAMUX channel.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>DMAMUX peripheral base address. </td></tr>
-    <tr><td class="paramname">channel</td><td>DMAMUX channel number. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga4d68cf7796e4a6a9cd0c4289712ca120"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void DMAMUX_DisableChannel </td>
-          <td>(</td>
-          <td class="paramtype">DMAMUX_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>channel</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function disables the DMAMUX channel.</p>
-<dl class="section note"><dt>Note</dt><dd>The user must disable the DMAMUX channel before configuring it. </dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>DMAMUX peripheral base address. </td></tr>
-    <tr><td class="paramname">channel</td><td>DMAMUX channel number. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gab4cfa329d636dc52dffb7fedef84367e"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void DMAMUX_SetSource </td>
-          <td>(</td>
-          <td class="paramtype">DMAMUX_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>channel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int32_t&#160;</td>
-          <td class="paramname"><em>source</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>DMAMUX peripheral base address. </td></tr>
-    <tr><td class="paramname">channel</td><td>DMAMUX channel number. </td></tr>
-    <tr><td class="paramname">source</td><td>Channel source, which is used to trigger the DMA transfer.User need to use the dma_request_source_t type as the input parameter. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
+<p>The MCUXpresso SDK provides a peripheral driver for the 10/100/1000 Mbps Ethernet QoS with TSN module of MCUXpresso SDK devices.</p>
+<h1><a class="anchor" id="EthernetQosDriver"></a>
+EQOS-TSN: Ethernet QoS with TSN Driver</h1>
+<h1>Operations of Ethernet QoS with TSN Driver {EthernetQosDriverOps}</h1>
+<h2><a class="anchor" id="ENETQosInitDeinitInterOps"></a>
+Initialize and De-initialize interface Operation</h2>
+<p>Use the <a class="el" href="a00029.html#ga6ea9055b33a4be6261321dd7f5d7569d" title="Gets the ENET default configuration structure. ">ENET_QOS_GetDefaultConfig()</a> to get the default basic configuration, Use the default configuration unchanged or changed as the input to the <a class="el" href="a00029.html#ga52c0e0010a95ae9829c3577f09045c37" title="Initializes the ENET module. ">ENET_QOS_Init()</a> to do basic configuration for EQOS module. Call <a class="el" href="a00029.html#gad77a47ac26f190cdc3f60c42033def66" title="Initialize for all ENET descriptors. ">ENET_QOS_DescriptorInit()</a> to initialization the descriptors and Call <a class="el" href="a00029.html#ga4b9ca12ac1da8a22e4c38780dca36783" title="Starts the ENET rx/tx. ">ENET_QOS_StartRxTx()</a> to start the EQOS engine after all initialization. <a class="el" href="a00029.html#ga46ca98c608a9370de15f5617fbc4709c" title="Deinitializes the ENET module. ">ENET_QOS_Deinit()</a> is used to to EQOS De-initialization.</p>
+<h2><a class="anchor" id="ENETQosOthBasicOps"></a>
+Other basic operation</h2>
+<p>This group provides the EQOS mac address set/get operation with <a class="el" href="a00029.html#gad8b191e841d3156a403de2e0f0f16a0f" title="Sets the ENET module Mac address. ">ENET_QOS_SetMacAddr()</a> and <a class="el" href="a00029.html#gad2b22a143bcebe34386c2dc1ec4c9f69" title="Gets the ENET module Mac address. ">ENET_QOS_GetMacAddr()</a>. The <a class="el" href="a00029.html#gaa4b09bff201b897d61e4b398d97f5c75" title="Set the MAC to enter into power down mode. ">ENET_QOS_EnterPowerDown()</a> and <a class="el" href="a00029.html#gab334639e52d3ea5d0c9e689d420b2aff" title="Set the MAC to exit power down mode. ">ENET_QOS_ExitPowerDown()</a> can be used to do power management.</p>
+<h2><a class="anchor" id="ENETQosIntOps"></a>
+Interrupt operation</h2>
+<p>This group provide the DMA interrupt get and clear APIs. This can be used by application to create new IRQ handler.</p>
+<h2><a class="anchor" id="ENETQosFuncOps"></a>
+Functional Operation</h2>
+<p>This group functions are low level TX/RX descriptor operations. It is convenient to use these TX/RX APIs to do application specific RX/TX. For TX: Use <a class="el" href="a00029.html#gac8ec621a37feefa4472738b84b36e501" title="Get the tx descriptor DMA Own flag. ">ENET_QOS_IsTxDescriptorDmaOwn()</a>, <a class="el" href="a00029.html#ga19c8bd01196f30f847943bc3db75bd84" title="Setup a given tx descriptor. ">ENET_QOS_SetupTxDescriptor()</a> to build your packet for transfer and ENET_QOS_UpdateTxDescriptorTail to update the TX tail pointer. For RX: Use <a class="el" href="a00029.html#gac81527ecb6bc5c1c9ceea49fec09bac6" title="Gets the context in the ENET rx descriptor. ">ENET_QOS_GetRxDescriptor()</a> to get the received data/length and use the <a class="el" href="a00029.html#gac25fbd0c003edd2e9b970de390c68107" title="Updates the buffers and the own status for a given rx descriptor. ">ENET_QOS_UpdateRxDescriptor()</a> to update the buffers/status.</p>
+<h2><a class="anchor" id="ENETQosTransOps"></a>
+Transactional Operation</h2>
+<p>When use the Transactional APIs, please make sure to call the ENET_QOS_CreateHandler to create the handler which are used to maintain all data related to TX/RX process.</p>
+<p>For EQOS receive, the <a class="el" href="a00029.html#gaa58e73492953ac3bb2bbf95db9c80ad7" title="Gets the size of the read frame. ">ENET_QOS_GetRxFrameSize()</a> function must be called to get the received data size. Then, call the <a class="el" href="a00029.html#gac64b2ddaf2fa723ee509903aa83e90a2" title="Reads a frame from the ENET device. ">ENET_QOS_ReadFrame()</a> function to get the received data.</p>
+<p>For EQOS transmit, call the <a class="el" href="a00029.html#ga6dceb8d3af5ad3359c296eb01171009c" title="Transmits an ENET frame. ">ENET_QOS_SendFrame()</a> function to send the data out. To save memory and avoid the memory copy in the TX process. The <a class="el" href="a00029.html#ga6dceb8d3af5ad3359c296eb01171009c" title="Transmits an ENET frame. ">ENET_QOS_SendFrame()</a> here is a zero-copy API, so make sure the input data buffers are not re-queued or freed before the data are really sent out. To make sure the data buffers reclaim is rightly done. the transmit interrupt must be used. so For transactional APIs here we enabled the tx interrupt in <a class="el" href="a00029.html#gaf3984bbc863c4116b3fe81ae53cd993f" title="Create ENET Handler. ">ENET_QOS_CreateHandler()</a>. That means the tx interrupt is automatically enabled in transactional APIs. is recommended to be called on the transmit interrupt handler.ENET_QOS_ReclaimTxDescriptor() is a transactional API to get the information from the finished transmit data buffers and reclaim the tx index. it is called by the transmit interrupt IRQ handler.</p>
+<p>For use the transactional APIs, receive polling Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/enet_qos For the functional API, rx polling Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/enet_qos </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->

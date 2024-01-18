@@ -362,6 +362,7 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/dcd</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
@@ -371,6 +372,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
@@ -1464,6 +1466,7 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/dcd</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
@@ -1473,6 +1476,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
@@ -2567,6 +2571,7 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/dcd</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
@@ -2576,6 +2581,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
@@ -3670,6 +3676,7 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/dcd</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
@@ -3679,6 +3686,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
@@ -4772,6 +4780,7 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/dcd</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
@@ -4781,6 +4790,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
@@ -5875,6 +5885,7 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/usb/dcd</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
@@ -5884,6 +5895,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
@@ -6677,18 +6689,6 @@
   <group>
     <name>usb</name>
     <group>
-      <name>dcd</name>
-      <file>
-        <name>$PROJ_DIR$/../usb_hsdcd.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../usb_hsdcd.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../usb_charger_detect.h</name>
-      </file>
-    </group>
-    <group>
       <name>device</name>
       <group>
         <name>class</name>
@@ -6752,6 +6752,18 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../../middleware/usb/phy/usb_phy.h</name>
+      </file>
+    </group>
+    <group>
+      <name>dcd</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/usb/dcd/usb_hsdcd.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/usb/dcd/usb_hsdcd.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/usb/dcd/usb_charger_detect.h</name>
       </file>
     </group>
     <group>
@@ -7062,6 +7074,9 @@
     <name>utilities</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/fsl_assert.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</name>

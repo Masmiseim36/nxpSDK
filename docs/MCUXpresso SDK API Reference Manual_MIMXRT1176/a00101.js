@@ -1,30 +1,44 @@
 var a00101 =
 [
-    [ "xbara_control_config_t", "a00101.html#a00721", [
-      [ "activeEdge", "a00101.html#a115969c58f3d6d8642a1095a7c685167", null ],
-      [ "requestType", "a00101.html#ae5ec7c11cc4f3164a562917fbc8f9183", null ]
+    [ "sai_edma_handle", "a00101.html#a00731", [
+      [ "dmaHandle", "a00101.html#a206a3b43dad407f5a36781c817207f6c", null ],
+      [ "nbytes", "a00101.html#a2ffb3c5dda8cbc7c9c304d0148e615d4", null ],
+      [ "bytesPerFrame", "a00101.html#a85f7e22cc868bbb5bd2a3e7bcab955f2", null ],
+      [ "channelMask", "a00101.html#ac277f141af096a95a528a7e36fd2063d", null ],
+      [ "channelNums", "a00101.html#a688de11e52b693d680dafedb93a941c5", null ],
+      [ "channel", "a00101.html#a7c0a238341e3c96e49ad2c661be30dfb", null ],
+      [ "count", "a00101.html#a80bd4bad1c70104a976c3e74cdbeab14", null ],
+      [ "state", "a00101.html#a7b35afcf6ad716da7d3e2b44dc46e9a6", null ],
+      [ "callback", "a00101.html#afbfc2ea495c2d6e378c44c8c37c53765", null ],
+      [ "userData", "a00101.html#ad85e23d4f2370b3d5b7a8d1438a6f33b", null ],
+      [ "tcd", "a00101.html#a6e68d0012cfebcc70e074237b7b121d8", null ],
+      [ "saiQueue", "a00101.html#ae552929f0b797fd27532cc0b8ebda762", null ],
+      [ "transferSize", "a00101.html#ab25e923e0c1904c4a9db8f0d3957bd24", null ],
+      [ "interleaveType", "a00101.html#a42a9091453bae041d29966f774cd7b3c", null ],
+      [ "queueUser", "a00101.html#afb40eac3af06a3130c21b6fdfe3a99b6", null ],
+      [ "queueDriver", "a00101.html#ac7cd6167651d0153af2ff4f324097602", null ]
     ] ],
-    [ "xbara_active_edge_t", "a00101.html#gacf40a09fdbb3dd3f141697fb08ce224c", [
-      [ "kXBARA_EdgeNone", "a00101.html#ggacf40a09fdbb3dd3f141697fb08ce224ca0b1f05aab008cc333fc9d221dc471ad2", null ],
-      [ "kXBARA_EdgeRising", "a00101.html#ggacf40a09fdbb3dd3f141697fb08ce224caa9f6a89ba6b33bb42492a01a32e125d2", null ],
-      [ "kXBARA_EdgeFalling", "a00101.html#ggacf40a09fdbb3dd3f141697fb08ce224cadd352c2692d10c47e0565b5db9c0aaad", null ],
-      [ "kXBARA_EdgeRisingAndFalling", "a00101.html#ggacf40a09fdbb3dd3f141697fb08ce224cab5a8f839c97e6895864cf9c9acdf3acc", null ]
+    [ "FSL_SAI_EDMA_DRIVER_VERSION", "a00101.html#gadec154552382f7b68bce82ce829f3911", null ],
+    [ "sai_edma_callback_t", "a00101.html#gaeb6ca21880d8cd8f5f954d38bfa73d63", null ],
+    [ "sai_edma_interleave_t", "a00101.html#gad6edfb066c228d8b519ac8990150cd01", null ],
+    [ "_sai_edma_interleave", "a00101.html#ga399d35c32a4aec53e8b62a256d528308", [
+      [ "kSAI_EDMAInterleavePerChannelSample", "a00101.html#gga399d35c32a4aec53e8b62a256d528308ad6dca42e6eb6f605c9628cc2a5eabfd5", null ],
+      [ "kSAI_EDMAInterleavePerChannelBlock", "a00101.html#gga399d35c32a4aec53e8b62a256d528308abe869d52b4b9f0883e963214b470d28e", null ]
     ] ],
-    [ "xbara_request_t", "a00101.html#ga8e4281860299afa4b037f46a43d194bc", [
-      [ "kXBARA_RequestDisable", "a00101.html#gga8e4281860299afa4b037f46a43d194bca67befcfe617c522f75f9c58aca037aef", null ],
-      [ "kXBARA_RequestDMAEnable", "a00101.html#gga8e4281860299afa4b037f46a43d194bca074420520b90004cbbc9fe1cf6d95b18", null ],
-      [ "kXBARA_RequestInterruptEnable", "a00101.html#gga8e4281860299afa4b037f46a43d194bca90c054b76f1e59c9e159e2bb89f82541", null ]
-    ] ],
-    [ "xbara_status_flag_t", "a00101.html#ga0c8c0b6bbacda08f8d646f2ba109158e", [
-      [ "kXBARA_EdgeDetectionOut0", "a00101.html#gga0c8c0b6bbacda08f8d646f2ba109158ea7fd07691d8d5cd8b7cbfa21c080464af", null ],
-      [ "kXBARA_EdgeDetectionOut1", "a00101.html#gga0c8c0b6bbacda08f8d646f2ba109158eaa9104d5388f116228e21a65116dabd6d", null ],
-      [ "kXBARA_EdgeDetectionOut2", "a00101.html#gga0c8c0b6bbacda08f8d646f2ba109158ea53460b197642d46a4f04eadda3cb4bd2", null ],
-      [ "kXBARA_EdgeDetectionOut3", "a00101.html#gga0c8c0b6bbacda08f8d646f2ba109158eaa26a7c1cbca51e3ffa9362c03ac5a0d1", null ]
-    ] ],
-    [ "XBARA_Init", "a00101.html#ga5c026c940af4df8e13962eb78d4e0f13", null ],
-    [ "XBARA_Deinit", "a00101.html#ga951d45c9a0884c2ea35d98b71a7ea889", null ],
-    [ "XBARA_SetSignalsConnection", "a00101.html#gac03e8f73ad95b6df165650308b809cad", null ],
-    [ "XBARA_GetStatusFlags", "a00101.html#ga47a5efeb5b13f65c272c01daadbf739c", null ],
-    [ "XBARA_ClearStatusFlags", "a00101.html#gaee2d4bb11ed4c302dc6d66904f4eb7a8", null ],
-    [ "XBARA_SetOutputSignalConfig", "a00101.html#gaa010e6aecc627b857b04d9c2e8f5178b", null ]
+    [ "SAI_TransferTxCreateHandleEDMA", "a00101.html#ga84f148e1d3fe186ce6604d637f89c2c1", null ],
+    [ "SAI_TransferRxCreateHandleEDMA", "a00101.html#ga44a719a507630fdcc25ba93690098a89", null ],
+    [ "SAI_TransferSetInterleaveType", "a00101.html#gada84bfce187319b89b6e89c802164478", null ],
+    [ "SAI_TransferTxSetConfigEDMA", "a00101.html#ga5295038a021787aef619bdd9f96981da", null ],
+    [ "SAI_TransferRxSetConfigEDMA", "a00101.html#gaed5d72de0d0aa0ac71de3222924e4aa7", null ],
+    [ "SAI_TransferSendEDMA", "a00101.html#ga7a2c125e1f975c9f718dcb820ac46f63", null ],
+    [ "SAI_TransferReceiveEDMA", "a00101.html#ga9060fb028d5a24d8763066981b079900", null ],
+    [ "SAI_TransferSendLoopEDMA", "a00101.html#ga1b62338a71194856549698e374d13cb0", null ],
+    [ "SAI_TransferReceiveLoopEDMA", "a00101.html#gaaf6043ff078868f35d4459dd2e112c0d", null ],
+    [ "SAI_TransferTerminateSendEDMA", "a00101.html#ga6b3db811719337e4f2172c66ceeb7933", null ],
+    [ "SAI_TransferTerminateReceiveEDMA", "a00101.html#ga819dcef593d48f3296ee858239802e26", null ],
+    [ "SAI_TransferAbortSendEDMA", "a00101.html#ga12925e07667cc1b27915aedd1f718a7a", null ],
+    [ "SAI_TransferAbortReceiveEDMA", "a00101.html#ga3bd586da5f41126cbfa92d2baa03620b", null ],
+    [ "SAI_TransferGetSendCountEDMA", "a00101.html#ga02aa0e441b0aada0f4875f28f832dc71", null ],
+    [ "SAI_TransferGetReceiveCountEDMA", "a00101.html#gae4a1100515e9a05bb61e0039288664a0", null ],
+    [ "SAI_TransferGetValidTransferSlotsEDMA", "a00101.html#ga33af2c1b3c360823ffdbb1348e586107", null ]
 ];

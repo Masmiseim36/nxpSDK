@@ -1,4 +1,4 @@
 var a00333 =
 [
-    [ "CAAM_RNG_GetRandomDataNonBlocking", "a00333.html#ga904a52e58fe49d7c1efc9f78fb9d04db", null ]
+    [ "CAAM_BLACK_GetKeyBlacken", "a00333.html#gad422f1c6b651ded80a57173d50582f1d", null ]
 ];

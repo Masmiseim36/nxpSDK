@@ -1,16 +1,10 @@
 var a00356 =
 [
-    [ "FSL_RDC_SEMA42_DRIVER_VERSION", "a00356.html#gaa6cac37b3ebec11ac45076d374d6a93e", null ],
-    [ "RDC_SEMA42_GATE_NUM_RESET_ALL", "a00356.html#ga2e1384ab2be0f1a97f5e4eda2d12ceaf", null ],
-    [ "RDC_SEMA42_GATEn", "a00356.html#ga857f01bed307b5d333bd793429b59037", null ],
-    [ "RDC_SEMA42_GATE_COUNT", "a00356.html#ga09a33a01fde064c69b0ee9eec91b0c1a", null ],
-    [ "RDC_SEMA42_Init", "a00356.html#ga5b8154d8b24ac1dfd1b1d2bb10158ec0", null ],
-    [ "RDC_SEMA42_Deinit", "a00356.html#ga1a2c1f1889cdd9c2d4410a9fffe226d9", null ],
-    [ "RDC_SEMA42_TryLock", "a00356.html#ga85fb981fbe35995485b419091c06583c", null ],
-    [ "RDC_SEMA42_Lock", "a00356.html#ga55f710fde1530472af83d2192a1003d6", null ],
-    [ "RDC_SEMA42_Unlock", "a00356.html#ga24343ed74b1ac14f1ef6ee2bf9981787", null ],
-    [ "RDC_SEMA42_GetLockMasterIndex", "a00356.html#ga0335914d7ba08830da16f7110d2e2ddc", null ],
-    [ "RDC_SEMA42_GetLockDomainID", "a00356.html#gac2bc50ca8bb908c88f0eedba0bc2f3f2", null ],
-    [ "RDC_SEMA42_ResetGate", "a00356.html#ga756f7f9c12750a30c2ab26271371108d", null ],
-    [ "RDC_SEMA42_ResetAllGates", "a00356.html#gae72a0e282cf4c612ff7f2e55954cd2fd", null ]
+    [ "FSL_PUF_DRIVER_VERSION", "a00356.html#ga7e9f1791013e2efc9bddbb202db774af", null ],
+    [ "PUF_GET_KEY_CODE_SIZE_FOR_KEY_SIZE", "a00356.html#ga3bdc651e62070fc7cdb52c3f1197fc84", null ],
+    [ "puf_key_slot_t", "a00356.html#ga5905e02be9ed347f883ea4d694eb0baa", null ],
+    [ "_puf_key_slot", "a00356.html#ga68d4d5d0fdfb5ceb3c1fdbcfb92e427d", [
+      [ "kPUF_KeySlot0", "a00356.html#gga68d4d5d0fdfb5ceb3c1fdbcfb92e427dabc4b46985695e9640df2093f937be7f2", null ],
+      [ "kPUF_KeySlot1", "a00356.html#gga68d4d5d0fdfb5ceb3c1fdbcfb92e427dad944437798712d481221671c3cd08212", null ]
+    ] ]
 ];

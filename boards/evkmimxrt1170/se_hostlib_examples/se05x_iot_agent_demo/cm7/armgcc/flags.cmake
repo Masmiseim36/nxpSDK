@@ -40,11 +40,14 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DFREEDOM \
     -DLPC_ENET \
     -DNXP_IOT_AGENT_USE_COREJSON \
+    -DNXP_IOT_AGENT_USE_MBEDTLS_TRANSPORT_FOR_MQTT \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DMCUXPRESSO_SDK \
     -DCRYPTO_USE_DRIVER_CAAM \
     -DCACHE_MODE_WRITE_THROUGH=1 \
     -DLWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1 \
+    -DCHECKSUM_GEN_ICMP6=1 \
+    -DCHECKSUM_CHECK_ICMP6=1 \
     -DLWIP_TIMEVAL_PRIVATE=0 \
     -DPB_FIELD_32BIT \
     -DEXTERNAL_CUSTOMER_BUILD_CONFIGURATION=1 \
@@ -57,12 +60,13 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DMBEDTLS \
     -DUSE_RTOS \
     -DmqttconfigENABLE_METRICS=0 \
+    -DSE_CLOUD_MCU_SDK \
     -DSCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC \
     -DLWIP_DNS=1 \
+    -DMBEDTLS_THREADING_ALT \
+    -DMBEDTLS_THREADING_C \
     -g \
     -O0 \
-    -fomit-frame-pointer \
-    -Wno-unused-function \
     -mcpu=cortex-m7 \
     -Wall \
     -mthumb \
@@ -75,6 +79,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -fomit-frame-pointer \
+    -Wno-unused-function \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -90,11 +96,14 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DFREEDOM \
     -DLPC_ENET \
     -DNXP_IOT_AGENT_USE_COREJSON \
+    -DNXP_IOT_AGENT_USE_MBEDTLS_TRANSPORT_FOR_MQTT \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DMCUXPRESSO_SDK \
     -DCRYPTO_USE_DRIVER_CAAM \
     -DCACHE_MODE_WRITE_THROUGH=1 \
     -DLWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1 \
+    -DCHECKSUM_GEN_ICMP6=1 \
+    -DCHECKSUM_CHECK_ICMP6=1 \
     -DLWIP_TIMEVAL_PRIVATE=0 \
     -DPB_FIELD_32BIT \
     -DEXTERNAL_CUSTOMER_BUILD_CONFIGURATION=1 \
@@ -107,11 +116,12 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DMBEDTLS \
     -DUSE_RTOS \
     -DmqttconfigENABLE_METRICS=0 \
+    -DSE_CLOUD_MCU_SDK \
     -DSCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC \
     -DLWIP_DNS=1 \
+    -DMBEDTLS_THREADING_ALT \
+    -DMBEDTLS_THREADING_C \
     -Os \
-    -fomit-frame-pointer \
-    -Wno-unused-function \
     -mcpu=cortex-m7 \
     -Wall \
     -mthumb \
@@ -124,6 +134,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -fomit-frame-pointer \
+    -Wno-unused-function \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -211,7 +223,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     --defsym=__heap_size__=0x8000 \
     ${FPU} \
     ${SPECS} \
-    -T${ProjDirPath}/MIMXRT1176xxxxx_cm7_flexspi_nor.ld -static \
+    -T\"${ProjDirPath}/MIMXRT1176xxxxx_cm7_flexspi_nor.ld\" -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} \
@@ -245,5 +257,5 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     --defsym=__heap_size__=0x8000 \
     ${FPU} \
     ${SPECS} \
-    -T${ProjDirPath}/MIMXRT1176xxxxx_cm7_flexspi_nor.ld -static \
+    -T\"${ProjDirPath}/MIMXRT1176xxxxx_cm7_flexspi_nor.ld\" -static \
 ")

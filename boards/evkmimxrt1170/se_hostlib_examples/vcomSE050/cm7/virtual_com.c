@@ -42,7 +42,7 @@
 #if defined(LPC_55x)
 #include "fsl_power.h"
 #endif
-#if defined(CPU_MIMXRT1062DVL6A)
+#if defined(CPU_MIMXRT1062DVL6A) || defined (CPU_MIMXRT1062DVL6B)
 #include "fsl_dcp.h"
 #include "fsl_trng.h"
 #endif
@@ -121,7 +121,7 @@ static uint8_t s_countryCode[COMM_FEATURE_DATA_SIZE] = {
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 static usb_cdc_acm_info_t s_usbCdcAcmInfo;
 /* Data buffer for receiving and sending*/
-#if defined(CPU_MIMXRT1062DVL6A)
+#if defined(CPU_MIMXRT1062DVL6A) || defined (CPU_MIMXRT1062DVL6B)
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_currRecvBuf[DATA_BUFF_SIZE];
 //USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_currSendBuf[DATA_BUFF_SIZE];
 #else
@@ -155,7 +155,7 @@ static volatile uint8_t s_comOpen            = 0;
 /*******************************************************************************
 * Code
 ******************************************************************************/
-#if defined(CPU_MIMXRT1062DVL6A)
+#if defined(CPU_MIMXRT1062DVL6A) || defined (CPU_MIMXRT1062DVL6B)
 /* The function sets the cacheable memory to shareable, this suggestion is referred from chapter 2.2.1 Memory regions, types and attributes in Cortex-M7 Devices, Generic User Guide */
 void BOARD_ConfigUSBMPU()
 {
@@ -821,7 +821,7 @@ void main(void)
     LED_RED_INIT(1);
 #endif
 
-#if defined(CPU_MIMXRT1062DVL6A)
+#if defined(CPU_MIMXRT1062DVL6A) || defined (CPU_MIMXRT1062DVL6B)
 #define LPI2C_CLOCK_SOURCE_DIVIDER (5U)
     dcp_config_t dcpConfig;
     trng_config_t trngConfig;

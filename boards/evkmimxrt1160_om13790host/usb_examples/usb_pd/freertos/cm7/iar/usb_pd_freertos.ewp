@@ -370,6 +370,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -1474,6 +1475,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -2578,6 +2580,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -3681,6 +3684,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -4785,6 +4789,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -5889,6 +5894,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/pd/phy_interface</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -7122,6 +7128,9 @@
     <name>utilities</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/fsl_assert.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.c</name>

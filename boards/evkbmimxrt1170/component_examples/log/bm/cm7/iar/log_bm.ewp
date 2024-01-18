@@ -348,7 +348,7 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../components/panic</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
@@ -359,6 +359,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/cm7</state>
@@ -1436,7 +1437,7 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../components/panic</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
@@ -1447,6 +1448,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/cm7</state>
@@ -2525,7 +2527,7 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../components/panic</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
@@ -2536,6 +2538,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/cm7</state>
@@ -3611,7 +3614,7 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../components/panic</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
@@ -3622,6 +3625,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/cm7</state>
@@ -4699,7 +4703,7 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../components/panic</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
@@ -4710,6 +4714,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/cm7</state>
@@ -5788,7 +5793,7 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../components/panic</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
@@ -5799,6 +5804,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/cm7</state>
@@ -6563,7 +6569,7 @@
   <group>
     <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
   <group>
@@ -6575,10 +6581,10 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/fsl_shell.c</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/shell/fsl_shell.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/fsl_shell.h</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/shell/fsl_shell.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</name>
@@ -6597,6 +6603,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/fsl_assert.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</name>
@@ -6717,6 +6726,24 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_mu.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_mu.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/drivers/fsl_iomuxc.h</name>

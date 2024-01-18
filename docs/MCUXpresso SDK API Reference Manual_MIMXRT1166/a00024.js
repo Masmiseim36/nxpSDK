@@ -1,22 +1,24 @@
 var a00024 =
 [
-    [ "dcic_config_t", "a00024.html#a00468", [
-      [ "enableExternalSignal", "a00024.html#aefecd9dd6948d73acf523bf818283de5", null ],
-      [ "polarityFlags", "a00024.html#a36dd498357c4e700fd32f29d3f1a9326", null ],
-      [ "enableInterrupts", "a00024.html#ab3ef7f3510ec32f4048366cd541990d0", null ]
+    [ "_dcic_config", "a00024.html#a00439", [
+      [ "enableExternalSignal", "a00024.html#ab2564f56ade9142dba4255088710fbe5", null ],
+      [ "polarityFlags", "a00024.html#aa384ac7bd45e35a9370288b9b3cbb27a", null ],
+      [ "enableInterrupts", "a00024.html#a35477fe7b9ad6a2ae68dc9e9013a7b75", null ]
     ] ],
-    [ "dcic_region_config_t", "a00024.html#a00469", [
-      [ "lock", "a00024.html#abe3bed7f9fc47745d2204ccc0866b8a2", null ],
-      [ "upperLeftX", "a00024.html#abf0ab174a85d42ac7733872436385ec3", null ],
-      [ "upperLeftY", "a00024.html#a167c9b11e42e84fc854b0cde4fe7bb89", null ],
-      [ "lowerRightX", "a00024.html#a4970c924cf1d03bacce772b6fa078423", null ],
-      [ "lowerRightY", "a00024.html#ace75cae0a16813f6dd7533a086430d16", null ],
-      [ "refCrc", "a00024.html#a0f780593f97ad3598ace9c1e6b273648", null ]
+    [ "_dcic_region_config", "a00024.html#a00440", [
+      [ "lock", "a00024.html#a7f99c705820757c379df562a2a2dc9b6", null ],
+      [ "upperLeftX", "a00024.html#aea3b38a75d682c72837d0c6c8d3732cf", null ],
+      [ "upperLeftY", "a00024.html#ae50eb0d963ec87e9dbaefb595e4d11c7", null ],
+      [ "lowerRightX", "a00024.html#aaa3a59e9b6ec977a5f74061f767d0794", null ],
+      [ "lowerRightY", "a00024.html#ab3c784cb67fa6270307f6c303ad76518", null ],
+      [ "refCrc", "a00024.html#ab080636e924e610593b2cd3622d5fce8", null ]
     ] ],
     [ "FSL_DCIC_DRIVER_VERSION", "a00024.html#ga17ecd061bffcdbaf9c0ad606aa98f7a7", null ],
     [ "DCIC_CRC32_POLYNOMIAL", "a00024.html#ga79e82862aadb0dce4521553623f6619a", null ],
     [ "DCIC_CRC32_INIT_VALUE", "a00024.html#ga425f5ddb3e7325a27b7b84d7bb578ae9", null ],
     [ "DCIC_REGION_MISMATCH_STATUS", "a00024.html#ga494a2018f1636f61bb9f42b5d6ab5255", null ],
+    [ "dcic_config_t", "a00024.html#gaa9eb718b9a5fbb5b281250d4a23454d4", null ],
+    [ "dcic_region_config_t", "a00024.html#gac29014a917e6abd38a8fd6e7570678ee", null ],
     [ "_DCIC_polarity_flags", "a00024.html#gaac5c40340838aa177da2fe845a9920c9", [
       [ "kDCIC_VsyncActiveHigh", "a00024.html#ggaac5c40340838aa177da2fe845a9920c9ab35936b8b18c7965f86b131c968a0da4", null ],
       [ "kDCIC_HsyncActiveHigh", "a00024.html#ggaac5c40340838aa177da2fe845a9920c9a0d9f2f7f59f3820e223081f6688545c3", null ],

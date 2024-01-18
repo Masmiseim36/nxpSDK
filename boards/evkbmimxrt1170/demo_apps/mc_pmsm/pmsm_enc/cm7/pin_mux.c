@@ -14,11 +14,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v13.0
+product: Pins v15.0
 processor: MIMXRT1176xxxxx
 package_id: MIMXRT1176DVMAA
 mcu_data: ksdk2_0
-processor_version: 0.13.1
+processor_version: 0.15.10
 pin_labels:
 - {pin_num: T17, pin_signal: GPIO_AD_07, label: TP, identifier: TP}
 - {pin_num: P16, pin_signal: GPIO_AD_11, label: CUR_A, identifier: CUR_A;CUR_A_ADC1}
@@ -65,7 +65,6 @@ BOARD_InitPins:
 void BOARD_InitPins(void) {
 }
 
-
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_InitLPUART:
@@ -92,7 +91,6 @@ void BOARD_InitLPUART(void) {
       IOMUXC_GPIO_AD_25_LPUART1_RXD,          /* GPIO_AD_25 is configured as LPUART1_RXD */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
 }
-
 
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
@@ -140,7 +138,6 @@ void BOARD_InitPWM(void) {
   XBARA_SetSignalsConnection(XBARA1, kXBARA1_InputAcmp3Out, kXBARA1_OutputFlexpwm1Fault0); /* ACMP3_OUT output assigned to XBARA1_IN44 input is connected to XBARA1_OUT58 output assigned to FLEXPWM1_FAULT0 */
 }
 
-
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_InitADC:
@@ -180,7 +177,7 @@ void BOARD_InitADC(void) {
       IOMUXC_GPIO_AD_08_GPIO_MUX3_IO07,       /* GPIO_AD_08 PAD functional properties : */
       0x02U);                                 /* Slew Rate Field: Slow Slew Rate
                                                  Drive Strength Field: high drive strength
-                                                 Pull / Keep Select Field: Pull Disable, Highz
+                                                 Pull / Keep Select Field: Pull Disable
                                                  Pull Up / Down Config. Field: Weak pull down
                                                  Open Drain Field: Disabled
                                                  Domain write protection: Both cores are allowed
@@ -189,7 +186,7 @@ void BOARD_InitADC(void) {
       IOMUXC_GPIO_AD_11_GPIO_MUX3_IO10,       /* GPIO_AD_11 PAD functional properties : */
       0x02U);                                 /* Slew Rate Field: Slow Slew Rate
                                                  Drive Strength Field: high drive strength
-                                                 Pull / Keep Select Field: Pull Disable, Highz
+                                                 Pull / Keep Select Field: Pull Disable
                                                  Pull Up / Down Config. Field: Weak pull down
                                                  Open Drain Field: Disabled
                                                  Domain write protection: Both cores are allowed
@@ -198,7 +195,7 @@ void BOARD_InitADC(void) {
       IOMUXC_GPIO_AD_12_GPIO_MUX3_IO11,       /* GPIO_AD_12 PAD functional properties : */
       0x02U);                                 /* Slew Rate Field: Slow Slew Rate
                                                  Drive Strength Field: high drive strength
-                                                 Pull / Keep Select Field: Pull Disable, Highz
+                                                 Pull / Keep Select Field: Pull Disable
                                                  Pull Up / Down Config. Field: Weak pull down
                                                  Open Drain Field: Disabled
                                                  Domain write protection: Both cores are allowed
@@ -207,13 +204,12 @@ void BOARD_InitADC(void) {
       IOMUXC_GPIO_AD_13_GPIO_MUX3_IO12,       /* GPIO_AD_13 PAD functional properties : */
       0x02U);                                 /* Slew Rate Field: Slow Slew Rate
                                                  Drive Strength Field: high drive strength
-                                                 Pull / Keep Select Field: Pull Disable, Highz
+                                                 Pull / Keep Select Field: Pull Disable
                                                  Pull Up / Down Config. Field: Weak pull down
                                                  Open Drain Field: Disabled
                                                  Domain write protection: Both cores are allowed
                                                  Domain write protection lock: Neither of DWP bits is locked */
 }
-
 
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
@@ -250,7 +246,6 @@ void BOARD_InitENC(void) {
   XBARA_SetSignalsConnection(XBARA1, kXBARA1_InputIomuxXbarInout39, kXBARA1_OutputDec1Phaseb); /* IOMUX_XBAR_INOUT39 output assigned to XBARA1_IN39 input is connected to XBARA1_OUT109 output assigned to DEC1_PHASEB */
 }
 
-
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_InitCMP:
@@ -273,7 +268,6 @@ void BOARD_InitCMP(void) {
       IOMUXC_GPIO_AD_30_GPIO_MUX3_IO29,       /* GPIO_AD_30 is configured as GPIO_MUX3_IO29 */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
 }
-
 /***********************************************************************************************************************
  * EOF
  **********************************************************************************************************************/

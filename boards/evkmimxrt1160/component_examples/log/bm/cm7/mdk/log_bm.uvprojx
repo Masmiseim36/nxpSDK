@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT1166DVM6A_cm7, MCUXPRESSO_SDK, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1166/utilities;../../../../../../../components/lists;../../../../../../../components/panic;../../../../../../../components/serial_manager;../../../../../../../components/osa;../../../../../../../components/log;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1166/utilities/shell;../../../../../../../components/lists;../../../../../../../components/panic;../../../../../../../components/serial_manager;../../../../../../../components/osa;../../../../../../../components/log;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1166/utilities;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -434,9 +434,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -456,12 +456,12 @@
             <File>
               <FileName>fsl_shell.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_shell.c</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/shell/fsl_shell.c</FilePath>
             </File>
             <File>
               <FileName>fsl_shell.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_shell.h</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/shell/fsl_shell.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>
@@ -492,6 +492,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>
@@ -1183,7 +1188,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1166DVM6A_cm7, MCUXPRESSO_SDK, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1166/utilities;../../../../../../../components/lists;../../../../../../../components/panic;../../../../../../../components/serial_manager;../../../../../../../components/osa;../../../../../../../components/log;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1166/utilities/shell;../../../../../../../components/lists;../../../../../../../components/panic;../../../../../../../components/serial_manager;../../../../../../../components/osa;../../../../../../../components/log;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1166/utilities;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1283,9 +1288,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -1305,12 +1310,12 @@
             <File>
               <FileName>fsl_shell.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_shell.c</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/shell/fsl_shell.c</FilePath>
             </File>
             <File>
               <FileName>fsl_shell.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_shell.h</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/shell/fsl_shell.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>
@@ -1341,6 +1346,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>
@@ -2032,7 +2042,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1166DVM6A_cm7, MCUXPRESSO_SDK, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1166/utilities;../../../../../../../components/lists;../../../../../../../components/panic;../../../../../../../components/serial_manager;../../../../../../../components/osa;../../../../../../../components/log;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1166/utilities/shell;../../../../../../../components/lists;../../../../../../../components/panic;../../../../../../../components/serial_manager;../../../../../../../components/osa;../../../../../../../components/log;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1166/utilities;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2132,9 +2142,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -2154,12 +2164,12 @@
             <File>
               <FileName>fsl_shell.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_shell.c</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/shell/fsl_shell.c</FilePath>
             </File>
             <File>
               <FileName>fsl_shell.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_shell.h</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/shell/fsl_shell.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>
@@ -2190,6 +2200,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>
@@ -2881,7 +2896,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT1166DVM6A_cm7, MCUXPRESSO_SDK, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1166/utilities;../../../../../../../components/lists;../../../../../../../components/panic;../../../../../../../components/serial_manager;../../../../../../../components/osa;../../../../../../../components/log;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1166/utilities/shell;../../../../../../../components/lists;../../../../../../../components/panic;../../../../../../../components/serial_manager;../../../../../../../components/osa;../../../../../../../components/log;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1166/utilities;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2981,9 +2996,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -3003,12 +3018,12 @@
             <File>
               <FileName>fsl_shell.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_shell.c</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/shell/fsl_shell.c</FilePath>
             </File>
             <File>
               <FileName>fsl_shell.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_shell.h</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/shell/fsl_shell.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>
@@ -3039,6 +3054,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>
@@ -3730,7 +3750,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1166DVM6A_cm7, MCUXPRESSO_SDK, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1166/utilities;../../../../../../../components/lists;../../../../../../../components/panic;../../../../../../../components/serial_manager;../../../../../../../components/osa;../../../../../../../components/log;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1166/utilities/shell;../../../../../../../components/lists;../../../../../../../components/panic;../../../../../../../components/serial_manager;../../../../../../../components/osa;../../../../../../../components/log;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1166/utilities;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3830,9 +3850,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -3852,12 +3872,12 @@
             <File>
               <FileName>fsl_shell.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_shell.c</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/shell/fsl_shell.c</FilePath>
             </File>
             <File>
               <FileName>fsl_shell.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_shell.h</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/shell/fsl_shell.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>
@@ -3888,6 +3908,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>
@@ -4579,7 +4604,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1166DVM6A_cm7, MCUXPRESSO_SDK, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../devices/MIMXRT1166/utilities;../../../../../../../components/lists;../../../../../../../components/panic;../../../../../../../components/serial_manager;../../../../../../../components/osa;../../../../../../../components/log;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../../devices/MIMXRT1166/utilities/shell;../../../../../../../components/lists;../../../../../../../components/panic;../../../../../../../components/serial_manager;../../../../../../../components/osa;../../../../../../../components/log;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../devices/MIMXRT1166;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1166/utilities;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4679,9 +4704,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -4701,12 +4726,12 @@
             <File>
               <FileName>fsl_shell.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_shell.c</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/shell/fsl_shell.c</FilePath>
             </File>
             <File>
               <FileName>fsl_shell.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_shell.h</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/shell/fsl_shell.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>
@@ -4737,6 +4762,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>

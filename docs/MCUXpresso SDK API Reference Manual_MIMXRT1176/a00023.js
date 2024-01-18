@@ -1,13 +1,14 @@
 var a00023 =
 [
-    [ "domain_slot_config_t", "a00023.html#a00469", [
-      [ "lockControl", "a00023.html#a56c314c3ca899d00e4c772b0bc791607", null ],
-      [ "allowUser", "a00023.html#a6af5753c721d39c34e1fa4653bfd79ce", null ],
-      [ "allowNonSecure", "a00023.html#a34a4f5e917760f7ab09a402d76aa3cb0", null ],
-      [ "lockList", "a00023.html#aa764010883393603ec84d3d60e7fd2f4", null ],
-      [ "whiteList", "a00023.html#a11168ff8d68d2270f18541adbee4ca91", null ]
+    [ "_domain_slot_config", "a00023.html#a00435", [
+      [ "lockControl", "a00023.html#a1a182f8d071d6db605af8e6e6fbc49b5", null ],
+      [ "allowUser", "a00023.html#a2ab4b46893ae709ac4be91781dd95c4e", null ],
+      [ "allowNonSecure", "a00023.html#a18b51ce9156336da2322ed366aa012c7", null ],
+      [ "lockList", "a00023.html#ac69fffcbde2281fa004e5847fac42e0b", null ],
+      [ "whiteList", "a00023.html#a93327b1337c4d18a77b91676971368b0", null ]
     ] ],
     [ "FSL_KEYMGR_DRIVER_VERSION", "a00023.html#ga77ddfd3a4eac25058303af4c0ac84585", null ],
+    [ "domain_slot_config_t", "a00023.html#ga08073a9f1e9b7be00695dda620c4a13d", null ],
     [ "KEYMGR_MasterKeyControll", "a00023.html#ga6b7441647037392a52fc16a28f8af5e9", null ],
     [ "KEYMGR_OTFAD1KeyControll", "a00023.html#ga4db0eead10c217c51b0a101493f8b83c", null ],
     [ "KEYMGR_OTFAD2KeyControll", "a00023.html#ga35a2beaac92bb85d493b8176d036d2ad", null ],

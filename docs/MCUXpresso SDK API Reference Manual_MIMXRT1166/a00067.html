@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: MMC Card Driver</title>
+<title>MCUXpresso SDK API Reference Manual: Notification Framework</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -100,165 +100,184 @@ $(document).ready(function(){initNavTree('a00067.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">MMC Card Driver<div class="ingroups"><a class="el" href="a00373.html">Cards: Secure Digital Card/Embedded MultiMedia Card/SDIO Card</a></div></div>  </div>
+<div class="title">Notification Framework</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MMCCARD driver provide card initialization/read/write/erase interface. </p>
-<h1><a class="anchor" id="MMCCardOperation"></a>
-MMC CARD Operation</h1>
-<h2>error log support</h2>
-<p>Not support yet </p>
-<h2>User configuable</h2>
-<h2>Board dependency</h2>
-<h2>Mutual exclusive access support for RTOS</h2>
-<p>MMCCARD driver has added mutual exclusive access support for init/deinit/write/read/erase function. Please note that the card init function will create the mutex lock dynamically by default, so to avoid the mutex create redundantly, application must follow bellow sequence for card re-initialization. </p>
-<div class="fragment"><div class="line"><a class="code" href="a00067.html#gab67cdb5a21909356c4abadf3a4d8b40c">MMC_Deinit</a>(card);<span class="comment">/* This function will destroy the created mutex */</span></div>
-<div class="line"><a class="code" href="a00067.html#ga03f006d98725caeee8162ebb1250ff86">MMC_Init</a>(card);</div>
-</div><!-- fragment --><h2>Typical use case</h2>
-<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/sdmmc_examples/ </p>
-<table class="memberdecls">
+<p>This section describes the programming interface of the Notifier driver.</p>
+<h1><a class="anchor" id="NotifierOv"></a>
+Notifier Overview</h1>
+<p>The Notifier provides a configuration dynamic change service. Based on this service, applications can switch between pre-defined configurations. The Notifier enables drivers and applications to register callback functions to this framework. Each time that the configuration is changed, drivers and applications receive a notification and change their settings. To simplify, the Notifier only supports the static callback registration. This means that, for applications, all callback functions are collected into a static table and passed to the Notifier.</p>
+<p>These are the steps for the configuration transition.</p>
+<ol type="1">
+<li>Before configuration transition, the Notifier sends a "BEFORE" message to the callback table. When this message is received, IP drivers should check whether any current processes can be stopped and stop them. If the processes cannot be stopped, the callback function returns an error.<br/>
+ The Notifier supports two types of transition policies, a graceful policy and a forceful policy. When the graceful policy is used, if some callbacks return an error while sending a "BEFORE" message, the configuration transition stops and the Notifier sends a "RECOVER" message to all drivers that have stopped. Then, these drivers can recover the previous status and continue to work. When the forceful policy is used, drivers are stopped forcefully.</li>
+<li>After the "BEFORE" message is processed successfully, the system switches to the new configuration.</li>
+<li>After the configuration changes, the Notifier sends an "AFTER" message to the callback table to notify drivers that the configuration transition is finished.</li>
+</ol>
+<p>This example shows how to use the Notifier in the Power Manager application.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;fsl_notifier.h&quot;</span></div>
+<div class="line"></div>
+<div class="line"><span class="comment">// Definition of the Power Manager callback.</span></div>
+<div class="line"><a class="code" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> callback0(<a class="code" href="a00067.html#a00592">notifier_notification_block_t</a> *notify, <span class="keywordtype">void</span> *data)</div>
+<div class="line">{</div>
+<div class="line"></div>
+<div class="line">    <a class="code" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ret = <a class="code" href="a00337.html#gga39fca1837c5ce7715cbf571669660c13a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>;</div>
+<div class="line"></div>
+<div class="line">    ...</div>
+<div class="line">    ...</div>
+<div class="line">    ...</div>
+<div class="line"></div>
+<div class="line">    <span class="keywordflow">return</span> ret;</div>
+<div class="line">}</div>
+<div class="line"><span class="comment">// Definition of the Power Manager user function.</span></div>
+<div class="line"><a class="code" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> APP_PowerModeSwitch(<a class="code" href="a00067.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *targetConfig, <span class="keywordtype">void</span> *userData)</div>
+<div class="line">{</div>
+<div class="line">    ...</div>
+<div class="line">    ...</div>
+<div class="line">    ...</div>
+<div class="line">}</div>
+<div class="line">...</div>
+<div class="line">...</div>
+<div class="line">...</div>
+<div class="line">...</div>
+<div class="line">...</div>
+<div class="line"><span class="comment">// Main function.</span></div>
+<div class="line">int main(<span class="keywordtype">void</span>)</div>
+<div class="line">{</div>
+<div class="line">    <span class="comment">// Define a notifier handle.</span></div>
+<div class="line">    <a class="code" href="a00067.html#a00591">notifier_handle_t</a> powerModeHandle;</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// Callback configuration.</span></div>
+<div class="line">    user_callback_data_t callbackData0;</div>
+<div class="line"></div>
+<div class="line">    <a class="code" href="a00067.html#a00590">notifier_callback_config_t</a> callbackCfg0 = {callback0,</div>
+<div class="line">                <a class="code" href="a00067.html#gga120d15994388722016ef487b8159f3dfada6451efe227571a1442e70ddf36e005">kNOTIFIER_CallbackBeforeAfter</a>,</div>
+<div class="line">                (<span class="keywordtype">void</span> *)&amp;callbackData0};</div>
+<div class="line"></div>
+<div class="line">    <a class="code" href="a00067.html#a00590">notifier_callback_config_t</a> callbacks[] = {callbackCfg0};</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// Power mode configurations.</span></div>
+<div class="line">    power_user_config_t vlprConfig;</div>
+<div class="line">    power_user_config_t stopConfig;</div>
+<div class="line"></div>
+<div class="line">    <a class="code" href="a00067.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *powerConfigs[] = {&amp;vlprConfig, &amp;stopConfig};</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// Definition of a transition to and out the power modes.</span></div>
+<div class="line">    vlprConfig.mode = kAPP_PowerModeVlpr;</div>
+<div class="line">    vlprConfig.enableLowPowerWakeUpOnInterrupt = <span class="keyword">false</span>;</div>
+<div class="line"></div>
+<div class="line">    stopConfig = vlprConfig;</div>
+<div class="line">    stopConfig.mode = kAPP_PowerModeStop;</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// Create Notifier handle.</span></div>
+<div class="line">    <a class="code" href="a00067.html#gaa2dfe33b4724d9c1025acdde1b1b3c31">NOTIFIER_CreateHandle</a>(&amp;powerModeHandle, powerConfigs, 2U, callbacks, 1U, APP_PowerModeSwitch, NULL);</div>
+<div class="line">    ...</div>
+<div class="line">    ...</div>
+<div class="line">    <span class="comment">// Power mode switch.</span></div>
+<div class="line">    NOTIFIER_switchConfig(&amp;powerModeHandle, targetConfigIndex, <a class="code" href="a00067.html#gga876c38aa0c3eb40cd6d9fa62106efd65a4513243b3cacd0aec289531dfb53e964">kNOTIFIER_PolicyAgreement</a>);</div>
+<div class="line">}</div>
+</div><!-- fragment --> <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00592"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a00592">mmc_usr_param_t</a></td></tr>
-<tr class="memdesc:a00592"><td class="mdescLeft">&#160;</td><td class="mdescRight">card user parameter  <a href="a00067.html#a00592">More...</a><br/></td></tr>
+<tr class="memitem:a00592"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a00592">_notifier_notification_block</a></td></tr>
+<tr class="memdesc:a00592"><td class="mdescLeft">&#160;</td><td class="mdescRight">notification block passed to the registered callback function.  <a href="a00067.html#a00592">More...</a><br/></td></tr>
 <tr class="separator:a00592"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00587"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a00587">mmc_card_t</a></td></tr>
-<tr class="memdesc:a00587"><td class="mdescLeft">&#160;</td><td class="mdescRight">mmc card state  <a href="a00067.html#a00587">More...</a><br/></td></tr>
-<tr class="separator:a00587"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gaa853e6ed145fdde29cb8277c789ab5cb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#gaa853e6ed145fdde29cb8277c789ab5cb">FSL_MMC_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00336.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2U, 5U, 0U)) /*2.5.0*/</td></tr>
-<tr class="memdesc:gaa853e6ed145fdde29cb8277c789ab5cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Middleware mmc version.  <a href="#gaa853e6ed145fdde29cb8277c789ab5cb">More...</a><br/></td></tr>
-<tr class="separator:gaa853e6ed145fdde29cb8277c789ab5cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00590"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a00590">_notifier_callback_config</a></td></tr>
+<tr class="memdesc:a00590"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback configuration structure.  <a href="a00067.html#a00590">More...</a><br/></td></tr>
+<tr class="separator:a00590"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00591"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a00591">_notifier_handle</a></td></tr>
+<tr class="memdesc:a00591"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier handle structure.  <a href="a00067.html#a00591">More...</a><br/></td></tr>
+<tr class="separator:a00591"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga5615d27683e82898b6d4526eff8efcd8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5615d27683e82898b6d4526eff8efcd8"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga5615d27683e82898b6d4526eff8efcd8">mmc_io_strength_t</a> )(uint32_t busFreq)</td></tr>
-<tr class="memdesc:ga5615d27683e82898b6d4526eff8efcd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">card io strength control <br/></td></tr>
-<tr class="separator:ga5615d27683e82898b6d4526eff8efcd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga80f2ccc799b1cca21a091e2b28fbf36c"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00067.html#ga876c38aa0c3eb40cd6d9fa62106efd65">_notifier_policy</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga80f2ccc799b1cca21a091e2b28fbf36c">notifier_policy_t</a></td></tr>
+<tr class="memdesc:ga80f2ccc799b1cca21a091e2b28fbf36c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier policies.  <a href="#ga80f2ccc799b1cca21a091e2b28fbf36c">More...</a><br/></td></tr>
+<tr class="separator:ga80f2ccc799b1cca21a091e2b28fbf36c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad7a79c7191c37e1cf4367bcda45b6943"><td class="memItemLeft" align="right" valign="top">typedef enum <br class="typebreak"/>
+<a class="el" href="a00067.html#gae4fbfb346e65c17b618dcedb491a864b">_notifier_notification_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#gad7a79c7191c37e1cf4367bcda45b6943">notifier_notification_type_t</a></td></tr>
+<tr class="memdesc:gad7a79c7191c37e1cf4367bcda45b6943"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notification type.  <a href="#gad7a79c7191c37e1cf4367bcda45b6943">More...</a><br/></td></tr>
+<tr class="separator:gad7a79c7191c37e1cf4367bcda45b6943"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3fdecfea1f1a6b56c8d74c3608ee9657"><td class="memItemLeft" align="right" valign="top">typedef enum <br class="typebreak"/>
+<a class="el" href="a00067.html#ga120d15994388722016ef487b8159f3df">_notifier_callback_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga3fdecfea1f1a6b56c8d74c3608ee9657">notifier_callback_type_t</a></td></tr>
+<tr class="memdesc:ga3fdecfea1f1a6b56c8d74c3608ee9657"><td class="mdescLeft">&#160;</td><td class="mdescRight">The callback type, which indicates kinds of notification the callback handles.  <a href="#ga3fdecfea1f1a6b56c8d74c3608ee9657">More...</a><br/></td></tr>
+<tr class="separator:ga3fdecfea1f1a6b56c8d74c3608ee9657"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad0b6e919f3ff69992b36a2734a650ec7"><td class="memItemLeft" align="right" valign="top">typedef void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a></td></tr>
+<tr class="memdesc:gad0b6e919f3ff69992b36a2734a650ec7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier user configuration type.  <a href="#gad0b6e919f3ff69992b36a2734a650ec7">More...</a><br/></td></tr>
+<tr class="separator:gad0b6e919f3ff69992b36a2734a650ec7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacb6a6d6f99e6ddfbb96dae53382949b2"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#gacb6a6d6f99e6ddfbb96dae53382949b2">notifier_user_function_t</a> )(<a class="el" href="a00067.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *targetConfig, void *userData)</td></tr>
+<tr class="memdesc:gacb6a6d6f99e6ddfbb96dae53382949b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier user function prototype Use this function to execute specific operations in configuration switch.  <a href="#gacb6a6d6f99e6ddfbb96dae53382949b2">More...</a><br/></td></tr>
+<tr class="separator:gacb6a6d6f99e6ddfbb96dae53382949b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac3dc913bdf7b5e3b40b347e0f748189a"><td class="memItemLeft" align="right" valign="top">typedef struct <br class="typebreak"/>
+<a class="el" href="a00067.html#a00592">_notifier_notification_block</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#gac3dc913bdf7b5e3b40b347e0f748189a">notifier_notification_block_t</a></td></tr>
+<tr class="memdesc:gac3dc913bdf7b5e3b40b347e0f748189a"><td class="mdescLeft">&#160;</td><td class="mdescRight">notification block passed to the registered callback function.  <a href="#gac3dc913bdf7b5e3b40b347e0f748189a">More...</a><br/></td></tr>
+<tr class="separator:gac3dc913bdf7b5e3b40b347e0f748189a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafd1d8cc01c496de8b4cd3990ff85415c"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#gafd1d8cc01c496de8b4cd3990ff85415c">notifier_callback_t</a> )(<a class="el" href="a00067.html#gac3dc913bdf7b5e3b40b347e0f748189a">notifier_notification_block_t</a> *notify, void *data)</td></tr>
+<tr class="memdesc:gafd1d8cc01c496de8b4cd3990ff85415c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback prototype.  <a href="#gafd1d8cc01c496de8b4cd3990ff85415c">More...</a><br/></td></tr>
+<tr class="separator:gafd1d8cc01c496de8b4cd3990ff85415c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1ed8b5576d410ff76c7707f7fc58435f"><td class="memItemLeft" align="right" valign="top">typedef struct <br class="typebreak"/>
+<a class="el" href="a00067.html#a00590">_notifier_callback_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga1ed8b5576d410ff76c7707f7fc58435f">notifier_callback_config_t</a></td></tr>
+<tr class="memdesc:ga1ed8b5576d410ff76c7707f7fc58435f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback configuration structure.  <a href="#ga1ed8b5576d410ff76c7707f7fc58435f">More...</a><br/></td></tr>
+<tr class="separator:ga1ed8b5576d410ff76c7707f7fc58435f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5fb6d98190b8a419a8d4b4150b0eae2a"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00067.html#a00591">_notifier_handle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga5fb6d98190b8a419a8d4b4150b0eae2a">notifier_handle_t</a></td></tr>
+<tr class="memdesc:ga5fb6d98190b8a419a8d4b4150b0eae2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier handle structure.  <a href="#ga5fb6d98190b8a419a8d4b4150b0eae2a">More...</a><br/></td></tr>
+<tr class="separator:ga5fb6d98190b8a419a8d4b4150b0eae2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga09d9e56f5d4c14bc6d35272c7ee2692d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00067.html#gga09d9e56f5d4c14bc6d35272c7ee2692da0f2e16ba804bfabd3c81fee5fa780c95">kMMC_SupportHighSpeed26MHZFlag</a> = (1U &lt;&lt; 0U), 
+<tr class="memitem:gacac871f1b98f53906b07b2663943c784"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#gacac871f1b98f53906b07b2663943c784">_notifier_status</a> { <br/>
+&#160;&#160;<a class="el" href="a00067.html#ggacac871f1b98f53906b07b2663943c784a23344b22d4d82fea2f17f4979d515c5c">kStatus_NOTIFIER_ErrorNotificationBefore</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00067.html#gga09d9e56f5d4c14bc6d35272c7ee2692dadb778db370818747d81df90b23298bf1">kMMC_SupportHighSpeed52MHZFlag</a> = (1U &lt;&lt; 1U), 
-<br/>
-&#160;&#160;<a class="el" href="a00067.html#gga09d9e56f5d4c14bc6d35272c7ee2692daf873861eb6356bd1a236d4741d3bd382">kMMC_SupportHighSpeedDDR52MHZ180V300VFlag</a> = (1 &lt;&lt; 2U), 
-<br/>
-&#160;&#160;<a class="el" href="a00067.html#gga09d9e56f5d4c14bc6d35272c7ee2692dab26ad5455afddab2dd5909435243d8de">kMMC_SupportHighSpeedDDR52MHZ120VFlag</a> = (1 &lt;&lt; 3U), 
-<br/>
-&#160;&#160;<a class="el" href="a00067.html#gga09d9e56f5d4c14bc6d35272c7ee2692da39b3765119b6f0134b9c3d00e78ccdc3">kMMC_SupportHS200200MHZ180VFlag</a> = (1 &lt;&lt; 4U), 
-<br/>
-&#160;&#160;<a class="el" href="a00067.html#gga09d9e56f5d4c14bc6d35272c7ee2692da7875676a63cb3e3f3bce09d60b12cf88">kMMC_SupportHS200200MHZ120VFlag</a> = (1 &lt;&lt; 5U), 
-<br/>
-&#160;&#160;<a class="el" href="a00067.html#gga09d9e56f5d4c14bc6d35272c7ee2692da5b1fc45cb6e3fee016907e5d13f1ad83">kMMC_SupportHS400DDR200MHZ180VFlag</a> = (1 &lt;&lt; 6U), 
-<br/>
-&#160;&#160;<a class="el" href="a00067.html#gga09d9e56f5d4c14bc6d35272c7ee2692daf2976472059a8701c26ed30e0f28c5fa">kMMC_SupportHS400DDR200MHZ120VFlag</a> = (1 &lt;&lt; 7U), 
-<br/>
-&#160;&#160;<a class="el" href="a00067.html#gga09d9e56f5d4c14bc6d35272c7ee2692da067279b27baf58ed3266df38e848b128">kMMC_SupportHighCapacityFlag</a> = (1U &lt;&lt; 8U), 
-<br/>
-&#160;&#160;<a class="el" href="a00067.html#gga09d9e56f5d4c14bc6d35272c7ee2692dac18882ad0cc699401c3e3483633ed77b">kMMC_SupportAlternateBootFlag</a> = (1U &lt;&lt; 9U), 
-<br/>
-&#160;&#160;<a class="el" href="a00067.html#gga09d9e56f5d4c14bc6d35272c7ee2692daf9baef828e6536d54f64295e1ce57548">kMMC_SupportDDRBootFlag</a> = (1U &lt;&lt; 10U), 
-<br/>
-&#160;&#160;<a class="el" href="a00067.html#gga09d9e56f5d4c14bc6d35272c7ee2692da57438a043537958e8324400ce3788ed0">kMMC_SupportHighSpeedBootFlag</a> = (1U &lt;&lt; 11U), 
-<br/>
-&#160;&#160;<a class="el" href="a00067.html#gga09d9e56f5d4c14bc6d35272c7ee2692da39d546b05b2c725a822419330606bba5">kMMC_SupportEnhanceHS400StrobeFlag</a> = (1U &lt;&lt; 12U)
+&#160;&#160;<a class="el" href="a00067.html#ggacac871f1b98f53906b07b2663943c784a7b48bf0cf849b07c6131a0abb65d2d58">kStatus_NOTIFIER_ErrorNotificationAfter</a>
 <br/>
  }</td></tr>
-<tr class="memdesc:ga09d9e56f5d4c14bc6d35272c7ee2692d"><td class="mdescLeft">&#160;</td><td class="mdescRight">MMC card flags.  <a href="a00067.html#ga09d9e56f5d4c14bc6d35272c7ee2692d">More...</a><br/></td></tr>
-<tr class="separator:ga09d9e56f5d4c14bc6d35272c7ee2692d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab89d4d12909a44eb53f0f366ea542cf4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#gab89d4d12909a44eb53f0f366ea542cf4">mmc_sleep_awake_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00067.html#ggab89d4d12909a44eb53f0f366ea542cf4a766aba45b5704265a1dfdf8d8d1ef5b2">kMMC_Sleep</a> = 1U, 
+<tr class="memdesc:gacac871f1b98f53906b07b2663943c784"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier error codes.  <a href="a00067.html#gacac871f1b98f53906b07b2663943c784">More...</a><br/></td></tr>
+<tr class="separator:gacac871f1b98f53906b07b2663943c784"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga876c38aa0c3eb40cd6d9fa62106efd65"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga876c38aa0c3eb40cd6d9fa62106efd65">_notifier_policy</a> { <br/>
+&#160;&#160;<a class="el" href="a00067.html#gga876c38aa0c3eb40cd6d9fa62106efd65a4513243b3cacd0aec289531dfb53e964">kNOTIFIER_PolicyAgreement</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00067.html#ggab89d4d12909a44eb53f0f366ea542cf4a68ce50ee0ddf66b369033f79da5328e9">kMMC_Awake</a> = 0U
+&#160;&#160;<a class="el" href="a00067.html#gga876c38aa0c3eb40cd6d9fa62106efd65a97a2587e9e4c523dc028778ba1f72dc8">kNOTIFIER_PolicyForcible</a>
 <br/>
  }</td></tr>
-<tr class="memdesc:gab89d4d12909a44eb53f0f366ea542cf4"><td class="mdescLeft">&#160;</td><td class="mdescRight">mmccard sleep/awake state  <a href="a00067.html#gab89d4d12909a44eb53f0f366ea542cf4">More...</a><br/></td></tr>
-<tr class="separator:gab89d4d12909a44eb53f0f366ea542cf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga876c38aa0c3eb40cd6d9fa62106efd65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier policies.  <a href="a00067.html#ga876c38aa0c3eb40cd6d9fa62106efd65">More...</a><br/></td></tr>
+<tr class="separator:ga876c38aa0c3eb40cd6d9fa62106efd65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae4fbfb346e65c17b618dcedb491a864b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#gae4fbfb346e65c17b618dcedb491a864b">_notifier_notification_type</a> { <br/>
+&#160;&#160;<a class="el" href="a00067.html#ggae4fbfb346e65c17b618dcedb491a864ba49e6ad28b9d351a051035c8065de5d94">kNOTIFIER_NotifyRecover</a> = 0x00U, 
+<br/>
+&#160;&#160;<a class="el" href="a00067.html#ggae4fbfb346e65c17b618dcedb491a864ba91707ed2be51db6da2a9d6cc6eaee39c">kNOTIFIER_NotifyBefore</a> = 0x01U, 
+<br/>
+&#160;&#160;<a class="el" href="a00067.html#ggae4fbfb346e65c17b618dcedb491a864ba6e89a377b2890077646fc6af6b5c2e00">kNOTIFIER_NotifyAfter</a> = 0x02U
+<br/>
+ }</td></tr>
+<tr class="memdesc:gae4fbfb346e65c17b618dcedb491a864b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notification type.  <a href="a00067.html#gae4fbfb346e65c17b618dcedb491a864b">More...</a><br/></td></tr>
+<tr class="separator:gae4fbfb346e65c17b618dcedb491a864b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga120d15994388722016ef487b8159f3df"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga120d15994388722016ef487b8159f3df">_notifier_callback_type</a> { <br/>
+&#160;&#160;<a class="el" href="a00067.html#gga120d15994388722016ef487b8159f3dfab9c117f1eccd38f914d0e4d05015d6a1">kNOTIFIER_CallbackBefore</a> = 0x01U, 
+<br/>
+&#160;&#160;<a class="el" href="a00067.html#gga120d15994388722016ef487b8159f3dfa8d5832eddd0d8cf976413aea02f3bfdc">kNOTIFIER_CallbackAfter</a> = 0x02U, 
+<br/>
+&#160;&#160;<a class="el" href="a00067.html#gga120d15994388722016ef487b8159f3dfada6451efe227571a1442e70ddf36e005">kNOTIFIER_CallbackBeforeAfter</a> = 0x03U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga120d15994388722016ef487b8159f3df"><td class="mdescLeft">&#160;</td><td class="mdescRight">The callback type, which indicates kinds of notification the callback handles.  <a href="a00067.html#ga120d15994388722016ef487b8159f3df">More...</a><br/></td></tr>
+<tr class="separator:ga120d15994388722016ef487b8159f3df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-MMCCARD Function</h2></td></tr>
-<tr class="memitem:ga03f006d98725caeee8162ebb1250ff86"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga03f006d98725caeee8162ebb1250ff86">MMC_Init</a> (<a class="el" href="a00067.html#a00587">mmc_card_t</a> *card)</td></tr>
-<tr class="memdesc:ga03f006d98725caeee8162ebb1250ff86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the MMC card and host.  <a href="#ga03f006d98725caeee8162ebb1250ff86">More...</a><br/></td></tr>
-<tr class="separator:ga03f006d98725caeee8162ebb1250ff86"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab67cdb5a21909356c4abadf3a4d8b40c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#gab67cdb5a21909356c4abadf3a4d8b40c">MMC_Deinit</a> (<a class="el" href="a00067.html#a00587">mmc_card_t</a> *card)</td></tr>
-<tr class="memdesc:gab67cdb5a21909356c4abadf3a4d8b40c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the card and host.  <a href="#gab67cdb5a21909356c4abadf3a4d8b40c">More...</a><br/></td></tr>
-<tr class="separator:gab67cdb5a21909356c4abadf3a4d8b40c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9adb1349b4f9415c631e94a375bc7db0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga9adb1349b4f9415c631e94a375bc7db0">MMC_CardInit</a> (<a class="el" href="a00067.html#a00587">mmc_card_t</a> *card)</td></tr>
-<tr class="memdesc:ga9adb1349b4f9415c631e94a375bc7db0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the card.  <a href="#ga9adb1349b4f9415c631e94a375bc7db0">More...</a><br/></td></tr>
-<tr class="separator:ga9adb1349b4f9415c631e94a375bc7db0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga83e4e9e390a6c817f06999bbf887a3b3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga83e4e9e390a6c817f06999bbf887a3b3">MMC_CardDeinit</a> (<a class="el" href="a00067.html#a00587">mmc_card_t</a> *card)</td></tr>
-<tr class="memdesc:ga83e4e9e390a6c817f06999bbf887a3b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the card.  <a href="#ga83e4e9e390a6c817f06999bbf887a3b3">More...</a><br/></td></tr>
-<tr class="separator:ga83e4e9e390a6c817f06999bbf887a3b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga44f98e6d4caefbac4ee0237890f651e6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga44f98e6d4caefbac4ee0237890f651e6">MMC_HostInit</a> (<a class="el" href="a00067.html#a00587">mmc_card_t</a> *card)</td></tr>
-<tr class="memdesc:ga44f98e6d4caefbac4ee0237890f651e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize the host.  <a href="#ga44f98e6d4caefbac4ee0237890f651e6">More...</a><br/></td></tr>
-<tr class="separator:ga44f98e6d4caefbac4ee0237890f651e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga56005088e0e2a575190bf7829520c7f1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga56005088e0e2a575190bf7829520c7f1">MMC_HostDeinit</a> (<a class="el" href="a00067.html#a00587">mmc_card_t</a> *card)</td></tr>
-<tr class="memdesc:ga56005088e0e2a575190bf7829520c7f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the host.  <a href="#ga56005088e0e2a575190bf7829520c7f1">More...</a><br/></td></tr>
-<tr class="separator:ga56005088e0e2a575190bf7829520c7f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga260f33fc882cd4eaef78f05ef9069fc9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga260f33fc882cd4eaef78f05ef9069fc9">MMC_HostDoReset</a> (<a class="el" href="a00067.html#a00587">mmc_card_t</a> *card)</td></tr>
-<tr class="memdesc:ga260f33fc882cd4eaef78f05ef9069fc9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the host.  <a href="#ga260f33fc882cd4eaef78f05ef9069fc9">More...</a><br/></td></tr>
-<tr class="separator:ga260f33fc882cd4eaef78f05ef9069fc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4f61aee1889a7a09e6dea3735714b1ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga4f61aee1889a7a09e6dea3735714b1ce">MMC_HostReset</a> (SDMMCHOST_CONFIG *host)</td></tr>
-<tr class="memdesc:ga4f61aee1889a7a09e6dea3735714b1ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the host.  <a href="#ga4f61aee1889a7a09e6dea3735714b1ce">More...</a><br/></td></tr>
-<tr class="separator:ga4f61aee1889a7a09e6dea3735714b1ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5231adac523a9314ba4aceb89e67c492"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga5231adac523a9314ba4aceb89e67c492">MMC_SetCardPower</a> (<a class="el" href="a00067.html#a00587">mmc_card_t</a> *card, bool enable)</td></tr>
-<tr class="memdesc:ga5231adac523a9314ba4aceb89e67c492"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets card power.  <a href="#ga5231adac523a9314ba4aceb89e67c492">More...</a><br/></td></tr>
-<tr class="separator:ga5231adac523a9314ba4aceb89e67c492"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac08db377dfecee284aedd579d445999a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#gac08db377dfecee284aedd579d445999a">MMC_CheckReadOnly</a> (<a class="el" href="a00067.html#a00587">mmc_card_t</a> *card)</td></tr>
-<tr class="memdesc:gac08db377dfecee284aedd579d445999a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the card is read-only.  <a href="#gac08db377dfecee284aedd579d445999a">More...</a><br/></td></tr>
-<tr class="separator:gac08db377dfecee284aedd579d445999a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga60a99fbb416b500761d668779ebe01f7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga60a99fbb416b500761d668779ebe01f7">MMC_ReadBlocks</a> (<a class="el" href="a00067.html#a00587">mmc_card_t</a> *card, uint8_t *buffer, uint32_t startBlock, uint32_t blockCount)</td></tr>
-<tr class="memdesc:ga60a99fbb416b500761d668779ebe01f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads data blocks from the card.  <a href="#ga60a99fbb416b500761d668779ebe01f7">More...</a><br/></td></tr>
-<tr class="separator:ga60a99fbb416b500761d668779ebe01f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga504ade2cd3eeb1891913271521bc9562"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga504ade2cd3eeb1891913271521bc9562">MMC_WriteBlocks</a> (<a class="el" href="a00067.html#a00587">mmc_card_t</a> *card, const uint8_t *buffer, uint32_t startBlock, uint32_t blockCount)</td></tr>
-<tr class="memdesc:ga504ade2cd3eeb1891913271521bc9562"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes data blocks to the card.  <a href="#ga504ade2cd3eeb1891913271521bc9562">More...</a><br/></td></tr>
-<tr class="separator:ga504ade2cd3eeb1891913271521bc9562"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga90ca5cb83516ede64e9af6ece3439bab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga90ca5cb83516ede64e9af6ece3439bab">MMC_EraseGroups</a> (<a class="el" href="a00067.html#a00587">mmc_card_t</a> *card, uint32_t startGroup, uint32_t endGroup)</td></tr>
-<tr class="memdesc:ga90ca5cb83516ede64e9af6ece3439bab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Erases groups of the card.  <a href="#ga90ca5cb83516ede64e9af6ece3439bab">More...</a><br/></td></tr>
-<tr class="separator:ga90ca5cb83516ede64e9af6ece3439bab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad36b22249e056b0dda1da583a5530d61"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#gad36b22249e056b0dda1da583a5530d61">MMC_SelectPartition</a> (<a class="el" href="a00067.html#a00587">mmc_card_t</a> *card, <a class="el" href="a00066.html#ga82afca48946089c24c692e526c8ceb97">mmc_access_partition_t</a> partitionNumber)</td></tr>
-<tr class="memdesc:gad36b22249e056b0dda1da583a5530d61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects the partition to access.  <a href="#gad36b22249e056b0dda1da583a5530d61">More...</a><br/></td></tr>
-<tr class="separator:gad36b22249e056b0dda1da583a5530d61"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafd26b8b19b85f99d23175bfb3ddf6ff0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#gafd26b8b19b85f99d23175bfb3ddf6ff0">MMC_SetBootConfig</a> (<a class="el" href="a00067.html#a00587">mmc_card_t</a> *card, const <a class="el" href="a00066.html#a00586">mmc_boot_config_t</a> *config)</td></tr>
-<tr class="memdesc:gafd26b8b19b85f99d23175bfb3ddf6ff0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the boot activity of the card.  <a href="#gafd26b8b19b85f99d23175bfb3ddf6ff0">More...</a><br/></td></tr>
-<tr class="separator:gafd26b8b19b85f99d23175bfb3ddf6ff0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga86dbfbd824a0f5243a960d343e3f9176"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga86dbfbd824a0f5243a960d343e3f9176">MMC_StartBoot</a> (<a class="el" href="a00067.html#a00587">mmc_card_t</a> *card, const <a class="el" href="a00066.html#a00586">mmc_boot_config_t</a> *mmcConfig, uint8_t *buffer, <a class="el" href="a00098.html#a00699">sdmmchost_boot_config_t</a> *hostConfig)</td></tr>
-<tr class="memdesc:ga86dbfbd824a0f5243a960d343e3f9176"><td class="mdescLeft">&#160;</td><td class="mdescRight">MMC card start boot.  <a href="#ga86dbfbd824a0f5243a960d343e3f9176">More...</a><br/></td></tr>
-<tr class="separator:ga86dbfbd824a0f5243a960d343e3f9176"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9b18b799d48e0b39672d89d5f6148548"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga9b18b799d48e0b39672d89d5f6148548">MMC_SetBootConfigWP</a> (<a class="el" href="a00067.html#a00587">mmc_card_t</a> *card, uint8_t wp)</td></tr>
-<tr class="memdesc:ga9b18b799d48e0b39672d89d5f6148548"><td class="mdescLeft">&#160;</td><td class="mdescRight">MMC card set boot configuration write protect.  <a href="#ga9b18b799d48e0b39672d89d5f6148548">More...</a><br/></td></tr>
-<tr class="separator:ga9b18b799d48e0b39672d89d5f6148548"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1e27e4af5916f5f501cd1d9912a42643"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga1e27e4af5916f5f501cd1d9912a42643">MMC_ReadBootData</a> (<a class="el" href="a00067.html#a00587">mmc_card_t</a> *card, uint8_t *buffer, <a class="el" href="a00098.html#a00699">sdmmchost_boot_config_t</a> *hostConfig)</td></tr>
-<tr class="memdesc:ga1e27e4af5916f5f501cd1d9912a42643"><td class="mdescLeft">&#160;</td><td class="mdescRight">MMC card continuous read boot data.  <a href="#ga1e27e4af5916f5f501cd1d9912a42643">More...</a><br/></td></tr>
-<tr class="separator:ga1e27e4af5916f5f501cd1d9912a42643"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1976bb2986bd2dd53de05101cde394a7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga1976bb2986bd2dd53de05101cde394a7">MMC_StopBoot</a> (<a class="el" href="a00067.html#a00587">mmc_card_t</a> *card, uint32_t bootMode)</td></tr>
-<tr class="memdesc:ga1976bb2986bd2dd53de05101cde394a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">MMC card stop boot mode.  <a href="#ga1976bb2986bd2dd53de05101cde394a7">More...</a><br/></td></tr>
-<tr class="separator:ga1976bb2986bd2dd53de05101cde394a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4e212f50660aa5fd7ff36a9232fecf93"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga4e212f50660aa5fd7ff36a9232fecf93">MMC_SetBootPartitionWP</a> (<a class="el" href="a00067.html#a00587">mmc_card_t</a> *card, <a class="el" href="a00066.html#ga3553e8a4c0f8154692ee22e154fb5275">mmc_boot_partition_wp_t</a> bootPartitionWP)</td></tr>
-<tr class="memdesc:ga4e212f50660aa5fd7ff36a9232fecf93"><td class="mdescLeft">&#160;</td><td class="mdescRight">MMC card set boot partition write protect.  <a href="#ga4e212f50660aa5fd7ff36a9232fecf93">More...</a><br/></td></tr>
-<tr class="separator:ga4e212f50660aa5fd7ff36a9232fecf93"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab41ad4bb9f654d8cd213effffcbbae06"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#gab41ad4bb9f654d8cd213effffcbbae06">MMC_EnableCacheControl</a> (<a class="el" href="a00067.html#a00587">mmc_card_t</a> *card, bool enable)</td></tr>
-<tr class="memdesc:gab41ad4bb9f654d8cd213effffcbbae06"><td class="mdescLeft">&#160;</td><td class="mdescRight">MMC card cache control function.  <a href="#gab41ad4bb9f654d8cd213effffcbbae06">More...</a><br/></td></tr>
-<tr class="separator:gab41ad4bb9f654d8cd213effffcbbae06"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga61bd93105cac69d83956086927d30dce"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga61bd93105cac69d83956086927d30dce">MMC_FlushCache</a> (<a class="el" href="a00067.html#a00587">mmc_card_t</a> *card)</td></tr>
-<tr class="memdesc:ga61bd93105cac69d83956086927d30dce"><td class="mdescLeft">&#160;</td><td class="mdescRight">MMC card cache flush function.  <a href="#ga61bd93105cac69d83956086927d30dce">More...</a><br/></td></tr>
-<tr class="separator:ga61bd93105cac69d83956086927d30dce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac8ecc09f078dc2e7e8f85eb24d939ed0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#gac8ecc09f078dc2e7e8f85eb24d939ed0">MMC_SetSleepAwake</a> (<a class="el" href="a00067.html#a00587">mmc_card_t</a> *card, <a class="el" href="a00067.html#gab89d4d12909a44eb53f0f366ea542cf4">mmc_sleep_awake_t</a> state)</td></tr>
-<tr class="memdesc:gac8ecc09f078dc2e7e8f85eb24d939ed0"><td class="mdescLeft">&#160;</td><td class="mdescRight">MMC sets card sleep awake state.  <a href="#gac8ecc09f078dc2e7e8f85eb24d939ed0">More...</a><br/></td></tr>
-<tr class="separator:gac8ecc09f078dc2e7e8f85eb24d939ed0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga255bea62892cc6c3859caf2b1a57e24e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga255bea62892cc6c3859caf2b1a57e24e">MMC_PollingCardStatusBusy</a> (<a class="el" href="a00067.html#a00587">mmc_card_t</a> *card, bool checkStatus, uint32_t timeoutMs)</td></tr>
-<tr class="memdesc:ga255bea62892cc6c3859caf2b1a57e24e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Polling card idle status.  <a href="#ga255bea62892cc6c3859caf2b1a57e24e">More...</a><br/></td></tr>
-<tr class="separator:ga255bea62892cc6c3859caf2b1a57e24e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gaa2dfe33b4724d9c1025acdde1b1b3c31"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#gaa2dfe33b4724d9c1025acdde1b1b3c31">NOTIFIER_CreateHandle</a> (<a class="el" href="a00067.html#ga5fb6d98190b8a419a8d4b4150b0eae2a">notifier_handle_t</a> *notifierHandle, <a class="el" href="a00067.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> **configs, uint8_t configsNumber, <a class="el" href="a00067.html#ga1ed8b5576d410ff76c7707f7fc58435f">notifier_callback_config_t</a> *callbacks, uint8_t callbacksNumber, <a class="el" href="a00067.html#gacb6a6d6f99e6ddfbb96dae53382949b2">notifier_user_function_t</a> userFunction, void *userData)</td></tr>
+<tr class="memdesc:gaa2dfe33b4724d9c1025acdde1b1b3c31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a Notifier handle.  <a href="#gaa2dfe33b4724d9c1025acdde1b1b3c31">More...</a><br/></td></tr>
+<tr class="separator:gaa2dfe33b4724d9c1025acdde1b1b3c31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9ca08c8f6fa9a7bafa9ecbe08603cd97"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97">NOTIFIER_SwitchConfig</a> (<a class="el" href="a00067.html#ga5fb6d98190b8a419a8d4b4150b0eae2a">notifier_handle_t</a> *notifierHandle, uint8_t configIndex, <a class="el" href="a00067.html#ga80f2ccc799b1cca21a091e2b28fbf36c">notifier_policy_t</a> policy)</td></tr>
+<tr class="memdesc:ga9ca08c8f6fa9a7bafa9ecbe08603cd97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switches the configuration according to a pre-defined structure.  <a href="#ga9ca08c8f6fa9a7bafa9ecbe08603cd97">More...</a><br/></td></tr>
+<tr class="separator:ga9ca08c8f6fa9a7bafa9ecbe08603cd97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9736632c3beca486ec3f8dab504b839c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga9736632c3beca486ec3f8dab504b839c">NOTIFIER_GetErrorCallbackIndex</a> (<a class="el" href="a00067.html#ga5fb6d98190b8a419a8d4b4150b0eae2a">notifier_handle_t</a> *notifierHandle)</td></tr>
+<tr class="memdesc:ga9736632c3beca486ec3f8dab504b839c"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns the last failed notification callback.  <a href="#ga9736632c3beca486ec3f8dab504b839c">More...</a><br/></td></tr>
+<tr class="separator:ga9736632c3beca486ec3f8dab504b839c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="a00592" id="a00592"></a>
@@ -266,860 +285,541 @@ MMCCARD Function</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct mmc_usr_param_t</td>
+          <td class="memname">struct _notifier_notification_block</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a8f74c9dd9fd1f4d4982010c9c8f81d1a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8f74c9dd9fd1f4d4982010c9c8f81d1a"></a>
-<a class="el" href="a00067.html#ga5615d27683e82898b6d4526eff8efcd8">mmc_io_strength_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a8f74c9dd9fd1f4d4982010c9c8f81d1a">ioStrength</a></td></tr>
-<tr class="memdesc:a8f74c9dd9fd1f4d4982010c9c8f81d1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">switch sd io strength <br/></td></tr>
-<tr class="separator:a8f74c9dd9fd1f4d4982010c9c8f81d1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4329e1d007e30129bb4544a58bd84f13"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4329e1d007e30129bb4544a58bd84f13"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a4329e1d007e30129bb4544a58bd84f13">maxFreq</a></td></tr>
-<tr class="memdesc:a4329e1d007e30129bb4544a58bd84f13"><td class="mdescLeft">&#160;</td><td class="mdescRight">board support maximum frequency <br/></td></tr>
-<tr class="separator:a4329e1d007e30129bb4544a58bd84f13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae3d0401fb63d202b3d1d1cbb7c741468"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae3d0401fb63d202b3d1d1cbb7c741468"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ae3d0401fb63d202b3d1d1cbb7c741468">capability</a></td></tr>
-<tr class="memdesc:ae3d0401fb63d202b3d1d1cbb7c741468"><td class="mdescLeft">&#160;</td><td class="mdescRight">board capability flag <br/></td></tr>
-<tr class="separator:ae3d0401fb63d202b3d1d1cbb7c741468"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-
-</div>
-</div>
-<a name="a00587" id="a00587"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct mmc_card_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"><p>Defines the card structure including the necessary fields to identify and describe the card. </p>
-</div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a12ab48f6985e78ef81d34ab22b8fc878"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a12ab48f6985e78ef81d34ab22b8fc878"></a>
-<a class="el" href="a00084.html#a00660">sdmmchost_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a12ab48f6985e78ef81d34ab22b8fc878">host</a></td></tr>
-<tr class="memdesc:a12ab48f6985e78ef81d34ab22b8fc878"><td class="mdescLeft">&#160;</td><td class="mdescRight">Host information. <br/></td></tr>
-<tr class="separator:a12ab48f6985e78ef81d34ab22b8fc878"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad1054b9eecc0633e8ca70ba164918b2a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad1054b9eecc0633e8ca70ba164918b2a"></a>
-<a class="el" href="a00067.html#a00592">mmc_usr_param_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ad1054b9eecc0633e8ca70ba164918b2a">usrParam</a></td></tr>
-<tr class="memdesc:ad1054b9eecc0633e8ca70ba164918b2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">user parameter <br/></td></tr>
-<tr class="separator:ad1054b9eecc0633e8ca70ba164918b2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab14a00fcc66890836622884227bd1873"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab14a00fcc66890836622884227bd1873"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ab14a00fcc66890836622884227bd1873">isHostReady</a></td></tr>
-<tr class="memdesc:ab14a00fcc66890836622884227bd1873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use this flag to indicate if host re-init needed or not. <br/></td></tr>
-<tr class="separator:ab14a00fcc66890836622884227bd1873"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a306fbd3a3215259f9b380f8e8423f172"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a306fbd3a3215259f9b380f8e8423f172">noInteralAlign</a></td></tr>
-<tr class="memdesc:a306fbd3a3215259f9b380f8e8423f172"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use this flag to disable sdmmc align.  <a href="#a306fbd3a3215259f9b380f8e8423f172">More...</a><br/></td></tr>
-<tr class="separator:a306fbd3a3215259f9b380f8e8423f172"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70c3243e9802d253fb260c6ee2557c8e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a70c3243e9802d253fb260c6ee2557c8e"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a70c3243e9802d253fb260c6ee2557c8e">busClock_Hz</a></td></tr>
-<tr class="memdesc:a70c3243e9802d253fb260c6ee2557c8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">MMC bus clock united in Hz. <br/></td></tr>
-<tr class="separator:a70c3243e9802d253fb260c6ee2557c8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2056ad945bf983dcf197d682508d1035"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2056ad945bf983dcf197d682508d1035"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a2056ad945bf983dcf197d682508d1035">relativeAddress</a></td></tr>
-<tr class="memdesc:a2056ad945bf983dcf197d682508d1035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Relative address of the card. <br/></td></tr>
-<tr class="separator:a2056ad945bf983dcf197d682508d1035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac163495eae9eb73be22075956d62aa64"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac163495eae9eb73be22075956d62aa64"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ac163495eae9eb73be22075956d62aa64">enablePreDefinedBlockCount</a></td></tr>
-<tr class="memdesc:ac163495eae9eb73be22075956d62aa64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable PRE-DEFINED block count when read/write. <br/></td></tr>
-<tr class="separator:ac163495eae9eb73be22075956d62aa64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a234ecfb0c811094377b4b829ea3ba0ac"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a234ecfb0c811094377b4b829ea3ba0ac"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a234ecfb0c811094377b4b829ea3ba0ac">flags</a></td></tr>
-<tr class="memdesc:a234ecfb0c811094377b4b829ea3ba0ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Capability flag in <a class="el" href="a00067.html#_mmc_card_flag">_mmc_card_flag</a>. <br/></td></tr>
-<tr class="separator:a234ecfb0c811094377b4b829ea3ba0ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac62c08dd4ae6fa2938127e5ca556b614"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac62c08dd4ae6fa2938127e5ca556b614"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ac62c08dd4ae6fa2938127e5ca556b614">internalBuffer</a> [<a class="el" href="a00066.html#ga4dd122ccc71f9eef692acf27d5f851c3">FSL_SDMMC_CARD_INTERNAL_BUFFER_SIZE</a>]</td></tr>
-<tr class="memdesc:ac62c08dd4ae6fa2938127e5ca556b614"><td class="mdescLeft">&#160;</td><td class="mdescRight">raw buffer used for mmc driver internal <br/></td></tr>
-<tr class="separator:ac62c08dd4ae6fa2938127e5ca556b614"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b3899f0be098f696fd5bc212d4b597e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0b3899f0be098f696fd5bc212d4b597e"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a0b3899f0be098f696fd5bc212d4b597e">ocr</a></td></tr>
-<tr class="memdesc:a0b3899f0be098f696fd5bc212d4b597e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Raw OCR content. <br/></td></tr>
-<tr class="separator:a0b3899f0be098f696fd5bc212d4b597e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a31922f2befc3b24acfae2fb948a1398b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a31922f2befc3b24acfae2fb948a1398b"></a>
-<a class="el" href="a00066.html#a00588">mmc_cid_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a31922f2befc3b24acfae2fb948a1398b">cid</a></td></tr>
-<tr class="memdesc:a31922f2befc3b24acfae2fb948a1398b"><td class="mdescLeft">&#160;</td><td class="mdescRight">CID. <br/></td></tr>
-<tr class="separator:a31922f2befc3b24acfae2fb948a1398b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70c9d4972f53e5b156eb65ed719e773a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a70c9d4972f53e5b156eb65ed719e773a"></a>
-<a class="el" href="a00066.html#a00589">mmc_csd_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a70c9d4972f53e5b156eb65ed719e773a">csd</a></td></tr>
-<tr class="memdesc:a70c9d4972f53e5b156eb65ed719e773a"><td class="mdescLeft">&#160;</td><td class="mdescRight">CSD. <br/></td></tr>
-<tr class="separator:a70c9d4972f53e5b156eb65ed719e773a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1abe5e60e629c2e8cd6f52f70c147053"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1abe5e60e629c2e8cd6f52f70c147053"></a>
-<a class="el" href="a00066.html#a00591">mmc_extended_csd_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a1abe5e60e629c2e8cd6f52f70c147053">extendedCsd</a></td></tr>
-<tr class="memdesc:a1abe5e60e629c2e8cd6f52f70c147053"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extended CSD. <br/></td></tr>
-<tr class="separator:a1abe5e60e629c2e8cd6f52f70c147053"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4cbb05171fc7209226ac22515fcdf365"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4cbb05171fc7209226ac22515fcdf365"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a4cbb05171fc7209226ac22515fcdf365">blockSize</a></td></tr>
-<tr class="memdesc:a4cbb05171fc7209226ac22515fcdf365"><td class="mdescLeft">&#160;</td><td class="mdescRight">Card block size. <br/></td></tr>
-<tr class="separator:a4cbb05171fc7209226ac22515fcdf365"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf035e6ccfee3bd92ef690d2aff5254d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaf035e6ccfee3bd92ef690d2aff5254d"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#aaf035e6ccfee3bd92ef690d2aff5254d">userPartitionBlocks</a></td></tr>
-<tr class="memdesc:aaf035e6ccfee3bd92ef690d2aff5254d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Card total block number in user partition. <br/></td></tr>
-<tr class="separator:aaf035e6ccfee3bd92ef690d2aff5254d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af76cbe7469a71b0695dae5b8e42088bf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af76cbe7469a71b0695dae5b8e42088bf"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#af76cbe7469a71b0695dae5b8e42088bf">bootPartitionBlocks</a></td></tr>
-<tr class="memdesc:af76cbe7469a71b0695dae5b8e42088bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Boot partition size united as block size. <br/></td></tr>
-<tr class="separator:af76cbe7469a71b0695dae5b8e42088bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a73c3b6a62f48d65719f95ae41ad9456d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a73c3b6a62f48d65719f95ae41ad9456d"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a73c3b6a62f48d65719f95ae41ad9456d">eraseGroupBlocks</a></td></tr>
-<tr class="memdesc:a73c3b6a62f48d65719f95ae41ad9456d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Erase group size united as block size. <br/></td></tr>
-<tr class="separator:a73c3b6a62f48d65719f95ae41ad9456d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8be2e5d491724a446334e871f06207af"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8be2e5d491724a446334e871f06207af"></a>
-<a class="el" href="a00066.html#ga82afca48946089c24c692e526c8ceb97">mmc_access_partition_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a8be2e5d491724a446334e871f06207af">currentPartition</a></td></tr>
-<tr class="memdesc:a8be2e5d491724a446334e871f06207af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current access partition. <br/></td></tr>
-<tr class="separator:a8be2e5d491724a446334e871f06207af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae9a7cc5d13cc3cb5b7921f4d4073e681"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae9a7cc5d13cc3cb5b7921f4d4073e681"></a>
-<a class="el" href="a00066.html#ga914d0ac81ffbcd7c4e5d0f5b2f56ef51">mmc_voltage_window_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ae9a7cc5d13cc3cb5b7921f4d4073e681">hostVoltageWindowVCCQ</a></td></tr>
-<tr class="memdesc:ae9a7cc5d13cc3cb5b7921f4d4073e681"><td class="mdescLeft">&#160;</td><td class="mdescRight">application must set this value according to board specific <br/></td></tr>
-<tr class="separator:ae9a7cc5d13cc3cb5b7921f4d4073e681"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac9c494f7476052a7eff992d03abdd0d5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac9c494f7476052a7eff992d03abdd0d5"></a>
-<a class="el" href="a00066.html#ga914d0ac81ffbcd7c4e5d0f5b2f56ef51">mmc_voltage_window_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ac9c494f7476052a7eff992d03abdd0d5">hostVoltageWindowVCC</a></td></tr>
-<tr class="memdesc:ac9c494f7476052a7eff992d03abdd0d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">application must set this value according to board specific <br/></td></tr>
-<tr class="separator:ac9c494f7476052a7eff992d03abdd0d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa77eb86df76d49460eb2b9de2a2a3ccd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa77eb86df76d49460eb2b9de2a2a3ccd"></a>
-<a class="el" href="a00066.html#gae60b38d7100556c34b293a83afdfabc9">mmc_high_speed_timing_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#aa77eb86df76d49460eb2b9de2a2a3ccd">busTiming</a></td></tr>
-<tr class="memdesc:aa77eb86df76d49460eb2b9de2a2a3ccd"><td class="mdescLeft">&#160;</td><td class="mdescRight">indicates the current work timing mode <br/></td></tr>
-<tr class="separator:aa77eb86df76d49460eb2b9de2a2a3ccd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aed7ad8dbb338c62d7290c6b8fcea0d09"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aed7ad8dbb338c62d7290c6b8fcea0d09"></a>
-<a class="el" href="a00066.html#gabec473eecc9b25f0b68f15b3a6c5fb07">mmc_data_bus_width_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#aed7ad8dbb338c62d7290c6b8fcea0d09">busWidth</a></td></tr>
-<tr class="memdesc:aed7ad8dbb338c62d7290c6b8fcea0d09"><td class="mdescLeft">&#160;</td><td class="mdescRight">indicates the current work bus width <br/></td></tr>
-<tr class="separator:aed7ad8dbb338c62d7290c6b8fcea0d09"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90649f0ffe1dc3f76848f91bd1e94416"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a90649f0ffe1dc3f76848f91bd1e94416"></a>
-<a class="el" href="a00083.html#a00659">sdmmc_osa_mutex_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a90649f0ffe1dc3f76848f91bd1e94416">lock</a></td></tr>
-<tr class="memdesc:a90649f0ffe1dc3f76848f91bd1e94416"><td class="mdescLeft">&#160;</td><td class="mdescRight">card access lock <br/></td></tr>
-<tr class="separator:a90649f0ffe1dc3f76848f91bd1e94416"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a018195ff797af865b0d49c0a40c5150a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00067.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a018195ff797af865b0d49c0a40c5150a">targetConfig</a></td></tr>
+<tr class="memdesc:a018195ff797af865b0d49c0a40c5150a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to target configuration.  <a href="#a018195ff797af865b0d49c0a40c5150a">More...</a><br/></td></tr>
+<tr class="separator:a018195ff797af865b0d49c0a40c5150a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba07cda193bd7b533b525d8272cceeb2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00067.html#ga80f2ccc799b1cca21a091e2b28fbf36c">notifier_policy_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#aba07cda193bd7b533b525d8272cceeb2">policy</a></td></tr>
+<tr class="memdesc:aba07cda193bd7b533b525d8272cceeb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure transition policy.  <a href="#aba07cda193bd7b533b525d8272cceeb2">More...</a><br/></td></tr>
+<tr class="separator:aba07cda193bd7b533b525d8272cceeb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc67fe829150c3c2a679db904432d7ea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00067.html#gad7a79c7191c37e1cf4367bcda45b6943">notifier_notification_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#adc67fe829150c3c2a679db904432d7ea">notifyType</a></td></tr>
+<tr class="memdesc:adc67fe829150c3c2a679db904432d7ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure notification type.  <a href="#adc67fe829150c3c2a679db904432d7ea">More...</a><br/></td></tr>
+<tr class="separator:adc67fe829150c3c2a679db904432d7ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a306fbd3a3215259f9b380f8e8423f172"></a>
+<a class="anchor" id="a018195ff797af865b0d49c0a40c5150a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool mmc_card_t::noInteralAlign</td>
+          <td class="memname"><a class="el" href="a00067.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a>* _notifier_notification_block::targetConfig</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>If disabled, sdmmc will not make sure the data buffer address is word align, otherwise all the transfer are aligned to low level driver. </p>
+
+</div>
+</div>
+<a class="anchor" id="aba07cda193bd7b533b525d8272cceeb2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00067.html#ga80f2ccc799b1cca21a091e2b28fbf36c">notifier_policy_t</a> _notifier_notification_block::policy</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="adc67fe829150c3c2a679db904432d7ea"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00067.html#gad7a79c7191c37e1cf4367bcda45b6943">notifier_notification_type_t</a> _notifier_notification_block::notifyType</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
 
 </div>
 </div>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gaa853e6ed145fdde29cb8277c789ab5cb"></a>
+<a name="a00590" id="a00590"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_MMC_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00336.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2U, 5U, 0U)) /*2.5.0*/</td>
+          <td class="memname">struct _notifier_callback_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<div class="textblock"><p>This structure holds the configuration of callbacks. Callbacks of this type are expected to be statically allocated. This structure contains the following application-defined data. callback - pointer to the callback function callbackType - specifies when the callback is called callbackData - pointer to the data passed to the callback. </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a85eb3076fe6c084c74669e67c62213a7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00067.html#gafd1d8cc01c496de8b4cd3990ff85415c">notifier_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a85eb3076fe6c084c74669e67c62213a7">callback</a></td></tr>
+<tr class="memdesc:a85eb3076fe6c084c74669e67c62213a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the callback function.  <a href="#a85eb3076fe6c084c74669e67c62213a7">More...</a><br/></td></tr>
+<tr class="separator:a85eb3076fe6c084c74669e67c62213a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a89d9f29db8d7cd160febde83d28059"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00067.html#ga3fdecfea1f1a6b56c8d74c3608ee9657">notifier_callback_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a3a89d9f29db8d7cd160febde83d28059">callbackType</a></td></tr>
+<tr class="memdesc:a3a89d9f29db8d7cd160febde83d28059"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback type.  <a href="#a3a89d9f29db8d7cd160febde83d28059">More...</a><br/></td></tr>
+<tr class="separator:a3a89d9f29db8d7cd160febde83d28059"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3157da142ad8e9147093b734f7f9c1c8"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a3157da142ad8e9147093b734f7f9c1c8">callbackData</a></td></tr>
+<tr class="memdesc:a3157da142ad8e9147093b734f7f9c1c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the data passed to the callback.  <a href="#a3157da142ad8e9147093b734f7f9c1c8">More...</a><br/></td></tr>
+<tr class="separator:a3157da142ad8e9147093b734f7f9c1c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="a85eb3076fe6c084c74669e67c62213a7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00067.html#gafd1d8cc01c496de8b4cd3990ff85415c">notifier_callback_t</a> _notifier_callback_config::callback</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a3a89d9f29db8d7cd160febde83d28059"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00067.html#ga3fdecfea1f1a6b56c8d74c3608ee9657">notifier_callback_type_t</a> _notifier_callback_config::callbackType</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a3157da142ad8e9147093b734f7f9c1c8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* _notifier_callback_config::callbackData</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="a00591" id="a00591"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct _notifier_handle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Notifier handle structure. Contains data necessary for the Notifier proper function. Stores references to registered configurations, callbacks, information about their numbers, user function, user data, and other internal data. <a class="el" href="a00067.html#gaa2dfe33b4724d9c1025acdde1b1b3c31" title="Creates a Notifier handle. ">NOTIFIER_CreateHandle()</a> must be called to initialize this handle. </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a3ecaf5ebe809ffe87e3fd765df0ce8f4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00067.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a3ecaf5ebe809ffe87e3fd765df0ce8f4">configsTable</a></td></tr>
+<tr class="memdesc:a3ecaf5ebe809ffe87e3fd765df0ce8f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to configure table.  <a href="#a3ecaf5ebe809ffe87e3fd765df0ce8f4">More...</a><br/></td></tr>
+<tr class="separator:a3ecaf5ebe809ffe87e3fd765df0ce8f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3922e6509dd3d21571e07367e2aa578"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#aa3922e6509dd3d21571e07367e2aa578">configsNumber</a></td></tr>
+<tr class="memdesc:aa3922e6509dd3d21571e07367e2aa578"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of configurations.  <a href="#aa3922e6509dd3d21571e07367e2aa578">More...</a><br/></td></tr>
+<tr class="separator:aa3922e6509dd3d21571e07367e2aa578"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf74e82056bd7b4e19ac11ce554b0e6e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00067.html#ga1ed8b5576d410ff76c7707f7fc58435f">notifier_callback_config_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#abf74e82056bd7b4e19ac11ce554b0e6e">callbacksTable</a></td></tr>
+<tr class="memdesc:abf74e82056bd7b4e19ac11ce554b0e6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to callback table.  <a href="#abf74e82056bd7b4e19ac11ce554b0e6e">More...</a><br/></td></tr>
+<tr class="separator:abf74e82056bd7b4e19ac11ce554b0e6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3800d55438441a0091a84516381bba10"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a3800d55438441a0091a84516381bba10">callbacksNumber</a></td></tr>
+<tr class="memdesc:a3800d55438441a0091a84516381bba10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum number of callback configurations.  <a href="#a3800d55438441a0091a84516381bba10">More...</a><br/></td></tr>
+<tr class="separator:a3800d55438441a0091a84516381bba10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af91a8551d975e6a2354efc9c8ef3b585"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#af91a8551d975e6a2354efc9c8ef3b585">errorCallbackIndex</a></td></tr>
+<tr class="memdesc:af91a8551d975e6a2354efc9c8ef3b585"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index of callback returns error.  <a href="#af91a8551d975e6a2354efc9c8ef3b585">More...</a><br/></td></tr>
+<tr class="separator:af91a8551d975e6a2354efc9c8ef3b585"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a482028570c5e46c6ed018885dc45204f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a482028570c5e46c6ed018885dc45204f">currentConfigIndex</a></td></tr>
+<tr class="memdesc:a482028570c5e46c6ed018885dc45204f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index of current configuration.  <a href="#a482028570c5e46c6ed018885dc45204f">More...</a><br/></td></tr>
+<tr class="separator:a482028570c5e46c6ed018885dc45204f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51562248abd92ea71aea469d7f2599b8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00067.html#gacb6a6d6f99e6ddfbb96dae53382949b2">notifier_user_function_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a51562248abd92ea71aea469d7f2599b8">userFunction</a></td></tr>
+<tr class="memdesc:a51562248abd92ea71aea469d7f2599b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">User function.  <a href="#a51562248abd92ea71aea469d7f2599b8">More...</a><br/></td></tr>
+<tr class="separator:a51562248abd92ea71aea469d7f2599b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ff25f57ffc4b15c365d03afe1d65ca5"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a6ff25f57ffc4b15c365d03afe1d65ca5">userData</a></td></tr>
+<tr class="memdesc:a6ff25f57ffc4b15c365d03afe1d65ca5"><td class="mdescLeft">&#160;</td><td class="mdescRight">User data passed to user function.  <a href="#a6ff25f57ffc4b15c365d03afe1d65ca5">More...</a><br/></td></tr>
+<tr class="separator:a6ff25f57ffc4b15c365d03afe1d65ca5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="a3ecaf5ebe809ffe87e3fd765df0ce8f4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00067.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a>** _notifier_handle::configsTable</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aa3922e6509dd3d21571e07367e2aa578"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t _notifier_handle::configsNumber</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="abf74e82056bd7b4e19ac11ce554b0e6e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00067.html#ga1ed8b5576d410ff76c7707f7fc58435f">notifier_callback_config_t</a>* _notifier_handle::callbacksTable</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a3800d55438441a0091a84516381bba10"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t _notifier_handle::callbacksNumber</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="af91a8551d975e6a2354efc9c8ef3b585"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t _notifier_handle::errorCallbackIndex</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a482028570c5e46c6ed018885dc45204f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t _notifier_handle::currentConfigIndex</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a51562248abd92ea71aea469d7f2599b8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00067.html#gacb6a6d6f99e6ddfbb96dae53382949b2">notifier_user_function_t</a> _notifier_handle::userFunction</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a6ff25f57ffc4b15c365d03afe1d65ca5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* _notifier_handle::userData</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga80f2ccc799b1cca21a091e2b28fbf36c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00067.html#ga876c38aa0c3eb40cd6d9fa62106efd65">_notifier_policy</a>  <a class="el" href="a00067.html#ga80f2ccc799b1cca21a091e2b28fbf36c">notifier_policy_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Defines whether the user function execution is forced or not. For kNOTIFIER_PolicyForcible, the user function is executed regardless of the callback results, while kNOTIFIER_PolicyAgreement policy is used to exit <a class="el" href="a00067.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> when any of the callbacks returns error code. See also <a class="el" href="a00067.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> description. </p>
+
+</div>
+</div>
+<a class="anchor" id="gad7a79c7191c37e1cf4367bcda45b6943"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00067.html#gae4fbfb346e65c17b618dcedb491a864b">_notifier_notification_type</a>  <a class="el" href="a00067.html#gad7a79c7191c37e1cf4367bcda45b6943">notifier_notification_type_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Used to notify registered callbacks </p>
+
+</div>
+</div>
+<a class="anchor" id="ga3fdecfea1f1a6b56c8d74c3608ee9657"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00067.html#ga120d15994388722016ef487b8159f3df">_notifier_callback_type</a>  <a class="el" href="a00067.html#ga3fdecfea1f1a6b56c8d74c3608ee9657">notifier_callback_type_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Used in the callback configuration structure (notifier_callback_config_t) to specify when the registered callback is called during configuration switch initiated by the <a class="el" href="a00067.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a>. Callback can be invoked in following situations.</p>
+<ul>
+<li>Before the configuration switch (Callback return value can affect <a class="el" href="a00067.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> execution. See the <a class="el" href="a00067.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> and notifier_policy_t documentation).</li>
+<li>After an unsuccessful attempt to switch configuration</li>
+<li>After a successful configuration switch </li>
+</ul>
+
+</div>
+</div>
+<a class="anchor" id="gad0b6e919f3ff69992b36a2734a650ec7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void <a class="el" href="a00067.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Reference of the user defined configuration is stored in an array; the notifier switches between these configurations based on this array. </p>
+
+</div>
+</div>
+<a class="anchor" id="gacb6a6d6f99e6ddfbb96dae53382949b2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef <a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>(* notifier_user_function_t)(<a class="el" href="a00067.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *targetConfig, void *userData)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Before and after this function execution, different notification is sent to registered callbacks. If this function returns any error code, <a class="el" href="a00067.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> exits.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">targetConfig</td><td>target Configuration. </td></tr>
+    <tr><td class="paramname">userData</td><td>Refers to other specific data passed to user function. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An error code or kStatus_Success. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gac3dc913bdf7b5e3b40b347e0f748189a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00067.html#a00592">_notifier_notification_block</a>  <a class="el" href="a00067.html#gac3dc913bdf7b5e3b40b347e0f748189a">notifier_notification_block_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gafd1d8cc01c496de8b4cd3990ff85415c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef <a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>(* notifier_callback_t)(<a class="el" href="a00067.html#gac3dc913bdf7b5e3b40b347e0f748189a">notifier_notification_block_t</a> *notify, void *data)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Declaration of a callback. It is common for registered callbacks. Reference to function of this type is part of the notifier_callback_config_t callback configuration structure. Depending on callback type, function of this prototype is called (see <a class="el" href="a00067.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a>) before configuration switch, after it or in both use cases to notify about the switch progress (see notifier_callback_type_t). When called, the type of the notification is passed as a parameter along with the reference to the target configuration structure (see notifier_notification_block_t) and any data passed during the callback registration. When notified before the configuration switch, depending on the configuration switch policy (see notifier_policy_t), the callback may deny the execution of the user function by returning an error code different than kStatus_Success (see <a class="el" href="a00067.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a>).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">notify</td><td>Notification block. </td></tr>
+    <tr><td class="paramname">data</td><td>Callback data. Refers to the data passed during callback registration. Intended to pass any driver or application data such as internal state information. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An error code or kStatus_Success. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga1ed8b5576d410ff76c7707f7fc58435f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00067.html#a00590">_notifier_callback_config</a>  <a class="el" href="a00067.html#ga1ed8b5576d410ff76c7707f7fc58435f">notifier_callback_config_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This structure holds the configuration of callbacks. Callbacks of this type are expected to be statically allocated. This structure contains the following application-defined data. callback - pointer to the callback function callbackType - specifies when the callback is called callbackData - pointer to the data passed to the callback. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga5fb6d98190b8a419a8d4b4150b0eae2a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00067.html#a00591">_notifier_handle</a>  <a class="el" href="a00067.html#ga5fb6d98190b8a419a8d4b4150b0eae2a">notifier_handle_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Notifier handle structure. Contains data necessary for the Notifier proper function. Stores references to registered configurations, callbacks, information about their numbers, user function, user data, and other internal data. <a class="el" href="a00067.html#gaa2dfe33b4724d9c1025acdde1b1b3c31" title="Creates a Notifier handle. ">NOTIFIER_CreateHandle()</a> must be called to initialize this handle. </p>
 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga09d9e56f5d4c14bc6d35272c7ee2692d"></a>
+<a class="anchor" id="gacac871f1b98f53906b07b2663943c784"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">anonymous enum</td>
+          <td class="memname">enum <a class="el" href="a00067.html#gacac871f1b98f53906b07b2663943c784">_notifier_status</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p><a class="anchor" id="_mmc_card_flag"></a></p>
+<p>Used as return value of Notifier functions. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga09d9e56f5d4c14bc6d35272c7ee2692da0f2e16ba804bfabd3c81fee5fa780c95"></a>kMMC_SupportHighSpeed26MHZFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Support high speed 26MHZ. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggacac871f1b98f53906b07b2663943c784a23344b22d4d82fea2f17f4979d515c5c"></a>kStatus_NOTIFIER_ErrorNotificationBefore</em>&nbsp;</td><td class="fielddoc">
+<p>An error occurs during send "BEFORE" notification. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga09d9e56f5d4c14bc6d35272c7ee2692dadb778db370818747d81df90b23298bf1"></a>kMMC_SupportHighSpeed52MHZFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Support high speed 52MHZ. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga09d9e56f5d4c14bc6d35272c7ee2692daf873861eb6356bd1a236d4741d3bd382"></a>kMMC_SupportHighSpeedDDR52MHZ180V300VFlag</em>&nbsp;</td><td class="fielddoc">
-<p>ddr 52MHZ 1.8V or 3.0V </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga09d9e56f5d4c14bc6d35272c7ee2692dab26ad5455afddab2dd5909435243d8de"></a>kMMC_SupportHighSpeedDDR52MHZ120VFlag</em>&nbsp;</td><td class="fielddoc">
-<p>DDR 52MHZ 1.2V. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga09d9e56f5d4c14bc6d35272c7ee2692da39b3765119b6f0134b9c3d00e78ccdc3"></a>kMMC_SupportHS200200MHZ180VFlag</em>&nbsp;</td><td class="fielddoc">
-<p>HS200 ,200MHZ,1.8V. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga09d9e56f5d4c14bc6d35272c7ee2692da7875676a63cb3e3f3bce09d60b12cf88"></a>kMMC_SupportHS200200MHZ120VFlag</em>&nbsp;</td><td class="fielddoc">
-<p>HS200, 200MHZ, 1.2V. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga09d9e56f5d4c14bc6d35272c7ee2692da5b1fc45cb6e3fee016907e5d13f1ad83"></a>kMMC_SupportHS400DDR200MHZ180VFlag</em>&nbsp;</td><td class="fielddoc">
-<p>HS400, DDR, 200MHZ,1.8V. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga09d9e56f5d4c14bc6d35272c7ee2692daf2976472059a8701c26ed30e0f28c5fa"></a>kMMC_SupportHS400DDR200MHZ120VFlag</em>&nbsp;</td><td class="fielddoc">
-<p>HS400, DDR, 200MHZ,1.2V. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga09d9e56f5d4c14bc6d35272c7ee2692da067279b27baf58ed3266df38e848b128"></a>kMMC_SupportHighCapacityFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Support high capacity. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga09d9e56f5d4c14bc6d35272c7ee2692dac18882ad0cc699401c3e3483633ed77b"></a>kMMC_SupportAlternateBootFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Support alternate boot. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga09d9e56f5d4c14bc6d35272c7ee2692daf9baef828e6536d54f64295e1ce57548"></a>kMMC_SupportDDRBootFlag</em>&nbsp;</td><td class="fielddoc">
-<p>support DDR boot flag </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga09d9e56f5d4c14bc6d35272c7ee2692da57438a043537958e8324400ce3788ed0"></a>kMMC_SupportHighSpeedBootFlag</em>&nbsp;</td><td class="fielddoc">
-<p>support high speed boot flag </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga09d9e56f5d4c14bc6d35272c7ee2692da39d546b05b2c725a822419330606bba5"></a>kMMC_SupportEnhanceHS400StrobeFlag</em>&nbsp;</td><td class="fielddoc">
-<p>support enhance HS400 strobe </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggacac871f1b98f53906b07b2663943c784a7b48bf0cf849b07c6131a0abb65d2d58"></a>kStatus_NOTIFIER_ErrorNotificationAfter</em>&nbsp;</td><td class="fielddoc">
+<p>An error occurs during send "AFTER" notification. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gab89d4d12909a44eb53f0f366ea542cf4"></a>
+<a class="anchor" id="ga876c38aa0c3eb40cd6d9fa62106efd65"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00067.html#gab89d4d12909a44eb53f0f366ea542cf4">mmc_sleep_awake_t</a></td>
+          <td class="memname">enum <a class="el" href="a00067.html#ga876c38aa0c3eb40cd6d9fa62106efd65">_notifier_policy</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Defines whether the user function execution is forced or not. For kNOTIFIER_PolicyForcible, the user function is executed regardless of the callback results, while kNOTIFIER_PolicyAgreement policy is used to exit <a class="el" href="a00067.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> when any of the callbacks returns error code. See also <a class="el" href="a00067.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> description. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab89d4d12909a44eb53f0f366ea542cf4a766aba45b5704265a1dfdf8d8d1ef5b2"></a>kMMC_Sleep</em>&nbsp;</td><td class="fielddoc">
-<p>MMC card sleep. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga876c38aa0c3eb40cd6d9fa62106efd65a4513243b3cacd0aec289531dfb53e964"></a>kNOTIFIER_PolicyAgreement</em>&nbsp;</td><td class="fielddoc">
+<p><a class="el" href="a00067.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> method is exited when any of the callbacks returns error code. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab89d4d12909a44eb53f0f366ea542cf4a68ce50ee0ddf66b369033f79da5328e9"></a>kMMC_Awake</em>&nbsp;</td><td class="fielddoc">
-<p>MMC card awake. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga876c38aa0c3eb40cd6d9fa62106efd65a97a2587e9e4c523dc028778ba1f72dc8"></a>kNOTIFIER_PolicyForcible</em>&nbsp;</td><td class="fielddoc">
+<p>The user function is executed regardless of the results. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gae4fbfb346e65c17b618dcedb491a864b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00067.html#gae4fbfb346e65c17b618dcedb491a864b">_notifier_notification_type</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Used to notify registered callbacks </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggae4fbfb346e65c17b618dcedb491a864ba49e6ad28b9d351a051035c8065de5d94"></a>kNOTIFIER_NotifyRecover</em>&nbsp;</td><td class="fielddoc">
+<p>Notify IP to recover to previous work state. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae4fbfb346e65c17b618dcedb491a864ba91707ed2be51db6da2a9d6cc6eaee39c"></a>kNOTIFIER_NotifyBefore</em>&nbsp;</td><td class="fielddoc">
+<p>Notify IP that configuration setting is going to change. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae4fbfb346e65c17b618dcedb491a864ba6e89a377b2890077646fc6af6b5c2e00"></a>kNOTIFIER_NotifyAfter</em>&nbsp;</td><td class="fielddoc">
+<p>Notify IP that configuration setting has been changed. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga120d15994388722016ef487b8159f3df"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00067.html#ga120d15994388722016ef487b8159f3df">_notifier_callback_type</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Used in the callback configuration structure (notifier_callback_config_t) to specify when the registered callback is called during configuration switch initiated by the <a class="el" href="a00067.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a>. Callback can be invoked in following situations.</p>
+<ul>
+<li>Before the configuration switch (Callback return value can affect <a class="el" href="a00067.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> execution. See the <a class="el" href="a00067.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> and notifier_policy_t documentation).</li>
+<li>After an unsuccessful attempt to switch configuration</li>
+<li>After a successful configuration switch </li>
+</ul>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga120d15994388722016ef487b8159f3dfab9c117f1eccd38f914d0e4d05015d6a1"></a>kNOTIFIER_CallbackBefore</em>&nbsp;</td><td class="fielddoc">
+<p>Callback handles BEFORE notification. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga120d15994388722016ef487b8159f3dfa8d5832eddd0d8cf976413aea02f3bfdc"></a>kNOTIFIER_CallbackAfter</em>&nbsp;</td><td class="fielddoc">
+<p>Callback handles AFTER notification. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga120d15994388722016ef487b8159f3dfada6451efe227571a1442e70ddf36e005"></a>kNOTIFIER_CallbackBeforeAfter</em>&nbsp;</td><td class="fielddoc">
+<p>Callback handles BEFORE and AFTER notification. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga03f006d98725caeee8162ebb1250ff86"></a>
+<a class="anchor" id="gaa2dfe33b4724d9c1025acdde1b1b3c31"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> MMC_Init </td>
+          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> NOTIFIER_CreateHandle </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00067.html#a00587">mmc_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>Thread safe function, please note that the function will create the mutex lock dynamically by default, so to avoid the mutex to be created redundantly, application must follow bellow sequence for card re-initialization: </p>
-<div class="fragment"><div class="line">  <a class="code" href="a00067.html#gab67cdb5a21909356c4abadf3a4d8b40c">MMC_Deinit</a>(card);</div>
-<div class="line">  <a class="code" href="a00067.html#ga03f006d98725caeee8162ebb1250ff86">MMC_Init</a>(card);</div>
-<div class="line">* </div>
-</div><!-- fragment --><dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa36304fa7f64a74351464b5f16a0765c7" title="host controller not ready ">kStatus_SDMMC_HostNotReady</a></td><td>Host is not ready. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffaee037801937ac6781197e7cb2713bab3" title="Go idle failed. ">kStatus_SDMMC_GoIdleFailed</a></td><td>Going idle failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffac05b576643f7597d46f0a9b8a77c04ab" title="Send Operation Condition failed. ">kStatus_SDMMC_HandShakeOperationConditionFailed</a></td><td>Sending operation condition failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa33ce287b896a9b498be7909cf2f7b38e" title="Send CID failed. ">kStatus_SDMMC_AllSendCidFailed</a></td><td>Sending CID failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa0bf534561495c727b05922468a0d34b3" title="Set relative address failed. ">kStatus_SDMMC_SetRelativeAddressFailed</a></td><td>Setging relative address failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa73cec1c7d4346ca37ab6b0818f3a5041" title="Send CSD failed. ">kStatus_SDMMC_SendCsdFailed</a></td><td>Sending CSD failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa1fd62104d25e38e44cf0f02299397aee" title="Card doesn&#39;t support. ">kStatus_SDMMC_CardNotSupport</a></td><td>Card not support. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa99077f9e3bb94b11b0169cf07a34e025" title="Select card failed. ">kStatus_SDMMC_SelectCardFailed</a></td><td>Sending SELECT_CARD command failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa5882193428838212f20c5c1d79dc4f90" title="Send EXT_CSD failed. ">kStatus_SDMMC_SendExtendedCsdFailed</a></td><td>Sending EXT_CSD failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffaeb87568ca0030117ce1bdca2d3fe36df" title="Set bus width failed. ">kStatus_SDMMC_SetDataBusWidthFailed</a></td><td>Setting bus width failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04fface05b1fe2c1b30113d51bee8f7cb910c" title="Switch high speed failed. ">kStatus_SDMMC_SwitchBusTimingFailed</a></td><td>Switching high speed failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa7ce8c51a45aad4f51f2dcbddcb7dc233" title="Set block size failed. ">kStatus_SDMMC_SetCardBlockSizeFailed</a></td><td>Setting card block size failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa40d587b2bc3427ceec711a71b0daafa8" title="set power class fail ">kStatus_SDMMC_SetPowerClassFail</a></td><td>Setting card power class failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00336.html#gga39fca1837c5ce7715cbf571669660c13a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>Operation succeeded. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gab67cdb5a21909356c4abadf3a4d8b40c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void MMC_Deinit </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00067.html#a00587">mmc_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>It is a thread safe function.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga9adb1349b4f9415c631e94a375bc7db0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> MMC_CardInit </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00067.html#a00587">mmc_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Thread safe function, please note that the function will create the mutex lock dynamically by default, so to avoid the mutex to be created redundantly, application must follow bellow sequence for card re-initialization: </p>
-<div class="fragment"><div class="line">  <a class="code" href="a00067.html#ga83e4e9e390a6c817f06999bbf887a3b3">MMC_CardDeinit</a>(card);</div>
-<div class="line">  <a class="code" href="a00067.html#ga9adb1349b4f9415c631e94a375bc7db0">MMC_CardInit</a>(card);</div>
-<div class="line">* </div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa36304fa7f64a74351464b5f16a0765c7" title="host controller not ready ">kStatus_SDMMC_HostNotReady</a></td><td>Host is not ready. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffaee037801937ac6781197e7cb2713bab3" title="Go idle failed. ">kStatus_SDMMC_GoIdleFailed</a></td><td>Going idle failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffac05b576643f7597d46f0a9b8a77c04ab" title="Send Operation Condition failed. ">kStatus_SDMMC_HandShakeOperationConditionFailed</a></td><td>Sending operation condition failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa33ce287b896a9b498be7909cf2f7b38e" title="Send CID failed. ">kStatus_SDMMC_AllSendCidFailed</a></td><td>Sending CID failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa0bf534561495c727b05922468a0d34b3" title="Set relative address failed. ">kStatus_SDMMC_SetRelativeAddressFailed</a></td><td>Setting relative address failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa73cec1c7d4346ca37ab6b0818f3a5041" title="Send CSD failed. ">kStatus_SDMMC_SendCsdFailed</a></td><td>Sending CSD failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa1fd62104d25e38e44cf0f02299397aee" title="Card doesn&#39;t support. ">kStatus_SDMMC_CardNotSupport</a></td><td>Card not support. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa99077f9e3bb94b11b0169cf07a34e025" title="Select card failed. ">kStatus_SDMMC_SelectCardFailed</a></td><td>Sending SELECT_CARD command failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa5882193428838212f20c5c1d79dc4f90" title="Send EXT_CSD failed. ">kStatus_SDMMC_SendExtendedCsdFailed</a></td><td>Sending EXT_CSD failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffaeb87568ca0030117ce1bdca2d3fe36df" title="Set bus width failed. ">kStatus_SDMMC_SetDataBusWidthFailed</a></td><td>Setting bus width failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04fface05b1fe2c1b30113d51bee8f7cb910c" title="Switch high speed failed. ">kStatus_SDMMC_SwitchBusTimingFailed</a></td><td>Switching high speed failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa7ce8c51a45aad4f51f2dcbddcb7dc233" title="Set block size failed. ">kStatus_SDMMC_SetCardBlockSizeFailed</a></td><td>Setting card block size failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa40d587b2bc3427ceec711a71b0daafa8" title="set power class fail ">kStatus_SDMMC_SetPowerClassFail</a></td><td>Setting card power class failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00336.html#gga39fca1837c5ce7715cbf571669660c13a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>Operation succeeded. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga83e4e9e390a6c817f06999bbf887a3b3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void MMC_CardDeinit </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00067.html#a00587">mmc_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>It is a thread safe function.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga44f98e6d4caefbac4ee0237890f651e6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> MMC_HostInit </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00067.html#a00587">mmc_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function deinitializes the specific host.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga56005088e0e2a575190bf7829520c7f1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void MMC_HostDeinit </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00067.html#a00587">mmc_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function deinitializes the host.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga260f33fc882cd4eaef78f05ef9069fc9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void MMC_HostDoReset </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00067.html#a00587">mmc_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function resets the specific host.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga4f61aee1889a7a09e6dea3735714b1ce"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void MMC_HostReset </td>
-          <td>(</td>
-          <td class="paramtype">SDMMCHOST_CONFIG *&#160;</td>
-          <td class="paramname"><em>host</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="a00382.html#_deprecated000026">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00067.html#ga260f33fc882cd4eaef78f05ef9069fc9">MMC_HostDoReset</a>. This function resets the specific host.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">host</td><td>Host descriptor. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga5231adac523a9314ba4aceb89e67c492"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void MMC_SetCardPower </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00067.html#a00587">mmc_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
+          <td class="paramtype"><a class="el" href="a00067.html#ga5fb6d98190b8a419a8d4b4150b0eae2a">notifier_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>notifierHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">enable</td><td>True is powering on, false is powering off. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gac08db377dfecee284aedd579d445999a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool MMC_CheckReadOnly </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00067.html#a00587">mmc_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">true</td><td>Card is read only. </td></tr>
-    <tr><td class="paramname">false</td><td>Card isn't read only. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga60a99fbb416b500761d668779ebe01f7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> MMC_ReadBlocks </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00067.html#a00587">mmc_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>buffer</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>startBlock</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>blockCount</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>It is a thread safe function.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">buffer</td><td>The buffer to save data. </td></tr>
-    <tr><td class="paramname">startBlock</td><td>The start block index. </td></tr>
-    <tr><td class="paramname">blockCount</td><td>The number of blocks to read. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00336.html#gga39fca1837c5ce7715cbf571669660c13a9743ab3bec5065667c0b12510317e76c" title="Generic status for invalid argument check. ">kStatus_InvalidArgument</a></td><td>Invalid argument. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa1fd62104d25e38e44cf0f02299397aee" title="Card doesn&#39;t support. ">kStatus_SDMMC_CardNotSupport</a></td><td>Card not support. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa3e1142eeffc0ccaceda57ee45f2a0ba9" title="Set block count failed. ">kStatus_SDMMC_SetBlockCountFailed</a></td><td>Setting block count failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa969247847528f8a186376988d0fb448c" title="Send command failed. ">kStatus_SDMMC_TransferFailed</a></td><td>Transfer failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa4bea51bb845aec7597b4eda78449457a" title="Stop transmission failed. ">kStatus_SDMMC_StopTransmissionFailed</a></td><td>Stopping transmission failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00336.html#gga39fca1837c5ce7715cbf571669660c13a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>Operation succeeded. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga504ade2cd3eeb1891913271521bc9562"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> MMC_WriteBlocks </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00067.html#a00587">mmc_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>buffer</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>startBlock</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>blockCount</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd><ol type="1">
-<li>It is a thread safe function.</li>
-<li>It is an async write function which means that the card status may still be busy after the function returns. Application can call function MMC_PollingCardStatusBusy to wait for the card status to be idle after the write operation.</li>
-</ol>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">buffer</td><td>The buffer to save data blocks. </td></tr>
-    <tr><td class="paramname">startBlock</td><td>Start block number to write. </td></tr>
-    <tr><td class="paramname">blockCount</td><td>Block count. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00336.html#gga39fca1837c5ce7715cbf571669660c13a9743ab3bec5065667c0b12510317e76c" title="Generic status for invalid argument check. ">kStatus_InvalidArgument</a></td><td>Invalid argument. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa4bd8f4c0ddc86120d94a75e4e5b4c3e1" title="Haven&#39;t supported. ">kStatus_SDMMC_NotSupportYet</a></td><td>Not support now. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa3e1142eeffc0ccaceda57ee45f2a0ba9" title="Set block count failed. ">kStatus_SDMMC_SetBlockCountFailed</a></td><td>Setting block count failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa8431f0a58374484158210c4858117168" title="Wait write complete failed. ">kStatus_SDMMC_WaitWriteCompleteFailed</a></td><td>Sending status failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa969247847528f8a186376988d0fb448c" title="Send command failed. ">kStatus_SDMMC_TransferFailed</a></td><td>Transfer failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa4bea51bb845aec7597b4eda78449457a" title="Stop transmission failed. ">kStatus_SDMMC_StopTransmissionFailed</a></td><td>Stop transmission failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00336.html#gga39fca1837c5ce7715cbf571669660c13a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>Operation succeeded. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga90ca5cb83516ede64e9af6ece3439bab"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> MMC_EraseGroups </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00067.html#a00587">mmc_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>startGroup</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>endGroup</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The erase command is best used to erase the entire device or a partition. Erase group is the smallest erase unit in MMC card. The erase range is [startGroup, endGroup].</p>
-<dl class="section note"><dt>Note</dt><dd><ol type="1">
-<li>It is a thread safe function.</li>
-<li>This function always polls card busy status according to the timeout value defined in the card register after all the erase command sent out.</li>
-</ol>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">startGroup</td><td>Start group number. </td></tr>
-    <tr><td class="paramname">endGroup</td><td>End group number. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00336.html#gga39fca1837c5ce7715cbf571669660c13a9743ab3bec5065667c0b12510317e76c" title="Generic status for invalid argument check. ">kStatus_InvalidArgument</a></td><td>Invalid argument. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa8431f0a58374484158210c4858117168" title="Wait write complete failed. ">kStatus_SDMMC_WaitWriteCompleteFailed</a></td><td>Send status failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa969247847528f8a186376988d0fb448c" title="Send command failed. ">kStatus_SDMMC_TransferFailed</a></td><td>Transfer failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00336.html#gga39fca1837c5ce7715cbf571669660c13a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>Operation succeeded. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gad36b22249e056b0dda1da583a5530d61"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> MMC_SelectPartition </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00067.html#a00587">mmc_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00066.html#ga82afca48946089c24c692e526c8ceb97">mmc_access_partition_t</a>&#160;</td>
-          <td class="paramname"><em>partitionNumber</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>It is a thread safe function.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">partitionNumber</td><td>The partition number. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffaaa4ade67474283a523a7baa2cc9fbe58" title="Configure EXT_CSD failed. ">kStatus_SDMMC_ConfigureExtendedCsdFailed</a></td><td>Configuring EXT_CSD failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00336.html#gga39fca1837c5ce7715cbf571669660c13a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>Operation succeeded. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gafd26b8b19b85f99d23175bfb3ddf6ff0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> MMC_SetBootConfig </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00067.html#a00587">mmc_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00066.html#a00586">mmc_boot_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">config</td><td>Boot configuration structure. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa4bd8f4c0ddc86120d94a75e4e5b4c3e1" title="Haven&#39;t supported. ">kStatus_SDMMC_NotSupportYet</a></td><td>Not support now. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffaaa4ade67474283a523a7baa2cc9fbe58" title="Configure EXT_CSD failed. ">kStatus_SDMMC_ConfigureExtendedCsdFailed</a></td><td>Configuring EXT_CSD failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffac14b3fbd314af14e4d86c9293f9fc561" title="Configure boot failed. ">kStatus_SDMMC_ConfigureBootFailed</a></td><td>Configuring boot failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00336.html#gga39fca1837c5ce7715cbf571669660c13a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>Operation succeeded. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga86dbfbd824a0f5243a960d343e3f9176"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> MMC_StartBoot </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00067.html#a00587">mmc_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00066.html#a00586">mmc_boot_config_t</a> *&#160;</td>
-          <td class="paramname"><em>mmcConfig</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>buffer</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00098.html#a00699">sdmmchost_boot_config_t</a> *&#160;</td>
-          <td class="paramname"><em>hostConfig</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">mmcConfig</td><td>The mmc Boot configuration structure. </td></tr>
-    <tr><td class="paramname">buffer</td><td>Address to receive data. </td></tr>
-    <tr><td class="paramname">hostConfig</td><td>Host boot configurations. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00336.html#gga39fca1837c5ce7715cbf571669660c13a8692e71089c7e81bd5f4503ff55035db" title="Generic status for Fail. ">kStatus_Fail</a></td><td>Failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa969247847528f8a186376988d0fb448c" title="Send command failed. ">kStatus_SDMMC_TransferFailed</a></td><td>Transfer failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00066.html#ggaa94c5fdcac6a4b26211b612c3edc04ffaee037801937ac6781197e7cb2713bab3" title="Go idle failed. ">kStatus_SDMMC_GoIdleFailed</a></td><td>Resetting card failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00336.html#gga39fca1837c5ce7715cbf571669660c13a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>Operation succeeded. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga9b18b799d48e0b39672d89d5f6148548"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> MMC_SetBootConfigWP </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00067.html#a00587">mmc_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
+          <td class="paramtype"><a class="el" href="a00067.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> **&#160;</td>
+          <td class="paramname"><em>configs</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>wp</em>&#160;</td>
+          <td class="paramname"><em>configsNumber</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00067.html#ga1ed8b5576d410ff76c7707f7fc58435f">notifier_callback_config_t</a> *&#160;</td>
+          <td class="paramname"><em>callbacks</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>callbacksNumber</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00067.html#gacb6a6d6f99e6ddfbb96dae53382949b2">notifier_user_function_t</a>&#160;</td>
+          <td class="paramname"><em>userFunction</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>userData</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1130,35 +830,41 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">wp</td><td>Write protect value. </td></tr>
+    <tr><td class="paramname">notifierHandle</td><td>A pointer to the notifier handle. </td></tr>
+    <tr><td class="paramname">configs</td><td>A pointer to an array with references to all configurations which is handled by the Notifier. </td></tr>
+    <tr><td class="paramname">configsNumber</td><td>Number of configurations. Size of the configuration array. </td></tr>
+    <tr><td class="paramname">callbacks</td><td>A pointer to an array of callback configurations. If there are no callbacks to register during Notifier initialization, use NULL value. </td></tr>
+    <tr><td class="paramname">callbacksNumber</td><td>Number of registered callbacks. Size of the callbacks array. </td></tr>
+    <tr><td class="paramname">userFunction</td><td>User function. </td></tr>
+    <tr><td class="paramname">userData</td><td>User data passed to user function. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>An error Code or kStatus_Success. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga1e27e4af5916f5f501cd1d9912a42643"></a>
+<a class="anchor" id="ga9ca08c8f6fa9a7bafa9ecbe08603cd97"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> MMC_ReadBootData </td>
+          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> NOTIFIER_SwitchConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00067.html#a00587">mmc_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
+          <td class="paramtype"><a class="el" href="a00067.html#ga5fb6d98190b8a419a8d4b4150b0eae2a">notifier_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>notifierHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>buffer</em>, </td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>configIndex</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00098.html#a00699">sdmmchost_boot_config_t</a> *&#160;</td>
-          <td class="paramname"><em>hostConfig</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00067.html#ga80f2ccc799b1cca21a091e2b28fbf36c">notifier_policy_t</a>&#160;</td>
+          <td class="paramname"><em>policy</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1167,232 +873,40 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
+<p>This function sets the system to the target configuration. Before transition, the Notifier sends notifications to all callbacks registered to the callback table. Callbacks are invoked in the following order: All registered callbacks are notified ordered by index in the callbacks array. The same order is used for before and after switch notifications. The notifications before the configuration switch can be used to obtain confirmation about the change from registered callbacks. If any registered callback denies the configuration change, further execution of this function depends on the notifier policy: the configuration change is either forced (kNOTIFIER_PolicyForcible) or exited (kNOTIFIER_PolicyAgreement). When configuration change is forced, the result of the before switch notifications are ignored. If an agreement is required, if any callback returns an error code, further notifications before switch notifications are cancelled and all already notified callbacks are re-invoked. The index of the callback which returned error code during pre-switch notifications is stored (any error codes during callbacks re-invocation are ignored) and NOTIFIER_GetErrorCallback() can be used to get it. Regardless of the policies, if any callback returns an error code, an error code indicating in which phase the error occurred is returned when <a class="el" href="a00067.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> exits. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">buffer</td><td>Buffer address. </td></tr>
-    <tr><td class="paramname">hostConfig</td><td>Host boot configurations. </td></tr>
+    <tr><td class="paramname">notifierHandle</td><td>pointer to notifier handle </td></tr>
+    <tr><td class="paramname">configIndex</td><td>Index of the target configuration. </td></tr>
+    <tr><td class="paramname">policy</td><td>Transaction policy, kNOTIFIER_PolicyAgreement or kNOTIFIER_PolicyForcible.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>An error code or kStatus_Success. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga1976bb2986bd2dd53de05101cde394a7"></a>
+<a class="anchor" id="ga9736632c3beca486ec3f8dab504b839c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> MMC_StopBoot </td>
+          <td class="memname">uint8_t NOTIFIER_GetErrorCallbackIndex </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00067.html#a00587">mmc_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>bootMode</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">bootMode</td><td>Boot mode. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga4e212f50660aa5fd7ff36a9232fecf93"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> MMC_SetBootPartitionWP </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00067.html#a00587">mmc_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00066.html#ga3553e8a4c0f8154692ee22e154fb5275">mmc_boot_partition_wp_t</a>&#160;</td>
-          <td class="paramname"><em>bootPartitionWP</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">bootPartitionWP</td><td>Boot partition write protect value. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gab41ad4bb9f654d8cd213effffcbbae06"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> MMC_EnableCacheControl </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00067.html#a00587">mmc_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The mmc device's cache is enabled by the driver by default. The cache should in typical case reduce the access time (compared to an access to the main nonvolatile storage) for both write and read.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">enable</td><td>True is enabling the cache, false is disabling the cache. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga61bd93105cac69d83956086927d30dce"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> MMC_FlushCache </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00067.html#a00587">mmc_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="a00067.html#ga5fb6d98190b8a419a8d4b4150b0eae2a">notifier_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>notifierHandle</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>A Flush operation refers to the requirement, from the host to the device, to write the cached data to the nonvolatile memory. Prior to a flush, the device may autonomously write data to the nonvolatile memory, but after the flush operation all data in the volatile area must be written to nonvolatile memory. There is no requirement for flush due to switching between the partitions. (Note: This also implies that the cache data shall not be lost when switching between partitions). Cached data may be lost in SLEEP state, so host should flush the cache before placing the device into SLEEP state.</p>
+<p>This function returns an index of the last callback that failed during the configuration switch while the last <a class="el" href="a00067.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> was called. If the last <a class="el" href="a00067.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> call ended successfully value equal to callbacks number is returned. The returned value represents an index in the array of static call-backs.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
+    <tr><td class="paramname">notifierHandle</td><td>Pointer to the notifier handle </td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a class="anchor" id="gac8ecc09f078dc2e7e8f85eb24d939ed0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> MMC_SetSleepAwake </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00067.html#a00587">mmc_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00067.html#gab89d4d12909a44eb53f0f366ea542cf4">mmc_sleep_awake_t</a>&#160;</td>
-          <td class="paramname"><em>state</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The Sleep/Awake command is used to initiate the state transition between Standby state and Sleep state. The memory device indicates the transition phase busy by pulling down the DAT0 line. The Sleep/Standby state is reached when the memory device stops pulling down the DAT0 line, then the function returns.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">state</td><td>The sleep/awake command argument, refer to <a class="el" href="a00067.html#gab89d4d12909a44eb53f0f366ea542cf4">mmc_sleep_awake_t</a>.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SDMMC_NotSupportYet</td><td>Indicates the memory device doesn't support the Sleep/Awake command. </td></tr>
-    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td>Indicates command transferred fail. </td></tr>
-    <tr><td class="paramname">kStatus_SDMMC_PollingCardIdleFailed</td><td>Indicates polling DAT0 busy timeout. </td></tr>
-    <tr><td class="paramname">kStatus_SDMMC_DeselectCardFailed</td><td>Indicates deselect card command failed. </td></tr>
-    <tr><td class="paramname">kStatus_SDMMC_SelectCardFailed</td><td>Indicates select card command failed. </td></tr>
-    <tr><td class="paramname">kStatus_Success</td><td>Indicates the card state switched successfully. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga255bea62892cc6c3859caf2b1a57e24e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> MMC_PollingCardStatusBusy </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00067.html#a00587">mmc_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>checkStatus</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>timeoutMs</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function can be used to poll the status from busy to idle, the function will return with the card status being idle or timeout or command failed.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">checkStatus</td><td>True is send CMD and read DAT0 status to check card status, false is read DAT0 status only. </td></tr>
-    <tr><td class="paramname">timeoutMs</td><td>Polling card status timeout value.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SDMMC_CardStatusIdle</td><td>Card is idle. </td></tr>
-    <tr><td class="paramname">kStatus_SDMMC_CardStatusBusy</td><td>Card is busy. </td></tr>
-    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td>Command tranfer failed. </td></tr>
-    <tr><td class="paramname">kStatus_SDMMC_SwitchFailed</td><td>Status command reports switch error. </td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>Callback Index of the last failed callback or value equal to callbacks count. </dd></dl>
 
 </div>
 </div>

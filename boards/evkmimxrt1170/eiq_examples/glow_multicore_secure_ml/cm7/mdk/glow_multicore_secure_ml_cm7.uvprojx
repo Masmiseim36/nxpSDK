@@ -501,7 +501,7 @@
             <File>
               <FileName>erpc_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/internal/boards/freertos/mu/erpc_config.h</FilePath>
+              <FilePath>../../../../../../middleware/eiq/glow/examples/multicore_secure_ml/source/erpc_config.h</FilePath>
             </File>
             <File>
               <FileName>erpc_config.h</FileName>
@@ -824,9 +824,9 @@
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_rpmsg_linux_transport.hpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_rpmsg_lite_base_transport.hpp</FileName>
+              <FileName>erpc_rpmsg_lite_base.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_rpmsg_lite_base_transport.hpp</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_rpmsg_lite_base.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_rpmsg_lite_rtos_transport.hpp</FileName>
@@ -872,6 +872,11 @@
               <FileName>erpc_uart_cmsis_transport.hpp</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_uart_zephyr_transport.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_zephyr_transport.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_usb_cdc_transport.hpp</FileName>
@@ -1072,6 +1077,11 @@
               <FileName>erpc_transport_arbitrator.hpp</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport_arbitrator.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_utils.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_utils.hpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -1464,6 +1474,11 @@
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_lcdifv2.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_soc_mipi_dsi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_soc_mipi_dsi.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
@@ -1502,6 +1517,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_incbin.S</FileName>
@@ -1694,6 +1714,16 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>doc</GroupName>
+          <Files>
+            <File>
+              <FileName>readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -2197,7 +2227,7 @@
             <File>
               <FileName>erpc_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/internal/boards/freertos/mu/erpc_config.h</FilePath>
+              <FilePath>../../../../../../middleware/eiq/glow/examples/multicore_secure_ml/source/erpc_config.h</FilePath>
             </File>
             <File>
               <FileName>erpc_config.h</FileName>
@@ -2520,9 +2550,9 @@
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_rpmsg_linux_transport.hpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_rpmsg_lite_base_transport.hpp</FileName>
+              <FileName>erpc_rpmsg_lite_base.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_rpmsg_lite_base_transport.hpp</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_rpmsg_lite_base.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_rpmsg_lite_rtos_transport.hpp</FileName>
@@ -2568,6 +2598,11 @@
               <FileName>erpc_uart_cmsis_transport.hpp</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_uart_zephyr_transport.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_zephyr_transport.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_usb_cdc_transport.hpp</FileName>
@@ -2768,6 +2803,11 @@
               <FileName>erpc_transport_arbitrator.hpp</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport_arbitrator.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_utils.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_utils.hpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -3160,6 +3200,11 @@
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_lcdifv2.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_soc_mipi_dsi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_soc_mipi_dsi.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
@@ -3198,6 +3243,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_incbin.S</FileName>
@@ -3390,6 +3440,16 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>doc</GroupName>
+          <Files>
+            <File>
+              <FileName>readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>

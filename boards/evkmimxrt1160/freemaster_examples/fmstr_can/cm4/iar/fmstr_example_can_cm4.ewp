@@ -347,8 +347,9 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../common/fmstr_example</state>
+          <state>$PROJ_DIR$/../source</state>
+          <state>$PROJ_DIR$/../source/board</state>
+          <state>$PROJ_DIR$/../source/example_data</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
@@ -628,6 +629,7 @@
         </option>
         <option>
           <name>AUserIncludes</name>
+          <state>$PROJ_DIR$/../source/board</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1440,8 +1442,9 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../common/fmstr_example</state>
+          <state>$PROJ_DIR$/../source</state>
+          <state>$PROJ_DIR$/../source/board</state>
+          <state>$PROJ_DIR$/../source/example_data</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
@@ -1721,6 +1724,7 @@
         </option>
         <option>
           <name>AUserIncludes</name>
+          <state>$PROJ_DIR$/../source/board</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -2529,8 +2533,9 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../common/fmstr_example</state>
+          <state>$PROJ_DIR$/../source</state>
+          <state>$PROJ_DIR$/../source/board</state>
+          <state>$PROJ_DIR$/../source/example_data</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
@@ -2810,6 +2815,7 @@
         </option>
         <option>
           <name>AUserIncludes</name>
+          <state>$PROJ_DIR$/../source/board</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -3618,8 +3624,9 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../common/fmstr_example</state>
+          <state>$PROJ_DIR$/../source</state>
+          <state>$PROJ_DIR$/../source/board</state>
+          <state>$PROJ_DIR$/../source/example_data</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
@@ -3899,6 +3906,7 @@
         </option>
         <option>
           <name>AUserIncludes</name>
+          <state>$PROJ_DIR$/../source/board</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -4705,8 +4713,9 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../common/fmstr_example</state>
+          <state>$PROJ_DIR$/../source</state>
+          <state>$PROJ_DIR$/../source/board</state>
+          <state>$PROJ_DIR$/../source/example_data</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
@@ -4986,6 +4995,7 @@
         </option>
         <option>
           <name>AUserIncludes</name>
+          <state>$PROJ_DIR$/../source/board</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -5798,8 +5808,9 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../common/fmstr_example</state>
+          <state>$PROJ_DIR$/../source</state>
+          <state>$PROJ_DIR$/../source/board</state>
+          <state>$PROJ_DIR$/../source/example_data</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
@@ -6079,6 +6090,7 @@
         </option>
         <option>
           <name>AUserIncludes</name>
+          <state>$PROJ_DIR$/../source/board</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -6887,8 +6899,9 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../common/fmstr_example</state>
+          <state>$PROJ_DIR$/../source</state>
+          <state>$PROJ_DIR$/../source/board</state>
+          <state>$PROJ_DIR$/../source/example_data</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
@@ -7168,6 +7181,7 @@
         </option>
         <option>
           <name>AUserIncludes</name>
+          <state>$PROJ_DIR$/../source/board</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -7976,8 +7990,9 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../common/fmstr_example</state>
+          <state>$PROJ_DIR$/../source</state>
+          <state>$PROJ_DIR$/../source/board</state>
+          <state>$PROJ_DIR$/../source/example_data</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
@@ -8257,6 +8272,7 @@
         </option>
         <option>
           <name>AUserIncludes</name>
+          <state>$PROJ_DIR$/../source/board</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -8720,64 +8736,43 @@
   <group>
     <name>source</name>
     <file>
-      <name>$PROJ_DIR$/../main.c</name>
+      <name>$PROJ_DIR$/../source/main.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../freemaster_cfg.h</name>
+      <name>$PROJ_DIR$/../source/freemaster_cfg.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../common/fmstr_example/freemaster_example.c</name>
+      <name>$PROJ_DIR$/../source/freemaster_example.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../common/fmstr_example/freemaster_example.h</name>
+      <name>$PROJ_DIR$/../source/freemaster_example.h</name>
     </file>
-    <group>
-      <name>example_data</name>
-      <file>
-        <name>$PROJ_DIR$/../../../common/fmstr_example/data_example_pmp.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../common/fmstr_example/data_img_logo.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../common/fmstr_example/data_img_file.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../common/fmstr_example/data_img_fmstrlogo.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../common/fmstr_example/data_html_index.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../common/fmstr_example/example_data.h</name>
-      </file>
-    </group>
   </group>
   <group>
     <name>board</name>
     <file>
-      <name>$PROJ_DIR$/../clock_config.c</name>
+      <name>$PROJ_DIR$/../source/board/clock_config.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../clock_config.h</name>
+      <name>$PROJ_DIR$/../source/board/clock_config.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../pin_mux.c</name>
+      <name>$PROJ_DIR$/../source/board/pin_mux.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../pin_mux.h</name>
+      <name>$PROJ_DIR$/../source/board/pin_mux.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../board.c</name>
+      <name>$PROJ_DIR$/../source/board/board.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../board.h</name>
+      <name>$PROJ_DIR$/../source/board/board.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../dcd.c</name>
+      <name>$PROJ_DIR$/../source/board/dcd.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../dcd.h</name>
+      <name>$PROJ_DIR$/../source/board/dcd.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../xmcd/xmcd.c</name>
@@ -8790,6 +8785,27 @@
     <name>doc</name>
     <file>
       <name>$PROJ_DIR$/../readme.txt</name>
+    </file>
+  </group>
+  <group>
+    <name>example_data</name>
+    <file>
+      <name>$PROJ_DIR$/../source/example_data/data_example_pmp.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../source/example_data/data_img_logo.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../source/example_data/data_img_file.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../source/example_data/data_img_fmstrlogo.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../source/example_data/data_html_index.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../source/example_data/example_data.h</name>
     </file>
   </group>
   <group>
@@ -9042,6 +9058,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/debug_console_lite/fsl_assert.h</name>
     </file>
   </group>
   <group>

@@ -1,178 +1,178 @@
 var a00031 =
 [
-    [ "enet_qos_rx_bd_struct_t", "a00031.html#a00504", [
-      [ "buff1Addr", "a00031.html#accf28abfd89366ced2164f495d160b44", null ],
-      [ "reserved", "a00031.html#ac798614368613e234577c52446181db8", null ],
-      [ "buff2Addr", "a00031.html#a6c94edccbe7a6df983e51a3acbf18e5b", null ],
-      [ "control", "a00031.html#a8ed545bc8dc618fc1c5d8e7d20cadc2e", null ]
+    [ "_enet_qos_rx_bd_struct", "a00031.html#a00475", [
+      [ "buff1Addr", "a00031.html#a5fa3f2d6443fa43d937b218366d43b8c", null ],
+      [ "reserved", "a00031.html#a9a95a4306e86554058d97965234a23c1", null ],
+      [ "buff2Addr", "a00031.html#a3ef89675f5836d9ba3489f265b418ca1", null ],
+      [ "control", "a00031.html#ac6601490bf54684fea5274f2763b8f86", null ]
     ] ],
-    [ "enet_qos_tx_bd_struct_t", "a00031.html#a00511", [
-      [ "buff1Addr", "a00031.html#a999ee28bc3185a16c7b990b6dc4fbbdf", null ],
-      [ "buff2Addr", "a00031.html#abfb71b297ae43d1b1defae37600fa9d9", null ],
-      [ "buffLen", "a00031.html#aeefb6df538b4e91a00a561fe4099def5", null ],
-      [ "controlStat", "a00031.html#a7e207c7efa77f2ee7d09820a3849275e", null ]
+    [ "_enet_qos_tx_bd_struct", "a00031.html#a00482", [
+      [ "buff1Addr", "a00031.html#afd5abfc8c47bd6e133161963cd8e163c", null ],
+      [ "buff2Addr", "a00031.html#aeb2501b5086a383ae3508d7d7b2640d0", null ],
+      [ "buffLen", "a00031.html#a90aa6892a8a31b7d97842c787efefa46", null ],
+      [ "controlStat", "a00031.html#a6c236c8637f4649514a42f86de952391", null ]
     ] ],
-    [ "enet_qos_tx_bd_config_struct_t", "a00031.html#a00509", [
-      [ "buffer1", "a00031.html#ae1ebc9f5c56b5cbbba98023921e532a7", null ],
-      [ "bytes1", "a00031.html#abf85c9569a17debce594a07a39ea7af8", null ],
-      [ "buffer2", "a00031.html#a8851d768bd1a08c976c00514966c0168", null ],
-      [ "bytes2", "a00031.html#a362fadcd88f7f301fa9b669349b91d21", null ],
-      [ "framelen", "a00031.html#ad3a50937d77b9404c8688e772acf8b7b", null ],
-      [ "intEnable", "a00031.html#a1fdf4a66053889e4f1c9dd613e327d54", null ],
-      [ "tsEnable", "a00031.html#a522f8827fde732914d9beba81a8b9564", null ],
-      [ "txOffloadOps", "a00031.html#abfbc89e63b718efb9084bdad5b7bfe8e", null ],
-      [ "flag", "a00031.html#a448b3d5e18e9643621ba9e4417d622eb", null ]
+    [ "_enet_qos_tx_bd_config_struct", "a00031.html#a00480", [
+      [ "buffer1", "a00031.html#a66c956131d12492d836908013bd867b5", null ],
+      [ "bytes1", "a00031.html#a422379023a1a3f2a961ff16381f2853f", null ],
+      [ "buffer2", "a00031.html#ad6a586718b71202e0f4582977922e7d8", null ],
+      [ "bytes2", "a00031.html#af3286e06048f15a61bc40bede9b39006", null ],
+      [ "framelen", "a00031.html#a277f3f2668f10f41f36c8590302f0040", null ],
+      [ "intEnable", "a00031.html#a205da2b167eb3f9d2e447527920fbe97", null ],
+      [ "tsEnable", "a00031.html#af7a0ce0a21ad0e88848c89ba8ade7e0b", null ],
+      [ "txOffloadOps", "a00031.html#a819d4375a49da19f5cf08c64a8982488", null ],
+      [ "flag", "a00031.html#a3dbba004d2f102c71dc0e26442104e9d", null ]
     ] ],
-    [ "enet_qos_ptp_time_t", "a00031.html#a00500", [
-      [ "second", "a00031.html#add6d39a367b91c7a20c091094352753b", null ],
-      [ "nanosecond", "a00031.html#ae3da4f2e43aca656e9a8a0fd3c5cd386", null ]
+    [ "_enet_qos_ptp_time", "a00031.html#a00473", [
+      [ "second", "a00031.html#a25793506feaab619b60fe434e7d80304", null ],
+      [ "nanosecond", "a00031.html#a1d1a21e515c607e70394282a52e97d5d", null ]
     ] ],
-    [ "enet_qos_frame_info_t", "a00031.html#a00497", [
-      [ "context", "a00031.html#a8d6d69337e26cc059c8fb31296b31559", null ],
-      [ "isTsAvail", "a00031.html#a9fa3a3610c46e447e82a1c48d02b2d25", null ],
-      [ "timeStamp", "a00031.html#a193a8f5369399aca6e0003a4916091e5", null ]
+    [ "enet_qos_frame_info", "a00031.html#a00725", [
+      [ "context", "a00031.html#a716cab758b633eb81a63420841bf6c50", null ],
+      [ "isTsAvail", "a00031.html#a7d5385e762402c137b1fa88bdaa4524f", null ],
+      [ "timeStamp", "a00031.html#a991e3a472a3c63a0f303e4928643afee", null ]
     ] ],
-    [ "enet_qos_tx_dirty_ring_t", "a00031.html#a00512", [
-      [ "txDirtyBase", "a00031.html#a0b276ff01345fa60435253de7f8fb0e9", null ],
-      [ "txGenIdx", "a00031.html#a19afa9bcd22178891abc916caca267d6", null ],
-      [ "txConsumIdx", "a00031.html#a228ef976dbee8f699479a215180f6763", null ],
-      [ "txRingLen", "a00031.html#aa0e9169a46f14aa8394ff9ea8c209685", null ],
-      [ "isFull", "a00031.html#a9d9487798deba95b94fa5cbc14b0a0e2", null ]
+    [ "_enet_qos_tx_dirty_ring", "a00031.html#a00483", [
+      [ "txDirtyBase", "a00031.html#ac965d1e2fcbf37c826f3027b7d477c16", null ],
+      [ "txGenIdx", "a00031.html#a4bbd3e40a2592bd4691da706cc5fd45e", null ],
+      [ "txConsumIdx", "a00031.html#addc218a8d2eeae8ec224de0c1b298b29", null ],
+      [ "txRingLen", "a00031.html#a00319d3e66cfa3dbac108d6ecc3120bb", null ],
+      [ "isFull", "a00031.html#a4936460570ef6ba14e3c3f0063091d8a", null ]
     ] ],
-    [ "enet_qos_ptp_config_t", "a00031.html#a00499", [
-      [ "fineUpdateEnable", "a00031.html#aa19b5f0f23baabcdae7605265e8cb518", null ],
-      [ "defaultAddend", "a00031.html#a45fe53e0992e9ab9e1bf4e9a91b8dee3", null ],
-      [ "ptp1588V2Enable", "a00031.html#a94552ec255ce96f79d8a0adcbae4817d", null ],
-      [ "tsRollover", "a00031.html#a85e5dbc5918519a85aa51c5a69effaef", null ]
+    [ "_enet_qos_ptp_config", "a00031.html#a00472", [
+      [ "fineUpdateEnable", "a00031.html#a2149ca8a00e5c96e5511e9d91ace5e94", null ],
+      [ "defaultAddend", "a00031.html#a790c84b8c95864a16c4cd5efccbf38e5", null ],
+      [ "ptp1588V2Enable", "a00031.html#af85b3415cf54ad36cb0f8e7a5e77da0e", null ],
+      [ "tsRollover", "a00031.html#a682bd81815035dc41f35306eb6d4314f", null ]
     ] ],
-    [ "enet_qos_est_gate_op_t", "a00031.html#a00495", null ],
-    [ "enet_qos_est_gcl_t", "a00031.html#a00496", [
-      [ "enable", "a00031.html#aa7c24dd502d2ea4f4087756cc7672335", null ],
-      [ "cycleTime", "a00031.html#aa4bbd74bca70fc30465dfcf75da129ee", null ],
-      [ "extTime", "a00031.html#a71f3bf7a214948774f5acf61cefd1f11", null ],
-      [ "numEntries", "a00031.html#a4ea0ffe5ab809275c43283f98c828211", null ],
-      [ "opList", "a00031.html#a0629686817c2783cce90e48e8e13e339", null ]
+    [ "_enet_qos_est_gate_op", "a00031.html#a00469", null ],
+    [ "_enet_qos_est_gcl", "a00031.html#a00470", [
+      [ "enable", "a00031.html#ae16b96d53e11f7d61e05e409f2c8cec2", null ],
+      [ "cycleTime", "a00031.html#aab84036642a65e5939bc472e6986cce2", null ],
+      [ "extTime", "a00031.html#ad3add0fd30c745d945fb3ca66c6b5785", null ],
+      [ "numEntries", "a00031.html#ad25fb0cf9b84a1f4918ddb5a0e186dc1", null ],
+      [ "opList", "a00031.html#a28fc15719c4f6ba14ac169bde8402243", null ]
     ] ],
-    [ "enet_qos_rxp_config_t", "a00031.html#a00507", [
-      [ "matchEnable", "a00031.html#a78f40ba815ba108790b3c8bdb7d3a1cc", null ],
-      [ "acceptFrame", "a00031.html#a7c6e3915eeae25361660345e17d59777", null ],
-      [ "rejectFrame", "a00031.html#a9486256dd3053e3a98aca20091d80a9d", null ],
-      [ "inverseMatch", "a00031.html#a3617e8313c26325ea501773a6f2f1a2e", null ],
-      [ "nextControl", "a00031.html#a022e9fcbf6525539196969f2db03d1be", null ],
-      [ "reserved", "a00031.html#a619cead25a2e02bbf50fa939d53763c8", null ],
-      [ "frameOffset", "a00031.html#ad31af0928d557e54ddcdf348259832ca", null ],
-      [ "okIndex", "a00031.html#a31f70ae27246ee35dc4450da27410d3e", null ],
-      [ "dmaChannel", "a00031.html#af88516aee66d2ce83f935a959174b0b6", null ],
-      [ "reserved2", "a00031.html#abe805b1a71760279052860e14e96c415", null ]
+    [ "_enet_qos_rxp_config", "a00031.html#a00478", [
+      [ "matchEnable", "a00031.html#a2ee6433ce35fe105fe976b095dc62280", null ],
+      [ "acceptFrame", "a00031.html#a0730274186d16e5207c4022adf7fc247", null ],
+      [ "rejectFrame", "a00031.html#a9aba77a73c88cd7f7b8e51a96d3c7bc9", null ],
+      [ "inverseMatch", "a00031.html#ab48bef9f7792a6e3084fa1b337d6bc92", null ],
+      [ "nextControl", "a00031.html#a4314a71ab993c67a37011fab9150d42b", null ],
+      [ "reserved", "a00031.html#a7630cad418ec25fab048177e05141309", null ],
+      [ "frameOffset", "a00031.html#a379bd66abcf6a70cbc7f729ff259bc72", null ],
+      [ "okIndex", "a00031.html#ab5c40d7d627187573ba8928c2fb8f839", null ],
+      [ "dmaChannel", "a00031.html#aa4c72da2cd0c02644363f759b44259d4", null ],
+      [ "reserved2", "a00031.html#aafc4197c4c3ae18bd6d6a147e52b9028", null ]
     ] ],
-    [ "enet_qos_buffer_config_t", "a00031.html#a00491", [
-      [ "rxRingLen", "a00031.html#a39a0b6f276a3ffe8fd041e71adad78b6", null ],
-      [ "txRingLen", "a00031.html#aa1762a26b232fd3a64c0b2b787866d36", null ],
-      [ "txDescStartAddrAlign", "a00031.html#a23d231060eaa2e6ae798088dcc23fa68", null ],
-      [ "txDescTailAddrAlign", "a00031.html#a551420d738a48815f693841eee848e28", null ],
-      [ "txDirtyStartAddr", "a00031.html#ada9d55f6f5d25fb24122065e572cc9c1", null ],
-      [ "rxDescStartAddrAlign", "a00031.html#a6918fca8576f83a1e64b5ab9865342f5", null ],
-      [ "rxDescTailAddrAlign", "a00031.html#ad218cb5d38ea9b57d92e52071362109d", null ],
-      [ "rxBufferStartAddr", "a00031.html#a211af4eefd77c8d4532602758337aa50", null ],
-      [ "rxBuffSizeAlign", "a00031.html#ae773859a0734fdc686ec7d4b27aa4f71", null ],
-      [ "rxBuffNeedMaintain", "a00031.html#a5735d2cdd1e38beffca84bc496ababdd", null ]
+    [ "_enet_qos_buffer_config", "a00031.html#a00465", [
+      [ "rxRingLen", "a00031.html#aedb4780852f6b12c682ede143c0c03ec", null ],
+      [ "txRingLen", "a00031.html#a56cef98811c558ad9afc1264d4b93496", null ],
+      [ "txDescStartAddrAlign", "a00031.html#aa5df9608301105b0d57df4977d32103e", null ],
+      [ "txDescTailAddrAlign", "a00031.html#a0dcc4d9784011136ca61e8810dd799a1", null ],
+      [ "txDirtyStartAddr", "a00031.html#a009e8ed742c274a6897ee1167a8de805", null ],
+      [ "rxDescStartAddrAlign", "a00031.html#a2ac6ec44ded20b43700a3880a5f9063a", null ],
+      [ "rxDescTailAddrAlign", "a00031.html#a8ab1842240e91a2f4cd72ad842a43502", null ],
+      [ "rxBufferStartAddr", "a00031.html#a2f36acacadf4912720b603c2498d32c5", null ],
+      [ "rxBuffSizeAlign", "a00031.html#aac8f68864fe07bc12eb10fa1c0560235", null ],
+      [ "rxBuffNeedMaintain", "a00031.html#a682a6986c5f45c226498ff208e3c4677", null ]
     ] ],
-    [ "enet_qos_cbs_config_t", "a00031.html#a00493", [
-      [ "sendSlope", "a00031.html#ababc91c304f511974556b94de1efd30d", null ],
-      [ "idleSlope", "a00031.html#a9c7a6fe18d0454dc8b97c79bbc65b997", null ],
-      [ "highCredit", "a00031.html#a40c55cf7c2b64eb6715d63030f6694d7", null ],
-      [ "lowCredit", "a00031.html#aeeaab5575ab1fb8d984301ccf7f1383d", null ]
+    [ "_enet_qos_cbs_config", "a00031.html#a00467", [
+      [ "sendSlope", "a00031.html#a4f99c16faf0f44d14e1d1a39ba4075e0", null ],
+      [ "idleSlope", "a00031.html#a260f8c10d08acdbcfdd0fc662dfe0e2d", null ],
+      [ "highCredit", "a00031.html#a4146b0cb564add31df426c861180aeb3", null ],
+      [ "lowCredit", "a00031.html#a614de48c96f68778365dea99e846f2d3", null ]
     ] ],
-    [ "enet_qos_queue_tx_config_t", "a00031.html#a00502", [
-      [ "mode", "a00031.html#af09a9c54b4b910dbb2a1649f81c1645a", null ],
-      [ "weight", "a00031.html#a38792ec5ef874e8d8d8eb6c013e2fdf6", null ],
-      [ "priority", "a00031.html#ae1d600db536386b7add1ce1d474afee4", null ],
-      [ "cbsConfig", "a00031.html#aaf710e1fac3796031ec5673350b8e16b", null ]
+    [ "enet_qos_tx_queue_config", "a00031.html#a00728", [
+      [ "mode", "a00031.html#afd0c9be1fd64d0252fce73eb79681aea", null ],
+      [ "weight", "a00031.html#a89d8e41e44cacac93c7a2ca91b363e32", null ],
+      [ "priority", "a00031.html#ab496acfa1fe896d3209a105c4ad90d9d", null ],
+      [ "cbsConfig", "a00031.html#a7511b624be0fb5195d613f2d1052514f", null ]
     ] ],
-    [ "enet_qos_queue_rx_config_t", "a00031.html#a00501", [
-      [ "mode", "a00031.html#a3098b50f7bded29a47889956942485f0", null ],
-      [ "mapChannel", "a00031.html#aa2234b6a75331155cbe42410983b2a91", null ],
-      [ "priority", "a00031.html#a798a4d4a4ba1d044ac10fba675fbba62", null ],
-      [ "packetRoute", "a00031.html#a940fd07af317e481d38f9017c176f046", null ]
+    [ "enet_qos_rx_queue_config", "a00031.html#a00727", [
+      [ "mode", "a00031.html#aac20c452efd829ee7d271c25d598d617", null ],
+      [ "mapChannel", "a00031.html#a1ac4dc6140bb69fb806fceaef69ebc34", null ],
+      [ "priority", "a00031.html#a5a5f76ace8cc2ade77ae38107a9c48a5", null ],
+      [ "packetRoute", "a00031.html#a8174956776fab988f81dc23df597ec2d", null ]
     ] ],
-    [ "enet_qos_multiqueue_config_t", "a00031.html#a00498", [
-      [ "burstLen", "a00031.html#a4c49dadbc9c2f42e278b98c2100165bc", null ],
-      [ "txQueueUse", "a00031.html#a0d6ed13793b99b3d4ab221e2662c5f71", null ],
-      [ "mtltxSche", "a00031.html#afe28df31a318735c7e8bb165e5942d8c", null ],
-      [ "txQueueConfig", "a00031.html#adf20e2ca36fca280aeab2c7d1c4970e2", null ],
-      [ "rxQueueUse", "a00031.html#a8b131cdf05788c77e70bab95c9b88f18", null ],
-      [ "mtlrxSche", "a00031.html#a0acc29cb63026de0db6a503539d823d4", null ],
-      [ "rxQueueConfig", "a00031.html#ad39c277d50ef34ca227c66d8317dc558", null ]
+    [ "enet_qos_multiqueue_config", "a00031.html#a00726", [
+      [ "burstLen", "a00031.html#a6f29823be0d123eb0299c6029f9e8f33", null ],
+      [ "txQueueUse", "a00031.html#a8972f10cc1f0949834bff81af45e4dea", null ],
+      [ "mtltxSche", "a00031.html#afe9786e873646d89ae10053e92289b98", null ],
+      [ "txQueueConfig", "a00031.html#a2949bf226f83f07e70008f7827111305", null ],
+      [ "rxQueueUse", "a00031.html#a1781c049ae662992ebe013c2dbfea2d7", null ],
+      [ "mtlrxSche", "a00031.html#ae7e713ed0f5db4477270ef87cb64f45b", null ],
+      [ "rxQueueConfig", "a00031.html#a5a10a8084eab2581a9da0beff080c363", null ]
     ] ],
-    [ "enet_qos_config_t", "a00031.html#a00494", [
-      [ "specialControl", "a00031.html#a21081fa459f13b7b5476006cf4161e79", null ],
-      [ "multiqueueCfg", "a00031.html#a980778efaa8f99c31e2745f242e3f3d1", null ],
-      [ "miiMode", "a00031.html#ac75802ecf58ce0e20fd937de81f5cf1e", null ],
-      [ "miiSpeed", "a00031.html#a67589b4a6c0493d0d4e0b3c1c10bb8e1", null ],
-      [ "miiDuplex", "a00031.html#a8399d0479271c42ea35eec39543eb1b6", null ],
-      [ "pauseDuration", "a00031.html#ab1782b2c0789c6af434047e415c7af02", null ],
-      [ "ptpConfig", "a00031.html#ad6ea6d01ccbd30747dc4266bef99d364", null ],
-      [ "csrClock_Hz", "a00031.html#a5dd62437055489e1f715613efb0c58e9", null ],
-      [ "rxBuffAlloc", "a00031.html#ad3956611f7f29c1e4caf39b41e429a88", null ],
-      [ "rxBuffFree", "a00031.html#ada29029b3397a28b70d7b8ae21370800", null ]
+    [ "_enet_qos_config", "a00031.html#a00468", [
+      [ "specialControl", "a00031.html#a007d3e743cab2820aadfe2c86ad817da", null ],
+      [ "multiqueueCfg", "a00031.html#aa7c531d97a7a43891d8fba7d78b369a5", null ],
+      [ "miiMode", "a00031.html#a967afcd0db7b0a186dbfb13d4ffbed2b", null ],
+      [ "miiSpeed", "a00031.html#ac71aad0cf0ab454af6e70ff958c6d191", null ],
+      [ "miiDuplex", "a00031.html#a486ee69fa9df64f48987dcbfca06b809", null ],
+      [ "pauseDuration", "a00031.html#a6c764a08f208763ac80fba07af1f669f", null ],
+      [ "ptpConfig", "a00031.html#aa20ca73a36d9da2b051a97f0d4032a78", null ],
+      [ "csrClock_Hz", "a00031.html#a63a59b094aeabd2081441b6a8cae321c", null ],
+      [ "rxBuffAlloc", "a00031.html#a20120567f52d9bd77d0dd59d818402ce", null ],
+      [ "rxBuffFree", "a00031.html#aa586a2441178a4b995e5ecd667e12218", null ]
     ] ],
-    [ "enet_qos_tx_bd_ring_t", "a00031.html#a00510", [
-      [ "txBdBase", "a00031.html#ac4a08449bb5ee5f1c9ac58f268b2ee76", null ],
-      [ "txGenIdx", "a00031.html#a1d8fedf37127dcc58b5f013aecebd4f3", null ],
-      [ "txConsumIdx", "a00031.html#ad14da1be0c9043173055f83b446dc18d", null ],
-      [ "txDescUsed", "a00031.html#ab23c3a2d0ea7f47d0bff406f1a35313c", null ],
-      [ "txRingLen", "a00031.html#a7f47edbb426bff26b14e4151b453d604", null ]
+    [ "_enet_qos_tx_bd_ring", "a00031.html#a00481", [
+      [ "txBdBase", "a00031.html#a7d1a81f238121355019b4dd3f7fe1c73", null ],
+      [ "txGenIdx", "a00031.html#ab42324e7d95979d7b1efac46940d4811", null ],
+      [ "txConsumIdx", "a00031.html#a9bade1203e790c2e3b47495fcdcc86bc", null ],
+      [ "txDescUsed", "a00031.html#add00cd8190ef8f156cb08646fb5bd019", null ],
+      [ "txRingLen", "a00031.html#af57820d2771cb0fd22d27790624d12da", null ]
     ] ],
-    [ "enet_qos_rx_bd_ring_t", "a00031.html#a00503", [
-      [ "rxBdBase", "a00031.html#af86dbbe22995427eb4d29b322dff28c4", null ],
-      [ "rxGenIdx", "a00031.html#ac391597e29fef3f49ad78a1df1fdd2d0", null ],
-      [ "rxRingLen", "a00031.html#a857dedb14fc48abb4ac37d634f5ff1f2", null ],
-      [ "rxBuffSizeAlign", "a00031.html#a391eab92544ba220323c74fe7bcbcdf5", null ]
+    [ "_enet_qos_rx_bd_ring", "a00031.html#a00474", [
+      [ "rxBdBase", "a00031.html#ac9e7e4c33674229d92f677de3b3b5955", null ],
+      [ "rxGenIdx", "a00031.html#afab30b06ac99a1fa1f63c2eafeabcd4f", null ],
+      [ "rxRingLen", "a00031.html#a4b4206cab3a4c4150effec2497b189d9", null ],
+      [ "rxBuffSizeAlign", "a00031.html#a314e3c6bf9819e8c2ae90b54f9a2561f", null ]
     ] ],
-    [ "enet_qos_handle_t", "a00031.html#a00390", [
-      [ "txQueueUse", "a00031.html#a1723b41edef7cabed501ac6d01e96709", null ],
-      [ "rxQueueUse", "a00031.html#a37a30003463224125f0c440cda6b8662", null ],
-      [ "doubleBuffEnable", "a00031.html#a3e9aaceff3e7aa077748701e25b85fb5", null ],
-      [ "rxintEnable", "a00031.html#ae349c8ba4a86ad0189d94451d72bc1da", null ],
-      [ "rxMaintainEnable", "a00031.html#afb665c2ef820bf9884ab733b2e2d6567", null ],
-      [ "rxBdRing", "a00031.html#abfaeb534d5c067520e7de5f743401538", null ],
-      [ "txBdRing", "a00031.html#ab45483896c1df9e246d4f51ca1d595ef", null ],
-      [ "txDirtyRing", "a00031.html#a3c9376a4ab7dc146e648e194f838c516", null ],
-      [ "rxBufferStartAddr", "a00031.html#ad1ad1f52dc2f44f0d39fc72352d20885", null ],
-      [ "callback", "a00031.html#a9033512273d0207a36a9b1264115d22b", null ],
-      [ "userData", "a00031.html#a4df60878ba7feab2c8689484a13e909d", null ],
-      [ "multicastCount", "a00031.html#a251b4c30f49c2238ba843114c016af55", null ],
-      [ "rxBuffAlloc", "a00031.html#a0318970c2b89c7b5705d6bbd527811d5", null ],
-      [ "rxBuffFree", "a00031.html#ac5b202fb2439abf831335532fee51e60", null ]
+    [ "_enet_qos_handle", "a00031.html#a00471", [
+      [ "txQueueUse", "a00031.html#a66bf7b1804b6131a74c54fc1afac13f6", null ],
+      [ "rxQueueUse", "a00031.html#a655dfd9a540eb271f609913faba7ee01", null ],
+      [ "doubleBuffEnable", "a00031.html#a0e387e6b9aaea40e207b74ffbcedf690", null ],
+      [ "rxintEnable", "a00031.html#a6cb62678bb7089c462b083c6192e20c7", null ],
+      [ "rxMaintainEnable", "a00031.html#a1fae269b6893b4b9d6e72ca68e7ddb56", null ],
+      [ "rxBdRing", "a00031.html#a3fa72707f3309a39005f0d3402f43b56", null ],
+      [ "txBdRing", "a00031.html#a64c6f7fc686db354f52443e9224aaf05", null ],
+      [ "txDirtyRing", "a00031.html#ad63db75c01bcfb09b4d87ad0982cb338", null ],
+      [ "rxBufferStartAddr", "a00031.html#a3e31c0950a662c4546537f5494fc66b3", null ],
+      [ "callback", "a00031.html#a0e846b949a656cbe4efc8ecf591f6536", null ],
+      [ "userData", "a00031.html#a9901a94724f71baf4186cdbfe6f2c748", null ],
+      [ "multicastCount", "a00031.html#a41728a96788818fee6492475bf61cb3b", null ],
+      [ "rxBuffAlloc", "a00031.html#a156dc2de6326a008751ea44a957a447a", null ],
+      [ "rxBuffFree", "a00031.html#afc0050b45c68bc59eb9df12f23899e18", null ]
     ] ],
-    [ "enet_qos_buffer_struct_t", "a00031.html#a00492", [
-      [ "buffer", "a00031.html#adf0a94c6f9bc67dde10f24c4b6d262c2", null ],
-      [ "length", "a00031.html#a333ed32c4a077b95fc6105443ac0d8c7", null ]
+    [ "_enet_qos_buffer_struct", "a00031.html#a00466", [
+      [ "buffer", "a00031.html#a5d2bec0e4cbb567c510d6a84167ae4bb", null ],
+      [ "length", "a00031.html#a472d33a37cb60eb09a984b70530a2a2d", null ]
     ] ],
-    [ "enet_qos_rx_frame_error_t", "a00031.html#a00505", [
-      [ "rxDstAddrFilterErr", "a00031.html#a4e3a89eea076ff75c6053549681259fc", null ],
-      [ "rxSrcAddrFilterErr", "a00031.html#adb973ccb550c5726466c3180a57ed1de", null ],
-      [ "rxDribbleErr", "a00031.html#a4f900a3c8dd05f3d77bcdb7dc1942df1", null ],
-      [ "rxReceiveErr", "a00031.html#ae0393ca962850e1eb27a4dc7d6c8711d", null ],
-      [ "rxOverFlowErr", "a00031.html#acfa0f116b86eaabacee427200ccf8c47", null ],
-      [ "rxWatchDogErr", "a00031.html#a562aca3128c715752f0e5b6f7ddfaa81", null ],
-      [ "rxGaintPacketErr", "a00031.html#aabcc5182c9c443d5442feb1a85e929ed", null ],
-      [ "rxCrcErr", "a00031.html#a4d4db30f5ef79130fdb96a3d30361640", null ]
+    [ "_enet_qos_rx_frame_error", "a00031.html#a00476", [
+      [ "rxDstAddrFilterErr", "a00031.html#a475e023c1173d0f0c6114bc62b6381c8", null ],
+      [ "rxSrcAddrFilterErr", "a00031.html#a215738eaa5b7952303c786092547b5a3", null ],
+      [ "rxDribbleErr", "a00031.html#aff73eab820bd27c4b03fa0ed0f01c9ad", null ],
+      [ "rxReceiveErr", "a00031.html#ace8be7490e65c07204fe124fdf12670e", null ],
+      [ "rxOverFlowErr", "a00031.html#a8d26107aa83c751ec6068b462c6604d2", null ],
+      [ "rxWatchDogErr", "a00031.html#a8a49d2de6575d87b25b2649041329089", null ],
+      [ "rxGaintPacketErr", "a00031.html#a87899e765f34199a5f42ce77d8f6f8ea", null ],
+      [ "rxCrcErr", "a00031.html#ad018759c6bc2ff7580a0f88cdf83acf0", null ]
     ] ],
-    [ "enet_qos_rx_frame_struct_t", "a00031.html#a00506", [
-      [ "rxBuffArray", "a00031.html#af3e1a95d6d6299b9035953121dff1fe6", null ],
-      [ "totLen", "a00031.html#a2301cd5191beda78af106ee21e2c87ab", null ],
-      [ "rxAttribute", "a00031.html#a346312200bc064ec2f9c8c49639c3cb3", null ],
-      [ "rxFrameError", "a00031.html#abba7d437a0a1f937a6757f158275bed1", null ]
+    [ "_enet_qos_rx_frame_struct", "a00031.html#a00477", [
+      [ "rxBuffArray", "a00031.html#ac1c7f04d891e6e00f5b66637ce16f600", null ],
+      [ "totLen", "a00031.html#adc10d845eaaf38dd64a1baf3a5b6b305", null ],
+      [ "rxAttribute", "a00031.html#a0579d23ddd1dc68972500897cd877c25", null ],
+      [ "rxFrameError", "a00031.html#a3249ded98c5c1541bec932ee1c493bc5", null ]
     ] ],
-    [ "enet_qos_transfer_stats_t", "a00031.html#a00508", [
-      [ "statsRxFrameCount", "a00031.html#ac21e87bef8e23f47705161e50faf3143", null ],
-      [ "statsRxCrcErr", "a00031.html#a4a13f88edbfa13826817d4c2fb1eba87", null ],
-      [ "statsRxAlignErr", "a00031.html#ab4e496ae5b85ba9181acbcfef7e73579", null ],
-      [ "statsRxLengthErr", "a00031.html#ac38b3602047be2b0b176a2d1998cae9a", null ],
-      [ "statsRxFifoOverflowErr", "a00031.html#a6fa62f0111fa640d62ade48b665c10e3", null ],
-      [ "statsTxFrameCount", "a00031.html#a7a21585ede1bdc1ec185860ff00e3b10", null ],
-      [ "statsTxFifoUnderRunErr", "a00031.html#a228d57cccc53d531d5c56081b5f6a007", null ]
+    [ "_enet_qos_transfer_stats", "a00031.html#a00479", [
+      [ "statsRxFrameCount", "a00031.html#a64ec14e761923fc6f8d0d5a5b121f4ca", null ],
+      [ "statsRxCrcErr", "a00031.html#a4970198e0de7914b36d1fee1926fe4e2", null ],
+      [ "statsRxAlignErr", "a00031.html#a850be267143b2e70aa5a3f8d88fabfe5", null ],
+      [ "statsRxLengthErr", "a00031.html#ab73717a097e86225dd1aaa312459ad1f", null ],
+      [ "statsRxFifoOverflowErr", "a00031.html#a907b627c14b30fde4585560ce1fe4b90", null ],
+      [ "statsTxFrameCount", "a00031.html#a7839eb6295c6e8611936a0db0b8a20d6", null ],
+      [ "statsTxFifoUnderRunErr", "a00031.html#a424bf8bd92f6a8976419bec9091a16be", null ]
     ] ],
     [ "FSL_ENET_QOS_DRIVER_VERSION", "a00031.html#ga345a6b97f20d159818684d9d54681e73", null ],
     [ "ENET_QOS_RXDESCRIP_RD_BUFF1VALID_MASK", "a00031.html#ga6cfea6ec84cf55e2f640f145167e986c", null ],
@@ -194,9 +194,56 @@ var a00031 =
     [ "ENET_QOS_RXP_BUFFER_SIZE", "a00031.html#ga9ce58d6082ba0834fa870536c716fe8e", null ],
     [ "ENET_QOS_EST_WID", "a00031.html#ga06151a2423e9fe12d0fc81adec13129b", null ],
     [ "ENET_QOS_EST_DEP", "a00031.html#ga3d62fe37021da538f3bcd78c945470ef", null ],
+    [ "enet_qos_mii_mode_t", "a00031.html#ga1647596835bfe8bc4ba1e112bfd5de6b", null ],
+    [ "enet_qos_mii_speed_t", "a00031.html#ga0eac79e15fe4c7b65c85b168b7b0007d", null ],
+    [ "enet_qos_mii_duplex_t", "a00031.html#ga772dba9a6241bfffc3d98253906fd244", null ],
+    [ "enet_qos_mii_normal_opcode", "a00031.html#gad69afcc0a86e9586e67ea48da290a1b4", null ],
+    [ "enet_qos_dma_burstlen", "a00031.html#gacaf0f236246fbf004883fc01b6fcc7a3", null ],
+    [ "enet_qos_desc_flag", "a00031.html#ga81a907d79b6fa7850cc883e58bef74f2", null ],
+    [ "enet_qos_systime_op", "a00031.html#ga3c59b31848be5ab65920e0775c08a51b", null ],
+    [ "enet_qos_ts_rollover_type", "a00031.html#gaa34cfb63349da91b4e31081c2cc1478a", null ],
+    [ "enet_qos_special_config_t", "a00031.html#ga3a974ef82ec9dd4880f01dff9def2e96", null ],
+    [ "enet_qos_dma_interrupt_enable_t", "a00031.html#ga6d1ae307c301d63f4bda75e4226805c7", null ],
+    [ "enet_qos_mac_interrupt_enable_t", "a00031.html#ga2a6189aa237af55319b202b053b560c8", null ],
+    [ "enet_qos_event_t", "a00031.html#ga5ddf36bd34cb2a03f18a9515cd0eae30", null ],
+    [ "enet_qos_queue_mode_t", "a00031.html#ga491c70da6807f3fcdc85ae2c926083a2", null ],
+    [ "enet_qos_mtl_multiqueue_txsche", "a00031.html#ga0a9b04aec75171468b7bdb40dc5f8168", null ],
+    [ "enet_qos_mtl_multiqueue_rxsche", "a00031.html#gad402b3ed766ce40e27d2579daa5461d6", null ],
+    [ "enet_qos_mtl_rxqueuemap_t", "a00031.html#gae9c46856d34919573e70c9b1aa7833b1", null ],
+    [ "enet_qos_rx_queue_route_t", "a00031.html#ga42a3185de1e1f6de5b617f84dda9e02f", null ],
+    [ "enet_qos_ptp_event_type_t", "a00031.html#ga2e8237b5fbe4778ddc95e8097feaf9a7", null ],
+    [ "enet_qos_ptp_pps_instance_t", "a00031.html#gaaef4605e4097bf372b3b2c9bcb3e19dd", null ],
+    [ "enet_qos_ptp_pps_trgt_mode_t", "a00031.html#gae2c60e08aa4b45a710ebe744a735509d", null ],
+    [ "enet_qos_ptp_pps_cmd_t", "a00031.html#gae5992c7862b2dc3cd6ea4644482f556d", null ],
+    [ "enet_qos_ets_list_length_t", "a00031.html#ga3f77feb6d226089c569c7c9d0a1248d4", null ],
+    [ "enet_qos_ets_gccr_addr_t", "a00031.html#ga6ad45ea395597a399262a46510ce6e0f", null ],
+    [ "enet_qos_rxp_dma_chn_t", "a00031.html#ga07f5a330144b1df4508eac1b6c01b1db", null ],
+    [ "enet_qos_tx_offload_t", "a00031.html#ga9b249a0de4250086bdc1266b51eb1d6d", null ],
+    [ "enet_qos_rx_bd_struct_t", "a00031.html#gab15ec19be18a19b493db63a96d57dc97", null ],
+    [ "enet_qos_tx_bd_struct_t", "a00031.html#ga0086189b457f6b20d20248f6a2f3c91b", null ],
+    [ "enet_qos_tx_bd_config_struct_t", "a00031.html#ga6fa859eafdf9866f2382d72f6a0c58be", null ],
+    [ "enet_qos_ptp_time_t", "a00031.html#gac560a2988aeb5ca9ba6a977c246dde03", null ],
+    [ "enet_qos_frame_info_t", "a00031.html#gad07f13bf26b86ddf3a7a915f516f14c9", null ],
+    [ "enet_qos_tx_dirty_ring_t", "a00031.html#gacf92b4829386e9de08df1e7b7a347e34", null ],
+    [ "enet_qos_ptp_config_t", "a00031.html#gafea61ab3cb41341423028e1ddec31832", null ],
+    [ "enet_qos_est_gate_op_t", "a00031.html#gab26fcc610a29eeb5cf3d5cfa1847c7fa", null ],
+    [ "enet_qos_est_gcl_t", "a00031.html#gac636f115088df71e9fe38bf633a394a9", null ],
+    [ "enet_qos_rxp_config_t", "a00031.html#ga7444f68fb0a155c9f31ad899391ed21e", null ],
+    [ "enet_qos_buffer_config_t", "a00031.html#ga275029e9b21481ae7677a5cfe28dc29c", null ],
+    [ "enet_qos_cbs_config_t", "a00031.html#gaea7ff9c9897d32927f5825f95c51b743", null ],
+    [ "enet_qos_queue_tx_config_t", "a00031.html#ga3920c38912e75197235c6a8a5ec0cb31", null ],
+    [ "enet_qos_queue_rx_config_t", "a00031.html#gace12eb20084fd68bda9349be280cfceb", null ],
+    [ "enet_qos_multiqueue_config_t", "a00031.html#ga4ebfaf69f1734341a29933358f314aba", null ],
     [ "enet_qos_rx_alloc_callback_t", "a00031.html#ga0ab5557d97101c1e160b22fcb79e770b", null ],
     [ "enet_qos_rx_free_callback_t", "a00031.html#gafc68c0aad6de0f0c18828cfb8570a6a8", null ],
-    [ "enet_qos_callback_t", "a00031.html#gac4c5dc0c8948323178c50cab581519e5", [
+    [ "enet_qos_config_t", "a00031.html#gaae58f42fbe25cba3b4d6dd62b749f421", null ],
+    [ "enet_qos_callback_t", "a00031.html#gac4c5dc0c8948323178c50cab581519e5", null ],
+    [ "enet_qos_tx_bd_ring_t", "a00031.html#ga0f9d88d74a4d49abb9dfe213b2349c63", null ],
+    [ "enet_qos_rx_bd_ring_t", "a00031.html#gad655312e18d95a39790d128f194d318e", null ],
+    [ "enet_qos_buffer_struct_t", "a00031.html#ga75d8c9e38f165658a82bd57fc841bfae", null ],
+    [ "enet_qos_rx_frame_error_t", "a00031.html#ga63bf885e15bc1db42eebb66b0bada4f8", null ],
+    [ "enet_qos_rx_frame_struct_t", "a00031.html#ga9c6c374ad0ce86d567e4761e9ee64c29", null ],
+    [ "enet_qos_transfer_stats_t", "a00031.html#gaa653c4bfff9896e35a39ef30e3a8df67", [
       [ "kStatus_ENET_QOS_InitMemoryFail", "a00031.html#gga5d76b81b0ad4c19007a781d4edb8181fa72d260069866ccddd451afe58b1750af", null ],
       [ "kStatus_ENET_QOS_RxFrameError", "a00031.html#gga5d76b81b0ad4c19007a781d4edb8181fa3506d4c1b43edb9c6fce092610b016e8", null ],
       [ "kStatus_ENET_QOS_RxFrameFail", "a00031.html#gga5d76b81b0ad4c19007a781d4edb8181faf145d00b3ec1a1ffce58b8e777ab7bdd", null ],
@@ -213,152 +260,152 @@ var a00031 =
       [ "kStatus_ENET_QOS_Timeout", "a00031.html#gga5d76b81b0ad4c19007a781d4edb8181fa2a39cdbdf6e6a6b77ac7f41d205d0156", null ],
       [ "kStatus_ENET_QOS_PpsBusy", "a00031.html#gga5d76b81b0ad4c19007a781d4edb8181fa4fbe02e8f93feca4d2e27ea6fc03b37e", null ]
     ] ],
-    [ "enet_qos_mii_mode_t", "a00031.html#ga8e23094f0e2a07c77dff660f2a2730e3", [
-      [ "kENET_QOS_MiiMode", "a00031.html#gga8e23094f0e2a07c77dff660f2a2730e3a5c37875d18f9704a58f0f253b4081ef2", null ],
-      [ "kENET_QOS_RgmiiMode", "a00031.html#gga8e23094f0e2a07c77dff660f2a2730e3a3153f28104dd30435e59e54a0a7159d2", null ],
-      [ "kENET_QOS_RmiiMode", "a00031.html#gga8e23094f0e2a07c77dff660f2a2730e3a9c0196d59c1a7b066d00a0bf8f25cd58", null ]
+    [ "_enet_qos_mii_mode", "a00031.html#ga5b2dd9620489c91c09994d9a8b0c1d65", [
+      [ "kENET_QOS_MiiMode", "a00031.html#gga5b2dd9620489c91c09994d9a8b0c1d65a5c37875d18f9704a58f0f253b4081ef2", null ],
+      [ "kENET_QOS_RgmiiMode", "a00031.html#gga5b2dd9620489c91c09994d9a8b0c1d65a3153f28104dd30435e59e54a0a7159d2", null ],
+      [ "kENET_QOS_RmiiMode", "a00031.html#gga5b2dd9620489c91c09994d9a8b0c1d65a9c0196d59c1a7b066d00a0bf8f25cd58", null ]
     ] ],
-    [ "enet_qos_mii_speed_t", "a00031.html#ga20f699a7382c5b7d923dc51d555a652d", [
-      [ "kENET_QOS_MiiSpeed10M", "a00031.html#gga20f699a7382c5b7d923dc51d555a652da3fceca3428909bf1a9c7419a45c454b0", null ],
-      [ "kENET_QOS_MiiSpeed100M", "a00031.html#gga20f699a7382c5b7d923dc51d555a652dac03ff077250e403fb90558121c925f7e", null ],
-      [ "kENET_QOS_MiiSpeed1000M", "a00031.html#gga20f699a7382c5b7d923dc51d555a652dabe9d70e462436fc6ae2c7750237db2e5", null ],
-      [ "kENET_QOS_MiiSpeed2500M", "a00031.html#gga20f699a7382c5b7d923dc51d555a652dadd6a88b3ede104b8b30d058900c8678d", null ]
+    [ "_enet_qos_mii_speed", "a00031.html#gae5e7cffd37d3e0f911d1d4ff46b1a474", [
+      [ "kENET_QOS_MiiSpeed10M", "a00031.html#ggae5e7cffd37d3e0f911d1d4ff46b1a474a3fceca3428909bf1a9c7419a45c454b0", null ],
+      [ "kENET_QOS_MiiSpeed100M", "a00031.html#ggae5e7cffd37d3e0f911d1d4ff46b1a474ac03ff077250e403fb90558121c925f7e", null ],
+      [ "kENET_QOS_MiiSpeed1000M", "a00031.html#ggae5e7cffd37d3e0f911d1d4ff46b1a474abe9d70e462436fc6ae2c7750237db2e5", null ],
+      [ "kENET_QOS_MiiSpeed2500M", "a00031.html#ggae5e7cffd37d3e0f911d1d4ff46b1a474add6a88b3ede104b8b30d058900c8678d", null ]
     ] ],
-    [ "enet_qos_mii_duplex_t", "a00031.html#ga32493ba8fa4bc94b0f062ca91c4c1915", [
-      [ "kENET_QOS_MiiHalfDuplex", "a00031.html#gga32493ba8fa4bc94b0f062ca91c4c1915ab6f1b9c2263a678c18e4853999734794", null ],
-      [ "kENET_QOS_MiiFullDuplex", "a00031.html#gga32493ba8fa4bc94b0f062ca91c4c1915a4ba67a5494492008b2c91aae1e029e91", null ]
+    [ "_enet_qos_mii_duplex", "a00031.html#gaab6af6aea2821ef7abd66efdda8f33e9", [
+      [ "kENET_QOS_MiiHalfDuplex", "a00031.html#ggaab6af6aea2821ef7abd66efdda8f33e9ab6f1b9c2263a678c18e4853999734794", null ],
+      [ "kENET_QOS_MiiFullDuplex", "a00031.html#ggaab6af6aea2821ef7abd66efdda8f33e9a4ba67a5494492008b2c91aae1e029e91", null ]
     ] ],
-    [ "enet_qos_mii_normal_opcode", "a00031.html#ga6119b3237ae3e7b7d2d800b3bf453b2f", [
-      [ "kENET_QOS_MiiWriteFrame", "a00031.html#gga6119b3237ae3e7b7d2d800b3bf453b2fae0b9262a6e2fdeff9d17a3ebad8f3de5", null ],
-      [ "kENET_QOS_MiiReadFrame", "a00031.html#gga6119b3237ae3e7b7d2d800b3bf453b2faefd737f2de007b23f4df6506c1285ee0", null ]
+    [ "_enet_qos_mii_normal_opcode", "a00031.html#ga83650d757620efaf398ae3154bf24e94", [
+      [ "kENET_QOS_MiiWriteFrame", "a00031.html#gga83650d757620efaf398ae3154bf24e94ae0b9262a6e2fdeff9d17a3ebad8f3de5", null ],
+      [ "kENET_QOS_MiiReadFrame", "a00031.html#gga83650d757620efaf398ae3154bf24e94aefd737f2de007b23f4df6506c1285ee0", null ]
     ] ],
-    [ "enet_qos_dma_burstlen", "a00031.html#gad3c9e13b63229ec7557b9f8ebf57a8a2", [
-      [ "kENET_QOS_BurstLen1", "a00031.html#ggad3c9e13b63229ec7557b9f8ebf57a8a2a26354682e082cfc8563b3398eb8a7bfc", null ],
-      [ "kENET_QOS_BurstLen2", "a00031.html#ggad3c9e13b63229ec7557b9f8ebf57a8a2a0504485a60ea8e499827dc826a816b64", null ],
-      [ "kENET_QOS_BurstLen4", "a00031.html#ggad3c9e13b63229ec7557b9f8ebf57a8a2a45e63473734207bdb94adb8d1932ea72", null ],
-      [ "kENET_QOS_BurstLen8", "a00031.html#ggad3c9e13b63229ec7557b9f8ebf57a8a2a36b02413fc768aafa844515e0ed3067a", null ],
-      [ "kENET_QOS_BurstLen16", "a00031.html#ggad3c9e13b63229ec7557b9f8ebf57a8a2a2f8203407a072f5144f5bd16a66e4942", null ],
-      [ "kENET_QOS_BurstLen32", "a00031.html#ggad3c9e13b63229ec7557b9f8ebf57a8a2a0138a64d59fa731624f82e02fd6b7eee", null ],
-      [ "kENET_QOS_BurstLen64", "a00031.html#ggad3c9e13b63229ec7557b9f8ebf57a8a2a4693b2d9965c0a036dd9a6ae6ad11d25", null ],
-      [ "kENET_QOS_BurstLen128", "a00031.html#ggad3c9e13b63229ec7557b9f8ebf57a8a2a4e66a77557dcf8abe151061d0f8b4f38", null ],
-      [ "kENET_QOS_BurstLen256", "a00031.html#ggad3c9e13b63229ec7557b9f8ebf57a8a2ae169c1da2f859c31fcfc4ea4de40327b", null ]
+    [ "_enet_qos_dma_burstlen", "a00031.html#ga25a7128c8fad2814e95f9249123626a3", [
+      [ "kENET_QOS_BurstLen1", "a00031.html#gga25a7128c8fad2814e95f9249123626a3a26354682e082cfc8563b3398eb8a7bfc", null ],
+      [ "kENET_QOS_BurstLen2", "a00031.html#gga25a7128c8fad2814e95f9249123626a3a0504485a60ea8e499827dc826a816b64", null ],
+      [ "kENET_QOS_BurstLen4", "a00031.html#gga25a7128c8fad2814e95f9249123626a3a45e63473734207bdb94adb8d1932ea72", null ],
+      [ "kENET_QOS_BurstLen8", "a00031.html#gga25a7128c8fad2814e95f9249123626a3a36b02413fc768aafa844515e0ed3067a", null ],
+      [ "kENET_QOS_BurstLen16", "a00031.html#gga25a7128c8fad2814e95f9249123626a3a2f8203407a072f5144f5bd16a66e4942", null ],
+      [ "kENET_QOS_BurstLen32", "a00031.html#gga25a7128c8fad2814e95f9249123626a3a0138a64d59fa731624f82e02fd6b7eee", null ],
+      [ "kENET_QOS_BurstLen64", "a00031.html#gga25a7128c8fad2814e95f9249123626a3a4693b2d9965c0a036dd9a6ae6ad11d25", null ],
+      [ "kENET_QOS_BurstLen128", "a00031.html#gga25a7128c8fad2814e95f9249123626a3a4e66a77557dcf8abe151061d0f8b4f38", null ],
+      [ "kENET_QOS_BurstLen256", "a00031.html#gga25a7128c8fad2814e95f9249123626a3ae169c1da2f859c31fcfc4ea4de40327b", null ]
     ] ],
-    [ "enet_qos_desc_flag", "a00031.html#ga240e5d334ee76b0952326020349eba31", [
-      [ "kENET_QOS_MiddleFlag", "a00031.html#gga240e5d334ee76b0952326020349eba31ab7ff92e1e4e73a4bcdb11219f959d9dc", null ],
-      [ "kENET_QOS_LastFlagOnly", "a00031.html#gga240e5d334ee76b0952326020349eba31a51bba80171ab10ffdaf4ab2c4c26677e", null ],
-      [ "kENET_QOS_FirstFlagOnly", "a00031.html#gga240e5d334ee76b0952326020349eba31ab34ebe045be96b2eed5f900bab1634f3", null ],
-      [ "kENET_QOS_FirstLastFlag", "a00031.html#gga240e5d334ee76b0952326020349eba31a896b5a8f5dce37acdd04f82d3aa7f2a4", null ]
+    [ "_enet_qos_desc_flag", "a00031.html#gadeee57bae34f841fecefe78ab52ddc50", [
+      [ "kENET_QOS_MiddleFlag", "a00031.html#ggadeee57bae34f841fecefe78ab52ddc50ab7ff92e1e4e73a4bcdb11219f959d9dc", null ],
+      [ "kENET_QOS_LastFlagOnly", "a00031.html#ggadeee57bae34f841fecefe78ab52ddc50a51bba80171ab10ffdaf4ab2c4c26677e", null ],
+      [ "kENET_QOS_FirstFlagOnly", "a00031.html#ggadeee57bae34f841fecefe78ab52ddc50ab34ebe045be96b2eed5f900bab1634f3", null ],
+      [ "kENET_QOS_FirstLastFlag", "a00031.html#ggadeee57bae34f841fecefe78ab52ddc50a896b5a8f5dce37acdd04f82d3aa7f2a4", null ]
     ] ],
-    [ "enet_qos_systime_op", "a00031.html#gab1a8d5f5309bda2d54e366868f71dcc4", [
-      [ "kENET_QOS_SystimeAdd", "a00031.html#ggab1a8d5f5309bda2d54e366868f71dcc4ad761bc8a86846bd32de16e0a6cdf9195", null ],
-      [ "kENET_QOS_SystimeSubtract", "a00031.html#ggab1a8d5f5309bda2d54e366868f71dcc4a12eb9232e308020e25b09278bbf1f230", null ]
+    [ "_enet_qos_systime_op", "a00031.html#ga9e0b909481438d65120f4320ea31ca84", [
+      [ "kENET_QOS_SystimeAdd", "a00031.html#gga9e0b909481438d65120f4320ea31ca84ad761bc8a86846bd32de16e0a6cdf9195", null ],
+      [ "kENET_QOS_SystimeSubtract", "a00031.html#gga9e0b909481438d65120f4320ea31ca84a12eb9232e308020e25b09278bbf1f230", null ]
     ] ],
-    [ "enet_qos_ts_rollover_type", "a00031.html#ga40e92222a17448e782308ead4b6e0b06", [
-      [ "kENET_QOS_BinaryRollover", "a00031.html#gga40e92222a17448e782308ead4b6e0b06a2561c6baba089d8250e73953c0e3c483", null ],
-      [ "kENET_QOS_DigitalRollover", "a00031.html#gga40e92222a17448e782308ead4b6e0b06a2b456ec9f4bf1b887b6eeba1e2f87783", null ]
+    [ "_enet_qos_ts_rollover_type", "a00031.html#ga47f072b75b0b740ad8254d0d9ed71705", [
+      [ "kENET_QOS_BinaryRollover", "a00031.html#gga47f072b75b0b740ad8254d0d9ed71705a2561c6baba089d8250e73953c0e3c483", null ],
+      [ "kENET_QOS_DigitalRollover", "a00031.html#gga47f072b75b0b740ad8254d0d9ed71705a2b456ec9f4bf1b887b6eeba1e2f87783", null ]
     ] ],
-    [ "enet_qos_special_config_t", "a00031.html#ga566bc955ce6b991051f65e7e21d57c65", [
-      [ "kENET_QOS_DescDoubleBuffer", "a00031.html#gga566bc955ce6b991051f65e7e21d57c65aa23735225dd936225255d1e358f7f998", null ],
-      [ "kENET_QOS_StoreAndForward", "a00031.html#gga566bc955ce6b991051f65e7e21d57c65a59d22382d6e3f1bec549f02437d39684", null ],
-      [ "kENET_QOS_PromiscuousEnable", "a00031.html#gga566bc955ce6b991051f65e7e21d57c65a851b29d5dd75fd436d90331e7c243328", null ],
-      [ "kENET_QOS_FlowControlEnable", "a00031.html#gga566bc955ce6b991051f65e7e21d57c65a9c6025000d779b1419e94a94fbc8088e", null ],
-      [ "kENET_QOS_BroadCastRxDisable", "a00031.html#gga566bc955ce6b991051f65e7e21d57c65aad1d44fb46fb2d7e3dd201ac186bb7f8", null ],
-      [ "kENET_QOS_MulticastAllEnable", "a00031.html#gga566bc955ce6b991051f65e7e21d57c65af2687413704ffec931b0699910bcf4ac", null ],
-      [ "kENET_QOS_8023AS2KPacket", "a00031.html#gga566bc955ce6b991051f65e7e21d57c65a8dc4c0acefa490a47426c418e540250d", null ],
-      [ "kENET_QOS_HashMulticastEnable", "a00031.html#gga566bc955ce6b991051f65e7e21d57c65ab1776698a43409b8b0dc4e5eacb359d9", null ],
-      [ "kENET_QOS_RxChecksumOffloadEnable", "a00031.html#gga566bc955ce6b991051f65e7e21d57c65a4795d259068bafafd45d42ef382af60b", null ]
+    [ "_enet_qos_special_config", "a00031.html#ga7adb2ea1ef8a2a9d4be81cd65a200722", [
+      [ "kENET_QOS_DescDoubleBuffer", "a00031.html#gga7adb2ea1ef8a2a9d4be81cd65a200722aa23735225dd936225255d1e358f7f998", null ],
+      [ "kENET_QOS_StoreAndForward", "a00031.html#gga7adb2ea1ef8a2a9d4be81cd65a200722a59d22382d6e3f1bec549f02437d39684", null ],
+      [ "kENET_QOS_PromiscuousEnable", "a00031.html#gga7adb2ea1ef8a2a9d4be81cd65a200722a851b29d5dd75fd436d90331e7c243328", null ],
+      [ "kENET_QOS_FlowControlEnable", "a00031.html#gga7adb2ea1ef8a2a9d4be81cd65a200722a9c6025000d779b1419e94a94fbc8088e", null ],
+      [ "kENET_QOS_BroadCastRxDisable", "a00031.html#gga7adb2ea1ef8a2a9d4be81cd65a200722aad1d44fb46fb2d7e3dd201ac186bb7f8", null ],
+      [ "kENET_QOS_MulticastAllEnable", "a00031.html#gga7adb2ea1ef8a2a9d4be81cd65a200722af2687413704ffec931b0699910bcf4ac", null ],
+      [ "kENET_QOS_8023AS2KPacket", "a00031.html#gga7adb2ea1ef8a2a9d4be81cd65a200722a8dc4c0acefa490a47426c418e540250d", null ],
+      [ "kENET_QOS_HashMulticastEnable", "a00031.html#gga7adb2ea1ef8a2a9d4be81cd65a200722ab1776698a43409b8b0dc4e5eacb359d9", null ],
+      [ "kENET_QOS_RxChecksumOffloadEnable", "a00031.html#gga7adb2ea1ef8a2a9d4be81cd65a200722a4795d259068bafafd45d42ef382af60b", null ]
     ] ],
-    [ "enet_qos_dma_interrupt_enable_t", "a00031.html#ga730ca73e0975ce001a188cc8dfe1b82c", [
-      [ "kENET_QOS_DmaTx", "a00031.html#gga730ca73e0975ce001a188cc8dfe1b82ca361af6885b37bedde511c07a338aeceb", null ],
-      [ "kENET_QOS_DmaTxStop", "a00031.html#gga730ca73e0975ce001a188cc8dfe1b82ca7ea8bf03e6a4884f3c2f0a089aafefa2", null ],
-      [ "kENET_QOS_DmaTxBuffUnavail", "a00031.html#gga730ca73e0975ce001a188cc8dfe1b82ca1ea936716bbd55914e2a1582ff6b1163", null ],
-      [ "kENET_QOS_DmaRx", "a00031.html#gga730ca73e0975ce001a188cc8dfe1b82cab789eb764e2cfa8fb63dc018c68e9943", null ],
-      [ "kENET_QOS_DmaRxBuffUnavail", "a00031.html#gga730ca73e0975ce001a188cc8dfe1b82ca2597cba9d1f22735da16b302207fa455", null ],
-      [ "kENET_QOS_DmaRxStop", "a00031.html#gga730ca73e0975ce001a188cc8dfe1b82ca13984d20e33d5f136333e341a5c06669", null ],
-      [ "kENET_QOS_DmaRxWatchdogTimeout", "a00031.html#gga730ca73e0975ce001a188cc8dfe1b82ca03fa2c4f7359b529dd5bf44c98eb08b1", null ],
-      [ "kENET_QOS_DmaEarlyTx", "a00031.html#gga730ca73e0975ce001a188cc8dfe1b82caddc25e801da74b9c75cb753c8ff90442", null ],
-      [ "kENET_QOS_DmaEarlyRx", "a00031.html#gga730ca73e0975ce001a188cc8dfe1b82cacbab28ae5dd16b387d3f82e03da29333", null ],
-      [ "kENET_QOS_DmaBusErr", "a00031.html#gga730ca73e0975ce001a188cc8dfe1b82ca849102bd44e65612a87befb5c2f6dcbf", null ]
+    [ "_enet_qos_dma_interrupt_enable", "a00031.html#ga5f6d8b7b349512b04bb0558368ce379e", [
+      [ "kENET_QOS_DmaTx", "a00031.html#gga5f6d8b7b349512b04bb0558368ce379ea361af6885b37bedde511c07a338aeceb", null ],
+      [ "kENET_QOS_DmaTxStop", "a00031.html#gga5f6d8b7b349512b04bb0558368ce379ea7ea8bf03e6a4884f3c2f0a089aafefa2", null ],
+      [ "kENET_QOS_DmaTxBuffUnavail", "a00031.html#gga5f6d8b7b349512b04bb0558368ce379ea1ea936716bbd55914e2a1582ff6b1163", null ],
+      [ "kENET_QOS_DmaRx", "a00031.html#gga5f6d8b7b349512b04bb0558368ce379eab789eb764e2cfa8fb63dc018c68e9943", null ],
+      [ "kENET_QOS_DmaRxBuffUnavail", "a00031.html#gga5f6d8b7b349512b04bb0558368ce379ea2597cba9d1f22735da16b302207fa455", null ],
+      [ "kENET_QOS_DmaRxStop", "a00031.html#gga5f6d8b7b349512b04bb0558368ce379ea13984d20e33d5f136333e341a5c06669", null ],
+      [ "kENET_QOS_DmaRxWatchdogTimeout", "a00031.html#gga5f6d8b7b349512b04bb0558368ce379ea03fa2c4f7359b529dd5bf44c98eb08b1", null ],
+      [ "kENET_QOS_DmaEarlyTx", "a00031.html#gga5f6d8b7b349512b04bb0558368ce379eaddc25e801da74b9c75cb753c8ff90442", null ],
+      [ "kENET_QOS_DmaEarlyRx", "a00031.html#gga5f6d8b7b349512b04bb0558368ce379eacbab28ae5dd16b387d3f82e03da29333", null ],
+      [ "kENET_QOS_DmaBusErr", "a00031.html#gga5f6d8b7b349512b04bb0558368ce379ea849102bd44e65612a87befb5c2f6dcbf", null ]
     ] ],
-    [ "enet_qos_mac_interrupt_enable_t", "a00031.html#ga3cf0f90324ea61cd94ab3f9845c66fe0", null ],
-    [ "enet_qos_event_t", "a00031.html#gaae17b8976ff4556c39570f060d82967b", [
-      [ "kENET_QOS_RxIntEvent", "a00031.html#ggaae17b8976ff4556c39570f060d82967baad9e2e0f6ec7a0cdc792bbb0aa98d609", null ],
-      [ "kENET_QOS_TxIntEvent", "a00031.html#ggaae17b8976ff4556c39570f060d82967ba076a9ec3ea7748adc582bb9941dd19f7", null ],
-      [ "kENET_QOS_WakeUpIntEvent", "a00031.html#ggaae17b8976ff4556c39570f060d82967ba95a40aeb8e1d0e3f64a263bd708c130f", null ],
-      [ "kENET_QOS_TimeStampIntEvent", "a00031.html#ggaae17b8976ff4556c39570f060d82967ba9cb341c6fa4a92e938780a77e22b3e82", null ]
+    [ "_enet_qos_mac_interrupt_enable", "a00031.html#gaf275910ec5d2af659a0ef5d822a0d143", null ],
+    [ "_enet_qos_event", "a00031.html#ga2749eb8c51bc82890c4b9f9de008ee2f", [
+      [ "kENET_QOS_RxIntEvent", "a00031.html#gga2749eb8c51bc82890c4b9f9de008ee2faad9e2e0f6ec7a0cdc792bbb0aa98d609", null ],
+      [ "kENET_QOS_TxIntEvent", "a00031.html#gga2749eb8c51bc82890c4b9f9de008ee2fa076a9ec3ea7748adc582bb9941dd19f7", null ],
+      [ "kENET_QOS_WakeUpIntEvent", "a00031.html#gga2749eb8c51bc82890c4b9f9de008ee2fa95a40aeb8e1d0e3f64a263bd708c130f", null ],
+      [ "kENET_QOS_TimeStampIntEvent", "a00031.html#gga2749eb8c51bc82890c4b9f9de008ee2fa9cb341c6fa4a92e938780a77e22b3e82", null ]
     ] ],
-    [ "enet_qos_queue_mode_t", "a00031.html#ga9bfbf2f7613c28a311156c1238d92d2e", [
-      [ "kENET_QOS_AVB_Mode", "a00031.html#gga9bfbf2f7613c28a311156c1238d92d2eab536d0f7ceb334736b87e7a31435ba50", null ],
-      [ "kENET_QOS_DCB_Mode", "a00031.html#gga9bfbf2f7613c28a311156c1238d92d2eaf16e0249af9d2f8c480c195cc1b12c42", null ]
+    [ "_enet_qos_queue_mode", "a00031.html#gad3b6a007c645089d16a0347087962ebb", [
+      [ "kENET_QOS_AVB_Mode", "a00031.html#ggad3b6a007c645089d16a0347087962ebbab536d0f7ceb334736b87e7a31435ba50", null ],
+      [ "kENET_QOS_DCB_Mode", "a00031.html#ggad3b6a007c645089d16a0347087962ebbaf16e0249af9d2f8c480c195cc1b12c42", null ]
     ] ],
-    [ "enet_qos_mtl_multiqueue_txsche", "a00031.html#ga839bd10310c3c65d4d637c0f687cda56", [
-      [ "kENET_QOS_txWeightRR", "a00031.html#gga839bd10310c3c65d4d637c0f687cda56ab1791b8c7b710f7f450d210a69448654", null ],
-      [ "kENET_QOS_txWeightFQ", "a00031.html#gga839bd10310c3c65d4d637c0f687cda56a10d7900ef57dbac80dbb996b58f3c217", null ],
-      [ "kENET_QOS_txDefictWeightRR", "a00031.html#gga839bd10310c3c65d4d637c0f687cda56a16a0ab621a354406a6bc200e6eb866c5", null ],
-      [ "kENET_QOS_txStrPrio", "a00031.html#gga839bd10310c3c65d4d637c0f687cda56a3d131b76c7585c69abc59c67c0ee9c9f", null ]
+    [ "_enet_qos_mtl_multiqueue_txsche", "a00031.html#ga4ff96b697493d27c4f046fc224847c03", [
+      [ "kENET_QOS_txWeightRR", "a00031.html#gga4ff96b697493d27c4f046fc224847c03ab1791b8c7b710f7f450d210a69448654", null ],
+      [ "kENET_QOS_txWeightFQ", "a00031.html#gga4ff96b697493d27c4f046fc224847c03a10d7900ef57dbac80dbb996b58f3c217", null ],
+      [ "kENET_QOS_txDefictWeightRR", "a00031.html#gga4ff96b697493d27c4f046fc224847c03a16a0ab621a354406a6bc200e6eb866c5", null ],
+      [ "kENET_QOS_txStrPrio", "a00031.html#gga4ff96b697493d27c4f046fc224847c03a3d131b76c7585c69abc59c67c0ee9c9f", null ]
     ] ],
-    [ "enet_qos_mtl_multiqueue_rxsche", "a00031.html#ga8b43085037b455c0d3343f3dbe8df82d", [
-      [ "kENET_QOS_rxStrPrio", "a00031.html#gga8b43085037b455c0d3343f3dbe8df82dac7feac973acb14ce97c34b7e9e35aec8", null ],
-      [ "kENET_QOS_rxWeightStrPrio", "a00031.html#gga8b43085037b455c0d3343f3dbe8df82da335abb7475f5338f60f504c85eaa6ff9", null ]
+    [ "_enet_qos_mtl_multiqueue_rxsche", "a00031.html#gaec82676c492e435c9dedf33b96f28164", [
+      [ "kENET_QOS_rxStrPrio", "a00031.html#ggaec82676c492e435c9dedf33b96f28164ac7feac973acb14ce97c34b7e9e35aec8", null ],
+      [ "kENET_QOS_rxWeightStrPrio", "a00031.html#ggaec82676c492e435c9dedf33b96f28164a335abb7475f5338f60f504c85eaa6ff9", null ]
     ] ],
-    [ "enet_qos_mtl_rxqueuemap_t", "a00031.html#ga098e2a647c30816cb132975cfec56d5d", [
-      [ "kENET_QOS_StaticDirctMap", "a00031.html#gga098e2a647c30816cb132975cfec56d5daf871c0858822f089471fef352c23479c", null ],
-      [ "kENET_QOS_DynamicMap", "a00031.html#gga098e2a647c30816cb132975cfec56d5da85650782256adebf19b308c70cd6fc97", null ]
+    [ "_enet_qos_mtl_rxqueuemap", "a00031.html#gaf93d3208ba194e3e24b13bcc599922cd", [
+      [ "kENET_QOS_StaticDirctMap", "a00031.html#ggaf93d3208ba194e3e24b13bcc599922cdaf871c0858822f089471fef352c23479c", null ],
+      [ "kENET_QOS_DynamicMap", "a00031.html#ggaf93d3208ba194e3e24b13bcc599922cda85650782256adebf19b308c70cd6fc97", null ]
     ] ],
-    [ "enet_qos_rx_queue_route_t", "a00031.html#ga9fcf800c85065e6b1e6293a04d315b6d", null ],
-    [ "enet_qos_ptp_event_type_t", "a00031.html#ga15f5058f92551f8528130864975d3297", [
-      [ "kENET_QOS_PtpEventMsgType", "a00031.html#gga15f5058f92551f8528130864975d3297a32abb8c774dbe7c1f8849d84feae2eac", null ],
-      [ "kENET_QOS_PtpSrcPortIdLen", "a00031.html#gga15f5058f92551f8528130864975d3297a7435967701fab5d6668f780a32e59d52", null ],
-      [ "kENET_QOS_PtpEventPort", "a00031.html#gga15f5058f92551f8528130864975d3297a501b47310136c6c07d4d05829cd22d7e", null ],
-      [ "kENET_QOS_PtpGnrlPort", "a00031.html#gga15f5058f92551f8528130864975d3297ac3a8740198c45c9f64e71d0add37a3ed", null ]
+    [ "_enet_qos_rx_queue_route", "a00031.html#gaafe88a81735e59bc5b51e134550c19b1", null ],
+    [ "_enet_qos_ptp_event_type", "a00031.html#gad6d63106bdc4519c7f6000ebd107561d", [
+      [ "kENET_QOS_PtpEventMsgType", "a00031.html#ggad6d63106bdc4519c7f6000ebd107561da32abb8c774dbe7c1f8849d84feae2eac", null ],
+      [ "kENET_QOS_PtpSrcPortIdLen", "a00031.html#ggad6d63106bdc4519c7f6000ebd107561da7435967701fab5d6668f780a32e59d52", null ],
+      [ "kENET_QOS_PtpEventPort", "a00031.html#ggad6d63106bdc4519c7f6000ebd107561da501b47310136c6c07d4d05829cd22d7e", null ],
+      [ "kENET_QOS_PtpGnrlPort", "a00031.html#ggad6d63106bdc4519c7f6000ebd107561dac3a8740198c45c9f64e71d0add37a3ed", null ]
     ] ],
-    [ "enet_qos_ptp_pps_instance_t", "a00031.html#ga6d4aad8ec63e49967622b6ab563c2bca", [
-      [ "kENET_QOS_PtpPpsIstance0", "a00031.html#gga6d4aad8ec63e49967622b6ab563c2bcaa3f74c1da5f3ab898d40186ccb19159fb", null ],
-      [ "kENET_QOS_PtpPpsIstance1", "a00031.html#gga6d4aad8ec63e49967622b6ab563c2bcaa55ff225f8c63477d1e14bfe00d30e09c", null ],
-      [ "kENET_QOS_PtpPpsIstance2", "a00031.html#gga6d4aad8ec63e49967622b6ab563c2bcaacc0fe4b9ef76ece612cc7db24c39c38b", null ],
-      [ "kENET_QOS_PtpPpsIstance3", "a00031.html#gga6d4aad8ec63e49967622b6ab563c2bcaaa414f88909fb03a026a3d2210e309475", null ]
+    [ "_enet_qos_ptp_pps_instance", "a00031.html#ga036fe4cd323567d3d668d0c9c02f853a", [
+      [ "kENET_QOS_PtpPpsIstance0", "a00031.html#gga036fe4cd323567d3d668d0c9c02f853aa3f74c1da5f3ab898d40186ccb19159fb", null ],
+      [ "kENET_QOS_PtpPpsIstance1", "a00031.html#gga036fe4cd323567d3d668d0c9c02f853aa55ff225f8c63477d1e14bfe00d30e09c", null ],
+      [ "kENET_QOS_PtpPpsIstance2", "a00031.html#gga036fe4cd323567d3d668d0c9c02f853aacc0fe4b9ef76ece612cc7db24c39c38b", null ],
+      [ "kENET_QOS_PtpPpsIstance3", "a00031.html#gga036fe4cd323567d3d668d0c9c02f853aaa414f88909fb03a026a3d2210e309475", null ]
     ] ],
-    [ "enet_qos_ptp_pps_trgt_mode_t", "a00031.html#gab9176efd1192e5ee75fd5e2cb7e4086b", [
-      [ "kENET_QOS_PtpPpsTrgtModeOnlyInt", "a00031.html#ggab9176efd1192e5ee75fd5e2cb7e4086ba80feaaf0a48fd99a8cad436ae23998be", null ],
-      [ "kENET_QOS_PtpPpsTrgtModeIntSt", "a00031.html#ggab9176efd1192e5ee75fd5e2cb7e4086ba4919111043e88cac1ab5ec1ecbd388e5", null ],
-      [ "kENET_QOS_PtpPpsTrgtModeOnlySt", "a00031.html#ggab9176efd1192e5ee75fd5e2cb7e4086ba6003374266514a145a01b2b572aec114", null ]
+    [ "_enet_qos_ptp_pps_trgt_mode", "a00031.html#ga503083788abe0c10a710576fe30698b2", [
+      [ "kENET_QOS_PtpPpsTrgtModeOnlyInt", "a00031.html#gga503083788abe0c10a710576fe30698b2a80feaaf0a48fd99a8cad436ae23998be", null ],
+      [ "kENET_QOS_PtpPpsTrgtModeIntSt", "a00031.html#gga503083788abe0c10a710576fe30698b2a4919111043e88cac1ab5ec1ecbd388e5", null ],
+      [ "kENET_QOS_PtpPpsTrgtModeOnlySt", "a00031.html#gga503083788abe0c10a710576fe30698b2a6003374266514a145a01b2b572aec114", null ]
     ] ],
-    [ "enet_qos_ptp_pps_cmd_t", "a00031.html#gae55826e0bf15e87a6557348c0d680138", [
-      [ "kENET_QOS_PtpPpsCmdNC", "a00031.html#ggae55826e0bf15e87a6557348c0d680138a8bbb83914c8b453abd5d3414d1b4065c", null ],
-      [ "kENET_QOS_PtpPpsCmdSSP", "a00031.html#ggae55826e0bf15e87a6557348c0d680138a558ea3e749dbc87f73a04d8fdb8c5404", null ],
-      [ "kENET_QOS_PtpPpsCmdSPT", "a00031.html#ggae55826e0bf15e87a6557348c0d680138a84637f9ce0554e0250ae2f4d9d23f209", null ],
-      [ "kENET_QOS_PtpPpsCmdCS", "a00031.html#ggae55826e0bf15e87a6557348c0d680138a3ed8d8280fb0df3fa82c95670bcd77d8", null ],
-      [ "kENET_QOS_PtpPpsCmdSPTAT", "a00031.html#ggae55826e0bf15e87a6557348c0d680138a76a9ed879c38c4a2cb982f3b7985626f", null ],
-      [ "kENET_QOS_PtpPpsCmdSPTI", "a00031.html#ggae55826e0bf15e87a6557348c0d680138a96a65a731305813973a0b03631bc2feb", null ],
-      [ "kENET_QOS_PtpPpsCmdCSPT", "a00031.html#ggae55826e0bf15e87a6557348c0d680138aaa0bcb6d49706463d4d4b1857d46ac5e", null ]
+    [ "_enet_qos_ptp_pps_cmd", "a00031.html#ga774d3ba9173ab537755ba573ead79b72", [
+      [ "kENET_QOS_PtpPpsCmdNC", "a00031.html#gga774d3ba9173ab537755ba573ead79b72a8bbb83914c8b453abd5d3414d1b4065c", null ],
+      [ "kENET_QOS_PtpPpsCmdSSP", "a00031.html#gga774d3ba9173ab537755ba573ead79b72a558ea3e749dbc87f73a04d8fdb8c5404", null ],
+      [ "kENET_QOS_PtpPpsCmdSPT", "a00031.html#gga774d3ba9173ab537755ba573ead79b72a84637f9ce0554e0250ae2f4d9d23f209", null ],
+      [ "kENET_QOS_PtpPpsCmdCS", "a00031.html#gga774d3ba9173ab537755ba573ead79b72a3ed8d8280fb0df3fa82c95670bcd77d8", null ],
+      [ "kENET_QOS_PtpPpsCmdSPTAT", "a00031.html#gga774d3ba9173ab537755ba573ead79b72a76a9ed879c38c4a2cb982f3b7985626f", null ],
+      [ "kENET_QOS_PtpPpsCmdSPTI", "a00031.html#gga774d3ba9173ab537755ba573ead79b72a96a65a731305813973a0b03631bc2feb", null ],
+      [ "kENET_QOS_PtpPpsCmdCSPT", "a00031.html#gga774d3ba9173ab537755ba573ead79b72aaa0bcb6d49706463d4d4b1857d46ac5e", null ]
     ] ],
-    [ "enet_qos_ets_list_length_t", "a00031.html#ga9f35322370b6b60f1a13ea4167cc24ea", [
-      [ "kENET_QOS_Ets_List_64", "a00031.html#gga9f35322370b6b60f1a13ea4167cc24eaae9e736a7fff32b886d2d47ab0da005d6", null ],
-      [ "kENET_QOS_Ets_List_128", "a00031.html#gga9f35322370b6b60f1a13ea4167cc24eaa28dd7b948bf8c3ecdbe58d4b0d43878f", null ],
-      [ "kENET_QOS_Ets_List_256", "a00031.html#gga9f35322370b6b60f1a13ea4167cc24eaa691566d56362c91e107fe1354215ec14", null ],
-      [ "kENET_QOS_Ets_List_512", "a00031.html#gga9f35322370b6b60f1a13ea4167cc24eaa42db61240f2cc44949f9f971ebb5223e", null ],
-      [ "kENET_QOS_Ets_List_1024", "a00031.html#gga9f35322370b6b60f1a13ea4167cc24eaa4ff9487814ee15986fad9721e2a4f712", null ]
+    [ "_enet_qos_ets_list_length", "a00031.html#ga51207bce4b17cd6643327b91b13da95d", [
+      [ "kENET_QOS_Ets_List_64", "a00031.html#gga51207bce4b17cd6643327b91b13da95dae9e736a7fff32b886d2d47ab0da005d6", null ],
+      [ "kENET_QOS_Ets_List_128", "a00031.html#gga51207bce4b17cd6643327b91b13da95da28dd7b948bf8c3ecdbe58d4b0d43878f", null ],
+      [ "kENET_QOS_Ets_List_256", "a00031.html#gga51207bce4b17cd6643327b91b13da95da691566d56362c91e107fe1354215ec14", null ],
+      [ "kENET_QOS_Ets_List_512", "a00031.html#gga51207bce4b17cd6643327b91b13da95da42db61240f2cc44949f9f971ebb5223e", null ],
+      [ "kENET_QOS_Ets_List_1024", "a00031.html#gga51207bce4b17cd6643327b91b13da95da4ff9487814ee15986fad9721e2a4f712", null ]
     ] ],
-    [ "enet_qos_ets_gccr_addr_t", "a00031.html#gaf6fbb179186a43483426ae7b226b6427", [
-      [ "kENET_QOS_Ets_btr_low", "a00031.html#ggaf6fbb179186a43483426ae7b226b6427a7fba258015112f8879eeb71d6d7d770b", null ],
-      [ "kENET_QOS_Ets_btr_high", "a00031.html#ggaf6fbb179186a43483426ae7b226b6427a905f2f146bf96088c198715ba5259186", null ],
-      [ "kENET_QOS_Ets_ctr_low", "a00031.html#ggaf6fbb179186a43483426ae7b226b6427a57e7e569cc7f33a3c4b362a05024f8d2", null ],
-      [ "kENET_QOS_Ets_ctr_high", "a00031.html#ggaf6fbb179186a43483426ae7b226b6427a36ed4b956329a36a0abedcf2f34645ff", null ],
-      [ "kENET_QOS_Ets_ter", "a00031.html#ggaf6fbb179186a43483426ae7b226b6427a045e5439df3c3b369bbb45d22fbd16b5", null ],
-      [ "kENET_QOS_Ets_llr", "a00031.html#ggaf6fbb179186a43483426ae7b226b6427ab3af7472d8c78fc7419f96084c2176c7", null ]
+    [ "_enet_qos_ets_gccr_addr", "a00031.html#ga613497807cc812ff0f9a1a9a05f6d0e1", [
+      [ "kENET_QOS_Ets_btr_low", "a00031.html#gga613497807cc812ff0f9a1a9a05f6d0e1a7fba258015112f8879eeb71d6d7d770b", null ],
+      [ "kENET_QOS_Ets_btr_high", "a00031.html#gga613497807cc812ff0f9a1a9a05f6d0e1a905f2f146bf96088c198715ba5259186", null ],
+      [ "kENET_QOS_Ets_ctr_low", "a00031.html#gga613497807cc812ff0f9a1a9a05f6d0e1a57e7e569cc7f33a3c4b362a05024f8d2", null ],
+      [ "kENET_QOS_Ets_ctr_high", "a00031.html#gga613497807cc812ff0f9a1a9a05f6d0e1a36ed4b956329a36a0abedcf2f34645ff", null ],
+      [ "kENET_QOS_Ets_ter", "a00031.html#gga613497807cc812ff0f9a1a9a05f6d0e1a045e5439df3c3b369bbb45d22fbd16b5", null ],
+      [ "kENET_QOS_Ets_llr", "a00031.html#gga613497807cc812ff0f9a1a9a05f6d0e1ab3af7472d8c78fc7419f96084c2176c7", null ]
     ] ],
-    [ "enet_qos_rxp_dma_chn_t", "a00031.html#ga1215487d078b5451065c0ff00fb38162", [
-      [ "kENET_QOS_Rxp_DMAChn0", "a00031.html#gga1215487d078b5451065c0ff00fb38162acb5a53c767316c78059d5355fe2d4c47", null ],
-      [ "kENET_QOS_Rxp_DMAChn1", "a00031.html#gga1215487d078b5451065c0ff00fb38162a380c523055299976f96ea84cc42ac2ae", null ],
-      [ "kENET_QOS_Rxp_DMAChn2", "a00031.html#gga1215487d078b5451065c0ff00fb38162acf4cb61eaca50b379747037f9d310bfa", null ],
-      [ "kENET_QOS_Rxp_DMAChn3", "a00031.html#gga1215487d078b5451065c0ff00fb38162a6cfe38ac1c33202ec5ad6c0e1bf13252", null ],
-      [ "kENET_QOS_Rxp_DMAChn4", "a00031.html#gga1215487d078b5451065c0ff00fb38162aa66e7f1d4c5fc4f45757a4caef6aac41", null ]
+    [ "_enet_qos_rxp_dma_chn", "a00031.html#ga67292319720537c30d5db1ec3f71bff8", [
+      [ "kENET_QOS_Rxp_DMAChn0", "a00031.html#gga67292319720537c30d5db1ec3f71bff8acb5a53c767316c78059d5355fe2d4c47", null ],
+      [ "kENET_QOS_Rxp_DMAChn1", "a00031.html#gga67292319720537c30d5db1ec3f71bff8a380c523055299976f96ea84cc42ac2ae", null ],
+      [ "kENET_QOS_Rxp_DMAChn2", "a00031.html#gga67292319720537c30d5db1ec3f71bff8acf4cb61eaca50b379747037f9d310bfa", null ],
+      [ "kENET_QOS_Rxp_DMAChn3", "a00031.html#gga67292319720537c30d5db1ec3f71bff8a6cfe38ac1c33202ec5ad6c0e1bf13252", null ],
+      [ "kENET_QOS_Rxp_DMAChn4", "a00031.html#gga67292319720537c30d5db1ec3f71bff8aa66e7f1d4c5fc4f45757a4caef6aac41", null ]
     ] ],
-    [ "enet_qos_tx_offload_t", "a00031.html#ga68143fcec06efa9b6cc0c7ec980cc0d7", [
-      [ "kENET_QOS_TxOffloadDisable", "a00031.html#gga68143fcec06efa9b6cc0c7ec980cc0d7a60c684ced511b304aed6a7d830e4eadf", null ],
-      [ "kENET_QOS_TxOffloadIPHeader", "a00031.html#gga68143fcec06efa9b6cc0c7ec980cc0d7af0fce4ada68a7b5039d7bc4767d4a8d2", null ],
-      [ "kENET_QOS_TxOffloadIPHeaderPlusPayload", "a00031.html#gga68143fcec06efa9b6cc0c7ec980cc0d7a279a390991bfed7c36e883f709efff05", null ],
-      [ "kENET_QOS_TxOffloadAll", "a00031.html#gga68143fcec06efa9b6cc0c7ec980cc0d7a335a5ebb3100c585b41caef24dd0af1c", null ]
+    [ "_enet_qos_tx_offload", "a00031.html#ga3fb187d72f8a59ebe8ab831968b9021a", [
+      [ "kENET_QOS_TxOffloadDisable", "a00031.html#gga3fb187d72f8a59ebe8ab831968b9021aa60c684ced511b304aed6a7d830e4eadf", null ],
+      [ "kENET_QOS_TxOffloadIPHeader", "a00031.html#gga3fb187d72f8a59ebe8ab831968b9021aaf0fce4ada68a7b5039d7bc4767d4a8d2", null ],
+      [ "kENET_QOS_TxOffloadIPHeaderPlusPayload", "a00031.html#gga3fb187d72f8a59ebe8ab831968b9021aa279a390991bfed7c36e883f709efff05", null ],
+      [ "kENET_QOS_TxOffloadAll", "a00031.html#gga3fb187d72f8a59ebe8ab831968b9021aa335a5ebb3100c585b41caef24dd0af1c", null ]
     ] ],
     [ "ENET_QOS_SetSYSControl", "a00031.html#gab399305c3e2dceb26de8a4c9f9f73cac", null ],
     [ "ENET_QOS_EnableClock", "a00031.html#gadfc2b35855e023374a897158b6590708", null ],

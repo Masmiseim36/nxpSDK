@@ -1,25 +1,181 @@
 var a00054 =
 [
-    [ "kpp_config_t", "a00054.html#a00568", [
-      [ "activeRow", "a00054.html#affe1c0fe7c98a7bbd90e5da557a77029", null ],
-      [ "activeColumn", "a00054.html#a17262e678dbf479fc6fea48e685e94be", null ],
-      [ "interrupt", "a00054.html#a3f6f88fe9bcaf13690da0506e52f8bd9", null ]
+    [ "_lcdifv2_display_config", "a00054.html#a00554", [
+      [ "panelWidth", "a00054.html#a9d604f80c32d04b8729ba72c93fdf6ed", null ],
+      [ "panelHeight", "a00054.html#a84ab9cc7b9ad9b6254bb00533874f7e2", null ],
+      [ "hsw", "a00054.html#a827d70c05f0260098f0c9a8662d9be76", null ],
+      [ "hfp", "a00054.html#ac9227b50bcb0a4a4c3ce27e3a69ddcb9", null ],
+      [ "hbp", "a00054.html#a541de0462cbd264eafc403252ae66e30", null ],
+      [ "vsw", "a00054.html#af9371f75ccd78637adacf5adca081d02", null ],
+      [ "vfp", "a00054.html#a27477b9afd7aeaddc9d6930dfe862e7b", null ],
+      [ "vbp", "a00054.html#ad1d6ac5bbb1c641df309388a0669daa8", null ],
+      [ "polarityFlags", "a00054.html#a0a19e6b49af670b92501bc332d7fecef", null ],
+      [ "lineOrder", "a00054.html#a2ea50e8d05a41cee97ed95e1b411af75", null ]
     ] ],
-    [ "FSL_KPP_DRIVER_VERSION", "a00054.html#ga35c20878a9d0b578ca2bbf50d98666a8", null ],
-    [ "kpp_interrupt_enable_t", "a00054.html#ga405aea9bdb57ab7a5a7d0aecdc0edc72", [
-      [ "kKPP_keyDepressInterrupt", "a00054.html#gga405aea9bdb57ab7a5a7d0aecdc0edc72ab4f673ab2f4dfc055981eed98465d8b2", null ],
-      [ "kKPP_keyReleaseInterrupt", "a00054.html#gga405aea9bdb57ab7a5a7d0aecdc0edc72a760b827e5a10ba43afac4c5a5f4449df", null ]
+    [ "_lcdifv2_buffer_config", "a00054.html#a00553", [
+      [ "strideBytes", "a00054.html#a0f2b74087de20779c54487011f42b764", null ],
+      [ "pixelFormat", "a00054.html#a76ab3a9ef2f5f3dd257015f5d7946fa9", null ]
     ] ],
-    [ "kpp_sync_operation_t", "a00054.html#ga0c44e479c6d310cf4d9a701c09f73485", [
-      [ "kKPP_ClearKeyDepressSyncChain", "a00054.html#gga0c44e479c6d310cf4d9a701c09f73485a362de7775b6d24295feddbb8cc93550b", null ],
-      [ "kKPP_SetKeyReleasesSyncChain", "a00054.html#gga0c44e479c6d310cf4d9a701c09f73485a2938765c6adf7fcf5128895478876aa5", null ]
+    [ "_lcdifv2_blend_config", "a00054.html#a00552", [
+      [ "globalAlpha", "a00054.html#adb03566cbdf4110bfc9b170cf32f9e4b", null ],
+      [ "alphaMode", "a00054.html#a04dfa9cab136d198d47c694afca2505b", null ],
+      [ "pdAlphaMode", "a00054.html#a871185cac19ea882de48e55fef15615a", null ],
+      [ "pdColorMode", "a00054.html#ae0229e703c5506b468249cc423bca391", null ],
+      [ "pdGlobalAlphaMode", "a00054.html#a86a9da1ceb0a4d5c7fd55133043b1c17", null ],
+      [ "pdFactorMode", "a00054.html#a04c0ecd7c9c4480b5fbb2edd3ed69c0c", null ]
     ] ],
-    [ "KPP_Init", "a00054.html#ga773203cef9b50a6c5864f78c05cb0c83", null ],
-    [ "KPP_Deinit", "a00054.html#ga910f3aec15296a1d993f9b4963a152fd", null ],
-    [ "KPP_EnableInterrupts", "a00054.html#ga4d8bc3929af0678c182047884c50f7db", null ],
-    [ "KPP_DisableInterrupts", "a00054.html#gaa7de1f02a42c4176605cf7053f78baab", null ],
-    [ "KPP_GetStatusFlag", "a00054.html#ga7e0b699fd3ac19ce1bbb95418871ab3e", null ],
-    [ "KPP_ClearStatusFlag", "a00054.html#gad5f48c3a6027700e16a3f9bf477fa7e6", null ],
-    [ "KPP_SetSynchronizeChain", "a00054.html#ga7a240001a7a2b5fb84754a9a75afcb86", null ],
-    [ "KPP_keyPressScanning", "a00054.html#ga636803e3b1c99ec6dc9756548d9ef7b9", null ]
+    [ "FSL_LCDIFV2_DRIVER_VERSION", "a00054.html#ga6e1d2ba9a5303fd29a8f78702a82895e", null ],
+    [ "LCDIFV2_MAKE_FIFO_EMPTY_INTERRUPT", "a00054.html#ga56846b0f6c97d532e0f9b5fa48e10022", null ],
+    [ "LCDIFV2_MAKE_DMA_DONE_INTERRUPT", "a00054.html#gaa6a7735cc6fdabc028438e0ee26dccde", null ],
+    [ "LCDIFV2_MAKE_DMA_ERROR_INTERRUPT", "a00054.html#ga9dfe40d044ec28c4418d2372e9862a9b", null ],
+    [ "lcdifv2_line_order_t", "a00054.html#ga241243076b8d7f8db85ba11aca4b1d41", null ],
+    [ "lcdifv2_display_config_t", "a00054.html#ga3b425cc6027e8a48f653130d1fb701ab", null ],
+    [ "lcdifv2_csc_mode_t", "a00054.html#ga987a58cf1b819da7908511b957c4a3af", null ],
+    [ "lcdifv2_pixel_format_t", "a00054.html#ga18ea3c4728d85e5f29b42254e91423b6", null ],
+    [ "lcdifv2_buffer_config_t", "a00054.html#ga7a6d39859b97f0d473c1bad8bdfee58e", null ],
+    [ "lcdifv2_alpha_mode_t", "a00054.html#ga35cbec9ffec4572b9b0ad3330020c1c1", null ],
+    [ "lcdifv2_pd_alpha_mode_t", "a00054.html#ga3a0961a70a23621c996a0f1b6ff74047", null ],
+    [ "lcdifv2_pd_color_mode_t", "a00054.html#ga1ac7cd75162d2e89488ab8f306aa7015", null ],
+    [ "lcdifv2_pd_global_alpha_mode_t", "a00054.html#gafa7db172fb06d80e02028880b282fd94", null ],
+    [ "lcdifv2_pd_factor_mode_t", "a00054.html#gaa40d3c513d287cd18b264326d7360904", null ],
+    [ "lcdifv2_blend_config_t", "a00054.html#ga1bc32c09ddd12fea3a5efdd50978f93d", null ],
+    [ "lcdifv2_pd_blend_mode_t", "a00054.html#ga162a81389832980d7564b8b8f36d66e9", null ],
+    [ "lcdifv2_pd_layer_t", "a00054.html#ga1df8d376b53c393f270852a7a6676905", null ],
+    [ "_lcdifv2_polarity_flags", "a00054.html#ga79dc11f5ab25c5d06bbf2233a6fef875", [
+      [ "kLCDIFV2_VsyncActiveHigh", "a00054.html#gga79dc11f5ab25c5d06bbf2233a6fef875aff940f5ac0021e784d5b32070b9e8750", null ],
+      [ "kLCDIFV2_HsyncActiveHigh", "a00054.html#gga79dc11f5ab25c5d06bbf2233a6fef875a3998d632b82ecac7474b1698334375cf", null ],
+      [ "kLCDIFV2_DataEnableActiveHigh", "a00054.html#gga79dc11f5ab25c5d06bbf2233a6fef875ac2b7e8fe2434f50df72d4678f50c95ec", null ],
+      [ "kLCDIFV2_DriveDataOnRisingClkEdge", "a00054.html#gga79dc11f5ab25c5d06bbf2233a6fef875a954ef56b636c596d6bf2849228eb09b8", null ],
+      [ "kLCDIFV2_DataActiveHigh", "a00054.html#gga79dc11f5ab25c5d06bbf2233a6fef875a132310cbc91d6fb224b2e9c32a3f67fc", null ],
+      [ "kLCDIFV2_VsyncActiveLow", "a00054.html#gga79dc11f5ab25c5d06bbf2233a6fef875a689e9418949051b0d34b25b3d3d73e44", null ],
+      [ "kLCDIFV2_HsyncActiveLow", "a00054.html#gga79dc11f5ab25c5d06bbf2233a6fef875a0f6ab525dce0f9b1df439fd14289152f", null ],
+      [ "kLCDIFV2_DataEnableActiveLow", "a00054.html#gga79dc11f5ab25c5d06bbf2233a6fef875aac082fd580ff5a336d0b68e419f27e6d", null ],
+      [ "kLCDIFV2_DriveDataOnFallingClkEdge", "a00054.html#gga79dc11f5ab25c5d06bbf2233a6fef875a0fbadd2ed932c4cd52ac0e29893cf9a6", null ],
+      [ "kLCDIFV2_DataActiveLow", "a00054.html#gga79dc11f5ab25c5d06bbf2233a6fef875a21e8f7c725afa37214c24ec9ad48fe8c", null ]
+    ] ],
+    [ "_lcdifv2_interrupt", "a00054.html#ga06d944793a2798723283074283620cb5", [
+      [ "kLCDIFV2_Layer0FifoEmptyInterrupt", "a00054.html#gga06d944793a2798723283074283620cb5a358a7bc9ea8354422102984248199259", null ],
+      [ "kLCDIFV2_Layer1FifoEmptyInterrupt", "a00054.html#gga06d944793a2798723283074283620cb5a9ff107c8c6cd07f63f08bdb3be608b26", null ],
+      [ "kLCDIFV2_Layer2FifoEmptyInterrupt", "a00054.html#gga06d944793a2798723283074283620cb5a93bf3e3a399fd03cd38d61d66d524757", null ],
+      [ "kLCDIFV2_Layer3FifoEmptyInterrupt", "a00054.html#gga06d944793a2798723283074283620cb5a55ab09ea3e283f633e5857b14797345f", null ],
+      [ "kLCDIFV2_Layer4FifoEmptyInterrupt", "a00054.html#gga06d944793a2798723283074283620cb5af32a8e9c7100849dab34b0138ad7dba7", null ],
+      [ "kLCDIFV2_Layer5FifoEmptyInterrupt", "a00054.html#gga06d944793a2798723283074283620cb5ac020bc00dc82ecb2ccef9325fdfcfb6d", null ],
+      [ "kLCDIFV2_Layer6FifoEmptyInterrupt", "a00054.html#gga06d944793a2798723283074283620cb5a9200531e1eeb4fb314a2e98158da7cf9", null ],
+      [ "kLCDIFV2_Layer7FifoEmptyInterrupt", "a00054.html#gga06d944793a2798723283074283620cb5a830c6f929969bdec0b99a01f8fdecaf4", null ],
+      [ "kLCDIFV2_Layer0DmaDoneInterrupt", "a00054.html#gga06d944793a2798723283074283620cb5a3e3190706ca24a3451aa6dc89af0a8e2", null ],
+      [ "kLCDIFV2_Layer1DmaDoneInterrupt", "a00054.html#gga06d944793a2798723283074283620cb5ac2bef523987d88d648840e82d6f6fdf8", null ],
+      [ "kLCDIFV2_Layer2DmaDoneInterrupt", "a00054.html#gga06d944793a2798723283074283620cb5a2d77864a53cea61720af217032b5580e", null ],
+      [ "kLCDIFV2_Layer3DmaDoneInterrupt", "a00054.html#gga06d944793a2798723283074283620cb5a0743fbf21bfe108214dcb42e7d6d1c88", null ],
+      [ "kLCDIFV2_Layer4DmaDoneInterrupt", "a00054.html#gga06d944793a2798723283074283620cb5a8f411c4cfab6bb1abb6d0e6fe5b11e1e", null ],
+      [ "kLCDIFV2_Layer5DmaDoneInterrupt", "a00054.html#gga06d944793a2798723283074283620cb5ad6de97ab837da3865ac526532bbb0806", null ],
+      [ "kLCDIFV2_Layer6DmaDoneInterrupt", "a00054.html#gga06d944793a2798723283074283620cb5aaf31102a17692f764b448fc8ffd999d4", null ],
+      [ "kLCDIFV2_Layer7DmaDoneInterrupt", "a00054.html#gga06d944793a2798723283074283620cb5a00f98125089e004b6999094381cd5a23", null ],
+      [ "kLCDIFV2_Layer0DmaErrorInterrupt", "a00054.html#gga06d944793a2798723283074283620cb5a4db656623521e9747979308e04e265c6", null ],
+      [ "kLCDIFV2_Layer1DmaErrorInterrupt", "a00054.html#gga06d944793a2798723283074283620cb5a78253701e02ad49c735d9ace7ded726a", null ],
+      [ "kLCDIFV2_Layer2DmaErrorInterrupt", "a00054.html#gga06d944793a2798723283074283620cb5a39e7e535a135f0609541c02a094c8e72", null ],
+      [ "kLCDIFV2_Layer3DmaErrorInterrupt", "a00054.html#gga06d944793a2798723283074283620cb5a1015b15d29f27c81e66fd455bfcf8ce6", null ],
+      [ "kLCDIFV2_Layer4DmaErrorInterrupt", "a00054.html#gga06d944793a2798723283074283620cb5a871c471a2c061eea3f7372d6322fa10e", null ],
+      [ "kLCDIFV2_Layer5DmaErrorInterrupt", "a00054.html#gga06d944793a2798723283074283620cb5a172d876db0317fc19c733f2bb2714e3e", null ],
+      [ "kLCDIFV2_Layer6DmaErrorInterrupt", "a00054.html#gga06d944793a2798723283074283620cb5a37eb945fe97c9c65987de8dafb292104", null ],
+      [ "kLCDIFV2_Layer7DmaErrorInterrupt", "a00054.html#gga06d944793a2798723283074283620cb5ab97b9786d6bceeda9df688a9041841d0", null ],
+      [ "kLCDIFV2_VerticalBlankingInterrupt", "a00054.html#gga06d944793a2798723283074283620cb5a7203ec9f98cca8de31dbf1e61fa9fc7a", null ],
+      [ "kLCDIFV2_OutputUnderrunInterrupt", "a00054.html#gga06d944793a2798723283074283620cb5ad9c21b9e4d14601c183b2bdfa864b674", null ],
+      [ "kLCDIFV2_VsyncEdgeInterrupt", "a00054.html#gga06d944793a2798723283074283620cb5a7e0187de3661b736abddbe59103a4e76", null ]
+    ] ],
+    [ "_lcdifv2_line_order", "a00054.html#ga5183d9c6f64a02b0336543802c56a72f", [
+      [ "kLCDIFV2_LineOrderRGB", "a00054.html#gga5183d9c6f64a02b0336543802c56a72faf4213d6bdd4299e3a3dfc16c8963effe", null ],
+      [ "kLCDIFV2_LineOrderRBG", "a00054.html#gga5183d9c6f64a02b0336543802c56a72fa3fa18445eb8b7c0fd99e28c53897409b", null ],
+      [ "kLCDIFV2_LineOrderGBR", "a00054.html#gga5183d9c6f64a02b0336543802c56a72fa2fe56f80f3ebe6d9e8c18c10b7b6aaec", null ],
+      [ "kLCDIFV2_LineOrderGRB", "a00054.html#gga5183d9c6f64a02b0336543802c56a72fa38b4f6a2efa86fc9952dc9fb0c6c0fee", null ],
+      [ "kLCDIFV2_LineOrderBRG", "a00054.html#gga5183d9c6f64a02b0336543802c56a72fa5ebb7eb6ab63e2a1dbbc897d3d67b5dd", null ],
+      [ "kLCDIFV2_LineOrderBGR", "a00054.html#gga5183d9c6f64a02b0336543802c56a72fa30a7ef64eb0626718f429a573b47d256", null ]
+    ] ],
+    [ "_lcdifv2_csc_mode", "a00054.html#ga99039755eb3794c625f35b88c473c489", [
+      [ "kLCDIFV2_CscDisable", "a00054.html#gga99039755eb3794c625f35b88c473c489a1cfc7c84aedad754f8e6b9b721f57698", null ],
+      [ "kLCDIFV2_CscYUV2RGB", "a00054.html#gga99039755eb3794c625f35b88c473c489ade991636de25f6dafd821b64b58025a2", null ],
+      [ "kLCDIFV2_CscYCbCr2RGB", "a00054.html#gga99039755eb3794c625f35b88c473c489aad5824f1100284cabd1def56067a3b5e", null ]
+    ] ],
+    [ "_lcdifv2_pixel_format", "a00054.html#ga796070866ebd33bc200edc9de8b7eb99", [
+      [ "kLCDIFV2_PixelFormatIndex1BPP", "a00054.html#gga796070866ebd33bc200edc9de8b7eb99ae2cd0cd0e002e40f7f41811da5c56587", null ],
+      [ "kLCDIFV2_PixelFormatIndex2BPP", "a00054.html#gga796070866ebd33bc200edc9de8b7eb99a95a27b802bc2ac4c5de184945ce9bd62", null ],
+      [ "kLCDIFV2_PixelFormatIndex4BPP", "a00054.html#gga796070866ebd33bc200edc9de8b7eb99ab097e18568d12dae043b40e055d5151d", null ],
+      [ "kLCDIFV2_PixelFormatIndex8BPP", "a00054.html#gga796070866ebd33bc200edc9de8b7eb99a8697d5ef873260fc398f7aa5f23a3ed4", null ],
+      [ "kLCDIFV2_PixelFormatRGB565", "a00054.html#gga796070866ebd33bc200edc9de8b7eb99a9c8f5db60ae5638b4fcb7e2b9d9b882b", null ],
+      [ "kLCDIFV2_PixelFormatARGB1555", "a00054.html#gga796070866ebd33bc200edc9de8b7eb99ad19de5e7280f906121ba817200013d61", null ],
+      [ "kLCDIFV2_PixelFormatARGB4444", "a00054.html#gga796070866ebd33bc200edc9de8b7eb99a121a661c7e7b81859cee249b014e0e60", null ],
+      [ "kLCDIFV2_PixelFormatUYVY", "a00054.html#gga796070866ebd33bc200edc9de8b7eb99a59688fab7667821cd58c1cc602182ba2", null ],
+      [ "kLCDIFV2_PixelFormatVYUY", "a00054.html#gga796070866ebd33bc200edc9de8b7eb99a5186649e30618cc6ec0580080e2f72e0", null ],
+      [ "kLCDIFV2_PixelFormatYUYV", "a00054.html#gga796070866ebd33bc200edc9de8b7eb99a00f31ec92111694ee0483f26e91699b1", null ],
+      [ "kLCDIFV2_PixelFormatYVYU", "a00054.html#gga796070866ebd33bc200edc9de8b7eb99a93c27c029471bff12bef91cd5dc65053", null ],
+      [ "kLCDIFV2_PixelFormatRGB888", "a00054.html#gga796070866ebd33bc200edc9de8b7eb99a29996c9bad7022c92c53637061aaa030", null ],
+      [ "kLCDIFV2_PixelFormatARGB8888", "a00054.html#gga796070866ebd33bc200edc9de8b7eb99a3947606784aceb0d6fe0ad9a055626a2", null ],
+      [ "kLCDIFV2_PixelFormatABGR8888", "a00054.html#gga796070866ebd33bc200edc9de8b7eb99a3878c086c2569764d3eaf4835183038d", null ]
+    ] ],
+    [ "_lcdifv2_alpha_mode", "a00054.html#ga47c0ad3bb7717f9294a089af6a5c4cf0", [
+      [ "kLCDIFV2_AlphaDisable", "a00054.html#gga47c0ad3bb7717f9294a089af6a5c4cf0a5ae362bf99048e7e4c9accd351809923", null ],
+      [ "kLCDIFV2_AlphaOverride", "a00054.html#gga47c0ad3bb7717f9294a089af6a5c4cf0aab53c6c6ed0432cdfc3557e37dea21b4", null ],
+      [ "kLCDIFV2_AlphaEmbedded", "a00054.html#gga47c0ad3bb7717f9294a089af6a5c4cf0a1d3df4de72898b228a8103945154fdc2", null ],
+      [ "kLCDIFV2_AlphaPoterDuff", "a00054.html#gga47c0ad3bb7717f9294a089af6a5c4cf0aff85a840c4d8c530f9da8319f028d163", null ]
+    ] ],
+    [ "_lcdifv2_pd_alpha_mode", "a00054.html#ga546a77aa4043bdb98f4c5b2874848d30", [
+      [ "kLCDIFV2_PD_AlphaStraight", "a00054.html#gga546a77aa4043bdb98f4c5b2874848d30a29f2f46932474f2c9c81a543b3188838", null ],
+      [ "kLCDIFV2_PD_AlphaInversed", "a00054.html#gga546a77aa4043bdb98f4c5b2874848d30a5d6fe28d8e3abb1edd6d9ad3ec4e6559", null ]
+    ] ],
+    [ "_lcdifv2_pd_color_mode", "a00054.html#ga810450a0e9c73d97b76ea06ebf17aeb3", [
+      [ "kLCDIFV2_PD_ColorNoAlpha", "a00054.html#gga810450a0e9c73d97b76ea06ebf17aeb3a09258131e98536b90993d81c619e9db2", null ],
+      [ "kLCDIFV2_PD_ColorWithAlpha", "a00054.html#gga810450a0e9c73d97b76ea06ebf17aeb3a170deabb35e69781f01fe609ed3415df", null ]
+    ] ],
+    [ "_lcdifv2_pd_global_alpha_mode", "a00054.html#gabb0d312b362733f1caa798340937e954", [
+      [ "kLCDIFV2_PD_GlobalAlpha", "a00054.html#ggabb0d312b362733f1caa798340937e954a418cf170521d57240a0ac4c2f688419b", null ],
+      [ "kLCDIFV2_PD_LocalAlpha", "a00054.html#ggabb0d312b362733f1caa798340937e954a1fb00274650c85f83ac7067d8b262249", null ],
+      [ "kLCDIFV2_PD_ScaledAlpha", "a00054.html#ggabb0d312b362733f1caa798340937e954a92eb8a17af538ea3e84d3c1764e68d4d", null ]
+    ] ],
+    [ "_lcdifv2_pd_factor_mode", "a00054.html#gabf934057abdc05ec6db6d3a3acd705b3", [
+      [ "kLCDIFV2_PD_FactorOne", "a00054.html#ggabf934057abdc05ec6db6d3a3acd705b3ac4a7ef9b2c94d126859fdf9492d0028c", null ],
+      [ "kLCDIFV2_PD_FactorZero", "a00054.html#ggabf934057abdc05ec6db6d3a3acd705b3a4c3c6d7482ce134f1a3d2e84249d2104", null ],
+      [ "kLCDIFV2_PD_FactorStraightAlpha", "a00054.html#ggabf934057abdc05ec6db6d3a3acd705b3ab3e71e7130918e4bd1c14e27874c0511", null ],
+      [ "kLCDIFV2_PD_FactorInversedAlpha", "a00054.html#ggabf934057abdc05ec6db6d3a3acd705b3a254d64809671ab76ee53065d9f054262", null ]
+    ] ],
+    [ "_lcdifv2_pd_blend_mode", "a00054.html#gaf2b2e3c9b5ad0883ef8b0c0ef2462921", [
+      [ "kLCDIFV2_PD_Src", "a00054.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921a850dd9f30ed07da380b8e9aba9445f1a", null ],
+      [ "kLCDIFV2_PD_Atop", "a00054.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921a8590a5bef98c7d607635773662ae5d97", null ],
+      [ "kLCDIFV2_PD_Over", "a00054.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921ac22476686760aaae3d7364cbf7fa6c8c", null ],
+      [ "kLCDIFV2_PD_In", "a00054.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921abc17caa6c93daa2390948e97f9ad693a", null ],
+      [ "kLCDIFV2_PD_Out", "a00054.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921a377452a01102655eed11d8091ba9977c", null ],
+      [ "kLCDIFV2_PD_Dst", "a00054.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921ada73dd3132a91f67329e551f478f3d44", null ],
+      [ "kLCDIFV2_PD_DstAtop", "a00054.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921ac3b5ede05274e9e20f81dd86ff9eddb3", null ],
+      [ "kLCDIFV2_PD_DstOver", "a00054.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921a763347e9d290ebaa39cc8bfdd8a3ad04", null ],
+      [ "kLCDIFV2_PD_DstIn", "a00054.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921a7bed31b4ebbf83175f84a4a6970aaabb", null ],
+      [ "kLCDIFV2_PD_DstOut", "a00054.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921aa119ccd5f23e92fdd2f34fb81cf3f8ea", null ],
+      [ "kLCDIFV2_PD_Xor", "a00054.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921a5d30d76fc503b93f3a34c3120a889241", null ],
+      [ "kLCDIFV2_PD_Clear", "a00054.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921a1956c9e9fb68a123eebfc7272e830259", null ],
+      [ "kLCDIFV2_PD_Max", "a00054.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921a4bf302411133320165da0a86ad51af7e", null ]
+    ] ],
+    [ "_lcdifv2_pd_layer", "a00054.html#ga5605db1f81ff4f2262d517e712e1c720", [
+      [ "kLCDIFV2_PD_SrcLayer", "a00054.html#gga5605db1f81ff4f2262d517e712e1c720aed5f7456a61b1c66e0005b128cc4b2c7", null ],
+      [ "kLCDIFV2_PD_DestLayer", "a00054.html#gga5605db1f81ff4f2262d517e712e1c720a90a82a97985a80021886518adb0ee226", null ],
+      [ "kLCDIFV2_PD_LayerMax", "a00054.html#gga5605db1f81ff4f2262d517e712e1c720a3f3c217de644fe9e4e1700377dde4354", null ]
+    ] ],
+    [ "LCDIFV2_Init", "a00054.html#ga2096bb25d9724a379ea0131e9be046db", null ],
+    [ "LCDIFV2_Deinit", "a00054.html#ga0ca63677991b12c3a6ac2be2b1b73ead", null ],
+    [ "LCDIFV2_Reset", "a00054.html#ga0efc69dab049656d628d4454fe796301", null ],
+    [ "LCDIFV2_DisplayGetDefaultConfig", "a00054.html#gabed37700087de4e0029bcbbfebac7b59", null ],
+    [ "LCDIFV2_SetDisplayConfig", "a00054.html#gacead64f9e9366e70b3536628f9870564", null ],
+    [ "LCDIFV2_EnableDisplay", "a00054.html#gaabe85f1639111a0fd6d1522a201e54a8", null ],
+    [ "LCDIFV2_EnableInterrupts", "a00054.html#gac23b86001b1e4dae3ca1e737715f292f", null ],
+    [ "LCDIFV2_DisableInterrupts", "a00054.html#ga708b7e98d0eef5a06e5d5fae6c285223", null ],
+    [ "LCDIFV2_GetInterruptStatus", "a00054.html#ga3a676334bb3ce4b979f56c4fd2fc2f77", null ],
+    [ "LCDIFV2_ClearInterruptStatus", "a00054.html#ga888f27a6e8c404d0cb00fef47d4598a0", null ],
+    [ "LCDIFV2_SetLut", "a00054.html#ga290ea115f86cc1bfef9328067fba224a", null ],
+    [ "LCDIFV2_SetLayerSize", "a00054.html#ga06604be4f09ef358c1b696ae9a7fb933", null ],
+    [ "LCDIFV2_SetLayerOffset", "a00054.html#ga8fd876343654535defa3a7e2908103ec", null ],
+    [ "LCDIFV2_SetLayerBufferConfig", "a00054.html#ga5eee64e6c0e6e944802c63bf8723247d", null ],
+    [ "LCDIFV2_SetLayerBufferAddr", "a00054.html#ga44b1c8c192b0711fcb43d4d55a1d35e9", null ],
+    [ "LCDIFV2_EnableLayer", "a00054.html#gac74e230352744fbdc0058329799b6b59", null ],
+    [ "LCDIFV2_TriggerLayerShadowLoad", "a00054.html#ga8208a333a9051ce883920a38c0d07227", null ],
+    [ "LCDIFV2_SetLayerBackGroundColor", "a00054.html#gaf3ce7445b7b1882b509e005b3a022941", null ],
+    [ "LCDIFV2_SetLayerBlendConfig", "a00054.html#gad8fa66c5933a819853b533da9eacbe2f", null ],
+    [ "LCDIFV2_SetCscMode", "a00054.html#ga1fdda10ffad58347fea2fd7c8329d11a", null ],
+    [ "LCDIFV2_GetPorterDuffConfig", "a00054.html#gaa2c722736c01796f61c67681a4eb0656", null ],
+    [ "LCDIFV2_GetMultiLayerGlobalAlpha", "a00054.html#gafde98fd72f7510c363728aa9624ee1b3", null ]
 ];

@@ -111,6 +111,7 @@ define block ZI        { zi };
 define block NCACHE_VAR    { section NonCacheable , section NonCacheable.init };
 define block QACCESS_CODE  { section CodeQuickAccess };
 define block QACCESS_DATA  { section DataQuickAccess };
+define block WLAN_DATA     { section .wlan_data };
 
 define region core1_region = mem:[from core1_image_start to core1_image_end];
 define block CORE1_IMAGE_BLOCK          { section  __core1_image };
@@ -122,6 +123,10 @@ initialize by copy {
   section DataQuickAccess,
   object portasm.o,
   object queue.o,
+  object mlan_sdio.o,
+  object mlan_11n.o,
+  object mlan_11n_aggr.o,
+  object mlan_11n_rxreorder.o,
   object inet_chksum.o,
   object timers.o,
   object ABImemcpy.o,
@@ -135,7 +140,14 @@ initialize by copy {
   object fsl_sdio.o,
   object sys_arch.o,
   object tcp_out.o,
-  object wifi.o
+  object tcp.o,
+  object tcpip.o,
+  object udp.o,
+  object wifi.o,
+  object sockets.o,
+  object fsl_memcpy.o,
+  object fsl_cache.o,
+  object wifi_netif.o
 };
 do not initialize  { section .noinit };
 if (isdefinedsymbol(__use_shmem__)) {
@@ -151,7 +163,7 @@ place at address mem: m_boot_hdr_dcd_data_start { readonly section .boot_hdr.dcd
 keep{ section .boot_hdr.conf, section .boot_hdr.ivt, section .boot_hdr.boot_data, section .boot_hdr.dcd_data };
 
 place in TEXT_region                        { readonly };
-place in DATA_region                        { block RW };
+place in DATA_region                        { block RW, block WLAN_DATA };
 place in DATA2_region                       { block ZI };
 place in DATA_region                        { last block HEAP };
 place in DATA_region                        { block NCACHE_VAR };

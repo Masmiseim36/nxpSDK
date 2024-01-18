@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,6 +99,7 @@ $(document).ready(function(){initNavTree('a00382.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
@@ -107,36 +108,45 @@ $(document).ready(function(){initNavTree('a00382.html','');});
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga0372d29e40e98691931c8b56e9f4894d"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00382.html#ga4791b82525d1ea4960b2fdbcbbb382b5">_iee_apc_region</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00382.html#ga0372d29e40e98691931c8b56e9f4894d">iee_apc_region_t</a></td></tr>
+<tr class="memdesc:ga0372d29e40e98691931c8b56e9f4894d"><td class="mdescLeft">&#160;</td><td class="mdescRight">APC IEE regions.  <a href="#ga0372d29e40e98691931c8b56e9f4894d">More...</a><br/></td></tr>
+<tr class="separator:ga0372d29e40e98691931c8b56e9f4894d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf84910f739a38fed78116e0a7b74878b"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00382.html#ga8415a6cfd14500c195d3c242624cb484">_apc_iee_domain</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00382.html#gaf84910f739a38fed78116e0a7b74878b">iee_apc_domain_t</a></td></tr>
+<tr class="memdesc:gaf84910f739a38fed78116e0a7b74878b"><td class="mdescLeft">&#160;</td><td class="mdescRight">APC IEE domains.  <a href="#gaf84910f739a38fed78116e0a7b74878b">More...</a><br/></td></tr>
+<tr class="separator:gaf84910f739a38fed78116e0a7b74878b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga43c589f51df60eee06163aec88f77bf6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00382.html#ga43c589f51df60eee06163aec88f77bf6">iee_apc_region_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00382.html#gga43c589f51df60eee06163aec88f77bf6a2c22eaab6d769b29f5a8097917d85fb2">kIEE_APC_Region0</a> = 0U, 
+<tr class="memitem:ga4791b82525d1ea4960b2fdbcbbb382b5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00382.html#ga4791b82525d1ea4960b2fdbcbbb382b5">_iee_apc_region</a> { <br/>
+&#160;&#160;<a class="el" href="a00382.html#gga4791b82525d1ea4960b2fdbcbbb382b5a2c22eaab6d769b29f5a8097917d85fb2">kIEE_APC_Region0</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00382.html#gga43c589f51df60eee06163aec88f77bf6a275b36df41b142ed3a0b36133af222b9">kIEE_APC_Region1</a> = 1U, 
+&#160;&#160;<a class="el" href="a00382.html#gga4791b82525d1ea4960b2fdbcbbb382b5a275b36df41b142ed3a0b36133af222b9">kIEE_APC_Region1</a> = 1U, 
 <br/>
-&#160;&#160;<a class="el" href="a00382.html#gga43c589f51df60eee06163aec88f77bf6abc1e3e871a24cb02fb3f0240138e17a8">kIEE_APC_Region2</a> = 2U, 
+&#160;&#160;<a class="el" href="a00382.html#gga4791b82525d1ea4960b2fdbcbbb382b5abc1e3e871a24cb02fb3f0240138e17a8">kIEE_APC_Region2</a> = 2U, 
 <br/>
-&#160;&#160;<a class="el" href="a00382.html#gga43c589f51df60eee06163aec88f77bf6a710f001e7ab7440abfcd79e4feb5a66e">kIEE_APC_Region3</a> = 3U, 
+&#160;&#160;<a class="el" href="a00382.html#gga4791b82525d1ea4960b2fdbcbbb382b5a710f001e7ab7440abfcd79e4feb5a66e">kIEE_APC_Region3</a> = 3U, 
 <br/>
-&#160;&#160;<a class="el" href="a00382.html#gga43c589f51df60eee06163aec88f77bf6a75a64fb8523aa7084a7f754486527834">kIEE_APC_Region4</a> = 4U, 
+&#160;&#160;<a class="el" href="a00382.html#gga4791b82525d1ea4960b2fdbcbbb382b5a75a64fb8523aa7084a7f754486527834">kIEE_APC_Region4</a> = 4U, 
 <br/>
-&#160;&#160;<a class="el" href="a00382.html#gga43c589f51df60eee06163aec88f77bf6a42ebebb096a7a86e6cd9c3a9402dc867">kIEE_APC_Region5</a> = 5U, 
+&#160;&#160;<a class="el" href="a00382.html#gga4791b82525d1ea4960b2fdbcbbb382b5a42ebebb096a7a86e6cd9c3a9402dc867">kIEE_APC_Region5</a> = 5U, 
 <br/>
-&#160;&#160;<a class="el" href="a00382.html#gga43c589f51df60eee06163aec88f77bf6add786f4801db876003b8a3d0cb1a8976">kIEE_APC_Region6</a> = 6U, 
+&#160;&#160;<a class="el" href="a00382.html#gga4791b82525d1ea4960b2fdbcbbb382b5add786f4801db876003b8a3d0cb1a8976">kIEE_APC_Region6</a> = 6U, 
 <br/>
-&#160;&#160;<a class="el" href="a00382.html#gga43c589f51df60eee06163aec88f77bf6a6a4dd45e2c0b090de4cc3f849906d020">kIEE_APC_Region7</a> = 7U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga43c589f51df60eee06163aec88f77bf6"><td class="mdescLeft">&#160;</td><td class="mdescRight">APC IEE regions.  <a href="a00382.html#ga43c589f51df60eee06163aec88f77bf6">More...</a><br/></td></tr>
-<tr class="separator:ga43c589f51df60eee06163aec88f77bf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6c8858dea20b71c984ac122c640742c5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00382.html#ga6c8858dea20b71c984ac122c640742c5">iee_apc_domain_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00382.html#gga6c8858dea20b71c984ac122c640742c5af66cb7c1deb45b4c135355509c5bcfe9">kIEE_APC_Domain0</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00382.html#gga6c8858dea20b71c984ac122c640742c5a5815ff9d580dc57a1c8ecc47fb6a2cfd">kIEE_APC_Domain1</a> = 1U
+&#160;&#160;<a class="el" href="a00382.html#gga4791b82525d1ea4960b2fdbcbbb382b5a6a4dd45e2c0b090de4cc3f849906d020">kIEE_APC_Region7</a> = 7U
 <br/>
  }</td></tr>
-<tr class="memdesc:ga6c8858dea20b71c984ac122c640742c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">APC IEE domains.  <a href="a00382.html#ga6c8858dea20b71c984ac122c640742c5">More...</a><br/></td></tr>
-<tr class="separator:ga6c8858dea20b71c984ac122c640742c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga4791b82525d1ea4960b2fdbcbbb382b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">APC IEE regions.  <a href="a00382.html#ga4791b82525d1ea4960b2fdbcbbb382b5">More...</a><br/></td></tr>
+<tr class="separator:ga4791b82525d1ea4960b2fdbcbbb382b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8415a6cfd14500c195d3c242624cb484"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00382.html#ga8415a6cfd14500c195d3c242624cb484">_apc_iee_domain</a> { <br/>
+&#160;&#160;<a class="el" href="a00382.html#gga8415a6cfd14500c195d3c242624cb484af66cb7c1deb45b4c135355509c5bcfe9">kIEE_APC_Domain0</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00382.html#gga8415a6cfd14500c195d3c242624cb484a5815ff9d580dc57a1c8ecc47fb6a2cfd">kIEE_APC_Domain1</a> = 1U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga8415a6cfd14500c195d3c242624cb484"><td class="mdescLeft">&#160;</td><td class="mdescRight">APC IEE domains.  <a href="a00382.html#ga8415a6cfd14500c195d3c242624cb484">More...</a><br/></td></tr>
+<tr class="separator:ga8415a6cfd14500c195d3c242624cb484"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -146,19 +156,19 @@ Functions</h2></td></tr>
 <tr class="memitem:gac278adaf161565d918abd41f4f4bf103"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00382.html#gac278adaf161565d918abd41f4f4bf103">IEE_APC_GlobalDisable</a> (IEE_APC_Type *base)</td></tr>
 <tr class="memdesc:gac278adaf161565d918abd41f4f4bf103"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the APC IEE Region setting.  <a href="#gac278adaf161565d918abd41f4f4bf103">More...</a><br/></td></tr>
 <tr class="separator:gac278adaf161565d918abd41f4f4bf103"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga96a4a09160e96548e72d96b27e42a405"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00382.html#ga96a4a09160e96548e72d96b27e42a405">IEE_APC_SetRegionConfig</a> (IEE_APC_Type *base, <a class="el" href="a00382.html#ga43c589f51df60eee06163aec88f77bf6">iee_apc_region_t</a> region, uint32_t startAddr, uint32_t endAddr)</td></tr>
+<tr class="memitem:ga96a4a09160e96548e72d96b27e42a405"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00382.html#ga96a4a09160e96548e72d96b27e42a405">IEE_APC_SetRegionConfig</a> (IEE_APC_Type *base, <a class="el" href="a00382.html#ga0372d29e40e98691931c8b56e9f4894d">iee_apc_region_t</a> region, uint32_t startAddr, uint32_t endAddr)</td></tr>
 <tr class="memdesc:ga96a4a09160e96548e72d96b27e42a405"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the APC IEE Memory Region Descriptors.  <a href="#ga96a4a09160e96548e72d96b27e42a405">More...</a><br/></td></tr>
 <tr class="separator:ga96a4a09160e96548e72d96b27e42a405"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8b9b0c0e6ab19657b266bc2b311d175a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00382.html#ga8b9b0c0e6ab19657b266bc2b311d175a">IEE_APC_LockRegionConfig</a> (IEE_APC_Type *base, <a class="el" href="a00382.html#ga43c589f51df60eee06163aec88f77bf6">iee_apc_region_t</a> region, <a class="el" href="a00382.html#ga6c8858dea20b71c984ac122c640742c5">iee_apc_domain_t</a> domain)</td></tr>
+<tr class="memitem:ga8b9b0c0e6ab19657b266bc2b311d175a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00382.html#ga8b9b0c0e6ab19657b266bc2b311d175a">IEE_APC_LockRegionConfig</a> (IEE_APC_Type *base, <a class="el" href="a00382.html#ga0372d29e40e98691931c8b56e9f4894d">iee_apc_region_t</a> region, <a class="el" href="a00382.html#gaf84910f739a38fed78116e0a7b74878b">iee_apc_domain_t</a> domain)</td></tr>
 <tr class="memdesc:ga8b9b0c0e6ab19657b266bc2b311d175a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lock the LPSR GPR and APC IEE configuration.  <a href="#ga8b9b0c0e6ab19657b266bc2b311d175a">More...</a><br/></td></tr>
 <tr class="separator:ga8b9b0c0e6ab19657b266bc2b311d175a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8f2a69526f52c82f2e02889accb64e74"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00382.html#ga8f2a69526f52c82f2e02889accb64e74">IEE_APC_RegionEnable</a> (IEE_APC_Type *base, <a class="el" href="a00382.html#ga43c589f51df60eee06163aec88f77bf6">iee_apc_region_t</a> region)</td></tr>
+<tr class="memitem:ga8f2a69526f52c82f2e02889accb64e74"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00382.html#ga8f2a69526f52c82f2e02889accb64e74">IEE_APC_RegionEnable</a> (IEE_APC_Type *base, <a class="el" href="a00382.html#ga0372d29e40e98691931c8b56e9f4894d">iee_apc_region_t</a> region)</td></tr>
 <tr class="memdesc:ga8f2a69526f52c82f2e02889accb64e74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the IEE encryption/decryption and can lock this setting.  <a href="#ga8f2a69526f52c82f2e02889accb64e74">More...</a><br/></td></tr>
 <tr class="separator:ga8f2a69526f52c82f2e02889accb64e74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga8f8e0efca6b2b04874ff994be95ccb36"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00382.html#ga8f8e0efca6b2b04874ff994be95ccb36">FSL_IEE_APC_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00338.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 1))</td></tr>
+<tr class="memitem:ga8f8e0efca6b2b04874ff994be95ccb36"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00382.html#ga8f8e0efca6b2b04874ff994be95ccb36">FSL_IEE_APC_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00336.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 1))</td></tr>
 <tr class="memdesc:ga8f8e0efca6b2b04874ff994be95ccb36"><td class="mdescLeft">&#160;</td><td class="mdescRight">IEE_APC driver version.  <a href="#ga8f8e0efca6b2b04874ff994be95ccb36">More...</a><br/></td></tr>
 <tr class="separator:ga8f8e0efca6b2b04874ff994be95ccb36"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -168,7 +178,7 @@ Driver version</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_IEE_APC_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00338.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 1))</td>
+          <td class="memname">#define FSL_IEE_APC_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00336.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 1))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -188,59 +198,84 @@ Driver version</h2></td></tr>
 
 </div>
 </div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga43c589f51df60eee06163aec88f77bf6"></a>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga0372d29e40e98691931c8b56e9f4894d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00382.html#ga43c589f51df60eee06163aec88f77bf6">iee_apc_region_t</a></td>
+          <td class="memname">typedef enum <a class="el" href="a00382.html#ga4791b82525d1ea4960b2fdbcbbb382b5">_iee_apc_region</a>  <a class="el" href="a00382.html#ga0372d29e40e98691931c8b56e9f4894d">iee_apc_region_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gaf84910f739a38fed78116e0a7b74878b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00382.html#ga8415a6cfd14500c195d3c242624cb484">_apc_iee_domain</a>  <a class="el" href="a00382.html#gaf84910f739a38fed78116e0a7b74878b">iee_apc_domain_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="ga4791b82525d1ea4960b2fdbcbbb382b5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00382.html#ga4791b82525d1ea4960b2fdbcbbb382b5">_iee_apc_region</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga43c589f51df60eee06163aec88f77bf6a2c22eaab6d769b29f5a8097917d85fb2"></a>kIEE_APC_Region0</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga4791b82525d1ea4960b2fdbcbbb382b5a2c22eaab6d769b29f5a8097917d85fb2"></a>kIEE_APC_Region0</em>&nbsp;</td><td class="fielddoc">
 <p>APC IEE region 0. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga43c589f51df60eee06163aec88f77bf6a275b36df41b142ed3a0b36133af222b9"></a>kIEE_APC_Region1</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga4791b82525d1ea4960b2fdbcbbb382b5a275b36df41b142ed3a0b36133af222b9"></a>kIEE_APC_Region1</em>&nbsp;</td><td class="fielddoc">
 <p>APC IEE region 1. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga43c589f51df60eee06163aec88f77bf6abc1e3e871a24cb02fb3f0240138e17a8"></a>kIEE_APC_Region2</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga4791b82525d1ea4960b2fdbcbbb382b5abc1e3e871a24cb02fb3f0240138e17a8"></a>kIEE_APC_Region2</em>&nbsp;</td><td class="fielddoc">
 <p>APC IEE region 2. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga43c589f51df60eee06163aec88f77bf6a710f001e7ab7440abfcd79e4feb5a66e"></a>kIEE_APC_Region3</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga4791b82525d1ea4960b2fdbcbbb382b5a710f001e7ab7440abfcd79e4feb5a66e"></a>kIEE_APC_Region3</em>&nbsp;</td><td class="fielddoc">
 <p>APC IEE region 3. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga43c589f51df60eee06163aec88f77bf6a75a64fb8523aa7084a7f754486527834"></a>kIEE_APC_Region4</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga4791b82525d1ea4960b2fdbcbbb382b5a75a64fb8523aa7084a7f754486527834"></a>kIEE_APC_Region4</em>&nbsp;</td><td class="fielddoc">
 <p>APC IEE region 4. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga43c589f51df60eee06163aec88f77bf6a42ebebb096a7a86e6cd9c3a9402dc867"></a>kIEE_APC_Region5</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga4791b82525d1ea4960b2fdbcbbb382b5a42ebebb096a7a86e6cd9c3a9402dc867"></a>kIEE_APC_Region5</em>&nbsp;</td><td class="fielddoc">
 <p>APC IEE region 5. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga43c589f51df60eee06163aec88f77bf6add786f4801db876003b8a3d0cb1a8976"></a>kIEE_APC_Region6</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga4791b82525d1ea4960b2fdbcbbb382b5add786f4801db876003b8a3d0cb1a8976"></a>kIEE_APC_Region6</em>&nbsp;</td><td class="fielddoc">
 <p>APC IEE region 6. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga43c589f51df60eee06163aec88f77bf6a6a4dd45e2c0b090de4cc3f849906d020"></a>kIEE_APC_Region7</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga4791b82525d1ea4960b2fdbcbbb382b5a6a4dd45e2c0b090de4cc3f849906d020"></a>kIEE_APC_Region7</em>&nbsp;</td><td class="fielddoc">
 <p>APC IEE region 7. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga6c8858dea20b71c984ac122c640742c5"></a>
+<a class="anchor" id="ga8415a6cfd14500c195d3c242624cb484"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00382.html#ga6c8858dea20b71c984ac122c640742c5">iee_apc_domain_t</a></td>
+          <td class="memname">enum <a class="el" href="a00382.html#ga8415a6cfd14500c195d3c242624cb484">_apc_iee_domain</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga6c8858dea20b71c984ac122c640742c5af66cb7c1deb45b4c135355509c5bcfe9"></a>kIEE_APC_Domain0</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga8415a6cfd14500c195d3c242624cb484af66cb7c1deb45b4c135355509c5bcfe9"></a>kIEE_APC_Domain0</em>&nbsp;</td><td class="fielddoc">
 <p>APC IEE region 0. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6c8858dea20b71c984ac122c640742c5a5815ff9d580dc57a1c8ecc47fb6a2cfd"></a>kIEE_APC_Domain1</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga8415a6cfd14500c195d3c242624cb484a5815ff9d580dc57a1c8ecc47fb6a2cfd"></a>kIEE_APC_Domain1</em>&nbsp;</td><td class="fielddoc">
 <p>APC IEE region 1. </p>
 </td></tr>
 </table>
@@ -299,7 +334,7 @@ Driver version</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> IEE_APC_SetRegionConfig </td>
+          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> IEE_APC_SetRegionConfig </td>
           <td>(</td>
           <td class="paramtype">IEE_APC_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -307,7 +342,7 @@ Driver version</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00382.html#ga43c589f51df60eee06163aec88f77bf6">iee_apc_region_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00382.html#ga0372d29e40e98691931c8b56e9f4894d">iee_apc_region_t</a>&#160;</td>
           <td class="paramname"><em>region</em>, </td>
         </tr>
         <tr>
@@ -347,7 +382,7 @@ Driver version</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> IEE_APC_LockRegionConfig </td>
+          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> IEE_APC_LockRegionConfig </td>
           <td>(</td>
           <td class="paramtype">IEE_APC_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -355,13 +390,13 @@ Driver version</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00382.html#ga43c589f51df60eee06163aec88f77bf6">iee_apc_region_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00382.html#ga0372d29e40e98691931c8b56e9f4894d">iee_apc_region_t</a>&#160;</td>
           <td class="paramname"><em>region</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00382.html#ga6c8858dea20b71c984ac122c640742c5">iee_apc_domain_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00382.html#gaf84910f739a38fed78116e0a7b74878b">iee_apc_domain_t</a>&#160;</td>
           <td class="paramname"><em>domain</em>&#160;</td>
         </tr>
         <tr>
@@ -396,7 +431,7 @@ Driver version</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00382.html#ga43c589f51df60eee06163aec88f77bf6">iee_apc_region_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00382.html#ga0372d29e40e98691931c8b56e9f4894d">iee_apc_region_t</a>&#160;</td>
           <td class="paramname"><em>region</em>&#160;</td>
         </tr>
         <tr>

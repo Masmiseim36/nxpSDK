@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, USB_STACK_BM=1, MCUXPRESSO_SDK, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>..;../../../common/fmstr_example;../../../../../../middleware/freemaster/src/support/mcuxsdk_usb;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../xmcd;../../../../../../middleware/usb/phy;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../source;../../../../../../middleware/freemaster/src/support/mcuxsdk_usb;../source/board;../source/example_data;..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../xmcd;../../../../../../middleware/usb/phy;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -352,7 +352,7 @@
               <MiscControls/>
               <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
-              <IncludePath/>
+              <IncludePath>../source/board</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -381,22 +381,52 @@
             <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../main.c</FilePath>
+              <FilePath>../source/main.c</FilePath>
             </File>
             <File>
               <FileName>freemaster_cfg.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../freemaster_cfg.h</FilePath>
+              <FilePath>../source/freemaster_cfg.h</FilePath>
             </File>
             <File>
               <FileName>freemaster_example.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../common/fmstr_example/freemaster_example.c</FilePath>
+              <FilePath>../source/freemaster_example.c</FilePath>
             </File>
             <File>
               <FileName>freemaster_example.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/freemaster_example.h</FilePath>
+              <FilePath>../source/freemaster_example.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_usb.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/freemaster_usb.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/freemaster_usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_usb_device_descriptor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/freemaster_usb_device_descriptor.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_usb_device_descriptor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/freemaster_usb_device_descriptor.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/usb_device_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_descriptor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/usb_device_descriptor.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -406,42 +436,42 @@
             <File>
               <FileName>clock_config.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
+              <FilePath>../source/board/clock_config.c</FilePath>
             </File>
             <File>
               <FileName>clock_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
+              <FilePath>../source/board/clock_config.h</FilePath>
             </File>
             <File>
               <FileName>pin_mux.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
+              <FilePath>../source/board/pin_mux.c</FilePath>
             </File>
             <File>
               <FileName>pin_mux.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
+              <FilePath>../source/board/pin_mux.h</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../board.c</FilePath>
+              <FilePath>../source/board/board.c</FilePath>
             </File>
             <File>
               <FileName>board.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../board.h</FilePath>
+              <FilePath>../source/board/board.h</FilePath>
             </File>
             <File>
               <FileName>dcd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../dcd.c</FilePath>
+              <FilePath>../source/board/dcd.c</FilePath>
             </File>
             <File>
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../dcd.h</FilePath>
+              <FilePath>../source/board/dcd.h</FilePath>
             </File>
             <File>
               <FileName>xmcd.c</FileName>
@@ -456,41 +486,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source/support_usb</GroupName>
-          <Files>
-            <File>
-              <FileName>freemaster_usb.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_usb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb.h</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_usb_device_descriptor.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb_device_descriptor.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_usb_device_descriptor.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb_device_descriptor.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/usb_device_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_descriptor.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/usb_device_descriptor.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -501,37 +496,37 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source/example_data</GroupName>
+          <GroupName>example_data</GroupName>
           <Files>
             <File>
               <FileName>data_example_pmp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_example_pmp.h</FilePath>
+              <FilePath>../source/example_data/data_example_pmp.h</FilePath>
             </File>
             <File>
               <FileName>data_img_logo.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_img_logo.h</FilePath>
+              <FilePath>../source/example_data/data_img_logo.h</FilePath>
             </File>
             <File>
               <FileName>data_img_file.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_img_file.h</FilePath>
+              <FilePath>../source/example_data/data_img_file.h</FilePath>
             </File>
             <File>
               <FileName>data_img_fmstrlogo.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_img_fmstrlogo.h</FilePath>
+              <FilePath>../source/example_data/data_img_fmstrlogo.h</FilePath>
             </File>
             <File>
               <FileName>data_html_index.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_html_index.h</FilePath>
+              <FilePath>../source/example_data/data_html_index.h</FilePath>
             </File>
             <File>
               <FileName>example_data.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/example_data.h</FilePath>
+              <FilePath>../source/example_data/example_data.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -777,6 +772,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1548,7 +1548,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=0, XIP_BOOT_HEADER_XMCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, USB_STACK_BM=1, MCUXPRESSO_SDK, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>..;../../../common/fmstr_example;../../../../../../middleware/freemaster/src/support/mcuxsdk_usb;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../xmcd;../../../../../../middleware/usb/phy;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../source;../../../../../../middleware/freemaster/src/support/mcuxsdk_usb;../source/board;../source/example_data;..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../xmcd;../../../../../../middleware/usb/phy;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1566,7 +1566,7 @@
               <MiscControls/>
               <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
-              <IncludePath/>
+              <IncludePath>../source/board</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -1595,22 +1595,52 @@
             <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../main.c</FilePath>
+              <FilePath>../source/main.c</FilePath>
             </File>
             <File>
               <FileName>freemaster_cfg.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../freemaster_cfg.h</FilePath>
+              <FilePath>../source/freemaster_cfg.h</FilePath>
             </File>
             <File>
               <FileName>freemaster_example.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../common/fmstr_example/freemaster_example.c</FilePath>
+              <FilePath>../source/freemaster_example.c</FilePath>
             </File>
             <File>
               <FileName>freemaster_example.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/freemaster_example.h</FilePath>
+              <FilePath>../source/freemaster_example.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_usb.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/freemaster_usb.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/freemaster_usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_usb_device_descriptor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/freemaster_usb_device_descriptor.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_usb_device_descriptor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/freemaster_usb_device_descriptor.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/usb_device_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_descriptor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/usb_device_descriptor.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1620,42 +1650,42 @@
             <File>
               <FileName>clock_config.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
+              <FilePath>../source/board/clock_config.c</FilePath>
             </File>
             <File>
               <FileName>clock_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
+              <FilePath>../source/board/clock_config.h</FilePath>
             </File>
             <File>
               <FileName>pin_mux.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
+              <FilePath>../source/board/pin_mux.c</FilePath>
             </File>
             <File>
               <FileName>pin_mux.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
+              <FilePath>../source/board/pin_mux.h</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../board.c</FilePath>
+              <FilePath>../source/board/board.c</FilePath>
             </File>
             <File>
               <FileName>board.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../board.h</FilePath>
+              <FilePath>../source/board/board.h</FilePath>
             </File>
             <File>
               <FileName>dcd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../dcd.c</FilePath>
+              <FilePath>../source/board/dcd.c</FilePath>
             </File>
             <File>
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../dcd.h</FilePath>
+              <FilePath>../source/board/dcd.h</FilePath>
             </File>
             <File>
               <FileName>xmcd.c</FileName>
@@ -1670,41 +1700,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source/support_usb</GroupName>
-          <Files>
-            <File>
-              <FileName>freemaster_usb.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_usb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb.h</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_usb_device_descriptor.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb_device_descriptor.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_usb_device_descriptor.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb_device_descriptor.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/usb_device_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_descriptor.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/usb_device_descriptor.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -1715,37 +1710,37 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source/example_data</GroupName>
+          <GroupName>example_data</GroupName>
           <Files>
             <File>
               <FileName>data_example_pmp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_example_pmp.h</FilePath>
+              <FilePath>../source/example_data/data_example_pmp.h</FilePath>
             </File>
             <File>
               <FileName>data_img_logo.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_img_logo.h</FilePath>
+              <FilePath>../source/example_data/data_img_logo.h</FilePath>
             </File>
             <File>
               <FileName>data_img_file.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_img_file.h</FilePath>
+              <FilePath>../source/example_data/data_img_file.h</FilePath>
             </File>
             <File>
               <FileName>data_img_fmstrlogo.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_img_fmstrlogo.h</FilePath>
+              <FilePath>../source/example_data/data_img_fmstrlogo.h</FilePath>
             </File>
             <File>
               <FileName>data_html_index.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_html_index.h</FilePath>
+              <FilePath>../source/example_data/data_html_index.h</FilePath>
             </File>
             <File>
               <FileName>example_data.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/example_data.h</FilePath>
+              <FilePath>../source/example_data/example_data.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1991,6 +1986,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2762,7 +2762,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, USB_STACK_BM=1, MCUXPRESSO_SDK, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>..;../../../common/fmstr_example;../../../../../../middleware/freemaster/src/support/mcuxsdk_usb;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../xmcd;../../../../../../middleware/usb/phy;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../source;../../../../../../middleware/freemaster/src/support/mcuxsdk_usb;../source/board;../source/example_data;..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../xmcd;../../../../../../middleware/usb/phy;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2780,7 +2780,7 @@
               <MiscControls/>
               <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
-              <IncludePath/>
+              <IncludePath>../source/board</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -2809,22 +2809,52 @@
             <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../main.c</FilePath>
+              <FilePath>../source/main.c</FilePath>
             </File>
             <File>
               <FileName>freemaster_cfg.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../freemaster_cfg.h</FilePath>
+              <FilePath>../source/freemaster_cfg.h</FilePath>
             </File>
             <File>
               <FileName>freemaster_example.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../common/fmstr_example/freemaster_example.c</FilePath>
+              <FilePath>../source/freemaster_example.c</FilePath>
             </File>
             <File>
               <FileName>freemaster_example.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/freemaster_example.h</FilePath>
+              <FilePath>../source/freemaster_example.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_usb.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/freemaster_usb.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/freemaster_usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_usb_device_descriptor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/freemaster_usb_device_descriptor.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_usb_device_descriptor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/freemaster_usb_device_descriptor.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/usb_device_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_descriptor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/usb_device_descriptor.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2834,42 +2864,42 @@
             <File>
               <FileName>clock_config.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
+              <FilePath>../source/board/clock_config.c</FilePath>
             </File>
             <File>
               <FileName>clock_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
+              <FilePath>../source/board/clock_config.h</FilePath>
             </File>
             <File>
               <FileName>pin_mux.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
+              <FilePath>../source/board/pin_mux.c</FilePath>
             </File>
             <File>
               <FileName>pin_mux.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
+              <FilePath>../source/board/pin_mux.h</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../board.c</FilePath>
+              <FilePath>../source/board/board.c</FilePath>
             </File>
             <File>
               <FileName>board.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../board.h</FilePath>
+              <FilePath>../source/board/board.h</FilePath>
             </File>
             <File>
               <FileName>dcd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../dcd.c</FilePath>
+              <FilePath>../source/board/dcd.c</FilePath>
             </File>
             <File>
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../dcd.h</FilePath>
+              <FilePath>../source/board/dcd.h</FilePath>
             </File>
             <File>
               <FileName>xmcd.c</FileName>
@@ -2884,41 +2914,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source/support_usb</GroupName>
-          <Files>
-            <File>
-              <FileName>freemaster_usb.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_usb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb.h</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_usb_device_descriptor.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb_device_descriptor.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_usb_device_descriptor.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb_device_descriptor.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/usb_device_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_descriptor.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/usb_device_descriptor.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -2929,37 +2924,37 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source/example_data</GroupName>
+          <GroupName>example_data</GroupName>
           <Files>
             <File>
               <FileName>data_example_pmp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_example_pmp.h</FilePath>
+              <FilePath>../source/example_data/data_example_pmp.h</FilePath>
             </File>
             <File>
               <FileName>data_img_logo.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_img_logo.h</FilePath>
+              <FilePath>../source/example_data/data_img_logo.h</FilePath>
             </File>
             <File>
               <FileName>data_img_file.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_img_file.h</FilePath>
+              <FilePath>../source/example_data/data_img_file.h</FilePath>
             </File>
             <File>
               <FileName>data_img_fmstrlogo.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_img_fmstrlogo.h</FilePath>
+              <FilePath>../source/example_data/data_img_fmstrlogo.h</FilePath>
             </File>
             <File>
               <FileName>data_html_index.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_html_index.h</FilePath>
+              <FilePath>../source/example_data/data_html_index.h</FilePath>
             </File>
             <File>
               <FileName>example_data.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/example_data.h</FilePath>
+              <FilePath>../source/example_data/example_data.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3205,6 +3200,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3976,7 +3976,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, USB_STACK_BM=1, MCUXPRESSO_SDK, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>..;../../../common/fmstr_example;../../../../../../middleware/freemaster/src/support/mcuxsdk_usb;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../xmcd;../../../../../../middleware/usb/phy;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../source;../../../../../../middleware/freemaster/src/support/mcuxsdk_usb;../source/board;../source/example_data;..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../xmcd;../../../../../../middleware/usb/phy;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3994,7 +3994,7 @@
               <MiscControls/>
               <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
-              <IncludePath/>
+              <IncludePath>../source/board</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -4023,22 +4023,52 @@
             <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../main.c</FilePath>
+              <FilePath>../source/main.c</FilePath>
             </File>
             <File>
               <FileName>freemaster_cfg.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../freemaster_cfg.h</FilePath>
+              <FilePath>../source/freemaster_cfg.h</FilePath>
             </File>
             <File>
               <FileName>freemaster_example.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../common/fmstr_example/freemaster_example.c</FilePath>
+              <FilePath>../source/freemaster_example.c</FilePath>
             </File>
             <File>
               <FileName>freemaster_example.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/freemaster_example.h</FilePath>
+              <FilePath>../source/freemaster_example.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_usb.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/freemaster_usb.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/freemaster_usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_usb_device_descriptor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/freemaster_usb_device_descriptor.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_usb_device_descriptor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/freemaster_usb_device_descriptor.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/usb_device_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_descriptor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/usb_device_descriptor.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4048,42 +4078,42 @@
             <File>
               <FileName>clock_config.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
+              <FilePath>../source/board/clock_config.c</FilePath>
             </File>
             <File>
               <FileName>clock_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
+              <FilePath>../source/board/clock_config.h</FilePath>
             </File>
             <File>
               <FileName>pin_mux.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
+              <FilePath>../source/board/pin_mux.c</FilePath>
             </File>
             <File>
               <FileName>pin_mux.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
+              <FilePath>../source/board/pin_mux.h</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../board.c</FilePath>
+              <FilePath>../source/board/board.c</FilePath>
             </File>
             <File>
               <FileName>board.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../board.h</FilePath>
+              <FilePath>../source/board/board.h</FilePath>
             </File>
             <File>
               <FileName>dcd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../dcd.c</FilePath>
+              <FilePath>../source/board/dcd.c</FilePath>
             </File>
             <File>
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../dcd.h</FilePath>
+              <FilePath>../source/board/dcd.h</FilePath>
             </File>
             <File>
               <FileName>xmcd.c</FileName>
@@ -4098,41 +4128,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source/support_usb</GroupName>
-          <Files>
-            <File>
-              <FileName>freemaster_usb.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_usb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb.h</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_usb_device_descriptor.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb_device_descriptor.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_usb_device_descriptor.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb_device_descriptor.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/usb_device_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_descriptor.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/usb_device_descriptor.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -4143,37 +4138,37 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source/example_data</GroupName>
+          <GroupName>example_data</GroupName>
           <Files>
             <File>
               <FileName>data_example_pmp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_example_pmp.h</FilePath>
+              <FilePath>../source/example_data/data_example_pmp.h</FilePath>
             </File>
             <File>
               <FileName>data_img_logo.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_img_logo.h</FilePath>
+              <FilePath>../source/example_data/data_img_logo.h</FilePath>
             </File>
             <File>
               <FileName>data_img_file.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_img_file.h</FilePath>
+              <FilePath>../source/example_data/data_img_file.h</FilePath>
             </File>
             <File>
               <FileName>data_img_fmstrlogo.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_img_fmstrlogo.h</FilePath>
+              <FilePath>../source/example_data/data_img_fmstrlogo.h</FilePath>
             </File>
             <File>
               <FileName>data_html_index.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_html_index.h</FilePath>
+              <FilePath>../source/example_data/data_html_index.h</FilePath>
             </File>
             <File>
               <FileName>example_data.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/example_data.h</FilePath>
+              <FilePath>../source/example_data/example_data.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4419,6 +4414,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5190,7 +5190,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, USB_STACK_BM=1, MCUXPRESSO_SDK, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>..;../../../common/fmstr_example;../../../../../../middleware/freemaster/src/support/mcuxsdk_usb;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../xmcd;../../../../../../middleware/usb/phy;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../source;../../../../../../middleware/freemaster/src/support/mcuxsdk_usb;../source/board;../source/example_data;..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../xmcd;../../../../../../middleware/usb/phy;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5208,7 +5208,7 @@
               <MiscControls/>
               <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
-              <IncludePath/>
+              <IncludePath>../source/board</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -5237,22 +5237,52 @@
             <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../main.c</FilePath>
+              <FilePath>../source/main.c</FilePath>
             </File>
             <File>
               <FileName>freemaster_cfg.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../freemaster_cfg.h</FilePath>
+              <FilePath>../source/freemaster_cfg.h</FilePath>
             </File>
             <File>
               <FileName>freemaster_example.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../common/fmstr_example/freemaster_example.c</FilePath>
+              <FilePath>../source/freemaster_example.c</FilePath>
             </File>
             <File>
               <FileName>freemaster_example.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/freemaster_example.h</FilePath>
+              <FilePath>../source/freemaster_example.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_usb.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/freemaster_usb.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/freemaster_usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_usb_device_descriptor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/freemaster_usb_device_descriptor.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_usb_device_descriptor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/freemaster_usb_device_descriptor.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/usb_device_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_descriptor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/usb_device_descriptor.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5262,42 +5292,42 @@
             <File>
               <FileName>clock_config.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
+              <FilePath>../source/board/clock_config.c</FilePath>
             </File>
             <File>
               <FileName>clock_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
+              <FilePath>../source/board/clock_config.h</FilePath>
             </File>
             <File>
               <FileName>pin_mux.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
+              <FilePath>../source/board/pin_mux.c</FilePath>
             </File>
             <File>
               <FileName>pin_mux.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
+              <FilePath>../source/board/pin_mux.h</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../board.c</FilePath>
+              <FilePath>../source/board/board.c</FilePath>
             </File>
             <File>
               <FileName>board.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../board.h</FilePath>
+              <FilePath>../source/board/board.h</FilePath>
             </File>
             <File>
               <FileName>dcd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../dcd.c</FilePath>
+              <FilePath>../source/board/dcd.c</FilePath>
             </File>
             <File>
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../dcd.h</FilePath>
+              <FilePath>../source/board/dcd.h</FilePath>
             </File>
             <File>
               <FileName>xmcd.c</FileName>
@@ -5312,41 +5342,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source/support_usb</GroupName>
-          <Files>
-            <File>
-              <FileName>freemaster_usb.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_usb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb.h</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_usb_device_descriptor.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb_device_descriptor.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_usb_device_descriptor.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb_device_descriptor.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/usb_device_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_descriptor.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/usb_device_descriptor.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -5357,37 +5352,37 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source/example_data</GroupName>
+          <GroupName>example_data</GroupName>
           <Files>
             <File>
               <FileName>data_example_pmp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_example_pmp.h</FilePath>
+              <FilePath>../source/example_data/data_example_pmp.h</FilePath>
             </File>
             <File>
               <FileName>data_img_logo.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_img_logo.h</FilePath>
+              <FilePath>../source/example_data/data_img_logo.h</FilePath>
             </File>
             <File>
               <FileName>data_img_file.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_img_file.h</FilePath>
+              <FilePath>../source/example_data/data_img_file.h</FilePath>
             </File>
             <File>
               <FileName>data_img_fmstrlogo.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_img_fmstrlogo.h</FilePath>
+              <FilePath>../source/example_data/data_img_fmstrlogo.h</FilePath>
             </File>
             <File>
               <FileName>data_html_index.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_html_index.h</FilePath>
+              <FilePath>../source/example_data/data_html_index.h</FilePath>
             </File>
             <File>
               <FileName>example_data.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/example_data.h</FilePath>
+              <FilePath>../source/example_data/example_data.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5633,6 +5628,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6404,7 +6404,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=0, XIP_BOOT_HEADER_XMCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, USB_STACK_BM=1, MCUXPRESSO_SDK, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>..;../../../common/fmstr_example;../../../../../../middleware/freemaster/src/support/mcuxsdk_usb;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../xmcd;../../../../../../middleware/usb/phy;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../source;../../../../../../middleware/freemaster/src/support/mcuxsdk_usb;../source/board;../source/example_data;..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../xmcd;../../../../../../middleware/usb/phy;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -6422,7 +6422,7 @@
               <MiscControls/>
               <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
-              <IncludePath/>
+              <IncludePath>../source/board</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -6451,22 +6451,52 @@
             <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../main.c</FilePath>
+              <FilePath>../source/main.c</FilePath>
             </File>
             <File>
               <FileName>freemaster_cfg.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../freemaster_cfg.h</FilePath>
+              <FilePath>../source/freemaster_cfg.h</FilePath>
             </File>
             <File>
               <FileName>freemaster_example.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../common/fmstr_example/freemaster_example.c</FilePath>
+              <FilePath>../source/freemaster_example.c</FilePath>
             </File>
             <File>
               <FileName>freemaster_example.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/freemaster_example.h</FilePath>
+              <FilePath>../source/freemaster_example.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_usb.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/freemaster_usb.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/freemaster_usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_usb_device_descriptor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/freemaster_usb_device_descriptor.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_usb_device_descriptor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/freemaster_usb_device_descriptor.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/usb_device_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_descriptor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/usb_device_descriptor.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6476,42 +6506,42 @@
             <File>
               <FileName>clock_config.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
+              <FilePath>../source/board/clock_config.c</FilePath>
             </File>
             <File>
               <FileName>clock_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
+              <FilePath>../source/board/clock_config.h</FilePath>
             </File>
             <File>
               <FileName>pin_mux.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
+              <FilePath>../source/board/pin_mux.c</FilePath>
             </File>
             <File>
               <FileName>pin_mux.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
+              <FilePath>../source/board/pin_mux.h</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../board.c</FilePath>
+              <FilePath>../source/board/board.c</FilePath>
             </File>
             <File>
               <FileName>board.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../board.h</FilePath>
+              <FilePath>../source/board/board.h</FilePath>
             </File>
             <File>
               <FileName>dcd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../dcd.c</FilePath>
+              <FilePath>../source/board/dcd.c</FilePath>
             </File>
             <File>
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../dcd.h</FilePath>
+              <FilePath>../source/board/dcd.h</FilePath>
             </File>
             <File>
               <FileName>xmcd.c</FileName>
@@ -6526,41 +6556,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source/support_usb</GroupName>
-          <Files>
-            <File>
-              <FileName>freemaster_usb.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_usb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb.h</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_usb_device_descriptor.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb_device_descriptor.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_usb_device_descriptor.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb_device_descriptor.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/usb_device_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_descriptor.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/usb_device_descriptor.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -6571,37 +6566,37 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source/example_data</GroupName>
+          <GroupName>example_data</GroupName>
           <Files>
             <File>
               <FileName>data_example_pmp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_example_pmp.h</FilePath>
+              <FilePath>../source/example_data/data_example_pmp.h</FilePath>
             </File>
             <File>
               <FileName>data_img_logo.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_img_logo.h</FilePath>
+              <FilePath>../source/example_data/data_img_logo.h</FilePath>
             </File>
             <File>
               <FileName>data_img_file.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_img_file.h</FilePath>
+              <FilePath>../source/example_data/data_img_file.h</FilePath>
             </File>
             <File>
               <FileName>data_img_fmstrlogo.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_img_fmstrlogo.h</FilePath>
+              <FilePath>../source/example_data/data_img_fmstrlogo.h</FilePath>
             </File>
             <File>
               <FileName>data_html_index.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_html_index.h</FilePath>
+              <FilePath>../source/example_data/data_html_index.h</FilePath>
             </File>
             <File>
               <FileName>example_data.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/example_data.h</FilePath>
+              <FilePath>../source/example_data/example_data.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6847,6 +6842,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -7618,7 +7618,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, USB_STACK_BM=1, MCUXPRESSO_SDK, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>..;../../../common/fmstr_example;../../../../../../middleware/freemaster/src/support/mcuxsdk_usb;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../xmcd;../../../../../../middleware/usb/phy;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../source;../../../../../../middleware/freemaster/src/support/mcuxsdk_usb;../source/board;../source/example_data;..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../xmcd;../../../../../../middleware/usb/phy;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -7636,7 +7636,7 @@
               <MiscControls/>
               <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
-              <IncludePath/>
+              <IncludePath>../source/board</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -7665,22 +7665,52 @@
             <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../main.c</FilePath>
+              <FilePath>../source/main.c</FilePath>
             </File>
             <File>
               <FileName>freemaster_cfg.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../freemaster_cfg.h</FilePath>
+              <FilePath>../source/freemaster_cfg.h</FilePath>
             </File>
             <File>
               <FileName>freemaster_example.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../common/fmstr_example/freemaster_example.c</FilePath>
+              <FilePath>../source/freemaster_example.c</FilePath>
             </File>
             <File>
               <FileName>freemaster_example.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/freemaster_example.h</FilePath>
+              <FilePath>../source/freemaster_example.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_usb.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/freemaster_usb.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/freemaster_usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_usb_device_descriptor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/freemaster_usb_device_descriptor.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_usb_device_descriptor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/freemaster_usb_device_descriptor.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/usb_device_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_descriptor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/usb_device_descriptor.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -7690,42 +7720,42 @@
             <File>
               <FileName>clock_config.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
+              <FilePath>../source/board/clock_config.c</FilePath>
             </File>
             <File>
               <FileName>clock_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
+              <FilePath>../source/board/clock_config.h</FilePath>
             </File>
             <File>
               <FileName>pin_mux.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
+              <FilePath>../source/board/pin_mux.c</FilePath>
             </File>
             <File>
               <FileName>pin_mux.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
+              <FilePath>../source/board/pin_mux.h</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../board.c</FilePath>
+              <FilePath>../source/board/board.c</FilePath>
             </File>
             <File>
               <FileName>board.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../board.h</FilePath>
+              <FilePath>../source/board/board.h</FilePath>
             </File>
             <File>
               <FileName>dcd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../dcd.c</FilePath>
+              <FilePath>../source/board/dcd.c</FilePath>
             </File>
             <File>
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../dcd.h</FilePath>
+              <FilePath>../source/board/dcd.h</FilePath>
             </File>
             <File>
               <FileName>xmcd.c</FileName>
@@ -7740,41 +7770,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source/support_usb</GroupName>
-          <Files>
-            <File>
-              <FileName>freemaster_usb.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_usb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb.h</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_usb_device_descriptor.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb_device_descriptor.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_usb_device_descriptor.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb_device_descriptor.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/usb_device_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_descriptor.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/usb_device_descriptor.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -7785,37 +7780,37 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source/example_data</GroupName>
+          <GroupName>example_data</GroupName>
           <Files>
             <File>
               <FileName>data_example_pmp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_example_pmp.h</FilePath>
+              <FilePath>../source/example_data/data_example_pmp.h</FilePath>
             </File>
             <File>
               <FileName>data_img_logo.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_img_logo.h</FilePath>
+              <FilePath>../source/example_data/data_img_logo.h</FilePath>
             </File>
             <File>
               <FileName>data_img_file.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_img_file.h</FilePath>
+              <FilePath>../source/example_data/data_img_file.h</FilePath>
             </File>
             <File>
               <FileName>data_img_fmstrlogo.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_img_fmstrlogo.h</FilePath>
+              <FilePath>../source/example_data/data_img_fmstrlogo.h</FilePath>
             </File>
             <File>
               <FileName>data_html_index.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_html_index.h</FilePath>
+              <FilePath>../source/example_data/data_html_index.h</FilePath>
             </File>
             <File>
               <FileName>example_data.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/example_data.h</FilePath>
+              <FilePath>../source/example_data/example_data.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -8061,6 +8056,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -8832,7 +8832,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, USB_STACK_BM=1, MCUXPRESSO_SDK, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>..;../../../common/fmstr_example;../../../../../../middleware/freemaster/src/support/mcuxsdk_usb;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../xmcd;../../../../../../middleware/usb/phy;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../source;../../../../../../middleware/freemaster/src/support/mcuxsdk_usb;../source/board;../source/example_data;..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../xmcd;../../../../../../middleware/usb/phy;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -8850,7 +8850,7 @@
               <MiscControls/>
               <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
-              <IncludePath/>
+              <IncludePath>../source/board</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -8879,22 +8879,52 @@
             <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../main.c</FilePath>
+              <FilePath>../source/main.c</FilePath>
             </File>
             <File>
               <FileName>freemaster_cfg.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../freemaster_cfg.h</FilePath>
+              <FilePath>../source/freemaster_cfg.h</FilePath>
             </File>
             <File>
               <FileName>freemaster_example.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../common/fmstr_example/freemaster_example.c</FilePath>
+              <FilePath>../source/freemaster_example.c</FilePath>
             </File>
             <File>
               <FileName>freemaster_example.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/freemaster_example.h</FilePath>
+              <FilePath>../source/freemaster_example.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_usb.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/freemaster_usb.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/freemaster_usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_usb_device_descriptor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/freemaster_usb_device_descriptor.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_usb_device_descriptor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/freemaster_usb_device_descriptor.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/usb_device_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_descriptor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/usb_device_descriptor.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -8904,42 +8934,42 @@
             <File>
               <FileName>clock_config.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
+              <FilePath>../source/board/clock_config.c</FilePath>
             </File>
             <File>
               <FileName>clock_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
+              <FilePath>../source/board/clock_config.h</FilePath>
             </File>
             <File>
               <FileName>pin_mux.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
+              <FilePath>../source/board/pin_mux.c</FilePath>
             </File>
             <File>
               <FileName>pin_mux.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
+              <FilePath>../source/board/pin_mux.h</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../board.c</FilePath>
+              <FilePath>../source/board/board.c</FilePath>
             </File>
             <File>
               <FileName>board.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../board.h</FilePath>
+              <FilePath>../source/board/board.h</FilePath>
             </File>
             <File>
               <FileName>dcd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../dcd.c</FilePath>
+              <FilePath>../source/board/dcd.c</FilePath>
             </File>
             <File>
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../dcd.h</FilePath>
+              <FilePath>../source/board/dcd.h</FilePath>
             </File>
             <File>
               <FileName>xmcd.c</FileName>
@@ -8954,41 +8984,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source/support_usb</GroupName>
-          <Files>
-            <File>
-              <FileName>freemaster_usb.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_usb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb.h</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_usb_device_descriptor.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb_device_descriptor.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_usb_device_descriptor.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb_device_descriptor.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/usb_device_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_descriptor.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/usb_device_descriptor.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -8999,37 +8994,37 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source/example_data</GroupName>
+          <GroupName>example_data</GroupName>
           <Files>
             <File>
               <FileName>data_example_pmp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_example_pmp.h</FilePath>
+              <FilePath>../source/example_data/data_example_pmp.h</FilePath>
             </File>
             <File>
               <FileName>data_img_logo.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_img_logo.h</FilePath>
+              <FilePath>../source/example_data/data_img_logo.h</FilePath>
             </File>
             <File>
               <FileName>data_img_file.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_img_file.h</FilePath>
+              <FilePath>../source/example_data/data_img_file.h</FilePath>
             </File>
             <File>
               <FileName>data_img_fmstrlogo.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_img_fmstrlogo.h</FilePath>
+              <FilePath>../source/example_data/data_img_fmstrlogo.h</FilePath>
             </File>
             <File>
               <FileName>data_html_index.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/data_html_index.h</FilePath>
+              <FilePath>../source/example_data/data_html_index.h</FilePath>
             </File>
             <File>
               <FileName>example_data.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../common/fmstr_example/example_data.h</FilePath>
+              <FilePath>../source/example_data/example_data.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -9275,6 +9270,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>

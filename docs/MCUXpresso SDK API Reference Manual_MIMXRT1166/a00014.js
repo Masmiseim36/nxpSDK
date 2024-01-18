@@ -1,20 +1,24 @@
 var a00014 =
 [
-    [ "caam_pkha_ecc_point_t", "a00014.html#a00440", [
-      [ "X", "a00014.html#a393f71cb5e18b16c11e12bf0fe8ff806", null ],
-      [ "Y", "a00014.html#a52bb5103370c936d3c038f369cd08df7", null ]
+    [ "_caam_pkha_ecc_point_t", "a00014.html#a00410", [
+      [ "X", "a00014.html#acea3e6952ae688c9be2fa0137cddfb32", null ],
+      [ "Y", "a00014.html#a5651572f785fa49c9f27be4202aed268", null ]
     ] ],
-    [ "caam_pkha_timing_t", "a00014.html#ga19b9850dc1c123eaa3c33e6ee89f7be0", [
-      [ "kCAAM_PKHA_NoTimingEqualized", "a00014.html#gga19b9850dc1c123eaa3c33e6ee89f7be0ab19b9b6242787763cb0128349babd527", null ],
-      [ "kCAAM_PKHA_TimingEqualized", "a00014.html#gga19b9850dc1c123eaa3c33e6ee89f7be0a467a85a74522572ab291cd9403c6c8d7", null ]
+    [ "caam_pkha_ecc_point_t", "a00014.html#ga1bbf309404e3163fd9e0de1b388c36bf", null ],
+    [ "caam_pkha_timing_t", "a00014.html#ga524a37ddb046ed5134a90ca26fe58a0a", null ],
+    [ "caam_pkha_f2m_t", "a00014.html#ga9eacc7fdd85eba3af64c7a5d261d6bad", null ],
+    [ "caam_pkha_montgomery_form_t", "a00014.html#gad583166de16c309fd664f04e326ca404", null ],
+    [ "_caam_pkha_timing_t", "a00014.html#ga4a5a1288de7eb6baac7883e3f12f5f86", [
+      [ "kCAAM_PKHA_NoTimingEqualized", "a00014.html#gga4a5a1288de7eb6baac7883e3f12f5f86ab19b9b6242787763cb0128349babd527", null ],
+      [ "kCAAM_PKHA_TimingEqualized", "a00014.html#gga4a5a1288de7eb6baac7883e3f12f5f86a467a85a74522572ab291cd9403c6c8d7", null ]
     ] ],
-    [ "caam_pkha_f2m_t", "a00014.html#ga32a72b1b22187f5abd743b1a960002fd", [
-      [ "kCAAM_PKHA_IntegerArith", "a00014.html#gga32a72b1b22187f5abd743b1a960002fdac4c41cc76ca68b4edffc46747fd7bc43", null ],
-      [ "kCAAM_PKHA_F2mArith", "a00014.html#gga32a72b1b22187f5abd743b1a960002fdae7613b372f45200431a9f94abb98ace3", null ]
+    [ "_caam_pkha_f2m_t", "a00014.html#gada72aa266e98b2414000ac2063870f52", [
+      [ "kCAAM_PKHA_IntegerArith", "a00014.html#ggada72aa266e98b2414000ac2063870f52ac4c41cc76ca68b4edffc46747fd7bc43", null ],
+      [ "kCAAM_PKHA_F2mArith", "a00014.html#ggada72aa266e98b2414000ac2063870f52ae7613b372f45200431a9f94abb98ace3", null ]
     ] ],
-    [ "caam_pkha_montgomery_form_t", "a00014.html#ga5e34d188a11ea30302f6ab4c33f9d4c8", [
-      [ "kCAAM_PKHA_NormalValue", "a00014.html#gga5e34d188a11ea30302f6ab4c33f9d4c8a81ecb2574d2e209139a683fb1e8daed2", null ],
-      [ "kCAAM_PKHA_MontgomeryFormat", "a00014.html#gga5e34d188a11ea30302f6ab4c33f9d4c8a6583a7222fd5e903faee967cc8379107", null ]
+    [ "_caam_pkha_montgomery_form_t", "a00014.html#gabb40b492ba390f464b075589fe5e5eb4", [
+      [ "kCAAM_PKHA_NormalValue", "a00014.html#ggabb40b492ba390f464b075589fe5e5eb4a81ecb2574d2e209139a683fb1e8daed2", null ],
+      [ "kCAAM_PKHA_MontgomeryFormat", "a00014.html#ggabb40b492ba390f464b075589fe5e5eb4a6583a7222fd5e903faee967cc8379107", null ]
     ] ],
     [ "CAAM_PKHA_NormalToMontgomery", "a00014.html#ga41287dd762e5d9c6ef73e2a919c4e533", null ],
     [ "CAAM_PKHA_MontgomeryToNormal", "a00014.html#ga1064589f9edd7393619123114c481584", null ],

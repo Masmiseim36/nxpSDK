@@ -40,7 +40,7 @@
 
 /* Use XBGR8888 format by default. */
 #define APP_FB_BPP    4
-#define APP_FB_FORMAT  kVIDEO_PixelFormatXBGR8888
+#define APP_FB_FORMAT kVIDEO_PixelFormatXBGR8888
 
 /* Cache line size. */
 #ifndef FSL_FEATURE_L2CACHE_LINESIZE_BYTE
@@ -192,7 +192,7 @@ void png_decode(FIL *file, uint8_t *buffer)
     UINT bytesRemain;
 
     /* Step 1: Read the PNG file into ram. */
-    png_size = f_size(file);
+    png_size   = f_size(file);
     png_buffer = (unsigned char *)malloc(png_size + 2 * APP_CACHE_LINE_SIZE);
 
     if (png_buffer == NULL)
@@ -219,7 +219,7 @@ void png_decode(FIL *file, uint8_t *buffer)
     }
 
     /* Step 2: Set source buffer, buffer size and pixel draw callback function for PNG decoder handler. */
-    err = PNG_openRAM(&s_pngimage, png_buffer_aligned, png_size, NULL);//PNGDraw);//TODO
+    err = PNG_openRAM(&s_pngimage, png_buffer_aligned, png_size, NULL); // PNGDraw);//TODO
 
     if (err != 0)
     {
@@ -227,9 +227,10 @@ void png_decode(FIL *file, uint8_t *buffer)
         assert(false);
     }
 
-    /* Step 3: Set buffer of generated image for PNG decoder handler, this is required when the pixel draw callback function is null. */
+    /* Step 3: Set buffer of generated image for PNG decoder handler, this is required when the pixel draw callback
+     * function is null. */
     /* Place the output image to the center of the screen. */
-    width = PNG_getWidth(&s_pngimage);
+    width  = PNG_getWidth(&s_pngimage);
     height = PNG_getHeight(&s_pngimage);
     APP_SetLayerConfig(width, height);
 

@@ -61,9 +61,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../dcd.h"
 "${ProjDirPath}/../evkmimxrt1160_connect_cm4_cm4side.jlinkscript"
 "${ProjDirPath}/../evkmimxrt1160_connect_cm4_cm4side_sdram.jlinkscript"
-"${ProjDirPath}/../usb_hsdcd.c"
-"${ProjDirPath}/../usb_hsdcd.h"
-"${ProjDirPath}/../usb_charger_detect.h"
 "${ProjDirPath}/../usb_device_hid.c"
 "${ProjDirPath}/../usb_device_hid.h"
 "${ProjDirPath}/../usb_device_ch9.c"
@@ -77,6 +74,7 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${SdkRootDirPath}/boards/evkmimxrt1160/usb_examples/usb_device_hid_mouse/bm
 )
 
+set_source_files_properties("${ProjDirPath}/../usb_hsdcd_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_usb_hsdcd_config_header")
 set_source_files_properties("${ProjDirPath}/../usb_device_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_usb_device_ehci_config_header")
 
 include(${SdkRootDirPath}/devices/MIMXRT1166/all_lib_device.cmake)

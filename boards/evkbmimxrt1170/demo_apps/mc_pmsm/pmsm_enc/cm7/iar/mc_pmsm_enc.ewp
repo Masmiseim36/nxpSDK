@@ -224,8 +224,12 @@
           <name>CCDefines</name>
           <state>DEBUG</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
+          <state>MC_EXAMPLE</state>
           <state>MCUXPRESSO_SDK</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>PMSM_SNSLESS</state>
+          <state>PMSM_SNSLESS_ENC</state>
+          <state>MID_EN</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -265,7 +269,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050,Ta021,Ta022,Ta023</state>
+          <state>Pa082,Pa050,Ta021,Ta022,Ta023,Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -302,11 +306,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -354,13 +358,14 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_IAR/GMCLIB/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_IAR/MLIB/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_iar/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/docs</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
@@ -373,6 +378,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../xmcd</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_iar/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -1333,8 +1339,12 @@
           <state>USE_SDRAM</state>
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
+          <state>MC_EXAMPLE</state>
           <state>MCUXPRESSO_SDK</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>PMSM_SNSLESS</state>
+          <state>PMSM_SNSLESS_ENC</state>
+          <state>MID_EN</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1374,7 +1384,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050,Ta021,Ta022,Ta023</state>
+          <state>Pa082,Pa050,Ta021,Ta022,Ta023,Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1411,11 +1421,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -1463,13 +1473,14 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_IAR/GMCLIB/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_IAR/MLIB/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_iar/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/docs</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
@@ -1482,6 +1493,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../xmcd</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_iar/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -2439,8 +2451,12 @@
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
+          <state>MC_EXAMPLE</state>
           <state>MCUXPRESSO_SDK</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>PMSM_SNSLESS</state>
+          <state>PMSM_SNSLESS_ENC</state>
+          <state>MID_EN</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2480,7 +2496,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050,Ta021,Ta022,Ta023</state>
+          <state>Pa082,Pa050,Ta021,Ta022,Ta023,Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -2517,11 +2533,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -2569,13 +2585,14 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_IAR/GMCLIB/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_IAR/MLIB/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_iar/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/docs</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
@@ -2588,6 +2605,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../xmcd</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_iar/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -3545,8 +3563,12 @@
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>DEBUG</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
+          <state>MC_EXAMPLE</state>
           <state>MCUXPRESSO_SDK</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>PMSM_SNSLESS</state>
+          <state>PMSM_SNSLESS_ENC</state>
+          <state>MID_EN</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3586,7 +3608,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050,Ta021,Ta022,Ta023</state>
+          <state>Pa082,Pa050,Ta021,Ta022,Ta023,Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -3623,11 +3645,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -3675,13 +3697,14 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_IAR/GMCLIB/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_IAR/MLIB/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_iar/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/docs</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
@@ -3694,6 +3717,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../xmcd</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_iar/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -4648,8 +4672,12 @@
           <name>CCDefines</name>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
+          <state>MC_EXAMPLE</state>
           <state>MCUXPRESSO_SDK</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>PMSM_SNSLESS</state>
+          <state>PMSM_SNSLESS_ENC</state>
+          <state>MID_EN</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -4689,7 +4717,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050,Ta021,Ta022,Ta023</state>
+          <state>Pa082,Pa050,Ta021,Ta022,Ta023,Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -4726,11 +4754,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -4778,13 +4806,14 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_IAR/GMCLIB/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_IAR/MLIB/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_iar/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/docs</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
@@ -4797,6 +4826,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../xmcd</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_iar/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -5757,8 +5787,12 @@
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
+          <state>MC_EXAMPLE</state>
           <state>MCUXPRESSO_SDK</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>PMSM_SNSLESS</state>
+          <state>PMSM_SNSLESS_ENC</state>
+          <state>MID_EN</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -5798,7 +5832,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050,Ta021,Ta022,Ta023</state>
+          <state>Pa082,Pa050,Ta021,Ta022,Ta023,Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -5835,11 +5869,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -5887,13 +5921,14 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_IAR/GMCLIB/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_IAR/MLIB/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_iar/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/docs</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
@@ -5906,6 +5941,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../xmcd</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_iar/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -6863,8 +6899,12 @@
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
+          <state>MC_EXAMPLE</state>
           <state>MCUXPRESSO_SDK</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>PMSM_SNSLESS</state>
+          <state>PMSM_SNSLESS_ENC</state>
+          <state>MID_EN</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -6904,7 +6944,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050,Ta021,Ta022,Ta023</state>
+          <state>Pa082,Pa050,Ta021,Ta022,Ta023,Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -6941,11 +6981,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -6993,13 +7033,14 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_IAR/GMCLIB/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_IAR/MLIB/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_iar/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/docs</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
@@ -7012,6 +7053,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../xmcd</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_iar/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -7969,8 +8011,12 @@
           <state>USE_SDRAM</state>
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
+          <state>MC_EXAMPLE</state>
           <state>MCUXPRESSO_SDK</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>PMSM_SNSLESS</state>
+          <state>PMSM_SNSLESS_ENC</state>
+          <state>MID_EN</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -8010,7 +8056,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050,Ta021,Ta022,Ta023</state>
+          <state>Pa082,Pa050,Ta021,Ta022,Ta023,Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -8047,11 +8093,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -8099,13 +8145,14 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_IAR/GMCLIB/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7.1_IAR/MLIB/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_iar/Include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/mcat</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/docs</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
@@ -8118,6 +8165,7 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../xmcd</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_iar/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -8852,507 +8900,153 @@
   <group>
     <name>motor_control</name>
     <group>
-      <name>freemaster</name>
+      <name>docs</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float_enc.pmpx</name>
+        <name>$PROJ_DIR$/../PMSMRT1170B.pdf</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/docs/Release_notes.pdf</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/docs/readme.txt</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/docs/Release_notes.pdf</name>
+      </file>
+    </group>
+    <group>
+      <name>pmsm</name>
       <group>
         <name>pmsm_float</name>
         <group>
-          <name>fm_control</name>
+          <name>mc_drivers</name>
           <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/control_page_config.js</name>
+            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_adcetc_imxrt11xx.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/control_page_scripts.js</name>
+            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_adcetc_imxrt11xx.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/FM_control_M1.html</name>
+            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_pwm3ph_pwma.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/FM_control_dual.html</name>
+            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_pwm3ph_pwma.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/jquery-1.11.1.min.js</name>
+            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_enc_qd.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/jqxbuttons.js</name>
+            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_enc_qd.h</name>
+          </file>
+        </group>
+        <group>
+          <name>mc_algorithms</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/pmsm_control.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/jqxcore.js</name>
+            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/pmsm_control.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/jqxdraw.js</name>
+            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/pmsm_control.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/jqxgauge.js</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/jqxlistmenu.js</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/jqxmenu.js</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/jqxnotification.js</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/jqxpanel.js</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/jqxradiobutton.js</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/jqxscrollbar.js</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/jqxslider.js</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/jqxswitchbutton.js</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/jqxtooltip.js</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/jqxwindow.js</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/logo.png</name>
+            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/pmsm_control.h</name>
           </file>
           <group>
-            <name>styles</name>
+            <name>mcaa_lib</name>
             <group>
-              <name>images</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/backgroundTop.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/backImage.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/bg_black.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/bg_black_horizontal.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/bg_blackhover.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/bg_blackhover_horizontal.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/bg_blackpressed.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/bg_blackpressed_horizontal.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/bg_blueenergy.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/bg_darkblue.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/bg_darkbluehover.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/bg_darkbluepressed.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/black_gradient.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/blackbackground.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/check_black.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/check_blue.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/check_blue_indeterminate.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/check_disabled.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/check_indeterminate_black.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/check_indeterminate_disabled.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/check_indeterminate_white.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/check_lightblue.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/check_lightblue_indeterminate.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/check_white.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/close.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/close_black.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/close_blue.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/close_white.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/crosshair.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/crosshair-white.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/darkred_gradient.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/drag.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/dragcancel.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/error.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/filter.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/html_editor.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/html_editor_white.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-calendar.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-calendar-white.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-cancel.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-cancel-white.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-delete.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-delete-white.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-down.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-down-blue.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-down-transparent.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-down-white.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-edit.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-edit-white.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-first.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-first-blue.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-first-transparent.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-first-white.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-last.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-last-blue.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-last-transparent.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-last-white.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-left.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-left-blue.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-left-transparent.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-left-white.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-menu-minimized.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-menu-minimized-white.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-right.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-right-blue.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-right-transparent.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-right-white.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-save.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-save-white.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-showpassword.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-showpassword-white.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-up.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-up-blue.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-up-transparent.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/icon-up-white.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/info.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/loader.gif</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/loader-small.gif</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/mail.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/menubutton.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/metro-icon-down.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/metro-icon-down-white.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/metro-icon-first.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/metro-icon-first-white.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/metro-icon-last.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/metro-icon-last-white.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/metro-icon-left.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/metro-icon-left-white.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/metro-icon-right.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/metro-icon-right - Copy.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/metro-icon-right-white.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/metro-icon-up.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/metro-icon-up-white.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/multi-arrow.gif</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/office-icon-down.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/office-icon-first.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/office-icon-last.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/office-icon-left.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/office-icon-right.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/office-icon-up.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/plus.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/plus_white.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/pointer.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/rangebar_classic.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/rangebar_darkblue.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/rangebar_shinyblack.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/rangebar_summer.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/red_arrow_down.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/red_arrow_up.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/red_gradient.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/roundbg_check_black.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/roundbg_check_disabled.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/roundbg_check_indeterminate.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/roundbg_check_white.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/roundbg_classic_hover.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/roundbg_classic_normal.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/roundbg_disabled.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/search.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/search_white.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/sortasc.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/sortascbutton.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/sortdesc.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/sortdescbutton.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/sortremove.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/star.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/star_disabled.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/star_hover.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/success.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/tick.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/time.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/track_classic.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/track_darkblue.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/track_shinyblack.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/track_summer.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/warning.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/wp_check_indeterminate_white.png</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/images/wp_check_white.png</name>
-              </file>
+              <name>cm7f_iar</name>
+              <group>
+                <name>Include</name>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_iar/Include/MCAA_EstimRL_FLT.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_iar/Include/mcaa_lib_fp.h</name>
+                </file>
+              </group>
             </group>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/jqx.energyblue</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/jqx.base.css</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/jqx.energyblue.css</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/jqx.energyblue.txt</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float/fm_control/styles/jqx.darkblue.css</name>
-            </file>
           </group>
         </group>
+        <group>
+          <name>state_machine</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine/state_machine.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine/state_machine.h</name>
+          </file>
+        </group>
+        <group>
+          <name>mc_state_machine</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine/m1_sm_snsless_enc.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine/m1_sm_snsless_enc.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine/sm_common.h</name>
+          </file>
+        </group>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/fm_tsa_pmsm.c</name>
+        </file>
+        <group>
+          <name>mc_identification</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification/hall_calib.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification/hall_calib.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification/ke_measure.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification/ke_measure.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification/mech_measure.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification/mech_measure.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification/mid_auxiliary.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification/mid_auxiliary.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification/mid_def.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification/mid_mc_api_connector.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification/mid_mc_api_connector.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification/mid_sm_states.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification/mid_sm_states.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification/pp_measure.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification/pp_measure.h</name>
+          </file>
+        </group>
+      </group>
+    </group>
+    <group>
+      <name>freemaster</name>
+      <group>
+        <name>pmsm_float</name>
         <group>
           <name>mcat</name>
           <group>
@@ -9414,144 +9108,12 @@
           </file>
         </group>
       </group>
-    </group>
-    <group>
-      <name>docs</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/docs/PMSMRT1170B.pdf</name>
+        <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float_enc.pmpx</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/docs/Release_notes.pdf</name>
+        <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/freemaster/pmsm_float_enc.pmpx</name>
       </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/docs/readme.txt</name>
-      </file>
-    </group>
-    <group>
-      <name>pmsm</name>
-      <group>
-        <name>pmsm_float</name>
-        <group>
-          <name>mc_drivers</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_adcetc_imxrt11xx.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_adcetc_imxrt11xx.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_pwm3ph_pwma.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_pwm3ph_pwma.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_enc_qd.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_enc_qd.h</name>
-          </file>
-        </group>
-        <group>
-          <name>mc_algorithms</name>
-          <group>
-            <name>mcaa_lib</name>
-            <group>
-              <name>cm7f_iar</name>
-              <group>
-                <name>Include</name>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_iar/Include/MCAA_EstimRL_FLT.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_iar/Include/mcaa_lib_fp.h</name>
-                </file>
-              </group>
-            </group>
-          </group>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/pmsm_control.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/pmsm_control.h</name>
-          </file>
-        </group>
-        <group>
-          <name>mc_identification</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification/hall_calib.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification/hall_calib.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification/ke_measure.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification/ke_measure.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification/mech_measure.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification/mech_measure.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification/mid_auxiliary.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification/mid_auxiliary.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification/mid_def.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification/mid_mc_api_connector.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification/mid_mc_api_connector.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification/mid_sm_states.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification/mid_sm_states.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification/pp_measure.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_identification/pp_measure.h</name>
-          </file>
-        </group>
-        <group>
-          <name>state_machine</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine/state_machine.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/state_machine/state_machine.h</name>
-          </file>
-        </group>
-        <group>
-          <name>mc_state_machine</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine/m1_sm_snsless_enc.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine/m1_sm_snsless_enc.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_state_machine/sm_common_enc.h</name>
-          </file>
-        </group>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/fm_tsa_pmsm.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../../middleware/motor_control/pmsm/pmsm_float/fm_tsa_pmsm.c</name>
-        </file>
-      </group>
     </group>
   </group>
   <group>
@@ -10620,6 +10182,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.h</name>
     </file>
   </group>
   <group>

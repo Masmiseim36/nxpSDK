@@ -1,56 +1,34 @@
 var a00102 =
 [
-    [ "xecc_config_t", "a00102.html#a00722", [
-      [ "enableXECC", "a00102.html#af5cdb3d7afa8ddd6134f94329cd07407", null ],
-      [ "enableWriteECC", "a00102.html#a730b714840994ca6bff7647585b75384", null ],
-      [ "enableReadECC", "a00102.html#af6798bd6d4bbf37a0e9b82de53a4ef9c", null ],
-      [ "enableSwap", "a00102.html#a048224519924d20bb14760353eaa34c2", null ],
-      [ "Region0BaseAddress", "a00102.html#a4805c558252beb3166355711a13e2d44", null ],
-      [ "Region0EndAddress", "a00102.html#a904be0b55cf3f57cada41b8aff548b73", null ],
-      [ "Region1BaseAddress", "a00102.html#a37f88b23fc0f23e752796cb76c1de779", null ],
-      [ "Region1EndAddress", "a00102.html#ae85858af091bf4e6e914c30e8c8b4972", null ],
-      [ "Region2BaseAddress", "a00102.html#a9d15fe83561d1ff5fa65e3dea269d6b6", null ],
-      [ "Region2EndAddress", "a00102.html#a2e569f03bfae6064079c04d9fab26807", null ],
-      [ "Region3BaseAddress", "a00102.html#aacec9aa3efca391b25bcb60dbebc5d9a", null ],
-      [ "Region3EndAddress", "a00102.html#a7955903ef689e62300fc01157492d466", null ]
+    [ "XBARAControlConfig", "a00102.html#a00734", [
+      [ "activeEdge", "a00102.html#a719e0f6dc2653f02bf80649520a7d773", null ],
+      [ "requestType", "a00102.html#a1e0cd92fa945d26323a7427afa4dec62", null ]
     ] ],
-    [ "xecc_single_error_info_t", "a00102.html#a00724", [
-      [ "singleErrorAddress", "a00102.html#a7b41aa06671c0bca43a1db5980276ea6", null ],
-      [ "singleErrorData", "a00102.html#a02b8cb0f493cb7d96921ea2085fdf2b4", null ],
-      [ "singleErrorEccCode", "a00102.html#ac442e263d4069ee1f8aeeb1c33641c24", null ],
-      [ "singleErrorBitPos", "a00102.html#a0079773797fc7c63daf5e43634d81ba6", null ],
-      [ "singleErrorBitField", "a00102.html#a4330d9b53375d5174bade0ce32ab0a69", null ]
+    [ "xbara_active_edge_t", "a00102.html#ga13767542b858cfba49c5db98eaf4555e", null ],
+    [ "xbara_request_t", "a00102.html#gaebc4ca2212f5faabce2f8678fd23338c", null ],
+    [ "xbara_status_flag_t", "a00102.html#gab6314ef7be163cd6a1867d874d9bbc1d", null ],
+    [ "xbara_control_config_t", "a00102.html#gaf08a77e84be753067f00baa38275f3da", null ],
+    [ "_xbara_active_edge", "a00102.html#ga5ce2a1edfa4a79a50b926c21331478a7", [
+      [ "kXBARA_EdgeNone", "a00102.html#gga5ce2a1edfa4a79a50b926c21331478a7a0b1f05aab008cc333fc9d221dc471ad2", null ],
+      [ "kXBARA_EdgeRising", "a00102.html#gga5ce2a1edfa4a79a50b926c21331478a7aa9f6a89ba6b33bb42492a01a32e125d2", null ],
+      [ "kXBARA_EdgeFalling", "a00102.html#gga5ce2a1edfa4a79a50b926c21331478a7add352c2692d10c47e0565b5db9c0aaad", null ],
+      [ "kXBARA_EdgeRisingAndFalling", "a00102.html#gga5ce2a1edfa4a79a50b926c21331478a7ab5a8f839c97e6895864cf9c9acdf3acc", null ]
     ] ],
-    [ "xecc_multi_error_info_t", "a00102.html#a00723", [
-      [ "multiErrorAddress", "a00102.html#a83d0d9d720b7dbb036fe7fc5435f882c", null ],
-      [ "multiErrorData", "a00102.html#a6e45cb1653531f4c19b09d5087f829a1", null ],
-      [ "multiErrorEccCode", "a00102.html#a72c34a2de807dcf83cb9dde85fb189d8", null ],
-      [ "multiErrorBitField", "a00102.html#a49e6022e276f12b457c13dbeb39dfc43", null ]
+    [ "_xbar_request", "a00102.html#ga73169ee17867a3ce8ffbf19abd42b9e1", [
+      [ "kXBARA_RequestDisable", "a00102.html#gga73169ee17867a3ce8ffbf19abd42b9e1a67befcfe617c522f75f9c58aca037aef", null ],
+      [ "kXBARA_RequestDMAEnable", "a00102.html#gga73169ee17867a3ce8ffbf19abd42b9e1a074420520b90004cbbc9fe1cf6d95b18", null ],
+      [ "kXBARA_RequestInterruptEnable", "a00102.html#gga73169ee17867a3ce8ffbf19abd42b9e1a90c054b76f1e59c9e159e2bb89f82541", null ]
     ] ],
-    [ "FSL_XECC_DRIVER_VERSION", "a00102.html#gad325431773b07bfed2a6b1c530529e9c", [
-      [ "kXECC_SingleErrorInterruptEnable", "a00102.html#gga5bea799269f02f5b3395d6b2c068b618a53650da26c6dc6b6837c57d45625502f", null ],
-      [ "kXECC_MultiErrorInterruptEnable", "a00102.html#gga5bea799269f02f5b3395d6b2c068b618a4f80bb192d6ccff4d622e708ab045e8a", null ],
-      [ "kXECC_AllInterruptsEnable", "a00102.html#gga5bea799269f02f5b3395d6b2c068b618a65218ab45b840660134ca314debffd8a", null ],
-      [ "kXECC_SingleErrorInterruptStatusEnable", "a00102.html#gga15b3bbe041870ee299f7e042b0305e3ca46b0747d6fc3d389c94e3d32c24ba1d7", null ],
-      [ "kXECC_MultiErrorInterruptStatusEnable", "a00102.html#gga15b3bbe041870ee299f7e042b0305e3ca8af35a7daddd2d506a855f448f336ce9", null ],
-      [ "kXECC_AllInterruptsStatusEnable", "a00102.html#gga15b3bbe041870ee299f7e042b0305e3ca98c732cf181522f6c578b31df6ab8445", null ],
-      [ "kXECC_SingleErrorInterruptFlag", "a00102.html#ggae62fccd8cea8f216b24ba625d404c4aeab611d76edf0b80e66e477265b193fd8a", null ],
-      [ "kXECC_MultiErrorInterruptFlag", "a00102.html#ggae62fccd8cea8f216b24ba625d404c4aea4e1a8eb52be75ce67b346467020d2b29", null ],
-      [ "kXECC_AllInterruptsFlag", "a00102.html#ggae62fccd8cea8f216b24ba625d404c4aea5cacabdbef71596e4b2608092bf52d45", null ]
+    [ "_xbara_status_flag_t", "a00102.html#ga492702c207ed1b605061f54b80c62f6a", [
+      [ "kXBARA_EdgeDetectionOut0", "a00102.html#gga492702c207ed1b605061f54b80c62f6aa7fd07691d8d5cd8b7cbfa21c080464af", null ],
+      [ "kXBARA_EdgeDetectionOut1", "a00102.html#gga492702c207ed1b605061f54b80c62f6aaa9104d5388f116228e21a65116dabd6d", null ],
+      [ "kXBARA_EdgeDetectionOut2", "a00102.html#gga492702c207ed1b605061f54b80c62f6aa53460b197642d46a4f04eadda3cb4bd2", null ],
+      [ "kXBARA_EdgeDetectionOut3", "a00102.html#gga492702c207ed1b605061f54b80c62f6aaa26a7c1cbca51e3ffa9362c03ac5a0d1", null ]
     ] ],
-    [ "XECC_Init", "a00102.html#ga97311aae29bfc510fbb42c624df1031c", null ],
-    [ "XECC_Deinit", "a00102.html#ga242c4cc1dcde4ba11079b7d035d043b4", null ],
-    [ "XECC_GetDefaultConfig", "a00102.html#gacb10ed003d22ffce8a40a2b162fd8892", null ],
-    [ "XECC_GetStatusFlags", "a00102.html#ga170796336e05241a2f249d743070b848", null ],
-    [ "XECC_ClearStatusFlags", "a00102.html#gaee625e46485dfc88311d562833a61c8d", null ],
-    [ "XECC_EnableInterruptStatus", "a00102.html#ga90aae71b41bc645a4e58e6cd9023328d", null ],
-    [ "XECC_DisableInterruptStatus", "a00102.html#ga5f1dcc0c540a8c035033eec3da8af225", null ],
-    [ "XECC_EnableInterrupts", "a00102.html#ga971955f3ef901c91df7f944c8ccee2df", null ],
-    [ "XECC_DisableInterrupts", "a00102.html#ga726e40ce8cfdf46f6d5add0ebceacd1a", null ],
-    [ "XECC_WriteECCEnable", "a00102.html#ga9d885d27b94053bfc27cc6e326e1161c", null ],
-    [ "XECC_ReadECCEnable", "a00102.html#ga46d062c8b186031c0fda12b9c73855ec", null ],
-    [ "XECC_SwapECCEnable", "a00102.html#gafed7d786907690c7dc6d71f97a8d061e", null ],
-    [ "XECC_ErrorInjection", "a00102.html#gaaca758e6d607ea7d598a46e74c429710", null ],
-    [ "XECC_GetSingleErrorInfo", "a00102.html#ga37e71e730b2513d22704ed9bca718a36", null ],
-    [ "XECC_GetMultiErrorInfo", "a00102.html#ga33588746ea450cf41f40ba94a0e6990a", null ]
+    [ "XBARA_Init", "a00102.html#ga5c026c940af4df8e13962eb78d4e0f13", null ],
+    [ "XBARA_Deinit", "a00102.html#ga951d45c9a0884c2ea35d98b71a7ea889", null ],
+    [ "XBARA_SetSignalsConnection", "a00102.html#gac03e8f73ad95b6df165650308b809cad", null ],
+    [ "XBARA_GetStatusFlags", "a00102.html#ga47a5efeb5b13f65c272c01daadbf739c", null ],
+    [ "XBARA_ClearStatusFlags", "a00102.html#gaee2d4bb11ed4c302dc6d66904f4eb7a8", null ],
+    [ "XBARA_SetOutputSignalConfig", "a00102.html#gaa010e6aecc627b857b04d9c2e8f5178b", null ]
 ];

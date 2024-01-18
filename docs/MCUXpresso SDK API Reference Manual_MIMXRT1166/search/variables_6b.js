@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['keysize',['keySize',['../a00053.html#a6bba5dc718cf9954eaf192e2142df556',1,'iee_config_t']]]
+  ['keysize',['keySize',['../a00053.html#a1c289e9f5036baab59131a66ed25e9df',1,'_iee_config']]],
+  ['klpi2cirqs',['kLpi2cIrqs',['../a00344.html#ga88b6c302a3fb2094ba8a3085cd0c2b16',1,'fsl_lpi2c.h']]]
 ];

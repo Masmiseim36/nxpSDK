@@ -227,6 +227,7 @@
           <state>_DEBUG=1</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
           <state>HAL_AUDIO_ISR_PRIORITY=0</state>
+          <state>USB_DEVICE_AUDIO_SPEAKER_DEDICATED_INTERVAL=1</state>
           <state>USB_STACK_BM</state>
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
@@ -369,8 +370,8 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
@@ -1331,6 +1332,7 @@
           <state>DEBUG</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
           <state>HAL_AUDIO_ISR_PRIORITY=0</state>
+          <state>USB_DEVICE_AUDIO_SPEAKER_DEDICATED_INTERVAL=1</state>
           <state>USB_STACK_BM</state>
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
@@ -1473,8 +1475,8 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
@@ -2436,6 +2438,7 @@
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
           <state>HAL_AUDIO_ISR_PRIORITY=0</state>
+          <state>USB_DEVICE_AUDIO_SPEAKER_DEDICATED_INTERVAL=1</state>
           <state>USB_STACK_BM</state>
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
@@ -2578,8 +2581,8 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
@@ -3540,6 +3543,7 @@
           <state>_DEBUG=0</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
           <state>HAL_AUDIO_ISR_PRIORITY=0</state>
+          <state>USB_DEVICE_AUDIO_SPEAKER_DEDICATED_INTERVAL=1</state>
           <state>USB_STACK_BM</state>
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
@@ -3682,8 +3686,8 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
@@ -4644,6 +4648,7 @@
           <state>USE_SDRAM</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
           <state>HAL_AUDIO_ISR_PRIORITY=0</state>
+          <state>USB_DEVICE_AUDIO_SPEAKER_DEDICATED_INTERVAL=1</state>
           <state>USB_STACK_BM</state>
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
@@ -4786,8 +4791,8 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
@@ -5749,6 +5754,7 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
           <state>HAL_AUDIO_ISR_PRIORITY=0</state>
+          <state>USB_DEVICE_AUDIO_SPEAKER_DEDICATED_INTERVAL=1</state>
           <state>USB_STACK_BM</state>
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
@@ -5891,8 +5897,8 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
@@ -6955,6 +6961,9 @@
     <name>utilities</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite/fsl_assert.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.c</name>

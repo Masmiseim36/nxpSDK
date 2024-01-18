@@ -67,7 +67,7 @@ void streamer_pcm_init(void);
  * @param num_buffers Number of SAI EDMA buffers to use
  * @return Pointer to handle for PCM interface
  */
-pcm_rtos_t *streamer_pcm_open(uint32_t num_buffers);
+int streamer_pcm_open(uint32_t num_buffers);
 
 /*!
  * @brief Open the receive PCM interface for writing and configuring
@@ -143,7 +143,7 @@ void streamer_pcm_rx_start(pcm_rtos_t *pcm);
  * @param size Size in bytes of the data buffer
  * @return 0 on succes, non-zero on failure
  */
-int streamer_pcm_write(pcm_rtos_t *pcm, uint8_t *data, uint32_t size);
+int streamer_pcm_write(uint8_t *data, uint32_t size);
 
 /*!
  * @brief Read audio data from the receive PCM interface
@@ -180,8 +180,7 @@ int streamer_pcm_read(pcm_rtos_t *pcm, uint8_t *data, uint32_t size);
  * @param transfer setting for transfer or receive
  * @return 0 on succes, non-zero on failure
  */
-int streamer_pcm_setparams(pcm_rtos_t *pcm,
-                           uint32_t sample_rate,
+int streamer_pcm_setparams(uint32_t sample_rate,
                            uint32_t bit_width,
                            uint8_t num_channels,
                            bool transfer,
@@ -203,7 +202,7 @@ int streamer_pcm_setparams(pcm_rtos_t *pcm,
  * @param bit_width Pointer to pcm handle bit width
  * @param num_channels Pointer to pcm handle number of channels
  */
-void streamer_pcm_getparams(pcm_rtos_t *pcm, uint32_t *sample_rate, uint32_t *bit_width, uint8_t *num_channels);
+void streamer_pcm_getparams(uint32_t *sample_rate, uint32_t *bit_width, uint8_t *num_channels);
 
 /*!
  * @brief Set PCM interface mute status

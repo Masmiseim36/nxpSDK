@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=0, XIP_BOOT_HEADER_XMCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE_UART, _POSIX_C_SOURCE=200809L, ARM_MATH_CM7, __FPU_PRESENT=1, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, EIQ_GUI_PRINTF</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=0, XIP_BOOT_HEADER_XMCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE_UART, _POSIX_C_SOURCE=200809L, ARM_MATH_CM7, __FPU_PRESENT=1, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1</Define>
               <Undefine/>
-              <IncludePath>../source;..;../../../../../middleware/eiq/common;../../../../../middleware/eiq/common/image;../../../../../components/video/camera/device;../../../../../components/video/camera/receiver;../../../../../components/video/camera/device/sccb;../../../../../components/video/camera/device/ov5640;../../../../../components/video/display/rm68191;../../../../../components/video/display/rm68200;../../../../../components/video/display/hx8394;../../../../../components/video/camera;../../../../../components/video/camera/receiver/csi;../../../../../devices/MIMXRT1176/drivers;../../../../../components/video;../../../../../components/video/display/dc;../../../../../components/video/display/dc/elcdif;../../../../../components/video/display/dc/lcdifv2;../../../../../components/video/display;../../../../../components/video/display/mipi_dsi_cmd;../../../../../devices/MIMXRT1176/utilities/str;../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../middleware/eiq/common/video;../../../../../middleware/eiq/common/gprintf;../../../../../middleware/eiq/deepviewrt/include;../../../../../components/lists;../../../../../components/uart;../../../../../devices/MIMXRT1176;../../../../../devices/MIMXRT1176/xip;../../../xip;../../../xmcd;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../source;..;../../../../../middleware/eiq/common;../source/image;../source/video;../source/common;../source/gprintf;../../../../../components/video/camera/device;../../../../../components/video/camera/receiver;../../../../../components/video/camera/device/sccb;../../../../../components/video/camera/device/ov5640;../../../../../components/video/display/rm68191;../../../../../components/video/display/rm68200;../../../../../components/video/display/hx8394;../../../../../components/video/camera;../../../../../components/video/camera/receiver/csi;../../../../../devices/MIMXRT1176/drivers;../../../../../components/video;../../../../../components/video/display/dc;../../../../../components/video/display/dc/elcdif;../../../../../components/video/display/dc/lcdifv2;../../../../../components/video/display;../../../../../components/video/display/mipi_dsi_cmd;../../../../../devices/MIMXRT1176/utilities/str;../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../middleware/eiq/deepviewrt/include;../../../../../components/lists;../../../../../components/uart;../../../../../devices/MIMXRT1176;../../../../../devices/MIMXRT1176/xip;../../../xip;../../../xmcd;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -401,27 +401,12 @@
             <File>
               <FileName>timer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/timer.h</FilePath>
+              <FilePath>../source/timer.h</FilePath>
             </File>
             <File>
               <FileName>timer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/common/timer.c</FilePath>
-            </File>
-            <File>
-              <FileName>eiq_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/eiq_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>eiq_iui.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/eiq_iui.h</FilePath>
-            </File>
-            <File>
-              <FileName>eiq_iworker.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/eiq_iworker.h</FilePath>
+              <FilePath>../source/timer.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -441,52 +426,42 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>doc</GroupName>
-          <Files>
-            <File>
-              <FileName>readme.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../doc/readme.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>source/image</GroupName>
           <Files>
             <File>
               <FileName>image_draw.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/common/image/image_draw.c</FilePath>
+              <FilePath>../source/image/image_draw.c</FilePath>
             </File>
             <File>
               <FileName>image_capture.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/common/image/image_capture.c</FilePath>
+              <FilePath>../source/image/image_capture.c</FilePath>
             </File>
             <File>
               <FileName>image_resize_nearest.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/common/image/image_resize_nearest.c</FilePath>
+              <FilePath>../source/image/image_resize_nearest.c</FilePath>
             </File>
             <File>
               <FileName>image_decode_raw.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/common/image/image_decode_raw.c</FilePath>
+              <FilePath>../source/image/image_decode_raw.c</FilePath>
             </File>
             <File>
               <FileName>image_utils.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/image/image_utils.h</FilePath>
+              <FilePath>../source/image/image_utils.h</FilePath>
             </File>
             <File>
               <FileName>image.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/image/image.h</FilePath>
+              <FilePath>../source/image/image.h</FilePath>
             </File>
             <File>
               <FileName>image_conv_rotate.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/common/image/image_conv_rotate.c</FilePath>
+              <FilePath>../source/image/image_conv_rotate.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -497,6 +472,71 @@
               <FileName>mobilenet_v1_0.25_160.rtm</FileName>
               <FileType>5</FileType>
               <FilePath>../source/models/mobilenet_v1_0.25_160.rtm</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source/video</GroupName>
+          <Files>
+            <File>
+              <FileName>eiq_camera_conf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/video/eiq_camera_conf.c</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_display_conf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/video/eiq_display_conf.c</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_camera.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/video/eiq_camera.h</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_camera_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/video/eiq_camera_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_display.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/video/eiq_display.h</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_display_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/video/eiq_display_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_pxp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/video/eiq_pxp.h</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_video_worker.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/video/eiq_video_worker.h</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_camera.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/video/eiq_camera.c</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_display.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/video/eiq_display.c</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_pxp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/video/eiq_pxp.c</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_video_worker.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/video/eiq_video_worker.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -532,16 +572,6 @@
               <FileName>board.h</FileName>
               <FileType>5</FileType>
               <FilePath>../board.h</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
             </File>
             <File>
               <FileName>retarget.c</FileName>
@@ -587,6 +617,46 @@
               <FileName>xmcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../xmcd/xmcd.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source/common</GroupName>
+          <Files>
+            <File>
+              <FileName>eiq_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/common/eiq_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_iui.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/common/eiq_iui.h</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_iworker.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/common/eiq_iworker.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source/gprintf</GroupName>
+          <Files>
+            <File>
+              <FileName>chgui.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/gprintf/chgui.h</FilePath>
+            </File>
+            <File>
+              <FileName>font.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/gprintf/font.h</FilePath>
+            </File>
+            <File>
+              <FileName>chgui.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/gprintf/chgui.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -894,6 +964,11 @@
               <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_lcdifv2.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_soc_mipi_dsi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_soc_mipi_dsi.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
@@ -933,90 +1008,10 @@
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source/video</GroupName>
-          <Files>
             <File>
-              <FileName>eiq_camera_conf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/camera/RM68191_RM68200/eiq_camera_conf.c</FilePath>
-            </File>
-            <File>
-              <FileName>eiq_display_conf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/display/RK055AHD091_RK055IQH091/eiq_display_conf.c</FilePath>
-            </File>
-            <File>
-              <FileName>eiq_camera.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/eiq_camera.c</FilePath>
-            </File>
-            <File>
-              <FileName>eiq_display.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/eiq_display.c</FilePath>
-            </File>
-            <File>
-              <FileName>eiq_pxp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/eiq_pxp.c</FilePath>
-            </File>
-            <File>
-              <FileName>eiq_video_worker.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/eiq_video_worker.c</FilePath>
-            </File>
-            <File>
-              <FileName>eiq_camera.h</FileName>
+              <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/eiq_camera.h</FilePath>
-            </File>
-            <File>
-              <FileName>eiq_camera_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/eiq_camera_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>eiq_display.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/eiq_display.h</FilePath>
-            </File>
-            <File>
-              <FileName>eiq_display_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/eiq_display_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>eiq_pxp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/eiq_pxp.h</FilePath>
-            </File>
-            <File>
-              <FileName>eiq_video_worker.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/eiq_video_worker.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source/gprintf</GroupName>
-          <Files>
-            <File>
-              <FileName>chgui.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/common/gprintf/chgui.c</FilePath>
-            </File>
-            <File>
-              <FileName>chgui.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/gprintf/chgui.h</FilePath>
-            </File>
-            <File>
-              <FileName>font.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/gprintf/font.h</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1202,6 +1197,16 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>doc</GroupName>
+          <Files>
+            <File>
+              <FileName>readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -1536,9 +1541,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=0, XIP_BOOT_HEADER_XMCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE_UART, _POSIX_C_SOURCE=200809L, ARM_MATH_CM7, __FPU_PRESENT=1, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, EIQ_GUI_PRINTF</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=0, XIP_BOOT_HEADER_XMCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE_UART, _POSIX_C_SOURCE=200809L, ARM_MATH_CM7, __FPU_PRESENT=1, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1</Define>
               <Undefine/>
-              <IncludePath>../source;..;../../../../../middleware/eiq/common;../../../../../middleware/eiq/common/image;../../../../../components/video/camera/device;../../../../../components/video/camera/receiver;../../../../../components/video/camera/device/sccb;../../../../../components/video/camera/device/ov5640;../../../../../components/video/display/rm68191;../../../../../components/video/display/rm68200;../../../../../components/video/display/hx8394;../../../../../components/video/camera;../../../../../components/video/camera/receiver/csi;../../../../../devices/MIMXRT1176/drivers;../../../../../components/video;../../../../../components/video/display/dc;../../../../../components/video/display/dc/elcdif;../../../../../components/video/display/dc/lcdifv2;../../../../../components/video/display;../../../../../components/video/display/mipi_dsi_cmd;../../../../../devices/MIMXRT1176/utilities/str;../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../middleware/eiq/common/video;../../../../../middleware/eiq/common/gprintf;../../../../../middleware/eiq/deepviewrt/include;../../../../../components/lists;../../../../../components/uart;../../../../../devices/MIMXRT1176;../../../../../devices/MIMXRT1176/xip;../../../xip;../../../xmcd;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../source;..;../../../../../middleware/eiq/common;../source/image;../source/video;../source/common;../source/gprintf;../../../../../components/video/camera/device;../../../../../components/video/camera/receiver;../../../../../components/video/camera/device/sccb;../../../../../components/video/camera/device/ov5640;../../../../../components/video/display/rm68191;../../../../../components/video/display/rm68200;../../../../../components/video/display/hx8394;../../../../../components/video/camera;../../../../../components/video/camera/receiver/csi;../../../../../devices/MIMXRT1176/drivers;../../../../../components/video;../../../../../components/video/display/dc;../../../../../components/video/display/dc/elcdif;../../../../../components/video/display/dc/lcdifv2;../../../../../components/video/display;../../../../../components/video/display/mipi_dsi_cmd;../../../../../devices/MIMXRT1176/utilities/str;../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../middleware/eiq/deepviewrt/include;../../../../../components/lists;../../../../../components/uart;../../../../../devices/MIMXRT1176;../../../../../devices/MIMXRT1176/xip;../../../xip;../../../xmcd;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1605,27 +1610,12 @@
             <File>
               <FileName>timer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/timer.h</FilePath>
+              <FilePath>../source/timer.h</FilePath>
             </File>
             <File>
               <FileName>timer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/common/timer.c</FilePath>
-            </File>
-            <File>
-              <FileName>eiq_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/eiq_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>eiq_iui.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/eiq_iui.h</FilePath>
-            </File>
-            <File>
-              <FileName>eiq_iworker.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/eiq_iworker.h</FilePath>
+              <FilePath>../source/timer.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1645,52 +1635,42 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>doc</GroupName>
-          <Files>
-            <File>
-              <FileName>readme.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../doc/readme.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>source/image</GroupName>
           <Files>
             <File>
               <FileName>image_draw.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/common/image/image_draw.c</FilePath>
+              <FilePath>../source/image/image_draw.c</FilePath>
             </File>
             <File>
               <FileName>image_capture.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/common/image/image_capture.c</FilePath>
+              <FilePath>../source/image/image_capture.c</FilePath>
             </File>
             <File>
               <FileName>image_resize_nearest.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/common/image/image_resize_nearest.c</FilePath>
+              <FilePath>../source/image/image_resize_nearest.c</FilePath>
             </File>
             <File>
               <FileName>image_decode_raw.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/common/image/image_decode_raw.c</FilePath>
+              <FilePath>../source/image/image_decode_raw.c</FilePath>
             </File>
             <File>
               <FileName>image_utils.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/image/image_utils.h</FilePath>
+              <FilePath>../source/image/image_utils.h</FilePath>
             </File>
             <File>
               <FileName>image.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/image/image.h</FilePath>
+              <FilePath>../source/image/image.h</FilePath>
             </File>
             <File>
               <FileName>image_conv_rotate.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/common/image/image_conv_rotate.c</FilePath>
+              <FilePath>../source/image/image_conv_rotate.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1701,6 +1681,71 @@
               <FileName>mobilenet_v1_0.25_160.rtm</FileName>
               <FileType>5</FileType>
               <FilePath>../source/models/mobilenet_v1_0.25_160.rtm</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source/video</GroupName>
+          <Files>
+            <File>
+              <FileName>eiq_camera_conf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/video/eiq_camera_conf.c</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_display_conf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/video/eiq_display_conf.c</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_camera.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/video/eiq_camera.h</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_camera_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/video/eiq_camera_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_display.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/video/eiq_display.h</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_display_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/video/eiq_display_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_pxp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/video/eiq_pxp.h</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_video_worker.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/video/eiq_video_worker.h</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_camera.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/video/eiq_camera.c</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_display.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/video/eiq_display.c</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_pxp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/video/eiq_pxp.c</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_video_worker.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/video/eiq_video_worker.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1736,16 +1781,6 @@
               <FileName>board.h</FileName>
               <FileType>5</FileType>
               <FilePath>../board.h</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
             </File>
             <File>
               <FileName>retarget.c</FileName>
@@ -1791,6 +1826,46 @@
               <FileName>xmcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../xmcd/xmcd.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source/common</GroupName>
+          <Files>
+            <File>
+              <FileName>eiq_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/common/eiq_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_iui.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/common/eiq_iui.h</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_iworker.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/common/eiq_iworker.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source/gprintf</GroupName>
+          <Files>
+            <File>
+              <FileName>chgui.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/gprintf/chgui.h</FilePath>
+            </File>
+            <File>
+              <FileName>font.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../source/gprintf/font.h</FilePath>
+            </File>
+            <File>
+              <FileName>chgui.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../source/gprintf/chgui.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2098,6 +2173,11 @@
               <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_lcdifv2.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_soc_mipi_dsi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_soc_mipi_dsi.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
@@ -2137,90 +2217,10 @@
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source/video</GroupName>
-          <Files>
             <File>
-              <FileName>eiq_camera_conf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/camera/RM68191_RM68200/eiq_camera_conf.c</FilePath>
-            </File>
-            <File>
-              <FileName>eiq_display_conf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/display/RK055AHD091_RK055IQH091/eiq_display_conf.c</FilePath>
-            </File>
-            <File>
-              <FileName>eiq_camera.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/eiq_camera.c</FilePath>
-            </File>
-            <File>
-              <FileName>eiq_display.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/eiq_display.c</FilePath>
-            </File>
-            <File>
-              <FileName>eiq_pxp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/eiq_pxp.c</FilePath>
-            </File>
-            <File>
-              <FileName>eiq_video_worker.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/eiq_video_worker.c</FilePath>
-            </File>
-            <File>
-              <FileName>eiq_camera.h</FileName>
+              <FileName>fsl_assert.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/eiq_camera.h</FilePath>
-            </File>
-            <File>
-              <FileName>eiq_camera_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/eiq_camera_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>eiq_display.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/eiq_display.h</FilePath>
-            </File>
-            <File>
-              <FileName>eiq_display_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/eiq_display_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>eiq_pxp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/eiq_pxp.h</FilePath>
-            </File>
-            <File>
-              <FileName>eiq_video_worker.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/eiq_video_worker.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source/gprintf</GroupName>
-          <Files>
-            <File>
-              <FileName>chgui.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/common/gprintf/chgui.c</FilePath>
-            </File>
-            <File>
-              <FileName>chgui.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/gprintf/chgui.h</FilePath>
-            </File>
-            <File>
-              <FileName>font.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/gprintf/font.h</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2406,6 +2406,16 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>doc</GroupName>
+          <Files>
+            <File>
+              <FileName>readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>

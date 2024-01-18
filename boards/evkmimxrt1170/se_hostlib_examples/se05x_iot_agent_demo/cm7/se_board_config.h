@@ -25,7 +25,7 @@
  */
 
 #define SE05X_ENA_HOST_PORT GPIO9
-#define SE05X_ENA_HOST_PIN 4U
+#define SE05X_ENA_HOST_PIN  4U
 
 #if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && FSL_FEATURE_SOC_LPI2C_COUNT > 0
 
@@ -35,17 +35,17 @@
 #endif
 
 /* Select USB1 PLL (480 MHz) as master lpi2c clock source */
-#   define LPI2C_CLOCK_SOURCE_SELECT (0U)
+#define LPI2C_CLOCK_SOURCE_SELECT (0U)
 /* Clock divider for master lpi2c clock source */
-#   define LPI2C_CLOCK_SOURCE_DIVIDER (5U)
+#define LPI2C_CLOCK_SOURCE_DIVIDER (5U)
 /* Get frequency of lpi2c clock */
-#   define LPI2C_CLOCK_FREQUENCY (CLOCK_GetFreq(kCLOCK_OscRc48MDiv2))
+#define LPI2C_CLOCK_FREQUENCY (CLOCK_GetFreq(kCLOCK_OscRc48MDiv2))
 // #   define LPI2C_CLOCK_FREQUENCY ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (LPI2C_CLOCK_SOURCE_DIVIDER + 1U))
 
-#   define AX_I2CM              (LPI2C_Type *)LPI2C1_BASE
-#   define AX_LPI2C_CLK_SRC       LPI2C_CLOCK_FREQUENCY
-#   define AX_I2CM_IRQN         LPI2C1_IRQn
-#   define USE_LIP2C            1
+#define AX_I2CM          (LPI2C_Type *)LPI2C1_BASE
+#define AX_LPI2C_CLK_SRC LPI2C_CLOCK_FREQUENCY
+#define AX_I2CM_IRQN     LPI2C1_IRQn
+#define USE_LIP2C        1
 
 #if defined(__GNUC__)
 #pragma GCC pop_options
@@ -55,9 +55,9 @@
 
 #if FSL_FEATURE_SOC_PIT_COUNT
 #define SE_PIT_RESET_HANDLER PIT0_IRQHandler
-#define PIT_BASE_ADDR PIT1
-#define PIT_IRQ_ID PIT1_IRQn
-#define PIT_SOURCE_CLOCK CLOCK_GetRootClockFreq(kCLOCK_Root_Bus)
+#define PIT_BASE_ADDR        PIT1
+#define PIT_IRQ_ID           PIT1_IRQn
+#define PIT_SOURCE_CLOCK     CLOCK_GetRootClockFreq(kCLOCK_Root_Bus)
 #endif /* FSL_FEATURE_SOC_PIT_COUNT */
 
 /*

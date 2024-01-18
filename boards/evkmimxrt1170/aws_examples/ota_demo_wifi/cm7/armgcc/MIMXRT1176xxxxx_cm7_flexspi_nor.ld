@@ -31,20 +31,22 @@ HEAP_SIZE  = DEFINED(__heap_size__)  ? __heap_size__  : 0x200;
 STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 0x400;
 RPMSG_SHMEM_SIZE = DEFINED(__use_shmem__) ? 0x2000 : 0;
 VECTOR_RAM_SIZE = DEFINED(__ram_vector_table__) ? 0x00000400 : 0;
+TEXT_SIZE = DEFINED(__use_flash64MB__) ? 0x03D8DC00 : 0x00D8DC00;
+CORE1IMAGE_START = DEFINED(__use_flash64MB__) ? 0x33FC0000 : 0x30FC0000;
 
 /* Specify the memory areas */
 MEMORY
 {
   m_interrupts          (RX)  : ORIGIN = 0x30040400, LENGTH = 0x00000400
-  m_text                (RX)  : ORIGIN = 0x30040800, LENGTH = 0x00D8DC00
+  m_text                (RX)  : ORIGIN = 0x30040800, LENGTH = TEXT_SIZE
   m_data                (RW)  : ORIGIN = 0x20000000, LENGTH = 0x00040000
   m_ncache              (RW)  : ORIGIN = 0x202C0000, LENGTH = 0x00002000
   m_data2               (RW)  : ORIGIN = 0x202C2000 + RPMSG_SHMEM_SIZE, LENGTH = 0x0007E000 - RPMSG_SHMEM_SIZE
   rpmsg_sh_mem          (RW)  : ORIGIN = 0x202C2000, LENGTH = RPMSG_SHMEM_SIZE
-  m_core1_image         (RX)  : ORIGIN = 0x30FC0000, LENGTH = 0x00040000
+  m_core1_image         (RX)  : ORIGIN = CORE1IMAGE_START, LENGTH = 0x00040000
 }
 
-/* NOTE: Flash in range 0x30D9_0000 - 0x30FF_FFFF is reserved for  data */
+/* NOTE: The last 0x230000 bytes in flash is reserved for  data */
 
 /* Define output sections */
 SECTIONS

@@ -20,13 +20,15 @@
 
 typedef struct
 {
-    union {
+    union
+    {
         struct
         {
             uint32_t image_index : 4; //!< Key blob for the image specified by image_index, valid only if type = 1
-            uint32_t dek_size : 4;  //!< Decryption Key size, 0-128bits, 1-192 bits, 2-256 bits, valid only if type = 0
-            uint32_t bk_sel : 12;    //!< Blob key source selection, valid only if type = 0
-            uint32_t size : 4;      //!< Keyblob Info structure size in longwords, valid only if type = 0
+            uint32_t dek_size : 4; //!< Decryption Key size, 0-128bits, 1-192 bits, 2-256 bits, 3-DUK, 4-IEE, valid only
+                                   //!< if type = 0
+            uint32_t bk_sel : 12;  //!< Blob key source selection, valid only if type = 0
+            uint32_t size : 4;     //!< Keyblob Info structure size in longwords, valid only if type = 0
             uint32_t type : 4; //!< Type, 0 - Update key blob info, 1 - Generate and program Keyblob to corresponding
             //! offset for image specified by image_index
             uint32_t tag : 4; //!< Tag, fixed to 0x0F
@@ -47,7 +49,8 @@ enum
     kDekSize_128bits = 0,
     kDekSize_192bits = 1,
     kDekSize_256bits = 2,
-    kDekSize_otfadDuk = 3,
+    kDekSize_edgelockDUK = 3,
+    kDekSize_edgelockIEE = 4,
 
     kBlobKeySize_128bits = 0,
     kBlobKeySize_192bits = 1,

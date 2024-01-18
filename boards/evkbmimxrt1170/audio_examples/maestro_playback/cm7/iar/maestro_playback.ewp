@@ -225,7 +225,6 @@
           <state>DEBUG</state>
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
-          <state>FLAC_DEC=1</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>PRINTF_FLOAT_ENABLE=1</state>
@@ -233,6 +232,7 @@
           <state>WAV_DEC=1</state>
           <state>SSRC_PROC=1</state>
           <state>MP3_DEC=1</state>
+          <state>FLAC_DEC=1</state>
           <state>STREAMER_ENABLE_FILESRC</state>
           <state>STREAMER_ENABLE_MEM_SRC</state>
           <state>STREAMER_ENABLE_MEM_SINK</state>
@@ -293,7 +293,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state>Pa050,Pa082,Pe188</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -376,7 +376,6 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../..</state>
-          <state>$PROJ_DIR$/../../../common/att</state>
           <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8962</state>
@@ -398,8 +397,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/elements</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/encoders/opus</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/encoders/cei</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt</state>
@@ -411,19 +409,21 @@
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opusfile/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/ogg/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/ogg/src</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/maestro/template</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -1381,7 +1381,6 @@
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
-          <state>FLAC_DEC=1</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>PRINTF_FLOAT_ENABLE=1</state>
@@ -1389,6 +1388,7 @@
           <state>WAV_DEC=1</state>
           <state>SSRC_PROC=1</state>
           <state>MP3_DEC=1</state>
+          <state>FLAC_DEC=1</state>
           <state>STREAMER_ENABLE_FILESRC</state>
           <state>STREAMER_ENABLE_MEM_SRC</state>
           <state>STREAMER_ENABLE_MEM_SINK</state>
@@ -1449,7 +1449,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state>Pa050,Pa082,Pe188</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1532,7 +1532,6 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../..</state>
-          <state>$PROJ_DIR$/../../../common/att</state>
           <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8962</state>
@@ -1554,8 +1553,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/elements</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/encoders/opus</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/encoders/cei</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt</state>
@@ -1567,19 +1565,21 @@
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opusfile/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/ogg/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/ogg/src</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
-          <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/maestro/template</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -2319,7 +2319,7 @@
       <name>$PROJ_DIR$/../streamer_pcm.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../streamer_pcm_app.h</name>
+      <name>$PROJ_DIR$/../streamer_pcm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../app_data.h</name>
@@ -2361,10 +2361,10 @@
   <group>
     <name>board</name>
     <file>
-      <name>$PROJ_DIR$/../../pin_mux.c</name>
+      <name>$PROJ_DIR$/../pin_mux.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../pin_mux.h</name>
+      <name>$PROJ_DIR$/../pin_mux.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../sdmmc_config.c</name>
@@ -2392,18 +2392,9 @@
     </file>
   </group>
   <group>
-    <name>att</name>
-    <file>
-      <name>$PROJ_DIR$/../../../common/att/eap_att.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../common/att/eap_att.h</name>
-    </file>
-  </group>
-  <group>
     <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
   <group>
@@ -2473,6 +2464,24 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_mu.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_mu.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_iomuxc.h</name>
@@ -2568,6 +2577,21 @@
       </file>
     </group>
     <group>
+      <name>osa</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_config.h</name>
+      </file>
+    </group>
+    <group>
       <name>uart</name>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
@@ -2601,21 +2625,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
-      </file>
-    </group>
-    <group>
-      <name>osa</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_config.h</name>
       </file>
     </group>
   </group>
@@ -2826,9 +2835,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/maestro/inc/streamer_message.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/maestro/inc/streamer_pcm.h</name>
       </file>
     </group>
     <group>
@@ -3062,63 +3068,6 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/elements/encoder.c</name>
-        </file>
-      </group>
-      <group>
-        <name>pipelines</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_audiosrc.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_fs.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_mic2file.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_opusmem2mem.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_pcm_speaker.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_pcm_speaker_mem.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_testeapfile2file.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_vit.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_vit_filesink.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_audiosrc.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_fs.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_mic2file.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_opusmem2mem.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_pcm_speaker.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_pcm_speaker_mem.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_testeapfile2file.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_vit.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_vit_filesink.c</name>
         </file>
       </group>
       <group>
@@ -3828,10 +3777,10 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/fsl_shell.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/shell/fsl_shell.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/fsl_shell.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/shell/fsl_shell.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</name>
@@ -3850,6 +3799,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/fsl_assert.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</name>
@@ -3929,18 +3881,6 @@
     <file>
       <name>$PROJ_DIR$/../../../../xip/evkbmimxrt1170_flexspi_nor_config.h</name>
     </file>
-  </group>
-  <group>
-    <name>EAP</name>
-    <group>
-      <name>Doc</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/EAP/Doc/EAP_SDK_ApplicationNote.pdf</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/EAP/Doc/EAP_UserGuide.pdf</name>
-      </file>
-    </group>
   </group>
   <group>
     <name>CMSIS</name>

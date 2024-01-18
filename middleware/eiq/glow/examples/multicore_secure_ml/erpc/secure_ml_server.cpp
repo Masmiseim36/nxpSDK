@@ -26,7 +26,7 @@ static ManuallyConstructed<SecureMLService_service> s_SecureMLService_service;
 
 
 // Call the correct server shim based on method unique ID.
-erpc_status_t SecureMLService_service::handleInvocation(uint32_t methodId, uint32_t sequence, Codec * codec, MessageBufferFactory *messageFactory)
+erpc_status_t SecureMLService_service::handleInvocation(uint32_t methodId, uint32_t sequence, Codec * codec, MessageBufferFactory *messageFactory, Transport *transport)
 {
     erpc_status_t erpcStatus;
     switch (methodId)
@@ -75,7 +75,7 @@ erpc_status_t SecureMLService_service::inference_shim(Codec * codec, MessageBuff
 #endif
 
         // preparing MessageBuffer for serializing data
-        err = messageFactory->prepareServerBufferForSend(codec->getBuffer());
+        err = messageFactory->prepareServerBufferForSend(codec->getBufferRef());
     }
 
     if (err == kErpcStatus_Success)
@@ -84,7 +84,7 @@ erpc_status_t SecureMLService_service::inference_shim(Codec * codec, MessageBuff
         codec->reset();
 
         // Build response message.
-        codec->startWriteMessage(kReplyMessage, kSecureMLService_service_id, kSecureMLService_inference_id, sequence);
+        codec->startWriteMessage(message_type_t::kReplyMessage, kSecureMLService_service_id, kSecureMLService_inference_id, sequence);
 
         codec->write(result);
 

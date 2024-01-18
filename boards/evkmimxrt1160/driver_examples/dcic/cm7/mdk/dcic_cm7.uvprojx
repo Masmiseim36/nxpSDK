@@ -454,9 +454,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -684,6 +684,11 @@
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/cm7/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_soc_mipi_dsi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_soc_mipi_dsi.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_soc_mipi_csi2rx.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_soc_mipi_csi2rx.h</FilePath>
@@ -747,6 +752,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1338,9 +1348,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -1568,6 +1578,11 @@
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/cm7/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_soc_mipi_dsi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_soc_mipi_dsi.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_soc_mipi_csi2rx.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_soc_mipi_csi2rx.h</FilePath>
@@ -1631,6 +1646,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2222,9 +2242,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -2452,6 +2472,11 @@
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/cm7/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_soc_mipi_dsi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_soc_mipi_dsi.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_soc_mipi_csi2rx.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_soc_mipi_csi2rx.h</FilePath>
@@ -2515,6 +2540,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3106,9 +3136,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -3336,6 +3366,11 @@
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/cm7/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_soc_mipi_dsi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_soc_mipi_dsi.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_soc_mipi_csi2rx.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_soc_mipi_csi2rx.h</FilePath>
@@ -3399,6 +3434,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>

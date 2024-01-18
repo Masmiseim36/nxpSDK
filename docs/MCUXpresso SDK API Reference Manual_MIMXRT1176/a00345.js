@@ -1,7 +1,7 @@
 var a00345 =
 [
-    [ "FSL_LPI2C_FREERTOS_DRIVER_VERSION", "a00345.html#gabe1b685d26560cdb8a3eccf81d013a3f", null ],
-    [ "LPI2C_RTOS_Init", "a00345.html#ga537a8859c9c83c8a8ccf6e0188cc8b5c", null ],
-    [ "LPI2C_RTOS_Deinit", "a00345.html#gacacb0612bfdcd7913be1cef8ad19fb9c", null ],
-    [ "LPI2C_RTOS_Transfer", "a00345.html#gab5359e4f864d7f21eebcab8d3229e963", null ]
+    [ "LPSPI CMSIS Driver", "a00347.html", null ],
+    [ "LPSPI FreeRTOS Driver", "a00346.html", "a00346" ],
+    [ "LPSPI Peripheral driver", "a00058.html", "a00058" ],
+    [ "LPSPI eDMA Driver", "a00059.html", "a00059" ]
 ];

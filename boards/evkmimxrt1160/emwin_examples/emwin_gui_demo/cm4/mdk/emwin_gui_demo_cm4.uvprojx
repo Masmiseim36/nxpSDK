@@ -464,9 +464,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -622,6 +622,11 @@
               <FileName>fsl_memory.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_soc_mipi_dsi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_soc_mipi_dsi.h</FilePath>
             </File>
             <File>
               <FileName>fsl_soc_mipi_csi2rx.h</FileName>
@@ -792,6 +797,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1124,6 +1134,11 @@
               <FilePath>../../../../../../middleware/emwin/emWin_header/GUI_Private.h</FilePath>
             </File>
             <File>
+              <FileName>GUI_Resource.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/emwin/emWin_header/GUI_Resource.h</FilePath>
+            </File>
+            <File>
               <FileName>GUI_SPRITE_Private.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/emwin/emWin_header/GUI_SPRITE_Private.h</FilePath>
@@ -1209,6 +1224,11 @@
               <FilePath>../../../../../../middleware/emwin/emWin_header/IP_FS.h</FilePath>
             </File>
             <File>
+              <FileName>JPEGConf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/emwin/emWin_header/JPEGConf.h</FilePath>
+            </File>
+            <File>
               <FileName>KEYBOARD.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/emwin/emWin_header/KEYBOARD.h</FilePath>
@@ -1252,6 +1272,26 @@
               <FileName>LCD_SIM.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/emwin/emWin_header/LCD_SIM.h</FilePath>
+            </File>
+            <File>
+              <FileName>LCD_X_8080_16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/emwin/emWin_header/LCD_X_8080_16.h</FilePath>
+            </File>
+            <File>
+              <FileName>LCD_X_8080_8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/emwin/emWin_header/LCD_X_8080_8.h</FilePath>
+            </File>
+            <File>
+              <FileName>LCD_X_I2C.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/emwin/emWin_header/LCD_X_I2C.h</FilePath>
+            </File>
+            <File>
+              <FileName>LCD_X_Serial_3Pin.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/emwin/emWin_header/LCD_X_Serial_3Pin.h</FilePath>
             </File>
             <File>
               <FileName>LISTBOX.h</FileName>
@@ -2113,9 +2153,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -2271,6 +2311,11 @@
               <FileName>fsl_memory.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_soc_mipi_dsi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_soc_mipi_dsi.h</FilePath>
             </File>
             <File>
               <FileName>fsl_soc_mipi_csi2rx.h</FileName>
@@ -2441,6 +2486,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2773,6 +2823,11 @@
               <FilePath>../../../../../../middleware/emwin/emWin_header/GUI_Private.h</FilePath>
             </File>
             <File>
+              <FileName>GUI_Resource.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/emwin/emWin_header/GUI_Resource.h</FilePath>
+            </File>
+            <File>
               <FileName>GUI_SPRITE_Private.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/emwin/emWin_header/GUI_SPRITE_Private.h</FilePath>
@@ -2858,6 +2913,11 @@
               <FilePath>../../../../../../middleware/emwin/emWin_header/IP_FS.h</FilePath>
             </File>
             <File>
+              <FileName>JPEGConf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/emwin/emWin_header/JPEGConf.h</FilePath>
+            </File>
+            <File>
               <FileName>KEYBOARD.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/emwin/emWin_header/KEYBOARD.h</FilePath>
@@ -2901,6 +2961,26 @@
               <FileName>LCD_SIM.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/emwin/emWin_header/LCD_SIM.h</FilePath>
+            </File>
+            <File>
+              <FileName>LCD_X_8080_16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/emwin/emWin_header/LCD_X_8080_16.h</FilePath>
+            </File>
+            <File>
+              <FileName>LCD_X_8080_8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/emwin/emWin_header/LCD_X_8080_8.h</FilePath>
+            </File>
+            <File>
+              <FileName>LCD_X_I2C.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/emwin/emWin_header/LCD_X_I2C.h</FilePath>
+            </File>
+            <File>
+              <FileName>LCD_X_Serial_3Pin.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/emwin/emWin_header/LCD_X_Serial_3Pin.h</FilePath>
             </File>
             <File>
               <FileName>LISTBOX.h</FileName>

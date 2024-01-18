@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['x',['X',['../a00014.html#a393f71cb5e18b16c11e12bf0fe8ff806',1,'caam_pkha_ecc_point_t']]],
-  ['xbuff',['xBuff',['../a00090.html#a65eb6eb4b19e8ed945a98ff104b17ee9',1,'smartcard_context_t']]],
-  ['xfer',['xfer',['../a00026.html#a4765b97f201d6886e992236d2fdc6bc7',1,'_dsi_handle']]],
-  ['xisbusy',['xIsBusy',['../a00090.html#ac0ce05c8505925bb0349c4740abbf214',1,'smartcard_context_t']]],
-  ['xsize',['xSize',['../a00090.html#ab4d7fc5bcf6b9b4c985a58b61606340d',1,'smartcard_context_t']]]
+  ['x',['X',['../a00014.html#acea3e6952ae688c9be2fa0137cddfb32',1,'_caam_pkha_ecc_point_t']]],
+  ['xbuff',['xBuff',['../a00088.html#a8778542e3b6abbb329911a5213a47831',1,'_smartcard_context']]],
+  ['xfer',['xfer',['../a00026.html#a4dd129d234ee123666f6ecec53837055',1,'_dsi_handle']]],
+  ['xisbusy',['xIsBusy',['../a00088.html#a970e237a3a1b894553246b26ce80fb14',1,'_smartcard_context']]],
+  ['xsize',['xSize',['../a00088.html#ac115fd74f20a24a7edc3ea9706a95b4f',1,'_smartcard_context']]]
 ];

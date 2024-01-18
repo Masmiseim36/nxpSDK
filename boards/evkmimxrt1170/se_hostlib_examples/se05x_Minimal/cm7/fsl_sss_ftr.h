@@ -444,7 +444,7 @@
     + SSS_HAVE_OPENSSL_1_1_1         \
     + SSS_HAVE_OPENSSL_3_0           \
     ) == 0)
-#        error "Enable at-least one of 'PTMW_OpenSSL'"
+// #        error "Enable at-least one of 'PTMW_OpenSSL'"
 #endif
 
 

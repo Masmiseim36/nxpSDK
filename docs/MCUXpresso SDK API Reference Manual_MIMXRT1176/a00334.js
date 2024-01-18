@@ -1,12 +1,21 @@
 var a00334 =
 [
-    [ "CAAM_AES_EncryptEcbNonBlocking", "a00334.html#gaf17615d04159c190c4b5dbe849cd60fb", null ],
-    [ "CAAM_AES_DecryptEcbNonBlocking", "a00334.html#ga95932998da1e1e6f8acf8b07425920c5", null ],
-    [ "CAAM_AES_EncryptCbcNonBlocking", "a00334.html#gabb70bd768fda571c83dae0f19ae47960", null ],
-    [ "CAAM_AES_DecryptCbcNonBlocking", "a00334.html#ga8af780abeaba467ebeae110822bac7f4", null ],
-    [ "CAAM_AES_CryptCtrNonBlocking", "a00334.html#gaf8111bdbb0f0477dce2ee307ecea487c", null ],
-    [ "CAAM_AES_EncryptTagCcmNonBlocking", "a00334.html#ga8ba9f0a2d82d4a5e9219d221fb8452b3", null ],
-    [ "CAAM_AES_DecryptTagCcmNonBlocking", "a00334.html#ga33528456ae5c03460e6f6e2e404a29d6", null ],
-    [ "CAAM_AES_EncryptTagGcmNonBlocking", "a00334.html#ga1f256cafc754c9884fbfb6016a87ad5e", null ],
-    [ "CAAM_AES_DecryptTagGcmNonBlocking", "a00334.html#gac1080871a66e816b659c333449423f34", null ]
+    [ "caam_fifost_type_t", "a00334.html#ga878fc65e38e70f81bb76f8f17f49b874", null ],
+    [ "caam_desc_type_t", "a00334.html#ga3534bd84da969e436740135aea3b697c", null ],
+    [ "_caam_fifost_type", "a00334.html#gab64c4aac04c7ac392cf549ab29729e16", [
+      [ "kCAAM_FIFOST_Type_Kek_Kek", "a00334.html#ggab64c4aac04c7ac392cf549ab29729e16a84e122bbbd2e66d5569a2d75be1f3b11", null ],
+      [ "kCAAM_FIFOST_Type_Kek_TKek", "a00334.html#ggab64c4aac04c7ac392cf549ab29729e16ae5e276ab814d1be88c32d7de249ffa59", null ],
+      [ "kCAAM_FIFOST_Type_Kek_Cmm_Jkek", "a00334.html#ggab64c4aac04c7ac392cf549ab29729e16a273bdfc76eae63ebc6c47f82e95d5fff", null ],
+      [ "kCAAM_FIFOST_Type_Kek_Cmm_Tkek", "a00334.html#ggab64c4aac04c7ac392cf549ab29729e16aeb6eccc10120f32f24ae92cd974a3127", null ]
+    ] ],
+    [ "_caam_desc_type", "a00334.html#ga4f7de733272c36461df158b6a42e5e46", [
+      [ "kCAAM_Descriptor_Type_Kek_Kek", "a00334.html#gga4f7de733272c36461df158b6a42e5e46a52b626477007f1366c4f1745fc4c70e6", null ],
+      [ "kCAAM_Descriptor_Type_Kek_TKek", "a00334.html#gga4f7de733272c36461df158b6a42e5e46adf40e9dddb88fac261056714bf51ae82", null ],
+      [ "kCAAM_Descriptor_Type_Kek_Ccm_Jkek", "a00334.html#gga4f7de733272c36461df158b6a42e5e46ac94c8c5849ea6eeed5f949b791da16e8", null ],
+      [ "kCAAM_Descriptor_Type_Kek_Ccm_Tkek", "a00334.html#gga4f7de733272c36461df158b6a42e5e46a36e0bff142e85c9a663862ecc9de6323", null ]
+    ] ],
+    [ "CAAM_RedBlob_Encapsule", "a00334.html#ga4582fee721c9b8c35f17beac855bac1f", null ],
+    [ "CAAM_RedBlob_Decapsule", "a00334.html#ga122fea38a73ae8e20e4bf23911554d72", null ],
+    [ "CAAM_BlackBlob_Encapsule", "a00334.html#ga614684d41dc08a72f94d250484606d91", null ],
+    [ "CAAM_BlackBlob_Decapsule", "a00334.html#gac20153a2d54d89fa2c05d1764a9dc658", null ]
 ];

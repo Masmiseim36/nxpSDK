@@ -1,61 +1,72 @@
 var a00011 =
 [
-    [ "asrc_channel_pair_config_t", "a00011.html#a00432", [
-      [ "audioDataChannels", "a00011.html#a70c663894f784597081ca9bc7b8cb700", null ],
-      [ "inClockSource", "a00011.html#ac7ce7a995807967bbeebbc62634bbede", null ],
-      [ "inSourceClock_Hz", "a00011.html#a2da4df3f25f16b65e66b1d623e03c318", null ],
-      [ "outClockSource", "a00011.html#af7788cbbb0cc5d361c5702c462285742", null ],
-      [ "outSourceClock_Hz", "a00011.html#ab0bf243a4adcd243c50c300ba6268709", null ],
-      [ "sampleRateRatio", "a00011.html#a3004a0d1c3bf1cfaa72b496ed0aed09f", null ],
-      [ "inDataWidth", "a00011.html#a02c87a1562abd45ee835e66f2cb0256b", null ],
-      [ "inDataAlign", "a00011.html#aace4f8a0c648d682b1a812a6c14e67be", null ],
-      [ "outDataWidth", "a00011.html#a4d3c073b44b4bc6944bf851fb6b4580d", null ],
-      [ "outDataAlign", "a00011.html#ae650dfa331f60aeaa6b6f4183d30f90a", null ],
-      [ "outSignExtension", "a00011.html#ac1c19ed8c07aa019c2f7d81495b44456", null ],
-      [ "outFifoThreshold", "a00011.html#a1655720dd3b8bc8ca7a6ffb4204dd250", null ],
-      [ "inFifoThreshold", "a00011.html#ad3aaab4d106fd192829d2b4c505f1ba4", null ],
-      [ "bufStallWhenFifoEmptyFull", "a00011.html#aa41dd93ae1884063da6642544156486e", null ]
+    [ "_asrc_channel_pair_config", "a00011.html#a00395", [
+      [ "audioDataChannels", "a00011.html#a90d4ecdbf20bdfde131b80d5c00060d9", null ],
+      [ "inClockSource", "a00011.html#a7adaf1aa8ded135d509d8c313621638a", null ],
+      [ "inSourceClock_Hz", "a00011.html#a465d19689ababc2705e02ab80d3feed7", null ],
+      [ "outClockSource", "a00011.html#ab216ee354bd86cbcc0e82dafa2d485a2", null ],
+      [ "outSourceClock_Hz", "a00011.html#acdde06943e51953dc73df730a513f37f", null ],
+      [ "sampleRateRatio", "a00011.html#a10647d2a4f6edb0e13258506a1e83f68", null ],
+      [ "inDataWidth", "a00011.html#a398fc7fad62625e225902d665616b4d5", null ],
+      [ "inDataAlign", "a00011.html#a122de754f5d128b2ee67befa3aa81cae", null ],
+      [ "outDataWidth", "a00011.html#a14f813855d239f44d519767a48a6a6b9", null ],
+      [ "outDataAlign", "a00011.html#a08ae1fcf582e5d3fa28b8030cd01b2e2", null ],
+      [ "outSignExtension", "a00011.html#a3bcae903183da93ffe988970a63f29f8", null ],
+      [ "outFifoThreshold", "a00011.html#a6e46911773e7e8d34f16b18ed290f556", null ],
+      [ "inFifoThreshold", "a00011.html#a718fbfe78ef4579257275eb0ef3aa406", null ],
+      [ "bufStallWhenFifoEmptyFull", "a00011.html#af86f70061a27df130fa27e64cd729e41", null ]
     ] ],
-    [ "asrc_transfer_t", "a00011.html#a00438", [
-      [ "inData", "a00011.html#a58b2d499f0c7e9063883625a2f89e8cb", null ],
-      [ "inDataSize", "a00011.html#a2dc2a0f0038710ee160242c1744fe0ca", null ],
-      [ "outData", "a00011.html#a2fa99d449b43849d338540e3b7b83866", null ],
-      [ "outDataSize", "a00011.html#a4e60de01990ac03e54c840453dfb8185", null ]
+    [ "_asrc_transfer", "a00011.html#a00403", [
+      [ "inData", "a00011.html#ab7fd9f352731052e6964a763d66c9ed0", null ],
+      [ "inDataSize", "a00011.html#afab0e76f93aeb099b35503d76e93d558", null ],
+      [ "outData", "a00011.html#a136f385581e20b51816079cb261acabe", null ],
+      [ "outDataSize", "a00011.html#a1e85fda7b8922dc63234c1af54a87b8d", null ]
     ] ],
-    [ "asrc_in_handle_t", "a00011.html#a00434", [
-      [ "callback", "a00011.html#a0cebe3f287291a4e56834e4e5e7e85f7", null ],
-      [ "sampleWidth", "a00011.html#aae36d8a580c988f571b003dd637636f4", null ],
-      [ "sampleMask", "a00011.html#a7d50180bf803fca4745a3c9e76503c7f", null ],
-      [ "fifoThreshold", "a00011.html#a10d1df2ce08ca62ef0611ec420a914a5", null ],
-      [ "asrcQueue", "a00011.html#ad07a0c88026cef410194e633bdb0f432", null ],
-      [ "transferSamples", "a00011.html#a3f11c7d03d26b2784fe50e78407ec314", null ],
-      [ "queueUser", "a00011.html#ae491b06ac4eea63e3af26ef9211ba152", null ],
-      [ "queueDriver", "a00011.html#ae729f8014c6cdff25957b4c11a2bdace", null ]
+    [ "_asrc_in_handle", "a00011.html#a00399", [
+      [ "callback", "a00011.html#a2a3b01464f07f6969e25714ce9b966d7", null ],
+      [ "sampleWidth", "a00011.html#ab8cd81c5aa1e8b46af7793f5d9d7f249", null ],
+      [ "sampleMask", "a00011.html#a3cc838f41ae9bb1736d822fcaa6ebb9c", null ],
+      [ "fifoThreshold", "a00011.html#a18a17a682c5d90b81e9aed370aece0b1", null ],
+      [ "asrcQueue", "a00011.html#a6be9260836b4aac53e4280ef18b0f87c", null ],
+      [ "transferSamples", "a00011.html#abde26eedc2c502cae8a934e556760991", null ],
+      [ "queueUser", "a00011.html#a0e13aaddc98e7cf3d84ba27af229587f", null ],
+      [ "queueDriver", "a00011.html#a303c00bd29d7483f678567d8f3db73d8", null ]
     ] ],
-    [ "asrc_out_handle_t", "a00011.html#a00436", [
-      [ "callback", "a00011.html#a07773de652ac4aa872044780b5065459", null ],
-      [ "sampleWidth", "a00011.html#a1de883b287429cc6d6ba19aff345564c", null ],
-      [ "fifoThreshold", "a00011.html#a2a7dce900e38c9a74bc3bd756099f7b2", null ],
-      [ "asrcQueue", "a00011.html#af9a1956eac3790a301fbdf01ae353e30", null ],
-      [ "transferSamples", "a00011.html#ad217506362600c77dbfdffa962507a71", null ],
-      [ "queueUser", "a00011.html#aed392674e434bc61457b8372d1be2bd3", null ],
-      [ "queueDriver", "a00011.html#ab3ef9d588b1dc139d1f0d79b2e287e88", null ]
+    [ "_asrc_out_handle", "a00011.html#a00401", [
+      [ "callback", "a00011.html#a4d165404d27283801c3f58a9823b9686", null ],
+      [ "sampleWidth", "a00011.html#a8ee9b95fafc55a92b25e84018a00976f", null ],
+      [ "fifoThreshold", "a00011.html#aefdd83083551f6d7b16fd004c6cc64ff", null ],
+      [ "asrcQueue", "a00011.html#a7e53290c4f6f9bb24a78ef5c1736085a", null ],
+      [ "transferSamples", "a00011.html#a17445548f012949fec0285ce2db1d717", null ],
+      [ "queueUser", "a00011.html#a84a5ff9505ed3300ac314285fcf565f7", null ],
+      [ "queueDriver", "a00011.html#a5eaa3892a37b30eb64172a47bc3e01f3", null ]
     ] ],
-    [ "asrc_handle_t", "a00011.html#a00386", [
-      [ "base", "a00011.html#ab97cfa0e1e385c9ad92a524cc8df15cd", null ],
-      [ "state", "a00011.html#a58110e0631d9011bb2cc9f4d1b1e2774", null ],
-      [ "userData", "a00011.html#ae8eeee4619341acc1d48a8efe95201f0", null ],
-      [ "audioDataChannels", "a00011.html#a3f280dcb2da284752d8c083d2292f6dc", null ],
-      [ "channelPair", "a00011.html#a0c3bcdce3780820af229a631899cd9c0", null ],
-      [ "in", "a00011.html#a47d8723414516e85455581fbe50f8956", null ],
-      [ "out", "a00011.html#a6453cf01fad36f1a2397750ceacff8f9", null ]
+    [ "_asrc_handle", "a00011.html#a00397", [
+      [ "base", "a00011.html#a2f71f01a5c96203584b39394978486b0", null ],
+      [ "state", "a00011.html#a5fcf76efc4b302c84c2d47631e87be98", null ],
+      [ "userData", "a00011.html#a75e1c3e538b3f2dbc9aeb56d575879fe", null ],
+      [ "audioDataChannels", "a00011.html#a69ce77af697823e1e879a70fe8499aee", null ],
+      [ "channelPair", "a00011.html#ac6f114150ce7ac7db24818bfc2ac6994", null ],
+      [ "in", "a00011.html#a396b1f05630164aafe9fe0b9fed4bbe7", null ],
+      [ "out", "a00011.html#a59888bbb28edda5d863fbdeff1d029e6", null ]
     ] ],
     [ "FSL_ASRC_DRIVER_VERSION", "a00011.html#gafae92ba17d0248f0e79417358c6738ba", null ],
     [ "ASRC_XFER_QUEUE_SIZE", "a00011.html#ga3108eea8d66651899f5ab4f4c8655844", null ],
     [ "FSL_ASRC_CHANNEL_PAIR_COUNT", "a00011.html#ga8409e98d07647477de2f20bb617a696b", null ],
     [ "FSL_ASRC_CHANNEL_PAIR_FIFO_DEPTH", "a00011.html#ga54a55b322da08d8e434259e8ef73a60f", null ],
     [ "ASRC_ASRCTR_AT_MASK", "a00011.html#ga60b3d4417577fcd97f83f2532bd168ee", null ],
-    [ "asrc_transfer_callback_t", "a00011.html#ga6c6a5ab31abf07be2c9d30a415b5da82", [
+    [ "asrc_channel_pair_t", "a00011.html#ga64fc1082f523d8ec0962fa5b4d4252ee", null ],
+    [ "asrc_ratio_t", "a00011.html#ga03bfe4f5123852632acc994e72779794", null ],
+    [ "asrc_audio_channel_t", "a00011.html#ga38bea1eca7e7bad1580ba3f15e4972ba", null ],
+    [ "asrc_data_width_t", "a00011.html#ga513560bb9d156ffd0a825d239e019ad9", null ],
+    [ "asrc_data_align_t", "a00011.html#gafcf53a75f0db5035bb8c586c3ac768c4", null ],
+    [ "asrc_sign_extension_t", "a00011.html#ga6c910683198a0e87ac608a66c651d599", null ],
+    [ "asrc_channel_pair_config_t", "a00011.html#ga7b63a69cba538c416eba9b52225403e2", null ],
+    [ "asrc_transfer_t", "a00011.html#gaa4f4755bc3e39609e357a6f42bde0eb0", null ],
+    [ "asrc_handle_t", "a00011.html#ga9a22823a1bfa8be67c9a2bbb419632bd", null ],
+    [ "asrc_transfer_callback_t", "a00011.html#ga6c6a5ab31abf07be2c9d30a415b5da82", null ],
+    [ "asrc_in_handle_t", "a00011.html#gaa6fbdb4ab5400dc524207ebd9002b1fd", null ],
+    [ "asrc_out_handle_t", "a00011.html#ga2293e388f186d1135c281678334b187f", [
       [ "kStatus_ASRCIdle", "a00011.html#ggaaf105ae5beaca1dee30ae54530691fcea45ecbd7bc54a0ee7dd4b93e7fb1bb97b", null ],
       [ "kStatus_ASRCInIdle", "a00011.html#ggaaf105ae5beaca1dee30ae54530691fcea0440eba4b54ba5e551ea40c3a3ce3346", null ],
       [ "kStatus_ASRCOutIdle", "a00011.html#ggaaf105ae5beaca1dee30ae54530691fcea6de1be58ec00c819d573870603164789", null ],
@@ -69,10 +80,10 @@ var a00011 =
       [ "kStatus_ASRCOutQueueIdle", "a00011.html#ggaaf105ae5beaca1dee30ae54530691fceacd1b0eebad4bd51615d6ab103406f0fd", null ],
       [ "kStatus_ASRCInQueueIdle", "a00011.html#ggaaf105ae5beaca1dee30ae54530691fcea0a76d73b6a02d96af4b49983da846010", null ]
     ] ],
-    [ "asrc_channel_pair_t", "a00011.html#ga4d609b2d88cb02f3ca8953287ef59565", [
-      [ "kASRC_ChannelPairA", "a00011.html#gga4d609b2d88cb02f3ca8953287ef59565a2f4b1231beeb24671810e11442173c86", null ],
-      [ "kASRC_ChannelPairB", "a00011.html#gga4d609b2d88cb02f3ca8953287ef59565ac1220ea4b993df256c274cf65d565996", null ],
-      [ "kASRC_ChannelPairC", "a00011.html#gga4d609b2d88cb02f3ca8953287ef59565a896b9a748764938ffb7849bbf5fc40af", null ],
+    [ "_asrc_channel_pair", "a00011.html#ga507827442feac33ca01a112be08c5b3e", [
+      [ "kASRC_ChannelPairA", "a00011.html#gga507827442feac33ca01a112be08c5b3ea2f4b1231beeb24671810e11442173c86", null ],
+      [ "kASRC_ChannelPairB", "a00011.html#gga507827442feac33ca01a112be08c5b3eac1220ea4b993df256c274cf65d565996", null ],
+      [ "kASRC_ChannelPairC", "a00011.html#gga507827442feac33ca01a112be08c5b3ea896b9a748764938ffb7849bbf5fc40af", null ],
       [ "kASRC_SampleRate_8000HZ", "a00011.html#gga80155586fa275b28773c9b203f52cabaaa3a0ddf35c2e473503f5361bfb2b1058", null ],
       [ "kASRC_SampleRate_11025HZ", "a00011.html#gga80155586fa275b28773c9b203f52cabaa07c1208ccf6a4a9a672ae9b04856d7d9", null ],
       [ "kASRC_SampleRate_12000HZ", "a00011.html#gga80155586fa275b28773c9b203f52cabaa9f0f0261d7efc5b3f5a7b413c763e2ea", null ],
@@ -127,35 +138,35 @@ var a00011 =
       [ "kASRC_OutputFifoNearFull", "a00011.html#ggadb49720dc49f7d4e4cf9adbf2948e409a9757272a0bc7c9bf584af7683baadeaa", null ],
       [ "kASRC_InputFifoNearEmpty", "a00011.html#ggadb49720dc49f7d4e4cf9adbf2948e409af00955d13e2d334fa07c02855cb60d15", null ]
     ] ],
-    [ "asrc_ratio_t", "a00011.html#ga0c6c7b93880cd0db10fbe5fe2ae62901", [
-      [ "kASRC_RatioNotUsed", "a00011.html#gga0c6c7b93880cd0db10fbe5fe2ae62901af2f5fbd3875ef8033463bde48b14fad8", null ],
-      [ "kASRC_RatioUseInternalMeasured", "a00011.html#gga0c6c7b93880cd0db10fbe5fe2ae62901aa06241be212852d232cd5959f4909b8a", null ],
-      [ "kASRC_RatioUseIdealRatio", "a00011.html#gga0c6c7b93880cd0db10fbe5fe2ae62901a44bf8297c5bc97376815f0be4ed4fbfe", null ]
+    [ "_asrc_ratio", "a00011.html#gaf22e3b22958008ebb2b57dda940d6e2f", [
+      [ "kASRC_RatioNotUsed", "a00011.html#ggaf22e3b22958008ebb2b57dda940d6e2faf2f5fbd3875ef8033463bde48b14fad8", null ],
+      [ "kASRC_RatioUseInternalMeasured", "a00011.html#ggaf22e3b22958008ebb2b57dda940d6e2faa06241be212852d232cd5959f4909b8a", null ],
+      [ "kASRC_RatioUseIdealRatio", "a00011.html#ggaf22e3b22958008ebb2b57dda940d6e2fa44bf8297c5bc97376815f0be4ed4fbfe", null ]
     ] ],
-    [ "asrc_audio_channel_t", "a00011.html#gaef98bb16fa0bdb5b2a8290877322ff10", [
-      [ "kASRC_ChannelsNumber1", "a00011.html#ggaef98bb16fa0bdb5b2a8290877322ff10a8304a06da7b58cc4952ae9b2d2b34a8a", null ],
-      [ "kASRC_ChannelsNumber2", "a00011.html#ggaef98bb16fa0bdb5b2a8290877322ff10a844e84cbe7c8f700f509a41ce13923e7", null ],
-      [ "kASRC_ChannelsNumber3", "a00011.html#ggaef98bb16fa0bdb5b2a8290877322ff10a193897ddae6db9f45493d4d900c50767", null ],
-      [ "kASRC_ChannelsNumber4", "a00011.html#ggaef98bb16fa0bdb5b2a8290877322ff10a40cd73ef746c93b24107bbf256bdbbd1", null ],
-      [ "kASRC_ChannelsNumber5", "a00011.html#ggaef98bb16fa0bdb5b2a8290877322ff10af8ce248e24d37cbee77ec2288d131723", null ],
-      [ "kASRC_ChannelsNumber6", "a00011.html#ggaef98bb16fa0bdb5b2a8290877322ff10aa6c212757db1b0642c8f2646cb6e0640", null ],
-      [ "kASRC_ChannelsNumber7", "a00011.html#ggaef98bb16fa0bdb5b2a8290877322ff10a38b01ce98e6c8e7835f2a8b65252db6f", null ],
-      [ "kASRC_ChannelsNumber8", "a00011.html#ggaef98bb16fa0bdb5b2a8290877322ff10a797cb5f2ba1b73b63fca17efd80abbc9", null ],
-      [ "kASRC_ChannelsNumber9", "a00011.html#ggaef98bb16fa0bdb5b2a8290877322ff10ac937db634077b573a3443acb37e22eb0", null ],
-      [ "kASRC_ChannelsNumber10", "a00011.html#ggaef98bb16fa0bdb5b2a8290877322ff10a12d8bacbf21d36dcfb0b1654140abec7", null ]
+    [ "_asrc_audio_channel", "a00011.html#ga6e6d1a924a3d58abb309eec7a20972fa", [
+      [ "kASRC_ChannelsNumber1", "a00011.html#gga6e6d1a924a3d58abb309eec7a20972faa8304a06da7b58cc4952ae9b2d2b34a8a", null ],
+      [ "kASRC_ChannelsNumber2", "a00011.html#gga6e6d1a924a3d58abb309eec7a20972faa844e84cbe7c8f700f509a41ce13923e7", null ],
+      [ "kASRC_ChannelsNumber3", "a00011.html#gga6e6d1a924a3d58abb309eec7a20972faa193897ddae6db9f45493d4d900c50767", null ],
+      [ "kASRC_ChannelsNumber4", "a00011.html#gga6e6d1a924a3d58abb309eec7a20972faa40cd73ef746c93b24107bbf256bdbbd1", null ],
+      [ "kASRC_ChannelsNumber5", "a00011.html#gga6e6d1a924a3d58abb309eec7a20972faaf8ce248e24d37cbee77ec2288d131723", null ],
+      [ "kASRC_ChannelsNumber6", "a00011.html#gga6e6d1a924a3d58abb309eec7a20972faaa6c212757db1b0642c8f2646cb6e0640", null ],
+      [ "kASRC_ChannelsNumber7", "a00011.html#gga6e6d1a924a3d58abb309eec7a20972faa38b01ce98e6c8e7835f2a8b65252db6f", null ],
+      [ "kASRC_ChannelsNumber8", "a00011.html#gga6e6d1a924a3d58abb309eec7a20972faa797cb5f2ba1b73b63fca17efd80abbc9", null ],
+      [ "kASRC_ChannelsNumber9", "a00011.html#gga6e6d1a924a3d58abb309eec7a20972faac937db634077b573a3443acb37e22eb0", null ],
+      [ "kASRC_ChannelsNumber10", "a00011.html#gga6e6d1a924a3d58abb309eec7a20972faa12d8bacbf21d36dcfb0b1654140abec7", null ]
     ] ],
-    [ "asrc_data_width_t", "a00011.html#gaea1d8db6dc0effbb7b93348a6095eaad", [
-      [ "kASRC_DataWidth24Bit", "a00011.html#ggaea1d8db6dc0effbb7b93348a6095eaada54c8fb38fbb5d80079f8dd04e76183fc", null ],
-      [ "kASRC_DataWidth16Bit", "a00011.html#ggaea1d8db6dc0effbb7b93348a6095eaada75bdfffc838219e49cf4636baa41115c", null ],
-      [ "kASRC_DataWidth8Bit", "a00011.html#ggaea1d8db6dc0effbb7b93348a6095eaadae47fc61db432a52a643e2668787010e2", null ]
+    [ "_asrc_data_width", "a00011.html#ga24b45c9e08c5ae84d1ea31d625a5f623", [
+      [ "kASRC_DataWidth24Bit", "a00011.html#gga24b45c9e08c5ae84d1ea31d625a5f623a54c8fb38fbb5d80079f8dd04e76183fc", null ],
+      [ "kASRC_DataWidth16Bit", "a00011.html#gga24b45c9e08c5ae84d1ea31d625a5f623a75bdfffc838219e49cf4636baa41115c", null ],
+      [ "kASRC_DataWidth8Bit", "a00011.html#gga24b45c9e08c5ae84d1ea31d625a5f623ae47fc61db432a52a643e2668787010e2", null ]
     ] ],
-    [ "asrc_data_align_t", "a00011.html#gab89169302881257e3af90c6281b8e201", [
-      [ "kASRC_DataAlignMSB", "a00011.html#ggab89169302881257e3af90c6281b8e201a20cf0509f3c85860b466ee0accdd4890", null ],
-      [ "kASRC_DataAlignLSB", "a00011.html#ggab89169302881257e3af90c6281b8e201a097f76cef410d5ef8a95f0b56f8d3148", null ]
+    [ "_asrc_data_align", "a00011.html#ga83637441c78743784c01f85d7096e145", [
+      [ "kASRC_DataAlignMSB", "a00011.html#gga83637441c78743784c01f85d7096e145a20cf0509f3c85860b466ee0accdd4890", null ],
+      [ "kASRC_DataAlignLSB", "a00011.html#gga83637441c78743784c01f85d7096e145a097f76cef410d5ef8a95f0b56f8d3148", null ]
     ] ],
-    [ "asrc_sign_extension_t", "a00011.html#ga2cb5a93b3e5907ce4ae5f5c404b3e5fa", [
-      [ "kASRC_NoSignExtension", "a00011.html#gga2cb5a93b3e5907ce4ae5f5c404b3e5faaa224e7e0b36d909dda3b6a4ff7428716", null ],
-      [ "kASRC_SignExtension", "a00011.html#gga2cb5a93b3e5907ce4ae5f5c404b3e5faa58ecb89af79d758faae7074d9be4dfd0", null ]
+    [ "_asrc_sign_extension", "a00011.html#gaa8c5d3ab48ea24e313ca9e8452962d93", [
+      [ "kASRC_NoSignExtension", "a00011.html#ggaa8c5d3ab48ea24e313ca9e8452962d93aa224e7e0b36d909dda3b6a4ff7428716", null ],
+      [ "kASRC_SignExtension", "a00011.html#ggaa8c5d3ab48ea24e313ca9e8452962d93a58ecb89af79d758faae7074d9be4dfd0", null ]
     ] ],
     [ "ASRC_GetInstance", "a00011.html#ga7f2a01d5abd8c0e5713c934cfe8e6c9c", null ],
     [ "ASRC_Init", "a00011.html#ga0bbcb481c8bdbd6629982cb0f46f9dc3", null ],

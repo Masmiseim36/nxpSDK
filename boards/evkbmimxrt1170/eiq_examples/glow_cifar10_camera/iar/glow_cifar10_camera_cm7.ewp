@@ -244,7 +244,6 @@
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>DISABLEFLOAT16</state>
-          <state>EIQ_GUI_PRINTF</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -284,7 +283,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pe167</state>
+          <state>Pe167,Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -321,11 +320,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -372,6 +371,8 @@
           <state>$PROJ_DIR$/../board</state>
           <state>$PROJ_DIR$/../../../../../middleware/eiq/glow/examples/cifar10_camera/evkbmimxrt1170</state>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../source/common</state>
+          <state>$PROJ_DIR$/../source/gprintf</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1176</state>
@@ -394,9 +395,6 @@
           <state>$PROJ_DIR$/../../../../../CMSIS/DSP/Include</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/DSP/PrivateInclude</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/DSP/Source/DistanceFunctions</state>
-          <state>$PROJ_DIR$/../../../../../middleware/eiq/common</state>
-          <state>$PROJ_DIR$/../../../../../middleware/eiq/common/video</state>
-          <state>$PROJ_DIR$/../../../../../middleware/eiq/common/gprintf</state>
           <state>$PROJ_DIR$/../../../../../middleware/eiq/glow/bundle_utils</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
@@ -1374,7 +1372,6 @@
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>DISABLEFLOAT16</state>
-          <state>EIQ_GUI_PRINTF</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1414,7 +1411,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pe167</state>
+          <state>Pe167,Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1451,11 +1448,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -1502,6 +1499,8 @@
           <state>$PROJ_DIR$/../board</state>
           <state>$PROJ_DIR$/../../../../../middleware/eiq/glow/examples/cifar10_camera/evkbmimxrt1170</state>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../source/common</state>
+          <state>$PROJ_DIR$/../source/gprintf</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1176</state>
@@ -1524,9 +1523,6 @@
           <state>$PROJ_DIR$/../../../../../CMSIS/DSP/Include</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/DSP/PrivateInclude</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/DSP/Source/DistanceFunctions</state>
-          <state>$PROJ_DIR$/../../../../../middleware/eiq/common</state>
-          <state>$PROJ_DIR$/../../../../../middleware/eiq/common/video</state>
-          <state>$PROJ_DIR$/../../../../../middleware/eiq/common/gprintf</state>
           <state>$PROJ_DIR$/../../../../../middleware/eiq/glow/bundle_utils</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
@@ -2329,64 +2325,67 @@
     <file>
       <name>$PROJ_DIR$/../source/timer.h</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/eiq/common/eiq_common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/eiq/common/eiq_iui.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/eiq/common/eiq_iworker.h</name>
-    </file>
+    <group>
+      <name>common</name>
+      <file>
+        <name>$PROJ_DIR$/../source/common/eiq_common.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../source/common/eiq_iui.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../source/common/eiq_iworker.h</name>
+      </file>
+    </group>
     <group>
       <name>video</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/video/camera/RM68191_RM68200/eiq_camera_conf.c</name>
+        <name>$PROJ_DIR$/../source/video/eiq_camera_conf.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/video/display/RK055AHD091_RK055IQH091/eiq_display_conf.c</name>
+        <name>$PROJ_DIR$/../source/video/eiq_display_conf.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/video/eiq_camera.c</name>
+        <name>$PROJ_DIR$/../source/video/eiq_camera.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/video/eiq_display.c</name>
+        <name>$PROJ_DIR$/../source/video/eiq_camera_conf.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/video/eiq_pxp.c</name>
+        <name>$PROJ_DIR$/../source/video/eiq_display.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/video/eiq_video_worker.c</name>
+        <name>$PROJ_DIR$/../source/video/eiq_display_conf.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/video/eiq_camera.h</name>
+        <name>$PROJ_DIR$/../source/video/eiq_pxp.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/video/eiq_camera_conf.h</name>
+        <name>$PROJ_DIR$/../source/video/eiq_video_worker.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/video/eiq_display.h</name>
+        <name>$PROJ_DIR$/../source/video/eiq_camera.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/video/eiq_display_conf.h</name>
+        <name>$PROJ_DIR$/../source/video/eiq_display.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/video/eiq_pxp.h</name>
+        <name>$PROJ_DIR$/../source/video/eiq_pxp.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/video/eiq_video_worker.h</name>
+        <name>$PROJ_DIR$/../source/video/eiq_video_worker.c</name>
       </file>
     </group>
     <group>
       <name>gprintf</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/gprintf/chgui.c</name>
+        <name>$PROJ_DIR$/../source/gprintf/chgui.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/gprintf/chgui.h</name>
+        <name>$PROJ_DIR$/../source/gprintf/font.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/gprintf/font.h</name>
+        <name>$PROJ_DIR$/../source/gprintf/chgui.c</name>
       </file>
     </group>
   </group>
@@ -2484,15 +2483,6 @@
     </group>
   </group>
   <group>
-    <name>doc</name>
-    <file>
-      <name>$PROJ_DIR$/../doc/readme.txt</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../doc/board.readme</name>
-    </file>
-  </group>
-  <group>
     <name>scripts</name>
     <file>
       <name>$PROJ_DIR$/../scripts/glow_process_image.py</name>
@@ -2523,6 +2513,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.h</name>
     </file>
   </group>
   <group>
@@ -2637,6 +2630,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_dcdc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_soc_mipi_dsi.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</name>
@@ -3081,6 +3077,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../xip/evkbmimxrt1170_flexspi_nor_config.h</name>
+    </file>
+  </group>
+  <group>
+    <name>doc</name>
+    <file>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
 </project>

@@ -20,6 +20,8 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+#pragma once
+
 /**
  * @file core_http_config_defaults.h
  * @brief The default values for the configuration macros for the HTTP Client
@@ -31,8 +33,6 @@
  * To use the custom config file, the HTTP_DO_NOT_USE_CUSTOM_CONFIG preprocessor
  * macro SHOULD NOT be set.
  */
-
-#pragma once
 
 #include "transport_interface.h"
 #include "fsl_debug_console.h"

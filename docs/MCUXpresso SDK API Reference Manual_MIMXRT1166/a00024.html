@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -101,6 +101,7 @@ $(document).ready(function(){initNavTree('a00024.html','');});
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">DCIC</div>  </div>
@@ -110,16 +111,16 @@ $(document).ready(function(){initNavTree('a00024.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00468"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a00468">dcic_config_t</a></td></tr>
-<tr class="memdesc:a00468"><td class="mdescLeft">&#160;</td><td class="mdescRight">DCIC configuration.  <a href="a00024.html#a00468">More...</a><br/></td></tr>
-<tr class="separator:a00468"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00469"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a00469">dcic_region_config_t</a></td></tr>
-<tr class="memdesc:a00469"><td class="mdescLeft">&#160;</td><td class="mdescRight">Region of interest (ROI) configuration.  <a href="a00024.html#a00469">More...</a><br/></td></tr>
-<tr class="separator:a00469"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00439"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a00439">_dcic_config</a></td></tr>
+<tr class="memdesc:a00439"><td class="mdescLeft">&#160;</td><td class="mdescRight">DCIC configuration.  <a href="a00024.html#a00439">More...</a><br/></td></tr>
+<tr class="separator:a00439"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00440"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a00440">_dcic_region_config</a></td></tr>
+<tr class="memdesc:a00440"><td class="mdescLeft">&#160;</td><td class="mdescRight">Region of interest (ROI) configuration.  <a href="a00024.html#a00440">More...</a><br/></td></tr>
+<tr class="separator:a00440"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga17ecd061bffcdbaf9c0ad606aa98f7a7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga17ecd061bffcdbaf9c0ad606aa98f7a7">FSL_DCIC_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00336.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 3))</td></tr>
+<tr class="memitem:ga17ecd061bffcdbaf9c0ad606aa98f7a7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga17ecd061bffcdbaf9c0ad606aa98f7a7">FSL_DCIC_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00337.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 3))</td></tr>
 <tr class="memdesc:ga17ecd061bffcdbaf9c0ad606aa98f7a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">DCIC driver version.  <a href="#ga17ecd061bffcdbaf9c0ad606aa98f7a7">More...</a><br/></td></tr>
 <tr class="separator:ga17ecd061bffcdbaf9c0ad606aa98f7a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga79e82862aadb0dce4521553623f6619a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga79e82862aadb0dce4521553623f6619a">DCIC_CRC32_POLYNOMIAL</a>&#160;&#160;&#160;0x04C11DB7UL</td></tr>
@@ -131,6 +132,17 @@ Macros</h2></td></tr>
 <tr class="memitem:ga494a2018f1636f61bb9f42b5d6ab5255"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga494a2018f1636f61bb9f42b5d6ab5255">DCIC_REGION_MISMATCH_STATUS</a>(region)&#160;&#160;&#160;(1UL &lt;&lt; (DCIC_DCICS_ROI_MATCH_STAT_SHIFT + (region)))</td></tr>
 <tr class="memdesc:ga494a2018f1636f61bb9f42b5d6ab5255"><td class="mdescLeft">&#160;</td><td class="mdescRight">ROI CRC32 value mismatch status.  <a href="#ga494a2018f1636f61bb9f42b5d6ab5255">More...</a><br/></td></tr>
 <tr class="separator:ga494a2018f1636f61bb9f42b5d6ab5255"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gaa9eb718b9a5fbb5b281250d4a23454d4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa9eb718b9a5fbb5b281250d4a23454d4"></a>
+typedef struct <a class="el" href="a00024.html#a00439">_dcic_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gaa9eb718b9a5fbb5b281250d4a23454d4">dcic_config_t</a></td></tr>
+<tr class="memdesc:gaa9eb718b9a5fbb5b281250d4a23454d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">DCIC configuration. <br/></td></tr>
+<tr class="separator:gaa9eb718b9a5fbb5b281250d4a23454d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac29014a917e6abd38a8fd6e7570678ee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac29014a917e6abd38a8fd6e7570678ee"></a>
+typedef struct <a class="el" href="a00024.html#a00440">_dcic_region_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gac29014a917e6abd38a8fd6e7570678ee">dcic_region_config_t</a></td></tr>
+<tr class="memdesc:gac29014a917e6abd38a8fd6e7570678ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Region of interest (ROI) configuration. <br/></td></tr>
+<tr class="separator:gac29014a917e6abd38a8fd6e7570678ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -205,13 +217,13 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Initialization and deinitialization</h2></td></tr>
-<tr class="memitem:gac1a6072d83e38deb21e0ee5902ba2865"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gac1a6072d83e38deb21e0ee5902ba2865">DCIC_Init</a> (DCIC_Type *base, const <a class="el" href="a00024.html#a00468">dcic_config_t</a> *config)</td></tr>
+<tr class="memitem:gac1a6072d83e38deb21e0ee5902ba2865"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gac1a6072d83e38deb21e0ee5902ba2865">DCIC_Init</a> (DCIC_Type *base, const <a class="el" href="a00024.html#gaa9eb718b9a5fbb5b281250d4a23454d4">dcic_config_t</a> *config)</td></tr>
 <tr class="memdesc:gac1a6072d83e38deb21e0ee5902ba2865"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the DCIC.  <a href="#gac1a6072d83e38deb21e0ee5902ba2865">More...</a><br/></td></tr>
 <tr class="separator:gac1a6072d83e38deb21e0ee5902ba2865"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga081863144e434a4ad325d81440902d14"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga081863144e434a4ad325d81440902d14">DCIC_Deinit</a> (DCIC_Type *base)</td></tr>
 <tr class="memdesc:ga081863144e434a4ad325d81440902d14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitialize the DCIC.  <a href="#ga081863144e434a4ad325d81440902d14">More...</a><br/></td></tr>
 <tr class="separator:ga081863144e434a4ad325d81440902d14"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaea22d2c626d79a6d428f05a0cd3dd4e5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gaea22d2c626d79a6d428f05a0cd3dd4e5">DCIC_GetDefaultConfig</a> (<a class="el" href="a00024.html#a00468">dcic_config_t</a> *config)</td></tr>
+<tr class="memitem:gaea22d2c626d79a6d428f05a0cd3dd4e5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gaea22d2c626d79a6d428f05a0cd3dd4e5">DCIC_GetDefaultConfig</a> (<a class="el" href="a00024.html#gaa9eb718b9a5fbb5b281250d4a23454d4">dcic_config_t</a> *config)</td></tr>
 <tr class="memdesc:gaea22d2c626d79a6d428f05a0cd3dd4e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the default configuration to initialize DCIC.  <a href="#gaea22d2c626d79a6d428f05a0cd3dd4e5">More...</a><br/></td></tr>
 <tr class="separator:gaea22d2c626d79a6d428f05a0cd3dd4e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae2c0f17b3438547841bae6b3b0c9ef81"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gae2c0f17b3438547841bae6b3b0c9ef81">DCIC_Enable</a> (DCIC_Type *base, bool enable)</td></tr>
@@ -241,7 +253,7 @@ Interrupts</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Region</h2></td></tr>
-<tr class="memitem:ga315c5d66205c0d997971036b462a9bb5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga315c5d66205c0d997971036b462a9bb5">DCIC_EnableRegion</a> (DCIC_Type *base, uint8_t regionIdx, const <a class="el" href="a00024.html#a00469">dcic_region_config_t</a> *config)</td></tr>
+<tr class="memitem:ga315c5d66205c0d997971036b462a9bb5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga315c5d66205c0d997971036b462a9bb5">DCIC_EnableRegion</a> (DCIC_Type *base, uint8_t regionIdx, const <a class="el" href="a00024.html#gac29014a917e6abd38a8fd6e7570678ee">dcic_region_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga315c5d66205c0d997971036b462a9bb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the region of interest (ROI) with configuration.  <a href="#ga315c5d66205c0d997971036b462a9bb5">More...</a><br/></td></tr>
 <tr class="separator:ga315c5d66205c0d997971036b462a9bb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabce288a758cda71cf1157d00ceeb3087"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gabce288a758cda71cf1157d00ceeb3087">DCIC_DisableRegion</a> (DCIC_Type *base, uint8_t regionIdx)</td></tr>
@@ -261,34 +273,34 @@ Misc control.</h2></td></tr>
 <tr class="separator:gaf54eb5b57daba0355bf895d3585705f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00468" id="a00468"></a>
+<a name="a00439" id="a00439"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct dcic_config_t</td>
+          <td class="memname">struct _dcic_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:aefecd9dd6948d73acf523bf818283de5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#aefecd9dd6948d73acf523bf818283de5">enableExternalSignal</a></td></tr>
-<tr class="memdesc:aefecd9dd6948d73acf523bf818283de5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the mismatch external signal.  <a href="#aefecd9dd6948d73acf523bf818283de5">More...</a><br/></td></tr>
-<tr class="separator:aefecd9dd6948d73acf523bf818283de5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a36dd498357c4e700fd32f29d3f1a9326"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a36dd498357c4e700fd32f29d3f1a9326">polarityFlags</a></td></tr>
-<tr class="memdesc:a36dd498357c4e700fd32f29d3f1a9326"><td class="mdescLeft">&#160;</td><td class="mdescRight">Display signal polarity, logical OR'ed of <a class="el" href="a00024.html#_DCIC_polarity_flags">_DCIC_polarity_flags</a>.  <a href="#a36dd498357c4e700fd32f29d3f1a9326">More...</a><br/></td></tr>
-<tr class="separator:a36dd498357c4e700fd32f29d3f1a9326"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab3ef7f3510ec32f4048366cd541990d0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ab3ef7f3510ec32f4048366cd541990d0">enableInterrupts</a></td></tr>
-<tr class="memdesc:ab3ef7f3510ec32f4048366cd541990d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interrupts to enable, should be OR'ed of <a class="el" href="a00024.html#_dcic_interrupt_enable">_dcic_interrupt_enable</a>.  <a href="#ab3ef7f3510ec32f4048366cd541990d0">More...</a><br/></td></tr>
-<tr class="separator:ab3ef7f3510ec32f4048366cd541990d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2564f56ade9142dba4255088710fbe5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ab2564f56ade9142dba4255088710fbe5">enableExternalSignal</a></td></tr>
+<tr class="memdesc:ab2564f56ade9142dba4255088710fbe5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the mismatch external signal.  <a href="#ab2564f56ade9142dba4255088710fbe5">More...</a><br/></td></tr>
+<tr class="separator:ab2564f56ade9142dba4255088710fbe5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa384ac7bd45e35a9370288b9b3cbb27a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#aa384ac7bd45e35a9370288b9b3cbb27a">polarityFlags</a></td></tr>
+<tr class="memdesc:aa384ac7bd45e35a9370288b9b3cbb27a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Display signal polarity, logical OR'ed of <a class="el" href="a00024.html#_DCIC_polarity_flags">_DCIC_polarity_flags</a>.  <a href="#aa384ac7bd45e35a9370288b9b3cbb27a">More...</a><br/></td></tr>
+<tr class="separator:aa384ac7bd45e35a9370288b9b3cbb27a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35477fe7b9ad6a2ae68dc9e9013a7b75"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a35477fe7b9ad6a2ae68dc9e9013a7b75">enableInterrupts</a></td></tr>
+<tr class="memdesc:a35477fe7b9ad6a2ae68dc9e9013a7b75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interrupts to enable, should be OR'ed of <a class="el" href="a00024.html#_dcic_interrupt_enable">_dcic_interrupt_enable</a>.  <a href="#a35477fe7b9ad6a2ae68dc9e9013a7b75">More...</a><br/></td></tr>
+<tr class="separator:a35477fe7b9ad6a2ae68dc9e9013a7b75"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="aefecd9dd6948d73acf523bf818283de5"></a>
+<a class="anchor" id="ab2564f56ade9142dba4255088710fbe5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool dcic_config_t::enableExternalSignal</td>
+          <td class="memname">bool _dcic_config::enableExternalSignal</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -296,24 +308,24 @@ Misc control.</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a36dd498357c4e700fd32f29d3f1a9326"></a>
+<a class="anchor" id="aa384ac7bd45e35a9370288b9b3cbb27a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t dcic_config_t::polarityFlags</td>
+          <td class="memname">uint8_t _dcic_config::polarityFlags</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ab3ef7f3510ec32f4048366cd541990d0"></a>
+<a class="anchor" id="a35477fe7b9ad6a2ae68dc9e9013a7b75"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t dcic_config_t::enableInterrupts</td>
+          <td class="memname">uint32_t _dcic_config::enableInterrupts</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -323,81 +335,55 @@ Misc control.</h2></td></tr>
 
 </div>
 </div>
-<a name="a00469" id="a00469"></a>
+<a name="a00440" id="a00440"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct dcic_region_config_t</td>
+          <td class="memname">struct _dcic_region_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:abe3bed7f9fc47745d2204ccc0866b8a2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#abe3bed7f9fc47745d2204ccc0866b8a2">lock</a></td></tr>
-<tr class="memdesc:abe3bed7f9fc47745d2204ccc0866b8a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lock the region configuration except reference CRC32 value setting.  <a href="#abe3bed7f9fc47745d2204ccc0866b8a2">More...</a><br/></td></tr>
-<tr class="separator:abe3bed7f9fc47745d2204ccc0866b8a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf0ab174a85d42ac7733872436385ec3"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#abf0ab174a85d42ac7733872436385ec3">upperLeftX</a></td></tr>
-<tr class="memdesc:abf0ab174a85d42ac7733872436385ec3"><td class="mdescLeft">&#160;</td><td class="mdescRight">X of upper left corner.  <a href="#abf0ab174a85d42ac7733872436385ec3">More...</a><br/></td></tr>
-<tr class="separator:abf0ab174a85d42ac7733872436385ec3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a167c9b11e42e84fc854b0cde4fe7bb89"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a167c9b11e42e84fc854b0cde4fe7bb89">upperLeftY</a></td></tr>
-<tr class="memdesc:a167c9b11e42e84fc854b0cde4fe7bb89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Y of upper left corner.  <a href="#a167c9b11e42e84fc854b0cde4fe7bb89">More...</a><br/></td></tr>
-<tr class="separator:a167c9b11e42e84fc854b0cde4fe7bb89"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4970c924cf1d03bacce772b6fa078423"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a4970c924cf1d03bacce772b6fa078423">lowerRightX</a></td></tr>
-<tr class="memdesc:a4970c924cf1d03bacce772b6fa078423"><td class="mdescLeft">&#160;</td><td class="mdescRight">X of lower right corner.  <a href="#a4970c924cf1d03bacce772b6fa078423">More...</a><br/></td></tr>
-<tr class="separator:a4970c924cf1d03bacce772b6fa078423"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace75cae0a16813f6dd7533a086430d16"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ace75cae0a16813f6dd7533a086430d16">lowerRightY</a></td></tr>
-<tr class="memdesc:ace75cae0a16813f6dd7533a086430d16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Y of lower right corner.  <a href="#ace75cae0a16813f6dd7533a086430d16">More...</a><br/></td></tr>
-<tr class="separator:ace75cae0a16813f6dd7533a086430d16"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f780593f97ad3598ace9c1e6b273648"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a0f780593f97ad3598ace9c1e6b273648">refCrc</a></td></tr>
-<tr class="memdesc:a0f780593f97ad3598ace9c1e6b273648"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reference CRC32 value.  <a href="#a0f780593f97ad3598ace9c1e6b273648">More...</a><br/></td></tr>
-<tr class="separator:a0f780593f97ad3598ace9c1e6b273648"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f99c705820757c379df562a2a2dc9b6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a7f99c705820757c379df562a2a2dc9b6">lock</a></td></tr>
+<tr class="memdesc:a7f99c705820757c379df562a2a2dc9b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lock the region configuration except reference CRC32 value setting.  <a href="#a7f99c705820757c379df562a2a2dc9b6">More...</a><br/></td></tr>
+<tr class="separator:a7f99c705820757c379df562a2a2dc9b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea3b38a75d682c72837d0c6c8d3732cf"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#aea3b38a75d682c72837d0c6c8d3732cf">upperLeftX</a></td></tr>
+<tr class="memdesc:aea3b38a75d682c72837d0c6c8d3732cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">X of upper left corner.  <a href="#aea3b38a75d682c72837d0c6c8d3732cf">More...</a><br/></td></tr>
+<tr class="separator:aea3b38a75d682c72837d0c6c8d3732cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae50eb0d963ec87e9dbaefb595e4d11c7"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ae50eb0d963ec87e9dbaefb595e4d11c7">upperLeftY</a></td></tr>
+<tr class="memdesc:ae50eb0d963ec87e9dbaefb595e4d11c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Y of upper left corner.  <a href="#ae50eb0d963ec87e9dbaefb595e4d11c7">More...</a><br/></td></tr>
+<tr class="separator:ae50eb0d963ec87e9dbaefb595e4d11c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa3a59e9b6ec977a5f74061f767d0794"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#aaa3a59e9b6ec977a5f74061f767d0794">lowerRightX</a></td></tr>
+<tr class="memdesc:aaa3a59e9b6ec977a5f74061f767d0794"><td class="mdescLeft">&#160;</td><td class="mdescRight">X of lower right corner.  <a href="#aaa3a59e9b6ec977a5f74061f767d0794">More...</a><br/></td></tr>
+<tr class="separator:aaa3a59e9b6ec977a5f74061f767d0794"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3c784cb67fa6270307f6c303ad76518"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ab3c784cb67fa6270307f6c303ad76518">lowerRightY</a></td></tr>
+<tr class="memdesc:ab3c784cb67fa6270307f6c303ad76518"><td class="mdescLeft">&#160;</td><td class="mdescRight">Y of lower right corner.  <a href="#ab3c784cb67fa6270307f6c303ad76518">More...</a><br/></td></tr>
+<tr class="separator:ab3c784cb67fa6270307f6c303ad76518"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab080636e924e610593b2cd3622d5fce8"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ab080636e924e610593b2cd3622d5fce8">refCrc</a></td></tr>
+<tr class="memdesc:ab080636e924e610593b2cd3622d5fce8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reference CRC32 value.  <a href="#ab080636e924e610593b2cd3622d5fce8">More...</a><br/></td></tr>
+<tr class="separator:ab080636e924e610593b2cd3622d5fce8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="abe3bed7f9fc47745d2204ccc0866b8a2"></a>
+<a class="anchor" id="a7f99c705820757c379df562a2a2dc9b6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool dcic_region_config_t::lock</td>
+          <td class="memname">bool _dcic_region_config::lock</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="abf0ab174a85d42ac7733872436385ec3"></a>
+<a class="anchor" id="aea3b38a75d682c72837d0c6c8d3732cf"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t dcic_region_config_t::upperLeftX</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Range: 0 to 2^13-1. </p>
-
-</div>
-</div>
-<a class="anchor" id="a167c9b11e42e84fc854b0cde4fe7bb89"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t dcic_region_config_t::upperLeftY</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Range: 0 to 2^12-1. </p>
-
-</div>
-</div>
-<a class="anchor" id="a4970c924cf1d03bacce772b6fa078423"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t dcic_region_config_t::lowerRightX</td>
+          <td class="memname">uint16_t _dcic_region_config::upperLeftX</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -405,12 +391,12 @@ Misc control.</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ace75cae0a16813f6dd7533a086430d16"></a>
+<a class="anchor" id="ae50eb0d963ec87e9dbaefb595e4d11c7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t dcic_region_config_t::lowerRightY</td>
+          <td class="memname">uint16_t _dcic_region_config::upperLeftY</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -418,12 +404,38 @@ Misc control.</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a0f780593f97ad3598ace9c1e6b273648"></a>
+<a class="anchor" id="aaa3a59e9b6ec977a5f74061f767d0794"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t dcic_region_config_t::refCrc</td>
+          <td class="memname">uint16_t _dcic_region_config::lowerRightX</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Range: 0 to 2^13-1. </p>
+
+</div>
+</div>
+<a class="anchor" id="ab3c784cb67fa6270307f6c303ad76518"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t _dcic_region_config::lowerRightY</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Range: 0 to 2^12-1. </p>
+
+</div>
+</div>
+<a class="anchor" id="ab080636e924e610593b2cd3622d5fce8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t _dcic_region_config::refCrc</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -439,7 +451,7 @@ Misc control.</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_DCIC_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00336.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 3))</td>
+          <td class="memname">#define FSL_DCIC_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00337.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 3))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -630,7 +642,7 @@ Misc control.</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00024.html#a00468">dcic_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00024.html#gaa9eb718b9a5fbb5b281250d4a23454d4">dcic_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -681,7 +693,7 @@ Misc control.</h2></td></tr>
         <tr>
           <td class="memname">void DCIC_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00024.html#a00468">dcic_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00024.html#gaa9eb718b9a5fbb5b281250d4a23454d4">dcic_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
@@ -937,7 +949,7 @@ Misc control.</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00024.html#a00469">dcic_region_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00024.html#gac29014a917e6abd38a8fd6e7570678ee">dcic_region_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -1130,7 +1142,7 @@ Misc control.</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">base</td><td>DCIC peripheral base address. </td></tr>
-    <tr><td class="paramname">enable.</td><td>Use true to enable, false to disable. </td></tr>
+    <tr><td class="paramname">enable</td><td>Use true to enable, false to disable. </td></tr>
   </table>
   </dd>
 </dl>

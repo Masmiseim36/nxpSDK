@@ -1,39 +1,37 @@
 var a00070 =
 [
-    [ "pdm_edma_transfer_t", "a00070.html#a00602", [
-      [ "data", "a00070.html#a5a16758981c9514c1e31e562ac402383", null ],
-      [ "dataSize", "a00070.html#ac2d4bf9a0f3f6883d1b496e81d1765c0", null ],
-      [ "linkTransfer", "a00070.html#a4b765e4c1ca7878ded80984e8aa9586f", null ]
+    [ "_pit_config", "a00070.html#a00600", [
+      [ "enableRunInDebug", "a00070.html#abb3a16f49f2b78289794faacfb1f3a80", null ]
     ] ],
-    [ "pdm_edma_handle_t", "a00070.html#a00416", [
-      [ "dmaHandle", "a00070.html#aa6948b7fae5b9b60a9cb3d35caab43e6", null ],
-      [ "count", "a00070.html#a48b93a4eb7d24f514f83583e47d55d25", null ],
-      [ "receivedBytes", "a00070.html#a82b4b90e128eb692d880bf37965cda16", null ],
-      [ "state", "a00070.html#a7280db62964b1a3b87aca9cbe78c438b", null ],
-      [ "callback", "a00070.html#ad90fa302d81254ae169adf2d5e3d07d9", null ],
-      [ "isLoopTransfer", "a00070.html#a23f59aed1e249be1f5fa202e80aae24f", null ],
-      [ "userData", "a00070.html#afe4cd17f193812ec34b607c0530b68c3", null ],
-      [ "tcd", "a00070.html#a469ababbefe4020017083a3cd9bf5377", null ],
-      [ "tcdNum", "a00070.html#ad0e7c34a57ac259e553f6f41828cc307", null ],
-      [ "tcdUser", "a00070.html#ad64a72581c268386f63f4a836d764703", null ],
-      [ "tcdDriver", "a00070.html#a9249c6d802f81934b2fb20e6200be135", null ],
-      [ "tcdUsedNum", "a00070.html#acdea13541018e16c86315c979b0adfc3", null ],
-      [ "interleaveType", "a00070.html#a21498e65aee36252fdfc3f1fef5a3f24", null ],
-      [ "endChannel", "a00070.html#a7ea2fa008497b21d20e7e58addb37f3a", null ],
-      [ "channelNums", "a00070.html#afd905c3afec148be18c98dfd997332f8", null ]
+    [ "FSL_PIT_DRIVER_VERSION", "a00070.html#ga55a6c6a9b7ee34302c636f9496d0ea2f", null ],
+    [ "pit_chnl_t", "a00070.html#gadda15e462fb93f2eea6237cab74dc7ca", null ],
+    [ "pit_interrupt_enable_t", "a00070.html#gae6b70a879fb84816fb40294c9e42846d", null ],
+    [ "pit_status_flags_t", "a00070.html#ga8f00d842bb7b1921ac26313e13dc75ba", null ],
+    [ "pit_config_t", "a00070.html#ga767a81b02a29e189c563188dd467a67b", null ],
+    [ "_pit_chnl", "a00070.html#ga128823c7ae3f2a6e19376b663ea56abd", [
+      [ "kPIT_Chnl_0", "a00070.html#gga128823c7ae3f2a6e19376b663ea56abda771abd65f098ad80d8f693e0b97a7e76", null ],
+      [ "kPIT_Chnl_1", "a00070.html#gga128823c7ae3f2a6e19376b663ea56abdac7733ad1c04ea00e2f7890a3c737cb7b", null ],
+      [ "kPIT_Chnl_2", "a00070.html#gga128823c7ae3f2a6e19376b663ea56abdad12ab59290845fcaebd2d9f01ae2f561", null ],
+      [ "kPIT_Chnl_3", "a00070.html#gga128823c7ae3f2a6e19376b663ea56abda4666db554c10bce47cfa628e8bb4ab93", null ]
     ] ],
-    [ "FSL_PDM_EDMA_DRIVER_VERSION", "a00070.html#ga29bd00b6c0b456c95f72cec1c634e1d9", null ],
-    [ "pdm_edma_callback_t", "a00070.html#ga7a687206d7275e856d530dddc99b3b9b", null ],
-    [ "pdm_edma_multi_channel_interleave_t", "a00070.html#ga24ac3c2b1dc469e120197bb045601356", [
-      [ "kPDM_EDMAMultiChannelInterleavePerChannelSample", "a00070.html#gga24ac3c2b1dc469e120197bb045601356ad14b3643089e53c2ba4cb2a22cf7e674", null ],
-      [ "kPDM_EDMAMultiChannelInterleavePerChannelBlock", "a00070.html#gga24ac3c2b1dc469e120197bb045601356ac5de8626736c8e7123c11058fc3b852e", null ]
+    [ "_pit_interrupt_enable", "a00070.html#ga3c078eb2e2c77f02f1d386ec64660674", [
+      [ "kPIT_TimerInterruptEnable", "a00070.html#gga3c078eb2e2c77f02f1d386ec64660674a98c517b7246326afb50c93fe515916e0", null ]
     ] ],
-    [ "PDM_TransferInstallEDMATCDMemory", "a00070.html#ga46652b70ce85c35399c477e4e1461eb3", null ],
-    [ "PDM_TransferCreateHandleEDMA", "a00070.html#ga8367df0d34950716dcc5476f95839538", null ],
-    [ "PDM_TransferSetMultiChannelInterleaveType", "a00070.html#gad57078ecc7b3444208df53e605e9db00", null ],
-    [ "PDM_TransferSetChannelConfigEDMA", "a00070.html#ga17662bef15ba44cbccd5835bd76408d8", null ],
-    [ "PDM_TransferReceiveEDMA", "a00070.html#gac8199077b7fbc3dcaaa5b6f079b1c252", null ],
-    [ "PDM_TransferTerminateReceiveEDMA", "a00070.html#gaf2c58ec42596da7cbf98e3db604e0f0e", null ],
-    [ "PDM_TransferAbortReceiveEDMA", "a00070.html#gac8d44c39e41824161b5c29e525e33d60", null ],
-    [ "PDM_TransferGetReceiveCountEDMA", "a00070.html#ga31eb23e10fcc2b0ad11f822f7c8fd15d", null ]
+    [ "_pit_status_flags", "a00070.html#ga8bd83b1eb625d5f5e9b69d1c78b5ce63", [
+      [ "kPIT_TimerFlag", "a00070.html#gga8bd83b1eb625d5f5e9b69d1c78b5ce63a6792e6d30409cb5054b3f12c4e735cc0", null ]
+    ] ],
+    [ "PIT_Init", "a00070.html#ga51eb6396276b3f1ec564bd1879c97c06", null ],
+    [ "PIT_Deinit", "a00070.html#ga1f9b6d5e9e463844f85e31102458c1fc", null ],
+    [ "PIT_GetDefaultConfig", "a00070.html#gae7dc830a1a71ec7597ba78ccc76abfb6", null ],
+    [ "PIT_SetTimerChainMode", "a00070.html#gabe6831cfb502ca058f15fcf065cd13de", null ],
+    [ "PIT_EnableInterrupts", "a00070.html#ga157360547de18885d6a783d2b510d87e", null ],
+    [ "PIT_DisableInterrupts", "a00070.html#ga12d03e0905453194bd5c3560996eb976", null ],
+    [ "PIT_GetEnabledInterrupts", "a00070.html#ga9ecb3ef65be040e9002a0277b13bb8e3", null ],
+    [ "PIT_GetStatusFlags", "a00070.html#ga503619dd8ee2244edd12da3e27fa13e2", null ],
+    [ "PIT_ClearStatusFlags", "a00070.html#gadc0f51c2e1b91fb0c529d752b71477e6", null ],
+    [ "PIT_SetTimerPeriod", "a00070.html#ga944e9c9bd6848d861a9eb17b617d72f7", null ],
+    [ "PIT_GetCurrentTimerCount", "a00070.html#ga1ffacaa2e8582f59194436ebc6de2db9", null ],
+    [ "PIT_StartTimer", "a00070.html#ga3f6b9762079e4ce2de6799e030b14964", null ],
+    [ "PIT_StopTimer", "a00070.html#ga32f1b8ca9cf0fc82ef192890e97899b8", null ],
+    [ "PIT_GetLifetimeTimerCount", "a00070.html#gaadfcf653873f3c881b316f6b9d9ca79c", null ]
 ];

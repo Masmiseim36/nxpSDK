@@ -31,8 +31,10 @@
 #include "ethercatconfig.h"
 #include "ethercatprint.h"
 #include "enet/soem_enet.h"
+#include "enet/enet.h"
 #include "soem_port.h"
 #include "FreeRTOS.h"
+#include "task.h"
 
 /*******************************************************************************
  * Definitions
@@ -248,6 +250,7 @@ static status_t MDIO_Read(uint8_t phyAddr, uint8_t regAddr, uint16_t *pData)
 /* OSHW: register enet port to SOEM stack */
 static int if_port_init(void)
 {
+    struct soem_if_port soem_port;
     (void)CLOCK_EnableClock(s_enetClock[ENET_GetInstance(ENET)]);
     ENET_SetSMI(ENET, BOARD_GetMDIOClock(), false);
     phy_resource.read  = MDIO_Read;
@@ -266,7 +269,15 @@ static int if_port_init(void)
     if_port.phy_autonego_timeout_count = PHY_AUTONEGO_TIMEOUT_COUNT;
     if_port.phy_stability_delay_us     = PHY_STABILITY_DELAY_US;
 
-    return register_soem_port(OSEM_PORT_NAME, "enet", &if_port);
+    soem_port.port_init = enet_init;
+    soem_port.port_send = enet_send;
+    soem_port.port_recv = enet_recv;
+    soem_port.port_link_status = enet_link_status;
+    soem_port.port_close = enet_close;    
+    strncpy(soem_port.ifname, OSEM_PORT_NAME, SOEM_IF_NAME_MAXLEN);
+    strncpy(soem_port.dev_name, "enet", SOEM_DEV_NAME_MAXLEN);
+    soem_port.port_pri = &if_port;
+    return register_soem_port(&soem_port);
 }
 
 

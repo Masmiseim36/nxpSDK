@@ -131,6 +131,9 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
     * (CodeQuickAccess)
     queue.o (+RO)
     tcp_out.o (+RO)
+    mlan_sdio.o (+RO)
+    mlan_11n.o (+RO)
+    mlan_11n_aggr.o (+RO)
     mlan_11n_rxreorder.o (+RO)
     tcp_in.o (+RO)
     inet_chksum.o (+RO)
@@ -140,13 +143,23 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
     wifi-sdio.o (+RO)
     fsl_sdio.o (+RO)
     pbuf.o (+RO)
+    tcp.o (+RO)
+    udp.o (+RO)
+    tcpip.o (+RO)
+    sockets.o (+RO)
     tasks.o (+RO)  
     fsl_cache.o (+RO)
     wifi.o (+RO)
+    wifi_netif.o (+RO)
+    fsl_os_abstraction_free_rtos.o (+RO)
+    fsl_memcpy.o (+RO)
     memmove.o (+RO)
     memseta.o (+RO)
   }
   RW_m_ncache m_data2_start EMPTY 0 {
+  }
+  RW_m_wlan_data m_data2_start  m_data2_size {
+    * (wlan_data)
   }
   RW_m_ncache_unused +0 EMPTY m_data2_size-ImageLength(RW_m_ncache) { ; Empty region added for MPU configuration
   }

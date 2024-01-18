@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: CAAM Non-blocking HASH driver</title>
+<title>MCUXpresso SDK API Reference Manual: CAAM Non-blocking DES driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -101,123 +101,94 @@ $(document).ready(function(){initNavTree('a00328.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">CAAM Non-blocking HASH driver<div class="ingroups"><a class="el" href="a00326.html">CAAM Non-blocking APIs</a></div></div>  </div>
+<div class="title">CAAM Non-blocking DES driver<div class="ingroups"><a class="el" href="a00327.html">CAAM Non-blocking APIs</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>This section describes the programming interface of the CAAM Non-blocking HASH driver. </p>
+<p>This section describes the programming interface of the CAAM Non-blocking DES driver. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga43f8383d9039e8e5143f23f99f32785f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00328.html#ga43f8383d9039e8e5143f23f99f32785f">CAAM_HASH_UpdateNonBlocking</a> (<a class="el" href="a00325.html#gab3d56fc2cb3351cff3d6a05535c72403">caam_hash_ctx_t</a> *ctx, const uint8_t *input, size_t inputSize)</td></tr>
-<tr class="memdesc:ga43f8383d9039e8e5143f23f99f32785f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add input address and size to input data table.  <a href="#ga43f8383d9039e8e5143f23f99f32785f">More...</a><br/></td></tr>
-<tr class="separator:ga43f8383d9039e8e5143f23f99f32785f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3f9428aae83622088c097e6e79c40b15"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00328.html#ga3f9428aae83622088c097e6e79c40b15">CAAM_HASH_FinishNonBlocking</a> (<a class="el" href="a00325.html#gab3d56fc2cb3351cff3d6a05535c72403">caam_hash_ctx_t</a> *ctx, <a class="el" href="a00013.html#gaf320d7a859f6a585c51d32c6f0a2e0c9">caam_desc_hash_t</a> descriptor, uint8_t *output, size_t *outputSize)</td></tr>
-<tr class="memdesc:ga3f9428aae83622088c097e6e79c40b15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finalize hashing.  <a href="#ga3f9428aae83622088c097e6e79c40b15">More...</a><br/></td></tr>
-<tr class="separator:ga3f9428aae83622088c097e6e79c40b15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5ba5834bc5d2b08f7e4438e043094dc3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00328.html#ga5ba5834bc5d2b08f7e4438e043094dc3">CAAM_HASH_NonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00438">caam_handle_t</a> *handle, <a class="el" href="a00013.html#gaf320d7a859f6a585c51d32c6f0a2e0c9">caam_desc_hash_t</a> descriptor, <a class="el" href="a00325.html#ga7fd7e4192d45fffc27544be4037681b3">caam_hash_algo_t</a> algo, const uint8_t *input, size_t inputSize, const uint8_t *key, size_t keySize, uint8_t *output, size_t *outputSize)</td></tr>
-<tr class="memdesc:ga5ba5834bc5d2b08f7e4438e043094dc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create HASH on given data.  <a href="#ga5ba5834bc5d2b08f7e4438e043094dc3">More...</a><br/></td></tr>
-<tr class="separator:ga5ba5834bc5d2b08f7e4438e043094dc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga172be006b86ac45ef32c031d2132ea21"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00328.html#ga172be006b86ac45ef32c031d2132ea21">CAAM_DES_EncryptEcbNonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a> descriptor, const uint8_t *plaintext, uint8_t *ciphertext, size_t size, const uint8_t key[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>])</td></tr>
+<tr class="memdesc:ga172be006b86ac45ef32c031d2132ea21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts DES using ECB block mode.  <a href="#ga172be006b86ac45ef32c031d2132ea21">More...</a><br/></td></tr>
+<tr class="separator:ga172be006b86ac45ef32c031d2132ea21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac15b98a3214c209457769d2e79a74f66"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00328.html#gac15b98a3214c209457769d2e79a74f66">CAAM_DES_DecryptEcbNonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a> descriptor, const uint8_t *ciphertext, uint8_t *plaintext, size_t size, const uint8_t key[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>])</td></tr>
+<tr class="memdesc:gac15b98a3214c209457769d2e79a74f66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts DES using ECB block mode.  <a href="#gac15b98a3214c209457769d2e79a74f66">More...</a><br/></td></tr>
+<tr class="separator:gac15b98a3214c209457769d2e79a74f66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeec5e525559005e43b06abb62ca00999"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00328.html#gaeec5e525559005e43b06abb62ca00999">CAAM_DES_EncryptCbcNonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a> descriptor, const uint8_t *plaintext, uint8_t *ciphertext, size_t size, const uint8_t iv[<a class="el" href="a00324.html#ga8d5058bb6bbc188832bf96b18d3914dd">CAAM_DES_IV_SIZE</a>], const uint8_t key[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>])</td></tr>
+<tr class="memdesc:gaeec5e525559005e43b06abb62ca00999"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts DES using CBC block mode.  <a href="#gaeec5e525559005e43b06abb62ca00999">More...</a><br/></td></tr>
+<tr class="separator:gaeec5e525559005e43b06abb62ca00999"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7a7628ad3c6a3169779fa1ad67041ef5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00328.html#ga7a7628ad3c6a3169779fa1ad67041ef5">CAAM_DES_DecryptCbcNonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a> descriptor, const uint8_t *ciphertext, uint8_t *plaintext, size_t size, const uint8_t iv[<a class="el" href="a00324.html#ga8d5058bb6bbc188832bf96b18d3914dd">CAAM_DES_IV_SIZE</a>], const uint8_t key[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>])</td></tr>
+<tr class="memdesc:ga7a7628ad3c6a3169779fa1ad67041ef5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts DES using CBC block mode.  <a href="#ga7a7628ad3c6a3169779fa1ad67041ef5">More...</a><br/></td></tr>
+<tr class="separator:ga7a7628ad3c6a3169779fa1ad67041ef5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga410f9c81dc642157e64baf8072789a39"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00328.html#ga410f9c81dc642157e64baf8072789a39">CAAM_DES_EncryptCfbNonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a> descriptor, const uint8_t *plaintext, uint8_t *ciphertext, size_t size, const uint8_t iv[<a class="el" href="a00324.html#ga8d5058bb6bbc188832bf96b18d3914dd">CAAM_DES_IV_SIZE</a>], const uint8_t key[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>])</td></tr>
+<tr class="memdesc:ga410f9c81dc642157e64baf8072789a39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts DES using CFB block mode.  <a href="#ga410f9c81dc642157e64baf8072789a39">More...</a><br/></td></tr>
+<tr class="separator:ga410f9c81dc642157e64baf8072789a39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3ea1050a5ebd2bdb5a84d9be8ce1d398"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00328.html#ga3ea1050a5ebd2bdb5a84d9be8ce1d398">CAAM_DES_DecryptCfbNonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a> descriptor, const uint8_t *ciphertext, uint8_t *plaintext, size_t size, const uint8_t iv[<a class="el" href="a00324.html#ga8d5058bb6bbc188832bf96b18d3914dd">CAAM_DES_IV_SIZE</a>], const uint8_t key[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>])</td></tr>
+<tr class="memdesc:ga3ea1050a5ebd2bdb5a84d9be8ce1d398"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts DES using CFB block mode.  <a href="#ga3ea1050a5ebd2bdb5a84d9be8ce1d398">More...</a><br/></td></tr>
+<tr class="separator:ga3ea1050a5ebd2bdb5a84d9be8ce1d398"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafa5593d511badf9c6a4ae74c6b6b0ca4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00328.html#gafa5593d511badf9c6a4ae74c6b6b0ca4">CAAM_DES_EncryptOfbNonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a> descriptor, const uint8_t *plaintext, uint8_t *ciphertext, size_t size, const uint8_t iv[<a class="el" href="a00324.html#ga8d5058bb6bbc188832bf96b18d3914dd">CAAM_DES_IV_SIZE</a>], const uint8_t key[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>])</td></tr>
+<tr class="memdesc:gafa5593d511badf9c6a4ae74c6b6b0ca4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts DES using OFB block mode.  <a href="#gafa5593d511badf9c6a4ae74c6b6b0ca4">More...</a><br/></td></tr>
+<tr class="separator:gafa5593d511badf9c6a4ae74c6b6b0ca4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga72b39ee0ac937b5b95f9e37efc9ca66b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00328.html#ga72b39ee0ac937b5b95f9e37efc9ca66b">CAAM_DES_DecryptOfbNonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a> descriptor, const uint8_t *ciphertext, uint8_t *plaintext, size_t size, const uint8_t iv[<a class="el" href="a00324.html#ga8d5058bb6bbc188832bf96b18d3914dd">CAAM_DES_IV_SIZE</a>], const uint8_t key[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>])</td></tr>
+<tr class="memdesc:ga72b39ee0ac937b5b95f9e37efc9ca66b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts DES using OFB block mode.  <a href="#ga72b39ee0ac937b5b95f9e37efc9ca66b">More...</a><br/></td></tr>
+<tr class="separator:ga72b39ee0ac937b5b95f9e37efc9ca66b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga94a140507e95b5043fd9c2106e2ad0c8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00328.html#ga94a140507e95b5043fd9c2106e2ad0c8">CAAM_DES2_EncryptEcbNonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a> descriptor, const uint8_t *plaintext, uint8_t *ciphertext, size_t size, const uint8_t key1[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>], const uint8_t key2[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>])</td></tr>
+<tr class="memdesc:ga94a140507e95b5043fd9c2106e2ad0c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts triple DES using ECB block mode with two keys.  <a href="#ga94a140507e95b5043fd9c2106e2ad0c8">More...</a><br/></td></tr>
+<tr class="separator:ga94a140507e95b5043fd9c2106e2ad0c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5515c0358e8bdfa390d485e648e7d052"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00328.html#ga5515c0358e8bdfa390d485e648e7d052">CAAM_DES2_DecryptEcbNonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a> descriptor, const uint8_t *ciphertext, uint8_t *plaintext, size_t size, const uint8_t key1[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>], const uint8_t key2[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>])</td></tr>
+<tr class="memdesc:ga5515c0358e8bdfa390d485e648e7d052"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts triple DES using ECB block mode with two keys.  <a href="#ga5515c0358e8bdfa390d485e648e7d052">More...</a><br/></td></tr>
+<tr class="separator:ga5515c0358e8bdfa390d485e648e7d052"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9d871bd6efbe6fe0a1ab4208c485ce8a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00328.html#ga9d871bd6efbe6fe0a1ab4208c485ce8a">CAAM_DES2_EncryptCbcNonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a> descriptor, const uint8_t *plaintext, uint8_t *ciphertext, size_t size, const uint8_t iv[<a class="el" href="a00324.html#ga8d5058bb6bbc188832bf96b18d3914dd">CAAM_DES_IV_SIZE</a>], const uint8_t key1[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>], const uint8_t key2[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>])</td></tr>
+<tr class="memdesc:ga9d871bd6efbe6fe0a1ab4208c485ce8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts triple DES using CBC block mode with two keys.  <a href="#ga9d871bd6efbe6fe0a1ab4208c485ce8a">More...</a><br/></td></tr>
+<tr class="separator:ga9d871bd6efbe6fe0a1ab4208c485ce8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa1acd181aa729f953347a49f0894d0e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00328.html#gaa1acd181aa729f953347a49f0894d0e4">CAAM_DES2_DecryptCbcNonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a> descriptor, const uint8_t *ciphertext, uint8_t *plaintext, size_t size, const uint8_t iv[<a class="el" href="a00324.html#ga8d5058bb6bbc188832bf96b18d3914dd">CAAM_DES_IV_SIZE</a>], const uint8_t key1[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>], const uint8_t key2[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>])</td></tr>
+<tr class="memdesc:gaa1acd181aa729f953347a49f0894d0e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts triple DES using CBC block mode with two keys.  <a href="#gaa1acd181aa729f953347a49f0894d0e4">More...</a><br/></td></tr>
+<tr class="separator:gaa1acd181aa729f953347a49f0894d0e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga28cd16a0ea20bd451cfa24a478c14e77"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00328.html#ga28cd16a0ea20bd451cfa24a478c14e77">CAAM_DES2_EncryptCfbNonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a> descriptor, const uint8_t *plaintext, uint8_t *ciphertext, size_t size, const uint8_t iv[<a class="el" href="a00324.html#ga8d5058bb6bbc188832bf96b18d3914dd">CAAM_DES_IV_SIZE</a>], const uint8_t key1[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>], const uint8_t key2[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>])</td></tr>
+<tr class="memdesc:ga28cd16a0ea20bd451cfa24a478c14e77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts triple DES using CFB block mode with two keys.  <a href="#ga28cd16a0ea20bd451cfa24a478c14e77">More...</a><br/></td></tr>
+<tr class="separator:ga28cd16a0ea20bd451cfa24a478c14e77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa0f470a82a52ea89c80c171f03a87367"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00328.html#gaa0f470a82a52ea89c80c171f03a87367">CAAM_DES2_DecryptCfbNonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a> descriptor, const uint8_t *ciphertext, uint8_t *plaintext, size_t size, const uint8_t iv[<a class="el" href="a00324.html#ga8d5058bb6bbc188832bf96b18d3914dd">CAAM_DES_IV_SIZE</a>], const uint8_t key1[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>], const uint8_t key2[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>])</td></tr>
+<tr class="memdesc:gaa0f470a82a52ea89c80c171f03a87367"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts triple DES using CFB block mode with two keys.  <a href="#gaa0f470a82a52ea89c80c171f03a87367">More...</a><br/></td></tr>
+<tr class="separator:gaa0f470a82a52ea89c80c171f03a87367"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9ae4d0c3db1360632dacf285b017108f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00328.html#ga9ae4d0c3db1360632dacf285b017108f">CAAM_DES2_EncryptOfbNonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a> descriptor, const uint8_t *plaintext, uint8_t *ciphertext, size_t size, const uint8_t iv[<a class="el" href="a00324.html#ga8d5058bb6bbc188832bf96b18d3914dd">CAAM_DES_IV_SIZE</a>], const uint8_t key1[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>], const uint8_t key2[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>])</td></tr>
+<tr class="memdesc:ga9ae4d0c3db1360632dacf285b017108f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts triple DES using OFB block mode with two keys.  <a href="#ga9ae4d0c3db1360632dacf285b017108f">More...</a><br/></td></tr>
+<tr class="separator:ga9ae4d0c3db1360632dacf285b017108f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga726f34fd23ec729182a6426d14049f70"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00328.html#ga726f34fd23ec729182a6426d14049f70">CAAM_DES2_DecryptOfbNonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a> descriptor, const uint8_t *ciphertext, uint8_t *plaintext, size_t size, const uint8_t iv[<a class="el" href="a00324.html#ga8d5058bb6bbc188832bf96b18d3914dd">CAAM_DES_IV_SIZE</a>], const uint8_t key1[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>], const uint8_t key2[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>])</td></tr>
+<tr class="memdesc:ga726f34fd23ec729182a6426d14049f70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts triple DES using OFB block mode with two keys.  <a href="#ga726f34fd23ec729182a6426d14049f70">More...</a><br/></td></tr>
+<tr class="separator:ga726f34fd23ec729182a6426d14049f70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacbf2e9ae28a2f95d36bd9dfb20759073"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00328.html#gacbf2e9ae28a2f95d36bd9dfb20759073">CAAM_DES3_EncryptEcbNonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a> descriptor, const uint8_t *plaintext, uint8_t *ciphertext, size_t size, const uint8_t key1[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>], const uint8_t key2[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>], const uint8_t key3[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>])</td></tr>
+<tr class="memdesc:gacbf2e9ae28a2f95d36bd9dfb20759073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts triple DES using ECB block mode with three keys.  <a href="#gacbf2e9ae28a2f95d36bd9dfb20759073">More...</a><br/></td></tr>
+<tr class="separator:gacbf2e9ae28a2f95d36bd9dfb20759073"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga47bb933e0081fd202a24e8d784449b0f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00328.html#ga47bb933e0081fd202a24e8d784449b0f">CAAM_DES3_DecryptEcbNonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a> descriptor, const uint8_t *ciphertext, uint8_t *plaintext, size_t size, const uint8_t key1[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>], const uint8_t key2[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>], const uint8_t key3[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>])</td></tr>
+<tr class="memdesc:ga47bb933e0081fd202a24e8d784449b0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts triple DES using ECB block mode with three keys.  <a href="#ga47bb933e0081fd202a24e8d784449b0f">More...</a><br/></td></tr>
+<tr class="separator:ga47bb933e0081fd202a24e8d784449b0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga323ad3212905da0735d3e346a65a6557"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00328.html#ga323ad3212905da0735d3e346a65a6557">CAAM_DES3_EncryptCbcNonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a> descriptor, const uint8_t *plaintext, uint8_t *ciphertext, size_t size, const uint8_t iv[<a class="el" href="a00324.html#ga8d5058bb6bbc188832bf96b18d3914dd">CAAM_DES_IV_SIZE</a>], const uint8_t key1[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>], const uint8_t key2[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>], const uint8_t key3[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>])</td></tr>
+<tr class="memdesc:ga323ad3212905da0735d3e346a65a6557"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts triple DES using CBC block mode with three keys.  <a href="#ga323ad3212905da0735d3e346a65a6557">More...</a><br/></td></tr>
+<tr class="separator:ga323ad3212905da0735d3e346a65a6557"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8f2ddcafa121b3ef855b93765607698d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00328.html#ga8f2ddcafa121b3ef855b93765607698d">CAAM_DES3_DecryptCbcNonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a> descriptor, const uint8_t *ciphertext, uint8_t *plaintext, size_t size, const uint8_t iv[<a class="el" href="a00324.html#ga8d5058bb6bbc188832bf96b18d3914dd">CAAM_DES_IV_SIZE</a>], const uint8_t key1[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>], const uint8_t key2[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>], const uint8_t key3[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>])</td></tr>
+<tr class="memdesc:ga8f2ddcafa121b3ef855b93765607698d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts triple DES using CBC block mode with three keys.  <a href="#ga8f2ddcafa121b3ef855b93765607698d">More...</a><br/></td></tr>
+<tr class="separator:ga8f2ddcafa121b3ef855b93765607698d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadd00a3876af9f89114b553bda97976b9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00328.html#gadd00a3876af9f89114b553bda97976b9">CAAM_DES3_EncryptCfbNonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a> descriptor, const uint8_t *plaintext, uint8_t *ciphertext, size_t size, const uint8_t iv[<a class="el" href="a00324.html#ga8d5058bb6bbc188832bf96b18d3914dd">CAAM_DES_IV_SIZE</a>], const uint8_t key1[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>], const uint8_t key2[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>], const uint8_t key3[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>])</td></tr>
+<tr class="memdesc:gadd00a3876af9f89114b553bda97976b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts triple DES using CFB block mode with three keys.  <a href="#gadd00a3876af9f89114b553bda97976b9">More...</a><br/></td></tr>
+<tr class="separator:gadd00a3876af9f89114b553bda97976b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8660f66afc047db09ca7a5318266b9c8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00328.html#ga8660f66afc047db09ca7a5318266b9c8">CAAM_DES3_DecryptCfbNonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a> descriptor, const uint8_t *ciphertext, uint8_t *plaintext, size_t size, const uint8_t iv[<a class="el" href="a00324.html#ga8d5058bb6bbc188832bf96b18d3914dd">CAAM_DES_IV_SIZE</a>], const uint8_t key1[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>], const uint8_t key2[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>], const uint8_t key3[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>])</td></tr>
+<tr class="memdesc:ga8660f66afc047db09ca7a5318266b9c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts triple DES using CFB block mode with three keys.  <a href="#ga8660f66afc047db09ca7a5318266b9c8">More...</a><br/></td></tr>
+<tr class="separator:ga8660f66afc047db09ca7a5318266b9c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga24422d8d092074ffcbcccc9db34dfdf5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00328.html#ga24422d8d092074ffcbcccc9db34dfdf5">CAAM_DES3_EncryptOfbNonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a> descriptor, const uint8_t *plaintext, uint8_t *ciphertext, size_t size, const uint8_t iv[<a class="el" href="a00324.html#ga8d5058bb6bbc188832bf96b18d3914dd">CAAM_DES_IV_SIZE</a>], const uint8_t key1[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>], const uint8_t key2[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>], const uint8_t key3[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>])</td></tr>
+<tr class="memdesc:ga24422d8d092074ffcbcccc9db34dfdf5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts triple DES using OFB block mode with three keys.  <a href="#ga24422d8d092074ffcbcccc9db34dfdf5">More...</a><br/></td></tr>
+<tr class="separator:ga24422d8d092074ffcbcccc9db34dfdf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7e8ecbeafd742e4b92ee1c6f62c42ad7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00328.html#ga7e8ecbeafd742e4b92ee1c6f62c42ad7">CAAM_DES3_DecryptOfbNonBlocking</a> (CAAM_Type *base, <a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *handle, <a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a> descriptor, const uint8_t *ciphertext, uint8_t *plaintext, size_t size, const uint8_t iv[<a class="el" href="a00324.html#ga8d5058bb6bbc188832bf96b18d3914dd">CAAM_DES_IV_SIZE</a>], const uint8_t key1[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>], const uint8_t key2[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>], const uint8_t key3[<a class="el" href="a00324.html#gaa2c4b5dee37456804224c9869b676112">CAAM_DES_KEY_SIZE</a>])</td></tr>
+<tr class="memdesc:ga7e8ecbeafd742e4b92ee1c6f62c42ad7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts triple DES using OFB block mode with three keys.  <a href="#ga7e8ecbeafd742e4b92ee1c6f62c42ad7">More...</a><br/></td></tr>
+<tr class="separator:ga7e8ecbeafd742e4b92ee1c6f62c42ad7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga43f8383d9039e8e5143f23f99f32785f"></a>
+<a class="anchor" id="ga172be006b86ac45ef32c031d2132ea21"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_HASH_UpdateNonBlocking </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00325.html#gab3d56fc2cb3351cff3d6a05535c72403">caam_hash_ctx_t</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>input</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>inputSize</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Add data input pointer to a table maintained internally in the context. Each call of this function creates one entry in the table. The entry consists of the input pointer and inputSize. All entries created by one or multiple calls of this function can be processed in one call to <a class="el" href="a00328.html#ga3f9428aae83622088c097e6e79c40b15" title="Finalize hashing. ">CAAM_HASH_FinishNonBlocking()</a> function. Individual entries can point to non-continuous data in the memory. The processing will occur in the order in which the <a class="el" href="a00328.html#ga43f8383d9039e8e5143f23f99f32785f" title="Add input address and size to input data table. ">CAAM_HASH_UpdateNonBlocking()</a> have been called.</p>
-<p>Memory pointers will be later accessed by CAAM (at time of <a class="el" href="a00328.html#ga3f9428aae83622088c097e6e79c40b15" title="Finalize hashing. ">CAAM_HASH_FinishNonBlocking()</a>), so the memory must stay valid until <a class="el" href="a00328.html#ga3f9428aae83622088c097e6e79c40b15" title="Finalize hashing. ">CAAM_HASH_FinishNonBlocking()</a> has been called and CAAM completes the processing.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">ctx</td><td>HASH context </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">input</td><td>Input data </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">inputSize</td><td>Size of input data in bytes </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Status of the hash update operation </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga3f9428aae83622088c097e6e79c40b15"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_HASH_FinishNonBlocking </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00325.html#gab3d56fc2cb3351cff3d6a05535c72403">caam_hash_ctx_t</a> *&#160;</td>
-          <td class="paramname"><em>ctx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#gaf320d7a859f6a585c51d32c6f0a2e0c9">caam_desc_hash_t</a>&#160;</td>
-          <td class="paramname"><em>descriptor</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>output</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>outputSize</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The actual algorithm is computed with all input data, the memory pointers are accessed by CAAM after the function returns. The input data chunks have been specified by prior calls to <a class="el" href="a00328.html#ga43f8383d9039e8e5143f23f99f32785f" title="Add input address and size to input data table. ">CAAM_HASH_UpdateNonBlocking()</a>. The function schedules the request at CAAM, then returns. After a while, when the CAAM completes processing of the input data chunks, the result is written to the output[] array, outputSize is written and the context is cleared.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">ctx</td><td>Input hash context </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>Memory for the CAAM descriptor. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>Output hash data </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">outputSize</td><td>Output parameter storing the size of the output hash in bytes </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Status of the hash finish operation </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga5ba5834bc5d2b08f7e4438e043094dc3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_HASH_NonBlocking </td>
+          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_DES_EncryptEcbNonBlocking </td>
           <td>(</td>
           <td class="paramtype">CAAM_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -225,56 +196,38 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#a00438">caam_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#gaf320d7a859f6a585c51d32c6f0a2e0c9">caam_desc_hash_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a>&#160;</td>
           <td class="paramname"><em>descriptor</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00325.html#ga7fd7e4192d45fffc27544be4037681b3">caam_hash_algo_t</a>&#160;</td>
-          <td class="paramname"><em>algo</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>input</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>inputSize</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>key</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>keySize</em>, </td>
+          <td class="paramname"><em>plaintext</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>output</em>, </td>
+          <td class="paramname"><em>ciphertext</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">size_t *&#160;</td>
-          <td class="paramname"><em>outputSize</em>&#160;</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key</em>[CAAM_DES_KEY_SIZE]&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -283,26 +236,1924 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Perform the full keyed XCBC-MAC/CMAC or SHA in one function call.</p>
-<p>Key shall be supplied if the underlaying algoritm is AES XCBC-MAC or CMAC. Key shall be NULL if the underlaying algoritm is SHA.</p>
-<p>For XCBC-MAC, the key length must be 16. For CMAC, the key length can be the AES key lengths supported by AES engine. For MDHA the key length argument is ignored.</p>
-<p>The function is non-blocking. The request is scheduled at CAAM.</p>
+<p>Encrypts DES using ECB block mode.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>Memory for the CAAM descriptor. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">algo</td><td>Underlaying algorithm to use for hash computation. </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">input</td><td>Input data </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">inputSize</td><td>Size of input data in bytes </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">key</td><td>Input key (NULL if underlaying algorithm is SHA) </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname">keySize</td><td>Size of input key in bytes </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>Output hash data </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">outputSize</td><td>Output parameter storing the size of the output hash in bytes </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>memory for CAAM commands </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">plaintext</td><td>Input plaintext to encrypt </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">ciphertext</td><td>Output ciphertext </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes. Must be multiple of 8 bytes. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key</td><td>Input key to use for encryption </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Status of the one call hash operation. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Status from descriptor push </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gac15b98a3214c209457769d2e79a74f66"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_DES_DecryptEcbNonBlocking </td>
+          <td>(</td>
+          <td class="paramtype">CAAM_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a>&#160;</td>
+          <td class="paramname"><em>descriptor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>ciphertext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>plaintext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key</em>[CAAM_DES_KEY_SIZE]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Decrypts DES using ECB block mode.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>memory for CAAM commands </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">ciphertext</td><td>Input ciphertext to decrypt </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">plaintext</td><td>Output plaintext </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes. Must be multiple of 8 bytes. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key</td><td>Input key to use for decryption </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status from descriptor push </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaeec5e525559005e43b06abb62ca00999"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_DES_EncryptCbcNonBlocking </td>
+          <td>(</td>
+          <td class="paramtype">CAAM_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a>&#160;</td>
+          <td class="paramname"><em>descriptor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>plaintext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>ciphertext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>iv</em>[CAAM_DES_IV_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key</em>[CAAM_DES_KEY_SIZE]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Encrypts DES using CBC block mode.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>memory for CAAM commands </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">plaintext</td><td>Input plaintext to encrypt </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">ciphertext</td><td>Ouput ciphertext </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">iv</td><td>Input initial vector to combine with the first plaintext block. The iv does not need to be secret, but it must be unpredictable. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key</td><td>Input key to use for encryption </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status from descriptor push </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga7a7628ad3c6a3169779fa1ad67041ef5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_DES_DecryptCbcNonBlocking </td>
+          <td>(</td>
+          <td class="paramtype">CAAM_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a>&#160;</td>
+          <td class="paramname"><em>descriptor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>ciphertext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>plaintext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>iv</em>[CAAM_DES_IV_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key</em>[CAAM_DES_KEY_SIZE]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Decrypts DES using CBC block mode.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>memory for CAAM commands </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">ciphertext</td><td>Input ciphertext to decrypt </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">plaintext</td><td>Output plaintext </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input data in bytes </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">iv</td><td>Input initial vector to combine with the first plaintext block. The iv does not need to be secret, but it must be unpredictable. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key</td><td>Input key to use for decryption </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status from descriptor push </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga410f9c81dc642157e64baf8072789a39"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_DES_EncryptCfbNonBlocking </td>
+          <td>(</td>
+          <td class="paramtype">CAAM_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a>&#160;</td>
+          <td class="paramname"><em>descriptor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>plaintext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>ciphertext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>iv</em>[CAAM_DES_IV_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key</em>[CAAM_DES_KEY_SIZE]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Encrypts DES using CFB block mode.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>memory for CAAM commands </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">plaintext</td><td>Input plaintext to encrypt </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input data in bytes </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">iv</td><td>Input initial block. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key</td><td>Input key to use for encryption </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">ciphertext</td><td>Output ciphertext </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status from descriptor push </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga3ea1050a5ebd2bdb5a84d9be8ce1d398"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_DES_DecryptCfbNonBlocking </td>
+          <td>(</td>
+          <td class="paramtype">CAAM_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a>&#160;</td>
+          <td class="paramname"><em>descriptor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>ciphertext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>plaintext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>iv</em>[CAAM_DES_IV_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key</em>[CAAM_DES_KEY_SIZE]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Decrypts DES using CFB block mode.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>memory for CAAM commands </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">ciphertext</td><td>Input ciphertext to decrypt </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">plaintext</td><td>Output plaintext </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">iv</td><td>Input initial block. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key</td><td>Input key to use for decryption </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status from descriptor push </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gafa5593d511badf9c6a4ae74c6b6b0ca4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_DES_EncryptOfbNonBlocking </td>
+          <td>(</td>
+          <td class="paramtype">CAAM_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a>&#160;</td>
+          <td class="paramname"><em>descriptor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>plaintext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>ciphertext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>iv</em>[CAAM_DES_IV_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key</em>[CAAM_DES_KEY_SIZE]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Encrypts DES using OFB block mode.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>memory for CAAM commands </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">plaintext</td><td>Input plaintext to encrypt </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">ciphertext</td><td>Output ciphertext </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">iv</td><td>Input unique input vector. The OFB mode requires that the IV be unique for each execution of the mode under the given key. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key</td><td>Input key to use for encryption </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status from descriptor push </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga72b39ee0ac937b5b95f9e37efc9ca66b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_DES_DecryptOfbNonBlocking </td>
+          <td>(</td>
+          <td class="paramtype">CAAM_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a>&#160;</td>
+          <td class="paramname"><em>descriptor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>ciphertext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>plaintext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>iv</em>[CAAM_DES_IV_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key</em>[CAAM_DES_KEY_SIZE]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Decrypts DES using OFB block mode.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>memory for CAAM commands </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">ciphertext</td><td>Input ciphertext to decrypt </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">plaintext</td><td>Output plaintext </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes. Must be multiple of 8 bytes. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">iv</td><td>Input unique input vector. The OFB mode requires that the IV be unique for each execution of the mode under the given key. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key</td><td>Input key to use for decryption </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status from descriptor push </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga94a140507e95b5043fd9c2106e2ad0c8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_DES2_EncryptEcbNonBlocking </td>
+          <td>(</td>
+          <td class="paramtype">CAAM_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a>&#160;</td>
+          <td class="paramname"><em>descriptor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>plaintext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>ciphertext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key1</em>[CAAM_DES_KEY_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key2</em>[CAAM_DES_KEY_SIZE]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Encrypts triple DES using ECB block mode with two keys.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>memory for CAAM commands </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">plaintext</td><td>Input plaintext to encrypt </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">ciphertext</td><td>Output ciphertext </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes. Must be multiple of 8 bytes. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key1</td><td>First input key for key bundle </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key2</td><td>Second input key for key bundle </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status from descriptor push </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga5515c0358e8bdfa390d485e648e7d052"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_DES2_DecryptEcbNonBlocking </td>
+          <td>(</td>
+          <td class="paramtype">CAAM_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a>&#160;</td>
+          <td class="paramname"><em>descriptor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>ciphertext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>plaintext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key1</em>[CAAM_DES_KEY_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key2</em>[CAAM_DES_KEY_SIZE]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Decrypts triple DES using ECB block mode with two keys.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>memory for CAAM commands </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">ciphertext</td><td>Input ciphertext to decrypt </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">plaintext</td><td>Output plaintext </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes. Must be multiple of 8 bytes. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key1</td><td>First input key for key bundle </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key2</td><td>Second input key for key bundle </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status from descriptor push </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9d871bd6efbe6fe0a1ab4208c485ce8a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_DES2_EncryptCbcNonBlocking </td>
+          <td>(</td>
+          <td class="paramtype">CAAM_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a>&#160;</td>
+          <td class="paramname"><em>descriptor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>plaintext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>ciphertext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>iv</em>[CAAM_DES_IV_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key1</em>[CAAM_DES_KEY_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key2</em>[CAAM_DES_KEY_SIZE]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Encrypts triple DES using CBC block mode with two keys.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>memory for CAAM commands </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">plaintext</td><td>Input plaintext to encrypt </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">ciphertext</td><td>Output ciphertext </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">iv</td><td>Input initial vector to combine with the first plaintext block. The iv does not need to be secret, but it must be unpredictable. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key1</td><td>First input key for key bundle </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key2</td><td>Second input key for key bundle </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status from descriptor push </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa1acd181aa729f953347a49f0894d0e4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_DES2_DecryptCbcNonBlocking </td>
+          <td>(</td>
+          <td class="paramtype">CAAM_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a>&#160;</td>
+          <td class="paramname"><em>descriptor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>ciphertext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>plaintext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>iv</em>[CAAM_DES_IV_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key1</em>[CAAM_DES_KEY_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key2</em>[CAAM_DES_KEY_SIZE]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Decrypts triple DES using CBC block mode with two keys.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>memory for CAAM commands </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">ciphertext</td><td>Input ciphertext to decrypt </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">plaintext</td><td>Output plaintext </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">iv</td><td>Input initial vector to combine with the first plaintext block. The iv does not need to be secret, but it must be unpredictable. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key1</td><td>First input key for key bundle </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key2</td><td>Second input key for key bundle </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status from descriptor push </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga28cd16a0ea20bd451cfa24a478c14e77"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_DES2_EncryptCfbNonBlocking </td>
+          <td>(</td>
+          <td class="paramtype">CAAM_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a>&#160;</td>
+          <td class="paramname"><em>descriptor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>plaintext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>ciphertext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>iv</em>[CAAM_DES_IV_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key1</em>[CAAM_DES_KEY_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key2</em>[CAAM_DES_KEY_SIZE]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Encrypts triple DES using CFB block mode with two keys.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>memory for CAAM commands </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">plaintext</td><td>Input plaintext to encrypt </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">ciphertext</td><td>Output ciphertext </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">iv</td><td>Input initial block. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key1</td><td>First input key for key bundle </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key2</td><td>Second input key for key bundle </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status from descriptor push </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa0f470a82a52ea89c80c171f03a87367"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_DES2_DecryptCfbNonBlocking </td>
+          <td>(</td>
+          <td class="paramtype">CAAM_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a>&#160;</td>
+          <td class="paramname"><em>descriptor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>ciphertext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>plaintext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>iv</em>[CAAM_DES_IV_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key1</em>[CAAM_DES_KEY_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key2</em>[CAAM_DES_KEY_SIZE]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Decrypts triple DES using CFB block mode with two keys.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>memory for CAAM commands </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">ciphertext</td><td>Input ciphertext to decrypt </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">plaintext</td><td>Output plaintext </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">iv</td><td>Input initial block. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key1</td><td>First input key for key bundle </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key2</td><td>Second input key for key bundle </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status from descriptor push </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9ae4d0c3db1360632dacf285b017108f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_DES2_EncryptOfbNonBlocking </td>
+          <td>(</td>
+          <td class="paramtype">CAAM_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a>&#160;</td>
+          <td class="paramname"><em>descriptor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>plaintext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>ciphertext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>iv</em>[CAAM_DES_IV_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key1</em>[CAAM_DES_KEY_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key2</em>[CAAM_DES_KEY_SIZE]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Encrypts triple DES using OFB block mode with two keys.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>memory for CAAM commands </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">plaintext</td><td>Input plaintext to encrypt </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">ciphertext</td><td>Output ciphertext </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">iv</td><td>Input unique input vector. The OFB mode requires that the IV be unique for each execution of the mode under the given key. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key1</td><td>First input key for key bundle </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key2</td><td>Second input key for key bundle </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status from descriptor push </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga726f34fd23ec729182a6426d14049f70"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_DES2_DecryptOfbNonBlocking </td>
+          <td>(</td>
+          <td class="paramtype">CAAM_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a>&#160;</td>
+          <td class="paramname"><em>descriptor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>ciphertext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>plaintext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>iv</em>[CAAM_DES_IV_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key1</em>[CAAM_DES_KEY_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key2</em>[CAAM_DES_KEY_SIZE]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Decrypts triple DES using OFB block mode with two keys.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>memory for CAAM commands </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">ciphertext</td><td>Input ciphertext to decrypt </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">plaintext</td><td>Output plaintext </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">iv</td><td>Input unique input vector. The OFB mode requires that the IV be unique for each execution of the mode under the given key. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key1</td><td>First input key for key bundle </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key2</td><td>Second input key for key bundle </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status from descriptor push </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gacbf2e9ae28a2f95d36bd9dfb20759073"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_DES3_EncryptEcbNonBlocking </td>
+          <td>(</td>
+          <td class="paramtype">CAAM_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a>&#160;</td>
+          <td class="paramname"><em>descriptor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>plaintext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>ciphertext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key1</em>[CAAM_DES_KEY_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key2</em>[CAAM_DES_KEY_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key3</em>[CAAM_DES_KEY_SIZE]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Encrypts triple DES using ECB block mode with three keys.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>memory for CAAM commands </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">plaintext</td><td>Input plaintext to encrypt </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">ciphertext</td><td>Output ciphertext </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes. Must be multiple of 8 bytes. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key1</td><td>First input key for key bundle </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key2</td><td>Second input key for key bundle </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key3</td><td>Third input key for key bundle </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status from descriptor push </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga47bb933e0081fd202a24e8d784449b0f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_DES3_DecryptEcbNonBlocking </td>
+          <td>(</td>
+          <td class="paramtype">CAAM_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a>&#160;</td>
+          <td class="paramname"><em>descriptor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>ciphertext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>plaintext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key1</em>[CAAM_DES_KEY_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key2</em>[CAAM_DES_KEY_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key3</em>[CAAM_DES_KEY_SIZE]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Decrypts triple DES using ECB block mode with three keys.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>memory for CAAM commands </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">ciphertext</td><td>Input ciphertext to decrypt </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">plaintext</td><td>Output plaintext </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes. Must be multiple of 8 bytes. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key1</td><td>First input key for key bundle </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key2</td><td>Second input key for key bundle </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key3</td><td>Third input key for key bundle </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status from descriptor push </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga323ad3212905da0735d3e346a65a6557"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_DES3_EncryptCbcNonBlocking </td>
+          <td>(</td>
+          <td class="paramtype">CAAM_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a>&#160;</td>
+          <td class="paramname"><em>descriptor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>plaintext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>ciphertext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>iv</em>[CAAM_DES_IV_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key1</em>[CAAM_DES_KEY_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key2</em>[CAAM_DES_KEY_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key3</em>[CAAM_DES_KEY_SIZE]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Encrypts triple DES using CBC block mode with three keys.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>memory for CAAM commands </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">plaintext</td><td>Input plaintext to encrypt </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">ciphertext</td><td>Output ciphertext </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input data in bytes </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">iv</td><td>Input initial vector to combine with the first plaintext block. The iv does not need to be secret, but it must be unpredictable. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key1</td><td>First input key for key bundle </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key2</td><td>Second input key for key bundle </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key3</td><td>Third input key for key bundle </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status from descriptor push </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga8f2ddcafa121b3ef855b93765607698d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_DES3_DecryptCbcNonBlocking </td>
+          <td>(</td>
+          <td class="paramtype">CAAM_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a>&#160;</td>
+          <td class="paramname"><em>descriptor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>ciphertext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>plaintext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>iv</em>[CAAM_DES_IV_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key1</em>[CAAM_DES_KEY_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key2</em>[CAAM_DES_KEY_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key3</em>[CAAM_DES_KEY_SIZE]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Decrypts triple DES using CBC block mode with three keys.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>memory for CAAM commands </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">ciphertext</td><td>Input ciphertext to decrypt </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">plaintext</td><td>Output plaintext </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">iv</td><td>Input initial vector to combine with the first plaintext block. The iv does not need to be secret, but it must be unpredictable. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key1</td><td>First input key for key bundle </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key2</td><td>Second input key for key bundle </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key3</td><td>Third input key for key bundle </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status from descriptor push </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gadd00a3876af9f89114b553bda97976b9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_DES3_EncryptCfbNonBlocking </td>
+          <td>(</td>
+          <td class="paramtype">CAAM_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a>&#160;</td>
+          <td class="paramname"><em>descriptor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>plaintext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>ciphertext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>iv</em>[CAAM_DES_IV_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key1</em>[CAAM_DES_KEY_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key2</em>[CAAM_DES_KEY_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key3</em>[CAAM_DES_KEY_SIZE]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Encrypts triple DES using CFB block mode with three keys.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>memory for CAAM commands </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">plaintext</td><td>Input plaintext to encrypt </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">ciphertext</td><td>Output ciphertext </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and ouput data in bytes </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">iv</td><td>Input initial block. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key1</td><td>First input key for key bundle </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key2</td><td>Second input key for key bundle </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key3</td><td>Third input key for key bundle </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status from descriptor push </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga8660f66afc047db09ca7a5318266b9c8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_DES3_DecryptCfbNonBlocking </td>
+          <td>(</td>
+          <td class="paramtype">CAAM_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a>&#160;</td>
+          <td class="paramname"><em>descriptor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>ciphertext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>plaintext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>iv</em>[CAAM_DES_IV_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key1</em>[CAAM_DES_KEY_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key2</em>[CAAM_DES_KEY_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key3</em>[CAAM_DES_KEY_SIZE]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Decrypts triple DES using CFB block mode with three keys.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>memory for CAAM commands </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">ciphertext</td><td>Input ciphertext to decrypt </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">plaintext</td><td>Output plaintext </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input data in bytes </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">iv</td><td>Input initial block. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key1</td><td>First input key for key bundle </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key2</td><td>Second input key for key bundle </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key3</td><td>Third input key for key bundle </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status from descriptor push </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga24422d8d092074ffcbcccc9db34dfdf5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_DES3_EncryptOfbNonBlocking </td>
+          <td>(</td>
+          <td class="paramtype">CAAM_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a>&#160;</td>
+          <td class="paramname"><em>descriptor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>plaintext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>ciphertext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>iv</em>[CAAM_DES_IV_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key1</em>[CAAM_DES_KEY_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key2</em>[CAAM_DES_KEY_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key3</em>[CAAM_DES_KEY_SIZE]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Encrypts triple DES using OFB block mode with three keys.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>memory for CAAM commands </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">plaintext</td><td>Input plaintext to encrypt </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">ciphertext</td><td>Output ciphertext </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">iv</td><td>Input unique input vector. The OFB mode requires that the IV be unique for each execution of the mode under the given key. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key1</td><td>First input key for key bundle </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key2</td><td>Second input key for key bundle </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key3</td><td>Third input key for key bundle </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status from descriptor push </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga7e8ecbeafd742e4b92ee1c6f62c42ad7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00337.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_DES3_DecryptOfbNonBlocking </td>
+          <td>(</td>
+          <td class="paramtype">CAAM_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#ga6df15b19655e3ecc6b38fb400c40d491">caam_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00013.html#gac208efb5c22648dda9161a46b2da16cd">caam_desc_cipher_des_t</a>&#160;</td>
+          <td class="paramname"><em>descriptor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>ciphertext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>plaintext</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>iv</em>[CAAM_DES_IV_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key1</em>[CAAM_DES_KEY_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key2</em>[CAAM_DES_KEY_SIZE], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t&#160;</td>
+          <td class="paramname"><em>key3</em>[CAAM_DES_KEY_SIZE]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Decrypts triple DES using OFB block mode with three keys.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>CAAM peripheral base address </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Handle used for this request. Specifies jobRing. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">descriptor</td><td>memory for CAAM commands </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">ciphertext</td><td>Input ciphertext to decrypt </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">plaintext</td><td>Output plaintext </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">size</td><td>Size of input and output data in bytes </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">iv</td><td>Input unique input vector. The OFB mode requires that the IV be unique for each execution of the mode under the given key. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key1</td><td>First input key for key bundle </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key2</td><td>Second input key for key bundle </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">key3</td><td>Third input key for key bundle </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status from descriptor push </dd></dl>
 
 </div>
 </div>

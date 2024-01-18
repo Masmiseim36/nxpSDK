@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, XIP_BOOT_HEADER_DCD_ENABLE=0, XIP_BOOT_HEADER_XMCD_ENABLE=0, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm4, LV_CONF_INCLUDE_SIMPLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, VG_COMMAND_CALL=1, VG_TARGET_FAST_CLEAR=0, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>../../../..;../../../../vglite_examples/vglite_support;..;../../..;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68191;../../../../../../devices/MIMXRT1176/drivers;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/gt911;../../../../../../components/video/display/dc/elcdif;../../../../../../middleware/vglite/inc;../../../../../../middleware/vglite/font;../../../../../../middleware/vglite/font/mcufont/decoder;../../../../../../middleware/vglite/VGLite/rtos;../../../../../../middleware/vglite/VGLiteKernel;../../../../../../middleware/vglite/VGLiteKernel/rtos;../../../../../../components/video/display/hx8394;../../../../../../middleware/lvgl/lvgl/demos;../../../../../../middleware/lvgl/lvgl/demos/widgets;../../../../../../middleware/lvgl/lvgl/demos/widgets/assets;../../../../../../middleware/lvgl/lvgl;../../../../../../middleware/lvgl/lvgl/src;../../../../../../middleware/lvgl;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../xmcd;../../../../../../components/video/display/dc;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../../../..;../../../../vglite_examples/vglite_support;..;../../..;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68191;../../../../../../devices/MIMXRT1176/drivers;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/gt911;../../../../../../components/video/display/dc/elcdif;../../../../../../middleware/vglite/inc;../../../../../../middleware/vglite/font;../../../../../../middleware/vglite/font/mcufont/decoder;../../../../../../middleware/vglite/VGLite/rtos;../../../../../../middleware/vglite/VGLiteKernel;../../../../../../middleware/vglite/VGLiteKernel/rtos;../../../../../../components/video/display/hx8394;../../../../../../middleware/lvgl/lvgl/demos;../../../../../../middleware/lvgl/lvgl/demos/widgets;../../../../../../middleware/lvgl/lvgl;../../../../../../middleware/lvgl/lvgl/src;../../../../../../middleware/lvgl;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/utilities;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../xmcd;../../../../../../components/video/display/dc;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -504,9 +504,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -744,6 +744,11 @@
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/cm4/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_soc_mipi_dsi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_soc_mipi_dsi.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_soc_mipi_csi2rx.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_soc_mipi_csi2rx.h</FilePath>
@@ -813,6 +818,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/vglite/inc/vg_lite_text.h</FilePath>
             </File>
+            <File>
+              <FileName>nxp_support.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/vglite/inc/nxp_support.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -837,6 +847,11 @@
               <FileName>vg_lite_path.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/vglite/VGLite/vg_lite_path.c</FilePath>
+            </File>
+            <File>
+              <FileName>nxp_support.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/vglite/VGLite/nxp_support.c</FilePath>
             </File>
             <File>
               <FileName>vg_lite_flat.h</FileName>
@@ -1727,6 +1742,26 @@
               <FileName>lv_gpu_stm32_dma2d.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/stm32_dma2d/lv_gpu_stm32_dma2d.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/draw/renesas</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_gpu_d2_ra6m3.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/renesas/lv_gpu_d2_ra6m3.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_d2_ra6m3.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/renesas/lv_gpu_d2_ra6m3.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_d2_draw_label.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/renesas/lv_gpu_d2_draw_label.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3212,6 +3247,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3848,7 +3888,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, XIP_BOOT_HEADER_DCD_ENABLE=0, XIP_BOOT_HEADER_XMCD_ENABLE=0, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm4, LV_CONF_INCLUDE_SIMPLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, VG_COMMAND_CALL=1, VG_TARGET_FAST_CLEAR=0, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>../../../..;../../../../vglite_examples/vglite_support;..;../../..;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68191;../../../../../../devices/MIMXRT1176/drivers;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/gt911;../../../../../../components/video/display/dc/elcdif;../../../../../../middleware/vglite/inc;../../../../../../middleware/vglite/font;../../../../../../middleware/vglite/font/mcufont/decoder;../../../../../../middleware/vglite/VGLite/rtos;../../../../../../middleware/vglite/VGLiteKernel;../../../../../../middleware/vglite/VGLiteKernel/rtos;../../../../../../components/video/display/hx8394;../../../../../../middleware/lvgl/lvgl/demos;../../../../../../middleware/lvgl/lvgl/demos/widgets;../../../../../../middleware/lvgl/lvgl/demos/widgets/assets;../../../../../../middleware/lvgl/lvgl;../../../../../../middleware/lvgl/lvgl/src;../../../../../../middleware/lvgl;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../xmcd;../../../../../../components/video/display/dc;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../../../..;../../../../vglite_examples/vglite_support;..;../../..;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68191;../../../../../../devices/MIMXRT1176/drivers;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/gt911;../../../../../../components/video/display/dc/elcdif;../../../../../../middleware/vglite/inc;../../../../../../middleware/vglite/font;../../../../../../middleware/vglite/font/mcufont/decoder;../../../../../../middleware/vglite/VGLite/rtos;../../../../../../middleware/vglite/VGLiteKernel;../../../../../../middleware/vglite/VGLiteKernel/rtos;../../../../../../components/video/display/hx8394;../../../../../../middleware/lvgl/lvgl/demos;../../../../../../middleware/lvgl/lvgl/demos/widgets;../../../../../../middleware/lvgl/lvgl;../../../../../../middleware/lvgl/lvgl/src;../../../../../../middleware/lvgl;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/utilities;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../xmcd;../../../../../../components/video/display/dc;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4018,9 +4058,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -4258,6 +4298,11 @@
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/cm4/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_soc_mipi_dsi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_soc_mipi_dsi.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_soc_mipi_csi2rx.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_soc_mipi_csi2rx.h</FilePath>
@@ -4327,6 +4372,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/vglite/inc/vg_lite_text.h</FilePath>
             </File>
+            <File>
+              <FileName>nxp_support.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/vglite/inc/nxp_support.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4351,6 +4401,11 @@
               <FileName>vg_lite_path.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/vglite/VGLite/vg_lite_path.c</FilePath>
+            </File>
+            <File>
+              <FileName>nxp_support.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/vglite/VGLite/nxp_support.c</FilePath>
             </File>
             <File>
               <FileName>vg_lite_flat.h</FileName>
@@ -5241,6 +5296,26 @@
               <FileName>lv_gpu_stm32_dma2d.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/stm32_dma2d/lv_gpu_stm32_dma2d.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/draw/renesas</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_gpu_d2_ra6m3.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/renesas/lv_gpu_d2_ra6m3.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_d2_ra6m3.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/renesas/lv_gpu_d2_ra6m3.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_d2_draw_label.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/lvgl/lvgl/src/draw/renesas/lv_gpu_d2_draw_label.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6726,6 +6801,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>

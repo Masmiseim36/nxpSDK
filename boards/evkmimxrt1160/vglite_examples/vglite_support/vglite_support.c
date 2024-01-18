@@ -15,7 +15,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define MAX_CONTIGUOUS_SIZE         0x200000
+#define MAX_CONTIGUOUS_SIZE 0x200000
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -39,8 +39,8 @@ extern uint32_t vglite_heap_size;
 /* VGLite driver heap */
 AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t contiguous_mem[MAX_CONTIGUOUS_SIZE], FRAME_BUFFER_ALIGN);
 
-void *vglite_heap_base        = &contiguous_mem;
-uint32_t vglite_heap_size     = MAX_CONTIGUOUS_SIZE;
+void *vglite_heap_base    = &contiguous_mem;
+uint32_t vglite_heap_size = MAX_CONTIGUOUS_SIZE;
 #endif /* CUSTOM_VGLITE_MEMORY_CONFIG */
 
 /*******************************************************************************

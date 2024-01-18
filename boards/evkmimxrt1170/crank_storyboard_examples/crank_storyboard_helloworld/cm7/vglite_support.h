@@ -19,13 +19,13 @@
  ******************************************************************************/
 #if defined(__cplusplus)
 extern "C" {
-#endif /* __cplusplus */
+#endif                                          /* __cplusplus */
 
-#define VG_LITE_COMMAND_BUFFER_SIZE                     (256 << 10) /* 256 KB */
+#define VG_LITE_COMMAND_BUFFER_SIZE (256 << 10) /* 256 KB */
 
 /* Default tessellation window width and height, in pixels */
-#define DEFAULT_VG_LITE_TW_WIDTH                        128 /* pixels */
-#define DEFAULT_VG_LITE_TW_HEIGHT                       128 /* pixels */
+#define DEFAULT_VG_LITE_TW_WIDTH  128 /* pixels */
+#define DEFAULT_VG_LITE_TW_HEIGHT 128 /* pixels */
 
 status_t BOARD_PrepareVGLiteController(void);
 

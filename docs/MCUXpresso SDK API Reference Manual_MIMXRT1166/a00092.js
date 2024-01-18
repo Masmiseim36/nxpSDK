@@ -1,62 +1,34 @@
 var a00092 =
 [
-    [ "snvs_lp_passive_tamper_t", "a00092.html#a00686", null ],
-    [ "snvs_lp_srtc_datetime_t", "a00092.html#a00688", [
-      [ "year", "a00092.html#a03a4361ff2481ab7ed890c60f3ac68b7", null ],
-      [ "month", "a00092.html#afeeab32d19b15b5dd7ebbcd3c1322e28", null ],
-      [ "day", "a00092.html#a8325ab17dc714294c88414f24d03320d", null ],
-      [ "hour", "a00092.html#a4a70a512ba988adb1fb1e4e62ba11f29", null ],
-      [ "minute", "a00092.html#a266253051fa3ee775a27bffb92d9be5b", null ],
-      [ "second", "a00092.html#a24f3ad7303d4b70ca927c385490a3448", null ]
+    [ "_spdif_edma_transfer", "a00092.html#a00689", [
+      [ "leftData", "a00092.html#a73cf51a860d8b2a0802021e2d2b00dc0", null ],
+      [ "rightData", "a00092.html#a65eaecba74933b7d202426c1ba10acfc", null ],
+      [ "dataSize", "a00092.html#a0029a1324de139d229a94c97cf7264d7", null ]
     ] ],
-    [ "snvs_lp_srtc_config_t", "a00092.html#a00687", [
-      [ "srtcCalEnable", "a00092.html#a876e4c24fd02f7b939354f625e81b0a3", null ],
-      [ "srtcCalValue", "a00092.html#a86c9d09f47c6c6fa4dd60c24088f2d4f", null ]
+    [ "_spdif_edma_handle", "a00092.html#a00688", [
+      [ "dmaLeftHandle", "a00092.html#ad53fcc5f37dcd780b5ed46592d2a2d43", null ],
+      [ "dmaRightHandle", "a00092.html#a14ff820b157940e28d96b619b44e5835", null ],
+      [ "nbytes", "a00092.html#ab2da0a7b6e0edb696a64b4cd5e811fd5", null ],
+      [ "count", "a00092.html#ab782e2b28e2cdd342a94f9c3f4db3d67", null ],
+      [ "state", "a00092.html#a2c83c226450e040294b7465ab90bc9f6", null ],
+      [ "callback", "a00092.html#a67abdc63adafff37d7f54bb13ac48a59", null ],
+      [ "userData", "a00092.html#a406a65f0685838550655890f1517f6b8", null ],
+      [ "leftTcd", "a00092.html#a8bcc7f9aac0741bbaa7bad15364b6966", null ],
+      [ "rightTcd", "a00092.html#a6bb2ffffc310417bf133ff190909224f", null ],
+      [ "spdifQueue", "a00092.html#ab444c7c84f3be88f478507d13edf0e57", null ],
+      [ "transferSize", "a00092.html#a690ce6df7b6cd35d3665031951bb1f0c", null ],
+      [ "queueUser", "a00092.html#a0222731e27952445ac95faf435651e72", null ],
+      [ "queueDriver", "a00092.html#af918a94ea924a39a8780b9cdd2e99ded", null ]
     ] ],
-    [ "FSL_SNVS_LP_DRIVER_VERSION", "a00092.html#gac5e0fc5d0c368b596733f3d40b212366", null ],
-    [ "SNVS_ZMK_REG_COUNT", "a00092.html#ga0eb6096d8a29431a527f42d2207df7bd", null ],
-    [ "SNVS_LP_MAX_TAMPER", "a00092.html#ga5e9e92e31bccf270bf2355cc6e80041a", null ],
-    [ "snvs_lp_srtc_interrupts_t", "a00092.html#ga806041c275061b615faf70ee97505a00", [
-      [ "kSNVS_SRTC_AlarmInterrupt", "a00092.html#gga806041c275061b615faf70ee97505a00ac53121f2a9d870cf7f21411edeb92515", null ]
-    ] ],
-    [ "snvs_lp_srtc_status_flags_t", "a00092.html#gadcecf6b4fd6c8c56133821ebbd2df9de", [
-      [ "kSNVS_SRTC_AlarmInterruptFlag", "a00092.html#ggadcecf6b4fd6c8c56133821ebbd2df9dea359a970814078eb2dfc6c6eb5a30e0c1", null ]
-    ] ],
-    [ "snvs_lp_external_tamper_status_t", "a00092.html#ga123f0196672467755ef8b828db230b24", null ],
-    [ "snvs_lp_external_tamper_polarity_t", "a00092.html#gae5f4aea285aec7abf629056ef0eb3163", null ],
-    [ "snvs_lp_zmk_program_mode_t", "a00092.html#gae44e3f9132afa438f0bfd6233928355f", [
-      [ "kSNVS_ZMKSoftwareProgram", "a00092.html#ggae44e3f9132afa438f0bfd6233928355fa6674756b9a54eb86739d3ac01c932614", null ],
-      [ "kSNVS_ZMKHardwareProgram", "a00092.html#ggae44e3f9132afa438f0bfd6233928355fabd57ccc7494ed942d56a3da20fa6d67f", null ]
-    ] ],
-    [ "snvs_lp_master_key_mode_t", "a00092.html#ga10b65b574393c82d6b6f3e5033c55d7b", [
-      [ "kSNVS_OTPMK", "a00092.html#gga10b65b574393c82d6b6f3e5033c55d7ba1dfa052b45b35c4415d36012034ede62", null ],
-      [ "kSNVS_ZMK", "a00092.html#gga10b65b574393c82d6b6f3e5033c55d7ba1e0c158e459a18e359ae55f8bcb195fe", null ],
-      [ "kSNVS_CMK", "a00092.html#gga10b65b574393c82d6b6f3e5033c55d7babb401e0ff02f30ef48013d0eca7ae47e", null ]
-    ] ],
-    [ "SNVS_LP_Init", "a00092.html#ga742e45feb782fa6b454e20f405d1f3d9", null ],
-    [ "SNVS_LP_Deinit", "a00092.html#gaf6184db24094f481adb2fa4511fdaa6a", null ],
-    [ "SNVS_LP_SRTC_Init", "a00092.html#gad2bc4630c869c62dcaee50c1bcd0897e", null ],
-    [ "SNVS_LP_SRTC_Deinit", "a00092.html#ga5d3d092911324c7436c84516a3cc53ab", null ],
-    [ "SNVS_LP_SRTC_GetDefaultConfig", "a00092.html#gab52bbf92230eca2bcfc590ad5733d6aa", null ],
-    [ "SNVS_LP_SRTC_SetDatetime", "a00092.html#ga3c35b4b1671c53939c335097411b6e7d", null ],
-    [ "SNVS_LP_SRTC_GetDatetime", "a00092.html#gaf65b902de3d06aa9940686ae86b7f8fd", null ],
-    [ "SNVS_LP_SRTC_SetAlarm", "a00092.html#gadb419ef8b369945b4858abcb76e36462", null ],
-    [ "SNVS_LP_SRTC_GetAlarm", "a00092.html#gab9120c6c286567d4144763b875725ac3", null ],
-    [ "SNVS_LP_SRTC_EnableInterrupts", "a00092.html#gabff8182f0b6daa2a2bbafcaab0caf582", null ],
-    [ "SNVS_LP_SRTC_DisableInterrupts", "a00092.html#gaecc4336193810a19ed278327f1d9b320", null ],
-    [ "SNVS_LP_SRTC_GetEnabledInterrupts", "a00092.html#gada2c47f87ffb9ff6eaeabe62796627bd", null ],
-    [ "SNVS_LP_SRTC_GetStatusFlags", "a00092.html#ga8d98bd36bcee5f9639346172eba5294b", null ],
-    [ "SNVS_LP_SRTC_ClearStatusFlags", "a00092.html#ga4b35224486431ebc7dd76707e5ab2c84", null ],
-    [ "SNVS_LP_SRTC_StartTimer", "a00092.html#gaa4af8e629107ca2df7b64d11a5afa01e", null ],
-    [ "SNVS_LP_SRTC_StopTimer", "a00092.html#ga413bc4eb1389aec4a61e3e54a08ec5f3", null ],
-    [ "SNVS_LP_PassiveTamperPin_GetDefaultConfig", "a00092.html#ga5b3b4bc95b7ad64a7c37d75f94f57a05", null ],
-    [ "SNVS_LP_EnableMonotonicCounter", "a00092.html#gaef92c80f282401b4db14ae4899997f20", null ],
-    [ "SNVS_LP_GetMonotonicCounter", "a00092.html#ga5a8eacfd2bae28cc0417785f8355f141", null ],
-    [ "SNVS_LP_IncreaseMonotonicCounter", "a00092.html#ga47bb73abadc43aa50a4dfdaa86a78293", null ],
-    [ "SNVS_LP_WriteZeroizableMasterKey", "a00092.html#ga10144a7135dd4a278c541d5e37a27ba1", null ],
-    [ "SNVS_LP_SetZeroizableMasterKeyValid", "a00092.html#ga4f8c7a22bd75612f3ecfcc64b2ca12d9", null ],
-    [ "SNVS_LP_GetZeroizableMasterKeyValid", "a00092.html#ga84aa6371b64d17ad9dd059a32cfcf0ba", null ],
-    [ "SNVS_LP_SetZeroizableMasterKeyProgramMode", "a00092.html#gaa4468c4f948d4529d21d2717f9af21fb", null ],
-    [ "SNVS_LP_EnableZeroizableMasterKeyECC", "a00092.html#ga9f0c2c01a10193906563254794af6f2b", null ],
-    [ "SNVS_LP_SetMasterKeyMode", "a00092.html#gaf546c45ff65189f400d757cf5f35223f", null ]
+    [ "FSL_SPDIF_EDMA_DRIVER_VERSION", "a00092.html#ga0d52f502d4b64dc5587a12289e6738e4", null ],
+    [ "spdif_edma_callback_t", "a00092.html#ga301f2d0b9a199636f3c105f26ebe0f57", null ],
+    [ "spdif_edma_transfer_t", "a00092.html#ga7bee16bc8fce0bfe7917d082f92ac27e", null ],
+    [ "SPDIF_TransferTxCreateHandleEDMA", "a00092.html#ga9b81a6190c5cc57120dae24864d17b78", null ],
+    [ "SPDIF_TransferRxCreateHandleEDMA", "a00092.html#ga997c6e8067aabb31c06d62dda8e18201", null ],
+    [ "SPDIF_TransferSendEDMA", "a00092.html#ga8f6d1ca1ea0d14799cc268bc0d403b52", null ],
+    [ "SPDIF_TransferReceiveEDMA", "a00092.html#ga6a9055e2562ac1a740005a235add28d2", null ],
+    [ "SPDIF_TransferAbortSendEDMA", "a00092.html#ga427c4b16d4f1fdea087e2ee2bb515565", null ],
+    [ "SPDIF_TransferAbortReceiveEDMA", "a00092.html#ga258da7096dcb32609e5bf8a6ca862ff7", null ],
+    [ "SPDIF_TransferGetSendCountEDMA", "a00092.html#gac8a656d32c96ce22f86298daf8702449", null ],
+    [ "SPDIF_TransferGetReceiveCountEDMA", "a00092.html#ga2372914f14224175a5d10130ce56b779", null ]
 ];

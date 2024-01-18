@@ -451,22 +451,22 @@
             <File>
               <FileName>demo_info.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/eiq/common/demo_info.h</FilePath>
+              <FilePath>../source/demo_info.h</FilePath>
             </File>
             <File>
               <FileName>eiq_common.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/eiq/common/eiq_common.h</FilePath>
+              <FilePath>../source/eiq_common.h</FilePath>
             </File>
             <File>
               <FileName>eiq_iui.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/eiq/common/eiq_iui.h</FilePath>
+              <FilePath>../source/eiq_iui.h</FilePath>
             </File>
             <File>
               <FileName>eiq_iworker.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/eiq/common/eiq_iworker.h</FilePath>
+              <FilePath>../source/eiq_iworker.h</FilePath>
             </File>
             <File>
               <FileName>app.h</FileName>
@@ -486,7 +486,7 @@
             <File>
               <FileName>erpc_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/internal/boards/freertos/mu/erpc_config.h</FilePath>
+              <FilePath>../../../../../../middleware/eiq/glow/examples/multicore_secure_ml/source/erpc_config.h</FilePath>
             </File>
             <File>
               <FileName>input_image.inc</FileName>
@@ -521,32 +521,32 @@
             <File>
               <FileName>image.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/eiq/common/image/image.h</FilePath>
+              <FilePath>../source/image/image.h</FilePath>
             </File>
             <File>
               <FileName>image_utils.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/eiq/common/image/image_utils.h</FilePath>
+              <FilePath>../source/image/image_utils.h</FilePath>
             </File>
             <File>
               <FileName>image_draw.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/eiq/common/image/image_draw.c</FilePath>
+              <FilePath>../source/image/image_draw.c</FilePath>
             </File>
             <File>
               <FileName>image_resize_nearest.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/eiq/common/image/image_resize_nearest.c</FilePath>
+              <FilePath>../source/image/image_resize_nearest.c</FilePath>
             </File>
             <File>
               <FileName>image_decode_raw.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/eiq/common/image/image_decode_raw.c</FilePath>
+              <FilePath>../source/image/image_decode_raw.c</FilePath>
             </File>
             <File>
               <FileName>image_conv.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/eiq/common/image/image_conv.c</FilePath>
+              <FilePath>../source/image/image_conv.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -859,9 +859,9 @@
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_rpmsg_linux_transport.hpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_rpmsg_lite_base_transport.hpp</FileName>
+              <FileName>erpc_rpmsg_lite_base.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_rpmsg_lite_base_transport.hpp</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_rpmsg_lite_base.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_rpmsg_lite_rtos_transport.hpp</FileName>
@@ -907,6 +907,11 @@
               <FileName>erpc_uart_cmsis_transport.hpp</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_uart_zephyr_transport.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_zephyr_transport.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_usb_cdc_transport.hpp</FileName>
@@ -1102,6 +1107,11 @@
               <FileName>erpc_transport_arbitrator.hpp</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport_arbitrator.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_utils.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_utils.hpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -1308,6 +1318,11 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1477,6 +1492,16 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>doc</GroupName>
+          <Files>
+            <File>
+              <FileName>readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -1930,22 +1955,22 @@
             <File>
               <FileName>demo_info.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/eiq/common/demo_info.h</FilePath>
+              <FilePath>../source/demo_info.h</FilePath>
             </File>
             <File>
               <FileName>eiq_common.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/eiq/common/eiq_common.h</FilePath>
+              <FilePath>../source/eiq_common.h</FilePath>
             </File>
             <File>
               <FileName>eiq_iui.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/eiq/common/eiq_iui.h</FilePath>
+              <FilePath>../source/eiq_iui.h</FilePath>
             </File>
             <File>
               <FileName>eiq_iworker.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/eiq/common/eiq_iworker.h</FilePath>
+              <FilePath>../source/eiq_iworker.h</FilePath>
             </File>
             <File>
               <FileName>app.h</FileName>
@@ -1965,7 +1990,7 @@
             <File>
               <FileName>erpc_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/internal/boards/freertos/mu/erpc_config.h</FilePath>
+              <FilePath>../../../../../../middleware/eiq/glow/examples/multicore_secure_ml/source/erpc_config.h</FilePath>
             </File>
             <File>
               <FileName>input_image.inc</FileName>
@@ -2000,32 +2025,32 @@
             <File>
               <FileName>image.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/eiq/common/image/image.h</FilePath>
+              <FilePath>../source/image/image.h</FilePath>
             </File>
             <File>
               <FileName>image_utils.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/eiq/common/image/image_utils.h</FilePath>
+              <FilePath>../source/image/image_utils.h</FilePath>
             </File>
             <File>
               <FileName>image_draw.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/eiq/common/image/image_draw.c</FilePath>
+              <FilePath>../source/image/image_draw.c</FilePath>
             </File>
             <File>
               <FileName>image_resize_nearest.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/eiq/common/image/image_resize_nearest.c</FilePath>
+              <FilePath>../source/image/image_resize_nearest.c</FilePath>
             </File>
             <File>
               <FileName>image_decode_raw.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/eiq/common/image/image_decode_raw.c</FilePath>
+              <FilePath>../source/image/image_decode_raw.c</FilePath>
             </File>
             <File>
               <FileName>image_conv.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/eiq/common/image/image_conv.c</FilePath>
+              <FilePath>../source/image/image_conv.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2338,9 +2363,9 @@
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_rpmsg_linux_transport.hpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_rpmsg_lite_base_transport.hpp</FileName>
+              <FileName>erpc_rpmsg_lite_base.hpp</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_rpmsg_lite_base_transport.hpp</FilePath>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_rpmsg_lite_base.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_rpmsg_lite_rtos_transport.hpp</FileName>
@@ -2386,6 +2411,11 @@
               <FileName>erpc_uart_cmsis_transport.hpp</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_uart_zephyr_transport.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_zephyr_transport.hpp</FilePath>
             </File>
             <File>
               <FileName>erpc_usb_cdc_transport.hpp</FileName>
@@ -2581,6 +2611,11 @@
               <FileName>erpc_transport_arbitrator.hpp</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport_arbitrator.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_utils.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_utils.hpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -2787,6 +2822,11 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2956,6 +2996,16 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>doc</GroupName>
+          <Files>
+            <File>
+              <FileName>readme.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>

@@ -32,7 +32,7 @@ public:
     SecureMLService_service() : Service(kSecureMLService_service_id) {}
 
     /*! @brief Call the correct server shim based on method unique ID. */
-    virtual erpc_status_t handleInvocation(uint32_t methodId, uint32_t sequence, erpc::Codec * codec, erpc::MessageBufferFactory *messageFactory);
+    virtual erpc_status_t handleInvocation(uint32_t methodId, uint32_t sequence, erpc::Codec * codec, erpc::MessageBufferFactory *messageFactory, erpc::Transport *transport);
 
 private:
     /*! @brief Server shim for inference of SecureMLService interface. */

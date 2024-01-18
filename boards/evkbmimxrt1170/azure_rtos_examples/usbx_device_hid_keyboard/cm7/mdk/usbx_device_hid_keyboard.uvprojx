@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, __CLANG_ARM, CPU_MIMXRT1176DVMAA_cm7, MIMXRT, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK, UX_OTG_SUPPORT, UX_INCLUDE_USER_DEFINE_FILE, NX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/osa;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../rtos/azure-rtos/usbx/usbx_device_controllers;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../xip;../../../../../../devices/MIMXRT1176/xip;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../rtos/azure-rtos/usbx/common/core/inc;../../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc;../../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc;../../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc;../../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc;../../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/ac6/inc;../../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../../rtos/azure-rtos/netxduo/addons/websocket;../../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../../rtos/azure-rtos/filex/common/inc;../../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../components/osa;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../rtos/azure-rtos/usbx/usbx_device_controllers;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../xip;../../../../../../devices/MIMXRT1176/xip;../../../../../../devices/MIMXRT1176/utilities;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../rtos/azure-rtos/usbx/common/core/inc;../../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc;../../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc;../../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc;../../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc;../../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/ac6/inc;../../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../../rtos/azure-rtos/netxduo/addons/websocket;../../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../../rtos/azure-rtos/filex/common/inc;../../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -474,9 +474,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -907,6 +907,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>
@@ -2346,7 +2351,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>fromelf.exe --output "$L@L.bin" --bincombined "#L"</UserProg1Name>
+            <UserProg1Name>fromelf.exe --output "$Lusbx_device_hid_keyboard.bin" --bincombined "#L"</UserProg1Name>
             <UserProg2Name/>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -2603,7 +2608,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, __CLANG_ARM, CPU_MIMXRT1176DVMAA_cm7, MIMXRT, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK, UX_OTG_SUPPORT, UX_INCLUDE_USER_DEFINE_FILE, NX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/osa;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../rtos/azure-rtos/usbx/usbx_device_controllers;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../xip;../../../../../../devices/MIMXRT1176/xip;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../rtos/azure-rtos/usbx/common/core/inc;../../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc;../../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc;../../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc;../../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc;../../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/ac6/inc;../../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../../rtos/azure-rtos/netxduo/addons/websocket;../../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../../rtos/azure-rtos/filex/common/inc;../../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../components/osa;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../rtos/azure-rtos/usbx/usbx_device_controllers;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../xip;../../../../../../devices/MIMXRT1176/xip;../../../../../../devices/MIMXRT1176/utilities;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../rtos/azure-rtos/usbx/common/core/inc;../../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc;../../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc;../../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc;../../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc;../../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/ac6/inc;../../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../../rtos/azure-rtos/netxduo/addons/websocket;../../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../../rtos/azure-rtos/filex/common/inc;../../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2743,9 +2748,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -3176,6 +3181,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>
@@ -4872,7 +4882,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, __CLANG_ARM, CPU_MIMXRT1176DVMAA_cm7, MIMXRT, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK, UX_OTG_SUPPORT, UX_INCLUDE_USER_DEFINE_FILE, NX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/osa;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../rtos/azure-rtos/usbx/usbx_device_controllers;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../xip;../../../../../../devices/MIMXRT1176/xip;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../rtos/azure-rtos/usbx/common/core/inc;../../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc;../../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc;../../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc;../../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc;../../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/ac6/inc;../../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../../rtos/azure-rtos/netxduo/addons/websocket;../../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../../rtos/azure-rtos/filex/common/inc;../../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../components/osa;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../rtos/azure-rtos/usbx/usbx_device_controllers;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../xip;../../../../../../devices/MIMXRT1176/xip;../../../../../../devices/MIMXRT1176/utilities;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../rtos/azure-rtos/usbx/common/core/inc;../../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc;../../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc;../../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc;../../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc;../../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/ac6/inc;../../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../../rtos/azure-rtos/netxduo/addons/websocket;../../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../../rtos/azure-rtos/filex/common/inc;../../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5012,9 +5022,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -5445,6 +5455,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>
@@ -6884,7 +6899,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>fromelf.exe --output "$L@L.bin" --bincombined "#L"</UserProg1Name>
+            <UserProg1Name>fromelf.exe --output "$Lusbx_device_hid_keyboard.bin" --bincombined "#L"</UserProg1Name>
             <UserProg2Name/>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -7141,7 +7156,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, __CLANG_ARM, CPU_MIMXRT1176DVMAA_cm7, MIMXRT, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK, UX_OTG_SUPPORT, UX_INCLUDE_USER_DEFINE_FILE, NX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/osa;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../rtos/azure-rtos/usbx/usbx_device_controllers;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../xip;../../../../../../devices/MIMXRT1176/xip;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../rtos/azure-rtos/usbx/common/core/inc;../../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc;../../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc;../../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc;../../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc;../../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/ac6/inc;../../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../../rtos/azure-rtos/netxduo/addons/websocket;../../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../../rtos/azure-rtos/filex/common/inc;../../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../components/osa;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../rtos/azure-rtos/usbx/usbx_device_controllers;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../xip;../../../../../../devices/MIMXRT1176/xip;../../../../../../devices/MIMXRT1176/utilities;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../rtos/azure-rtos/usbx/common/core/inc;../../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc;../../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc;../../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc;../../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc;../../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/ac6/inc;../../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../../rtos/azure-rtos/netxduo/addons/websocket;../../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../../rtos/azure-rtos/filex/common/inc;../../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -7281,9 +7296,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -7714,6 +7729,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>

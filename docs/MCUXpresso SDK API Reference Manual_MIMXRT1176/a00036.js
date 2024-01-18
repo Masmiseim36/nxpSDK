@@ -1,43 +1,48 @@
 var a00036 =
 [
-    [ "FLEXIO_I2C_Type", "a00036.html#a00535", [
-      [ "flexioBase", "a00036.html#a85065e51da3c0158d4b1d9254d691d26", null ],
-      [ "SDAPinIndex", "a00036.html#acf0bab2399a7d7013f3708feb4d74ff6", null ],
-      [ "SCLPinIndex", "a00036.html#a8ffb4cb7eac22b561f34ebcf4c309db9", null ],
-      [ "shifterIndex", "a00036.html#ab1a64e477a45a6f98cd835644c6699ec", null ],
-      [ "timerIndex", "a00036.html#ab468253ce0595401dac6cbe2ede4c82a", null ],
-      [ "baudrate", "a00036.html#a34f7664f9c39134c78a668c718040c54", null ]
+    [ "_flexio_i2c_type", "a00036.html#a00505", [
+      [ "flexioBase", "a00036.html#a8c612e804a704d10af7495010447506d", null ],
+      [ "SDAPinIndex", "a00036.html#a0dd4c317807ba1701e561d3f6b9131ce", null ],
+      [ "SCLPinIndex", "a00036.html#a90f9f1c5d3181e6ac34b475c6eb0da56", null ],
+      [ "shifterIndex", "a00036.html#ae1646b8581dea1779059dd37ad4c8515", null ],
+      [ "timerIndex", "a00036.html#a00c9a97524f0d5c42585aacf4c4de4ca", null ],
+      [ "baudrate", "a00036.html#ae684d7f95a201dbb4104801e0311f247", null ]
     ] ],
-    [ "flexio_i2c_master_config_t", "a00036.html#a00533", [
-      [ "enableMaster", "a00036.html#a4dcbed2930b467df1978f9bf2b71c128", null ],
-      [ "enableInDoze", "a00036.html#ad73b88c0700d82721ccbf0744d1b6780", null ],
-      [ "enableInDebug", "a00036.html#acf98ed2c52a014d2ed825a38293001d4", null ],
-      [ "enableFastAccess", "a00036.html#a89a0daa456c7d99a7144d5245f422bbe", null ],
-      [ "baudRate_Bps", "a00036.html#a446dee2e270776aa6d462710e85b7454", null ]
+    [ "_flexio_i2c_master_config", "a00036.html#a00502", [
+      [ "enableMaster", "a00036.html#a91a87b7bd8d4bae9e406390ae9776155", null ],
+      [ "enableInDoze", "a00036.html#ae4c1517363576758cff67f9537927b88", null ],
+      [ "enableInDebug", "a00036.html#a7f9e31f1448e28351002384106e332f0", null ],
+      [ "enableFastAccess", "a00036.html#a689dee0d3ab98623b8f5c0b5bd83183d", null ],
+      [ "baudRate_Bps", "a00036.html#abf5d294be79f4687caa730c2674de22e", null ]
     ] ],
-    [ "flexio_i2c_master_transfer_t", "a00036.html#a00534", [
-      [ "flags", "a00036.html#a2695cc7566c8a4cbbcf837d1f7209b6a", null ],
-      [ "slaveAddress", "a00036.html#ad9a4b7694d338eaa4d7b6b2e8ebcf6c5", null ],
-      [ "direction", "a00036.html#a756cb7ae9db1832fcffcd736a7039369", null ],
-      [ "subaddress", "a00036.html#a60552386bd16b5d17197660571638898", null ],
-      [ "subaddressSize", "a00036.html#a17d04e1156e9dd99026a4b527e487a96", null ],
-      [ "data", "a00036.html#a94b0a6518c96392dd0497350af675ada", null ],
-      [ "dataSize", "a00036.html#a5bd368a720ef8ed7df1601d7cac19ae2", null ]
+    [ "_flexio_i2c_master_transfer", "a00036.html#a00504", [
+      [ "flags", "a00036.html#aa74dd7104b75a95d9128fce2f9731628", null ],
+      [ "slaveAddress", "a00036.html#ad40d580b11006c7b47931d5a16482a01", null ],
+      [ "direction", "a00036.html#a3a0e94bf1d8f89f9a0f3c36b919e6a09", null ],
+      [ "subaddress", "a00036.html#a3404710ebddd14a8b17023b52bb9879b", null ],
+      [ "subaddressSize", "a00036.html#af41d8d9c777f5e6413561a92601ec930", null ],
+      [ "data", "a00036.html#a0104b33e9efa445c26bde6cc0be3ddce", null ],
+      [ "dataSize", "a00036.html#a8539ca8b74e1d6335754daf6e819fd47", null ]
     ] ],
-    [ "flexio_i2c_master_handle_t", "a00036.html#a00395", [
-      [ "transfer", "a00036.html#a60bd61f7bad1102b8ae17c147ebe7562", null ],
-      [ "transferSize", "a00036.html#a48d8d3dd2b37359e54ee1ac10d68bfa5", null ],
-      [ "state", "a00036.html#abdeb9df90f61127f95734a9ad2226de8", null ],
-      [ "completionCallback", "a00036.html#a1b3ef650c54e91d7ae83998a7a3cb061", null ],
-      [ "userData", "a00036.html#affef8570c9455a63c5b0d67595f1dc6a", null ],
-      [ "needRestart", "a00036.html#aaf7dbf9de526b48d31035afdf18a2d8d", null ]
+    [ "_flexio_i2c_master_handle", "a00036.html#a00503", [
+      [ "transfer", "a00036.html#a5532e06e5a1f46f2ee953951d6ddb45e", null ],
+      [ "transferSize", "a00036.html#aa8453802324d3032c21902f09bd05382", null ],
+      [ "state", "a00036.html#a3b70729eb68c9344be4f40542dfa248f", null ],
+      [ "completionCallback", "a00036.html#a4b7bc5ea292a14712aec27ee849b34bd", null ],
+      [ "userData", "a00036.html#a7727d87a3ccfd45513d77026b3c3958e", null ],
+      [ "needRestart", "a00036.html#af59e068af6c05ffa9e2906aa992ef6cf", null ]
     ] ],
     [ "I2C_RETRY_TIMES", "a00036.html#gaac288786aaa7d0cb947c91591baf42d7", null ],
+    [ "flexio_i2c_direction_t", "a00036.html#ga038697c86a5538e572c14a8cede654b3", null ],
+    [ "FLEXIO_I2C_Type", "a00036.html#ga79ef07860cbf29ed2c2ebce2876f8186", null ],
+    [ "flexio_i2c_master_config_t", "a00036.html#ga241764390b12485a028350187b87e3b0", null ],
+    [ "flexio_i2c_master_transfer_t", "a00036.html#gad8cb291a190361416d2281573c658220", null ],
+    [ "flexio_i2c_master_handle_t", "a00036.html#ga5f9254ffdddf26ddcd5838437c07c7f2", null ],
     [ "flexio_i2c_master_transfer_callback_t", "a00036.html#ga4a92b2aafd0ea1e7746dc23a7b0f0691", [
-      [ "kStatus_FLEXIO_I2C_Busy", "a00036.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a8ab8145bc386f3630f13b87c38496331", null ],
-      [ "kStatus_FLEXIO_I2C_Idle", "a00036.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a2f105638fc06422cc54cf5337d507873", null ],
-      [ "kStatus_FLEXIO_I2C_Nak", "a00036.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0af5e4a932f6f9e6ae30a42dc31fab8bd5", null ],
-      [ "kStatus_FLEXIO_I2C_Timeout", "a00036.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a3d8bcc4ffd332948cb8b28f7982ac4d1", null ]
+      [ "kStatus_FLEXIO_I2C_Busy", "a00036.html#gga56a0f36da7f9eaaf54bd05cc2bf49173a8ab8145bc386f3630f13b87c38496331", null ],
+      [ "kStatus_FLEXIO_I2C_Idle", "a00036.html#gga56a0f36da7f9eaaf54bd05cc2bf49173a2f105638fc06422cc54cf5337d507873", null ],
+      [ "kStatus_FLEXIO_I2C_Nak", "a00036.html#gga56a0f36da7f9eaaf54bd05cc2bf49173af5e4a932f6f9e6ae30a42dc31fab8bd5", null ],
+      [ "kStatus_FLEXIO_I2C_Timeout", "a00036.html#gga56a0f36da7f9eaaf54bd05cc2bf49173a3d8bcc4ffd332948cb8b28f7982ac4d1", null ]
     ] ],
     [ "_flexio_i2c_master_interrupt", "a00036.html#gaa4597b532bb2a564c329076dc5da8155", [
       [ "kFLEXIO_I2C_TxEmptyInterruptEnable", "a00036.html#ggaa4597b532bb2a564c329076dc5da8155ac34fefcbb2d45dd7bfd385586439923b", null ],
@@ -48,10 +53,11 @@ var a00036 =
       [ "kFLEXIO_I2C_RxFullFlag", "a00036.html#ggafc92480bf28b1161b62a1f10a23e7458a4eba9f70c326fcea72a255cba80dc42d", null ],
       [ "kFLEXIO_I2C_ReceiveNakFlag", "a00036.html#ggafc92480bf28b1161b62a1f10a23e7458a8774a1fedf2a596d2647864bd4f27664", null ]
     ] ],
-    [ "flexio_i2c_direction_t", "a00036.html#gad7cd7cc57788188d0f804b5e3a549303", [
-      [ "kFLEXIO_I2C_Write", "a00036.html#ggad7cd7cc57788188d0f804b5e3a549303a666a4c181486b773264ce1e038e14850", null ],
-      [ "kFLEXIO_I2C_Read", "a00036.html#ggad7cd7cc57788188d0f804b5e3a549303aeac2a6bd710680e5f644763dea0c89c4", null ]
+    [ "_flexio_i2c_direction", "a00036.html#gabe134561df742c0ed1d6c56196255ccb", [
+      [ "kFLEXIO_I2C_Write", "a00036.html#ggabe134561df742c0ed1d6c56196255ccba666a4c181486b773264ce1e038e14850", null ],
+      [ "kFLEXIO_I2C_Read", "a00036.html#ggabe134561df742c0ed1d6c56196255ccbaeac2a6bd710680e5f644763dea0c89c4", null ]
     ] ],
+    [ "FLEXIO_I2C_CheckForBusyBus", "a00036.html#ga2ded19f42c2b7e09764e6e926c501b67", null ],
     [ "FLEXIO_I2C_MasterInit", "a00036.html#gaaacd8cca7de1ff3a8c33c86d4f7f88fd", null ],
     [ "FLEXIO_I2C_MasterDeinit", "a00036.html#ga2da731bfa4e1e36b5d6d0235898b26dd", null ],
     [ "FLEXIO_I2C_MasterGetDefaultConfig", "a00036.html#gaa85599771e53091102f0823217ad0bcc", null ],

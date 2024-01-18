@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE_UART, SERIAL_PORT_TYPE_UART=1, PRINTF_ADVANCED_ENABLE=1, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, BOARD_NETWORK_USE_100M_ENET_PORT=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>../../../../../../../middleware/soem/osal/baremetal;..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/phy/device/phyksz8081;../../../../../../../middleware/soem/soem;../../../../../../../middleware/soem/oshw/mcux-sdk;../../../../../../../middleware/soem/oshw/mcux-sdk/enet;../../../../../../../middleware/soem/osal;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../components/phy;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../../../../../../../middleware/soem/osal/baremetal;..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/phy/device/phyksz8081;../../../../../../../middleware/soem/oshw/mcux-sdk;../../../../../../../middleware/soem/oshw/mcux-sdk/enet;../../../../../../../middleware/soem/soem;../../../../../../../middleware/soem/osal;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/utilities;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../components/phy;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -434,9 +434,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -512,6 +512,36 @@
               <FileName>fsl_lpuart.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_soc_src.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_soc_src.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_mu.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_mu.c</FilePath>
             </File>
             <File>
               <FileName>fsl_iomuxc.h</FileName>
@@ -596,137 +626,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>soem/soem</GroupName>
-          <Files>
-            <File>
-              <FileName>ethercateoe.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercateoe.c</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatconfig.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatconfig.c</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatdc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatdc.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatprint.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatprint.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatconfig.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatconfig.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatsoe.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatsoe.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatcoe.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatcoe.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatbase.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatbase.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercateoe.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercateoe.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercat.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercat.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatsoe.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatsoe.c</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatconfiglist.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatconfiglist.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatcoe.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatcoe.c</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatprint.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatprint.c</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatfoe.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatfoe.c</FilePath>
-            </File>
-            <File>
-              <FileName>ethercattype.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercattype.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatmain.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatmain.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatmain.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatmain.c</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatdc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatdc.c</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatfoe.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatfoe.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatbase.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatbase.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>soem/oshw/mcux-sdk</GroupName>
           <Files>
             <File>
-              <FileName>oshw.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/oshw.h</FilePath>
-            </File>
-            <File>
-              <FileName>soem_port.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/soem_port.h</FilePath>
-            </File>
-            <File>
-              <FileName>oshw.c</FileName>
+              <FileName>nicdrv.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/oshw.c</FilePath>
-            </File>
-            <File>
-              <FileName>soem_port.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/soem_port.c</FilePath>
+              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/nicdrv.c</FilePath>
             </File>
             <File>
               <FileName>nicdrv.h</FileName>
@@ -734,9 +639,24 @@
               <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/nicdrv.h</FilePath>
             </File>
             <File>
-              <FileName>nicdrv.c</FileName>
+              <FileName>oshw.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/nicdrv.c</FilePath>
+              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/oshw.c</FilePath>
+            </File>
+            <File>
+              <FileName>oshw.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/oshw.h</FilePath>
+            </File>
+            <File>
+              <FileName>soem_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/soem_port.c</FilePath>
+            </File>
+            <File>
+              <FileName>soem_port.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/soem_port.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -744,9 +664,9 @@
           <GroupName>soem/oshw/mcux-sdk/enet</GroupName>
           <Files>
             <File>
-              <FileName>enet.h</FileName>
+              <FileName>soem_enet.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/enet/enet.h</FilePath>
+              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/enet/soem_enet.h</FilePath>
             </File>
             <File>
               <FileName>enet.c</FileName>
@@ -754,9 +674,119 @@
               <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/enet/enet.c</FilePath>
             </File>
             <File>
-              <FileName>soem_enet.h</FileName>
+              <FileName>enet.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/enet/soem_enet.h</FilePath>
+              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/enet/enet.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>soem/soem</GroupName>
+          <Files>
+            <File>
+              <FileName>ethercat.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercat.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatbase.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatbase.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatbase.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatbase.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatcoe.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatcoe.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatcoe.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatcoe.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatconfig.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatconfig.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatconfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatconfig.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatconfiglist.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatconfiglist.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatdc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatdc.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatdc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatdc.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercateoe.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercateoe.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercateoe.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercateoe.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatfoe.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatfoe.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatfoe.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatfoe.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatmain.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatmain.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatmain.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatmain.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatprint.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatprint.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatprint.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatprint.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatsoe.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatsoe.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatsoe.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatsoe.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercattype.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercattype.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -847,6 +877,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1061,7 +1096,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>fromelf.exe --output "$L@L.bin" --bincombined "#L"</UserProg1Name>
+            <UserProg1Name>fromelf.exe --output "$Lsoem_gpio_pulse_bm.bin" --bincombined "#L"</UserProg1Name>
             <UserProg2Name/>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -1318,7 +1353,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE_UART, SERIAL_PORT_TYPE_UART=1, PRINTF_ADVANCED_ENABLE=1, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, BOARD_NETWORK_USE_100M_ENET_PORT=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>../../../../../../../middleware/soem/osal/baremetal;..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/phy/device/phyksz8081;../../../../../../../middleware/soem/soem;../../../../../../../middleware/soem/oshw/mcux-sdk;../../../../../../../middleware/soem/oshw/mcux-sdk/enet;../../../../../../../middleware/soem/osal;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../components/phy;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../../../../../../../middleware/soem/osal/baremetal;..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/phy/device/phyksz8081;../../../../../../../middleware/soem/oshw/mcux-sdk;../../../../../../../middleware/soem/oshw/mcux-sdk/enet;../../../../../../../middleware/soem/soem;../../../../../../../middleware/soem/osal;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/utilities;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../components/phy;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1418,9 +1453,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -1496,6 +1531,36 @@
               <FileName>fsl_lpuart.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_soc_src.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_soc_src.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_mu.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_mu.c</FilePath>
             </File>
             <File>
               <FileName>fsl_iomuxc.h</FileName>
@@ -1580,137 +1645,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>soem/soem</GroupName>
-          <Files>
-            <File>
-              <FileName>ethercateoe.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercateoe.c</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatconfig.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatconfig.c</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatdc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatdc.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatprint.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatprint.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatconfig.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatconfig.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatsoe.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatsoe.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatcoe.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatcoe.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatbase.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatbase.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercateoe.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercateoe.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercat.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercat.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatsoe.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatsoe.c</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatconfiglist.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatconfiglist.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatcoe.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatcoe.c</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatprint.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatprint.c</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatfoe.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatfoe.c</FilePath>
-            </File>
-            <File>
-              <FileName>ethercattype.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercattype.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatmain.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatmain.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatmain.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatmain.c</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatdc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatdc.c</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatfoe.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatfoe.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatbase.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatbase.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>soem/oshw/mcux-sdk</GroupName>
           <Files>
             <File>
-              <FileName>oshw.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/oshw.h</FilePath>
-            </File>
-            <File>
-              <FileName>soem_port.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/soem_port.h</FilePath>
-            </File>
-            <File>
-              <FileName>oshw.c</FileName>
+              <FileName>nicdrv.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/oshw.c</FilePath>
-            </File>
-            <File>
-              <FileName>soem_port.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/soem_port.c</FilePath>
+              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/nicdrv.c</FilePath>
             </File>
             <File>
               <FileName>nicdrv.h</FileName>
@@ -1718,9 +1658,24 @@
               <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/nicdrv.h</FilePath>
             </File>
             <File>
-              <FileName>nicdrv.c</FileName>
+              <FileName>oshw.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/nicdrv.c</FilePath>
+              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/oshw.c</FilePath>
+            </File>
+            <File>
+              <FileName>oshw.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/oshw.h</FilePath>
+            </File>
+            <File>
+              <FileName>soem_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/soem_port.c</FilePath>
+            </File>
+            <File>
+              <FileName>soem_port.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/soem_port.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1728,9 +1683,9 @@
           <GroupName>soem/oshw/mcux-sdk/enet</GroupName>
           <Files>
             <File>
-              <FileName>enet.h</FileName>
+              <FileName>soem_enet.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/enet/enet.h</FilePath>
+              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/enet/soem_enet.h</FilePath>
             </File>
             <File>
               <FileName>enet.c</FileName>
@@ -1738,9 +1693,119 @@
               <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/enet/enet.c</FilePath>
             </File>
             <File>
-              <FileName>soem_enet.h</FileName>
+              <FileName>enet.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/enet/soem_enet.h</FilePath>
+              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/enet/enet.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>soem/soem</GroupName>
+          <Files>
+            <File>
+              <FileName>ethercat.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercat.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatbase.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatbase.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatbase.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatbase.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatcoe.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatcoe.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatcoe.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatcoe.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatconfig.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatconfig.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatconfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatconfig.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatconfiglist.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatconfiglist.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatdc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatdc.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatdc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatdc.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercateoe.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercateoe.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercateoe.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercateoe.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatfoe.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatfoe.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatfoe.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatfoe.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatmain.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatmain.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatmain.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatmain.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatprint.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatprint.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatprint.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatprint.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatsoe.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatsoe.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatsoe.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatsoe.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercattype.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercattype.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1831,6 +1896,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2302,7 +2372,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE_UART, SERIAL_PORT_TYPE_UART=1, PRINTF_ADVANCED_ENABLE=1, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, BOARD_NETWORK_USE_100M_ENET_PORT=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>../../../../../../../middleware/soem/osal/baremetal;..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/phy/device/phyksz8081;../../../../../../../middleware/soem/soem;../../../../../../../middleware/soem/oshw/mcux-sdk;../../../../../../../middleware/soem/oshw/mcux-sdk/enet;../../../../../../../middleware/soem/osal;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../components/phy;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../../../../../../../middleware/soem/osal/baremetal;..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/phy/device/phyksz8081;../../../../../../../middleware/soem/oshw/mcux-sdk;../../../../../../../middleware/soem/oshw/mcux-sdk/enet;../../../../../../../middleware/soem/soem;../../../../../../../middleware/soem/osal;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/utilities;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../components/phy;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2402,9 +2472,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -2480,6 +2550,36 @@
               <FileName>fsl_lpuart.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_soc_src.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_soc_src.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_mu.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_mu.c</FilePath>
             </File>
             <File>
               <FileName>fsl_iomuxc.h</FileName>
@@ -2564,137 +2664,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>soem/soem</GroupName>
-          <Files>
-            <File>
-              <FileName>ethercateoe.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercateoe.c</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatconfig.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatconfig.c</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatdc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatdc.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatprint.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatprint.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatconfig.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatconfig.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatsoe.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatsoe.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatcoe.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatcoe.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatbase.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatbase.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercateoe.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercateoe.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercat.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercat.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatsoe.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatsoe.c</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatconfiglist.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatconfiglist.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatcoe.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatcoe.c</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatprint.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatprint.c</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatfoe.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatfoe.c</FilePath>
-            </File>
-            <File>
-              <FileName>ethercattype.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercattype.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatmain.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatmain.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatmain.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatmain.c</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatdc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatdc.c</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatfoe.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatfoe.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatbase.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatbase.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>soem/oshw/mcux-sdk</GroupName>
           <Files>
             <File>
-              <FileName>oshw.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/oshw.h</FilePath>
-            </File>
-            <File>
-              <FileName>soem_port.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/soem_port.h</FilePath>
-            </File>
-            <File>
-              <FileName>oshw.c</FileName>
+              <FileName>nicdrv.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/oshw.c</FilePath>
-            </File>
-            <File>
-              <FileName>soem_port.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/soem_port.c</FilePath>
+              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/nicdrv.c</FilePath>
             </File>
             <File>
               <FileName>nicdrv.h</FileName>
@@ -2702,9 +2677,24 @@
               <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/nicdrv.h</FilePath>
             </File>
             <File>
-              <FileName>nicdrv.c</FileName>
+              <FileName>oshw.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/nicdrv.c</FilePath>
+              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/oshw.c</FilePath>
+            </File>
+            <File>
+              <FileName>oshw.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/oshw.h</FilePath>
+            </File>
+            <File>
+              <FileName>soem_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/soem_port.c</FilePath>
+            </File>
+            <File>
+              <FileName>soem_port.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/soem_port.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2712,9 +2702,9 @@
           <GroupName>soem/oshw/mcux-sdk/enet</GroupName>
           <Files>
             <File>
-              <FileName>enet.h</FileName>
+              <FileName>soem_enet.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/enet/enet.h</FilePath>
+              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/enet/soem_enet.h</FilePath>
             </File>
             <File>
               <FileName>enet.c</FileName>
@@ -2722,9 +2712,119 @@
               <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/enet/enet.c</FilePath>
             </File>
             <File>
-              <FileName>soem_enet.h</FileName>
+              <FileName>enet.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/enet/soem_enet.h</FilePath>
+              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/enet/enet.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>soem/soem</GroupName>
+          <Files>
+            <File>
+              <FileName>ethercat.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercat.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatbase.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatbase.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatbase.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatbase.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatcoe.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatcoe.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatcoe.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatcoe.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatconfig.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatconfig.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatconfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatconfig.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatconfiglist.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatconfiglist.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatdc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatdc.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatdc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatdc.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercateoe.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercateoe.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercateoe.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercateoe.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatfoe.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatfoe.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatfoe.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatfoe.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatmain.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatmain.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatmain.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatmain.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatprint.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatprint.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatprint.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatprint.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatsoe.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatsoe.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatsoe.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatsoe.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercattype.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercattype.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2815,6 +2915,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3029,7 +3134,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>fromelf.exe --output "$L@L.bin" --bincombined "#L"</UserProg1Name>
+            <UserProg1Name>fromelf.exe --output "$Lsoem_gpio_pulse_bm.bin" --bincombined "#L"</UserProg1Name>
             <UserProg2Name/>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -3286,7 +3391,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE_UART, SERIAL_PORT_TYPE_UART=1, PRINTF_ADVANCED_ENABLE=1, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, BOARD_NETWORK_USE_100M_ENET_PORT=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>../../../../../../../middleware/soem/osal/baremetal;..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/phy/device/phyksz8081;../../../../../../../middleware/soem/soem;../../../../../../../middleware/soem/oshw/mcux-sdk;../../../../../../../middleware/soem/oshw/mcux-sdk/enet;../../../../../../../middleware/soem/osal;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../components/phy;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../../../../../../../middleware/soem/osal/baremetal;..;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../components/phy/device/phyksz8081;../../../../../../../middleware/soem/oshw/mcux-sdk;../../../../../../../middleware/soem/oshw/mcux-sdk/enet;../../../../../../../middleware/soem/soem;../../../../../../../middleware/soem/osal;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/utilities;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../components/phy;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3386,9 +3491,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -3464,6 +3569,36 @@
               <FileName>fsl_lpuart.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_soc_src.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_soc_src.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_mu.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_mu.c</FilePath>
             </File>
             <File>
               <FileName>fsl_iomuxc.h</FileName>
@@ -3548,137 +3683,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>soem/soem</GroupName>
-          <Files>
-            <File>
-              <FileName>ethercateoe.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercateoe.c</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatconfig.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatconfig.c</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatdc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatdc.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatprint.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatprint.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatconfig.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatconfig.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatsoe.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatsoe.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatcoe.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatcoe.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatbase.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatbase.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercateoe.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercateoe.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercat.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercat.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatsoe.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatsoe.c</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatconfiglist.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatconfiglist.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatcoe.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatcoe.c</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatprint.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatprint.c</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatfoe.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatfoe.c</FilePath>
-            </File>
-            <File>
-              <FileName>ethercattype.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercattype.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatmain.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatmain.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatmain.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatmain.c</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatdc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatdc.c</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatfoe.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatfoe.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethercatbase.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/soem/ethercatbase.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>soem/oshw/mcux-sdk</GroupName>
           <Files>
             <File>
-              <FileName>oshw.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/oshw.h</FilePath>
-            </File>
-            <File>
-              <FileName>soem_port.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/soem_port.h</FilePath>
-            </File>
-            <File>
-              <FileName>oshw.c</FileName>
+              <FileName>nicdrv.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/oshw.c</FilePath>
-            </File>
-            <File>
-              <FileName>soem_port.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/soem_port.c</FilePath>
+              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/nicdrv.c</FilePath>
             </File>
             <File>
               <FileName>nicdrv.h</FileName>
@@ -3686,9 +3696,24 @@
               <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/nicdrv.h</FilePath>
             </File>
             <File>
-              <FileName>nicdrv.c</FileName>
+              <FileName>oshw.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/nicdrv.c</FilePath>
+              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/oshw.c</FilePath>
+            </File>
+            <File>
+              <FileName>oshw.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/oshw.h</FilePath>
+            </File>
+            <File>
+              <FileName>soem_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/soem_port.c</FilePath>
+            </File>
+            <File>
+              <FileName>soem_port.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/soem_port.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3696,9 +3721,9 @@
           <GroupName>soem/oshw/mcux-sdk/enet</GroupName>
           <Files>
             <File>
-              <FileName>enet.h</FileName>
+              <FileName>soem_enet.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/enet/enet.h</FilePath>
+              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/enet/soem_enet.h</FilePath>
             </File>
             <File>
               <FileName>enet.c</FileName>
@@ -3706,9 +3731,119 @@
               <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/enet/enet.c</FilePath>
             </File>
             <File>
-              <FileName>soem_enet.h</FileName>
+              <FileName>enet.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/enet/soem_enet.h</FilePath>
+              <FilePath>../../../../../../../middleware/soem/oshw/mcux-sdk/enet/enet.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>soem/soem</GroupName>
+          <Files>
+            <File>
+              <FileName>ethercat.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercat.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatbase.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatbase.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatbase.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatbase.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatcoe.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatcoe.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatcoe.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatcoe.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatconfig.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatconfig.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatconfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatconfig.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatconfiglist.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatconfiglist.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatdc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatdc.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatdc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatdc.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercateoe.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercateoe.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercateoe.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercateoe.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatfoe.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatfoe.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatfoe.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatfoe.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatmain.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatmain.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatmain.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatmain.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatprint.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatprint.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatprint.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatprint.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatsoe.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatsoe.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethercatsoe.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercatsoe.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethercattype.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/soem/soem/ethercattype.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3799,6 +3934,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>

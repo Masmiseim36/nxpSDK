@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../app_bluetooth_config.h -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDIO_ENABLED=1, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, APPL_USE_STANDARD_IO, GATT_CLIENT, GATT_DB, FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ=0, IOT_WIFI_ENABLE_SAVE_NETWORK=1, FSL_OSA_MAIN_FUNC_ENABLE=0, HAL_UART_ADAPTER_FIFO=1, CONFIG_BT_GATT_DYNAMIC_DB=1, FSL_FEATURE_FLASH_PAGE_SIZE_BYTES=4096, gMemManagerLight=0, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, SDK_OS_FREE_RTOS, FSL_OSA_TASK_ENABLE=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING=1, SDK_DEBUGCONSOLE_UART=1, CONFIG_BT_BREDR=1, CONFIG_BT_PERIPHERAL=1, CONFIG_BT_CENTRAL=1, CONFIG_BT_SMP=1, CONFIG_BT_GATT_CLIENT=1, SHELL_TASK_STACK_SIZE=2048, LPUART_RING_BUFFER_SIZE=1024U, HAL_UART_DMA_ENABLE=1, HAL_AUDIO_DMA_INIT_ENABLE=0, LFS_NO_INTRINSICS=1, LFS_NO_ERROR=1, CONFIG_ARM=1, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1, LOG_ENABLE_ASYNC_MODE=1, LOG_MAX_ARGUMENT_COUNT=10, LOG_ENABLE_OVERWRITE=0, SHELL_ADVANCE=1, DEBUG_CONSOLE_RX_ENABLE=0, OSA_USED=1, SHELL_USE_COMMON_TASK=0, CRYPTO_USE_DRIVER_CAAM, CACHE_MODE_WRITE_THROUGH=1, LWIP_DNS=1, LWIP_NETIF_HOSTNAME=1, LWIP_NETIF_STATUS_CALLBACK=1, LWIP_IGMP=1, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"'</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDIO_ENABLED=1, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, APPL_USE_STANDARD_IO, GATT_CLIENT, GATT_DB, FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ=0, IOT_WIFI_ENABLE_SAVE_NETWORK=1, FSL_OSA_MAIN_FUNC_ENABLE=0, HAL_UART_ADAPTER_FIFO=1, CONFIG_BT_GATT_DYNAMIC_DB=1, FSL_FEATURE_FLASH_PAGE_SIZE_BYTES=4096, gMemManagerLight=0, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, SDK_OS_FREE_RTOS, FSL_OSA_TASK_ENABLE=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING=1, SDK_DEBUGCONSOLE_UART=1, CONFIG_BT_BREDR=1, CONFIG_BT_PERIPHERAL=1, CONFIG_BT_CENTRAL=1, CONFIG_BT_SMP=1, CONFIG_BT_GATT_CLIENT=1, SHELL_TASK_STACK_SIZE=2048, LPUART_RING_BUFFER_SIZE=1024U, HAL_UART_DMA_ENABLE=1, HAL_AUDIO_DMA_INIT_ENABLE=0, LFS_NO_INTRINSICS=1, LFS_NO_ERROR=1, CONFIG_ARM=1, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1, SHELL_ADVANCE=1, DEBUG_CONSOLE_RX_ENABLE=0, OSA_USED=1, SHELL_USE_COMMON_TASK=0, LOG_ENABLE_ASYNC_MODE=1, LOG_MAX_ARGUMENT_COUNT=10, LOG_ENABLE_OVERWRITE=0, CRYPTO_USE_DRIVER_CAAM, CACHE_MODE_WRITE_THROUGH=1, LWIP_DNS=1, LWIP_NETIF_HOSTNAME=1, LWIP_NETIF_STATUS_CALLBACK=1, LWIP_IGMP=1, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"'</Define>
               <Undefine/>
-              <IncludePath>..;../controller/configs/mbedtls;../platform/configs;../controller/configs/lwip;../controller/configs/wifi;../../../../../../middleware/wifi_nxp/incl;../../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../../middleware/wifi_nxp/wifidriver;../../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/sdmmc/sdio;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../middleware/usb/host;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../middleware/fatfs/source;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/platform;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind;../../../../../../components/gpio;../../../../../../components/osa;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../middleware/wireless/ethermind/bluetooth/export/eOSAL;../../../../../../middleware/wireless/ethermind/bluetooth/export/include;../../../../../../middleware/wireless/ethermind/bluetooth/export/vendor;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/att;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avctp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avdtp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/bnep;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/dbase;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/hci_1.2;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/mcap;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/obex;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/rfcomm;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sdp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sm;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/smp;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/aes_cmac;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/at_parser;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/object_parser;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/racp;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/storage;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/xml_parser;../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth;../../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal;../../../../../../middleware/wireless/ethermind/port/pal/mcux/sbc;../../../../../../middleware/wireless/ethermind/port/osal/src/freertos;../../../../../../middleware/wireless/ethermind/port/pal/mcux;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/sbc;../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/config;../../../../../../middleware/wireless/ethermind/bluetooth/export/extension;../../../../../../middleware/edgefast_bluetooth/source;../../../../../../middleware/edgefast_bluetooth/include;../../../../../../middleware/edgefast_bluetooth/source/porting;../../../../../../middleware/edgefast_bluetooth/source/services;../../../../../../middleware/edgefast_bluetooth/source/shell;../../../../../../components/internal_flash;../../../../../../middleware/littlefs;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller;../../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../../middleware/wifi_nxp/incl/port/os;../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/osa;../../../../../../middleware/edgefast_bluetooth/output/templates/config;../../../../../../components/log;../../../../../../components/common_task</IncludePath>
+              <IncludePath>..;../controller/configs/mbedtls;../platform/configs;../controller/configs/lwip;../controller/configs/wifi;../../../../../../middleware/wifi_nxp/incl;../../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x;../../../../../../middleware/wifi_nxp/wifidriver;../../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../../middleware/wifi_nxp/firmware_dnld;../../../../../../middleware/wifi_nxp/sdio_nxp_abs;../../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl;../../../../../../middleware/wifi_nxp/fwdnld_intf_abs;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../devices/MIMXRT1176/utilities;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/sdmmc/sdio;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../middleware/usb/host;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../middleware/fatfs/source;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/platform;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind;../../../../../../components/gpio;../../../../../../middleware/edgefast_bluetooth/include;../../../../../../middleware/edgefast_bluetooth/source/shell;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell;../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio;../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio;../../../../../../middleware/edgefast_bluetooth/source/services;../../../../../../middleware/edgefast_bluetooth/source/services/ots;../../../../../../middleware/edgefast_bluetooth/include/bluetooth/services;../../../../../../middleware/edgefast_bluetooth/include/bluetooth/services/config;../../../../../../components/osa;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../middleware/wireless/ethermind/bluetooth/export/eOSAL;../../../../../../middleware/wireless/ethermind/bluetooth/export/include;../../../../../../middleware/wireless/ethermind/bluetooth/export/vendor;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/att;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avctp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avdtp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/bnep;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/dbase;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/hci_1.2;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/mcap;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/obex;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/rfcomm;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sdp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sm;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/smp;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/aes_cmac;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/at_parser;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/object_parser;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/racp;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/storage;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/xml_parser;../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth;../../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal;../../../../../../middleware/wireless/ethermind/port/pal/mcux/sbc;../../../../../../middleware/wireless/ethermind/port/osal/src/freertos;../../../../../../middleware/wireless/ethermind/port/pal/mcux;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/sbc;../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/config;../../../../../../middleware/wireless/ethermind/bluetooth/export/extension;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host;../../../../../../middleware/edgefast_bluetooth/source/porting;../../../../../../components/internal_flash;../../../../../../middleware/littlefs;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller;../../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../../middleware/wifi_nxp/incl/port/os;../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits;../../../../../../components/wifi_bt_module/incl;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/osa;../../../../../../components/common_task;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/crypto;../../../../../../components/log</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -409,14 +409,19 @@
               <FilePath>../edgefast_bluetooth_config.h</FilePath>
             </File>
             <File>
-              <FileName>bt_module_config.h</FileName>
+              <FileName>edgefast_bluetooth_audio_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../bt_module_config.h</FilePath>
+              <FilePath>../edgefast_bluetooth_audio_config.h</FilePath>
             </File>
             <File>
-              <FileName>edgefast_bluetooth_config.h</FileName>
+              <FileName>edgefast_bluetooth_debug_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/edgefast_bluetooth/output/templates/config/edgefast_bluetooth_config.h</FilePath>
+              <FilePath>../edgefast_bluetooth_debug_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_bt_module_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../wifi_bt_module_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -499,9 +504,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -713,6 +718,16 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/littlefs_pl.h</FilePath>
             </File>
+            <File>
+              <FileName>fw_loader_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/fw_loader_uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fw_loader_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/fw_loader_uart.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -764,16 +779,6 @@
               <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/incl/type_decls.h</FilePath>
             </File>
             <File>
-              <FileName>mlan_sdio_defs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_sdio_defs.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_sdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_sdio.h</FilePath>
-            </File>
-            <File>
               <FileName>mlan_decl.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_decl.h</FilePath>
@@ -786,32 +791,72 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi/wifi_bt_firmware</GroupName>
+          <GroupName>wifi/wifi_bt_firmware/8801</GroupName>
           <Files>
             <File>
               <FileName>sd8801_wlan.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/sd8801_wlan.h</FilePath>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801/sd8801_wlan.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/wifi_bt_firmware/IW416</GroupName>
+          <Files>
             <File>
               <FileName>sduartIW416_wlan_bt.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduartIW416_wlan_bt.h</FilePath>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416/sduartIW416_wlan_bt.h</FilePath>
             </File>
+            <File>
+              <FileName>sdIW416_wlan.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416/sdIW416_wlan.h</FilePath>
+            </File>
+            <File>
+              <FileName>uartIW416_bt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416/uartIW416_bt.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/wifi_bt_firmware/8987</GroupName>
+          <Files>
             <File>
               <FileName>sduart8987_wlan_bt.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduart8987_wlan_bt.h</FilePath>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987/sduart8987_wlan_bt.h</FilePath>
             </File>
             <File>
-              <FileName>sduart_nw61x.h</FileName>
+              <FileName>sd8987_wlan.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduart_nw61x.h</FilePath>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987/sd8987_wlan.h</FilePath>
             </File>
             <File>
-              <FileName>wlan_bt_fw.h</FileName>
+              <FileName>uart8987_bt.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/wlan_bt_fw.h</FilePath>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987/uart8987_bt.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/wifi_bt_firmware/nw61x</GroupName>
+          <Files>
+            <File>
+              <FileName>sduart_nw61x_se.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x/sduart_nw61x_se.h</FilePath>
+            </File>
+            <File>
+              <FileName>sd_nw61x_se.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x/sd_nw61x_se.h</FilePath>
+            </File>
+            <File>
+              <FileName>uart_nw61x_se.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x/uart_nw61x_se.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -829,24 +874,24 @@
               <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/sdio.h</FilePath>
             </File>
             <File>
+              <FileName>wifi-sdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/wifi-sdio.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/firmware_dnld</GroupName>
+          <Files>
+            <File>
               <FileName>firmware_dnld.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/firmware_dnld.c</FilePath>
+              <FilePath>../../../../../../middleware/wifi_nxp/firmware_dnld/firmware_dnld.c</FilePath>
             </File>
             <File>
               <FileName>firmware_dnld.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/firmware_dnld.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_sdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/mlan_sdio.c</FilePath>
-            </File>
-            <File>
-              <FileName>wifi-sdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/wifi-sdio.h</FilePath>
+              <FilePath>../../../../../../middleware/wifi_nxp/firmware_dnld/firmware_dnld.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1077,6 +1122,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>
@@ -1496,6 +1546,696 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>edgefast/bluetooth/shell/audio</GroupName>
+          <Files>
+            <File>
+              <FileName>audio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/audio.h</FilePath>
+            </File>
+            <File>
+              <FileName>bap_broadcast_assistant.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/bap_broadcast_assistant.c</FilePath>
+            </File>
+            <File>
+              <FileName>bap_scan_delegator.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/bap_scan_delegator.c</FilePath>
+            </File>
+            <File>
+              <FileName>bap.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/bap.c</FilePath>
+            </File>
+            <File>
+              <FileName>cap_acceptor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/cap_acceptor.c</FilePath>
+            </File>
+            <File>
+              <FileName>cap_initiator.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/cap_initiator.c</FilePath>
+            </File>
+            <File>
+              <FileName>csip_set_coordinator.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/csip_set_coordinator.c</FilePath>
+            </File>
+            <File>
+              <FileName>csip_set_member.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/csip_set_member.c</FilePath>
+            </File>
+            <File>
+              <FileName>has_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/has_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>has.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/has.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/mcc.c</FilePath>
+            </File>
+            <File>
+              <FileName>media_controller.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/media_controller.c</FilePath>
+            </File>
+            <File>
+              <FileName>micp_mic_ctlr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/micp_mic_ctlr.c</FilePath>
+            </File>
+            <File>
+              <FileName>micp_mic_dev.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/micp_mic_dev.c</FilePath>
+            </File>
+            <File>
+              <FileName>mpl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/mpl.c</FilePath>
+            </File>
+            <File>
+              <FileName>tbs_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/tbs_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>tbs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/tbs.c</FilePath>
+            </File>
+            <File>
+              <FileName>tmap.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/tmap.c</FilePath>
+            </File>
+            <File>
+              <FileName>vcp_vol_ctlr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/vcp_vol_ctlr.c</FilePath>
+            </File>
+            <File>
+              <FileName>vcp_vol_rend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/vcp_vol_rend.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>edgefast/bluetooth/include/bluetooth/audio/config</GroupName>
+          <Files>
+            <File>
+              <FileName>config_cap.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config/config_cap.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_aics.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config/config_aics.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_vocs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config/config_vocs.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_vcp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config/config_vcp.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_micp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config/config_micp.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_csip.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config/config_csip.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_mcs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config/config_mcs.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_mcs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config/config_mcs.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_mpl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config/config_mpl.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_mctl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config/config_mctl.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_ascs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config/config_ascs.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_bap.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config/config_bap.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_pacs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config/config_pacs.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_bass.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config/config_bass.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_has.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config/config_has.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_tbs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config/config_tbs.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_tmap.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config/config_tmap.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>edgefast/bluetooth/include/bluetooth/audio</GroupName>
+          <Files>
+            <File>
+              <FileName>cap.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/cap.h</FilePath>
+            </File>
+            <File>
+              <FileName>aics.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/aics.h</FilePath>
+            </File>
+            <File>
+              <FileName>vocs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/vocs.h</FilePath>
+            </File>
+            <File>
+              <FileName>vcp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/vcp.h</FilePath>
+            </File>
+            <File>
+              <FileName>micp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/micp.h</FilePath>
+            </File>
+            <File>
+              <FileName>csip.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/csip.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/mcs.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/mcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>media_proxy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/media_proxy.h</FilePath>
+            </File>
+            <File>
+              <FileName>audio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/audio.h</FilePath>
+            </File>
+            <File>
+              <FileName>bap_lc3_preset.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/bap_lc3_preset.h</FilePath>
+            </File>
+            <File>
+              <FileName>bap.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/bap.h</FilePath>
+            </File>
+            <File>
+              <FileName>lc3.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/lc3.h</FilePath>
+            </File>
+            <File>
+              <FileName>pacs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/pacs.h</FilePath>
+            </File>
+            <File>
+              <FileName>bap.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/bap.h</FilePath>
+            </File>
+            <File>
+              <FileName>has.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/has.h</FilePath>
+            </File>
+            <File>
+              <FileName>tbs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/tbs.h</FilePath>
+            </File>
+            <File>
+              <FileName>tmap.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/tmap.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>edgefast/bluetooth/source/audio</GroupName>
+          <Files>
+            <File>
+              <FileName>cap_acceptor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/cap_acceptor.c</FilePath>
+            </File>
+            <File>
+              <FileName>cap_initiator.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/cap_initiator.c</FilePath>
+            </File>
+            <File>
+              <FileName>cap_stream.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/cap_stream.c</FilePath>
+            </File>
+            <File>
+              <FileName>cap_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/cap_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>aics.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/aics.c</FilePath>
+            </File>
+            <File>
+              <FileName>aics_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/aics_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>aics_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/aics_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>vocs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/vocs.c</FilePath>
+            </File>
+            <File>
+              <FileName>vocs_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/vocs_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>vocs_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/vocs_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>vcp_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/vcp_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>vcp_vol_ctlr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/vcp_vol_ctlr.c</FilePath>
+            </File>
+            <File>
+              <FileName>vcp_vol_rend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/vcp_vol_rend.c</FilePath>
+            </File>
+            <File>
+              <FileName>micp_mic_ctlr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/micp_mic_ctlr.c</FilePath>
+            </File>
+            <File>
+              <FileName>micp_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/micp_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>micp_mic_dev.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/micp_mic_dev.c</FilePath>
+            </File>
+            <File>
+              <FileName>csip_crypto.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/csip_crypto.c</FilePath>
+            </File>
+            <File>
+              <FileName>csip_crypto.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/csip_crypto.h</FilePath>
+            </File>
+            <File>
+              <FileName>csip_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/csip_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>csip_set_coordinator.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/csip_set_coordinator.c</FilePath>
+            </File>
+            <File>
+              <FileName>csip_set_member.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/csip_set_member.c</FilePath>
+            </File>
+            <File>
+              <FileName>ccid_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/ccid_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>ccid.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/ccid.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/mcs.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcs_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/mcs_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/mcc.c</FilePath>
+            </File>
+            <File>
+              <FileName>media_proxy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/media_proxy.c</FilePath>
+            </File>
+            <File>
+              <FileName>media_proxy_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/media_proxy_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/mpl.c</FilePath>
+            </File>
+            <File>
+              <FileName>mpl_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/mpl_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>ascs_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/ascs_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>ascs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/ascs.c</FilePath>
+            </File>
+            <File>
+              <FileName>audio_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/audio_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>bap_iso.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/bap_iso.c</FilePath>
+            </File>
+            <File>
+              <FileName>bap_iso.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/bap_iso.h</FilePath>
+            </File>
+            <File>
+              <FileName>audio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/audio.c</FilePath>
+            </File>
+            <File>
+              <FileName>bap_broadcast_sink.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/bap_broadcast_sink.c</FilePath>
+            </File>
+            <File>
+              <FileName>bap_broadcast_source.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/bap_broadcast_source.c</FilePath>
+            </File>
+            <File>
+              <FileName>codec.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/codec.c</FilePath>
+            </File>
+            <File>
+              <FileName>bap_endpoint.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/bap_endpoint.h</FilePath>
+            </File>
+            <File>
+              <FileName>pacs_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/pacs_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>pacs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/pacs.c</FilePath>
+            </File>
+            <File>
+              <FileName>bap_stream.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/bap_stream.c</FilePath>
+            </File>
+            <File>
+              <FileName>bap_stream.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/bap_stream.h</FilePath>
+            </File>
+            <File>
+              <FileName>bap_unicast_client_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/bap_unicast_client_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>bap_unicast_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/bap_unicast_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>bap_unicast_server.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/bap_unicast_server.c</FilePath>
+            </File>
+            <File>
+              <FileName>bap_unicast_server.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/bap_unicast_server.h</FilePath>
+            </File>
+            <File>
+              <FileName>bap_broadcast_assistant.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/bap_broadcast_assistant.c</FilePath>
+            </File>
+            <File>
+              <FileName>bap_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/bap_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>bap_scan_delegator.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/bap_scan_delegator.c</FilePath>
+            </File>
+            <File>
+              <FileName>has_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/has_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>has_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/has_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>has.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/has.c</FilePath>
+            </File>
+            <File>
+              <FileName>tbs_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/tbs_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>tbs_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/tbs_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>tbs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/tbs.c</FilePath>
+            </File>
+            <File>
+              <FileName>tmap.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/tmap.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>edgefast/bluetooth/source/services/ots</GroupName>
+          <Files>
+            <File>
+              <FileName>ots.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/services/ots/ots.c</FilePath>
+            </File>
+            <File>
+              <FileName>ots_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/services/ots/ots_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>ots_client_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/services/ots/ots_client_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>ots_dir_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/services/ots/ots_dir_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>ots_dir_list_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/services/ots/ots_dir_list_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>ots_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/services/ots/ots_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>ots_l2cap.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/services/ots/ots_l2cap.c</FilePath>
+            </File>
+            <File>
+              <FileName>ots_l2cap_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/services/ots/ots_l2cap_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>ots_oacp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/services/ots/ots_oacp.c</FilePath>
+            </File>
+            <File>
+              <FileName>ots_oacp_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/services/ots/ots_oacp_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>ots_obj_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/services/ots/ots_obj_manager.c</FilePath>
+            </File>
+            <File>
+              <FileName>ots_obj_manager_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/services/ots/ots_obj_manager_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>ots_olcp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/services/ots/ots_olcp.c</FilePath>
+            </File>
+            <File>
+              <FileName>ots_olcp_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/services/ots/ots_olcp_internal.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>edgefast/bluetooth/include/bluetooth/services</GroupName>
+          <Files>
+            <File>
+              <FileName>ots.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/services/ots.h</FilePath>
+            </File>
+            <File>
+              <FileName>bas.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/services/bas.h</FilePath>
+            </File>
+            <File>
+              <FileName>hrs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/services/hrs.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>edgefast/bluetooth/include/bluetooth/services/config</GroupName>
+          <Files>
+            <File>
+              <FileName>config_ots.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/services/config/config_ots.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
@@ -1772,6 +2512,11 @@
               <FileName>BT_a2dp_api.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_a2dp_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>BT_analyzer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_analyzer.h</FilePath>
             </File>
             <File>
               <FileName>BT_api.h</FileName>
@@ -2581,7 +3326,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>edgefast/bluetooth/source</GroupName>
+          <GroupName>edgefast/bluetooth/source/host</GroupName>
           <Files>
             <File>
               <FileName>bt_pal_a2dp.c</FileName>
@@ -2647,6 +3392,16 @@
               <FileName>bt_pal_conn.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_conn.c</FilePath>
+            </File>
+            <File>
+              <FileName>bt_pal_data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_data.c</FilePath>
+            </File>
+            <File>
+              <FileName>bt_pal_ead.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_ead.c</FilePath>
             </File>
             <File>
               <FileName>bt_pal_conn_internal.h</FileName>
@@ -2747,6 +3502,11 @@
               <FileName>bt_pal_addr.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_addr.c</FilePath>
+            </File>
+            <File>
+              <FileName>bt_pal_addr_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_addr_internal.h</FilePath>
             </File>
             <File>
               <FileName>bt_pal_buf.c</FileName>
@@ -2896,7 +3656,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>edgefast/bluetooth/source/a2dp_codec/sbc</GroupName>
+          <GroupName>edgefast/bluetooth/source/host/a2dp_codec/sbc</GroupName>
           <Files>
             <File>
               <FileName>a2dp_codec_sbc.c</FileName>
@@ -2999,9 +3759,19 @@
               <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/hci.h</FilePath>
             </File>
             <File>
-              <FileName>hci_err.h</FileName>
+              <FileName>byteorder.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/hci_err.h</FilePath>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/byteorder.h</FilePath>
+            </File>
+            <File>
+              <FileName>hci_types.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/hci_types.h</FilePath>
+            </File>
+            <File>
+              <FileName>ead.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/ead.h</FilePath>
             </File>
             <File>
               <FileName>hci_raw.h</FileName>
@@ -3089,6 +3859,16 @@
               <FilePath>../../../../../../middleware/edgefast_bluetooth/include/sys/byteorder.h</FilePath>
             </File>
             <File>
+              <FileName>ring_buffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/sys/ring_buffer.h</FilePath>
+            </File>
+            <File>
+              <FileName>ffs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/sys/ffs.h</FilePath>
+            </File>
+            <File>
               <FileName>work_queue.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/edgefast_bluetooth/include/sys/work_queue.h</FilePath>
@@ -3123,6 +3903,11 @@
         <Group>
           <GroupName>edgefast/bluetooth/porting</GroupName>
           <Files>
+            <File>
+              <FileName>ring_buffer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/porting/ring_buffer.c</FilePath>
+            </File>
             <File>
               <FileName>porting.c</FileName>
               <FileType>1</FileType>
@@ -3167,6 +3952,21 @@
               <FileName>errno.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/edgefast_bluetooth/source/porting/errno/errno.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>edgefast/bluetooth/porting/fifo</GroupName>
+          <Files>
+            <File>
+              <FileName>fifo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/porting/fifo/fifo.c</FilePath>
+            </File>
+            <File>
+              <FileName>fifo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/porting/fifo/fifo.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3227,21 +4027,6 @@
               <FileName>hrs.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/edgefast_bluetooth/source/services/hrs.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>edgefast/bluetooth/include/bluetooth/services</GroupName>
-          <Files>
-            <File>
-              <FileName>bas.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/services/bas.h</FilePath>
-            </File>
-            <File>
-              <FileName>hrs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/services/hrs.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4571,13 +5356,58 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi/incl/wifidriver</GroupName>
+          <GroupName>wifi/sdio_nxp_abs</GroupName>
           <Files>
+            <File>
+              <FileName>mlan_sdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/sdio_nxp_abs/mlan_sdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fwdnld_sdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/sdio_nxp_abs/fwdnld_sdio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/sdio_nxp_abs/incl</GroupName>
+          <Files>
+            <File>
+              <FileName>fwdnld_sdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl/fwdnld_sdio.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_sdio_defs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl/mlan_sdio_defs.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_sdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl/mlan_sdio.h</FilePath>
+            </File>
             <File>
               <FileName>mlan_sdio_api.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/incl/wifidriver/mlan_sdio_api.h</FilePath>
+              <FilePath>../../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl/mlan_sdio_api.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/incl/port/os</GroupName>
+          <Files>
+            <File>
+              <FileName>wm_os.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/incl/port/os/wm_os.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/incl/wifidriver</GroupName>
+          <Files>
             <File>
               <FileName>wifi-decl.h</FileName>
               <FileType>5</FileType>
@@ -4596,22 +5426,37 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi/incl/port/os</GroupName>
-          <Files>
-            <File>
-              <FileName>wm_os.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/incl/port/os/wm_os.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>wifi/port/os</GroupName>
           <Files>
             <File>
               <FileName>os.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/wifi_nxp/port/os/os.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/wifi_bt_firmware</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan_bt_fw.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/wlan_bt_fw.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/fwdnld_intf_abs</GroupName>
+          <Files>
+            <File>
+              <FileName>fwdnld_intf_abs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/fwdnld_intf_abs/fwdnld_intf_abs.c</FilePath>
+            </File>
+            <File>
+              <FileName>fwdnld_intf_abs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/fwdnld_intf_abs/fwdnld_intf_abs.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4634,49 +5479,9 @@
           <GroupName>component/wifi_bt_module/Murata/tx_pwr_limits</GroupName>
           <Files>
             <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_1XK_CA.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_CA.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_1XK_EU.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_EU.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_1XK_JP.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_JP.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_1XK_US.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_US.h</FilePath>
-            </File>
-            <File>
               <FileName>wlan_txpwrlimit_cfg_murata_1XK_WW.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_WW.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_CA.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_CA.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_EU.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_EU.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_JP.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_JP.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_US.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_US.h</FilePath>
             </File>
             <File>
               <FileName>wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FileName>
@@ -4684,29 +5489,34 @@
               <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FilePath>
             </File>
             <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_2DS_CA.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_CA.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_2DS_EU.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_EU.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_2DS_JP.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_JP.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_2DS_US.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_US.h</FilePath>
-            </File>
-            <File>
               <FileName>wlan_txpwrlimit_cfg_murata_2DS_WW.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_WW.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2EL_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2EL_WW.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/wifi_bt_module/u-blox/tx_pwr_limits</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_jody_w5_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits/wlan_txpwrlimit_cfg_jody_w5_WW.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/wifi_bt_module/incl</GroupName>
+          <Files>
+            <File>
+              <FileName>wifi_bt_module_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/incl/wifi_bt_module_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4786,6 +5596,36 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/common_task</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_component_common_task.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/common_task/fsl_component_common_task.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_common_task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/common_task/fsl_component_common_task.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>edgefast/bluetooth/crypto</GroupName>
+          <Files>
+            <File>
+              <FileName>bt_crypto.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/crypto/bt_crypto.c</FilePath>
+            </File>
+            <File>
+              <FileName>bt_crypto.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/crypto/bt_crypto.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>component/log</GroupName>
           <Files>
             <File>
@@ -4812,21 +5652,6 @@
               <FileName>fsl_component_log_backend_debugconsole.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/log/fsl_component_log_backend_debugconsole.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/common_task</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_component_common_task.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/common_task/fsl_component_common_task.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_common_task.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/common_task/fsl_component_common_task.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5161,9 +5986,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../app_bluetooth_config.h -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDIO_ENABLED=1, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, APPL_USE_STANDARD_IO, GATT_CLIENT, GATT_DB, FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ=0, IOT_WIFI_ENABLE_SAVE_NETWORK=1, FSL_OSA_MAIN_FUNC_ENABLE=0, HAL_UART_ADAPTER_FIFO=1, CONFIG_BT_GATT_DYNAMIC_DB=1, FSL_FEATURE_FLASH_PAGE_SIZE_BYTES=4096, gMemManagerLight=0, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, SDK_OS_FREE_RTOS, FSL_OSA_TASK_ENABLE=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING=1, SDK_DEBUGCONSOLE_UART=1, CONFIG_BT_BREDR=1, CONFIG_BT_PERIPHERAL=1, CONFIG_BT_CENTRAL=1, CONFIG_BT_SMP=1, CONFIG_BT_GATT_CLIENT=1, SHELL_TASK_STACK_SIZE=2048, LPUART_RING_BUFFER_SIZE=1024U, HAL_UART_DMA_ENABLE=1, HAL_AUDIO_DMA_INIT_ENABLE=0, LFS_NO_INTRINSICS=1, LFS_NO_ERROR=1, CONFIG_ARM=1, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1, LOG_ENABLE_ASYNC_MODE=1, LOG_MAX_ARGUMENT_COUNT=10, LOG_ENABLE_OVERWRITE=0, SHELL_ADVANCE=1, DEBUG_CONSOLE_RX_ENABLE=0, OSA_USED=1, SHELL_USE_COMMON_TASK=0, CRYPTO_USE_DRIVER_CAAM, CACHE_MODE_WRITE_THROUGH=1, LWIP_DNS=1, LWIP_NETIF_HOSTNAME=1, LWIP_NETIF_STATUS_CALLBACK=1, LWIP_IGMP=1, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"'</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDIO_ENABLED=1, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, APPL_USE_STANDARD_IO, GATT_CLIENT, GATT_DB, FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ=0, IOT_WIFI_ENABLE_SAVE_NETWORK=1, FSL_OSA_MAIN_FUNC_ENABLE=0, HAL_UART_ADAPTER_FIFO=1, CONFIG_BT_GATT_DYNAMIC_DB=1, FSL_FEATURE_FLASH_PAGE_SIZE_BYTES=4096, gMemManagerLight=0, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, SDK_OS_FREE_RTOS, FSL_OSA_TASK_ENABLE=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING=1, SDK_DEBUGCONSOLE_UART=1, CONFIG_BT_BREDR=1, CONFIG_BT_PERIPHERAL=1, CONFIG_BT_CENTRAL=1, CONFIG_BT_SMP=1, CONFIG_BT_GATT_CLIENT=1, SHELL_TASK_STACK_SIZE=2048, LPUART_RING_BUFFER_SIZE=1024U, HAL_UART_DMA_ENABLE=1, HAL_AUDIO_DMA_INIT_ENABLE=0, LFS_NO_INTRINSICS=1, LFS_NO_ERROR=1, CONFIG_ARM=1, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1, SHELL_ADVANCE=1, DEBUG_CONSOLE_RX_ENABLE=0, OSA_USED=1, SHELL_USE_COMMON_TASK=0, LOG_ENABLE_ASYNC_MODE=1, LOG_MAX_ARGUMENT_COUNT=10, LOG_ENABLE_OVERWRITE=0, CRYPTO_USE_DRIVER_CAAM, CACHE_MODE_WRITE_THROUGH=1, LWIP_DNS=1, LWIP_NETIF_HOSTNAME=1, LWIP_NETIF_STATUS_CALLBACK=1, LWIP_IGMP=1, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"'</Define>
               <Undefine/>
-              <IncludePath>..;../controller/configs/mbedtls;../platform/configs;../controller/configs/lwip;../controller/configs/wifi;../../../../../../middleware/wifi_nxp/incl;../../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../../middleware/wifi_nxp/wifidriver;../../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/sdmmc/sdio;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../middleware/usb/host;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../middleware/fatfs/source;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/platform;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind;../../../../../../components/gpio;../../../../../../components/osa;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../middleware/wireless/ethermind/bluetooth/export/eOSAL;../../../../../../middleware/wireless/ethermind/bluetooth/export/include;../../../../../../middleware/wireless/ethermind/bluetooth/export/vendor;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/att;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avctp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avdtp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/bnep;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/dbase;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/hci_1.2;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/mcap;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/obex;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/rfcomm;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sdp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sm;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/smp;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/aes_cmac;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/at_parser;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/object_parser;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/racp;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/storage;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/xml_parser;../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth;../../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal;../../../../../../middleware/wireless/ethermind/port/pal/mcux/sbc;../../../../../../middleware/wireless/ethermind/port/osal/src/freertos;../../../../../../middleware/wireless/ethermind/port/pal/mcux;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/sbc;../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/config;../../../../../../middleware/wireless/ethermind/bluetooth/export/extension;../../../../../../middleware/edgefast_bluetooth/source;../../../../../../middleware/edgefast_bluetooth/include;../../../../../../middleware/edgefast_bluetooth/source/porting;../../../../../../middleware/edgefast_bluetooth/source/services;../../../../../../middleware/edgefast_bluetooth/source/shell;../../../../../../components/internal_flash;../../../../../../middleware/littlefs;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller;../../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../../middleware/wifi_nxp/incl/port/os;../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/osa;../../../../../../middleware/edgefast_bluetooth/output/templates/config;../../../../../../components/log;../../../../../../components/common_task</IncludePath>
+              <IncludePath>..;../controller/configs/mbedtls;../platform/configs;../controller/configs/lwip;../controller/configs/wifi;../../../../../../middleware/wifi_nxp/incl;../../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987;../../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x;../../../../../../middleware/wifi_nxp/wifidriver;../../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../../middleware/wifi_nxp/firmware_dnld;../../../../../../middleware/wifi_nxp/sdio_nxp_abs;../../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl;../../../../../../middleware/wifi_nxp/fwdnld_intf_abs;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../devices/MIMXRT1176/utilities;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/sdmmc/sdio;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../middleware/usb/host;../../../../../../middleware/usb/include;../../../../../../middleware/usb/host/class;../../../../../../middleware/usb/phy;../../../../../../middleware/fatfs/source/fsl_usb_disk;../../../../../../middleware/fatfs/source;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/platform;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind;../../../../../../components/gpio;../../../../../../middleware/edgefast_bluetooth/include;../../../../../../middleware/edgefast_bluetooth/source/shell;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell;../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio;../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio;../../../../../../middleware/edgefast_bluetooth/source/services;../../../../../../middleware/edgefast_bluetooth/source/services/ots;../../../../../../middleware/edgefast_bluetooth/include/bluetooth/services;../../../../../../middleware/edgefast_bluetooth/include/bluetooth/services/config;../../../../../../components/osa;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../middleware/wireless/ethermind/bluetooth/export/eOSAL;../../../../../../middleware/wireless/ethermind/bluetooth/export/include;../../../../../../middleware/wireless/ethermind/bluetooth/export/vendor;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/att;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avctp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avdtp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/bnep;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/dbase;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/hci_1.2;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/mcap;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/obex;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/rfcomm;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sdp;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sm;../../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/smp;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/aes_cmac;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/at_parser;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/object_parser;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/racp;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/storage;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/xml_parser;../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth;../../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal;../../../../../../middleware/wireless/ethermind/port/pal/mcux/sbc;../../../../../../middleware/wireless/ethermind/port/osal/src/freertos;../../../../../../middleware/wireless/ethermind/port/pal/mcux;../../../../../../middleware/wireless/ethermind/bluetooth/private/utils/sbc;../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/config;../../../../../../middleware/wireless/ethermind/bluetooth/export/extension;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host;../../../../../../middleware/edgefast_bluetooth/source/porting;../../../../../../components/internal_flash;../../../../../../middleware/littlefs;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller;../../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../../middleware/wifi_nxp/incl/port/os;../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits;../../../../../../components/wifi_bt_module/incl;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/osa;../../../../../../components/common_task;../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/crypto;../../../../../../components/log</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5238,14 +6063,19 @@
               <FilePath>../edgefast_bluetooth_config.h</FilePath>
             </File>
             <File>
-              <FileName>bt_module_config.h</FileName>
+              <FileName>edgefast_bluetooth_audio_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../bt_module_config.h</FilePath>
+              <FilePath>../edgefast_bluetooth_audio_config.h</FilePath>
             </File>
             <File>
-              <FileName>edgefast_bluetooth_config.h</FileName>
+              <FileName>edgefast_bluetooth_debug_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/edgefast_bluetooth/output/templates/config/edgefast_bluetooth_config.h</FilePath>
+              <FilePath>../edgefast_bluetooth_debug_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_bt_module_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../wifi_bt_module_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5328,9 +6158,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -5542,6 +6372,16 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/littlefs_pl.h</FilePath>
             </File>
+            <File>
+              <FileName>fw_loader_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/fw_loader_uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>fw_loader_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/fw_loader_uart.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -5593,16 +6433,6 @@
               <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/incl/type_decls.h</FilePath>
             </File>
             <File>
-              <FileName>mlan_sdio_defs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_sdio_defs.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_sdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_sdio.h</FilePath>
-            </File>
-            <File>
               <FileName>mlan_decl.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_decl.h</FilePath>
@@ -5615,32 +6445,72 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi/wifi_bt_firmware</GroupName>
+          <GroupName>wifi/wifi_bt_firmware/8801</GroupName>
           <Files>
             <File>
               <FileName>sd8801_wlan.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/sd8801_wlan.h</FilePath>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801/sd8801_wlan.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/wifi_bt_firmware/IW416</GroupName>
+          <Files>
             <File>
               <FileName>sduartIW416_wlan_bt.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduartIW416_wlan_bt.h</FilePath>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416/sduartIW416_wlan_bt.h</FilePath>
             </File>
+            <File>
+              <FileName>sdIW416_wlan.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416/sdIW416_wlan.h</FilePath>
+            </File>
+            <File>
+              <FileName>uartIW416_bt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416/uartIW416_bt.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/wifi_bt_firmware/8987</GroupName>
+          <Files>
             <File>
               <FileName>sduart8987_wlan_bt.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduart8987_wlan_bt.h</FilePath>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987/sduart8987_wlan_bt.h</FilePath>
             </File>
             <File>
-              <FileName>sduart_nw61x.h</FileName>
+              <FileName>sd8987_wlan.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduart_nw61x.h</FilePath>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987/sd8987_wlan.h</FilePath>
             </File>
             <File>
-              <FileName>wlan_bt_fw.h</FileName>
+              <FileName>uart8987_bt.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/wlan_bt_fw.h</FilePath>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987/uart8987_bt.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/wifi_bt_firmware/nw61x</GroupName>
+          <Files>
+            <File>
+              <FileName>sduart_nw61x_se.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x/sduart_nw61x_se.h</FilePath>
+            </File>
+            <File>
+              <FileName>sd_nw61x_se.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x/sd_nw61x_se.h</FilePath>
+            </File>
+            <File>
+              <FileName>uart_nw61x_se.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x/uart_nw61x_se.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5658,24 +6528,24 @@
               <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/sdio.h</FilePath>
             </File>
             <File>
+              <FileName>wifi-sdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/wifi-sdio.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/firmware_dnld</GroupName>
+          <Files>
+            <File>
               <FileName>firmware_dnld.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/firmware_dnld.c</FilePath>
+              <FilePath>../../../../../../middleware/wifi_nxp/firmware_dnld/firmware_dnld.c</FilePath>
             </File>
             <File>
               <FileName>firmware_dnld.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/firmware_dnld.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_sdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/mlan_sdio.c</FilePath>
-            </File>
-            <File>
-              <FileName>wifi-sdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/wifidriver/wifi-sdio.h</FilePath>
+              <FilePath>../../../../../../middleware/wifi_nxp/firmware_dnld/firmware_dnld.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5906,6 +6776,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>
@@ -6325,6 +7200,696 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>edgefast/bluetooth/shell/audio</GroupName>
+          <Files>
+            <File>
+              <FileName>audio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/audio.h</FilePath>
+            </File>
+            <File>
+              <FileName>bap_broadcast_assistant.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/bap_broadcast_assistant.c</FilePath>
+            </File>
+            <File>
+              <FileName>bap_scan_delegator.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/bap_scan_delegator.c</FilePath>
+            </File>
+            <File>
+              <FileName>bap.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/bap.c</FilePath>
+            </File>
+            <File>
+              <FileName>cap_acceptor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/cap_acceptor.c</FilePath>
+            </File>
+            <File>
+              <FileName>cap_initiator.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/cap_initiator.c</FilePath>
+            </File>
+            <File>
+              <FileName>csip_set_coordinator.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/csip_set_coordinator.c</FilePath>
+            </File>
+            <File>
+              <FileName>csip_set_member.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/csip_set_member.c</FilePath>
+            </File>
+            <File>
+              <FileName>has_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/has_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>has.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/has.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/mcc.c</FilePath>
+            </File>
+            <File>
+              <FileName>media_controller.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/media_controller.c</FilePath>
+            </File>
+            <File>
+              <FileName>micp_mic_ctlr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/micp_mic_ctlr.c</FilePath>
+            </File>
+            <File>
+              <FileName>micp_mic_dev.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/micp_mic_dev.c</FilePath>
+            </File>
+            <File>
+              <FileName>mpl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/mpl.c</FilePath>
+            </File>
+            <File>
+              <FileName>tbs_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/tbs_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>tbs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/tbs.c</FilePath>
+            </File>
+            <File>
+              <FileName>tmap.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/tmap.c</FilePath>
+            </File>
+            <File>
+              <FileName>vcp_vol_ctlr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/vcp_vol_ctlr.c</FilePath>
+            </File>
+            <File>
+              <FileName>vcp_vol_rend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/shell/vcp_vol_rend.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>edgefast/bluetooth/include/bluetooth/audio/config</GroupName>
+          <Files>
+            <File>
+              <FileName>config_cap.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config/config_cap.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_aics.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config/config_aics.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_vocs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config/config_vocs.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_vcp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config/config_vcp.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_micp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config/config_micp.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_csip.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config/config_csip.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_mcs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config/config_mcs.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_mcs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config/config_mcs.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_mpl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config/config_mpl.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_mctl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config/config_mctl.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_ascs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config/config_ascs.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_bap.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config/config_bap.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_pacs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config/config_pacs.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_bass.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config/config_bass.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_has.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config/config_has.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_tbs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config/config_tbs.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_tmap.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/config/config_tmap.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>edgefast/bluetooth/include/bluetooth/audio</GroupName>
+          <Files>
+            <File>
+              <FileName>cap.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/cap.h</FilePath>
+            </File>
+            <File>
+              <FileName>aics.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/aics.h</FilePath>
+            </File>
+            <File>
+              <FileName>vocs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/vocs.h</FilePath>
+            </File>
+            <File>
+              <FileName>vcp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/vcp.h</FilePath>
+            </File>
+            <File>
+              <FileName>micp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/micp.h</FilePath>
+            </File>
+            <File>
+              <FileName>csip.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/csip.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/mcs.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/mcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>media_proxy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/media_proxy.h</FilePath>
+            </File>
+            <File>
+              <FileName>audio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/audio.h</FilePath>
+            </File>
+            <File>
+              <FileName>bap_lc3_preset.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/bap_lc3_preset.h</FilePath>
+            </File>
+            <File>
+              <FileName>bap.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/bap.h</FilePath>
+            </File>
+            <File>
+              <FileName>lc3.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/lc3.h</FilePath>
+            </File>
+            <File>
+              <FileName>pacs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/pacs.h</FilePath>
+            </File>
+            <File>
+              <FileName>bap.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/bap.h</FilePath>
+            </File>
+            <File>
+              <FileName>has.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/has.h</FilePath>
+            </File>
+            <File>
+              <FileName>tbs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/tbs.h</FilePath>
+            </File>
+            <File>
+              <FileName>tmap.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/audio/tmap.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>edgefast/bluetooth/source/audio</GroupName>
+          <Files>
+            <File>
+              <FileName>cap_acceptor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/cap_acceptor.c</FilePath>
+            </File>
+            <File>
+              <FileName>cap_initiator.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/cap_initiator.c</FilePath>
+            </File>
+            <File>
+              <FileName>cap_stream.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/cap_stream.c</FilePath>
+            </File>
+            <File>
+              <FileName>cap_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/cap_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>aics.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/aics.c</FilePath>
+            </File>
+            <File>
+              <FileName>aics_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/aics_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>aics_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/aics_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>vocs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/vocs.c</FilePath>
+            </File>
+            <File>
+              <FileName>vocs_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/vocs_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>vocs_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/vocs_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>vcp_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/vcp_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>vcp_vol_ctlr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/vcp_vol_ctlr.c</FilePath>
+            </File>
+            <File>
+              <FileName>vcp_vol_rend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/vcp_vol_rend.c</FilePath>
+            </File>
+            <File>
+              <FileName>micp_mic_ctlr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/micp_mic_ctlr.c</FilePath>
+            </File>
+            <File>
+              <FileName>micp_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/micp_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>micp_mic_dev.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/micp_mic_dev.c</FilePath>
+            </File>
+            <File>
+              <FileName>csip_crypto.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/csip_crypto.c</FilePath>
+            </File>
+            <File>
+              <FileName>csip_crypto.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/csip_crypto.h</FilePath>
+            </File>
+            <File>
+              <FileName>csip_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/csip_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>csip_set_coordinator.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/csip_set_coordinator.c</FilePath>
+            </File>
+            <File>
+              <FileName>csip_set_member.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/csip_set_member.c</FilePath>
+            </File>
+            <File>
+              <FileName>ccid_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/ccid_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>ccid.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/ccid.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/mcs.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcs_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/mcs_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/mcc.c</FilePath>
+            </File>
+            <File>
+              <FileName>media_proxy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/media_proxy.c</FilePath>
+            </File>
+            <File>
+              <FileName>media_proxy_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/media_proxy_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/mpl.c</FilePath>
+            </File>
+            <File>
+              <FileName>mpl_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/mpl_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>ascs_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/ascs_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>ascs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/ascs.c</FilePath>
+            </File>
+            <File>
+              <FileName>audio_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/audio_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>bap_iso.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/bap_iso.c</FilePath>
+            </File>
+            <File>
+              <FileName>bap_iso.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/bap_iso.h</FilePath>
+            </File>
+            <File>
+              <FileName>audio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/audio.c</FilePath>
+            </File>
+            <File>
+              <FileName>bap_broadcast_sink.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/bap_broadcast_sink.c</FilePath>
+            </File>
+            <File>
+              <FileName>bap_broadcast_source.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/bap_broadcast_source.c</FilePath>
+            </File>
+            <File>
+              <FileName>codec.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/codec.c</FilePath>
+            </File>
+            <File>
+              <FileName>bap_endpoint.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/bap_endpoint.h</FilePath>
+            </File>
+            <File>
+              <FileName>pacs_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/pacs_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>pacs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/pacs.c</FilePath>
+            </File>
+            <File>
+              <FileName>bap_stream.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/bap_stream.c</FilePath>
+            </File>
+            <File>
+              <FileName>bap_stream.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/bap_stream.h</FilePath>
+            </File>
+            <File>
+              <FileName>bap_unicast_client_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/bap_unicast_client_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>bap_unicast_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/bap_unicast_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>bap_unicast_server.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/bap_unicast_server.c</FilePath>
+            </File>
+            <File>
+              <FileName>bap_unicast_server.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/bap_unicast_server.h</FilePath>
+            </File>
+            <File>
+              <FileName>bap_broadcast_assistant.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/bap_broadcast_assistant.c</FilePath>
+            </File>
+            <File>
+              <FileName>bap_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/bap_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>bap_scan_delegator.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/bap_scan_delegator.c</FilePath>
+            </File>
+            <File>
+              <FileName>has_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/has_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>has_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/has_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>has.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/has.c</FilePath>
+            </File>
+            <File>
+              <FileName>tbs_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/tbs_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>tbs_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/tbs_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>tbs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/tbs.c</FilePath>
+            </File>
+            <File>
+              <FileName>tmap.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/audio/tmap.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>edgefast/bluetooth/source/services/ots</GroupName>
+          <Files>
+            <File>
+              <FileName>ots.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/services/ots/ots.c</FilePath>
+            </File>
+            <File>
+              <FileName>ots_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/services/ots/ots_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>ots_client_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/services/ots/ots_client_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>ots_dir_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/services/ots/ots_dir_list.c</FilePath>
+            </File>
+            <File>
+              <FileName>ots_dir_list_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/services/ots/ots_dir_list_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>ots_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/services/ots/ots_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>ots_l2cap.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/services/ots/ots_l2cap.c</FilePath>
+            </File>
+            <File>
+              <FileName>ots_l2cap_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/services/ots/ots_l2cap_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>ots_oacp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/services/ots/ots_oacp.c</FilePath>
+            </File>
+            <File>
+              <FileName>ots_oacp_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/services/ots/ots_oacp_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>ots_obj_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/services/ots/ots_obj_manager.c</FilePath>
+            </File>
+            <File>
+              <FileName>ots_obj_manager_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/services/ots/ots_obj_manager_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>ots_olcp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/services/ots/ots_olcp.c</FilePath>
+            </File>
+            <File>
+              <FileName>ots_olcp_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/services/ots/ots_olcp_internal.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>edgefast/bluetooth/include/bluetooth/services</GroupName>
+          <Files>
+            <File>
+              <FileName>ots.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/services/ots.h</FilePath>
+            </File>
+            <File>
+              <FileName>bas.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/services/bas.h</FilePath>
+            </File>
+            <File>
+              <FileName>hrs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/services/hrs.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>edgefast/bluetooth/include/bluetooth/services/config</GroupName>
+          <Files>
+            <File>
+              <FileName>config_ots.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/services/config/config_ots.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>component/osa</GroupName>
           <Files>
             <File>
@@ -6601,6 +8166,11 @@
               <FileName>BT_a2dp_api.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_a2dp_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>BT_analyzer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_analyzer.h</FilePath>
             </File>
             <File>
               <FileName>BT_api.h</FileName>
@@ -7410,7 +8980,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>edgefast/bluetooth/source</GroupName>
+          <GroupName>edgefast/bluetooth/source/host</GroupName>
           <Files>
             <File>
               <FileName>bt_pal_a2dp.c</FileName>
@@ -7476,6 +9046,16 @@
               <FileName>bt_pal_conn.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_conn.c</FilePath>
+            </File>
+            <File>
+              <FileName>bt_pal_data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_data.c</FilePath>
+            </File>
+            <File>
+              <FileName>bt_pal_ead.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_ead.c</FilePath>
             </File>
             <File>
               <FileName>bt_pal_conn_internal.h</FileName>
@@ -7576,6 +9156,11 @@
               <FileName>bt_pal_addr.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_addr.c</FilePath>
+            </File>
+            <File>
+              <FileName>bt_pal_addr_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_addr_internal.h</FilePath>
             </File>
             <File>
               <FileName>bt_pal_buf.c</FileName>
@@ -7725,7 +9310,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>edgefast/bluetooth/source/a2dp_codec/sbc</GroupName>
+          <GroupName>edgefast/bluetooth/source/host/a2dp_codec/sbc</GroupName>
           <Files>
             <File>
               <FileName>a2dp_codec_sbc.c</FileName>
@@ -7828,9 +9413,19 @@
               <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/hci.h</FilePath>
             </File>
             <File>
-              <FileName>hci_err.h</FileName>
+              <FileName>byteorder.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/hci_err.h</FilePath>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/byteorder.h</FilePath>
+            </File>
+            <File>
+              <FileName>hci_types.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/hci_types.h</FilePath>
+            </File>
+            <File>
+              <FileName>ead.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/ead.h</FilePath>
             </File>
             <File>
               <FileName>hci_raw.h</FileName>
@@ -7918,6 +9513,16 @@
               <FilePath>../../../../../../middleware/edgefast_bluetooth/include/sys/byteorder.h</FilePath>
             </File>
             <File>
+              <FileName>ring_buffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/sys/ring_buffer.h</FilePath>
+            </File>
+            <File>
+              <FileName>ffs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/sys/ffs.h</FilePath>
+            </File>
+            <File>
               <FileName>work_queue.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/edgefast_bluetooth/include/sys/work_queue.h</FilePath>
@@ -7952,6 +9557,11 @@
         <Group>
           <GroupName>edgefast/bluetooth/porting</GroupName>
           <Files>
+            <File>
+              <FileName>ring_buffer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/porting/ring_buffer.c</FilePath>
+            </File>
             <File>
               <FileName>porting.c</FileName>
               <FileType>1</FileType>
@@ -7996,6 +9606,21 @@
               <FileName>errno.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/edgefast_bluetooth/source/porting/errno/errno.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>edgefast/bluetooth/porting/fifo</GroupName>
+          <Files>
+            <File>
+              <FileName>fifo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/porting/fifo/fifo.c</FilePath>
+            </File>
+            <File>
+              <FileName>fifo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/porting/fifo/fifo.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -8056,21 +9681,6 @@
               <FileName>hrs.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/edgefast_bluetooth/source/services/hrs.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>edgefast/bluetooth/include/bluetooth/services</GroupName>
-          <Files>
-            <File>
-              <FileName>bas.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/services/bas.h</FilePath>
-            </File>
-            <File>
-              <FileName>hrs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/edgefast_bluetooth/include/bluetooth/services/hrs.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -9400,13 +11010,58 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi/incl/wifidriver</GroupName>
+          <GroupName>wifi/sdio_nxp_abs</GroupName>
           <Files>
+            <File>
+              <FileName>mlan_sdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/sdio_nxp_abs/mlan_sdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fwdnld_sdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/sdio_nxp_abs/fwdnld_sdio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/sdio_nxp_abs/incl</GroupName>
+          <Files>
+            <File>
+              <FileName>fwdnld_sdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl/fwdnld_sdio.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_sdio_defs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl/mlan_sdio_defs.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_sdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl/mlan_sdio.h</FilePath>
+            </File>
             <File>
               <FileName>mlan_sdio_api.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/incl/wifidriver/mlan_sdio_api.h</FilePath>
+              <FilePath>../../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl/mlan_sdio_api.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/incl/port/os</GroupName>
+          <Files>
+            <File>
+              <FileName>wm_os.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/incl/port/os/wm_os.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/incl/wifidriver</GroupName>
+          <Files>
             <File>
               <FileName>wifi-decl.h</FileName>
               <FileType>5</FileType>
@@ -9425,22 +11080,37 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>wifi/incl/port/os</GroupName>
-          <Files>
-            <File>
-              <FileName>wm_os.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi_nxp/incl/port/os/wm_os.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>wifi/port/os</GroupName>
           <Files>
             <File>
               <FileName>os.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/wifi_nxp/port/os/os.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/wifi_bt_firmware</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan_bt_fw.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/wifi_bt_firmware/wlan_bt_fw.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/fwdnld_intf_abs</GroupName>
+          <Files>
+            <File>
+              <FileName>fwdnld_intf_abs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/fwdnld_intf_abs/fwdnld_intf_abs.c</FilePath>
+            </File>
+            <File>
+              <FileName>fwdnld_intf_abs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/wifi_nxp/fwdnld_intf_abs/fwdnld_intf_abs.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -9463,49 +11133,9 @@
           <GroupName>component/wifi_bt_module/Murata/tx_pwr_limits</GroupName>
           <Files>
             <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_1XK_CA.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_CA.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_1XK_EU.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_EU.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_1XK_JP.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_JP.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_1XK_US.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_US.h</FilePath>
-            </File>
-            <File>
               <FileName>wlan_txpwrlimit_cfg_murata_1XK_WW.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_WW.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_CA.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_CA.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_EU.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_EU.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_JP.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_JP.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_US.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_US.h</FilePath>
             </File>
             <File>
               <FileName>wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FileName>
@@ -9513,29 +11143,34 @@
               <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FilePath>
             </File>
             <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_2DS_CA.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_CA.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_2DS_EU.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_EU.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_2DS_JP.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_JP.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_2DS_US.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_US.h</FilePath>
-            </File>
-            <File>
               <FileName>wlan_txpwrlimit_cfg_murata_2DS_WW.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_WW.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2EL_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2EL_WW.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/wifi_bt_module/u-blox/tx_pwr_limits</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_jody_w5_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits/wlan_txpwrlimit_cfg_jody_w5_WW.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/wifi_bt_module/incl</GroupName>
+          <Files>
+            <File>
+              <FileName>wifi_bt_module_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/incl/wifi_bt_module_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -9615,6 +11250,36 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/common_task</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_component_common_task.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/common_task/fsl_component_common_task.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_common_task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/common_task/fsl_component_common_task.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>edgefast/bluetooth/crypto</GroupName>
+          <Files>
+            <File>
+              <FileName>bt_crypto.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/crypto/bt_crypto.c</FilePath>
+            </File>
+            <File>
+              <FileName>bt_crypto.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/crypto/bt_crypto.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>component/log</GroupName>
           <Files>
             <File>
@@ -9641,21 +11306,6 @@
               <FileName>fsl_component_log_backend_debugconsole.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/log/fsl_component_log_backend_debugconsole.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/common_task</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_component_common_task.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/common_task/fsl_component_common_task.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_common_task.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/common_task/fsl_component_common_task.c</FilePath>
             </File>
           </Files>
         </Group>

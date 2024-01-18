@@ -25,8 +25,6 @@
 /* Version info */
 #define MCRSP_VER "2.0.0" /* motor control package version */
 
-#define DAPENG_TEST /* Dapeng test */
-
 /* Example's feature set in form of bits inside ui16featureSet.
    This feature set is expected to be growing over time.
    ... | FEATURE_S_RAMP | FEATURE_FIELD_WEAKENING | FEATURE_ENC
@@ -163,6 +161,9 @@ int main(void)
 
     /* Enable interrupts */
     EnableGlobalIRQ(ui32PrimaskReg);
+     
+    /* Enable PWM clock */
+    g_sM1Pwm3ph.pui32PwmBaseAddress->MCTRL |= PWM_MCTRL_RUN(0xF);
 
     /* Infinite loop */
     while (1)

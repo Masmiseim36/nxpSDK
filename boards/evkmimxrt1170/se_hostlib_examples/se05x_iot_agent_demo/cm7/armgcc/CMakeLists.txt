@@ -54,7 +54,7 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../aws_mqtt_config.h"
 "${ProjDirPath}/../aws_bufferpool_config.h"
 "${ProjDirPath}/../iot_mqtt_agent_config.h"
-"${SdkRootDirPath}/boards/evkmimxrt1170/se_hostlib_examples/se05x_cloud_gcp/cm7/FreeRTOSIPConfig.h"
+"${ProjDirPath}/../FreeRTOSIPConfig.h"
 "${ProjDirPath}/../app.h"
 "${ProjDirPath}/../lwipopts.h"
 "${ProjDirPath}/../iot_agent_demo.c"

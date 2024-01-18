@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: Notification Framework</title>
+<title>MCUXpresso SDK API Reference Manual: PDM EDMA Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -101,215 +101,129 @@ $(document).ready(function(){initNavTree('a00068.html','');});
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">Notification Framework</div>  </div>
+<div class="title">PDM EDMA Driver<div class="ingroups"><a class="el" href="a00353.html">PDM: Microphone Interface</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>This section describes the programming interface of the Notifier driver.</p>
-<h1><a class="anchor" id="NotifierOv"></a>
-Notifier Overview</h1>
-<p>The Notifier provides a configuration dynamic change service. Based on this service, applications can switch between pre-defined configurations. The Notifier enables drivers and applications to register callback functions to this framework. Each time that the configuration is changed, drivers and applications receive a notification and change their settings. To simplify, the Notifier only supports the static callback registration. This means that, for applications, all callback functions are collected into a static table and passed to the Notifier.</p>
-<p>These are the steps for the configuration transition.</p>
-<ol type="1">
-<li>Before configuration transition, the Notifier sends a "BEFORE" message to the callback table. When this message is received, IP drivers should check whether any current processes can be stopped and stop them. If the processes cannot be stopped, the callback function returns an error.<br/>
- The Notifier supports two types of transition policies, a graceful policy and a forceful policy. When the graceful policy is used, if some callbacks return an error while sending a "BEFORE" message, the configuration transition stops and the Notifier sends a "RECOVER" message to all drivers that have stopped. Then, these drivers can recover the previous status and continue to work. When the forceful policy is used, drivers are stopped forcefully.</li>
-<li>After the "BEFORE" message is processed successfully, the system switches to the new configuration.</li>
-<li>After the configuration changes, the Notifier sends an "AFTER" message to the callback table to notify drivers that the configuration transition is finished.</li>
-</ol>
-<p>This example shows how to use the Notifier in the Power Manager application.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;fsl_notifier.h&quot;</span></div>
-<div class="line"></div>
-<div class="line"><span class="comment">// Definition of the Power Manager callback.</span></div>
-<div class="line"><a class="code" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> callback0(<a class="code" href="a00068.html#a00599">notifier_notification_block_t</a> *notify, <span class="keywordtype">void</span> *data)</div>
-<div class="line">{</div>
-<div class="line"></div>
-<div class="line">    <a class="code" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ret = <a class="code" href="a00338.html#gga39fca1837c5ce7715cbf571669660c13a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>;</div>
-<div class="line"></div>
-<div class="line">    ...</div>
-<div class="line">    ...</div>
-<div class="line">    ...</div>
-<div class="line"></div>
-<div class="line">    <span class="keywordflow">return</span> ret;</div>
-<div class="line">}</div>
-<div class="line"><span class="comment">// Definition of the Power Manager user function.</span></div>
-<div class="line"><a class="code" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> APP_PowerModeSwitch(<a class="code" href="a00068.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *targetConfig, <span class="keywordtype">void</span> *userData)</div>
-<div class="line">{</div>
-<div class="line">    ...</div>
-<div class="line">    ...</div>
-<div class="line">    ...</div>
-<div class="line">}</div>
-<div class="line">...</div>
-<div class="line">...</div>
-<div class="line">...</div>
-<div class="line">...</div>
-<div class="line">...</div>
-<div class="line"><span class="comment">// Main function.</span></div>
-<div class="line">int main(<span class="keywordtype">void</span>)</div>
-<div class="line">{</div>
-<div class="line">    <span class="comment">// Define a notifier handle.</span></div>
-<div class="line">    <a class="code" href="a00068.html#a00598">notifier_handle_t</a> powerModeHandle;</div>
-<div class="line"></div>
-<div class="line">    <span class="comment">// Callback configuration.</span></div>
-<div class="line">    user_callback_data_t callbackData0;</div>
-<div class="line"></div>
-<div class="line">    <a class="code" href="a00068.html#a00597">notifier_callback_config_t</a> callbackCfg0 = {callback0,</div>
-<div class="line">                <a class="code" href="a00068.html#ggaad75237e3cea51f8315cf6577b35db91ada6451efe227571a1442e70ddf36e005">kNOTIFIER_CallbackBeforeAfter</a>,</div>
-<div class="line">                (<span class="keywordtype">void</span> *)&amp;callbackData0};</div>
-<div class="line"></div>
-<div class="line">    <a class="code" href="a00068.html#a00597">notifier_callback_config_t</a> callbacks[] = {callbackCfg0};</div>
-<div class="line"></div>
-<div class="line">    <span class="comment">// Power mode configurations.</span></div>
-<div class="line">    power_user_config_t vlprConfig;</div>
-<div class="line">    power_user_config_t stopConfig;</div>
-<div class="line"></div>
-<div class="line">    <a class="code" href="a00068.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *powerConfigs[] = {&amp;vlprConfig, &amp;stopConfig};</div>
-<div class="line"></div>
-<div class="line">    <span class="comment">// Definition of a transition to and out the power modes.</span></div>
-<div class="line">    vlprConfig.mode = kAPP_PowerModeVlpr;</div>
-<div class="line">    vlprConfig.enableLowPowerWakeUpOnInterrupt = <span class="keyword">false</span>;</div>
-<div class="line"></div>
-<div class="line">    stopConfig = vlprConfig;</div>
-<div class="line">    stopConfig.mode = kAPP_PowerModeStop;</div>
-<div class="line"></div>
-<div class="line">    <span class="comment">// Create Notifier handle.</span></div>
-<div class="line">    <a class="code" href="a00068.html#gaa2dfe33b4724d9c1025acdde1b1b3c31">NOTIFIER_CreateHandle</a>(&amp;powerModeHandle, powerConfigs, 2U, callbacks, 1U, APP_PowerModeSwitch, NULL);</div>
-<div class="line">    ...</div>
-<div class="line">    ...</div>
-<div class="line">    <span class="comment">// Power mode switch.</span></div>
-<div class="line">    NOTIFIER_switchConfig(&amp;powerModeHandle, targetConfigIndex, <a class="code" href="a00068.html#gga62e961564dc31b8155d128a3f6566409a4513243b3cacd0aec289531dfb53e964">kNOTIFIER_PolicyAgreement</a>);</div>
-<div class="line">}</div>
-</div><!-- fragment --> <table class="memberdecls">
+<table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00599"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a00599">notifier_notification_block_t</a></td></tr>
-<tr class="memdesc:a00599"><td class="mdescLeft">&#160;</td><td class="mdescRight">notification block passed to the registered callback function.  <a href="a00068.html#a00599">More...</a><br/></td></tr>
-<tr class="separator:a00599"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00597"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a00597">notifier_callback_config_t</a></td></tr>
-<tr class="memdesc:a00597"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback configuration structure.  <a href="a00068.html#a00597">More...</a><br/></td></tr>
-<tr class="separator:a00597"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00598"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a00598">notifier_handle_t</a></td></tr>
-<tr class="memdesc:a00598"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier handle structure.  <a href="a00068.html#a00598">More...</a><br/></td></tr>
-<tr class="separator:a00598"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00591"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a00591">_pdm_edma_transfer</a></td></tr>
+<tr class="memdesc:a00591"><td class="mdescLeft">&#160;</td><td class="mdescRight">PDM edma transfer.  <a href="a00068.html#a00591">More...</a><br/></td></tr>
+<tr class="separator:a00591"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00590"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a00590">_pdm_edma_handle</a></td></tr>
+<tr class="memdesc:a00590"><td class="mdescLeft">&#160;</td><td class="mdescRight">PDM DMA transfer handle, users should not touch the content of the handle.  <a href="a00068.html#a00590">More...</a><br/></td></tr>
+<tr class="separator:a00590"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:gad0b6e919f3ff69992b36a2734a650ec7"><td class="memItemLeft" align="right" valign="top">typedef void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a></td></tr>
-<tr class="memdesc:gad0b6e919f3ff69992b36a2734a650ec7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier user configuration type.  <a href="#gad0b6e919f3ff69992b36a2734a650ec7">More...</a><br/></td></tr>
-<tr class="separator:gad0b6e919f3ff69992b36a2734a650ec7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacb6a6d6f99e6ddfbb96dae53382949b2"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gacb6a6d6f99e6ddfbb96dae53382949b2">notifier_user_function_t</a> )(<a class="el" href="a00068.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *targetConfig, void *userData)</td></tr>
-<tr class="memdesc:gacb6a6d6f99e6ddfbb96dae53382949b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier user function prototype Use this function to execute specific operations in configuration switch.  <a href="#gacb6a6d6f99e6ddfbb96dae53382949b2">More...</a><br/></td></tr>
-<tr class="separator:gacb6a6d6f99e6ddfbb96dae53382949b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafd1d8cc01c496de8b4cd3990ff85415c"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gafd1d8cc01c496de8b4cd3990ff85415c">notifier_callback_t</a> )(<a class="el" href="a00068.html#a00599">notifier_notification_block_t</a> *notify, void *data)</td></tr>
-<tr class="memdesc:gafd1d8cc01c496de8b4cd3990ff85415c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback prototype.  <a href="#gafd1d8cc01c496de8b4cd3990ff85415c">More...</a><br/></td></tr>
-<tr class="separator:gafd1d8cc01c496de8b4cd3990ff85415c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga264c03e5de4de29bbc891e4527b181af"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga264c03e5de4de29bbc891e4527b181af"></a>
+typedef struct <a class="el" href="a00068.html#a00590">_pdm_edma_handle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga264c03e5de4de29bbc891e4527b181af">pdm_edma_handle_t</a></td></tr>
+<tr class="memdesc:ga264c03e5de4de29bbc891e4527b181af"><td class="mdescLeft">&#160;</td><td class="mdescRight">PDM edma handler. <br/></td></tr>
+<tr class="separator:ga264c03e5de4de29bbc891e4527b181af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga47a1cd0fe8e4a71179fd1869a05056f6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga47a1cd0fe8e4a71179fd1869a05056f6"></a>
+typedef enum <br class="typebreak"/>
+<a class="el" href="a00068.html#gaadcb355ecd477088c7db1bea9e1d1564">_pdm_edma_multi_channel_interleave</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga47a1cd0fe8e4a71179fd1869a05056f6">pdm_edma_multi_channel_interleave_t</a></td></tr>
+<tr class="memdesc:ga47a1cd0fe8e4a71179fd1869a05056f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">pdm multi channel interleave type <br/></td></tr>
+<tr class="separator:ga47a1cd0fe8e4a71179fd1869a05056f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4b26a9d86f09993392b106b3b0885403"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4b26a9d86f09993392b106b3b0885403"></a>
+typedef struct <a class="el" href="a00068.html#a00591">_pdm_edma_transfer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga4b26a9d86f09993392b106b3b0885403">pdm_edma_transfer_t</a></td></tr>
+<tr class="memdesc:ga4b26a9d86f09993392b106b3b0885403"><td class="mdescLeft">&#160;</td><td class="mdescRight">PDM edma transfer. <br/></td></tr>
+<tr class="separator:ga4b26a9d86f09993392b106b3b0885403"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7a687206d7275e856d530dddc99b3b9b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7a687206d7275e856d530dddc99b3b9b"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga7a687206d7275e856d530dddc99b3b9b">pdm_edma_callback_t</a> )(PDM_Type *base, <a class="el" href="a00068.html#ga264c03e5de4de29bbc891e4527b181af">pdm_edma_handle_t</a> *handle, <a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
+<tr class="memdesc:ga7a687206d7275e856d530dddc99b3b9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">PDM eDMA transfer callback function for finish and error. <br/></td></tr>
+<tr class="separator:ga7a687206d7275e856d530dddc99b3b9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:gacac871f1b98f53906b07b2663943c784"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gacac871f1b98f53906b07b2663943c784">_notifier_status</a> { <br/>
-&#160;&#160;<a class="el" href="a00068.html#ggacac871f1b98f53906b07b2663943c784a23344b22d4d82fea2f17f4979d515c5c">kStatus_NOTIFIER_ErrorNotificationBefore</a>, 
+<tr class="memitem:gaadcb355ecd477088c7db1bea9e1d1564"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gaadcb355ecd477088c7db1bea9e1d1564">_pdm_edma_multi_channel_interleave</a> { <br/>
+&#160;&#160;<a class="el" href="a00068.html#ggaadcb355ecd477088c7db1bea9e1d1564ad14b3643089e53c2ba4cb2a22cf7e674">kPDM_EDMAMultiChannelInterleavePerChannelSample</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00068.html#ggacac871f1b98f53906b07b2663943c784a7b48bf0cf849b07c6131a0abb65d2d58">kStatus_NOTIFIER_ErrorNotificationAfter</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:gacac871f1b98f53906b07b2663943c784"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier error codes.  <a href="a00068.html#gacac871f1b98f53906b07b2663943c784">More...</a><br/></td></tr>
-<tr class="separator:gacac871f1b98f53906b07b2663943c784"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga62e961564dc31b8155d128a3f6566409"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga62e961564dc31b8155d128a3f6566409">notifier_policy_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00068.html#gga62e961564dc31b8155d128a3f6566409a4513243b3cacd0aec289531dfb53e964">kNOTIFIER_PolicyAgreement</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#gga62e961564dc31b8155d128a3f6566409a97a2587e9e4c523dc028778ba1f72dc8">kNOTIFIER_PolicyForcible</a>
+&#160;&#160;<a class="el" href="a00068.html#ggaadcb355ecd477088c7db1bea9e1d1564ac5de8626736c8e7123c11058fc3b852e">kPDM_EDMAMultiChannelInterleavePerChannelBlock</a>
 <br/>
  }</td></tr>
-<tr class="memdesc:ga62e961564dc31b8155d128a3f6566409"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notifier policies.  <a href="a00068.html#ga62e961564dc31b8155d128a3f6566409">More...</a><br/></td></tr>
-<tr class="separator:ga62e961564dc31b8155d128a3f6566409"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5ee4314c2a52ee0af61985e7163a1be9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga5ee4314c2a52ee0af61985e7163a1be9">notifier_notification_type_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00068.html#gga5ee4314c2a52ee0af61985e7163a1be9a49e6ad28b9d351a051035c8065de5d94">kNOTIFIER_NotifyRecover</a> = 0x00U, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#gga5ee4314c2a52ee0af61985e7163a1be9a91707ed2be51db6da2a9d6cc6eaee39c">kNOTIFIER_NotifyBefore</a> = 0x01U, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#gga5ee4314c2a52ee0af61985e7163a1be9a6e89a377b2890077646fc6af6b5c2e00">kNOTIFIER_NotifyAfter</a> = 0x02U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga5ee4314c2a52ee0af61985e7163a1be9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Notification type.  <a href="a00068.html#ga5ee4314c2a52ee0af61985e7163a1be9">More...</a><br/></td></tr>
-<tr class="separator:ga5ee4314c2a52ee0af61985e7163a1be9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaad75237e3cea51f8315cf6577b35db91"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gaad75237e3cea51f8315cf6577b35db91">notifier_callback_type_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00068.html#ggaad75237e3cea51f8315cf6577b35db91ab9c117f1eccd38f914d0e4d05015d6a1">kNOTIFIER_CallbackBefore</a> = 0x01U, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#ggaad75237e3cea51f8315cf6577b35db91a8d5832eddd0d8cf976413aea02f3bfdc">kNOTIFIER_CallbackAfter</a> = 0x02U, 
-<br/>
-&#160;&#160;<a class="el" href="a00068.html#ggaad75237e3cea51f8315cf6577b35db91ada6451efe227571a1442e70ddf36e005">kNOTIFIER_CallbackBeforeAfter</a> = 0x03U
-<br/>
- }</td></tr>
-<tr class="memdesc:gaad75237e3cea51f8315cf6577b35db91"><td class="mdescLeft">&#160;</td><td class="mdescRight">The callback type, which indicates kinds of notification the callback handles.  <a href="a00068.html#gaad75237e3cea51f8315cf6577b35db91">More...</a><br/></td></tr>
-<tr class="separator:gaad75237e3cea51f8315cf6577b35db91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gaadcb355ecd477088c7db1bea9e1d1564"><td class="mdescLeft">&#160;</td><td class="mdescRight">pdm multi channel interleave type  <a href="a00068.html#gaadcb355ecd477088c7db1bea9e1d1564">More...</a><br/></td></tr>
+<tr class="separator:gaadcb355ecd477088c7db1bea9e1d1564"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gaa2dfe33b4724d9c1025acdde1b1b3c31"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gaa2dfe33b4724d9c1025acdde1b1b3c31">NOTIFIER_CreateHandle</a> (<a class="el" href="a00068.html#a00598">notifier_handle_t</a> *notifierHandle, <a class="el" href="a00068.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> **configs, uint8_t configsNumber, <a class="el" href="a00068.html#a00597">notifier_callback_config_t</a> *callbacks, uint8_t callbacksNumber, <a class="el" href="a00068.html#gacb6a6d6f99e6ddfbb96dae53382949b2">notifier_user_function_t</a> userFunction, void *userData)</td></tr>
-<tr class="memdesc:gaa2dfe33b4724d9c1025acdde1b1b3c31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a Notifier handle.  <a href="#gaa2dfe33b4724d9c1025acdde1b1b3c31">More...</a><br/></td></tr>
-<tr class="separator:gaa2dfe33b4724d9c1025acdde1b1b3c31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9ca08c8f6fa9a7bafa9ecbe08603cd97"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97">NOTIFIER_SwitchConfig</a> (<a class="el" href="a00068.html#a00598">notifier_handle_t</a> *notifierHandle, uint8_t configIndex, <a class="el" href="a00068.html#ga62e961564dc31b8155d128a3f6566409">notifier_policy_t</a> policy)</td></tr>
-<tr class="memdesc:ga9ca08c8f6fa9a7bafa9ecbe08603cd97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switches the configuration according to a pre-defined structure.  <a href="#ga9ca08c8f6fa9a7bafa9ecbe08603cd97">More...</a><br/></td></tr>
-<tr class="separator:ga9ca08c8f6fa9a7bafa9ecbe08603cd97"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9736632c3beca486ec3f8dab504b839c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga9736632c3beca486ec3f8dab504b839c">NOTIFIER_GetErrorCallbackIndex</a> (<a class="el" href="a00068.html#a00598">notifier_handle_t</a> *notifierHandle)</td></tr>
-<tr class="memdesc:ga9736632c3beca486ec3f8dab504b839c"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns the last failed notification callback.  <a href="#ga9736632c3beca486ec3f8dab504b839c">More...</a><br/></td></tr>
-<tr class="separator:ga9736632c3beca486ec3f8dab504b839c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Driver version</h2></td></tr>
+<tr class="memitem:ga29bd00b6c0b456c95f72cec1c634e1d9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga29bd00b6c0b456c95f72cec1c634e1d9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga29bd00b6c0b456c95f72cec1c634e1d9">FSL_PDM_EDMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00336.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 6, 1))</td></tr>
+<tr class="memdesc:ga29bd00b6c0b456c95f72cec1c634e1d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version 2.6.1. <br/></td></tr>
+<tr class="separator:ga29bd00b6c0b456c95f72cec1c634e1d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+PDM eDMA Transactional</h2></td></tr>
+<tr class="memitem:ga46652b70ce85c35399c477e4e1461eb3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga46652b70ce85c35399c477e4e1461eb3">PDM_TransferInstallEDMATCDMemory</a> (<a class="el" href="a00068.html#ga264c03e5de4de29bbc891e4527b181af">pdm_edma_handle_t</a> *handle, void *tcdAddr, size_t tcdNum)</td></tr>
+<tr class="memdesc:ga46652b70ce85c35399c477e4e1461eb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Install EDMA descriptor memory.  <a href="#ga46652b70ce85c35399c477e4e1461eb3">More...</a><br/></td></tr>
+<tr class="separator:ga46652b70ce85c35399c477e4e1461eb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8367df0d34950716dcc5476f95839538"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga8367df0d34950716dcc5476f95839538">PDM_TransferCreateHandleEDMA</a> (PDM_Type *base, <a class="el" href="a00068.html#ga264c03e5de4de29bbc891e4527b181af">pdm_edma_handle_t</a> *handle, <a class="el" href="a00068.html#ga7a687206d7275e856d530dddc99b3b9b">pdm_edma_callback_t</a> callback, void *userData, <a class="el" href="a00025.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *dmaHandle)</td></tr>
+<tr class="memdesc:ga8367df0d34950716dcc5476f95839538"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the PDM Rx eDMA handle.  <a href="#ga8367df0d34950716dcc5476f95839538">More...</a><br/></td></tr>
+<tr class="separator:ga8367df0d34950716dcc5476f95839538"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad57078ecc7b3444208df53e605e9db00"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gad57078ecc7b3444208df53e605e9db00">PDM_TransferSetMultiChannelInterleaveType</a> (<a class="el" href="a00068.html#ga264c03e5de4de29bbc891e4527b181af">pdm_edma_handle_t</a> *handle, <a class="el" href="a00068.html#ga47a1cd0fe8e4a71179fd1869a05056f6">pdm_edma_multi_channel_interleave_t</a> multiChannelInterleaveType)</td></tr>
+<tr class="memdesc:gad57078ecc7b3444208df53e605e9db00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the multi PDM channel interleave type.  <a href="#gad57078ecc7b3444208df53e605e9db00">More...</a><br/></td></tr>
+<tr class="separator:gad57078ecc7b3444208df53e605e9db00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga17662bef15ba44cbccd5835bd76408d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga17662bef15ba44cbccd5835bd76408d8">PDM_TransferSetChannelConfigEDMA</a> (PDM_Type *base, <a class="el" href="a00068.html#ga264c03e5de4de29bbc891e4527b181af">pdm_edma_handle_t</a> *handle, uint32_t channel, const <a class="el" href="a00067.html#ga80d9ef1eb58406a6c0f2d2b74dc3a4df">pdm_channel_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga17662bef15ba44cbccd5835bd76408d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the PDM channel.  <a href="#ga17662bef15ba44cbccd5835bd76408d8">More...</a><br/></td></tr>
+<tr class="separator:ga17662bef15ba44cbccd5835bd76408d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac8199077b7fbc3dcaaa5b6f079b1c252"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gac8199077b7fbc3dcaaa5b6f079b1c252">PDM_TransferReceiveEDMA</a> (PDM_Type *base, <a class="el" href="a00068.html#ga264c03e5de4de29bbc891e4527b181af">pdm_edma_handle_t</a> *handle, <a class="el" href="a00068.html#ga4b26a9d86f09993392b106b3b0885403">pdm_edma_transfer_t</a> *xfer)</td></tr>
+<tr class="memdesc:gac8199077b7fbc3dcaaa5b6f079b1c252"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a non-blocking PDM receive using eDMA.  <a href="#gac8199077b7fbc3dcaaa5b6f079b1c252">More...</a><br/></td></tr>
+<tr class="separator:gac8199077b7fbc3dcaaa5b6f079b1c252"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf2c58ec42596da7cbf98e3db604e0f0e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gaf2c58ec42596da7cbf98e3db604e0f0e">PDM_TransferTerminateReceiveEDMA</a> (PDM_Type *base, <a class="el" href="a00068.html#ga264c03e5de4de29bbc891e4527b181af">pdm_edma_handle_t</a> *handle)</td></tr>
+<tr class="memdesc:gaf2c58ec42596da7cbf98e3db604e0f0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Terminate all PDM receive.  <a href="#gaf2c58ec42596da7cbf98e3db604e0f0e">More...</a><br/></td></tr>
+<tr class="separator:gaf2c58ec42596da7cbf98e3db604e0f0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac8d44c39e41824161b5c29e525e33d60"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#gac8d44c39e41824161b5c29e525e33d60">PDM_TransferAbortReceiveEDMA</a> (PDM_Type *base, <a class="el" href="a00068.html#ga264c03e5de4de29bbc891e4527b181af">pdm_edma_handle_t</a> *handle)</td></tr>
+<tr class="memdesc:gac8d44c39e41824161b5c29e525e33d60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts a PDM receive using eDMA.  <a href="#gac8d44c39e41824161b5c29e525e33d60">More...</a><br/></td></tr>
+<tr class="separator:gac8d44c39e41824161b5c29e525e33d60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga31eb23e10fcc2b0ad11f822f7c8fd15d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ga31eb23e10fcc2b0ad11f822f7c8fd15d">PDM_TransferGetReceiveCountEDMA</a> (PDM_Type *base, <a class="el" href="a00068.html#ga264c03e5de4de29bbc891e4527b181af">pdm_edma_handle_t</a> *handle, size_t *count)</td></tr>
+<tr class="memdesc:ga31eb23e10fcc2b0ad11f822f7c8fd15d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets byte count received by PDM.  <a href="#ga31eb23e10fcc2b0ad11f822f7c8fd15d">More...</a><br/></td></tr>
+<tr class="separator:ga31eb23e10fcc2b0ad11f822f7c8fd15d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00599" id="a00599"></a>
+<a name="a00591" id="a00591"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct notifier_notification_block_t</td>
+          <td class="memname">struct _pdm_edma_transfer</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a2e0b1d4d7e3ebf8f454b55af953e3ffa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00068.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a2e0b1d4d7e3ebf8f454b55af953e3ffa">targetConfig</a></td></tr>
-<tr class="memdesc:a2e0b1d4d7e3ebf8f454b55af953e3ffa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to target configuration.  <a href="#a2e0b1d4d7e3ebf8f454b55af953e3ffa">More...</a><br/></td></tr>
-<tr class="separator:a2e0b1d4d7e3ebf8f454b55af953e3ffa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a26aef2519eb2f9990e04f2ce961dfc9b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00068.html#ga62e961564dc31b8155d128a3f6566409">notifier_policy_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a26aef2519eb2f9990e04f2ce961dfc9b">policy</a></td></tr>
-<tr class="memdesc:a26aef2519eb2f9990e04f2ce961dfc9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure transition policy.  <a href="#a26aef2519eb2f9990e04f2ce961dfc9b">More...</a><br/></td></tr>
-<tr class="separator:a26aef2519eb2f9990e04f2ce961dfc9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ca3b1a52e315e072a8ab48fcc1dd62a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00068.html#ga5ee4314c2a52ee0af61985e7163a1be9">notifier_notification_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a2ca3b1a52e315e072a8ab48fcc1dd62a">notifyType</a></td></tr>
-<tr class="memdesc:a2ca3b1a52e315e072a8ab48fcc1dd62a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure notification type.  <a href="#a2ca3b1a52e315e072a8ab48fcc1dd62a">More...</a><br/></td></tr>
-<tr class="separator:a2ca3b1a52e315e072a8ab48fcc1dd62a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f67a852ffe38870a6f3ec4c483bd849"><td class="memItemLeft" align="right" valign="top">volatile uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a1f67a852ffe38870a6f3ec4c483bd849">data</a></td></tr>
+<tr class="memdesc:a1f67a852ffe38870a6f3ec4c483bd849"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data start address to transfer.  <a href="#a1f67a852ffe38870a6f3ec4c483bd849">More...</a><br/></td></tr>
+<tr class="separator:a1f67a852ffe38870a6f3ec4c483bd849"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84c0960ac59f56bec84cddf77eb0e4ee"><td class="memItemLeft" align="right" valign="top">volatile size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a84c0960ac59f56bec84cddf77eb0e4ee">dataSize</a></td></tr>
+<tr class="memdesc:a84c0960ac59f56bec84cddf77eb0e4ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Total Transfer bytes size.  <a href="#a84c0960ac59f56bec84cddf77eb0e4ee">More...</a><br/></td></tr>
+<tr class="separator:a84c0960ac59f56bec84cddf77eb0e4ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63b1c7e23da61731e35a1f799d203982"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a63b1c7e23da61731e35a1f799d203982"></a>
+struct <a class="el" href="a00068.html#a00591">_pdm_edma_transfer</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a63b1c7e23da61731e35a1f799d203982">linkTransfer</a></td></tr>
+<tr class="memdesc:a63b1c7e23da61731e35a1f799d203982"><td class="mdescLeft">&#160;</td><td class="mdescRight">linked transfer configurations <br/></td></tr>
+<tr class="separator:a63b1c7e23da61731e35a1f799d203982"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a2e0b1d4d7e3ebf8f454b55af953e3ffa"></a>
+<a class="anchor" id="a1f67a852ffe38870a6f3ec4c483bd849"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00068.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a>* notifier_notification_block_t::targetConfig</td>
+          <td class="memname">volatile uint8_t* _pdm_edma_transfer::data</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a26aef2519eb2f9990e04f2ce961dfc9b"></a>
+<a class="anchor" id="a84c0960ac59f56bec84cddf77eb0e4ee"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00068.html#ga62e961564dc31b8155d128a3f6566409">notifier_policy_t</a> notifier_notification_block_t::policy</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a2ca3b1a52e315e072a8ab48fcc1dd62a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00068.html#ga5ee4314c2a52ee0af61985e7163a1be9">notifier_notification_type_t</a> notifier_notification_block_t::notifyType</td>
+          <td class="memname">volatile size_t _pdm_edma_transfer::dataSize</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -319,403 +233,163 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a name="a00597" id="a00597"></a>
+<a name="a00590" id="a00590"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct notifier_callback_config_t</td>
+          <td class="memname">struct _pdm_edma_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>This structure holds the configuration of callbacks. Callbacks of this type are expected to be statically allocated. This structure contains the following application-defined data. callback - pointer to the callback function callbackType - specifies when the callback is called callbackData - pointer to the data passed to the callback. </p>
-</div><table class="memberdecls">
+<div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a116c9dd621ffc21178e769edbd9192e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00068.html#gafd1d8cc01c496de8b4cd3990ff85415c">notifier_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a116c9dd621ffc21178e769edbd9192e4">callback</a></td></tr>
-<tr class="memdesc:a116c9dd621ffc21178e769edbd9192e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the callback function.  <a href="#a116c9dd621ffc21178e769edbd9192e4">More...</a><br/></td></tr>
-<tr class="separator:a116c9dd621ffc21178e769edbd9192e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9e6ec8e23a48ef8d97b2f6d16fb68ec"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00068.html#gaad75237e3cea51f8315cf6577b35db91">notifier_callback_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#ad9e6ec8e23a48ef8d97b2f6d16fb68ec">callbackType</a></td></tr>
-<tr class="memdesc:ad9e6ec8e23a48ef8d97b2f6d16fb68ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback type.  <a href="#ad9e6ec8e23a48ef8d97b2f6d16fb68ec">More...</a><br/></td></tr>
-<tr class="separator:ad9e6ec8e23a48ef8d97b2f6d16fb68ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e7db701bbf36647da1e6d0f0efe2ebf"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a4e7db701bbf36647da1e6d0f0efe2ebf">callbackData</a></td></tr>
-<tr class="memdesc:a4e7db701bbf36647da1e6d0f0efe2ebf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the data passed to the callback.  <a href="#a4e7db701bbf36647da1e6d0f0efe2ebf">More...</a><br/></td></tr>
-<tr class="separator:a4e7db701bbf36647da1e6d0f0efe2ebf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03e73c7e1a2adfbc1af077d1cc8efa7b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a03e73c7e1a2adfbc1af077d1cc8efa7b"></a>
+<a class="el" href="a00025.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a03e73c7e1a2adfbc1af077d1cc8efa7b">dmaHandle</a></td></tr>
+<tr class="memdesc:a03e73c7e1a2adfbc1af077d1cc8efa7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMA handler for PDM send. <br/></td></tr>
+<tr class="separator:a03e73c7e1a2adfbc1af077d1cc8efa7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b4c587db8d351b104269f4bdb2880ef"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5b4c587db8d351b104269f4bdb2880ef"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a5b4c587db8d351b104269f4bdb2880ef">count</a></td></tr>
+<tr class="memdesc:a5b4c587db8d351b104269f4bdb2880ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">The transfer data count in a DMA request. <br/></td></tr>
+<tr class="separator:a5b4c587db8d351b104269f4bdb2880ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ceebc26dfe04f8e0ee28e12a3bb995a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9ceebc26dfe04f8e0ee28e12a3bb995a"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a9ceebc26dfe04f8e0ee28e12a3bb995a">receivedBytes</a></td></tr>
+<tr class="memdesc:a9ceebc26dfe04f8e0ee28e12a3bb995a"><td class="mdescLeft">&#160;</td><td class="mdescRight">total transfer count <br/></td></tr>
+<tr class="separator:a9ceebc26dfe04f8e0ee28e12a3bb995a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0a04166bf528a8d427e789431b6666f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af0a04166bf528a8d427e789431b6666f"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#af0a04166bf528a8d427e789431b6666f">state</a></td></tr>
+<tr class="memdesc:af0a04166bf528a8d427e789431b6666f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal state for PDM eDMA transfer. <br/></td></tr>
+<tr class="separator:af0a04166bf528a8d427e789431b6666f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75d7dd2da8c88ace2858ae09c87b75af"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a75d7dd2da8c88ace2858ae09c87b75af"></a>
+<a class="el" href="a00068.html#ga7a687206d7275e856d530dddc99b3b9b">pdm_edma_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a75d7dd2da8c88ace2858ae09c87b75af">callback</a></td></tr>
+<tr class="memdesc:a75d7dd2da8c88ace2858ae09c87b75af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback for users while transfer finish or error occurs. <br/></td></tr>
+<tr class="separator:a75d7dd2da8c88ace2858ae09c87b75af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0008d8c3299a491f83886181d27cbcdb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0008d8c3299a491f83886181d27cbcdb"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a0008d8c3299a491f83886181d27cbcdb">isLoopTransfer</a></td></tr>
+<tr class="memdesc:a0008d8c3299a491f83886181d27cbcdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">loop transfer <br/></td></tr>
+<tr class="separator:a0008d8c3299a491f83886181d27cbcdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7348c92c8cd5294bdb8882cbf973d1ce"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7348c92c8cd5294bdb8882cbf973d1ce"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a7348c92c8cd5294bdb8882cbf973d1ce">userData</a></td></tr>
+<tr class="memdesc:a7348c92c8cd5294bdb8882cbf973d1ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">User callback parameter. <br/></td></tr>
+<tr class="separator:a7348c92c8cd5294bdb8882cbf973d1ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa88510ad00b4fd110fb6cd1b6e43ee8b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00025.html#gacff054f9816fb678fc49f5e66a4d7649">edma_tcd_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#aa88510ad00b4fd110fb6cd1b6e43ee8b">tcd</a></td></tr>
+<tr class="memdesc:aa88510ad00b4fd110fb6cd1b6e43ee8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">TCD pool for eDMA transfer.  <a href="#aa88510ad00b4fd110fb6cd1b6e43ee8b">More...</a><br/></td></tr>
+<tr class="separator:aa88510ad00b4fd110fb6cd1b6e43ee8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a439acfe895bc4171886afafc838f6056"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a439acfe895bc4171886afafc838f6056"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a439acfe895bc4171886afafc838f6056">tcdNum</a></td></tr>
+<tr class="memdesc:a439acfe895bc4171886afafc838f6056"><td class="mdescLeft">&#160;</td><td class="mdescRight">TCD number. <br/></td></tr>
+<tr class="separator:a439acfe895bc4171886afafc838f6056"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83649bee3b23b9a12dc210f59dfddf88"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a83649bee3b23b9a12dc210f59dfddf88">tcdUser</a></td></tr>
+<tr class="memdesc:a83649bee3b23b9a12dc210f59dfddf88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index for user to queue transfer.  <a href="#a83649bee3b23b9a12dc210f59dfddf88">More...</a><br/></td></tr>
+<tr class="separator:a83649bee3b23b9a12dc210f59dfddf88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedff178b004caa806ffc2663698c8f35"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aedff178b004caa806ffc2663698c8f35"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#aedff178b004caa806ffc2663698c8f35">tcdDriver</a></td></tr>
+<tr class="memdesc:aedff178b004caa806ffc2663698c8f35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index for driver to get the transfer data and size. <br/></td></tr>
+<tr class="separator:aedff178b004caa806ffc2663698c8f35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7bf6839561da9b372090303e01b5c2e9"><td class="memItemLeft" align="right" valign="top">volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a7bf6839561da9b372090303e01b5c2e9">tcdUsedNum</a></td></tr>
+<tr class="memdesc:a7bf6839561da9b372090303e01b5c2e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index for user to queue transfer.  <a href="#a7bf6839561da9b372090303e01b5c2e9">More...</a><br/></td></tr>
+<tr class="separator:a7bf6839561da9b372090303e01b5c2e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78e8dfde0a3e447a2cb17fe19d418c5e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a78e8dfde0a3e447a2cb17fe19d418c5e"></a>
+<a class="el" href="a00068.html#ga47a1cd0fe8e4a71179fd1869a05056f6">pdm_edma_multi_channel_interleave_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a78e8dfde0a3e447a2cb17fe19d418c5e">interleaveType</a></td></tr>
+<tr class="memdesc:a78e8dfde0a3e447a2cb17fe19d418c5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">multi channel transfer interleave type <br/></td></tr>
+<tr class="separator:a78e8dfde0a3e447a2cb17fe19d418c5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abcf7b8065ce8f70cef05f1bc717086c6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abcf7b8065ce8f70cef05f1bc717086c6"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#abcf7b8065ce8f70cef05f1bc717086c6">endChannel</a></td></tr>
+<tr class="memdesc:abcf7b8065ce8f70cef05f1bc717086c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The last enabled channel. <br/></td></tr>
+<tr class="separator:abcf7b8065ce8f70cef05f1bc717086c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a392ba1540012ebc2e94096ffaef8052c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a392ba1540012ebc2e94096ffaef8052c"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a392ba1540012ebc2e94096ffaef8052c">channelNums</a></td></tr>
+<tr class="memdesc:a392ba1540012ebc2e94096ffaef8052c"><td class="mdescLeft">&#160;</td><td class="mdescRight">total channel numbers <br/></td></tr>
+<tr class="separator:a392ba1540012ebc2e94096ffaef8052c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a116c9dd621ffc21178e769edbd9192e4"></a>
+<a class="anchor" id="aa88510ad00b4fd110fb6cd1b6e43ee8b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00068.html#gafd1d8cc01c496de8b4cd3990ff85415c">notifier_callback_t</a> notifier_callback_config_t::callback</td>
+          <td class="memname"><a class="el" href="a00025.html#gacff054f9816fb678fc49f5e66a4d7649">edma_tcd_t</a>* _pdm_edma_handle::tcd</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ad9e6ec8e23a48ef8d97b2f6d16fb68ec"></a>
+<a class="anchor" id="a83649bee3b23b9a12dc210f59dfddf88"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00068.html#gaad75237e3cea51f8315cf6577b35db91">notifier_callback_type_t</a> notifier_callback_config_t::callbackType</td>
+          <td class="memname">uint32_t _pdm_edma_handle::tcdUser</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a4e7db701bbf36647da1e6d0f0efe2ebf"></a>
+<a class="anchor" id="a7bf6839561da9b372090303e01b5c2e9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void* notifier_callback_config_t::callbackData</td>
+          <td class="memname">volatile uint32_t _pdm_edma_handle::tcdUsedNum</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-
-</div>
-</div>
-<a name="a00598" id="a00598"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct notifier_handle_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"><p>Notifier handle structure. Contains data necessary for the Notifier proper function. Stores references to registered configurations, callbacks, information about their numbers, user function, user data, and other internal data. <a class="el" href="a00068.html#gaa2dfe33b4724d9c1025acdde1b1b3c31" title="Creates a Notifier handle. ">NOTIFIER_CreateHandle()</a> must be called to initialize this handle. </p>
-</div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a8fd95d668f17b8a7705e2a4ff49f2e16"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00068.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a8fd95d668f17b8a7705e2a4ff49f2e16">configsTable</a></td></tr>
-<tr class="memdesc:a8fd95d668f17b8a7705e2a4ff49f2e16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to configure table.  <a href="#a8fd95d668f17b8a7705e2a4ff49f2e16">More...</a><br/></td></tr>
-<tr class="separator:a8fd95d668f17b8a7705e2a4ff49f2e16"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a59bdd44c33254cfd4626f5906d3c0a7a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a59bdd44c33254cfd4626f5906d3c0a7a">configsNumber</a></td></tr>
-<tr class="memdesc:a59bdd44c33254cfd4626f5906d3c0a7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of configurations.  <a href="#a59bdd44c33254cfd4626f5906d3c0a7a">More...</a><br/></td></tr>
-<tr class="separator:a59bdd44c33254cfd4626f5906d3c0a7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a423480d080ea2580628222dc6c492735"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00068.html#a00597">notifier_callback_config_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a423480d080ea2580628222dc6c492735">callbacksTable</a></td></tr>
-<tr class="memdesc:a423480d080ea2580628222dc6c492735"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to callback table.  <a href="#a423480d080ea2580628222dc6c492735">More...</a><br/></td></tr>
-<tr class="separator:a423480d080ea2580628222dc6c492735"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd4e9338f2cd47c46fc0c02886daafbb"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#acd4e9338f2cd47c46fc0c02886daafbb">callbacksNumber</a></td></tr>
-<tr class="memdesc:acd4e9338f2cd47c46fc0c02886daafbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum number of callback configurations.  <a href="#acd4e9338f2cd47c46fc0c02886daafbb">More...</a><br/></td></tr>
-<tr class="separator:acd4e9338f2cd47c46fc0c02886daafbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a8447a4b6045219363883663f40d300"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a6a8447a4b6045219363883663f40d300">errorCallbackIndex</a></td></tr>
-<tr class="memdesc:a6a8447a4b6045219363883663f40d300"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index of callback returns error.  <a href="#a6a8447a4b6045219363883663f40d300">More...</a><br/></td></tr>
-<tr class="separator:a6a8447a4b6045219363883663f40d300"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae9d6d2cc9c47485863c098c0284a021"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#aae9d6d2cc9c47485863c098c0284a021">currentConfigIndex</a></td></tr>
-<tr class="memdesc:aae9d6d2cc9c47485863c098c0284a021"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index of current configuration.  <a href="#aae9d6d2cc9c47485863c098c0284a021">More...</a><br/></td></tr>
-<tr class="separator:aae9d6d2cc9c47485863c098c0284a021"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f6589fa386e93c40c52ed292da4f47f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00068.html#gacb6a6d6f99e6ddfbb96dae53382949b2">notifier_user_function_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a4f6589fa386e93c40c52ed292da4f47f">userFunction</a></td></tr>
-<tr class="memdesc:a4f6589fa386e93c40c52ed292da4f47f"><td class="mdescLeft">&#160;</td><td class="mdescRight">User function.  <a href="#a4f6589fa386e93c40c52ed292da4f47f">More...</a><br/></td></tr>
-<tr class="separator:a4f6589fa386e93c40c52ed292da4f47f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e90e1dafbe97f2ea5187530ee04af0a"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html#a5e90e1dafbe97f2ea5187530ee04af0a">userData</a></td></tr>
-<tr class="memdesc:a5e90e1dafbe97f2ea5187530ee04af0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">User data passed to user function.  <a href="#a5e90e1dafbe97f2ea5187530ee04af0a">More...</a><br/></td></tr>
-<tr class="separator:a5e90e1dafbe97f2ea5187530ee04af0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a8fd95d668f17b8a7705e2a4ff49f2e16"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00068.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a>** notifier_handle_t::configsTable</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a59bdd44c33254cfd4626f5906d3c0a7a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t notifier_handle_t::configsNumber</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a423480d080ea2580628222dc6c492735"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00068.html#a00597">notifier_callback_config_t</a>* notifier_handle_t::callbacksTable</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="acd4e9338f2cd47c46fc0c02886daafbb"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t notifier_handle_t::callbacksNumber</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a6a8447a4b6045219363883663f40d300"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t notifier_handle_t::errorCallbackIndex</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="aae9d6d2cc9c47485863c098c0284a021"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t notifier_handle_t::currentConfigIndex</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a4f6589fa386e93c40c52ed292da4f47f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00068.html#gacb6a6d6f99e6ddfbb96dae53382949b2">notifier_user_function_t</a> notifier_handle_t::userFunction</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a5e90e1dafbe97f2ea5187530ee04af0a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void* notifier_handle_t::userData</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-
-</div>
-</div>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="gad0b6e919f3ff69992b36a2734a650ec7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef void <a class="el" href="a00068.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Reference of the user defined configuration is stored in an array; the notifier switches between these configurations based on this array. </p>
-
-</div>
-</div>
-<a class="anchor" id="gacb6a6d6f99e6ddfbb96dae53382949b2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef <a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>(* notifier_user_function_t)(<a class="el" href="a00068.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> *targetConfig, void *userData)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Before and after this function execution, different notification is sent to registered callbacks. If this function returns any error code, <a class="el" href="a00068.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> exits.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">targetConfig</td><td>target Configuration. </td></tr>
-    <tr><td class="paramname">userData</td><td>Refers to other specific data passed to user function. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>An error code or kStatus_Success. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gafd1d8cc01c496de8b4cd3990ff85415c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef <a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>(* notifier_callback_t)(<a class="el" href="a00068.html#a00599">notifier_notification_block_t</a> *notify, void *data)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Declaration of a callback. It is common for registered callbacks. Reference to function of this type is part of the <a class="el" href="a00068.html#a00597" title="Callback configuration structure. ">notifier_callback_config_t</a> callback configuration structure. Depending on callback type, function of this prototype is called (see <a class="el" href="a00068.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a>) before configuration switch, after it or in both use cases to notify about the switch progress (see notifier_callback_type_t). When called, the type of the notification is passed as a parameter along with the reference to the target configuration structure (see <a class="el" href="a00068.html#a00599" title="notification block passed to the registered callback function. ">notifier_notification_block_t</a>) and any data passed during the callback registration. When notified before the configuration switch, depending on the configuration switch policy (see notifier_policy_t), the callback may deny the execution of the user function by returning an error code different than kStatus_Success (see <a class="el" href="a00068.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a>).</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">notify</td><td>Notification block. </td></tr>
-    <tr><td class="paramname">data</td><td>Callback data. Refers to the data passed during callback registration. Intended to pass any driver or application data such as internal state information. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>An error code or kStatus_Success. </dd></dl>
 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gacac871f1b98f53906b07b2663943c784"></a>
+<a class="anchor" id="gaadcb355ecd477088c7db1bea9e1d1564"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00068.html#gacac871f1b98f53906b07b2663943c784">_notifier_status</a></td>
+          <td class="memname">enum <a class="el" href="a00068.html#gaadcb355ecd477088c7db1bea9e1d1564">_pdm_edma_multi_channel_interleave</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Used as return value of Notifier functions. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggacac871f1b98f53906b07b2663943c784a23344b22d4d82fea2f17f4979d515c5c"></a>kStatus_NOTIFIER_ErrorNotificationBefore</em>&nbsp;</td><td class="fielddoc">
-<p>An error occurs during send "BEFORE" notification. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaadcb355ecd477088c7db1bea9e1d1564ad14b3643089e53c2ba4cb2a22cf7e674"></a>kPDM_EDMAMultiChannelInterleavePerChannelSample</em>&nbsp;</td><td class="fielddoc">
+<h2>multi channel PDM data interleave per channel sample </h2>
+<p>|CHANNEL0 | CHANNEL1 | CHANNEL0 | CHANNEL1 | CHANNEL0 | CHANNEL 1 | .... </p>
+<h2>| </h2>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggacac871f1b98f53906b07b2663943c784a7b48bf0cf849b07c6131a0abb65d2d58"></a>kStatus_NOTIFIER_ErrorNotificationAfter</em>&nbsp;</td><td class="fielddoc">
-<p>An error occurs during send "AFTER" notification. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga62e961564dc31b8155d128a3f6566409"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00068.html#ga62e961564dc31b8155d128a3f6566409">notifier_policy_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Defines whether the user function execution is forced or not. For kNOTIFIER_PolicyForcible, the user function is executed regardless of the callback results, while kNOTIFIER_PolicyAgreement policy is used to exit <a class="el" href="a00068.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> when any of the callbacks returns error code. See also <a class="el" href="a00068.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> description. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga62e961564dc31b8155d128a3f6566409a4513243b3cacd0aec289531dfb53e964"></a>kNOTIFIER_PolicyAgreement</em>&nbsp;</td><td class="fielddoc">
-<p><a class="el" href="a00068.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> method is exited when any of the callbacks returns error code. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga62e961564dc31b8155d128a3f6566409a97a2587e9e4c523dc028778ba1f72dc8"></a>kNOTIFIER_PolicyForcible</em>&nbsp;</td><td class="fielddoc">
-<p>The user function is executed regardless of the results. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga5ee4314c2a52ee0af61985e7163a1be9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00068.html#ga5ee4314c2a52ee0af61985e7163a1be9">notifier_notification_type_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Used to notify registered callbacks </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga5ee4314c2a52ee0af61985e7163a1be9a49e6ad28b9d351a051035c8065de5d94"></a>kNOTIFIER_NotifyRecover</em>&nbsp;</td><td class="fielddoc">
-<p>Notify IP to recover to previous work state. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5ee4314c2a52ee0af61985e7163a1be9a91707ed2be51db6da2a9d6cc6eaee39c"></a>kNOTIFIER_NotifyBefore</em>&nbsp;</td><td class="fielddoc">
-<p>Notify IP that configuration setting is going to change. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5ee4314c2a52ee0af61985e7163a1be9a6e89a377b2890077646fc6af6b5c2e00"></a>kNOTIFIER_NotifyAfter</em>&nbsp;</td><td class="fielddoc">
-<p>Notify IP that configuration setting has been changed. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gaad75237e3cea51f8315cf6577b35db91"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00068.html#gaad75237e3cea51f8315cf6577b35db91">notifier_callback_type_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Used in the callback configuration structure (<a class="el" href="a00068.html#a00597" title="Callback configuration structure. ">notifier_callback_config_t</a>) to specify when the registered callback is called during configuration switch initiated by the <a class="el" href="a00068.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a>. Callback can be invoked in following situations.</p>
-<ul>
-<li>Before the configuration switch (Callback return value can affect <a class="el" href="a00068.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> execution. See the <a class="el" href="a00068.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> and notifier_policy_t documentation).</li>
-<li>After an unsuccessful attempt to switch configuration</li>
-<li>After a successful configuration switch </li>
-</ul>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaad75237e3cea51f8315cf6577b35db91ab9c117f1eccd38f914d0e4d05015d6a1"></a>kNOTIFIER_CallbackBefore</em>&nbsp;</td><td class="fielddoc">
-<p>Callback handles BEFORE notification. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaad75237e3cea51f8315cf6577b35db91a8d5832eddd0d8cf976413aea02f3bfdc"></a>kNOTIFIER_CallbackAfter</em>&nbsp;</td><td class="fielddoc">
-<p>Callback handles AFTER notification. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaad75237e3cea51f8315cf6577b35db91ada6451efe227571a1442e70ddf36e005"></a>kNOTIFIER_CallbackBeforeAfter</em>&nbsp;</td><td class="fielddoc">
-<p>Callback handles BEFORE and AFTER notification. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaadcb355ecd477088c7db1bea9e1d1564ac5de8626736c8e7123c11058fc3b852e"></a>kPDM_EDMAMultiChannelInterleavePerChannelBlock</em>&nbsp;</td><td class="fielddoc">
+<h2>multi channel PDM data interleave per channel block </h2>
+<p>|CHANNEL0 | CHANNEL0 | CHANNEL0 | ...... </p>
+<p>| CHANNEL1 | CHANNEL 1 | CHANNEL 1 | ....| CHANNEL2 | CHANNEL 2 </p>
+<h2>| CHANNEL 2 | ....| </h2>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gaa2dfe33b4724d9c1025acdde1b1b3c31"></a>
+<a class="anchor" id="ga46652b70ce85c35399c477e4e1461eb3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> NOTIFIER_CreateHandle </td>
+          <td class="memname">void PDM_TransferInstallEDMATCDMemory </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00068.html#a00598">notifier_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>notifierHandle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00068.html#gad0b6e919f3ff69992b36a2734a650ec7">notifier_user_config_t</a> **&#160;</td>
-          <td class="paramname"><em>configs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>configsNumber</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00068.html#a00597">notifier_callback_config_t</a> *&#160;</td>
-          <td class="paramname"><em>callbacks</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>callbacksNumber</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00068.html#gacb6a6d6f99e6ddfbb96dae53382949b2">notifier_user_function_t</a>&#160;</td>
-          <td class="paramname"><em>userFunction</em>, </td>
+          <td class="paramtype"><a class="el" href="a00068.html#ga264c03e5de4de29bbc891e4527b181af">pdm_edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>userData</em>&#160;</td>
+          <td class="paramname"><em>tcdAddr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>tcdNum</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -726,41 +400,48 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">notifierHandle</td><td>A pointer to the notifier handle. </td></tr>
-    <tr><td class="paramname">configs</td><td>A pointer to an array with references to all configurations which is handled by the Notifier. </td></tr>
-    <tr><td class="paramname">configsNumber</td><td>Number of configurations. Size of the configuration array. </td></tr>
-    <tr><td class="paramname">callbacks</td><td>A pointer to an array of callback configurations. If there are no callbacks to register during Notifier initialization, use NULL value. </td></tr>
-    <tr><td class="paramname">callbacksNumber</td><td>Number of registered callbacks. Size of the callbacks array. </td></tr>
-    <tr><td class="paramname">userFunction</td><td>User function. </td></tr>
-    <tr><td class="paramname">userData</td><td>User data passed to user function. </td></tr>
+    <tr><td class="paramname">handle</td><td>Pointer to EDMA channel transfer handle. </td></tr>
+    <tr><td class="paramname">tcdAddr</td><td>EDMA head descriptor address. </td></tr>
+    <tr><td class="paramname">tcdNum</td><td>EDMA link descriptor address. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>An error Code or kStatus_Success. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga9ca08c8f6fa9a7bafa9ecbe08603cd97"></a>
+<a class="anchor" id="ga8367df0d34950716dcc5476f95839538"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> NOTIFIER_SwitchConfig </td>
+          <td class="memname">void PDM_TransferCreateHandleEDMA </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00068.html#a00598">notifier_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>notifierHandle</em>, </td>
+          <td class="paramtype">PDM_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>configIndex</em>, </td>
+          <td class="paramtype"><a class="el" href="a00068.html#ga264c03e5de4de29bbc891e4527b181af">pdm_edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00068.html#ga62e961564dc31b8155d128a3f6566409">notifier_policy_t</a>&#160;</td>
-          <td class="paramname"><em>policy</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00068.html#ga7a687206d7275e856d530dddc99b3b9b">pdm_edma_callback_t</a>&#160;</td>
+          <td class="paramname"><em>callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>userData</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00025.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>dmaHandle</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -769,40 +450,296 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function sets the system to the target configuration. Before transition, the Notifier sends notifications to all callbacks registered to the callback table. Callbacks are invoked in the following order: All registered callbacks are notified ordered by index in the callbacks array. The same order is used for before and after switch notifications. The notifications before the configuration switch can be used to obtain confirmation about the change from registered callbacks. If any registered callback denies the configuration change, further execution of this function depends on the notifier policy: the configuration change is either forced (kNOTIFIER_PolicyForcible) or exited (kNOTIFIER_PolicyAgreement). When configuration change is forced, the result of the before switch notifications are ignored. If an agreement is required, if any callback returns an error code, further notifications before switch notifications are cancelled and all already notified callbacks are re-invoked. The index of the callback which returned error code during pre-switch notifications is stored (any error codes during callbacks re-invocation are ignored) and NOTIFIER_GetErrorCallback() can be used to get it. Regardless of the policies, if any callback returns an error code, an error code indicating in which phase the error occurred is returned when <a class="el" href="a00068.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> exits. </p>
+<p>This function initializes the PDM slave DMA handle, which can be used for other PDM master transactional APIs. Usually, for a specified PDM instance, call this API once to get the initialized handle.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">notifierHandle</td><td>pointer to notifier handle </td></tr>
-    <tr><td class="paramname">configIndex</td><td>Index of the target configuration. </td></tr>
-    <tr><td class="paramname">policy</td><td>Transaction policy, kNOTIFIER_PolicyAgreement or kNOTIFIER_PolicyForcible.</td></tr>
+    <tr><td class="paramname">base</td><td>PDM base pointer. </td></tr>
+    <tr><td class="paramname">handle</td><td>PDM eDMA handle pointer. </td></tr>
+    <tr><td class="paramname">callback</td><td>Pointer to user callback function. </td></tr>
+    <tr><td class="paramname">userData</td><td>User parameter passed to the callback function. </td></tr>
+    <tr><td class="paramname">dmaHandle</td><td>eDMA handle pointer, this handle shall be static allocated by users. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>An error code or kStatus_Success. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga9736632c3beca486ec3f8dab504b839c"></a>
+<a class="anchor" id="gad57078ecc7b3444208df53e605e9db00"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t NOTIFIER_GetErrorCallbackIndex </td>
+          <td class="memname">void PDM_TransferSetMultiChannelInterleaveType </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00068.html#a00598">notifier_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>notifierHandle</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="a00068.html#ga264c03e5de4de29bbc891e4527b181af">pdm_edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="a00068.html#ga47a1cd0fe8e4a71179fd1869a05056f6">pdm_edma_multi_channel_interleave_t</a>&#160;</td>
+          <td class="paramname"><em>multiChannelInterleaveType</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function returns an index of the last callback that failed during the configuration switch while the last <a class="el" href="a00068.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> was called. If the last <a class="el" href="a00068.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97" title="Switches the configuration according to a pre-defined structure. ">NOTIFIER_SwitchConfig()</a> call ended successfully value equal to callbacks number is returned. The returned value represents an index in the array of static call-backs.</p>
+<p>This function initializes the PDM DMA handle member interleaveType, it shall be called only when application would like to use type kPDM_EDMAMultiChannelInterleavePerChannelBlock, since the default interleaveType is kPDM_EDMAMultiChannelInterleavePerChannelSample always</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">notifierHandle</td><td>Pointer to the notifier handle </td></tr>
+    <tr><td class="paramname">handle</td><td>PDM eDMA handle pointer. </td></tr>
+    <tr><td class="paramname">multiChannelInterleaveType</td><td>Multi channel interleave type. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Callback Index of the last failed callback or value equal to callbacks count. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga17662bef15ba44cbccd5835bd76408d8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PDM_TransferSetChannelConfigEDMA </td>
+          <td>(</td>
+          <td class="paramtype">PDM_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00068.html#ga264c03e5de4de29bbc891e4527b181af">pdm_edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a00067.html#ga80d9ef1eb58406a6c0f2d2b74dc3a4df">pdm_channel_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>PDM base pointer. </td></tr>
+    <tr><td class="paramname">handle</td><td>PDM eDMA handle pointer. </td></tr>
+    <tr><td class="paramname">channel</td><td>channel index. </td></tr>
+    <tr><td class="paramname">config</td><td>pdm channel configurations. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gac8199077b7fbc3dcaaa5b6f079b1c252"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> PDM_TransferReceiveEDMA </td>
+          <td>(</td>
+          <td class="paramtype">PDM_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00068.html#ga264c03e5de4de29bbc891e4527b181af">pdm_edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00068.html#ga4b26a9d86f09993392b106b3b0885403">pdm_edma_transfer_t</a> *&#160;</td>
+          <td class="paramname"><em>xfer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>This interface returns immediately after the transfer initiates. Call the PDM_GetReceiveRemainingBytes to poll the transfer status and check whether the PDM transfer is finished.</dd></dl>
+<ol type="1">
+<li>Scatter gather case: This functio support dynamic scatter gather and staic scatter gather, a. for the dynamic scatter gather case: Application should call PDM_TransferReceiveEDMA function continuously to make sure new receive request is submit before the previous one finish. b. for the static scatter gather case: Application should use the link transfer feature and make sure a loop link transfer is provided, such as: <div class="fragment"><div class="line"> <a class="code" href="a00068.html#a00591">pdm_edma_transfer_t</a> pdmXfer[2] =</div>
+<div class="line">*   {</div>
+<div class="line">*       {</div>
+<div class="line">*       .<a class="code" href="a00068.html#a1f67a852ffe38870a6f3ec4c483bd849">data</a>  = s_buffer,</div>
+<div class="line">*       .dataSize = BUFFER_SIZE,</div>
+<div class="line">*       .linkTransfer = &amp;pdmXfer[1],</div>
+<div class="line">*       },</div>
+<div class="line">*</div>
+<div class="line">*       {</div>
+<div class="line">*       .<a class="code" href="a00068.html#a1f67a852ffe38870a6f3ec4c483bd849">data</a>  = &amp;s_buffer[BUFFER_SIZE],</div>
+<div class="line">*       .dataSize = BUFFER_SIZE,</div>
+<div class="line">*       .linkTransfer = &amp;pdmXfer[0]</div>
+<div class="line">*       },</div>
+<div class="line">*   };</div>
+<div class="line">* </div>
+</div><!-- fragment --></li>
+<li>Multi channel case: This function support receive multi pdm channel data, for example, if two channel is requested, <div class="fragment"><div class="line">* <a class="code" href="a00068.html#ga17662bef15ba44cbccd5835bd76408d8">PDM_TransferSetChannelConfigEDMA</a>(DEMO_PDM, &amp;s_pdmRxHandle_0, DEMO_PDM_ENABLE_CHANNEL_0, &amp;channelConfig);</div>
+<div class="line">* <a class="code" href="a00068.html#ga17662bef15ba44cbccd5835bd76408d8">PDM_TransferSetChannelConfigEDMA</a>(DEMO_PDM, &amp;s_pdmRxHandle_0, DEMO_PDM_ENABLE_CHANNEL_1, &amp;channelConfig);</div>
+<div class="line">* <a class="code" href="a00068.html#gac8199077b7fbc3dcaaa5b6f079b1c252">PDM_TransferReceiveEDMA</a>(DEMO_PDM, &amp;s_pdmRxHandle_0, pdmXfer);</div>
+<div class="line">* </div>
+</div><!-- fragment --> The output data will be formatted as below if handle-&gt;interleaveType = <h2>kPDM_EDMAMultiChannelInterleavePerChannelSample : </h2>
+</li>
+</ol>
+<h2>|CHANNEL0 | CHANNEL1 | CHANNEL0 | CHANNEL1 | CHANNEL0 | CHANNEL 1 | ....| </h2>
+<p>The output data will be formatted as below if handle-&gt;interleaveType = kPDM_EDMAMultiChannelInterleavePerChannelBlock </p>
+<h2>: </h2>
+<p>|CHANNEL3 | CHANNEL3 | CHANNEL3 | .... | CHANNEL4 | CHANNEL 4 | CHANNEL4 |....| CHANNEL5 | CHANNEL 5 | CHANNEL5 </p>
+<h2>|....| </h2>
+<p>Note: the dataSize of xfer is the total data size, while application using kPDM_EDMAMultiChannelInterleavePerChannelBlock, the buffer size for each PDM channel is channelSize = dataSize / channelNums, then there are limitation for this feature,</p>
+<ol type="1">
+<li>3 DMIC array: the dataSize shall be 4 * (channelSize) The addtional buffer is mandantory for edma modulo feature.</li>
+<li>The kPDM_EDMAMultiChannelInterleavePerChannelBlock feature support below dmic array only, 2 DMIC array: CHANNEL3, CHANNEL4 3 DMIC array: CHANNEL3, CHANNEL4, CHANNEL5 4 DMIC array: CHANNEL3, CHANNEL4, CHANNEL5, CHANNEL6 Any other combinations is not support, that is to SAY, THE FEATURE SUPPORT RECEIVE START FROM CHANNEL3 ONLY AND 4 MAXIMUM DMIC CHANNELS.</li>
+</ol>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>PDM base pointer </td></tr>
+    <tr><td class="paramname">handle</td><td>PDM eDMA handle pointer. </td></tr>
+    <tr><td class="paramname">xfer</td><td>Pointer to DMA transfer structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Start a PDM eDMA receive successfully. </td></tr>
+    <tr><td class="paramname">kStatus_InvalidArgument</td><td>The input argument is invalid. </td></tr>
+    <tr><td class="paramname">kStatus_RxBusy</td><td>PDM is busy receiving data. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaf2c58ec42596da7cbf98e3db604e0f0e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PDM_TransferTerminateReceiveEDMA </td>
+          <td>(</td>
+          <td class="paramtype">PDM_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00068.html#ga264c03e5de4de29bbc891e4527b181af">pdm_edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function will clear all transfer slots buffered in the pdm queue. If users only want to abort the current transfer slot, please call PDM_TransferAbortReceiveEDMA.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>PDM base pointer. </td></tr>
+    <tr><td class="paramname">handle</td><td>PDM eDMA handle pointer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gac8d44c39e41824161b5c29e525e33d60"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PDM_TransferAbortReceiveEDMA </td>
+          <td>(</td>
+          <td class="paramtype">PDM_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00068.html#ga264c03e5de4de29bbc891e4527b181af">pdm_edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function only aborts the current transfer slots, the other transfer slots' information still kept in the handler. If users want to terminate all transfer slots, just call PDM_TransferTerminateReceiveEDMA.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>PDM base pointer </td></tr>
+    <tr><td class="paramname">handle</td><td>PDM eDMA handle pointer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga31eb23e10fcc2b0ad11f822f7c8fd15d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00336.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> PDM_TransferGetReceiveCountEDMA </td>
+          <td>(</td>
+          <td class="paramtype">PDM_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00068.html#ga264c03e5de4de29bbc891e4527b181af">pdm_edma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>PDM base pointer </td></tr>
+    <tr><td class="paramname">handle</td><td>PDM eDMA handle pointer. </td></tr>
+    <tr><td class="paramname">count</td><td>Bytes count received by PDM. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Succeed get the transfer count. </td></tr>
+    <tr><td class="paramname">kStatus_NoTransferInProgress</td><td>There is no non-blocking transaction in progress. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

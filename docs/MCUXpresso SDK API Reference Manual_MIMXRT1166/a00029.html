@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -100,6 +100,7 @@ $(document).ready(function(){initNavTree('a00029.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">ENC: Quadrature Encoder/Decoder</div>  </div>
@@ -130,12 +131,51 @@ Polling Configuration</h2>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00485"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a00485">enc_config_t</a></td></tr>
-<tr class="memdesc:a00485"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define user configuration structure for ENC module.  <a href="a00029.html#a00485">More...</a><br/></td></tr>
-<tr class="separator:a00485"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00486"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a00486">enc_self_test_config_t</a></td></tr>
-<tr class="memdesc:a00486"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define configuration structure for self test module.  <a href="a00029.html#a00486">More...</a><br/></td></tr>
-<tr class="separator:a00486"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00457"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a00457">_enc_config</a></td></tr>
+<tr class="memdesc:a00457"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define user configuration structure for ENC module.  <a href="a00029.html#a00457">More...</a><br/></td></tr>
+<tr class="separator:a00457"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00458"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a00458">_enc_self_test_config</a></td></tr>
+<tr class="memdesc:a00458"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define configuration structure for self test module.  <a href="a00029.html#a00458">More...</a><br/></td></tr>
+<tr class="separator:a00458"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga88e8835d32fcf55bb143a1fe619bfd53"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00029.html#ga3f3efffe910c1611816a08ba17ce7c9e">_enc_home_trigger_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga88e8835d32fcf55bb143a1fe619bfd53">enc_home_trigger_mode_t</a></td></tr>
+<tr class="memdesc:ga88e8835d32fcf55bb143a1fe619bfd53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define HOME signal's trigger mode.  <a href="#ga88e8835d32fcf55bb143a1fe619bfd53">More...</a><br/></td></tr>
+<tr class="separator:ga88e8835d32fcf55bb143a1fe619bfd53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2c9746fc8a7bcad2cfaa2d3f3f035c90"><td class="memItemLeft" align="right" valign="top">typedef enum <br class="typebreak"/>
+<a class="el" href="a00029.html#ga29de01f066a7b20c96b51fdb392fe1b4">_enc_index_trigger_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga2c9746fc8a7bcad2cfaa2d3f3f035c90">enc_index_trigger_mode_t</a></td></tr>
+<tr class="memdesc:ga2c9746fc8a7bcad2cfaa2d3f3f035c90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define INDEX signal's trigger mode.  <a href="#ga2c9746fc8a7bcad2cfaa2d3f3f035c90">More...</a><br/></td></tr>
+<tr class="separator:ga2c9746fc8a7bcad2cfaa2d3f3f035c90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab0beff48cfdfaf49f5f3a6e9133e81a5"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00029.html#gab0ab18a69b9eb5c4489686d527be38d1">_enc_decoder_work_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#gab0beff48cfdfaf49f5f3a6e9133e81a5">enc_decoder_work_mode_t</a></td></tr>
+<tr class="memdesc:gab0beff48cfdfaf49f5f3a6e9133e81a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define type for decoder work mode.  <a href="#gab0beff48cfdfaf49f5f3a6e9133e81a5">More...</a><br/></td></tr>
+<tr class="separator:gab0beff48cfdfaf49f5f3a6e9133e81a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaee9062a7faa53f64b0f96009613bc2f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaaee9062a7faa53f64b0f96009613bc2f"></a>
+typedef enum <br class="typebreak"/>
+<a class="el" href="a00029.html#gadf524ed65a40db2e53c463e9c47d06c2">_enc_position_match_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#gaaee9062a7faa53f64b0f96009613bc2f">enc_position_match_mode_t</a></td></tr>
+<tr class="memdesc:gaaee9062a7faa53f64b0f96009613bc2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define type for the condition of POSMATCH pulses. <br/></td></tr>
+<tr class="separator:gaaee9062a7faa53f64b0f96009613bc2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5f5c9d7aa77ae4e798079e7670f73801"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5f5c9d7aa77ae4e798079e7670f73801"></a>
+typedef enum <br class="typebreak"/>
+<a class="el" href="a00029.html#gae23ed261bb1bdfd8641019354769e69d">_enc_revolution_count_condition</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga5f5c9d7aa77ae4e798079e7670f73801">enc_revolution_count_condition_t</a></td></tr>
+<tr class="memdesc:ga5f5c9d7aa77ae4e798079e7670f73801"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define type for determining how the revolution counter (REV) is incremented/decremented. <br/></td></tr>
+<tr class="separator:ga5f5c9d7aa77ae4e798079e7670f73801"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadac7b390ef77fd7af12c271abd2a6ebc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gadac7b390ef77fd7af12c271abd2a6ebc"></a>
+typedef enum <br class="typebreak"/>
+<a class="el" href="a00029.html#ga638c95c62f924d71ba7e541d916b6df7">_enc_self_test_direction</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#gadac7b390ef77fd7af12c271abd2a6ebc">enc_self_test_direction_t</a></td></tr>
+<tr class="memdesc:gadac7b390ef77fd7af12c271abd2a6ebc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define type for direction of self test generated signal. <br/></td></tr>
+<tr class="separator:gadac7b390ef77fd7af12c271abd2a6ebc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga669904e46fd69d83bc31d0f1dcd658df"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00029.html#ga60803a576d8e50d9b6afe83ce46779a3">_enc_prescaler</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga669904e46fd69d83bc31d0f1dcd658df">enc_prescaler_t</a></td></tr>
+<tr class="memdesc:ga669904e46fd69d83bc31d0f1dcd658df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define prescaler value for clock in CTRL3.  <a href="#ga669904e46fd69d83bc31d0f1dcd658df">More...</a><br/></td></tr>
+<tr class="separator:ga669904e46fd69d83bc31d0f1dcd658df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaef1fed8a3da13886d58499365e1b6047"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaef1fed8a3da13886d58499365e1b6047"></a>
+typedef struct <a class="el" href="a00029.html#a00457">_enc_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#gaef1fed8a3da13886d58499365e1b6047">enc_config_t</a></td></tr>
+<tr class="memdesc:gaef1fed8a3da13886d58499365e1b6047"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define user configuration structure for ENC module. <br/></td></tr>
+<tr class="separator:gaef1fed8a3da13886d58499365e1b6047"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga89f150375e09c8bc136d2498339fa0c3"><td class="memItemLeft" align="right" valign="top">typedef struct <br class="typebreak"/>
+<a class="el" href="a00029.html#a00458">_enc_self_test_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga89f150375e09c8bc136d2498339fa0c3">enc_self_test_config_t</a></td></tr>
+<tr class="memdesc:ga89f150375e09c8bc136d2498339fa0c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define configuration structure for self test module.  <a href="#ga89f150375e09c8bc136d2498339fa0c3">More...</a><br/></td></tr>
+<tr class="separator:ga89f150375e09c8bc136d2498339fa0c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -197,74 +237,77 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:gabcad4dcf0536b020cfbea8cb4374626a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signal status flag mask.  <a href="a00029.html#gabcad4dcf0536b020cfbea8cb4374626a">More...</a><br/></td></tr>
 <tr class="separator:gabcad4dcf0536b020cfbea8cb4374626a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9b19f10c2303de256aab7b1d5c0057c3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga9b19f10c2303de256aab7b1d5c0057c3">enc_home_trigger_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00029.html#gga9b19f10c2303de256aab7b1d5c0057c3a14f8fc3da25b327522b1bf6b9341a10c">kENC_HOMETriggerDisabled</a> = 0U, 
+<tr class="memitem:ga3f3efffe910c1611816a08ba17ce7c9e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga3f3efffe910c1611816a08ba17ce7c9e">_enc_home_trigger_mode</a> { <br/>
+&#160;&#160;<a class="el" href="a00029.html#gga3f3efffe910c1611816a08ba17ce7c9ea14f8fc3da25b327522b1bf6b9341a10c">kENC_HOMETriggerDisabled</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00029.html#gga9b19f10c2303de256aab7b1d5c0057c3a2640b2c847b9d69a9b2382cb7f7a1481">kENC_HOMETriggerOnRisingEdge</a>, 
+&#160;&#160;<a class="el" href="a00029.html#gga3f3efffe910c1611816a08ba17ce7c9ea2640b2c847b9d69a9b2382cb7f7a1481">kENC_HOMETriggerOnRisingEdge</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00029.html#gga9b19f10c2303de256aab7b1d5c0057c3a79e8a6e80fc98d6d88a84c937ef7e378">kENC_HOMETriggerOnFallingEdge</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:ga9b19f10c2303de256aab7b1d5c0057c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define HOME signal's trigger mode.  <a href="a00029.html#ga9b19f10c2303de256aab7b1d5c0057c3">More...</a><br/></td></tr>
-<tr class="separator:ga9b19f10c2303de256aab7b1d5c0057c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga986882142c037e6dd8c7845410f1e287"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga986882142c037e6dd8c7845410f1e287">enc_index_trigger_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00029.html#gga986882142c037e6dd8c7845410f1e287ae8376e76cb334d80c7cfc1c7f77e13ea">kENC_INDEXTriggerDisabled</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00029.html#gga986882142c037e6dd8c7845410f1e287ab5095f768a55185cc1bfbc089903d7b3">kENC_INDEXTriggerOnRisingEdge</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00029.html#gga986882142c037e6dd8c7845410f1e287a1f0da068b8eb44cfbeafb6f88426163b">kENC_INDEXTriggerOnFallingEdge</a>
+&#160;&#160;<a class="el" href="a00029.html#gga3f3efffe910c1611816a08ba17ce7c9ea79e8a6e80fc98d6d88a84c937ef7e378">kENC_HOMETriggerOnFallingEdge</a>
 <br/>
  }</td></tr>
-<tr class="memdesc:ga986882142c037e6dd8c7845410f1e287"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define INDEX signal's trigger mode.  <a href="a00029.html#ga986882142c037e6dd8c7845410f1e287">More...</a><br/></td></tr>
-<tr class="separator:ga986882142c037e6dd8c7845410f1e287"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga397e650f9e1a2fef6109896f18378b4c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga397e650f9e1a2fef6109896f18378b4c">enc_decoder_work_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00029.html#gga397e650f9e1a2fef6109896f18378b4caf661773e581845df10715016acc53092">kENC_DecoderWorkAsNormalMode</a> = 0U, 
+<tr class="memdesc:ga3f3efffe910c1611816a08ba17ce7c9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define HOME signal's trigger mode.  <a href="a00029.html#ga3f3efffe910c1611816a08ba17ce7c9e">More...</a><br/></td></tr>
+<tr class="separator:ga3f3efffe910c1611816a08ba17ce7c9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga29de01f066a7b20c96b51fdb392fe1b4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga29de01f066a7b20c96b51fdb392fe1b4">_enc_index_trigger_mode</a> { <br/>
+&#160;&#160;<a class="el" href="a00029.html#gga29de01f066a7b20c96b51fdb392fe1b4ae8376e76cb334d80c7cfc1c7f77e13ea">kENC_INDEXTriggerDisabled</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00029.html#gga397e650f9e1a2fef6109896f18378b4ca052a9bce9a3071c02b28238615b607a2">kENC_DecoderWorkAsSignalPhaseCountMode</a>
+&#160;&#160;<a class="el" href="a00029.html#gga29de01f066a7b20c96b51fdb392fe1b4ab5095f768a55185cc1bfbc089903d7b3">kENC_INDEXTriggerOnRisingEdge</a>, 
 <br/>
- }</td></tr>
-<tr class="memdesc:ga397e650f9e1a2fef6109896f18378b4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define type for decoder work mode.  <a href="a00029.html#ga397e650f9e1a2fef6109896f18378b4c">More...</a><br/></td></tr>
-<tr class="separator:ga397e650f9e1a2fef6109896f18378b4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaec8ec35691febedfb85e38fc4c311838"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#gaec8ec35691febedfb85e38fc4c311838">enc_position_match_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00029.html#ggaec8ec35691febedfb85e38fc4c311838ac7207e66be9333b516ef1b5d4079a6b4">kENC_POSMATCHOnPositionCounterEqualToComapreValue</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00029.html#ggaec8ec35691febedfb85e38fc4c311838ad546a2325a4a1b0d94ea19024cee663a">kENC_POSMATCHOnReadingAnyPositionCounter</a>
+&#160;&#160;<a class="el" href="a00029.html#gga29de01f066a7b20c96b51fdb392fe1b4a1f0da068b8eb44cfbeafb6f88426163b">kENC_INDEXTriggerOnFallingEdge</a>
 <br/>
  }</td></tr>
-<tr class="memdesc:gaec8ec35691febedfb85e38fc4c311838"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define type for the condition of POSMATCH pulses.  <a href="a00029.html#gaec8ec35691febedfb85e38fc4c311838">More...</a><br/></td></tr>
-<tr class="separator:gaec8ec35691febedfb85e38fc4c311838"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga645857d43e30752a5bee6d970a1201be"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga645857d43e30752a5bee6d970a1201be">enc_revolution_count_condition_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00029.html#gga645857d43e30752a5bee6d970a1201bea6704d1629d730f19652da91096eb5a27">kENC_RevolutionCountOnINDEXPulse</a> = 0U, 
+<tr class="memdesc:ga29de01f066a7b20c96b51fdb392fe1b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define INDEX signal's trigger mode.  <a href="a00029.html#ga29de01f066a7b20c96b51fdb392fe1b4">More...</a><br/></td></tr>
+<tr class="separator:ga29de01f066a7b20c96b51fdb392fe1b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab0ab18a69b9eb5c4489686d527be38d1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#gab0ab18a69b9eb5c4489686d527be38d1">_enc_decoder_work_mode</a> { <br/>
+&#160;&#160;<a class="el" href="a00029.html#ggab0ab18a69b9eb5c4489686d527be38d1af661773e581845df10715016acc53092">kENC_DecoderWorkAsNormalMode</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00029.html#gga645857d43e30752a5bee6d970a1201bea2ff1ec8052b541a253c50c2a6069dea8">kENC_RevolutionCountOnRollOverModulus</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:ga645857d43e30752a5bee6d970a1201be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define type for determining how the revolution counter (REV) is incremented/decremented.  <a href="a00029.html#ga645857d43e30752a5bee6d970a1201be">More...</a><br/></td></tr>
-<tr class="separator:ga645857d43e30752a5bee6d970a1201be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0771658dcc0d7fb694a3f6c3df1f7815"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga0771658dcc0d7fb694a3f6c3df1f7815">enc_self_test_direction_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00029.html#gga0771658dcc0d7fb694a3f6c3df1f7815a15fa41a761cf10c06dc032ad51b9d72c">kENC_SelfTestDirectionPositive</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00029.html#gga0771658dcc0d7fb694a3f6c3df1f7815a1536128883baf0c538ecf287c5b65a4a">kENC_SelfTestDirectionNegative</a>
+&#160;&#160;<a class="el" href="a00029.html#ggab0ab18a69b9eb5c4489686d527be38d1a052a9bce9a3071c02b28238615b607a2">kENC_DecoderWorkAsSignalPhaseCountMode</a>
 <br/>
  }</td></tr>
-<tr class="memdesc:ga0771658dcc0d7fb694a3f6c3df1f7815"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define type for direction of self test generated signal.  <a href="a00029.html#ga0771658dcc0d7fb694a3f6c3df1f7815">More...</a><br/></td></tr>
-<tr class="separator:ga0771658dcc0d7fb694a3f6c3df1f7815"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gab0ab18a69b9eb5c4489686d527be38d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define type for decoder work mode.  <a href="a00029.html#gab0ab18a69b9eb5c4489686d527be38d1">More...</a><br/></td></tr>
+<tr class="separator:gab0ab18a69b9eb5c4489686d527be38d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadf524ed65a40db2e53c463e9c47d06c2"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#gadf524ed65a40db2e53c463e9c47d06c2">_enc_position_match_mode</a> { <br/>
+&#160;&#160;<a class="el" href="a00029.html#ggadf524ed65a40db2e53c463e9c47d06c2ac7207e66be9333b516ef1b5d4079a6b4">kENC_POSMATCHOnPositionCounterEqualToComapreValue</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00029.html#ggadf524ed65a40db2e53c463e9c47d06c2ad546a2325a4a1b0d94ea19024cee663a">kENC_POSMATCHOnReadingAnyPositionCounter</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:gadf524ed65a40db2e53c463e9c47d06c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define type for the condition of POSMATCH pulses.  <a href="a00029.html#gadf524ed65a40db2e53c463e9c47d06c2">More...</a><br/></td></tr>
+<tr class="separator:gadf524ed65a40db2e53c463e9c47d06c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae23ed261bb1bdfd8641019354769e69d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#gae23ed261bb1bdfd8641019354769e69d">_enc_revolution_count_condition</a> { <br/>
+&#160;&#160;<a class="el" href="a00029.html#ggae23ed261bb1bdfd8641019354769e69da6704d1629d730f19652da91096eb5a27">kENC_RevolutionCountOnINDEXPulse</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00029.html#ggae23ed261bb1bdfd8641019354769e69da2ff1ec8052b541a253c50c2a6069dea8">kENC_RevolutionCountOnRollOverModulus</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:gae23ed261bb1bdfd8641019354769e69d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define type for determining how the revolution counter (REV) is incremented/decremented.  <a href="a00029.html#gae23ed261bb1bdfd8641019354769e69d">More...</a><br/></td></tr>
+<tr class="separator:gae23ed261bb1bdfd8641019354769e69d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga638c95c62f924d71ba7e541d916b6df7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga638c95c62f924d71ba7e541d916b6df7">_enc_self_test_direction</a> { <br/>
+&#160;&#160;<a class="el" href="a00029.html#gga638c95c62f924d71ba7e541d916b6df7a15fa41a761cf10c06dc032ad51b9d72c">kENC_SelfTestDirectionPositive</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00029.html#gga638c95c62f924d71ba7e541d916b6df7a1536128883baf0c538ecf287c5b65a4a">kENC_SelfTestDirectionNegative</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga638c95c62f924d71ba7e541d916b6df7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define type for direction of self test generated signal.  <a href="a00029.html#ga638c95c62f924d71ba7e541d916b6df7">More...</a><br/></td></tr>
+<tr class="separator:ga638c95c62f924d71ba7e541d916b6df7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga60803a576d8e50d9b6afe83ce46779a3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga60803a576d8e50d9b6afe83ce46779a3">_enc_prescaler</a> </td></tr>
+<tr class="memdesc:ga60803a576d8e50d9b6afe83ce46779a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define prescaler value for clock in CTRL3.  <a href="a00029.html#ga60803a576d8e50d9b6afe83ce46779a3">More...</a><br/></td></tr>
+<tr class="separator:ga60803a576d8e50d9b6afe83ce46779a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Initialization and De-initialization</h2></td></tr>
-<tr class="memitem:ga3137a28cb8af9082c19244923faa6c7a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga3137a28cb8af9082c19244923faa6c7a">ENC_Init</a> (ENC_Type *base, const <a class="el" href="a00029.html#a00485">enc_config_t</a> *config)</td></tr>
+<tr class="memitem:ga3137a28cb8af9082c19244923faa6c7a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga3137a28cb8af9082c19244923faa6c7a">ENC_Init</a> (ENC_Type *base, const <a class="el" href="a00029.html#gaef1fed8a3da13886d58499365e1b6047">enc_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga3137a28cb8af9082c19244923faa6c7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialization for the ENC module.  <a href="#ga3137a28cb8af9082c19244923faa6c7a">More...</a><br/></td></tr>
 <tr class="separator:ga3137a28cb8af9082c19244923faa6c7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae5541a81fcbffecd6184d3c88eb7ae4b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#gae5541a81fcbffecd6184d3c88eb7ae4b">ENC_Deinit</a> (ENC_Type *base)</td></tr>
 <tr class="memdesc:gae5541a81fcbffecd6184d3c88eb7ae4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-initialization for the ENC module.  <a href="#gae5541a81fcbffecd6184d3c88eb7ae4b">More...</a><br/></td></tr>
 <tr class="separator:gae5541a81fcbffecd6184d3c88eb7ae4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga812eaa30d800dd8901fada028ef14562"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga812eaa30d800dd8901fada028ef14562">ENC_GetDefaultConfig</a> (<a class="el" href="a00029.html#a00485">enc_config_t</a> *config)</td></tr>
+<tr class="memitem:ga812eaa30d800dd8901fada028ef14562"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga812eaa30d800dd8901fada028ef14562">ENC_GetDefaultConfig</a> (<a class="el" href="a00029.html#gaef1fed8a3da13886d58499365e1b6047">enc_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga812eaa30d800dd8901fada028ef14562"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get an available pre-defined settings for ENC's configuration.  <a href="#ga812eaa30d800dd8901fada028ef14562">More...</a><br/></td></tr>
 <tr class="separator:ga812eaa30d800dd8901fada028ef14562"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga813809b8cc5b8e3ecde96fa048854a78"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga813809b8cc5b8e3ecde96fa048854a78">ENC_DoSoftwareLoadInitialPositionValue</a> (ENC_Type *base)</td></tr>
 <tr class="memdesc:ga813809b8cc5b8e3ecde96fa048854a78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load the initial position value to position counter.  <a href="#ga813809b8cc5b8e3ecde96fa048854a78">More...</a><br/></td></tr>
 <tr class="separator:ga813809b8cc5b8e3ecde96fa048854a78"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaba180b2066b162e2e89107622102583f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#gaba180b2066b162e2e89107622102583f">ENC_SetSelfTestConfig</a> (ENC_Type *base, const <a class="el" href="a00029.html#a00486">enc_self_test_config_t</a> *config)</td></tr>
+<tr class="memitem:gaba180b2066b162e2e89107622102583f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#gaba180b2066b162e2e89107622102583f">ENC_SetSelfTestConfig</a> (ENC_Type *base, const <a class="el" href="a00029.html#ga89f150375e09c8bc136d2498339fa0c3">enc_self_test_config_t</a> *config)</td></tr>
 <tr class="memdesc:gaba180b2066b162e2e89107622102583f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable and configure the self test function.  <a href="#gaba180b2066b162e2e89107622102583f">More...</a><br/></td></tr>
 <tr class="separator:gaba180b2066b162e2e89107622102583f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga16862bf181ab5cbfab0281f3d95c6001"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga16862bf181ab5cbfab0281f3d95c6001">ENC_EnableWatchdog</a> (ENC_Type *base, bool enable)</td></tr>
@@ -318,148 +361,169 @@ Value Operation</h2></td></tr>
 <tr class="memitem:gad7c69f91e436ff10454c22fb7ae5b7e4"><td class="memItemLeft" align="right" valign="top">static uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#gad7c69f91e436ff10454c22fb7ae5b7e4">ENC_GetHoldRevolutionValue</a> (ENC_Type *base)</td></tr>
 <tr class="memdesc:gad7c69f91e436ff10454c22fb7ae5b7e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the hold position revolution counter's value.  <a href="#gad7c69f91e436ff10454c22fb7ae5b7e4">More...</a><br/></td></tr>
 <tr class="separator:gad7c69f91e436ff10454c22fb7ae5b7e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5b24f380eb62929adb7823b1b52fe390"><td class="memItemLeft" align="right" valign="top">static uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga5b24f380eb62929adb7823b1b52fe390">ENC_GetLastEdgeTimeValue</a> (ENC_Type *base)</td></tr>
+<tr class="memdesc:ga5b24f380eb62929adb7823b1b52fe390"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the last edge time value.  <a href="#ga5b24f380eb62929adb7823b1b52fe390">More...</a><br/></td></tr>
+<tr class="separator:ga5b24f380eb62929adb7823b1b52fe390"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga813621a8b88243c69eff8788e7d78a1c"><td class="memItemLeft" align="right" valign="top">static uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga813621a8b88243c69eff8788e7d78a1c">ENC_GetHoldLastEdgeTimeValue</a> (ENC_Type *base)</td></tr>
+<tr class="memdesc:ga813621a8b88243c69eff8788e7d78a1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the last edge time hold value.  <a href="#ga813621a8b88243c69eff8788e7d78a1c">More...</a><br/></td></tr>
+<tr class="separator:ga813621a8b88243c69eff8788e7d78a1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6882da538aa2ec25d13748a8ef28d2e2"><td class="memItemLeft" align="right" valign="top">static uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga6882da538aa2ec25d13748a8ef28d2e2">ENC_GetPositionDifferencePeriodValue</a> (ENC_Type *base)</td></tr>
+<tr class="memdesc:ga6882da538aa2ec25d13748a8ef28d2e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the position difference period value.  <a href="#ga6882da538aa2ec25d13748a8ef28d2e2">More...</a><br/></td></tr>
+<tr class="separator:ga6882da538aa2ec25d13748a8ef28d2e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8c061763322132ddc9721ebf73895a65"><td class="memItemLeft" align="right" valign="top">static uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga8c061763322132ddc9721ebf73895a65">ENC_GetPositionDifferencePeriodBufferValue</a> (ENC_Type *base)</td></tr>
+<tr class="memdesc:ga8c061763322132ddc9721ebf73895a65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the position difference period buffer value.  <a href="#ga8c061763322132ddc9721ebf73895a65">More...</a><br/></td></tr>
+<tr class="separator:ga8c061763322132ddc9721ebf73895a65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4ca4a1557b39fbb99f1f78d12842faaf"><td class="memItemLeft" align="right" valign="top">static uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ga4ca4a1557b39fbb99f1f78d12842faaf">ENC_GetHoldPositionDifferencePeriodValue</a> (ENC_Type *base)</td></tr>
+<tr class="memdesc:ga4ca4a1557b39fbb99f1f78d12842faaf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the position difference period hold value.  <a href="#ga4ca4a1557b39fbb99f1f78d12842faaf">More...</a><br/></td></tr>
+<tr class="separator:ga4ca4a1557b39fbb99f1f78d12842faaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00485" id="a00485"></a>
+<a name="a00457" id="a00457"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct enc_config_t</td>
+          <td class="memname">struct _enc_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a522c7ab99e1a8b897de8dd34868a0c75"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a522c7ab99e1a8b897de8dd34868a0c75">enableReverseDirection</a></td></tr>
-<tr class="memdesc:a522c7ab99e1a8b897de8dd34868a0c75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable reverse direction counting.  <a href="#a522c7ab99e1a8b897de8dd34868a0c75">More...</a><br/></td></tr>
-<tr class="separator:a522c7ab99e1a8b897de8dd34868a0c75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e87b6b545b87079f90cbecd93e7f809"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00029.html#ga397e650f9e1a2fef6109896f18378b4c">enc_decoder_work_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a5e87b6b545b87079f90cbecd93e7f809">decoderWorkMode</a></td></tr>
-<tr class="memdesc:a5e87b6b545b87079f90cbecd93e7f809"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable signal phase count mode.  <a href="#a5e87b6b545b87079f90cbecd93e7f809">More...</a><br/></td></tr>
-<tr class="separator:a5e87b6b545b87079f90cbecd93e7f809"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ae2c5f9ba4a1dafbaac4b5b5eadd04d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00029.html#ga9b19f10c2303de256aab7b1d5c0057c3">enc_home_trigger_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a6ae2c5f9ba4a1dafbaac4b5b5eadd04d">HOMETriggerMode</a></td></tr>
-<tr class="memdesc:a6ae2c5f9ba4a1dafbaac4b5b5eadd04d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable HOME to initialize position counters.  <a href="#a6ae2c5f9ba4a1dafbaac4b5b5eadd04d">More...</a><br/></td></tr>
-<tr class="separator:a6ae2c5f9ba4a1dafbaac4b5b5eadd04d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e53616ea784ca3a6cd05083cfab2caa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00029.html#ga986882142c037e6dd8c7845410f1e287">enc_index_trigger_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a5e53616ea784ca3a6cd05083cfab2caa">INDEXTriggerMode</a></td></tr>
-<tr class="memdesc:a5e53616ea784ca3a6cd05083cfab2caa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable INDEX to initialize position counters.  <a href="#a5e53616ea784ca3a6cd05083cfab2caa">More...</a><br/></td></tr>
-<tr class="separator:a5e53616ea784ca3a6cd05083cfab2caa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0b92cd8d3b24f2aaf5d564a2fca4fe6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#af0b92cd8d3b24f2aaf5d564a2fca4fe6">enableTRIGGERClearPositionCounter</a></td></tr>
-<tr class="memdesc:af0b92cd8d3b24f2aaf5d564a2fca4fe6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear POSD, REV, UPOS and LPOS on rising edge of TRIGGER, or not.  <a href="#af0b92cd8d3b24f2aaf5d564a2fca4fe6">More...</a><br/></td></tr>
-<tr class="separator:af0b92cd8d3b24f2aaf5d564a2fca4fe6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a347cca3f04709a2372dcb0d1ff706420"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a347cca3f04709a2372dcb0d1ff706420"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a347cca3f04709a2372dcb0d1ff706420">enableTRIGGERClearHoldPositionCounter</a></td></tr>
-<tr class="memdesc:a347cca3f04709a2372dcb0d1ff706420"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable update of hold registers on rising edge of TRIGGER, or not. <br/></td></tr>
-<tr class="separator:a347cca3f04709a2372dcb0d1ff706420"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a818e09227f3a5892bda5e1128f2a03b4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a818e09227f3a5892bda5e1128f2a03b4">enableWatchdog</a></td></tr>
-<tr class="memdesc:a818e09227f3a5892bda5e1128f2a03b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the watchdog to detect if the target is moving or not.  <a href="#a818e09227f3a5892bda5e1128f2a03b4">More...</a><br/></td></tr>
-<tr class="separator:a818e09227f3a5892bda5e1128f2a03b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4061699ed317acca6ad5a796cd8ff634"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a4061699ed317acca6ad5a796cd8ff634">watchdogTimeoutValue</a></td></tr>
-<tr class="memdesc:a4061699ed317acca6ad5a796cd8ff634"><td class="mdescLeft">&#160;</td><td class="mdescRight">Watchdog timeout count value.  <a href="#a4061699ed317acca6ad5a796cd8ff634">More...</a><br/></td></tr>
-<tr class="separator:a4061699ed317acca6ad5a796cd8ff634"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28e5850a83a55194a165d0cac8f4add1"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a28e5850a83a55194a165d0cac8f4add1">filterCount</a></td></tr>
-<tr class="memdesc:a28e5850a83a55194a165d0cac8f4add1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input Filter Sample Count.  <a href="#a28e5850a83a55194a165d0cac8f4add1">More...</a><br/></td></tr>
-<tr class="separator:a28e5850a83a55194a165d0cac8f4add1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a76b510d862901687d3afe0f9693232b7"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a76b510d862901687d3afe0f9693232b7">filterSamplePeriod</a></td></tr>
-<tr class="memdesc:a76b510d862901687d3afe0f9693232b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input Filter Sample Period.  <a href="#a76b510d862901687d3afe0f9693232b7">More...</a><br/></td></tr>
-<tr class="separator:a76b510d862901687d3afe0f9693232b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf23078fa2f9d81476596f10fa6f34c2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00029.html#gaec8ec35691febedfb85e38fc4c311838">enc_position_match_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#aaf23078fa2f9d81476596f10fa6f34c2">positionMatchMode</a></td></tr>
-<tr class="memdesc:aaf23078fa2f9d81476596f10fa6f34c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The condition of POSMATCH pulses.  <a href="#aaf23078fa2f9d81476596f10fa6f34c2">More...</a><br/></td></tr>
-<tr class="separator:aaf23078fa2f9d81476596f10fa6f34c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a706b9258832c5da9279971b158cefe3b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a706b9258832c5da9279971b158cefe3b">positionCompareValue</a></td></tr>
-<tr class="memdesc:a706b9258832c5da9279971b158cefe3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Position compare value.  <a href="#a706b9258832c5da9279971b158cefe3b">More...</a><br/></td></tr>
-<tr class="separator:a706b9258832c5da9279971b158cefe3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c6214d0358540fb9ca7bd31d3961fc4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00029.html#ga645857d43e30752a5bee6d970a1201be">enc_revolution_count_condition_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a5c6214d0358540fb9ca7bd31d3961fc4">revolutionCountCondition</a></td></tr>
-<tr class="memdesc:a5c6214d0358540fb9ca7bd31d3961fc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Revolution Counter Modulus Enable.  <a href="#a5c6214d0358540fb9ca7bd31d3961fc4">More...</a><br/></td></tr>
-<tr class="separator:a5c6214d0358540fb9ca7bd31d3961fc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab41faf266e79e9fbdfbca2c4a568f286"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ab41faf266e79e9fbdfbca2c4a568f286">enableModuloCountMode</a></td></tr>
-<tr class="memdesc:ab41faf266e79e9fbdfbca2c4a568f286"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable Modulo Counting.  <a href="#ab41faf266e79e9fbdfbca2c4a568f286">More...</a><br/></td></tr>
-<tr class="separator:ab41faf266e79e9fbdfbca2c4a568f286"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9c4ca08aaa0a4680a62fae18c1f907a7"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a9c4ca08aaa0a4680a62fae18c1f907a7">positionModulusValue</a></td></tr>
-<tr class="memdesc:a9c4ca08aaa0a4680a62fae18c1f907a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Position modulus value.  <a href="#a9c4ca08aaa0a4680a62fae18c1f907a7">More...</a><br/></td></tr>
-<tr class="separator:a9c4ca08aaa0a4680a62fae18c1f907a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a42ff0a11bf950e3383e2c86df34c1380"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a42ff0a11bf950e3383e2c86df34c1380">positionInitialValue</a></td></tr>
-<tr class="memdesc:a42ff0a11bf950e3383e2c86df34c1380"><td class="mdescLeft">&#160;</td><td class="mdescRight">Position initial value.  <a href="#a42ff0a11bf950e3383e2c86df34c1380">More...</a><br/></td></tr>
-<tr class="separator:a42ff0a11bf950e3383e2c86df34c1380"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad754ab4be68e450ac01f5c5def997762"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ad754ab4be68e450ac01f5c5def997762">enableReverseDirection</a></td></tr>
+<tr class="memdesc:ad754ab4be68e450ac01f5c5def997762"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable reverse direction counting.  <a href="#ad754ab4be68e450ac01f5c5def997762">More...</a><br/></td></tr>
+<tr class="separator:ad754ab4be68e450ac01f5c5def997762"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac55e95a1ebbf9a703c63a05c723e040a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00029.html#gab0beff48cfdfaf49f5f3a6e9133e81a5">enc_decoder_work_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ac55e95a1ebbf9a703c63a05c723e040a">decoderWorkMode</a></td></tr>
+<tr class="memdesc:ac55e95a1ebbf9a703c63a05c723e040a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable signal phase count mode.  <a href="#ac55e95a1ebbf9a703c63a05c723e040a">More...</a><br/></td></tr>
+<tr class="separator:ac55e95a1ebbf9a703c63a05c723e040a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c57c0fef10c4148b7bbf0014af81e27"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00029.html#ga88e8835d32fcf55bb143a1fe619bfd53">enc_home_trigger_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a4c57c0fef10c4148b7bbf0014af81e27">HOMETriggerMode</a></td></tr>
+<tr class="memdesc:a4c57c0fef10c4148b7bbf0014af81e27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable HOME to initialize position counters.  <a href="#a4c57c0fef10c4148b7bbf0014af81e27">More...</a><br/></td></tr>
+<tr class="separator:a4c57c0fef10c4148b7bbf0014af81e27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a254d6094c2d9f4cb8febc3ef2498ea49"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00029.html#ga2c9746fc8a7bcad2cfaa2d3f3f035c90">enc_index_trigger_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a254d6094c2d9f4cb8febc3ef2498ea49">INDEXTriggerMode</a></td></tr>
+<tr class="memdesc:a254d6094c2d9f4cb8febc3ef2498ea49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable INDEX to initialize position counters.  <a href="#a254d6094c2d9f4cb8febc3ef2498ea49">More...</a><br/></td></tr>
+<tr class="separator:a254d6094c2d9f4cb8febc3ef2498ea49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ea8fda8e285c9d85d7594272cf026a3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a7ea8fda8e285c9d85d7594272cf026a3">enableTRIGGERClearPositionCounter</a></td></tr>
+<tr class="memdesc:a7ea8fda8e285c9d85d7594272cf026a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear POSD, REV, UPOS and LPOS on rising edge of TRIGGER, or not.  <a href="#a7ea8fda8e285c9d85d7594272cf026a3">More...</a><br/></td></tr>
+<tr class="separator:a7ea8fda8e285c9d85d7594272cf026a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84c1b8172f384e77bbd71a026ad2087e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a84c1b8172f384e77bbd71a026ad2087e"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a84c1b8172f384e77bbd71a026ad2087e">enableTRIGGERClearHoldPositionCounter</a></td></tr>
+<tr class="memdesc:a84c1b8172f384e77bbd71a026ad2087e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable update of hold registers on rising edge of TRIGGER, or not. <br/></td></tr>
+<tr class="separator:a84c1b8172f384e77bbd71a026ad2087e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17c4c8a51a6d44a81e0a61fd03525623"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a17c4c8a51a6d44a81e0a61fd03525623">enableWatchdog</a></td></tr>
+<tr class="memdesc:a17c4c8a51a6d44a81e0a61fd03525623"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the watchdog to detect if the target is moving or not.  <a href="#a17c4c8a51a6d44a81e0a61fd03525623">More...</a><br/></td></tr>
+<tr class="separator:a17c4c8a51a6d44a81e0a61fd03525623"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a7a86c52cc98695d57781e8323d1491"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a8a7a86c52cc98695d57781e8323d1491">watchdogTimeoutValue</a></td></tr>
+<tr class="memdesc:a8a7a86c52cc98695d57781e8323d1491"><td class="mdescLeft">&#160;</td><td class="mdescRight">Watchdog timeout count value.  <a href="#a8a7a86c52cc98695d57781e8323d1491">More...</a><br/></td></tr>
+<tr class="separator:a8a7a86c52cc98695d57781e8323d1491"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51959cb2969010b93e3c0e61a2e7d783"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a51959cb2969010b93e3c0e61a2e7d783">filterCount</a></td></tr>
+<tr class="memdesc:a51959cb2969010b93e3c0e61a2e7d783"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input Filter Sample Count.  <a href="#a51959cb2969010b93e3c0e61a2e7d783">More...</a><br/></td></tr>
+<tr class="separator:a51959cb2969010b93e3c0e61a2e7d783"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a255edb31b7f52fa56a899225183a161d"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a255edb31b7f52fa56a899225183a161d">filterSamplePeriod</a></td></tr>
+<tr class="memdesc:a255edb31b7f52fa56a899225183a161d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input Filter Sample Period.  <a href="#a255edb31b7f52fa56a899225183a161d">More...</a><br/></td></tr>
+<tr class="separator:a255edb31b7f52fa56a899225183a161d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19fd34ae83be2d5a24ecc939671bb002"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00029.html#gaaee9062a7faa53f64b0f96009613bc2f">enc_position_match_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a19fd34ae83be2d5a24ecc939671bb002">positionMatchMode</a></td></tr>
+<tr class="memdesc:a19fd34ae83be2d5a24ecc939671bb002"><td class="mdescLeft">&#160;</td><td class="mdescRight">The condition of POSMATCH pulses.  <a href="#a19fd34ae83be2d5a24ecc939671bb002">More...</a><br/></td></tr>
+<tr class="separator:a19fd34ae83be2d5a24ecc939671bb002"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaec5b01b6e9661c6df0610708c21c44d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#aaec5b01b6e9661c6df0610708c21c44d">positionCompareValue</a></td></tr>
+<tr class="memdesc:aaec5b01b6e9661c6df0610708c21c44d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Position compare value.  <a href="#aaec5b01b6e9661c6df0610708c21c44d">More...</a><br/></td></tr>
+<tr class="separator:aaec5b01b6e9661c6df0610708c21c44d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c2b18b1b738a004a1a42eab4318ed03"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00029.html#ga5f5c9d7aa77ae4e798079e7670f73801">enc_revolution_count_condition_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a7c2b18b1b738a004a1a42eab4318ed03">revolutionCountCondition</a></td></tr>
+<tr class="memdesc:a7c2b18b1b738a004a1a42eab4318ed03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Revolution Counter Modulus Enable.  <a href="#a7c2b18b1b738a004a1a42eab4318ed03">More...</a><br/></td></tr>
+<tr class="separator:a7c2b18b1b738a004a1a42eab4318ed03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b795d9ea719e7cff3951689ab65a930"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a8b795d9ea719e7cff3951689ab65a930">enableModuloCountMode</a></td></tr>
+<tr class="memdesc:a8b795d9ea719e7cff3951689ab65a930"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable Modulo Counting.  <a href="#a8b795d9ea719e7cff3951689ab65a930">More...</a><br/></td></tr>
+<tr class="separator:a8b795d9ea719e7cff3951689ab65a930"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad24588974b896443abc282fb81d9a910"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#ad24588974b896443abc282fb81d9a910">positionModulusValue</a></td></tr>
+<tr class="memdesc:ad24588974b896443abc282fb81d9a910"><td class="mdescLeft">&#160;</td><td class="mdescRight">Position modulus value.  <a href="#ad24588974b896443abc282fb81d9a910">More...</a><br/></td></tr>
+<tr class="separator:ad24588974b896443abc282fb81d9a910"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc59884c4cdd242858612d085604c84e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#adc59884c4cdd242858612d085604c84e">positionInitialValue</a></td></tr>
+<tr class="memdesc:adc59884c4cdd242858612d085604c84e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Position initial value.  <a href="#adc59884c4cdd242858612d085604c84e">More...</a><br/></td></tr>
+<tr class="separator:adc59884c4cdd242858612d085604c84e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8331e11687df85caf1995f583223741"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#af8331e11687df85caf1995f583223741">enablePeriodMeasurementFunction</a></td></tr>
+<tr class="memdesc:af8331e11687df85caf1995f583223741"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable period measurement function.  <a href="#af8331e11687df85caf1995f583223741">More...</a><br/></td></tr>
+<tr class="separator:af8331e11687df85caf1995f583223741"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46b9eab04ef6e99b5e2adaafa55ba2f1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00029.html#ga669904e46fd69d83bc31d0f1dcd658df">enc_prescaler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a46b9eab04ef6e99b5e2adaafa55ba2f1">prescalerValue</a></td></tr>
+<tr class="memdesc:a46b9eab04ef6e99b5e2adaafa55ba2f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The value of prescaler.  <a href="#a46b9eab04ef6e99b5e2adaafa55ba2f1">More...</a><br/></td></tr>
+<tr class="separator:a46b9eab04ef6e99b5e2adaafa55ba2f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a522c7ab99e1a8b897de8dd34868a0c75"></a>
+<a class="anchor" id="ad754ab4be68e450ac01f5c5def997762"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool enc_config_t::enableReverseDirection</td>
+          <td class="memname">bool _enc_config::enableReverseDirection</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a5e87b6b545b87079f90cbecd93e7f809"></a>
+<a class="anchor" id="ac55e95a1ebbf9a703c63a05c723e040a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00029.html#ga397e650f9e1a2fef6109896f18378b4c">enc_decoder_work_mode_t</a> enc_config_t::decoderWorkMode</td>
+          <td class="memname"><a class="el" href="a00029.html#gab0beff48cfdfaf49f5f3a6e9133e81a5">enc_decoder_work_mode_t</a> _enc_config::decoderWorkMode</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a6ae2c5f9ba4a1dafbaac4b5b5eadd04d"></a>
+<a class="anchor" id="a4c57c0fef10c4148b7bbf0014af81e27"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00029.html#ga9b19f10c2303de256aab7b1d5c0057c3">enc_home_trigger_mode_t</a> enc_config_t::HOMETriggerMode</td>
+          <td class="memname"><a class="el" href="a00029.html#ga88e8835d32fcf55bb143a1fe619bfd53">enc_home_trigger_mode_t</a> _enc_config::HOMETriggerMode</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a5e53616ea784ca3a6cd05083cfab2caa"></a>
+<a class="anchor" id="a254d6094c2d9f4cb8febc3ef2498ea49"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00029.html#ga986882142c037e6dd8c7845410f1e287">enc_index_trigger_mode_t</a> enc_config_t::INDEXTriggerMode</td>
+          <td class="memname"><a class="el" href="a00029.html#ga2c9746fc8a7bcad2cfaa2d3f3f035c90">enc_index_trigger_mode_t</a> _enc_config::INDEXTriggerMode</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="af0b92cd8d3b24f2aaf5d564a2fca4fe6"></a>
+<a class="anchor" id="a7ea8fda8e285c9d85d7594272cf026a3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool enc_config_t::enableTRIGGERClearPositionCounter</td>
+          <td class="memname">bool _enc_config::enableTRIGGERClearPositionCounter</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a818e09227f3a5892bda5e1128f2a03b4"></a>
+<a class="anchor" id="a17c4c8a51a6d44a81e0a61fd03525623"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool enc_config_t::enableWatchdog</td>
+          <td class="memname">bool _enc_config::enableWatchdog</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a4061699ed317acca6ad5a796cd8ff634"></a>
+<a class="anchor" id="a8a7a86c52cc98695d57781e8323d1491"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t enc_config_t::watchdogTimeoutValue</td>
+          <td class="memname">uint16_t _enc_config::watchdogTimeoutValue</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -467,12 +531,12 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 
 </div>
 </div>
-<a class="anchor" id="a28e5850a83a55194a165d0cac8f4add1"></a>
+<a class="anchor" id="a51959cb2969010b93e3c0e61a2e7d783"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t enc_config_t::filterCount</td>
+          <td class="memname">uint16_t _enc_config::filterCount</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -480,12 +544,12 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 
 </div>
 </div>
-<a class="anchor" id="a76b510d862901687d3afe0f9693232b7"></a>
+<a class="anchor" id="a255edb31b7f52fa56a899225183a161d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t enc_config_t::filterSamplePeriod</td>
+          <td class="memname">uint16_t _enc_config::filterSamplePeriod</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -493,24 +557,24 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 
 </div>
 </div>
-<a class="anchor" id="aaf23078fa2f9d81476596f10fa6f34c2"></a>
+<a class="anchor" id="a19fd34ae83be2d5a24ecc939671bb002"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00029.html#gaec8ec35691febedfb85e38fc4c311838">enc_position_match_mode_t</a> enc_config_t::positionMatchMode</td>
+          <td class="memname"><a class="el" href="a00029.html#gaaee9062a7faa53f64b0f96009613bc2f">enc_position_match_mode_t</a> _enc_config::positionMatchMode</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a706b9258832c5da9279971b158cefe3b"></a>
+<a class="anchor" id="aaec5b01b6e9661c6df0610708c21c44d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t enc_config_t::positionCompareValue</td>
+          <td class="memname">uint32_t _enc_config::positionCompareValue</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -518,36 +582,36 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 
 </div>
 </div>
-<a class="anchor" id="a5c6214d0358540fb9ca7bd31d3961fc4"></a>
+<a class="anchor" id="a7c2b18b1b738a004a1a42eab4318ed03"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00029.html#ga645857d43e30752a5bee6d970a1201be">enc_revolution_count_condition_t</a> enc_config_t::revolutionCountCondition</td>
+          <td class="memname"><a class="el" href="a00029.html#ga5f5c9d7aa77ae4e798079e7670f73801">enc_revolution_count_condition_t</a> _enc_config::revolutionCountCondition</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ab41faf266e79e9fbdfbca2c4a568f286"></a>
+<a class="anchor" id="a8b795d9ea719e7cff3951689ab65a930"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool enc_config_t::enableModuloCountMode</td>
+          <td class="memname">bool _enc_config::enableModuloCountMode</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a9c4ca08aaa0a4680a62fae18c1f907a7"></a>
+<a class="anchor" id="ad24588974b896443abc282fb81d9a910"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t enc_config_t::positionModulusValue</td>
+          <td class="memname">uint32_t _enc_config::positionModulusValue</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -555,12 +619,12 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 
 </div>
 </div>
-<a class="anchor" id="a42ff0a11bf950e3383e2c86df34c1380"></a>
+<a class="anchor" id="adc59884c4cdd242858612d085604c84e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t enc_config_t::positionInitialValue</td>
+          <td class="memname">uint32_t _enc_config::positionInitialValue</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -568,50 +632,74 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 
 </div>
 </div>
-
-</div>
-</div>
-<a name="a00486" id="a00486"></a>
+<a class="anchor" id="af8331e11687df85caf1995f583223741"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct enc_self_test_config_t</td>
+          <td class="memname">bool _enc_config::enablePeriodMeasurementFunction</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a46b9eab04ef6e99b5e2adaafa55ba2f1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00029.html#ga669904e46fd69d83bc31d0f1dcd658df">enc_prescaler_t</a> _enc_config::prescalerValue</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="a00458" id="a00458"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct _enc_self_test_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"><p>The self test module provides a quadrature test signal to the inputs of the quadrature decoder module. This is a factory test feature. It is also useful to customers' software development and testing. </p>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a43c1f46f38185c53d70945706d0f7379"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00029.html#ga0771658dcc0d7fb694a3f6c3df1f7815">enc_self_test_direction_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a43c1f46f38185c53d70945706d0f7379">signalDirection</a></td></tr>
-<tr class="memdesc:a43c1f46f38185c53d70945706d0f7379"><td class="mdescLeft">&#160;</td><td class="mdescRight">Direction of self test generated signal.  <a href="#a43c1f46f38185c53d70945706d0f7379">More...</a><br/></td></tr>
-<tr class="separator:a43c1f46f38185c53d70945706d0f7379"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8aff93755f8b555b1665c5ecff59c4e2"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a8aff93755f8b555b1665c5ecff59c4e2">signalCount</a></td></tr>
-<tr class="memdesc:a8aff93755f8b555b1665c5ecff59c4e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hold the number of quadrature advances to generate.  <a href="#a8aff93755f8b555b1665c5ecff59c4e2">More...</a><br/></td></tr>
-<tr class="separator:a8aff93755f8b555b1665c5ecff59c4e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa7425889c344d1b9804603666b7beedc"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#aa7425889c344d1b9804603666b7beedc">signalPeriod</a></td></tr>
-<tr class="memdesc:aa7425889c344d1b9804603666b7beedc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hold the period of quadrature phase in IPBus clock cycles.  <a href="#aa7425889c344d1b9804603666b7beedc">More...</a><br/></td></tr>
-<tr class="separator:aa7425889c344d1b9804603666b7beedc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af93dbcfe3bdec619dc4c3137ab435ef0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00029.html#gadac7b390ef77fd7af12c271abd2a6ebc">enc_self_test_direction_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#af93dbcfe3bdec619dc4c3137ab435ef0">signalDirection</a></td></tr>
+<tr class="memdesc:af93dbcfe3bdec619dc4c3137ab435ef0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Direction of self test generated signal.  <a href="#af93dbcfe3bdec619dc4c3137ab435ef0">More...</a><br/></td></tr>
+<tr class="separator:af93dbcfe3bdec619dc4c3137ab435ef0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88b049ae384312c2b4fb74c59924f7f5"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a88b049ae384312c2b4fb74c59924f7f5">signalCount</a></td></tr>
+<tr class="memdesc:a88b049ae384312c2b4fb74c59924f7f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hold the number of quadrature advances to generate.  <a href="#a88b049ae384312c2b4fb74c59924f7f5">More...</a><br/></td></tr>
+<tr class="separator:a88b049ae384312c2b4fb74c59924f7f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a232136f38b57ce15fdf30a430a3ebff3"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html#a232136f38b57ce15fdf30a430a3ebff3">signalPeriod</a></td></tr>
+<tr class="memdesc:a232136f38b57ce15fdf30a430a3ebff3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hold the period of quadrature phase in IPBus clock cycles.  <a href="#a232136f38b57ce15fdf30a430a3ebff3">More...</a><br/></td></tr>
+<tr class="separator:a232136f38b57ce15fdf30a430a3ebff3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a43c1f46f38185c53d70945706d0f7379"></a>
+<a class="anchor" id="af93dbcfe3bdec619dc4c3137ab435ef0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00029.html#ga0771658dcc0d7fb694a3f6c3df1f7815">enc_self_test_direction_t</a> enc_self_test_config_t::signalDirection</td>
+          <td class="memname"><a class="el" href="a00029.html#gadac7b390ef77fd7af12c271abd2a6ebc">enc_self_test_direction_t</a> _enc_self_test_config::signalDirection</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a8aff93755f8b555b1665c5ecff59c4e2"></a>
+<a class="anchor" id="a88b049ae384312c2b4fb74c59924f7f5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t enc_self_test_config_t::signalCount</td>
+          <td class="memname">uint16_t _enc_self_test_config::signalCount</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -619,12 +707,12 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 
 </div>
 </div>
-<a class="anchor" id="aa7425889c344d1b9804603666b7beedc"></a>
+<a class="anchor" id="a232136f38b57ce15fdf30a430a3ebff3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t enc_self_test_config_t::signalPeriod</td>
+          <td class="memname">uint16_t _enc_self_test_config::signalPeriod</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -632,6 +720,72 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 
 </div>
 </div>
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga88e8835d32fcf55bb143a1fe619bfd53"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00029.html#ga3f3efffe910c1611816a08ba17ce7c9e">_enc_home_trigger_mode</a>  <a class="el" href="a00029.html#ga88e8835d32fcf55bb143a1fe619bfd53">enc_home_trigger_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The ENC would count the trigger from HOME signal line. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga2c9746fc8a7bcad2cfaa2d3f3f035c90"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00029.html#ga29de01f066a7b20c96b51fdb392fe1b4">_enc_index_trigger_mode</a>  <a class="el" href="a00029.html#ga2c9746fc8a7bcad2cfaa2d3f3f035c90">enc_index_trigger_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The ENC would count the trigger from INDEX signal line. </p>
+
+</div>
+</div>
+<a class="anchor" id="gab0beff48cfdfaf49f5f3a6e9133e81a5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00029.html#gab0ab18a69b9eb5c4489686d527be38d1">_enc_decoder_work_mode</a>  <a class="el" href="a00029.html#gab0beff48cfdfaf49f5f3a6e9133e81a5">enc_decoder_work_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The normal work mode uses the standard quadrature decoder with PHASEA and PHASEB. When in signal phase count mode, a positive transition of the PHASEA input generates a count signal while the PHASEB input and the reverse direction control the counter direction. If the reverse direction is not enabled, PHASEB = 0 means counting up and PHASEB = 1 means counting down. Otherwise, the direction is reversed. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga669904e46fd69d83bc31d0f1dcd658df"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00029.html#ga60803a576d8e50d9b6afe83ce46779a3">_enc_prescaler</a>  <a class="el" href="a00029.html#ga669904e46fd69d83bc31d0f1dcd658df">enc_prescaler_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The clock is prescaled by a value of 2^PRSC which means that the prescaler logic can divide the clock by a minimum of 1 and a maximum of 32,768. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga89f150375e09c8bc136d2498339fa0c3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00029.html#a00458">_enc_self_test_config</a>  <a class="el" href="a00029.html#ga89f150375e09c8bc136d2498339fa0c3">enc_self_test_config_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The self test module provides a quadrature test signal to the inputs of the quadrature decoder module. This is a factory test feature. It is also useful to customers' software development and testing. </p>
 
 </div>
 </div>
@@ -749,132 +903,145 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 
 </div>
 </div>
-<a class="anchor" id="ga9b19f10c2303de256aab7b1d5c0057c3"></a>
+<a class="anchor" id="ga3f3efffe910c1611816a08ba17ce7c9e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00029.html#ga9b19f10c2303de256aab7b1d5c0057c3">enc_home_trigger_mode_t</a></td>
+          <td class="memname">enum <a class="el" href="a00029.html#ga3f3efffe910c1611816a08ba17ce7c9e">_enc_home_trigger_mode</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>The ENC would count the trigger from HOME signal line. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga9b19f10c2303de256aab7b1d5c0057c3a14f8fc3da25b327522b1bf6b9341a10c"></a>kENC_HOMETriggerDisabled</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga3f3efffe910c1611816a08ba17ce7c9ea14f8fc3da25b327522b1bf6b9341a10c"></a>kENC_HOMETriggerDisabled</em>&nbsp;</td><td class="fielddoc">
 <p>HOME signal's trigger is disabled. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9b19f10c2303de256aab7b1d5c0057c3a2640b2c847b9d69a9b2382cb7f7a1481"></a>kENC_HOMETriggerOnRisingEdge</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga3f3efffe910c1611816a08ba17ce7c9ea2640b2c847b9d69a9b2382cb7f7a1481"></a>kENC_HOMETriggerOnRisingEdge</em>&nbsp;</td><td class="fielddoc">
 <p>Use positive going edge-to-trigger initialization of position counters. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9b19f10c2303de256aab7b1d5c0057c3a79e8a6e80fc98d6d88a84c937ef7e378"></a>kENC_HOMETriggerOnFallingEdge</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga3f3efffe910c1611816a08ba17ce7c9ea79e8a6e80fc98d6d88a84c937ef7e378"></a>kENC_HOMETriggerOnFallingEdge</em>&nbsp;</td><td class="fielddoc">
 <p>Use negative going edge-to-trigger initialization of position counters. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga986882142c037e6dd8c7845410f1e287"></a>
+<a class="anchor" id="ga29de01f066a7b20c96b51fdb392fe1b4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00029.html#ga986882142c037e6dd8c7845410f1e287">enc_index_trigger_mode_t</a></td>
+          <td class="memname">enum <a class="el" href="a00029.html#ga29de01f066a7b20c96b51fdb392fe1b4">_enc_index_trigger_mode</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>The ENC would count the trigger from INDEX signal line. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga986882142c037e6dd8c7845410f1e287ae8376e76cb334d80c7cfc1c7f77e13ea"></a>kENC_INDEXTriggerDisabled</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga29de01f066a7b20c96b51fdb392fe1b4ae8376e76cb334d80c7cfc1c7f77e13ea"></a>kENC_INDEXTriggerDisabled</em>&nbsp;</td><td class="fielddoc">
 <p>INDEX signal's trigger is disabled. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga986882142c037e6dd8c7845410f1e287ab5095f768a55185cc1bfbc089903d7b3"></a>kENC_INDEXTriggerOnRisingEdge</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga29de01f066a7b20c96b51fdb392fe1b4ab5095f768a55185cc1bfbc089903d7b3"></a>kENC_INDEXTriggerOnRisingEdge</em>&nbsp;</td><td class="fielddoc">
 <p>Use positive going edge-to-trigger initialization of position counters. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga986882142c037e6dd8c7845410f1e287a1f0da068b8eb44cfbeafb6f88426163b"></a>kENC_INDEXTriggerOnFallingEdge</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga29de01f066a7b20c96b51fdb392fe1b4a1f0da068b8eb44cfbeafb6f88426163b"></a>kENC_INDEXTriggerOnFallingEdge</em>&nbsp;</td><td class="fielddoc">
 <p>Use negative going edge-to-trigger initialization of position counters. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga397e650f9e1a2fef6109896f18378b4c"></a>
+<a class="anchor" id="gab0ab18a69b9eb5c4489686d527be38d1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00029.html#ga397e650f9e1a2fef6109896f18378b4c">enc_decoder_work_mode_t</a></td>
+          <td class="memname">enum <a class="el" href="a00029.html#gab0ab18a69b9eb5c4489686d527be38d1">_enc_decoder_work_mode</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>The normal work mode uses the standard quadrature decoder with PHASEA and PHASEB. When in signal phase count mode, a positive transition of the PHASEA input generates a count signal while the PHASEB input and the reverse direction control the counter direction. If the reverse direction is not enabled, PHASEB = 0 means counting up and PHASEB = 1 means counting down. Otherwise, the direction is reversed. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga397e650f9e1a2fef6109896f18378b4caf661773e581845df10715016acc53092"></a>kENC_DecoderWorkAsNormalMode</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab0ab18a69b9eb5c4489686d527be38d1af661773e581845df10715016acc53092"></a>kENC_DecoderWorkAsNormalMode</em>&nbsp;</td><td class="fielddoc">
 <p>Use standard quadrature decoder with PHASEA and PHASEB. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga397e650f9e1a2fef6109896f18378b4ca052a9bce9a3071c02b28238615b607a2"></a>kENC_DecoderWorkAsSignalPhaseCountMode</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggab0ab18a69b9eb5c4489686d527be38d1a052a9bce9a3071c02b28238615b607a2"></a>kENC_DecoderWorkAsSignalPhaseCountMode</em>&nbsp;</td><td class="fielddoc">
 <p>PHASEA input generates a count signal while PHASEB input control the direction. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gaec8ec35691febedfb85e38fc4c311838"></a>
+<a class="anchor" id="gadf524ed65a40db2e53c463e9c47d06c2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00029.html#gaec8ec35691febedfb85e38fc4c311838">enc_position_match_mode_t</a></td>
+          <td class="memname">enum <a class="el" href="a00029.html#gadf524ed65a40db2e53c463e9c47d06c2">_enc_position_match_mode</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaec8ec35691febedfb85e38fc4c311838ac7207e66be9333b516ef1b5d4079a6b4"></a>kENC_POSMATCHOnPositionCounterEqualToComapreValue</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggadf524ed65a40db2e53c463e9c47d06c2ac7207e66be9333b516ef1b5d4079a6b4"></a>kENC_POSMATCHOnPositionCounterEqualToComapreValue</em>&nbsp;</td><td class="fielddoc">
 <p>POSMATCH pulses when a match occurs between the position counters (POS) and the compare value (COMP). </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaec8ec35691febedfb85e38fc4c311838ad546a2325a4a1b0d94ea19024cee663a"></a>kENC_POSMATCHOnReadingAnyPositionCounter</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggadf524ed65a40db2e53c463e9c47d06c2ad546a2325a4a1b0d94ea19024cee663a"></a>kENC_POSMATCHOnReadingAnyPositionCounter</em>&nbsp;</td><td class="fielddoc">
 <p>POSMATCH pulses when any position counter register is read. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga645857d43e30752a5bee6d970a1201be"></a>
+<a class="anchor" id="gae23ed261bb1bdfd8641019354769e69d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00029.html#ga645857d43e30752a5bee6d970a1201be">enc_revolution_count_condition_t</a></td>
+          <td class="memname">enum <a class="el" href="a00029.html#gae23ed261bb1bdfd8641019354769e69d">_enc_revolution_count_condition</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga645857d43e30752a5bee6d970a1201bea6704d1629d730f19652da91096eb5a27"></a>kENC_RevolutionCountOnINDEXPulse</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggae23ed261bb1bdfd8641019354769e69da6704d1629d730f19652da91096eb5a27"></a>kENC_RevolutionCountOnINDEXPulse</em>&nbsp;</td><td class="fielddoc">
 <p>Use INDEX pulse to increment/decrement revolution counter. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga645857d43e30752a5bee6d970a1201bea2ff1ec8052b541a253c50c2a6069dea8"></a>kENC_RevolutionCountOnRollOverModulus</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggae23ed261bb1bdfd8641019354769e69da2ff1ec8052b541a253c50c2a6069dea8"></a>kENC_RevolutionCountOnRollOverModulus</em>&nbsp;</td><td class="fielddoc">
 <p>Use modulus counting roll-over/under to increment/decrement revolution counter. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga0771658dcc0d7fb694a3f6c3df1f7815"></a>
+<a class="anchor" id="ga638c95c62f924d71ba7e541d916b6df7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00029.html#ga0771658dcc0d7fb694a3f6c3df1f7815">enc_self_test_direction_t</a></td>
+          <td class="memname">enum <a class="el" href="a00029.html#ga638c95c62f924d71ba7e541d916b6df7">_enc_self_test_direction</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga0771658dcc0d7fb694a3f6c3df1f7815a15fa41a761cf10c06dc032ad51b9d72c"></a>kENC_SelfTestDirectionPositive</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga638c95c62f924d71ba7e541d916b6df7a15fa41a761cf10c06dc032ad51b9d72c"></a>kENC_SelfTestDirectionPositive</em>&nbsp;</td><td class="fielddoc">
 <p>Self test generates the signal in positive direction. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0771658dcc0d7fb694a3f6c3df1f7815a1536128883baf0c538ecf287c5b65a4a"></a>kENC_SelfTestDirectionNegative</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga638c95c62f924d71ba7e541d916b6df7a1536128883baf0c538ecf287c5b65a4a"></a>kENC_SelfTestDirectionNegative</em>&nbsp;</td><td class="fielddoc">
 <p>Self test generates the signal in negative direction. </p>
 </td></tr>
 </table>
+
+</div>
+</div>
+<a class="anchor" id="ga60803a576d8e50d9b6afe83ce46779a3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00029.html#ga60803a576d8e50d9b6afe83ce46779a3">_enc_prescaler</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The clock is prescaled by a value of 2^PRSC which means that the prescaler logic can divide the clock by a minimum of 1 and a maximum of 32,768. </p>
 
 </div>
 </div>
@@ -892,7 +1059,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00029.html#a00485">enc_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00029.html#gaef1fed8a3da13886d58499365e1b6047">enc_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -950,7 +1117,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="memname">void ENC_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00029.html#a00485">enc_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00029.html#gaef1fed8a3da13886d58499365e1b6047">enc_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
@@ -958,18 +1125,18 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 </div><div class="memdoc">
 <p>This function initializes the ENC configuration structure with an available settings, the default value are: </p>
 <div class="fragment"><div class="line">*   config-&gt;enableReverseDirection                = <span class="keyword">false</span>;</div>
-<div class="line">*   config-&gt;decoderWorkMode                       = <a class="code" href="a00029.html#gga397e650f9e1a2fef6109896f18378b4caf661773e581845df10715016acc53092">kENC_DecoderWorkAsNormalMode</a>;</div>
-<div class="line">*   config-&gt;HOMETriggerMode                       = <a class="code" href="a00029.html#gga9b19f10c2303de256aab7b1d5c0057c3a14f8fc3da25b327522b1bf6b9341a10c">kENC_HOMETriggerDisabled</a>;</div>
-<div class="line">*   config-&gt;INDEXTriggerMode                      = <a class="code" href="a00029.html#gga986882142c037e6dd8c7845410f1e287ae8376e76cb334d80c7cfc1c7f77e13ea">kENC_INDEXTriggerDisabled</a>;</div>
+<div class="line">*   config-&gt;decoderWorkMode                       = <a class="code" href="a00029.html#ggab0ab18a69b9eb5c4489686d527be38d1af661773e581845df10715016acc53092">kENC_DecoderWorkAsNormalMode</a>;</div>
+<div class="line">*   config-&gt;HOMETriggerMode                       = <a class="code" href="a00029.html#gga3f3efffe910c1611816a08ba17ce7c9ea14f8fc3da25b327522b1bf6b9341a10c">kENC_HOMETriggerDisabled</a>;</div>
+<div class="line">*   config-&gt;INDEXTriggerMode                      = <a class="code" href="a00029.html#gga29de01f066a7b20c96b51fdb392fe1b4ae8376e76cb334d80c7cfc1c7f77e13ea">kENC_INDEXTriggerDisabled</a>;</div>
 <div class="line">*   config-&gt;enableTRIGGERClearPositionCounter     = <span class="keyword">false</span>;</div>
 <div class="line">*   config-&gt;enableTRIGGERClearHoldPositionCounter = <span class="keyword">false</span>;</div>
 <div class="line">*   config-&gt;enableWatchdog                        = <span class="keyword">false</span>;</div>
 <div class="line">*   config-&gt;watchdogTimeoutValue                  = 0U;</div>
 <div class="line">*   config-&gt;filterCount                           = 0U;</div>
 <div class="line">*   config-&gt;filterSamplePeriod                    = 0U;</div>
-<div class="line">*   config-&gt;positionMatchMode                     = <a class="code" href="a00029.html#ggaec8ec35691febedfb85e38fc4c311838ac7207e66be9333b516ef1b5d4079a6b4">kENC_POSMATCHOnPositionCounterEqualToComapreValue</a>;</div>
+<div class="line">*   config-&gt;positionMatchMode                     = <a class="code" href="a00029.html#ggadf524ed65a40db2e53c463e9c47d06c2ac7207e66be9333b516ef1b5d4079a6b4">kENC_POSMATCHOnPositionCounterEqualToComapreValue</a>;</div>
 <div class="line">*   config-&gt;positionCompareValue                  = 0xFFFFFFFFU;</div>
-<div class="line">*   config-&gt;revolutionCountCondition              = <a class="code" href="a00029.html#gga645857d43e30752a5bee6d970a1201bea6704d1629d730f19652da91096eb5a27">kENC_RevolutionCountOnINDEXPulse</a>;</div>
+<div class="line">*   config-&gt;revolutionCountCondition              = <a class="code" href="a00029.html#ggae23ed261bb1bdfd8641019354769e69da6704d1629d730f19652da91096eb5a27">kENC_RevolutionCountOnINDEXPulse</a>;</div>
 <div class="line">*   config-&gt;enableModuloCountMode                 = <span class="keyword">false</span>;</div>
 <div class="line">*   config-&gt;positionModulusValue                  = 0U;</div>
 <div class="line">*   config-&gt;positionInitialValue                  = 0U;</div>
@@ -1021,7 +1188,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00029.html#a00486">enc_self_test_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00029.html#ga89f150375e09c8bc136d2498339fa0c3">enc_self_test_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -1454,6 +1621,161 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Hold position revolution counter's value. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga5b24f380eb62929adb7823b1b52fe390"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint16_t ENC_GetLastEdgeTimeValue </td>
+          <td>(</td>
+          <td class="paramtype">ENC_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>ENC peripheral base address.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The last edge time hold value. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga813621a8b88243c69eff8788e7d78a1c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint16_t ENC_GetHoldLastEdgeTimeValue </td>
+          <td>(</td>
+          <td class="paramtype">ENC_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>ENC peripheral base address.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The last edge time hold value. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga6882da538aa2ec25d13748a8ef28d2e2"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint16_t ENC_GetPositionDifferencePeriodValue </td>
+          <td>(</td>
+          <td class="paramtype">ENC_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>ENC peripheral base address.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The position difference period hold value. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga8c061763322132ddc9721ebf73895a65"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint16_t ENC_GetPositionDifferencePeriodBufferValue </td>
+          <td>(</td>
+          <td class="paramtype">ENC_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>ENC peripheral base address.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The position difference period hold value. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga4ca4a1557b39fbb99f1f78d12842faaf"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint16_t ENC_GetHoldPositionDifferencePeriodValue </td>
+          <td>(</td>
+          <td class="paramtype">ENC_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>ENC peripheral base address.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The position difference period hold value. </dd></dl>
 
 </div>
 </div>

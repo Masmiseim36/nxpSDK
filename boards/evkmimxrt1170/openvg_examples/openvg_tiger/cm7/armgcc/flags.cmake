@@ -179,7 +179,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG " \
     -Wl,--print-memory-usage \
     ${FPU} \
     ${SPECS} \
-    -T${ProjDirPath}/openvg_tiger_MIMXRT1176xxxxx_cm7_sdram_only.ld -static \
+    -T\"${ProjDirPath}/openvg_tiger_MIMXRT1176xxxxx_cm7_sdram_only.ld\" -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE " \
     ${CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE} \
@@ -205,5 +205,5 @@ SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE " \
     -Wl,--print-memory-usage \
     ${FPU} \
     ${SPECS} \
-    -T${ProjDirPath}/openvg_tiger_MIMXRT1176xxxxx_cm7_sdram_only.ld -static \
+    -T\"${ProjDirPath}/openvg_tiger_MIMXRT1176xxxxx_cm7_sdram_only.ld\" -static \
 ")

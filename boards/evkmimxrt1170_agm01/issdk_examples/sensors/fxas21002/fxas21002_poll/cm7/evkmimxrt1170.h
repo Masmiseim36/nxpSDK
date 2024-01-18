@@ -15,7 +15,7 @@
 
 #include "pin_mux.h"
 #include "board.h"
-//#include "fsl_msmc.h"
+// #include "fsl_msmc.h"
 #include "RTE_Device.h"
 #include "gpio_driver.h"
 #include "MIMXRT1176_cm7.h"

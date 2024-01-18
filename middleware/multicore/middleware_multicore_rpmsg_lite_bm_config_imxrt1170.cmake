@@ -5,6 +5,8 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
 if(CONFIG_USE_middleware_multicore_rpmsg_lite AND CONFIG_USE_middleware_multicore_rpmsg_lite_bm AND CONFIG_USE_middleware_multicore_mcmgr_imxrt1170 AND (CONFIG_BOARD STREQUAL evkmimxrt1170 OR CONFIG_BOARD STREQUAL evkbmimxrt1170) AND CONFIG_USE_middleware_multicore_rpmsg_lite_imxrt1170_bm)
 
+add_config_file(${CMAKE_CURRENT_LIST_DIR}/rpmsg_lite/template_application/rpmsg_config.h "" middleware_multicore_rpmsg_lite_bm_config_imxrt1170)
+
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
   ${CMAKE_CURRENT_LIST_DIR}/rpmsg_lite/template_application
 )

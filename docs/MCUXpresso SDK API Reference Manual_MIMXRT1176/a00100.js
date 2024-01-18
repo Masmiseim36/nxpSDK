@@ -1,125 +1,135 @@
 var a00100 =
 [
-    [ "wm8960_audio_format_t", "a00100.html#a00717", [
-      [ "mclk_HZ", "a00100.html#afb1efbb406e368e6fd5393da2543bb8a", null ],
-      [ "sampleRate", "a00100.html#ae96a0158b6a005c24d4713578b9f493a", null ],
-      [ "bitWidth", "a00100.html#abd1d53b78beb2d929a1d1200c2a18227", null ]
+    [ "lpadc_config_t", "a00100.html#a00725", [
+      [ "enableInDozeMode", "a00100.html#ac47a5a50ba40ca3b021b4be239a048f3", null ],
+      [ "enableAnalogPreliminary", "a00100.html#ab62dd78747ca5df971c30ad59d0127ba", null ],
+      [ "powerUpDelay", "a00100.html#a05885e7359e788bfee8bee8b1b7e17ac", null ],
+      [ "referenceVoltageSource", "a00100.html#af2a2e2e253efb0a783435fe171091b3f", null ],
+      [ "powerLevelMode", "a00100.html#aa95f676c2ce209a53e411045a118b7d7", null ],
+      [ "triggerPriorityPolicy", "a00100.html#a6790dea9cdf41dbe47a312f46d046d39", null ],
+      [ "enableConvPause", "a00100.html#a54cc3c1d27305b3916a0ce2fc1f86af0", null ],
+      [ "convPauseDelay", "a00100.html#a95cd7bea05bf46e0f5444762aba38fbe", null ],
+      [ "FIFOWatermark", "a00100.html#aeb5cae2223bf1d49e13332308ceae79b", null ]
     ] ],
-    [ "wm8960_master_sysclk_config_t", "a00100.html#a00720", [
-      [ "sysclkSource", "a00100.html#a9d65bbccb784d7bd1850e0c4bd505469", null ],
-      [ "sysclkFreq", "a00100.html#a351c89e7074a75ea90e4a69b70721a7a", null ]
+    [ "lpadc_conv_command_config_t", "a00100.html#a00726", [
+      [ "sampleScaleMode", "a00100.html#aa8a989a84f3f494e8a222a14e4fa2740", null ],
+      [ "sampleChannelMode", "a00100.html#ad83d6cc054bd648551aa7a875e5e8a58", null ],
+      [ "channelNumber", "a00100.html#a34b3392e374a496930b09d8c5a410d7b", null ],
+      [ "chainedNextCommandNumber", "a00100.html#adcf04257bab0b975b7667a25bf4cbcdf", null ],
+      [ "enableAutoChannelIncrement", "a00100.html#a66e3347e2c2f96cadd5805bca6409646", null ],
+      [ "loopCount", "a00100.html#a7ce69c5cf297a804b5510d779036c867", null ],
+      [ "hardwareAverageMode", "a00100.html#a1c44cc7c4a60d180e6a9aae0501e8752", null ],
+      [ "sampleTimeMode", "a00100.html#a24deb3ab5d573ce3b17ed48987350b65", null ],
+      [ "hardwareCompareMode", "a00100.html#a5bb19c6af0abf963655462a350c53ce4", null ],
+      [ "hardwareCompareValueHigh", "a00100.html#a4bc748a87503d1d30fce8652296a21a1", null ],
+      [ "hardwareCompareValueLow", "a00100.html#aded6fd827d36d7f20693cf5f361ec57e", null ]
     ] ],
-    [ "wm8960_config_t", "a00100.html#a00718", [
-      [ "route", "a00100.html#aecb1d7a00e01dca75ed9008045fea7c9", null ],
-      [ "bus", "a00100.html#a2aa9a1534286c670f9cccc121dfc2427", null ],
-      [ "format", "a00100.html#a1f604d76836bba22c48628d1790abbf1", null ],
-      [ "master_slave", "a00100.html#a2628e48b064d8d943c0f247da6404342", null ],
-      [ "masterClock", "a00100.html#a8641bb5e2d06983e204a10b798d2d230", null ],
-      [ "enableSpeaker", "a00100.html#ab417dfff6b9fbaed35eb25d8b3d77bc2", null ],
-      [ "leftInputSource", "a00100.html#a775a0be4401bb4e3bfabc2cf30bc62c6", null ],
-      [ "rightInputSource", "a00100.html#a4e52782271640121f001ba4d1404e5e3", null ],
-      [ "playSource", "a00100.html#a7c121144634e1ef8a1eed7f28f155031", null ],
-      [ "slaveAddress", "a00100.html#a3789a7dad901df8d576de42d76b47b41", null ],
-      [ "i2cConfig", "a00100.html#a223e757e0c4efc169f0b45385d99dbd5", null ]
+    [ "lpadc_conv_trigger_config_t", "a00100.html#a00728", [
+      [ "targetCommandId", "a00100.html#ae1c77e5afcb5c9d2b80ac92cc5de597e", null ],
+      [ "delayPower", "a00100.html#a33fd3b422ca9c26c1eb915ef8fdc3c3e", null ],
+      [ "priority", "a00100.html#a2e4d3a907597cd2c8c712ae967c5ac2f", null ],
+      [ "enableHardwareTrigger", "a00100.html#a32a44ab0d65a0666b659027b93738c95", null ]
     ] ],
-    [ "wm8960_handle_t", "a00100.html#a00719", [
-      [ "config", "a00100.html#a1445b9b877b692662e5fb0f8ce3224c9", null ],
-      [ "i2cHandle", "a00100.html#ae6d5faabcff6b852ebb460da190c9811", null ]
+    [ "lpadc_conv_result_t", "a00100.html#a00727", [
+      [ "commandIdSource", "a00100.html#a7ed6dcbf44ad017014525335013c817b", null ],
+      [ "loopCountIndex", "a00100.html#a87e1ee666c960928797ca574f1bcae1b", null ],
+      [ "triggerIdSource", "a00100.html#ad3b63c03e1c136e4293dd82a443f1de2", null ],
+      [ "convValue", "a00100.html#a4add4f13e761e8048d4434eb195f44d5", null ]
     ] ],
-    [ "FSL_WM8960_DRIVER_VERSION", "a00100.html#ga4a96a53318ae1b2c8778b10501018fc3", null ],
-    [ "WM8960_I2C_HANDLER_SIZE", "a00100.html#gad42c885e755bfa53b74cd811af45db8a", null ],
-    [ "WM8960_LINVOL", "a00100.html#gae6c6a3b67c7930937dd877390dc94cbe", null ],
-    [ "WM8960_CACHEREGNUM", "a00100.html#gacdd9105c1955cf9b7be99a89121e9e7a", null ],
-    [ "WM8960_CLOCK2_BCLK_DIV_MASK", "a00100.html#ga0725f8e23c8e9a812136d9461a348f11", null ],
-    [ "WM8960_IFACE1_FORMAT_MASK", "a00100.html#ga1cfddde9bff2839d98dad8cea4d958df", null ],
-    [ "WM8960_IFACE1_WL_MASK", "a00100.html#ga5d2bc2d14ee9c5aeb37042af35715e1b", null ],
-    [ "WM8960_IFACE1_LRP_MASK", "a00100.html#ga17766c78737e1eb92290921c3110dd92", null ],
-    [ "WM8960_IFACE1_DLRSWAP_MASK", "a00100.html#gaa36fdca87c244c8f6d2fff4d96611087", null ],
-    [ "WM8960_IFACE1_MS_MASK", "a00100.html#ga139e7ba937dd4d9cf1077bf1598ec86b", null ],
-    [ "WM8960_IFACE1_BCLKINV_MASK", "a00100.html#gacb30f80634350ca28097b895df43cc02", null ],
-    [ "WM8960_IFACE1_ALRSWAP_MASK", "a00100.html#ga5b6f652b9b3e5fd2dc7d728f7b967c9a", null ],
-    [ "WM8960_POWER1_VREF_MASK", "a00100.html#ga885a20098e84dc26ab843b69830048b5", null ],
-    [ "WM8960_POWER2_DACL_MASK", "a00100.html#gab8a3493e9e8f10ae4d2c7986aa0c3329", null ],
-    [ "WM8960_I2C_ADDR", "a00100.html#gab3675ad227d4528542916e9b591ace43", null ],
-    [ "WM8960_I2C_BAUDRATE", "a00100.html#gaf9f86ecdf51d7c84a55caa0ef67a37f5", null ],
-    [ "WM8960_ADC_MAX_VOLUME_vALUE", "a00100.html#gab5c61e09d9dcad206e40ea299b9b3487", null ],
-    [ "wm8960_module_t", "a00100.html#gad71999d652d6d29485aea6dacf371fc7", [
-      [ "kWM8960_ModuleADC", "a00100.html#ggad71999d652d6d29485aea6dacf371fc7ae06d8a84878c6ea432e3401e65fb87cb", null ],
-      [ "kWM8960_ModuleDAC", "a00100.html#ggad71999d652d6d29485aea6dacf371fc7a536f29cc4bde51273aee16ca2f5e6079", null ],
-      [ "kWM8960_ModuleVREF", "a00100.html#ggad71999d652d6d29485aea6dacf371fc7a73f24782244c9b2965072eaa7e59a5d3", null ],
-      [ "kWM8960_ModuleHP", "a00100.html#ggad71999d652d6d29485aea6dacf371fc7ac5579774be5b12a7a18f98d1cf374c55", null ],
-      [ "kWM8960_ModuleMICB", "a00100.html#ggad71999d652d6d29485aea6dacf371fc7a4db03d48e615c4643ad53e361737218d", null ],
-      [ "kWM8960_ModuleMIC", "a00100.html#ggad71999d652d6d29485aea6dacf371fc7a2ccb86eb6c7ce514a7ce51b97206c426", null ],
-      [ "kWM8960_ModuleLineIn", "a00100.html#ggad71999d652d6d29485aea6dacf371fc7a303a97aa3ca809c7f6a972d64287a878", null ],
-      [ "kWM8960_ModuleLineOut", "a00100.html#ggad71999d652d6d29485aea6dacf371fc7afee92d11ea3a0fc6f9345eac1c648215", null ],
-      [ "kWM8960_ModuleSpeaker", "a00100.html#ggad71999d652d6d29485aea6dacf371fc7ab2927284f295d943ba601829f5c85d25", null ],
-      [ "kWM8960_ModuleOMIX", "a00100.html#ggad71999d652d6d29485aea6dacf371fc7a0bedf71e89a9a96bf649200db84f77be", null ],
-      [ "kWM8960_HeadphoneLeft", "a00100.html#gga425be5f49e9c31d8d13d53190a3e7bc2a5cb5a5fd1015f7957c198a440d406e96", null ],
-      [ "kWM8960_HeadphoneRight", "a00100.html#gga425be5f49e9c31d8d13d53190a3e7bc2a0721220fe5946056318d7e0ec3cbb682", null ],
-      [ "kWM8960_SpeakerLeft", "a00100.html#gga425be5f49e9c31d8d13d53190a3e7bc2a38ea4c658535deb51658ce2e00aa4c3e", null ],
-      [ "kWM8960_SpeakerRight", "a00100.html#gga425be5f49e9c31d8d13d53190a3e7bc2a12ce651420aecbccd5be4512ab204523", null ]
+    [ "FSL_LPADC_DRIVER_VERSION", "a00100.html#gab8a795637177dc9973e0fd2f5b29b6c3", null ],
+    [ "LPADC_GET_ACTIVE_COMMAND_STATUS", "a00100.html#gae305eca1c95975e49ea88d0d39aeb3e0", null ],
+    [ "LPADC_GET_ACTIVE_TRIGGER_STATUE", "a00100.html#ga48a0c8b6bac1e45cc7bdc93ccc288786", null ],
+    [ "lpadc_sample_scale_mode_t", "a00100.html#ga6e079f1e1ac3e1e05be59c1537deaccc", null ],
+    [ "lpadc_sample_channel_mode_t", "a00100.html#ga2a016da64e36075cc5627b867ec622fb", null ],
+    [ "lpadc_hardware_average_mode_t", "a00100.html#gadca70a0ed9c6266555ad732462ea16bd", null ],
+    [ "lpadc_sample_time_mode_t", "a00100.html#ga23447c7f5c4e9a106715484fd93a8f95", null ],
+    [ "lpadc_hardware_compare_mode_t", "a00100.html#gaa631af36a82f2b04bf818918ad86bbc4", null ],
+    [ "lpadc_reference_voltage_source_t", "a00100.html#ga8af78c5368037ad9c657f3317566717a", null ],
+    [ "lpadc_power_level_mode_t", "a00100.html#ga9e768f8b368e2e90d0d0c740392d14cd", null ],
+    [ "lpadc_trigger_priority_policy_t", "a00100.html#gae9504b206b2965d084eaa4caa0661e84", null ],
+    [ "_lpadc_status_flags", "a00100.html#gaf40ddd93026be88551f23b9428e98e22", [
+      [ "kLPADC_ResultFIFO0OverflowFlag", "a00100.html#ggaf40ddd93026be88551f23b9428e98e22a0bc43d455f0c92b0455d392b02a4581e", null ],
+      [ "kLPADC_ResultFIFO0ReadyFlag", "a00100.html#ggaf40ddd93026be88551f23b9428e98e22a16e8001de19be822847a36c2d6e6146c", null ],
+      [ "kLPADC_ActiveFlag", "a00100.html#ggaf40ddd93026be88551f23b9428e98e22a7b716de0304a1f486bde149e456b763c", null ],
+      [ "kLPADC_ResultFIFOOverflowFlag", "a00100.html#ggaf40ddd93026be88551f23b9428e98e22aa52211bffea2def3062daff07532cb28", null ],
+      [ "kLPADC_ResultFIFOReadyFlag", "a00100.html#ggaf40ddd93026be88551f23b9428e98e22a7bd75ce7f5f38970c10f03c77075fc5d", null ]
     ] ],
-    [ "wm8960_play_source_t", "a00100.html#gac536addc1967c512191ce08e3452e84a", [
-      [ "kWM8960_PlaySourcePGA", "a00100.html#ggac536addc1967c512191ce08e3452e84aa861dc114e341d3245bed939058c16183", null ],
-      [ "kWM8960_PlaySourceInput", "a00100.html#ggac536addc1967c512191ce08e3452e84aaac489a1eedbfc272a9023862efedacc0", null ],
-      [ "kWM8960_PlaySourceDAC", "a00100.html#ggac536addc1967c512191ce08e3452e84aa5a1779ecd2781e184cbb41aa826f9550", null ]
+    [ "_lpadc_interrupt_enable", "a00100.html#gaeba33be014c52b093d5e7815dcf8e6b3", [
+      [ "kLPADC_ResultFIFO0OverflowInterruptEnable", "a00100.html#ggaeba33be014c52b093d5e7815dcf8e6b3a8591fb75b5c63ceab76e5766ef49363e", null ],
+      [ "kLPADC_FIFO0WatermarkInterruptEnable", "a00100.html#ggaeba33be014c52b093d5e7815dcf8e6b3a2bab7f05a3af09e6f8b90a6ca39fc2b6", null ],
+      [ "kLPADC_ResultFIFOOverflowInterruptEnable", "a00100.html#ggaeba33be014c52b093d5e7815dcf8e6b3a487f293b5443e2b9c39412f4476f7638", null ],
+      [ "kLPADC_FIFOWatermarkInterruptEnable", "a00100.html#ggaeba33be014c52b093d5e7815dcf8e6b3a90f6e2b2819d89b685281a440b10b8b5", null ]
     ] ],
-    [ "wm8960_route_t", "a00100.html#gadeeac537e163e7225244411c27a43210", [
-      [ "kWM8960_RouteBypass", "a00100.html#ggadeeac537e163e7225244411c27a43210a7ebcfe6753412e27508fab055a844642", null ],
-      [ "kWM8960_RoutePlayback", "a00100.html#ggadeeac537e163e7225244411c27a43210a952a2f8b6834cb61b67f6430a71094ef", null ],
-      [ "kWM8960_RoutePlaybackandRecord", "a00100.html#ggadeeac537e163e7225244411c27a43210a6a5973f3f8f53223a26f9e1368eae9c9", null ],
-      [ "kWM8960_RouteRecord", "a00100.html#ggadeeac537e163e7225244411c27a43210a6d7f4a4f100efb3ad5b05ba3eae74def", null ]
+    [ "_lpadc_sample_scale_mode", "a00100.html#ga1d4e7fc7a4a9a94f460d113d367f5e89", [
+      [ "kLPADC_SamplePartScale", "a00100.html#gga1d4e7fc7a4a9a94f460d113d367f5e89a2d5ef37dc371402d7b50992f6724f2fd", null ],
+      [ "kLPADC_SampleFullScale", "a00100.html#gga1d4e7fc7a4a9a94f460d113d367f5e89acf9a7acbde288c4de0a60d0018457721", null ]
     ] ],
-    [ "wm8960_protocol_t", "a00100.html#ga64f94347b02b08161996766de30b14fb", [
-      [ "kWM8960_BusI2S", "a00100.html#gga64f94347b02b08161996766de30b14fba8efabaf43c6bb17acf54ae37cec6c5f5", null ],
-      [ "kWM8960_BusLeftJustified", "a00100.html#gga64f94347b02b08161996766de30b14fbaf87b1ee7c9c54da5f136f1b79a64b5b9", null ],
-      [ "kWM8960_BusRightJustified", "a00100.html#gga64f94347b02b08161996766de30b14fbaed00553ce02a48439a5ec8984d5db467", null ],
-      [ "kWM8960_BusPCMA", "a00100.html#gga64f94347b02b08161996766de30b14fba8fb45995b3bf25ee5122e4ab270c7d2a", null ],
-      [ "kWM8960_BusPCMB", "a00100.html#gga64f94347b02b08161996766de30b14fba7a6a94a2db557a1ebe08f4cf10b23f66", null ]
+    [ "_lpadc_sample_channel_mode", "a00100.html#ga76e229daed6a76105f60bb569038c54d", [
+      [ "kLPADC_SampleChannelSingleEndSideA", "a00100.html#gga76e229daed6a76105f60bb569038c54dae511411bd331e3049a5c9583163e4fe2", null ],
+      [ "kLPADC_SampleChannelSingleEndSideB", "a00100.html#gga76e229daed6a76105f60bb569038c54dab477a25f4b1cef6b47115b7bb4b9583c", null ],
+      [ "kLPADC_SampleChannelDiffBothSideAB", "a00100.html#gga76e229daed6a76105f60bb569038c54da44153790e20e1d99c9ab49165b27db98", null ],
+      [ "kLPADC_SampleChannelDiffBothSideBA", "a00100.html#gga76e229daed6a76105f60bb569038c54da29943cdedc87ec9e31f6e4f5b08452c8", null ]
     ] ],
-    [ "wm8960_input_t", "a00100.html#ga53d7560a3c263de4bdaddb7ff6b91a8a", [
-      [ "kWM8960_InputClosed", "a00100.html#gga53d7560a3c263de4bdaddb7ff6b91a8aa2c6eae84feeba20a1b15e8538202bdbf", null ],
-      [ "kWM8960_InputSingleEndedMic", "a00100.html#gga53d7560a3c263de4bdaddb7ff6b91a8aa1013bdcf916395fb0c7cda34bc9218df", null ],
-      [ "kWM8960_InputDifferentialMicInput2", "a00100.html#gga53d7560a3c263de4bdaddb7ff6b91a8aa96dd0a1fbf73e530b2a8f73994fa8788", null ],
-      [ "kWM8960_InputDifferentialMicInput3", "a00100.html#gga53d7560a3c263de4bdaddb7ff6b91a8aa26c5d1f279052c5b3991a563af490ae0", null ],
-      [ "kWM8960_InputLineINPUT2", "a00100.html#gga53d7560a3c263de4bdaddb7ff6b91a8aafb03754cff21d67de95242a285a3fc13", null ],
-      [ "kWM8960_InputLineINPUT3", "a00100.html#gga53d7560a3c263de4bdaddb7ff6b91a8aae011db846215196ebcecb8cbbb17e5e3", null ],
-      [ "kWM8960_AudioSampleRate8KHz", "a00100.html#gga6739788b75165c40c5fa298fbd9c18bda50961d3980d3e37dd41e3d8c62c3a870", null ],
-      [ "kWM8960_AudioSampleRate11025Hz", "a00100.html#gga6739788b75165c40c5fa298fbd9c18bda509786e8390518009b7349ee35290f02", null ],
-      [ "kWM8960_AudioSampleRate12KHz", "a00100.html#gga6739788b75165c40c5fa298fbd9c18bdafc081d6675dcc61766d1db7b7a6e57ba", null ],
-      [ "kWM8960_AudioSampleRate16KHz", "a00100.html#gga6739788b75165c40c5fa298fbd9c18bda37f98eb4cc147382a0001729bfcffd98", null ],
-      [ "kWM8960_AudioSampleRate22050Hz", "a00100.html#gga6739788b75165c40c5fa298fbd9c18bda0a285edc0cb7ce46f6844fca3f8f3689", null ],
-      [ "kWM8960_AudioSampleRate24KHz", "a00100.html#gga6739788b75165c40c5fa298fbd9c18bdacc8ce4cd6fa286f26a8850093f2aa696", null ],
-      [ "kWM8960_AudioSampleRate32KHz", "a00100.html#gga6739788b75165c40c5fa298fbd9c18bda59a22bfdc17d3ce83eb4d78507565700", null ],
-      [ "kWM8960_AudioSampleRate44100Hz", "a00100.html#gga6739788b75165c40c5fa298fbd9c18bdaf44c5c0712d53f88943e56d8ccd466a4", null ],
-      [ "kWM8960_AudioSampleRate48KHz", "a00100.html#gga6739788b75165c40c5fa298fbd9c18bdae09e315fe927817900e50edd8f5dc29c", null ],
-      [ "kWM8960_AudioSampleRate96KHz", "a00100.html#gga6739788b75165c40c5fa298fbd9c18bda07ce8a1ae26763623e24caed8f9c42e3", null ],
-      [ "kWM8960_AudioSampleRate192KHz", "a00100.html#gga6739788b75165c40c5fa298fbd9c18bdae9007085de5c77817b93a8d5ef16e227", null ],
-      [ "kWM8960_AudioSampleRate384KHz", "a00100.html#gga6739788b75165c40c5fa298fbd9c18bdabdd1e457644ed2ba495ab7c010876e9e", null ],
-      [ "kWM8960_AudioBitWidth16bit", "a00100.html#ggab98c672c5aaffb98a9189cd99e58ff23a1e3149fabb02a0cc14413352945cabef", null ],
-      [ "kWM8960_AudioBitWidth20bit", "a00100.html#ggab98c672c5aaffb98a9189cd99e58ff23ab67c78216a745b5cd0c6b2bc348a6d85", null ],
-      [ "kWM8960_AudioBitWidth24bit", "a00100.html#ggab98c672c5aaffb98a9189cd99e58ff23a32e10ddc499b7b6c91af8a4b515fb9b3", null ],
-      [ "kWM8960_AudioBitWidth32bit", "a00100.html#ggab98c672c5aaffb98a9189cd99e58ff23abd1253b6f3fa57dd356d1280add31a66", null ]
+    [ "_lpadc_hardware_average_mode", "a00100.html#gad0ca387797936463d0d86cda97d17438", [
+      [ "kLPADC_HardwareAverageCount1", "a00100.html#ggad0ca387797936463d0d86cda97d17438adeae8ae097545482c1942926119d968c", null ],
+      [ "kLPADC_HardwareAverageCount2", "a00100.html#ggad0ca387797936463d0d86cda97d17438a03e731d3d2e024623fd22145c484b797", null ],
+      [ "kLPADC_HardwareAverageCount4", "a00100.html#ggad0ca387797936463d0d86cda97d17438a0eda65451db63f4a0c1d154f851f9353", null ],
+      [ "kLPADC_HardwareAverageCount8", "a00100.html#ggad0ca387797936463d0d86cda97d17438a3cc487e2f5720a5c45318f69028c32cc", null ],
+      [ "kLPADC_HardwareAverageCount16", "a00100.html#ggad0ca387797936463d0d86cda97d17438ad5fece9b31b47f741c413fe7445df855", null ],
+      [ "kLPADC_HardwareAverageCount32", "a00100.html#ggad0ca387797936463d0d86cda97d17438a4cfb338bc49982bc7e58a7f0949bf425", null ],
+      [ "kLPADC_HardwareAverageCount64", "a00100.html#ggad0ca387797936463d0d86cda97d17438a081530884310024c8d2750735b6295ea", null ],
+      [ "kLPADC_HardwareAverageCount128", "a00100.html#ggad0ca387797936463d0d86cda97d17438a4f86910a33fa9874108753b6de1947ce", null ]
     ] ],
-    [ "wm8960_sysclk_source_t", "a00100.html#gabc038c44fbcf4f341d6a56168b091671", [
-      [ "kWM8960_SysClkSourceMclk", "a00100.html#ggabc038c44fbcf4f341d6a56168b091671a2f693bb4ba26726b322414de913c7952", null ],
-      [ "kWM8960_SysClkSourceInternalPLL", "a00100.html#ggabc038c44fbcf4f341d6a56168b091671a3c99b674642b963f84888733e1dcb80a", null ]
+    [ "_lpadc_sample_time_mode", "a00100.html#ga1ee59a08c5a28f7c3b75c530d1cccc65", [
+      [ "kLPADC_SampleTimeADCK3", "a00100.html#gga1ee59a08c5a28f7c3b75c530d1cccc65abfd94e19de3d57b94fae9baded5804db", null ],
+      [ "kLPADC_SampleTimeADCK5", "a00100.html#gga1ee59a08c5a28f7c3b75c530d1cccc65a441c59d3df7a1ad5b64416e6a08dd246", null ],
+      [ "kLPADC_SampleTimeADCK7", "a00100.html#gga1ee59a08c5a28f7c3b75c530d1cccc65aa2a17502f50e36de117b337994c21dc2", null ],
+      [ "kLPADC_SampleTimeADCK11", "a00100.html#gga1ee59a08c5a28f7c3b75c530d1cccc65a4a980813baf6845d528db2a265475905", null ],
+      [ "kLPADC_SampleTimeADCK19", "a00100.html#gga1ee59a08c5a28f7c3b75c530d1cccc65a7f5bb84adb8783fd6fa8d3ce5ed31f3a", null ],
+      [ "kLPADC_SampleTimeADCK35", "a00100.html#gga1ee59a08c5a28f7c3b75c530d1cccc65a9d59f3e6e9335223746533051f83a20b", null ],
+      [ "kLPADC_SampleTimeADCK67", "a00100.html#gga1ee59a08c5a28f7c3b75c530d1cccc65a653e653b0ee479f6b42ff4b8ffea49ac", null ],
+      [ "kLPADC_SampleTimeADCK131", "a00100.html#gga1ee59a08c5a28f7c3b75c530d1cccc65ae327cbad1ded4882cbcd53ad5e6c2262", null ]
     ] ],
-    [ "WM8960_Init", "a00100.html#ga858aef4726057dd44882d1ed86979b9b", null ],
-    [ "WM8960_Deinit", "a00100.html#gaedaaeb3e155069e1e7d6e41d8597561f", null ],
-    [ "WM8960_SetDataRoute", "a00100.html#ga6922f6e4b7e5edec6f29549e1f9df98b", null ],
-    [ "WM8960_SetLeftInput", "a00100.html#gaf6b69e1ebbca5832f6c2c9065a8623e5", null ],
-    [ "WM8960_SetRightInput", "a00100.html#ga78f5175195593c91559abd992e9cf395", null ],
-    [ "WM8960_SetProtocol", "a00100.html#ga13e6e6f7bc58616cc9a79be31137ede5", null ],
-    [ "WM8960_SetMasterSlave", "a00100.html#ga88842e10f2046b4bb6cd24f6e605ccad", null ],
-    [ "WM8960_SetVolume", "a00100.html#ga046444c70f68c74b0514211a6f4ab3a7", null ],
-    [ "WM8960_GetVolume", "a00100.html#ga57f8b8228a0031cccc8fba4c079ccd7b", null ],
-    [ "WM8960_SetMute", "a00100.html#gafd5893a1845dfd1a4c1721f9cbf720e0", null ],
-    [ "WM8960_SetModule", "a00100.html#gaa173f27a2ffcfc3d7c9fc60f96e1070f", null ],
-    [ "WM8960_SetPlay", "a00100.html#gadd0a4568108064adc221bd9c823e423a", null ],
-    [ "WM8960_ConfigDataFormat", "a00100.html#ga8ac24f4e16ca54145d44e38ac8085e6f", null ],
-    [ "WM8960_SetJackDetect", "a00100.html#ga2bb7a2a1dfb0513f8e1238a952cc77cc", null ],
-    [ "WM8960_WriteReg", "a00100.html#ga46c9a029f9e5155486506e4493fe983f", null ],
-    [ "WM8960_ReadReg", "a00100.html#ga32914c3d6d76e5507f945966400229ca", null ],
-    [ "WM8960_ModifyReg", "a00100.html#gab7aa751625c271e00860ab99b33a9532", null ]
+    [ "_lpadc_hardware_compare_mode", "a00100.html#gaedf69fcc744298a489b12df83b4aff83", [
+      [ "kLPADC_HardwareCompareDisabled", "a00100.html#ggaedf69fcc744298a489b12df83b4aff83ab205c4a4aa1cd79f38be81e6469f2fd2", null ],
+      [ "kLPADC_HardwareCompareStoreOnTrue", "a00100.html#ggaedf69fcc744298a489b12df83b4aff83a0e30824c70217e386a1dfbaaecbd7b67", null ],
+      [ "kLPADC_HardwareCompareRepeatUntilTrue", "a00100.html#ggaedf69fcc744298a489b12df83b4aff83a11bc71ef00c5e95a18431947fe0362e1", null ]
+    ] ],
+    [ "_lpadc_reference_voltage_mode", "a00100.html#gaf8c74a8d5d1dc7f3918cf35513e51596", [
+      [ "kLPADC_ReferenceVoltageAlt1", "a00100.html#ggaf8c74a8d5d1dc7f3918cf35513e51596a8d40316bc847f29e588ff1a50775ab11", null ],
+      [ "kLPADC_ReferenceVoltageAlt2", "a00100.html#ggaf8c74a8d5d1dc7f3918cf35513e51596a7f45d8cf9f4a252f22d52b8a82db304a", null ],
+      [ "kLPADC_ReferenceVoltageAlt3", "a00100.html#ggaf8c74a8d5d1dc7f3918cf35513e51596a8c41f94955b5b1141956d61fc2feb44c", null ]
+    ] ],
+    [ "_lpadc_power_level_mode", "a00100.html#gae5cd887aaa7f385bf70b6ff4066d4f7d", [
+      [ "kLPADC_PowerLevelAlt1", "a00100.html#ggae5cd887aaa7f385bf70b6ff4066d4f7dac88970640320826c36101d8e7fa5a9c9", null ],
+      [ "kLPADC_PowerLevelAlt2", "a00100.html#ggae5cd887aaa7f385bf70b6ff4066d4f7daca71931306fe195df044d6a889639919", null ],
+      [ "kLPADC_PowerLevelAlt3", "a00100.html#ggae5cd887aaa7f385bf70b6ff4066d4f7daed7771e49eeec9fee65726c600956d6d", null ],
+      [ "kLPADC_PowerLevelAlt4", "a00100.html#ggae5cd887aaa7f385bf70b6ff4066d4f7da2f34a351174cf34ee124ccfc7f2bf9d2", null ]
+    ] ],
+    [ "_lpadc_trigger_priority_policy", "a00100.html#gad93a64db4c5264aa880ea61ec2fb3729", [
+      [ "kLPADC_ConvPreemptImmediatelyNotAutoResumed", "a00100.html#ggad93a64db4c5264aa880ea61ec2fb3729a8952cef1b3169656cb213b1269f19e8a", null ],
+      [ "kLPADC_ConvPreemptSoftlyNotAutoResumed", "a00100.html#ggad93a64db4c5264aa880ea61ec2fb3729a50acd884fdcaa0297e0a5597172418fe", null ],
+      [ "kLPADC_TriggerPriorityPreemptImmediately", "a00100.html#ggad93a64db4c5264aa880ea61ec2fb3729a0fec3ebd14c77fc5a1711cb3ed7a2ab5", null ],
+      [ "kLPADC_TriggerPriorityPreemptSoftly", "a00100.html#ggad93a64db4c5264aa880ea61ec2fb3729a406eb5620e19a0cad27c10211c548a46", null ]
+    ] ],
+    [ "LPADC_Init", "a00100.html#gaf13dbab92e7a26afb07b3bb2cbaab793", null ],
+    [ "LPADC_GetDefaultConfig", "a00100.html#ga94c79af85a28c45bc642226292b14d1c", null ],
+    [ "LPADC_Deinit", "a00100.html#gabc10ae5663788ea5c7f77e2f3517a677", null ],
+    [ "LPADC_Enable", "a00100.html#gaf76592d9f392cd30b738f599b2e71344", null ],
+    [ "LPADC_DoResetFIFO", "a00100.html#gab6e4218842365ee6c620cfc59db213c4", null ],
+    [ "LPADC_DoResetConfig", "a00100.html#ga3d6911f2f9ad7fd2fdf93c3b5d1e80f7", null ],
+    [ "LPADC_GetStatusFlags", "a00100.html#gaa2793911f11091179bfcd8e9b1860300", null ],
+    [ "LPADC_ClearStatusFlags", "a00100.html#ga77ba72fad1e0f84b42809da6918e6532", null ],
+    [ "LPADC_EnableInterrupts", "a00100.html#ga2c147558843514556795fd52f86aca56", null ],
+    [ "LPADC_DisableInterrupts", "a00100.html#ga5c633af2aeab39c215d3b5aa6172ccb7", null ],
+    [ "LPADC_EnableFIFOWatermarkDMA", "a00100.html#gacaaa33bc4d9cfd8fad4fac8f1475d97c", null ],
+    [ "LPADC_GetConvResultCount", "a00100.html#ga51b39db4ab530f900aa3a88a3047daf3", null ],
+    [ "LPADC_GetConvResult", "a00100.html#ga1862883b3c4ce8365ad1f1a6c64043cc", null ],
+    [ "LPADC_GetConvResultBlocking", "a00100.html#gaebbcb9d28f962d7f12512a0e99aa09d2", null ],
+    [ "LPADC_SetConvTriggerConfig", "a00100.html#ga67927722ab525eda9e31d1f7554f02a4", null ],
+    [ "LPADC_GetDefaultConvTriggerConfig", "a00100.html#ga44e286bc27b1e8fee3f4796ca9196a27", null ],
+    [ "LPADC_DoSoftwareTrigger", "a00100.html#gacaef94ac48a3e0a34f9235f88767b7a3", null ],
+    [ "LPADC_EnableHardwareTriggerCommandSelection", "a00100.html#ga4224ecb1a5bc073aeb37e462674734fe", null ],
+    [ "LPADC_SetConvCommandConfig", "a00100.html#ga500d8b7b0323136353e10fdfad2e40c7", null ],
+    [ "LPADC_GetDefaultConvCommandConfig", "a00100.html#gaa3f7fd90bdbd65fbc4e5b88e904173f9", null ]
 ];

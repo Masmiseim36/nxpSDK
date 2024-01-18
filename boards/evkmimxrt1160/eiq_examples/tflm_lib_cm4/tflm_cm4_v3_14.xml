@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="cm4_MIMXRT1166xxxxx"/>
+    <definition extID="middleware.eiq.tensorflow_lite_micro.cmsis_nn.MIMXRT1166"/>
+    <definition extID="platform.utilities.misc_utilities.MIMXRT1166"/>
+    <definition extID="middleware.eiq.tensorflow_lite_micro.MIMXRT1166"/>
+    <definition extID="middleware.eiq.tensorflow_lite_micro.third_party.cmsis_nn.MIMXRT1166"/>
+    <definition extID="middleware.eiq.tensorflow_lite_micro.headers.MIMXRT1166"/>
+    <definition extID="middleware.eiq.tensorflow_lite_micro.third_party.kissfft.MIMXRT1166"/>
+    <definition extID="middleware.eiq.tensorflow_lite_micro.third_party.flatbuffers.MIMXRT1166"/>
+    <definition extID="middleware.eiq.tensorflow_lite_micro.third_party.gemmlowp.MIMXRT1166"/>
+    <definition extID="middleware.eiq.tensorflow_lite_micro.third_party.ruy.MIMXRT1166"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT1166"/>
+    <definition extID="iar"/>
+    <definition extID="mdk"/>
+    <definition extID="mcuxpresso"/>
+    <definition extID="com.nxp.mcuxpresso"/>
+  </externalDefinitions>
+  <example id="evkmimxrt1160_tflm_cm4" name="tflm_cm4" device_core="cm4_MIMXRT1166xxxxx" dependency="middleware.eiq.tensorflow_lite_micro.cmsis_nn.MIMXRT1166 platform.utilities.misc_utilities.MIMXRT1166 middleware.eiq.tensorflow_lite_micro.MIMXRT1166 middleware.eiq.tensorflow_lite_micro.third_party.cmsis_nn.MIMXRT1166 middleware.eiq.tensorflow_lite_micro.headers.MIMXRT1166 middleware.eiq.tensorflow_lite_micro.third_party.kissfft.MIMXRT1166 middleware.eiq.tensorflow_lite_micro.third_party.flatbuffers.MIMXRT1166 middleware.eiq.tensorflow_lite_micro.third_party.gemmlowp.MIMXRT1166 middleware.eiq.tensorflow_lite_micro.third_party.ruy.MIMXRT1166 CMSIS_Include_core_cm.MIMXRT1166" category="eiq_examples">
+    <projects>
+      <project type="com.crt.advproject.projecttype.lib" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>CPU_MIMXRT1166DVM6A_cm4</value>
+          <value>SDK_DEBUGCONSOLE=1</value>
+          <value>XIP_BOOT_HEADER_ENABLE=0</value>
+          <value>ARM_MATH_CM4</value>
+          <value>__FPU_PRESENT=1</value>
+          <value>MCUXPRESSO_SDK</value>
+          <value>TF_LITE_STATIC_MEMORY</value>
+          <value>CMSIS_NN</value>
+        </option>
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv4.hard</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv4.hard</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c -ffunction-sections -fdata-sections -Wno-strict-aliasing</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.nowarn" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.extrawarn" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.wconversion" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.toerrors" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="com.crt.advproject.cpp.fpu" type="enum">
+          <value>com.crt.advproject.cpp.fpu.fpv4.hard</value>
+        </option>
+        <option id="gnu.cpp.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="com.crt.advproject.cpp.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnupp11</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <source path="iar" project_relative_path="./" type="workspace" toolchain="iar">
+      <files mask="tflm_cm4.ewp"/>
+      <files mask="tflm_cm4.eww"/>
+    </source>
+    <source path="mdk" project_relative_path="./" type="workspace" toolchain="mdk">
+      <files mask="tflm_cm4.uvprojx"/>
+      <files mask="tflm_cm4.uvmpw"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="readme.md"/>
+    </source>
+  </example>
+</ksdk:examples>

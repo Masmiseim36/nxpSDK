@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: Smart Card PHY Driver</title>
+<title>MCUXpresso SDK API Reference Manual: XBARB: Inter-Peripheral Crossbar Switch</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -98,103 +98,112 @@ $(document).ready(function(){initNavTree('a00367.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Smart Card PHY Driver<div class="ingroups"><a class="el" href="a00090.html">Smart Card</a></div></div>  </div>
+<div class="title">XBARB: Inter-Peripheral Crossbar Switch</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
+<p>The MCUXpresso SDK provides a peripheral driver for the Inter-Peripheral Crossbar Switch (XBARB) block of MCUXpresso SDK devices.</p>
+<p>The XBARB peripheral driver configures the XBARB (Inter-Peripheral Crossbar Switch) and handles initialization and configuration of the XBARB module.</p>
+<p>XBARB driver has two parts:</p>
+<ul>
+<li>Signal connection interconnects input and output signals.</li>
+</ul>
+<h1><a class="anchor" id="XbarbFunctionalGroups"></a>
+Function groups</h1>
+<h2><a class="anchor" id="XBARBInit"></a>
+XBARB Initialization</h2>
+<p>To initialize the XBARB driver, a state structure has to be passed into the initialization function. This block of memory keeps pointers to user's callback functions and parameters to these functions. The XBARB module is initialized by calling the <a class="el" href="a00367.html#gaef36940e839f28936f9415c3cb6d703f" title="Initializes the XBARB module. ">XBARB_Init()</a> function.</p>
+<h2><a class="anchor" id="XBARBCallDiagram"></a>
+Call diagram</h2>
+<ol type="1">
+<li>Call the "XBARB_Init()" function to initialize the XBARB module.</li>
+<li>Optionally, call the "XBARB_SetSignalsConnection()" function to Set connection between the selected XBARB_IN[*] input and the XBARB_OUT[*] output signal. It connects the XBARB input to the selected XBARB output. A configuration structure of the "xbarb_input_signal_t" type and "xbarb_output_signal_t" type is required.</li>
+<li>Finally, the XBARB works properly.</li>
+</ol>
+<h1><a class="anchor" id="XbarbExample"></a>
+Typical use case</h1>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga7106f115c4c1b51c19ec9758cb14a51d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7106f115c4c1b51c19ec9758cb14a51d"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00367.html#ga7106f115c4c1b51c19ec9758cb14a51d">SMARTCARD_ATR_DURATION_ADJUSTMENT</a>&#160;&#160;&#160;(360u)</td></tr>
-<tr class="memdesc:ga7106f115c4c1b51c19ec9758cb14a51d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card definition which specifies the adjustment number of clock cycles during which an ATR string has to be received. <br/></td></tr>
-<tr class="separator:ga7106f115c4c1b51c19ec9758cb14a51d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaeebf4642169ffb6ad767b7433382ff1c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00367.html#gaeebf4642169ffb6ad767b7433382ff1c">SMARTCARD_INIT_DELAY_CLOCK_CYCLES_ADJUSTMENT</a>&#160;&#160;&#160;(4200u)</td></tr>
-<tr class="memdesc:gaeebf4642169ffb6ad767b7433382ff1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card definition which specifies the adjustment number of clock cycles until an initial 'TS' character has to be received.  <a href="#gaeebf4642169ffb6ad767b7433382ff1c">More...</a><br/></td></tr>
-<tr class="separator:gaeebf4642169ffb6ad767b7433382ff1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga8e01ab09cbd161d85a0ecc29b3230db7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00367.html#ga8e01ab09cbd161d85a0ecc29b3230db7">SMARTCARD_PHY_GetDefaultConfig</a> (<a class="el" href="a00090.html#a00686">smartcard_interface_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga8e01ab09cbd161d85a0ecc29b3230db7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills in the configuration structure with default values.  <a href="#ga8e01ab09cbd161d85a0ecc29b3230db7">More...</a><br/></td></tr>
-<tr class="separator:ga8e01ab09cbd161d85a0ecc29b3230db7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad7d80be0c1867711f3673dede0d574e6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00367.html#gad7d80be0c1867711f3673dede0d574e6">SMARTCARD_PHY_Init</a> (void *base, <a class="el" href="a00090.html#a00686">smartcard_interface_config_t</a> const *config, uint32_t srcClock_Hz)</td></tr>
-<tr class="memdesc:gad7d80be0c1867711f3673dede0d574e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a Smart card interface instance.  <a href="#gad7d80be0c1867711f3673dede0d574e6">More...</a><br/></td></tr>
-<tr class="separator:gad7d80be0c1867711f3673dede0d574e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa6dcbfb856a038cc1724ecc766973417"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00367.html#gaa6dcbfb856a038cc1724ecc766973417">SMARTCARD_PHY_Deinit</a> (void *base, <a class="el" href="a00090.html#a00686">smartcard_interface_config_t</a> const *config)</td></tr>
-<tr class="memdesc:gaa6dcbfb856a038cc1724ecc766973417"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-initializes a Smart card interface, stops the Smart card clock, and disables the VCC.  <a href="#gaa6dcbfb856a038cc1724ecc766973417">More...</a><br/></td></tr>
-<tr class="separator:gaa6dcbfb856a038cc1724ecc766973417"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa8f968b1ffeca4f4813ce6b11b5b964b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00367.html#gaa8f968b1ffeca4f4813ce6b11b5b964b">SMARTCARD_PHY_Activate</a> (void *base, <a class="el" href="a00090.html#a00685">smartcard_context_t</a> *context, <a class="el" href="a00090.html#gaa4b57fc884f0466d060b71d9787b0901">smartcard_reset_type_t</a> resetType)</td></tr>
-<tr class="memdesc:gaa8f968b1ffeca4f4813ce6b11b5b964b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Activates the Smart card IC.  <a href="#gaa8f968b1ffeca4f4813ce6b11b5b964b">More...</a><br/></td></tr>
-<tr class="separator:gaa8f968b1ffeca4f4813ce6b11b5b964b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa8a7e36f264ca216943b8d923681efd9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00367.html#gaa8a7e36f264ca216943b8d923681efd9">SMARTCARD_PHY_Deactivate</a> (void *base, <a class="el" href="a00090.html#a00685">smartcard_context_t</a> *context)</td></tr>
-<tr class="memdesc:gaa8a7e36f264ca216943b8d923681efd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-activates the Smart card IC.  <a href="#gaa8a7e36f264ca216943b8d923681efd9">More...</a><br/></td></tr>
-<tr class="separator:gaa8a7e36f264ca216943b8d923681efd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga56a8cf967f64d7b0d2332dae3640cc3e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00367.html#ga56a8cf967f64d7b0d2332dae3640cc3e">SMARTCARD_PHY_Control</a> (void *base, <a class="el" href="a00090.html#a00685">smartcard_context_t</a> *context, <a class="el" href="a00090.html#ga3620f4dad4aca31c4e2b5eb5d6114147">smartcard_interface_control_t</a> control, uint32_t param)</td></tr>
-<tr class="memdesc:ga56a8cf967f64d7b0d2332dae3640cc3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controls the Smart card interface IC.  <a href="#ga56a8cf967f64d7b0d2332dae3640cc3e">More...</a><br/></td></tr>
-<tr class="separator:ga56a8cf967f64d7b0d2332dae3640cc3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+XBARB functional Operation.</h2></td></tr>
+<tr class="memitem:gaef36940e839f28936f9415c3cb6d703f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00367.html#gaef36940e839f28936f9415c3cb6d703f">XBARB_Init</a> (XBARB_Type *base)</td></tr>
+<tr class="memdesc:gaef36940e839f28936f9415c3cb6d703f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the XBARB module.  <a href="#gaef36940e839f28936f9415c3cb6d703f">More...</a><br/></td></tr>
+<tr class="separator:gaef36940e839f28936f9415c3cb6d703f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad5775a6073d472b2749cc202116d1809"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00367.html#gad5775a6073d472b2749cc202116d1809">XBARB_Deinit</a> (XBARB_Type *base)</td></tr>
+<tr class="memdesc:gad5775a6073d472b2749cc202116d1809"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shuts down the XBARB module.  <a href="#gad5775a6073d472b2749cc202116d1809">More...</a><br/></td></tr>
+<tr class="separator:gad5775a6073d472b2749cc202116d1809"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga64a72733261fc11d061c0d7f0abe0771"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00367.html#ga64a72733261fc11d061c0d7f0abe0771">XBARB_SetSignalsConnection</a> (XBARB_Type *base, xbar_input_signal_t input, xbar_output_signal_t output)</td></tr>
+<tr class="memdesc:ga64a72733261fc11d061c0d7f0abe0771"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures a connection between the selected XBARB_IN[*] input and the XBARB_OUT[*] output signal.  <a href="#ga64a72733261fc11d061c0d7f0abe0771">More...</a><br/></td></tr>
+<tr class="separator:ga64a72733261fc11d061c0d7f0abe0771"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gaeebf4642169ffb6ad767b7433382ff1c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SMARTCARD_INIT_DELAY_CLOCK_CYCLES_ADJUSTMENT&#160;&#160;&#160;(4200u)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga8e01ab09cbd161d85a0ecc29b3230db7"></a>
+<a class="anchor" id="gaef36940e839f28936f9415c3cb6d703f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void SMARTCARD_PHY_GetDefaultConfig </td>
+          <td class="memname">void XBARB_Init </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00090.html#a00686">smartcard_interface_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em></td><td>)</td>
+          <td class="paramtype">XBARB_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>This function un-gates the XBARB clock.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">config</td><td>The Smart card user configuration structure which contains configuration structure of type <a class="el" href="a00090.html#a00686" title="Defines user specified configuration of Smart card interface. ">smartcard_interface_config_t</a>. Function fill in members: clockToResetDelay = 42000, vcc = kSmartcardVoltageClassB3_3V, with default values. </td></tr>
+    <tr><td class="paramname">base</td><td>XBARB peripheral address. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gad7d80be0c1867711f3673dede0d574e6"></a>
+<a class="anchor" id="gad5775a6073d472b2749cc202116d1809"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SMARTCARD_PHY_Init </td>
+          <td class="memname">void XBARB_Deinit </td>
           <td>(</td>
-          <td class="paramtype">void *&#160;</td>
+          <td class="paramtype">XBARB_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function disables XBARB clock.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>XBARB peripheral address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga64a72733261fc11d061c0d7f0abe0771"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void XBARB_SetSignalsConnection </td>
+          <td>(</td>
+          <td class="paramtype">XBARB_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00090.html#a00686">smartcard_interface_config_t</a> const *&#160;</td>
-          <td class="paramname"><em>config</em>, </td>
+          <td class="paramtype">xbar_input_signal_t&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>srcClock_Hz</em>&#160;</td>
+          <td class="paramtype">xbar_output_signal_t&#160;</td>
+          <td class="paramname"><em>output</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -203,188 +212,12 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>This function configures which XBARB input is connected to the selected XBARB output. If more than one XBARB module is available, only the inputs and outputs from the same module can be connected.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>The Smart card peripheral base address. </td></tr>
-    <tr><td class="paramname">config</td><td>The user configuration structure of type <a class="el" href="a00090.html#a00686" title="Defines user specified configuration of Smart card interface. ">smartcard_interface_config_t</a>. Call the function <a class="el" href="a00367.html#ga8e01ab09cbd161d85a0ecc29b3230db7" title="Fills in the configuration structure with default values. ">SMARTCARD_PHY_GetDefaultConfig()</a> to fill the configuration structure. </td></tr>
-    <tr><td class="paramname">srcClock_Hz</td><td>Smart card clock generation module source clock.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SMARTCARD_Success</td><td>or kStatus_SMARTCARD_OtherError in case of error. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa6dcbfb856a038cc1724ecc766973417"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SMARTCARD_PHY_Deinit </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00090.html#a00686">smartcard_interface_config_t</a> const *&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>The Smart card peripheral module base address. </td></tr>
-    <tr><td class="paramname">config</td><td>The user configuration structure of type <a class="el" href="a00090.html#a00686" title="Defines user specified configuration of Smart card interface. ">smartcard_interface_config_t</a>. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa8f968b1ffeca4f4813ce6b11b5b964b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SMARTCARD_PHY_Activate </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00090.html#a00685">smartcard_context_t</a> *&#160;</td>
-          <td class="paramname"><em>context</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00090.html#gaa4b57fc884f0466d060b71d9787b0901">smartcard_reset_type_t</a>&#160;</td>
-          <td class="paramname"><em>resetType</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>The Smart card peripheral module base address. </td></tr>
-    <tr><td class="paramname">context</td><td>A pointer to a Smart card driver context structure. </td></tr>
-    <tr><td class="paramname">resetType</td><td>type of reset to be performed, possible values = kSmartcardColdReset, kSmartcardWarmReset</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SMARTCARD_Success</td><td>or kStatus_SMARTCARD_OtherError in case of error. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa8a7e36f264ca216943b8d923681efd9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SMARTCARD_PHY_Deactivate </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00090.html#a00685">smartcard_context_t</a> *&#160;</td>
-          <td class="paramname"><em>context</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>The Smart card peripheral module base address. </td></tr>
-    <tr><td class="paramname">context</td><td>A pointer to a Smart card driver context structure.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SMARTCARD_Success</td><td>or kStatus_SMARTCARD_OtherError in case of error. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga56a8cf967f64d7b0d2332dae3640cc3e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00338.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SMARTCARD_PHY_Control </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00090.html#a00685">smartcard_context_t</a> *&#160;</td>
-          <td class="paramname"><em>context</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00090.html#ga3620f4dad4aca31c4e2b5eb5d6114147">smartcard_interface_control_t</a>&#160;</td>
-          <td class="paramname"><em>control</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>param</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>The Smart card peripheral module base address. </td></tr>
-    <tr><td class="paramname">context</td><td>A pointer to a Smart card driver context structure. </td></tr>
-    <tr><td class="paramname">control</td><td>A interface command type. </td></tr>
-    <tr><td class="paramname">param</td><td>Integer value specific to control type</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SMARTCARD_Success</td><td>or kStatus_SMARTCARD_OtherError in case of error. </td></tr>
+    <tr><td class="paramname">base</td><td>XBARB peripheral address. </td></tr>
+    <tr><td class="paramname">input</td><td>XBARB input signal. </td></tr>
+    <tr><td class="paramname">output</td><td>XBARB output signal. </td></tr>
   </table>
   </dd>
 </dl>

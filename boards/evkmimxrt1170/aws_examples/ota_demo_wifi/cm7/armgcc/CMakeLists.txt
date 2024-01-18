@@ -46,8 +46,6 @@ include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../config_files/FreeRTOSConfig.h"
-"${ProjDirPath}/../app_config.h"
-"${ProjDirPath}/../config_files/aws_mbedtls_config.h"
 "${ProjDirPath}/../config_files/core_mqtt_config.h"
 "${ProjDirPath}/../config_files/core_pkcs11_config.h"
 "${ProjDirPath}/../config_files/demo_config.h"
@@ -56,6 +54,7 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../aws_clientcredential.h"
 "${ProjDirPath}/../aws_clientcredential_keys.h"
 "${ProjDirPath}/../freertos_tasks_c_additions.h"
+"${ProjDirPath}/../config_files/aws_mbedtls_config.h"
 "${ProjDirPath}/../sdmmc_config.c"
 "${ProjDirPath}/../sdmmc_config.h"
 "${ProjDirPath}/../wifi_bt_config.c"
@@ -82,6 +81,7 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../ota/ota_signature_validation.c"
 "${ProjDirPath}/../ota/ota_update.c"
 "${ProjDirPath}/../ota/ota_update.h"
+"${ProjDirPath}/../app_config.h"
 "${ProjDirPath}/../wifi_config.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
@@ -106,7 +106,6 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 set_source_files_properties("${ProjDirPath}/../config_files/FreeRTOSConfig.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos-kernel_template")
-set_source_files_properties("${ProjDirPath}/../app_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_wifi_template")
 set_source_files_properties("${ProjDirPath}/../config_files/core_mqtt_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos_coremqtt_template")
 set_source_files_properties("${ProjDirPath}/../config_files/core_pkcs11_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_freertos_corepkcs11_template")
 set_source_files_properties("${ProjDirPath}/../config_files/demo_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_iot_reference_template")
@@ -116,6 +115,7 @@ set_source_files_properties("${ProjDirPath}/../sdmmc_config.h" PROPERTIES COMPON
 set_source_files_properties("${ProjDirPath}/../wifi_bt_config.c" PROPERTIES COMPONENT_CONFIG_FILE "middleware_wifi_template")
 set_source_files_properties("${ProjDirPath}/../wifi_bt_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_wifi_template")
 set_source_files_properties("${ProjDirPath}/../lwipopts.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_lwip_template")
+set_source_files_properties("${ProjDirPath}/../app_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_wifi_template")
 set_source_files_properties("${ProjDirPath}/../wifi_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_wifi_template")
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)

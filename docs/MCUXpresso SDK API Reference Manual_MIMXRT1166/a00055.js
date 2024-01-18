@@ -1,33 +1,46 @@
 var a00055 =
 [
-    [ "lcdifv2_display_config_t", "a00055.html#a00567", [
-      [ "panelWidth", "a00055.html#a644ef05df1993a4215a2f6e6bfe1a54b", null ],
-      [ "panelHeight", "a00055.html#ac6df59b7f9ad6ccf22d3211cbeaa6d77", null ],
-      [ "hsw", "a00055.html#aaeeadc9061767b3d0db813b20e82c90a", null ],
-      [ "hfp", "a00055.html#af91de0bca028faa4c91be67529beddab", null ],
-      [ "hbp", "a00055.html#a55f15a87f6906ec4ffedee41f34f6a20", null ],
-      [ "vsw", "a00055.html#a289ecf406c34a4c05c84b651ff21b5a7", null ],
-      [ "vfp", "a00055.html#a290f4c49afab32f16d47a08a20679267", null ],
-      [ "vbp", "a00055.html#a6b463d9ada1df3d86da20d41e94f5634", null ],
-      [ "polarityFlags", "a00055.html#aa80eedd06dda3b5cfeb393a40c1de365", null ],
-      [ "lineOrder", "a00055.html#ac3a949880303eb1ed75f6d32ca57084f", null ]
+    [ "_lcdifv2_display_config", "a00055.html#a00559", [
+      [ "panelWidth", "a00055.html#a9d604f80c32d04b8729ba72c93fdf6ed", null ],
+      [ "panelHeight", "a00055.html#a84ab9cc7b9ad9b6254bb00533874f7e2", null ],
+      [ "hsw", "a00055.html#a827d70c05f0260098f0c9a8662d9be76", null ],
+      [ "hfp", "a00055.html#ac9227b50bcb0a4a4c3ce27e3a69ddcb9", null ],
+      [ "hbp", "a00055.html#a541de0462cbd264eafc403252ae66e30", null ],
+      [ "vsw", "a00055.html#af9371f75ccd78637adacf5adca081d02", null ],
+      [ "vfp", "a00055.html#a27477b9afd7aeaddc9d6930dfe862e7b", null ],
+      [ "vbp", "a00055.html#ad1d6ac5bbb1c641df309388a0669daa8", null ],
+      [ "polarityFlags", "a00055.html#a0a19e6b49af670b92501bc332d7fecef", null ],
+      [ "lineOrder", "a00055.html#a2ea50e8d05a41cee97ed95e1b411af75", null ]
     ] ],
-    [ "lcdifv2_buffer_config_t", "a00055.html#a00566", [
-      [ "strideBytes", "a00055.html#a4161dde9c1b640c4c1d40e21094ad057", null ],
-      [ "pixelFormat", "a00055.html#a7c1d0fe932febb725db1403276a1804e", null ]
+    [ "_lcdifv2_buffer_config", "a00055.html#a00558", [
+      [ "strideBytes", "a00055.html#a0f2b74087de20779c54487011f42b764", null ],
+      [ "pixelFormat", "a00055.html#a76ab3a9ef2f5f3dd257015f5d7946fa9", null ]
     ] ],
-    [ "lcdifv2_blend_config_t", "a00055.html#a00565", [
-      [ "globalAlpha", "a00055.html#afd135efecc632a888671a9d00ad5f887", null ],
-      [ "alphaMode", "a00055.html#ad7326e15a49e9c16d357bd31a12640e9", null ],
-      [ "pdAlphaMode", "a00055.html#a0e052fccc7cf8ec0ce9ee91f05775c98", null ],
-      [ "pdColorMode", "a00055.html#ae0f1e15147db1e15e8bd9d8cc9de1f99", null ],
-      [ "pdGlobalAlphaMode", "a00055.html#aeeed7a0ccc62c7f026566af8170e62cc", null ],
-      [ "pdFactorMode", "a00055.html#aeb48ec7e6c6ec270981ceaf841738bcf", null ]
+    [ "_lcdifv2_blend_config", "a00055.html#a00557", [
+      [ "globalAlpha", "a00055.html#adb03566cbdf4110bfc9b170cf32f9e4b", null ],
+      [ "alphaMode", "a00055.html#a04dfa9cab136d198d47c694afca2505b", null ],
+      [ "pdAlphaMode", "a00055.html#a871185cac19ea882de48e55fef15615a", null ],
+      [ "pdColorMode", "a00055.html#ae0229e703c5506b468249cc423bca391", null ],
+      [ "pdGlobalAlphaMode", "a00055.html#a86a9da1ceb0a4d5c7fd55133043b1c17", null ],
+      [ "pdFactorMode", "a00055.html#a04c0ecd7c9c4480b5fbb2edd3ed69c0c", null ]
     ] ],
     [ "FSL_LCDIFV2_DRIVER_VERSION", "a00055.html#ga6e1d2ba9a5303fd29a8f78702a82895e", null ],
     [ "LCDIFV2_MAKE_FIFO_EMPTY_INTERRUPT", "a00055.html#ga56846b0f6c97d532e0f9b5fa48e10022", null ],
     [ "LCDIFV2_MAKE_DMA_DONE_INTERRUPT", "a00055.html#gaa6a7735cc6fdabc028438e0ee26dccde", null ],
     [ "LCDIFV2_MAKE_DMA_ERROR_INTERRUPT", "a00055.html#ga9dfe40d044ec28c4418d2372e9862a9b", null ],
+    [ "lcdifv2_line_order_t", "a00055.html#ga241243076b8d7f8db85ba11aca4b1d41", null ],
+    [ "lcdifv2_display_config_t", "a00055.html#ga3b425cc6027e8a48f653130d1fb701ab", null ],
+    [ "lcdifv2_csc_mode_t", "a00055.html#ga987a58cf1b819da7908511b957c4a3af", null ],
+    [ "lcdifv2_pixel_format_t", "a00055.html#ga18ea3c4728d85e5f29b42254e91423b6", null ],
+    [ "lcdifv2_buffer_config_t", "a00055.html#ga7a6d39859b97f0d473c1bad8bdfee58e", null ],
+    [ "lcdifv2_alpha_mode_t", "a00055.html#ga35cbec9ffec4572b9b0ad3330020c1c1", null ],
+    [ "lcdifv2_pd_alpha_mode_t", "a00055.html#ga3a0961a70a23621c996a0f1b6ff74047", null ],
+    [ "lcdifv2_pd_color_mode_t", "a00055.html#ga1ac7cd75162d2e89488ab8f306aa7015", null ],
+    [ "lcdifv2_pd_global_alpha_mode_t", "a00055.html#gafa7db172fb06d80e02028880b282fd94", null ],
+    [ "lcdifv2_pd_factor_mode_t", "a00055.html#gaa40d3c513d287cd18b264326d7360904", null ],
+    [ "lcdifv2_blend_config_t", "a00055.html#ga1bc32c09ddd12fea3a5efdd50978f93d", null ],
+    [ "lcdifv2_pd_blend_mode_t", "a00055.html#ga162a81389832980d7564b8b8f36d66e9", null ],
+    [ "lcdifv2_pd_layer_t", "a00055.html#ga1df8d376b53c393f270852a7a6676905", null ],
     [ "_lcdifv2_polarity_flags", "a00055.html#ga79dc11f5ab25c5d06bbf2233a6fef875", [
       [ "kLCDIFV2_VsyncActiveHigh", "a00055.html#gga79dc11f5ab25c5d06bbf2233a6fef875aff940f5ac0021e784d5b32070b9e8750", null ],
       [ "kLCDIFV2_HsyncActiveHigh", "a00055.html#gga79dc11f5ab25c5d06bbf2233a6fef875a3998d632b82ecac7474b1698334375cf", null ],
@@ -69,79 +82,79 @@ var a00055 =
       [ "kLCDIFV2_OutputUnderrunInterrupt", "a00055.html#gga06d944793a2798723283074283620cb5ad9c21b9e4d14601c183b2bdfa864b674", null ],
       [ "kLCDIFV2_VsyncEdgeInterrupt", "a00055.html#gga06d944793a2798723283074283620cb5a7e0187de3661b736abddbe59103a4e76", null ]
     ] ],
-    [ "lcdifv2_line_order_t", "a00055.html#ga1e1d1a0792672d18b62eb27ee7cebfb1", [
-      [ "kLCDIFV2_LineOrderRGB", "a00055.html#gga1e1d1a0792672d18b62eb27ee7cebfb1af4213d6bdd4299e3a3dfc16c8963effe", null ],
-      [ "kLCDIFV2_LineOrderRBG", "a00055.html#gga1e1d1a0792672d18b62eb27ee7cebfb1a3fa18445eb8b7c0fd99e28c53897409b", null ],
-      [ "kLCDIFV2_LineOrderGBR", "a00055.html#gga1e1d1a0792672d18b62eb27ee7cebfb1a2fe56f80f3ebe6d9e8c18c10b7b6aaec", null ],
-      [ "kLCDIFV2_LineOrderGRB", "a00055.html#gga1e1d1a0792672d18b62eb27ee7cebfb1a38b4f6a2efa86fc9952dc9fb0c6c0fee", null ],
-      [ "kLCDIFV2_LineOrderBRG", "a00055.html#gga1e1d1a0792672d18b62eb27ee7cebfb1a5ebb7eb6ab63e2a1dbbc897d3d67b5dd", null ],
-      [ "kLCDIFV2_LineOrderBGR", "a00055.html#gga1e1d1a0792672d18b62eb27ee7cebfb1a30a7ef64eb0626718f429a573b47d256", null ]
+    [ "_lcdifv2_line_order", "a00055.html#ga5183d9c6f64a02b0336543802c56a72f", [
+      [ "kLCDIFV2_LineOrderRGB", "a00055.html#gga5183d9c6f64a02b0336543802c56a72faf4213d6bdd4299e3a3dfc16c8963effe", null ],
+      [ "kLCDIFV2_LineOrderRBG", "a00055.html#gga5183d9c6f64a02b0336543802c56a72fa3fa18445eb8b7c0fd99e28c53897409b", null ],
+      [ "kLCDIFV2_LineOrderGBR", "a00055.html#gga5183d9c6f64a02b0336543802c56a72fa2fe56f80f3ebe6d9e8c18c10b7b6aaec", null ],
+      [ "kLCDIFV2_LineOrderGRB", "a00055.html#gga5183d9c6f64a02b0336543802c56a72fa38b4f6a2efa86fc9952dc9fb0c6c0fee", null ],
+      [ "kLCDIFV2_LineOrderBRG", "a00055.html#gga5183d9c6f64a02b0336543802c56a72fa5ebb7eb6ab63e2a1dbbc897d3d67b5dd", null ],
+      [ "kLCDIFV2_LineOrderBGR", "a00055.html#gga5183d9c6f64a02b0336543802c56a72fa30a7ef64eb0626718f429a573b47d256", null ]
     ] ],
-    [ "lcdifv2_csc_mode_t", "a00055.html#gaebf78f91cbd1e0b5481222b3674ff7f2", [
-      [ "kLCDIFV2_CscDisable", "a00055.html#ggaebf78f91cbd1e0b5481222b3674ff7f2a1cfc7c84aedad754f8e6b9b721f57698", null ],
-      [ "kLCDIFV2_CscYUV2RGB", "a00055.html#ggaebf78f91cbd1e0b5481222b3674ff7f2ade991636de25f6dafd821b64b58025a2", null ],
-      [ "kLCDIFV2_CscYCbCr2RGB", "a00055.html#ggaebf78f91cbd1e0b5481222b3674ff7f2aad5824f1100284cabd1def56067a3b5e", null ]
+    [ "_lcdifv2_csc_mode", "a00055.html#ga99039755eb3794c625f35b88c473c489", [
+      [ "kLCDIFV2_CscDisable", "a00055.html#gga99039755eb3794c625f35b88c473c489a1cfc7c84aedad754f8e6b9b721f57698", null ],
+      [ "kLCDIFV2_CscYUV2RGB", "a00055.html#gga99039755eb3794c625f35b88c473c489ade991636de25f6dafd821b64b58025a2", null ],
+      [ "kLCDIFV2_CscYCbCr2RGB", "a00055.html#gga99039755eb3794c625f35b88c473c489aad5824f1100284cabd1def56067a3b5e", null ]
     ] ],
-    [ "lcdifv2_pixel_format_t", "a00055.html#ga1442c94926ed6c64013b0cdd022220c1", [
-      [ "kLCDIFV2_PixelFormatIndex1BPP", "a00055.html#gga1442c94926ed6c64013b0cdd022220c1ae2cd0cd0e002e40f7f41811da5c56587", null ],
-      [ "kLCDIFV2_PixelFormatIndex2BPP", "a00055.html#gga1442c94926ed6c64013b0cdd022220c1a95a27b802bc2ac4c5de184945ce9bd62", null ],
-      [ "kLCDIFV2_PixelFormatIndex4BPP", "a00055.html#gga1442c94926ed6c64013b0cdd022220c1ab097e18568d12dae043b40e055d5151d", null ],
-      [ "kLCDIFV2_PixelFormatIndex8BPP", "a00055.html#gga1442c94926ed6c64013b0cdd022220c1a8697d5ef873260fc398f7aa5f23a3ed4", null ],
-      [ "kLCDIFV2_PixelFormatRGB565", "a00055.html#gga1442c94926ed6c64013b0cdd022220c1a9c8f5db60ae5638b4fcb7e2b9d9b882b", null ],
-      [ "kLCDIFV2_PixelFormatARGB1555", "a00055.html#gga1442c94926ed6c64013b0cdd022220c1ad19de5e7280f906121ba817200013d61", null ],
-      [ "kLCDIFV2_PixelFormatARGB4444", "a00055.html#gga1442c94926ed6c64013b0cdd022220c1a121a661c7e7b81859cee249b014e0e60", null ],
-      [ "kLCDIFV2_PixelFormatUYVY", "a00055.html#gga1442c94926ed6c64013b0cdd022220c1a59688fab7667821cd58c1cc602182ba2", null ],
-      [ "kLCDIFV2_PixelFormatVYUY", "a00055.html#gga1442c94926ed6c64013b0cdd022220c1a5186649e30618cc6ec0580080e2f72e0", null ],
-      [ "kLCDIFV2_PixelFormatYUYV", "a00055.html#gga1442c94926ed6c64013b0cdd022220c1a00f31ec92111694ee0483f26e91699b1", null ],
-      [ "kLCDIFV2_PixelFormatYVYU", "a00055.html#gga1442c94926ed6c64013b0cdd022220c1a93c27c029471bff12bef91cd5dc65053", null ],
-      [ "kLCDIFV2_PixelFormatRGB888", "a00055.html#gga1442c94926ed6c64013b0cdd022220c1a29996c9bad7022c92c53637061aaa030", null ],
-      [ "kLCDIFV2_PixelFormatARGB8888", "a00055.html#gga1442c94926ed6c64013b0cdd022220c1a3947606784aceb0d6fe0ad9a055626a2", null ],
-      [ "kLCDIFV2_PixelFormatABGR8888", "a00055.html#gga1442c94926ed6c64013b0cdd022220c1a3878c086c2569764d3eaf4835183038d", null ]
+    [ "_lcdifv2_pixel_format", "a00055.html#ga796070866ebd33bc200edc9de8b7eb99", [
+      [ "kLCDIFV2_PixelFormatIndex1BPP", "a00055.html#gga796070866ebd33bc200edc9de8b7eb99ae2cd0cd0e002e40f7f41811da5c56587", null ],
+      [ "kLCDIFV2_PixelFormatIndex2BPP", "a00055.html#gga796070866ebd33bc200edc9de8b7eb99a95a27b802bc2ac4c5de184945ce9bd62", null ],
+      [ "kLCDIFV2_PixelFormatIndex4BPP", "a00055.html#gga796070866ebd33bc200edc9de8b7eb99ab097e18568d12dae043b40e055d5151d", null ],
+      [ "kLCDIFV2_PixelFormatIndex8BPP", "a00055.html#gga796070866ebd33bc200edc9de8b7eb99a8697d5ef873260fc398f7aa5f23a3ed4", null ],
+      [ "kLCDIFV2_PixelFormatRGB565", "a00055.html#gga796070866ebd33bc200edc9de8b7eb99a9c8f5db60ae5638b4fcb7e2b9d9b882b", null ],
+      [ "kLCDIFV2_PixelFormatARGB1555", "a00055.html#gga796070866ebd33bc200edc9de8b7eb99ad19de5e7280f906121ba817200013d61", null ],
+      [ "kLCDIFV2_PixelFormatARGB4444", "a00055.html#gga796070866ebd33bc200edc9de8b7eb99a121a661c7e7b81859cee249b014e0e60", null ],
+      [ "kLCDIFV2_PixelFormatUYVY", "a00055.html#gga796070866ebd33bc200edc9de8b7eb99a59688fab7667821cd58c1cc602182ba2", null ],
+      [ "kLCDIFV2_PixelFormatVYUY", "a00055.html#gga796070866ebd33bc200edc9de8b7eb99a5186649e30618cc6ec0580080e2f72e0", null ],
+      [ "kLCDIFV2_PixelFormatYUYV", "a00055.html#gga796070866ebd33bc200edc9de8b7eb99a00f31ec92111694ee0483f26e91699b1", null ],
+      [ "kLCDIFV2_PixelFormatYVYU", "a00055.html#gga796070866ebd33bc200edc9de8b7eb99a93c27c029471bff12bef91cd5dc65053", null ],
+      [ "kLCDIFV2_PixelFormatRGB888", "a00055.html#gga796070866ebd33bc200edc9de8b7eb99a29996c9bad7022c92c53637061aaa030", null ],
+      [ "kLCDIFV2_PixelFormatARGB8888", "a00055.html#gga796070866ebd33bc200edc9de8b7eb99a3947606784aceb0d6fe0ad9a055626a2", null ],
+      [ "kLCDIFV2_PixelFormatABGR8888", "a00055.html#gga796070866ebd33bc200edc9de8b7eb99a3878c086c2569764d3eaf4835183038d", null ]
     ] ],
-    [ "lcdifv2_alpha_mode_t", "a00055.html#ga3255e95343f51d86a9cf9e917e2d4627", [
-      [ "kLCDIFV2_AlphaDisable", "a00055.html#gga3255e95343f51d86a9cf9e917e2d4627a5ae362bf99048e7e4c9accd351809923", null ],
-      [ "kLCDIFV2_AlphaOverride", "a00055.html#gga3255e95343f51d86a9cf9e917e2d4627aab53c6c6ed0432cdfc3557e37dea21b4", null ],
-      [ "kLCDIFV2_AlphaEmbedded", "a00055.html#gga3255e95343f51d86a9cf9e917e2d4627a1d3df4de72898b228a8103945154fdc2", null ],
-      [ "kLCDIFV2_AlphaPoterDuff", "a00055.html#gga3255e95343f51d86a9cf9e917e2d4627aff85a840c4d8c530f9da8319f028d163", null ]
+    [ "_lcdifv2_alpha_mode", "a00055.html#ga47c0ad3bb7717f9294a089af6a5c4cf0", [
+      [ "kLCDIFV2_AlphaDisable", "a00055.html#gga47c0ad3bb7717f9294a089af6a5c4cf0a5ae362bf99048e7e4c9accd351809923", null ],
+      [ "kLCDIFV2_AlphaOverride", "a00055.html#gga47c0ad3bb7717f9294a089af6a5c4cf0aab53c6c6ed0432cdfc3557e37dea21b4", null ],
+      [ "kLCDIFV2_AlphaEmbedded", "a00055.html#gga47c0ad3bb7717f9294a089af6a5c4cf0a1d3df4de72898b228a8103945154fdc2", null ],
+      [ "kLCDIFV2_AlphaPoterDuff", "a00055.html#gga47c0ad3bb7717f9294a089af6a5c4cf0aff85a840c4d8c530f9da8319f028d163", null ]
     ] ],
-    [ "lcdifv2_pd_alpha_mode_t", "a00055.html#gaaf235923feb878bb9561ba36c1109ca2", [
-      [ "kLCDIFV2_PD_AlphaStraight", "a00055.html#ggaaf235923feb878bb9561ba36c1109ca2a29f2f46932474f2c9c81a543b3188838", null ],
-      [ "kLCDIFV2_PD_AlphaInversed", "a00055.html#ggaaf235923feb878bb9561ba36c1109ca2a5d6fe28d8e3abb1edd6d9ad3ec4e6559", null ]
+    [ "_lcdifv2_pd_alpha_mode", "a00055.html#ga546a77aa4043bdb98f4c5b2874848d30", [
+      [ "kLCDIFV2_PD_AlphaStraight", "a00055.html#gga546a77aa4043bdb98f4c5b2874848d30a29f2f46932474f2c9c81a543b3188838", null ],
+      [ "kLCDIFV2_PD_AlphaInversed", "a00055.html#gga546a77aa4043bdb98f4c5b2874848d30a5d6fe28d8e3abb1edd6d9ad3ec4e6559", null ]
     ] ],
-    [ "lcdifv2_pd_color_mode_t", "a00055.html#gafc3f67c057d01321b6dc03ddb050ff9b", [
-      [ "kLCDIFV2_PD_ColorNoAlpha", "a00055.html#ggafc3f67c057d01321b6dc03ddb050ff9ba09258131e98536b90993d81c619e9db2", null ],
-      [ "kLCDIFV2_PD_ColorWithAlpha", "a00055.html#ggafc3f67c057d01321b6dc03ddb050ff9ba170deabb35e69781f01fe609ed3415df", null ]
+    [ "_lcdifv2_pd_color_mode", "a00055.html#ga810450a0e9c73d97b76ea06ebf17aeb3", [
+      [ "kLCDIFV2_PD_ColorNoAlpha", "a00055.html#gga810450a0e9c73d97b76ea06ebf17aeb3a09258131e98536b90993d81c619e9db2", null ],
+      [ "kLCDIFV2_PD_ColorWithAlpha", "a00055.html#gga810450a0e9c73d97b76ea06ebf17aeb3a170deabb35e69781f01fe609ed3415df", null ]
     ] ],
-    [ "lcdifv2_pd_global_alpha_mode_t", "a00055.html#ga93df8af4b8ccfc3e6e9f5e010917fa7c", [
-      [ "kLCDIFV2_PD_GlobalAlpha", "a00055.html#gga93df8af4b8ccfc3e6e9f5e010917fa7ca418cf170521d57240a0ac4c2f688419b", null ],
-      [ "kLCDIFV2_PD_LocalAlpha", "a00055.html#gga93df8af4b8ccfc3e6e9f5e010917fa7ca1fb00274650c85f83ac7067d8b262249", null ],
-      [ "kLCDIFV2_PD_ScaledAlpha", "a00055.html#gga93df8af4b8ccfc3e6e9f5e010917fa7ca92eb8a17af538ea3e84d3c1764e68d4d", null ]
+    [ "_lcdifv2_pd_global_alpha_mode", "a00055.html#gabb0d312b362733f1caa798340937e954", [
+      [ "kLCDIFV2_PD_GlobalAlpha", "a00055.html#ggabb0d312b362733f1caa798340937e954a418cf170521d57240a0ac4c2f688419b", null ],
+      [ "kLCDIFV2_PD_LocalAlpha", "a00055.html#ggabb0d312b362733f1caa798340937e954a1fb00274650c85f83ac7067d8b262249", null ],
+      [ "kLCDIFV2_PD_ScaledAlpha", "a00055.html#ggabb0d312b362733f1caa798340937e954a92eb8a17af538ea3e84d3c1764e68d4d", null ]
     ] ],
-    [ "lcdifv2_pd_factor_mode_t", "a00055.html#gad7fb10422c5e1f86366d9ef3ba2fc43a", [
-      [ "kLCDIFV2_PD_FactorOne", "a00055.html#ggad7fb10422c5e1f86366d9ef3ba2fc43aac4a7ef9b2c94d126859fdf9492d0028c", null ],
-      [ "kLCDIFV2_PD_FactorZero", "a00055.html#ggad7fb10422c5e1f86366d9ef3ba2fc43aa4c3c6d7482ce134f1a3d2e84249d2104", null ],
-      [ "kLCDIFV2_PD_FactorStraightAlpha", "a00055.html#ggad7fb10422c5e1f86366d9ef3ba2fc43aab3e71e7130918e4bd1c14e27874c0511", null ],
-      [ "kLCDIFV2_PD_FactorInversedAlpha", "a00055.html#ggad7fb10422c5e1f86366d9ef3ba2fc43aa254d64809671ab76ee53065d9f054262", null ]
+    [ "_lcdifv2_pd_factor_mode", "a00055.html#gabf934057abdc05ec6db6d3a3acd705b3", [
+      [ "kLCDIFV2_PD_FactorOne", "a00055.html#ggabf934057abdc05ec6db6d3a3acd705b3ac4a7ef9b2c94d126859fdf9492d0028c", null ],
+      [ "kLCDIFV2_PD_FactorZero", "a00055.html#ggabf934057abdc05ec6db6d3a3acd705b3a4c3c6d7482ce134f1a3d2e84249d2104", null ],
+      [ "kLCDIFV2_PD_FactorStraightAlpha", "a00055.html#ggabf934057abdc05ec6db6d3a3acd705b3ab3e71e7130918e4bd1c14e27874c0511", null ],
+      [ "kLCDIFV2_PD_FactorInversedAlpha", "a00055.html#ggabf934057abdc05ec6db6d3a3acd705b3a254d64809671ab76ee53065d9f054262", null ]
     ] ],
-    [ "lcdifv2_pd_blend_mode_t", "a00055.html#ga4078f51a5317cfb7aed7fb4935909e15", [
-      [ "kLCDIFV2_PD_Src", "a00055.html#gga4078f51a5317cfb7aed7fb4935909e15a850dd9f30ed07da380b8e9aba9445f1a", null ],
-      [ "kLCDIFV2_PD_Atop", "a00055.html#gga4078f51a5317cfb7aed7fb4935909e15a8590a5bef98c7d607635773662ae5d97", null ],
-      [ "kLCDIFV2_PD_Over", "a00055.html#gga4078f51a5317cfb7aed7fb4935909e15ac22476686760aaae3d7364cbf7fa6c8c", null ],
-      [ "kLCDIFV2_PD_In", "a00055.html#gga4078f51a5317cfb7aed7fb4935909e15abc17caa6c93daa2390948e97f9ad693a", null ],
-      [ "kLCDIFV2_PD_Out", "a00055.html#gga4078f51a5317cfb7aed7fb4935909e15a377452a01102655eed11d8091ba9977c", null ],
-      [ "kLCDIFV2_PD_Dst", "a00055.html#gga4078f51a5317cfb7aed7fb4935909e15ada73dd3132a91f67329e551f478f3d44", null ],
-      [ "kLCDIFV2_PD_DstAtop", "a00055.html#gga4078f51a5317cfb7aed7fb4935909e15ac3b5ede05274e9e20f81dd86ff9eddb3", null ],
-      [ "kLCDIFV2_PD_DstOver", "a00055.html#gga4078f51a5317cfb7aed7fb4935909e15a763347e9d290ebaa39cc8bfdd8a3ad04", null ],
-      [ "kLCDIFV2_PD_DstIn", "a00055.html#gga4078f51a5317cfb7aed7fb4935909e15a7bed31b4ebbf83175f84a4a6970aaabb", null ],
-      [ "kLCDIFV2_PD_DstOut", "a00055.html#gga4078f51a5317cfb7aed7fb4935909e15aa119ccd5f23e92fdd2f34fb81cf3f8ea", null ],
-      [ "kLCDIFV2_PD_Xor", "a00055.html#gga4078f51a5317cfb7aed7fb4935909e15a5d30d76fc503b93f3a34c3120a889241", null ],
-      [ "kLCDIFV2_PD_Clear", "a00055.html#gga4078f51a5317cfb7aed7fb4935909e15a1956c9e9fb68a123eebfc7272e830259", null ],
-      [ "kLCDIFV2_PD_Max", "a00055.html#gga4078f51a5317cfb7aed7fb4935909e15a4bf302411133320165da0a86ad51af7e", null ]
+    [ "_lcdifv2_pd_blend_mode", "a00055.html#gaf2b2e3c9b5ad0883ef8b0c0ef2462921", [
+      [ "kLCDIFV2_PD_Src", "a00055.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921a850dd9f30ed07da380b8e9aba9445f1a", null ],
+      [ "kLCDIFV2_PD_Atop", "a00055.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921a8590a5bef98c7d607635773662ae5d97", null ],
+      [ "kLCDIFV2_PD_Over", "a00055.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921ac22476686760aaae3d7364cbf7fa6c8c", null ],
+      [ "kLCDIFV2_PD_In", "a00055.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921abc17caa6c93daa2390948e97f9ad693a", null ],
+      [ "kLCDIFV2_PD_Out", "a00055.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921a377452a01102655eed11d8091ba9977c", null ],
+      [ "kLCDIFV2_PD_Dst", "a00055.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921ada73dd3132a91f67329e551f478f3d44", null ],
+      [ "kLCDIFV2_PD_DstAtop", "a00055.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921ac3b5ede05274e9e20f81dd86ff9eddb3", null ],
+      [ "kLCDIFV2_PD_DstOver", "a00055.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921a763347e9d290ebaa39cc8bfdd8a3ad04", null ],
+      [ "kLCDIFV2_PD_DstIn", "a00055.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921a7bed31b4ebbf83175f84a4a6970aaabb", null ],
+      [ "kLCDIFV2_PD_DstOut", "a00055.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921aa119ccd5f23e92fdd2f34fb81cf3f8ea", null ],
+      [ "kLCDIFV2_PD_Xor", "a00055.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921a5d30d76fc503b93f3a34c3120a889241", null ],
+      [ "kLCDIFV2_PD_Clear", "a00055.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921a1956c9e9fb68a123eebfc7272e830259", null ],
+      [ "kLCDIFV2_PD_Max", "a00055.html#ggaf2b2e3c9b5ad0883ef8b0c0ef2462921a4bf302411133320165da0a86ad51af7e", null ]
     ] ],
-    [ "lcdifv2_pd_layer_t", "a00055.html#gac34c8f53d468df33b2a212e450c76eaa", [
-      [ "kLCDIFV2_PD_SrcLayer", "a00055.html#ggac34c8f53d468df33b2a212e450c76eaaaed5f7456a61b1c66e0005b128cc4b2c7", null ],
-      [ "kLCDIFV2_PD_DestLayer", "a00055.html#ggac34c8f53d468df33b2a212e450c76eaaa90a82a97985a80021886518adb0ee226", null ],
-      [ "kLCDIFV2_PD_LayerMax", "a00055.html#ggac34c8f53d468df33b2a212e450c76eaaa3f3c217de644fe9e4e1700377dde4354", null ]
+    [ "_lcdifv2_pd_layer", "a00055.html#ga5605db1f81ff4f2262d517e712e1c720", [
+      [ "kLCDIFV2_PD_SrcLayer", "a00055.html#gga5605db1f81ff4f2262d517e712e1c720aed5f7456a61b1c66e0005b128cc4b2c7", null ],
+      [ "kLCDIFV2_PD_DestLayer", "a00055.html#gga5605db1f81ff4f2262d517e712e1c720a90a82a97985a80021886518adb0ee226", null ],
+      [ "kLCDIFV2_PD_LayerMax", "a00055.html#gga5605db1f81ff4f2262d517e712e1c720a3f3c217de644fe9e4e1700377dde4354", null ]
     ] ],
     [ "LCDIFV2_Init", "a00055.html#ga2096bb25d9724a379ea0131e9be046db", null ],
     [ "LCDIFV2_Deinit", "a00055.html#ga0ca63677991b12c3a6ac2be2b1b73ead", null ],

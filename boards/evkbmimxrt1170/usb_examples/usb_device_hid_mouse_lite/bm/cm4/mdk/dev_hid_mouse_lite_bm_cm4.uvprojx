@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, _DEBUG=1, CPU_MIMXRT1176DVMAA_cm4, USB_STACK_BM, DATA_SECTION_IS_CACHEABLE=1, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>..;../..;../../../../../../../components/timer;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../xip;../../../../../../../devices/MIMXRT1176/xip;../../../../../../../components/osa;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../..;../../../../../../../components/timer;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../middleware/usb/dcd;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../xip;../../../../../../../devices/MIMXRT1176/xip;../../../../../../../components/osa;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -497,26 +497,6 @@
               <FileName>evkbmimxrt1170_connect_cm4_cm4side_sdram.jlinkscript</FileName>
               <FileType>5</FileType>
               <FilePath>../evkbmimxrt1170_connect_cm4_cm4side_sdram.jlinkscript</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb/dcd</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_hsdcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usb_hsdcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_hsdcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usb_hsdcd.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_charger_detect.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usb_charger_detect.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -689,6 +669,11 @@
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_str.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
@@ -707,6 +692,26 @@
               <FileName>fsl_debug_console.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/dcd</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_hsdcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/usb/dcd/usb_hsdcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_hsdcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/usb/dcd/usb_hsdcd.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_charger_detect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/usb/dcd/usb_charger_detect.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1253,7 +1258,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm4, USB_STACK_BM, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>..;../..;../../../../../../../components/timer;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../xip;../../../../../../../devices/MIMXRT1176/xip;../../../../../../../components/osa;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../..;../../../../../../../components/timer;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../middleware/usb/dcd;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../xip;../../../../../../../devices/MIMXRT1176/xip;../../../../../../../components/osa;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1416,26 +1421,6 @@
               <FileName>evkbmimxrt1170_connect_cm4_cm4side_sdram.jlinkscript</FileName>
               <FileType>5</FileType>
               <FilePath>../evkbmimxrt1170_connect_cm4_cm4side_sdram.jlinkscript</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb/dcd</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_hsdcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usb_hsdcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_hsdcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usb_hsdcd.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_charger_detect.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usb_charger_detect.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1608,6 +1593,11 @@
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_str.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
@@ -1626,6 +1616,26 @@
               <FileName>fsl_debug_console.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/dcd</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_hsdcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/usb/dcd/usb_hsdcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_hsdcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/usb/dcd/usb_hsdcd.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_charger_detect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/usb/dcd/usb_charger_detect.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2172,7 +2182,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, DEBUG, CPU_MIMXRT1176DVMAA_cm4, USB_STACK_BM, DATA_SECTION_IS_CACHEABLE=1, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>..;../..;../../../../../../../components/timer;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../xip;../../../../../../../devices/MIMXRT1176/xip;../../../../../../../components/osa;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../..;../../../../../../../components/timer;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../middleware/usb/dcd;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../xip;../../../../../../../devices/MIMXRT1176/xip;../../../../../../../components/osa;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2335,26 +2345,6 @@
               <FileName>evkbmimxrt1170_connect_cm4_cm4side_sdram.jlinkscript</FileName>
               <FileType>5</FileType>
               <FilePath>../evkbmimxrt1170_connect_cm4_cm4side_sdram.jlinkscript</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb/dcd</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_hsdcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usb_hsdcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_hsdcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usb_hsdcd.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_charger_detect.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usb_charger_detect.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2527,6 +2517,11 @@
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_str.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
@@ -2545,6 +2540,26 @@
               <FileName>fsl_debug_console.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/dcd</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_hsdcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/usb/dcd/usb_hsdcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_hsdcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/usb/dcd/usb_hsdcd.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_charger_detect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/usb/dcd/usb_charger_detect.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3091,7 +3106,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, _DEBUG=0, CPU_MIMXRT1176DVMAA_cm4, USB_STACK_BM, DATA_SECTION_IS_CACHEABLE=1, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>..;../..;../../../../../../../components/timer;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../xip;../../../../../../../devices/MIMXRT1176/xip;../../../../../../../components/osa;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../..;../../../../../../../components/timer;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../middleware/usb/dcd;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../xip;../../../../../../../devices/MIMXRT1176/xip;../../../../../../../components/osa;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3254,26 +3269,6 @@
               <FileName>evkbmimxrt1170_connect_cm4_cm4side_sdram.jlinkscript</FileName>
               <FileType>5</FileType>
               <FilePath>../evkbmimxrt1170_connect_cm4_cm4side_sdram.jlinkscript</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb/dcd</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_hsdcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usb_hsdcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_hsdcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usb_hsdcd.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_charger_detect.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usb_charger_detect.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3446,6 +3441,11 @@
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_str.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
@@ -3464,6 +3464,26 @@
               <FileName>fsl_debug_console.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/dcd</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_hsdcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/usb/dcd/usb_hsdcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_hsdcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/usb/dcd/usb_hsdcd.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_charger_detect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/usb/dcd/usb_charger_detect.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4010,7 +4030,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm4, USB_STACK_BM, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>..;../..;../../../../../../../components/timer;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../xip;../../../../../../../devices/MIMXRT1176/xip;../../../../../../../components/osa;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../..;../../../../../../../components/timer;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../middleware/usb/dcd;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../xip;../../../../../../../devices/MIMXRT1176/xip;../../../../../../../components/osa;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4173,26 +4193,6 @@
               <FileName>evkbmimxrt1170_connect_cm4_cm4side_sdram.jlinkscript</FileName>
               <FileType>5</FileType>
               <FilePath>../evkbmimxrt1170_connect_cm4_cm4side_sdram.jlinkscript</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb/dcd</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_hsdcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usb_hsdcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_hsdcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usb_hsdcd.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_charger_detect.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usb_charger_detect.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4365,6 +4365,11 @@
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_str.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
@@ -4383,6 +4388,26 @@
               <FileName>fsl_debug_console.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/dcd</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_hsdcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/usb/dcd/usb_hsdcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_hsdcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/usb/dcd/usb_hsdcd.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_charger_detect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/usb/dcd/usb_charger_detect.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4929,7 +4954,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, NDEBUG, CPU_MIMXRT1176DVMAA_cm4, USB_STACK_BM, DATA_SECTION_IS_CACHEABLE=1, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>..;../..;../../../../../../../components/timer;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../xip;../../../../../../../devices/MIMXRT1176/xip;../../../../../../../components/osa;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../..;../../../../../../../components/timer;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../middleware/usb/dcd;../../../../../../../components/lists;../../../../../../../components/uart;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../xip;../../../../../../../devices/MIMXRT1176/xip;../../../../../../../components/osa;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5092,26 +5117,6 @@
               <FileName>evkbmimxrt1170_connect_cm4_cm4side_sdram.jlinkscript</FileName>
               <FileType>5</FileType>
               <FilePath>../evkbmimxrt1170_connect_cm4_cm4side_sdram.jlinkscript</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb/dcd</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_hsdcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usb_hsdcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_hsdcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usb_hsdcd.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_charger_detect.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usb_charger_detect.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5284,6 +5289,11 @@
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_str.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
@@ -5302,6 +5312,26 @@
               <FileName>fsl_debug_console.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/dcd</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_hsdcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/usb/dcd/usb_hsdcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_hsdcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/usb/dcd/usb_hsdcd.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_charger_detect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/usb/dcd/usb_charger_detect.h</FilePath>
             </File>
           </Files>
         </Group>

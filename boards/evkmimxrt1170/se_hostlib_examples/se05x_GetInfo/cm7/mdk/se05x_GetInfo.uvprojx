@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE_UART, IMX_RT, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', MBEDTLS_USER_CONFIG_FILE='\"sss_ksdk_mbedtls_config.h\"', SIMW_DEMO_ENABLE__DEMO_SE05X_GETINFO, PRINTF_ADVANCED_ENABLE=1, CRYPTO_USE_DRIVER_CAAM, CACHE_MODE_WRITE_THROUGH=1, MBEDTLS, SCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC, SERIAL_PORT_TYPE_UART=1, T1oI2C, T1oI2C_UM11225, SSS_USE_FTR_FILE, NO_SECURE_CHANNEL_SUPPORT, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE_UART, IMX_RT, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', MBEDTLS_USER_CONFIG_FILE='\"sss_ksdk_mbedtls_config.h\"', SIMW_DEMO_ENABLE__DEMO_SE05X_GETINFO, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK, CRYPTO_USE_DRIVER_CAAM, CACHE_MODE_WRITE_THROUGH=1, MBEDTLS, SCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC, SERIAL_PORT_TYPE_UART=1, T1oI2C, T1oI2C_UM11225, SSS_USE_FTR_FILE, NO_SECURE_CHANNEL_SUPPORT</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../middleware/se_hostlib/sss/plugin/mbedtls;../../../../../../middleware/se_hostlib/sss/port/ksdk;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../CMSIS/Core/Include;../../../../../../middleware/se_hostlib/hostlib/hostLib/inc;../../../../../../middleware/se_hostlib/hostlib/hostLib/se05x/src;../../../../../../middleware/se_hostlib/sss/inc;../../../../../../middleware/se_hostlib;../../../../../../middleware/se_hostlib/platform;../../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc;../../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk;../../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom;../../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C;../../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra;../../../../../../middleware/se_hostlib/sss/ex/inc;../../../../../../middleware/se_hostlib/sss/ex/src;../../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx;../../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log;../../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../middleware/se_hostlib/sss/plugin/mbedtls;../../../../../../middleware/se_hostlib/sss/port/ksdk;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/utilities;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/se_hostlib/hostlib/hostLib/inc;../../../../../../middleware/se_hostlib/hostlib/hostLib/se05x/src;../../../../../../middleware/se_hostlib/sss/inc;../../../../../../middleware/se_hostlib;../../../../../../middleware/se_hostlib/platform;../../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc;../../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc;../../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk;../../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom;../../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C;../../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra;../../../../../../middleware/se_hostlib/sss/ex/inc;../../../../../../middleware/se_hostlib/sss/ex/src;../../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx;../../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm7_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x8000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x8000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -387,6 +387,16 @@
               <FileName>pin_mux.h</FileName>
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>se_board_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../se_board_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>se_board_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../se_board_config.h</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
@@ -439,9 +449,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -539,6 +549,36 @@
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_gpc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_soc_src.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_soc_src.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_mu.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_mu.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_iomuxc.h</FilePath>
@@ -574,6 +614,11 @@
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_dcdc.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
@@ -582,11 +627,6 @@
               <FileName>fsl_anatop_ai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1763,6 +1803,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/port/ksdk/threading_alt.h</FilePath>
             </File>
+            <File>
+              <FileName>ksdk_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1878,6 +1923,11 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/fsl_assert.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1899,6 +1949,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -1912,16 +1972,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1972,46 +2022,6 @@
               <FileName>evkmimxrt1170_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkmimxrt1170_flexspi_nor_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>cachel1_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2442,6 +2452,41 @@
               <FileName>fsl_sss_se05x_scp03.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/se_hostlib/sss/src/se05x/fsl_sss_se05x_scp03.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>se_hostlib/hostlib/hostLib/mbedtls/inc</GroupName>
+          <Files>
+            <File>
+              <FileName>ax_mbedtls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc/ax_mbedtls.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>se_hostlib/hostlib/hostLib/mbedtls/src</GroupName>
+          <Files>
+            <File>
+              <FileName>ecdh_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/src/ecdh_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>rsa_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/src/rsa_alt.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>se_hostlib/sss/src/mbedtls</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_sss_mbedtls_apis.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/se_hostlib/sss/src/mbedtls/fsl_sss_mbedtls_apis.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2956,37 +3001,42 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>se_hostlib/hostlib/hostLib/mbedtls/inc</GroupName>
+          <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>ax_mbedtls.h</FileName>
+              <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc/ax_mbedtls.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>se_hostlib/hostlib/hostLib/mbedtls/src</GroupName>
-          <Files>
-            <File>
-              <FileName>ecdh_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/src/ecdh_alt.c</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
             </File>
             <File>
-              <FileName>rsa_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/src/rsa_alt.c</FilePath>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>se_hostlib/sss/src/mbedtls</GroupName>
-          <Files>
             <File>
-              <FileName>fsl_sss_mbedtls_apis.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/se_hostlib/sss/src/mbedtls/fsl_sss_mbedtls_apis.c</FilePath>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3321,9 +3371,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE_UART, IMX_RT, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', MBEDTLS_USER_CONFIG_FILE='\"sss_ksdk_mbedtls_config.h\"', SIMW_DEMO_ENABLE__DEMO_SE05X_GETINFO, PRINTF_ADVANCED_ENABLE=1, CRYPTO_USE_DRIVER_CAAM, CACHE_MODE_WRITE_THROUGH=1, MBEDTLS, SCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC, SERIAL_PORT_TYPE_UART=1, T1oI2C, T1oI2C_UM11225, SSS_USE_FTR_FILE, NO_SECURE_CHANNEL_SUPPORT, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE_UART, IMX_RT, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', MBEDTLS_USER_CONFIG_FILE='\"sss_ksdk_mbedtls_config.h\"', SIMW_DEMO_ENABLE__DEMO_SE05X_GETINFO, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK, CRYPTO_USE_DRIVER_CAAM, CACHE_MODE_WRITE_THROUGH=1, MBEDTLS, SCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC, SERIAL_PORT_TYPE_UART=1, T1oI2C, T1oI2C_UM11225, SSS_USE_FTR_FILE, NO_SECURE_CHANNEL_SUPPORT</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../middleware/se_hostlib/sss/plugin/mbedtls;../../../../../../middleware/se_hostlib/sss/port/ksdk;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../CMSIS/Core/Include;../../../../../../middleware/se_hostlib/hostlib/hostLib/inc;../../../../../../middleware/se_hostlib/hostlib/hostLib/se05x/src;../../../../../../middleware/se_hostlib/sss/inc;../../../../../../middleware/se_hostlib;../../../../../../middleware/se_hostlib/platform;../../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc;../../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk;../../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom;../../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C;../../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra;../../../../../../middleware/se_hostlib/sss/ex/inc;../../../../../../middleware/se_hostlib/sss/ex/src;../../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx;../../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log;../../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../middleware/se_hostlib/sss/plugin/mbedtls;../../../../../../middleware/se_hostlib/sss/port/ksdk;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/utilities;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/se_hostlib/hostlib/hostLib/inc;../../../../../../middleware/se_hostlib/hostlib/hostLib/se05x/src;../../../../../../middleware/se_hostlib/sss/inc;../../../../../../middleware/se_hostlib;../../../../../../middleware/se_hostlib/platform;../../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc;../../../../../../middleware/se_hostlib/hostlib/hostLib/platform/inc;../../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk;../../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom;../../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/smCom/T1oI2C;../../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/infra;../../../../../../middleware/se_hostlib/sss/ex/inc;../../../../../../middleware/se_hostlib/sss/ex/src;../../../../../../middleware/se_hostlib/hostlib/hostLib/se05x_03_xx_xx;../../../../../../middleware/se_hostlib/hostlib/hostLib/libCommon/log;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3357,7 +3407,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm7_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x8000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --diag_suppress 6314 --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x8000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -3376,6 +3426,16 @@
               <FileName>pin_mux.h</FileName>
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>se_board_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../se_board_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>se_board_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../se_board_config.h</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
@@ -3428,9 +3488,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -3528,6 +3588,36 @@
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_gpc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_gpc.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_soc_src.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_soc_src.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_mu.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_mu.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_iomuxc.h</FilePath>
@@ -3563,6 +3653,11 @@
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_dcdc.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
@@ -3571,11 +3666,6 @@
               <FileName>fsl_anatop_ai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4752,6 +4842,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/port/ksdk/threading_alt.h</FilePath>
             </File>
+            <File>
+              <FileName>ksdk_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4867,6 +4962,11 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/fsl_assert.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4888,6 +4988,16 @@
           <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_component_serial_manager.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
@@ -4901,16 +5011,6 @@
               <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4961,46 +5061,6 @@
               <FileName>evkmimxrt1170_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkmimxrt1170_flexspi_nor_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>cachel1_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5431,6 +5491,41 @@
               <FileName>fsl_sss_se05x_scp03.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/se_hostlib/sss/src/se05x/fsl_sss_se05x_scp03.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>se_hostlib/hostlib/hostLib/mbedtls/inc</GroupName>
+          <Files>
+            <File>
+              <FileName>ax_mbedtls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc/ax_mbedtls.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>se_hostlib/hostlib/hostLib/mbedtls/src</GroupName>
+          <Files>
+            <File>
+              <FileName>ecdh_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/src/ecdh_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>rsa_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/src/rsa_alt.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>se_hostlib/sss/src/mbedtls</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_sss_mbedtls_apis.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/se_hostlib/sss/src/mbedtls/fsl_sss_mbedtls_apis.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5945,37 +6040,42 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>se_hostlib/hostlib/hostLib/mbedtls/inc</GroupName>
+          <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>ax_mbedtls.h</FileName>
+              <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc/ax_mbedtls.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>se_hostlib/hostlib/hostLib/mbedtls/src</GroupName>
-          <Files>
-            <File>
-              <FileName>ecdh_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/src/ecdh_alt.c</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
             </File>
             <File>
-              <FileName>rsa_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/src/rsa_alt.c</FilePath>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>se_hostlib/sss/src/mbedtls</GroupName>
-          <Files>
             <File>
-              <FileName>fsl_sss_mbedtls_apis.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/se_hostlib/sss/src/mbedtls/fsl_sss_mbedtls_apis.c</FilePath>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>

@@ -19,7 +19,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_LPSPI_MASTER_DMA_BASEADDR       DMA0
+#define EXAMPLE_LPSPI_MASTER_DMA_BASEADDR DMA0
 
 /* 1 ms per tick. */
 #ifndef LVGL_TICK_MS

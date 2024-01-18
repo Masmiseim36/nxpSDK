@@ -229,6 +229,7 @@
           <state>DSP_IMAGE_COPY_TO_RAM=1</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>SDK_I3C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8904_ENABLE</state>
           <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
@@ -362,10 +363,11 @@
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8904</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
@@ -820,6 +822,8 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
+          <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_literal_debug.bin,__dsp_literal_bin,__dsp_literal_section,4</state>
+          <state>--keep=__dsp_literal_bin</state>
           <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_text_debug.bin,__dsp_text_bin,__dsp_text_section,4</state>
           <state>--keep=__dsp_text_bin</state>
           <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_data_debug.bin,__dsp_data_bin,__dsp_data_section,4</state>
@@ -1332,6 +1336,7 @@
           <state>DSP_IMAGE_COPY_TO_RAM=1</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>SDK_I3C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8904_ENABLE</state>
           <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
@@ -1465,10 +1470,11 @@
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8904</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
@@ -1923,6 +1929,8 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
+          <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_literal_debug.bin,__dsp_literal_bin,__dsp_literal_section,4</state>
+          <state>--keep=__dsp_literal_bin</state>
           <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_text_debug.bin,__dsp_text_bin,__dsp_text_section,4</state>
           <state>--keep=__dsp_text_bin</state>
           <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_data_debug.bin,__dsp_data_bin,__dsp_data_section,4</state>
@@ -2434,6 +2442,7 @@
           <state>DSP_IMAGE_COPY_TO_RAM=1</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>SDK_I3C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8904_ENABLE</state>
           <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
@@ -2567,10 +2576,11 @@
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8904</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
@@ -3025,6 +3035,8 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
+          <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_literal_release.bin,__dsp_literal_bin,__dsp_literal_section,4</state>
+          <state>--keep=__dsp_literal_bin</state>
           <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_text_release.bin,__dsp_text_bin,__dsp_text_section,4</state>
           <state>--keep=__dsp_text_bin</state>
           <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_data_release.bin,__dsp_data_bin,__dsp_data_section,4</state>
@@ -3537,6 +3549,7 @@
           <state>DSP_IMAGE_COPY_TO_RAM=1</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>SDK_I3C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8904_ENABLE</state>
           <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
@@ -3670,10 +3683,11 @@
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8904</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
@@ -4127,6 +4141,8 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
+          <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_literal_release.bin,__dsp_literal_bin,__dsp_literal_section,4</state>
+          <state>--keep=__dsp_literal_bin</state>
           <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_text_release.bin,__dsp_text_bin,__dsp_text_section,4</state>
           <state>--keep=__dsp_text_bin</state>
           <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_data_release.bin,__dsp_data_bin,__dsp_data_section,4</state>
@@ -4419,6 +4435,12 @@
       <name>$PROJ_DIR$/../../dsp/binary/dsp_data_release.bin</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../dsp/binary/dsp_literal_debug.bin</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../dsp/binary/dsp_literal_release.bin</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../dsp/binary/dsp_ncache_debug.bin</name>
     </file>
     <file>
@@ -4476,7 +4498,7 @@
   <group>
     <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
   <group>
@@ -4668,10 +4690,10 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/fsl_shell.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/shell/fsl_shell.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/fsl_shell.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/shell/fsl_shell.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</name>
@@ -4690,6 +4712,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/fsl_assert.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</name>

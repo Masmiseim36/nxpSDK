@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2006-2021 by Cadence Design Systems, Inc.  ALL RIGHTS RESERVED.
+# Copyright (c) 2006-2023 by Cadence Design Systems, Inc.  ALL RIGHTS RESERVED.
 # These coded instructions, statements, and computer programs are the
 # copyrighted works and confidential proprietary information of
 # Cadence Design Systems Inc.  They may be adapted and modified by bona fide
@@ -17,6 +17,30 @@ Tensilica HiFi Vorbis Decoder (with or without OGG container)
 ======================================================================
 Revision History
 ======================================================================
+
+Version 1.15p2 API 1.16: Sept 27, 2023
+
++ Patch release.
++ Fixed issue with out-of-sequence API error in case of output pingpong.
++ Built using RI-2023.11 toolchain with xt-clang compiler.
++ Programmer's Guide not updated.
+
+----------------------------------------------------------------------
+Version 1.15p1 API 1.16: Jan 24, 2023
+
++ Patch release.
++ Built using RI-2022.10 toolchain with xt-clang compiler.
++ Programmer's Guide not updated.
+
+----------------------------------------------------------------------
+Version 1.15 API 1.16: Oct 14, 2022
+
++ GA release.
++ Built using RI-2022.9 toolchain with xt-clang compiler.
++ Programmer's Guide reviewed and updated.
++ Optimized for HiFi 1.
+
+----------------------------------------------------------------------
 
 Version 1.14 API 1.16: May 13, 2020
 
@@ -144,4 +168,3 @@ Version 1.5 API 1.12: October 19, 2006
 First customer release.
 
 ----------------------------------------------------------------------
-2020-12-03:16:06:RI-2019.2:603975:636745:481317::

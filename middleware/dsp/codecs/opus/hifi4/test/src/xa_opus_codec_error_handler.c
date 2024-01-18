@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2022 Cadence Design Systems, Inc.
+ * Copyright (c) 2014-2023 Cadence Design Systems, Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -102,7 +102,9 @@ const char *ppb_xa_opus_codec_execute_non_fatal[] =
     "Insufficient data",
     "Internal error",
     "Corrupted stream",
-    "warning: Unable to enforce the forced mode, hence overriding the forced mode with appropriate mode set"
+    "warning: Unable to enforce the forced mode, hence overriding the forced mode with appropriate mode set",
+    "warning: Encoded Mode is not supported by standalone SILK/CELT mode library",
+    "warning: Hybrid Mode Frame detected for standalone SILK mode library, Decoded frame with limited quality"
 };
 
 /* Fatal Errors */

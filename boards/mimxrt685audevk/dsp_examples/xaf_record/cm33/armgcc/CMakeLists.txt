@@ -63,6 +63,8 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../incbin.S"
 "${SdkRootDirPath}/boards/mimxrt685audevk/dsp_examples/xaf_record/dsp/binary/dsp_data_debug.bin"
 "${SdkRootDirPath}/boards/mimxrt685audevk/dsp_examples/xaf_record/dsp/binary/dsp_data_release.bin"
+"${SdkRootDirPath}/boards/mimxrt685audevk/dsp_examples/xaf_record/dsp/binary/dsp_literal_debug.bin"
+"${SdkRootDirPath}/boards/mimxrt685audevk/dsp_examples/xaf_record/dsp/binary/dsp_literal_release.bin"
 "${SdkRootDirPath}/boards/mimxrt685audevk/dsp_examples/xaf_record/dsp/binary/dsp_ncache_debug.bin"
 "${SdkRootDirPath}/boards/mimxrt685audevk/dsp_examples/xaf_record/dsp/binary/dsp_ncache_release.bin"
 "${SdkRootDirPath}/boards/mimxrt685audevk/dsp_examples/xaf_record/dsp/binary/dsp_text_debug.bin"

@@ -35,7 +35,7 @@
     (defined(FSL_FEATURE_SOC_RNG_COUNT) && (FSL_FEATURE_SOC_RNG_COUNT > 0)) ||                             \
     (defined(FSL_FEATURE_SOC_LPC_RNG_COUNT) && (FSL_FEATURE_SOC_LPC_RNG_COUNT > 0)) ||                     \
     (defined(FSL_FEATURE_SOC_LPC_RNG1_COUNT) && (FSL_FEATURE_SOC_LPC_RNG1_COUNT > 0)) || (defined(ELS)) || \
-    (defined(MBEDTLS_MCUX_ELE_S400_API)) /* Need to find some suitable feature for ELE 400 Crypto availability */
+    (defined(FSL_FEATURE_SOC_ELE_S4XX)) /* Need to find some suitable feature for ELE 400 Crypto availability */
 
 #ifndef MBEDTLS_MCUX_ENTROPY
 #define MBEDTLS_MCUX_ENTROPY (1)
@@ -71,6 +71,11 @@
 #if !defined(MBEDTLS_PLATFORM_PRINTF_ALT) && !defined(MBEDTLS_PLATFORM_PRINTF_MACRO)
 #include "fsl_debug_console.h"
 #define MBEDTLS_PLATFORM_PRINTF_MACRO PRINTF /* Default printf macro to use, can be undefined */
+#endif
+
+#if !defined(MBEDTLS_PLATFORM_FPRINTF_ALT) && !defined(MBEDTLS_PLATFORM_FPRINTF_MACRO)
+#include "fsl_debug_console.h"
+#define MBEDTLS_PLATFORM_FPRINTF_MACRO PRINTF /* Default printf macro to use, can be undefined */
 #endif
 
 #endif /* MCUX_MBEDTLS_ACCELERATOR_CONFIG_H */

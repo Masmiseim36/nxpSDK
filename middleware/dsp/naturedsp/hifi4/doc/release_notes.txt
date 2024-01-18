@@ -1,3 +1,17 @@
+---------------- Library Release 4.1.1, February 2022-----
+
+This release contains the fix for run time memory crash observed with RI.7 xt-clang build. 
+
+API:
+- No changes
+
+New features:
+- None 
+
+Others:
+- The fix has been tested for a limited number of HiFi4 configs with RI.7 xt-clang.   
+- The Performance and the API Library Reference manuals remains the same as the earlier ver 4.1.0. 
+
 ---------------- Library Release 4.1.0, August 2020-----
 
 This release contains new functions (imaging) and performance improvements.

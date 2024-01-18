@@ -279,7 +279,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state>Pa082,Pa050,Pa167,Pe177,Pe191,Pe546</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -316,11 +316,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa167,Pe177,Pe191,Pe546</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -373,17 +373,17 @@
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if/incl</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/certs</state>
+          <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/firmware_dnld</state>
+          <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/sdio_nxp_abs</state>
+          <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl</state>
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/library</state>
           <state>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/hostapd</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/wpa_supplicant</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/freertos</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/freertos/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/ap</state>
+          <state>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/utils</state>
           <state>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/crypto</state>
+          <state>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/ap</state>
           <state>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_common</state>
           <state>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_peer</state>
@@ -397,9 +397,12 @@
           <state>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/radius</state>
           <state>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/rsn_supp</state>
           <state>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/utils</state>
           <state>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/wps</state>
           <state>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/port/mbedtls</state>
+          <state>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/hostapd</state>
+          <state>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/wpa_supplicant</state>
+          <state>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/freertos</state>
+          <state>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/freertos/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio</state>
           <state>$PROJ_DIR$/../../../../../components/gpio</state>
@@ -416,6 +419,7 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
@@ -425,6 +429,13 @@
           <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware</state>
           <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits</state>
           <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits</state>
+          <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits</state>
+          <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/incl</state>
+          <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801</state>
+          <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416</state>
+          <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987</state>
+          <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x</state>
+          <state>$PROJ_DIR$/../../../../../middleware/wifi_nxp/fwdnld_intf_abs</state>
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
@@ -1161,9 +1172,6 @@
       <name>$PROJ_DIR$/../main.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../lwipopts.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../lwippools.h</name>
     </file>
     <file>
@@ -1174,6 +1182,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../wifi_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../lwipopts.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../app_config.h</name>
@@ -1215,7 +1226,7 @@
   <group>
     <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
   <group>
@@ -1531,12 +1542,6 @@
           <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/incl/type_decls.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_sdio_defs.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_sdio.h</name>
-        </file>
-        <file>
           <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_decl.h</name>
         </file>
         <file>
@@ -1682,9 +1687,6 @@
         <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/wifi-wps.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/mlan_sdio.c</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/wifi-sdio.h</name>
       </file>
       <file>
@@ -1692,12 +1694,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/sdio.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/firmware_dnld.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifidriver/firmware_dnld.h</name>
       </file>
     </group>
     <group>
@@ -1721,9 +1717,6 @@
         <name>wifidriver</name>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl/wifidriver/wifi_nxp.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl/wifidriver/mlan_sdio_api.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/incl/wifidriver/wifi-decl.h</name>
@@ -1911,21 +1904,93 @@
       </file>
     </group>
     <group>
+      <name>sdio_nxp_abs</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/sdio_nxp_abs/mlan_sdio.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/sdio_nxp_abs/fwdnld_sdio.c</name>
+      </file>
+      <group>
+        <name>incl</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl/fwdnld_sdio.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl/mlan_sdio_defs.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl/mlan_sdio.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl/mlan_sdio_api.h</name>
+        </file>
+      </group>
+    </group>
+    <group>
       <name>wifi_bt_firmware</name>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/wlan_bt_fw.h</name>
       </file>
+      <group>
+        <name>8801</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801/sd8801_wlan.h</name>
+        </file>
+      </group>
+      <group>
+        <name>IW416</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416/sduartIW416_wlan_bt.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416/sdIW416_wlan.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416/uartIW416_bt.h</name>
+        </file>
+      </group>
+      <group>
+        <name>8987</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987/sduart8987_wlan_bt.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987/sd8987_wlan.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987/uart8987_bt.h</name>
+        </file>
+      </group>
+      <group>
+        <name>nw61x</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x/sduart_nw61x_se.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x/sd_nw61x_se.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x/uart_nw61x_se.h</name>
+        </file>
+      </group>
+    </group>
+    <group>
+      <name>firmware_dnld</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/sd8801_wlan.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/firmware_dnld/firmware_dnld.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduartIW416_wlan_bt.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/firmware_dnld/firmware_dnld.h</name>
+      </file>
+    </group>
+    <group>
+      <name>fwdnld_intf_abs</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/fwdnld_intf_abs/fwdnld_intf_abs.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduart8987_wlan_bt.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduart_nw61x.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/fwdnld_intf_abs/fwdnld_intf_abs.h</name>
       </file>
     </group>
   </group>
@@ -2655,6 +2720,12 @@
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/port/mbedtls/wpa_supp_mbedtls_config.h</name>
         </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/port/mbedtls/wpa_supp_els_pkc_mbedtls_config.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/port/mbedtls/wpa_supp_ele_s400_mbedtls_config.h</name>
+        </file>
       </group>
     </group>
     <group>
@@ -2684,6 +2755,30 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/common/gas.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/common/dpp.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/common/dpp_auth.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/common/dpp_backup.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/common/dpp_crypto.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/common/dpp_pkex.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/common/dpp_reconfig.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/common/dpp_tcp.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/common/gas_server.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/common/brcm_vendor.h</name>
@@ -2830,7 +2925,7 @@
           <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/utils/block_alloc.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/utils/wlist.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/utils/dl_list.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/utils/wpa_debug.c</name>
@@ -2840,6 +2935,9 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/utils/eloop_freertos.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/utils/json.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/utils/base64.h</name>
@@ -3043,6 +3141,15 @@
           <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/ap/acs.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/ap/dpp_hostapd.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/ap/gas_query_ap.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/ap/gas_serv.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/ap/accounting.h</name>
         </file>
         <file>
@@ -3193,6 +3300,12 @@
           <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_common/chap.c</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_common/eap_fast_common.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_common/eap_sim_common.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_common/chap.h</name>
         </file>
         <file>
@@ -3265,6 +3378,9 @@
           <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_server/eap_server_tls.c</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_server/eap_sim_db.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_server/eap_server_ttls.c</name>
         </file>
         <file>
@@ -3281,6 +3397,15 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_server/eap_server_gtc.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_server/eap_server_fast.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_server/eap_server_sim.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_server/eap_server_aka.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_server/eap.h</name>
@@ -3361,6 +3486,9 @@
           <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/crypto/sha1-internal.c</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/crypto/fips_prf_internal.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/crypto/sha256-internal.c</name>
         </file>
         <file>
@@ -3413,6 +3541,9 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/crypto/sha512-kdf.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/crypto/milenage.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/crypto/aes.h</name>
@@ -3583,7 +3714,19 @@
           <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_peer/mschapv2.c</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_peer/eap_fast.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_peer/eap_fast_pac.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_peer/eap_gtc.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_peer/eap_sim.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_peer/eap_aka.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_peer/eap_config.h</name>
@@ -3722,6 +3865,54 @@
         </file>
       </group>
       <group>
+        <name>tls</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/asn1.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/asn1.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/bignum.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/pkcs1.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/pkcs5.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/pkcs8.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/rsa.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/tlsv1_client.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/tlsv1_client_i.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/tlsv1_common.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/tlsv1_cred.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/tlsv1_record.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/tlsv1_server.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/tlsv1_server_i.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/x509v3.h</name>
+        </file>
+      </group>
+      <group>
         <name>fst</name>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/fst/fst_ctrl_aux.h</name>
@@ -3767,51 +3958,6 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/pae/ieee802_1x_secy_ops.h</name>
-        </file>
-      </group>
-      <group>
-        <name>tls</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/asn1.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/bignum.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/pkcs1.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/pkcs5.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/pkcs8.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/rsa.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/tlsv1_client.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/tlsv1_client_i.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/tlsv1_common.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/tlsv1_cred.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/tlsv1_record.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/tlsv1_server.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/tlsv1_server_i.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/x509v3.h</name>
         </file>
       </group>
     </group>
@@ -3997,6 +4143,12 @@
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/wpa_supplicant/wps_supplicant.c</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/wpa_supplicant/dpp_supplicant.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/wpa_supplicant/interworking.c</name>
+      </file>
     </group>
     <group>
       <name>freertos</name>
@@ -4009,6 +4161,12 @@
           <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/freertos/src/supp_api.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/freertos/src/wpa_cli.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/freertos/src/wpa_cli.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/freertos/src/supp_main.c</name>
         </file>
         <file>
@@ -4018,6 +4176,9 @@
     </group>
     <group>
       <name>hostapd</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/hostapd/hlr_auc_gw.c</name>
+      </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/wireless/wpa_supplicant-rtos/hostapd/ctrl_iface.c</name>
       </file>
@@ -4164,51 +4325,33 @@
         <group>
           <name>tx_pwr_limits</name>
           <file>
-            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_CA.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_EU.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_JP.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_US.h</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_WW.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_CA.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_EU.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_JP.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_US.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_WW.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_CA.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_EU.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_JP.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_US.h</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_WW.h</name>
           </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2EL_WW.h</name>
+          </file>
         </group>
+      </group>
+      <group>
+        <name>u-blox</name>
+        <group>
+          <name>tx_pwr_limits</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits/wlan_txpwrlimit_cfg_jody_w5_WW.h</name>
+          </file>
+        </group>
+      </group>
+      <group>
+        <name>incl</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/incl/wifi_bt_module_config.h</name>
+        </file>
       </group>
     </group>
     <group>
@@ -4252,19 +4395,7 @@
       <group>
         <name>api</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/api/sockets.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/api/netifapi.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/api/netdb.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/api/netbuf.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/api/tcpip.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/api/api_lib.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/lwip/src/api/api_msg.c</name>
@@ -4276,130 +4407,142 @@
           <name>$PROJ_DIR$/../../../../../middleware/lwip/src/api/if_api.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/api/api_lib.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/api/netbuf.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/api/netdb.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/api/netifapi.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/api/sockets.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/api/tcpip.c</name>
         </file>
       </group>
       <group>
         <name>core</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/memp.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/def.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ip.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/pbuf.c</name>
-        </file>
-        <file>
           <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/altcp.c</name>
         </file>
-        <group>
-          <name>ipv6</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv6/ethip6.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv6/dhcp6.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv6/ip6_addr.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv6/nd6.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv6/mld6.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv6/icmp6.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv6/ip6_frag.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv6/ip6.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv6/inet6.c</name>
-          </file>
-        </group>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/tcp_out.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/raw.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/altcp_alloc.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/altcp_tcp.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/sys.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/init.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/inet_chksum.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/timeouts.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/tcp_in.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/netif.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/mem.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/udp.c</name>
-        </file>
-        <group>
-          <name>ipv4</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv4/dhcp.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv4/ip4.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv4/autoip.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv4/icmp.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv4/acd.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv4/etharp.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv4/ip4_addr.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv4/igmp.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv4/ip4_frag.c</name>
-          </file>
-        </group>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/tcp.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/stats.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/def.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/dns.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/altcp_alloc.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/inet_chksum.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/init.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ip.c</name>
+        </file>
+        <group>
+          <name>ipv4</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv4/acd.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv4/autoip.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv4/dhcp.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv4/etharp.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv4/icmp.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv4/igmp.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv4/ip4.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv4/ip4_addr.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv4/ip4_frag.c</name>
+          </file>
+        </group>
+        <group>
+          <name>ipv6</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv6/dhcp6.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv6/ethip6.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv6/icmp6.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv6/inet6.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv6/ip6.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv6/ip6_addr.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv6/ip6_frag.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv6/mld6.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/ipv6/nd6.c</name>
+          </file>
+        </group>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/mem.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/memp.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/netif.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/pbuf.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/raw.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/stats.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/sys.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/tcp.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/tcp_in.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/tcp_out.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/timeouts.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/lwip/src/core/udp.c</name>
         </file>
       </group>
       <group>
@@ -4407,13 +4550,19 @@
         <group>
           <name>compat</name>
           <group>
-            <name>stdc</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/compat/stdc/errno.h</name>
-            </file>
-          </group>
-          <group>
             <name>posix</name>
+            <group>
+              <name>arpa</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/compat/posix/arpa/inet.h</name>
+              </file>
+            </group>
+            <group>
+              <name>net</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/compat/posix/net/if.h</name>
+              </file>
+            </group>
             <file>
               <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/compat/posix/netdb.h</name>
             </file>
@@ -4423,18 +4572,12 @@
                 <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/compat/posix/sys/socket.h</name>
               </file>
             </group>
-            <group>
-              <name>net</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/compat/posix/net/if.h</name>
-              </file>
-            </group>
-            <group>
-              <name>arpa</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/compat/posix/arpa/inet.h</name>
-              </file>
-            </group>
+          </group>
+          <group>
+            <name>stdc</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/compat/stdc/errno.h</name>
+            </file>
           </group>
         </group>
         <group>
@@ -4604,6 +4747,9 @@
               <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/priv/altcp_priv.h</name>
             </file>
             <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/priv/api_msg.h</name>
+            </file>
+            <file>
               <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/priv/mem_priv.h</name>
             </file>
             <file>
@@ -4613,16 +4759,7 @@
               <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/priv/memp_std.h</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/priv/api_msg.h</name>
-            </file>
-            <file>
               <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/priv/nd6_priv.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/priv/tcpip_priv.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/priv/tcp_priv.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/priv/raw_priv.h</name>
@@ -4630,65 +4767,71 @@
             <file>
               <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/priv/sockets_priv.h</name>
             </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/priv/tcp_priv.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/priv/tcpip_priv.h</name>
+            </file>
           </group>
           <group>
             <name>prot</name>
             <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/prot/ip6.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/prot/udp.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/prot/mld6.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/prot/ip4.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/prot/icmp.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/prot/igmp.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/prot/dhcp.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/prot/tcp.h</name>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/prot/acd.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/prot/autoip.h</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/prot/iana.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/prot/ieee.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/prot/dns.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/prot/icmp6.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/prot/ethernet.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/prot/nd6.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/prot/ip.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/prot/acd.h</name>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/prot/dhcp.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/prot/dhcp6.h</name>
             </file>
             <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/prot/dns.h</name>
+            </file>
+            <file>
               <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/prot/etharp.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/prot/ethernet.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/prot/iana.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/prot/icmp.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/prot/icmp6.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/prot/ieee.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/prot/igmp.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/prot/ip.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/prot/ip4.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/prot/ip6.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/prot/mld6.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/prot/nd6.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/prot/tcp.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/prot/udp.h</name>
             </file>
           </group>
           <group>
@@ -4704,127 +4847,127 @@
             <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/bridgeif.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/zepif.h</name>
+            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/bridgeif_opts.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/lowpan6.h</name>
+            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/etharp.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ethernet.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ieee802154.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ethernet.h</name>
+            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/lowpan6.h</name>
           </file>
-          <group>
-            <name>ppp</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/ipv6cp.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/pppapi.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/magic.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/ppp.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/upap.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/mppe.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/pppol2tp.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/pppoe.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/ipcp.h</name>
-            </file>
-            <group>
-              <name>polarssl</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/polarssl/sha1.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/polarssl/des.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/polarssl/md5.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/polarssl/md4.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/polarssl/arc4.h</name>
-              </file>
-            </group>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/pppdebug.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/eap.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/pppos.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/ppp_opts.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/pppcrypt.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/vj.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/chap-new.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/eui64.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/chap_ms.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/ccp.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/ecp.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/lcp.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/fsm.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/ppp_impl.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/chap-md5.h</name>
-            </file>
-          </group>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/lowpan6_ble.h</name>
+          </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/lowpan6_common.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/lowpan6_opts.h</name>
           </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/bridgeif_opts.h</name>
-          </file>
+          <group>
+            <name>ppp</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/ccp.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/chap-md5.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/chap-new.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/chap_ms.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/eap.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/ecp.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/eui64.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/fsm.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/ipcp.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/ipv6cp.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/lcp.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/magic.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/mppe.h</name>
+            </file>
+            <group>
+              <name>polarssl</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/polarssl/arc4.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/polarssl/des.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/polarssl/md4.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/polarssl/md5.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/polarssl/sha1.h</name>
+              </file>
+            </group>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/ppp.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/ppp_impl.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/ppp_opts.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/pppapi.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/pppcrypt.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/pppdebug.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/pppoe.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/pppol2tp.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/pppos.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/upap.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/ppp/vj.h</name>
+            </file>
+          </group>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/slipif.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/lowpan6_ble.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/etharp.h</name>
+            <name>$PROJ_DIR$/../../../../../middleware/lwip/src/include/netif/zepif.h</name>
           </file>
         </group>
       </group>
@@ -4975,6 +5118,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/fsl_assert.h</name>
     </file>
   </group>
   <group>

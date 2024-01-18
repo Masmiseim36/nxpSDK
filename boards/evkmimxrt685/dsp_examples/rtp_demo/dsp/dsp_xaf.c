@@ -19,6 +19,7 @@
 #include "rtp.h"
 
 #include "xaf-utils-test.h"
+#include "xaf-fio-test.h"
 #include "xa-audio-decoder-api.h"
 #include "xa-mixer-api.h"
 #include "xa-renderer-api.h"
@@ -41,8 +42,27 @@
 
 #define AUDIO_FRMWK_BUF_SIZE (64 * 1024)
 #define AUDIO_COMP_BUF_SIZE  (256 * 1024)
+int audio_frmwk_buf_size;
+int audio_comp_buf_size;
 
 #define OUTPUT_SAMPLE_RATE 48000
+
+int g_execution_abort_flag = 0;
+xf_thread_t g_disconnect_thread;
+int g_num_comps_in_graph = 0;
+xf_thread_t *g_comp_thread;
+
+_XA_API_ERR_MAP error_map_table_api[XA_NUM_API_ERRS]=
+{
+    {(int)XAF_RTOS_ERR,       "rtos error"},
+    {(int)XAF_INVALIDVAL_ERR,    "invalid value"},
+    {(int)XAF_ROUTING_ERR,    "routing error"},
+    {(int)XAF_INVALIDPTR_ERR,        "invalid pointer"},
+    {(int)XAF_API_ERR,          "API error"},
+    {(int)XAF_TIMEOUT_ERR,   "message queue Timeout"},
+    {(int)XAF_MEMORY_ERR,   "memory error"},
+};
+
 
 /*******************************************************************************
  * Prototypes
@@ -60,6 +80,35 @@ static char playback_stack[STACK_SIZE];
 /*******************************************************************************
  * Code
  ******************************************************************************/
+
+int abort_blocked_threads()
+{
+    int i;
+
+    /*...set global abort flag immediately */
+    g_execution_abort_flag = 1;
+
+    /* Ignore if not enabled in the testbench */
+    if ( g_num_comps_in_graph == 0 )
+        return -1;
+
+    for( i=0; i<g_num_comps_in_graph; i++ )
+    {
+        if ( __xf_thread_get_state(&g_comp_thread[i]) == XF_THREAD_STATE_BLOCKED )
+        {
+            fprintf(stderr, "Aborting thread: %d\n", i);
+            __xf_thread_cancel( (xf_thread_t *) &g_comp_thread[i] );
+        }
+    }
+
+    if ( __xf_thread_get_state(&g_disconnect_thread) == XF_THREAD_STATE_BLOCKED )
+    {
+        fprintf(stderr, "Aborting disconnect thread\n");
+        __xf_thread_cancel( &g_disconnect_thread );
+    }
+
+    return 0;
+}
 
 /*! @brief Memory alloc for XAF */
 static void *dsp_xaf_malloc(int32_t size, int32_t id)
@@ -359,14 +408,14 @@ static XAF_ERR_CODE dsp_xaf_renderer_setup(void *p_renderer, xaf_format_t *forma
  *
  * @param dsp DSP context handle
  */
-static void dsp_xaf_process_creating(dsp_handle_t *dsp)
+static int dsp_xaf_process_creating(dsp_handle_t *dsp)
 {
 #define CHECK_ERROR(err_code, action)                                \
     if (err_code != XAF_NO_ERR)                                      \
     {                                                                \
         DSP_PRINTF("[dsp_xaf] " action " failed: %d\r\n", err_code); \
         dsp_xaf_set_state(dsp, DspState_Closing);                    \
-        return;                                                      \
+        return -1;                                                      \
     }
 
     xaf_comp_status comp_status;
@@ -379,13 +428,14 @@ static void dsp_xaf_process_creating(dsp_handle_t *dsp)
 
     xaf_adev_config_default_init(&device_config);
 
-    device_config.pmem_malloc                 = dsp_xaf_malloc;
-    device_config.pmem_free                   = dsp_xaf_free;
-    device_config.audio_component_buffer_size = AUDIO_COMP_BUF_SIZE;
-    device_config.audio_framework_buffer_size = AUDIO_FRMWK_BUF_SIZE;
-
-    err_code = xaf_adev_open(&dsp->audio_device, &device_config);
-    CHECK_ERROR(err_code, "xaf_adev_open");
+    audio_frmwk_buf_size = AUDIO_FRMWK_BUF_SIZE;
+    audio_comp_buf_size = AUDIO_COMP_BUF_SIZE;
+    device_config.audio_component_buffer_size[XAF_MEM_ID_COMP] = AUDIO_COMP_BUF_SIZE;
+    device_config.audio_framework_buffer_size[XAF_MEM_ID_DEV]  = AUDIO_FRMWK_BUF_SIZE;
+    device_config.core                                         = XF_CORE_ID;
+    void *p_adev = NULL;
+    TST_CHK_API_ADEV_OPEN(p_adev, device_config, "[DSP Codec] Audio Device Open\r\n");
+    dsp->audio_device = p_adev;
 
     DSP_PRINTF("[dsp_xaf] Audio device open\r\n");
 
@@ -537,7 +587,7 @@ static void dsp_xaf_process_creating(dsp_handle_t *dsp)
         {
             DSP_PRINTF("[dsp_xaf] xaf_get_status unexpected status: %d\r\n", comp_status);
             dsp_xaf_set_state(dsp, DspState_Closing);
-            return;
+            return -1;
         }
 
         dsp->dec_handle[i] = (xa_codec_handle_t)malloc(xa_g711_dec_get_handle_byte_size());
@@ -545,7 +595,7 @@ static void dsp_xaf_process_creating(dsp_handle_t *dsp)
         {
             DSP_PRINTF("[dsp_xaf] failed to allocate decoder handle\r\n");
             dsp_xaf_set_state(dsp, DspState_Closing);
-            return;
+            return -1;
         }
 
         dsp->dec_scratch[i] = (pVOID)malloc(xa_g711_dec_get_scratch_byte_size());
@@ -553,7 +603,7 @@ static void dsp_xaf_process_creating(dsp_handle_t *dsp)
         {
             DSP_PRINTF("[dsp_xaf] failed to allocate decoder scratch memory\r\n");
             dsp_xaf_set_state(dsp, DspState_Closing);
-            return;
+            return -1;
         }
 
         XA_ERRORCODE res = xa_g711_dec_init(dsp->dec_handle[i], dsp->dec_scratch[i], PLC_ENABLED);
@@ -561,11 +611,12 @@ static void dsp_xaf_process_creating(dsp_handle_t *dsp)
         {
             DSP_PRINTF("[dsp_xaf] xa_g711_dec_init failed: %d\r\n", res);
             dsp_xaf_set_state(dsp, DspState_Closing);
-            return;
+            return -1;
         }
     }
 
     dsp_xaf_set_state(dsp, DspState_Running);
+    return 0;
 }
 
 /*! @brief Executed in Running state */

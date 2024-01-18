@@ -47,6 +47,9 @@ include(${ProjDirPath}/config.cmake)
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${SdkRootDirPath}/boards/mimxrt685audevk/dsp_examples/naturedsp/dsp/binary/dsp_data_debug.bin"
 "${SdkRootDirPath}/boards/mimxrt685audevk/dsp_examples/naturedsp/dsp/binary/dsp_data_release.bin"
+"${SdkRootDirPath}/boards/mimxrt685audevk/dsp_examples/naturedsp/dsp/binary/dsp_literal_debug.bin"
+"${SdkRootDirPath}/boards/mimxrt685audevk/dsp_examples/naturedsp/dsp/binary/dsp_literal_release.bin"
+"${SdkRootDirPath}/boards/mimxrt685audevk/dsp_examples/naturedsp/dsp/binary/dsp_ncache_release.bin"
 "${SdkRootDirPath}/boards/mimxrt685audevk/dsp_examples/naturedsp/dsp/binary/dsp_text_debug.bin"
 "${SdkRootDirPath}/boards/mimxrt685audevk/dsp_examples/naturedsp/dsp/binary/dsp_text_release.bin"
 "${ProjDirPath}/../main_cm33.c"

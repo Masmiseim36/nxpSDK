@@ -82,7 +82,7 @@ int flash_verify_erase(uint32_t offset, size_t size)
 int flash_erase(uint32_t offset, size_t size)
 {
     uint32_t endaddr = offset + size;
-    status_t status;
+    status_t status = kStatus_Success;
 
     PRINTF("Erasing %u sectors of flash from offset 0x%x ", (size + MFLASH_SECTOR_SIZE - 1) / MFLASH_SECTOR_SIZE,
            offset);

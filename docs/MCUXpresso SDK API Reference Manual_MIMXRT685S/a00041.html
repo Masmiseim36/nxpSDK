@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: nxpTfaIntegratorFilter_t Struct Reference</title>
+<title>MCUXpresso SDK API Reference Manual: OTFAD: On The Fly AES-128 Decryption Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,92 +99,506 @@ $(document).ready(function(){initNavTree('a00041.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#pub-attribs">Data Fields</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">nxpTfaIntegratorFilter_t Struct Reference</div>  </div>
+<div class="title">OTFAD: On The Fly AES-128 Decryption Driver</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p><code>#include &lt;tfa9xxx_parameters.h&gt;</code></p>
+<a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
+<p>The MCUXpresso SDK provides a peripheral driver for On The Fly AES-128 Decryption (OTFAD) module of MCUXpresso SDK devices.</p>
+<p>This example code shows how to decrypt ciphertext in external memory using the OTFAD driver.</p>
+<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/otfad </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Data Fields</h2></td></tr>
-<tr class="memitem:a3b5305cb7900b11d3502fe0d93368d55"><td class="memItemLeft" align="right" valign="top">nxpTfaBiquad_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a3b5305cb7900b11d3502fe0d93368d55">biquad</a></td></tr>
-<tr class="separator:a3b5305cb7900b11d3502fe0d93368d55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1ea819329cff2bcf257579cff88cb02f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a1ea819329cff2bcf257579cff88cb02f">type</a></td></tr>
-<tr class="separator:a1ea819329cff2bcf257579cff88cb02f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af07b2170856e30405a3e8da31414ecc2"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#af07b2170856e30405a3e8da31414ecc2">cutOffFreq</a></td></tr>
-<tr class="separator:af07b2170856e30405a3e8da31414ecc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a060277c4334224f5157e932fcd9f5244"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a060277c4334224f5157e932fcd9f5244">samplingFreq</a></td></tr>
-<tr class="separator:a060277c4334224f5157e932fcd9f5244"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a205799bc92e64ea614acb84b773bf4ae"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a205799bc92e64ea614acb84b773bf4ae">leakage</a></td></tr>
-<tr class="separator:a205799bc92e64ea614acb84b773bf4ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:a00339"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a00339">_otfad_encryption_config</a></td></tr>
+<tr class="memdesc:a00339"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD encryption configuration structure.  <a href="a00041.html#a00339">More...</a><br/></td></tr>
+<tr class="separator:a00339"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00338"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a00338">_otfad_config</a></td></tr>
+<tr class="memdesc:a00338"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD configuration structure.  <a href="a00041.html#a00338">More...</a><br/></td></tr>
+<tr class="separator:a00338"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga828408bc7f3f0b2dfda7411a0c94b8e7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga828408bc7f3f0b2dfda7411a0c94b8e7"></a>
+typedef struct <br class="typebreak"/>
+<a class="el" href="a00041.html#a00339">_otfad_encryption_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga828408bc7f3f0b2dfda7411a0c94b8e7">otfad_encryption_config_t</a></td></tr>
+<tr class="memdesc:ga828408bc7f3f0b2dfda7411a0c94b8e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD encryption configuration structure. <br/></td></tr>
+<tr class="separator:ga828408bc7f3f0b2dfda7411a0c94b8e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga98b90973600f36ddd230dcad13200323"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga98b90973600f36ddd230dcad13200323"></a>
+typedef struct <a class="el" href="a00041.html#a00338">_otfad_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga98b90973600f36ddd230dcad13200323">otfad_config_t</a></td></tr>
+<tr class="memdesc:ga98b90973600f36ddd230dcad13200323"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD configuration structure. <br/></td></tr>
+<tr class="separator:ga98b90973600f36ddd230dcad13200323"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga2970898e8a43ce21e1cc510d49f1b89d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<a class="el" href="a00041.html#gga2970898e8a43ce21e1cc510d49f1b89dab86672f372b394bddf19bc570929597c">kStatus_OTFAD_ResRegAccessMode</a> = MAKE_STATUS(kStatusGroup_OTFAD, 0), 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga2970898e8a43ce21e1cc510d49f1b89dada2a68470d9b60529fde6beab292e72f">kStatus_OTFAD_AddressError</a> = MAKE_STATUS(kStatusGroup_OTFAD, 1), 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga2970898e8a43ce21e1cc510d49f1b89da94765e8e9e448cfa441e2134f87a842f">kStatus_OTFAD_RegionOverlap</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga2970898e8a43ce21e1cc510d49f1b89dab98da10f5a46caedb11ea21bcb4b6328">kStatus_OTFAD_RegionMiss</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga2970898e8a43ce21e1cc510d49f1b89d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Status codes for the OTFAD driver.  <a href="a00041.html#ga2970898e8a43ce21e1cc510d49f1b89d">More...</a><br/></td></tr>
+<tr class="separator:ga2970898e8a43ce21e1cc510d49f1b89d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafa231099d07583c3ed0981e0bb665f55"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<a class="el" href="a00041.html#ggafa231099d07583c3ed0981e0bb665f55a289054cf51b8d6cb3c32a87884400e17">kOTFAD_Context_0</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#ggafa231099d07583c3ed0981e0bb665f55abe9a603f23afef05bfdeb1583713f336">kOTFAD_Context_1</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#ggafa231099d07583c3ed0981e0bb665f55a3769e4cee63954e3dfaceea80109ce08">kOTFAD_Context_2</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#ggafa231099d07583c3ed0981e0bb665f55ad32231e169446492d32c3674354dbf4d">kOTFAD_Context_3</a> = 3U
+<br/>
+ }</td></tr>
+<tr class="memdesc:gafa231099d07583c3ed0981e0bb665f55"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD context type.  <a href="a00041.html#gafa231099d07583c3ed0981e0bb665f55">More...</a><br/></td></tr>
+<tr class="separator:gafa231099d07583c3ed0981e0bb665f55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga394b3903fbf00ba2b6243f60689a5a5f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<a class="el" href="a00041.html#gga394b3903fbf00ba2b6243f60689a5a5fa46b06bacd1a8297969a3a61810b5366f">kOTFAD_NRM</a> = 0x00U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga394b3903fbf00ba2b6243f60689a5a5fafa7c009b2feed9501056ff7ef74bec34">kOTFAD_SVM</a> = 0x02U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga394b3903fbf00ba2b6243f60689a5a5fafe2dfe963d9f93d97d2f7ebfcc3ccc96">kOTFAD_LDM</a> = 0x03U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga394b3903fbf00ba2b6243f60689a5a5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD operate mode.  <a href="a00041.html#ga394b3903fbf00ba2b6243f60689a5a5f">More...</a><br/></td></tr>
+<tr class="separator:ga394b3903fbf00ba2b6243f60689a5a5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Driver version</h2></td></tr>
+<tr class="memitem:ga20f3f7f4a4d28843e4dcba42fe074de4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga20f3f7f4a4d28843e4dcba42fe074de4">FSL_OTFAD_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00220.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2U, 1U, 3U))</td></tr>
+<tr class="memdesc:ga20f3f7f4a4d28843e4dcba42fe074de4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver version.  <a href="#ga20f3f7f4a4d28843e4dcba42fe074de4">More...</a><br/></td></tr>
+<tr class="separator:ga20f3f7f4a4d28843e4dcba42fe074de4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Initialization and deinitialization</h2></td></tr>
+<tr class="memitem:ga7ec529b7e632085d191bc1c772efaa2e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga7ec529b7e632085d191bc1c772efaa2e">OTFAD_GetDefaultConfig</a> (<a class="el" href="a00041.html#ga98b90973600f36ddd230dcad13200323">otfad_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga7ec529b7e632085d191bc1c772efaa2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD module initialization function.  <a href="#ga7ec529b7e632085d191bc1c772efaa2e">More...</a><br/></td></tr>
+<tr class="separator:ga7ec529b7e632085d191bc1c772efaa2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga50c3cc55c76ff1feacb5291ff2428a6c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga50c3cc55c76ff1feacb5291ff2428a6c">OTFAD_Init</a> (OTFAD_Type *base, const <a class="el" href="a00041.html#ga98b90973600f36ddd230dcad13200323">otfad_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga50c3cc55c76ff1feacb5291ff2428a6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD module initialization function.  <a href="#ga50c3cc55c76ff1feacb5291ff2428a6c">More...</a><br/></td></tr>
+<tr class="separator:ga50c3cc55c76ff1feacb5291ff2428a6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8a04f4e827eaee49fc2dc31e54d05397"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8a04f4e827eaee49fc2dc31e54d05397"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga8a04f4e827eaee49fc2dc31e54d05397">OTFAD_Deinit</a> (OTFAD_Type *base)</td></tr>
+<tr class="memdesc:ga8a04f4e827eaee49fc2dc31e54d05397"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the OTFAD. <br/></td></tr>
+<tr class="separator:ga8a04f4e827eaee49fc2dc31e54d05397"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Status</h2></td></tr>
+<tr class="memitem:ga97f6956807f1b567e8cf98a2306a4b1f"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga97f6956807f1b567e8cf98a2306a4b1f">OTFAD_GetOperateMode</a> (OTFAD_Type *base)</td></tr>
+<tr class="memdesc:ga97f6956807f1b567e8cf98a2306a4b1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD module get operate mode.  <a href="#ga97f6956807f1b567e8cf98a2306a4b1f">More...</a><br/></td></tr>
+<tr class="separator:ga97f6956807f1b567e8cf98a2306a4b1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac7760cfc19871898542641394ca4526d"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gac7760cfc19871898542641394ca4526d">OTFAD_GetStatus</a> (OTFAD_Type *base)</td></tr>
+<tr class="memdesc:gac7760cfc19871898542641394ca4526d"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD module get status.  <a href="#gac7760cfc19871898542641394ca4526d">More...</a><br/></td></tr>
+<tr class="separator:gac7760cfc19871898542641394ca4526d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+functional</h2></td></tr>
+<tr class="memitem:ga49d9425e4b8a8d626be9713e5a7c9537"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga49d9425e4b8a8d626be9713e5a7c9537">OTFAD_SetEncryptionConfig</a> (OTFAD_Type *base, const <a class="el" href="a00041.html#ga828408bc7f3f0b2dfda7411a0c94b8e7">otfad_encryption_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga49d9425e4b8a8d626be9713e5a7c9537"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD module set encryption configuration.  <a href="#ga49d9425e4b8a8d626be9713e5a7c9537">More...</a><br/></td></tr>
+<tr class="separator:ga49d9425e4b8a8d626be9713e5a7c9537"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga98b5cbfb4a1e6a8fe8af63df3965161d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga98b5cbfb4a1e6a8fe8af63df3965161d">OTFAD_GetEncryptionConfig</a> (OTFAD_Type *base, <a class="el" href="a00041.html#ga828408bc7f3f0b2dfda7411a0c94b8e7">otfad_encryption_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga98b5cbfb4a1e6a8fe8af63df3965161d"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD module get encryption configuration.  <a href="#ga98b5cbfb4a1e6a8fe8af63df3965161d">More...</a><br/></td></tr>
+<tr class="separator:ga98b5cbfb4a1e6a8fe8af63df3965161d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga874fd2f27989b88104253600094be09a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga874fd2f27989b88104253600094be09a">OTFAD_HitDetermination</a> (OTFAD_Type *base, uint32_t address, uint8_t *contextIndex)</td></tr>
+<tr class="memdesc:ga874fd2f27989b88104253600094be09a"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD module do hit determination.  <a href="#ga874fd2f27989b88104253600094be09a">More...</a><br/></td></tr>
+<tr class="separator:ga874fd2f27989b88104253600094be09a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Integrator filter input definitions </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a3b5305cb7900b11d3502fe0d93368d55"></a>
+<hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="a00339" id="a00339"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">nxpTfaBiquad_t nxpTfaIntegratorFilter_t::biquad</td>
+          <td class="memname">struct _otfad_encryption_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Output results fixed point coeffs </p>
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a1cb78fa06289056ac14f0fc005a1668a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1cb78fa06289056ac14f0fc005a1668a"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a1cb78fa06289056ac14f0fc005a1668a">valid</a></td></tr>
+<tr class="memdesc:a1cb78fa06289056ac14f0fc005a1668a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The context is valid or not. <br/></td></tr>
+<tr class="separator:a1cb78fa06289056ac14f0fc005a1668a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb19041cc58492f8a017804a4df4dce8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acb19041cc58492f8a017804a4df4dce8"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#acb19041cc58492f8a017804a4df4dce8">AESdecryption</a></td></tr>
+<tr class="memdesc:acb19041cc58492f8a017804a4df4dce8"><td class="mdescLeft">&#160;</td><td class="mdescRight">AES decryption enable. <br/></td></tr>
+<tr class="separator:acb19041cc58492f8a017804a4df4dce8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b1429dd23d029a4f2836f8339c55b9e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9b1429dd23d029a4f2836f8339c55b9e"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a9b1429dd23d029a4f2836f8339c55b9e">readOnly</a></td></tr>
+<tr class="memdesc:a9b1429dd23d029a4f2836f8339c55b9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">read write attribute for the entire set of context registers <br/></td></tr>
+<tr class="separator:a9b1429dd23d029a4f2836f8339c55b9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac51567d3c9f496bcecedd3e5cfe328f4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac51567d3c9f496bcecedd3e5cfe328f4"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ac51567d3c9f496bcecedd3e5cfe328f4">contextIndex</a></td></tr>
+<tr class="memdesc:ac51567d3c9f496bcecedd3e5cfe328f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD context index. <br/></td></tr>
+<tr class="separator:ac51567d3c9f496bcecedd3e5cfe328f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab87136c486c1734105d8d43fa946be43"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab87136c486c1734105d8d43fa946be43"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ab87136c486c1734105d8d43fa946be43">startAddr</a></td></tr>
+<tr class="memdesc:ab87136c486c1734105d8d43fa946be43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start address. <br/></td></tr>
+<tr class="separator:ab87136c486c1734105d8d43fa946be43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac828c03229990cbc659bca3ff7ac80ec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac828c03229990cbc659bca3ff7ac80ec"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ac828c03229990cbc659bca3ff7ac80ec">endAddr</a></td></tr>
+<tr class="memdesc:ac828c03229990cbc659bca3ff7ac80ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">End address. <br/></td></tr>
+<tr class="separator:ac828c03229990cbc659bca3ff7ac80ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6427bccbb63e1f833102933d8e4940a2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6427bccbb63e1f833102933d8e4940a2"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a6427bccbb63e1f833102933d8e4940a2">key</a> [4]</td></tr>
+<tr class="memdesc:a6427bccbb63e1f833102933d8e4940a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encryption key. <br/></td></tr>
+<tr class="separator:a6427bccbb63e1f833102933d8e4940a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4a4171419d04f3e330ddd5781432cec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af4a4171419d04f3e330ddd5781432cec"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#af4a4171419d04f3e330ddd5781432cec">counter</a> [2]</td></tr>
+<tr class="memdesc:af4a4171419d04f3e330ddd5781432cec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encryption counter. <br/></td></tr>
+<tr class="separator:af4a4171419d04f3e330ddd5781432cec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 
 </div>
 </div>
-<a class="anchor" id="a1ea819329cff2bcf257579cff88cb02f"></a>
+<a name="a00338" id="a00338"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t nxpTfaIntegratorFilter_t::type</td>
+          <td class="memname">struct _otfad_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Butterworth filter type: high or low pass </p>
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a74de234f0a7a7e7f1b292878cb823dfc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a74de234f0a7a7e7f1b292878cb823dfc"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a74de234f0a7a7e7f1b292878cb823dfc">forceSVM</a></td></tr>
+<tr class="memdesc:a74de234f0a7a7e7f1b292878cb823dfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Force entry into SVM after a write. <br/></td></tr>
+<tr class="separator:a74de234f0a7a7e7f1b292878cb823dfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfe2b6482b0a8e35e6562b2ed10d3b9d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acfe2b6482b0a8e35e6562b2ed10d3b9d"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#acfe2b6482b0a8e35e6562b2ed10d3b9d">forceLDM</a></td></tr>
+<tr class="memdesc:acfe2b6482b0a8e35e6562b2ed10d3b9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Force entry into LDM after a write. <br/></td></tr>
+<tr class="separator:acfe2b6482b0a8e35e6562b2ed10d3b9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2865c0afcc93d19ad54ec6f440ca46bf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2865c0afcc93d19ad54ec6f440ca46bf"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a2865c0afcc93d19ad54ec6f440ca46bf">restrictedRegAccess</a></td></tr>
+<tr class="memdesc:a2865c0afcc93d19ad54ec6f440ca46bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Restricted register access enable. <br/></td></tr>
+<tr class="separator:a2865c0afcc93d19ad54ec6f440ca46bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5506b60d77173b44913cc06390b753ea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5506b60d77173b44913cc06390b753ea"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a5506b60d77173b44913cc06390b753ea">enableOTFAD</a></td></tr>
+<tr class="memdesc:a5506b60d77173b44913cc06390b753ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD has decryption enabled. <br/></td></tr>
+<tr class="separator:a5506b60d77173b44913cc06390b753ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 
 </div>
 </div>
-<a class="anchor" id="af07b2170856e30405a3e8da31414ecc2"></a>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga20f3f7f4a4d28843e4dcba42fe074de4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">float nxpTfaIntegratorFilter_t::cutOffFreq</td>
+          <td class="memname">#define FSL_OTFAD_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00220.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2U, 1U, 3U))</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>cut off frequency in Hertz; range: [100.0 4000.0] </p>
 
 </div>
 </div>
-<a class="anchor" id="a060277c4334224f5157e932fcd9f5244"></a>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="ga2970898e8a43ce21e1cc510d49f1b89d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">float nxpTfaIntegratorFilter_t::samplingFreq</td>
+          <td class="memname">anonymous enum</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>sampling frequency in Hertz </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga2970898e8a43ce21e1cc510d49f1b89dab86672f372b394bddf19bc570929597c"></a>kStatus_OTFAD_ResRegAccessMode</em>&nbsp;</td><td class="fielddoc">
+<p>Restricted register mode. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga2970898e8a43ce21e1cc510d49f1b89dada2a68470d9b60529fde6beab292e72f"></a>kStatus_OTFAD_AddressError</em>&nbsp;</td><td class="fielddoc">
+<p>End address less than start address. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga2970898e8a43ce21e1cc510d49f1b89da94765e8e9e448cfa441e2134f87a842f"></a>kStatus_OTFAD_RegionOverlap</em>&nbsp;</td><td class="fielddoc">
+<p>the OTFAD does not support any form of memory region overlap, for system accesses that hit in multiple contexts or no contexts, the fetched data is simply bypassed </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga2970898e8a43ce21e1cc510d49f1b89dab98da10f5a46caedb11ea21bcb4b6328"></a>kStatus_OTFAD_RegionMiss</em>&nbsp;</td><td class="fielddoc">
+<p>For accesses that hit in a single context, but not the selected one. </p>
+</td></tr>
+</table>
 
 </div>
 </div>
-<a class="anchor" id="a205799bc92e64ea614acb84b773bf4ae"></a>
+<a class="anchor" id="gafa231099d07583c3ed0981e0bb665f55"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">float nxpTfaIntegratorFilter_t::leakage</td>
+          <td class="memname">anonymous enum</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>leakage factor; range [0.0 1.0] </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggafa231099d07583c3ed0981e0bb665f55a289054cf51b8d6cb3c32a87884400e17"></a>kOTFAD_Context_0</em>&nbsp;</td><td class="fielddoc">
+<p>context 0 </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggafa231099d07583c3ed0981e0bb665f55abe9a603f23afef05bfdeb1583713f336"></a>kOTFAD_Context_1</em>&nbsp;</td><td class="fielddoc">
+<p>context 1 </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggafa231099d07583c3ed0981e0bb665f55a3769e4cee63954e3dfaceea80109ce08"></a>kOTFAD_Context_2</em>&nbsp;</td><td class="fielddoc">
+<p>context 2 </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggafa231099d07583c3ed0981e0bb665f55ad32231e169446492d32c3674354dbf4d"></a>kOTFAD_Context_3</em>&nbsp;</td><td class="fielddoc">
+<p>context 3 </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga394b3903fbf00ba2b6243f60689a5a5f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">anonymous enum</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga394b3903fbf00ba2b6243f60689a5a5fa46b06bacd1a8297969a3a61810b5366f"></a>kOTFAD_NRM</em>&nbsp;</td><td class="fielddoc">
+<p>Normal Mode. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga394b3903fbf00ba2b6243f60689a5a5fafa7c009b2feed9501056ff7ef74bec34"></a>kOTFAD_SVM</em>&nbsp;</td><td class="fielddoc">
+<p>Security Violation Mode. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga394b3903fbf00ba2b6243f60689a5a5fafe2dfe963d9f93d97d2f7ebfcc3ccc96"></a>kOTFAD_LDM</em>&nbsp;</td><td class="fielddoc">
+<p>Logically Disabled Mode. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga7ec529b7e632085d191bc1c772efaa2e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void OTFAD_GetDefaultConfig </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00041.html#ga98b90973600f36ddd230dcad13200323">otfad_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">config</td><td>OTFAD configuration. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga50c3cc55c76ff1feacb5291ff2428a6c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void OTFAD_Init </td>
+          <td>(</td>
+          <td class="paramtype">OTFAD_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a00041.html#ga98b90973600f36ddd230dcad13200323">otfad_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>OTFAD base address. </td></tr>
+    <tr><td class="paramname">config</td><td>OTFAD configuration. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga97f6956807f1b567e8cf98a2306a4b1f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t OTFAD_GetOperateMode </td>
+          <td>(</td>
+          <td class="paramtype">OTFAD_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>OTFAD base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gac7760cfc19871898542641394ca4526d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t OTFAD_GetStatus </td>
+          <td>(</td>
+          <td class="paramtype">OTFAD_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>OTFAD base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga49d9425e4b8a8d626be9713e5a7c9537"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> OTFAD_SetEncryptionConfig </td>
+          <td>(</td>
+          <td class="paramtype">OTFAD_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a00041.html#ga828408bc7f3f0b2dfda7411a0c94b8e7">otfad_encryption_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>OTFAD base address. </td></tr>
+    <tr><td class="paramname">config</td><td>encryption configuration.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Note: if enable keyblob process, the first 256 bytes external memory is use for keyblob data, so this region shouldn't be in OTFAD region. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga98b5cbfb4a1e6a8fe8af63df3965161d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> OTFAD_GetEncryptionConfig </td>
+          <td>(</td>
+          <td class="paramtype">OTFAD_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00041.html#ga828408bc7f3f0b2dfda7411a0c94b8e7">otfad_encryption_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>OTFAD base address. </td></tr>
+    <tr><td class="paramname">config</td><td>encryption configuration.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Note: if enable keyblob process, the first 256 bytes external memory is use for keyblob data, so this region shouldn't be in OTFAD region. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga874fd2f27989b88104253600094be09a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> OTFAD_HitDetermination </td>
+          <td>(</td>
+          <td class="paramtype">OTFAD_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>contextIndex</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>OTFAD base address. </td></tr>
+    <tr><td class="paramname">address</td><td>the physical address space assigned to the QuadSPI(FlexSPI) module. </td></tr>
+    <tr><td class="paramname">contextIndex</td><td>hitted context region index. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>status, such as kStatus_Success or kStatus_OTFAD_ResRegAccessMode. </dd></dl>
 
 </div>
 </div>

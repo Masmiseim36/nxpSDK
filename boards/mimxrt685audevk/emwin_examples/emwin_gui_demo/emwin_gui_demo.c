@@ -25,7 +25,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_LPSPI_MASTER_DMA_BASEADDR       DMA0
+#define EXAMPLE_LPSPI_MASTER_DMA_BASEADDR DMA0
 
 #ifndef GUI_NORMAL_FONT
 #define GUI_NORMAL_FONT (&GUI_Font16_ASCII)

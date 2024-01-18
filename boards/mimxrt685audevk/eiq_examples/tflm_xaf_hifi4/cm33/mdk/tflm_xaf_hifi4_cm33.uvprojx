@@ -335,7 +335,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, DSP_IMAGE_COPY_TO_RAM=1, SDK_DEBUGCONSOLE_UART, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_CS42448_ENABLE, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>../../../../../../middleware/eiq/tensorflow-lite/examples/xaf;..;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../components/codec/port/cs42448;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/codec/cs42448;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/bm;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT685S;../../../../flash_config;../../../../../../components/pca9420;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../CMSIS/Core/Include;../../../../../../middleware/eiq/tensorflow-lite/examples/xaf/mimxrt685audevk_hifi4</IncludePath>
+              <IncludePath>../source;..;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../components/codec/port/cs42448;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/codec/cs42448;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/bm;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT685S;../../../../flash_config;../../../../../../components/pca9420;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -382,12 +382,12 @@
             <File>
               <FileName>message.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/examples/xaf/message.h</FilePath>
+              <FilePath>../source/message.h</FilePath>
             </File>
             <File>
               <FileName>rpmsg_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/examples/xaf/rpmsg_config.h</FilePath>
+              <FilePath>../source/rpmsg_config.h</FilePath>
             </File>
             <File>
               <FileName>incbin.S</FileName>
@@ -397,7 +397,7 @@
             <File>
               <FileName>dsp_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/examples/xaf/mimxrt685audevk_hifi4/dsp_config.h</FilePath>
+              <FilePath>../source/dsp_config.h</FilePath>
             </File>
             <File>
               <FileName>main.c</FileName>
@@ -409,6 +409,11 @@
         <Group>
           <GroupName>dsp_binary</GroupName>
           <Files>
+            <File>
+              <FileName>dsp_literal_release.bin</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../hifi4/binary/dsp_literal_release.bin</FilePath>
+            </File>
             <File>
               <FileName>dsp_text_release.bin</FileName>
               <FileType>5</FileType>
@@ -490,9 +495,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -978,6 +983,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1355,7 +1365,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, DSP_IMAGE_COPY_TO_RAM=1, SDK_DEBUGCONSOLE_UART, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_CS42448_ENABLE, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>../../../../../../middleware/eiq/tensorflow-lite/examples/xaf;..;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../components/codec/port/cs42448;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/codec/cs42448;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/bm;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT685S;../../../../flash_config;../../../../../../components/pca9420;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../CMSIS/Core/Include;../../../../../../middleware/eiq/tensorflow-lite/examples/xaf/mimxrt685audevk_hifi4</IncludePath>
+              <IncludePath>../source;..;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../components/codec/port/cs42448;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/codec/cs42448;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/bm;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT685S;../../../../flash_config;../../../../../../components/pca9420;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1402,12 +1412,12 @@
             <File>
               <FileName>message.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/examples/xaf/message.h</FilePath>
+              <FilePath>../source/message.h</FilePath>
             </File>
             <File>
               <FileName>rpmsg_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/examples/xaf/rpmsg_config.h</FilePath>
+              <FilePath>../source/rpmsg_config.h</FilePath>
             </File>
             <File>
               <FileName>incbin.S</FileName>
@@ -1417,7 +1427,7 @@
             <File>
               <FileName>dsp_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/eiq/tensorflow-lite/examples/xaf/mimxrt685audevk_hifi4/dsp_config.h</FilePath>
+              <FilePath>../source/dsp_config.h</FilePath>
             </File>
             <File>
               <FileName>main.c</FileName>
@@ -1429,6 +1439,11 @@
         <Group>
           <GroupName>dsp_binary</GroupName>
           <Files>
+            <File>
+              <FileName>dsp_literal_release.bin</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../hifi4/binary/dsp_literal_release.bin</FilePath>
+            </File>
             <File>
               <FileName>dsp_text_release.bin</FileName>
               <FileType>5</FileType>
@@ -1510,9 +1525,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -1998,6 +2013,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>

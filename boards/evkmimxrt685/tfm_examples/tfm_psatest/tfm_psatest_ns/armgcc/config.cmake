@@ -5,6 +5,7 @@
 set(CONFIG_COMPILER gcc)
 set(CONFIG_TOOLCHAIN armgcc)
 set(CONFIG_USE_COMPONENT_CONFIGURATION false)
+set(CONFIG_USE_middleware_tfm_usart true)
 set(CONFIG_USE_middleware_tfm_ns_profile_large true)
 set(CONFIG_USE_middleware_tfm_ns true)
 set(CONFIG_USE_middleware_psatest_ns true)

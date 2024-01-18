@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2014-2022 by Cadence Design Systems, Inc.  ALL RIGHTS RESERVED.
+# Copyright (c) 2014-2023 by Cadence Design Systems, Inc.  ALL RIGHTS RESERVED.
 # These coded instructions, statements, and computer programs are the
 # copyrighted works and confidential proprietary information of
 # Cadence Design Systems Inc.  They may be adapted and modified by bona fide
@@ -17,6 +17,58 @@ Cadence Tensilica HiFi Opus Codec
 ======================================================================
 Revision History
 ======================================================================
+
+Version 1.24 API 1.0: June 15, 2023
+
++ GA Release
++ Added support for SILK-ONLY or CELT-ONLY libraries.
++ Dynamic memory allocation based on stream/config parameters.
++ Tools: RI.10 tools and xt-clang compiler.
++ PG doc updated.
+
+---------------------------------------------------------------------
+
+Version 1.23_Beta API 1.0: April 7, 2023
+
++ Beta release for Opus codec with SILK/CELT separation
++ Dynamic memory optimized based on stream/config parameters
++ Release with RI.10 tools on AE_HiFi3_LE5 core
++ PG doc not updated.
+
+---------------------------------------------------------------------
+
+Version 1.22_Alpha API 1.0: January 13, 2023
+
++ Alpha release with SILK and CELT separation - core AE_HiFi4_LE5_FP.
++ Tools: RI.9 tools and xt-clang compiler.
++ PG doc not updated.
+
+---------------------------------------------------------------------
+
+Version 1.21 API 1.0: September 23, 2022
+
++ GA release
++ Tools: RI.9 tools and xt-clang compiler.
++ Release for HiFi4 LX6.0.2 HW.
++ PG doc not updated
+
+---------------------------------------------------------------------
+
+Version 1.20p2 API 1.0: September 16, 2022
+
++ patch release - core AE_HiFi5e_LE7_AO_FP
++ Built using RI.9 tools and xt-clang compiler.
++ PG doc not updated
+
+---------------------------------------------------------------------
+
+Version 1.20p1 API 1.0: June 23, 2022
+
++ TENA-3399, position independent library release.
++ Tools: RI.8 tools and xt-clang compiler.
++ Core: 7-stage Fusion F1 with vFPU, Call0 and Windowed ABI
+
+---------------------------------------------------------------------
 
 Version 1.19 API 1.0: June 10, 2022
 
@@ -186,4 +238,4 @@ Initial customer release.
 ----------------------------------------------------------------------
 
 
-2022-06-08:05:14:RI-2021.8:746801:745268:746182::
+2023-08-24:02:30:RI-2021.7:820665:820436:820682::

@@ -53,10 +53,6 @@
 int srtm_usb_speaker_init(dsp_handle_t *dsp, unsigned int *pCmdParams);
 int srtm_usb_mic_init(dsp_handle_t *dsp, unsigned int *pCmdParams, bool i2s);
 
-#if XA_CLIENT_PROXY
-int client_proxy_filter(dsp_handle_t *dsp, int filterOn);
-#endif
-
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -283,12 +279,6 @@ static int handleMSG_AUDIO(dsp_handle_t *dsp, srtm_message *msg)
             }
             break;
 
-#if XA_CLIENT_PROXY
-        case SRTM_Command_FilterCfg:
-            msg->error = client_proxy_filter(dsp, msg->param[0]);
-            break;
-#endif
-
         /* Unknown message. */
         default:
             msg->head.type = SRTM_MessageTypeNotification;
@@ -409,13 +399,6 @@ int main(void)
     BOARD_InitBootPins();
     BOARD_InitDebugConsole();
     BOARD_InitClock();
-
-#ifdef XA_CLIENT_PROXY
-    /* Dummy I2S init for EAP */
-    i2s_config_t s_TxConfig;
-    I2S_TxGetDefaultConfig(&s_TxConfig);
-    I2S_TxInit(I2S1, &s_TxConfig);
-#endif
 
     /* Iniitalize DMA1 which will be shared by capturer and renderer. */
     DMA_Init(DMA1);

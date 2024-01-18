@@ -18,6 +18,7 @@
 #include "fsl_memory.h"
 #endif
 #include "xaf-utils-test.h"
+#include "xaf-fio-test.h"
 #include "xa_error_standards.h"
 #include "audio/xa-capturer-api.h"
 #include "audio/xa-pcm-gain-api.h"
@@ -31,6 +32,8 @@
  ******************************************************************************/
 #define AUDIO_FRMWK_BUF_SIZE (32 * 1024)
 #define AUDIO_COMP_BUF_SIZE  (101 * 1024)
+int audio_frmwk_buf_size;
+int audio_comp_buf_size;
 
 #define CAPTURER_FRAME_SIZE (192)
 #define PCM_GAIN_FRAME_SIZE (192)
@@ -51,6 +54,7 @@ const int comp_get_order_mic[] = {XA_CAPTURER_0, XA_GAIN_0};
 unsigned char UsbMic_process_stack[STACK_SIZE];
 unsigned char UsbMic_cleanup_stack[STACK_SIZE];
 int srtm_usbMic_cleanup(void *arg, int wake_value);
+static xaf_adev_config_t device_config;
 
 static void *comp_get_pointer(dsp_handle_t *dsp, int cid, bool addr)
 {
@@ -89,11 +93,8 @@ static int UsbMic_close(dsp_handle_t *dsp, bool success)
             DSP_PRINTF("[DSP_USB_MIC] xaf_comp_delete[%d] failure: %d\r\n", i, ret);
     }
 
-    ret = xaf_adev_close(dsp->audio_device, XAF_ADEV_NORMAL_CLOSE);
-    if (ret != XAF_NO_ERR)
-        DSP_PRINTF("[DSP_USB_MIC] xaf_adev_close failure: %d\r\n", ret);
-    else
-        DSP_PRINTF("[DSP_USB_MIC] Audio device closed\r\n\r\n");
+    void * p_adev = dsp->audio_device;
+    TST_CHK_API_ADEV_CLOSE(p_adev, XAF_ADEV_NORMAL_CLOSE, device_config, "xaf_adev_close");
 
     /* Send message to the application */
     if (success)
@@ -180,13 +181,13 @@ int srtm_usb_mic_init(dsp_handle_t *dsp, unsigned int *pCmdParams, bool i2s)
     xaf_format_t comp_format[NUM_COMP_IN_GRAPH];
     int (*comp_setup[NUM_COMP_IN_GRAPH])(void *p_comp, xaf_format_t *, bool);
     void *usbMic_inbuf[1];
+    void *p_adev =  dsp->audio_device;
     xaf_comp_type comp_type[NUM_COMP_IN_GRAPH];
     xf_id_t comp_id[NUM_COMP_IN_GRAPH];
     int comp_ninbuf[NUM_COMP_IN_GRAPH];
     int comp_noutbuf[NUM_COMP_IN_GRAPH];
     XAF_ERR_CODE ret;
     xaf_comp_status comp_status;
-    xaf_adev_config_t device_config;
     xaf_comp_config_t comp_config[NUM_COMP_IN_GRAPH];
     int comp_info[4];
 
@@ -244,18 +245,14 @@ int srtm_usb_mic_init(dsp_handle_t *dsp, unsigned int *pCmdParams, bool i2s)
     /* Initialize XAF */
     xaf_adev_config_default_init(&device_config);
 
-    device_config.pmem_malloc                 = DSP_Malloc;
-    device_config.pmem_free                   = DSP_Free;
-    device_config.audio_component_buffer_size = AUDIO_COMP_BUF_SIZE;
-    device_config.audio_framework_buffer_size = AUDIO_FRMWK_BUF_SIZE;
+    audio_frmwk_buf_size = AUDIO_FRMWK_BUF_SIZE;
+    audio_comp_buf_size = AUDIO_COMP_BUF_SIZE;
+    device_config.audio_component_buffer_size[XAF_MEM_ID_COMP] = AUDIO_COMP_BUF_SIZE;
+    device_config.audio_framework_buffer_size[XAF_MEM_ID_DEV] = AUDIO_FRMWK_BUF_SIZE;
+    device_config.core = XF_CORE_ID;
 
-    ret = xaf_adev_open(&dsp->audio_device, &device_config);
-    if (ret != XAF_NO_ERR)
-    {
-        DSP_PRINTF("[DSP_USB_MIC] xaf_adev_open failure: %d\r\n", ret);
-        return -1;
-    }
-
+    TST_CHK_API_ADEV_OPEN(p_adev, device_config, "[DSP Codec] Audio Device Open\r\n");
+    dsp->audio_device = p_adev;
     DSP_PRINTF("[DSP_USB_MIC] Audio Device Ready\n\r");
 
     /* Create and setup all components */
@@ -272,7 +269,7 @@ int srtm_usb_mic_init(dsp_handle_t *dsp, unsigned int *pCmdParams, bool i2s)
         comp_config[cid].pp_inbuf = comp_ninbuf[cid] > 0 ? (pVOID(*)[XAF_MAX_INBUFS]) & usbMic_inbuf[0] : NULL;
 
         /* Create component */
-        ret = xaf_comp_create(dsp->audio_device, comp_get_pointer(dsp, cid, true), &comp_config[cid]);
+        ret = xaf_comp_create(p_adev, comp_get_pointer(dsp, cid, true), &comp_config[cid]);
         if (ret != XAF_NO_ERR)
         {
             DSP_PRINTF("[DSP_USB_MIC] xaf_comp_create[%d] failure: %d\r\n", i, ret);
@@ -288,14 +285,14 @@ int srtm_usb_mic_init(dsp_handle_t *dsp, unsigned int *pCmdParams, bool i2s)
 
     /* Start capturer */
     cid = XA_CAPTURER_0;
-    ret = xaf_comp_process(dsp->audio_device, comp_get_pointer(dsp, cid, false), NULL, 0, XAF_START_FLAG);
+    ret = xaf_comp_process(p_adev, comp_get_pointer(dsp, cid, false), NULL, 0, XAF_START_FLAG);
     if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("[DSP_USB_MIC] xaf_comp_process XAF_START_FLAG %s failure: %d\r\n", comp_id[cid], ret);
         goto error_cleanup;
     }
 
-    ret = xaf_comp_get_status(dsp->audio_device, comp_get_pointer(dsp, cid, false), &comp_status, &comp_info[0]);
+    ret = xaf_comp_get_status(p_adev, comp_get_pointer(dsp, cid, false), &comp_status, &comp_info[0]);
     if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("[DSP_USB_MIC] xaf_comp_get_status %s failure: %d\r\n", comp_id[cid], ret);
@@ -324,14 +321,14 @@ int srtm_usb_mic_init(dsp_handle_t *dsp, unsigned int *pCmdParams, bool i2s)
 
     /* Start PCM gain */
     cid = XA_GAIN_0;
-    ret = xaf_comp_process(dsp->audio_device, comp_get_pointer(dsp, cid, false), NULL, 0, XAF_START_FLAG);
+    ret = xaf_comp_process(p_adev, comp_get_pointer(dsp, cid, false), NULL, 0, XAF_START_FLAG);
     if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("[DSP_USB_MIC] xaf_comp_process XAF_START_FLAG %s failure: %d\r\n", comp_id[cid], ret);
         goto error_cleanup;
     }
 
-    ret = xaf_comp_get_status(dsp->audio_device, comp_get_pointer(dsp, cid, false), &comp_status, &comp_info[0]);
+    ret = xaf_comp_get_status(p_adev, comp_get_pointer(dsp, cid, false), &comp_status, &comp_info[0]);
     if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("[DSP_USB_MIC] xaf_comp_get_status %s failure: %d\r\n", comp_id[cid], ret);

@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2011-2020 by Cadence Design Systems, Inc.  ALL RIGHTS RESERVED.
+# Copyright (c) 2011-2023 by Cadence Design Systems, Inc.  ALL RIGHTS RESERVED.
 # These coded instructions, statements, and computer programs are the
 # copyrighted works and confidential proprietary information of
 # Cadence Design Systems Inc.  They may be adapted and modified by bona fide
@@ -12,16 +12,96 @@
 #
 
 ======================================================================
-Tensilica HiFi Aynchronous and Synchronous Sample Rate Converter (SRC)
+Cadence Tensilica HiFi Asynchronous and Synchronous Sample Rate Converter (SRC)
 ======================================================================
 
 ======================================================================
 Revision History
 ======================================================================
 
+Version 1.18 API 1.12: June 30, 2023
+
++ GA release.
++ Built using RI.10 tools and xt-clang compiler.
++ Added support for modular custom library build for better codesize footprint
++ HiFi5 specific optimizations
++ Programmer's guide updated.
+
+----------------------------------------------------------------------
+
+Version 1.17 API 1.12: April 25, 2023
+
++ GA release.
++ Fixed API definition differences
++ Built using RI.9 tools and xt-clang compiler.
+
+----------------------------------------------------------------------
+
+Version 1.16p1 API 1.12: April 7, 2023
+
++ patch release - HiFi5 only.
++ Built using RI.9 tools and xt-clang compiler.
+
+----------------------------------------------------------------------
+
+Version 1.16 API 1.12: November 15, 2022
+
++ GA release.
++ Built using RI.9 tools and xt-clang compiler.
++ PG updated
+
+----------------------------------------------------------------------
+
+Version 1.15p1 API 1.12: August 30, 2022
+
++ patch release - HiFi5 only.
++ Built using RI.9 tools and xt-clang compiler.
++ PG doc not updated
+
+----------------------------------------------------------------------
+
+Version 1.15 API 1.12: August 05, 2022
+
++ GA release - HiFi1 only.
++ Built using RI.8 tools and xt-clang compiler.
++ Code further tuned for HiFi1 core.
++ Programmer's guide updated.
+
+----------------------------------------------------------------------
+
+Version 1.14_Beta API 1.12: February 17, 2022
+
++ Beta release (source code) for HiFi1 core
+
+----------------------------------------------------------------------
+
+Version 1.13_Beta API 1.12: February 4, 2022
+
++ Beta release for HiFi1 core
++ HiFi1 optimized code further tuned.
++ No PG update
+
+----------------------------------------------------------------------
+
+Version 1.12.alpha API 1.12: October 28, 2021
+
++ Alpha release for HiFi1 core
++ Functions from xa_src_polyphase.c and xa_src_polyphase_mch.c are further optimized for HiFi1
++ PG doc not updated
+
+----------------------------------------------------------------------
+
+Version 1.11.alpha API 1.12: September 09, 2021
+
++ Alpha release for HiFi1 core
++ PG doc not updated
+
+----------------------------------------------------------------------
+
 Version 1.10 API 1.12: April 13, 2020
 
 + Changed package name from src_pp to asrc_src_pp.
+
 [J2183] Added conversion to 4kHz and 6kHz.
 
 ----------------------------------------------------------------------
@@ -240,4 +320,4 @@ Version 0.5: August 17, 2011
 - Preliminary Release
 
 ----------------------------------------------------------------------
-2020-04-13:12:56:RI-2019.2:588588:587929:552342::
+2023-08-24:03:28:RI-2021.7:823980:820436:823935::

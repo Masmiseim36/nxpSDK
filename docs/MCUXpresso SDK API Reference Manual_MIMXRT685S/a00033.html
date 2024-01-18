@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: I3C: I3C Driver</title>
+<title>MCUXpresso SDK API Reference Manual: I3C Common Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,226 +99,368 @@ $(document).ready(function(){initNavTree('a00033.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a> &#124;
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">I3C: I3C Driver</div>  </div>
+<div class="title">I3C Common Driver<div class="ingroups"><a class="el" href="a00034.html">I3C: I3C Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00032"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html">I3C Common Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00031"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html">I3C Master Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00034"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00034.html">I3C Slave Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00325"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#a00325">i3c_device_info_t</a></td></tr>
-<tr class="memdesc:a00325"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C device information.  <a href="a00033.html#a00325">More...</a><br/></td></tr>
-<tr class="separator:a00325"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00316"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#a00316">_i3c_config</a></td></tr>
+<tr class="memdesc:a00316"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure with settings to initialize the I3C module, could both initialize master and slave functionality.  <a href="a00033.html#a00316">More...</a><br/></td></tr>
+<tr class="separator:a00316"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga85db5502e9ec4894521b0a23527f8f02"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#ga85db5502e9ec4894521b0a23527f8f02">I3C_RETRY_TIMES</a>&#160;&#160;&#160;0U /* Define to zero means keep waiting until the flag is assert/deassert. */</td></tr>
-<tr class="memdesc:ga85db5502e9ec4894521b0a23527f8f02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timeout times for waiting flag.  <a href="#ga85db5502e9ec4894521b0a23527f8f02">More...</a><br/></td></tr>
-<tr class="separator:ga85db5502e9ec4894521b0a23527f8f02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga2de4b28216cc6c350e76856e3cfce71a"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00033.html#a00316">_i3c_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#ga2de4b28216cc6c350e76856e3cfce71a">i3c_config_t</a></td></tr>
+<tr class="memdesc:ga2de4b28216cc6c350e76856e3cfce71a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure with settings to initialize the I3C module, could both initialize master and slave functionality.  <a href="#ga2de4b28216cc6c350e76856e3cfce71a">More...</a><br/></td></tr>
+<tr class="separator:ga2de4b28216cc6c350e76856e3cfce71a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:gaba01db17f4a2bfbc3db60dc172972a25"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00033.html#ggaba01db17f4a2bfbc3db60dc172972a25a3762f16a9354bdcbc99b05c938d3867c">kStatus_I3C_Busy</a> = MAKE_STATUS(kStatusGroup_I3C, 0), 
-<br/>
-&#160;&#160;<a class="el" href="a00033.html#ggaba01db17f4a2bfbc3db60dc172972a25a121e7eccc4bdafa890313b8c0b08c49d">kStatus_I3C_Idle</a> = MAKE_STATUS(kStatusGroup_I3C, 1), 
-<br/>
-&#160;&#160;<a class="el" href="a00033.html#ggaba01db17f4a2bfbc3db60dc172972a25a3ed2939c8d83d81804512322d001e740">kStatus_I3C_Nak</a> = MAKE_STATUS(kStatusGroup_I3C, 2), 
-<br/>
-&#160;&#160;<a class="el" href="a00033.html#ggaba01db17f4a2bfbc3db60dc172972a25a35dcb142f61c8ff4779d5f6b5b23b5de">kStatus_I3C_WriteAbort</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00033.html#ggaba01db17f4a2bfbc3db60dc172972a25a44213e1f693b99a95b397ab886f4639b">kStatus_I3C_Term</a> = MAKE_STATUS(kStatusGroup_I3C, 4), 
-<br/>
-&#160;&#160;<a class="el" href="a00033.html#ggaba01db17f4a2bfbc3db60dc172972a25a9abddf0a7e7b083164af01db2c097096">kStatus_I3C_HdrParityError</a> = MAKE_STATUS(kStatusGroup_I3C, 5), 
-<br/>
-&#160;&#160;<a class="el" href="a00033.html#ggaba01db17f4a2bfbc3db60dc172972a25acfda04a4d0a28eaebfdf5782d1f98f08">kStatus_I3C_CrcError</a> = MAKE_STATUS(kStatusGroup_I3C, 6), 
-<br/>
-&#160;&#160;<a class="el" href="a00033.html#ggaba01db17f4a2bfbc3db60dc172972a25ab2f9f9f9ea46a58de73776f50d97e77b">kStatus_I3C_ReadFifoError</a> = MAKE_STATUS(kStatusGroup_I3C, 7), 
-<br/>
-&#160;&#160;<a class="el" href="a00033.html#ggaba01db17f4a2bfbc3db60dc172972a25a123c72bdcefad2cbd5926266af329936">kStatus_I3C_WriteFifoError</a> = MAKE_STATUS(kStatusGroup_I3C, 8), 
-<br/>
-&#160;&#160;<a class="el" href="a00033.html#ggaba01db17f4a2bfbc3db60dc172972a25a2048ccedbed421e63f6c2303c2dbd3ef">kStatus_I3C_MsgError</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00033.html#ggaba01db17f4a2bfbc3db60dc172972a25abc69734a51e6c32e7da9e14efeb0df47">kStatus_I3C_InvalidReq</a> = MAKE_STATUS(kStatusGroup_I3C, 10), 
-<br/>
-&#160;&#160;<a class="el" href="a00033.html#ggaba01db17f4a2bfbc3db60dc172972a25abb073c687a177100617e94d117ce51f3">kStatus_I3C_Timeout</a> = MAKE_STATUS(kStatusGroup_I3C, 11), 
-<br/>
-&#160;&#160;<a class="el" href="a00033.html#ggaba01db17f4a2bfbc3db60dc172972a25a73076eb00a2c6f4c3d6205d66c980526">kStatus_I3C_SlaveCountExceed</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00033.html#ggaba01db17f4a2bfbc3db60dc172972a25a11ff36d41103f38710773355924d7104">kStatus_I3C_IBIWon</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00033.html#ggaba01db17f4a2bfbc3db60dc172972a25a75c0f7a8ba41935f6ebc7635d716520c">kStatus_I3C_OverrunError</a> = MAKE_STATUS(kStatusGroup_I3C, 14), 
-<br/>
-&#160;&#160;<a class="el" href="a00033.html#ggaba01db17f4a2bfbc3db60dc172972a25a9e6234b9bdde57e720ef19477e45b989">kStatus_I3C_UnderrunError</a> = MAKE_STATUS(kStatusGroup_I3C, 15), 
-<br/>
-&#160;&#160;<a class="el" href="a00033.html#ggaba01db17f4a2bfbc3db60dc172972a25a3c0f1fcfcc4bfe3ea822b534a6533beb">kStatus_I3C_UnderrunNak</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00033.html#ggaba01db17f4a2bfbc3db60dc172972a25a725c8fff58c234755d781adbaef8b0f0">kStatus_I3C_InvalidStart</a> = MAKE_STATUS(kStatusGroup_I3C, 17), 
-<br/>
-&#160;&#160;<a class="el" href="a00033.html#ggaba01db17f4a2bfbc3db60dc172972a25a1d7edf69e0ea3fd0980d230f78c5f7cd">kStatus_I3C_SdrParityError</a> = MAKE_STATUS(kStatusGroup_I3C, 18), 
-<br/>
-&#160;&#160;<a class="el" href="a00033.html#ggaba01db17f4a2bfbc3db60dc172972a25a062b154b947a5db7e4e32abfd941fdd5">kStatus_I3C_S0S1Error</a> = MAKE_STATUS(kStatusGroup_I3C, 19)
-<br/>
- }</td></tr>
-<tr class="memdesc:gaba01db17f4a2bfbc3db60dc172972a25"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C status return codes.  <a href="a00033.html#gaba01db17f4a2bfbc3db60dc172972a25">More...</a><br/></td></tr>
-<tr class="separator:gaba01db17f4a2bfbc3db60dc172972a25"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9cc3047d71168e8e79989f1d6fd59cef"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#ga9cc3047d71168e8e79989f1d6fd59cef">i3c_hdr_mode_t</a> </td></tr>
-<tr class="memdesc:ga9cc3047d71168e8e79989f1d6fd59cef"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C HDR modes.  <a href="a00033.html#ga9cc3047d71168e8e79989f1d6fd59cef">More...</a><br/></td></tr>
-<tr class="separator:ga9cc3047d71168e8e79989f1d6fd59cef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Driver version</h2></td></tr>
-<tr class="memitem:ga9969405bde9b0859074c423ae688ca99"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9969405bde9b0859074c423ae688ca99"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#ga9969405bde9b0859074c423ae688ca99">FSL_I3C_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00217.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 10, 3))</td></tr>
-<tr class="memdesc:ga9969405bde9b0859074c423ae688ca99"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C driver version. <br/></td></tr>
-<tr class="separator:ga9969405bde9b0859074c423ae688ca99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gab720082aac7fe2d9e785af098423ac4f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#gab720082aac7fe2d9e785af098423ac4f">I3C_GetInstance</a> (I3C_Type *base)</td></tr>
+<tr class="memdesc:gab720082aac7fe2d9e785af098423ac4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get which instance current I3C is used.  <a href="#gab720082aac7fe2d9e785af098423ac4f">More...</a><br/></td></tr>
+<tr class="separator:gab720082aac7fe2d9e785af098423ac4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3d32d7648da36b4fd0581fce78c4a13b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#ga3d32d7648da36b4fd0581fce78c4a13b">I3C_GetDefaultConfig</a> (<a class="el" href="a00033.html#ga2de4b28216cc6c350e76856e3cfce71a">i3c_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga3d32d7648da36b4fd0581fce78c4a13b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides a default configuration for the I3C peripheral, the configuration covers both master functionality and slave functionality.  <a href="#ga3d32d7648da36b4fd0581fce78c4a13b">More...</a><br/></td></tr>
+<tr class="separator:ga3d32d7648da36b4fd0581fce78c4a13b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacac08d592a3da29d975f3d96a0b073c7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#gacac08d592a3da29d975f3d96a0b073c7">I3C_Init</a> (I3C_Type *base, const <a class="el" href="a00033.html#ga2de4b28216cc6c350e76856e3cfce71a">i3c_config_t</a> *config, uint32_t sourceClock_Hz)</td></tr>
+<tr class="memdesc:gacac08d592a3da29d975f3d96a0b073c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the I3C peripheral.  <a href="#gacac08d592a3da29d975f3d96a0b073c7">More...</a><br/></td></tr>
+<tr class="separator:gacac08d592a3da29d975f3d96a0b073c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00325" id="a00325"></a>
+<a name="a00316" id="a00316"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct i3c_device_info_t</td>
+          <td class="memname">struct _i3c_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
+<div class="textblock"><p>This structure holds configuration settings for the I3C peripheral. To initialize this structure to reasonable defaults, call the <a class="el" href="a00033.html#ga3d32d7648da36b4fd0581fce78c4a13b" title="Provides a default configuration for the I3C peripheral, the configuration covers both master functio...">I3C_GetDefaultConfig()</a> function and pass a pointer to your configuration structure instance.</p>
+<p>The configuration structure can be made constant so it resides in flash. </p>
+</div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a8d2a160d24239705091dd376479ed1f0"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#a8d2a160d24239705091dd376479ed1f0">dynamicAddr</a></td></tr>
-<tr class="memdesc:a8d2a160d24239705091dd376479ed1f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device dynamic address.  <a href="#a8d2a160d24239705091dd376479ed1f0">More...</a><br/></td></tr>
-<tr class="separator:a8d2a160d24239705091dd376479ed1f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09e37502a282097247f768f72bac40cc"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#a09e37502a282097247f768f72bac40cc">staticAddr</a></td></tr>
-<tr class="memdesc:a09e37502a282097247f768f72bac40cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Static address.  <a href="#a09e37502a282097247f768f72bac40cc">More...</a><br/></td></tr>
-<tr class="separator:a09e37502a282097247f768f72bac40cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a496110aa4a2316bd53e0e776e4a632b3"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#a496110aa4a2316bd53e0e776e4a632b3">dcr</a></td></tr>
-<tr class="memdesc:a496110aa4a2316bd53e0e776e4a632b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device characteristics register information.  <a href="#a496110aa4a2316bd53e0e776e4a632b3">More...</a><br/></td></tr>
-<tr class="separator:a496110aa4a2316bd53e0e776e4a632b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a83099f1311df02da6f72cc67338250ee"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#a83099f1311df02da6f72cc67338250ee">bcr</a></td></tr>
-<tr class="memdesc:a83099f1311df02da6f72cc67338250ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bus characteristics register information.  <a href="#a83099f1311df02da6f72cc67338250ee">More...</a><br/></td></tr>
-<tr class="separator:a83099f1311df02da6f72cc67338250ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e1e5b5a46b1420f4d3a52f232e822ba"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#a7e1e5b5a46b1420f4d3a52f232e822ba">vendorID</a></td></tr>
-<tr class="memdesc:a7e1e5b5a46b1420f4d3a52f232e822ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device vendor ID(manufacture ID).  <a href="#a7e1e5b5a46b1420f4d3a52f232e822ba">More...</a><br/></td></tr>
-<tr class="separator:a7e1e5b5a46b1420f4d3a52f232e822ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac8e84da4f8d38ffc777338358624f4b1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac8e84da4f8d38ffc777338358624f4b1"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#ac8e84da4f8d38ffc777338358624f4b1">partNumber</a></td></tr>
-<tr class="memdesc:ac8e84da4f8d38ffc777338358624f4b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device part number info. <br/></td></tr>
-<tr class="separator:ac8e84da4f8d38ffc777338358624f4b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a423a644e13da7f1f14502c020cf523da"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#a423a644e13da7f1f14502c020cf523da">maxReadLength</a></td></tr>
-<tr class="memdesc:a423a644e13da7f1f14502c020cf523da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum read length.  <a href="#a423a644e13da7f1f14502c020cf523da">More...</a><br/></td></tr>
-<tr class="separator:a423a644e13da7f1f14502c020cf523da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee3043008597d36782b97dd3bcf0ba5d"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#aee3043008597d36782b97dd3bcf0ba5d">maxWriteLength</a></td></tr>
-<tr class="memdesc:aee3043008597d36782b97dd3bcf0ba5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum write length.  <a href="#aee3043008597d36782b97dd3bcf0ba5d">More...</a><br/></td></tr>
-<tr class="separator:aee3043008597d36782b97dd3bcf0ba5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9f3ff01e612b13427e7c71dd1bb19857"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#a9f3ff01e612b13427e7c71dd1bb19857">hdrMode</a></td></tr>
-<tr class="memdesc:a9f3ff01e612b13427e7c71dd1bb19857"><td class="mdescLeft">&#160;</td><td class="mdescRight">Support hdr mode, could be OR logic in i3c_hdr_mode.  <a href="#a9f3ff01e612b13427e7c71dd1bb19857">More...</a><br/></td></tr>
-<tr class="separator:a9f3ff01e612b13427e7c71dd1bb19857"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bc08b79d3226ade2cd5f292f94d5c49"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00032.html#ga76bce9b196dcb1badbc4d93a8c30c981">i3c_master_enable_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#a3bc08b79d3226ade2cd5f292f94d5c49">enableMaster</a></td></tr>
+<tr class="memdesc:a3bc08b79d3226ade2cd5f292f94d5c49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable master mode.  <a href="#a3bc08b79d3226ade2cd5f292f94d5c49">More...</a><br/></td></tr>
+<tr class="separator:a3bc08b79d3226ade2cd5f292f94d5c49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d5ba0aceccd3c9910755a072ea9cd53"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#a3d5ba0aceccd3c9910755a072ea9cd53">disableTimeout</a></td></tr>
+<tr class="memdesc:a3d5ba0aceccd3c9910755a072ea9cd53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether to disable timeout to prevent the ERRWARN.  <a href="#a3d5ba0aceccd3c9910755a072ea9cd53">More...</a><br/></td></tr>
+<tr class="separator:a3d5ba0aceccd3c9910755a072ea9cd53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2914e32db14dd3688fd424f9d588364"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00032.html#ga5307d8c6469fa59a7fb168009ad4ac78">i3c_master_hkeep_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#af2914e32db14dd3688fd424f9d588364">hKeep</a></td></tr>
+<tr class="memdesc:af2914e32db14dd3688fd424f9d588364"><td class="mdescLeft">&#160;</td><td class="mdescRight">High keeper mode setting.  <a href="#af2914e32db14dd3688fd424f9d588364">More...</a><br/></td></tr>
+<tr class="separator:af2914e32db14dd3688fd424f9d588364"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b4f9b5bc4c449d3938d33a7592f2a79"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#a8b4f9b5bc4c449d3938d33a7592f2a79">enableOpenDrainStop</a></td></tr>
+<tr class="memdesc:a8b4f9b5bc4c449d3938d33a7592f2a79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether to emit open-drain speed STOP.  <a href="#a8b4f9b5bc4c449d3938d33a7592f2a79">More...</a><br/></td></tr>
+<tr class="separator:a8b4f9b5bc4c449d3938d33a7592f2a79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2bc1b10efecbc850b0106fe7c7d0e82c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#a2bc1b10efecbc850b0106fe7c7d0e82c">enableOpenDrainHigh</a></td></tr>
+<tr class="memdesc:a2bc1b10efecbc850b0106fe7c7d0e82c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable Open-Drain High to be 1 PPBAUD count for i3c messages, or 1 ODBAUD.  <a href="#a2bc1b10efecbc850b0106fe7c7d0e82c">More...</a><br/></td></tr>
+<tr class="separator:a2bc1b10efecbc850b0106fe7c7d0e82c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1120689f110480c16907e5c5ed354686"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00032.html#ga519780f40548249bbdac52bf2b9a8c78">i3c_baudrate_hz_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#a1120689f110480c16907e5c5ed354686">baudRate_Hz</a></td></tr>
+<tr class="memdesc:a1120689f110480c16907e5c5ed354686"><td class="mdescLeft">&#160;</td><td class="mdescRight">Desired baud rate settings.  <a href="#a1120689f110480c16907e5c5ed354686">More...</a><br/></td></tr>
+<tr class="separator:a1120689f110480c16907e5c5ed354686"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab562d0467a4e260d21d1bbae321fd06b"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#ab562d0467a4e260d21d1bbae321fd06b">masterDynamicAddress</a></td></tr>
+<tr class="memdesc:ab562d0467a4e260d21d1bbae321fd06b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Main master dynamic address configuration.  <a href="#ab562d0467a4e260d21d1bbae321fd06b">More...</a><br/></td></tr>
+<tr class="separator:ab562d0467a4e260d21d1bbae321fd06b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff7f4c6bafbb885897f2d7b9c32b89e1"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#aff7f4c6bafbb885897f2d7b9c32b89e1">slowClock_Hz</a></td></tr>
+<tr class="memdesc:aff7f4c6bafbb885897f2d7b9c32b89e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slow clock frequency for time control.  <a href="#aff7f4c6bafbb885897f2d7b9c32b89e1">More...</a><br/></td></tr>
+<tr class="separator:aff7f4c6bafbb885897f2d7b9c32b89e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27410e9c7b53a8284700e67ec2b68992"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#a27410e9c7b53a8284700e67ec2b68992">maxWriteLength</a></td></tr>
+<tr class="memdesc:a27410e9c7b53a8284700e67ec2b68992"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum write length.  <a href="#a27410e9c7b53a8284700e67ec2b68992">More...</a><br/></td></tr>
+<tr class="separator:a27410e9c7b53a8284700e67ec2b68992"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a439a2b208dbfb25b5ca0c0950867b579"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#a439a2b208dbfb25b5ca0c0950867b579">maxReadLength</a></td></tr>
+<tr class="memdesc:a439a2b208dbfb25b5ca0c0950867b579"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum read length.  <a href="#a439a2b208dbfb25b5ca0c0950867b579">More...</a><br/></td></tr>
+<tr class="separator:a439a2b208dbfb25b5ca0c0950867b579"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefdbff4b4388221a1e287480cebdba75"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#aefdbff4b4388221a1e287480cebdba75">enableSlave</a></td></tr>
+<tr class="memdesc:aefdbff4b4388221a1e287480cebdba75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether to enable slave.  <a href="#aefdbff4b4388221a1e287480cebdba75">More...</a><br/></td></tr>
+<tr class="separator:aefdbff4b4388221a1e287480cebdba75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a779c1601ce98b1dd5f62c24feb0c50d5"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#a779c1601ce98b1dd5f62c24feb0c50d5">staticAddr</a></td></tr>
+<tr class="memdesc:a779c1601ce98b1dd5f62c24feb0c50d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Static address.  <a href="#a779c1601ce98b1dd5f62c24feb0c50d5">More...</a><br/></td></tr>
+<tr class="separator:a779c1601ce98b1dd5f62c24feb0c50d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61a12ef494b7af5a220c8d5e49e62624"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#a61a12ef494b7af5a220c8d5e49e62624">vendorID</a></td></tr>
+<tr class="memdesc:a61a12ef494b7af5a220c8d5e49e62624"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device vendor ID(manufacture ID).  <a href="#a61a12ef494b7af5a220c8d5e49e62624">More...</a><br/></td></tr>
+<tr class="separator:a61a12ef494b7af5a220c8d5e49e62624"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf75f83e29c7cbed21e7d7f47f6dd8ef"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#acf75f83e29c7cbed21e7d7f47f6dd8ef">enableRandomPart</a></td></tr>
+<tr class="memdesc:acf75f83e29c7cbed21e7d7f47f6dd8ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether to generate random part number, if using random part number, the partNumber variable setting is meaningless.  <a href="#acf75f83e29c7cbed21e7d7f47f6dd8ef">More...</a><br/></td></tr>
+<tr class="separator:acf75f83e29c7cbed21e7d7f47f6dd8ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0bf1ce749152789656dc61fea3a78309"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0bf1ce749152789656dc61fea3a78309"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#a0bf1ce749152789656dc61fea3a78309">partNumber</a></td></tr>
+<tr class="memdesc:a0bf1ce749152789656dc61fea3a78309"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device part number info. <br/></td></tr>
+<tr class="separator:a0bf1ce749152789656dc61fea3a78309"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab881625cfedbb4cc7f14a804d4881304"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#ab881625cfedbb4cc7f14a804d4881304">dcr</a></td></tr>
+<tr class="memdesc:ab881625cfedbb4cc7f14a804d4881304"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device characteristics register information.  <a href="#ab881625cfedbb4cc7f14a804d4881304">More...</a><br/></td></tr>
+<tr class="separator:ab881625cfedbb4cc7f14a804d4881304"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a228172885a18ff322aa5b1c9f6c857f0"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#a228172885a18ff322aa5b1c9f6c857f0">bcr</a></td></tr>
+<tr class="memdesc:a228172885a18ff322aa5b1c9f6c857f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bus characteristics register information.  <a href="#a228172885a18ff322aa5b1c9f6c857f0">More...</a><br/></td></tr>
+<tr class="separator:a228172885a18ff322aa5b1c9f6c857f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30a45300b82a28be966ee8473eff2917"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#a30a45300b82a28be966ee8473eff2917">hdrMode</a></td></tr>
+<tr class="memdesc:a30a45300b82a28be966ee8473eff2917"><td class="mdescLeft">&#160;</td><td class="mdescRight">Support hdr mode, could be OR logic in enumeration:i3c_hdr_mode_t.  <a href="#a30a45300b82a28be966ee8473eff2917">More...</a><br/></td></tr>
+<tr class="separator:a30a45300b82a28be966ee8473eff2917"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1acde963994018eda94eebaf06bea2d8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#a1acde963994018eda94eebaf06bea2d8">nakAllRequest</a></td></tr>
+<tr class="memdesc:a1acde963994018eda94eebaf06bea2d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether to reply NAK to all requests except broadcast CCC.  <a href="#a1acde963994018eda94eebaf06bea2d8">More...</a><br/></td></tr>
+<tr class="separator:a1acde963994018eda94eebaf06bea2d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a013ff532255f28a3333932568f755198"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#a013ff532255f28a3333932568f755198">ignoreS0S1Error</a></td></tr>
+<tr class="memdesc:a013ff532255f28a3333932568f755198"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether to ignore S0/S1 error in SDR mode.  <a href="#a013ff532255f28a3333932568f755198">More...</a><br/></td></tr>
+<tr class="separator:a013ff532255f28a3333932568f755198"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81b6d334e852fecc5812846e2b6f7fd8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#a81b6d334e852fecc5812846e2b6f7fd8">offline</a></td></tr>
+<tr class="memdesc:a81b6d334e852fecc5812846e2b6f7fd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether to wait 60 us of bus quiet or HDR request to ensure slave track SDR mode safely.  <a href="#a81b6d334e852fecc5812846e2b6f7fd8">More...</a><br/></td></tr>
+<tr class="separator:a81b6d334e852fecc5812846e2b6f7fd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1954abe3bce364ec30fc4855735a9415"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#a1954abe3bce364ec30fc4855735a9415">matchSlaveStartStop</a></td></tr>
+<tr class="memdesc:a1954abe3bce364ec30fc4855735a9415"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether to assert start/stop status only the time slave is addressed.  <a href="#a1954abe3bce364ec30fc4855735a9415">More...</a><br/></td></tr>
+<tr class="separator:a1954abe3bce364ec30fc4855735a9415"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a8d2a160d24239705091dd376479ed1f0"></a>
+<a class="anchor" id="a3bc08b79d3226ade2cd5f292f94d5c49"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t i3c_device_info_t::dynamicAddr</td>
+          <td class="memname"><a class="el" href="a00032.html#ga76bce9b196dcb1badbc4d93a8c30c981">i3c_master_enable_t</a> _i3c_config::enableMaster</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a09e37502a282097247f768f72bac40cc"></a>
+<a class="anchor" id="a3d5ba0aceccd3c9910755a072ea9cd53"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t i3c_device_info_t::staticAddr</td>
+          <td class="memname">bool _i3c_config::disableTimeout</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a496110aa4a2316bd53e0e776e4a632b3"></a>
+<a class="anchor" id="af2914e32db14dd3688fd424f9d588364"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t i3c_device_info_t::dcr</td>
+          <td class="memname"><a class="el" href="a00032.html#ga5307d8c6469fa59a7fb168009ad4ac78">i3c_master_hkeep_t</a> _i3c_config::hKeep</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a83099f1311df02da6f72cc67338250ee"></a>
+<a class="anchor" id="a8b4f9b5bc4c449d3938d33a7592f2a79"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t i3c_device_info_t::bcr</td>
+          <td class="memname">bool _i3c_config::enableOpenDrainStop</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a7e1e5b5a46b1420f4d3a52f232e822ba"></a>
+<a class="anchor" id="a2bc1b10efecbc850b0106fe7c7d0e82c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t i3c_device_info_t::vendorID</td>
+          <td class="memname">bool _i3c_config::enableOpenDrainHigh</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a423a644e13da7f1f14502c020cf523da"></a>
+<a class="anchor" id="a1120689f110480c16907e5c5ed354686"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t i3c_device_info_t::maxReadLength</td>
+          <td class="memname"><a class="el" href="a00032.html#ga519780f40548249bbdac52bf2b9a8c78">i3c_baudrate_hz_t</a> _i3c_config::baudRate_Hz</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="aee3043008597d36782b97dd3bcf0ba5d"></a>
+<a class="anchor" id="ab562d0467a4e260d21d1bbae321fd06b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t i3c_device_info_t::maxWriteLength</td>
+          <td class="memname">uint8_t _i3c_config::masterDynamicAddress</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a9f3ff01e612b13427e7c71dd1bb19857"></a>
+<a class="anchor" id="aff7f4c6bafbb885897f2d7b9c32b89e1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t i3c_device_info_t::hdrMode</td>
+          <td class="memname">uint32_t _i3c_config::slowClock_Hz</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a27410e9c7b53a8284700e67ec2b68992"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t _i3c_config::maxWriteLength</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a439a2b208dbfb25b5ca0c0950867b579"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t _i3c_config::maxReadLength</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aefdbff4b4388221a1e287480cebdba75"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool _i3c_config::enableSlave</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a779c1601ce98b1dd5f62c24feb0c50d5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t _i3c_config::staticAddr</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a61a12ef494b7af5a220c8d5e49e62624"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t _i3c_config::vendorID</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="acf75f83e29c7cbed21e7d7f47f6dd8ef"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool _i3c_config::enableRandomPart</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ab881625cfedbb4cc7f14a804d4881304"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t _i3c_config::dcr</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a228172885a18ff322aa5b1c9f6c857f0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t _i3c_config::bcr</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a30a45300b82a28be966ee8473eff2917"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t _i3c_config::hdrMode</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a1acde963994018eda94eebaf06bea2d8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool _i3c_config::nakAllRequest</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a013ff532255f28a3333932568f755198"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool _i3c_config::ignoreS0S1Error</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a81b6d334e852fecc5812846e2b6f7fd8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool _i3c_config::offline</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a1954abe3bce364ec30fc4855735a9415"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool _i3c_config::matchSlaveStartStop</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -328,103 +470,128 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 </div>
 </div>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga85db5502e9ec4894521b0a23527f8f02"></a>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga2de4b28216cc6c350e76856e3cfce71a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define I3C_RETRY_TIMES&#160;&#160;&#160;0U /* Define to zero means keep waiting until the flag is assert/deassert. */</td>
+          <td class="memname">typedef struct <a class="el" href="a00033.html#a00316">_i3c_config</a>  <a class="el" href="a00033.html#ga2de4b28216cc6c350e76856e3cfce71a">i3c_config_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>This structure holds configuration settings for the I3C peripheral. To initialize this structure to reasonable defaults, call the <a class="el" href="a00033.html#ga3d32d7648da36b4fd0581fce78c4a13b" title="Provides a default configuration for the I3C peripheral, the configuration covers both master functio...">I3C_GetDefaultConfig()</a> function and pass a pointer to your configuration structure instance.</p>
+<p>The configuration structure can be made constant so it resides in flash. </p>
 
 </div>
 </div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gaba01db17f4a2bfbc3db60dc172972a25"></a>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="gab720082aac7fe2d9e785af098423ac4f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">anonymous enum</td>
+          <td class="memname">uint32_t I3C_GetInstance </td>
+          <td>(</td>
+          <td class="paramtype">I3C_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaba01db17f4a2bfbc3db60dc172972a25a3762f16a9354bdcbc99b05c938d3867c"></a>kStatus_I3C_Busy</em>&nbsp;</td><td class="fielddoc">
-<p>The master is already performing a transfer. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaba01db17f4a2bfbc3db60dc172972a25a121e7eccc4bdafa890313b8c0b08c49d"></a>kStatus_I3C_Idle</em>&nbsp;</td><td class="fielddoc">
-<p>The slave driver is idle. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaba01db17f4a2bfbc3db60dc172972a25a3ed2939c8d83d81804512322d001e740"></a>kStatus_I3C_Nak</em>&nbsp;</td><td class="fielddoc">
-<p>The slave device sent a NAK in response to an address. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaba01db17f4a2bfbc3db60dc172972a25a35dcb142f61c8ff4779d5f6b5b23b5de"></a>kStatus_I3C_WriteAbort</em>&nbsp;</td><td class="fielddoc">
-<p>The slave device sent a NAK in response to a write. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaba01db17f4a2bfbc3db60dc172972a25a44213e1f693b99a95b397ab886f4639b"></a>kStatus_I3C_Term</em>&nbsp;</td><td class="fielddoc">
-<p>The master terminates slave read. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaba01db17f4a2bfbc3db60dc172972a25a9abddf0a7e7b083164af01db2c097096"></a>kStatus_I3C_HdrParityError</em>&nbsp;</td><td class="fielddoc">
-<p>Parity error from DDR read. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaba01db17f4a2bfbc3db60dc172972a25acfda04a4d0a28eaebfdf5782d1f98f08"></a>kStatus_I3C_CrcError</em>&nbsp;</td><td class="fielddoc">
-<p>CRC error from DDR read. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaba01db17f4a2bfbc3db60dc172972a25ab2f9f9f9ea46a58de73776f50d97e77b"></a>kStatus_I3C_ReadFifoError</em>&nbsp;</td><td class="fielddoc">
-<p>Read from M/SRDATAB register when FIFO empty. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaba01db17f4a2bfbc3db60dc172972a25a123c72bdcefad2cbd5926266af329936"></a>kStatus_I3C_WriteFifoError</em>&nbsp;</td><td class="fielddoc">
-<p>Write to M/SWDATAB register when FIFO full. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaba01db17f4a2bfbc3db60dc172972a25a2048ccedbed421e63f6c2303c2dbd3ef"></a>kStatus_I3C_MsgError</em>&nbsp;</td><td class="fielddoc">
-<p>Message SDR/DDR mismatch or read/write message in wrong state. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaba01db17f4a2bfbc3db60dc172972a25abc69734a51e6c32e7da9e14efeb0df47"></a>kStatus_I3C_InvalidReq</em>&nbsp;</td><td class="fielddoc">
-<p>Invalid use of request. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaba01db17f4a2bfbc3db60dc172972a25abb073c687a177100617e94d117ce51f3"></a>kStatus_I3C_Timeout</em>&nbsp;</td><td class="fielddoc">
-<p>The module has stalled too long in a frame. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaba01db17f4a2bfbc3db60dc172972a25a73076eb00a2c6f4c3d6205d66c980526"></a>kStatus_I3C_SlaveCountExceed</em>&nbsp;</td><td class="fielddoc">
-<p>The I3C slave count has exceed the definition in I3C_MAX_DEVCNT. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaba01db17f4a2bfbc3db60dc172972a25a11ff36d41103f38710773355924d7104"></a>kStatus_I3C_IBIWon</em>&nbsp;</td><td class="fielddoc">
-<p>The I3C slave event IBI or MR or HJ won the arbitration on a header address. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaba01db17f4a2bfbc3db60dc172972a25a75c0f7a8ba41935f6ebc7635d716520c"></a>kStatus_I3C_OverrunError</em>&nbsp;</td><td class="fielddoc">
-<p>Slave internal from-bus buffer/FIFO overrun. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaba01db17f4a2bfbc3db60dc172972a25a9e6234b9bdde57e720ef19477e45b989"></a>kStatus_I3C_UnderrunError</em>&nbsp;</td><td class="fielddoc">
-<p>Slave internal to-bus buffer/FIFO underrun. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaba01db17f4a2bfbc3db60dc172972a25a3c0f1fcfcc4bfe3ea822b534a6533beb"></a>kStatus_I3C_UnderrunNak</em>&nbsp;</td><td class="fielddoc">
-<p>Slave internal from-bus buffer/FIFO underrun and NACK error. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaba01db17f4a2bfbc3db60dc172972a25a725c8fff58c234755d781adbaef8b0f0"></a>kStatus_I3C_InvalidStart</em>&nbsp;</td><td class="fielddoc">
-<p>Slave invalid start flag. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaba01db17f4a2bfbc3db60dc172972a25a1d7edf69e0ea3fd0980d230f78c5f7cd"></a>kStatus_I3C_SdrParityError</em>&nbsp;</td><td class="fielddoc">
-<p>SDR parity error. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaba01db17f4a2bfbc3db60dc172972a25a062b154b947a5db7e4e32abfd941fdd5"></a>kStatus_I3C_S0S1Error</em>&nbsp;</td><td class="fielddoc">
-<p>S0 or S1 error. </p>
-</td></tr>
-</table>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="ga9cc3047d71168e8e79989f1d6fd59cef"></a>
+<a class="anchor" id="ga3d32d7648da36b4fd0581fce78c4a13b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00033.html#ga9cc3047d71168e8e79989f1d6fd59cef">i3c_hdr_mode_t</a></td>
+          <td class="memname">void I3C_GetDefaultConfig </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00033.html#ga2de4b28216cc6c350e76856e3cfce71a">i3c_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>This function provides the following default configuration for I3C: </p>
+<div class="fragment"><div class="line">*    config-&gt;enableMaster                 = <a class="code" href="a00032.html#gga39a886766770aee160f0de7975f033cda5c985cf628a99366ba2295e2beabfae9">kI3C_MasterCapable</a>;</div>
+<div class="line">*    config-&gt;disableTimeout               = <span class="keyword">false</span>;</div>
+<div class="line">*    config-&gt;hKeep                        = <a class="code" href="a00032.html#gga1d9990523436d938bbb3fed13ae2fca7ac4aed7c1fde2d52e879f32f4993f0a3f">kI3C_MasterHighKeeperNone</a>;</div>
+<div class="line">*    config-&gt;enableOpenDrainStop          = <span class="keyword">true</span>;</div>
+<div class="line">*    config-&gt;enableOpenDrainHigh          = <span class="keyword">true</span>;</div>
+<div class="line">*    config-&gt;baudRate_Hz.i2cBaud          = 400000U;</div>
+<div class="line">*    config-&gt;baudRate_Hz.i3cPushPullBaud  = 12500000U;</div>
+<div class="line">*    config-&gt;baudRate_Hz.i3cOpenDrainBaud = 2500000U;</div>
+<div class="line">*    config-&gt;masterDynamicAddress         = 0x0AU;</div>
+<div class="line">*    config-&gt;slowClock_Hz                 = 1000000U;</div>
+<div class="line">*    config-&gt;enableSlave                  = <span class="keyword">true</span>;</div>
+<div class="line">*    config-&gt;vendorID                     = 0x11BU;</div>
+<div class="line">*    config-&gt;enableRandomPart             = <span class="keyword">false</span>;</div>
+<div class="line">*    config-&gt;partNumber                   = 0;</div>
+<div class="line">*    config-&gt;dcr                          = 0;</div>
+<div class="line">*    config-&gt;bcr = 0;</div>
+<div class="line">*    config-&gt;hdrMode             = (uint8_t)kI3C_HDRModeDDR;</div>
+<div class="line">*    config-&gt;nakAllRequest       = <span class="keyword">false</span>;</div>
+<div class="line">*    config-&gt;ignoreS0S1Error     = <span class="keyword">false</span>;</div>
+<div class="line">*    config-&gt;offline             = <span class="keyword">false</span>;</div>
+<div class="line">*    config-&gt;matchSlaveStartStop = <span class="keyword">false</span>;</div>
+<div class="line">* </div>
+</div><!-- fragment --><p>After calling this function, you can override any settings in order to customize the configuration, prior to initializing the common I3C driver with <a class="el" href="a00033.html#gacac08d592a3da29d975f3d96a0b073c7" title="Initializes the I3C peripheral. ">I3C_Init()</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">config</td><td>User provided configuration structure for default values. Refer to <a class="el" href="a00033.html#ga2de4b28216cc6c350e76856e3cfce71a" title="Structure with settings to initialize the I3C module, could both initialize master and slave function...">i3c_config_t</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gacac08d592a3da29d975f3d96a0b073c7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void I3C_Init </td>
+          <td>(</td>
+          <td class="paramtype">I3C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a00033.html#ga2de4b28216cc6c350e76856e3cfce71a">i3c_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>sourceClock_Hz</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function enables the peripheral clock and initializes the I3C peripheral as described by the user provided configuration. This will initialize both the master peripheral and slave peripheral so that I3C module could work as pure master, pure slave or secondary master, etc. A software reset is performed prior to configuration.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
+    <tr><td class="paramname">config</td><td>User provided peripheral configuration. Use <a class="el" href="a00033.html#ga3d32d7648da36b4fd0581fce78c4a13b" title="Provides a default configuration for the I3C peripheral, the configuration covers both master functio...">I3C_GetDefaultConfig()</a> to get a set of defaults that you can override. </td></tr>
+    <tr><td class="paramname">sourceClock_Hz</td><td>Frequency in Hertz of the I3C functional clock. Used to calculate the baud rate divisors, filter widths, and timeout periods. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

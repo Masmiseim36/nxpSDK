@@ -14,13 +14,11 @@
 #include <xtensa/xos.h>
 
 #include "xaf-utils-test.h"
+#include "xaf-fio-test.h"
 #include "xa_error_standards.h"
 
 #include "audio/xa-pcm-gain-api.h"
 #include "audio/xa-renderer-api.h"
-#if XA_CLIENT_PROXY
-#include "client_proxy_api.h"
-#endif
 
 #include "dsp_config.h"
 #include "srtm_utils.h"
@@ -32,6 +30,8 @@
  ******************************************************************************/
 #define AUDIO_FRMWK_BUF_SIZE (64 * 1024)
 #define AUDIO_COMP_BUF_SIZE  (256 * 1024)
+extern int audio_frmwk_buf_size;
+extern int audio_comp_buf_size;
 
 #define PCM_GAIN_FRAME_SIZE (4 * 1024)
 #define RENDERER_FRAME_SIZE (4 * 1024)
@@ -40,16 +40,9 @@ enum
 {
     XA_COMP = -1,
     XA_GAIN_0,
-#if XA_CLIENT_PROXY
-    XA_CLIENT_PROXY_0,
-#endif
     XA_RENDERER_0,
     NUM_COMP_IN_GRAPH,
 };
-
-#if XA_CLIENT_PROXY
-#define CLIENT_PROXY_FRAME_SIZE_US (10000) // 10000us @96000 x2 channels 32 bit = 4096B buffer
-#endif
 
 /*******************************************************************************
  * Component Setup/ Config
@@ -60,6 +53,7 @@ static unsigned char cleanup_stack[STACK_SIZE];
 static int srtm_file_ren_cleanup(void *arg, int wake_value);
 static int comp_get_order[NUM_COMP_IN_GRAPH] = {0};
 static uint8_t num_comp                      = 0;
+static xaf_adev_config_t device_config;
 
 static void *comp_get_pointer(dsp_handle_t *dsp, int cid, bool addr)
 {
@@ -67,10 +61,6 @@ static void *comp_get_pointer(dsp_handle_t *dsp, int cid, bool addr)
     {
         case XA_GAIN_0:
             return (addr ? &dsp->comp_gain : dsp->comp_gain);
-#if XA_CLIENT_PROXY
-        case XA_CLIENT_PROXY_0:
-            return (addr ? &dsp->comp_client_proxy : dsp->comp_client_proxy);
-#endif
         case XA_RENDERER_0:
             return (addr ? &dsp->comp_renderer : dsp->comp_renderer);
         default:
@@ -103,11 +93,8 @@ static int file_ren_close(dsp_handle_t *dsp, bool success)
             DSP_PRINTF("[DSP_FILE_REN] xaf_comp_delete[%d] failure: %d\r\n", i, ret);
     }
 
-    ret = xaf_adev_close(dsp->audio_device, XAF_ADEV_NORMAL_CLOSE);
-    if (ret != XAF_NO_ERR)
-        DSP_PRINTF("[DSP_FILE_REN] xaf_adev_close failure: %d\r\n", ret);
-    else
-        DSP_PRINTF("[DSP_FILE_REN] Audio device closed\r\n\r\n");
+    void * p_adev = dsp->audio_device;
+    TST_CHK_API_ADEV_CLOSE(p_adev, XAF_ADEV_NORMAL_CLOSE, device_config, "xaf_adev_close");
 
     /* Send message to the application */
     if (success)
@@ -135,24 +122,6 @@ static int pcm_gain_setup(void *p_comp, xaf_format_t *format)
 
     return xaf_comp_set_config(p_comp, 5, &param[0]);
 }
-
-#if XA_CLIENT_PROXY
-static int client_proxy_setup(void *p_comp, xaf_format_t *format)
-{
-    int param[10];
-
-    param[0] = XA_CLIENT_PROXY_CONFIG_PARAM_CHANNELS;
-    param[1] = format->channels;
-    param[2] = XA_CLIENT_PROXY_CONFIG_PARAM_SAMPLE_RATE;
-    param[3] = format->sample_rate;
-    param[4] = XA_CLIENT_PROXY_CONFIG_PARAM_PCM_WIDTH;
-    param[5] = format->pcm_width;
-    param[6] = XA_CLIENT_PROXY_CONFIG_PARAM_INPUT_FRAME_SIZE_US;
-    param[7] = CLIENT_PROXY_FRAME_SIZE_US;
-
-    return xaf_comp_set_config(p_comp, 4, &param[0]);
-}
-#endif
 
 static XAF_ERR_CODE renderer_setup(void *p_renderer, xaf_format_t *format)
 {
@@ -218,7 +187,6 @@ int srtm_file_ren_create(dsp_handle_t *dsp, uint32_t *pCmdParams)
     int comp_noutbuf[NUM_COMP_IN_GRAPH];
     XAF_ERR_CODE ret;
     xaf_comp_status comp_status;
-    xaf_adev_config_t device_config;
     xaf_comp_config_t comp_config[NUM_COMP_IN_GRAPH];
     int comp_info[4];
 
@@ -239,10 +207,6 @@ int srtm_file_ren_create(dsp_handle_t *dsp, uint32_t *pCmdParams)
     /* Create component order */
     num_comp                   = 0;
     comp_get_order[num_comp++] = XA_GAIN_0;
-#if XA_CLIENT_PROXY
-    if (channels == 2)
-        comp_get_order[num_comp++] = XA_CLIENT_PROXY_0;
-#endif
     comp_get_order[num_comp++] = XA_RENDERER_0;
 
     /* Component data preparation */
@@ -267,16 +231,6 @@ int srtm_file_ren_create(dsp_handle_t *dsp, uint32_t *pCmdParams)
                 comp_id[cid]                 = "post-proc/pcm_gain";
                 comp_ninbuf[cid]             = 1;
                 break;
-#if XA_CLIENT_PROXY
-            case XA_CLIENT_PROXY_0:
-                comp_format[cid].sample_rate = sampling_rate;
-                comp_format[cid].channels    = channels;
-                comp_format[cid].pcm_width   = width;
-                comp_setup[cid]              = client_proxy_setup;
-                comp_type[cid]               = XAF_POST_PROC;
-                comp_id[cid]                 = "post-proc/client_proxy";
-                break;
-#endif
             case XA_RENDERER_0:
                 comp_format[cid].sample_rate = sampling_rate;
                 comp_format[cid].channels    = channels;
@@ -295,19 +249,16 @@ int srtm_file_ren_create(dsp_handle_t *dsp, uint32_t *pCmdParams)
     /* Initialize XAF */
     xaf_adev_config_default_init(&device_config);
 
-    device_config.pmem_malloc                 = DSP_Malloc;
-    device_config.pmem_free                   = DSP_Free;
-    device_config.audio_component_buffer_size = AUDIO_COMP_BUF_SIZE;
-    device_config.audio_framework_buffer_size = AUDIO_FRMWK_BUF_SIZE;
+    audio_frmwk_buf_size = AUDIO_FRMWK_BUF_SIZE;
+    audio_comp_buf_size = AUDIO_COMP_BUF_SIZE;
+    device_config.audio_component_buffer_size[XAF_MEM_ID_COMP] = AUDIO_COMP_BUF_SIZE;
+    device_config.audio_framework_buffer_size[XAF_MEM_ID_DEV] = AUDIO_FRMWK_BUF_SIZE;
+    device_config.core = XF_CORE_ID;
 
-    ret = xaf_adev_open(&dsp->audio_device, &device_config);
-    if (ret != XAF_NO_ERR)
-    {
-        DSP_PRINTF("[DSP_FILE_REN] xaf_adev_open failure: %d\r\n", ret);
-        return -1;
-    }
-
+    void * p_adev = dsp->audio_device;
+    TST_CHK_API_ADEV_OPEN(p_adev, device_config, "[DSP Codec] Audio Device Open\r\n");
     DSP_PRINTF("[DSP_FILE_REN] Audio Device Ready\n\r");
+    dsp->audio_device = p_adev;
 
     /* Create and setup all components */
     for (i = 0; i < num_comp; i++)

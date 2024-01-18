@@ -13,6 +13,7 @@
 
 #include "ringbuffer.h"
 #include "rpmsg_queue.h"
+#include "xaf-api.h"
 
 #define APP_SEMA42 SEMA42
 #define SEMA_PRINTF_NUM	  0
@@ -103,5 +104,6 @@ void *event_handler_entry(void *arg);
 int xa_app_initialize_event_queue(void);
 int xa_app_receive_events_cb(void *comp, uint32_t event_id, void *buf, uint32_t buf_size, uint32_t comp_error_flag);
 void xa_app_free_event_queue(void);
+void print_mem_stats(void *p_adev, xaf_adev_config_t adev_config);
 
 #endif /* __SRTM_UTILS_H__ */

@@ -33,7 +33,7 @@ endif
 # compiler tools
 ifeq (,$(filter $(CPU), gcc x86))
 ifeq (,$(XT_CPP_COMPILER))
-	CC = xt-xcc $(XTCORE)
+	CC = xt-clang $(XTCORE)
 else
 	CC = $(XT_CPP_COMPILER) $(XTCORE)
 endif
@@ -62,11 +62,14 @@ else
 	endif
 endif
 
+has_mul16 = $(shell grep -w "IsaUseMul16" "$$XTENSA_SYSTEM/$$XTENSA_CORE"-params | awk  -- '{ print $$3 }')
+has_mul32 = $(shell grep -w "IsaUse32bitMul" "$$XTENSA_SYSTEM/$$XTENSA_CORE"-params | awk  -- '{ print $$3 }')
+
 # compiler flags
 CFLAGS += $(EXTRA_CFLAGS)
 LDFLAGS += $(EXTRA_LDFLAGS)
 
-COPTGCC = -INLINE:requested -Wsign-compare -Wstrict-prototypes -Wdeclaration-after-statement
+COPTGCC = -INLINE:requested -Wsign-compare -Wdeclaration-after-statement
 ifeq "$(DEBUG)" "1"
 	CFLAGS += -g
 else
@@ -81,7 +84,14 @@ ifeq (,$(filter $(CPU), gcc x86))
 	#endif
 	COPTIONS += -Wall $(COPTGCC) \
 	            -std=gnu99 -pedantic \
-	            -fsigned-char -mno-mul16 -mno-mul32 -mno-div32 -Wall -W
+	            -fsigned-char -Wall -W
+	ifeq "$(has_mul16)" "0"
+        	COPTIONS_XPG += -mno-mul16
+	endif
+	ifeq "$(has_mul32)" "0"
+        	COPTIONS_XPG += -mno-mul32 -mno-div32
+	endif
+	COPTIONS += $(COPTIONS_XPG)
 
 	ifeq ($(WARNING_AS_ERROR),1)
 	    COPTIONS += -Werror

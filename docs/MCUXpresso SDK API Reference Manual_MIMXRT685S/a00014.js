@@ -1,99 +1,82 @@
 var a00014 =
 [
-    [ "ctimer_match_config_t", "a00014.html#a00295", [
-      [ "matchValue", "a00014.html#afa3614f09e787565b3514ddd4d9545a0", null ],
-      [ "enableCounterReset", "a00014.html#aaa00b16aba273e3f11f9480154acc1e5", null ],
-      [ "enableCounterStop", "a00014.html#a94fe2c63ce7fcb5cf68f9ce73974a3e8", null ],
-      [ "outControl", "a00014.html#a0e8b29f0c0f74c5273942a521e3b16d6", null ],
-      [ "outPinInitState", "a00014.html#a31ca8ee3406b7a17c793d94469e1e68d", null ],
-      [ "enableInterrupt", "a00014.html#ae09fd69820c9285d7f146260d2c51584", null ]
+    [ "_cs42888_audio_format", "a00014.html#a00276", [
+      [ "mclk_HZ", "a00014.html#a10d00b0e91e9fbf33c7c77bb104ef21b", null ],
+      [ "sampleRate", "a00014.html#a407c0f6d0c5c140f36ead6b8561f1289", null ],
+      [ "bitWidth", "a00014.html#a621a1b1ed908192a1b313d5114a2084e", null ]
     ] ],
-    [ "ctimer_config_t", "a00014.html#a00294", [
-      [ "mode", "a00014.html#ab72ef3a10cab9754d3cecb44ef7ad6ac", null ],
-      [ "input", "a00014.html#ac07c23c0bbadea74c24c03e401321fbc", null ],
-      [ "prescale", "a00014.html#aa8baec2c586854dc58ff4cdb82b7996b", null ]
+    [ "cs42888_config", "a00014.html#a00407", [
+      [ "bus", "a00014.html#a0aef75d2e780c2ab20b977502074d919", null ],
+      [ "format", "a00014.html#a5c87c9ae3ce51bf8f9e3279178d8b0ac", null ],
+      [ "ADCMode", "a00014.html#aed6855eea5768e26bd55a38d4b9594bf", null ],
+      [ "DACMode", "a00014.html#a282d7645529df380a7128e952c4a5875", null ],
+      [ "master", "a00014.html#a266dc8f1cd4ebf48685b7bdea543feec", null ],
+      [ "i2cConfig", "a00014.html#a6f3b211b95780eb127952ca275bbfdb0", null ],
+      [ "slaveAddress", "a00014.html#a63d9fe669c4cea85a7bdb83e5cd354b4", null ],
+      [ "reset", "a00014.html#ae8f2ea58d447aa80a72ec6bc6c824f15", null ]
     ] ],
-    [ "FSL_CTIMER_DRIVER_VERSION", "a00014.html#ga89b626fd25a5b3bbd511672ff51618f8", null ],
-    [ "ctimer_capture_channel_t", "a00014.html#ga2fbf5cfa219c31ac16f3786d6897dc3f", [
-      [ "kCTIMER_Capture_0", "a00014.html#gga2fbf5cfa219c31ac16f3786d6897dc3faa13dee3bb29b8962385da2ac6d8dc938", null ],
-      [ "kCTIMER_Capture_1", "a00014.html#gga2fbf5cfa219c31ac16f3786d6897dc3fac4fcf23f15faa447489ef7ccc4d6cb25", null ],
-      [ "kCTIMER_Capture_2", "a00014.html#gga2fbf5cfa219c31ac16f3786d6897dc3fa9d6d30f6a5498d009cd87fafee3bccd5", null ],
-      [ "kCTIMER_Capture_3", "a00014.html#gga2fbf5cfa219c31ac16f3786d6897dc3fa9d2f295d94d98bc376159ecea3ff2461", null ]
+    [ "_cs42888_handle", "a00014.html#a00277", [
+      [ "config", "a00014.html#a91dd3acb8b54ad7c9b31ee4640675572", null ],
+      [ "i2cHandle", "a00014.html#abe4ae0d2677d079f71af2b531ee3991f", null ]
     ] ],
-    [ "ctimer_capture_edge_t", "a00014.html#gac37706bc06bc7590ce1e3d1b4bf73638", [
-      [ "kCTIMER_Capture_RiseEdge", "a00014.html#ggac37706bc06bc7590ce1e3d1b4bf73638ac8297b7a4be687e63200fc22be1d2f02", null ],
-      [ "kCTIMER_Capture_FallEdge", "a00014.html#ggac37706bc06bc7590ce1e3d1b4bf73638a18a0af674c980ebbdfd0413dcfa3f3c0", null ],
-      [ "kCTIMER_Capture_BothEdge", "a00014.html#ggac37706bc06bc7590ce1e3d1b4bf73638ab73ca62f50120abc4662c750925e9b5a", null ]
+    [ "FSL_CS42888_DRIVER_VERSION", "a00014.html#ga469630e0b22b4bc480718055fd9bdff1", null ],
+    [ "CS42888_I2C_HANDLER_SIZE", "a00014.html#ga953230c47c19e6eb63913ae2b64e1ae5", null ],
+    [ "CS42888_ID", "a00014.html#ga8996629a1d0330f394495461ceb4957b", null ],
+    [ "CS42888_AOUT_MAX_VOLUME_VALUE", "a00014.html#gac06d214143119255ed45dd4f3b7ab627", null ],
+    [ "CS42888_CACHEREGNUM", "a00014.html#gaa8dd0b96c875487380daa23f03192594", null ],
+    [ "CS42888_I2C_ADDR", "a00014.html#ga3758dc010c2ce784b57cf530610bee26", null ],
+    [ "CS42888_I2C_BITRATE", "a00014.html#ga129d78d2efcbc77435255429dc0baef4", null ],
+    [ "cs42888_reset", "a00014.html#ga5fe323798009a9b45302adece010e3e0", null ],
+    [ "cs42888_func_mode", "a00014.html#ga1ab2b08437ff0240d91298dec0fc957b", null ],
+    [ "cs42888_module_t", "a00014.html#ga7151227626166a33aa10d24aa7e6a53e", null ],
+    [ "cs42888_bus_t", "a00014.html#ga0f2c856d60f3b94bafd6f3c4ed4027ed", null ],
+    [ "cs42888_audio_format_t", "a00014.html#ga8f705faa4b3075e9293c448b3a0fb1db", null ],
+    [ "cs42888_config_t", "a00014.html#gab738cdffee1c037e754566c0c0856daf", null ],
+    [ "cs42888_handle_t", "a00014.html#gad32b5ec50e313050a3c4ba0ec2eef663", null ],
+    [ "_CS42888_func_mode", "a00014.html#ga0181f6f0d547da193db4a61149cf84d0", [
+      [ "kCS42888_ModeMasterSSM", "a00014.html#gga0181f6f0d547da193db4a61149cf84d0a57b2cc424116839aeec3d1c2e53bfff4", null ],
+      [ "kCS42888_ModeMasterDSM", "a00014.html#gga0181f6f0d547da193db4a61149cf84d0a11b7086a5f9cfc75f35718710815780c", null ],
+      [ "kCS42888_ModeMasterQSM", "a00014.html#gga0181f6f0d547da193db4a61149cf84d0a2d0f655396420774935b01b1b01b315a", null ],
+      [ "kCS42888_ModeSlave", "a00014.html#gga0181f6f0d547da193db4a61149cf84d0aa6dd80e639d0173bafda96b4df37c96a", null ]
     ] ],
-    [ "ctimer_match_t", "a00014.html#gae60f7d34c9e499abba96e5979ee1818d", [
-      [ "kCTIMER_Match_0", "a00014.html#ggae60f7d34c9e499abba96e5979ee1818dac06fa7bc66bbb978bc14348fc0cb4633", null ],
-      [ "kCTIMER_Match_1", "a00014.html#ggae60f7d34c9e499abba96e5979ee1818da38a7356dba8d8a5a8877e9de9fde2faf", null ],
-      [ "kCTIMER_Match_2", "a00014.html#ggae60f7d34c9e499abba96e5979ee1818da98b35c6f057b201073c8afa4bdce60ed", null ],
-      [ "kCTIMER_Match_3", "a00014.html#ggae60f7d34c9e499abba96e5979ee1818da6acca2e2ccd6cc6d08a3d958e47c80fb", null ]
+    [ "_CS42888_module", "a00014.html#gae2b10bb2968b31b5745cc6f091b7ab24", [
+      [ "kCS42888_ModuleDACPair1", "a00014.html#ggae2b10bb2968b31b5745cc6f091b7ab24a0c3edb05c683d99b43b1afffa92c7745", null ],
+      [ "kCS42888_ModuleDACPair2", "a00014.html#ggae2b10bb2968b31b5745cc6f091b7ab24a12297793c9f7de6c5df5dd506ba81600", null ],
+      [ "kCS42888_ModuleDACPair3", "a00014.html#ggae2b10bb2968b31b5745cc6f091b7ab24a45072abfadea932906a4e536dbb7d5a4", null ],
+      [ "kCS42888_ModuleDACPair4", "a00014.html#ggae2b10bb2968b31b5745cc6f091b7ab24a3d1833e1a30aa83df7c3174ff3ab63a9", null ],
+      [ "kCS42888_ModuleADCPair1", "a00014.html#ggae2b10bb2968b31b5745cc6f091b7ab24a9e6ae9226aa29208f3fde450a3a2ae69", null ],
+      [ "kCS42888_ModuleADCPair2", "a00014.html#ggae2b10bb2968b31b5745cc6f091b7ab24a3863290d03b58c95e2ae8824fe99aac6", null ]
     ] ],
-    [ "ctimer_external_match_t", "a00014.html#ga09f5eb858c001377062fe0b8a0d5bd29", [
-      [ "kCTIMER_External_Match_0", "a00014.html#gga09f5eb858c001377062fe0b8a0d5bd29a42b2f4d5cb9a524f87f6626169155207", null ],
-      [ "kCTIMER_External_Match_1", "a00014.html#gga09f5eb858c001377062fe0b8a0d5bd29a90643d7c03749f64e0d20cfcf55a80ed", null ],
-      [ "kCTIMER_External_Match_2", "a00014.html#gga09f5eb858c001377062fe0b8a0d5bd29ab4602750f83eba0e5cebd0f2ed91a3c4", null ],
-      [ "kCTIMER_External_Match_3", "a00014.html#gga09f5eb858c001377062fe0b8a0d5bd29aba7194efe10386e467b082fc0b847031", null ]
+    [ "_CS42888_bus", "a00014.html#ga6b8dfab01be44c83e79f6d913d9526bd", [
+      [ "kCS42888_BusLeftJustified", "a00014.html#gga6b8dfab01be44c83e79f6d913d9526bda7685b48742dd9b6a928673cb716dc496", null ],
+      [ "kCS42888_BusI2S", "a00014.html#gga6b8dfab01be44c83e79f6d913d9526bdaeef13df8577ef9bfde4a8390d5b0ccd9", null ],
+      [ "kCS42888_BusRightJustified", "a00014.html#gga6b8dfab01be44c83e79f6d913d9526bda4d55c55bf343966060e2a1a756445629", null ],
+      [ "kCS42888_BusOL1", "a00014.html#gga6b8dfab01be44c83e79f6d913d9526bda7c862e2ffab7396a543b9a07df682c7d", null ],
+      [ "kCS42888_BusOL2", "a00014.html#gga6b8dfab01be44c83e79f6d913d9526bda440e9e0d3ebd0431de4690b05bffcf5f", null ],
+      [ "kCS42888_BusTDM", "a00014.html#gga6b8dfab01be44c83e79f6d913d9526bdaf1ae036e2e350aabfe39cd29bace6d32", null ],
+      [ "kCS42888_AOUT1", "a00014.html#gga0b887f38fa71033f0904f8e2330b6815a40c873d24063247f27786a37ae99f4e5", null ],
+      [ "kCS42888_AOUT2", "a00014.html#gga0b887f38fa71033f0904f8e2330b6815a4e25320a6e1770c4782c0776bd6708e2", null ],
+      [ "kCS42888_AOUT3", "a00014.html#gga0b887f38fa71033f0904f8e2330b6815a3635f95f2c41320a933acb215a07ea1e", null ],
+      [ "kCS42888_AOUT4", "a00014.html#gga0b887f38fa71033f0904f8e2330b6815ad9aedebf8ecd41a35099a221194985ae", null ],
+      [ "kCS42888_AOUT5", "a00014.html#gga0b887f38fa71033f0904f8e2330b6815a5433074d6d61dc9a342dd07880ad8013", null ],
+      [ "kCS42888_AOUT6", "a00014.html#gga0b887f38fa71033f0904f8e2330b6815a5523459f137c68559e45279689b3c9d1", null ],
+      [ "kCS42888_AOUT7", "a00014.html#gga0b887f38fa71033f0904f8e2330b6815a4c5575ba57cca766bc4f8a1971065b5a", null ],
+      [ "kCS42888_AOUT8", "a00014.html#gga0b887f38fa71033f0904f8e2330b6815a317c6f4677e7331aeee1270eefd18981", null ]
     ] ],
-    [ "ctimer_match_output_control_t", "a00014.html#ga22cef1fc5f8e23a35b6c3a012e3d143c", [
-      [ "kCTIMER_Output_NoAction", "a00014.html#gga22cef1fc5f8e23a35b6c3a012e3d143cac387e950c7d8c19c1464dd27e5c7396f", null ],
-      [ "kCTIMER_Output_Clear", "a00014.html#gga22cef1fc5f8e23a35b6c3a012e3d143ca2086fd6712693ac8f0758553ff7bb3d3", null ],
-      [ "kCTIMER_Output_Set", "a00014.html#gga22cef1fc5f8e23a35b6c3a012e3d143cae1b0b02fe1e0af81f62fb40ff8339b8f", null ],
-      [ "kCTIMER_Output_Toggle", "a00014.html#gga22cef1fc5f8e23a35b6c3a012e3d143ca4ad940f7bea1dbae09b156ec0415f5f2", null ]
-    ] ],
-    [ "ctimer_timer_mode_t", "a00014.html#ga9cc18e14c871b2a79888a4cdacbb0eee", null ],
-    [ "ctimer_interrupt_enable_t", "a00014.html#ga0971c614f932bcf55994bf6c92325eb2", [
-      [ "kCTIMER_Match0InterruptEnable", "a00014.html#gga0971c614f932bcf55994bf6c92325eb2a05694ae09ff514b7237388b33acaaa99", null ],
-      [ "kCTIMER_Match1InterruptEnable", "a00014.html#gga0971c614f932bcf55994bf6c92325eb2a47f020e940359f6f08c5c8171d2942b9", null ],
-      [ "kCTIMER_Match2InterruptEnable", "a00014.html#gga0971c614f932bcf55994bf6c92325eb2ab15c129ca07d334ae13d77e0646c7287", null ],
-      [ "kCTIMER_Match3InterruptEnable", "a00014.html#gga0971c614f932bcf55994bf6c92325eb2a1f67c8c1e8039ca326e9f25fabffdd0d", null ],
-      [ "kCTIMER_Capture0InterruptEnable", "a00014.html#gga0971c614f932bcf55994bf6c92325eb2a5fe0ea705babd6351564e59c8db8e928", null ],
-      [ "kCTIMER_Capture1InterruptEnable", "a00014.html#gga0971c614f932bcf55994bf6c92325eb2a5d70800d3cc33733d42f525242edbbf4", null ],
-      [ "kCTIMER_Capture2InterruptEnable", "a00014.html#gga0971c614f932bcf55994bf6c92325eb2a68a56db3574cd0ea3bb783c7d13f0894", null ],
-      [ "kCTIMER_Capture3InterruptEnable", "a00014.html#gga0971c614f932bcf55994bf6c92325eb2a347ceee25f668e7af7a459da9bbc9418", null ]
-    ] ],
-    [ "ctimer_status_flags_t", "a00014.html#gae64285eb2e52bf5cc2b723870392ff60", [
-      [ "kCTIMER_Match0Flag", "a00014.html#ggae64285eb2e52bf5cc2b723870392ff60ad76fd4735e0604307b50d2fd12cba3c0", null ],
-      [ "kCTIMER_Match1Flag", "a00014.html#ggae64285eb2e52bf5cc2b723870392ff60a901042ca905603329df3cf1d316a2e53", null ],
-      [ "kCTIMER_Match2Flag", "a00014.html#ggae64285eb2e52bf5cc2b723870392ff60af5a6c5ee43a01803e82c26181dedfa97", null ],
-      [ "kCTIMER_Match3Flag", "a00014.html#ggae64285eb2e52bf5cc2b723870392ff60a02e58518795f05162313b509a600a3d3", null ],
-      [ "kCTIMER_Capture0Flag", "a00014.html#ggae64285eb2e52bf5cc2b723870392ff60a5504b0ec94b832a46824ec297a106df1", null ],
-      [ "kCTIMER_Capture1Flag", "a00014.html#ggae64285eb2e52bf5cc2b723870392ff60af3a0db73d48116ea419af737c706b30b", null ],
-      [ "kCTIMER_Capture2Flag", "a00014.html#ggae64285eb2e52bf5cc2b723870392ff60aaf0224295d4f330d0d61d10ab30f38ea", null ],
-      [ "kCTIMER_Capture3Flag", "a00014.html#ggae64285eb2e52bf5cc2b723870392ff60a2bd4b55092422d4faa550293c529dacf", null ]
-    ] ],
-    [ "ctimer_callback_type_t", "a00014.html#ga740677adee6ada817bb45ed62607c3c4", [
-      [ "kCTIMER_SingleCallback", "a00014.html#gga740677adee6ada817bb45ed62607c3c4af805d881e4dc37e339a8434c1816f930", null ],
-      [ "kCTIMER_MultipleCallback", "a00014.html#gga740677adee6ada817bb45ed62607c3c4a38d629ce598178fd96f48660e63ae1e7", null ]
-    ] ],
-    [ "CTIMER_Init", "a00014.html#gacae8e1dbb60368ab01a9564de7eda037", null ],
-    [ "CTIMER_Deinit", "a00014.html#ga97daa711029883d46933204381f44c9f", null ],
-    [ "CTIMER_GetDefaultConfig", "a00014.html#gac44f44c3f88125a41081ca2a7cf06223", null ],
-    [ "CTIMER_SetupPwmPeriod", "a00014.html#gacb1f53d8b6a2b157194983172c448707", null ],
-    [ "CTIMER_SetupPwm", "a00014.html#ga2a70f03b835a36e5b321861d0b0ebb41", null ],
-    [ "CTIMER_UpdatePwmPulsePeriod", "a00014.html#gad9f4a6073c669662f300d395d66e16bb", null ],
-    [ "CTIMER_UpdatePwmDutycycle", "a00014.html#ga5d04834d4b29c8505b0a89b8875c2e78", null ],
-    [ "CTIMER_SetupMatch", "a00014.html#ga64b1d0ba86d952b5ec30e201880c7bb5", null ],
-    [ "CTIMER_GetOutputMatchStatus", "a00014.html#gae4d610de22fd8b8c9577e774dac88ac5", null ],
-    [ "CTIMER_SetupCapture", "a00014.html#gae279db71f27ceb5a6d15ad8d17cbd670", null ],
-    [ "CTIMER_GetTimerCountValue", "a00014.html#ga0b2f1b62dee7adf60574c3410e7bd26f", null ],
-    [ "CTIMER_RegisterCallBack", "a00014.html#gaa7de0b40e3127d3d8901398df50feb20", null ],
-    [ "CTIMER_EnableInterrupts", "a00014.html#ga24464606cafc0f316116b164966a906e", null ],
-    [ "CTIMER_DisableInterrupts", "a00014.html#gaf1b8088779288346a7508dc7ef6e99d1", null ],
-    [ "CTIMER_GetEnabledInterrupts", "a00014.html#ga635d2570c0274ff40f10ac7b5f3317df", null ],
-    [ "CTIMER_GetStatusFlags", "a00014.html#gad65b4a95cbfca13083f6d93e7a46f1cb", null ],
-    [ "CTIMER_ClearStatusFlags", "a00014.html#ga43b7410d9c6aab6aad466bd481b9222b", null ],
-    [ "CTIMER_StartTimer", "a00014.html#gae9a75a0e18a696baa795ae67aa30a120", null ],
-    [ "CTIMER_StopTimer", "a00014.html#ga3c7e8e1eb12e5f48ecca04c8128a9545", null ],
-    [ "CTIMER_Reset", "a00014.html#ga7ea373165af081e0e1700f7a3ba56642", null ],
-    [ "CTIMER_SetPrescale", "a00014.html#gacd6bd05573ab1128b8f3feaf30058e32", null ],
-    [ "CTIMER_GetCaptureValue", "a00014.html#gad50a3d5668e4b0e9aba06d4d555139b9", null ],
-    [ "CTIMER_EnableResetMatchChannel", "a00014.html#gaeb3527b175c6158c02d76e063e2794b5", null ],
-    [ "CTIMER_EnableStopMatchChannel", "a00014.html#gaf575852d70d9db218b0def620a0b7302", null ],
-    [ "CTIMER_EnableMatchChannelReload", "a00014.html#ga47db49d83551ef1e38375570f29e5f0e", null ],
-    [ "CTIMER_EnableRisingEdgeCapture", "a00014.html#ga0b4954f928c8e278c29325ea10aa7fa5", null ],
-    [ "CTIMER_EnableFallingEdgeCapture", "a00014.html#ga37f6a866661fa105f4e66e76e02d4236", null ],
-    [ "CTIMER_SetShadowValue", "a00014.html#gabe141933756553c5fcbb23160f065b00", null ]
+    [ "CS42888_Init", "a00014.html#gaaedecae1ab48066f40067f938b45e246", null ],
+    [ "CS42888_Deinit", "a00014.html#ga9f3f2e2ab36b350ac9e7687ac068c924", null ],
+    [ "CS42888_SetProtocol", "a00014.html#ga9909a32fcd8fb65497a0971169f02b6f", null ],
+    [ "CS42888_SetFuncMode", "a00014.html#ga7eec024331e152d41eb21b4de0dcb50b", null ],
+    [ "CS42888_SelectFunctionalMode", "a00014.html#ga206dde5ac0fb4ad77ce3b3e68a5f03e0", null ],
+    [ "CS42888_SetAOUTVolume", "a00014.html#ga213cbbee89c91489164c8ab704ff468b", null ],
+    [ "CS42888_SetAINVolume", "a00014.html#gae86544adbe99c855a60db68b11e40960", null ],
+    [ "CS42888_GetAOUTVolume", "a00014.html#ga2e5e55bf98bd6af70483e36d94f5c173", null ],
+    [ "CS42888_GetAINVolume", "a00014.html#gafc22378afb83464ee651b35187aa57c0", null ],
+    [ "CS42888_SetMute", "a00014.html#ga55964f9ec6f7f9dd0f066a2aa50187ab", null ],
+    [ "CS42888_SetChannelMute", "a00014.html#gaf995fa288cfd403c1dcdc7286edcdb48", null ],
+    [ "CS42888_SetModule", "a00014.html#ga2664a02181180546f17d0ec2a35f227b", null ],
+    [ "CS42888_ConfigDataFormat", "a00014.html#ga1cc19dbe338c5dac380a6d4f8747b7e9", null ],
+    [ "CS42888_WriteReg", "a00014.html#gaac05142d661f4cc16706b59f5bb6c03d", null ],
+    [ "CS42888_ReadReg", "a00014.html#ga7d6fae89e3f167613b9aeabe65380918", null ],
+    [ "CS42888_ModifyReg", "a00014.html#ga9338f9003a76f3d7f71156f49e7ce293", null ]
 ];

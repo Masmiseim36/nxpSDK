@@ -14,14 +14,11 @@
 #include <xtensa/xos.h>
 
 #include "xaf-utils-test.h"
+#include "xaf-fio-test.h"
 #include "xa_error_standards.h"
 
 #include "audio/xa-pcm-gain-api.h"
 #include "audio/xa-renderer-api.h"
-
-#if XA_CLIENT_PROXY
-#include "client_proxy_api.h"
-#endif
 
 #include "dsp_config.h"
 #include "srtm_utils.h"
@@ -32,6 +29,8 @@
  ******************************************************************************/
 #define AUDIO_FRMWK_BUF_SIZE (64 * 1024)
 #define AUDIO_COMP_BUF_SIZE  (256 * 1024)
+extern int audio_frmwk_buf_size;
+extern int audio_comp_buf_size;
 
 #define PCM_GAIN_FRAME_SIZE (192)
 #define RENDERER_FRAME_SIZE (192)
@@ -40,23 +39,12 @@ enum
 {
     XA_COMP = -1,
     XA_GAIN_0,
-#if XA_CLIENT_PROXY
-    XA_CLIENT_PROXY_0,
-#endif
     XA_RENDERER_0,
     NUM_COMP_IN_GRAPH,
 };
 
 const int comp_get_order[] = {XA_GAIN_0,
-#if XA_CLIENT_PROXY
-                              XA_CLIENT_PROXY_0,
-#endif
                               XA_RENDERER_0};
-
-#if XA_CLIENT_PROXY
-#define CLIENT_PROXY_FRAME_SIZE_US \
-    (1000) // 1000us @48000 x2 channels 16 bit = 4096B buffer (192 16bit-samples per channel)
-#endif
 
 /*******************************************************************************
  * Component Setup/ Config
@@ -64,6 +52,7 @@ const int comp_get_order[] = {XA_GAIN_0,
 unsigned char UsbSpeaker_process_stack[STACK_SIZE];
 unsigned char UsbSpeaker_cleanup_stack[STACK_SIZE];
 int srtm_usbSpeaker_cleanup(void *arg, int wake_value);
+static xaf_adev_config_t device_config;
 
 static void *comp_get_pointer(dsp_handle_t *dsp, int cid, bool addr)
 {
@@ -71,10 +60,6 @@ static void *comp_get_pointer(dsp_handle_t *dsp, int cid, bool addr)
     {
         case XA_GAIN_0:
             return (addr ? &dsp->comp_gain : dsp->comp_gain);
-#if XA_CLIENT_PROXY
-        case XA_CLIENT_PROXY_0:
-            return (addr ? &dsp->comp_client_proxy : dsp->comp_client_proxy);
-#endif
         case XA_RENDERER_0:
             return (addr ? &dsp->comp_renderer : dsp->comp_renderer);
         default:
@@ -107,11 +92,8 @@ static int UsbSpeaker_close(dsp_handle_t *dsp, bool success)
             DSP_PRINTF("[DSP_USB_SPEAKER] xaf_comp_delete[%d] failure: %d\r\n", i, ret);
     }
 
-    ret = xaf_adev_close(dsp->audio_device, XAF_ADEV_NORMAL_CLOSE);
-    if (ret != XAF_NO_ERR)
-        DSP_PRINTF("[DSP_USB_SPEAKER] xaf_adev_close failure: %d\r\n", ret);
-    else
-        DSP_PRINTF("[DSP_USB_SPEAKER] Audio device closed\r\n\r\n");
+    void * p_adev = dsp->audio_device;
+    TST_CHK_API_ADEV_CLOSE(p_adev, XAF_ADEV_NORMAL_CLOSE, device_config, "xaf_adev_close");
 
     /* Send message to the application */
     if (success)
@@ -139,24 +121,6 @@ static int pcm_gain_setup(void *p_comp, xaf_format_t *format)
 
     return xaf_comp_set_config(p_comp, 5, &param[0]);
 }
-
-#if XA_CLIENT_PROXY
-static int client_proxy_setup(void *p_comp, xaf_format_t *format)
-{
-    int param[10];
-
-    param[0] = XA_CLIENT_PROXY_CONFIG_PARAM_CHANNELS;
-    param[1] = format->channels;
-    param[2] = XA_CLIENT_PROXY_CONFIG_PARAM_SAMPLE_RATE;
-    param[3] = format->sample_rate;
-    param[4] = XA_CLIENT_PROXY_CONFIG_PARAM_PCM_WIDTH;
-    param[5] = format->pcm_width;
-    param[6] = XA_CLIENT_PROXY_CONFIG_PARAM_INPUT_FRAME_SIZE_US;
-    param[7] = CLIENT_PROXY_FRAME_SIZE_US;
-
-    return xaf_comp_set_config(p_comp, 4, &param[0]);
-}
-#endif
 
 static XAF_ERR_CODE renderer_setup(void *p_renderer, xaf_format_t *format)
 {
@@ -201,13 +165,13 @@ int srtm_usb_speaker_init(dsp_handle_t *dsp, unsigned int *pCmdParams)
     xaf_format_t comp_format[NUM_COMP_IN_GRAPH];
     int (*comp_setup[NUM_COMP_IN_GRAPH])(void *p_comp, xaf_format_t *);
     void *usbSpeaker_inbuf[1];
+    void *p_adev =  dsp->audio_device;
     xaf_comp_type comp_type[NUM_COMP_IN_GRAPH];
     xf_id_t comp_id[NUM_COMP_IN_GRAPH];
     int comp_ninbuf[NUM_COMP_IN_GRAPH];
     int comp_noutbuf[NUM_COMP_IN_GRAPH];
     XAF_ERR_CODE ret;
     xaf_comp_status comp_status;
-    xaf_adev_config_t device_config;
     xaf_comp_config_t comp_config[NUM_COMP_IN_GRAPH];
     int comp_info[4];
     uint32_t read_length;
@@ -241,16 +205,6 @@ int srtm_usb_speaker_init(dsp_handle_t *dsp, unsigned int *pCmdParams)
                 comp_id[cid]                 = "post-proc/pcm_gain";
                 comp_ninbuf[cid]             = 1;
                 break;
-#if XA_CLIENT_PROXY
-            case XA_CLIENT_PROXY_0:
-                comp_format[cid].sample_rate = sampling_rate;
-                comp_format[cid].channels    = channels;
-                comp_format[cid].pcm_width   = width;
-                comp_setup[cid]              = client_proxy_setup;
-                comp_type[cid]               = XAF_POST_PROC;
-                comp_id[cid]                 = "post-proc/client_proxy";
-                break;
-#endif
             case XA_RENDERER_0:
                 comp_format[cid].sample_rate = sampling_rate;
                 comp_format[cid].channels    = channels;
@@ -269,18 +223,13 @@ int srtm_usb_speaker_init(dsp_handle_t *dsp, unsigned int *pCmdParams)
     /* Initialize XAF */
     xaf_adev_config_default_init(&device_config);
 
-    device_config.pmem_malloc                 = DSP_Malloc;
-    device_config.pmem_free                   = DSP_Free;
-    device_config.audio_component_buffer_size = AUDIO_COMP_BUF_SIZE;
-    device_config.audio_framework_buffer_size = AUDIO_FRMWK_BUF_SIZE;
-
-    ret = xaf_adev_open(&dsp->audio_device, &device_config);
-    if (ret != XAF_NO_ERR)
-    {
-        DSP_PRINTF("[DSP_USB_SPEAKER] xaf_adev_open failure: %d\r\n", ret);
-        return -1;
-    }
-
+    audio_frmwk_buf_size = AUDIO_FRMWK_BUF_SIZE;
+    audio_comp_buf_size = AUDIO_COMP_BUF_SIZE;
+    device_config.audio_component_buffer_size[XAF_MEM_ID_COMP] = AUDIO_COMP_BUF_SIZE;
+    device_config.audio_framework_buffer_size[XAF_MEM_ID_DEV] = AUDIO_FRMWK_BUF_SIZE;
+    device_config.core = XF_CORE_ID;
+    TST_CHK_API_ADEV_OPEN(p_adev, device_config, "[DSP Codec] Audio Device Open\r\n");
+    dsp->audio_device = p_adev;
     DSP_PRINTF("[DSP_USB_SPEAKER] Audio Device Ready\n\r");
 
     /* Create and setup all components */
@@ -297,7 +246,7 @@ int srtm_usb_speaker_init(dsp_handle_t *dsp, unsigned int *pCmdParams)
         comp_config[cid].pp_inbuf = comp_ninbuf[cid] > 0 ? (pVOID(*)[XAF_MAX_INBUFS]) & usbSpeaker_inbuf[0] : NULL;
 
         /* Create component */
-        ret = xaf_comp_create(dsp->audio_device, comp_get_pointer(dsp, cid, true), &comp_config[cid]);
+        ret = xaf_comp_create(p_adev, comp_get_pointer(dsp, cid, true), &comp_config[cid]);
         if (ret != XAF_NO_ERR)
         {
             DSP_PRINTF("[DSP_USB_SPEAKER] xaf_comp_create[%d] failure: %d\r\n", i, ret);
@@ -308,7 +257,7 @@ int srtm_usb_speaker_init(dsp_handle_t *dsp, unsigned int *pCmdParams)
         comp_setup[cid](comp_get_pointer(dsp, cid, false), &comp_format[cid]);
 
         /* Start component */
-        ret = xaf_comp_process(dsp->audio_device, comp_get_pointer(dsp, cid, false), NULL, 0, XAF_START_FLAG);
+        ret = xaf_comp_process(p_adev, comp_get_pointer(dsp, cid, false), NULL, 0, XAF_START_FLAG);
         if (ret != XAF_NO_ERR)
         {
             DSP_PRINTF("[DSP_USB_SPEAKER] xaf_comp_process XAF_START_FLAG %s failure: %d\r\n", comp_id[cid], ret);
@@ -316,7 +265,7 @@ int srtm_usb_speaker_init(dsp_handle_t *dsp, unsigned int *pCmdParams)
         }
 
         /* Check status of the component */
-        ret = xaf_comp_get_status(dsp->audio_device, comp_get_pointer(dsp, cid, false), &comp_status, &comp_info[0]);
+        ret = xaf_comp_get_status(p_adev, comp_get_pointer(dsp, cid, false), &comp_status, &comp_info[0]);
         if (ret != XAF_NO_ERR)
         {
             DSP_PRINTF("[DSP_USB_SPEAKER] xaf_comp_get_status %s failure: %d\r\n", comp_id[cid], ret);
@@ -356,7 +305,7 @@ int srtm_usb_speaker_init(dsp_handle_t *dsp, unsigned int *pCmdParams)
 
     read_length = DSP_AudioReadRing(dsp, usbSpeaker_inbuf[0], PCM_GAIN_FRAME_SIZE);
     if (read_length > 0)
-        ret = xaf_comp_process(dsp->audio_device, dsp->comp, usbSpeaker_inbuf[0], read_length, XAF_INPUT_READY_FLAG);
+        ret = xaf_comp_process(p_adev, dsp->comp, usbSpeaker_inbuf[0], read_length, XAF_INPUT_READY_FLAG);
     else
     {
         DSP_PRINTF("[DSP_USB_SPEAKER] Initial data not available\r\n");
@@ -411,15 +360,3 @@ int srtm_usbSpeaker_cleanup(void *arg, int wake_value)
 
     return UsbSpeaker_close(dsp, true);
 }
-
-#if XA_CLIENT_PROXY
-int client_proxy_filter(dsp_handle_t *dsp, int filterNum)
-{
-    int param[2];
-
-    param[0] = XA_CLIENT_PROXY_CONFIG_PARAM_EAP;
-    param[1] = filterNum;
-
-    return xaf_comp_set_config(dsp->comp_client_proxy, 1, &param[0]);
-}
-#endif

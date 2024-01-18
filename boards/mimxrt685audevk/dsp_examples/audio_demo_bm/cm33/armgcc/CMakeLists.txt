@@ -47,6 +47,8 @@ include(${ProjDirPath}/config.cmake)
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${SdkRootDirPath}/boards/mimxrt685audevk/dsp_examples/audio_demo_bm/dsp/binary/dsp_data_debug.bin"
 "${SdkRootDirPath}/boards/mimxrt685audevk/dsp_examples/audio_demo_bm/dsp/binary/dsp_data_release.bin"
+"${SdkRootDirPath}/boards/mimxrt685audevk/dsp_examples/audio_demo_bm/dsp/binary/dsp_literal_debug.bin"
+"${SdkRootDirPath}/boards/mimxrt685audevk/dsp_examples/audio_demo_bm/dsp/binary/dsp_literal_release.bin"
 "${SdkRootDirPath}/boards/mimxrt685audevk/dsp_examples/audio_demo_bm/dsp/binary/dsp_ncache_debug.bin"
 "${SdkRootDirPath}/boards/mimxrt685audevk/dsp_examples/audio_demo_bm/dsp/binary/dsp_ncache_release.bin"
 "${SdkRootDirPath}/boards/mimxrt685audevk/dsp_examples/audio_demo_bm/dsp/binary/dsp_text_debug.bin"

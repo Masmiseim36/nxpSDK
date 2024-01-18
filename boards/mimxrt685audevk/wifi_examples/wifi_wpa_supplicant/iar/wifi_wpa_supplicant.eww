@@ -5,7 +5,18 @@
       <name>all</name>
       <member>
         <project>wifi_wpa_supplicant</project>
+        <configuration>flash_debug</configuration>
+      </member>
+      <member>
+        <project>wifi_wpa_supplicant</project>
         <configuration>flash_release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>flash_debug</name>
+      <member>
+        <project>wifi_wpa_supplicant</project>
+        <configuration>flash_debug</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>

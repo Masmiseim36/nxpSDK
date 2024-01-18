@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: SPI CMSIS driver</title>
+<title>MCUXpresso SDK API Reference Manual: I2C CMSIS Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,70 +99,96 @@ $(document).ready(function(){initNavTree('a00226.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">SPI CMSIS driver<div class="ingroups"><a class="el" href="a00225.html">SPI: Serial Peripheral Interface Driver</a></div></div>  </div>
+<div class="title">I2C CMSIS Driver<div class="ingroups"><a class="el" href="a00224.html">I2C: Inter-Integrated Circuit Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<p>This section describes the programming interface of the SPI Cortex Microcontroller Software Interface Standard (CMSIS) driver. And this driver defines generic peripheral driver interfaces for middleware making it reusable across a wide range of supported microcontroller devices. The API connects microcontroller peripherals with middleware that implements for example communication stacks, file systems, or graphic user interfaces. More information and usage methord see <a href="http://www.keil.com/pack/doc/cmsis/Driver/html/index.html">http://www.keil.com/pack/doc/cmsis/Driver/html/index.html</a>.</p>
-<h1><a class="anchor" id="SPIFunGrps"></a>
-Function groups</h1>
-<h2><a class="anchor" id="SPIGetVersionOps"></a>
-SPI CMSIS GetVersion Operation</h2>
-<p>This function group will return the SPI CMSIS Driver version to user.</p>
-<h2><a class="anchor" id="SPIGetCapOps"></a>
-SPI CMSIS GetCapabilities Operation</h2>
-<p>This function group will return the capabilities of this driver.</p>
-<h2><a class="anchor" id="SPIInitResetOps"></a>
-SPI CMSIS Initialize and Uninitialize Operation</h2>
-<p>This function will initialize and uninitialize the instance in master mode or slave mode. And this API must be called before you configure an instance or after you Deinit an instance.The right steps to start an instance is that you must initialize the instance which been slected firstly,then you can power on the instance.After these all have been done,you can configure the instance by using control operation.If you want to Uninitialize the instance, you must power off the instance first.</p>
-<h2><a class="anchor" id="SPITransOps"></a>
-SPI CMSIS Transfer Operation</h2>
-<p>This function group controls the transfer, master send/receive data, and slave send/receive data.</p>
-<h2><a class="anchor" id="SPIStatusOps"></a>
-SPI CMSIS Status Operation</h2>
-<p>This function group gets the SPI transfer status.</p>
-<h2><a class="anchor" id="SPIControlOps"></a>
-SPI CMSIS Control Operation</h2>
-<p>This function can configure instance as master mode or slave mode, set baudrate for master mode transfer, get current baudrate of master mode transfer,set transfer data bits and other control command.</p>
-<h1><a class="anchor" id="SPITpyUC"></a>
-Typical use case</h1>
-<h2><a class="anchor" id="SPIMasterOps"></a>
-Master Operation</h2>
-<div class="fragment"><div class="line"><span class="comment">/* Variables */</span></div>
-<div class="line">uint8_t masterRxData[TRANSFER_SIZE] = {0U};</div>
-<div class="line">uint8_t masterTxData[TRANSFER_SIZE] = {0U};</div>
+<p>This section describes the programming interface of the I2C Cortex Microcontroller Software Interface Standard (CMSIS) driver. And this driver defines generic peripheral driver interfaces for middleware making it reusable across a wide range of supported microcontroller devices. The API connects microcontroller peripherals with middleware that implements for example communication stacks, file systems, or graphic user interfaces. More information and usage methord see <a href="http://www.keil.com/pack/doc/cmsis/Driver/html/index.html">http://www.keil.com/pack/doc/cmsis/Driver/html/index.html</a>.</p>
+<p>The I2C CMSIS driver includes transactional APIs.</p>
+<p>Transactional APIs are transaction target high-level APIs. The transactional APIs can be used to enable the peripheral quickly and also in the application if the code size and performance of transactional APIs satisfy the requirements. If the code size and performance are critical requirements, see the transactional API implementation and write custom code accessing the hardware registers.</p>
+<h1><a class="anchor" id="I2CCMSISDriver"></a>
+I2C CMSIS Driver</h1>
+<h2><a class="anchor" id="I2CMasterOpsTransIRQ"></a>
+Master Operation in interrupt transactional method</h2>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> I2C_MasterSignalEvent_t(uint32_t event)</div>
+<div class="line">{</div>
+<div class="line">    <span class="keywordflow">if</span> (event == ARM_I2C_EVENT_TRANSFER_DONE)</div>
+<div class="line">    {</div>
+<div class="line">        g_MasterCompletionFlag = <span class="keyword">true</span>;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="line"><span class="comment">/*Init I2C MASTER*/</span></div>
+<div class="line">EXAMPLE_I2C_MASTER.Initialize(I2C_MasterSignalEvent_t);</div>
 <div class="line"></div>
-<div class="line"><span class="comment">/*SPI master init*/</span></div>
-<div class="line">DRIVER_MASTER_SPI.Initialize(SPI_MasterSignalEvent_t);</div>
-<div class="line">DRIVER_MASTER_SPI.PowerControl(ARM_POWER_FULL);</div>
-<div class="line">DRIVER_MASTER_SPI.Control(ARM_SPI_MODE_MASTER, TRANSFER_BAUDRATE);</div>
+<div class="line">EXAMPLE_I2C_MASTER.PowerControl(ARM_POWER_FULL);</div>
 <div class="line"></div>
-<div class="line"><span class="comment">/* Start master transfer */</span></div>
-<div class="line">DRIVER_MASTER_SPI.Transfer(masterTxData, masterRxData, TRANSFER_SIZE);</div>
+<div class="line"><span class="comment">/*config transmit speed*/</span></div>
+<div class="line">EXAMPLE_I2C_MASTER.Control(ARM_I2C_BUS_SPEED, ARM_I2C_BUS_SPEED_STANDARD);</div>
 <div class="line"></div>
-<div class="line"><span class="comment">/* Master power off */</span></div>
-<div class="line">DRIVER_MASTER_SPI.PowerControl(ARM_POWER_OFF);</div>
+<div class="line"><span class="comment">/*start transmit*/</span></div>
+<div class="line">EXAMPLE_I2C_MASTER.MasterTransmit(I2C_MASTER_SLAVE_ADDR, g_master_buff, I2C_DATA_LENGTH, <span class="keyword">false</span>);</div>
 <div class="line"></div>
-<div class="line"><span class="comment">/* Master uninitialize */</span></div>
-<div class="line">DRIVER_MASTER_SPI.Uninitialize();</div>
-</div><!-- fragment --><h2><a class="anchor" id="LPSPISlaveOps"></a>
-Slave Operation</h2>
-<div class="fragment"><div class="line"><span class="comment">/* Variables */</span></div>
-<div class="line">uint8_t slaveRxData[TRANSFER_SIZE] = {0U};</div>
-<div class="line">uint8_t slaveTxData[TRANSFER_SIZE] = {0U};</div>
+<div class="line"><span class="comment">/*  Wait for transfer completed. */</span></div>
+<div class="line"><span class="keywordflow">while</span> (!g_MasterCompletionFlag)</div>
+<div class="line">{</div>
+<div class="line">}</div>
+<div class="line">g_MasterCompletionFlag = <span class="keyword">false</span>;</div>
+</div><!-- fragment --><h2><a class="anchor" id="I2CMasterOpsTransDMA"></a>
+Master Operation in DMA transactional method</h2>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> I2C_MasterSignalEvent_t(uint32_t event)</div>
+<div class="line">{</div>
+<div class="line">    <span class="comment">/*  Transfer done */</span></div>
+<div class="line">    <span class="keywordflow">if</span> (event == ARM_I2C_EVENT_TRANSFER_DONE)</div>
+<div class="line">    {</div>
+<div class="line">        g_MasterCompletionFlag = <span class="keyword">true</span>;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
 <div class="line"></div>
-<div class="line"><span class="comment">/*SPI slave init*/</span></div>
-<div class="line">DRIVER_SLAVE_SPI.Initialize(SPI_SlaveSignalEvent_t);</div>
-<div class="line">DRIVER_SLAVE_SPI.PowerControl(ARM_POWER_FULL);</div>
-<div class="line">DRIVER_SLAVE_SPI.Control(ARM_SPI_MODE_SLAVE, <span class="keyword">false</span>);</div>
+<div class="line"><span class="comment">/* Init DMA*/</span></div>
+<div class="line"><a class="code" href="a00016.html#gade1b5efa61054ce538b37b181dd075bb">DMA_Init</a>(EXAMPLE_DMA);</div>
 <div class="line"></div>
-<div class="line"><span class="comment">/* Start slave transfer */</span></div>
-<div class="line">DRIVER_SLAVE_SPI.Transfer(slaveTxData, slaveRxData, TRANSFER_SIZE);</div>
+<div class="line"><span class="comment">/*Init I2C MASTER*/</span></div>
+<div class="line">EXAMPLE_I2C_MASTER.Initialize(I2C_MasterSignalEvent_t);</div>
 <div class="line"></div>
-<div class="line"><span class="comment">/* slave power off */</span></div>
-<div class="line">DRIVER_SLAVE_SPI.PowerControl(ARM_POWER_OFF);</div>
+<div class="line">EXAMPLE_I2C_MASTER.PowerControl(ARM_POWER_FULL);</div>
 <div class="line"></div>
-<div class="line"><span class="comment">/* slave uninitialize */</span></div>
-<div class="line">DRIVER_SLAVE_SPI.Uninitialize();</div>
+<div class="line"><span class="comment">/*config transmit speed*/</span></div>
+<div class="line">EXAMPLE_I2C_MASTER.Control(ARM_I2C_BUS_SPEED, ARM_I2C_BUS_SPEED_STANDARD);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/*start transfer*/</span></div>
+<div class="line">EXAMPLE_I2C_MASTER.MasterReceive(I2C_MASTER_SLAVE_ADDR, g_master_buff, I2C_DATA_LENGTH, <span class="keyword">false</span>);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/*  Wait for transfer completed. */</span></div>
+<div class="line"><span class="keywordflow">while</span> (!g_MasterCompletionFlag)</div>
+<div class="line">{</div>
+<div class="line">}</div>
+<div class="line">g_MasterCompletionFlag = <span class="keyword">false</span>;</div>
+</div><!-- fragment --><h2><a class="anchor" id="I2CSlaveOpsTransIRQ"></a>
+Slave Operation in interrupt transactional method</h2>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> I2C_SlaveSignalEvent_t(uint32_t event)</div>
+<div class="line">{</div>
+<div class="line">    <span class="comment">/*  Transfer done */</span></div>
+<div class="line">    <span class="keywordflow">if</span> (event == ARM_I2C_EVENT_TRANSFER_DONE)</div>
+<div class="line">    {</div>
+<div class="line">        g_SlaveCompletionFlag = <span class="keyword">true</span>;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/*Init I2C SLAVE*/</span></div>
+<div class="line">EXAMPLE_I2C_SLAVE.Initialize(I2C_SlaveSignalEvent_t);</div>
+<div class="line"></div>
+<div class="line">EXAMPLE_I2C_SLAVE.PowerControl(ARM_POWER_FULL);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/*config slave addr*/</span></div>
+<div class="line">EXAMPLE_I2C_SLAVE.Control(ARM_I2C_OWN_ADDRESS, I2C_MASTER_SLAVE_ADDR);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/*start transfer*/</span></div>
+<div class="line">EXAMPLE_I2C_SLAVE.SlaveReceive(g_slave_buff, I2C_DATA_LENGTH);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/*  Wait for transfer completed. */</span></div>
+<div class="line"><span class="keywordflow">while</span> (!g_SlaveCompletionFlag)</div>
+<div class="line">{</div>
+<div class="line">}</div>
+<div class="line">g_SlaveCompletionFlag = <span class="keyword">false</span>;</div>
 </div><!-- fragment --> </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->

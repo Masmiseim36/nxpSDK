@@ -13,6 +13,15 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
   ${CMAKE_CURRENT_LIST_DIR}/.
 )
 
+if(CONFIG_USE_COMPONENT_CONFIGURATION)
+  message("===>Import configuration from ${CMAKE_CURRENT_LIST_FILE}")
+
+  target_compile_definitions(${MCUX_SDK_PROJECT_NAME} PUBLIC
+    -DSDK_I3C_BASED_COMPONENT_USED=1
+  )
+
+endif()
+
 else()
 
 message(SEND_ERROR "component_i3c_adapter.MIMXRT685S dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")

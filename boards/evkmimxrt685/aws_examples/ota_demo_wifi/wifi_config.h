@@ -17,7 +17,7 @@
 #endif
 
 #ifndef RW610
-#define CONFIG_SDIO_MULTI_PORT_RX_AGGR 1
+//#define CONFIG_SDIO_MULTI_PORT_RX_AGGR 1
 #endif
 
 #if defined(SD8987) || defined(RW610)
@@ -64,6 +64,7 @@
 #define CONFIG_ECSA
 #define CONFIG_WIFI_EU_CRYPTO
 #define CONFIG_EXT_SCAN_SUPPORT
+#define WIFI_ADD_ON 1
 #endif
 
 //#define CONFIG_IPV6               1

@@ -67,7 +67,7 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O0")
 
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} --xtensa-core=nxp_rt600_RI2021_8_newlib")
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} --xtensa-core=nxp_rt600_RI23_11_newlib")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} --xtensa-system=${XTENSA_SYSTEM}")
 
@@ -139,7 +139,7 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFSL_RTOS_XOS=1")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Os")
 
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} --xtensa-core=nxp_rt600_RI2021_8_newlib")
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} --xtensa-core=nxp_rt600_RI23_11_newlib")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} --xtensa-system=${XTENSA_SYSTEM}")
 
@@ -189,7 +189,7 @@ SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0")
 
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} --xtensa-core=nxp_rt600_RI2021_8_newlib")
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} --xtensa-core=nxp_rt600_RI23_11_newlib")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} --xtensa-system=${XTENSA_SYSTEM}")
 
@@ -215,7 +215,7 @@ SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DSERIAL_PORT_TYPE_UART=
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Os")
 
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} --xtensa-core=nxp_rt600_RI2021_8_newlib")
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} --xtensa-core=nxp_rt600_RI23_11_newlib")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} --xtensa-system=${XTENSA_SYSTEM}")
 
@@ -235,15 +235,19 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mlsp=${ProjDi
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -g")
 
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --xtensa-core=nxp_rt600_RI2021_8_newlib")
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --xtensa-core=nxp_rt600_RI23_11_newlib")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --xtensa-system=${XTENSA_SYSTEM}")
 
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Wl,--orphan-handling=place")
+
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mlsp=${ProjDirPath}/../../../../../../devices/MIMXRT685S/xtensa/min-rt")
 
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --xtensa-core=nxp_rt600_RI2021_8_newlib")
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --xtensa-core=nxp_rt600_RI23_11_newlib")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --xtensa-system=${XTENSA_SYSTEM}")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Wl,--orphan-handling=place")
 
 include_directories(${ProjDirPath}/..)
 
@@ -259,7 +263,15 @@ include_directories(${ProjDirPath}/../../../../../../middleware/dsp/codecs/aacpl
 
 include_directories(${ProjDirPath}/../../../../../../middleware/dsp/codecs/asrc_src_pp/hifi4/include/src_pp)
 
+include_directories(${ProjDirPath}/../../../../../../middleware/dsp/codecs/bsac/hifi4/include/aac_dec)
+
+include_directories(${ProjDirPath}/../../../../../../middleware/dsp/codecs/dabplus/hifi4/include/aac_dec)
+
+include_directories(${ProjDirPath}/../../../../../../middleware/dsp/codecs/drm/hifi4/include/drm_dec)
+
 include_directories(${ProjDirPath}/../../../../../../middleware/dsp/codecs/g711/hifi4/include/g711_codec)
+
+include_directories(${ProjDirPath}/../../../../../../middleware/dsp/codecs/g722/hifi4/include/g722_codec)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/dsp/codecs/mp3_dec/hifi4/include/mp3_dec)
 
@@ -427,7 +439,6 @@ add_executable(dsp_rtp_demo_hifi4.elf
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-mem.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-msg.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-msgq.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-msgq1.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-sched.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-component.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-core.h"
@@ -457,6 +468,7 @@ add_executable(dsp_rtp_demo_hifi4.elf
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-sys.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/iss/xf-board.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/host-apf/src/xaf-api.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/host-apf/src/xf-msgq1.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/host-apf/src/xf-proxy.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/host-apf/src/xf-trace.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/xaf-structs.h"
@@ -524,8 +536,6 @@ add_executable(dsp_rtp_demo_hifi4.elf
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/vorbis_dec/xa-vorbis-decoder.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/capturer/xa-capturer-dmic.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/capturer/xa-capturer-i2s.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/client_proxy/client_proxy.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/client_proxy/client_proxy_api.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/vit_pre_proc/vit_pre_proc.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/vit_pre_proc/vit_pre_proc.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/voice_seeker/voice_seeker.c"
@@ -534,6 +544,8 @@ add_executable(dsp_rtp_demo_hifi4.elf
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/sbc_dec/xa-sbc-decoder.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/sbc_enc/xa-sbc-encoder.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/renderer/xa-renderer.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/src/xaf-fio-test.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/src/xaf-mem-test.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_common.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_common.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_common_dsp.c"
@@ -565,7 +577,19 @@ target_link_libraries(dsp_rtp_demo_hifi4.elf debug ${ProjDirPath}/../../../../..
 target_link_libraries(dsp_rtp_demo_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/dsp/codecs/asrc_src_pp/hifi4/lib/xa_asrc_src_pp.a)
 
 
+target_link_libraries(dsp_rtp_demo_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/dsp/codecs/bsac/hifi4/lib/xa_bsac_dec.a)
+
+
+target_link_libraries(dsp_rtp_demo_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/dsp/codecs/dabplus/hifi4/lib/xa_dabplus_dec.a)
+
+
+target_link_libraries(dsp_rtp_demo_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/dsp/codecs/drm/hifi4/lib/xa_drm_dec.a)
+
+
 target_link_libraries(dsp_rtp_demo_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/dsp/codecs/g711/hifi4/lib/xa_g711_codec.a)
+
+
+target_link_libraries(dsp_rtp_demo_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/dsp/codecs/g722/hifi4/lib/xa_g722_codec.a)
 
 
 target_link_libraries(dsp_rtp_demo_hifi4.elf debug ${ProjDirPath}/../../../../../../middleware/dsp/codecs/mp3_dec/hifi4/lib/xa_mp3_dec.a)
@@ -595,7 +619,19 @@ target_link_libraries(dsp_rtp_demo_hifi4.elf optimized ${ProjDirPath}/../../../.
 target_link_libraries(dsp_rtp_demo_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/dsp/codecs/asrc_src_pp/hifi4/lib/xa_asrc_src_pp.a)
 
 
+target_link_libraries(dsp_rtp_demo_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/dsp/codecs/bsac/hifi4/lib/xa_bsac_dec.a)
+
+
+target_link_libraries(dsp_rtp_demo_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/dsp/codecs/dabplus/hifi4/lib/xa_dabplus_dec.a)
+
+
+target_link_libraries(dsp_rtp_demo_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/dsp/codecs/drm/hifi4/lib/xa_drm_dec.a)
+
+
 target_link_libraries(dsp_rtp_demo_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/dsp/codecs/g711/hifi4/lib/xa_g711_codec.a)
+
+
+target_link_libraries(dsp_rtp_demo_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/dsp/codecs/g722/hifi4/lib/xa_g722_codec.a)
 
 
 target_link_libraries(dsp_rtp_demo_hifi4.elf optimized ${ProjDirPath}/../../../../../../middleware/dsp/codecs/mp3_dec/hifi4/lib/xa_mp3_dec.a)
@@ -621,13 +657,19 @@ target_link_libraries(dsp_rtp_demo_hifi4.elf optimized ${ProjDirPath}/../../../.
 TARGET_LINK_LIBRARIES(dsp_rtp_demo_hifi4.elf -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET dsp_rtp_demo_hifi4.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}
---xtensa-params= -Obinary ${EXECUTABLE_OUTPUT_PATH}/dsp_rtp_demo_hifi4.elf ${EXECUTABLE_OUTPUT_PATH}/../../binary/dsp_text_${CMAKE_BUILD_TYPE}.bin
---xtensa-core=nxp_rt600_RI2021_8_newlib
+--xtensa-params= -Obinary ${EXECUTABLE_OUTPUT_PATH}/dsp_rtp_demo_hifi4.elf ${EXECUTABLE_OUTPUT_PATH}/../../binary/dsp_literal_${CMAKE_BUILD_TYPE}.bin
+--xtensa-core=nxp_rt600_RI23_11_newlib
 --xtensa-system=${XTENSA_SYSTEM}
 --only-section=.Level3InterruptVector.literal
 --only-section=.DebugExceptionVector.literal
 --only-section=.NMIExceptionVector.literal
 --only-section=.UserExceptionVector.literal
+)
+
+ADD_CUSTOM_COMMAND(TARGET dsp_rtp_demo_hifi4.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}
+--xtensa-params= -Obinary ${EXECUTABLE_OUTPUT_PATH}/dsp_rtp_demo_hifi4.elf ${EXECUTABLE_OUTPUT_PATH}/../../binary/dsp_text_${CMAKE_BUILD_TYPE}.bin
+--xtensa-core=nxp_rt600_RI23_11_newlib
+--xtensa-system=${XTENSA_SYSTEM}
 --only-section=.ResetVector.text
 --only-section=.WindowVectors.text
 --only-section=.Level2InterruptVector.text
@@ -641,7 +683,7 @@ ADD_CUSTOM_COMMAND(TARGET dsp_rtp_demo_hifi4.elf POST_BUILD COMMAND ${CMAKE_OBJC
 
 ADD_CUSTOM_COMMAND(TARGET dsp_rtp_demo_hifi4.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}
 --xtensa-params= -Obinary ${EXECUTABLE_OUTPUT_PATH}/dsp_rtp_demo_hifi4.elf ${EXECUTABLE_OUTPUT_PATH}/../../binary/dsp_data_${CMAKE_BUILD_TYPE}.bin
---xtensa-core=nxp_rt600_RI2021_8_newlib
+--xtensa-core=nxp_rt600_RI23_11_newlib
 --xtensa-system=${XTENSA_SYSTEM}
 --only-section=.clib.rodata
 --only-section=.rtos.rodata
@@ -655,7 +697,7 @@ ADD_CUSTOM_COMMAND(TARGET dsp_rtp_demo_hifi4.elf POST_BUILD COMMAND ${CMAKE_OBJC
 
 ADD_CUSTOM_COMMAND(TARGET dsp_rtp_demo_hifi4.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}
 --xtensa-params= -Obinary ${EXECUTABLE_OUTPUT_PATH}/dsp_rtp_demo_hifi4.elf ${EXECUTABLE_OUTPUT_PATH}/../../binary/dsp_ncache_${CMAKE_BUILD_TYPE}.bin
---xtensa-core=nxp_rt600_RI2021_8_newlib
+--xtensa-core=nxp_rt600_RI23_11_newlib
 --xtensa-system=${XTENSA_SYSTEM}
 --only-section=NonCacheable
 )

@@ -78,7 +78,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>fromelf.exe --output "$L@L.bin" --bincombined "#L"</UserProg1Name>
+            <UserProg1Name>fromelf.exe --output "$Lsdk20-app.bin" --bincombined "#L"</UserProg1Name>
             <UserProg2Name/>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -335,7 +335,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, MULADDC_CANNOT_USE_R7, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, PRINTF_FLOAT_ENABLE=1, MBEDTLS_CONFIG_FILE='\"mcux_mbedtls_config.h\"', MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../middleware/mbedtls3x/port/rng;../../../../../middleware/mbedtls3x/include;../../../../../middleware/mbedtls3x/library;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../components/uart;../../../flash_config;../../../../../components/serial_manager;../../../../../components/lists;../../../../../middleware/mbedtls3x/port;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../middleware/mbedtls3x/port/rng;../../../../../middleware/mbedtls3x/include;../../../../../middleware/mbedtls3x/library;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../devices/MIMXRT685S/utilities;../../../../../components/uart;../../../flash_config;../../../../../components/serial_manager;../../../../../components/lists;../../../../../middleware/mbedtls3x/port;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -440,9 +440,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -628,6 +628,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -835,6 +840,36 @@
               <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/compat-2.x.h</FilePath>
             </File>
             <File>
+              <FileName>config_adjust_legacy_crypto.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/config_adjust_legacy_crypto.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_adjust_legacy_from_psa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/config_adjust_legacy_from_psa.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_adjust_psa_from_legacy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/config_adjust_psa_from_legacy.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_adjust_psa_superset_legacy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/config_adjust_psa_superset_legacy.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_adjust_ssl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/config_adjust_ssl.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_adjust_x509.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/config_adjust_x509.h</FilePath>
+            </File>
+            <File>
               <FileName>config_psa.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/config_psa.h</FilePath>
@@ -908,11 +943,6 @@
               <FileName>hmac_drbg.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/hmac_drbg.h</FilePath>
-            </File>
-            <File>
-              <FileName>legacy_or_psa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/legacy_or_psa.h</FilePath>
             </File>
             <File>
               <FileName>lms.h</FileName>
@@ -1020,6 +1050,11 @@
               <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/sha1.h</FilePath>
             </File>
             <File>
+              <FileName>sha3.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/sha3.h</FilePath>
+            </File>
+            <File>
               <FileName>sha256.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/sha256.h</FilePath>
@@ -1100,14 +1135,39 @@
           <GroupName>mbedtls3x/include/psa</GroupName>
           <Files>
             <File>
+              <FileName>build_info.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/psa/build_info.h</FilePath>
+            </File>
+            <File>
               <FileName>crypto.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto.h</FilePath>
             </File>
             <File>
+              <FileName>crypto_adjust_auto_enabled.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_auto_enabled.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_adjust_config_key_pair_types.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_key_pair_types.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_adjust_config_synonyms.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_synonyms.h</FilePath>
+            </File>
+            <File>
               <FileName>crypto_builtin_composites.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_builtin_composites.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_builtin_key_derivation.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_builtin_key_derivation.h</FilePath>
             </File>
             <File>
               <FileName>crypto_builtin_primitives.h</FileName>
@@ -1135,6 +1195,11 @@
               <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_driver_contexts_composites.h</FilePath>
             </File>
             <File>
+              <FileName>crypto_driver_contexts_key_derivation.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_driver_contexts_key_derivation.h</FilePath>
+            </File>
+            <File>
               <FileName>crypto_driver_contexts_primitives.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_driver_contexts_primitives.h</FilePath>
@@ -1143,6 +1208,11 @@
               <FileName>crypto_extra.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_extra.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_legacy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_legacy.h</FilePath>
             </File>
             <File>
               <FileName>crypto_platform.h</FileName>
@@ -1228,6 +1298,11 @@
               <FileName>base64.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/base64.c</FilePath>
+            </File>
+            <File>
+              <FileName>base64_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/base64_internal.h</FilePath>
             </File>
             <File>
               <FileName>bignum.c</FileName>
@@ -1330,14 +1405,14 @@
               <FilePath>../../../../../middleware/mbedtls3x/library/constant_time.c</FilePath>
             </File>
             <File>
+              <FileName>constant_time_impl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/constant_time_impl.h</FilePath>
+            </File>
+            <File>
               <FileName>constant_time_internal.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/constant_time_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>constant_time_invasive.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls3x/library/constant_time_invasive.h</FilePath>
             </File>
             <File>
               <FileName>ctr_drbg.c</FileName>
@@ -1380,6 +1455,11 @@
               <FilePath>../../../../../middleware/mbedtls3x/library/ecp_curves.c</FilePath>
             </File>
             <File>
+              <FileName>ecp_curves_new.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/ecp_curves_new.c</FilePath>
+            </File>
+            <File>
               <FileName>ecp_internal_alt.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/ecp_internal_alt.h</FilePath>
@@ -1415,16 +1495,6 @@
               <FilePath>../../../../../middleware/mbedtls3x/library/gcm.c</FilePath>
             </File>
             <File>
-              <FileName>hash_info.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls3x/library/hash_info.c</FilePath>
-            </File>
-            <File>
-              <FileName>hash_info.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls3x/library/hash_info.h</FilePath>
-            </File>
-            <File>
               <FileName>hkdf.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/hkdf.c</FilePath>
@@ -1453,6 +1523,11 @@
               <FileName>md.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/md.c</FilePath>
+            </File>
+            <File>
+              <FileName>md_psa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/md_psa.h</FilePath>
             </File>
             <File>
               <FileName>md_wrap.h</FileName>
@@ -1498,6 +1573,11 @@
               <FileName>pk.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/pk.c</FilePath>
+            </File>
+            <File>
+              <FileName>pk_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/pk_internal.h</FilePath>
             </File>
             <File>
               <FileName>pk_wrap.c</FileName>
@@ -1585,9 +1665,19 @@
               <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_core.h</FilePath>
             </File>
             <File>
-              <FileName>psa_crypto_driver_wrappers.c</FileName>
+              <FileName>psa_crypto_core_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_core_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_driver_wrappers_no_static.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_driver_wrappers.c</FilePath>
+              <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_driver_wrappers_no_static.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_driver_wrappers_no_static.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_driver_wrappers_no_static.h</FilePath>
             </File>
             <File>
               <FileName>psa_crypto_driver_wrappers.h</FileName>
@@ -1603,6 +1693,16 @@
               <FileName>psa_crypto_ecp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_ecp.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_ffdh.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_ffdh.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_ffdh.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_ffdh.h</FilePath>
             </File>
             <File>
               <FileName>psa_crypto_hash.c</FileName>
@@ -1690,14 +1790,14 @@
               <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_storage.h</FilePath>
             </File>
             <File>
-              <FileName>psa_its_file.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls3x/library/psa_its_file.c</FilePath>
-            </File>
-            <File>
               <FileName>psa_util.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/psa_util.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_util_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/psa_util_internal.h</FilePath>
             </File>
             <File>
               <FileName>ripemd160.c</FileName>
@@ -1723,6 +1823,11 @@
               <FileName>sha1.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/sha1.c</FilePath>
+            </File>
+            <File>
+              <FileName>sha3.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/sha3.c</FilePath>
             </File>
             <File>
               <FileName>sha256.c</FileName>
@@ -1915,6 +2020,11 @@
               <FilePath>../../../../../middleware/mbedtls3x/library/x509_csr.c</FilePath>
             </File>
             <File>
+              <FileName>x509write.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/x509write.c</FilePath>
+            </File>
+            <File>
               <FileName>x509write_crt.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/x509write_crt.c</FilePath>
@@ -2048,7 +2158,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>fromelf.exe --output "$L@L.bin" --bincombined "#L"</UserProg1Name>
+            <UserProg1Name>fromelf.exe --output "$Lsdk20-app.bin" --bincombined "#L"</UserProg1Name>
             <UserProg2Name/>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -2305,7 +2415,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MULADDC_CANNOT_USE_R7, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, PRINTF_FLOAT_ENABLE=1, MBEDTLS_CONFIG_FILE='\"mcux_mbedtls_config.h\"', MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../middleware/mbedtls3x/port/rng;../../../../../middleware/mbedtls3x/include;../../../../../middleware/mbedtls3x/library;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../components/uart;../../../flash_config;../../../../../components/serial_manager;../../../../../components/lists;../../../../../middleware/mbedtls3x/port;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../middleware/mbedtls3x/port/rng;../../../../../middleware/mbedtls3x/include;../../../../../middleware/mbedtls3x/library;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../devices/MIMXRT685S/utilities;../../../../../components/uart;../../../flash_config;../../../../../components/serial_manager;../../../../../components/lists;../../../../../middleware/mbedtls3x/port;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2410,9 +2520,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -2598,6 +2708,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2805,6 +2920,36 @@
               <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/compat-2.x.h</FilePath>
             </File>
             <File>
+              <FileName>config_adjust_legacy_crypto.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/config_adjust_legacy_crypto.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_adjust_legacy_from_psa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/config_adjust_legacy_from_psa.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_adjust_psa_from_legacy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/config_adjust_psa_from_legacy.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_adjust_psa_superset_legacy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/config_adjust_psa_superset_legacy.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_adjust_ssl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/config_adjust_ssl.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_adjust_x509.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/config_adjust_x509.h</FilePath>
+            </File>
+            <File>
               <FileName>config_psa.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/config_psa.h</FilePath>
@@ -2878,11 +3023,6 @@
               <FileName>hmac_drbg.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/hmac_drbg.h</FilePath>
-            </File>
-            <File>
-              <FileName>legacy_or_psa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/legacy_or_psa.h</FilePath>
             </File>
             <File>
               <FileName>lms.h</FileName>
@@ -2990,6 +3130,11 @@
               <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/sha1.h</FilePath>
             </File>
             <File>
+              <FileName>sha3.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/sha3.h</FilePath>
+            </File>
+            <File>
               <FileName>sha256.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/sha256.h</FilePath>
@@ -3070,14 +3215,39 @@
           <GroupName>mbedtls3x/include/psa</GroupName>
           <Files>
             <File>
+              <FileName>build_info.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/psa/build_info.h</FilePath>
+            </File>
+            <File>
               <FileName>crypto.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto.h</FilePath>
             </File>
             <File>
+              <FileName>crypto_adjust_auto_enabled.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_auto_enabled.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_adjust_config_key_pair_types.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_key_pair_types.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_adjust_config_synonyms.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_synonyms.h</FilePath>
+            </File>
+            <File>
               <FileName>crypto_builtin_composites.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_builtin_composites.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_builtin_key_derivation.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_builtin_key_derivation.h</FilePath>
             </File>
             <File>
               <FileName>crypto_builtin_primitives.h</FileName>
@@ -3105,6 +3275,11 @@
               <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_driver_contexts_composites.h</FilePath>
             </File>
             <File>
+              <FileName>crypto_driver_contexts_key_derivation.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_driver_contexts_key_derivation.h</FilePath>
+            </File>
+            <File>
               <FileName>crypto_driver_contexts_primitives.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_driver_contexts_primitives.h</FilePath>
@@ -3113,6 +3288,11 @@
               <FileName>crypto_extra.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_extra.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_legacy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_legacy.h</FilePath>
             </File>
             <File>
               <FileName>crypto_platform.h</FileName>
@@ -3198,6 +3378,11 @@
               <FileName>base64.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/base64.c</FilePath>
+            </File>
+            <File>
+              <FileName>base64_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/base64_internal.h</FilePath>
             </File>
             <File>
               <FileName>bignum.c</FileName>
@@ -3300,14 +3485,14 @@
               <FilePath>../../../../../middleware/mbedtls3x/library/constant_time.c</FilePath>
             </File>
             <File>
+              <FileName>constant_time_impl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/constant_time_impl.h</FilePath>
+            </File>
+            <File>
               <FileName>constant_time_internal.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/constant_time_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>constant_time_invasive.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls3x/library/constant_time_invasive.h</FilePath>
             </File>
             <File>
               <FileName>ctr_drbg.c</FileName>
@@ -3350,6 +3535,11 @@
               <FilePath>../../../../../middleware/mbedtls3x/library/ecp_curves.c</FilePath>
             </File>
             <File>
+              <FileName>ecp_curves_new.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/ecp_curves_new.c</FilePath>
+            </File>
+            <File>
               <FileName>ecp_internal_alt.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/ecp_internal_alt.h</FilePath>
@@ -3385,16 +3575,6 @@
               <FilePath>../../../../../middleware/mbedtls3x/library/gcm.c</FilePath>
             </File>
             <File>
-              <FileName>hash_info.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls3x/library/hash_info.c</FilePath>
-            </File>
-            <File>
-              <FileName>hash_info.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls3x/library/hash_info.h</FilePath>
-            </File>
-            <File>
               <FileName>hkdf.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/hkdf.c</FilePath>
@@ -3423,6 +3603,11 @@
               <FileName>md.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/md.c</FilePath>
+            </File>
+            <File>
+              <FileName>md_psa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/md_psa.h</FilePath>
             </File>
             <File>
               <FileName>md_wrap.h</FileName>
@@ -3468,6 +3653,11 @@
               <FileName>pk.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/pk.c</FilePath>
+            </File>
+            <File>
+              <FileName>pk_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/pk_internal.h</FilePath>
             </File>
             <File>
               <FileName>pk_wrap.c</FileName>
@@ -3555,9 +3745,19 @@
               <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_core.h</FilePath>
             </File>
             <File>
-              <FileName>psa_crypto_driver_wrappers.c</FileName>
+              <FileName>psa_crypto_core_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_core_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_driver_wrappers_no_static.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_driver_wrappers.c</FilePath>
+              <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_driver_wrappers_no_static.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_driver_wrappers_no_static.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_driver_wrappers_no_static.h</FilePath>
             </File>
             <File>
               <FileName>psa_crypto_driver_wrappers.h</FileName>
@@ -3573,6 +3773,16 @@
               <FileName>psa_crypto_ecp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_ecp.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_ffdh.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_ffdh.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_ffdh.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_ffdh.h</FilePath>
             </File>
             <File>
               <FileName>psa_crypto_hash.c</FileName>
@@ -3660,14 +3870,14 @@
               <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_storage.h</FilePath>
             </File>
             <File>
-              <FileName>psa_its_file.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls3x/library/psa_its_file.c</FilePath>
-            </File>
-            <File>
               <FileName>psa_util.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/psa_util.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_util_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/psa_util_internal.h</FilePath>
             </File>
             <File>
               <FileName>ripemd160.c</FileName>
@@ -3693,6 +3903,11 @@
               <FileName>sha1.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/sha1.c</FilePath>
+            </File>
+            <File>
+              <FileName>sha3.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/sha3.c</FilePath>
             </File>
             <File>
               <FileName>sha256.c</FileName>
@@ -3885,6 +4100,11 @@
               <FilePath>../../../../../middleware/mbedtls3x/library/x509_csr.c</FilePath>
             </File>
             <File>
+              <FileName>x509write.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/x509write.c</FilePath>
+            </File>
+            <File>
               <FileName>x509write_crt.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/x509write_crt.c</FilePath>
@@ -4018,7 +4238,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>fromelf.exe --output "$L@L.bin" --bincombined "#L"</UserProg1Name>
+            <UserProg1Name>fromelf.exe --output "$Lsdk20-app.bin" --bincombined "#L"</UserProg1Name>
             <UserProg2Name/>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -4275,7 +4495,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, MULADDC_CANNOT_USE_R7, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, PRINTF_FLOAT_ENABLE=1, MBEDTLS_CONFIG_FILE='\"mcux_mbedtls_config.h\"', MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../middleware/mbedtls3x/port/rng;../../../../../middleware/mbedtls3x/include;../../../../../middleware/mbedtls3x/library;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../components/uart;../../../flash_config;../../../../../components/serial_manager;../../../../../components/lists;../../../../../middleware/mbedtls3x/port;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../middleware/mbedtls3x/port/rng;../../../../../middleware/mbedtls3x/include;../../../../../middleware/mbedtls3x/library;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../devices/MIMXRT685S/utilities;../../../../../components/uart;../../../flash_config;../../../../../components/serial_manager;../../../../../components/lists;../../../../../middleware/mbedtls3x/port;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4380,9 +4600,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -4568,6 +4788,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4775,6 +5000,36 @@
               <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/compat-2.x.h</FilePath>
             </File>
             <File>
+              <FileName>config_adjust_legacy_crypto.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/config_adjust_legacy_crypto.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_adjust_legacy_from_psa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/config_adjust_legacy_from_psa.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_adjust_psa_from_legacy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/config_adjust_psa_from_legacy.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_adjust_psa_superset_legacy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/config_adjust_psa_superset_legacy.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_adjust_ssl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/config_adjust_ssl.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_adjust_x509.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/config_adjust_x509.h</FilePath>
+            </File>
+            <File>
               <FileName>config_psa.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/config_psa.h</FilePath>
@@ -4848,11 +5103,6 @@
               <FileName>hmac_drbg.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/hmac_drbg.h</FilePath>
-            </File>
-            <File>
-              <FileName>legacy_or_psa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/legacy_or_psa.h</FilePath>
             </File>
             <File>
               <FileName>lms.h</FileName>
@@ -4960,6 +5210,11 @@
               <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/sha1.h</FilePath>
             </File>
             <File>
+              <FileName>sha3.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/sha3.h</FilePath>
+            </File>
+            <File>
               <FileName>sha256.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/sha256.h</FilePath>
@@ -5040,14 +5295,39 @@
           <GroupName>mbedtls3x/include/psa</GroupName>
           <Files>
             <File>
+              <FileName>build_info.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/psa/build_info.h</FilePath>
+            </File>
+            <File>
               <FileName>crypto.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto.h</FilePath>
             </File>
             <File>
+              <FileName>crypto_adjust_auto_enabled.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_auto_enabled.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_adjust_config_key_pair_types.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_key_pair_types.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_adjust_config_synonyms.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_synonyms.h</FilePath>
+            </File>
+            <File>
               <FileName>crypto_builtin_composites.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_builtin_composites.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_builtin_key_derivation.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_builtin_key_derivation.h</FilePath>
             </File>
             <File>
               <FileName>crypto_builtin_primitives.h</FileName>
@@ -5075,6 +5355,11 @@
               <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_driver_contexts_composites.h</FilePath>
             </File>
             <File>
+              <FileName>crypto_driver_contexts_key_derivation.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_driver_contexts_key_derivation.h</FilePath>
+            </File>
+            <File>
               <FileName>crypto_driver_contexts_primitives.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_driver_contexts_primitives.h</FilePath>
@@ -5083,6 +5368,11 @@
               <FileName>crypto_extra.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_extra.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_legacy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_legacy.h</FilePath>
             </File>
             <File>
               <FileName>crypto_platform.h</FileName>
@@ -5168,6 +5458,11 @@
               <FileName>base64.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/base64.c</FilePath>
+            </File>
+            <File>
+              <FileName>base64_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/base64_internal.h</FilePath>
             </File>
             <File>
               <FileName>bignum.c</FileName>
@@ -5270,14 +5565,14 @@
               <FilePath>../../../../../middleware/mbedtls3x/library/constant_time.c</FilePath>
             </File>
             <File>
+              <FileName>constant_time_impl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/constant_time_impl.h</FilePath>
+            </File>
+            <File>
               <FileName>constant_time_internal.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/constant_time_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>constant_time_invasive.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls3x/library/constant_time_invasive.h</FilePath>
             </File>
             <File>
               <FileName>ctr_drbg.c</FileName>
@@ -5320,6 +5615,11 @@
               <FilePath>../../../../../middleware/mbedtls3x/library/ecp_curves.c</FilePath>
             </File>
             <File>
+              <FileName>ecp_curves_new.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/ecp_curves_new.c</FilePath>
+            </File>
+            <File>
               <FileName>ecp_internal_alt.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/ecp_internal_alt.h</FilePath>
@@ -5355,16 +5655,6 @@
               <FilePath>../../../../../middleware/mbedtls3x/library/gcm.c</FilePath>
             </File>
             <File>
-              <FileName>hash_info.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls3x/library/hash_info.c</FilePath>
-            </File>
-            <File>
-              <FileName>hash_info.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls3x/library/hash_info.h</FilePath>
-            </File>
-            <File>
               <FileName>hkdf.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/hkdf.c</FilePath>
@@ -5393,6 +5683,11 @@
               <FileName>md.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/md.c</FilePath>
+            </File>
+            <File>
+              <FileName>md_psa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/md_psa.h</FilePath>
             </File>
             <File>
               <FileName>md_wrap.h</FileName>
@@ -5438,6 +5733,11 @@
               <FileName>pk.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/pk.c</FilePath>
+            </File>
+            <File>
+              <FileName>pk_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/pk_internal.h</FilePath>
             </File>
             <File>
               <FileName>pk_wrap.c</FileName>
@@ -5525,9 +5825,19 @@
               <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_core.h</FilePath>
             </File>
             <File>
-              <FileName>psa_crypto_driver_wrappers.c</FileName>
+              <FileName>psa_crypto_core_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_core_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_driver_wrappers_no_static.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_driver_wrappers.c</FilePath>
+              <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_driver_wrappers_no_static.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_driver_wrappers_no_static.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_driver_wrappers_no_static.h</FilePath>
             </File>
             <File>
               <FileName>psa_crypto_driver_wrappers.h</FileName>
@@ -5543,6 +5853,16 @@
               <FileName>psa_crypto_ecp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_ecp.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_ffdh.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_ffdh.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_ffdh.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_ffdh.h</FilePath>
             </File>
             <File>
               <FileName>psa_crypto_hash.c</FileName>
@@ -5630,14 +5950,14 @@
               <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_storage.h</FilePath>
             </File>
             <File>
-              <FileName>psa_its_file.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls3x/library/psa_its_file.c</FilePath>
-            </File>
-            <File>
               <FileName>psa_util.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/psa_util.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_util_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/psa_util_internal.h</FilePath>
             </File>
             <File>
               <FileName>ripemd160.c</FileName>
@@ -5663,6 +5983,11 @@
               <FileName>sha1.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/sha1.c</FilePath>
+            </File>
+            <File>
+              <FileName>sha3.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/sha3.c</FilePath>
             </File>
             <File>
               <FileName>sha256.c</FileName>
@@ -5855,6 +6180,11 @@
               <FilePath>../../../../../middleware/mbedtls3x/library/x509_csr.c</FilePath>
             </File>
             <File>
+              <FileName>x509write.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/x509write.c</FilePath>
+            </File>
+            <File>
               <FileName>x509write_crt.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/x509write_crt.c</FilePath>
@@ -5988,7 +6318,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>fromelf.exe --output "$L@L.bin" --bincombined "#L"</UserProg1Name>
+            <UserProg1Name>fromelf.exe --output "$Lsdk20-app.bin" --bincombined "#L"</UserProg1Name>
             <UserProg2Name/>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -6245,7 +6575,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MULADDC_CANNOT_USE_R7, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, PRINTF_FLOAT_ENABLE=1, MBEDTLS_CONFIG_FILE='\"mcux_mbedtls_config.h\"', MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../middleware/mbedtls3x/port/rng;../../../../../middleware/mbedtls3x/include;../../../../../middleware/mbedtls3x/library;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../components/uart;../../../flash_config;../../../../../components/serial_manager;../../../../../components/lists;../../../../../middleware/mbedtls3x/port;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../middleware/mbedtls3x/port/rng;../../../../../middleware/mbedtls3x/include;../../../../../middleware/mbedtls3x/library;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../devices/MIMXRT685S/utilities;../../../../../components/uart;../../../flash_config;../../../../../components/serial_manager;../../../../../components/lists;../../../../../middleware/mbedtls3x/port;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -6350,9 +6680,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -6538,6 +6868,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6745,6 +7080,36 @@
               <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/compat-2.x.h</FilePath>
             </File>
             <File>
+              <FileName>config_adjust_legacy_crypto.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/config_adjust_legacy_crypto.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_adjust_legacy_from_psa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/config_adjust_legacy_from_psa.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_adjust_psa_from_legacy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/config_adjust_psa_from_legacy.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_adjust_psa_superset_legacy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/config_adjust_psa_superset_legacy.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_adjust_ssl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/config_adjust_ssl.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_adjust_x509.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/config_adjust_x509.h</FilePath>
+            </File>
+            <File>
               <FileName>config_psa.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/config_psa.h</FilePath>
@@ -6818,11 +7183,6 @@
               <FileName>hmac_drbg.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/hmac_drbg.h</FilePath>
-            </File>
-            <File>
-              <FileName>legacy_or_psa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/legacy_or_psa.h</FilePath>
             </File>
             <File>
               <FileName>lms.h</FileName>
@@ -6930,6 +7290,11 @@
               <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/sha1.h</FilePath>
             </File>
             <File>
+              <FileName>sha3.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/sha3.h</FilePath>
+            </File>
+            <File>
               <FileName>sha256.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/include/mbedtls/sha256.h</FilePath>
@@ -7010,14 +7375,39 @@
           <GroupName>mbedtls3x/include/psa</GroupName>
           <Files>
             <File>
+              <FileName>build_info.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/psa/build_info.h</FilePath>
+            </File>
+            <File>
               <FileName>crypto.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto.h</FilePath>
             </File>
             <File>
+              <FileName>crypto_adjust_auto_enabled.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_auto_enabled.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_adjust_config_key_pair_types.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_key_pair_types.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_adjust_config_synonyms.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_synonyms.h</FilePath>
+            </File>
+            <File>
               <FileName>crypto_builtin_composites.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_builtin_composites.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_builtin_key_derivation.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_builtin_key_derivation.h</FilePath>
             </File>
             <File>
               <FileName>crypto_builtin_primitives.h</FileName>
@@ -7045,6 +7435,11 @@
               <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_driver_contexts_composites.h</FilePath>
             </File>
             <File>
+              <FileName>crypto_driver_contexts_key_derivation.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_driver_contexts_key_derivation.h</FilePath>
+            </File>
+            <File>
               <FileName>crypto_driver_contexts_primitives.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_driver_contexts_primitives.h</FilePath>
@@ -7053,6 +7448,11 @@
               <FileName>crypto_extra.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_extra.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_legacy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/include/psa/crypto_legacy.h</FilePath>
             </File>
             <File>
               <FileName>crypto_platform.h</FileName>
@@ -7138,6 +7538,11 @@
               <FileName>base64.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/base64.c</FilePath>
+            </File>
+            <File>
+              <FileName>base64_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/base64_internal.h</FilePath>
             </File>
             <File>
               <FileName>bignum.c</FileName>
@@ -7240,14 +7645,14 @@
               <FilePath>../../../../../middleware/mbedtls3x/library/constant_time.c</FilePath>
             </File>
             <File>
+              <FileName>constant_time_impl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/constant_time_impl.h</FilePath>
+            </File>
+            <File>
               <FileName>constant_time_internal.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/constant_time_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>constant_time_invasive.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls3x/library/constant_time_invasive.h</FilePath>
             </File>
             <File>
               <FileName>ctr_drbg.c</FileName>
@@ -7290,6 +7695,11 @@
               <FilePath>../../../../../middleware/mbedtls3x/library/ecp_curves.c</FilePath>
             </File>
             <File>
+              <FileName>ecp_curves_new.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/ecp_curves_new.c</FilePath>
+            </File>
+            <File>
               <FileName>ecp_internal_alt.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/ecp_internal_alt.h</FilePath>
@@ -7325,16 +7735,6 @@
               <FilePath>../../../../../middleware/mbedtls3x/library/gcm.c</FilePath>
             </File>
             <File>
-              <FileName>hash_info.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls3x/library/hash_info.c</FilePath>
-            </File>
-            <File>
-              <FileName>hash_info.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls3x/library/hash_info.h</FilePath>
-            </File>
-            <File>
               <FileName>hkdf.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/hkdf.c</FilePath>
@@ -7363,6 +7763,11 @@
               <FileName>md.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/md.c</FilePath>
+            </File>
+            <File>
+              <FileName>md_psa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/md_psa.h</FilePath>
             </File>
             <File>
               <FileName>md_wrap.h</FileName>
@@ -7408,6 +7813,11 @@
               <FileName>pk.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/pk.c</FilePath>
+            </File>
+            <File>
+              <FileName>pk_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/pk_internal.h</FilePath>
             </File>
             <File>
               <FileName>pk_wrap.c</FileName>
@@ -7495,9 +7905,19 @@
               <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_core.h</FilePath>
             </File>
             <File>
-              <FileName>psa_crypto_driver_wrappers.c</FileName>
+              <FileName>psa_crypto_core_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_core_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_driver_wrappers_no_static.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_driver_wrappers.c</FilePath>
+              <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_driver_wrappers_no_static.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_driver_wrappers_no_static.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_driver_wrappers_no_static.h</FilePath>
             </File>
             <File>
               <FileName>psa_crypto_driver_wrappers.h</FileName>
@@ -7513,6 +7933,16 @@
               <FileName>psa_crypto_ecp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_ecp.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_ffdh.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_ffdh.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_ffdh.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_ffdh.h</FilePath>
             </File>
             <File>
               <FileName>psa_crypto_hash.c</FileName>
@@ -7600,14 +8030,14 @@
               <FilePath>../../../../../middleware/mbedtls3x/library/psa_crypto_storage.h</FilePath>
             </File>
             <File>
-              <FileName>psa_its_file.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls3x/library/psa_its_file.c</FilePath>
-            </File>
-            <File>
               <FileName>psa_util.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/psa_util.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_util_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/psa_util_internal.h</FilePath>
             </File>
             <File>
               <FileName>ripemd160.c</FileName>
@@ -7633,6 +8063,11 @@
               <FileName>sha1.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/sha1.c</FilePath>
+            </File>
+            <File>
+              <FileName>sha3.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/sha3.c</FilePath>
             </File>
             <File>
               <FileName>sha256.c</FileName>
@@ -7823,6 +8258,11 @@
               <FileName>x509_csr.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls3x/library/x509_csr.c</FilePath>
+            </File>
+            <File>
+              <FileName>x509write.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls3x/library/x509write.c</FilePath>
             </File>
             <File>
               <FileName>x509write_crt.c</FileName>

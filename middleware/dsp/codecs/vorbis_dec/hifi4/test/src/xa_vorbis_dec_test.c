@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006-2021 Cadence Design Systems, Inc.
+ * Copyright (c) 2006-2023 Cadence Design Systems, Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -144,6 +144,7 @@ WORD32  raw_vorbis_file_flag =0;
 WORD32  raw_vorbis_file_last_pkt_gran_pos = -1;
 WORD32  ogg_max_page_size = 12;  /* Library default */
 WORD32  runtime_mem = 0;    /* Library default, corresponds to 4k blocksize */
+static const char INVALID_ARGUMENT_MESSAGE[] = "\nIncorrect Input parameters! Use -h for help.";
 
 #if DISPLAY_MESSAGE
 /*******************************************************************************
@@ -163,8 +164,8 @@ VOID xa_display_id_message(WORD8 lib_name[], WORD8 lib_version[])
 {
     WORD8 str[4][XA_SCREEN_WIDTH] = 
     {
-        "TENSILICA, INC.\n",
-        "http://www.tensilica.com\n",
+        "Cadence Design Systems, Inc.\n",
+        "https://www.cadence.com\n",
         "",
         ""
     };
@@ -220,7 +221,7 @@ VOID xa_display_comment (pWORD8 pb_comment_mem, UWORD32 ui_comment_mem_size)
 {
     UWORD32 ui_loop_counter;
     UWORD32 ui_comment_mem_offset = 0;
-    WORD32 i_no_of_usr_comments;
+    UWORD32 i_no_of_usr_comments;
     UWORD32  ui_str_length;
 
     /*************************************************************************/
@@ -470,7 +471,7 @@ XA_ERRORCODE xa_ogg_dec_main_process(int  argc, char *argv[])
                                XA_CMD_TYPE_API_VERSION, pb_api_version);
     _XA_HANDLE_ERROR(p_proc_err_info, "", err_code);    
 
-    /* Display the Tensilica identification message */
+    /* Display the Cadence identification message */
     xa_display_id_message(pb_lib_name, pb_lib_version);
    
 #endif
@@ -1423,12 +1424,13 @@ int main(int argc, char *argv[])
             /* otherwise if this a normal command and its enabled for execution */
             if(processcmd) 
             {
-                WORD32 i;
+                WORD32 i, isTrue;
                 WORD32 err_code = XA_NO_ERROR;
                 int file_flag = 0;
 
                 for(i = 0; i < fargc; i++) 
                 {
+					isTrue = 0;
                     printf("%s ", fargv[i]);
                     pargv[i] = fargv[i];
 
@@ -1448,6 +1450,7 @@ int main(int argc, char *argv[])
                             err_code = XA_TESTBENCH_MFMAN_FATAL_FILE_OPEN_FAILED;
                             xa_error_handler(&xa_testbench_error_info, "Input File", err_code);
                         }
+						isTrue = 1;
 #if STEP_PLAY
                         /* Note end of file or filesize */
                         fseek(g_pf_inp, 0L, SEEK_END); 
@@ -1474,6 +1477,7 @@ int main(int argc, char *argv[])
                             xa_error_handler(&xa_testbench_error_info, 
                             "Output File", err_code);
                         }
+						isTrue = 1;
                     } 
                     if(!strncmp(fargv[i], "-rtmem:", 7))
                     {
@@ -1482,12 +1486,14 @@ int main(int argc, char *argv[])
 
                         strcpy((char*)pb_buf, (char*)pb_arg_val);
                         runtime_mem = atoi((char*)pb_buf);
+						isTrue = 1;
                         continue;
                     }
 
                     if(!strncmp(fargv[i], "-r", 2))
                     {
                         raw_vorbis_file_flag =1;
+						isTrue = 1;
                     }
 
                     if(!strncmp(fargv[i], "-g", 2))
@@ -1497,6 +1503,7 @@ int main(int argc, char *argv[])
 
                         strcpy((char*)pb_buf, (char*)pb_arg_val);
                         raw_vorbis_file_last_pkt_gran_pos =atoi((char*)pb_buf);
+						isTrue = 1;
                     }
 
 #ifdef SMALL_INPUT_CHUNK_FEED
@@ -1509,6 +1516,7 @@ int main(int argc, char *argv[])
 
                         if (varChunkSize < 8) 
                             varChunkSize=8;
+						isTrue = 1;
                     }
 #endif //#ifdef SMALL_INPUT_CHUNK_FEED
                     if(!strncmp(fargv[i], "-ogg_maxpage:", 13))
@@ -1518,7 +1526,13 @@ int main(int argc, char *argv[])
 
                         strcpy((char*)pb_buf, (char*)pb_arg_val);
                         ogg_max_page_size = atoi((char*)pb_buf);
+						isTrue = 1;
                     }
+					if(isTrue==0)
+					{
+						puts(INVALID_ARGUMENT_MESSAGE);
+						exit(0);
+					}
                 }
                 g_w_malloc_count = 0;
 
@@ -1560,7 +1574,7 @@ int main(int argc, char *argv[])
     }
     else 
     {
-        WORD32 i;
+        WORD32 i, isTrue;
         WORD32 err_code = XA_NO_ERROR;
         WORD32 file_flag = 0;
 
@@ -1569,6 +1583,7 @@ int main(int argc, char *argv[])
 
         for(i = 1; i < argc; i++) 
         {
+			isTrue = 0;
             printf("%s ", argv[i]);
 
             if(!strncmp(argv[i], "-h", 2))
@@ -1593,7 +1608,7 @@ int main(int argc, char *argv[])
                     err_code = XA_TESTBENCH_MFMAN_FATAL_FILE_OPEN_FAILED;
                     xa_error_handler(&xa_testbench_error_info, "Input File", err_code);
                 }
-
+				isTrue = 1;
 #if STEP_PLAY
                 /* Note end of file or filesize */
                 fseek(g_pf_inp, 0L, SEEK_END); 
@@ -1618,6 +1633,7 @@ int main(int argc, char *argv[])
                     err_code = XA_TESTBENCH_MFMAN_FATAL_FILE_OPEN_FAILED;
                     xa_error_handler(&xa_testbench_error_info, "Output File", err_code);
                 }
+				isTrue = 1;
             }
             if(!strncmp(argv[i], "-rtmem:", 7))
             {
@@ -1626,12 +1642,14 @@ int main(int argc, char *argv[])
 
                 strcpy((char*)pb_buf, (char*)pb_arg_val);
                 runtime_mem = atoi((char*)pb_buf);
+				isTrue = 1;
                 continue;
             }
 
             if(!strncmp(argv[i], "-r", 2))
             {
                 raw_vorbis_file_flag =1;
+				isTrue = 1;
             }
         
             if(!strncmp(argv[i], "-g", 2))
@@ -1641,6 +1659,7 @@ int main(int argc, char *argv[])
 
                 strcpy((char*)pb_buf, (char*)pb_arg_val);
                 raw_vorbis_file_last_pkt_gran_pos =atoi((char*)pb_buf);
+				isTrue = 1;
             }
 
 #ifdef SMALL_INPUT_CHUNK_FEED
@@ -1653,6 +1672,7 @@ int main(int argc, char *argv[])
 
                 if (varChunkSize < 8) 
                     varChunkSize=8;
+				isTrue = 1;
             }
 #endif //#ifdef SMALL_INPUT_CHUNK_FEED
             if(!strncmp(argv[i], "-ogg_maxpage:", 13))
@@ -1662,8 +1682,13 @@ int main(int argc, char *argv[])
 
                 strcpy((char*)pb_buf, (char*)pb_arg_val);
                 ogg_max_page_size = atoi((char*)pb_buf);
+				isTrue = 1;
             }
-
+			if(isTrue==0)
+			{
+				puts(INVALID_ARGUMENT_MESSAGE);
+				exit(0);
+			}
         }
         g_w_malloc_count = 0;
 

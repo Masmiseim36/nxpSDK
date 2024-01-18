@@ -31,11 +31,11 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/library/ecjpake.c
   ${CMAKE_CURRENT_LIST_DIR}/library/ecp.c
   ${CMAKE_CURRENT_LIST_DIR}/library/ecp_curves.c
+  ${CMAKE_CURRENT_LIST_DIR}/library/ecp_curves_new.c
   ${CMAKE_CURRENT_LIST_DIR}/library/entropy.c
   ${CMAKE_CURRENT_LIST_DIR}/library/entropy_poll.c
   ${CMAKE_CURRENT_LIST_DIR}/library/error.c
   ${CMAKE_CURRENT_LIST_DIR}/library/gcm.c
-  ${CMAKE_CURRENT_LIST_DIR}/library/hash_info.c
   ${CMAKE_CURRENT_LIST_DIR}/library/hkdf.c
   ${CMAKE_CURRENT_LIST_DIR}/library/hmac_drbg.c
   ${CMAKE_CURRENT_LIST_DIR}/library/lmots.c
@@ -60,8 +60,9 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/library/psa_crypto_aead.c
   ${CMAKE_CURRENT_LIST_DIR}/library/psa_crypto_cipher.c
   ${CMAKE_CURRENT_LIST_DIR}/library/psa_crypto_client.c
-  ${CMAKE_CURRENT_LIST_DIR}/library/psa_crypto_driver_wrappers.c
+  ${CMAKE_CURRENT_LIST_DIR}/library/psa_crypto_driver_wrappers_no_static.c
   ${CMAKE_CURRENT_LIST_DIR}/library/psa_crypto_ecp.c
+  ${CMAKE_CURRENT_LIST_DIR}/library/psa_crypto_ffdh.c
   ${CMAKE_CURRENT_LIST_DIR}/library/psa_crypto_hash.c
   ${CMAKE_CURRENT_LIST_DIR}/library/psa_crypto_mac.c
   ${CMAKE_CURRENT_LIST_DIR}/library/psa_crypto_pake.c
@@ -69,12 +70,12 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/library/psa_crypto_se.c
   ${CMAKE_CURRENT_LIST_DIR}/library/psa_crypto_slot_management.c
   ${CMAKE_CURRENT_LIST_DIR}/library/psa_crypto_storage.c
-  ${CMAKE_CURRENT_LIST_DIR}/library/psa_its_file.c
   ${CMAKE_CURRENT_LIST_DIR}/library/psa_util.c
   ${CMAKE_CURRENT_LIST_DIR}/library/ripemd160.c
   ${CMAKE_CURRENT_LIST_DIR}/library/rsa.c
   ${CMAKE_CURRENT_LIST_DIR}/library/rsa_alt_helpers.c
   ${CMAKE_CURRENT_LIST_DIR}/library/sha1.c
+  ${CMAKE_CURRENT_LIST_DIR}/library/sha3.c
   ${CMAKE_CURRENT_LIST_DIR}/library/sha256.c
   ${CMAKE_CURRENT_LIST_DIR}/library/sha512.c
   ${CMAKE_CURRENT_LIST_DIR}/library/threading.c

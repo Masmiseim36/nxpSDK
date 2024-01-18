@@ -78,7 +78,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>fromelf.exe --output "$L@L.bin" --bincombined "#L"</UserProg1Name>
+            <UserProg1Name>fromelf.exe --output "$Lsdk20-app.bin" --bincombined "#L"</UserProg1Name>
             <UserProg2Name/>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../erpc_common;../../erpc_common/erpc_matrix_multiply/service;..;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../devices/MIMXRT685S;../../../../../components/uart;../../../flash_config;../../../../../components/lists;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT685S/template;../../../../../middleware/multicore/erpc/erpc_c;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common;../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service;../../../../../devices/MIMXRT685S;../../../../../components/uart;../../../flash_config;../../../../../components/lists;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT685S/template;../../../../../middleware/multicore/erpc/erpc_c;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -379,16 +379,6 @@
           <GroupName>source</GroupName>
           <Files>
             <File>
-              <FileName>erpc_error_handler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../erpc_common/erpc_error_handler.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_error_handler.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../../erpc_common/erpc_error_handler.cpp</FilePath>
-            </File>
-            <File>
               <FileName>main_server.c</FileName>
               <FileType>1</FileType>
               <FilePath>../main_server.c</FilePath>
@@ -398,30 +388,15 @@
               <FileType>5</FileType>
               <FilePath>../erpc_config.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>erpc/service</GroupName>
-          <Files>
             <File>
-              <FileName>erpc_matrix_multiply.erpc</FileName>
+              <FileName>erpc_error_handler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply.erpc</FilePath>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_error_handler.h</FilePath>
             </File>
             <File>
-              <FileName>erpc_matrix_multiply.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_matrix_multiply_server.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_server.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_matrix_multiply_server.cpp</FileName>
+              <FileName>erpc_error_handler.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_server.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_error_handler.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -469,9 +444,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -519,6 +494,16 @@
               <FilePath>../../../../../devices/MIMXRT685S/cmsis_drivers/fsl_usart_cmsis.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_common.h</FilePath>
@@ -539,16 +524,6 @@
               <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_power.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_power.h</FilePath>
@@ -557,16 +532,6 @@
               <FileName>fsl_power.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_power.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_reset.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_reset.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_reset.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_reset.c</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>
@@ -613,6 +578,16 @@
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_reset.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_reset.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_reset.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_reset.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -642,6 +617,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -758,6 +738,16 @@
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_pre_post_action.cpp</FilePath>
             </File>
+            <File>
+              <FileName>erpc_utils.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_utils.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_utils.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_utils.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -842,6 +832,56 @@
               <FileName>erpc_endianness_undefined.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/multicore/erpc/erpc_c/port/erpc_endianness_undefined.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>erpc/service</GroupName>
+          <Files>
+            <File>
+              <FileName>erpc_matrix_multiply.erpc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply.erpc</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_matrix_multiply_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_matrix_multiply_common.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_common.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_matrix_multiply_server.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_server.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_matrix_multiply_server.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_server.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_matrix_multiply_interface.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_interface.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_matrix_multiply_interface.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_interface.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>c_erpc_matrix_multiply_server.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/c_erpc_matrix_multiply_server.h</FilePath>
+            </File>
+            <File>
+              <FileName>c_erpc_matrix_multiply_server.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/c_erpc_matrix_multiply_server.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -1067,7 +1107,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>fromelf.exe --output "$L@L.bin" --bincombined "#L"</UserProg1Name>
+            <UserProg1Name>fromelf.exe --output "$Lsdk20-app.bin" --bincombined "#L"</UserProg1Name>
             <UserProg2Name/>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -1323,7 +1363,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../erpc_common;../../erpc_common/erpc_matrix_multiply/service;..;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../devices/MIMXRT685S;../../../../../components/uart;../../../flash_config;../../../../../components/lists;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT685S/template;../../../../../middleware/multicore/erpc/erpc_c;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common;../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service;../../../../../devices/MIMXRT685S;../../../../../components/uart;../../../flash_config;../../../../../components/lists;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT685S/template;../../../../../middleware/multicore/erpc/erpc_c;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1368,16 +1408,6 @@
           <GroupName>source</GroupName>
           <Files>
             <File>
-              <FileName>erpc_error_handler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../erpc_common/erpc_error_handler.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_error_handler.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../../erpc_common/erpc_error_handler.cpp</FilePath>
-            </File>
-            <File>
               <FileName>main_server.c</FileName>
               <FileType>1</FileType>
               <FilePath>../main_server.c</FilePath>
@@ -1387,30 +1417,15 @@
               <FileType>5</FileType>
               <FilePath>../erpc_config.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>erpc/service</GroupName>
-          <Files>
             <File>
-              <FileName>erpc_matrix_multiply.erpc</FileName>
+              <FileName>erpc_error_handler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply.erpc</FilePath>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_error_handler.h</FilePath>
             </File>
             <File>
-              <FileName>erpc_matrix_multiply.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_matrix_multiply_server.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_server.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_matrix_multiply_server.cpp</FileName>
+              <FileName>erpc_error_handler.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_server.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_error_handler.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -1458,9 +1473,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -1508,6 +1523,16 @@
               <FilePath>../../../../../devices/MIMXRT685S/cmsis_drivers/fsl_usart_cmsis.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_common.h</FilePath>
@@ -1528,16 +1553,6 @@
               <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_power.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_power.h</FilePath>
@@ -1546,16 +1561,6 @@
               <FileName>fsl_power.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_power.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_reset.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_reset.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_reset.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_reset.c</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>
@@ -1602,6 +1607,16 @@
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_reset.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_reset.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_reset.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_reset.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1631,6 +1646,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1747,6 +1767,16 @@
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_pre_post_action.cpp</FilePath>
             </File>
+            <File>
+              <FileName>erpc_utils.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_utils.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_utils.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_utils.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1831,6 +1861,56 @@
               <FileName>erpc_endianness_undefined.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/multicore/erpc/erpc_c/port/erpc_endianness_undefined.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>erpc/service</GroupName>
+          <Files>
+            <File>
+              <FileName>erpc_matrix_multiply.erpc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply.erpc</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_matrix_multiply_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_matrix_multiply_common.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_common.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_matrix_multiply_server.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_server.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_matrix_multiply_server.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_server.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_matrix_multiply_interface.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_interface.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_matrix_multiply_interface.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_interface.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>c_erpc_matrix_multiply_server.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/c_erpc_matrix_multiply_server.h</FilePath>
+            </File>
+            <File>
+              <FileName>c_erpc_matrix_multiply_server.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/c_erpc_matrix_multiply_server.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -2056,7 +2136,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>fromelf.exe --output "$L@L.bin" --bincombined "#L"</UserProg1Name>
+            <UserProg1Name>fromelf.exe --output "$Lsdk20-app.bin" --bincombined "#L"</UserProg1Name>
             <UserProg2Name/>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -2312,7 +2392,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../erpc_common;../../erpc_common/erpc_matrix_multiply/service;..;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../devices/MIMXRT685S;../../../../../components/uart;../../../flash_config;../../../../../components/lists;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT685S/template;../../../../../middleware/multicore/erpc/erpc_c;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common;../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service;../../../../../devices/MIMXRT685S;../../../../../components/uart;../../../flash_config;../../../../../components/lists;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT685S/template;../../../../../middleware/multicore/erpc/erpc_c;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2357,16 +2437,6 @@
           <GroupName>source</GroupName>
           <Files>
             <File>
-              <FileName>erpc_error_handler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../erpc_common/erpc_error_handler.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_error_handler.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../../erpc_common/erpc_error_handler.cpp</FilePath>
-            </File>
-            <File>
               <FileName>main_server.c</FileName>
               <FileType>1</FileType>
               <FilePath>../main_server.c</FilePath>
@@ -2376,30 +2446,15 @@
               <FileType>5</FileType>
               <FilePath>../erpc_config.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>erpc/service</GroupName>
-          <Files>
             <File>
-              <FileName>erpc_matrix_multiply.erpc</FileName>
+              <FileName>erpc_error_handler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply.erpc</FilePath>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_error_handler.h</FilePath>
             </File>
             <File>
-              <FileName>erpc_matrix_multiply.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_matrix_multiply_server.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_server.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_matrix_multiply_server.cpp</FileName>
+              <FileName>erpc_error_handler.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_server.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_error_handler.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -2447,9 +2502,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -2497,6 +2552,16 @@
               <FilePath>../../../../../devices/MIMXRT685S/cmsis_drivers/fsl_usart_cmsis.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_common.h</FilePath>
@@ -2517,16 +2582,6 @@
               <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_power.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_power.h</FilePath>
@@ -2535,16 +2590,6 @@
               <FileName>fsl_power.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_power.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_reset.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_reset.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_reset.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_reset.c</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>
@@ -2591,6 +2636,16 @@
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_reset.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_reset.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_reset.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_reset.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2620,6 +2675,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2736,6 +2796,16 @@
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_pre_post_action.cpp</FilePath>
             </File>
+            <File>
+              <FileName>erpc_utils.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_utils.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_utils.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_utils.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2820,6 +2890,56 @@
               <FileName>erpc_endianness_undefined.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/multicore/erpc/erpc_c/port/erpc_endianness_undefined.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>erpc/service</GroupName>
+          <Files>
+            <File>
+              <FileName>erpc_matrix_multiply.erpc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply.erpc</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_matrix_multiply_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_matrix_multiply_common.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_common.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_matrix_multiply_server.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_server.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_matrix_multiply_server.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_server.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_matrix_multiply_interface.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_interface.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_matrix_multiply_interface.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_interface.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>c_erpc_matrix_multiply_server.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/c_erpc_matrix_multiply_server.h</FilePath>
+            </File>
+            <File>
+              <FileName>c_erpc_matrix_multiply_server.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/c_erpc_matrix_multiply_server.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -3045,7 +3165,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>fromelf.exe --output "$L@L.bin" --bincombined "#L"</UserProg1Name>
+            <UserProg1Name>fromelf.exe --output "$Lsdk20-app.bin" --bincombined "#L"</UserProg1Name>
             <UserProg2Name/>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -3301,7 +3421,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../erpc_common;../../erpc_common/erpc_matrix_multiply/service;..;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../devices/MIMXRT685S;../../../../../components/uart;../../../flash_config;../../../../../components/lists;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT685S/template;../../../../../middleware/multicore/erpc/erpc_c;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common;../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service;../../../../../devices/MIMXRT685S;../../../../../components/uart;../../../flash_config;../../../../../components/lists;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT685S/template;../../../../../middleware/multicore/erpc/erpc_c;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3346,16 +3466,6 @@
           <GroupName>source</GroupName>
           <Files>
             <File>
-              <FileName>erpc_error_handler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../erpc_common/erpc_error_handler.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_error_handler.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../../erpc_common/erpc_error_handler.cpp</FilePath>
-            </File>
-            <File>
               <FileName>main_server.c</FileName>
               <FileType>1</FileType>
               <FilePath>../main_server.c</FilePath>
@@ -3365,30 +3475,15 @@
               <FileType>5</FileType>
               <FilePath>../erpc_config.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>erpc/service</GroupName>
-          <Files>
             <File>
-              <FileName>erpc_matrix_multiply.erpc</FileName>
+              <FileName>erpc_error_handler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply.erpc</FilePath>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_error_handler.h</FilePath>
             </File>
             <File>
-              <FileName>erpc_matrix_multiply.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_matrix_multiply_server.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_server.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_matrix_multiply_server.cpp</FileName>
+              <FileName>erpc_error_handler.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_server.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_error_handler.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -3436,9 +3531,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -3486,6 +3581,16 @@
               <FilePath>../../../../../devices/MIMXRT685S/cmsis_drivers/fsl_usart_cmsis.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_common.h</FilePath>
@@ -3506,16 +3611,6 @@
               <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_power.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_power.h</FilePath>
@@ -3524,16 +3619,6 @@
               <FileName>fsl_power.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_power.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_reset.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_reset.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_reset.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_reset.c</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>
@@ -3580,6 +3665,16 @@
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_reset.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_reset.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_reset.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_reset.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3609,6 +3704,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3725,6 +3825,16 @@
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_pre_post_action.cpp</FilePath>
             </File>
+            <File>
+              <FileName>erpc_utils.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_utils.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_utils.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_utils.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3809,6 +3919,56 @@
               <FileName>erpc_endianness_undefined.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/multicore/erpc/erpc_c/port/erpc_endianness_undefined.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>erpc/service</GroupName>
+          <Files>
+            <File>
+              <FileName>erpc_matrix_multiply.erpc</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply.erpc</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_matrix_multiply_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_matrix_multiply_common.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_common.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_matrix_multiply_server.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_server.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_matrix_multiply_server.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_server.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_matrix_multiply_interface.hpp</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_interface.hpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_matrix_multiply_interface.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_interface.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>c_erpc_matrix_multiply_server.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/c_erpc_matrix_multiply_server.h</FilePath>
+            </File>
+            <File>
+              <FileName>c_erpc_matrix_multiply_server.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/c_erpc_matrix_multiply_server.cpp</FilePath>
             </File>
           </Files>
         </Group>

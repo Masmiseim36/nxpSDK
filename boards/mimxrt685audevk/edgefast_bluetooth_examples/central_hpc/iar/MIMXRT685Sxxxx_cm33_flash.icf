@@ -1,0 +1,165 @@
+/*
+** ###################################################################
+**     Processors:          MIMXRT685SFAWBR_cm33
+**                          MIMXRT685SFFOB_cm33
+**                          MIMXRT685SFVKB_cm33
+**
+**     Compiler:            IAR ANSI C/C++ Compiler for ARM
+**     Reference manual:    MIMXRT685 User manual Rev. 0.95 11 November 2019
+**     Version:             rev. 1.0, 2018-06-19
+**     Build:               b210303
+**
+**     Abstract:
+**         Linker file for the IAR ANSI C/C++ Compiler for ARM
+**
+**     Copyright 2016 Freescale Semiconductor, Inc.
+**     Copyright 2016-2021 NXP
+**     All rights reserved.
+**
+**     SPDX-License-Identifier: BSD-3-Clause
+**
+**     http:                 www.nxp.com
+**     mail:                 support@nxp.com
+**
+** ###################################################################
+*/
+/* NVM */
+/* By default, the NVM is not used. */
+if (!isdefinedsymbol(gUseNVMLink_d)) {
+    define symbol gUseNVMLink_d = 0;
+}
+
+if (!isdefinedsymbol(gEraseNVMLink_d)) {
+    define symbol gEraseNVMLink_d = 0;
+}
+
+if (!isdefinedsymbol(gNVMSectorCountLink_d)) {
+    define symbol gNVMSectorCountLink_d = 4;
+}
+/* NVM */
+/* flash layout */
+
+/* USB BDT size */
+define symbol usb_bdt_size             = 0x0;
+/* Stack and Heap Sizes */
+if (isdefinedsymbol(__stack_size__)) {
+  define symbol __size_cstack__        = __stack_size__;
+} else {
+  define symbol __size_cstack__        = 0x0400;
+}
+
+if (isdefinedsymbol(__heap_size__)) {
+  define symbol __size_heap__          = __heap_size__;
+} else {
+  define symbol __size_heap__          = 0x1000;
+}
+
+/* The SRAM region [0x10000-0x1BFFF] is reserved for ROM code. */
+/* The SRAM region [0x0-0xFFFF], [0x1C000-0x1FFFF] is reserved for app-specific use cases. */
+/* The SRAM region [0x20000-0x7FFFF] is reserved for Non-cached shared memory between M33 and DSP. */
+
+define symbol __ram_vector_table_size__        =  isdefinedsymbol(__ram_vector_table__) ? 0x00000130 : 0;
+define symbol __ram_vector_table_offset__      =  isdefinedsymbol(__ram_vector_table__) ? 0x0000012F : 0;
+
+define symbol m_interrupts_start               = 0x08001000;
+define symbol m_interrupts_end                 = 0x0800112F;
+
+define symbol m_text_start                     = 0x08001130;
+define symbol _ROM_END_                        = 0x087FFFFF;
+/* NOTE: Flash in range 0x08800000 - 0x08FFFFFF is reserved for litteFS data */
+
+/*define symbol m_text_end                       = 0x081FFFFF;*/
+
+define symbol m_interrupts_ram_start           = 0x20080000;
+define symbol m_interrupts_ram_end             = 0x20080000 + __ram_vector_table_offset__;
+
+define symbol m_data_start                     = m_interrupts_ram_start + __ram_vector_table_size__;
+define symbol m_data_end                       = 0x201FFFFF;
+
+define symbol m_usb_sram_start                 = 0x40140000;
+define symbol m_usb_sram_end                   = 0x40143FFF;
+
+define symbol m_boot_flash_conf_start          = 0x08000400;
+
+define exported symbol __VECTOR_TABLE          = m_interrupts_start;
+define exported symbol __VECTOR_RAM            = isdefinedsymbol(__ram_vector_table__) ? m_interrupts_ram_start : m_interrupts_start;
+define exported symbol __RAM_VECTOR_TABLE_SIZE = __ram_vector_table_size__;
+define symbol STORAGE_AREA_LENGTH  = 0x10000;
+
+define symbol STORAGE_AREA_SIZE  = STORAGE_AREA_LENGTH;
+define symbol STORAGE_AREA_START = _ROM_END_ - STORAGE_AREA_SIZE + 1;
+define symbol m_text_end         = STORAGE_AREA_START -1;
+/*** NVM Configuration Start ***/
+if (isdefinedsymbol(gUseNVMLink_d))
+{
+  define exported symbol NVM_AREA_START = STORAGE_AREA_START;
+  
+  define exported symbol NV_STORAGE_SECTOR_SIZE = 0x1000;  /* 4k flash sector size */
+  define exported symbol NV_STORAGE_MAX_SECTORS = gNVMSectorCountLink_d;
+  define exported symbol NVM_AREA_SIZE = NV_STORAGE_SECTOR_SIZE * NV_STORAGE_MAX_SECTORS;
+  if (NVM_AREA_SIZE > STORAGE_AREA_SIZE)
+  {
+    error "Required NVM storage area is biger than STORAGE_AREA_SIZE";
+  }
+  define exported symbol NV_STORAGE_END_ADDRESS = NVM_AREA_START + NVM_AREA_SIZE - 1;
+  define exported symbol NV_STORAGE_START_ADDRESS = NVM_AREA_START;
+}
+/*** NVM Configuration End ***/
+
+/*** littleFS configuration Start ***/
+define exported symbol EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS = _ROM_END_ + 1;
+define exported symbol EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE = 0x1000;  /* 4k flash sector size */
+define exported symbol EDGEFAST_BT_LITTLEFS_STORAGE_MAX_SECTORS = (0x08FFFFFF + 1 - EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS) / EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE;
+/*** littleFS configuration End ***/
+
+define memory mem with size = 4G;
+
+define region TEXT_region             = mem:[from m_interrupts_start to m_interrupts_end]
+                                      | mem:[from m_text_start to m_text_end];
+define region m_interrupts_ram_region = mem:[from m_interrupts_ram_start to m_interrupts_ram_end];
+define region DATA_region             = mem:[from m_data_start to m_data_end - __size_cstack__];
+define region CSTACK_region           = mem:[from m_data_end-__size_cstack__ + 1 to m_data_end];
+
+
+define block CSTACK    with alignment = 8, size = __size_cstack__   { };
+define block HEAP      with alignment = 8, size = __size_heap__     { };
+define block RO        { readonly };
+define block RW        { readwrite };
+define block ZI        { zi };
+
+/* regions for USB */
+define region USB_BDT_region = mem:[from m_usb_sram_start to m_usb_sram_start + usb_bdt_size - 1];
+define region USB_SRAM_region = mem:[from m_usb_sram_start + usb_bdt_size to m_usb_sram_end];
+
+initialize by copy { readwrite, section .textrw, section CodeQuickAccess, section DataQuickAccess,
+  /* Place in RAM flash and performance dependent functions */
+  object fsl_adapter_flexspi_nor_flash.o,
+  object NV_Flash.o,
+  object mflash_drv.o,
+  object  fsl_cache.o,
+  object fsl_flexspi.o,};
+
+do not initialize  { section .noinit, section m_usb_bdt, section m_usb_global  };
+
+keep{section .flash_conf, section NVM_ADAPTER_TABLE };
+place at address mem: m_boot_flash_conf_start    { readonly section .flash_conf };
+place at address mem: m_interrupts_start    { readonly section .intvec };
+define block ._bt_gatt_service_static with fixed order { readonly section ._bt_gatt_service_static*};
+define block ._bt_settings_static with fixed order { readonly section ._bt_settings*};
+define block ._bt_conn_cb with fixed order { readonly section ._bt_conn_cb*};
+define block ._bt_l2cap_fixed_chan with fixed order { readonly section ._bt_l2cap_fixed_chan*};
+define block ._bt_l2cap_br_fixed_chan with fixed order { readonly section ._bt_l2cap_br_fixed_chan*};
+define block ._settings_handler_static with fixed order { readonly section ._settings_handler_static*};
+define block ._k_mem_slab with fixed order { readwrite section ._k_mem_slab*};
+define block ._net_buf_pool with fixed order { readwrite section ._net_buf_pool*};
+
+place in TEXT_region                        { block RO,block ._bt_gatt_service_static, block ._bt_settings_static, block ._bt_conn_cb, block ._bt_l2cap_fixed_chan, block ._bt_l2cap_br_fixed_chan, block ._settings_handler_static };
+place in m_interrupts_ram_region            { section m_interrupts_ram };
+place in DATA_region                        { section CodeQuickAccess, section DataQuickAccess };
+place in DATA_region                        { block RW, block ._net_buf_pool, block ._k_mem_slab };
+place in DATA_region                        { block ZI };
+place in DATA_region                        { last block HEAP };
+place in CSTACK_region                      { block CSTACK };
+place in USB_BDT_region                     { section m_usb_bdt };
+place in USB_SRAM_region                    { section m_usb_global };
+keep { section .flash_area_list, section ._net_buf_pool*, section ._k_mem_slab*, section ._bt*, section ._settings*};

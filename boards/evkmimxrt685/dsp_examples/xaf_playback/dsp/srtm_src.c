@@ -13,7 +13,7 @@
 #include <xtensa/xos.h>
 
 #include "xaf-utils-test.h"
-
+#include "xaf-fio-test.h"
 #include "xa_error_standards.h"
 #include "xa_src_pp_api.h"
 #include "srtm_utils.h"
@@ -27,6 +27,9 @@
 #define AUDIO_COMP_BUF_SIZE  (256 * 1024)
 #define MAX_SRC_FRAME_ADJUST 2
 #define MAX_INPUT_CHUNK_LEN  512
+
+extern int audio_frmwk_buf_size;
+extern int audio_comp_buf_size;
 
 static int src_setup(
     void *p_comp, int channels, int in_sample_rate, int out_sample_rate, int in_frame_size, int pcm_width_bytes)
@@ -139,17 +142,13 @@ int srtm_src(dsp_handle_t *dsp, unsigned int *pCmdParams)
 
     xaf_adev_config_default_init(&device_config);
 
-    device_config.pmem_malloc                 = DSP_Malloc;
-    device_config.pmem_free                   = DSP_Free;
-    device_config.audio_component_buffer_size = AUDIO_COMP_BUF_SIZE;
-    device_config.audio_framework_buffer_size = AUDIO_FRMWK_BUF_SIZE;
+    audio_frmwk_buf_size = AUDIO_FRMWK_BUF_SIZE;
+    audio_comp_buf_size = AUDIO_COMP_BUF_SIZE;
+    device_config.audio_component_buffer_size[XAF_MEM_ID_COMP] = AUDIO_COMP_BUF_SIZE;
+    device_config.audio_framework_buffer_size[XAF_MEM_ID_DEV] = AUDIO_FRMWK_BUF_SIZE;
+    device_config.core = XF_CORE_ID;
 
-    ret = xaf_adev_open(&p_adev, &device_config);
-    if (ret != XAF_NO_ERR)
-    {
-        DSP_PRINTF("xaf_adev_open failure: %d\r\n", ret);
-        return -1;
-    }
+    TST_CHK_API_ADEV_OPEN(p_adev, device_config, "[DSP Codec] Audio Device Open\r\n");
 
     DSP_PRINTF("[DSP SRC] Audio Device Ready\r\n");
     /* ...create src component */
@@ -244,13 +243,7 @@ int srtm_src(dsp_handle_t *dsp, unsigned int *pCmdParams)
         return -1;
     }
 
-    ret = xaf_adev_close(p_adev, XAF_ADEV_NORMAL_CLOSE);
-    if (ret != XAF_NO_ERR)
-    {
-        DSP_PRINTF("xaf_adev_close failure: %d\r\n", ret);
-        return -1;
-    }
-
+    TST_CHK_API_ADEV_CLOSE(p_adev, XAF_ADEV_NORMAL_CLOSE, device_config, "xaf_adev_close");
     DSP_PRINTF("[DSP SRC] Audio device closed\r\n\r\n");
 
     /* Report the size of the input and decoded output buffer */

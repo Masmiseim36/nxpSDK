@@ -291,7 +291,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050,Pa084,Pa205,Pe128,Pe186,Pe546,Pe940,Pe550,Pa167,Pe177,Pe111,Pe188,Pe161</state>
+          <state>Pa082,Pa050,Pa084,Pa205,Pe128,Pe186,Pe546,Pe940,Pe550,Pa167,Pe177,Pe111,Pe188,Pe161,Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -332,7 +332,7 @@
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -489,6 +489,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
@@ -500,6 +501,7 @@
           <state>$PROJ_DIR$/../../../../../../CMSIS/RTOS2/RTX/Source</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/RTOS2/RTX/Include</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/RTOS2/RTX/Config</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/partition</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include</state>
@@ -1524,7 +1526,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050,Pa084,Pa205,Pe128,Pe186,Pe546,Pe940,Pe550,Pa167,Pe177,Pe111,Pe188,Pe161</state>
+          <state>Pa082,Pa050,Pa084,Pa205,Pe128,Pe186,Pe546,Pe940,Pe550,Pa167,Pe177,Pe111,Pe188,Pe161,Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1565,7 +1567,7 @@
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -1722,6 +1724,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
@@ -1733,6 +1736,7 @@
           <state>$PROJ_DIR$/../../../../../../CMSIS/RTOS2/RTX/Source</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/RTOS2/RTX/Include</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/RTOS2/RTX/Config</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/partition</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include</state>
@@ -2521,87 +2525,30 @@
   <group>
     <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
   <group>
     <name>tf-m</name>
     <group>
-      <name>config</name>
-      <group>
-        <name>profile</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/config/profile/config_profile_large.h</name>
-        </file>
-      </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/config/config_base.h</name>
-      </file>
-    </group>
-    <group>
       <name>platform</name>
       <group>
-        <name>include</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_crypto_keys.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include/tfm_hal_device_header.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_boot_seed.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_device_id.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_defs.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_ns.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include/region.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_test.h</name>
-        </file>
-      </group>
-      <group>
         <name>ext</name>
-        <group>
-          <name>common</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common/uart_stdout.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common/uart_stdout.c</name>
-          </file>
-        </group>
-        <group>
-          <name>driver</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/driver/Driver_USART.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/driver/Driver_Common.h</name>
-          </file>
-        </group>
         <group>
           <name>target</name>
           <group>
             <name>nxp</name>
             <group>
               <name>common</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/libc_dummy.c</name>
-              </file>
               <group>
                 <name>CMSIS_Driver</name>
                 <file>
                   <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/CMSIS_Driver/Driver_USART.c</name>
                 </file>
               </group>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/libc_dummy.c</name>
+              </file>
               <group>
                 <name>Device</name>
                 <group>
@@ -2626,6 +2573,9 @@
                   </file>
                 </group>
               </group>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/target_cfg_common.h</name>
+              </file>
             </group>
             <group>
               <name>mimxrt685audevk</name>
@@ -2659,7 +2609,64 @@
             </group>
           </group>
         </group>
+        <group>
+          <name>common</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common/uart_stdout.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common/uart_stdout.c</name>
+          </file>
+        </group>
+        <group>
+          <name>driver</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/driver/Driver_USART.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/driver/Driver_Common.h</name>
+          </file>
+        </group>
       </group>
+      <group>
+        <name>include</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_crypto_keys.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include/tfm_hal_device_header.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_boot_seed.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_device_id.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_defs.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_ns.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include/region.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_test.h</name>
+        </file>
+      </group>
+    </group>
+    <group>
+      <name>config</name>
+      <group>
+        <name>profile</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/config/profile/config_profile_large.h</name>
+        </file>
+      </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/config/config_base.h</name>
+      </file>
     </group>
     <group>
       <name>interface</name>
@@ -2921,6 +2928,12 @@
           <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/val/nspe/val_peripherals.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/val/nspe/val_platform.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/val/nspe/val_platform.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/val/nspe/val_storage.c</name>
         </file>
         <file>
@@ -3004,6 +3017,9 @@
             </group>
             <file>
               <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/pal_common.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/pal_weak.c</name>
             </file>
             <group>
               <name>initial_attestation</name>
@@ -4460,6 +4476,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/fsl_assert.h</name>
     </file>
   </group>
   <group>

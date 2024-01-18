@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2022 by Cadence Design Systems, Inc.  ALL RIGHTS RESERVED.
+# Copyright (c) 2022-2023 by Cadence Design Systems, Inc.  ALL RIGHTS RESERVED.
 # These coded instructions, statements, and computer programs are the
 # copyrighted works and confidential proprietary information of
 # Cadence Design Systems Inc.  They may be adapted and modified by bona fide
@@ -26,6 +26,28 @@ MPEG-1/2 Layers I and II 2-Channel Decoding
 ======================================================================
 Revision History
 ======================================================================
+
+Version 3.28.1 API 1.17: June 14, 2023
+
++ Built using RI.11 tools.
+
+----------------------------------------------------------------------
+
+Version 3.28 API 1.17: March 23, 2023
+
++ GA release
++ Built using RI.10 tools.
++ PG doc updated.
+
+----------------------------------------------------------------------
+
+Version 3.27 API 1.17: January 16, 2023
+
++ GA release
++ Built using RI.10 tools.
+
+----------------------------------------------------------------------
+
 Version 3.26 API 1.17: July 22, 2022
 
 + GA release
@@ -388,4 +410,4 @@ Version 1.5 API 1.12: October 4, 2006
 Initial customer release.
 
 ----------------------------------------------------------------------
-2022-07-22:09:12:RI-2021.8:754469:745268:754457::
+2023-06-12:23:37:RI-2021.7:803604:802997:803593::

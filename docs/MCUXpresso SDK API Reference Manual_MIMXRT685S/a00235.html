@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: INPUTMUX: Input Multiplexing Driver</title>
+<title>MCUXpresso SDK API Reference Manual: Hashcrypt common functions</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,283 +99,245 @@ $(document).ready(function(){initNavTree('a00235.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#files">Files</a> &#124;
 <a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">INPUTMUX: Input Multiplexing Driver</div>  </div>
+<div class="title">Hashcrypt common functions<div class="ingroups"><a class="el" href="a00233.html">Hashcrypt: The Cryptographic Accelerator</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a driver for the Input multiplexing (INPUTMUX). <br/>
-It configures the inputs to the pin interrupt block, DMA trigger, and frequency measure function. Once configured, the clock is not needed for the inputmux. <br/>
- </p>
-<h1><a class="anchor" id="INPUTMUXInit"></a>
-Input Multiplexing Driver operation</h1>
-<p>INPUTMUX_AttachSignal function configures the specified input</p>
-<h1><a class="anchor" id="INPUTMUXTypUC"></a>
-Typical use case</h1>
-<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/inputmux </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
-Files</h2></td></tr>
-<tr class="memitem:a00164"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00164.html">fsl_inputmux.h</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00099"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00099.html">fsl_inputmux_connections.h</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga227df33dfe2aed994d27887b6cdbe801"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga227df33dfe2aed994d27887b6cdbe801"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#ga227df33dfe2aed994d27887b6cdbe801">SCT0_PMUX_ID</a>&#160;&#160;&#160;0x00U</td></tr>
-<tr class="memdesc:ga227df33dfe2aed994d27887b6cdbe801"><td class="mdescLeft">&#160;</td><td class="mdescRight">Periphinmux IDs. <br/></td></tr>
-<tr class="separator:ga227df33dfe2aed994d27887b6cdbe801"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga859c70de1a97b05f61723b64e6f06227"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga859c70de1a97b05f61723b64e6f06227"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#ga859c70de1a97b05f61723b64e6f06227">HASHCRYPT_MODE_SHA1</a>&#160;&#160;&#160;0x1</td></tr>
+<tr class="memdesc:ga859c70de1a97b05f61723b64e6f06227"><td class="mdescLeft">&#160;</td><td class="mdescRight">Algorithm definitions correspond with the values for Mode field in Control register ! <br/></td></tr>
+<tr class="separator:ga859c70de1a97b05f61723b64e6f06227"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gafccc8d49b73cba6bb99024890615c07e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafccc8d49b73cba6bb99024890615c07e"></a>
+typedef enum <a class="el" href="a00235.html#ga0c0641fe4726c8047123fe99b1f79a71">_hashcrypt_algo_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#gafccc8d49b73cba6bb99024890615c07e">hashcrypt_algo_t</a></td></tr>
+<tr class="memdesc:gafccc8d49b73cba6bb99024890615c07e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Algorithm used for Hashcrypt operation. <br/></td></tr>
+<tr class="separator:gafccc8d49b73cba6bb99024890615c07e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga7ac6f6ac5dd2b621eabb60d2ab48163b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#ga7ac6f6ac5dd2b621eabb60d2ab48163b">inputmux_connection_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba6578893c8d3f1a355f3d6a1f134d742a">kINPUTMUX_Sct0PinInp0ToSct0</a> = 0U + (SCT0_PMUX_ID &lt;&lt; PMUX_SHIFT)
-, <br/>
-&#160;&#160;<a class="el" href="a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba1e042af47b407b5b414e22bab7f3e87d">kINPUTMUX_DebugHaltedToSct0</a> = 23U + (SCT0_PMUX_ID &lt;&lt; PMUX_SHIFT)
-, <br/>
-&#160;&#160;<a class="el" href="a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba55c96954290ceb81ca5340dc369e8398">kINPUTMUX_GpioPort1Pin31ToPintsel</a> = 63U + (PINTSEL_PMUX_ID &lt;&lt; PMUX_SHIFT)
-, <br/>
-&#160;&#160;<a class="el" href="a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba6bd295ca0d4418fd4a6901f24203e94f">kINPUTMUX_FlexspiToDspInterrupt</a> = 34U + (DSP_INT_PMUX_ID &lt;&lt; PMUX_SHIFT)
-, <br/>
-&#160;&#160;<a class="el" href="a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba8a32cbc30569942384aa1836c9feb437">kINPUTMUX_FreqmeGpioClkToFreqmeas</a> = 6U + (FREQMEAS_PMUX_ID &lt;&lt; PMUX_SHIFT)
-, <br/>
-&#160;&#160;<a class="el" href="a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba51b1f9f4cdacbdd3702e513740a99549">kINPUTMUX_Usb1FrameToggleToTimer0CaptureChannels</a> = 18U + (CT32BIT0_CAP_PMUX_ID &lt;&lt; PMUX_SHIFT)
-, <br/>
-&#160;&#160;<a class="el" href="a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba2fe1df092eb9829f95bf7608b40ba928">kINPUTMUX_Usb1FrameToggleToTimer1CaptureChannels</a> = 18U + (CT32BIT1_CAP_PMUX_ID &lt;&lt; PMUX_SHIFT)
-, <br/>
-&#160;&#160;<a class="el" href="a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163bac920efa83706e1b4626d54c3a96398bf">kINPUTMUX_Usb1FrameToggleToTimer2CaptureChannels</a> = 18U + (CT32BIT2_CAP_PMUX_ID &lt;&lt; PMUX_SHIFT)
-, <br/>
-&#160;&#160;<a class="el" href="a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba5b9e39446b7f0a2829a31c76bb276148">kINPUTMUX_Usb1FrameToggleToTimer3CaptureChannels</a> = 18U + (CT32BIT3_CAP_PMUX_ID &lt;&lt; PMUX_SHIFT)
-, <br/>
-&#160;&#160;<a class="el" href="a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163babdf35ff88b3936fe3d7c28177336db05">kINPUTMUX_Usb1FrameToggleToTimer4CaptureChannels</a> = 18U + (CT32BIT4_CAP_PMUX_ID &lt;&lt; PMUX_SHIFT)
-, <br/>
-&#160;&#160;<a class="el" href="a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163bafe834f88ae7cdc34c3ddbb9786911b85">kINPUTMUX_FlexspiTxToDma0</a> = 29U + (DMA0_ITRIG_PMUX_ID &lt;&lt; PMUX_SHIFT)
-, <br/>
-&#160;&#160;<a class="el" href="a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163bab53933a01ac425ec701b55a472d76ca1">kINPUTMUX_FlexspiTxToDma1</a> = 29U + (DMA1_ITRIG_PMUX_ID &lt;&lt; PMUX_SHIFT)
-, <br/>
-&#160;&#160;<a class="el" href="a00235.html#gga7ac6f6ac5dd2b621eabb60d2ab48163ba93afc4bf5035aa077e7ceb1a124c3ecd">kINPUTMUX_Dma0OtrigChannel32ToTriginChannels</a> = 32U + (DMA0_OTRIG_PMUX_ID &lt;&lt; PMUX_SHIFT)
+<tr class="memitem:ga0c0641fe4726c8047123fe99b1f79a71"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#ga0c0641fe4726c8047123fe99b1f79a71">_hashcrypt_algo_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00235.html#gga0c0641fe4726c8047123fe99b1f79a71a521a8aebc98248da4565bbf8fd69ff57">kHASHCRYPT_Sha1</a> = HASHCRYPT_MODE_SHA1, 
+<br/>
+&#160;&#160;<a class="el" href="a00235.html#gga0c0641fe4726c8047123fe99b1f79a71ae14b2fbb186eb7ecb1bfc007a509b3d3">kHASHCRYPT_Sha256</a> = HASHCRYPT_MODE_SHA256, 
+<br/>
+&#160;&#160;<a class="el" href="a00235.html#gga0c0641fe4726c8047123fe99b1f79a71a142430d685b31911c77af2ce8194a51b">kHASHCRYPT_Aes</a> = HASHCRYPT_MODE_AES
 <br/>
  }</td></tr>
-<tr class="memdesc:ga7ac6f6ac5dd2b621eabb60d2ab48163b"><td class="mdescLeft">&#160;</td><td class="mdescRight">INPUTMUX connections type.  <a href="a00235.html#ga7ac6f6ac5dd2b621eabb60d2ab48163b">More...</a><br/></td></tr>
-<tr class="separator:ga7ac6f6ac5dd2b621eabb60d2ab48163b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1be6152afb5eac6042f6488947f16b1e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#ga1be6152afb5eac6042f6488947f16b1e">inputmux_signal_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00235.html#gga1be6152afb5eac6042f6488947f16b1eaf9eff4ec73dd1f30aa917eb601d6c7f1">kINPUTMUX_Dmac0InputTriggerPint0Ena</a> = 0U + (DMA0_ITRIG_EN0_ID &lt;&lt; ENA_SHIFT)
-, <br/>
-&#160;&#160;<a class="el" href="a00235.html#gga1be6152afb5eac6042f6488947f16b1ea879489de7ef5e4309eaaad821c024275">kINPUTMUX_Dmac0InputTriggerFlexspiTxEna</a> = 29U + (DMA0_ITRIG_EN0_ID &lt;&lt; ENA_SHIFT)
-, <br/>
-&#160;&#160;<a class="el" href="a00235.html#gga1be6152afb5eac6042f6488947f16b1ea789f2d65e85b5e3cf8d50ea036dd6eda">kINPUTMUX_Dmac1InputTriggerFlexspiTxEna</a> = 29U + (DMA1_ITRIG_EN0_ID &lt;&lt; ENA_SHIFT)
-, <br/>
-&#160;&#160;<a class="el" href="a00235.html#gga1be6152afb5eac6042f6488947f16b1ea39953ac87dbad66ae3c4ec1f862c91ef">kINPUTMUX_HashCryptToDmac0Ch30RequestEna</a> = 30U + (DMA0_REQ_ENA0_ID &lt;&lt; ENA_SHIFT)
-<br/>
- }</td></tr>
-<tr class="memdesc:ga1be6152afb5eac6042f6488947f16b1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">INPUTMUX signal enable/disable type.  <a href="a00235.html#ga1be6152afb5eac6042f6488947f16b1e">More...</a><br/></td></tr>
-<tr class="separator:ga1be6152afb5eac6042f6488947f16b1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga0c0641fe4726c8047123fe99b1f79a71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Algorithm used for Hashcrypt operation.  <a href="a00235.html#ga0c0641fe4726c8047123fe99b1f79a71">More...</a><br/></td></tr>
+<tr class="separator:ga0c0641fe4726c8047123fe99b1f79a71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gae02fecc3b8aab2a9d3f40f07ca7114a4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#gae02fecc3b8aab2a9d3f40f07ca7114a4">INPUTMUX_Init</a> (INPUTMUX_Type *base)</td></tr>
-<tr class="memdesc:gae02fecc3b8aab2a9d3f40f07ca7114a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize INPUTMUX peripheral.  <a href="#gae02fecc3b8aab2a9d3f40f07ca7114a4">More...</a><br/></td></tr>
-<tr class="separator:gae02fecc3b8aab2a9d3f40f07ca7114a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa4f141e3874109e45c2a6f9be027e0ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#gaa4f141e3874109e45c2a6f9be027e0ee">INPUTMUX_AttachSignal</a> (INPUTMUX_Type *base, uint32_t index, <a class="el" href="a00235.html#ga7ac6f6ac5dd2b621eabb60d2ab48163b">inputmux_connection_t</a> connection)</td></tr>
-<tr class="memdesc:gaa4f141e3874109e45c2a6f9be027e0ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attaches a signal.  <a href="#gaa4f141e3874109e45c2a6f9be027e0ee">More...</a><br/></td></tr>
-<tr class="separator:gaa4f141e3874109e45c2a6f9be027e0ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf84e3b0d7a06af86ea6f1ac0d6edf382"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#gaf84e3b0d7a06af86ea6f1ac0d6edf382">INPUTMUX_Deinit</a> (INPUTMUX_Type *base)</td></tr>
-<tr class="memdesc:gaf84e3b0d7a06af86ea6f1ac0d6edf382"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitialize INPUTMUX peripheral.  <a href="#gaf84e3b0d7a06af86ea6f1ac0d6edf382">More...</a><br/></td></tr>
-<tr class="separator:gaf84e3b0d7a06af86ea6f1ac0d6edf382"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga02f8a8a22a0ac96e7ac823da4cacd585"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#ga02f8a8a22a0ac96e7ac823da4cacd585">HASHCRYPT_Init</a> (HASHCRYPT_Type *base)</td></tr>
+<tr class="memdesc:ga02f8a8a22a0ac96e7ac823da4cacd585"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables clock and disables reset for HASHCRYPT peripheral.  <a href="#ga02f8a8a22a0ac96e7ac823da4cacd585">More...</a><br/></td></tr>
+<tr class="separator:ga02f8a8a22a0ac96e7ac823da4cacd585"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2561c8bc17a4b2143a0cc7c46de64fbe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#ga2561c8bc17a4b2143a0cc7c46de64fbe">HASHCRYPT_Deinit</a> (HASHCRYPT_Type *base)</td></tr>
+<tr class="memdesc:ga2561c8bc17a4b2143a0cc7c46de64fbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables clock for HASHCRYPT peripheral.  <a href="#ga2561c8bc17a4b2143a0cc7c46de64fbe">More...</a><br/></td></tr>
+<tr class="separator:ga2561c8bc17a4b2143a0cc7c46de64fbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga166fc4ada71e4fa9e160774700c976d7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga166fc4ada71e4fa9e160774700c976d7"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#ga166fc4ada71e4fa9e160774700c976d7">FSL_INPUTMUX_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00217.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 5))</td></tr>
-<tr class="memdesc:ga166fc4ada71e4fa9e160774700c976d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Group interrupt driver version for SDK. <br/></td></tr>
-<tr class="separator:ga166fc4ada71e4fa9e160774700c976d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6de3a130dd77ff83fba428d53188e661"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#ga6de3a130dd77ff83fba428d53188e661">FSL_HASHCRYPT_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00220.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 14))</td></tr>
+<tr class="memdesc:ga6de3a130dd77ff83fba428d53188e661"><td class="mdescLeft">&#160;</td><td class="mdescRight">HASHCRYPT driver version.  <a href="#ga6de3a130dd77ff83fba428d53188e661">More...</a><br/></td></tr>
+<tr class="separator:ga6de3a130dd77ff83fba428d53188e661"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga7ac6f6ac5dd2b621eabb60d2ab48163b"></a>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga6de3a130dd77ff83fba428d53188e661"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00235.html#ga7ac6f6ac5dd2b621eabb60d2ab48163b">inputmux_connection_t</a></td>
+          <td class="memname">#define FSL_HASHCRYPT_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00220.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 14))</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163ba6578893c8d3f1a355f3d6a1f134d742a"></a>kINPUTMUX_Sct0PinInp0ToSct0</em>&nbsp;</td><td class="fielddoc">
-<p>SCT INMUX. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163ba1e042af47b407b5b414e22bab7f3e87d"></a>kINPUTMUX_DebugHaltedToSct0</em>&nbsp;</td><td class="fielddoc">
-<p>Pin Interrupt. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163ba55c96954290ceb81ca5340dc369e8398"></a>kINPUTMUX_GpioPort1Pin31ToPintsel</em>&nbsp;</td><td class="fielddoc">
-<p>DSP Interrupt. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163ba6bd295ca0d4418fd4a6901f24203e94f"></a>kINPUTMUX_FlexspiToDspInterrupt</em>&nbsp;</td><td class="fielddoc">
-<p>Frequency measure. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163ba8a32cbc30569942384aa1836c9feb437"></a>kINPUTMUX_FreqmeGpioClkToFreqmeas</em>&nbsp;</td><td class="fielddoc">
-<p>CTmier0 capture input mux. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163ba51b1f9f4cdacbdd3702e513740a99549"></a>kINPUTMUX_Usb1FrameToggleToTimer0CaptureChannels</em>&nbsp;</td><td class="fielddoc">
-<p>CTmier1 capture input mux. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163ba2fe1df092eb9829f95bf7608b40ba928"></a>kINPUTMUX_Usb1FrameToggleToTimer1CaptureChannels</em>&nbsp;</td><td class="fielddoc">
-<p>CTmier2 capture input mux. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163bac920efa83706e1b4626d54c3a96398bf"></a>kINPUTMUX_Usb1FrameToggleToTimer2CaptureChannels</em>&nbsp;</td><td class="fielddoc">
-<p>CTmier3 capture input mux. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163ba5b9e39446b7f0a2829a31c76bb276148"></a>kINPUTMUX_Usb1FrameToggleToTimer3CaptureChannels</em>&nbsp;</td><td class="fielddoc">
-<p>CTmier4 capture input mux. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163babdf35ff88b3936fe3d7c28177336db05"></a>kINPUTMUX_Usb1FrameToggleToTimer4CaptureChannels</em>&nbsp;</td><td class="fielddoc">
-<p>DMA0 ITRIG. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163bafe834f88ae7cdc34c3ddbb9786911b85"></a>kINPUTMUX_FlexspiTxToDma0</em>&nbsp;</td><td class="fielddoc">
-<p>DMA1 ITRIG. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163bab53933a01ac425ec701b55a472d76ca1"></a>kINPUTMUX_FlexspiTxToDma1</em>&nbsp;</td><td class="fielddoc">
-<p>DMA0 OTRIG. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7ac6f6ac5dd2b621eabb60d2ab48163ba93afc4bf5035aa077e7ceb1a124c3ecd"></a>kINPUTMUX_Dma0OtrigChannel32ToTriginChannels</em>&nbsp;</td><td class="fielddoc">
-<p>DMA1 OTRIG. </p>
-</td></tr>
-</table>
+<p>Version 2.2.14.</p>
+<p>Current version: 2.2.14</p>
+<p>Change log:</p>
+<ul>
+<li>Version 2.0.0<ul>
+<li>Initial version</li>
+</ul>
+</li>
+<li>Version 2.0.1<ul>
+<li>Support loading AES key from unaligned address</li>
+</ul>
+</li>
+<li>Version 2.0.2<ul>
+<li>Support loading AES key from unaligned address for different compiler and core variants</li>
+</ul>
+</li>
+<li>Version 2.0.3<ul>
+<li>Remove SHA512 and AES ICB algorithm definitions</li>
+</ul>
+</li>
+<li>Version 2.0.4<ul>
+<li>Add SHA context switch support</li>
+</ul>
+</li>
+<li>Version 2.1.0<ul>
+<li>Update the register name and macro to align with new header.</li>
+</ul>
+</li>
+<li>Version 2.1.1<ul>
+<li>Fix MISRA C-2012.</li>
+</ul>
+</li>
+<li>Version 2.1.2<ul>
+<li>Support loading AES input data from unaligned address.</li>
+</ul>
+</li>
+<li>Version 2.1.3<ul>
+<li>Fix MISRA C-2012.</li>
+</ul>
+</li>
+<li>Version 2.1.4<ul>
+<li>Fix context switch cannot work when switching from AES.</li>
+</ul>
+</li>
+<li>Version 2.1.5<ul>
+<li>Add data synchronization barrier inside hashcrypt_sha_ldm_stm_16_words() to prevent possible optimization issue.</li>
+</ul>
+</li>
+<li>Version 2.2.0<ul>
+<li>Add AES-OFB and AES-CFB mixed IP/SW modes.</li>
+</ul>
+</li>
+<li>Version 2.2.1<ul>
+<li>Add data synchronization barrier inside hashcrypt_sha_ldm_stm_16_words() prevent compiler from reordering memory write when -O2 or higher is used.</li>
+</ul>
+</li>
+<li>Version 2.2.2<ul>
+<li>Add data synchronization barrier inside hashcrypt_sha_ldm_stm_16_words() to fix optimization issue</li>
+</ul>
+</li>
+<li>Version 2.2.3<ul>
+<li>Added check for size in hashcrypt_aes_one_block to prevent overflowing COUNT field in MEMCTRL register, if its bigger than COUNT field do a multiple runs.</li>
+</ul>
+</li>
+<li>Version 2.2.4<ul>
+<li>In all HASHCRYPT_AES_xx functions have been added setting CTRL_MODE bitfield to 0 after processing data, which decreases power consumption.</li>
+</ul>
+</li>
+<li>Version 2.2.5<ul>
+<li>Add data synchronization barrier and instruction synchronization barrier inside hashcrypt_sha_process_message_data() to fix optimization issue</li>
+</ul>
+</li>
+<li>Version 2.2.6<ul>
+<li>Add data synchronization barrier inside <a class="el" href="a00025.html#ga73e2339a36879daa7aa54491387ba103" title="Add data to current HASH. ">HASHCRYPT_SHA_Update()</a> and hashcrypt_get_data() function to fix optimization issue on MDK and ARMGCC release targets</li>
+</ul>
+</li>
+<li>Version 2.2.7<ul>
+<li>Add data synchronization barrier inside <a class="el" href="a00025.html#ga73e2339a36879daa7aa54491387ba103" title="Add data to current HASH. ">HASHCRYPT_SHA_Update()</a> to fix optimization issue on MCUX IDE release target</li>
+</ul>
+</li>
+<li>Version 2.2.8<ul>
+<li>Unify hashcrypt hashing behavior between aligned and unaligned input data</li>
+</ul>
+</li>
+<li>Version 2.2.9<ul>
+<li>Add handling of set ERROR bit in the STATUS register</li>
+</ul>
+</li>
+<li>Version 2.2.10<ul>
+<li>Fix missing error statement in hashcrypt_save_running_hash()</li>
+</ul>
+</li>
+<li>Version 2.2.11<ul>
+<li>Fix incorrect SHA-256 calculation for long messages with reload</li>
+</ul>
+</li>
+<li>Version 2.2.12<ul>
+<li>Fix hardfault issue on the Keil compiler due to unaligned memcpy() input on some optimization levels</li>
+</ul>
+</li>
+<li>Version 2.2.13<ul>
+<li>Added function hashcrypt_seed_prng() which loading random number into PRNG_SEED register before AES operation for SCA protection</li>
+</ul>
+</li>
+<li>Version 2.2.14<ul>
+<li>Modify function hashcrypt_get_data() to prevent issue with unaligned access </li>
+</ul>
+</li>
+</ul>
 
 </div>
 </div>
-<a class="anchor" id="ga1be6152afb5eac6042f6488947f16b1e"></a>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="ga0c0641fe4726c8047123fe99b1f79a71"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00235.html#ga1be6152afb5eac6042f6488947f16b1e">inputmux_signal_t</a></td>
+          <td class="memname">enum <a class="el" href="a00235.html#ga0c0641fe4726c8047123fe99b1f79a71">_hashcrypt_algo_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga1be6152afb5eac6042f6488947f16b1eaf9eff4ec73dd1f30aa917eb601d6c7f1"></a>kINPUTMUX_Dmac0InputTriggerPint0Ena</em>&nbsp;</td><td class="fielddoc">
-<p>DMA0 input trigger source enable. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga0c0641fe4726c8047123fe99b1f79a71a521a8aebc98248da4565bbf8fd69ff57"></a>kHASHCRYPT_Sha1</em>&nbsp;</td><td class="fielddoc">
+<p>SHA_1. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1be6152afb5eac6042f6488947f16b1ea879489de7ef5e4309eaaad821c024275"></a>kINPUTMUX_Dmac0InputTriggerFlexspiTxEna</em>&nbsp;</td><td class="fielddoc">
-<p>DMA1 input trigger source enable. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0c0641fe4726c8047123fe99b1f79a71ae14b2fbb186eb7ecb1bfc007a509b3d3"></a>kHASHCRYPT_Sha256</em>&nbsp;</td><td class="fielddoc">
+<p>SHA_256. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1be6152afb5eac6042f6488947f16b1ea789f2d65e85b5e3cf8d50ea036dd6eda"></a>kINPUTMUX_Dmac1InputTriggerFlexspiTxEna</em>&nbsp;</td><td class="fielddoc">
-<p>DMA0 REQ signal. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1be6152afb5eac6042f6488947f16b1ea39953ac87dbad66ae3c4ec1f862c91ef"></a>kINPUTMUX_HashCryptToDmac0Ch30RequestEna</em>&nbsp;</td><td class="fielddoc">
-<p>DMA1 REQ signal. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0c0641fe4726c8047123fe99b1f79a71a142430d685b31911c77af2ce8194a51b"></a>kHASHCRYPT_Aes</em>&nbsp;</td><td class="fielddoc">
+<p>AES. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gae02fecc3b8aab2a9d3f40f07ca7114a4"></a>
+<a class="anchor" id="ga02f8a8a22a0ac96e7ac823da4cacd585"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void INPUTMUX_Init </td>
+          <td class="memname">void HASHCRYPT_Init </td>
           <td>(</td>
-          <td class="paramtype">INPUTMUX_Type *&#160;</td>
+          <td class="paramtype">HASHCRYPT_Type *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function enables the INPUTMUX clock.</p>
+<p>Enable clock and disable reset for HASHCRYPT.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the INPUTMUX peripheral.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None.</td><td></td></tr>
+    <tr><td class="paramname">base</td><td>HASHCRYPT base address </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gaa4f141e3874109e45c2a6f9be027e0ee"></a>
+<a class="anchor" id="ga2561c8bc17a4b2143a0cc7c46de64fbe"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void INPUTMUX_AttachSignal </td>
+          <td class="memname">void HASHCRYPT_Deinit </td>
           <td>(</td>
-          <td class="paramtype">INPUTMUX_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>index</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00235.html#ga7ac6f6ac5dd2b621eabb60d2ab48163b">inputmux_connection_t</a>&#160;</td>
-          <td class="paramname"><em>connection</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function gates the INPUTPMUX clock.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the INPUTMUX peripheral. </td></tr>
-    <tr><td class="paramname">index</td><td>Destination peripheral to attach the signal to. </td></tr>
-    <tr><td class="paramname">connection</td><td>Selects connection.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None.</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaf84e3b0d7a06af86ea6f1ac0d6edf382"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void INPUTMUX_Deinit </td>
-          <td>(</td>
-          <td class="paramtype">INPUTMUX_Type *&#160;</td>
+          <td class="paramtype">HASHCRYPT_Type *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function disables the INPUTMUX clock.</p>
+<p>Disable clock and enable reset.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the INPUTMUX peripheral.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None.</td><td></td></tr>
+    <tr><td class="paramname">base</td><td>HASHCRYPT base address </td></tr>
   </table>
   </dd>
 </dl>

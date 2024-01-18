@@ -38,14 +38,12 @@
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/vit_pre_proc</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/voice_seeker</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/test_inp</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/utilities</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/EAP/Example_Application/CONFIG_HEADER</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/EAP/EAP_Includes</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/utilities/shell</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/voice_seeker/RT685_HiFi4/include</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/naturedsp/hifi4/include</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/naturedsp/hifi4/include_private</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/voice_seeker/rdsp_utilities_public/include</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/voice_seeker/rdsp_utilities_public/rdsp_memory_utils_public</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/voice_seeker/RT685_HiFi4/rdsp_utilities_public/include</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/voice_seeker/RT685_HiFi4/rdsp_utilities_public/rdsp_memory_utils_public</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../CMSIS/Core/Include</ListEntry>
             </value>
@@ -67,7 +65,7 @@
               <ListEntry key="XOS_CLOCK_FREQ" value="594000000"/>
               <ListEntry key="XF_CORE_ID" value="0"/>
               <ListEntry key="XF_CFG_CORES_NUM" value="1"/>
-              <ListEntry key="DEVICE_ID" value="VIT_IMXRT600"/>
+              <ListEntry key="VIT_DEVICE_ID" value="VIT_IMXRT600"/>
               <ListEntry key="HAVE_XOS" value=""/>
               <ListEntry key="HIFI_ONLY_XAF" value=""/>
               <ListEntry key="FIO_LOCAL_FS" value=""/>
@@ -77,6 +75,7 @@
               <ListEntry key="NNLIB_V2" value=""/>
               <ListEntry key="FSL_RTOS_XOS" value="1"/>
               <ListEntry key="DEBUG_CONSOLE_RX_ENABLE" value="0"/>
+              <ListEntry key="HIFI4" value="1"/>
             </value>
           </KeyValueListMapEntry>
         </KeyValueListMapOptions>
@@ -154,10 +153,10 @@
             <key>LinkerAdditionalOptions</key>
             <value inheritance="append">
               <ListEntry>-g&#13;
+-Wl,--orphan-handling=place&#13;
 -Wl,--start-group&#13;
-${xt_project_loc}/../../../../../../middleware/vit/HIFI4/Lib/libVIT_HIFI4_v04_08_01.a&#13;
+${xt_project_loc}/../../../../../../middleware/vit/HIFI4/Lib/libVIT_HIFI4_v04_09_00.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/nn/nnlib/lib/hifi4/libxa_nnlib.a&#13;
-${xt_project_loc}/../../../../../../middleware/EAP/EAP_Library/libEAP16_3_0_13_FP1_RT600.a&#13;
 ${xt_project_loc}/../../../../../../middleware/voice_seeker/RT685_HiFi4/lib/libvoiceseeker_no_aec.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/naturedsp/hifi4/libnaturedsp.a&#13;
 -Wl,--end-group&#13;

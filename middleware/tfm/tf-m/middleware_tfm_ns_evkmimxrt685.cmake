@@ -6,6 +6,7 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 if((CONFIG_BOARD STREQUAL evkmimxrt685))
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+  ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/common
   ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/evkmimxrt685
   ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/evkmimxrt685/partition
   ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/evkmimxrt685/Device/Include

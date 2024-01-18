@@ -15,6 +15,7 @@
 #include "fsl_i2s.h"
 
 #include "xaf-utils-test.h"
+#include "xaf-fio-test.h"
 #include "audio/xa-renderer-api.h"
 #include "audio/xa-pcm-gain-api.h"
 #include "audio/xa-capturer-api.h"
@@ -33,7 +34,12 @@
  * Definitions
  ******************************************************************************/
 #define AUDIO_FRMWK_BUF_SIZE (32 * 1024)
-#define AUDIO_COMP_BUF_SIZE  (140 * 1024)
+#define AUDIO_COMP_BUF_SIZE  (128 * 1024)
+
+#define EXAMPLE_DSP_THREAD_STACK_SIZE (16 * 1024)
+
+int audio_frmwk_buf_size;
+int audio_comp_buf_size;
 
 enum
 {
@@ -66,11 +72,7 @@ const int comp_create_order[] = {XA_CAPTURER_0, XA_GAIN_0,
 #define MAX_CHANNELS  8
 #define MAX_WIDTH     32
 
-#if XA_VOICE_SEEKER
 #define FRAME_SIZE_MS (30)
-#else
-#define FRAME_SIZE_MS (10)
-#endif
 
 /*******************************************************************************
  * Component Setup/ Config
@@ -334,17 +336,15 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s)
 
     xaf_adev_config_default_init(&device_config);
 
-    device_config.pmem_malloc                 = DSP_Malloc;
-    device_config.pmem_free                   = DSP_Free;
-    device_config.audio_component_buffer_size = AUDIO_COMP_BUF_SIZE;
-    device_config.audio_framework_buffer_size = AUDIO_FRMWK_BUF_SIZE;
+    audio_frmwk_buf_size = AUDIO_FRMWK_BUF_SIZE;
+    audio_comp_buf_size = AUDIO_COMP_BUF_SIZE;
+    device_config.audio_component_buffer_size[XAF_MEM_ID_COMP] = AUDIO_COMP_BUF_SIZE;
+    device_config.audio_framework_buffer_size[XAF_MEM_ID_DEV] = AUDIO_FRMWK_BUF_SIZE;
+    device_config.core = XF_CORE_ID;
+    device_config.dsp_thread_stack_size = EXAMPLE_DSP_THREAD_STACK_SIZE;
 
-    ret = xaf_adev_open(&p_adev, &device_config);
-    if (ret != XAF_NO_ERR)
-    {
-        DSP_PRINTF("[DSP Record] xaf_adev_open failure: %d\r\n", ret);
-        return -1;
-    }
+    TST_CHK_API_ADEV_OPEN(p_adev, device_config, "[DSP Codec] Audio Device Open\r\n");
+
 
     DSP_PRINTF("[DSP Record] Audio Device Ready\n\r");
 
@@ -482,6 +482,7 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s)
     DSP_PRINTF("[DSP Record] connected XA_GAIN_0 -> XA_VIT_PRE_PROC_0\n\r");
 #endif
 
+
     /* Start VIT pre processing */
     ret = xaf_comp_process(p_adev, p_comp[XA_VIT_PRE_PROC_0], NULL, 0, XAF_START_FLAG);
     if (ret != XAF_NO_ERR)
@@ -555,12 +556,8 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s)
         }
     }
 
-    xaf_adev_close(p_adev, XAF_ADEV_NORMAL_CLOSE);
-    if (ret != XAF_NO_ERR)
-    {
-        DSP_PRINTF("[DSP Record] xaf_adev_close failure: %d\r\n", ret);
-        return -1;
-    }
+    TST_CHK_API_ADEV_CLOSE(p_adev, XAF_ADEV_NORMAL_CLOSE, device_config, "xaf_adev_close");
+    p_adev = NULL;
 
     DSP_PRINTF("[DSP Record] Audio device closed\n\n\r\r");
 

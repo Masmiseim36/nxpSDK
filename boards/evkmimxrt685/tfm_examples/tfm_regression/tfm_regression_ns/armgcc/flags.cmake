@@ -50,11 +50,11 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -DTFM_CRYPTO_TEST_ALG_SHA_512 \
     -DTFM_CRYPTO_TEST_HKDF \
     -DTFM_CRYPTO_TEST_ECDH \
-    -DTEST_FRAMEWORK_NS \
-    -DTEST_FRAMEWORK_S \
+    -DTFM_CRYPTO_TEST_UNSUPPORTED_ALG \
+    -DTFM_NS_REG_TEST \
+    -DTFM_S_REG_TEST \
     -DTEST_NS_PS \
     -DTEST_NS_PLATFORM \
-    -DTEST_NS_QCBOR \
     -DTFM_PARTITION_IPC_TEST \
     -DTEST_NS_IPC \
     -DTEST_NS_SLIH_IRQ \
@@ -113,11 +113,11 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -DTFM_CRYPTO_TEST_ALG_SHA_512 \
     -DTFM_CRYPTO_TEST_HKDF \
     -DTFM_CRYPTO_TEST_ECDH \
-    -DTEST_FRAMEWORK_NS \
-    -DTEST_FRAMEWORK_S \
+    -DTFM_CRYPTO_TEST_UNSUPPORTED_ALG \
+    -DTFM_NS_REG_TEST \
+    -DTFM_S_REG_TEST \
     -DTEST_NS_PS \
     -DTEST_NS_PLATFORM \
-    -DTEST_NS_QCBOR \
     -DTFM_PARTITION_IPC_TEST \
     -DTEST_NS_IPC \
     -DTEST_NS_SLIH_IRQ \
@@ -225,7 +225,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG " \
     -Wl,--print-memory-usage \
     ${FPU} \
     ${SPECS} \
-    -T${SdkRootDirPath}/middleware/tfm/tf-m/platform/ext/common/gcc/tfm_common_ns_pre.ld -static \
+    -T\"${SdkRootDirPath}/middleware/tfm/tf-m/platform/ext/common/gcc/tfm_common_ns_pre.ld\" -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     ${CMAKE_EXE_LINKER_FLAGS_RELEASE} \
@@ -252,5 +252,5 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     -Wl,--print-memory-usage \
     ${FPU} \
     ${SPECS} \
-    -T${SdkRootDirPath}/middleware/tfm/tf-m/platform/ext/common/gcc/tfm_common_ns_pre.ld -static \
+    -T\"${SdkRootDirPath}/middleware/tfm/tf-m/platform/ext/common/gcc/tfm_common_ns_pre.ld\" -static \
 ")

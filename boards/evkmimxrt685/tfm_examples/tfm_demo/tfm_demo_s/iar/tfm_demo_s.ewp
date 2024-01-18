@@ -230,7 +230,6 @@
           <state>TFM_SP_LOG_RAW_ENABLED</state>
           <state>TFM_PARTITION_LOG_LEVEL=TFM_PARTITION_LOG_LEVEL_INFO</state>
           <state>PLATFORM_NO_FLASH</state>
-          <state>OTP_NV_COUNTERS_RAM_EMULATION</state>
           <state>DAUTH_CHIP_DEFAULT</state>
           <state>__SEMIHOST_HARDFAULT_DISABLE</state>
           <state>ENABLE_HEAP</state>
@@ -320,7 +319,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa039,Pa082,Pa050,Pa205,Pa084,Pe546,Pe550,Pe940,Pe188,Pe186,Pe177,Pe111,Pe174,Pe161,Pe068,Pe223,Pa181</state>
+          <state>Pa039,Pa082,Pa050,Pa205,Pa084,Pe546,Pe550,Pe940,Pe188,Pe186,Pe177,Pe111,Pe174,Pe161,Pe068,Pe223,Pa181,Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -361,7 +360,7 @@
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--cmse  --diag_suppress Pa082,Pa050</state>
+          <state>--cmse</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -427,7 +426,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/include/tfm</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/core</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/boot</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/ffm</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/interface</state>
@@ -446,6 +445,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/partitions/platform</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
@@ -1423,7 +1423,6 @@
           <state>TFM_SP_LOG_RAW_ENABLED</state>
           <state>TFM_PARTITION_LOG_LEVEL=TFM_PARTITION_LOG_LEVEL_INFO</state>
           <state>PLATFORM_NO_FLASH</state>
-          <state>OTP_NV_COUNTERS_RAM_EMULATION</state>
           <state>DAUTH_CHIP_DEFAULT</state>
           <state>__SEMIHOST_HARDFAULT_DISABLE</state>
           <state>ENABLE_HEAP</state>
@@ -1513,7 +1512,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa039,Pa082,Pa050,Pa205,Pa084,Pe546,Pe550,Pe940,Pe188,Pe186,Pe177,Pe111,Pe174,Pe161,Pe068,Pe223,Pa181</state>
+          <state>Pa039,Pa082,Pa050,Pa205,Pa084,Pe546,Pe550,Pe940,Pe188,Pe186,Pe177,Pe111,Pe174,Pe161,Pe068,Pe223,Pa181,Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1554,7 +1553,7 @@
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--cmse  --diag_suppress Pa082,Pa050</state>
+          <state>--cmse</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -1620,7 +1619,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/include/tfm</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/core</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/boot</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/ffm</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/interface</state>
@@ -1639,6 +1638,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/partitions/platform</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
@@ -2441,7 +2441,7 @@
   <group>
     <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
   <group>
@@ -2562,16 +2562,16 @@
                 </file>
               </group>
               <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/crypto_accelerator_config.h</name>
+              </file>
+              <file>
                 <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/libc_dummy.c</name>
               </file>
               <file>
                 <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/crypto_hw.c</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/faults.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/tfm_hal_isolation.c</name>
+                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/mpc_ppc_faults.c</name>
               </file>
               <group>
                 <name>services</name>
@@ -2589,10 +2589,10 @@
                 <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/plat_huk.c</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/tfm_hal_platform.c</name>
+                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/tfm_hal_isolation.c</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/tfm_interrupts.c</name>
+                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/tfm_hal_platform.c</name>
               </file>
               <group>
                 <name>Device</name>
@@ -2621,6 +2621,9 @@
                   </file>
                 </group>
               </group>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/target_cfg_common.h</name>
+              </file>
             </group>
             <group>
               <name>evkmimxrt685</name>
@@ -2717,6 +2720,9 @@
             <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common/tfm_hal_reset_halt.c</name>
           </file>
           <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common/tfm_interrupts.c</name>
+          </file>
+          <file>
             <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common/tfm_s_linker_alignments.h</name>
           </file>
           <file>
@@ -2744,6 +2750,9 @@
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common/template/otp_flash.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common/template/tfm_fih_rng.c</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common/template/tfm_initial_attest_pub_key.c</name>
@@ -3060,7 +3069,7 @@
       <group>
         <name>src</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/src/tfm_psa_call_pack.c</name>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/src/tfm_psa_call.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/src/tfm_ps_api.c</name>
@@ -3142,6 +3151,9 @@
           <group>
             <name>ffm</name>
             <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/ffm/agent_api.h</name>
+            </file>
+            <file>
               <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/ffm/backend.h</name>
             </file>
             <file>
@@ -3174,54 +3186,108 @@
           </group>
         </group>
         <group>
-          <name>ffm</name>
+          <name>core</name>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/backend_ipc.c</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/core/backend_ipc.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/psa_api.c</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/core/psa_api.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/psa_call_api.c</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/core/psa_call_api.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/psa_connection_api.c</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/core/psa_connection_api.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/psa_irq_api.c</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/core/psa_irq_api.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/psa_mmiovec_api.c</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/core/psa_mmiovec_api.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/psa_read_write_skip_api.c</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/core/psa_read_write_skip_api.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/psa_version_api.c</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/core/psa_version_api.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/interrupt.c</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/core/interrupt.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/interrupt.h</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/core/interrupt.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/spm_log.c</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/core/spm_connection_pool.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/stack_watermark.c</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/core/spm_log.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/stack_watermark.h</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/core/stack_watermark.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/tfm_boot_data.c</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/core/stack_watermark.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/tfm_boot_data.h</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/core/tfm_boot_data.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/utilities.c</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/core/tfm_boot_data.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/core/utilities.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/core/internal_status_code.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/core/main.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/core/memory_symbols.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/core/tfm_pools.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/core/tfm_rpc.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/core/tfm_svcalls.h</name>
+          </file>
+          <group>
+            <name>arch</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/core/arch/tfm_arch.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/core/arch/tfm_arch_v8m_main.c</name>
+            </file>
+          </group>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/core/psa_interface_svc.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/core/rom_loader.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/core/spm_ipc.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/core/spm.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/core/tfm_svcalls.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/core/tfm_pools.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/core/thread.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/core/thread.h</name>
           </file>
         </group>
         <group>
@@ -3231,60 +3297,6 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/ns_client_ext/tfm_spm_ns_ctx.c</name>
-          </file>
-        </group>
-        <group>
-          <name>cmsis_psa</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/internal_status_code.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/main.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/memory_symbols.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/tfm_pools.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/tfm_rpc.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/tfm_svcalls.h</name>
-          </file>
-          <group>
-            <name>arch</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/arch/tfm_arch.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/arch/tfm_arch_v8m_main.c</name>
-            </file>
-          </group>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/psa_interface_svc.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/rom_loader.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/spm_ipc.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/spm.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/tfm_core_svcalls_ipc.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/tfm_pools.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/thread.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/thread.h</name>
           </file>
         </group>
       </group>
@@ -3715,6 +3727,9 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/fsl_assert.c</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/fsl_assert.h</name>
+    </file>
   </group>
   <group>
     <name>component</name>
@@ -3994,10 +4009,19 @@
         <name>$PROJ_DIR$/../../../../../../middleware/tfm/mbed-crypto/library/aes.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/tfm/mbed-crypto/library/aesce.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/tfm/mbed-crypto/library/aesce.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../../middleware/tfm/mbed-crypto/library/aesni.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/tfm/mbed-crypto/library/aesni.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/tfm/mbed-crypto/library/alignment.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/tfm/mbed-crypto/library/asn1parse.c</name>
@@ -4028,6 +4052,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/tfm/mbed-crypto/library/bignum_mod_raw.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/tfm/mbed-crypto/library/bignum_mod_raw_invasive.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/tfm/mbed-crypto/library/bn_mul.h</name>
@@ -4261,6 +4288,9 @@
         <name>$PROJ_DIR$/../../../../../../middleware/tfm/mbed-crypto/library/psa_crypto_rsa.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/tfm/mbed-crypto/library/psa_crypto_pake.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../../middleware/tfm/mbed-crypto/library/psa_crypto_se.c</name>
       </file>
       <file>
@@ -4280,6 +4310,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/tfm/mbed-crypto/library/psa_its_file.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/tfm/mbed-crypto/library/psa_util.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/tfm/mbed-crypto/library/ripemd160.c</name>
@@ -4322,9 +4355,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/tfm/mbed-crypto/port/mbedcrypto_mcux_casper.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/tfm/mbed-crypto/port/mbedcrypto_mcux_css.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/tfm/mbed-crypto/port/mbedcrypto_mcux_els.c</name>

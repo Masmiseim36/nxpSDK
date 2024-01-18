@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -101,6 +101,7 @@ $(document).ready(function(){initNavTree('a00040.html','');});
   <div class="summary">
 <a href="#files">Files</a> &#124;
 <a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">MRT: Multi-Rate Timer</div>  </div>
@@ -141,110 +142,132 @@ MRT tick example</h2>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
 Files</h2></td></tr>
-<tr class="memitem:a00178"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00178.html">fsl_mrt.h</a></td></tr>
+<tr class="memitem:a00181"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00181.html">fsl_mrt.h</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00345"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#a00345">mrt_config_t</a></td></tr>
-<tr class="memdesc:a00345"><td class="mdescLeft">&#160;</td><td class="mdescRight">MRT configuration structure.  <a href="a00040.html#a00345">More...</a><br/></td></tr>
-<tr class="separator:a00345"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00337"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#a00337">_mrt_config</a></td></tr>
+<tr class="memdesc:a00337"><td class="mdescLeft">&#160;</td><td class="mdescRight">MRT configuration structure.  <a href="a00040.html#a00337">More...</a><br/></td></tr>
+<tr class="separator:a00337"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gaf78437e7a713ae57fd5c12135af514ba"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf78437e7a713ae57fd5c12135af514ba"></a>
+typedef enum <a class="el" href="a00040.html#ga05660f6ec5e7c0ac6204165d7ab9bf35">_mrt_chnl</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a></td></tr>
+<tr class="memdesc:gaf78437e7a713ae57fd5c12135af514ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of MRT channels. <br/></td></tr>
+<tr class="separator:gaf78437e7a713ae57fd5c12135af514ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaff791fb43331fc1ae8f4e0d9003ac286"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaff791fb43331fc1ae8f4e0d9003ac286"></a>
+typedef enum <a class="el" href="a00040.html#gae772c3f1dc986d55a787b987f731b389">_mrt_timer_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#gaff791fb43331fc1ae8f4e0d9003ac286">mrt_timer_mode_t</a></td></tr>
+<tr class="memdesc:gaff791fb43331fc1ae8f4e0d9003ac286"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of MRT timer modes. <br/></td></tr>
+<tr class="separator:gaff791fb43331fc1ae8f4e0d9003ac286"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga35fd7f67352e6660946fe980fcd4fc5d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga35fd7f67352e6660946fe980fcd4fc5d"></a>
+typedef enum <a class="el" href="a00040.html#ga854d01b9575db5b6f0f7aaad49cf0c7d">_mrt_interrupt_enable</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga35fd7f67352e6660946fe980fcd4fc5d">mrt_interrupt_enable_t</a></td></tr>
+<tr class="memdesc:ga35fd7f67352e6660946fe980fcd4fc5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of MRT interrupts. <br/></td></tr>
+<tr class="separator:ga35fd7f67352e6660946fe980fcd4fc5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga42f664094e65ac53728a8bb0dea0d641"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga42f664094e65ac53728a8bb0dea0d641"></a>
+typedef enum <a class="el" href="a00040.html#ga13878b183833475306c8aabb81391a8a">_mrt_status_flags</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga42f664094e65ac53728a8bb0dea0d641">mrt_status_flags_t</a></td></tr>
+<tr class="memdesc:ga42f664094e65ac53728a8bb0dea0d641"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of MRT status flags. <br/></td></tr>
+<tr class="separator:ga42f664094e65ac53728a8bb0dea0d641"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadb656916391d01109e84f6e5d97fd5c3"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00040.html#a00337">_mrt_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#gadb656916391d01109e84f6e5d97fd5c3">mrt_config_t</a></td></tr>
+<tr class="memdesc:gadb656916391d01109e84f6e5d97fd5c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">MRT configuration structure.  <a href="#gadb656916391d01109e84f6e5d97fd5c3">More...</a><br/></td></tr>
+<tr class="separator:gadb656916391d01109e84f6e5d97fd5c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:gaece5c1972e35dec2efcce98847a09622"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#gaece5c1972e35dec2efcce98847a09622">mrt_chnl_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00040.html#ggaece5c1972e35dec2efcce98847a09622a27e83d437e2798b19c59c2af4d99e1dc">kMRT_Channel_0</a> = 0U, 
+<tr class="memitem:ga05660f6ec5e7c0ac6204165d7ab9bf35"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga05660f6ec5e7c0ac6204165d7ab9bf35">_mrt_chnl</a> { <br/>
+&#160;&#160;<a class="el" href="a00040.html#gga05660f6ec5e7c0ac6204165d7ab9bf35a27e83d437e2798b19c59c2af4d99e1dc">kMRT_Channel_0</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00040.html#ggaece5c1972e35dec2efcce98847a09622a44b7807f36fe0a21240e721d46d8f9d7">kMRT_Channel_1</a>, 
+&#160;&#160;<a class="el" href="a00040.html#gga05660f6ec5e7c0ac6204165d7ab9bf35a44b7807f36fe0a21240e721d46d8f9d7">kMRT_Channel_1</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00040.html#ggaece5c1972e35dec2efcce98847a09622a17597fb66d9b1d3e97b318db79267f52">kMRT_Channel_2</a>, 
+&#160;&#160;<a class="el" href="a00040.html#gga05660f6ec5e7c0ac6204165d7ab9bf35a17597fb66d9b1d3e97b318db79267f52">kMRT_Channel_2</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00040.html#ggaece5c1972e35dec2efcce98847a09622af57e6e009258a71bc3a2890aedff34b3">kMRT_Channel_3</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:gaece5c1972e35dec2efcce98847a09622"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of MRT channels.  <a href="a00040.html#gaece5c1972e35dec2efcce98847a09622">More...</a><br/></td></tr>
-<tr class="separator:gaece5c1972e35dec2efcce98847a09622"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad481f648f1c89a1eab327530d6fef1d0"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#gad481f648f1c89a1eab327530d6fef1d0">mrt_timer_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00040.html#ggad481f648f1c89a1eab327530d6fef1d0a6b415c060dc09ed293ec3dda829cb257">kMRT_RepeatMode</a> = (0 &lt;&lt; MRT_CHANNEL_CTRL_MODE_SHIFT), 
-<br/>
-&#160;&#160;<a class="el" href="a00040.html#ggad481f648f1c89a1eab327530d6fef1d0abe4ba0a30bc09f1921a0504eb826b3dc">kMRT_OneShotMode</a> = (1 &lt;&lt; MRT_CHANNEL_CTRL_MODE_SHIFT), 
-<br/>
-&#160;&#160;<a class="el" href="a00040.html#ggad481f648f1c89a1eab327530d6fef1d0add9f55173bb54f623c955c29c22dd5b2">kMRT_OneShotStallMode</a> = (2 &lt;&lt; MRT_CHANNEL_CTRL_MODE_SHIFT)
+&#160;&#160;<a class="el" href="a00040.html#gga05660f6ec5e7c0ac6204165d7ab9bf35af57e6e009258a71bc3a2890aedff34b3">kMRT_Channel_3</a>
 <br/>
  }</td></tr>
-<tr class="memdesc:gad481f648f1c89a1eab327530d6fef1d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of MRT timer modes.  <a href="a00040.html#gad481f648f1c89a1eab327530d6fef1d0">More...</a><br/></td></tr>
-<tr class="separator:gad481f648f1c89a1eab327530d6fef1d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9d2f90ae2c6f99410e2908dac8cc6943"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga9d2f90ae2c6f99410e2908dac8cc6943">mrt_interrupt_enable_t</a> { <a class="el" href="a00040.html#gga9d2f90ae2c6f99410e2908dac8cc6943a2a5e8ee568da2c888093b732f2157ea5">kMRT_TimerInterruptEnable</a> = MRT_CHANNEL_CTRL_INTEN_MASK
- }</td></tr>
-<tr class="memdesc:ga9d2f90ae2c6f99410e2908dac8cc6943"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of MRT interrupts.  <a href="a00040.html#ga9d2f90ae2c6f99410e2908dac8cc6943">More...</a><br/></td></tr>
-<tr class="separator:ga9d2f90ae2c6f99410e2908dac8cc6943"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0bb94508d8cf924c3a6971364377673a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga0bb94508d8cf924c3a6971364377673a">mrt_status_flags_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00040.html#gga0bb94508d8cf924c3a6971364377673aa6942598faf3aef148a850f8850cf01c3">kMRT_TimerInterruptFlag</a> = MRT_CHANNEL_STAT_INTFLAG_MASK, 
+<tr class="memdesc:ga05660f6ec5e7c0ac6204165d7ab9bf35"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of MRT channels.  <a href="a00040.html#ga05660f6ec5e7c0ac6204165d7ab9bf35">More...</a><br/></td></tr>
+<tr class="separator:ga05660f6ec5e7c0ac6204165d7ab9bf35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae772c3f1dc986d55a787b987f731b389"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#gae772c3f1dc986d55a787b987f731b389">_mrt_timer_mode</a> { <br/>
+&#160;&#160;<a class="el" href="a00040.html#ggae772c3f1dc986d55a787b987f731b389a6b415c060dc09ed293ec3dda829cb257">kMRT_RepeatMode</a> = (0 &lt;&lt; MRT_CHANNEL_CTRL_MODE_SHIFT), 
 <br/>
-&#160;&#160;<a class="el" href="a00040.html#gga0bb94508d8cf924c3a6971364377673aa745c62687191197b48b35dbd1aac40db">kMRT_TimerRunFlag</a> = MRT_CHANNEL_STAT_RUN_MASK
+&#160;&#160;<a class="el" href="a00040.html#ggae772c3f1dc986d55a787b987f731b389abe4ba0a30bc09f1921a0504eb826b3dc">kMRT_OneShotMode</a> = (1 &lt;&lt; MRT_CHANNEL_CTRL_MODE_SHIFT), 
+<br/>
+&#160;&#160;<a class="el" href="a00040.html#ggae772c3f1dc986d55a787b987f731b389add9f55173bb54f623c955c29c22dd5b2">kMRT_OneShotStallMode</a> = (2 &lt;&lt; MRT_CHANNEL_CTRL_MODE_SHIFT)
 <br/>
  }</td></tr>
-<tr class="memdesc:ga0bb94508d8cf924c3a6971364377673a"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of MRT status flags.  <a href="a00040.html#ga0bb94508d8cf924c3a6971364377673a">More...</a><br/></td></tr>
-<tr class="separator:ga0bb94508d8cf924c3a6971364377673a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gae772c3f1dc986d55a787b987f731b389"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of MRT timer modes.  <a href="a00040.html#gae772c3f1dc986d55a787b987f731b389">More...</a><br/></td></tr>
+<tr class="separator:gae772c3f1dc986d55a787b987f731b389"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga854d01b9575db5b6f0f7aaad49cf0c7d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga854d01b9575db5b6f0f7aaad49cf0c7d">_mrt_interrupt_enable</a> { <a class="el" href="a00040.html#gga854d01b9575db5b6f0f7aaad49cf0c7da2a5e8ee568da2c888093b732f2157ea5">kMRT_TimerInterruptEnable</a> = MRT_CHANNEL_CTRL_INTEN_MASK
+ }</td></tr>
+<tr class="memdesc:ga854d01b9575db5b6f0f7aaad49cf0c7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of MRT interrupts.  <a href="a00040.html#ga854d01b9575db5b6f0f7aaad49cf0c7d">More...</a><br/></td></tr>
+<tr class="separator:ga854d01b9575db5b6f0f7aaad49cf0c7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga13878b183833475306c8aabb81391a8a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga13878b183833475306c8aabb81391a8a">_mrt_status_flags</a> { <br/>
+&#160;&#160;<a class="el" href="a00040.html#gga13878b183833475306c8aabb81391a8aa6942598faf3aef148a850f8850cf01c3">kMRT_TimerInterruptFlag</a> = MRT_CHANNEL_STAT_INTFLAG_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00040.html#gga13878b183833475306c8aabb81391a8aa745c62687191197b48b35dbd1aac40db">kMRT_TimerRunFlag</a> = MRT_CHANNEL_STAT_RUN_MASK
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga13878b183833475306c8aabb81391a8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of MRT status flags.  <a href="a00040.html#ga13878b183833475306c8aabb81391a8a">More...</a><br/></td></tr>
+<tr class="separator:ga13878b183833475306c8aabb81391a8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
 <tr class="memitem:gae39f6122bd73a5156d40291962f7507f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae39f6122bd73a5156d40291962f7507f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#gae39f6122bd73a5156d40291962f7507f">FSL_MRT_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00217.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 3))</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#gae39f6122bd73a5156d40291962f7507f">FSL_MRT_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00220.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 3))</td></tr>
 <tr class="memdesc:gae39f6122bd73a5156d40291962f7507f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version 2.0.3. <br/></td></tr>
 <tr class="separator:gae39f6122bd73a5156d40291962f7507f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Initialization and deinitialization</h2></td></tr>
-<tr class="memitem:ga44091408531a61dfac7c4ee4982be317"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga44091408531a61dfac7c4ee4982be317">MRT_Init</a> (MRT_Type *base, const <a class="el" href="a00040.html#a00345">mrt_config_t</a> *config)</td></tr>
+<tr class="memitem:ga44091408531a61dfac7c4ee4982be317"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga44091408531a61dfac7c4ee4982be317">MRT_Init</a> (MRT_Type *base, const <a class="el" href="a00040.html#gadb656916391d01109e84f6e5d97fd5c3">mrt_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga44091408531a61dfac7c4ee4982be317"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ungates the MRT clock and configures the peripheral for basic operation.  <a href="#ga44091408531a61dfac7c4ee4982be317">More...</a><br/></td></tr>
 <tr class="separator:ga44091408531a61dfac7c4ee4982be317"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5d988ee09b604ab28f1b37320ee8d2d9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga5d988ee09b604ab28f1b37320ee8d2d9">MRT_Deinit</a> (MRT_Type *base)</td></tr>
 <tr class="memdesc:ga5d988ee09b604ab28f1b37320ee8d2d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gate the MRT clock.  <a href="#ga5d988ee09b604ab28f1b37320ee8d2d9">More...</a><br/></td></tr>
 <tr class="separator:ga5d988ee09b604ab28f1b37320ee8d2d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad30aa85105a47b708fd5880a929e5e84"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#gad30aa85105a47b708fd5880a929e5e84">MRT_GetDefaultConfig</a> (<a class="el" href="a00040.html#a00345">mrt_config_t</a> *config)</td></tr>
+<tr class="memitem:gad30aa85105a47b708fd5880a929e5e84"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#gad30aa85105a47b708fd5880a929e5e84">MRT_GetDefaultConfig</a> (<a class="el" href="a00040.html#gadb656916391d01109e84f6e5d97fd5c3">mrt_config_t</a> *config)</td></tr>
 <tr class="memdesc:gad30aa85105a47b708fd5880a929e5e84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill in the MRT config struct with the default settings.  <a href="#gad30aa85105a47b708fd5880a929e5e84">More...</a><br/></td></tr>
 <tr class="separator:gad30aa85105a47b708fd5880a929e5e84"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8f4d38afa34e99ba521d9ca08be06355"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga8f4d38afa34e99ba521d9ca08be06355">MRT_SetupChannelMode</a> (MRT_Type *base, <a class="el" href="a00040.html#gaece5c1972e35dec2efcce98847a09622">mrt_chnl_t</a> channel, const <a class="el" href="a00040.html#gad481f648f1c89a1eab327530d6fef1d0">mrt_timer_mode_t</a> mode)</td></tr>
+<tr class="memitem:ga8f4d38afa34e99ba521d9ca08be06355"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga8f4d38afa34e99ba521d9ca08be06355">MRT_SetupChannelMode</a> (MRT_Type *base, <a class="el" href="a00040.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a> channel, const <a class="el" href="a00040.html#gaff791fb43331fc1ae8f4e0d9003ac286">mrt_timer_mode_t</a> mode)</td></tr>
 <tr class="memdesc:ga8f4d38afa34e99ba521d9ca08be06355"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up an MRT channel mode.  <a href="#ga8f4d38afa34e99ba521d9ca08be06355">More...</a><br/></td></tr>
 <tr class="separator:ga8f4d38afa34e99ba521d9ca08be06355"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Interrupt Interface</h2></td></tr>
-<tr class="memitem:gae875817838659e596dc1cb1527c948c3"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#gae875817838659e596dc1cb1527c948c3">MRT_EnableInterrupts</a> (MRT_Type *base, <a class="el" href="a00040.html#gaece5c1972e35dec2efcce98847a09622">mrt_chnl_t</a> channel, uint32_t mask)</td></tr>
+<tr class="memitem:gae875817838659e596dc1cb1527c948c3"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#gae875817838659e596dc1cb1527c948c3">MRT_EnableInterrupts</a> (MRT_Type *base, <a class="el" href="a00040.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a> channel, uint32_t mask)</td></tr>
 <tr class="memdesc:gae875817838659e596dc1cb1527c948c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the MRT interrupt.  <a href="#gae875817838659e596dc1cb1527c948c3">More...</a><br/></td></tr>
 <tr class="separator:gae875817838659e596dc1cb1527c948c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7a8066680089523fa602dbe58b0c0505"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga7a8066680089523fa602dbe58b0c0505">MRT_DisableInterrupts</a> (MRT_Type *base, <a class="el" href="a00040.html#gaece5c1972e35dec2efcce98847a09622">mrt_chnl_t</a> channel, uint32_t mask)</td></tr>
+<tr class="memitem:ga7a8066680089523fa602dbe58b0c0505"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga7a8066680089523fa602dbe58b0c0505">MRT_DisableInterrupts</a> (MRT_Type *base, <a class="el" href="a00040.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a> channel, uint32_t mask)</td></tr>
 <tr class="memdesc:ga7a8066680089523fa602dbe58b0c0505"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the selected MRT interrupt.  <a href="#ga7a8066680089523fa602dbe58b0c0505">More...</a><br/></td></tr>
 <tr class="separator:ga7a8066680089523fa602dbe58b0c0505"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2e666900eef9bdbd9d9e587d2b7ca2c2"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga2e666900eef9bdbd9d9e587d2b7ca2c2">MRT_GetEnabledInterrupts</a> (MRT_Type *base, <a class="el" href="a00040.html#gaece5c1972e35dec2efcce98847a09622">mrt_chnl_t</a> channel)</td></tr>
+<tr class="memitem:ga2e666900eef9bdbd9d9e587d2b7ca2c2"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga2e666900eef9bdbd9d9e587d2b7ca2c2">MRT_GetEnabledInterrupts</a> (MRT_Type *base, <a class="el" href="a00040.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a> channel)</td></tr>
 <tr class="memdesc:ga2e666900eef9bdbd9d9e587d2b7ca2c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the enabled MRT interrupts.  <a href="#ga2e666900eef9bdbd9d9e587d2b7ca2c2">More...</a><br/></td></tr>
 <tr class="separator:ga2e666900eef9bdbd9d9e587d2b7ca2c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Status Interface</h2></td></tr>
-<tr class="memitem:gafa8493a0faee1cc356da26ca99a54da8"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#gafa8493a0faee1cc356da26ca99a54da8">MRT_GetStatusFlags</a> (MRT_Type *base, <a class="el" href="a00040.html#gaece5c1972e35dec2efcce98847a09622">mrt_chnl_t</a> channel)</td></tr>
+<tr class="memitem:gafa8493a0faee1cc356da26ca99a54da8"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#gafa8493a0faee1cc356da26ca99a54da8">MRT_GetStatusFlags</a> (MRT_Type *base, <a class="el" href="a00040.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a> channel)</td></tr>
 <tr class="memdesc:gafa8493a0faee1cc356da26ca99a54da8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the MRT status flags.  <a href="#gafa8493a0faee1cc356da26ca99a54da8">More...</a><br/></td></tr>
 <tr class="separator:gafa8493a0faee1cc356da26ca99a54da8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga959db20281cfce080c684bd94f667799"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga959db20281cfce080c684bd94f667799">MRT_ClearStatusFlags</a> (MRT_Type *base, <a class="el" href="a00040.html#gaece5c1972e35dec2efcce98847a09622">mrt_chnl_t</a> channel, uint32_t mask)</td></tr>
+<tr class="memitem:ga959db20281cfce080c684bd94f667799"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga959db20281cfce080c684bd94f667799">MRT_ClearStatusFlags</a> (MRT_Type *base, <a class="el" href="a00040.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a> channel, uint32_t mask)</td></tr>
 <tr class="memdesc:ga959db20281cfce080c684bd94f667799"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the MRT status flags.  <a href="#ga959db20281cfce080c684bd94f667799">More...</a><br/></td></tr>
 <tr class="separator:ga959db20281cfce080c684bd94f667799"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Read and Write the timer period</h2></td></tr>
-<tr class="memitem:ga57f3d18e0ec88a5eb04b3282e0f3dc95"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga57f3d18e0ec88a5eb04b3282e0f3dc95">MRT_UpdateTimerPeriod</a> (MRT_Type *base, <a class="el" href="a00040.html#gaece5c1972e35dec2efcce98847a09622">mrt_chnl_t</a> channel, uint32_t count, bool immediateLoad)</td></tr>
+<tr class="memitem:ga57f3d18e0ec88a5eb04b3282e0f3dc95"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga57f3d18e0ec88a5eb04b3282e0f3dc95">MRT_UpdateTimerPeriod</a> (MRT_Type *base, <a class="el" href="a00040.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a> channel, uint32_t count, bool immediateLoad)</td></tr>
 <tr class="memdesc:ga57f3d18e0ec88a5eb04b3282e0f3dc95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to update the timer period in units of count.  <a href="#ga57f3d18e0ec88a5eb04b3282e0f3dc95">More...</a><br/></td></tr>
 <tr class="separator:ga57f3d18e0ec88a5eb04b3282e0f3dc95"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7c0bbb20b4abd7450f860277ef9d8a20"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga7c0bbb20b4abd7450f860277ef9d8a20">MRT_GetCurrentTimerCount</a> (MRT_Type *base, <a class="el" href="a00040.html#gaece5c1972e35dec2efcce98847a09622">mrt_chnl_t</a> channel)</td></tr>
+<tr class="memitem:ga7c0bbb20b4abd7450f860277ef9d8a20"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga7c0bbb20b4abd7450f860277ef9d8a20">MRT_GetCurrentTimerCount</a> (MRT_Type *base, <a class="el" href="a00040.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a> channel)</td></tr>
 <tr class="memdesc:ga7c0bbb20b4abd7450f860277ef9d8a20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the current timer counting value.  <a href="#ga7c0bbb20b4abd7450f860277ef9d8a20">More...</a><br/></td></tr>
 <tr class="separator:ga7c0bbb20b4abd7450f860277ef9d8a20"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Timer Start and Stop</h2></td></tr>
-<tr class="memitem:ga388dd5041e6c179d637e17cd6e5a607e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga388dd5041e6c179d637e17cd6e5a607e">MRT_StartTimer</a> (MRT_Type *base, <a class="el" href="a00040.html#gaece5c1972e35dec2efcce98847a09622">mrt_chnl_t</a> channel, uint32_t count)</td></tr>
+<tr class="memitem:ga388dd5041e6c179d637e17cd6e5a607e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga388dd5041e6c179d637e17cd6e5a607e">MRT_StartTimer</a> (MRT_Type *base, <a class="el" href="a00040.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a> channel, uint32_t count)</td></tr>
 <tr class="memdesc:ga388dd5041e6c179d637e17cd6e5a607e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the timer counting.  <a href="#ga388dd5041e6c179d637e17cd6e5a607e">More...</a><br/></td></tr>
 <tr class="separator:ga388dd5041e6c179d637e17cd6e5a607e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7620866a54acdcc17abab2b46a94dc6c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga7620866a54acdcc17abab2b46a94dc6c">MRT_StopTimer</a> (MRT_Type *base, <a class="el" href="a00040.html#gaece5c1972e35dec2efcce98847a09622">mrt_chnl_t</a> channel)</td></tr>
+<tr class="memitem:ga7620866a54acdcc17abab2b46a94dc6c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga7620866a54acdcc17abab2b46a94dc6c">MRT_StopTimer</a> (MRT_Type *base, <a class="el" href="a00040.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a> channel)</td></tr>
 <tr class="memdesc:ga7620866a54acdcc17abab2b46a94dc6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the timer counting.  <a href="#ga7620866a54acdcc17abab2b46a94dc6c">More...</a><br/></td></tr>
 <tr class="separator:ga7620866a54acdcc17abab2b46a94dc6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -253,17 +276,17 @@ Get &amp; release channel</h2></td></tr>
 <tr class="memitem:ga320ba098c93a30174254eb763dd37dde"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga320ba098c93a30174254eb763dd37dde">MRT_GetIdleChannel</a> (MRT_Type *base)</td></tr>
 <tr class="memdesc:ga320ba098c93a30174254eb763dd37dde"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find the available channel.  <a href="#ga320ba098c93a30174254eb763dd37dde">More...</a><br/></td></tr>
 <tr class="separator:ga320ba098c93a30174254eb763dd37dde"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8e55bb859e4f9b98ea8ec580ed7b106a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga8e55bb859e4f9b98ea8ec580ed7b106a">MRT_ReleaseChannel</a> (MRT_Type *base, <a class="el" href="a00040.html#gaece5c1972e35dec2efcce98847a09622">mrt_chnl_t</a> channel)</td></tr>
+<tr class="memitem:ga8e55bb859e4f9b98ea8ec580ed7b106a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga8e55bb859e4f9b98ea8ec580ed7b106a">MRT_ReleaseChannel</a> (MRT_Type *base, <a class="el" href="a00040.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a> channel)</td></tr>
 <tr class="memdesc:ga8e55bb859e4f9b98ea8ec580ed7b106a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Release the channel when the timer is using the multi-task mode.  <a href="#ga8e55bb859e4f9b98ea8ec580ed7b106a">More...</a><br/></td></tr>
 <tr class="separator:ga8e55bb859e4f9b98ea8ec580ed7b106a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00345" id="a00345"></a>
+<a name="a00337" id="a00337"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct mrt_config_t</td>
+          <td class="memname">struct _mrt_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -271,95 +294,110 @@ Get &amp; release channel</h2></td></tr>
 <p>The config struct can be made const so it resides in flash </p>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:aa8d8b810ee17770fd48674454f59bb08"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa8d8b810ee17770fd48674454f59bb08"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#aa8d8b810ee17770fd48674454f59bb08">enableMultiTask</a></td></tr>
-<tr class="memdesc:aa8d8b810ee17770fd48674454f59bb08"><td class="mdescLeft">&#160;</td><td class="mdescRight">true: Timers run in multi-task mode; false: Timers run in hardware status mode <br/></td></tr>
-<tr class="separator:aa8d8b810ee17770fd48674454f59bb08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf44f75ebc1e4c27ed0cf88c03c122d9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adf44f75ebc1e4c27ed0cf88c03c122d9"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#adf44f75ebc1e4c27ed0cf88c03c122d9">enableMultiTask</a></td></tr>
+<tr class="memdesc:adf44f75ebc1e4c27ed0cf88c03c122d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">true: Timers run in multi-task mode; false: Timers run in hardware status mode <br/></td></tr>
+<tr class="separator:adf44f75ebc1e4c27ed0cf88c03c122d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
 </div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gaece5c1972e35dec2efcce98847a09622"></a>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="gadb656916391d01109e84f6e5d97fd5c3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00040.html#gaece5c1972e35dec2efcce98847a09622">mrt_chnl_t</a></td>
+          <td class="memname">typedef struct <a class="el" href="a00040.html#a00337">_mrt_config</a>  <a class="el" href="a00040.html#gadb656916391d01109e84f6e5d97fd5c3">mrt_config_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This structure holds the configuration settings for the MRT peripheral. To initialize this structure to reasonable defaults, call the <a class="el" href="a00040.html#gad30aa85105a47b708fd5880a929e5e84" title="Fill in the MRT config struct with the default settings. ">MRT_GetDefaultConfig()</a> function and pass a pointer to your config structure instance.</p>
+<p>The config struct can be made const so it resides in flash </p>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="ga05660f6ec5e7c0ac6204165d7ab9bf35"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00040.html#ga05660f6ec5e7c0ac6204165d7ab9bf35">_mrt_chnl</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaece5c1972e35dec2efcce98847a09622a27e83d437e2798b19c59c2af4d99e1dc"></a>kMRT_Channel_0</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga05660f6ec5e7c0ac6204165d7ab9bf35a27e83d437e2798b19c59c2af4d99e1dc"></a>kMRT_Channel_0</em>&nbsp;</td><td class="fielddoc">
 <p>MRT channel number 0. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaece5c1972e35dec2efcce98847a09622a44b7807f36fe0a21240e721d46d8f9d7"></a>kMRT_Channel_1</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga05660f6ec5e7c0ac6204165d7ab9bf35a44b7807f36fe0a21240e721d46d8f9d7"></a>kMRT_Channel_1</em>&nbsp;</td><td class="fielddoc">
 <p>MRT channel number 1. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaece5c1972e35dec2efcce98847a09622a17597fb66d9b1d3e97b318db79267f52"></a>kMRT_Channel_2</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga05660f6ec5e7c0ac6204165d7ab9bf35a17597fb66d9b1d3e97b318db79267f52"></a>kMRT_Channel_2</em>&nbsp;</td><td class="fielddoc">
 <p>MRT channel number 2. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaece5c1972e35dec2efcce98847a09622af57e6e009258a71bc3a2890aedff34b3"></a>kMRT_Channel_3</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga05660f6ec5e7c0ac6204165d7ab9bf35af57e6e009258a71bc3a2890aedff34b3"></a>kMRT_Channel_3</em>&nbsp;</td><td class="fielddoc">
 <p>MRT channel number 3. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gad481f648f1c89a1eab327530d6fef1d0"></a>
+<a class="anchor" id="gae772c3f1dc986d55a787b987f731b389"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00040.html#gad481f648f1c89a1eab327530d6fef1d0">mrt_timer_mode_t</a></td>
+          <td class="memname">enum <a class="el" href="a00040.html#gae772c3f1dc986d55a787b987f731b389">_mrt_timer_mode</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggad481f648f1c89a1eab327530d6fef1d0a6b415c060dc09ed293ec3dda829cb257"></a>kMRT_RepeatMode</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggae772c3f1dc986d55a787b987f731b389a6b415c060dc09ed293ec3dda829cb257"></a>kMRT_RepeatMode</em>&nbsp;</td><td class="fielddoc">
 <p>Repeat Interrupt mode. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad481f648f1c89a1eab327530d6fef1d0abe4ba0a30bc09f1921a0504eb826b3dc"></a>kMRT_OneShotMode</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggae772c3f1dc986d55a787b987f731b389abe4ba0a30bc09f1921a0504eb826b3dc"></a>kMRT_OneShotMode</em>&nbsp;</td><td class="fielddoc">
 <p>One-shot Interrupt mode. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad481f648f1c89a1eab327530d6fef1d0add9f55173bb54f623c955c29c22dd5b2"></a>kMRT_OneShotStallMode</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggae772c3f1dc986d55a787b987f731b389add9f55173bb54f623c955c29c22dd5b2"></a>kMRT_OneShotStallMode</em>&nbsp;</td><td class="fielddoc">
 <p>One-shot stall mode. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga9d2f90ae2c6f99410e2908dac8cc6943"></a>
+<a class="anchor" id="ga854d01b9575db5b6f0f7aaad49cf0c7d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00040.html#ga9d2f90ae2c6f99410e2908dac8cc6943">mrt_interrupt_enable_t</a></td>
+          <td class="memname">enum <a class="el" href="a00040.html#ga854d01b9575db5b6f0f7aaad49cf0c7d">_mrt_interrupt_enable</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga9d2f90ae2c6f99410e2908dac8cc6943a2a5e8ee568da2c888093b732f2157ea5"></a>kMRT_TimerInterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga854d01b9575db5b6f0f7aaad49cf0c7da2a5e8ee568da2c888093b732f2157ea5"></a>kMRT_TimerInterruptEnable</em>&nbsp;</td><td class="fielddoc">
 <p>Timer interrupt enable. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga0bb94508d8cf924c3a6971364377673a"></a>
+<a class="anchor" id="ga13878b183833475306c8aabb81391a8a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00040.html#ga0bb94508d8cf924c3a6971364377673a">mrt_status_flags_t</a></td>
+          <td class="memname">enum <a class="el" href="a00040.html#ga13878b183833475306c8aabb81391a8a">_mrt_status_flags</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga0bb94508d8cf924c3a6971364377673aa6942598faf3aef148a850f8850cf01c3"></a>kMRT_TimerInterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga13878b183833475306c8aabb81391a8aa6942598faf3aef148a850f8850cf01c3"></a>kMRT_TimerInterruptFlag</em>&nbsp;</td><td class="fielddoc">
 <p>Timer interrupt flag. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0bb94508d8cf924c3a6971364377673aa745c62687191197b48b35dbd1aac40db"></a>kMRT_TimerRunFlag</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga13878b183833475306c8aabb81391a8aa745c62687191197b48b35dbd1aac40db"></a>kMRT_TimerRunFlag</em>&nbsp;</td><td class="fielddoc">
 <p>Indicates state of the timer. </p>
 </td></tr>
 </table>
@@ -380,7 +418,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00040.html#a00345">mrt_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00040.html#gadb656916391d01109e84f6e5d97fd5c3">mrt_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -433,7 +471,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="memname">static void MRT_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00040.html#a00345">mrt_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00040.html#gadb656916391d01109e84f6e5d97fd5c3">mrt_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
@@ -472,13 +510,13 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00040.html#gaece5c1972e35dec2efcce98847a09622">mrt_chnl_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00040.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a>&#160;</td>
           <td class="paramname"><em>channel</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00040.html#gad481f648f1c89a1eab327530d6fef1d0">mrt_timer_mode_t</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00040.html#gaff791fb43331fc1ae8f4e0d9003ac286">mrt_timer_mode_t</a>&#160;</td>
           <td class="paramname"><em>mode</em>&#160;</td>
         </tr>
         <tr>
@@ -520,7 +558,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00040.html#gaece5c1972e35dec2efcce98847a09622">mrt_chnl_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00040.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a>&#160;</td>
           <td class="paramname"><em>channel</em>, </td>
         </tr>
         <tr>
@@ -545,7 +583,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
   <table class="params">
     <tr><td class="paramname">base</td><td>Multi-Rate timer peripheral base address </td></tr>
     <tr><td class="paramname">channel</td><td>Timer channel number </td></tr>
-    <tr><td class="paramname">mask</td><td>The interrupts to enable. This is a logical OR of members of the enumeration <a class="el" href="a00040.html#ga9d2f90ae2c6f99410e2908dac8cc6943" title="List of MRT interrupts. ">mrt_interrupt_enable_t</a> </td></tr>
+    <tr><td class="paramname">mask</td><td>The interrupts to enable. This is a logical OR of members of the enumeration <a class="el" href="a00040.html#ga35fd7f67352e6660946fe980fcd4fc5d" title="List of MRT interrupts. ">mrt_interrupt_enable_t</a> </td></tr>
   </table>
   </dd>
 </dl>
@@ -568,7 +606,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00040.html#gaece5c1972e35dec2efcce98847a09622">mrt_chnl_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00040.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a>&#160;</td>
           <td class="paramname"><em>channel</em>, </td>
         </tr>
         <tr>
@@ -593,7 +631,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
   <table class="params">
     <tr><td class="paramname">base</td><td>Multi-Rate timer peripheral base address </td></tr>
     <tr><td class="paramname">channel</td><td>Timer channel number </td></tr>
-    <tr><td class="paramname">mask</td><td>The interrupts to disable. This is a logical OR of members of the enumeration <a class="el" href="a00040.html#ga9d2f90ae2c6f99410e2908dac8cc6943" title="List of MRT interrupts. ">mrt_interrupt_enable_t</a> </td></tr>
+    <tr><td class="paramname">mask</td><td>The interrupts to disable. This is a logical OR of members of the enumeration <a class="el" href="a00040.html#ga35fd7f67352e6660946fe980fcd4fc5d" title="List of MRT interrupts. ">mrt_interrupt_enable_t</a> </td></tr>
   </table>
   </dd>
 </dl>
@@ -616,7 +654,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00040.html#gaece5c1972e35dec2efcce98847a09622">mrt_chnl_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00040.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a>&#160;</td>
           <td class="paramname"><em>channel</em>&#160;</td>
         </tr>
         <tr>
@@ -638,7 +676,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The enabled interrupts. This is the logical OR of members of the enumeration <a class="el" href="a00040.html#ga9d2f90ae2c6f99410e2908dac8cc6943" title="List of MRT interrupts. ">mrt_interrupt_enable_t</a> </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The enabled interrupts. This is the logical OR of members of the enumeration <a class="el" href="a00040.html#ga35fd7f67352e6660946fe980fcd4fc5d" title="List of MRT interrupts. ">mrt_interrupt_enable_t</a> </dd></dl>
 
 </div>
 </div>
@@ -658,7 +696,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00040.html#gaece5c1972e35dec2efcce98847a09622">mrt_chnl_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00040.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a>&#160;</td>
           <td class="paramname"><em>channel</em>&#160;</td>
         </tr>
         <tr>
@@ -680,7 +718,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The status flags. This is the logical OR of members of the enumeration <a class="el" href="a00040.html#ga0bb94508d8cf924c3a6971364377673a" title="List of MRT status flags. ">mrt_status_flags_t</a> </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The status flags. This is the logical OR of members of the enumeration <a class="el" href="a00040.html#ga42f664094e65ac53728a8bb0dea0d641" title="List of MRT status flags. ">mrt_status_flags_t</a> </dd></dl>
 
 </div>
 </div>
@@ -700,7 +738,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00040.html#gaece5c1972e35dec2efcce98847a09622">mrt_chnl_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00040.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a>&#160;</td>
           <td class="paramname"><em>channel</em>, </td>
         </tr>
         <tr>
@@ -725,7 +763,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
   <table class="params">
     <tr><td class="paramname">base</td><td>Multi-Rate timer peripheral base address </td></tr>
     <tr><td class="paramname">channel</td><td>Timer channel number </td></tr>
-    <tr><td class="paramname">mask</td><td>The status flags to clear. This is a logical OR of members of the enumeration <a class="el" href="a00040.html#ga0bb94508d8cf924c3a6971364377673a" title="List of MRT status flags. ">mrt_status_flags_t</a> </td></tr>
+    <tr><td class="paramname">mask</td><td>The status flags to clear. This is a logical OR of members of the enumeration <a class="el" href="a00040.html#ga42f664094e65ac53728a8bb0dea0d641" title="List of MRT status flags. ">mrt_status_flags_t</a> </td></tr>
   </table>
   </dd>
 </dl>
@@ -745,7 +783,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00040.html#gaece5c1972e35dec2efcce98847a09622">mrt_chnl_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00040.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a>&#160;</td>
           <td class="paramname"><em>channel</em>, </td>
         </tr>
         <tr>
@@ -797,7 +835,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00040.html#gaece5c1972e35dec2efcce98847a09622">mrt_chnl_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00040.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a>&#160;</td>
           <td class="paramname"><em>channel</em>&#160;</td>
         </tr>
         <tr>
@@ -841,7 +879,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00040.html#gaece5c1972e35dec2efcce98847a09622">mrt_chnl_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00040.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a>&#160;</td>
           <td class="paramname"><em>channel</em>, </td>
         </tr>
         <tr>
@@ -891,7 +929,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00040.html#gaece5c1972e35dec2efcce98847a09622">mrt_chnl_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00040.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a>&#160;</td>
           <td class="paramname"><em>channel</em>&#160;</td>
         </tr>
         <tr>
@@ -964,7 +1002,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00040.html#gaece5c1972e35dec2efcce98847a09622">mrt_chnl_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00040.html#gaf78437e7a713ae57fd5c12135af514ba">mrt_chnl_t</a>&#160;</td>
           <td class="paramname"><em>channel</em>&#160;</td>
         </tr>
         <tr>

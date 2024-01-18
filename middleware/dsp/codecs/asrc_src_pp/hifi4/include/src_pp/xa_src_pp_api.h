@@ -1,14 +1,24 @@
 /*
- * Copyright (c) 2011-2020 by Cadence Design Systems, Inc.  ALL RIGHTS RESERVED.
- * These coded instructions, statements, and computer programs are the
- * copyrighted works and confidential proprietary information of
- * Cadence Design Systems Inc.  They may be adapted and modified by bona fide
- * purchasers for internal use, but neither the original nor any adapted
- * or modified version may be disclosed or distributed to third parties
- * in any manner, medium, or form, in whole or in part, without the prior
- * written consent of Cadence Design Systems Inc.  This software and its
- * derivatives are to be executed solely on products incorporating a Cadence
- * Design Systems processor.
+ * Copyright (c) 2011-2023 Cadence Design Systems, Inc.
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to
+ * the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+ * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 
@@ -48,10 +58,10 @@ enum xa_config_param_src_pp
 /* Non-Fatal Errors */
 enum xa_error_nonfatal_config_src_pp
 {
-  XA_SRC_PP_CONFIG_NON_FATAL_INVALID_CONFIG_TYPE        = XA_ERROR_CODE(xa_severity_nonfatal, xa_class_config, XA_SRC_PP, 0),
-  XA_SRC_PP_CONFIG_NON_FATAL_INVALID_ENABLE_ASRC        = XA_ERROR_CODE(xa_severity_nonfatal, xa_class_config, XA_SRC_PP, 1),
-  XA_SRC_PP_CONFIG_NON_FATAL_INVALID_DRIFT_ASRC         = XA_ERROR_CODE(xa_severity_nonfatal, xa_class_config, XA_SRC_PP, 2),
-  XA_SRC_PP_CONFIG_NON_FATAL_INVALID_ENABLE_CUBIC       = XA_ERROR_CODE(xa_severity_nonfatal, xa_class_config, XA_SRC_PP, 3),  
+  XA_SRC_PP_CONFIG_NONFATAL_INVALID_CONFIG_TYPE        = XA_ERROR_CODE(xa_severity_nonfatal, xa_class_config, XA_SRC_PP, 0),
+  XA_SRC_PP_CONFIG_NONFATAL_INVALID_ENABLE_ASRC        = XA_ERROR_CODE(xa_severity_nonfatal, xa_class_config, XA_SRC_PP, 1),
+  XA_SRC_PP_CONFIG_NONFATAL_INVALID_DRIFT_ASRC         = XA_ERROR_CODE(xa_severity_nonfatal, xa_class_config, XA_SRC_PP, 2),
+  XA_SRC_PP_CONFIG_NONFATAL_INVALID_ENABLE_CUBIC       = XA_ERROR_CODE(xa_severity_nonfatal, xa_class_config, XA_SRC_PP, 3),  
 };
 /* Fatal Errors */
 enum xa_error_fatal_config_src_pp
@@ -71,8 +81,8 @@ enum xa_error_fatal_config_src_pp
 /* Non Fatal Errors */
 enum xa_error_nonfatal_execute_src_pp
 {
-  XA_SRC_PP_EXECUTE_NON_FATAL_INVALID_CONFIG_SEQ         = XA_ERROR_CODE(xa_severity_nonfatal, xa_class_execute, XA_SRC_PP, 0),
-  XA_SRC_PP_EXECUTE_NON_FATAL_INVALID_API_SEQ            = XA_ERROR_CODE(xa_severity_nonfatal, xa_class_execute, XA_SRC_PP, 1),
+  XA_SRC_PP_EXECUTE_NONFATAL_INVALID_CONFIG_SEQ         = XA_ERROR_CODE(xa_severity_nonfatal, xa_class_execute, XA_SRC_PP, 0),
+  XA_SRC_PP_EXECUTE_NONFATAL_INVALID_API_SEQ            = XA_ERROR_CODE(xa_severity_nonfatal, xa_class_execute, XA_SRC_PP, 1),
 };
 
 /* Fatal Errors */
@@ -88,7 +98,6 @@ extern "C" {
 #endif	/* __cplusplus */
     /* Either one of the following is available in any library */
 xa_codec_func_t xa_src_pp; // Standard SRC / SRCPlus
-xa_codec_func_t xa_src384k_pp; // Trimmed src384k
 #if defined(__cplusplus)
 }
 #endif	/* __cplusplus */

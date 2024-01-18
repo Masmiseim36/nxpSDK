@@ -269,7 +269,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pe546,Pe188,Pe111,Pa084,Pe068,Pe177,Pe223</state>
+          <state>Pe546,Pe188,Pe111,Pa084,Pe068,Pe177,Pe223,Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -310,7 +310,7 @@
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -427,6 +427,7 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
@@ -1427,7 +1428,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pe546,Pe188,Pe111,Pa084,Pe068,Pe177,Pe223</state>
+          <state>Pe546,Pe188,Pe111,Pa084,Pe068,Pe177,Pe223,Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1468,7 +1469,7 @@
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -1585,6 +1586,7 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
@@ -2584,7 +2586,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pe546,Pe188,Pe111,Pa084,Pe068,Pe177,Pe223</state>
+          <state>Pe546,Pe188,Pe111,Pa084,Pe068,Pe177,Pe223,Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -2625,7 +2627,7 @@
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -2742,6 +2744,7 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
@@ -3742,7 +3745,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pe546,Pe188,Pe111,Pa084,Pe068,Pe177,Pe223</state>
+          <state>Pe546,Pe188,Pe111,Pa084,Pe068,Pe177,Pe223,Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -3783,7 +3786,7 @@
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -3900,6 +3903,7 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
@@ -4681,7 +4685,7 @@
   <group>
     <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
   <group>
@@ -4757,6 +4761,24 @@
           <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/include/mbedtls/compat-2.x.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/include/mbedtls/config_adjust_legacy_crypto.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/include/mbedtls/config_adjust_legacy_from_psa.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/include/mbedtls/config_adjust_psa_from_legacy.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/include/mbedtls/config_adjust_psa_superset_legacy.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/include/mbedtls/config_adjust_ssl.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/include/mbedtls/config_adjust_x509.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/include/mbedtls/config_psa.h</name>
         </file>
         <file>
@@ -4800,9 +4822,6 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/include/mbedtls/hmac_drbg.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/include/mbedtls/legacy_or_psa.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/include/mbedtls/lms.h</name>
@@ -4868,6 +4887,9 @@
           <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/include/mbedtls/sha1.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/include/mbedtls/sha3.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/include/mbedtls/sha256.h</name>
         </file>
         <file>
@@ -4916,10 +4938,25 @@
       <group>
         <name>psa</name>
         <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/include/psa/build_info.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/include/psa/crypto.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_auto_enabled.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_key_pair_types.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/include/psa/crypto_adjust_config_synonyms.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/include/psa/crypto_builtin_composites.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/include/psa/crypto_builtin_key_derivation.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/include/psa/crypto_builtin_primitives.h</name>
@@ -4937,10 +4974,16 @@
           <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/include/psa/crypto_driver_contexts_composites.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/include/psa/crypto_driver_contexts_key_derivation.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/include/psa/crypto_driver_contexts_primitives.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/include/psa/crypto_extra.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/include/psa/crypto_legacy.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/include/psa/crypto_platform.h</name>
@@ -4993,6 +5036,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/base64.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/base64_internal.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/bignum.c</name>
@@ -5055,10 +5101,10 @@
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/constant_time.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/constant_time_internal.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/constant_time_impl.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/constant_time_invasive.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/constant_time_internal.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/ctr_drbg.c</name>
@@ -5085,6 +5131,9 @@
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/ecp_curves.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/ecp_curves_new.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/ecp_internal_alt.h</name>
       </file>
       <file>
@@ -5106,12 +5155,6 @@
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/gcm.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/hash_info.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/hash_info.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/hkdf.c</name>
       </file>
       <file>
@@ -5128,6 +5171,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/md.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/md_psa.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/md_wrap.h</name>
@@ -5155,6 +5201,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/pk.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/pk_internal.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/pk_wrap.c</name>
@@ -5208,7 +5257,13 @@
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/psa_crypto_core.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/psa_crypto_driver_wrappers.c</name>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/psa_crypto_core_common.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/psa_crypto_driver_wrappers_no_static.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/psa_crypto_driver_wrappers_no_static.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/psa_crypto_driver_wrappers.h</name>
@@ -5218,6 +5273,12 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/psa_crypto_ecp.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/psa_crypto_ffdh.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/psa_crypto_ffdh.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/psa_crypto_hash.c</name>
@@ -5271,10 +5332,10 @@
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/psa_crypto_storage.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/psa_its_file.c</name>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/psa_util.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/psa_util.c</name>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/psa_util_internal.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/ripemd160.c</name>
@@ -5290,6 +5351,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/sha1.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/sha3.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/sha256.c</name>
@@ -5406,6 +5470,9 @@
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/x509_csr.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/x509write.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls3x/library/x509write_crt.c</name>
       </file>
       <file>
@@ -5472,6 +5539,12 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/val/nspe/val_peripherals.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/val/nspe/val_platform.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/val/nspe/val_platform.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/val/nspe/val_storage.c</name>
@@ -5557,6 +5630,9 @@
             </group>
             <file>
               <name>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/pal_common.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/pal_weak.c</name>
             </file>
           </group>
         </group>
@@ -6593,6 +6669,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/fsl_assert.h</name>
     </file>
   </group>
   <group>

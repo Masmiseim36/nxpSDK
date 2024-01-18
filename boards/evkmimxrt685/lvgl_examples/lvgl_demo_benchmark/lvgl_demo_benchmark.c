@@ -20,7 +20,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_LPSPI_MASTER_DMA_BASEADDR       DMA0
+#define EXAMPLE_LPSPI_MASTER_DMA_BASEADDR DMA0
 
 static volatile bool s_lvgl_initialized = false;
 

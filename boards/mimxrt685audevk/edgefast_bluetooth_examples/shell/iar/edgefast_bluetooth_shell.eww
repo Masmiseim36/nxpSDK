@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<workspace>
+  <batchBuild>
+    <batchDefinition>
+      <name>all</name>
+      <member>
+        <project>edgefast_bluetooth_shell</project>
+        <configuration>flash_debug</configuration>
+      </member>
+      <member>
+        <project>edgefast_bluetooth_shell</project>
+        <configuration>flash_release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>flash_debug</name>
+      <member>
+        <project>edgefast_bluetooth_shell</project>
+        <configuration>flash_debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>flash_release</name>
+      <member>
+        <project>edgefast_bluetooth_shell</project>
+        <configuration>flash_release</configuration>
+      </member>
+    </batchDefinition>
+  </batchBuild>
+  <project>
+    <path>$WS_DIR$/edgefast_bluetooth_shell.ewp</path>
+  </project>
+</workspace>

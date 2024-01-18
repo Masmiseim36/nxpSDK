@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006-2021 Cadence Design Systems, Inc.
+ * Copyright (c) 2006-2023 Cadence Design Systems, Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -97,7 +97,8 @@ enum xa_error_fatal_execute_vorbis_dec
     XA_VORBISDEC_EXECUTE_FATAL_PERSIST_ALLOC                = XA_ERROR_CODE(xa_severity_fatal, xa_class_execute, XA_CODEC_VORBIS_DEC, 0),
     XA_VORBISDEC_EXECUTE_FATAL_SCRATCH_ALLOC                = XA_ERROR_CODE(xa_severity_fatal, xa_class_execute, XA_CODEC_VORBIS_DEC, 1),
     XA_VORBISDEC_EXECUTE_FATAL_CORRUPT_STREAM               = XA_ERROR_CODE(xa_severity_fatal, xa_class_execute, XA_CODEC_VORBIS_DEC, 2),
-    XA_VORBISDEC_EXECUTE_FATAL_INSUFFICIENT_INP_BUF_SIZE    = XA_ERROR_CODE(xa_severity_fatal, xa_class_execute, XA_CODEC_VORBIS_DEC, 3)
+    XA_VORBISDEC_EXECUTE_FATAL_INSUFFICIENT_INP_BUF_SIZE    = XA_ERROR_CODE(xa_severity_fatal, xa_class_execute, XA_CODEC_VORBIS_DEC, 3),
+    XA_VORBISDEC_EXECUTE_FATAL_OUT_OF_SEQUENCE_API    		= XA_ERROR_CODE(xa_severity_fatal, xa_class_execute, XA_CODEC_VORBIS_DEC, 4)
 };
 
 #include "xa_type_def.h"

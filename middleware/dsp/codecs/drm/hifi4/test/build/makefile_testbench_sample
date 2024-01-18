@@ -1,0 +1,157 @@
+#
+# Copyright (c) 2014-2022 Cadence Design Systems, Inc.
+# 
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included
+# in all copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+# IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+# CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+# TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+# SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#
+
+INCLUDE_RAW_AAC_SUPPORT = 0
+
+ROOTDIR= ../..
+
+OBJDIR = ./objs/test/xa_drm_dec
+TESTDIR = $(ROOTDIR)/test
+CFLAGS += -c 
+
+# Tools
+ifeq ($(CPU), gcc)
+    CC = gcc
+    AR = ar
+    LL = gcc
+    OBJCOPY = objcopy
+   
+    RM_R = rm -rf
+    MKPATH = mkdir -p
+    CP = cp -f
+
+    OBJ_EXTN = ogcc
+
+    CFLAGS += -DCSTUB_HIFI2 -m32 -c  -Wsign-compare -W
+    LDFLAGS += -lm -m32 -lstdc++ 
+
+else
+    CC = xt-xc++ $(XTCORE)
+    AR = xt-ar $(XTCORE)
+    LL = xt-xc++ $(XTCORE)
+    OBJCOPY = xt-objcopy $(XTCORE)
+    
+    ISS = xt-run $(XTCORE)
+    CONFIGDIR := $(shell $(ISS) --show-config=config)
+    include $(CONFIGDIR)/misc/hostenv.mk
+    
+    OBJ_EXTN = o
+
+    CFLAGS += -mlongcalls -mno-mul16 -mno-mul32 -mno-div32 -Wall -Wsign-compare -Wstrict-prototypes -W
+    ifeq ($(shell $(CC) --version | grep -c 'version 7'), 0)
+        CFLAGS += -mcoproc
+    else
+        CFLAGS += -OPT:hifi2_ops
+    endif
+endif
+
+WARNING_AS_ERROR ?=1
+ifeq ($(WARNING_AS_ERROR), 1)
+WERROR_FLAG=-Werror
+endif
+
+CFLAGS += $(EXTRA_CFLAGS) $(WERROR_FLAG)
+CFLAGS += -DINPUT_READ_ON_REQUEST
+
+LDFLAGS += $(EXTRA_LDFLAGS) 
+
+ifeq "$(DEBUG)" "1"
+    OPT_OS = -g
+    OPT_O2 = -g
+    CFLAGS += -DNDEBUG=0
+else
+    OPT_OS = -Os
+    OPT_O2 = -O2
+    CFLAGS += -DNDEBUG=1
+endif
+
+
+ifeq "$(CPU)" "gcc"
+    DRM_DEC_LIB = $(ROOTDIR)/lib/xgcc_drm_dec.a
+    
+    DRM_DEC_TEST = xgcc_drm_dec_test
+else
+    DRM_DEC_LIB = $(ROOTDIR)/lib/xa_drm_dec.a
+    DRM_DEC_TEST = xa_drm_dec_test
+	CFLAGS += -DPROFILE
+endif
+
+XA_LIBS = $(DRM_DEC_LIB) 
+
+CFLAGS +=  \
+	-I$(ROOTDIR)/include/ \
+    -I$(TESTDIR)/include/ \
+
+vpath %.cpp  $(TESTDIR)/src  
+
+OBJS = \
+	xa_drm_dec_sample_testbench.$(OBJ_EXTN) \
+	xa_drm_dec_error_handler.$(OBJ_EXTN) \
+	xa_drm_dec_utils.$(OBJ_EXTN) \
+	xa_waveio.$(OBJ_EXTN) \
+    xa_drm_dec_drm_utils.$(OBJ_EXTN) \
+    
+
+
+ifeq "$(INCLUDE_RAW_AAC_SUPPORT)" "1"
+    OBJS += xa_drm_dec_raw_aac_utils.$(OBJ_EXTN)
+    CFLAGS += -DRAW_AAC_SUPPORTED
+endif
+
+
+OBJS_OBJS = $(addprefix $(OBJDIR)/,$(OBJS))
+
+.PHONY: all
+
+all: $(DRM_DEC_TEST)
+
+$(OBJDIR):
+	-$(MKPATH) $@
+
+ifeq "$(CPU)" "gcc"
+
+CSTUB_OBJ = $(OBJDIR)/cstub-DC_330HiFi_syn.$(OBJ_EXTN)
+
+$(CSTUB_OBJ): $(ROOTDIR)/test/src/cstub-DC_330HiFi_syn.cpp
+	$(QUIET)echo CC $<
+	$(QUIET)$(CC) $(CFLAGS) $(INCLUDEFLAGS) -o $@ $<
+
+$(DRM_DEC_TEST): $(OBJDIR) $(OBJS_OBJS) $(CSTUB_OBJ) $(DRM_DEC_LIB) 
+	$(QUIET)echo Linking and Creating Executable $(DRM_DEC_TEST)
+	$(QUIET)$(LL) $(LDFLAGS) -o $@  $(OBJS_OBJS) $(CSTUB_OBJ)  $(DRM_DEC_LIB) 
+
+else
+
+$(DRM_DEC_TEST): $(OBJDIR) $(OBJS_OBJS)  $(DRM_DEC_LIB)
+	$(QUIET)echo Linking and Creating Executable $(DRM_DEC_TEST)
+	$(QUIET)$(LL) $(LDFLAGS) -o $@  $(OBJS_OBJS) -lm $(DRM_DEC_LIB)
+
+endif
+
+$(OBJS_OBJS): $(OBJDIR)/%.$(OBJ_EXTN): %.cpp
+	$(QUIET)echo CC $<
+	$(QUIET)$(CC) -c $(OPT_O2) $(CFLAGS) -o $@ $<
+
+clean:
+	rm -f $(OBJDIR)/*.$(OBJ_EXTN) $(DRM_DEC_TEST)
+

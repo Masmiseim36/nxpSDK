@@ -1,0 +1,12 @@
+diff --git a/tensorflow/lite/micro/tools/make/targets/xtensa_makefile.inc b/tensorflow/lite/micro/tools/make/targets/xtensa_makefile.inc
+index 62af4b50..1772b360 100644
+--- a/tensorflow/lite/micro/tools/make/targets/xtensa_makefile.inc
++++ b/tensorflow/lite/micro/tools/make/targets/xtensa_makefile.inc
+@@ -38,7 +38,6 @@ PLATFORM_FLAGS = \
+   -DTF_LITE_MCU_DEBUG_LOG \
+   -DTF_LITE_USE_CTIME \
+   --xtensa-core=$(XTENSA_CORE) \
+-  -mcoproc \
+   -DMAX_RFFT_PWR=9 \
+   -DMIN_RFFT_PWR=MAX_RFFT_PWR \
+   $(TARGET_ARCH_DEFINES) \

@@ -29,31 +29,37 @@
                             							
                             <tool errorParsers="org.eclipse.cdt.core.VCErrorParser;org.eclipse.cdt.core.GASErrorParser" id="org.eclipse.cdt.build.core.settings.holder.1705889012" name="Assembly" superClass="org.eclipse.cdt.build.core.settings.holder">
                                 								
-                                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="org.eclipse.cdt.build.core.settings.holder.incpaths.1112585083" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
+                                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="org.eclipse.cdt.build.core.settings.holder.incpaths.823096487" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
                                     									
-                                    <listOptionValue builtIn="false" value="C:/tools/xtensa/XtDevTools/install/builds/RI-2021.8-win32/nxp_rt600_RI2021_8_newlib/xtensa-elf/include/xcc/c++"/>
+                                    <listOptionValue builtIn="false" value="/home/nxf33034/xtensa/workspaces/2/hifi4_library/include"/>
                                     									
-                                    <listOptionValue builtIn="false" value="C:/tools/xtensa/XtDevTools/install/builds/RI-2021.8-win32/nxp_rt600_RI2021_8_newlib/xtensa-elf/include/xcc/c++/xtensa-elf"/>
+                                    <listOptionValue builtIn="false" value="/home/nxf33034/xtensa/workspaces/2/hifi4_library/include_private"/>
                                     									
-                                    <listOptionValue builtIn="false" value="C:/tools/xtensa/XtDevTools/install/builds/RI-2021.8-win32/nxp_rt600_RI2021_8_newlib/xtensa-elf/include/xcc/c++/backward"/>
+                                    <listOptionValue builtIn="false" value="/home/nxf33034/xtensa/XtDevTools/install/builds/RI-2023.11-linux/nxp_rt600_RI23_11_newlib/xtensa-elf/include/xcc/c++"/>
                                     									
-                                    <listOptionValue builtIn="false" value="C:/tools/xtensa/XtDevTools/install/tools/RI-2021.8-win32/XtensaTools/lib/xcc/include"/>
+                                    <listOptionValue builtIn="false" value="/home/nxf33034/xtensa/XtDevTools/install/builds/RI-2023.11-linux/nxp_rt600_RI23_11_newlib/xtensa-elf/include/xcc/c++/xtensa-elf"/>
                                     									
-                                    <listOptionValue builtIn="false" value="C:/tools/xtensa/XtDevTools/install/builds/RI-2021.8-win32/nxp_rt600_RI2021_8_newlib/xtensa-elf/arch/include"/>
+                                    <listOptionValue builtIn="false" value="/home/nxf33034/xtensa/XtDevTools/install/builds/RI-2023.11-linux/nxp_rt600_RI23_11_newlib/xtensa-elf/include/xcc/c++/backward"/>
                                     									
-                                    <listOptionValue builtIn="false" value="C:/tools/xtensa/XtDevTools/install/builds/RI-2021.8-win32/nxp_rt600_RI2021_8_newlib/xtensa-elf/include"/>
+                                    <listOptionValue builtIn="false" value="/home/nxf33034/xtensa/XtDevTools/install/tools/RI-2023.11-linux/XtensaTools/lib/xcc/include"/>
                                     									
-                                    <listOptionValue builtIn="false" value="C:/tools/xtensa/XtDevTools/install/tools/RI-2021.8-win32/XtensaTools/xtensa-elf/include"/>
+                                    <listOptionValue builtIn="false" value="/home/nxf33034/xtensa/XtDevTools/install/builds/RI-2023.11-linux/nxp_rt600_RI23_11_newlib/xtensa-elf/arch/include"/>
                                     									
-                                    <listOptionValue builtIn="false" value="&quot;C:\tools\xtensa\XtDevTools\install\tools\RI-2021.8-win32\XtensaTools\llvm\lib\clang\10.0.1\include&quot;"/>
+                                    <listOptionValue builtIn="false" value="/home/nxf33034/xtensa/XtDevTools/install/builds/RI-2023.11-linux/nxp_rt600_RI23_11_newlib/xtensa-elf/include"/>
                                     									
-                                    <listOptionValue builtIn="false" value="&quot;C:\_ddm\xtensa\1\hifi4_library\include&quot;"/>
+                                    <listOptionValue builtIn="false" value="/home/nxf33034/xtensa/XtDevTools/install/tools/RI-2023.11-linux/XtensaTools/xtensa-elf/include"/>
                                     									
-                                    <listOptionValue builtIn="false" value="&quot;C:\_ddm\xtensa\1\hifi4_library\include_private&quot;"/>
+                                    <listOptionValue builtIn="false" value="/home/nxf33034/xtensa/XtDevTools/install/tools/RI-2023.11-linux/XtensaTools/llvm/lib/clang/10.0.1/include"/>
                                     								
                                 </option>
                                 								
-                                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="org.eclipse.cdt.build.core.settings.holder.symbols.170352170" name="Symbols" superClass="org.eclipse.cdt.build.core.settings.holder.symbols" valueType="definedSymbols">
+                                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="org.eclipse.cdt.build.core.settings.holder.symbols.1848225665" name="Symbols" superClass="org.eclipse.cdt.build.core.settings.holder.symbols" valueType="definedSymbols">
+                                    									
+                                    <listOptionValue builtIn="false" value="__RENAMING__=1"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="DATA_CACHE=32768"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="MEM_MODEL=1"/>
                                     									
                                     <listOptionValue builtIn="false" value="_ILP32=1"/>
                                     									
@@ -567,7 +573,7 @@
                                     									
                                     <listOptionValue builtIn="false" value="__USER_LABEL_PREFIX__"/>
                                     									
-                                    <listOptionValue builtIn="false" value="__VERSION__=&quot;XtensaTools-14.08"/>
+                                    <listOptionValue builtIn="false" value="__VERSION__=&quot;XtensaTools-14.11"/>
                                     									
                                     <listOptionValue builtIn="false" value="__WCHAR_MAX__=65535"/>
                                     									
@@ -583,7 +589,7 @@
                                     									
                                     <listOptionValue builtIn="false" value="__WINT_WIDTH__=32"/>
                                     									
-                                    <listOptionValue builtIn="false" value="__XCC_MINOR__=8"/>
+                                    <listOptionValue builtIn="false" value="__XCC_MINOR__=11"/>
                                     									
                                     <listOptionValue builtIn="false" value="__XCC__=14000"/>
                                     									
@@ -593,7 +599,7 @@
                                     									
                                     <listOptionValue builtIn="false" value="__XTENSA__=1"/>
                                     									
-                                    <listOptionValue builtIn="false" value="__XT_CLANG_MINOR__=8"/>
+                                    <listOptionValue builtIn="false" value="__XT_CLANG_MINOR__=11"/>
                                     									
                                     <listOptionValue builtIn="false" value="__XT_CLANG__=14000"/>
                                     									
@@ -622,12 +628,6 @@
                                     <listOptionValue builtIn="false" value="__private_extern__=extern"/>
                                     									
                                     <listOptionValue builtIn="false" value="__xtensa__=1"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="__RENAMING__=1"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="DATA_CACHE=32768"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="MEM_MODEL=1"/>
                                     								
                                 </option>
                                 								
@@ -637,31 +637,37 @@
                             							
                             <tool errorParsers="org.eclipse.cdt.core.VCErrorParser;org.eclipse.cdt.core.GASErrorParser" id="org.eclipse.cdt.build.core.settings.holder.183276868" name="GNU C++" superClass="org.eclipse.cdt.build.core.settings.holder">
                                 								
-                                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="org.eclipse.cdt.build.core.settings.holder.incpaths.1653018062" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
+                                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="org.eclipse.cdt.build.core.settings.holder.incpaths.1493106024" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
                                     									
-                                    <listOptionValue builtIn="false" value="C:/tools/xtensa/XtDevTools/install/builds/RI-2021.8-win32/nxp_rt600_RI2021_8_newlib/xtensa-elf/include/xcc/c++"/>
+                                    <listOptionValue builtIn="false" value="/home/nxf33034/xtensa/workspaces/2/hifi4_library/include"/>
                                     									
-                                    <listOptionValue builtIn="false" value="C:/tools/xtensa/XtDevTools/install/builds/RI-2021.8-win32/nxp_rt600_RI2021_8_newlib/xtensa-elf/include/xcc/c++/xtensa-elf"/>
+                                    <listOptionValue builtIn="false" value="/home/nxf33034/xtensa/workspaces/2/hifi4_library/include_private"/>
                                     									
-                                    <listOptionValue builtIn="false" value="C:/tools/xtensa/XtDevTools/install/builds/RI-2021.8-win32/nxp_rt600_RI2021_8_newlib/xtensa-elf/include/xcc/c++/backward"/>
+                                    <listOptionValue builtIn="false" value="/home/nxf33034/xtensa/XtDevTools/install/builds/RI-2023.11-linux/nxp_rt600_RI23_11_newlib/xtensa-elf/include/xcc/c++"/>
                                     									
-                                    <listOptionValue builtIn="false" value="C:/tools/xtensa/XtDevTools/install/tools/RI-2021.8-win32/XtensaTools/lib/xcc/include"/>
+                                    <listOptionValue builtIn="false" value="/home/nxf33034/xtensa/XtDevTools/install/builds/RI-2023.11-linux/nxp_rt600_RI23_11_newlib/xtensa-elf/include/xcc/c++/xtensa-elf"/>
                                     									
-                                    <listOptionValue builtIn="false" value="C:/tools/xtensa/XtDevTools/install/builds/RI-2021.8-win32/nxp_rt600_RI2021_8_newlib/xtensa-elf/arch/include"/>
+                                    <listOptionValue builtIn="false" value="/home/nxf33034/xtensa/XtDevTools/install/builds/RI-2023.11-linux/nxp_rt600_RI23_11_newlib/xtensa-elf/include/xcc/c++/backward"/>
                                     									
-                                    <listOptionValue builtIn="false" value="C:/tools/xtensa/XtDevTools/install/builds/RI-2021.8-win32/nxp_rt600_RI2021_8_newlib/xtensa-elf/include"/>
+                                    <listOptionValue builtIn="false" value="/home/nxf33034/xtensa/XtDevTools/install/tools/RI-2023.11-linux/XtensaTools/lib/xcc/include"/>
                                     									
-                                    <listOptionValue builtIn="false" value="C:/tools/xtensa/XtDevTools/install/tools/RI-2021.8-win32/XtensaTools/xtensa-elf/include"/>
+                                    <listOptionValue builtIn="false" value="/home/nxf33034/xtensa/XtDevTools/install/builds/RI-2023.11-linux/nxp_rt600_RI23_11_newlib/xtensa-elf/arch/include"/>
                                     									
-                                    <listOptionValue builtIn="false" value="&quot;C:\tools\xtensa\XtDevTools\install\tools\RI-2021.8-win32\XtensaTools\llvm\lib\clang\10.0.1\include&quot;"/>
+                                    <listOptionValue builtIn="false" value="/home/nxf33034/xtensa/XtDevTools/install/builds/RI-2023.11-linux/nxp_rt600_RI23_11_newlib/xtensa-elf/include"/>
                                     									
-                                    <listOptionValue builtIn="false" value="&quot;C:\_ddm\xtensa\1\hifi4_library\include&quot;"/>
+                                    <listOptionValue builtIn="false" value="/home/nxf33034/xtensa/XtDevTools/install/tools/RI-2023.11-linux/XtensaTools/xtensa-elf/include"/>
                                     									
-                                    <listOptionValue builtIn="false" value="&quot;C:\_ddm\xtensa\1\hifi4_library\include_private&quot;"/>
+                                    <listOptionValue builtIn="false" value="/home/nxf33034/xtensa/XtDevTools/install/tools/RI-2023.11-linux/XtensaTools/llvm/lib/clang/10.0.1/include"/>
                                     								
                                 </option>
                                 								
-                                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="org.eclipse.cdt.build.core.settings.holder.symbols.1797407515" name="Symbols" superClass="org.eclipse.cdt.build.core.settings.holder.symbols" valueType="definedSymbols">
+                                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="org.eclipse.cdt.build.core.settings.holder.symbols.1987920244" name="Symbols" superClass="org.eclipse.cdt.build.core.settings.holder.symbols" valueType="definedSymbols">
+                                    									
+                                    <listOptionValue builtIn="false" value="__RENAMING__=1"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="DATA_CACHE=32768"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="MEM_MODEL=1"/>
                                     									
                                     <listOptionValue builtIn="false" value="_ILP32=1"/>
                                     									
@@ -1175,7 +1181,7 @@
                                     									
                                     <listOptionValue builtIn="false" value="__USER_LABEL_PREFIX__"/>
                                     									
-                                    <listOptionValue builtIn="false" value="__VERSION__=&quot;XtensaTools-14.08"/>
+                                    <listOptionValue builtIn="false" value="__VERSION__=&quot;XtensaTools-14.11"/>
                                     									
                                     <listOptionValue builtIn="false" value="__WCHAR_MAX__=65535"/>
                                     									
@@ -1191,7 +1197,7 @@
                                     									
                                     <listOptionValue builtIn="false" value="__WINT_WIDTH__=32"/>
                                     									
-                                    <listOptionValue builtIn="false" value="__XCC_MINOR__=8"/>
+                                    <listOptionValue builtIn="false" value="__XCC_MINOR__=11"/>
                                     									
                                     <listOptionValue builtIn="false" value="__XCC__=14000"/>
                                     									
@@ -1201,7 +1207,7 @@
                                     									
                                     <listOptionValue builtIn="false" value="__XTENSA__=1"/>
                                     									
-                                    <listOptionValue builtIn="false" value="__XT_CLANG_MINOR__=8"/>
+                                    <listOptionValue builtIn="false" value="__XT_CLANG_MINOR__=11"/>
                                     									
                                     <listOptionValue builtIn="false" value="__XT_CLANG__=14000"/>
                                     									
@@ -1230,12 +1236,6 @@
                                     <listOptionValue builtIn="false" value="__private_extern__=extern"/>
                                     									
                                     <listOptionValue builtIn="false" value="__xtensa__=1"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="__RENAMING__=1"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="DATA_CACHE=32768"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="MEM_MODEL=1"/>
                                     								
                                 </option>
                                 								
@@ -1245,31 +1245,37 @@
                             							
                             <tool errorParsers="org.eclipse.cdt.core.VCErrorParser;org.eclipse.cdt.core.GASErrorParser" id="org.eclipse.cdt.build.core.settings.holder.402814569" name="GNU C" superClass="org.eclipse.cdt.build.core.settings.holder">
                                 								
-                                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="org.eclipse.cdt.build.core.settings.holder.incpaths.441363298" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
+                                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="org.eclipse.cdt.build.core.settings.holder.incpaths.1322525798" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
                                     									
-                                    <listOptionValue builtIn="false" value="C:/tools/xtensa/XtDevTools/install/builds/RI-2021.8-win32/nxp_rt600_RI2021_8_newlib/xtensa-elf/include/xcc/c++"/>
+                                    <listOptionValue builtIn="false" value="/home/nxf33034/xtensa/workspaces/2/hifi4_library/include"/>
                                     									
-                                    <listOptionValue builtIn="false" value="C:/tools/xtensa/XtDevTools/install/builds/RI-2021.8-win32/nxp_rt600_RI2021_8_newlib/xtensa-elf/include/xcc/c++/xtensa-elf"/>
+                                    <listOptionValue builtIn="false" value="/home/nxf33034/xtensa/workspaces/2/hifi4_library/include_private"/>
                                     									
-                                    <listOptionValue builtIn="false" value="C:/tools/xtensa/XtDevTools/install/builds/RI-2021.8-win32/nxp_rt600_RI2021_8_newlib/xtensa-elf/include/xcc/c++/backward"/>
+                                    <listOptionValue builtIn="false" value="/home/nxf33034/xtensa/XtDevTools/install/builds/RI-2023.11-linux/nxp_rt600_RI23_11_newlib/xtensa-elf/include/xcc/c++"/>
                                     									
-                                    <listOptionValue builtIn="false" value="C:/tools/xtensa/XtDevTools/install/tools/RI-2021.8-win32/XtensaTools/lib/xcc/include"/>
+                                    <listOptionValue builtIn="false" value="/home/nxf33034/xtensa/XtDevTools/install/builds/RI-2023.11-linux/nxp_rt600_RI23_11_newlib/xtensa-elf/include/xcc/c++/xtensa-elf"/>
                                     									
-                                    <listOptionValue builtIn="false" value="C:/tools/xtensa/XtDevTools/install/builds/RI-2021.8-win32/nxp_rt600_RI2021_8_newlib/xtensa-elf/arch/include"/>
+                                    <listOptionValue builtIn="false" value="/home/nxf33034/xtensa/XtDevTools/install/builds/RI-2023.11-linux/nxp_rt600_RI23_11_newlib/xtensa-elf/include/xcc/c++/backward"/>
                                     									
-                                    <listOptionValue builtIn="false" value="C:/tools/xtensa/XtDevTools/install/builds/RI-2021.8-win32/nxp_rt600_RI2021_8_newlib/xtensa-elf/include"/>
+                                    <listOptionValue builtIn="false" value="/home/nxf33034/xtensa/XtDevTools/install/tools/RI-2023.11-linux/XtensaTools/lib/xcc/include"/>
                                     									
-                                    <listOptionValue builtIn="false" value="C:/tools/xtensa/XtDevTools/install/tools/RI-2021.8-win32/XtensaTools/xtensa-elf/include"/>
+                                    <listOptionValue builtIn="false" value="/home/nxf33034/xtensa/XtDevTools/install/builds/RI-2023.11-linux/nxp_rt600_RI23_11_newlib/xtensa-elf/arch/include"/>
                                     									
-                                    <listOptionValue builtIn="false" value="&quot;C:\tools\xtensa\XtDevTools\install\tools\RI-2021.8-win32\XtensaTools\llvm\lib\clang\10.0.1\include&quot;"/>
+                                    <listOptionValue builtIn="false" value="/home/nxf33034/xtensa/XtDevTools/install/builds/RI-2023.11-linux/nxp_rt600_RI23_11_newlib/xtensa-elf/include"/>
                                     									
-                                    <listOptionValue builtIn="false" value="&quot;C:\_ddm\xtensa\1\hifi4_library\include&quot;"/>
+                                    <listOptionValue builtIn="false" value="/home/nxf33034/xtensa/XtDevTools/install/tools/RI-2023.11-linux/XtensaTools/xtensa-elf/include"/>
                                     									
-                                    <listOptionValue builtIn="false" value="&quot;C:\_ddm\xtensa\1\hifi4_library\include_private&quot;"/>
+                                    <listOptionValue builtIn="false" value="/home/nxf33034/xtensa/XtDevTools/install/tools/RI-2023.11-linux/XtensaTools/llvm/lib/clang/10.0.1/include"/>
                                     								
                                 </option>
                                 								
-                                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="org.eclipse.cdt.build.core.settings.holder.symbols.1188949107" name="Symbols" superClass="org.eclipse.cdt.build.core.settings.holder.symbols" valueType="definedSymbols">
+                                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="org.eclipse.cdt.build.core.settings.holder.symbols.2077051978" name="Symbols" superClass="org.eclipse.cdt.build.core.settings.holder.symbols" valueType="definedSymbols">
+                                    									
+                                    <listOptionValue builtIn="false" value="__RENAMING__=1"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="DATA_CACHE=32768"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="MEM_MODEL=1"/>
                                     									
                                     <listOptionValue builtIn="false" value="_ILP32=1"/>
                                     									
@@ -1783,7 +1789,7 @@
                                     									
                                     <listOptionValue builtIn="false" value="__USER_LABEL_PREFIX__"/>
                                     									
-                                    <listOptionValue builtIn="false" value="__VERSION__=&quot;XtensaTools-14.08"/>
+                                    <listOptionValue builtIn="false" value="__VERSION__=&quot;XtensaTools-14.11"/>
                                     									
                                     <listOptionValue builtIn="false" value="__WCHAR_MAX__=65535"/>
                                     									
@@ -1799,7 +1805,7 @@
                                     									
                                     <listOptionValue builtIn="false" value="__WINT_WIDTH__=32"/>
                                     									
-                                    <listOptionValue builtIn="false" value="__XCC_MINOR__=8"/>
+                                    <listOptionValue builtIn="false" value="__XCC_MINOR__=11"/>
                                     									
                                     <listOptionValue builtIn="false" value="__XCC__=14000"/>
                                     									
@@ -1809,7 +1815,7 @@
                                     									
                                     <listOptionValue builtIn="false" value="__XTENSA__=1"/>
                                     									
-                                    <listOptionValue builtIn="false" value="__XT_CLANG_MINOR__=8"/>
+                                    <listOptionValue builtIn="false" value="__XT_CLANG_MINOR__=11"/>
                                     									
                                     <listOptionValue builtIn="false" value="__XT_CLANG__=14000"/>
                                     									
@@ -1838,12 +1844,6 @@
                                     <listOptionValue builtIn="false" value="__private_extern__=extern"/>
                                     									
                                     <listOptionValue builtIn="false" value="__xtensa__=1"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="__RENAMING__=1"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="DATA_CACHE=32768"/>
-                                    									
-                                    <listOptionValue builtIn="false" value="MEM_MODEL=1"/>
                                     								
                                 </option>
                                 								
@@ -1898,8 +1898,6 @@
         <project id="hifi4_library.null.485868084" name="hifi4_library"/>
         	
     </storageModule>
-    	
-    <storageModule moduleId="refreshScope"/>
     	
     <storageModule moduleId="scannerConfiguration">
         		

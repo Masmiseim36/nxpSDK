@@ -1,0 +1,124 @@
+#
+# Copyright (c) 2008-2022 Cadence Design Systems, Inc.
+# 
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included
+# in all copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+# IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+# CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+# TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+# SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#
+
+# Top-level makefile for binary and source licensees to generate
+# example test program for BSAC decoder library.
+WARNING_AS_ERROR ?=1
+ifeq ($(WARNING_AS_ERROR), 1)
+WERROR_FLAG=-Werror
+endif
+
+XTCORE =
+
+ifeq "$(CPU)" "gcc"
+CXX = g++ $(XTCORE)
+CC = g++ $(XTCORE)
+AR = ar $(XTCORE)
+RM_R = rm -rf
+MKPATH = mkdir -p
+else
+CC = xt-xcc $(XTCORE)
+ISS = xt-run $(XTCORE)
+CONFIGDIR := $(shell $(ISS) $(XTCORE) --show-config=config)
+include $(CONFIGDIR)/misc/hostenv.mk
+endif
+
+ifeq ($(DEBUG), 1)
+OPT = -O0 -g
+else
+OPT = -O2
+endif
+
+ifeq "$(CPU)" "gcc"
+CFLAGS = $(OPT) -Wall  -D__XTENSA_HIFI2__ $(EXTRA_CFLAGS) -DWAV_HEADER -DCSTUB_HIFI2
+CFLAGS += -DCSTUB_HIFI2 -malign-double
+else
+CFLAGS = $(OPT) -Wall $(WERROR_FLAG)  -mlongcalls -D__XTENSA_HIFI2__ $(EXTRA_CFLAGS) -DWAV_HEADER 
+endif
+
+LDFLAGS = $(EXTRA_LDFLAGS)
+
+ifeq ($(PROFILE),1)
+  CFLAGS += -DPROFILE=1
+endif
+
+ifeq ($(WRITE_THROUGH),1)
+  LDFLAGS += \
+	-Wl,--defsym,_memmap_cacheattr_reset=0 \
+	-Wl,--defsym,_memmap_cacheattr_reset=_memmap_cacheattr_wt_trapnull
+endif
+
+INCLUDE = -I$(ROOTDIR)/include \
+          -I$(ROOTDIR)/test/include
+
+ROOTDIR = ../..
+OBJDIR = objs
+
+ifeq "$(CPU)" "gcc"
+OBJS_CSTUB = $(OBJDIR)/cstub-DC_330HiFi_syn.o
+endif
+
+OBJS = \
+	xa_aac_dec_error_handler.o \
+	xa_aac_dec_sample_testbench.o
+
+OBJS_OBJS = $(addprefix $(OBJDIR)/,$(OBJS))
+
+.PHONY: install all bsac clean
+
+all: bsac
+
+ifeq "$(CPU)" "gcc"
+BSACLIB = $(ROOTDIR)/lib/xgcc_bsac_dec.a
+bsac: xgcc_bsac_dec_test
+else
+BSACLIB = $(ROOTDIR)/lib/xa_bsac_dec.a
+bsac: xa_bsac_dec_test
+endif
+
+ifeq "$(CPU)" "gcc"
+$(OBJS_CSTUB) : $(ROOTDIR)/test/src/cstub-DC_330HiFi_syn.cpp
+	$(CC) -c $(OPT) $(INCLUDE) -o $(OBJS_CSTUB) $(ROOTDIR)/test/src/cstub-DC_330HiFi_syn.cpp 
+
+xgcc_bsac_dec_test: $(OBJDIR) $(OBJS_OBJS) $(BSACLIB) $(OBJS_CSTUB)
+	$(CC) -o $@ $(OBJS_CSTUB) $(OBJS_OBJS) $(BSACLIB) $(LDFLAGS)
+
+clean:
+	-$(RM) xgcc_bsac_dec_test
+	-$(RM_R) $(OBJDIR)
+	@echo "CPU=$(CPU)"
+else
+xa_bsac_dec_test: $(OBJDIR) $(OBJS_OBJS) $(BSACLIB)
+	$(CC) -o $@ $(OBJS_OBJS) $(BSACLIB) $(LDFLAGS)
+
+clean:
+	-$(RM) xa_bsac_dec_test
+	-$(RM_R) $(OBJDIR)
+	@echo "CPU=$(CPU)"
+endif
+
+$(OBJDIR):
+	-$(MKPATH) $(OBJDIR)
+
+$(OBJS_OBJS): $(OBJDIR)/%.o: $(ROOTDIR)/test/src/%.c
+	$(CC) -c $(CFLAGS) $(INCLUDE) -o $@ $<

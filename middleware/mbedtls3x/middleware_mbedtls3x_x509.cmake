@@ -9,6 +9,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/library/x509_crl.c
   ${CMAKE_CURRENT_LIST_DIR}/library/x509_crt.c
   ${CMAKE_CURRENT_LIST_DIR}/library/x509_csr.c
+  ${CMAKE_CURRENT_LIST_DIR}/library/x509write.c
   ${CMAKE_CURRENT_LIST_DIR}/library/x509write_crt.c
   ${CMAKE_CURRENT_LIST_DIR}/library/x509write_csr.c
   ${CMAKE_CURRENT_LIST_DIR}/library/pkcs7.c

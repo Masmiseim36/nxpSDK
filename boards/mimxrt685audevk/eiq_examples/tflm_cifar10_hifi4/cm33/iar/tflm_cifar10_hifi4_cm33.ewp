@@ -808,6 +808,8 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
+          <state>--image_input=$PROJ_DIR$/../../hifi4/binary/dsp_literal_release.bin,__dsp_literal_bin,__dsp_literal_section,4</state>
+          <state>--keep=__dsp_literal_bin</state>
           <state>--image_input=$PROJ_DIR$/../../hifi4/binary/dsp_text_release.bin,__dsp_text_bin,__dsp_text_section,4</state>
           <state>--keep=__dsp_text_bin</state>
           <state>--image_input=$PROJ_DIR$/../../hifi4/binary/dsp_data_release.bin,__dsp_data_bin,__dsp_data_section,4</state>
@@ -1895,6 +1897,8 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
+          <state>--image_input=$PROJ_DIR$/../../hifi4/binary/dsp_literal_release.bin,__dsp_literal_bin,__dsp_literal_section,4</state>
+          <state>--keep=__dsp_literal_bin</state>
           <state>--image_input=$PROJ_DIR$/../../hifi4/binary/dsp_text_release.bin,__dsp_text_bin,__dsp_text_section,4</state>
           <state>--keep=__dsp_text_bin</state>
           <state>--image_input=$PROJ_DIR$/../../hifi4/binary/dsp_data_release.bin,__dsp_data_bin,__dsp_data_section,4</state>
@@ -2179,6 +2183,9 @@
   <group>
     <name>dsp_binary</name>
     <file>
+      <name>$PROJ_DIR$/../../hifi4/binary/dsp_literal_release.bin</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../hifi4/binary/dsp_text_release.bin</name>
     </file>
     <file>
@@ -2236,7 +2243,7 @@
   <group>
     <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
   <group>
@@ -2408,6 +2415,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_assert.h</name>
     </file>
   </group>
   <group>

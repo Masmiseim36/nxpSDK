@@ -41,7 +41,7 @@
 
 #define NOTIF_EVT_RPMSG_RECEIVED_DATA (1 << 0)
 #define NOTIF_EVT                     (NOTIF_EVT_RPMSG_RECEIVED_DATA)
-#define DSP_THREAD_STACK_SIZE (10 * 1024)
+#define DSP_THREAD_STACK_SIZE (12 * 1024)
 #define DSP_THREAD_PRIORITY   (XOS_MAX_PRIORITY - 3)
 
 #define AUDIO_BUFFER_SIZE (32 * 1024)
@@ -50,16 +50,13 @@
  * Prototypes
  ******************************************************************************/
 /* SRTM prototypes */
-int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_name);
-int srtm_encoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int enc_name);
+int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams);
+int srtm_encoder(dsp_handle_t *dsp, unsigned int *pCmdParams);
 int srtm_src(dsp_handle_t *dsp, unsigned int *pCmdParams);
 int srtm_pcm_gain(dsp_handle_t *dsp, unsigned int *pCmdParams);
 int srtm_file_dec_create(dsp_handle_t *dsp, srtm_audio_component_t type);
 #ifdef MULTICHANNEL
 int srtm_file_ren_create(dsp_handle_t *dsp, uint32_t *pCmdParams);
-#endif
-#if XA_CLIENT_PROXY
-int client_proxy_filter(dsp_handle_t *dsp, int filterOn);
 #endif
 
 /*******************************************************************************
@@ -135,27 +132,27 @@ static int handleMSG_GENERAL(dsp_handle_t *dsp, srtm_message *msg)
         /* Return SDK key component versions to host*/
         case SRTM_Command_ECHO:
             // 0 Audio Framework version high 16 bits major, lower 16 bits minor
-            msg->param[0] = ((2) << 16 | (0));
+            msg->param[0] = ((3) << 16 | (5));
             // 1 Audio Framework API version high 16 bits major, lower 16 bits minor
-            msg->param[1] = ((1) << 16 | (3));
+            msg->param[1] = ((3) << 16 | (2));
             // 2 NatureDSP Lib version high 16 bits major, lower 16 bits minor
-            msg->param[2] = ((4) << 16 | (0));
+            msg->param[2] = ((4) << 16 | (1));
             // 3 NatureDSP Lib API version high 16 bits major, lower 16 bits minor
-            msg->param[3] = ((4) << 16 | (10));
+            msg->param[3] = ((4) << 16 | (0));
             // 4 MP3 Decoder version high 16 bits major, lower 16 bits minor
-            msg->param[4] = ((3) << 16 | (18));
+            msg->param[4] = ((3) << 16 | (28));
             // 5 AAC Decoder version high 16 bits major, lower 16 bits minor
-            msg->param[5] = ((3) << 16 | (7));
+            msg->param[5] = ((3) << 16 | (16));
 #if XA_VORBIS_DECODER
             // 6 VORBIS Decoder version high 16 bits major, lower 16 bits minor
-            msg->param[6] = ((1) << 16 | (12));
+            msg->param[6] = ((1) << 16 | (15));
 #endif
             // 7 OPUS Codec version high 16 bits major, lower 16 bits minor
-            msg->param[7] = ((1) << 16 | (8));
+            msg->param[7] = ((1) << 16 | (24));
             // 8 SBC Decoder version high 16 bits major, lower 16 bits minor
-            msg->param[8] = ((1) << 16 | (4));
+            msg->param[8] = ((1) << 16 | (6));
             // 9 SBC Encoder version high 16 bits major, lower 16 bits minor
-            msg->param[9] = ((1) << 16 | (5));
+            msg->param[9] = ((1) << 16 | (7));
             break;
 
         /* Unknown message. */
@@ -176,151 +173,39 @@ static int handleMSG_AUDIO(dsp_handle_t *dsp, srtm_message *msg)
 
     switch (msg->head.command)
     {
-        case SRTM_Command_MP3:
-            /* Param 0 MP3 input buffer address*/
-            /* Param 1 MP3 input buffer size*/
-            /* Param 2 PCM output buffer address*/
-            /* Param 3 PCM output buffer size*/
-            /* Param 4 decode output location */
-            /* Param 5 return parameter, actual read size */
-            /* Param 6 return parameter, actual write size */
-            DSP_PRINTF(
-                "[DSP_Main] MP3 input buffer addr 0x%X, buffer size %d, output buffer addr 0x%X, output buffer size "
-                "%d\r\n",
-                msg->param[0], msg->param[1], msg->param[2], msg->param[3]);
-            if ((msg->param[0] == 0) || (msg->param[1] == 0) || (msg->param[2] == 0) || (msg->param[3] == 0))
+        case SRTM_Command_Decode:
+        	/* Param 0 Decoder type */
+			/* Param 1 Buffer address with encoded data */
+			/* Param 2 Encoded data size */
+            DSP_PRINTF("[DSP_Main] Input buffer addr: 0x%X, buffer size: %d \r\n", msg->param[1], msg->param[2]);
+            if ((msg->param[0] >= SRTM_Decoder_MAX) || (msg->param[1] == 0) || (msg->param[2] == 0))
             {
                 msg->head.type = SRTM_MessageTypeNotification;
                 msg->error     = SRTM_Status_InvalidParameter;
                 break;
             }
-            msg->error = srtm_decoder(dsp, &msg->param[0], SRTM_Command_MP3);
+            msg->error = srtm_decoder(dsp, &msg->param[0]);
             break;
 
-        case SRTM_Command_OPUS_DEC:
-            /* Param 0 OPUS input buffer address*/
-            /* Param 1 OPUS input buffer size*/
-            /* Param 2 PCM output buffer address*/
-            /* Param 3 PCM output buffer size*/
-            /* Param 4 decode output location */
-            /* Param 5 return parameter, actual read size */
-            /* Param 6 return parameter, actual write size */
+        case SRTM_Command_Encode:
+            /* Param 0 Encoder type */
+            /* Param 1 Buffer address with PCM data */
+            /* Param 2 PCM data size */
+            /* Param 3 Buffer address to store encoded data */
+            /* Param 4 Buffer size to store encoded data */
+            /* Param 5 Return parameter, actual read size */
+            /* Param 6 Return parameter, actual write size */
             DSP_PRINTF(
-                "[DSP_Main] OPUS input buffer addr 0x%X, buffer size %d, output buffer addr 0x%X, output buffer size "
-                "%d\r\n",
-                msg->param[0], msg->param[1], msg->param[2], msg->param[3]);
-            if ((msg->param[0] == 0) || (msg->param[1] == 0) || (msg->param[2] == 0) || (msg->param[3] == 0))
+                "[DSP_Main] PCM input buffer addr: 0x%X, buffer size: %d, output buffer addr: 0x%X, output buffer "
+                "size: %d\r\n",
+                msg->param[1], msg->param[2], msg->param[3], msg->param[4]);
+            if ((msg->param[0] >= SRTM_Encoder_MAX) || (msg->param[1] == 0) || (msg->param[2] == 0) || (msg->param[3] == 0) || (msg->param[4] == 0))
             {
                 msg->head.type = SRTM_MessageTypeNotification;
                 msg->error     = SRTM_Status_InvalidParameter;
                 break;
             }
-            msg->error = srtm_decoder(dsp, &msg->param[0], SRTM_Command_OPUS_DEC);
-            break;
-
-        case SRTM_Command_OPUS_ENC:
-            /* Param 0 PCM input buffer address*/
-            /* Param 1 PCM input buffer size*/
-            /* Param 2 OPUS output buffer address*/
-            /* Param 3 OPUS output buffer size*/
-            /* Param 4 return parameter, actual read size */
-            /* Param 5 return parameter, actual write size */
-            DSP_PRINTF(
-                "[DSP_Main] PCM input buffer addr 0x%X, buffer size %d, OPUS output buffer addr 0x%X, output buffer "
-                "size %\r\n",
-                msg->param[0], msg->param[1], msg->param[2], msg->param[3]);
-            if ((msg->param[0] == 0) || (msg->param[1] == 0) || (msg->param[2] == 0) || (msg->param[3] == 0))
-            {
-                msg->head.type = SRTM_MessageTypeNotification;
-                msg->error     = SRTM_Status_InvalidParameter;
-                break;
-            }
-            msg->error = srtm_encoder(dsp, &msg->param[0], SRTM_Command_OPUS_ENC);
-            break;
-
-        case SRTM_Command_SBC_DEC:
-            /* Param 0 SBC input buffer address*/
-            /* Param 1 SBC input buffer size*/
-            /* Param 2 PCM output buffer address*/
-            /* Param 3 PCM output buffer size*/
-            /* Param 4 decode output location */
-            /* Param 5 return parameter, actual read size */
-            /* Param 6 return parameter, actual write size */
-            DSP_PRINTF(
-                "[DSP_Main] SBC input buffer addr 0x%X, buffer size %d, output buffer addr 0x%X, output buffer size "
-                "%d\r\n",
-                msg->param[0], msg->param[1], msg->param[2], msg->param[3]);
-            if ((msg->param[0] == 0) || (msg->param[1] == 0) || (msg->param[2] == 0) || (msg->param[3] == 0))
-            {
-                msg->head.type = SRTM_MessageTypeNotification;
-                msg->error     = SRTM_Status_InvalidParameter;
-                break;
-            }
-            msg->error = srtm_decoder(dsp, &msg->param[0], SRTM_Command_SBC_DEC);
-            break;
-
-        case SRTM_Command_SBC_ENC:
-            /* Param 0 PCM input buffer address*/
-            /* Param 1 PCM input buffer size*/
-            /* Param 2 SBC output buffer address*/
-            /* Param 3 SBC output buffer size*/
-            /* Param 4 return parameter, actual read size */
-            /* Param 5 return parameter, actual write size */
-            DSP_PRINTF(
-                "[DSP_Main] PCM input buffer addr 0x%X, buffer size %d, SBC output buffer addr 0x%X, output buffer "
-                "size %d\r\n",
-                msg->param[0], msg->param[1], msg->param[2], msg->param[3]);
-            if ((msg->param[0] == 0) || (msg->param[1] == 0) || (msg->param[2] == 0) || (msg->param[3] == 0))
-            {
-                msg->head.type = SRTM_MessageTypeNotification;
-                msg->error     = SRTM_Status_InvalidParameter;
-                break;
-            }
-            msg->error = srtm_encoder(dsp, &msg->param[0], SRTM_Command_SBC_ENC);
-            break;
-
-        case SRTM_Command_AAC:
-            /* Param 0 AAC input buffer address*/
-            /* Param 1 AAC input buffer size*/
-            /* Param 2 PCM output buffer address*/
-            /* Param 3 PCM output buffer size*/
-            /* Param 4 decode output location */
-            /* Param 5 return parameter, actual read size */
-            /* Param 6 return parameter, actual write size */
-            DSP_PRINTF(
-                "[DSP_Main] AAC input buffer addr 0x%X, buffer size %d, output buffer addr 0x%X, output buffer size "
-                "%d\r\n",
-                msg->param[0], msg->param[1], msg->param[2], msg->param[3]);
-            if ((msg->param[0] == 0) || (msg->param[1] == 0) || (msg->param[2] == 0) || (msg->param[3] == 0))
-            {
-                msg->head.type = SRTM_MessageTypeNotification;
-                msg->error     = SRTM_Status_InvalidParameter;
-                break;
-            }
-            msg->error = srtm_decoder(dsp, &msg->param[0], SRTM_Command_AAC);
-            break;
-
-        case SRTM_Command_VORBIS:
-            /* Param 0 VORBIS input buffer address */
-            /* Param 1 VORBIS input buffer size */
-            /* Param 2 PCM output buffer address */
-            /* Param 3 PCM output buffer size */
-            /* Param 4 decode output location */
-            /* Param 5 return parameter, actual read size */
-            /* Param 6 return parameter, actual write size */
-            /* Param 7 VORBIS input buffer is raw (1) or OGG encapsulated (0) */
-            DSP_PRINTF(
-                "[DSP_Main] VORBIS input buffer addr 0x%X, buffer size %d, "
-                "output buffer addr 0x%X, output buffer size %d, "
-                "output_renderer %d, raw_input %d\r\n",
-                msg->param[0], msg->param[1], msg->param[2], msg->param[3], msg->param[4], msg->param[7]);
-            if ((msg->param[0] == 0) || (msg->param[1] == 0) || (msg->param[2] == 0) || (msg->param[3] == 0))
-            {
-                msg->head.type = SRTM_MessageTypeNotification;
-                msg->error     = SRTM_Status_InvalidParameter;
-                break;
-            }
-            msg->error = srtm_decoder(dsp, &msg->param[0], SRTM_Command_VORBIS);
+            msg->error = srtm_encoder(dsp, &msg->param[0]);
             break;
 
         case SRTM_Command_SRC:
@@ -405,23 +290,6 @@ static int handleMSG_AUDIO(dsp_handle_t *dsp, srtm_message *msg)
                 msg->head.type = SRTM_MessageTypeNotification;
                 msg->error     = SRTM_Status_InvalidParameter;
             }
-#ifdef MULTICHANNEL
-#ifdef EAP32_PROC
-            if (msg->param[3] != DSP_COMPONENT_NONE)
-            {
-                DSP_PRINTF("Cannot play other than 96kHz PCM file with EAP32 enabled. Please disable EAP first.\r\n");
-                msg->head.type = SRTM_MessageTypeNotification;
-                msg->error     = SRTM_Status_InvalidParameter;
-            }
-#elif (defined(EAP_PROC))
-            if (msg->param[3] == DSP_COMPONENT_NONE && msg->param[4] == 2 && msg->param[5] == 96000)
-            {
-                DSP_PRINTF("Cannot play 96kHz PCM file with EAP(16) enabled. Please enable EAP32_PROC first.\r\n");
-                msg->head.type = SRTM_MessageTypeNotification;
-                msg->error     = SRTM_Status_InvalidParameter;
-            }
-#endif
-#endif
             /* Check to see if file already playing */
             else if (dsp->file_playing)
             {
@@ -501,12 +369,6 @@ static int handleMSG_AUDIO(dsp_handle_t *dsp, srtm_message *msg)
                 xos_event_set(&dsp->pipeline_event, DSP_EVENT_STOP);
             }
             break;
-
-#if XA_CLIENT_PROXY
-        case SRTM_Command_FilterCfg:
-            msg->error = client_proxy_filter(dsp, msg->param[0]);
-            break;
-#endif
 
         /* Unknown message. */
         default:
@@ -628,13 +490,6 @@ int main(void)
     BOARD_InitBootPins();
     BOARD_InitDebugConsole();
     BOARD_InitClock();
-
-#ifdef XA_CLIENT_PROXY
-    /* Dummy I2S init for EAP */
-    i2s_config_t s_TxConfig;
-    I2S_TxGetDefaultConfig(&s_TxConfig);
-    I2S_TxInit(I2S1, &s_TxConfig);
-#endif
 
     /* Iniitalize DMA1 which will be shared by capturer and renderer. */
     DMA_Init(DMA1);

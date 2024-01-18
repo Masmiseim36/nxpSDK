@@ -14,7 +14,11 @@
               <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_hifi4</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/aacplus_dec/hifi4/include/aac_dec</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/asrc_src_pp/hifi4/include/src_pp</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/bsac/hifi4/include/aac_dec</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/dabplus/hifi4/include/aac_dec</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/drm/hifi4/include/drm_dec</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/g711/hifi4/include/g711_codec</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/g722/hifi4/include/g722_codec</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/mp3_dec/hifi4/include/mp3_dec</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/opus/hifi4/include/opus_codec</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/opus/hifi4/include/ogg_lib</ListEntry>
@@ -45,9 +49,7 @@
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/vit_pre_proc</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/voice_seeker</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/test_inp</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/utilities</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/EAP/Example_Application/CONFIG_HEADER</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/EAP/EAP_Includes</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/utilities/shell</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../CMSIS/Core/Include</ListEntry>
             </value>
@@ -60,27 +62,12 @@
               <ListEntry key="NDEBUG" value=""/>
               <ListEntry key="XA_CAPTURER" value="1"/>
               <ListEntry key="XA_PCM_GAIN" value="1"/>
-              <ListEntry key="XA_CLIENT_PROXY" value="1"/>
               <ListEntry key="XA_RENDERER" value="1"/>
               <ListEntry key="SDK_DEBUGCONSOLE" value="1"/>
               <ListEntry key="XOS_CLOCK_FREQ" value="594000000"/>
               <ListEntry key="XF_CORE_ID" value="0"/>
               <ListEntry key="XF_CFG_CORES_NUM" value="1"/>
-              <ListEntry key="ALGORITHM_VC" value="1"/>
-              <ListEntry key="ALGORITHM_CS" value="1"/>
-              <ListEntry key="ALGORITHM_DBE" value="1"/>
-              <ListEntry key="ALGORITHM_EQNB" value="1"/>
-              <ListEntry key="ALGORITHM_LM" value="1"/>
-              <ListEntry key="ALGORITHM_TE" value="1"/>
-              <ListEntry key="ALGORITHM_TG" value="1"/>
-              <ListEntry key="ALGORITHM_AVL" value="1"/>
-              <ListEntry key="ALGORITHM_PSA" value="1"/>
-              <ListEntry key="ALGORITHM_PR_EQNB" value="1"/>
-              <ListEntry key="ALGORITHM_LIMP" value="1"/>
-              <ListEntry key="ALGORITHM_LIMR" value="1"/>
-              <ListEntry key="ALGORITHM_XO" value="1"/>
               <ListEntry key="PLATFORM_ID" value="LVM_IMXRT600"/>
-              <ListEntry key="EAP_PROC" value=""/>
               <ListEntry key="HAVE_XOS" value=""/>
               <ListEntry key="HIFI_ONLY_XAF" value=""/>
               <ListEntry key="FIO_LOCAL_FS" value=""/>
@@ -155,10 +142,15 @@
           <StringListMapEntry>
             <key>LinkerAdditionalOptions</key>
             <value inheritance="append">
-              <ListEntry>-Wl,--start-group&#13;
+              <ListEntry>-Wl,--orphan-handling=place&#13;
+-Wl,--start-group&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/codecs/aacplus_dec/hifi4/lib/xa_aacplus_v2_loas_dec.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/codecs/asrc_src_pp/hifi4/lib/xa_asrc_src_pp.a&#13;
+${xt_project_loc}/../../../../../../middleware/dsp/codecs/bsac/hifi4/lib/xa_bsac_dec.a&#13;
+${xt_project_loc}/../../../../../../middleware/dsp/codecs/dabplus/hifi4/lib/xa_dabplus_dec.a&#13;
+${xt_project_loc}/../../../../../../middleware/dsp/codecs/drm/hifi4/lib/xa_drm_dec.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/codecs/g711/hifi4/lib/xa_g711_codec.a&#13;
+${xt_project_loc}/../../../../../../middleware/dsp/codecs/g722/hifi4/lib/xa_g722_codec.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/codecs/mp3_dec/hifi4/lib/xa_mp3_dec.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/codecs/opus/hifi4/lib/xa_opus_codec.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/codecs/opus/hifi4/lib/xa_opus_dec.a&#13;
@@ -167,7 +159,6 @@ ${xt_project_loc}/../../../../../../middleware/dsp/codecs/sbc_dec/hifi4/lib/xa_s
 ${xt_project_loc}/../../../../../../middleware/dsp/codecs/sbc_enc/hifi4/lib/xa_sbc_enc.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/codecs/vorbis_dec/hifi4/lib/xa_vorbis_dec.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/nn/nnlib/lib/hifi4/libxa_nnlib.a&#13;
-${xt_project_loc}/../../../../../../middleware/EAP/EAP_Library/libEAP16_3_0_13_FP1_RT600.a&#13;
 -Wl,--end-group&#13;
 </ListEntry>
             </value>

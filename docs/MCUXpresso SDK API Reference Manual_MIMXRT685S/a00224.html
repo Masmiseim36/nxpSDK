@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: I2S: I2S Driver</title>
+<title>MCUXpresso SDK API Reference Manual: I2C: Inter-Integrated Circuit Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -101,357 +101,236 @@ $(document).ready(function(){initNavTree('a00224.html','');});
   <div class="summary">
 <a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">I2S: I2S Driver</div>  </div>
+<div class="title">I2C: Inter-Integrated Circuit Driver</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides the peripheral driver for the I2S function of FLEXCOMM module of MCUXpresso SDK devices.<br/>
- <br/>
-The I2S module is used to transmit or receive digital audio data. Only transmit or receive is enabled at one time in one module. <br/>
-Driver currently supports one (primary) channel pair per one I2S enabled FLEXCOMM module only. <br/>
-</p>
-<h1><a class="anchor" id="I2SInit"></a>
-I2S Driver Initialization and Configuration</h1>
-<p><a class="el" href="a00029.html#ga5d68b2f69b625a753d498dab6758c5b9" title="Initializes the FLEXCOMM peripheral for I2S transmit functionality. ">I2S_TxInit()</a> and <a class="el" href="a00029.html#gaa71e9b55c275d5469c1e3f723dc55213" title="Initializes the FLEXCOMM peripheral for I2S receive functionality. ">I2S_RxInit()</a> functions ungate the clock for the FLEXCOMM module, assign I2S function to FLEXCOMM module and configure audio data format and other I2S operational settings. <a class="el" href="a00029.html#ga5d68b2f69b625a753d498dab6758c5b9" title="Initializes the FLEXCOMM peripheral for I2S transmit functionality. ">I2S_TxInit()</a> is used when I2S should transmit data, <a class="el" href="a00029.html#gaa71e9b55c275d5469c1e3f723dc55213" title="Initializes the FLEXCOMM peripheral for I2S receive functionality. ">I2S_RxInit()</a> when it should receive data.</p>
-<p><a class="el" href="a00029.html#ga905cb886175d4a1f9ac2fbf8d2722cf6" title="Sets the I2S Tx configuration structure to default values. ">I2S_TxGetDefaultConfig()</a> and <a class="el" href="a00029.html#ga8356de62fea66f67a9803ee89a78805a" title="Sets the I2S Rx configuration structure to default values. ">I2S_RxGetDefaultConfig()</a> functions can be used to set the module configuration structure with default values for transmit and receive function, respectively.</p>
-<p><a class="el" href="a00029.html#ga68e9243ae7345a144668c7e04f1f52ac" title="De-initializes the I2S peripheral. ">I2S_Deinit()</a> function resets the FLEXCOMM module.</p>
-<p><a class="el" href="a00029.html#ga0e630bdd0adb5a39b52e374ede7bc07f" title="Initializes handle for transfer of audio data. ">I2S_TxTransferCreateHandle()</a> function creates transactional handle for transmit in interrupt mode.</p>
-<p><a class="el" href="a00029.html#gabd8c54c9689fd89024c83bb883693c16" title="Initializes handle for reception of audio data. ">I2S_RxTransferCreateHandle()</a> function creates transactional handle for receive in interrupt mode.</p>
-<p><a class="el" href="a00030.html#gab367abb21d0180a8327c3408efa06bd8" title="Initializes handle for transfer of audio data. ">I2S_TxTransferCreateHandleDMA()</a> function creates transactional handle for transmit in DMA mode.</p>
-<p><a class="el" href="a00030.html#gabf7c9bdafbd7e7aac4b265dace33f9e6" title="Initializes handle for reception of audio data. ">I2S_RxTransferCreateHandleDMA()</a> function creates transactional handle for receive in DMA mode.</p>
-<h1><a class="anchor" id="I2STransfer"></a>
-I2S Transmit Data</h1>
-<p><a class="el" href="a00029.html#ga8e341c9ce48e5be03e120ea332758048" title="Begins or queue sending of the given data. ">I2S_TxTransferNonBlocking()</a> function is used to add data buffer to transmit in interrupt mode. It also begins transmission if not transmitting yet.</p>
-<p><a class="el" href="a00029.html#ga454cba72bec3ebeecf865570ce6ed900" title="Begins or queue reception of data into given buffer. ">I2S_RxTransferNonBlocking()</a> function is used to add data buffer to receive data into in interrupt mode. It also begins reception if not receiving yet.</p>
-<p><a class="el" href="a00030.html#ga7f0ee69bcc210dc1519a99e2d9403e67" title="Begins or queue sending of the given data. ">I2S_TxTransferSendDMA()</a> function is used to add data buffer to transmit in DMA mode. It also begins transmission if not transmitting yet.</p>
-<p><a class="el" href="a00030.html#gae8c0cacf997b6d4642c6c4e26dccf5aa" title="Begins or queue reception of data into given buffer. ">I2S_RxTransferReceiveDMA()</a> function is used to add data buffer to receive data into in DMA mode. It also begins reception if not receiving yet.</p>
-<p>The transfer of data will be stopped automatically when all data buffers queued using the above functions will be processed and no new data buffer is enqueued meanwhile. If the above functions are not called frequently enough, I2S stop followed by restart may keep occurring resulting in drops audio stream.</p>
-<h1><a class="anchor" id="I2SInterrupt"></a>
-I2S Interrupt related functions</h1>
-<p><a class="el" href="a00029.html#ga435263725c056eccaa82eb1947e162aa" title="Enables I2S FIFO interrupts. ">I2S_EnableInterrupts()</a> function is used to enable interrupts in FIFO interrupt register. Regular use cases do not require this function to be called from application code.</p>
-<p><a class="el" href="a00029.html#gaa6f8ed52f3cd5c63b3a3716a70c77223" title="Disables I2S FIFO interrupts. ">I2S_DisableInterrupts()</a> function is used to disable interrupts in FIFO interrupt register. Regular use cases do not require this function to be called from application code.</p>
-<p><a class="el" href="a00029.html#ga2d96a8f63e454de7225a98541b6461b9" title="Returns the set of currently enabled I2S FIFO interrupts. ">I2S_GetEnabledInterrupts()</a> function returns interrupts enabled in FIFO interrupt register. Regular use cases do not require this function to be called from application code.</p>
-<p><a class="el" href="a00029.html#ga2423f95dc2c00bce6a9de6d868d1fde2" title="Invoked from interrupt handler when transmit FIFO level decreases. ">I2S_TxHandleIRQ()</a> and <a class="el" href="a00029.html#gaeff61f8cbd780c881c593ad059f98338" title="Invoked from interrupt handler when receive FIFO level decreases. ">I2S_RxHandleIRQ()</a> functions are called from ISR which is invoked when actual FIFO level decreases to configured watermark value.</p>
-<p><a class="el" href="a00030.html#gac9f82a576dc3a2d10df9cade5ce57a42" title="Invoked from DMA interrupt handler. ">I2S_DMACallback()</a> function is called from ISR which is invoked when DMA transfer (actual descriptor) finishes.</p>
-<h1><a class="anchor" id="I2SOther"></a>
-I2S Other functions</h1>
-<p><a class="el" href="a00029.html#gac109aadc23d6f31e6f8420fa3f4018fd" title="Enables I2S operation. ">I2S_Enable()</a> function enables I2S function in FLEXCOMM module. Regular use cases do not require this function to be called from application code.</p>
-<p><a class="el" href="a00029.html#ga4b393781ae83a07d4d3e99972429cfa1" title="Disables I2S operation. ">I2S_Disable()</a> function disables I2S function in FLEXCOMM module. Regular use cases do not require this function to be called from application code.</p>
-<p><a class="el" href="a00029.html#gae3d210a830859e93103931b4baf83586" title="Returns number of buffer underruns or overruns. ">I2S_TransferGetErrorCount()</a> function returns the number of FIFO underruns or overruns in interrupt mode.</p>
-<p><a class="el" href="a00029.html#ga14ef749f4300fe7b1fd38277f0ef167f" title="Returns number of bytes transferred so far. ">I2S_TransferGetCount()</a> function returns the number of bytes transferred in interrupt mode.</p>
-<p><a class="el" href="a00029.html#ga25659519f70757bf2db3831f7e807bd8" title="Aborts sending of data. ">I2S_TxTransferAbort()</a> function aborts trasmit operation in interrupt mode.</p>
-<p><a class="el" href="a00029.html#ga32eb018b43745a695ef26cec1ff73a73" title="Aborts receiving of data. ">I2S_RxTransferAbort()</a> function aborts receive operation in interrupt mode.</p>
-<p><a class="el" href="a00030.html#ga59beaf115701e7b97ffd517a83e6b611" title="Aborts transfer of data. ">I2S_TransferAbortDMA()</a> function aborts transmit or receive operation in DMA mode.</p>
-<h1>I2S Functional limitations</h1>
-<p>I2S can not to accurately determine when the data is sent to the end. Since program commands cannot quickly disable I2S, there will always be more clock exposure. If someone want to get accurate data, can use <a class="el" href="a00030.html#ga59beaf115701e7b97ffd517a83e6b611" title="Aborts transfer of data. ">I2S_TransferAbortDMA()</a> api in TxCallback() to terminate sending data prematurely and ensure the accuracy of the data with delay function.</p>
-<h1><a class="anchor" id="I2SFormat"></a>
-I2S Data formats</h1>
-<h2><a class="anchor" id="I2SFormatDMA"></a>
-DMA mode</h2>
-<p>Length of buffer for transmit or receive has to be multiply of 4 bytes. Buffer address has to be aligned to 4-bytes. Data are put into or taken from FIFO unaltered in DMA mode so buffer has to be prepared according to following information. If oneChannel is enabled, then the buffer should contain valid data only, that is to say, audio data should be put continuously in the buffer Take 8 bit data as example: </p>
-<p><code>LSB</code>   </p>
-<p><code>L07</code>  </p>
-<p><code>L06</code>  </p>
-<p><code>L05</code>  </p>
-<p><code>L04</code>  </p>
-<p><code>L03</code>  </p>
-<p><code>L02</code>  </p>
-<p><code>L01</code>  </p>
-<p><code>L00</code>  </p>
-<p><code>L07</code>  </p>
-<p><code>L06</code>  </p>
-<p><code>L05</code>  </p>
-<p><code>L04</code>  </p>
-<p><code>L03</code>  </p>
-<p><code>L02</code>  </p>
-<p><code>L01</code>  </p>
-<p><code>L00</code>  </p>
-<p><code>L07</code>  </p>
-<p><code>L06</code>  </p>
-<p><code>L05</code>  </p>
-<p><code>L04</code>  </p>
-<p><code>L03</code>  </p>
-<p><code>L02</code>  </p>
-<p><code>L01</code>  </p>
-<p><code>L00</code>  </p>
-<p><code>L07</code>  </p>
-<p><code>L06</code>  </p>
-<p><code>L05</code>  </p>
-<p><code>L04</code>  </p>
-<p><code>L03</code>  </p>
-<p><code>L02</code>  </p>
-<p><code>L01</code>  </p>
-<p><code>L00</code>   </p>
-<p>If <a class="el" href="a00029.html#addfc45dd466680d9a2074dd5c69dc4e5" title="Data length (4 - 32) ">i2s_config_t.dataLength</a> (channel bit width) is between 4 and 16, every word in buffer should contain data for left and right channels.</p>
-<table class="doxtable">
-<tr>
-<th><code>MSB</code>  </th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th><code>LSB</code>   </th></tr>
-<tr>
-<td><code>R15</code>  </td><td><code>R14</code>  </td><td><code>R13</code>  </td><td><code>R12</code>  </td><td><code>R11</code>  </td><td><code>R10</code>  </td><td><code>R09</code>  </td><td><code>R08</code>  </td><td><code>R07</code>  </td><td><code>R06</code>  </td><td><code>R05</code>  </td><td><code>R04</code>  </td><td><code>R03</code>  </td><td><code>R02</code>  </td><td><code>R01</code>  </td><td><code>R00</code>  </td><td><code>L15</code>  </td><td><code>L14</code>  </td><td><code>L13</code>  </td><td><code>L12</code>  </td><td><code>L11</code>  </td><td><code>L10</code>  </td><td><code>L09</code>  </td><td><code>L08</code>  </td><td><code>L07</code>  </td><td><code>L06</code>  </td><td><code>L05</code>  </td><td><code>L04</code>  </td><td><code>L03</code>  </td><td><code>L02</code>  </td><td><code>L01</code>  </td><td><code>L00</code>   </td></tr>
-</table>
-<p>Rnn - right channel bit nn <br/>
-Lnn - left channel bit nn <br/>
- Note that for example if <a class="el" href="a00029.html#addfc45dd466680d9a2074dd5c69dc4e5" title="Data length (4 - 32) ">i2s_config_t.dataLength</a> = 7, bits on positions R07-R15 and L07-L15 are ignored (buffer "wastes space"). <br/>
-</p>
-<p>If <a class="el" href="a00029.html#addfc45dd466680d9a2074dd5c69dc4e5" title="Data length (4 - 32) ">i2s_config_t.dataLength</a> (channel bit width) is between 17 and 24 and <a class="el" href="a00029.html#a05e651099ce845bcba1144d2f3e8b6ca" title="Packing format for 48-bit data (false - 24 bit values, true - alternating 32-bit and 16-bit values) ...">i2s_config_t.pack48</a> = false:</p>
-<p>Even words (counting from zero): </p>
-<table class="doxtable">
-<tr>
-<th><code>MSB</code>  </th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th><code>LSB</code>   </th></tr>
-<tr>
-<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><code>L23</code>  </td><td><code>L22</code>  </td><td><code>L21</code>  </td><td><code>L20</code>  </td><td><code>L19</code>  </td><td><code>L18</code>  </td><td><code>L17</code>  </td><td><code>L16</code>  </td><td><code>L15</code>  </td><td><code>L14</code>  </td><td><code>L13</code>  </td><td><code>L12</code>  </td><td><code>L11</code>  </td><td><code>L10</code>  </td><td><code>L09</code>  </td><td><code>L08</code>  </td><td><code>L07</code>  </td><td><code>L06</code>  </td><td><code>L05</code>  </td><td><code>L04</code>  </td><td><code>L03</code>  </td><td><code>L02</code>  </td><td><code>L01</code>  </td><td><code>L00</code>   </td></tr>
-</table>
-<p>Odd words (counting from zero): </p>
-<table class="doxtable">
-<tr>
-<th><code>MSB</code>  </th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th><code>LSB</code>   </th></tr>
-<tr>
-<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><code>R23</code>  </td><td><code>R22</code>  </td><td><code>R21</code>  </td><td><code>R20</code>  </td><td><code>R19</code>  </td><td><code>R18</code>  </td><td><code>R17</code>  </td><td><code>R16</code>  </td><td><code>R15</code>  </td><td><code>R14</code>  </td><td><code>R13</code>  </td><td><code>R12</code>  </td><td><code>R11</code>  </td><td><code>R10</code>  </td><td><code>R09</code>  </td><td><code>R08</code>  </td><td><code>R07</code>  </td><td><code>R06</code>  </td><td><code>R05</code>  </td><td><code>R04</code>  </td><td><code>R03</code>  </td><td><code>R02</code>  </td><td><code>R01</code>  </td><td><code>R00</code>   </td></tr>
-</table>
-<p>If <a class="el" href="a00029.html#addfc45dd466680d9a2074dd5c69dc4e5" title="Data length (4 - 32) ">i2s_config_t.dataLength</a> (channel bit width) is between 17 and 24 and <a class="el" href="a00029.html#a05e651099ce845bcba1144d2f3e8b6ca" title="Packing format for 48-bit data (false - 24 bit values, true - alternating 32-bit and 16-bit values) ...">i2s_config_t.pack48</a> = true:</p>
-<p>Even words (counting from zero): </p>
-<table class="doxtable">
-<tr>
-<th><code>MSB</code>  </th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th><code>LSB</code>   </th></tr>
-<tr>
-<td><code>R07</code>  </td><td><code>R06</code>  </td><td><code>R05</code>  </td><td><code>R04</code>  </td><td><code>R03</code>  </td><td><code>R02</code>  </td><td><code>R01</code>  </td><td><code>R00</code>  </td><td><code>L23</code>  </td><td><code>L22</code>  </td><td><code>L21</code>  </td><td><code>L20</code>  </td><td><code>L19</code>  </td><td><code>L18</code>  </td><td><code>L17</code>  </td><td><code>L16</code>  </td><td><code>L15</code>  </td><td><code>L14</code>  </td><td><code>L13</code>  </td><td><code>L12</code>  </td><td><code>L11</code>  </td><td><code>L10</code>  </td><td><code>L09</code>  </td><td><code>L08</code>  </td><td><code>L07</code>  </td><td><code>L06</code>  </td><td><code>L05</code>  </td><td><code>L04</code>  </td><td><code>L03</code>  </td><td><code>L02</code>  </td><td><code>L01</code>  </td><td><code>L00</code>   </td></tr>
-</table>
-<p>Odd words (counting from zero): </p>
-<table class="doxtable">
-<tr>
-<th><code>MSB</code>  </th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th><code>LSB</code>   </th></tr>
-<tr>
-<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><code>R23</code>  </td><td><code>R22</code>  </td><td><code>R21</code>  </td><td><code>R20</code>  </td><td><code>R19</code>  </td><td><code>R18</code>  </td><td><code>R17</code>  </td><td><code>R16</code>  </td><td><code>R15</code>  </td><td><code>R14</code>  </td><td><code>R13</code>  </td><td><code>R12</code>  </td><td><code>R11</code>  </td><td><code>R10</code>  </td><td><code>R09</code>  </td><td><code>R08</code>   </td></tr>
-</table>
-<p>If <a class="el" href="a00029.html#addfc45dd466680d9a2074dd5c69dc4e5" title="Data length (4 - 32) ">i2s_config_t.dataLength</a> (channel bit width) is between 25 and 32:</p>
-<p>Even words (counting from zero): </p>
-<table class="doxtable">
-<tr>
-<th><code>MSB</code>  </th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th><code>LSB</code>   </th></tr>
-<tr>
-<td><code>L31</code>  </td><td><code>L30</code>  </td><td><code>L29</code>  </td><td><code>L28</code>  </td><td><code>L27</code>  </td><td><code>L26</code>  </td><td><code>L25</code>  </td><td><code>L24</code>  </td><td><code>L23</code>  </td><td><code>L22</code>  </td><td><code>L21</code>  </td><td><code>L20</code>  </td><td><code>L19</code>  </td><td><code>L18</code>  </td><td><code>L17</code>  </td><td><code>L16</code>  </td><td><code>L15</code>  </td><td><code>L14</code>  </td><td><code>L13</code>  </td><td><code>L12</code>  </td><td><code>L11</code>  </td><td><code>L10</code>  </td><td><code>L09</code>  </td><td><code>L08</code>  </td><td><code>L07</code>  </td><td><code>L06</code>  </td><td><code>L05</code>  </td><td><code>L04</code>  </td><td><code>L03</code>  </td><td><code>L02</code>  </td><td><code>L01</code>  </td><td><code>L00</code>   </td></tr>
-</table>
-<p>Odd words (counting from zero): </p>
-<table class="doxtable">
-<tr>
-<th><code>MSB</code>  </th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th><code>LSB</code>   </th></tr>
-<tr>
-<td><code>R31</code>  </td><td><code>R30</code>  </td><td><code>R29</code>  </td><td><code>R28</code>  </td><td><code>R27</code>  </td><td><code>R26</code>  </td><td><code>R25</code>  </td><td><code>R24</code>  </td><td><code>R23</code>  </td><td><code>R22</code>  </td><td><code>R21</code>  </td><td><code>R20</code>  </td><td><code>R19</code>  </td><td><code>R18</code>  </td><td><code>R17</code>  </td><td><code>R16</code>  </td><td><code>R15</code>  </td><td><code>R14</code>  </td><td><code>R13</code>  </td><td><code>R12</code>  </td><td><code>R11</code>  </td><td><code>R10</code>  </td><td><code>R09</code>  </td><td><code>R08</code>  </td><td><code>R07</code>  </td><td><code>R06</code>  </td><td><code>R05</code>  </td><td><code>R04</code>  </td><td><code>R03</code>  </td><td><code>R02</code>  </td><td><code>R01</code>  </td><td><code>R00</code>   </td></tr>
-</table>
-<h2><a class="anchor" id="I2SFormatInterrupt"></a>
-Interrupt mode</h2>
-<p>If <a class="el" href="a00029.html#addfc45dd466680d9a2074dd5c69dc4e5" title="Data length (4 - 32) ">i2s_config_t.dataLength</a> (channel bit width) is 4:</p>
-<p>Buffer does not need to be aligned (buffer is read / written by single bytes, each byte contain left and right channel): </p>
-<table class="doxtable">
-<tr>
-<th><code>MSB</code>  </th><th></th><th></th><th></th><th></th><th></th><th></th><th><code>LSB</code>   </th></tr>
-<tr>
-<td><code>R03</code>  </td><td><code>R02</code>  </td><td><code>R01</code>  </td><td><code>R00</code>  </td><td><code>L03</code>  </td><td><code>L02</code>  </td><td><code>L01</code>  </td><td><code>L00</code>   </td></tr>
-</table>
-<p>If <a class="el" href="a00029.html#addfc45dd466680d9a2074dd5c69dc4e5" title="Data length (4 - 32) ">i2s_config_t.dataLength</a> (channel bit width) is between 5 and 8:</p>
-<p>Length of buffer for transmit or receive has to be multiply of 2 bytes. Buffer address has to be aligned to 2-bytes. </p>
-<table class="doxtable">
-<tr>
-<th><code>MSB</code>  </th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th><code>LSB</code>   </th></tr>
-<tr>
-<td><code>R07</code>  </td><td><code>R06</code>  </td><td><code>R05</code>  </td><td><code>R04</code>  </td><td><code>R03</code>  </td><td><code>R02</code>  </td><td><code>R01</code>  </td><td><code>R00</code>  </td><td><code>L07</code>  </td><td><code>L06</code>  </td><td><code>L05</code>  </td><td><code>L04</code>  </td><td><code>L03</code>  </td><td><code>L02</code>  </td><td><code>L01</code>  </td><td><code>L00</code>   </td></tr>
-</table>
-<p>If <a class="el" href="a00029.html#addfc45dd466680d9a2074dd5c69dc4e5" title="Data length (4 - 32) ">i2s_config_t.dataLength</a> (channel bit width) is between 9 and 16:</p>
-<p>Length of buffer for transmit or receive has to be multiply of 4 bytes. Buffer address has to be aligned to 4-bytes. </p>
-<table class="doxtable">
-<tr>
-<th><code>MSB</code>  </th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th><code>LSB</code>   </th></tr>
-<tr>
-<td><code>R15</code>  </td><td><code>R14</code>  </td><td><code>R13</code>  </td><td><code>R12</code>  </td><td><code>R11</code>  </td><td><code>R10</code>  </td><td><code>R09</code>  </td><td><code>R08</code>  </td><td><code>R07</code>  </td><td><code>R06</code>  </td><td><code>R05</code>  </td><td><code>R04</code>  </td><td><code>R03</code>  </td><td><code>R02</code>  </td><td><code>R01</code>  </td><td><code>R00</code>  </td><td><code>L15</code>  </td><td><code>L14</code>  </td><td><code>L13</code>  </td><td><code>L12</code>  </td><td><code>L11</code>  </td><td><code>L10</code>  </td><td><code>L09</code>  </td><td><code>L08</code>  </td><td><code>L07</code>  </td><td><code>L06</code>  </td><td><code>L05</code>  </td><td><code>L04</code>  </td><td><code>L03</code>  </td><td><code>L02</code>  </td><td><code>L01</code>  </td><td><code>L00</code>   </td></tr>
-</table>
-<p>If <a class="el" href="a00029.html#addfc45dd466680d9a2074dd5c69dc4e5" title="Data length (4 - 32) ">i2s_config_t.dataLength</a> (channel bit width) is between 17 and 24 and <a class="el" href="a00029.html#a05e651099ce845bcba1144d2f3e8b6ca" title="Packing format for 48-bit data (false - 24 bit values, true - alternating 32-bit and 16-bit values) ...">i2s_config_t.pack48</a> = false(mono channel audio data is supported):</p>
-<p>Length of buffer for transmit or receive has to be multiply of 6 bytes. </p>
-<table class="doxtable">
-<tr>
-<th><code>MSB</code>  </th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th><code>LSB</code>   </th></tr>
-<tr>
-<td><code>R23</code>  </td><td><code>R22</code>  </td><td><code>R21</code>  </td><td><code>R20</code>  </td><td><code>R19</code>  </td><td><code>R18</code>  </td><td><code>R17</code>  </td><td><code>R16</code>  </td><td><code>R15</code>  </td><td><code>R14</code>  </td><td><code>R13</code>  </td><td><code>R12</code>  </td><td><code>R11</code>  </td><td><code>R10</code>  </td><td><code>R09</code>  </td><td><code>R08</code>  </td><td><code>R07</code>  </td><td><code>R06</code>  </td><td><code>R05</code>  </td><td><code>R04</code>  </td><td><code>R03</code>  </td><td><code>R02</code>  </td><td><code>R01</code>  </td><td><code>R00</code>  </td><td><code>L23</code>  </td><td><code>L22</code>  </td><td><code>L21</code>  </td><td><code>L20</code>  </td><td><code>L19</code>  </td><td><code>L18</code>  </td><td><code>L17</code>  </td><td><code>L16</code>  </td><td><code>L15</code>  </td><td><code>L14</code>  </td><td><code>L13</code>  </td><td><code>L12</code>  </td><td><code>L11</code>  </td><td><code>L10</code>  </td><td><code>L09</code>  </td><td><code>L08</code>  </td><td><code>L07</code>  </td><td><code>L06</code>  </td><td><code>L05</code>  </td><td><code>L04</code>  </td><td><code>L03</code>  </td><td><code>L02</code>  </td><td><code>L01</code>  </td><td><code>L00</code>   </td></tr>
-</table>
-<p>If <a class="el" href="a00029.html#addfc45dd466680d9a2074dd5c69dc4e5" title="Data length (4 - 32) ">i2s_config_t.dataLength</a> (channel bit width) is between 17 and 24 and <a class="el" href="a00029.html#a05e651099ce845bcba1144d2f3e8b6ca" title="Packing format for 48-bit data (false - 24 bit values, true - alternating 32-bit and 16-bit values) ...">i2s_config_t.pack48</a> = true:</p>
-<p>Length of buffer for transmit or receive has to be multiply of 6 bytes. Buffer address has to be aligned to 4-bytes. </p>
-<table class="doxtable">
-<tr>
-<th><code>MSB</code>  </th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th><code>LSB</code>   </th></tr>
-<tr>
-<td><code>R23</code>  </td><td><code>R22</code>  </td><td><code>R21</code>  </td><td><code>R20</code>  </td><td><code>R19</code>  </td><td><code>R18</code>  </td><td><code>R17</code>  </td><td><code>R16</code>  </td><td><code>R15</code>  </td><td><code>R14</code>  </td><td><code>R13</code>  </td><td><code>R12</code>  </td><td><code>R11</code>  </td><td><code>R10</code>  </td><td><code>R09</code>  </td><td><code>R08</code>  </td><td><code>R07</code>  </td><td><code>R06</code>  </td><td><code>R05</code>  </td><td><code>R04</code>  </td><td><code>R03</code>  </td><td><code>R02</code>  </td><td><code>R01</code>  </td><td><code>R00</code>  </td><td><code>L23</code>  </td><td><code>L22</code>  </td><td><code>L21</code>  </td><td><code>L20</code>  </td><td><code>L19</code>  </td><td><code>L18</code>  </td><td><code>L17</code>  </td><td><code>L16</code>  </td><td><code>L15</code>  </td><td><code>L14</code>  </td><td><code>L13</code>  </td><td><code>L12</code>  </td><td><code>L11</code>  </td><td><code>L10</code>  </td><td><code>L09</code>  </td><td><code>L08</code>  </td><td><code>L07</code>  </td><td><code>L06</code>  </td><td><code>L05</code>  </td><td><code>L04</code>  </td><td><code>L03</code>  </td><td><code>L02</code>  </td><td><code>L01</code>  </td><td><code>L00</code>   </td></tr>
-</table>
-<p>If <a class="el" href="a00029.html#addfc45dd466680d9a2074dd5c69dc4e5" title="Data length (4 - 32) ">i2s_config_t.dataLength</a> (channel bit width) is between 25 and 32 and <a class="el" href="a00029.html#a31f47bae11e9bd15ddcf145f63487844" title="true mono, false stereo ">i2s_config_t.oneChannel</a> = false:</p>
-<p>Buffer for transmit or receive has to be multiply of 8 bytes. Buffer address has to be aligned to 4-bytes.</p>
-<p>Even words (counting from zero): </p>
-<table class="doxtable">
-<tr>
-<th><code>MSB</code>  </th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th><code>LSB</code>   </th></tr>
-<tr>
-<td><code>L31</code>  </td><td><code>L30</code>  </td><td><code>L29</code>  </td><td><code>L28</code>  </td><td><code>L27</code>  </td><td><code>L26</code>  </td><td><code>L25</code>  </td><td><code>L24</code>  </td><td><code>L23</code>  </td><td><code>L22</code>  </td><td><code>L21</code>  </td><td><code>L20</code>  </td><td><code>L19</code>  </td><td><code>L18</code>  </td><td><code>L17</code>  </td><td><code>L16</code>  </td><td><code>L15</code>  </td><td><code>L14</code>  </td><td><code>L13</code>  </td><td><code>L12</code>  </td><td><code>L11</code>  </td><td><code>L10</code>  </td><td><code>L09</code>  </td><td><code>L08</code>  </td><td><code>L07</code>  </td><td><code>L06</code>  </td><td><code>L05</code>  </td><td><code>L04</code>  </td><td><code>L03</code>  </td><td><code>L02</code>  </td><td><code>L01</code>  </td><td><code>L00</code>   </td></tr>
-</table>
-<p>Odd words (counting from zero): </p>
-<table class="doxtable">
-<tr>
-<th><code>MSB</code>  </th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th><code>LSB</code>   </th></tr>
-<tr>
-<td><code>R31</code>  </td><td><code>R30</code>  </td><td><code>R29</code>  </td><td><code>R28</code>  </td><td><code>R27</code>  </td><td><code>R26</code>  </td><td><code>R25</code>  </td><td><code>R24</code>  </td><td><code>R23</code>  </td><td><code>R22</code>  </td><td><code>R21</code>  </td><td><code>R20</code>  </td><td><code>R19</code>  </td><td><code>R18</code>  </td><td><code>R17</code>  </td><td><code>R16</code>  </td><td><code>R15</code>  </td><td><code>R14</code>  </td><td><code>R13</code>  </td><td><code>R12</code>  </td><td><code>R11</code>  </td><td><code>R10</code>  </td><td><code>R09</code>  </td><td><code>R08</code>  </td><td><code>R07</code>  </td><td><code>R06</code>  </td><td><code>R05</code>  </td><td><code>R04</code>  </td><td><code>R03</code>  </td><td><code>R02</code>  </td><td><code>R01</code>  </td><td><code>R00</code>   </td></tr>
-</table>
-<p>If <a class="el" href="a00029.html#addfc45dd466680d9a2074dd5c69dc4e5" title="Data length (4 - 32) ">i2s_config_t.dataLength</a> (channel bit width) is between 25 and 32 and <a class="el" href="a00029.html#a31f47bae11e9bd15ddcf145f63487844" title="true mono, false stereo ">i2s_config_t.oneChannel</a> = true:</p>
-<p>Buffer for transmit or receive has to be multiply of 4 bytes. Buffer address has to be aligned to 4-bytes.</p>
-<table class="doxtable">
-<tr>
-<th><code>MSB</code>  </th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th><code>LSB</code>   </th></tr>
-<tr>
-<td><code>L31</code>  </td><td><code>L30</code>  </td><td><code>L29</code>  </td><td><code>L28</code>  </td><td><code>L27</code>  </td><td><code>L26</code>  </td><td><code>L25</code>  </td><td><code>L24</code>  </td><td><code>L23</code>  </td><td><code>L22</code>  </td><td><code>L21</code>  </td><td><code>L20</code>  </td><td><code>L19</code>  </td><td><code>L18</code>  </td><td><code>L17</code>  </td><td><code>L16</code>  </td><td><code>L15</code>  </td><td><code>L14</code>  </td><td><code>L13</code>  </td><td><code>L12</code>  </td><td><code>L11</code>  </td><td><code>L10</code>  </td><td><code>L09</code>  </td><td><code>L08</code>  </td><td><code>L07</code>  </td><td><code>L06</code>  </td><td><code>L05</code>  </td><td><code>L04</code>  </td><td><code>L03</code>  </td><td><code>L02</code>  </td><td><code>L01</code>  </td><td><code>L00</code>   </td></tr>
-</table>
-<h1><a class="anchor" id="I2SEx"></a>
-I2S Driver Examples</h1>
-<h2><a class="anchor" id="I2SInterruptEx"></a>
-Interrupt mode examples</h2>
-<p>Transmit example </p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> StartTransfer(<span class="keywordtype">void</span>)</div>
+<p>The MCUXpresso SDK provides a peripheral driver for the Inter-Integrated Circuit (I2C) module of MCUXpresso SDK devices.</p>
+<p>The I2C driver includes functional APIs and transactional APIs.</p>
+<p>Functional APIs are feature/property target low-level APIs. Functional APIs can be used for the I2C master/slave initialization/configuration/operation for optimization/customization purpose. Using the functional APIs requires the knowledge of the I2C master peripheral and how to organize functional APIs to meet the application requirements. The I2C functional operation groups provide the functional APIs set.</p>
+<p>Transactional APIs are transaction target high-level APIs. The transactional APIs can be used to enable the peripheral quickly and also in the application if the code size and performance of transactional APIs satisfy the requirements. If the code size and performance are critical requirements, see the transactional API implementation and write custom code using the functional APIs or accessing the hardware registers.</p>
+<p>Transactional APIs support asynchronous transfer. This means that the functions <a class="el" href="a00026.html#gac7f76a04b6f6873c52ad176d58901fe9" title="Performs a non-blocking transaction on the I2C bus. ">I2C_MasterTransferNonBlocking()</a> set up the interrupt non-blocking transfer. When the transfer completes, the upper layer is notified through a callback function with the status.</p>
+<h1><a class="anchor" id="I2CTpyUC"></a>
+Typical use case</h1>
+<h2><a class="anchor" id="I2CMasterOpsFunctional"></a>
+Master Operation in functional method</h2>
+<div class="fragment"><div class="line"><a class="code" href="a00026.html#a00302">i2c_master_config_t</a> masterConfig;</div>
+<div class="line">uint8_t status;</div>
+<div class="line"><a class="code" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> result = <a class="code" href="a00220.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>;</div>
+<div class="line">uint8_t txBuff[BUFFER_SIZE];</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* Get default configuration for master. */</span></div>
+<div class="line"><a class="code" href="a00026.html#gad69f2d63ea756dda60749ff6b09f587d">I2C_MasterGetDefaultConfig</a>(&amp;masterConfig);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* Init I2C master. */</span></div>
+<div class="line"><a class="code" href="a00026.html#ga29f967b3ae8487a36ba2a58deb01ccae">I2C_MasterInit</a>(EXAMPLE_I2C_MASTER_BASEADDR, &amp;masterConfig, I2C_MASTER_CLK);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* Send start and slave address. */</span></div>
+<div class="line"><a class="code" href="a00026.html#ga7664234966e4162e952b6d57efcaa8a6">I2C_MasterStart</a>(EXAMPLE_I2C_MASTER_BASEADDR, 7-bit slave address, <a class="code" href="a00026.html#gga1625497320644ba123718bafdd2c1f39a93b476b469c2a4bfed5916b458ae9bb0">kI2C_Write</a>/<a class="code" href="a00026.html#gga1625497320644ba123718bafdd2c1f39a3a7bb24dc8d1c1be8925603eeafe9b30">kI2C_Read</a>);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* Wait address sent out. */</span></div>
+<div class="line"><span class="keywordflow">while</span>(!((status = I2C_GetStatusFlag(EXAMPLE_I2C_MASTER_BASEADDR)) &amp; kI2C_IntPendingFlag))</div>
 <div class="line">{</div>
-<div class="line">    <a class="code" href="a00029.html#a00321">i2s_config_t</a> config;</div>
-<div class="line">    <a class="code" href="a00029.html#a00322">i2s_transfer_t</a> transfer;</div>
-<div class="line">    i2s_handle_t handle;</div>
 <div class="line"></div>
-<div class="line">    <a class="code" href="a00029.html#ga905cb886175d4a1f9ac2fbf8d2722cf6">I2S_TxGetDefaultConfig</a>(&amp;config);</div>
-<div class="line">    config.<a class="code" href="a00029.html#aafc62e3f728b969836765543c64e51cc">masterSlave</a> = <a class="code" href="a00029.html#ggadebb589e2ab53e2443229481d9047b47a13ab2820eda5d509bb3ceff6fb28758b">kI2S_MasterSlaveNormalMaster</a>;</div>
-<div class="line">    config.<a class="code" href="a00029.html#a124c2290d1b6a65c1ed7b9862c5751e0">divider</a> = 32; <span class="comment">/* clock frequency/audio sample frequency/channels/channel bit depth */</span></div>
-<div class="line">    <a class="code" href="a00029.html#ga5d68b2f69b625a753d498dab6758c5b9">I2S_TxInit</a>(I2S0, &amp;config);</div>
-<div class="line"></div>
-<div class="line">    <a class="code" href="a00029.html#ga0e630bdd0adb5a39b52e374ede7bc07f">I2S_TxTransferCreateHandle</a>(I2S0, &amp;handle, TxCallback, NULL);</div>
-<div class="line"></div>
-<div class="line">    transfer.<a class="code" href="a00029.html#aaf5f1c23ca46a1e0d8eff1ae7264f94c">data</a> = buffer;</div>
-<div class="line">    transfer.<a class="code" href="a00029.html#a62b40fb1c17cac3cb35ab66564e75f9c">dataSize</a> = <span class="keyword">sizeof</span>(buffer);</div>
-<div class="line">    <a class="code" href="a00029.html#ga8e341c9ce48e5be03e120ea332758048">I2S_TxTransferNonBlocking</a>(I2S0, &amp;handle, transfer);</div>
-<div class="line"></div>
-<div class="line">    <span class="comment">/* Enqueue next buffer right away so there is no drop in audio data stream when the first buffer finishes */</span></div>
-<div class="line">    <a class="code" href="a00029.html#ga8e341c9ce48e5be03e120ea332758048">I2S_TxTransferNonBlocking</a>(I2S0, &amp;handle, someTransfer);</div>
 <div class="line">}</div>
 <div class="line"></div>
-<div class="line"><span class="keywordtype">void</span> TxCallback(I2S_Type *base, i2s_handle_t *handle, <a class="code" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> completionStatus, <span class="keywordtype">void</span> *userData)</div>
+<div class="line"><span class="keywordflow">if</span>(status &amp; kI2C_ReceiveNakFlag)</div>
 <div class="line">{</div>
-<div class="line">    i2s_tranfer_t transfer;</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="a00225.html#gga61dadd085c1777f559549e05962b2c9ea72fd33d0b5263a63766e62f71d16be00">kStatus_I2C_Nak</a>;</div>
+<div class="line">}</div>
 <div class="line"></div>
-<div class="line">    <span class="keywordflow">if</span> (completionStatus == <a class="code" href="a00029.html#gga726ca809ffd3d67ab4b8476646f26635a634ef87c7515bb4037dfaaea2d75b6e1">kStatus_I2S_BufferComplete</a>)</div>
+<div class="line">result = <a class="code" href="a00026.html#ga3b4d71b59e118adc63afbc5434e5e7dd">I2C_MasterWriteBlocking</a>(EXAMPLE_I2C_MASTER_BASEADDR, txBuff, BUFFER_SIZE, <a class="code" href="a00026.html#gga87ea07668194cfb46c7c368d2cb42433ae80f7b768b1621e42ac965d3d23de5e2">kI2C_TransferDefaultFlag</a>);</div>
+<div class="line"></div>
+<div class="line"><span class="keywordflow">if</span>(result)</div>
+<div class="line">{</div>
+<div class="line">    <span class="comment">/* If error occours, send STOP. */</span></div>
+<div class="line">    <a class="code" href="a00026.html#gaf46a8cc094fc18c6cadea8de71448723">I2C_MasterStop</a>(EXAMPLE_I2C_MASTER_BASEADDR, kI2CStop);</div>
+<div class="line">    <span class="keywordflow">return</span> result;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordflow">while</span>(!(I2C_GetStatusFlag(EXAMPLE_I2C_MASTER_BASEADDR) &amp; kI2C_IntPendingFlag))</div>
+<div class="line">{</div>
+<div class="line"></div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* Wait all data sent out, send STOP. */</span></div>
+<div class="line"><a class="code" href="a00026.html#gaf46a8cc094fc18c6cadea8de71448723">I2C_MasterStop</a>(EXAMPLE_I2C_MASTER_BASEADDR, kI2CStop);</div>
+</div><!-- fragment --><h2><a class="anchor" id="I2CMasterOpsTransIRQ"></a>
+Master Operation in interrupt transactional method</h2>
+<div class="fragment"><div class="line"><a class="code" href="a00026.html#a00304">i2c_master_handle_t</a> g_m_handle;</div>
+<div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> g_MasterCompletionFlag = <span class="keyword">false</span>;</div>
+<div class="line"><a class="code" href="a00026.html#a00302">i2c_master_config_t</a> masterConfig;</div>
+<div class="line">uint8_t status;</div>
+<div class="line"><a class="code" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> result = <a class="code" href="a00220.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>;</div>
+<div class="line">uint8_t txBuff[BUFFER_SIZE];</div>
+<div class="line"><a class="code" href="a00026.html#a00305">i2c_master_transfer_t</a> masterXfer;</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> i2c_master_callback(I2C_Type *base, <a class="code" href="a00026.html#a00304">i2c_master_handle_t</a> *handle, <a class="code" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, <span class="keywordtype">void</span> *userData)</div>
+<div class="line">{</div>
+<div class="line">    <span class="comment">/* Signal transfer success when received success status. */</span></div>
+<div class="line">    <span class="keywordflow">if</span> (status == <a class="code" href="a00220.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>)</div>
 <div class="line">    {</div>
-<div class="line">        <span class="comment">/* Enqueue next buffer */</span></div>
-<div class="line">        transfer.data = buffer;</div>
-<div class="line">        transfer.dataSize = <span class="keyword">sizeof</span>(buffer);</div>
-<div class="line">        <a class="code" href="a00029.html#ga8e341c9ce48e5be03e120ea332758048">I2S_TxTransferNonBlocking</a>(base, handle, transfer);</div>
+<div class="line">        g_MasterCompletionFlag = <span class="keyword">true</span>;</div>
 <div class="line">    }</div>
 <div class="line">}</div>
-</div><!-- fragment --><p>Receive example </p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> StartTransfer(<span class="keywordtype">void</span>)</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* Get default configuration for master. */</span></div>
+<div class="line"><a class="code" href="a00026.html#gad69f2d63ea756dda60749ff6b09f587d">I2C_MasterGetDefaultConfig</a>(&amp;masterConfig);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* Init I2C master. */</span></div>
+<div class="line"><a class="code" href="a00026.html#ga29f967b3ae8487a36ba2a58deb01ccae">I2C_MasterInit</a>(EXAMPLE_I2C_MASTER_BASEADDR, &amp;masterConfig, I2C_MASTER_CLK);</div>
+<div class="line"></div>
+<div class="line">masterXfer.<a class="code" href="a00026.html#aa6d93caa78fc9bf0f0aac10f66b8eba1">slaveAddress</a> = I2C_MASTER_SLAVE_ADDR_7BIT;</div>
+<div class="line">masterXfer.<a class="code" href="a00026.html#a7bd3afcf89b78d9397b2f0c55f9deb27">direction</a> = <a class="code" href="a00026.html#gga1625497320644ba123718bafdd2c1f39a93b476b469c2a4bfed5916b458ae9bb0">kI2C_Write</a>;</div>
+<div class="line">masterXfer.<a class="code" href="a00026.html#a7a4f43a16e63d9f286bc41b6255b5e3f">subaddress</a> = NULL;</div>
+<div class="line">masterXfer.<a class="code" href="a00026.html#a0c2c6dde8d11db7793fdea90f1b34afb">subaddressSize</a> = 0;</div>
+<div class="line">masterXfer.<a class="code" href="a00026.html#a083727a4268398628225a68cad8c4a50">data</a> = txBuff;</div>
+<div class="line">masterXfer.<a class="code" href="a00026.html#a7034b157201c46c116dc251e3b56412d">dataSize</a> = BUFFER_SIZE;</div>
+<div class="line">masterXfer.<a class="code" href="a00026.html#a84861e140902bd67ae901b2f4c53bfc0">flags</a> = <a class="code" href="a00026.html#gga87ea07668194cfb46c7c368d2cb42433ae80f7b768b1621e42ac965d3d23de5e2">kI2C_TransferDefaultFlag</a>;</div>
+<div class="line"></div>
+<div class="line"><a class="code" href="a00026.html#ga31e3de02b57801c6896e6045c4a31268">I2C_MasterTransferCreateHandle</a>(EXAMPLE_I2C_MASTER_BASEADDR, &amp;g_m_handle, i2c_master_callback, NULL);</div>
+<div class="line"><a class="code" href="a00026.html#gac7f76a04b6f6873c52ad176d58901fe9">I2C_MasterTransferNonBlocking</a>(EXAMPLE_I2C_MASTER_BASEADDR, &amp;g_m_handle, &amp;masterXfer);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/*  Wait for transfer completed. */</span></div>
+<div class="line"><span class="keywordflow">while</span> (!g_MasterCompletionFlag)</div>
 <div class="line">{</div>
-<div class="line">    <a class="code" href="a00029.html#a00321">i2s_config_t</a> config;</div>
-<div class="line">    <a class="code" href="a00029.html#a00322">i2s_transfer_t</a> transfer;</div>
-<div class="line">    i2s_handle_t handle;</div>
-<div class="line"></div>
-<div class="line">    <a class="code" href="a00029.html#ga8356de62fea66f67a9803ee89a78805a">I2S_RxGetDefaultConfig</a>(&amp;config);</div>
-<div class="line">    config.<a class="code" href="a00029.html#aafc62e3f728b969836765543c64e51cc">masterSlave</a> = <a class="code" href="a00029.html#ggadebb589e2ab53e2443229481d9047b47a13ab2820eda5d509bb3ceff6fb28758b">kI2S_MasterSlaveNormalMaster</a>;</div>
-<div class="line">    config.<a class="code" href="a00029.html#a124c2290d1b6a65c1ed7b9862c5751e0">divider</a> = 32; <span class="comment">/* clock frequency/audio sample frequency/channels/channel bit depth */</span></div>
-<div class="line">    <a class="code" href="a00029.html#gaa71e9b55c275d5469c1e3f723dc55213">I2S_RxInit</a>(I2S0, &amp;config);</div>
-<div class="line"></div>
-<div class="line">    <a class="code" href="a00029.html#gabd8c54c9689fd89024c83bb883693c16">I2S_RxTransferCreateHandle</a>(I2S0, &amp;handle, RxCallback, NULL);</div>
-<div class="line"></div>
-<div class="line">    transfer.<a class="code" href="a00029.html#aaf5f1c23ca46a1e0d8eff1ae7264f94c">data</a> = buffer;</div>
-<div class="line">    transfer.<a class="code" href="a00029.html#a62b40fb1c17cac3cb35ab66564e75f9c">dataSize</a> = <span class="keyword">sizeof</span>(buffer);</div>
-<div class="line">    <a class="code" href="a00029.html#ga454cba72bec3ebeecf865570ce6ed900">I2S_RxTransferNonBlocking</a>(I2S0, &amp;handle, transfer);</div>
-<div class="line"></div>
-<div class="line">    <span class="comment">/* Enqueue next buffer right away so there is no drop in audio data stream when the first buffer finishes */</span></div>
-<div class="line">    <a class="code" href="a00029.html#ga454cba72bec3ebeecf865570ce6ed900">I2S_RxTransferNonBlocking</a>(I2S0, &amp;handle, someTransfer);</div>
 <div class="line">}</div>
+<div class="line">g_MasterCompletionFlag = <span class="keyword">false</span>;</div>
+</div><!-- fragment --><h2><a class="anchor" id="I2CMasterOpsTransDMA"></a>
+Master Operation in DMA transactional method</h2>
+<div class="fragment"><div class="line"><a class="code" href="a00027.html#a00303">i2c_master_dma_handle_t</a> g_m_dma_handle;</div>
+<div class="line"><a class="code" href="a00016.html#a00283">dma_handle_t</a> dmaHandle;</div>
+<div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> g_MasterCompletionFlag = <span class="keyword">false</span>;</div>
+<div class="line"><a class="code" href="a00026.html#a00302">i2c_master_config_t</a> masterConfig;</div>
+<div class="line">uint8_t txBuff[BUFFER_SIZE];</div>
+<div class="line"><a class="code" href="a00026.html#a00305">i2c_master_transfer_t</a> masterXfer;</div>
 <div class="line"></div>
-<div class="line"><span class="keywordtype">void</span> RxCallback(I2S_Type *base, i2s_handle_t *handle, <a class="code" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> completionStatus, <span class="keywordtype">void</span> *userData)</div>
+<div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> i2c_master_callback(I2C_Type *base, <a class="code" href="a00027.html#a00303">i2c_master_dma_handle_t</a> *handle, <a class="code" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, <span class="keywordtype">void</span> *userData)</div>
 <div class="line">{</div>
-<div class="line">    i2s_tranfer_t transfer;</div>
-<div class="line"></div>
-<div class="line">    <span class="keywordflow">if</span> (completionStatus == <a class="code" href="a00029.html#gga726ca809ffd3d67ab4b8476646f26635a634ef87c7515bb4037dfaaea2d75b6e1">kStatus_I2S_BufferComplete</a>)</div>
+<div class="line">    <span class="comment">/* Signal transfer success when received success status. */</span></div>
+<div class="line">    <span class="keywordflow">if</span> (status == <a class="code" href="a00220.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>)</div>
 <div class="line">    {</div>
-<div class="line">        <span class="comment">/* Enqueue next buffer */</span></div>
-<div class="line">        transfer.data = buffer;</div>
-<div class="line">        transfer.dataSize = <span class="keyword">sizeof</span>(buffer);</div>
-<div class="line">        <a class="code" href="a00029.html#ga454cba72bec3ebeecf865570ce6ed900">I2S_RxTransferNonBlocking</a>(base, handle, transfer);</div>
+<div class="line">        g_MasterCompletionFlag = <span class="keyword">true</span>;</div>
 <div class="line">    }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="I2SDMAEx"></a>
-DMA mode examples</h2>
-<p>Transmit example </p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> StartTransfer(<span class="keywordtype">void</span>)</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* Get default configuration for master. */</span></div>
+<div class="line"><a class="code" href="a00026.html#gad69f2d63ea756dda60749ff6b09f587d">I2C_MasterGetDefaultConfig</a>(&amp;masterConfig);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/* Init I2C master. */</span></div>
+<div class="line"><a class="code" href="a00026.html#ga29f967b3ae8487a36ba2a58deb01ccae">I2C_MasterInit</a>(EXAMPLE_I2C_MASTER_BASEADDR, &amp;masterConfig, I2C_MASTER_CLK);</div>
+<div class="line"></div>
+<div class="line">masterXfer.<a class="code" href="a00026.html#aa6d93caa78fc9bf0f0aac10f66b8eba1">slaveAddress</a> = I2C_MASTER_SLAVE_ADDR_7BIT;</div>
+<div class="line">masterXfer.<a class="code" href="a00026.html#a7bd3afcf89b78d9397b2f0c55f9deb27">direction</a> = <a class="code" href="a00026.html#gga1625497320644ba123718bafdd2c1f39a93b476b469c2a4bfed5916b458ae9bb0">kI2C_Write</a>;</div>
+<div class="line">masterXfer.<a class="code" href="a00026.html#a7a4f43a16e63d9f286bc41b6255b5e3f">subaddress</a> = NULL;</div>
+<div class="line">masterXfer.<a class="code" href="a00026.html#a0c2c6dde8d11db7793fdea90f1b34afb">subaddressSize</a> = 0;</div>
+<div class="line">masterXfer.<a class="code" href="a00026.html#a083727a4268398628225a68cad8c4a50">data</a> = txBuff;</div>
+<div class="line">masterXfer.<a class="code" href="a00026.html#a7034b157201c46c116dc251e3b56412d">dataSize</a> = BUFFER_SIZE;</div>
+<div class="line">masterXfer.<a class="code" href="a00026.html#a84861e140902bd67ae901b2f4c53bfc0">flags</a> = <a class="code" href="a00026.html#gga87ea07668194cfb46c7c368d2cb42433ae80f7b768b1621e42ac965d3d23de5e2">kI2C_TransferDefaultFlag</a>;</div>
+<div class="line"></div>
+<div class="line"><a class="code" href="a00016.html#gaa0293771d55ee1a7c42a8ffecb0728e7">DMA_EnableChannel</a>(EXAMPLE_DMA, EXAMPLE_I2C_MASTER_CHANNEL);</div>
+<div class="line"><a class="code" href="a00016.html#ga5354ff2c0c1ec53e2cbd712169fc5558">DMA_CreateHandle</a>(&amp;dmaHandle, EXAMPLE_DMA, EXAMPLE_I2C_MASTER_CHANNEL);</div>
+<div class="line"></div>
+<div class="line"><a class="code" href="a00027.html#ga83d8463e42b12e7b797a3f928f51b3cb">I2C_MasterTransferCreateHandleDMA</a>(EXAMPLE_I2C_MASTER_BASEADDR, &amp;g_m_dma_handle, i2c_master_callback, NULL, &amp;dmaHandle);</div>
+<div class="line"><a class="code" href="a00027.html#ga8643ea43510b8d97b94db05766444cd2">I2C_MasterTransferDMA</a>(EXAMPLE_I2C_MASTER_BASEADDR, &amp;g_m_dma_handle, &amp;masterXfer);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/*  Wait for transfer completed. */</span></div>
+<div class="line"><span class="keywordflow">while</span> (!g_MasterCompletionFlag)</div>
 <div class="line">{</div>
-<div class="line">    <a class="code" href="a00029.html#a00321">i2s_config_t</a> config;</div>
-<div class="line">    <a class="code" href="a00029.html#a00322">i2s_transfer_t</a> transfer;</div>
-<div class="line">    i2s_dma_handle_t handle;</div>
+<div class="line">}</div>
+<div class="line">g_MasterCompletionFlag = <span class="keyword">false</span>;</div>
+</div><!-- fragment --><h2><a class="anchor" id="I2CSlaveOpsFunctional"></a>
+Slave Operation in functional method</h2>
+<div class="fragment"><div class="line"><a class="code" href="a00029.html#a00308">i2c_slave_config_t</a> slaveConfig;</div>
+<div class="line">uint8_t status;</div>
+<div class="line"><a class="code" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> result = <a class="code" href="a00220.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>;</div>
 <div class="line"></div>
-<div class="line">    <a class="code" href="a00029.html#ga905cb886175d4a1f9ac2fbf8d2722cf6">I2S_TxGetDefaultConfig</a>(&amp;config);</div>
-<div class="line">    config.<a class="code" href="a00029.html#aafc62e3f728b969836765543c64e51cc">masterSlave</a> = <a class="code" href="a00029.html#ggadebb589e2ab53e2443229481d9047b47a13ab2820eda5d509bb3ceff6fb28758b">kI2S_MasterSlaveNormalMaster</a>;</div>
-<div class="line">    config.<a class="code" href="a00029.html#a124c2290d1b6a65c1ed7b9862c5751e0">divider</a> = 32; <span class="comment">/* clock frequency/audio sample frequency/channels/channel bit depth */</span></div>
-<div class="line">    <a class="code" href="a00029.html#ga5d68b2f69b625a753d498dab6758c5b9">I2S_TxInit</a>(I2S0, &amp;config);</div>
+<div class="line"><a class="code" href="a00029.html#ga7115f80e28b62bbbd3be1a2a918529ba">I2C_SlaveGetDefaultConfig</a>(&amp;slaveConfig); <span class="comment">/*default configuration 7-bit addressing mode*/</span></div>
+<div class="line">slaveConfig.slaveAddr = 7-bit address</div>
+<div class="line">slaveConfig.addressingMode = kI2C_Address7bit/kI2C_RangeMatch;</div>
+<div class="line"><a class="code" href="a00029.html#ga175a81b5ab74dd78469d6cdea690d8cc">I2C_SlaveInit</a>(EXAMPLE_I2C_SLAVE_BASEADDR, &amp;slaveConfig);</div>
 <div class="line"></div>
-<div class="line">    <a class="code" href="a00030.html#gab367abb21d0180a8327c3408efa06bd8">I2S_TxTransferCreateHandleDMA</a>(I2S0, &amp;handle, TxCallback, NULL);</div>
+<div class="line"><span class="comment">/* Wait address match. */</span></div>
+<div class="line"><span class="keywordflow">while</span>(!((status = I2C_GetStatusFlag(EXAMPLE_I2C_SLAVE_BASEADDR)) &amp; kI2C_AddressMatchFlag))</div>
+<div class="line">{</div>
 <div class="line"></div>
-<div class="line">    transfer.<a class="code" href="a00029.html#aaf5f1c23ca46a1e0d8eff1ae7264f94c">data</a> = buffer;</div>
-<div class="line">    transfer.<a class="code" href="a00029.html#a62b40fb1c17cac3cb35ab66564e75f9c">dataSize</a> = <span class="keyword">sizeof</span>(buffer);</div>
-<div class="line">    I2S_TxTransferNonBlockingDMA(I2S0, &amp;handle, transfer);</div>
-<div class="line"></div>
-<div class="line">    <span class="comment">/* Enqueue next buffer right away so there is no drop in audio data stream when the first buffer finishes */</span></div>
-<div class="line">    I2S_TxTransferNonBlockingDMA(I2S0, &amp;handle, someTransfer);</div>
 <div class="line">}</div>
 <div class="line"></div>
-<div class="line"><span class="keywordtype">void</span> TxCallback(I2S_Type *base, i2s_dma_handle_t *handle, <a class="code" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> completionStatus, <span class="keywordtype">void</span> *userData)</div>
+<div class="line"><span class="comment">/* Slave transmit, master reading from slave. */</span></div>
+<div class="line"><span class="keywordflow">if</span> (status &amp; kI2C_TransferDirectionFlag)</div>
 <div class="line">{</div>
-<div class="line">    i2s_tranfer_t transfer;</div>
+<div class="line">    result = <a class="code" href="a00029.html#ga280404c6b1ede542f2c1c20bd382869c">I2C_SlaveWriteBlocking</a>(EXAMPLE_I2C_SLAVE_BASEADDR);</div>
+<div class="line">}</div>
+<div class="line"><span class="keywordflow">else</span></div>
+<div class="line">{</div>
+<div class="line">    <a class="code" href="a00029.html#ga89baaf8bc82b19c837032665e89a1707">I2C_SlaveReadBlocking</a>(EXAMPLE_I2C_SLAVE_BASEADDR);</div>
+<div class="line">}</div>
 <div class="line"></div>
-<div class="line">    <span class="keywordflow">if</span> (completionStatus == <a class="code" href="a00029.html#gga726ca809ffd3d67ab4b8476646f26635a634ef87c7515bb4037dfaaea2d75b6e1">kStatus_I2S_BufferComplete</a>)</div>
+<div class="line"><span class="keywordflow">return</span> result;</div>
+</div><!-- fragment --><h2><a class="anchor" id="I2CSlaveOpsTransIRQ"></a>
+Slave Operation in interrupt transactional method</h2>
+<div class="fragment"><div class="line"><a class="code" href="a00029.html#a00308">i2c_slave_config_t</a> slaveConfig;</div>
+<div class="line"><a class="code" href="a00029.html#a00309">i2c_slave_handle_t</a> g_s_handle;</div>
+<div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> g_SlaveCompletionFlag = <span class="keyword">false</span>;</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> i2c_slave_callback(I2C_Type *base, <a class="code" href="a00029.html#a00310">i2c_slave_transfer_t</a> *xfer, <span class="keywordtype">void</span> *userData)</div>
+<div class="line">{</div>
+<div class="line">    <span class="keywordflow">switch</span> (xfer-&gt;<a class="code" href="a00029.html#a461d482d4a91765e8820b55b17e7e53c">event</a>)</div>
 <div class="line">    {</div>
-<div class="line">        <span class="comment">/* Enqueue next buffer */</span></div>
-<div class="line">        transfer.data = buffer;</div>
-<div class="line">        transfer.dataSize = <span class="keyword">sizeof</span>(buffer);</div>
-<div class="line">        I2S_TxTransferNonBlockingDMA(base, handle, transfer);</div>
+<div class="line">        <span class="comment">/*  Transmit request */</span></div>
+<div class="line">        <span class="keywordflow">case</span> <a class="code" href="a00029.html#gga87e42e170b60f17f657ef3c06a918133a2f85039a57379838909876a1d509b7aa">kI2C_SlaveTransmitEvent</a>:</div>
+<div class="line">            <span class="comment">/*  Update information for transmit process */</span></div>
+<div class="line">            xfer-&gt;data = g_slave_buff;</div>
+<div class="line">            xfer-&gt;dataSize = I2C_DATA_LENGTH;</div>
+<div class="line">            <span class="keywordflow">break</span>;</div>
+<div class="line"></div>
+<div class="line">        <span class="comment">/*  Receive request */</span></div>
+<div class="line">        <span class="keywordflow">case</span> <a class="code" href="a00029.html#gga87e42e170b60f17f657ef3c06a918133aac8593e808a8137d1b5d3a51640779de">kI2C_SlaveReceiveEvent</a>:</div>
+<div class="line">            <span class="comment">/*  Update information for received process */</span></div>
+<div class="line">            xfer-&gt;data = g_slave_buff;</div>
+<div class="line">            xfer-&gt;dataSize = I2C_DATA_LENGTH;</div>
+<div class="line">            <span class="keywordflow">break</span>;</div>
+<div class="line"></div>
+<div class="line">        <span class="comment">/*  Transfer done */</span></div>
+<div class="line">        <span class="keywordflow">case</span> <a class="code" href="a00029.html#gga87e42e170b60f17f657ef3c06a918133a38cca3cd668e73f51b8e574835d419df">kI2C_SlaveCompletionEvent</a>:</div>
+<div class="line">            g_SlaveCompletionFlag = <span class="keyword">true</span>;</div>
+<div class="line">            <span class="keywordflow">break</span>;</div>
+<div class="line"></div>
+<div class="line">        <span class="keywordflow">default</span>:</div>
+<div class="line">            g_SlaveCompletionFlag = <span class="keyword">true</span>;</div>
+<div class="line">            <span class="keywordflow">break</span>;</div>
 <div class="line">    }</div>
 <div class="line">}</div>
-</div><!-- fragment --><p>Receive example </p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> StartTransfer(<span class="keywordtype">void</span>)</div>
+<div class="line"></div>
+<div class="line"><a class="code" href="a00029.html#ga7115f80e28b62bbbd3be1a2a918529ba">I2C_SlaveGetDefaultConfig</a>(&amp;slaveConfig); <span class="comment">/*default configuration 7-bit addressing mode*/</span></div>
+<div class="line">slaveConfig.slaveAddr = 7-bit address</div>
+<div class="line">slaveConfig.addressingMode = kI2C_Address7bit/kI2C_RangeMatch;</div>
+<div class="line"></div>
+<div class="line"><a class="code" href="a00029.html#ga175a81b5ab74dd78469d6cdea690d8cc">I2C_SlaveInit</a>(EXAMPLE_I2C_SLAVE_BASEADDR, &amp;slaveConfig);</div>
+<div class="line"></div>
+<div class="line"><a class="code" href="a00029.html#gac9b90f575d92ff8ad3cc350a5c8ad1b9">I2C_SlaveTransferCreateHandle</a>(EXAMPLE_I2C_SLAVE_BASEADDR, &amp;g_s_handle, i2c_slave_callback, NULL);</div>
+<div class="line"></div>
+<div class="line"><a class="code" href="a00029.html#gaa387d81ea08a9d4b39cfeb3dfec505f7">I2C_SlaveTransferNonBlocking</a>(EXAMPLE_I2C_SLAVE_BASEADDR, &amp;g_s_handle, <a class="code" href="a00029.html#gga87e42e170b60f17f657ef3c06a918133a38cca3cd668e73f51b8e574835d419df">kI2C_SlaveCompletionEvent</a>);</div>
+<div class="line"></div>
+<div class="line"><span class="comment">/*  Wait for transfer completed. */</span></div>
+<div class="line"><span class="keywordflow">while</span> (!g_SlaveCompletionFlag)</div>
 <div class="line">{</div>
-<div class="line">    <a class="code" href="a00029.html#a00321">i2s_config_t</a> config;</div>
-<div class="line">    <a class="code" href="a00029.html#a00322">i2s_transfer_t</a> transfer;</div>
-<div class="line">    i2s_dma_handle_t handle;</div>
-<div class="line"></div>
-<div class="line">    <a class="code" href="a00029.html#ga8356de62fea66f67a9803ee89a78805a">I2S_RxGetDefaultConfig</a>(&amp;config);</div>
-<div class="line">    config.<a class="code" href="a00029.html#aafc62e3f728b969836765543c64e51cc">masterSlave</a> = <a class="code" href="a00029.html#ggadebb589e2ab53e2443229481d9047b47a13ab2820eda5d509bb3ceff6fb28758b">kI2S_MasterSlaveNormalMaster</a>;</div>
-<div class="line">    config.<a class="code" href="a00029.html#a124c2290d1b6a65c1ed7b9862c5751e0">divider</a> = 32; <span class="comment">/* clock frequency/audio sample frequency/channels/channel bit depth */</span></div>
-<div class="line">    <a class="code" href="a00029.html#gaa71e9b55c275d5469c1e3f723dc55213">I2S_RxInit</a>(I2S0, &amp;config);</div>
-<div class="line"></div>
-<div class="line">    <a class="code" href="a00030.html#gabf7c9bdafbd7e7aac4b265dace33f9e6">I2S_RxTransferCreateHandleDMA</a>(I2S0, &amp;handle, RxCallback, NULL);</div>
-<div class="line"></div>
-<div class="line">    transfer.<a class="code" href="a00029.html#aaf5f1c23ca46a1e0d8eff1ae7264f94c">data</a> = buffer;</div>
-<div class="line">    transfer.<a class="code" href="a00029.html#a62b40fb1c17cac3cb35ab66564e75f9c">dataSize</a> = <span class="keyword">sizeof</span>(buffer);</div>
-<div class="line">    I2S_RxTransferNonBlockingDMA(I2S0, &amp;handle, transfer);</div>
-<div class="line"></div>
-<div class="line">    <span class="comment">/* Enqueue next buffer right away so there is no drop in audio data stream when the first buffer finishes */</span></div>
-<div class="line">    I2S_RxTransferNonBlockingDMA(I2S0, &amp;handle, someTransfer);</div>
 <div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="keywordtype">void</span> RxCallback(I2S_Type *base, i2s_dma_handle_t *handle, <a class="code" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> completionStatus, <span class="keywordtype">void</span> *userData)</div>
-<div class="line">{</div>
-<div class="line">    i2s_tranfer_t transfer;</div>
-<div class="line"></div>
-<div class="line">    <span class="keywordflow">if</span> (completionStatus == <a class="code" href="a00029.html#gga726ca809ffd3d67ab4b8476646f26635a634ef87c7515bb4037dfaaea2d75b6e1">kStatus_I2S_BufferComplete</a>)</div>
-<div class="line">    {</div>
-<div class="line">        <span class="comment">/* Enqueue next buffer */</span></div>
-<div class="line">        transfer.data = buffer;</div>
-<div class="line">        transfer.dataSize = <span class="keyword">sizeof</span>(buffer);</div>
-<div class="line">        I2S_RxTransferNonBlockingDMA(base, handle, transfer);</div>
-<div class="line">    }</div>
-<div class="line">}</div>
+<div class="line">g_SlaveCompletionFlag = <span class="keyword">false</span>;</div>
 </div><!-- fragment --> <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
 Modules</h2></td></tr>
-<tr class="memitem:a00030"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html">I2S DMA Driver</a></td></tr>
+<tr class="memitem:a00226"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00226.html">I2C CMSIS Driver</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00029"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html">I2S Driver</a></td></tr>
+<tr class="memitem:a00027"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html">I2C DMA Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00225"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00225.html">I2C Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00028"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html">I2C FreeRTOS Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00026"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00026.html">I2C Master Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00029"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html">I2C Slave Driver</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->

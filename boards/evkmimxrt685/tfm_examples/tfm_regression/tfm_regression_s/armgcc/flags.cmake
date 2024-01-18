@@ -38,7 +38,6 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -DPS_WIPE_ALL \
     -DITS_WIPE_ALL \
     -DPLATFORM_NO_FLASH \
-    -DOTP_NV_COUNTERS_RAM_EMULATION \
     -DDAUTH_CHIP_DEFAULT \
     -D__SEMIHOST_HARDFAULT_DISABLE \
     -DMCUXPRESSO_SDK \
@@ -70,7 +69,8 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -DTFM_CRYPTO_TEST_ALG_SHA_512 \
     -DTFM_CRYPTO_TEST_HKDF \
     -DTFM_CRYPTO_TEST_ECDH \
-    -DTEST_FRAMEWORK_S \
+    -DTFM_CRYPTO_TEST_UNSUPPORTED_ALG \
+    -DTFM_S_REG_TEST \
     -DUSE_SP_LOG \
     -DTFM_PARTITION_PROTECTED_STORAGE \
     -DTEST_S_PLATFORM \
@@ -138,7 +138,6 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -DPS_WIPE_ALL \
     -DITS_WIPE_ALL \
     -DPLATFORM_NO_FLASH \
-    -DOTP_NV_COUNTERS_RAM_EMULATION \
     -DDAUTH_CHIP_DEFAULT \
     -D__SEMIHOST_HARDFAULT_DISABLE \
     -DMCUXPRESSO_SDK \
@@ -170,7 +169,8 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -DTFM_CRYPTO_TEST_ALG_SHA_512 \
     -DTFM_CRYPTO_TEST_HKDF \
     -DTFM_CRYPTO_TEST_ECDH \
-    -DTEST_FRAMEWORK_S \
+    -DTFM_CRYPTO_TEST_UNSUPPORTED_ALG \
+    -DTFM_S_REG_TEST \
     -DUSE_SP_LOG \
     -DTFM_PARTITION_PROTECTED_STORAGE \
     -DTEST_S_PLATFORM \
@@ -303,7 +303,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG " \
     -Wl,--print-memory-usage \
     ${FPU} \
     ${SPECS} \
-    -T${SdkRootDirPath}/middleware/tfm/tf-m/platform/ext/target/nxp/common/armgcc/tfm_common_s_pre.ld -static \
+    -T\"${SdkRootDirPath}/middleware/tfm/tf-m/platform/ext/target/nxp/common/armgcc/tfm_common_s_pre.ld\" -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     ${CMAKE_EXE_LINKER_FLAGS_RELEASE} \
@@ -332,5 +332,5 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     -Wl,--print-memory-usage \
     ${FPU} \
     ${SPECS} \
-    -T${SdkRootDirPath}/middleware/tfm/tf-m/platform/ext/target/nxp/common/armgcc/tfm_common_s_pre.ld -static \
+    -T\"${SdkRootDirPath}/middleware/tfm/tf-m/platform/ext/target/nxp/common/armgcc/tfm_common_s_pre.ld\" -static \
 ")

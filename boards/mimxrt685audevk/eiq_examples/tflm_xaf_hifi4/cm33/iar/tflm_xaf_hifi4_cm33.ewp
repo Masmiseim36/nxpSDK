@@ -352,7 +352,7 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/examples/xaf</state>
+          <state>$PROJ_DIR$/../source</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
@@ -372,7 +372,6 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/examples/xaf/mimxrt685audevk_hifi4</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -821,6 +820,8 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
+          <state>--image_input=$PROJ_DIR$/../../hifi4/binary/dsp_literal_release.bin,__dsp_literal_bin,__dsp_literal_section,4</state>
+          <state>--keep=__dsp_literal_bin</state>
           <state>--image_input=$PROJ_DIR$/../../hifi4/binary/dsp_text_release.bin,__dsp_text_bin,__dsp_text_section,4</state>
           <state>--keep=__dsp_text_bin</state>
           <state>--image_input=$PROJ_DIR$/../../hifi4/binary/dsp_data_release.bin,__dsp_data_bin,__dsp_data_section,4</state>
@@ -1453,7 +1454,7 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/examples/xaf</state>
+          <state>$PROJ_DIR$/../source</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
@@ -1473,7 +1474,6 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/examples/xaf/mimxrt685audevk_hifi4</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1921,6 +1921,8 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
+          <state>--image_input=$PROJ_DIR$/../../hifi4/binary/dsp_literal_release.bin,__dsp_literal_bin,__dsp_literal_section,4</state>
+          <state>--keep=__dsp_literal_bin</state>
           <state>--image_input=$PROJ_DIR$/../../hifi4/binary/dsp_text_release.bin,__dsp_text_bin,__dsp_text_section,4</state>
           <state>--keep=__dsp_text_bin</state>
           <state>--image_input=$PROJ_DIR$/../../hifi4/binary/dsp_data_release.bin,__dsp_data_bin,__dsp_data_section,4</state>
@@ -2205,13 +2207,13 @@
   <group>
     <name>source</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/examples/xaf/message.h</name>
+      <name>$PROJ_DIR$/../source/message.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/examples/xaf/rpmsg_config.h</name>
+      <name>$PROJ_DIR$/../source/rpmsg_config.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/eiq/tensorflow-lite/examples/xaf/mimxrt685audevk_hifi4/dsp_config.h</name>
+      <name>$PROJ_DIR$/../source/dsp_config.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../main.c</name>
@@ -2219,6 +2221,9 @@
   </group>
   <group>
     <name>dsp_binary</name>
+    <file>
+      <name>$PROJ_DIR$/../../hifi4/binary/dsp_literal_release.bin</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../../hifi4/binary/dsp_text_release.bin</name>
     </file>
@@ -2268,7 +2273,7 @@
   <group>
     <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
   <group>
@@ -2578,6 +2583,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_assert.h</name>
     </file>
   </group>
   <group>

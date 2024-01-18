@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: IAP Boot Driver</title>
+<title>MCUXpresso SDK API Reference Manual: I3C Slave Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -100,117 +100,2184 @@ $(document).ready(function(){initNavTree('a00035.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">IAP Boot Driver<div class="ingroups"><a class="el" href="a00233.html">IAP: In Application Programming Driver</a></div></div>  </div>
+<div class="title">I3C Slave Driver<div class="ingroups"><a class="el" href="a00034.html">I3C: I3C Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00332"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a00332">iap_boot_option_t</a></td></tr>
-<tr class="memdesc:a00332"><td class="mdescLeft">&#160;</td><td class="mdescRight">IAP boot option.  <a href="a00035.html#a00332">More...</a><br/></td></tr>
-<tr class="separator:a00332"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00324"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a00324">_i3c_slave_config</a></td></tr>
+<tr class="memdesc:a00324"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure with settings to initialize the I3C slave module.  <a href="a00035.html#a00324">More...</a><br/></td></tr>
+<tr class="separator:a00324"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00326"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a00326">_i3c_slave_transfer</a></td></tr>
+<tr class="memdesc:a00326"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C slave transfer structure.  <a href="a00035.html#a00326">More...</a><br/></td></tr>
+<tr class="separator:a00326"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00325"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a00325">_i3c_slave_handle</a></td></tr>
+<tr class="memdesc:a00325"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C slave handle structure.  <a href="a00035.html#a00325">More...</a><br/></td></tr>
+<tr class="separator:a00325"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga55ebb225b1b8f34400e33d99058f4750"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga55ebb225b1b8f34400e33d99058f4750"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ga55ebb225b1b8f34400e33d99058f4750">IAP_BOOT_OPTION_TAG</a>&#160;&#160;&#160;(0xEBU)</td></tr>
-<tr class="memdesc:ga55ebb225b1b8f34400e33d99058f4750"><td class="mdescLeft">&#160;</td><td class="mdescRight">IAP boot option tag. <br/></td></tr>
-<tr class="separator:ga55ebb225b1b8f34400e33d99058f4750"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga35f536419bbbbec84ed1f8b26ca454d8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga35f536419bbbbec84ed1f8b26ca454d8"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ga35f536419bbbbec84ed1f8b26ca454d8">IAP_BOOT_OPTION_MODE_MASTER</a>&#160;&#160;&#160;(0U)</td></tr>
-<tr class="memdesc:ga35f536419bbbbec84ed1f8b26ca454d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">IAP boot option mode. <br/></td></tr>
-<tr class="separator:ga35f536419bbbbec84ed1f8b26ca454d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gaba4f0075492b5accfbcb247cf2513be3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaba4f0075492b5accfbcb247cf2513be3"></a>
+typedef enum <a class="el" href="a00035.html#gae8b230de231b4fa946c919b0b68f5340">_i3c_slave_event</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#gaba4f0075492b5accfbcb247cf2513be3">i3c_slave_event_t</a></td></tr>
+<tr class="memdesc:gaba4f0075492b5accfbcb247cf2513be3"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C slave.event. <br/></td></tr>
+<tr class="separator:gaba4f0075492b5accfbcb247cf2513be3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7a6964b6cdcbbadf3bad646f03cb5157"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7a6964b6cdcbbadf3bad646f03cb5157"></a>
+typedef enum <br class="typebreak"/>
+<a class="el" href="a00035.html#ga681c551b7705bf4b4a4c5ded645dbf88">_i3c_slave_activity_state</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ga7a6964b6cdcbbadf3bad646f03cb5157">i3c_slave_activity_state_t</a></td></tr>
+<tr class="memdesc:ga7a6964b6cdcbbadf3bad646f03cb5157"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C slave.activity state. <br/></td></tr>
+<tr class="separator:ga7a6964b6cdcbbadf3bad646f03cb5157"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaf5381779ee40e0601099f82336968b1"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00035.html#a00324">_i3c_slave_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#gaaf5381779ee40e0601099f82336968b1">i3c_slave_config_t</a></td></tr>
+<tr class="memdesc:gaaf5381779ee40e0601099f82336968b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure with settings to initialize the I3C slave module.  <a href="#gaaf5381779ee40e0601099f82336968b1">More...</a><br/></td></tr>
+<tr class="separator:gaaf5381779ee40e0601099f82336968b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga99929d7ef76befce5c7401a5a42d2453"><td class="memItemLeft" align="right" valign="top">typedef enum <br class="typebreak"/>
+<a class="el" href="a00035.html#gad2e5167cb9cabc1582fedcec5786104c">_i3c_slave_transfer_event</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ga99929d7ef76befce5c7401a5a42d2453">i3c_slave_transfer_event_t</a></td></tr>
+<tr class="memdesc:ga99929d7ef76befce5c7401a5a42d2453"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set of events sent to the callback for non blocking slave transfers.  <a href="#ga99929d7ef76befce5c7401a5a42d2453">More...</a><br/></td></tr>
+<tr class="separator:ga99929d7ef76befce5c7401a5a42d2453"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga33dc0e62f6fa1c9c8556dc5adacf8614"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga33dc0e62f6fa1c9c8556dc5adacf8614"></a>
+typedef struct <a class="el" href="a00035.html#a00326">_i3c_slave_transfer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ga33dc0e62f6fa1c9c8556dc5adacf8614">i3c_slave_transfer_t</a></td></tr>
+<tr class="memdesc:ga33dc0e62f6fa1c9c8556dc5adacf8614"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C slave transfer structure. <br/></td></tr>
+<tr class="separator:ga33dc0e62f6fa1c9c8556dc5adacf8614"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gada633855ef6083061ce6205185f29187"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#gada633855ef6083061ce6205185f29187">i3c_slave_transfer_callback_t</a> )(I3C_Type *base, <a class="el" href="a00035.html#ga33dc0e62f6fa1c9c8556dc5adacf8614">i3c_slave_transfer_t</a> *transfer, void *userData)</td></tr>
+<tr class="memdesc:gada633855ef6083061ce6205185f29187"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slave event callback function pointer type.  <a href="#gada633855ef6083061ce6205185f29187">More...</a><br/></td></tr>
+<tr class="separator:gada633855ef6083061ce6205185f29187"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa57ff17d0b3919986c395a8825e00462"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#gaa57ff17d0b3919986c395a8825e00462">i3c_slave_isr_t</a> )(I3C_Type *base, void *handle)</td></tr>
+<tr class="memdesc:gaa57ff17d0b3919986c395a8825e00462"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typedef for slave interrupt handler.  <a href="#gaa57ff17d0b3919986c395a8825e00462">More...</a><br/></td></tr>
+<tr class="separator:gaa57ff17d0b3919986c395a8825e00462"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga95df42cf9f599a7d5ed4aa7c4555ebcf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ga95df42cf9f599a7d5ed4aa7c4555ebcf">IAP_RunBootLoader</a> (<a class="el" href="a00035.html#a00332">iap_boot_option_t</a> *option)</td></tr>
-<tr class="memdesc:ga95df42cf9f599a7d5ed4aa7c4555ebcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invoke into ROM with specified boot parameters.  <a href="#ga95df42cf9f599a7d5ed4aa7c4555ebcf">More...</a><br/></td></tr>
-<tr class="separator:ga95df42cf9f599a7d5ed4aa7c4555ebcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gae5c787dbdeb2420f38e50c912e36bad1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#gae5c787dbdeb2420f38e50c912e36bad1">_i3c_slave_flags</a> { <br/>
+&#160;&#160;<a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1ae856c2de9789a964c5df9de6b59fa5b5">kI3C_SlaveNotStopFlag</a> = I3C_SSTATUS_STNOTSTOP_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1abb232d0753ef5e1cb528c0f70daa2028">kI3C_SlaveMessageFlag</a> = I3C_SSTATUS_STMSG_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1afc342a0ed101c4dd987047414dba5727">kI3C_SlaveRequiredReadFlag</a> = I3C_SSTATUS_STREQRD_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a1b44c76f76dc7592c5a3a851691c827f">kI3C_SlaveRequiredWriteFlag</a> = I3C_SSTATUS_STREQWR_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a90d1bd0889b419b41710c905a023e699">kI3C_SlaveBusDAAFlag</a> = I3C_SSTATUS_STDAA_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a8134e94cfc1a1a1e41b6d7dafecc6721">kI3C_SlaveBusHDRModeFlag</a> = I3C_SSTATUS_STHDR_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a007137b4800c84cf25a31eadc687bc2e">kI3C_SlaveBusStartFlag</a> = I3C_SSTATUS_START_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1aa7410fa50b7d84e1f3da17649389cf98">kI3C_SlaveMatchedFlag</a> = I3C_SSTATUS_MATCHED_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a8904ae203162bf4de511bd3d44166bd0">kI3C_SlaveBusStopFlag</a> = I3C_SSTATUS_STOP_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1ab04dfa145be7ae004f3e453cc5f22975">kI3C_SlaveRxReadyFlag</a> = I3C_SSTATUS_RX_PEND_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1ac0fb318358a569c3b90a754649ad480b">kI3C_SlaveTxReadyFlag</a> = I3C_SSTATUS_TXNOTFULL_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a36533bd278344d58566e0316d8c32695">kI3C_SlaveDynamicAddrChangedFlag</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a0237cb952ce19512f77eaea85ec7dd87">kI3C_SlaveReceivedCCCFlag</a> = I3C_SSTATUS_CCC_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a603496b621ece631d6b7c66398f37254">kI3C_SlaveErrorFlag</a> = I3C_SSTATUS_ERRWARN_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1aa40886fd07849aa04abbf78a0e90213b">kI3C_SlaveHDRCommandMatchFlag</a> = I3C_SSTATUS_HDRMATCH_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a47c0731626e7d65f7bd99befb714082b">kI3C_SlaveCCCHandledFlag</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a5e512f1349b7b6d5d245be7496f9d9a2">kI3C_SlaveEventSentFlag</a> = I3C_SSTATUS_EVENT_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a111fbbfc5bd0296baaa460209acbb17b">kI3C_SlaveIbiDisableFlag</a> = I3C_SSTATUS_IBIDIS_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1ae2da05c79b6d1dcbf7087b638c95351f">kI3C_SlaveMasterRequestDisabledFlag</a> = I3C_SSTATUS_MRDIS_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1af43952b3f9ba151711d1d6b105d956d7">kI3C_SlaveHotJoinDisabledFlag</a> = I3C_SSTATUS_HJDIS_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a085cabea22a033d45af3bdd11ef20558">kI3C_SlaveClearFlags</a> = kI3C_SlaveBusStartFlag | kI3C_SlaveMatchedFlag | kI3C_SlaveBusStopFlag
+<br/>
+ }</td></tr>
+<tr class="memdesc:gae5c787dbdeb2420f38e50c912e36bad1"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C slave peripheral flags.  <a href="a00035.html#gae5c787dbdeb2420f38e50c912e36bad1">More...</a><br/></td></tr>
+<tr class="separator:gae5c787dbdeb2420f38e50c912e36bad1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga806dc86e40128eb6bf3e0853537b2b9b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ga806dc86e40128eb6bf3e0853537b2b9b">_i3c_slave_error_flags</a> { <br/>
+&#160;&#160;<a class="el" href="a00035.html#gga806dc86e40128eb6bf3e0853537b2b9bab6fbf473367003f04876296c2fbca2af">kI3C_SlaveErrorOverrunFlag</a> = I3C_SERRWARN_ORUN_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#gga806dc86e40128eb6bf3e0853537b2b9ba15a719f050edf51372b2cb7eacb54f4f">kI3C_SlaveErrorUnderrunFlag</a> = I3C_SERRWARN_URUN_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#gga806dc86e40128eb6bf3e0853537b2b9ba6890862c30f340f357ab162c6f193ec0">kI3C_SlaveErrorUnderrunNakFlag</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#gga806dc86e40128eb6bf3e0853537b2b9ba712354ffcf66274ceca67defb71a3eb0">kI3C_SlaveErrorTermFlag</a> = I3C_SERRWARN_TERM_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#gga806dc86e40128eb6bf3e0853537b2b9ba55e1ca378f58f8528cd7f7da6b34997f">kI3C_SlaveErrorInvalidStartFlag</a> = I3C_SERRWARN_INVSTART_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#gga806dc86e40128eb6bf3e0853537b2b9baf97cf443cb9b10aa179e4c01edebfef5">kI3C_SlaveErrorSdrParityFlag</a> = I3C_SERRWARN_SPAR_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#gga806dc86e40128eb6bf3e0853537b2b9ba2c9b8ea22108348a0ddb649b6caa6c10">kI3C_SlaveErrorHdrParityFlag</a> = I3C_SERRWARN_HPAR_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#gga806dc86e40128eb6bf3e0853537b2b9ba7aa919a09ffc845467c720d4cec2de62">kI3C_SlaveErrorHdrCRCFlag</a> = I3C_SERRWARN_HCRC_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#gga806dc86e40128eb6bf3e0853537b2b9bae001a006772822e5feeba1a48447c8d7">kI3C_SlaveErrorS0S1Flag</a> = I3C_SERRWARN_S0S1_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#gga806dc86e40128eb6bf3e0853537b2b9baf2c8a7e4796255f62eaa3f879bf42dfe">kI3C_SlaveErrorOverreadFlag</a> = I3C_SERRWARN_OREAD_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#gga806dc86e40128eb6bf3e0853537b2b9ba397e6eebaeae742add9b14dc2a72a07f">kI3C_SlaveErrorOverwriteFlag</a> = I3C_SERRWARN_OWRITE_MASK
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga806dc86e40128eb6bf3e0853537b2b9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C slave error flags to indicate the causes.  <a href="a00035.html#ga806dc86e40128eb6bf3e0853537b2b9b">More...</a><br/></td></tr>
+<tr class="separator:ga806dc86e40128eb6bf3e0853537b2b9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae8b230de231b4fa946c919b0b68f5340"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#gae8b230de231b4fa946c919b0b68f5340">_i3c_slave_event</a> { <br/>
+&#160;&#160;<a class="el" href="a00035.html#ggae8b230de231b4fa946c919b0b68f5340aa0edb1d7b4740e23426ab265c7f76da4">kI3C_SlaveEventNormal</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#ggae8b230de231b4fa946c919b0b68f5340a42c92ea9bd328c3b65d0e7fc6674c338">kI3C_SlaveEventIBI</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#ggae8b230de231b4fa946c919b0b68f5340af81749873ca6b6a227c090fd5bceeee8">kI3C_SlaveEventMasterReq</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#ggae8b230de231b4fa946c919b0b68f5340a1989c0750ed0d920482b8b65d98a73b4">kI3C_SlaveEventHotJoinReq</a> = 3U
+<br/>
+ }</td></tr>
+<tr class="memdesc:gae8b230de231b4fa946c919b0b68f5340"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C slave.event.  <a href="a00035.html#gae8b230de231b4fa946c919b0b68f5340">More...</a><br/></td></tr>
+<tr class="separator:gae8b230de231b4fa946c919b0b68f5340"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga681c551b7705bf4b4a4c5ded645dbf88"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ga681c551b7705bf4b4a4c5ded645dbf88">_i3c_slave_activity_state</a> { <br/>
+&#160;&#160;<a class="el" href="a00035.html#gga681c551b7705bf4b4a4c5ded645dbf88ae04aca510c43014f567bb5ecc92b055a">kI3C_SlaveNoLatency</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#gga681c551b7705bf4b4a4c5ded645dbf88acba58e3c0ddebac15feacc8810aa36e9">kI3C_SlaveLatency1Ms</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#gga681c551b7705bf4b4a4c5ded645dbf88a7cc603734f6cea7f36f11f6e82bbec2a">kI3C_SlaveLatency100Ms</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#gga681c551b7705bf4b4a4c5ded645dbf88a886e7c36aa0320db1a27769d23bbe245">kI3C_SlaveLatency10S</a> = 3U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga681c551b7705bf4b4a4c5ded645dbf88"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C slave.activity state.  <a href="a00035.html#ga681c551b7705bf4b4a4c5ded645dbf88">More...</a><br/></td></tr>
+<tr class="separator:ga681c551b7705bf4b4a4c5ded645dbf88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad2e5167cb9cabc1582fedcec5786104c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#gad2e5167cb9cabc1582fedcec5786104c">_i3c_slave_transfer_event</a> { <br/>
+&#160;&#160;<a class="el" href="a00035.html#ggad2e5167cb9cabc1582fedcec5786104ca4ba7cde181fc4720255985ac9669563b">kI3C_SlaveAddressMatchEvent</a> = 0x01U, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#ggad2e5167cb9cabc1582fedcec5786104cac1ddc4bae9e31c516d468c44c644438b">kI3C_SlaveTransmitEvent</a> = 0x02U, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#ggad2e5167cb9cabc1582fedcec5786104cafc30108371d78ede74f4a1c9724d22b8">kI3C_SlaveReceiveEvent</a> = 0x04U, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#ggad2e5167cb9cabc1582fedcec5786104ca16e7360bba643f1a7f699ac0d9ff5033">kI3C_SlaveRequiredTransmitEvent</a> = 0x08U, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#ggad2e5167cb9cabc1582fedcec5786104ca3a226dce66e90a81b3766c9f4ab61128">kI3C_SlaveStartEvent</a> = 0x10U, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#ggad2e5167cb9cabc1582fedcec5786104cace186b327e1875eb407912f73feaa2d0">kI3C_SlaveHDRCommandMatchEvent</a> = 0x20U, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#ggad2e5167cb9cabc1582fedcec5786104cafd02679de07ec01bbda9eddff9d51142">kI3C_SlaveCompletionEvent</a> = 0x40U, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#ggad2e5167cb9cabc1582fedcec5786104cada90e0bf341a85503f67d12f6845ffe0">kI3C_SlaveRequestSentEvent</a> = 0x80U, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#ggad2e5167cb9cabc1582fedcec5786104cad241179a27080e858b3b7e7c8f6069e8">kI3C_SlaveReceivedCCCEvent</a> = 0x100L, 
+<br/>
+&#160;&#160;<a class="el" href="a00035.html#ggad2e5167cb9cabc1582fedcec5786104cac872741fd80ab9d76f9ec145a674f53c">kI3C_SlaveAllEvents</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:gad2e5167cb9cabc1582fedcec5786104c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set of events sent to the callback for non blocking slave transfers.  <a href="a00035.html#gad2e5167cb9cabc1582fedcec5786104c">More...</a><br/></td></tr>
+<tr class="separator:gad2e5167cb9cabc1582fedcec5786104c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Initialization and deinitialization</h2></td></tr>
+<tr class="memitem:gada6de6140ea7a8fd8f9b188f6ca8d561"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gada6de6140ea7a8fd8f9b188f6ca8d561">I3C_SlaveGetDefaultConfig</a> (<a class="el" href="a00035.html#gaaf5381779ee40e0601099f82336968b1">i3c_slave_config_t</a> *slaveConfig)</td></tr>
+<tr class="memdesc:gada6de6140ea7a8fd8f9b188f6ca8d561"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides a default configuration for the I3C slave peripheral.  <a href="#gada6de6140ea7a8fd8f9b188f6ca8d561">More...</a><br/></td></tr>
+<tr class="separator:gada6de6140ea7a8fd8f9b188f6ca8d561"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6cbdffff9439d0b1ee27682a5c592c34"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga6cbdffff9439d0b1ee27682a5c592c34">I3C_SlaveInit</a> (I3C_Type *base, const <a class="el" href="a00035.html#gaaf5381779ee40e0601099f82336968b1">i3c_slave_config_t</a> *slaveConfig, uint32_t slowClock_Hz)</td></tr>
+<tr class="memdesc:ga6cbdffff9439d0b1ee27682a5c592c34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the I3C slave peripheral.  <a href="#ga6cbdffff9439d0b1ee27682a5c592c34">More...</a><br/></td></tr>
+<tr class="separator:ga6cbdffff9439d0b1ee27682a5c592c34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaf8b8a5e1974d969dfb4769ece3f2d0c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gaaf8b8a5e1974d969dfb4769ece3f2d0c">I3C_SlaveDeinit</a> (I3C_Type *base)</td></tr>
+<tr class="memdesc:gaaf8b8a5e1974d969dfb4769ece3f2d0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the I3C slave peripheral.  <a href="#gaaf8b8a5e1974d969dfb4769ece3f2d0c">More...</a><br/></td></tr>
+<tr class="separator:gaaf8b8a5e1974d969dfb4769ece3f2d0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4ee0343d4b79a3a929821af22b227949"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga4ee0343d4b79a3a929821af22b227949">I3C_SlaveEnable</a> (I3C_Type *base, bool isEnable)</td></tr>
+<tr class="memdesc:ga4ee0343d4b79a3a929821af22b227949"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/Disable Slave.  <a href="#ga4ee0343d4b79a3a929821af22b227949">More...</a><br/></td></tr>
+<tr class="separator:ga4ee0343d4b79a3a929821af22b227949"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Status</h2></td></tr>
+<tr class="memitem:gaf483efbd8d9c2569369d4d6d9ee043c7"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gaf483efbd8d9c2569369d4d6d9ee043c7">I3C_SlaveGetStatusFlags</a> (I3C_Type *base)</td></tr>
+<tr class="memdesc:gaf483efbd8d9c2569369d4d6d9ee043c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the I3C slave status flags.  <a href="#gaf483efbd8d9c2569369d4d6d9ee043c7">More...</a><br/></td></tr>
+<tr class="separator:gaf483efbd8d9c2569369d4d6d9ee043c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga41de2b6422398d3aed02cfdbda87ded5"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga41de2b6422398d3aed02cfdbda87ded5">I3C_SlaveClearStatusFlags</a> (I3C_Type *base, uint32_t statusMask)</td></tr>
+<tr class="memdesc:ga41de2b6422398d3aed02cfdbda87ded5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the I3C slave status flag state.  <a href="#ga41de2b6422398d3aed02cfdbda87ded5">More...</a><br/></td></tr>
+<tr class="separator:ga41de2b6422398d3aed02cfdbda87ded5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf6c4e955676f72510a17e7cf9797d389"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gaf6c4e955676f72510a17e7cf9797d389">I3C_SlaveGetErrorStatusFlags</a> (I3C_Type *base)</td></tr>
+<tr class="memdesc:gaf6c4e955676f72510a17e7cf9797d389"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the I3C slave error status flags.  <a href="#gaf6c4e955676f72510a17e7cf9797d389">More...</a><br/></td></tr>
+<tr class="separator:gaf6c4e955676f72510a17e7cf9797d389"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaff291ac645d00d688a3c4539362a9e3a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gaff291ac645d00d688a3c4539362a9e3a">I3C_SlaveClearErrorStatusFlags</a> (I3C_Type *base, uint32_t statusMask)</td></tr>
+<tr class="memdesc:gaff291ac645d00d688a3c4539362a9e3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the I3C slave error status flag state.  <a href="#gaff291ac645d00d688a3c4539362a9e3a">More...</a><br/></td></tr>
+<tr class="separator:gaff291ac645d00d688a3c4539362a9e3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab93bd6b3583b8382d1d5f40795004f73"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00035.html#ga7a6964b6cdcbbadf3bad646f03cb5157">i3c_slave_activity_state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gab93bd6b3583b8382d1d5f40795004f73">I3C_SlaveGetActivityState</a> (I3C_Type *base)</td></tr>
+<tr class="memdesc:gab93bd6b3583b8382d1d5f40795004f73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the I3C slave state.  <a href="#gab93bd6b3583b8382d1d5f40795004f73">More...</a><br/></td></tr>
+<tr class="separator:gab93bd6b3583b8382d1d5f40795004f73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf71eca6432d37c8def30786a031d6fec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf71eca6432d37c8def30786a031d6fec"></a>
+<a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>I3C_SlaveCheckAndClearError</b> (I3C_Type *base, uint32_t status)</td></tr>
+<tr class="separator:gaf71eca6432d37c8def30786a031d6fec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Interrupts</h2></td></tr>
+<tr class="memitem:ga2af3e5de992c1276297273a63348d457"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga2af3e5de992c1276297273a63348d457">I3C_SlaveEnableInterrupts</a> (I3C_Type *base, uint32_t interruptMask)</td></tr>
+<tr class="memdesc:ga2af3e5de992c1276297273a63348d457"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the I3C slave interrupt requests.  <a href="#ga2af3e5de992c1276297273a63348d457">More...</a><br/></td></tr>
+<tr class="separator:ga2af3e5de992c1276297273a63348d457"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9e57f2e719be892e00d0a2e418a7d36a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga9e57f2e719be892e00d0a2e418a7d36a">I3C_SlaveDisableInterrupts</a> (I3C_Type *base, uint32_t interruptMask)</td></tr>
+<tr class="memdesc:ga9e57f2e719be892e00d0a2e418a7d36a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the I3C slave interrupt requests.  <a href="#ga9e57f2e719be892e00d0a2e418a7d36a">More...</a><br/></td></tr>
+<tr class="separator:ga9e57f2e719be892e00d0a2e418a7d36a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7e7f2933e71c84110713583b86756728"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga7e7f2933e71c84110713583b86756728">I3C_SlaveGetEnabledInterrupts</a> (I3C_Type *base)</td></tr>
+<tr class="memdesc:ga7e7f2933e71c84110713583b86756728"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the set of currently enabled I3C slave interrupt requests.  <a href="#ga7e7f2933e71c84110713583b86756728">More...</a><br/></td></tr>
+<tr class="separator:ga7e7f2933e71c84110713583b86756728"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1ca3ffdca28af282a70156dd851dc6e6"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga1ca3ffdca28af282a70156dd851dc6e6">I3C_SlaveGetPendingInterrupts</a> (I3C_Type *base)</td></tr>
+<tr class="memdesc:ga1ca3ffdca28af282a70156dd851dc6e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the set of pending I3C slave interrupt requests.  <a href="#ga1ca3ffdca28af282a70156dd851dc6e6">More...</a><br/></td></tr>
+<tr class="separator:ga1ca3ffdca28af282a70156dd851dc6e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+DMA control</h2></td></tr>
+<tr class="memitem:ga295e383ac5ea2f4e1d1ce23507f6235d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga295e383ac5ea2f4e1d1ce23507f6235d">I3C_SlaveEnableDMA</a> (I3C_Type *base, bool enableTx, bool enableRx, uint32_t width)</td></tr>
+<tr class="memdesc:ga295e383ac5ea2f4e1d1ce23507f6235d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables I3C slave DMA requests.  <a href="#ga295e383ac5ea2f4e1d1ce23507f6235d">More...</a><br/></td></tr>
+<tr class="separator:ga295e383ac5ea2f4e1d1ce23507f6235d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7105aa1d37198b11eb064634c4ab55a3"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga7105aa1d37198b11eb064634c4ab55a3">I3C_SlaveGetTxFifoAddress</a> (I3C_Type *base, uint32_t width)</td></tr>
+<tr class="memdesc:ga7105aa1d37198b11eb064634c4ab55a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets I3C slave transmit data register address for DMA transfer.  <a href="#ga7105aa1d37198b11eb064634c4ab55a3">More...</a><br/></td></tr>
+<tr class="separator:ga7105aa1d37198b11eb064634c4ab55a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4d7c6a568b4031a0036521a834362d3c"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga4d7c6a568b4031a0036521a834362d3c">I3C_SlaveGetRxFifoAddress</a> (I3C_Type *base, uint32_t width)</td></tr>
+<tr class="memdesc:ga4d7c6a568b4031a0036521a834362d3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets I3C slave receive data register address for DMA transfer.  <a href="#ga4d7c6a568b4031a0036521a834362d3c">More...</a><br/></td></tr>
+<tr class="separator:ga4d7c6a568b4031a0036521a834362d3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+FIFO control</h2></td></tr>
+<tr class="memitem:ga636c51a8e9043322a0ac215928c2e46d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga636c51a8e9043322a0ac215928c2e46d">I3C_SlaveSetWatermarks</a> (I3C_Type *base, <a class="el" href="a00032.html#gad5fba0f8bfbc5d6c5c84811921d454ff">i3c_tx_trigger_level_t</a> txLvl, <a class="el" href="a00032.html#ga826edd92e230b7f10fa6a54ffef9200c">i3c_rx_trigger_level_t</a> rxLvl, bool flushTx, bool flushRx)</td></tr>
+<tr class="memdesc:ga636c51a8e9043322a0ac215928c2e46d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the watermarks for I3C slave FIFOs.  <a href="#ga636c51a8e9043322a0ac215928c2e46d">More...</a><br/></td></tr>
+<tr class="separator:ga636c51a8e9043322a0ac215928c2e46d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5598ac74ca66fa9c73998d43a3b48f5c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#ga5598ac74ca66fa9c73998d43a3b48f5c">I3C_SlaveGetFifoCounts</a> (I3C_Type *base, size_t *rxCount, size_t *txCount)</td></tr>
+<tr class="memdesc:ga5598ac74ca66fa9c73998d43a3b48f5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the current number of bytes in the I3C slave FIFOs.  <a href="#ga5598ac74ca66fa9c73998d43a3b48f5c">More...</a><br/></td></tr>
+<tr class="separator:ga5598ac74ca66fa9c73998d43a3b48f5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Bus operations</h2></td></tr>
+<tr class="memitem:gab024187605c4c4bf9256a36e4e217b2e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gab024187605c4c4bf9256a36e4e217b2e">I3C_SlaveRequestEvent</a> (I3C_Type *base, <a class="el" href="a00035.html#gaba4f0075492b5accfbcb247cf2513be3">i3c_slave_event_t</a> event)</td></tr>
+<tr class="memdesc:gab024187605c4c4bf9256a36e4e217b2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C slave request event.  <a href="#gab024187605c4c4bf9256a36e4e217b2e">More...</a><br/></td></tr>
+<tr class="separator:gab024187605c4c4bf9256a36e4e217b2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gada1fa684cab9859f17724bc800b35b19"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gada1fa684cab9859f17724bc800b35b19">I3C_SlaveSend</a> (I3C_Type *base, const void *txBuff, size_t txSize)</td></tr>
+<tr class="memdesc:gada1fa684cab9859f17724bc800b35b19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a polling send transfer on the I3C bus.  <a href="#gada1fa684cab9859f17724bc800b35b19">More...</a><br/></td></tr>
+<tr class="separator:gada1fa684cab9859f17724bc800b35b19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab35cd6ef6042ccbd3534a4b57a3dcf37"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html#gab35cd6ef6042ccbd3534a4b57a3dcf37">I3C_SlaveReceive</a> (I3C_Type *base, void *rxBuff, size_t rxSize)</td></tr>
+<tr class="memdesc:gab35cd6ef6042ccbd3534a4b57a3dcf37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a polling receive transfer on the I3C bus.  <a href="#gab35cd6ef6042ccbd3534a4b57a3dcf37">More...</a><br/></td></tr>
+<tr class="separator:gab35cd6ef6042ccbd3534a4b57a3dcf37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Slave non-blocking</h2></td></tr>
+<tr class="memitem:ga3c0a5fc262795b92f8a68b6e20c572e5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ga3c0a5fc262795b92f8a68b6e20c572e5">I3C_SlaveTransferCreateHandle</a> (I3C_Type *base, <a class="el" href="a00035.html#a00325">i3c_slave_handle_t</a> *handle, <a class="el" href="a00035.html#gada633855ef6083061ce6205185f29187">i3c_slave_transfer_callback_t</a> callback, void *userData)</td></tr>
+<tr class="memdesc:ga3c0a5fc262795b92f8a68b6e20c572e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new handle for the I3C slave non-blocking APIs.  <a href="#ga3c0a5fc262795b92f8a68b6e20c572e5">More...</a><br/></td></tr>
+<tr class="separator:ga3c0a5fc262795b92f8a68b6e20c572e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6105a83b8c488151a17eb8d93d51f00d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ga6105a83b8c488151a17eb8d93d51f00d">I3C_SlaveTransferNonBlocking</a> (I3C_Type *base, <a class="el" href="a00035.html#a00325">i3c_slave_handle_t</a> *handle, uint32_t eventMask)</td></tr>
+<tr class="memdesc:ga6105a83b8c488151a17eb8d93d51f00d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts accepting slave transfers.  <a href="#ga6105a83b8c488151a17eb8d93d51f00d">More...</a><br/></td></tr>
+<tr class="separator:ga6105a83b8c488151a17eb8d93d51f00d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9f19df9a2dd5d99440e7707aa662d49c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ga9f19df9a2dd5d99440e7707aa662d49c">I3C_SlaveTransferGetCount</a> (I3C_Type *base, <a class="el" href="a00035.html#a00325">i3c_slave_handle_t</a> *handle, size_t *count)</td></tr>
+<tr class="memdesc:ga9f19df9a2dd5d99440e7707aa662d49c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the slave transfer status during a non-blocking transfer.  <a href="#ga9f19df9a2dd5d99440e7707aa662d49c">More...</a><br/></td></tr>
+<tr class="separator:ga9f19df9a2dd5d99440e7707aa662d49c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2d2b65294f290b2dd43ac2707f3ca87e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ga2d2b65294f290b2dd43ac2707f3ca87e">I3C_SlaveTransferAbort</a> (I3C_Type *base, <a class="el" href="a00035.html#a00325">i3c_slave_handle_t</a> *handle)</td></tr>
+<tr class="memdesc:ga2d2b65294f290b2dd43ac2707f3ca87e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the slave non-blocking transfers.  <a href="#ga2d2b65294f290b2dd43ac2707f3ca87e">More...</a><br/></td></tr>
+<tr class="separator:ga2d2b65294f290b2dd43ac2707f3ca87e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Slave IRQ handler</h2></td></tr>
+<tr class="memitem:gaf604d3e51fccadaa37e28bd6ba6d37c3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#gaf604d3e51fccadaa37e28bd6ba6d37c3">I3C_SlaveTransferHandleIRQ</a> (I3C_Type *base, void *intHandle)</td></tr>
+<tr class="memdesc:gaf604d3e51fccadaa37e28bd6ba6d37c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reusable routine to handle slave interrupts.  <a href="#gaf604d3e51fccadaa37e28bd6ba6d37c3">More...</a><br/></td></tr>
+<tr class="separator:gaf604d3e51fccadaa37e28bd6ba6d37c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga41456fa4696a936a2d7419667f39c6b8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ga41456fa4696a936a2d7419667f39c6b8">I3C_SlaveRequestIBIWithData</a> (I3C_Type *base, uint8_t *data, size_t dataSize)</td></tr>
+<tr class="memdesc:ga41456fa4696a936a2d7419667f39c6b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C slave request IBI event with data payload(mandatory and extended).  <a href="#ga41456fa4696a936a2d7419667f39c6b8">More...</a><br/></td></tr>
+<tr class="separator:ga41456fa4696a936a2d7419667f39c6b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad2b8e86e437281cd6d464930e55cc8be"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#gad2b8e86e437281cd6d464930e55cc8be">I3C_SlaveRequestIBIWithSingleData</a> (I3C_Type *base, uint8_t data, size_t dataSize)</td></tr>
+<tr class="memdesc:gad2b8e86e437281cd6d464930e55cc8be"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C slave request IBI event with single data.  <a href="#gad2b8e86e437281cd6d464930e55cc8be">More...</a><br/></td></tr>
+<tr class="separator:gad2b8e86e437281cd6d464930e55cc8be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00332" id="a00332"></a>
+<a name="a00324" id="a00324"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct iap_boot_option_t</td>
+          <td class="memname">struct _i3c_slave_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"></div><h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a3dcf012c6f93189ce0e413e4e2ef701c"></a>
+<div class="textblock"><p>This structure holds configuration settings for the I3C peripheral. To initialize this structure to reasonable defaults, call the <a class="el" href="a00032.html#gada6de6140ea7a8fd8f9b188f6ca8d561" title="Provides a default configuration for the I3C slave peripheral. ">I3C_SlaveGetDefaultConfig()</a> function and pass a pointer to your configuration structure instance.</p>
+<p>The configuration structure can be made constant so it resides in flash. </p>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a98e59d65cd067657b19586498d34b691"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a98e59d65cd067657b19586498d34b691">enableSlave</a></td></tr>
+<tr class="memdesc:a98e59d65cd067657b19586498d34b691"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether to enable slave.  <a href="#a98e59d65cd067657b19586498d34b691">More...</a><br/></td></tr>
+<tr class="separator:a98e59d65cd067657b19586498d34b691"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba869c7d335f091252724496cebf3362"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#aba869c7d335f091252724496cebf3362">isHotJoin</a></td></tr>
+<tr class="memdesc:aba869c7d335f091252724496cebf3362"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether to enable slave hotjoin before enable slave.  <a href="#aba869c7d335f091252724496cebf3362">More...</a><br/></td></tr>
+<tr class="separator:aba869c7d335f091252724496cebf3362"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6485b7dbb04a6c846d15efa6414fea4"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ad6485b7dbb04a6c846d15efa6414fea4">staticAddr</a></td></tr>
+<tr class="memdesc:ad6485b7dbb04a6c846d15efa6414fea4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Static address.  <a href="#ad6485b7dbb04a6c846d15efa6414fea4">More...</a><br/></td></tr>
+<tr class="separator:ad6485b7dbb04a6c846d15efa6414fea4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6f1f557ff3b6329f934a7beae3cb935"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ae6f1f557ff3b6329f934a7beae3cb935">vendorID</a></td></tr>
+<tr class="memdesc:ae6f1f557ff3b6329f934a7beae3cb935"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device vendor ID(manufacture ID).  <a href="#ae6f1f557ff3b6329f934a7beae3cb935">More...</a><br/></td></tr>
+<tr class="separator:ae6f1f557ff3b6329f934a7beae3cb935"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9097abc948d52048f675c885dfa70367"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a9097abc948d52048f675c885dfa70367">enableRandomPart</a></td></tr>
+<tr class="memdesc:a9097abc948d52048f675c885dfa70367"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether to generate random part number, if using random part number, the partNumber variable setting is meaningless.  <a href="#a9097abc948d52048f675c885dfa70367">More...</a><br/></td></tr>
+<tr class="separator:a9097abc948d52048f675c885dfa70367"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61ecf90dc2ed0f876f21152896ae761d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a61ecf90dc2ed0f876f21152896ae761d"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a61ecf90dc2ed0f876f21152896ae761d">partNumber</a></td></tr>
+<tr class="memdesc:a61ecf90dc2ed0f876f21152896ae761d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device part number info. <br/></td></tr>
+<tr class="separator:a61ecf90dc2ed0f876f21152896ae761d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36b69d63e3e195467fc5f0a85b92e137"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a36b69d63e3e195467fc5f0a85b92e137">dcr</a></td></tr>
+<tr class="memdesc:a36b69d63e3e195467fc5f0a85b92e137"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device characteristics register information.  <a href="#a36b69d63e3e195467fc5f0a85b92e137">More...</a><br/></td></tr>
+<tr class="separator:a36b69d63e3e195467fc5f0a85b92e137"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a033b2209cf467c1093f2d4b5712af517"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a033b2209cf467c1093f2d4b5712af517">bcr</a></td></tr>
+<tr class="memdesc:a033b2209cf467c1093f2d4b5712af517"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bus characteristics register information.  <a href="#a033b2209cf467c1093f2d4b5712af517">More...</a><br/></td></tr>
+<tr class="separator:a033b2209cf467c1093f2d4b5712af517"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58998e01c13dc791e93fb1ba4daaa4b4"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a58998e01c13dc791e93fb1ba4daaa4b4">hdrMode</a></td></tr>
+<tr class="memdesc:a58998e01c13dc791e93fb1ba4daaa4b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Support hdr mode, could be OR logic in enumeration:i3c_hdr_mode_t.  <a href="#a58998e01c13dc791e93fb1ba4daaa4b4">More...</a><br/></td></tr>
+<tr class="separator:a58998e01c13dc791e93fb1ba4daaa4b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad7780d1c07aa095322741261884a262"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#aad7780d1c07aa095322741261884a262">nakAllRequest</a></td></tr>
+<tr class="memdesc:aad7780d1c07aa095322741261884a262"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether to reply NAK to all requests except broadcast CCC.  <a href="#aad7780d1c07aa095322741261884a262">More...</a><br/></td></tr>
+<tr class="separator:aad7780d1c07aa095322741261884a262"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac1db73316013d7241a0740cd25cf543"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#aac1db73316013d7241a0740cd25cf543">ignoreS0S1Error</a></td></tr>
+<tr class="memdesc:aac1db73316013d7241a0740cd25cf543"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether to ignore S0/S1 error in SDR mode.  <a href="#aac1db73316013d7241a0740cd25cf543">More...</a><br/></td></tr>
+<tr class="separator:aac1db73316013d7241a0740cd25cf543"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1bdba99be8c955f59d4ea751fee40e5e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a1bdba99be8c955f59d4ea751fee40e5e">offline</a></td></tr>
+<tr class="memdesc:a1bdba99be8c955f59d4ea751fee40e5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether to wait 60 us of bus quiet or HDR request to ensure slave track SDR mode safely.  <a href="#a1bdba99be8c955f59d4ea751fee40e5e">More...</a><br/></td></tr>
+<tr class="separator:a1bdba99be8c955f59d4ea751fee40e5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00082ef99380792997189f5681b85f9b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a00082ef99380792997189f5681b85f9b">matchSlaveStartStop</a></td></tr>
+<tr class="memdesc:a00082ef99380792997189f5681b85f9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether to assert start/stop status only the time slave is addressed.  <a href="#a00082ef99380792997189f5681b85f9b">More...</a><br/></td></tr>
+<tr class="separator:a00082ef99380792997189f5681b85f9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac22a277e89ffffb160ec9c5c2e8c1da3"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ac22a277e89ffffb160ec9c5c2e8c1da3">maxWriteLength</a></td></tr>
+<tr class="memdesc:ac22a277e89ffffb160ec9c5c2e8c1da3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum write length.  <a href="#ac22a277e89ffffb160ec9c5c2e8c1da3">More...</a><br/></td></tr>
+<tr class="separator:ac22a277e89ffffb160ec9c5c2e8c1da3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93b111531dcd14e2cbe2ddad4e5ec579"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a93b111531dcd14e2cbe2ddad4e5ec579">maxReadLength</a></td></tr>
+<tr class="memdesc:a93b111531dcd14e2cbe2ddad4e5ec579"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum read length.  <a href="#a93b111531dcd14e2cbe2ddad4e5ec579">More...</a><br/></td></tr>
+<tr class="separator:a93b111531dcd14e2cbe2ddad4e5ec579"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="a98e59d65cd067657b19586498d34b691"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t iap_boot_option_t::bootImageIndex</td>
+          <td class="memname">bool _i3c_slave_config::enableSlave</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a9bce3df9087fe4fa05f640382da9b4b9"></a>
+<a class="anchor" id="aba869c7d335f091252724496cebf3362"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t iap_boot_option_t::instance</td>
+          <td class="memname">bool _i3c_slave_config::isHotJoin</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a259cfbea5148ebdf1b934a9b09f4bf78"></a>
+<a class="anchor" id="ad6485b7dbb04a6c846d15efa6414fea4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t iap_boot_option_t::bootInterface</td>
+          <td class="memname">uint8_t _i3c_slave_config::staticAddr</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="aeed5e23471c3935739ee931da231e65d"></a>
+<a class="anchor" id="ae6f1f557ff3b6329f934a7beae3cb935"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t iap_boot_option_t::mode</td>
+          <td class="memname">uint16_t _i3c_slave_config::vendorID</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>RT600: 0: USART 1: I2C 2: SPI 3: USB HID 4:FlexSPI 7:SD 8:MMC </p>
 
 </div>
 </div>
+<a class="anchor" id="a9097abc948d52048f675c885dfa70367"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool _i3c_slave_config::enableRandomPart</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a36b69d63e3e195467fc5f0a85b92e137"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t _i3c_slave_config::dcr</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a033b2209cf467c1093f2d4b5712af517"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t _i3c_slave_config::bcr</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a58998e01c13dc791e93fb1ba4daaa4b4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t _i3c_slave_config::hdrMode</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aad7780d1c07aa095322741261884a262"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool _i3c_slave_config::nakAllRequest</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aac1db73316013d7241a0740cd25cf543"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool _i3c_slave_config::ignoreS0S1Error</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a1bdba99be8c955f59d4ea751fee40e5e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool _i3c_slave_config::offline</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a00082ef99380792997189f5681b85f9b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool _i3c_slave_config::matchSlaveStartStop</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ac22a277e89ffffb160ec9c5c2e8c1da3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t _i3c_slave_config::maxWriteLength</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a93b111531dcd14e2cbe2ddad4e5ec579"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t _i3c_slave_config::maxReadLength</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="a00326" id="a00326"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct _i3c_slave_transfer</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:aae626ab0c53ea993502930acf3d8ea76"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#aae626ab0c53ea993502930acf3d8ea76">event</a></td></tr>
+<tr class="memdesc:aae626ab0c53ea993502930acf3d8ea76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reason the callback is being invoked.  <a href="#aae626ab0c53ea993502930acf3d8ea76">More...</a><br/></td></tr>
+<tr class="separator:aae626ab0c53ea993502930acf3d8ea76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d4e5deb1087d8ac00f9107ac23c71cb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6d4e5deb1087d8ac00f9107ac23c71cb"></a>
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a6d4e5deb1087d8ac00f9107ac23c71cb">txData</a></td></tr>
+<tr class="memdesc:a6d4e5deb1087d8ac00f9107ac23c71cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer buffer. <br/></td></tr>
+<tr class="separator:a6d4e5deb1087d8ac00f9107ac23c71cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a1a87baea75b5c0dc7095c2a981f612"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0a1a87baea75b5c0dc7095c2a981f612"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a0a1a87baea75b5c0dc7095c2a981f612">txDataSize</a></td></tr>
+<tr class="memdesc:a0a1a87baea75b5c0dc7095c2a981f612"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer size. <br/></td></tr>
+<tr class="separator:a0a1a87baea75b5c0dc7095c2a981f612"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2ac349b2b99e7d558937fd78ba2b4cd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac2ac349b2b99e7d558937fd78ba2b4cd"></a>
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ac2ac349b2b99e7d558937fd78ba2b4cd">rxData</a></td></tr>
+<tr class="memdesc:ac2ac349b2b99e7d558937fd78ba2b4cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer buffer. <br/></td></tr>
+<tr class="separator:ac2ac349b2b99e7d558937fd78ba2b4cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6baf089846fb6865bbdd008992de31f0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6baf089846fb6865bbdd008992de31f0"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a6baf089846fb6865bbdd008992de31f0">rxDataSize</a></td></tr>
+<tr class="memdesc:a6baf089846fb6865bbdd008992de31f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer size. <br/></td></tr>
+<tr class="separator:a6baf089846fb6865bbdd008992de31f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65ee3f437337750d3ed2ff6b1ed2ea9a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a65ee3f437337750d3ed2ff6b1ed2ea9a">completionStatus</a></td></tr>
+<tr class="memdesc:a65ee3f437337750d3ed2ff6b1ed2ea9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Success or error code describing how the transfer completed.  <a href="#a65ee3f437337750d3ed2ff6b1ed2ea9a">More...</a><br/></td></tr>
+<tr class="separator:a65ee3f437337750d3ed2ff6b1ed2ea9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19c410943c0e2c6151bd6db66fd6b129"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a19c410943c0e2c6151bd6db66fd6b129">transferredCount</a></td></tr>
+<tr class="memdesc:a19c410943c0e2c6151bd6db66fd6b129"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bytes actually transferred since start or last repeated start.  <a href="#a19c410943c0e2c6151bd6db66fd6b129">More...</a><br/></td></tr>
+<tr class="separator:a19c410943c0e2c6151bd6db66fd6b129"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="aae626ab0c53ea993502930acf3d8ea76"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t _i3c_slave_transfer::event</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a65ee3f437337750d3ed2ff6b1ed2ea9a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> _i3c_slave_transfer::completionStatus</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Only applies for <a class="el" href="a00035.html#ggad2e5167cb9cabc1582fedcec5786104cafd02679de07ec01bbda9eddff9d51142" title="A stop was detected, completing the transfer. ">kI3C_SlaveCompletionEvent</a>. </p>
+
+</div>
+</div>
+<a class="anchor" id="a19c410943c0e2c6151bd6db66fd6b129"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t _i3c_slave_transfer::transferredCount</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="a00325" id="a00325"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct _i3c_slave_handle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><dl class="section note"><dt>Note</dt><dd>The contents of this structure are private and subject to change. </dd></dl>
+</div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a50df171f9d88c49be6d6436a77f10219"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00035.html#ga33dc0e62f6fa1c9c8556dc5adacf8614">i3c_slave_transfer_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a50df171f9d88c49be6d6436a77f10219">transfer</a></td></tr>
+<tr class="memdesc:a50df171f9d88c49be6d6436a77f10219"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C slave transfer copy.  <a href="#a50df171f9d88c49be6d6436a77f10219">More...</a><br/></td></tr>
+<tr class="separator:a50df171f9d88c49be6d6436a77f10219"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb1b7bf3f9fd364b823dbe3db77521a7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#acb1b7bf3f9fd364b823dbe3db77521a7">isBusy</a></td></tr>
+<tr class="memdesc:acb1b7bf3f9fd364b823dbe3db77521a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether transfer is busy.  <a href="#acb1b7bf3f9fd364b823dbe3db77521a7">More...</a><br/></td></tr>
+<tr class="separator:acb1b7bf3f9fd364b823dbe3db77521a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72e3e1c5a9b258169ba9786a15a5e2a1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a72e3e1c5a9b258169ba9786a15a5e2a1">wasTransmit</a></td></tr>
+<tr class="memdesc:a72e3e1c5a9b258169ba9786a15a5e2a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether the last transfer was a transmit.  <a href="#a72e3e1c5a9b258169ba9786a15a5e2a1">More...</a><br/></td></tr>
+<tr class="separator:a72e3e1c5a9b258169ba9786a15a5e2a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d00b5d609d410c27fe7ec44dd9966b0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a7d00b5d609d410c27fe7ec44dd9966b0">eventMask</a></td></tr>
+<tr class="memdesc:a7d00b5d609d410c27fe7ec44dd9966b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mask of enabled events.  <a href="#a7d00b5d609d410c27fe7ec44dd9966b0">More...</a><br/></td></tr>
+<tr class="separator:a7d00b5d609d410c27fe7ec44dd9966b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a099a6c61eda5a8111ac6e721fad9b177"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a099a6c61eda5a8111ac6e721fad9b177">transferredCount</a></td></tr>
+<tr class="memdesc:a099a6c61eda5a8111ac6e721fad9b177"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of bytes transferred.  <a href="#a099a6c61eda5a8111ac6e721fad9b177">More...</a><br/></td></tr>
+<tr class="separator:a099a6c61eda5a8111ac6e721fad9b177"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b9ca233519ab32f42785be0a67b1330"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00035.html#gada633855ef6083061ce6205185f29187">i3c_slave_transfer_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a0b9ca233519ab32f42785be0a67b1330">callback</a></td></tr>
+<tr class="memdesc:a0b9ca233519ab32f42785be0a67b1330"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function called at transfer event.  <a href="#a0b9ca233519ab32f42785be0a67b1330">More...</a><br/></td></tr>
+<tr class="separator:a0b9ca233519ab32f42785be0a67b1330"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d399edcf39c50dbfb9554b75975bacb"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a5d399edcf39c50dbfb9554b75975bacb">userData</a></td></tr>
+<tr class="memdesc:a5d399edcf39c50dbfb9554b75975bacb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback parameter passed to callback.  <a href="#a5d399edcf39c50dbfb9554b75975bacb">More...</a><br/></td></tr>
+<tr class="separator:a5d399edcf39c50dbfb9554b75975bacb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a131bc68dc0b868b949ac47af0f3c4535"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a131bc68dc0b868b949ac47af0f3c4535"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a131bc68dc0b868b949ac47af0f3c4535">txFifoSize</a></td></tr>
+<tr class="memdesc:a131bc68dc0b868b949ac47af0f3c4535"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tx Fifo size. <br/></td></tr>
+<tr class="separator:a131bc68dc0b868b949ac47af0f3c4535"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="a50df171f9d88c49be6d6436a77f10219"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00035.html#ga33dc0e62f6fa1c9c8556dc5adacf8614">i3c_slave_transfer_t</a> _i3c_slave_handle::transfer</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="acb1b7bf3f9fd364b823dbe3db77521a7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool _i3c_slave_handle::isBusy</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a72e3e1c5a9b258169ba9786a15a5e2a1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool _i3c_slave_handle::wasTransmit</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a7d00b5d609d410c27fe7ec44dd9966b0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t _i3c_slave_handle::eventMask</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a099a6c61eda5a8111ac6e721fad9b177"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t _i3c_slave_handle::transferredCount</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a0b9ca233519ab32f42785be0a67b1330"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00035.html#gada633855ef6083061ce6205185f29187">i3c_slave_transfer_callback_t</a> _i3c_slave_handle::callback</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a5d399edcf39c50dbfb9554b75975bacb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* _i3c_slave_handle::userData</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="gaaf5381779ee40e0601099f82336968b1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00035.html#a00324">_i3c_slave_config</a>  <a class="el" href="a00035.html#gaaf5381779ee40e0601099f82336968b1">i3c_slave_config_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This structure holds configuration settings for the I3C peripheral. To initialize this structure to reasonable defaults, call the <a class="el" href="a00032.html#gada6de6140ea7a8fd8f9b188f6ca8d561" title="Provides a default configuration for the I3C slave peripheral. ">I3C_SlaveGetDefaultConfig()</a> function and pass a pointer to your configuration structure instance.</p>
+<p>The configuration structure can be made constant so it resides in flash. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga99929d7ef76befce5c7401a5a42d2453"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00035.html#gad2e5167cb9cabc1582fedcec5786104c">_i3c_slave_transfer_event</a>  <a class="el" href="a00035.html#ga99929d7ef76befce5c7401a5a42d2453">i3c_slave_transfer_event_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>These event enumerations are used for two related purposes. First, a bit mask created by OR'ing together events is passed to <a class="el" href="a00035.html#ga6105a83b8c488151a17eb8d93d51f00d" title="Starts accepting slave transfers. ">I3C_SlaveTransferNonBlocking()</a> in order to specify which events to enable. Then, when the slave callback is invoked, it is passed the current event through its <em>transfer</em> parameter.</p>
+<dl class="section note"><dt>Note</dt><dd>These enumerations are meant to be OR'd together to form a bit mask of events. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gada633855ef6083061ce6205185f29187"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* i3c_slave_transfer_callback_t)(I3C_Type *base, <a class="el" href="a00035.html#ga33dc0e62f6fa1c9c8556dc5adacf8614">i3c_slave_transfer_t</a> *transfer, void *userData)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This callback is used only for the slave non-blocking transfer API. To install a callback, use the I3C_SlaveSetCallback() function after you have created a handle.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Base address for the I3C instance on which the event occurred. </td></tr>
+    <tr><td class="paramname">transfer</td><td>Pointer to transfer descriptor containing values passed to and/or from the callback. </td></tr>
+    <tr><td class="paramname">userData</td><td>Arbitrary pointer-sized value passed from the application. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa57ff17d0b3919986c395a8825e00462"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* i3c_slave_isr_t)(I3C_Type *base, void *handle)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="gae5c787dbdeb2420f38e50c912e36bad1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00035.html#gae5c787dbdeb2420f38e50c912e36bad1">_i3c_slave_flags</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The following status register flags can be cleared:</p>
+<ul>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a007137b4800c84cf25a31eadc687bc2e" title="Start/Re-start event is seen since the bus was last cleared. ">kI3C_SlaveBusStartFlag</a></li>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1aa7410fa50b7d84e1f3da17649389cf98" title="Slave address(dynamic/static) matched since last cleared. ">kI3C_SlaveMatchedFlag</a></li>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a8904ae203162bf4de511bd3d44166bd0" title="Stop event is seen since the bus was last cleared. ">kI3C_SlaveBusStopFlag</a></li>
+</ul>
+<p>Only below flags can be enabled as interrupts.</p>
+<ul>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a007137b4800c84cf25a31eadc687bc2e" title="Start/Re-start event is seen since the bus was last cleared. ">kI3C_SlaveBusStartFlag</a></li>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1aa7410fa50b7d84e1f3da17649389cf98" title="Slave address(dynamic/static) matched since last cleared. ">kI3C_SlaveMatchedFlag</a></li>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a8904ae203162bf4de511bd3d44166bd0" title="Stop event is seen since the bus was last cleared. ">kI3C_SlaveBusStopFlag</a></li>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1ab04dfa145be7ae004f3e453cc5f22975" title="Rx data ready in rx buffer flag. ">kI3C_SlaveRxReadyFlag</a></li>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1ac0fb318358a569c3b90a754649ad480b" title="Tx buffer ready for Tx data flag. ">kI3C_SlaveTxReadyFlag</a></li>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a36533bd278344d58566e0316d8c32695" title="Slave dynamic address has been assigned, re-assigned, or lost. ">kI3C_SlaveDynamicAddrChangedFlag</a></li>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a0237cb952ce19512f77eaea85ec7dd87" title="Slave received Common command code. ">kI3C_SlaveReceivedCCCFlag</a></li>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a603496b621ece631d6b7c66398f37254" title="Error occurred flag. ">kI3C_SlaveErrorFlag</a></li>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1aa40886fd07849aa04abbf78a0e90213b" title="High data rate command match. ">kI3C_SlaveHDRCommandMatchFlag</a></li>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a47c0731626e7d65f7bd99befb714082b" title="Slave received Common command code is handled by I3C module. ">kI3C_SlaveCCCHandledFlag</a></li>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a5e512f1349b7b6d5d245be7496f9d9a2" title="Slave IBI/P2P/MR/HJ event has been sent. ">kI3C_SlaveEventSentFlag</a></li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>These enums are meant to be OR'd together to form a bit mask. </dd></dl>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggae5c787dbdeb2420f38e50c912e36bad1ae856c2de9789a964c5df9de6b59fa5b5"></a>kI3C_SlaveNotStopFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Slave status not stop flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae5c787dbdeb2420f38e50c912e36bad1abb232d0753ef5e1cb528c0f70daa2028"></a>kI3C_SlaveMessageFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Slave status message, indicating slave is listening to the bus traffic or responding. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae5c787dbdeb2420f38e50c912e36bad1afc342a0ed101c4dd987047414dba5727"></a>kI3C_SlaveRequiredReadFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Slave status required, either is master doing SDR read from slave, or is IBI pushing out. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae5c787dbdeb2420f38e50c912e36bad1a1b44c76f76dc7592c5a3a851691c827f"></a>kI3C_SlaveRequiredWriteFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Slave status request write, master is doing SDR write to slave, except slave in ENTDAA mode. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae5c787dbdeb2420f38e50c912e36bad1a90d1bd0889b419b41710c905a023e699"></a>kI3C_SlaveBusDAAFlag</em>&nbsp;</td><td class="fielddoc">
+<p>I3C bus is in ENTDAA mode. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae5c787dbdeb2420f38e50c912e36bad1a8134e94cfc1a1a1e41b6d7dafecc6721"></a>kI3C_SlaveBusHDRModeFlag</em>&nbsp;</td><td class="fielddoc">
+<p>I3C bus is in HDR mode. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae5c787dbdeb2420f38e50c912e36bad1a007137b4800c84cf25a31eadc687bc2e"></a>kI3C_SlaveBusStartFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Start/Re-start event is seen since the bus was last cleared. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae5c787dbdeb2420f38e50c912e36bad1aa7410fa50b7d84e1f3da17649389cf98"></a>kI3C_SlaveMatchedFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Slave address(dynamic/static) matched since last cleared. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae5c787dbdeb2420f38e50c912e36bad1a8904ae203162bf4de511bd3d44166bd0"></a>kI3C_SlaveBusStopFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Stop event is seen since the bus was last cleared. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae5c787dbdeb2420f38e50c912e36bad1ab04dfa145be7ae004f3e453cc5f22975"></a>kI3C_SlaveRxReadyFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Rx data ready in rx buffer flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae5c787dbdeb2420f38e50c912e36bad1ac0fb318358a569c3b90a754649ad480b"></a>kI3C_SlaveTxReadyFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Tx buffer ready for Tx data flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae5c787dbdeb2420f38e50c912e36bad1a36533bd278344d58566e0316d8c32695"></a>kI3C_SlaveDynamicAddrChangedFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Slave dynamic address has been assigned, re-assigned, or lost. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae5c787dbdeb2420f38e50c912e36bad1a0237cb952ce19512f77eaea85ec7dd87"></a>kI3C_SlaveReceivedCCCFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Slave received Common command code. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae5c787dbdeb2420f38e50c912e36bad1a603496b621ece631d6b7c66398f37254"></a>kI3C_SlaveErrorFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Error occurred flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae5c787dbdeb2420f38e50c912e36bad1aa40886fd07849aa04abbf78a0e90213b"></a>kI3C_SlaveHDRCommandMatchFlag</em>&nbsp;</td><td class="fielddoc">
+<p>High data rate command match. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae5c787dbdeb2420f38e50c912e36bad1a47c0731626e7d65f7bd99befb714082b"></a>kI3C_SlaveCCCHandledFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Slave received Common command code is handled by I3C module. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae5c787dbdeb2420f38e50c912e36bad1a5e512f1349b7b6d5d245be7496f9d9a2"></a>kI3C_SlaveEventSentFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Slave IBI/P2P/MR/HJ event has been sent. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae5c787dbdeb2420f38e50c912e36bad1a111fbbfc5bd0296baaa460209acbb17b"></a>kI3C_SlaveIbiDisableFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Slave in band interrupt is disabled. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae5c787dbdeb2420f38e50c912e36bad1ae2da05c79b6d1dcbf7087b638c95351f"></a>kI3C_SlaveMasterRequestDisabledFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Slave master request is disabled. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae5c787dbdeb2420f38e50c912e36bad1af43952b3f9ba151711d1d6b105d956d7"></a>kI3C_SlaveHotJoinDisabledFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Slave Hot-Join is disabled. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae5c787dbdeb2420f38e50c912e36bad1a085cabea22a033d45af3bdd11ef20558"></a>kI3C_SlaveClearFlags</em>&nbsp;</td><td class="fielddoc">
+<p>All flags which are cleared by the driver upon starting a transfer. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga806dc86e40128eb6bf3e0853537b2b9b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00035.html#ga806dc86e40128eb6bf3e0853537b2b9b">_i3c_slave_error_flags</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>These enums are meant to be OR'd together to form a bit mask. </dd></dl>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga806dc86e40128eb6bf3e0853537b2b9bab6fbf473367003f04876296c2fbca2af"></a>kI3C_SlaveErrorOverrunFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Slave internal from-bus buffer/FIFO overrun. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga806dc86e40128eb6bf3e0853537b2b9ba15a719f050edf51372b2cb7eacb54f4f"></a>kI3C_SlaveErrorUnderrunFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Slave internal to-bus buffer/FIFO underrun. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga806dc86e40128eb6bf3e0853537b2b9ba6890862c30f340f357ab162c6f193ec0"></a>kI3C_SlaveErrorUnderrunNakFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Slave internal from-bus buffer/FIFO underrun and NACK error. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga806dc86e40128eb6bf3e0853537b2b9ba712354ffcf66274ceca67defb71a3eb0"></a>kI3C_SlaveErrorTermFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Terminate error from master. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga806dc86e40128eb6bf3e0853537b2b9ba55e1ca378f58f8528cd7f7da6b34997f"></a>kI3C_SlaveErrorInvalidStartFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Slave invalid start flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga806dc86e40128eb6bf3e0853537b2b9baf97cf443cb9b10aa179e4c01edebfef5"></a>kI3C_SlaveErrorSdrParityFlag</em>&nbsp;</td><td class="fielddoc">
+<p>SDR parity error. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga806dc86e40128eb6bf3e0853537b2b9ba2c9b8ea22108348a0ddb649b6caa6c10"></a>kI3C_SlaveErrorHdrParityFlag</em>&nbsp;</td><td class="fielddoc">
+<p>HDR parity error. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga806dc86e40128eb6bf3e0853537b2b9ba7aa919a09ffc845467c720d4cec2de62"></a>kI3C_SlaveErrorHdrCRCFlag</em>&nbsp;</td><td class="fielddoc">
+<p>HDR-DDR CRC error. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga806dc86e40128eb6bf3e0853537b2b9bae001a006772822e5feeba1a48447c8d7"></a>kI3C_SlaveErrorS0S1Flag</em>&nbsp;</td><td class="fielddoc">
+<p>S0 or S1 error. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga806dc86e40128eb6bf3e0853537b2b9baf2c8a7e4796255f62eaa3f879bf42dfe"></a>kI3C_SlaveErrorOverreadFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Over-read error. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga806dc86e40128eb6bf3e0853537b2b9ba397e6eebaeae742add9b14dc2a72a07f"></a>kI3C_SlaveErrorOverwriteFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Over-write error. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gae8b230de231b4fa946c919b0b68f5340"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00035.html#gae8b230de231b4fa946c919b0b68f5340">_i3c_slave_event</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggae8b230de231b4fa946c919b0b68f5340aa0edb1d7b4740e23426ab265c7f76da4"></a>kI3C_SlaveEventNormal</em>&nbsp;</td><td class="fielddoc">
+<p>Normal mode. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae8b230de231b4fa946c919b0b68f5340a42c92ea9bd328c3b65d0e7fc6674c338"></a>kI3C_SlaveEventIBI</em>&nbsp;</td><td class="fielddoc">
+<p>In band interrupt event. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae8b230de231b4fa946c919b0b68f5340af81749873ca6b6a227c090fd5bceeee8"></a>kI3C_SlaveEventMasterReq</em>&nbsp;</td><td class="fielddoc">
+<p>Master request event. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae8b230de231b4fa946c919b0b68f5340a1989c0750ed0d920482b8b65d98a73b4"></a>kI3C_SlaveEventHotJoinReq</em>&nbsp;</td><td class="fielddoc">
+<p>Hot-join event. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga681c551b7705bf4b4a4c5ded645dbf88"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00035.html#ga681c551b7705bf4b4a4c5ded645dbf88">_i3c_slave_activity_state</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga681c551b7705bf4b4a4c5ded645dbf88ae04aca510c43014f567bb5ecc92b055a"></a>kI3C_SlaveNoLatency</em>&nbsp;</td><td class="fielddoc">
+<p>Normal bus operation. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga681c551b7705bf4b4a4c5ded645dbf88acba58e3c0ddebac15feacc8810aa36e9"></a>kI3C_SlaveLatency1Ms</em>&nbsp;</td><td class="fielddoc">
+<p>1ms of latency. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga681c551b7705bf4b4a4c5ded645dbf88a7cc603734f6cea7f36f11f6e82bbec2a"></a>kI3C_SlaveLatency100Ms</em>&nbsp;</td><td class="fielddoc">
+<p>100ms of latency. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga681c551b7705bf4b4a4c5ded645dbf88a886e7c36aa0320db1a27769d23bbe245"></a>kI3C_SlaveLatency10S</em>&nbsp;</td><td class="fielddoc">
+<p>10s latency. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gad2e5167cb9cabc1582fedcec5786104c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00035.html#gad2e5167cb9cabc1582fedcec5786104c">_i3c_slave_transfer_event</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>These event enumerations are used for two related purposes. First, a bit mask created by OR'ing together events is passed to <a class="el" href="a00035.html#ga6105a83b8c488151a17eb8d93d51f00d" title="Starts accepting slave transfers. ">I3C_SlaveTransferNonBlocking()</a> in order to specify which events to enable. Then, when the slave callback is invoked, it is passed the current event through its <em>transfer</em> parameter.</p>
+<dl class="section note"><dt>Note</dt><dd>These enumerations are meant to be OR'd together to form a bit mask of events. </dd></dl>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggad2e5167cb9cabc1582fedcec5786104ca4ba7cde181fc4720255985ac9669563b"></a>kI3C_SlaveAddressMatchEvent</em>&nbsp;</td><td class="fielddoc">
+<p>Received the slave address after a start or repeated start. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad2e5167cb9cabc1582fedcec5786104cac1ddc4bae9e31c516d468c44c644438b"></a>kI3C_SlaveTransmitEvent</em>&nbsp;</td><td class="fielddoc">
+<p>Callback is requested to provide data to transmit (slave-transmitter role). </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad2e5167cb9cabc1582fedcec5786104cafc30108371d78ede74f4a1c9724d22b8"></a>kI3C_SlaveReceiveEvent</em>&nbsp;</td><td class="fielddoc">
+<p>Callback is requested to provide a buffer in which to place received data (slave-receiver role). </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad2e5167cb9cabc1582fedcec5786104ca16e7360bba643f1a7f699ac0d9ff5033"></a>kI3C_SlaveRequiredTransmitEvent</em>&nbsp;</td><td class="fielddoc">
+<p>Callback is requested to provide a buffer in which to place received data (slave-receiver role). </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad2e5167cb9cabc1582fedcec5786104ca3a226dce66e90a81b3766c9f4ab61128"></a>kI3C_SlaveStartEvent</em>&nbsp;</td><td class="fielddoc">
+<p>A start/repeated start was detected. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad2e5167cb9cabc1582fedcec5786104cace186b327e1875eb407912f73feaa2d0"></a>kI3C_SlaveHDRCommandMatchEvent</em>&nbsp;</td><td class="fielddoc">
+<p>Slave Match HDR Command. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad2e5167cb9cabc1582fedcec5786104cafd02679de07ec01bbda9eddff9d51142"></a>kI3C_SlaveCompletionEvent</em>&nbsp;</td><td class="fielddoc">
+<p>A stop was detected, completing the transfer. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad2e5167cb9cabc1582fedcec5786104cada90e0bf341a85503f67d12f6845ffe0"></a>kI3C_SlaveRequestSentEvent</em>&nbsp;</td><td class="fielddoc">
+<p>Slave request event sent. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad2e5167cb9cabc1582fedcec5786104cad241179a27080e858b3b7e7c8f6069e8"></a>kI3C_SlaveReceivedCCCEvent</em>&nbsp;</td><td class="fielddoc">
+<p>Slave received CCC event, need to handle by application. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad2e5167cb9cabc1582fedcec5786104cac872741fd80ab9d76f9ec145a674f53c"></a>kI3C_SlaveAllEvents</em>&nbsp;</td><td class="fielddoc">
+<p>Bit mask of all available events. </p>
+</td></tr>
+</table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga95df42cf9f599a7d5ed4aa7c4555ebcf"></a>
+<a class="anchor" id="gada6de6140ea7a8fd8f9b188f6ca8d561"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void IAP_RunBootLoader </td>
+          <td class="memname">void I3C_SlaveGetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00035.html#a00332">iap_boot_option_t</a> *&#160;</td>
-          <td class="paramname"><em>option</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="a00035.html#gaaf5381779ee40e0601099f82336968b1">i3c_slave_config_t</a> *&#160;</td>
+          <td class="paramname"><em>slaveConfig</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function provides the following default configuration for the I3C slave peripheral: </p>
+<div class="fragment"><div class="line">*  slaveConfig-&gt;enableslave             = <span class="keyword">true</span>;</div>
+<div class="line">* </div>
+</div><!-- fragment --><p>After calling this function, you can override any settings in order to customize the configuration, prior to initializing the slave driver with <a class="el" href="a00032.html#ga6cbdffff9439d0b1ee27682a5c592c34" title="Initializes the I3C slave peripheral. ">I3C_SlaveInit()</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">slaveConfig</td><td>User provided configuration structure for default values. Refer to <a class="el" href="a00035.html#gaaf5381779ee40e0601099f82336968b1" title="Structure with settings to initialize the I3C slave module. ">i3c_slave_config_t</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga6cbdffff9439d0b1ee27682a5c592c34"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void I3C_SlaveInit </td>
+          <td>(</td>
+          <td class="paramtype">I3C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a00035.html#gaaf5381779ee40e0601099f82336968b1">i3c_slave_config_t</a> *&#160;</td>
+          <td class="paramname"><em>slaveConfig</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>slowClock_Hz</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function enables the peripheral clock and initializes the I3C slave peripheral as described by the user provided configuration.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
+    <tr><td class="paramname">slaveConfig</td><td>User provided peripheral configuration. Use <a class="el" href="a00032.html#gada6de6140ea7a8fd8f9b188f6ca8d561" title="Provides a default configuration for the I3C slave peripheral. ">I3C_SlaveGetDefaultConfig()</a> to get a set of defaults that you can override. </td></tr>
+    <tr><td class="paramname">slowClock_Hz</td><td>Frequency in Hertz of the I3C slow clock. Used to calculate the bus match condition values. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaaf8b8a5e1974d969dfb4769ece3f2d0c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void I3C_SlaveDeinit </td>
+          <td>(</td>
+          <td class="paramtype">I3C_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function disables the I3C slave peripheral and gates the clock.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga4ee0343d4b79a3a929821af22b227949"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void I3C_SlaveEnable </td>
+          <td>(</td>
+          <td class="paramtype">I3C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>isEnable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
+    <tr><td class="paramname">isEnable</td><td>Enable or disable. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaf483efbd8d9c2569369d4d6d9ee043c7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t I3C_SlaveGetStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">I3C_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>A bit mask with the state of all I3C slave status flags is returned. For each flag, the corresponding bit in the return value is set if the flag is asserted.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>State of the status flags:<ul>
+<li>1: related status flag is set.</li>
+<li>0: related status flag is not set. </li>
+</ul>
+</dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00035.html#gae5c787dbdeb2420f38e50c912e36bad1" title="I3C slave peripheral flags. ">_i3c_slave_flags</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga41de2b6422398d3aed02cfdbda87ded5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void I3C_SlaveClearStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">I3C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>statusMask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The following status register flags can be cleared:</p>
+<ul>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a007137b4800c84cf25a31eadc687bc2e" title="Start/Re-start event is seen since the bus was last cleared. ">kI3C_SlaveBusStartFlag</a></li>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1aa7410fa50b7d84e1f3da17649389cf98" title="Slave address(dynamic/static) matched since last cleared. ">kI3C_SlaveMatchedFlag</a></li>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a8904ae203162bf4de511bd3d44166bd0" title="Stop event is seen since the bus was last cleared. ">kI3C_SlaveBusStopFlag</a></li>
+</ul>
+<p>Attempts to clear other flags has no effect.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
+    <tr><td class="paramname">statusMask</td><td>A bitmask of status flags that are to be cleared. The mask is composed of <a class="el" href="a00035.html#gae5c787dbdeb2420f38e50c912e36bad1" title="I3C slave peripheral flags. ">_i3c_slave_flags</a> enumerators OR'd together. You may pass the result of a previous call to <a class="el" href="a00032.html#gaf483efbd8d9c2569369d4d6d9ee043c7" title="Gets the I3C slave status flags. ">I3C_SlaveGetStatusFlags()</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00035.html#gae5c787dbdeb2420f38e50c912e36bad1" title="I3C slave peripheral flags. ">_i3c_slave_flags</a>. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaf6c4e955676f72510a17e7cf9797d389"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t I3C_SlaveGetErrorStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">I3C_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>A bit mask with the state of all I3C slave error status flags is returned. For each flag, the corresponding bit in the return value is set if the flag is asserted.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>State of the error status flags:<ul>
+<li>1: related status flag is set.</li>
+<li>0: related status flag is not set. </li>
+</ul>
+</dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00035.html#ga806dc86e40128eb6bf3e0853537b2b9b" title="I3C slave error flags to indicate the causes. ">_i3c_slave_error_flags</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaff291ac645d00d688a3c4539362a9e3a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void I3C_SlaveClearErrorStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">I3C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>statusMask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
+    <tr><td class="paramname">statusMask</td><td>A bitmask of error status flags that are to be cleared. The mask is composed of <a class="el" href="a00035.html#ga806dc86e40128eb6bf3e0853537b2b9b" title="I3C slave error flags to indicate the causes. ">_i3c_slave_error_flags</a> enumerators OR'd together. You may pass the result of a previous call to <a class="el" href="a00032.html#gaf6c4e955676f72510a17e7cf9797d389" title="Gets the I3C slave error status flags. ">I3C_SlaveGetErrorStatusFlags()</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00035.html#ga806dc86e40128eb6bf3e0853537b2b9b" title="I3C slave error flags to indicate the causes. ">_i3c_slave_error_flags</a>. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gab93bd6b3583b8382d1d5f40795004f73"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00035.html#ga7a6964b6cdcbbadf3bad646f03cb5157">i3c_slave_activity_state_t</a> I3C_SlaveGetActivityState </td>
+          <td>(</td>
+          <td class="paramtype">I3C_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">option</td><td>Boot parameters. Refer to <a class="el" href="a00035.html#a00332" title="IAP boot option. ">iap_boot_option_t</a>. </td></tr>
+    <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>I3C slave activity state, refer <a class="el" href="a00035.html#ga7a6964b6cdcbbadf3bad646f03cb5157" title="I3C slave.activity state. ">i3c_slave_activity_state_t</a>. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga2af3e5de992c1276297273a63348d457"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void I3C_SlaveEnableInterrupts </td>
+          <td>(</td>
+          <td class="paramtype">I3C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>interruptMask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Only below flags can be enabled as interrupts.</p>
+<ul>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a007137b4800c84cf25a31eadc687bc2e" title="Start/Re-start event is seen since the bus was last cleared. ">kI3C_SlaveBusStartFlag</a></li>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1aa7410fa50b7d84e1f3da17649389cf98" title="Slave address(dynamic/static) matched since last cleared. ">kI3C_SlaveMatchedFlag</a></li>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a8904ae203162bf4de511bd3d44166bd0" title="Stop event is seen since the bus was last cleared. ">kI3C_SlaveBusStopFlag</a></li>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1ab04dfa145be7ae004f3e453cc5f22975" title="Rx data ready in rx buffer flag. ">kI3C_SlaveRxReadyFlag</a></li>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1ac0fb318358a569c3b90a754649ad480b" title="Tx buffer ready for Tx data flag. ">kI3C_SlaveTxReadyFlag</a></li>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a36533bd278344d58566e0316d8c32695" title="Slave dynamic address has been assigned, re-assigned, or lost. ">kI3C_SlaveDynamicAddrChangedFlag</a></li>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a0237cb952ce19512f77eaea85ec7dd87" title="Slave received Common command code. ">kI3C_SlaveReceivedCCCFlag</a></li>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a603496b621ece631d6b7c66398f37254" title="Error occurred flag. ">kI3C_SlaveErrorFlag</a></li>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1aa40886fd07849aa04abbf78a0e90213b" title="High data rate command match. ">kI3C_SlaveHDRCommandMatchFlag</a></li>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a47c0731626e7d65f7bd99befb714082b" title="Slave received Common command code is handled by I3C module. ">kI3C_SlaveCCCHandledFlag</a></li>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a5e512f1349b7b6d5d245be7496f9d9a2" title="Slave IBI/P2P/MR/HJ event has been sent. ">kI3C_SlaveEventSentFlag</a></li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
+    <tr><td class="paramname">interruptMask</td><td>Bit mask of interrupts to enable. See <a class="el" href="a00035.html#gae5c787dbdeb2420f38e50c912e36bad1" title="I3C slave peripheral flags. ">_i3c_slave_flags</a> for the set of constants that should be OR'd together to form the bit mask. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9e57f2e719be892e00d0a2e418a7d36a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void I3C_SlaveDisableInterrupts </td>
+          <td>(</td>
+          <td class="paramtype">I3C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>interruptMask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Only below flags can be disabled as interrupts.</p>
+<ul>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a007137b4800c84cf25a31eadc687bc2e" title="Start/Re-start event is seen since the bus was last cleared. ">kI3C_SlaveBusStartFlag</a></li>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1aa7410fa50b7d84e1f3da17649389cf98" title="Slave address(dynamic/static) matched since last cleared. ">kI3C_SlaveMatchedFlag</a></li>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a8904ae203162bf4de511bd3d44166bd0" title="Stop event is seen since the bus was last cleared. ">kI3C_SlaveBusStopFlag</a></li>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1ab04dfa145be7ae004f3e453cc5f22975" title="Rx data ready in rx buffer flag. ">kI3C_SlaveRxReadyFlag</a></li>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1ac0fb318358a569c3b90a754649ad480b" title="Tx buffer ready for Tx data flag. ">kI3C_SlaveTxReadyFlag</a></li>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a36533bd278344d58566e0316d8c32695" title="Slave dynamic address has been assigned, re-assigned, or lost. ">kI3C_SlaveDynamicAddrChangedFlag</a></li>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a0237cb952ce19512f77eaea85ec7dd87" title="Slave received Common command code. ">kI3C_SlaveReceivedCCCFlag</a></li>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a603496b621ece631d6b7c66398f37254" title="Error occurred flag. ">kI3C_SlaveErrorFlag</a></li>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1aa40886fd07849aa04abbf78a0e90213b" title="High data rate command match. ">kI3C_SlaveHDRCommandMatchFlag</a></li>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a47c0731626e7d65f7bd99befb714082b" title="Slave received Common command code is handled by I3C module. ">kI3C_SlaveCCCHandledFlag</a></li>
+<li><a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1a5e512f1349b7b6d5d245be7496f9d9a2" title="Slave IBI/P2P/MR/HJ event has been sent. ">kI3C_SlaveEventSentFlag</a></li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
+    <tr><td class="paramname">interruptMask</td><td>Bit mask of interrupts to disable. See <a class="el" href="a00035.html#gae5c787dbdeb2420f38e50c912e36bad1" title="I3C slave peripheral flags. ">_i3c_slave_flags</a> for the set of constants that should be OR'd together to form the bit mask. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga7e7f2933e71c84110713583b86756728"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t I3C_SlaveGetEnabledInterrupts </td>
+          <td>(</td>
+          <td class="paramtype">I3C_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A bitmask composed of <a class="el" href="a00035.html#gae5c787dbdeb2420f38e50c912e36bad1" title="I3C slave peripheral flags. ">_i3c_slave_flags</a> enumerators OR'd together to indicate the set of enabled interrupts. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga1ca3ffdca28af282a70156dd851dc6e6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t I3C_SlaveGetPendingInterrupts </td>
+          <td>(</td>
+          <td class="paramtype">I3C_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A bitmask composed of <a class="el" href="a00035.html#gae5c787dbdeb2420f38e50c912e36bad1" title="I3C slave peripheral flags. ">_i3c_slave_flags</a> enumerators OR'd together to indicate the set of pending interrupts. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga295e383ac5ea2f4e1d1ce23507f6235d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void I3C_SlaveEnableDMA </td>
+          <td>(</td>
+          <td class="paramtype">I3C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enableTx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enableRx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>width</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
+    <tr><td class="paramname">enableTx</td><td>Enable flag for transmit DMA request. Pass true for enable, false for disable. </td></tr>
+    <tr><td class="paramname">enableRx</td><td>Enable flag for receive DMA request. Pass true for enable, false for disable. </td></tr>
+    <tr><td class="paramname">width</td><td>DMA read/write unit in bytes. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga7105aa1d37198b11eb064634c4ab55a3"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t I3C_SlaveGetTxFifoAddress </td>
+          <td>(</td>
+          <td class="paramtype">I3C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>width</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
+    <tr><td class="paramname">width</td><td>DMA read/write unit in bytes. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The I3C Slave Transmit Data Register address. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga4d7c6a568b4031a0036521a834362d3c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t I3C_SlaveGetRxFifoAddress </td>
+          <td>(</td>
+          <td class="paramtype">I3C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>width</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
+    <tr><td class="paramname">width</td><td>DMA read/write unit in bytes. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The I3C Slave Receive Data Register address. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga636c51a8e9043322a0ac215928c2e46d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void I3C_SlaveSetWatermarks </td>
+          <td>(</td>
+          <td class="paramtype">I3C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00032.html#gad5fba0f8bfbc5d6c5c84811921d454ff">i3c_tx_trigger_level_t</a>&#160;</td>
+          <td class="paramname"><em>txLvl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00032.html#ga826edd92e230b7f10fa6a54ffef9200c">i3c_rx_trigger_level_t</a>&#160;</td>
+          <td class="paramname"><em>rxLvl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>flushTx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>flushRx</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
+    <tr><td class="paramname">txLvl</td><td>Transmit FIFO watermark level. The <a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1ac0fb318358a569c3b90a754649ad480b" title="Tx buffer ready for Tx data flag. ">kI3C_SlaveTxReadyFlag</a> flag is set whenever the number of words in the transmit FIFO reaches <em>txLvl</em>. </td></tr>
+    <tr><td class="paramname">rxLvl</td><td>Receive FIFO watermark level. The <a class="el" href="a00035.html#ggae5c787dbdeb2420f38e50c912e36bad1ab04dfa145be7ae004f3e453cc5f22975" title="Rx data ready in rx buffer flag. ">kI3C_SlaveRxReadyFlag</a> flag is set whenever the number of words in the receive FIFO reaches <em>rxLvl</em>. </td></tr>
+    <tr><td class="paramname">flushTx</td><td>true if TX FIFO is to be cleared, otherwise TX FIFO remains unchanged. </td></tr>
+    <tr><td class="paramname">flushRx</td><td>true if RX FIFO is to be cleared, otherwise RX FIFO remains unchanged. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga5598ac74ca66fa9c73998d43a3b48f5c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void I3C_SlaveGetFifoCounts </td>
+          <td>(</td>
+          <td class="paramtype">I3C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>rxCount</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>txCount</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">txCount</td><td>Pointer through which the current number of bytes in the transmit FIFO is returned. Pass NULL if this value is not required. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">rxCount</td><td>Pointer through which the current number of bytes in the receive FIFO is returned. Pass NULL if this value is not required. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gab024187605c4c4bf9256a36e4e217b2e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void I3C_SlaveRequestEvent </td>
+          <td>(</td>
+          <td class="paramtype">I3C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00035.html#gaba4f0075492b5accfbcb247cf2513be3">i3c_slave_event_t</a>&#160;</td>
+          <td class="paramname"><em>event</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
+    <tr><td class="paramname">event</td><td>I3C slave event of type <a class="el" href="a00035.html#gaba4f0075492b5accfbcb247cf2513be3" title="I3C slave.event. ">i3c_slave_event_t</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gada1fa684cab9859f17724bc800b35b19"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I3C_SlaveSend </td>
+          <td>(</td>
+          <td class="paramtype">I3C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>txBuff</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>txSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
+    <tr><td class="paramname">txBuff</td><td>The pointer to the data to be transferred. </td></tr>
+    <tr><td class="paramname">txSize</td><td>The length in bytes of the data to be transferred. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Error or success status returned by API. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gab35cd6ef6042ccbd3534a4b57a3dcf37"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I3C_SlaveReceive </td>
+          <td>(</td>
+          <td class="paramtype">I3C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>rxBuff</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>rxSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
+    <tr><td class="paramname">rxBuff</td><td>The pointer to the data to be transferred. </td></tr>
+    <tr><td class="paramname">rxSize</td><td>The length in bytes of the data to be transferred. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Error or success status returned by API. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga3c0a5fc262795b92f8a68b6e20c572e5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void I3C_SlaveTransferCreateHandle </td>
+          <td>(</td>
+          <td class="paramtype">I3C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00035.html#a00325">i3c_slave_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00035.html#gada633855ef6083061ce6205185f29187">i3c_slave_transfer_callback_t</a>&#160;</td>
+          <td class="paramname"><em>callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>userData</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The creation of a handle is for use with the non-blocking APIs. Once a handle is created, there is not a corresponding destroy handle. If the user wants to terminate a transfer, the <a class="el" href="a00035.html#ga2d2b65294f290b2dd43ac2707f3ca87e" title="Aborts the slave non-blocking transfers. ">I3C_SlaveTransferAbort()</a> API shall be called.</p>
+<dl class="section note"><dt>Note</dt><dd>The function also enables the NVIC IRQ for the input I3C. Need to notice that on some SoCs the I3C IRQ is connected to INTMUX, in this case user needs to enable the associated INTMUX IRQ in application.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">handle</td><td>Pointer to the I3C slave driver handle. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">callback</td><td>User provided pointer to the asynchronous callback function. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">userData</td><td>User provided pointer to the application callback data. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga6105a83b8c488151a17eb8d93d51f00d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I3C_SlaveTransferNonBlocking </td>
+          <td>(</td>
+          <td class="paramtype">I3C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00035.html#a00325">i3c_slave_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>eventMask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Call this API after calling <a class="el" href="a00029.html#ga175a81b5ab74dd78469d6cdea690d8cc" title="Initializes the I2C slave peripheral. ">I2C_SlaveInit()</a> and <a class="el" href="a00035.html#ga3c0a5fc262795b92f8a68b6e20c572e5" title="Creates a new handle for the I3C slave non-blocking APIs. ">I3C_SlaveTransferCreateHandle()</a> to start processing transactions driven by an I2C master. The slave monitors the I2C bus and pass events to the callback that was passed into the call to <a class="el" href="a00035.html#ga3c0a5fc262795b92f8a68b6e20c572e5" title="Creates a new handle for the I3C slave non-blocking APIs. ">I3C_SlaveTransferCreateHandle()</a>. The callback is always invoked from the interrupt context.</p>
+<p>The set of events received by the callback is customizable. To do so, set the <em>eventMask</em> parameter to the OR'd combination of <a class="el" href="a00035.html#ga99929d7ef76befce5c7401a5a42d2453" title="Set of events sent to the callback for non blocking slave transfers. ">i3c_slave_transfer_event_t</a> enumerators for the events you wish to receive. The <a class="el" href="a00035.html#ggad2e5167cb9cabc1582fedcec5786104cac1ddc4bae9e31c516d468c44c644438b" title="Callback is requested to provide data to transmit (slave-transmitter role). ">kI3C_SlaveTransmitEvent</a> and <a class="el" href="a00035.html#ggad2e5167cb9cabc1582fedcec5786104cafc30108371d78ede74f4a1c9724d22b8" title="Callback is requested to provide a buffer in which to place received data (slave-receiver role)...">kI3C_SlaveReceiveEvent</a> events are always enabled and do not need to be included in the mask. Alternatively, you can pass 0 to get a default set of only the transmit and receive events that are always enabled. In addition, the <a class="el" href="a00035.html#ggad2e5167cb9cabc1582fedcec5786104cac872741fd80ab9d76f9ec145a674f53c" title="Bit mask of all available events. ">kI3C_SlaveAllEvents</a> constant is provided as a convenient way to enable all events.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>Pointer to struct: <a class="el" href="a00035.html#a00325" title="I3C slave handle structure. ">_i3c_slave_handle</a> structure which stores the transfer state. </td></tr>
+    <tr><td class="paramname">eventMask</td><td>Bit mask formed by OR'ing together <a class="el" href="a00035.html#ga99929d7ef76befce5c7401a5a42d2453" title="Set of events sent to the callback for non blocking slave transfers. ">i3c_slave_transfer_event_t</a> enumerators to specify which events to send to the callback. Other accepted values are 0 to get a default set of only the transmit and receive events, and <a class="el" href="a00035.html#ggad2e5167cb9cabc1582fedcec5786104cac872741fd80ab9d76f9ec145a674f53c" title="Bit mask of all available events. ">kI3C_SlaveAllEvents</a> to enable all events.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00220.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>Slave transfers were successfully started. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00034.html#ggaba01db17f4a2bfbc3db60dc172972a25a3762f16a9354bdcbc99b05c938d3867c" title="The master is already performing a transfer. ">kStatus_I3C_Busy</a></td><td>Slave transfers have already been started on this handle. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9f19df9a2dd5d99440e7707aa662d49c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00220.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I3C_SlaveTransferGetCount </td>
+          <td>(</td>
+          <td class="paramtype">I3C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00035.html#a00325">i3c_slave_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">handle</td><td>Pointer to i2c_slave_handle_t structure. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">count</td><td>Pointer to a value to hold the number of bytes transferred. May be NULL if the count is not required. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00220.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td></td></tr>
+    <tr><td class="paramname"><a class="el" href="a00220.html#gga99fb83031ce9923c84392b4e92f956b5a82fc7f2a425a9c3cfcf6636b8c05c06c" title="Generic status for no transfer in progress. ">kStatus_NoTransferInProgress</a></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga2d2b65294f290b2dd43ac2707f3ca87e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void I3C_SlaveTransferAbort </td>
+          <td>(</td>
+          <td class="paramtype">I3C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00035.html#a00325">i3c_slave_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>This API could be called at any time to stop slave for handling the bus events. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>Pointer to struct: <a class="el" href="a00035.html#a00325" title="I3C slave handle structure. ">_i3c_slave_handle</a> structure which stores the transfer state. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00220.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td></td></tr>
+    <tr><td class="paramname"><a class="el" href="a00034.html#ggaba01db17f4a2bfbc3db60dc172972a25a121e7eccc4bdafa890313b8c0b08c49d" title="The slave driver is idle. ">kStatus_I3C_Idle</a></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaf604d3e51fccadaa37e28bd6ba6d37c3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void I3C_SlaveTransferHandleIRQ </td>
+          <td>(</td>
+          <td class="paramtype">I3C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>intHandle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>This function does not need to be called unless you are reimplementing the non blocking API's interrupt handler routines to add special functionality. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
+    <tr><td class="paramname">intHandle</td><td>Pointer to struct: <a class="el" href="a00035.html#a00325" title="I3C slave handle structure. ">_i3c_slave_handle</a> structure which stores the transfer state. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga41456fa4696a936a2d7419667f39c6b8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void I3C_SlaveRequestIBIWithData </td>
+          <td>(</td>
+          <td class="paramtype">I3C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>dataSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
+    <tr><td class="paramname">data</td><td>Pointer to IBI data to be sent in the request. </td></tr>
+    <tr><td class="paramname">dataSize</td><td>IBI data size. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gad2b8e86e437281cd6d464930e55cc8be"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void I3C_SlaveRequestIBIWithSingleData </td>
+          <td>(</td>
+          <td class="paramtype">I3C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>dataSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="a00259.html#_deprecated000003">Deprecated:</a></b></dt><dd>Do not use this function. It has been superseded by <a class="el" href="a00035.html#ga41456fa4696a936a2d7419667f39c6b8">I3C_SlaveRequestIBIWithData</a>.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
+    <tr><td class="paramname">data</td><td>IBI data to be sent in the request. </td></tr>
+    <tr><td class="paramname">dataSize</td><td>IBI data size. </td></tr>
   </table>
   </dd>
 </dl>

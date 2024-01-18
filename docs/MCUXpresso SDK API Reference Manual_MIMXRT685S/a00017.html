@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: DMIC DMA Driver</title>
+<title>MCUXpresso SDK API Reference Manual: DMIC Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -101,259 +101,853 @@ $(document).ready(function(){initNavTree('a00017.html','');});
   <div class="summary">
 <a href="#files">Files</a> &#124;
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">DMIC DMA Driver<div class="ingroups"><a class="el" href="a00218.html">DMIC: Digital Microphone</a></div></div>  </div>
+<div class="title">DMIC Driver<div class="ingroups"><a class="el" href="a00221.html">DMIC: Digital Microphone</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
 Files</h2></td></tr>
-<tr class="memitem:a00128"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00128.html">fsl_dmic_dma.h</a></td></tr>
+<tr class="memitem:a00130"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00130.html">fsl_dmic.h</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00303"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a00303">dmic_transfer_t</a></td></tr>
-<tr class="memdesc:a00303"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMIC transfer structure.  <a href="a00017.html#a00303">More...</a><br/></td></tr>
-<tr class="separator:a00303"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00260"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a00260">dmic_dma_handle_t</a></td></tr>
-<tr class="memdesc:a00260"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMIC DMA handle.  <a href="a00017.html#a00260">More...</a><br/></td></tr>
-<tr class="separator:a00260"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00286"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a00286">_dmic_channel_config</a></td></tr>
+<tr class="memdesc:a00286"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMIC Channel configuration structure.  <a href="a00017.html#a00286">More...</a><br/></td></tr>
+<tr class="separator:a00286"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga531eba032d30d72f4f0fc691481e1ca6"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga531eba032d30d72f4f0fc691481e1ca6">dmic_dma_transfer_callback_t</a> )(DMIC_Type *base, dmic_dma_handle_t *handle, <a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
-<tr class="memdesc:ga531eba032d30d72f4f0fc691481e1ca6"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMIC transfer callback function.  <a href="#ga531eba032d30d72f4f0fc691481e1ca6">More...</a><br/></td></tr>
-<tr class="separator:ga531eba032d30d72f4f0fc691481e1ca6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae17a19ff02b57870ccc79cb4e2041697"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00017.html#ga05a17315bad12283b447f3d5669f780c">_operation_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gae17a19ff02b57870ccc79cb4e2041697">operation_mode_t</a></td></tr>
+<tr class="memdesc:gae17a19ff02b57870ccc79cb4e2041697"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMIC different operation modes.  <a href="#gae17a19ff02b57870ccc79cb4e2041697">More...</a><br/></td></tr>
+<tr class="separator:gae17a19ff02b57870ccc79cb4e2041697"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga34d60152c3007bd996432f70ba9f6059"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00017.html#gac97e9c00ab92862fa27a1561d1405c82">_stereo_side</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga34d60152c3007bd996432f70ba9f6059">stereo_side_t</a></td></tr>
+<tr class="memdesc:ga34d60152c3007bd996432f70ba9f6059"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMIC left/right values.  <a href="#ga34d60152c3007bd996432f70ba9f6059">More...</a><br/></td></tr>
+<tr class="separator:ga34d60152c3007bd996432f70ba9f6059"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5f3bf9263d5a3d08881ba48795c28e39"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00017.html#gadf789e383c5e816b8fb8953231908365">_compensation</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga5f3bf9263d5a3d08881ba48795c28e39">compensation_t</a></td></tr>
+<tr class="memdesc:ga5f3bf9263d5a3d08881ba48795c28e39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pre-emphasis Filter coefficient value for 2FS and 4FS modes.  <a href="#ga5f3bf9263d5a3d08881ba48795c28e39">More...</a><br/></td></tr>
+<tr class="separator:ga5f3bf9263d5a3d08881ba48795c28e39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga46fe0c93b7cc999e573ca38149d7345b"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00017.html#ga6f8fbc6a43f8c4f61e424ac5021ca35d">_dc_removal</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga46fe0c93b7cc999e573ca38149d7345b">dc_removal_t</a></td></tr>
+<tr class="memdesc:ga46fe0c93b7cc999e573ca38149d7345b"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMIC DC filter control values.  <a href="#ga46fe0c93b7cc999e573ca38149d7345b">More...</a><br/></td></tr>
+<tr class="separator:ga46fe0c93b7cc999e573ca38149d7345b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2bd350ddd8dafaa8906458522805929c"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00017.html#ga344409630e73d7bb3185c2f52a4bb7a3">_dmic_channel</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga2bd350ddd8dafaa8906458522805929c">dmic_channel_t</a></td></tr>
+<tr class="memdesc:ga2bd350ddd8dafaa8906458522805929c"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMIC Channel number.  <a href="#ga2bd350ddd8dafaa8906458522805929c">More...</a><br/></td></tr>
+<tr class="separator:ga2bd350ddd8dafaa8906458522805929c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaead87b6849f94a6ef58074e8d1c81163"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00017.html#gab556fff90a7d4bb050328242b6ce451b">_dmic_phy_sample_rate</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gaead87b6849f94a6ef58074e8d1c81163">dmic_phy_sample_rate_t</a></td></tr>
+<tr class="memdesc:gaead87b6849f94a6ef58074e8d1c81163"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMIC and decimator sample rates.  <a href="#gaead87b6849f94a6ef58074e8d1c81163">More...</a><br/></td></tr>
+<tr class="separator:gaead87b6849f94a6ef58074e8d1c81163"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab78de043418652316c45c92bf32228e9"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00017.html#a00286">_dmic_channel_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gab78de043418652316c45c92bf32228e9">dmic_channel_config_t</a></td></tr>
+<tr class="memdesc:gab78de043418652316c45c92bf32228e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMIC Channel configuration structure.  <a href="#gab78de043418652316c45c92bf32228e9">More...</a><br/></td></tr>
+<tr class="separator:gab78de043418652316c45c92bf32228e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf07797092bf838ea43246e43cf949706"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gaf07797092bf838ea43246e43cf949706">dmic_callback_t</a> )(void)</td></tr>
+<tr class="memdesc:gaf07797092bf838ea43246e43cf949706"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMIC Callback function.  <a href="#gaf07797092bf838ea43246e43cf949706">More...</a><br/></td></tr>
+<tr class="separator:gaf07797092bf838ea43246e43cf949706"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga78bc937ccd0f6070a69c35461afdcaf4"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga78bc937ccd0f6070a69c35461afdcaf4">dmic_hwvad_callback_t</a> )(void)</td></tr>
+<tr class="memdesc:ga78bc937ccd0f6070a69c35461afdcaf4"><td class="mdescLeft">&#160;</td><td class="mdescRight">HWVAD Callback function.  <a href="#ga78bc937ccd0f6070a69c35461afdcaf4">More...</a><br/></td></tr>
+<tr class="separator:ga78bc937ccd0f6070a69c35461afdcaf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gabc6126af1d45847bc59afa0aa3216b04"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<a class="el" href="a00017.html#ggabc6126af1d45847bc59afa0aa3216b04a81559e2a4c082aef4d6401b4e35b176c">kStatus_DMIC_Busy</a> = MAKE_STATUS(kStatusGroup_DMIC, 0), 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#ggabc6126af1d45847bc59afa0aa3216b04adecdc212fc4d4988b1e5a7dc1d0f0c38">kStatus_DMIC_Idle</a> = MAKE_STATUS(kStatusGroup_DMIC, 1), 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#ggabc6126af1d45847bc59afa0aa3216b04a6c2e39dda92a068e756ec6a3618e5d2c">kStatus_DMIC_OverRunError</a> = MAKE_STATUS(kStatusGroup_DMIC, 2), 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#ggabc6126af1d45847bc59afa0aa3216b04ae3bcac7b4342404b8872cd691212c306">kStatus_DMIC_UnderRunError</a> = MAKE_STATUS(kStatusGroup_DMIC, 3)
+<br/>
+ }</td></tr>
+<tr class="memdesc:gabc6126af1d45847bc59afa0aa3216b04"><td class="mdescLeft">&#160;</td><td class="mdescRight">_dmic_status DMIC transfer status.  <a href="a00017.html#gabc6126af1d45847bc59afa0aa3216b04">More...</a><br/></td></tr>
+<tr class="separator:gabc6126af1d45847bc59afa0aa3216b04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga05a17315bad12283b447f3d5669f780c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga05a17315bad12283b447f3d5669f780c">_operation_mode</a> { <br/>
+&#160;&#160;<a class="el" href="a00017.html#gga05a17315bad12283b447f3d5669f780ca733122aeba98fe1139358bae0204dd8c">kDMIC_OperationModeInterrupt</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#gga05a17315bad12283b447f3d5669f780ca8ed68ada41ddf27165de917646244451">kDMIC_OperationModeDma</a> = 2U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga05a17315bad12283b447f3d5669f780c"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMIC different operation modes.  <a href="a00017.html#ga05a17315bad12283b447f3d5669f780c">More...</a><br/></td></tr>
+<tr class="separator:ga05a17315bad12283b447f3d5669f780c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac97e9c00ab92862fa27a1561d1405c82"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gac97e9c00ab92862fa27a1561d1405c82">_stereo_side</a> { <br/>
+&#160;&#160;<a class="el" href="a00017.html#ggac97e9c00ab92862fa27a1561d1405c82a9e1cc577f2042fcc41618bbefdd3da48">kDMIC_Left</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#ggac97e9c00ab92862fa27a1561d1405c82ab86d3c67c8303d5391e98d6a6ac2fc61">kDMIC_Right</a> = 1U
+<br/>
+ }</td></tr>
+<tr class="memdesc:gac97e9c00ab92862fa27a1561d1405c82"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMIC left/right values.  <a href="a00017.html#gac97e9c00ab92862fa27a1561d1405c82">More...</a><br/></td></tr>
+<tr class="separator:gac97e9c00ab92862fa27a1561d1405c82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga540deb48ce92de287370227e3670694f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga540deb48ce92de287370227e3670694f">pdm_div_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00017.html#gga540deb48ce92de287370227e3670694faff39715c1ed9fcc15668e7d5183131bf">kDMIC_PdmDiv1</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#gga540deb48ce92de287370227e3670694fac1e4e33da9d7493b11e2d6d4c392e226">kDMIC_PdmDiv2</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#gga540deb48ce92de287370227e3670694faf4e99ba5ff2921416649da5cd5a8f674">kDMIC_PdmDiv3</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#gga540deb48ce92de287370227e3670694fad0cd9721f59f5c39d2f85e4caa123a18">kDMIC_PdmDiv4</a> = 3U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#gga540deb48ce92de287370227e3670694fa9ad0cf2202c730c3c36d8ff19afbbd6e">kDMIC_PdmDiv6</a> = 4U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#gga540deb48ce92de287370227e3670694fa80c85cc378b32ae9a6f6a07884f35571">kDMIC_PdmDiv8</a> = 5U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#gga540deb48ce92de287370227e3670694faa84e02ac93aad1fa550e30870263947c">kDMIC_PdmDiv12</a> = 6U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#gga540deb48ce92de287370227e3670694fa2f2db98157ba93dc8c7ce87b7d2c2d63">kDMIC_PdmDiv16</a> = 7U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#gga540deb48ce92de287370227e3670694faa63470d148b99d14bb6728b11e8674f0">kDMIC_PdmDiv24</a> = 8U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#gga540deb48ce92de287370227e3670694fac58eeb7ddbf8f905d37db34cc80c097d">kDMIC_PdmDiv32</a> = 9U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#gga540deb48ce92de287370227e3670694fa703d0c824f9c76662d36e67cf6a16365">kDMIC_PdmDiv48</a> = 10U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#gga540deb48ce92de287370227e3670694faf77fd318a3dce2cf7328a9ea3fce9212">kDMIC_PdmDiv64</a> = 11U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#gga540deb48ce92de287370227e3670694fae5289fbecf2b2b8c9637fb20a804359d">kDMIC_PdmDiv96</a> = 12U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#gga540deb48ce92de287370227e3670694fafda7bbf367ee93f0c32ff4f39239c785">kDMIC_PdmDiv128</a> = 13U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga540deb48ce92de287370227e3670694f"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMIC Clock pre-divider values.  <a href="a00017.html#ga540deb48ce92de287370227e3670694f">More...</a><br/></td></tr>
+<tr class="separator:ga540deb48ce92de287370227e3670694f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadf789e383c5e816b8fb8953231908365"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gadf789e383c5e816b8fb8953231908365">_compensation</a> { <br/>
+&#160;&#160;<a class="el" href="a00017.html#ggadf789e383c5e816b8fb8953231908365a9518c5cba4a1a16cc17e03ba17d033d7">kDMIC_CompValueZero</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#ggadf789e383c5e816b8fb8953231908365a2e1c1ad1bbb5000e08d8fca1f9966205">kDMIC_CompValueNegativePoint16</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#ggadf789e383c5e816b8fb8953231908365ae369e39f07b8ea7124608b0a2d7f51ea">kDMIC_CompValueNegativePoint15</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#ggadf789e383c5e816b8fb8953231908365adcf6c3731299e7405db61d9f8b1c895b">kDMIC_CompValueNegativePoint13</a> = 3U
+<br/>
+ }</td></tr>
+<tr class="memdesc:gadf789e383c5e816b8fb8953231908365"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pre-emphasis Filter coefficient value for 2FS and 4FS modes.  <a href="a00017.html#gadf789e383c5e816b8fb8953231908365">More...</a><br/></td></tr>
+<tr class="separator:gadf789e383c5e816b8fb8953231908365"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6f8fbc6a43f8c4f61e424ac5021ca35d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga6f8fbc6a43f8c4f61e424ac5021ca35d">_dc_removal</a> { <br/>
+&#160;&#160;<a class="el" href="a00017.html#gga6f8fbc6a43f8c4f61e424ac5021ca35dacd6b43bf85bcd52777cdeaab455f1c4c">kDMIC_DcNoRemove</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#gga6f8fbc6a43f8c4f61e424ac5021ca35da7413d9085286a18fc39809ede6283d1f">kDMIC_DcCut155</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#gga6f8fbc6a43f8c4f61e424ac5021ca35dae01c0abeff1e80b7288a5840319473f9">kDMIC_DcCut78</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#gga6f8fbc6a43f8c4f61e424ac5021ca35daf90a66e1000b01d5f0b529034a7e2616">kDMIC_DcCut39</a> = 3U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga6f8fbc6a43f8c4f61e424ac5021ca35d"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMIC DC filter control values.  <a href="a00017.html#ga6f8fbc6a43f8c4f61e424ac5021ca35d">More...</a><br/></td></tr>
+<tr class="separator:ga6f8fbc6a43f8c4f61e424ac5021ca35d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga344409630e73d7bb3185c2f52a4bb7a3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga344409630e73d7bb3185c2f52a4bb7a3">_dmic_channel</a> { <br/>
+&#160;&#160;<a class="el" href="a00017.html#gga344409630e73d7bb3185c2f52a4bb7a3a3574c3b8c6bc3013a5bb5e498f090bc4">kDMIC_Channel0</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#gga344409630e73d7bb3185c2f52a4bb7a3a9832e15a17b33bff6fb4f2327430c438">kDMIC_Channel1</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#gga344409630e73d7bb3185c2f52a4bb7a3a6ede13a4459a1570d02d254f1b8ed2b0">kDMIC_Channel2</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#gga344409630e73d7bb3185c2f52a4bb7a3abe1d54842a011db563dde9acff16d5e7">kDMIC_Channel3</a> = 3U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#gga344409630e73d7bb3185c2f52a4bb7a3af8c4945449d8152a725b05bc817f2bcc">kDMIC_Channel4</a> = 4U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#gga344409630e73d7bb3185c2f52a4bb7a3a011368a9c021f6b0651347c27e61146a">kDMIC_Channel5</a> = 5U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#gga344409630e73d7bb3185c2f52a4bb7a3a977569c3c7a78ef1e016109a11dac342">kDMIC_Channel6</a> = 6U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#gga344409630e73d7bb3185c2f52a4bb7a3ac97b9277f388b5f4523bbe31ca77bc1b">kDMIC_Channel7</a> = 7U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga344409630e73d7bb3185c2f52a4bb7a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMIC Channel number.  <a href="a00017.html#ga344409630e73d7bb3185c2f52a4bb7a3">More...</a><br/></td></tr>
+<tr class="separator:ga344409630e73d7bb3185c2f52a4bb7a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadc29c2ff13d900c2f185ee95427fb06c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<a class="el" href="a00017.html#ggadc29c2ff13d900c2f185ee95427fb06ca2d3260a4ca8598c81c9e2be2b65ff2c8">kDMIC_EnableChannel0</a> = 1 &lt;&lt; 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#ggadc29c2ff13d900c2f185ee95427fb06ca001a3adccff5566f01048e0618e904fc">kDMIC_EnableChannel1</a> = 1 &lt;&lt; 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#ggadc29c2ff13d900c2f185ee95427fb06ca3189d8a7fb3691124026921a91e38582">kDMIC_EnableChannel2</a> = 1 &lt;&lt; 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#ggadc29c2ff13d900c2f185ee95427fb06ca93d9bf9a092c5dde24ea82e83602c3f5">kDMIC_EnableChannel3</a> = 1 &lt;&lt; 3U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#ggadc29c2ff13d900c2f185ee95427fb06caf8b70377e140e062445b02cc31eb9295">kDMIC_EnableChannel4</a> = 1 &lt;&lt; 4U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#ggadc29c2ff13d900c2f185ee95427fb06ca931b4aed92de76d50915601fbea9923d">kDMIC_EnableChannel5</a> = 1 &lt;&lt; 5U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#ggadc29c2ff13d900c2f185ee95427fb06ca1f6a36372463aba4cf67ac045470f523">kDMIC_EnableChannel6</a> = 1 &lt;&lt; 6U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#ggadc29c2ff13d900c2f185ee95427fb06ca1037a6bf20929f2647495e9c7be39e81">kDMIC_EnableChannel7</a> = 1 &lt;&lt; 7U
+<br/>
+ }</td></tr>
+<tr class="memdesc:gadc29c2ff13d900c2f185ee95427fb06c"><td class="mdescLeft">&#160;</td><td class="mdescRight">_dmic_channel_mask DMIC Channel mask.  <a href="a00017.html#gadc29c2ff13d900c2f185ee95427fb06c">More...</a><br/></td></tr>
+<tr class="separator:gadc29c2ff13d900c2f185ee95427fb06c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab556fff90a7d4bb050328242b6ce451b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gab556fff90a7d4bb050328242b6ce451b">_dmic_phy_sample_rate</a> { <br/>
+&#160;&#160;<a class="el" href="a00017.html#ggab556fff90a7d4bb050328242b6ce451ba518375822c55b8b005159812aba5b04d">kDMIC_PhyFullSpeed</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#ggab556fff90a7d4bb050328242b6ce451baf42dd89abb0b7e1dbd0f0c2a97c8137e">kDMIC_PhyHalfSpeed</a> = 1U
+<br/>
+ }</td></tr>
+<tr class="memdesc:gab556fff90a7d4bb050328242b6ce451b"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMIC and decimator sample rates.  <a href="a00017.html#gab556fff90a7d4bb050328242b6ce451b">More...</a><br/></td></tr>
+<tr class="separator:gab556fff90a7d4bb050328242b6ce451b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-DMIC DMA version</h2></td></tr>
-<tr class="memitem:ga812aa4ef8d8da2a21063196062aed5f0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga812aa4ef8d8da2a21063196062aed5f0"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga812aa4ef8d8da2a21063196062aed5f0">FSL_DMIC_DMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00217.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 4, 0))</td></tr>
-<tr class="memdesc:ga812aa4ef8d8da2a21063196062aed5f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMIC DMA driver version 2.4.0. <br/></td></tr>
-<tr class="separator:ga812aa4ef8d8da2a21063196062aed5f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+DMIC version</h2></td></tr>
+<tr class="memitem:gacdb186464844cacb8cda8965ff1fd079"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gacdb186464844cacb8cda8965ff1fd079">FSL_DMIC_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00220.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 2))</td></tr>
+<tr class="memdesc:gacdb186464844cacb8cda8965ff1fd079"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMIC driver version 2.3.2.  <a href="#gacdb186464844cacb8cda8965ff1fd079">More...</a><br/></td></tr>
+<tr class="separator:gacdb186464844cacb8cda8965ff1fd079"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-DMA transactional</h2></td></tr>
-<tr class="memitem:ga0908db2059feacc444a7346b42906934"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga0908db2059feacc444a7346b42906934">DMIC_TransferCreateHandleDMA</a> (DMIC_Type *base, dmic_dma_handle_t *handle, <a class="el" href="a00017.html#ga531eba032d30d72f4f0fc691481e1ca6">dmic_dma_transfer_callback_t</a> callback, void *userData, <a class="el" href="a00015.html#a00299">dma_handle_t</a> *rxDmaHandle)</td></tr>
-<tr class="memdesc:ga0908db2059feacc444a7346b42906934"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the DMIC handle which is used in transactional functions.  <a href="#ga0908db2059feacc444a7346b42906934">More...</a><br/></td></tr>
-<tr class="separator:ga0908db2059feacc444a7346b42906934"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga429f14998f6bf0e9d2a2750fb168de11"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga429f14998f6bf0e9d2a2750fb168de11">DMIC_TransferReceiveDMA</a> (DMIC_Type *base, dmic_dma_handle_t *handle, <a class="el" href="a00017.html#a00303">dmic_transfer_t</a> *xfer, uint32_t channel)</td></tr>
-<tr class="memdesc:ga429f14998f6bf0e9d2a2750fb168de11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives data using DMA.  <a href="#ga429f14998f6bf0e9d2a2750fb168de11">More...</a><br/></td></tr>
-<tr class="separator:ga429f14998f6bf0e9d2a2750fb168de11"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac8598bcd4a9a96f96235fc400ebeb2d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gac8598bcd4a9a96f96235fc400ebeb2d2">DMIC_TransferAbortReceiveDMA</a> (DMIC_Type *base, dmic_dma_handle_t *handle)</td></tr>
-<tr class="memdesc:gac8598bcd4a9a96f96235fc400ebeb2d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the received data using DMA.  <a href="#gac8598bcd4a9a96f96235fc400ebeb2d2">More...</a><br/></td></tr>
-<tr class="separator:gac8598bcd4a9a96f96235fc400ebeb2d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac132e5ab26920dac8dd4a7df5c8503a5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gac132e5ab26920dac8dd4a7df5c8503a5">DMIC_TransferGetReceiveCountDMA</a> (DMIC_Type *base, dmic_dma_handle_t *handle, uint32_t *count)</td></tr>
-<tr class="memdesc:gac132e5ab26920dac8dd4a7df5c8503a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of bytes that have been received.  <a href="#gac132e5ab26920dac8dd4a7df5c8503a5">More...</a><br/></td></tr>
-<tr class="separator:gac132e5ab26920dac8dd4a7df5c8503a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafcb1572158c78d11c5e389ceacdb3de5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gafcb1572158c78d11c5e389ceacdb3de5">DMIC_InstallDMADescriptorMemory</a> (dmic_dma_handle_t *handle, void *linkAddr, size_t linkNum)</td></tr>
-<tr class="memdesc:gafcb1572158c78d11c5e389ceacdb3de5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Install DMA descriptor memory.  <a href="#gafcb1572158c78d11c5e389ceacdb3de5">More...</a><br/></td></tr>
-<tr class="separator:gafcb1572158c78d11c5e389ceacdb3de5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Initialization and deinitialization</h2></td></tr>
+<tr class="memitem:ga6af38ebd38a51962cab12083af82324b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga6af38ebd38a51962cab12083af82324b">DMIC_GetInstance</a> (DMIC_Type *base)</td></tr>
+<tr class="memdesc:ga6af38ebd38a51962cab12083af82324b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the DMIC instance from peripheral base address.  <a href="#ga6af38ebd38a51962cab12083af82324b">More...</a><br/></td></tr>
+<tr class="separator:ga6af38ebd38a51962cab12083af82324b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9c6bce944abc7a1ab3fe991b214a45d3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga9c6bce944abc7a1ab3fe991b214a45d3">DMIC_Init</a> (DMIC_Type *base)</td></tr>
+<tr class="memdesc:ga9c6bce944abc7a1ab3fe991b214a45d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turns DMIC Clock on.  <a href="#ga9c6bce944abc7a1ab3fe991b214a45d3">More...</a><br/></td></tr>
+<tr class="separator:ga9c6bce944abc7a1ab3fe991b214a45d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab98b0a0dcf468ab57827505ec0b752e6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gab98b0a0dcf468ab57827505ec0b752e6">DMIC_DeInit</a> (DMIC_Type *base)</td></tr>
+<tr class="memdesc:gab98b0a0dcf468ab57827505ec0b752e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turns DMIC Clock off.  <a href="#gab98b0a0dcf468ab57827505ec0b752e6">More...</a><br/></td></tr>
+<tr class="separator:gab98b0a0dcf468ab57827505ec0b752e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1d879be7966325a36ac004513ce8c688"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga1d879be7966325a36ac004513ce8c688">DMIC_SetOperationMode</a> (DMIC_Type *base, <a class="el" href="a00017.html#gae17a19ff02b57870ccc79cb4e2041697">operation_mode_t</a> mode)</td></tr>
+<tr class="memdesc:ga1d879be7966325a36ac004513ce8c688"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set DMIC operating mode.  <a href="#ga1d879be7966325a36ac004513ce8c688">More...</a><br/></td></tr>
+<tr class="separator:ga1d879be7966325a36ac004513ce8c688"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafaadf7842594e1aa1557b0321f677dc2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gafaadf7842594e1aa1557b0321f677dc2">DMIC_Use2fs</a> (DMIC_Type *base, bool use2fs)</td></tr>
+<tr class="memdesc:gafaadf7842594e1aa1557b0321f677dc2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure Clock scaling.  <a href="#gafaadf7842594e1aa1557b0321f677dc2">More...</a><br/></td></tr>
+<tr class="separator:gafaadf7842594e1aa1557b0321f677dc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Channel configuration</h2></td></tr>
+<tr class="memitem:ga44d959900152668f51ece1ee1e3607b8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga44d959900152668f51ece1ee1e3607b8">DMIC_CfgChannelDc</a> (DMIC_Type *base, <a class="el" href="a00017.html#ga2bd350ddd8dafaa8906458522805929c">dmic_channel_t</a> channel, <a class="el" href="a00017.html#ga46fe0c93b7cc999e573ca38149d7345b">dc_removal_t</a> dc_cut_level, uint32_t post_dc_gain_reduce, bool saturate16bit)</td></tr>
+<tr class="memdesc:ga44d959900152668f51ece1ee1e3607b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure DMIC channel.  <a href="#ga44d959900152668f51ece1ee1e3607b8">More...</a><br/></td></tr>
+<tr class="separator:ga44d959900152668f51ece1ee1e3607b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa4008f7917ef69934b01198da2c180d3"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gaa4008f7917ef69934b01198da2c180d3">DMIC_EnableChannelSignExtend</a> (DMIC_Type *base, <a class="el" href="a00017.html#ga2bd350ddd8dafaa8906458522805929c">dmic_channel_t</a> channel, bool enable)</td></tr>
+<tr class="memdesc:gaa4008f7917ef69934b01198da2c180d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enbale channel sign extend which allows processing of 24bit audio data on 32bit machines.  <a href="#gaa4008f7917ef69934b01198da2c180d3">More...</a><br/></td></tr>
+<tr class="separator:gaa4008f7917ef69934b01198da2c180d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1bfcaed7509b4295cd60dfaac9586e6a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga1bfcaed7509b4295cd60dfaac9586e6a">DMIC_ConfigChannel</a> (DMIC_Type *base, <a class="el" href="a00017.html#ga2bd350ddd8dafaa8906458522805929c">dmic_channel_t</a> channel, <a class="el" href="a00017.html#ga34d60152c3007bd996432f70ba9f6059">stereo_side_t</a> side, <a class="el" href="a00017.html#gab78de043418652316c45c92bf32228e9">dmic_channel_config_t</a> *channel_config)</td></tr>
+<tr class="memdesc:ga1bfcaed7509b4295cd60dfaac9586e6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure DMIC channel.  <a href="#ga1bfcaed7509b4295cd60dfaac9586e6a">More...</a><br/></td></tr>
+<tr class="separator:ga1bfcaed7509b4295cd60dfaac9586e6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9feb1c1487876380c080dc28a8335647"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga9feb1c1487876380c080dc28a8335647">DMIC_EnableChannnel</a> (DMIC_Type *base, uint32_t channelmask)</td></tr>
+<tr class="memdesc:ga9feb1c1487876380c080dc28a8335647"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable a particualr channel.  <a href="#ga9feb1c1487876380c080dc28a8335647">More...</a><br/></td></tr>
+<tr class="separator:ga9feb1c1487876380c080dc28a8335647"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga17af24956c1bde8a0c66345e3e0957c9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga17af24956c1bde8a0c66345e3e0957c9">DMIC_FifoChannel</a> (DMIC_Type *base, uint32_t channel, uint32_t trig_level, uint32_t enable, uint32_t resetn)</td></tr>
+<tr class="memdesc:ga17af24956c1bde8a0c66345e3e0957c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure fifo settings for DMIC channel.  <a href="#ga17af24956c1bde8a0c66345e3e0957c9">More...</a><br/></td></tr>
+<tr class="separator:ga17af24956c1bde8a0c66345e3e0957c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga66c5df77aaa4c4dd4a0448ba3ea19ff2"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga66c5df77aaa4c4dd4a0448ba3ea19ff2">DMIC_EnableChannelInterrupt</a> (DMIC_Type *base, <a class="el" href="a00017.html#ga2bd350ddd8dafaa8906458522805929c">dmic_channel_t</a> channel, bool enable)</td></tr>
+<tr class="memdesc:ga66c5df77aaa4c4dd4a0448ba3ea19ff2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable a particualr channel interrupt request.  <a href="#ga66c5df77aaa4c4dd4a0448ba3ea19ff2">More...</a><br/></td></tr>
+<tr class="separator:ga66c5df77aaa4c4dd4a0448ba3ea19ff2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga55a76465d0f8449b4cc1ff347c570290"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga55a76465d0f8449b4cc1ff347c570290">DMIC_EnableChannelDma</a> (DMIC_Type *base, <a class="el" href="a00017.html#ga2bd350ddd8dafaa8906458522805929c">dmic_channel_t</a> channel, bool enable)</td></tr>
+<tr class="memdesc:ga55a76465d0f8449b4cc1ff347c570290"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable a particualr channel dma request.  <a href="#ga55a76465d0f8449b4cc1ff347c570290">More...</a><br/></td></tr>
+<tr class="separator:ga55a76465d0f8449b4cc1ff347c570290"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7d4de30e110d2438e5d0303c7cab933c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga7d4de30e110d2438e5d0303c7cab933c">DMIC_EnableChannelFifo</a> (DMIC_Type *base, <a class="el" href="a00017.html#ga2bd350ddd8dafaa8906458522805929c">dmic_channel_t</a> channel, bool enable)</td></tr>
+<tr class="memdesc:ga7d4de30e110d2438e5d0303c7cab933c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable a particualr channel fifo.  <a href="#ga7d4de30e110d2438e5d0303c7cab933c">More...</a><br/></td></tr>
+<tr class="separator:ga7d4de30e110d2438e5d0303c7cab933c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf8ff5deee0e0edaa2181d0762711d1fc"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gaf8ff5deee0e0edaa2181d0762711d1fc">DMIC_DoFifoReset</a> (DMIC_Type *base, <a class="el" href="a00017.html#ga2bd350ddd8dafaa8906458522805929c">dmic_channel_t</a> channel)</td></tr>
+<tr class="memdesc:gaf8ff5deee0e0edaa2181d0762711d1fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Channel fifo reset.  <a href="#gaf8ff5deee0e0edaa2181d0762711d1fc">More...</a><br/></td></tr>
+<tr class="separator:gaf8ff5deee0e0edaa2181d0762711d1fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad7ab9196cff9972a1c859dde2ca2df4a"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gad7ab9196cff9972a1c859dde2ca2df4a">DMIC_FifoGetStatus</a> (DMIC_Type *base, uint32_t channel)</td></tr>
+<tr class="memdesc:gad7ab9196cff9972a1c859dde2ca2df4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get FIFO status.  <a href="#gad7ab9196cff9972a1c859dde2ca2df4a">More...</a><br/></td></tr>
+<tr class="separator:gad7ab9196cff9972a1c859dde2ca2df4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae4671bd569e1af27a883662d9473236b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gae4671bd569e1af27a883662d9473236b">DMIC_FifoClearStatus</a> (DMIC_Type *base, uint32_t channel, uint32_t mask)</td></tr>
+<tr class="memdesc:gae4671bd569e1af27a883662d9473236b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear FIFO status.  <a href="#gae4671bd569e1af27a883662d9473236b">More...</a><br/></td></tr>
+<tr class="separator:gae4671bd569e1af27a883662d9473236b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7ba039347e508039816670ae64678e4a"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga7ba039347e508039816670ae64678e4a">DMIC_FifoGetData</a> (DMIC_Type *base, uint32_t channel)</td></tr>
+<tr class="memdesc:ga7ba039347e508039816670ae64678e4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get FIFO data.  <a href="#ga7ba039347e508039816670ae64678e4a">More...</a><br/></td></tr>
+<tr class="separator:ga7ba039347e508039816670ae64678e4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9e229e939244b8bc874ad2d6b9939d6c"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga9e229e939244b8bc874ad2d6b9939d6c">DMIC_FifoGetAddress</a> (DMIC_Type *base, uint32_t channel)</td></tr>
+<tr class="memdesc:ga9e229e939244b8bc874ad2d6b9939d6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get FIFO address.  <a href="#ga9e229e939244b8bc874ad2d6b9939d6c">More...</a><br/></td></tr>
+<tr class="separator:ga9e229e939244b8bc874ad2d6b9939d6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga057cf94fc59b6e80e3c6df21da4ed9ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga057cf94fc59b6e80e3c6df21da4ed9ce">DMIC_ResetChannelDecimator</a> (DMIC_Type *base, uint32_t channelMask, bool reset)</td></tr>
+<tr class="memdesc:ga057cf94fc59b6e80e3c6df21da4ed9ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMIC channel Decimator reset.  <a href="#ga057cf94fc59b6e80e3c6df21da4ed9ce">More...</a><br/></td></tr>
+<tr class="separator:ga057cf94fc59b6e80e3c6df21da4ed9ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7a0b986f16b971092dccfdd94452db11"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga7a0b986f16b971092dccfdd94452db11">DMIC_EnableChannelGlobalSync</a> (DMIC_Type *base, uint32_t channelMask, uint32_t syncCounter)</td></tr>
+<tr class="memdesc:ga7a0b986f16b971092dccfdd94452db11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable DMIC channel global sync function.  <a href="#ga7a0b986f16b971092dccfdd94452db11">More...</a><br/></td></tr>
+<tr class="separator:ga7a0b986f16b971092dccfdd94452db11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9f7356ce4ed7d483d99616315f743c74"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga9f7356ce4ed7d483d99616315f743c74">DMIC_DisableChannelGlobalSync</a> (DMIC_Type *base, uint32_t channelMask)</td></tr>
+<tr class="memdesc:ga9f7356ce4ed7d483d99616315f743c74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disbale DMIC channel global sync function.  <a href="#ga9f7356ce4ed7d483d99616315f743c74">More...</a><br/></td></tr>
+<tr class="separator:ga9f7356ce4ed7d483d99616315f743c74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Register callback.</h2></td></tr>
+<tr class="memitem:ga4557908afd7f568bc1ae3143f42d47d9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga4557908afd7f568bc1ae3143f42d47d9">DMIC_EnableIntCallback</a> (DMIC_Type *base, <a class="el" href="a00017.html#gaf07797092bf838ea43246e43cf949706">dmic_callback_t</a> cb)</td></tr>
+<tr class="memdesc:ga4557908afd7f568bc1ae3143f42d47d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable callback.  <a href="#ga4557908afd7f568bc1ae3143f42d47d9">More...</a><br/></td></tr>
+<tr class="separator:ga4557908afd7f568bc1ae3143f42d47d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab0cc7b4e67381315fa1b7e81d4a7771c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gab0cc7b4e67381315fa1b7e81d4a7771c">DMIC_DisableIntCallback</a> (DMIC_Type *base, <a class="el" href="a00017.html#gaf07797092bf838ea43246e43cf949706">dmic_callback_t</a> cb)</td></tr>
+<tr class="memdesc:gab0cc7b4e67381315fa1b7e81d4a7771c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable callback.  <a href="#gab0cc7b4e67381315fa1b7e81d4a7771c">More...</a><br/></td></tr>
+<tr class="separator:gab0cc7b4e67381315fa1b7e81d4a7771c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+HWVAD</h2></td></tr>
+<tr class="memitem:gae0b7e1f69c320b0a1ca0815cdb8344f9"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gae0b7e1f69c320b0a1ca0815cdb8344f9">DMIC_SetGainNoiseEstHwvad</a> (DMIC_Type *base, uint32_t value)</td></tr>
+<tr class="memdesc:gae0b7e1f69c320b0a1ca0815cdb8344f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the gain value for the noise estimator.  <a href="#gae0b7e1f69c320b0a1ca0815cdb8344f9">More...</a><br/></td></tr>
+<tr class="separator:gae0b7e1f69c320b0a1ca0815cdb8344f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0666228b59392fd37c209fc2bc38c4ba"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga0666228b59392fd37c209fc2bc38c4ba">DMIC_SetGainSignalEstHwvad</a> (DMIC_Type *base, uint32_t value)</td></tr>
+<tr class="memdesc:ga0666228b59392fd37c209fc2bc38c4ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the gain value for the signal estimator.  <a href="#ga0666228b59392fd37c209fc2bc38c4ba">More...</a><br/></td></tr>
+<tr class="separator:ga0666228b59392fd37c209fc2bc38c4ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad224cdf0525be5cc5342c440c9f6f5f3"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gad224cdf0525be5cc5342c440c9f6f5f3">DMIC_SetFilterCtrlHwvad</a> (DMIC_Type *base, uint32_t value)</td></tr>
+<tr class="memdesc:gad224cdf0525be5cc5342c440c9f6f5f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the hwvad filter cutoff frequency parameter.  <a href="#gad224cdf0525be5cc5342c440c9f6f5f3">More...</a><br/></td></tr>
+<tr class="separator:gad224cdf0525be5cc5342c440c9f6f5f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga68409219a45a0f46f601a97f88fd672c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga68409219a45a0f46f601a97f88fd672c">DMIC_SetInputGainHwvad</a> (DMIC_Type *base, uint32_t value)</td></tr>
+<tr class="memdesc:ga68409219a45a0f46f601a97f88fd672c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the input gain of hwvad.  <a href="#ga68409219a45a0f46f601a97f88fd672c">More...</a><br/></td></tr>
+<tr class="separator:ga68409219a45a0f46f601a97f88fd672c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad2837b74dbbcd557736ae4ac3be8db06"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gad2837b74dbbcd557736ae4ac3be8db06">DMIC_CtrlClrIntrHwvad</a> (DMIC_Type *base, bool st10)</td></tr>
+<tr class="memdesc:gad2837b74dbbcd557736ae4ac3be8db06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears hwvad internal interrupt flag.  <a href="#gad2837b74dbbcd557736ae4ac3be8db06">More...</a><br/></td></tr>
+<tr class="separator:gad2837b74dbbcd557736ae4ac3be8db06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga144a8ee8ddc2f71d1ea731d3f7141724"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga144a8ee8ddc2f71d1ea731d3f7141724">DMIC_FilterResetHwvad</a> (DMIC_Type *base, bool rstt)</td></tr>
+<tr class="memdesc:ga144a8ee8ddc2f71d1ea731d3f7141724"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets hwvad filters.  <a href="#ga144a8ee8ddc2f71d1ea731d3f7141724">More...</a><br/></td></tr>
+<tr class="separator:ga144a8ee8ddc2f71d1ea731d3f7141724"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga10ebe9447d9bc55f4ad3f0f45387f6f8"><td class="memItemLeft" align="right" valign="top">static uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga10ebe9447d9bc55f4ad3f0f45387f6f8">DMIC_GetNoiseEnvlpEst</a> (DMIC_Type *base)</td></tr>
+<tr class="memdesc:ga10ebe9447d9bc55f4ad3f0f45387f6f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the value from output of the filter z7.  <a href="#ga10ebe9447d9bc55f4ad3f0f45387f6f8">More...</a><br/></td></tr>
+<tr class="separator:ga10ebe9447d9bc55f4ad3f0f45387f6f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac31c9046eaf53062ffa0749aa53cc789"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gac31c9046eaf53062ffa0749aa53cc789">DMIC_HwvadEnableIntCallback</a> (DMIC_Type *base, <a class="el" href="a00017.html#ga78bc937ccd0f6070a69c35461afdcaf4">dmic_hwvad_callback_t</a> vadcb)</td></tr>
+<tr class="memdesc:gac31c9046eaf53062ffa0749aa53cc789"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable hwvad callback.  <a href="#gac31c9046eaf53062ffa0749aa53cc789">More...</a><br/></td></tr>
+<tr class="separator:gac31c9046eaf53062ffa0749aa53cc789"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6d50d3f50203f8c86b3f56fbf6e99af3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga6d50d3f50203f8c86b3f56fbf6e99af3">DMIC_HwvadDisableIntCallback</a> (DMIC_Type *base, <a class="el" href="a00017.html#ga78bc937ccd0f6070a69c35461afdcaf4">dmic_hwvad_callback_t</a> vadcb)</td></tr>
+<tr class="memdesc:ga6d50d3f50203f8c86b3f56fbf6e99af3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable callback.  <a href="#ga6d50d3f50203f8c86b3f56fbf6e99af3">More...</a><br/></td></tr>
+<tr class="separator:ga6d50d3f50203f8c86b3f56fbf6e99af3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00303" id="a00303"></a>
+<a name="a00286" id="a00286"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct dmic_transfer_t</td>
+          <td class="memname">struct _dmic_channel_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a4f0facd979e386d36ac3a9745ae277a4"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a4f0facd979e386d36ac3a9745ae277a4">data</a></td></tr>
-<tr class="memdesc:a4f0facd979e386d36ac3a9745ae277a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The buffer of data to be transfer.  <a href="#a4f0facd979e386d36ac3a9745ae277a4">More...</a><br/></td></tr>
-<tr class="separator:a4f0facd979e386d36ac3a9745ae277a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a48387b512df9319e5cc9fe66e61dc658"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a48387b512df9319e5cc9fe66e61dc658"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a48387b512df9319e5cc9fe66e61dc658">dataWidth</a></td></tr>
-<tr class="memdesc:a48387b512df9319e5cc9fe66e61dc658"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMIC support 16bit/32bit. <br/></td></tr>
-<tr class="separator:a48387b512df9319e5cc9fe66e61dc658"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a632b4fa4892151e79bff476bb9152263"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a632b4fa4892151e79bff476bb9152263">dataSize</a></td></tr>
-<tr class="memdesc:a632b4fa4892151e79bff476bb9152263"><td class="mdescLeft">&#160;</td><td class="mdescRight">The byte count to be transfer.  <a href="#a632b4fa4892151e79bff476bb9152263">More...</a><br/></td></tr>
-<tr class="separator:a632b4fa4892151e79bff476bb9152263"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d618c8bfe41aa5cb52142158b34847e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6d618c8bfe41aa5cb52142158b34847e"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a6d618c8bfe41aa5cb52142158b34847e">dataAddrInterleaveSize</a></td></tr>
-<tr class="memdesc:a6d618c8bfe41aa5cb52142158b34847e"><td class="mdescLeft">&#160;</td><td class="mdescRight">destination address interleave size <br/></td></tr>
-<tr class="separator:a6d618c8bfe41aa5cb52142158b34847e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6103582a673e48df02be91fec0e0dab1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6103582a673e48df02be91fec0e0dab1"></a>
-struct _dmic_transfer *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a6103582a673e48df02be91fec0e0dab1">linkTransfer</a></td></tr>
-<tr class="memdesc:a6103582a673e48df02be91fec0e0dab1"><td class="mdescLeft">&#160;</td><td class="mdescRight">use to support link transfer <br/></td></tr>
-<tr class="separator:a6103582a673e48df02be91fec0e0dab1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36498a56cad6dde7bfae607efc3b17fc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a36498a56cad6dde7bfae607efc3b17fc"></a>
+<a class="el" href="a00017.html#ga540deb48ce92de287370227e3670694f">pdm_div_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a36498a56cad6dde7bfae607efc3b17fc">divhfclk</a></td></tr>
+<tr class="memdesc:a36498a56cad6dde7bfae607efc3b17fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMIC Clock pre-divider values. <br/></td></tr>
+<tr class="separator:a36498a56cad6dde7bfae607efc3b17fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5891c99c3d8e7b17dd0dce0f5a8faf3c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5891c99c3d8e7b17dd0dce0f5a8faf3c"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a5891c99c3d8e7b17dd0dce0f5a8faf3c">osr</a></td></tr>
+<tr class="memdesc:a5891c99c3d8e7b17dd0dce0f5a8faf3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">oversampling rate(CIC decimation rate) for PCM <br/></td></tr>
+<tr class="separator:a5891c99c3d8e7b17dd0dce0f5a8faf3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac84a16b61f1aefdf5d216e8d168afa28"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac84a16b61f1aefdf5d216e8d168afa28"></a>
+int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ac84a16b61f1aefdf5d216e8d168afa28">gainshft</a></td></tr>
+<tr class="memdesc:ac84a16b61f1aefdf5d216e8d168afa28"><td class="mdescLeft">&#160;</td><td class="mdescRight">4FS PCM data gain control <br/></td></tr>
+<tr class="separator:ac84a16b61f1aefdf5d216e8d168afa28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d83942691b8f266d8074298ad4f7b2d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3d83942691b8f266d8074298ad4f7b2d"></a>
+<a class="el" href="a00017.html#ga5f3bf9263d5a3d08881ba48795c28e39">compensation_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a3d83942691b8f266d8074298ad4f7b2d">preac2coef</a></td></tr>
+<tr class="memdesc:a3d83942691b8f266d8074298ad4f7b2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pre-emphasis Filter coefficient value for 2FS. <br/></td></tr>
+<tr class="separator:a3d83942691b8f266d8074298ad4f7b2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74638dc22082b93e94a58a7a4e48fed8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a74638dc22082b93e94a58a7a4e48fed8"></a>
+<a class="el" href="a00017.html#ga5f3bf9263d5a3d08881ba48795c28e39">compensation_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a74638dc22082b93e94a58a7a4e48fed8">preac4coef</a></td></tr>
+<tr class="memdesc:a74638dc22082b93e94a58a7a4e48fed8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pre-emphasis Filter coefficient value for 4FS. <br/></td></tr>
+<tr class="separator:a74638dc22082b93e94a58a7a4e48fed8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a755288869cb9b2e3648aa7829b9ca84e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00017.html#ga46fe0c93b7cc999e573ca38149d7345b">dc_removal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a755288869cb9b2e3648aa7829b9ca84e">dc_cut_level</a></td></tr>
+<tr class="memdesc:a755288869cb9b2e3648aa7829b9ca84e"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMIC DC filter control values.  <a href="#a755288869cb9b2e3648aa7829b9ca84e">More...</a><br/></td></tr>
+<tr class="separator:a755288869cb9b2e3648aa7829b9ca84e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8acb2a7e9ea96264a5c291edc892b094"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8acb2a7e9ea96264a5c291edc892b094"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a8acb2a7e9ea96264a5c291edc892b094">post_dc_gain_reduce</a></td></tr>
+<tr class="memdesc:a8acb2a7e9ea96264a5c291edc892b094"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fine gain adjustment in the form of a number of bits to downshift. <br/></td></tr>
+<tr class="separator:a8acb2a7e9ea96264a5c291edc892b094"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeab841e38efad9bc964e0be335a2c612"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeab841e38efad9bc964e0be335a2c612"></a>
+<a class="el" href="a00017.html#gaead87b6849f94a6ef58074e8d1c81163">dmic_phy_sample_rate_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#aeab841e38efad9bc964e0be335a2c612">sample_rate</a></td></tr>
+<tr class="memdesc:aeab841e38efad9bc964e0be335a2c612"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMIC and decimator sample rates. <br/></td></tr>
+<tr class="separator:aeab841e38efad9bc964e0be335a2c612"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37b20e13fee6e301b1cc2dba62899870"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a37b20e13fee6e301b1cc2dba62899870">saturate16bit</a></td></tr>
+<tr class="memdesc:a37b20e13fee6e301b1cc2dba62899870"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects 16-bit saturation.  <a href="#a37b20e13fee6e301b1cc2dba62899870">More...</a><br/></td></tr>
+<tr class="separator:a37b20e13fee6e301b1cc2dba62899870"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0edc6cf6f1fe636e9bfc1cf40c8e950e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0edc6cf6f1fe636e9bfc1cf40c8e950e"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a0edc6cf6f1fe636e9bfc1cf40c8e950e">enableSignExtend</a></td></tr>
+<tr class="memdesc:a0edc6cf6f1fe636e9bfc1cf40c8e950e"><td class="mdescLeft">&#160;</td><td class="mdescRight">sign extend feature which allows processing of 24bit audio data on 32bit machine <br/></td></tr>
+<tr class="separator:a0edc6cf6f1fe636e9bfc1cf40c8e950e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a4f0facd979e386d36ac3a9745ae277a4"></a>
+<a class="anchor" id="a755288869cb9b2e3648aa7829b9ca84e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void* dmic_transfer_t::data</td>
+          <td class="memname"><a class="el" href="a00017.html#ga46fe0c93b7cc999e573ca38149d7345b">dc_removal_t</a> _dmic_channel_config::dc_cut_level</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a632b4fa4892151e79bff476bb9152263"></a>
+<a class="anchor" id="a37b20e13fee6e301b1cc2dba62899870"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">size_t dmic_transfer_t::dataSize</td>
+          <td class="memname">bool _dmic_channel_config::saturate16bit</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>0 means results roll over if out range and do not saturate. 1 means if the result overflows, it saturates at 0xFFFF for positive overflow and 0x8000 for negative overflow. </p>
 
 </div>
 </div>
 
 </div>
 </div>
-<a name="a00260" id="a00260"></a>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="gacdb186464844cacb8cda8965ff1fd079"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct _dmic_dma_handle</td>
+          <td class="memname">#define FSL_DMIC_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00220.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 2))</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a1727f5ed3cff1bcca6b73f062e5f9b0c"><td class="memItemLeft" align="right" valign="top">DMIC_Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a1727f5ed3cff1bcca6b73f062e5f9b0c">base</a></td></tr>
-<tr class="memdesc:a1727f5ed3cff1bcca6b73f062e5f9b0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMIC peripheral base address.  <a href="#a1727f5ed3cff1bcca6b73f062e5f9b0c">More...</a><br/></td></tr>
-<tr class="separator:a1727f5ed3cff1bcca6b73f062e5f9b0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5bd3c2c224d11698647df5e48b70b29f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00015.html#a00299">dma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a5bd3c2c224d11698647df5e48b70b29f">rxDmaHandle</a></td></tr>
-<tr class="memdesc:a5bd3c2c224d11698647df5e48b70b29f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The DMA RX channel used.  <a href="#a5bd3c2c224d11698647df5e48b70b29f">More...</a><br/></td></tr>
-<tr class="separator:a5bd3c2c224d11698647df5e48b70b29f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa7d28d13ca279e07b003d829600cc21c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00017.html#ga531eba032d30d72f4f0fc691481e1ca6">dmic_dma_transfer_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#aa7d28d13ca279e07b003d829600cc21c">callback</a></td></tr>
-<tr class="memdesc:aa7d28d13ca279e07b003d829600cc21c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function.  <a href="#aa7d28d13ca279e07b003d829600cc21c">More...</a><br/></td></tr>
-<tr class="separator:aa7d28d13ca279e07b003d829600cc21c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2900b57e6643f6774eb09e9c63509fba"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a2900b57e6643f6774eb09e9c63509fba">userData</a></td></tr>
-<tr class="memdesc:a2900b57e6643f6774eb09e9c63509fba"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMIC callback function parameter.  <a href="#a2900b57e6643f6774eb09e9c63509fba">More...</a><br/></td></tr>
-<tr class="separator:a2900b57e6643f6774eb09e9c63509fba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2cb5cd7863011d54c5e753d354356cd8"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a2cb5cd7863011d54c5e753d354356cd8">transferSize</a></td></tr>
-<tr class="memdesc:a2cb5cd7863011d54c5e753d354356cd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the data to receive.  <a href="#a2cb5cd7863011d54c5e753d354356cd8">More...</a><br/></td></tr>
-<tr class="separator:a2cb5cd7863011d54c5e753d354356cd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac5ffc38189ce727ae8a99394e5347bda"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac5ffc38189ce727ae8a99394e5347bda"></a>
-volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ac5ffc38189ce727ae8a99394e5347bda">state</a></td></tr>
-<tr class="memdesc:ac5ffc38189ce727ae8a99394e5347bda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal state of DMIC DMA transfer. <br/></td></tr>
-<tr class="separator:ac5ffc38189ce727ae8a99394e5347bda"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abdd82c90453cba85d14d626ac484bf60"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#abdd82c90453cba85d14d626ac484bf60">channel</a></td></tr>
-<tr class="memdesc:abdd82c90453cba85d14d626ac484bf60"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMIC channel used.  <a href="#abdd82c90453cba85d14d626ac484bf60">More...</a><br/></td></tr>
-<tr class="separator:abdd82c90453cba85d14d626ac484bf60"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a32a2dddbcc2f55581a30a486aeae4d70"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a32a2dddbcc2f55581a30a486aeae4d70"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a32a2dddbcc2f55581a30a486aeae4d70">isChannelValid</a></td></tr>
-<tr class="memdesc:a32a2dddbcc2f55581a30a486aeae4d70"><td class="mdescLeft">&#160;</td><td class="mdescRight">DMIC channel initialization flag. <br/></td></tr>
-<tr class="separator:a32a2dddbcc2f55581a30a486aeae4d70"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac41fceb6d445488eae293569ea64bef2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac41fceb6d445488eae293569ea64bef2"></a>
-<a class="el" href="a00015.html#a00298">dma_descriptor_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ac41fceb6d445488eae293569ea64bef2">desLink</a></td></tr>
-<tr class="memdesc:ac41fceb6d445488eae293569ea64bef2"><td class="mdescLeft">&#160;</td><td class="mdescRight">descriptor pool pointer <br/></td></tr>
-<tr class="separator:ac41fceb6d445488eae293569ea64bef2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae0ce9f1835d9eede0bcc03cb04dbc81e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae0ce9f1835d9eede0bcc03cb04dbc81e"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ae0ce9f1835d9eede0bcc03cb04dbc81e">linkNum</a></td></tr>
-<tr class="memdesc:ae0ce9f1835d9eede0bcc03cb04dbc81e"><td class="mdescLeft">&#160;</td><td class="mdescRight">number of descriptor in descriptors pool <br/></td></tr>
-<tr class="separator:ae0ce9f1835d9eede0bcc03cb04dbc81e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a1727f5ed3cff1bcca6b73f062e5f9b0c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">DMIC_Type* dmic_dma_handle_t::base</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a5bd3c2c224d11698647df5e48b70b29f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00015.html#a00299">dma_handle_t</a>* dmic_dma_handle_t::rxDmaHandle</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="aa7d28d13ca279e07b003d829600cc21c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00017.html#ga531eba032d30d72f4f0fc691481e1ca6">dmic_dma_transfer_callback_t</a> dmic_dma_handle_t::callback</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a2900b57e6643f6774eb09e9c63509fba"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void* dmic_dma_handle_t::userData</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a2cb5cd7863011d54c5e753d354356cd8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_t dmic_dma_handle_t::transferSize</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="abdd82c90453cba85d14d626ac484bf60"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t dmic_dma_handle_t::channel</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 
 </div>
 </div>
 <h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="ga531eba032d30d72f4f0fc691481e1ca6"></a>
+<a class="anchor" id="gae17a19ff02b57870ccc79cb4e2041697"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* dmic_dma_transfer_callback_t)(DMIC_Type *base, dmic_dma_handle_t *handle, <a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
+          <td class="memname">typedef enum <a class="el" href="a00017.html#ga05a17315bad12283b447f3d5669f780c">_operation_mode</a>  <a class="el" href="a00017.html#gae17a19ff02b57870ccc79cb4e2041697">operation_mode_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga0908db2059feacc444a7346b42906934"></a>
+<a class="anchor" id="ga34d60152c3007bd996432f70ba9f6059"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DMIC_TransferCreateHandleDMA </td>
+          <td class="memname">typedef enum <a class="el" href="a00017.html#gac97e9c00ab92862fa27a1561d1405c82">_stereo_side</a>  <a class="el" href="a00017.html#ga34d60152c3007bd996432f70ba9f6059">stereo_side_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga5f3bf9263d5a3d08881ba48795c28e39"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00017.html#gadf789e383c5e816b8fb8953231908365">_compensation</a>  <a class="el" href="a00017.html#ga5f3bf9263d5a3d08881ba48795c28e39">compensation_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga46fe0c93b7cc999e573ca38149d7345b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00017.html#ga6f8fbc6a43f8c4f61e424ac5021ca35d">_dc_removal</a>  <a class="el" href="a00017.html#ga46fe0c93b7cc999e573ca38149d7345b">dc_removal_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga2bd350ddd8dafaa8906458522805929c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00017.html#ga344409630e73d7bb3185c2f52a4bb7a3">_dmic_channel</a>  <a class="el" href="a00017.html#ga2bd350ddd8dafaa8906458522805929c">dmic_channel_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gaead87b6849f94a6ef58074e8d1c81163"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00017.html#gab556fff90a7d4bb050328242b6ce451b">_dmic_phy_sample_rate</a>  <a class="el" href="a00017.html#gaead87b6849f94a6ef58074e8d1c81163">dmic_phy_sample_rate_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gab78de043418652316c45c92bf32228e9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00017.html#a00286">_dmic_channel_config</a>  <a class="el" href="a00017.html#gab78de043418652316c45c92bf32228e9">dmic_channel_config_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gaf07797092bf838ea43246e43cf949706"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* dmic_callback_t)(void)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga78bc937ccd0f6070a69c35461afdcaf4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* dmic_hwvad_callback_t)(void)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="gabc6126af1d45847bc59afa0aa3216b04"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">anonymous enum</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggabc6126af1d45847bc59afa0aa3216b04a81559e2a4c082aef4d6401b4e35b176c"></a>kStatus_DMIC_Busy</em>&nbsp;</td><td class="fielddoc">
+<p>DMIC is busy. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggabc6126af1d45847bc59afa0aa3216b04adecdc212fc4d4988b1e5a7dc1d0f0c38"></a>kStatus_DMIC_Idle</em>&nbsp;</td><td class="fielddoc">
+<p>DMIC is idle. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggabc6126af1d45847bc59afa0aa3216b04a6c2e39dda92a068e756ec6a3618e5d2c"></a>kStatus_DMIC_OverRunError</em>&nbsp;</td><td class="fielddoc">
+<p>DMIC over run Error. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggabc6126af1d45847bc59afa0aa3216b04ae3bcac7b4342404b8872cd691212c306"></a>kStatus_DMIC_UnderRunError</em>&nbsp;</td><td class="fielddoc">
+<p>DMIC under run Error. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga05a17315bad12283b447f3d5669f780c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00017.html#ga05a17315bad12283b447f3d5669f780c">_operation_mode</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga05a17315bad12283b447f3d5669f780ca733122aeba98fe1139358bae0204dd8c"></a>kDMIC_OperationModeInterrupt</em>&nbsp;</td><td class="fielddoc">
+<p>Interrupt mode. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga05a17315bad12283b447f3d5669f780ca8ed68ada41ddf27165de917646244451"></a>kDMIC_OperationModeDma</em>&nbsp;</td><td class="fielddoc">
+<p>DMA mode. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gac97e9c00ab92862fa27a1561d1405c82"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00017.html#gac97e9c00ab92862fa27a1561d1405c82">_stereo_side</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggac97e9c00ab92862fa27a1561d1405c82a9e1cc577f2042fcc41618bbefdd3da48"></a>kDMIC_Left</em>&nbsp;</td><td class="fielddoc">
+<p>Left Stereo channel. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac97e9c00ab92862fa27a1561d1405c82ab86d3c67c8303d5391e98d6a6ac2fc61"></a>kDMIC_Right</em>&nbsp;</td><td class="fielddoc">
+<p>Right Stereo channel. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga540deb48ce92de287370227e3670694f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00017.html#ga540deb48ce92de287370227e3670694f">pdm_div_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga540deb48ce92de287370227e3670694faff39715c1ed9fcc15668e7d5183131bf"></a>kDMIC_PdmDiv1</em>&nbsp;</td><td class="fielddoc">
+<p>DMIC pre-divider set in divide by 1. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga540deb48ce92de287370227e3670694fac1e4e33da9d7493b11e2d6d4c392e226"></a>kDMIC_PdmDiv2</em>&nbsp;</td><td class="fielddoc">
+<p>DMIC pre-divider set in divide by 2. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga540deb48ce92de287370227e3670694faf4e99ba5ff2921416649da5cd5a8f674"></a>kDMIC_PdmDiv3</em>&nbsp;</td><td class="fielddoc">
+<p>DMIC pre-divider set in divide by 3. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga540deb48ce92de287370227e3670694fad0cd9721f59f5c39d2f85e4caa123a18"></a>kDMIC_PdmDiv4</em>&nbsp;</td><td class="fielddoc">
+<p>DMIC pre-divider set in divide by 4. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga540deb48ce92de287370227e3670694fa9ad0cf2202c730c3c36d8ff19afbbd6e"></a>kDMIC_PdmDiv6</em>&nbsp;</td><td class="fielddoc">
+<p>DMIC pre-divider set in divide by 6. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga540deb48ce92de287370227e3670694fa80c85cc378b32ae9a6f6a07884f35571"></a>kDMIC_PdmDiv8</em>&nbsp;</td><td class="fielddoc">
+<p>DMIC pre-divider set in divide by 8. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga540deb48ce92de287370227e3670694faa84e02ac93aad1fa550e30870263947c"></a>kDMIC_PdmDiv12</em>&nbsp;</td><td class="fielddoc">
+<p>DMIC pre-divider set in divide by 12. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga540deb48ce92de287370227e3670694fa2f2db98157ba93dc8c7ce87b7d2c2d63"></a>kDMIC_PdmDiv16</em>&nbsp;</td><td class="fielddoc">
+<p>DMIC pre-divider set in divide by 16. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga540deb48ce92de287370227e3670694faa63470d148b99d14bb6728b11e8674f0"></a>kDMIC_PdmDiv24</em>&nbsp;</td><td class="fielddoc">
+<p>DMIC pre-divider set in divide by 24. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga540deb48ce92de287370227e3670694fac58eeb7ddbf8f905d37db34cc80c097d"></a>kDMIC_PdmDiv32</em>&nbsp;</td><td class="fielddoc">
+<p>DMIC pre-divider set in divide by 32. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga540deb48ce92de287370227e3670694fa703d0c824f9c76662d36e67cf6a16365"></a>kDMIC_PdmDiv48</em>&nbsp;</td><td class="fielddoc">
+<p>DMIC pre-divider set in divide by 48. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga540deb48ce92de287370227e3670694faf77fd318a3dce2cf7328a9ea3fce9212"></a>kDMIC_PdmDiv64</em>&nbsp;</td><td class="fielddoc">
+<p>DMIC pre-divider set in divide by 64. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga540deb48ce92de287370227e3670694fae5289fbecf2b2b8c9637fb20a804359d"></a>kDMIC_PdmDiv96</em>&nbsp;</td><td class="fielddoc">
+<p>DMIC pre-divider set in divide by 96. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga540deb48ce92de287370227e3670694fafda7bbf367ee93f0c32ff4f39239c785"></a>kDMIC_PdmDiv128</em>&nbsp;</td><td class="fielddoc">
+<p>DMIC pre-divider set in divide by 128. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gadf789e383c5e816b8fb8953231908365"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00017.html#gadf789e383c5e816b8fb8953231908365">_compensation</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggadf789e383c5e816b8fb8953231908365a9518c5cba4a1a16cc17e03ba17d033d7"></a>kDMIC_CompValueZero</em>&nbsp;</td><td class="fielddoc">
+<p>Compensation 0. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggadf789e383c5e816b8fb8953231908365a2e1c1ad1bbb5000e08d8fca1f9966205"></a>kDMIC_CompValueNegativePoint16</em>&nbsp;</td><td class="fielddoc">
+<p>Compensation -0.16. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggadf789e383c5e816b8fb8953231908365ae369e39f07b8ea7124608b0a2d7f51ea"></a>kDMIC_CompValueNegativePoint15</em>&nbsp;</td><td class="fielddoc">
+<p>Compensation -0.15. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggadf789e383c5e816b8fb8953231908365adcf6c3731299e7405db61d9f8b1c895b"></a>kDMIC_CompValueNegativePoint13</em>&nbsp;</td><td class="fielddoc">
+<p>Compensation -0.13. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga6f8fbc6a43f8c4f61e424ac5021ca35d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00017.html#ga6f8fbc6a43f8c4f61e424ac5021ca35d">_dc_removal</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga6f8fbc6a43f8c4f61e424ac5021ca35dacd6b43bf85bcd52777cdeaab455f1c4c"></a>kDMIC_DcNoRemove</em>&nbsp;</td><td class="fielddoc">
+<p>Flat response no filter. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga6f8fbc6a43f8c4f61e424ac5021ca35da7413d9085286a18fc39809ede6283d1f"></a>kDMIC_DcCut155</em>&nbsp;</td><td class="fielddoc">
+<p>Cut off Frequency is 155 Hz. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga6f8fbc6a43f8c4f61e424ac5021ca35dae01c0abeff1e80b7288a5840319473f9"></a>kDMIC_DcCut78</em>&nbsp;</td><td class="fielddoc">
+<p>Cut off Frequency is 78 Hz. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga6f8fbc6a43f8c4f61e424ac5021ca35daf90a66e1000b01d5f0b529034a7e2616"></a>kDMIC_DcCut39</em>&nbsp;</td><td class="fielddoc">
+<p>Cut off Frequency is 39 Hz. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga344409630e73d7bb3185c2f52a4bb7a3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00017.html#ga344409630e73d7bb3185c2f52a4bb7a3">_dmic_channel</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga344409630e73d7bb3185c2f52a4bb7a3a3574c3b8c6bc3013a5bb5e498f090bc4"></a>kDMIC_Channel0</em>&nbsp;</td><td class="fielddoc">
+<p>DMIC channel 0. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga344409630e73d7bb3185c2f52a4bb7a3a9832e15a17b33bff6fb4f2327430c438"></a>kDMIC_Channel1</em>&nbsp;</td><td class="fielddoc">
+<p>DMIC channel 1. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga344409630e73d7bb3185c2f52a4bb7a3a6ede13a4459a1570d02d254f1b8ed2b0"></a>kDMIC_Channel2</em>&nbsp;</td><td class="fielddoc">
+<p>DMIC channel 2. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga344409630e73d7bb3185c2f52a4bb7a3abe1d54842a011db563dde9acff16d5e7"></a>kDMIC_Channel3</em>&nbsp;</td><td class="fielddoc">
+<p>DMIC channel 3. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga344409630e73d7bb3185c2f52a4bb7a3af8c4945449d8152a725b05bc817f2bcc"></a>kDMIC_Channel4</em>&nbsp;</td><td class="fielddoc">
+<p>DMIC channel 4. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga344409630e73d7bb3185c2f52a4bb7a3a011368a9c021f6b0651347c27e61146a"></a>kDMIC_Channel5</em>&nbsp;</td><td class="fielddoc">
+<p>DMIC channel 5. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga344409630e73d7bb3185c2f52a4bb7a3a977569c3c7a78ef1e016109a11dac342"></a>kDMIC_Channel6</em>&nbsp;</td><td class="fielddoc">
+<p>DMIC channel 6. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga344409630e73d7bb3185c2f52a4bb7a3ac97b9277f388b5f4523bbe31ca77bc1b"></a>kDMIC_Channel7</em>&nbsp;</td><td class="fielddoc">
+<p>DMIC channel 7. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gadc29c2ff13d900c2f185ee95427fb06c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">anonymous enum</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggadc29c2ff13d900c2f185ee95427fb06ca2d3260a4ca8598c81c9e2be2b65ff2c8"></a>kDMIC_EnableChannel0</em>&nbsp;</td><td class="fielddoc">
+<p>DMIC channel 0 mask. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggadc29c2ff13d900c2f185ee95427fb06ca001a3adccff5566f01048e0618e904fc"></a>kDMIC_EnableChannel1</em>&nbsp;</td><td class="fielddoc">
+<p>DMIC channel 1 mask. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggadc29c2ff13d900c2f185ee95427fb06ca3189d8a7fb3691124026921a91e38582"></a>kDMIC_EnableChannel2</em>&nbsp;</td><td class="fielddoc">
+<p>DMIC channel 2 mask. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggadc29c2ff13d900c2f185ee95427fb06ca93d9bf9a092c5dde24ea82e83602c3f5"></a>kDMIC_EnableChannel3</em>&nbsp;</td><td class="fielddoc">
+<p>DMIC channel 3 mask. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggadc29c2ff13d900c2f185ee95427fb06caf8b70377e140e062445b02cc31eb9295"></a>kDMIC_EnableChannel4</em>&nbsp;</td><td class="fielddoc">
+<p>DMIC channel 4 mask. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggadc29c2ff13d900c2f185ee95427fb06ca931b4aed92de76d50915601fbea9923d"></a>kDMIC_EnableChannel5</em>&nbsp;</td><td class="fielddoc">
+<p>DMIC channel 5 mask. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggadc29c2ff13d900c2f185ee95427fb06ca1f6a36372463aba4cf67ac045470f523"></a>kDMIC_EnableChannel6</em>&nbsp;</td><td class="fielddoc">
+<p>DMIC channel 6 mask. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggadc29c2ff13d900c2f185ee95427fb06ca1037a6bf20929f2647495e9c7be39e81"></a>kDMIC_EnableChannel7</em>&nbsp;</td><td class="fielddoc">
+<p>DMIC channel 7 mask. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gab556fff90a7d4bb050328242b6ce451b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00017.html#gab556fff90a7d4bb050328242b6ce451b">_dmic_phy_sample_rate</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab556fff90a7d4bb050328242b6ce451ba518375822c55b8b005159812aba5b04d"></a>kDMIC_PhyFullSpeed</em>&nbsp;</td><td class="fielddoc">
+<p>Decimator gets one sample per each chosen clock edge of PDM interface. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab556fff90a7d4bb050328242b6ce451baf42dd89abb0b7e1dbd0f0c2a97c8137e"></a>kDMIC_PhyHalfSpeed</em>&nbsp;</td><td class="fielddoc">
+<p>PDM clock to Microphone is halved, decimator receives each sample twice. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga6af38ebd38a51962cab12083af82324b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t DMIC_GetInstance </td>
+          <td>(</td>
+          <td class="paramtype">DMIC_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>DMIC peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>DMIC instance. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9c6bce944abc7a1ab3fe991b214a45d3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DMIC_Init </td>
+          <td>(</td>
+          <td class="paramtype">DMIC_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>: DMIC base </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Nothing </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gab98b0a0dcf468ab57827505ec0b752e6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DMIC_DeInit </td>
+          <td>(</td>
+          <td class="paramtype">DMIC_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>: DMIC base </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Nothing </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga1d879be7966325a36ac004513ce8c688"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DMIC_SetOperationMode </td>
           <td>(</td>
           <td class="paramtype">DMIC_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -361,26 +955,43 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">dmic_dma_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
+          <td class="paramtype"><a class="el" href="a00017.html#gae17a19ff02b57870ccc79cb4e2041697">operation_mode_t</a>&#160;</td>
+          <td class="paramname"><em>mode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="a00259.html#_deprecated000001">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00017.html#ga66c5df77aaa4c4dd4a0448ba3ea19ff2">DMIC_EnableChannelInterrupt</a>, <a class="el" href="a00017.html#ga55a76465d0f8449b4cc1ff347c570290">DMIC_EnableChannelDma</a>. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>: The base address of DMIC interface </td></tr>
+    <tr><td class="paramname">mode</td><td>: DMIC mode </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Nothing </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gafaadf7842594e1aa1557b0321f677dc2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DMIC_Use2fs </td>
+          <td>(</td>
+          <td class="paramtype">DMIC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00017.html#ga531eba032d30d72f4f0fc691481e1ca6">dmic_dma_transfer_callback_t</a>&#160;</td>
-          <td class="paramname"><em>callback</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>userData</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00015.html#a00299">dma_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>rxDmaHandle</em>&#160;</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>use2fs</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -391,23 +1002,21 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>DMIC peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>Pointer to dmic_dma_handle_t structure. </td></tr>
-    <tr><td class="paramname">callback</td><td>Callback function. </td></tr>
-    <tr><td class="paramname">userData</td><td>User data. </td></tr>
-    <tr><td class="paramname">rxDmaHandle</td><td>User-requested DMA handle for RX DMA transfer. </td></tr>
+    <tr><td class="paramname">base</td><td>: The base address of DMIC interface </td></tr>
+    <tr><td class="paramname">use2fs</td><td>: clock scaling </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>Nothing </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga429f14998f6bf0e9d2a2750fb168de11"></a>
+<a class="anchor" id="ga44d959900152668f51ece1ee1e3607b8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DMIC_TransferReceiveDMA </td>
+          <td class="memname">void DMIC_CfgChannelDc </td>
           <td>(</td>
           <td class="paramtype">DMIC_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -415,14 +1024,429 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">dmic_dma_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
+          <td class="paramtype"><a class="el" href="a00017.html#ga2bd350ddd8dafaa8906458522805929c">dmic_channel_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00017.html#a00303">dmic_transfer_t</a> *&#160;</td>
-          <td class="paramname"><em>xfer</em>, </td>
+          <td class="paramtype"><a class="el" href="a00017.html#ga46fe0c93b7cc999e573ca38149d7345b">dc_removal_t</a>&#160;</td>
+          <td class="paramname"><em>dc_cut_level</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>post_dc_gain_reduce</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>saturate16bit</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>: The base address of DMIC interface </td></tr>
+    <tr><td class="paramname">channel</td><td>: DMIC channel </td></tr>
+    <tr><td class="paramname">dc_cut_level</td><td>: dc_removal_t, Cut off Frequency </td></tr>
+    <tr><td class="paramname">post_dc_gain_reduce</td><td>: Fine gain adjustment in the form of a number of bits to downshift. </td></tr>
+    <tr><td class="paramname">saturate16bit</td><td>: If selects 16-bit saturation. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa4008f7917ef69934b01198da2c180d3"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void DMIC_EnableChannelSignExtend </td>
+          <td>(</td>
+          <td class="paramtype">DMIC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00017.html#ga2bd350ddd8dafaa8906458522805929c">dmic_channel_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>: The base address of DMIC interface </td></tr>
+    <tr><td class="paramname">channel</td><td>: DMIC channel </td></tr>
+    <tr><td class="paramname">enable</td><td>: true is enable sign extend, false is disable sign extend </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga1bfcaed7509b4295cd60dfaac9586e6a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DMIC_ConfigChannel </td>
+          <td>(</td>
+          <td class="paramtype">DMIC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00017.html#ga2bd350ddd8dafaa8906458522805929c">dmic_channel_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00017.html#ga34d60152c3007bd996432f70ba9f6059">stereo_side_t</a>&#160;</td>
+          <td class="paramname"><em>side</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00017.html#gab78de043418652316c45c92bf32228e9">dmic_channel_config_t</a> *&#160;</td>
+          <td class="paramname"><em>channel_config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>: The base address of DMIC interface </td></tr>
+    <tr><td class="paramname">channel</td><td>: DMIC channel </td></tr>
+    <tr><td class="paramname">side</td><td>: stereo_side_t, choice of left or right </td></tr>
+    <tr><td class="paramname">channel_config</td><td>: Channel configuration </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Nothing </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9feb1c1487876380c080dc28a8335647"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DMIC_EnableChannnel </td>
+          <td>(</td>
+          <td class="paramtype">DMIC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>channelmask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>: The base address of DMIC interface </td></tr>
+    <tr><td class="paramname">channelmask</td><td>reference _dmic_channel_mask </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Nothing </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga17af24956c1bde8a0c66345e3e0957c9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DMIC_FifoChannel </td>
+          <td>(</td>
+          <td class="paramtype">DMIC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>trig_level</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>enable</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>resetn</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>: The base address of DMIC interface </td></tr>
+    <tr><td class="paramname">channel</td><td>: DMIC channel </td></tr>
+    <tr><td class="paramname">trig_level</td><td>: FIFO trigger level </td></tr>
+    <tr><td class="paramname">enable</td><td>: FIFO level </td></tr>
+    <tr><td class="paramname">resetn</td><td>: FIFO reset </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Nothing </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga66c5df77aaa4c4dd4a0448ba3ea19ff2"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void DMIC_EnableChannelInterrupt </td>
+          <td>(</td>
+          <td class="paramtype">DMIC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00017.html#ga2bd350ddd8dafaa8906458522805929c">dmic_channel_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>: The base address of DMIC interface </td></tr>
+    <tr><td class="paramname">channel</td><td>: Channel selection </td></tr>
+    <tr><td class="paramname">enable</td><td>: true is enable, false is disable </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga55a76465d0f8449b4cc1ff347c570290"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void DMIC_EnableChannelDma </td>
+          <td>(</td>
+          <td class="paramtype">DMIC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00017.html#ga2bd350ddd8dafaa8906458522805929c">dmic_channel_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>: The base address of DMIC interface </td></tr>
+    <tr><td class="paramname">channel</td><td>: Channel selection </td></tr>
+    <tr><td class="paramname">enable</td><td>: true is enable, false is disable </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga7d4de30e110d2438e5d0303c7cab933c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void DMIC_EnableChannelFifo </td>
+          <td>(</td>
+          <td class="paramtype">DMIC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00017.html#ga2bd350ddd8dafaa8906458522805929c">dmic_channel_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>: The base address of DMIC interface </td></tr>
+    <tr><td class="paramname">channel</td><td>: Channel selection </td></tr>
+    <tr><td class="paramname">enable</td><td>: true is enable, false is disable </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaf8ff5deee0e0edaa2181d0762711d1fc"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void DMIC_DoFifoReset </td>
+          <td>(</td>
+          <td class="paramtype">DMIC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00017.html#ga2bd350ddd8dafaa8906458522805929c">dmic_channel_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>: The base address of DMIC interface </td></tr>
+    <tr><td class="paramname">channel</td><td>: Channel selection </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gad7ab9196cff9972a1c859dde2ca2df4a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t DMIC_FifoGetStatus </td>
+          <td>(</td>
+          <td class="paramtype">DMIC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -436,32 +1460,32 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>This function receives data using DMA. This is a non-blocking function, which returns right away. When all data is received, the receive callback function is called.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>USART peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>Pointer to usart_dma_handle_t structure. </td></tr>
-    <tr><td class="paramname">xfer</td><td>DMIC DMA transfer structure. See <a class="el" href="a00017.html#a00303" title="DMIC transfer structure. ">dmic_transfer_t</a>. </td></tr>
-    <tr><td class="paramname">channel</td><td>DMIC start channel number. </td></tr>
+    <tr><td class="paramname">base</td><td>: The base address of DMIC interface </td></tr>
+    <tr><td class="paramname">channel</td><td>: DMIC channel </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>FIFO status </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gac8598bcd4a9a96f96235fc400ebeb2d2"></a>
+<a class="anchor" id="gae4671bd569e1af27a883662d9473236b"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void DMIC_TransferAbortReceiveDMA </td>
+          <td class="memname">static void DMIC_FifoClearStatus </td>
           <td>(</td>
           <td class="paramtype">DMIC_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -469,8 +1493,14 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">dmic_dma_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -478,24 +1508,33 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>This function aborts the received data using DMA.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>DMIC peripheral base address </td></tr>
-    <tr><td class="paramname">handle</td><td>Pointer to dmic_dma_handle_t structure </td></tr>
+    <tr><td class="paramname">base</td><td>: The base address of DMIC interface </td></tr>
+    <tr><td class="paramname">channel</td><td>: DMIC channel </td></tr>
+    <tr><td class="paramname">mask</td><td>: Bits to be cleared </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>FIFO status </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gac132e5ab26920dac8dd4a7df5c8503a5"></a>
+<a class="anchor" id="ga7ba039347e508039816670ae64678e4a"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00217.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DMIC_TransferGetReceiveCountDMA </td>
+          <td class="memname">static uint32_t DMIC_FifoGetData </td>
           <td>(</td>
           <td class="paramtype">DMIC_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -503,14 +1542,95 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">dmic_dma_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>channel</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>: The base address of DMIC interface </td></tr>
+    <tr><td class="paramname">channel</td><td>: DMIC channel </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>FIFO data </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9e229e939244b8bc874ad2d6b9939d6c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t DMIC_FifoGetAddress </td>
+          <td>(</td>
+          <td class="paramtype">DMIC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>count</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>channel</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>: The base address of DMIC interface </td></tr>
+    <tr><td class="paramname">channel</td><td>: DMIC channel </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>FIFO data </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga057cf94fc59b6e80e3c6df21da4ed9ce"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DMIC_ResetChannelDecimator </td>
+          <td>(</td>
+          <td class="paramtype">DMIC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>channelMask</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>reset</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -519,47 +1639,121 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function gets the number of bytes that have been received.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>DMIC peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>DMIC handle pointer. </td></tr>
-    <tr><td class="paramname">count</td><td>Receive bytes count. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_NoTransferInProgress</td><td>No receive in progress. </td></tr>
-    <tr><td class="paramname">kStatus_InvalidArgument</td><td>Parameter is invalid. </td></tr>
-    <tr><td class="paramname">kStatus_Success</td><td>Get successfully through the parameter count; </td></tr>
+    <tr><td class="paramname">base</td><td>: The base address of DMIC interface </td></tr>
+    <tr><td class="paramname">channelMask</td><td>: DMIC channel mask, reference _dmic_channel_mask </td></tr>
+    <tr><td class="paramname">reset</td><td>: true is reset decimator, false is release decimator. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gafcb1572158c78d11c5e389ceacdb3de5"></a>
+<a class="anchor" id="ga7a0b986f16b971092dccfdd94452db11"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void DMIC_EnableChannelGlobalSync </td>
+          <td>(</td>
+          <td class="paramtype">DMIC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>channelMask</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>syncCounter</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>: The base address of DMIC interface </td></tr>
+    <tr><td class="paramname">channelMask</td><td>: DMIC channel mask, reference _dmic_channel_mask </td></tr>
+    <tr><td class="paramname">syncCounter</td><td>:sync counter will trigger a pulse whenever count reaches CCOUNTVAL. If CCOUNTVAL is set to 0, there will be a pulse on every cycle </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9f7356ce4ed7d483d99616315f743c74"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void DMIC_DisableChannelGlobalSync </td>
+          <td>(</td>
+          <td class="paramtype">DMIC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>channelMask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>: The base address of DMIC interface </td></tr>
+    <tr><td class="paramname">channelMask</td><td>: DMIC channel mask, reference _dmic_channel_mask </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga4557908afd7f568bc1ae3143f42d47d9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void DMIC_InstallDMADescriptorMemory </td>
+          <td class="memname">void DMIC_EnableIntCallback </td>
           <td>(</td>
-          <td class="paramtype">dmic_dma_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
+          <td class="paramtype">DMIC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>linkAddr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>linkNum</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00017.html#gaf07797092bf838ea43246e43cf949706">dmic_callback_t</a>&#160;</td>
+          <td class="paramname"><em>cb</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -568,12 +1762,455 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function used to register DMA descriptor memory for linked transfer, a typical case is ping pong transfer which will request more than one DMA descriptor memory space, it should be called after DMIC_TransferCreateHandleDMA. User should be take care about the address of DMA descriptor pool which required align with 16BYTE at least.</p>
+<p>This function enables the interrupt for the selected DMIC peripheral. The callback function is not enabled until this function is called.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>Pointer to DMA channel transfer handle. </td></tr>
-    <tr><td class="paramname">linkAddr</td><td>DMA link descriptor address. </td></tr>
-    <tr><td class="paramname">linkNum</td><td>DMA link descriptor number. </td></tr>
+    <tr><td class="paramname">base</td><td>Base address of the DMIC peripheral. </td></tr>
+    <tr><td class="paramname">cb</td><td>callback Pointer to store callback function. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None.</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gab0cc7b4e67381315fa1b7e81d4a7771c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DMIC_DisableIntCallback </td>
+          <td>(</td>
+          <td class="paramtype">DMIC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00017.html#gaf07797092bf838ea43246e43cf949706">dmic_callback_t</a>&#160;</td>
+          <td class="paramname"><em>cb</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function disables the interrupt for the selected DMIC peripheral.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Base address of the DMIC peripheral. </td></tr>
+    <tr><td class="paramname">cb</td><td>callback Pointer to store callback function.. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None.</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gae0b7e1f69c320b0a1ca0815cdb8344f9"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void DMIC_SetGainNoiseEstHwvad </td>
+          <td>(</td>
+          <td class="paramtype">DMIC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>DMIC base pointer </td></tr>
+    <tr><td class="paramname">value</td><td>gain value for the noise estimator. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None.</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga0666228b59392fd37c209fc2bc38c4ba"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void DMIC_SetGainSignalEstHwvad </td>
+          <td>(</td>
+          <td class="paramtype">DMIC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>DMIC base pointer </td></tr>
+    <tr><td class="paramname">value</td><td>gain value for the signal estimator. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None.</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gad224cdf0525be5cc5342c440c9f6f5f3"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void DMIC_SetFilterCtrlHwvad </td>
+          <td>(</td>
+          <td class="paramtype">DMIC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>DMIC base pointer </td></tr>
+    <tr><td class="paramname">value</td><td>cut off frequency value. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None.</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga68409219a45a0f46f601a97f88fd672c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void DMIC_SetInputGainHwvad </td>
+          <td>(</td>
+          <td class="paramtype">DMIC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>DMIC base pointer </td></tr>
+    <tr><td class="paramname">value</td><td>input gain value for hwvad. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None.</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gad2837b74dbbcd557736ae4ac3be8db06"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void DMIC_CtrlClrIntrHwvad </td>
+          <td>(</td>
+          <td class="paramtype">DMIC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>st10</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>DMIC base pointer </td></tr>
+    <tr><td class="paramname">st10</td><td>bit value. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None.</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga144a8ee8ddc2f71d1ea731d3f7141724"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void DMIC_FilterResetHwvad </td>
+          <td>(</td>
+          <td class="paramtype">DMIC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>rstt</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>DMIC base pointer </td></tr>
+    <tr><td class="paramname">rstt</td><td>Reset bit value. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None.</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga10ebe9447d9bc55f4ad3f0f45387f6f8"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint16_t DMIC_GetNoiseEnvlpEst </td>
+          <td>(</td>
+          <td class="paramtype">DMIC_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>DMIC base pointer </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">output</td><td>of filter z7. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gac31c9046eaf53062ffa0749aa53cc789"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DMIC_HwvadEnableIntCallback </td>
+          <td>(</td>
+          <td class="paramtype">DMIC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00017.html#ga78bc937ccd0f6070a69c35461afdcaf4">dmic_hwvad_callback_t</a>&#160;</td>
+          <td class="paramname"><em>vadcb</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function enables the hwvad interrupt for the selected DMIC peripheral. The callback function is not enabled until this function is called.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Base address of the DMIC peripheral. </td></tr>
+    <tr><td class="paramname">vadcb</td><td>callback Pointer to store callback function. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None.</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga6d50d3f50203f8c86b3f56fbf6e99af3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DMIC_HwvadDisableIntCallback </td>
+          <td>(</td>
+          <td class="paramtype">DMIC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00017.html#ga78bc937ccd0f6070a69c35461afdcaf4">dmic_hwvad_callback_t</a>&#160;</td>
+          <td class="paramname"><em>vadcb</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function disables the hwvad interrupt for the selected DMIC peripheral.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Base address of the DMIC peripheral. </td></tr>
+    <tr><td class="paramname">vadcb</td><td>callback Pointer to store callback function.. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None.</td><td></td></tr>
   </table>
   </dd>
 </dl>

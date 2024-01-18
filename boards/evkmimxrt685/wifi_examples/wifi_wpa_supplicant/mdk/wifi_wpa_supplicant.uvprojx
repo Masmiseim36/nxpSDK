@@ -78,7 +78,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>fromelf.exe --output "$L@L.bin" --bincombined "#L"</UserProg1Name>
+            <UserProg1Name>fromelf.exe --output "$Lsdk20-app.bin" --bincombined "#L"</UserProg1Name>
             <UserProg2Name/>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -334,7 +334,7 @@
               <MiscControls>-include ../app_config.h -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, SDK_OS_FREE_RTOS, FSL_OSA_TASK_ENABLE=1, MBEDTLS_CONFIG_FILE='\"wpa_supp_mbedtls_config.h\"', SDIO_ENABLED, SO_REUSE=1, SERIAL_PORT_TYPE_UART=1, LWIP_DNS=1, LWIP_NETIF_HOSTNAME=1, LWIP_NETIF_STATUS_CALLBACK=1, LWIP_IGMP=1</Define>
               <Undefine/>
-              <IncludePath>..;../../common;../../..;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../devices/MIMXRT685S/drivers;../../../../../components/pca9420;../../../../../middleware/wifi_nxp/incl;../../../../../middleware/wifi_nxp/incl/wlcmgr;../../../../../middleware/wifi_nxp/wifidriver;../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if;../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if/incl;../../../../../middleware/wifi_nxp/certs;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/wireless/wpa_supplicant-rtos;../../../../../middleware/wireless/wpa_supplicant-rtos/hostapd;../../../../../middleware/wireless/wpa_supplicant-rtos/wpa_supplicant;../../../../../middleware/wireless/wpa_supplicant-rtos/freertos;../../../../../middleware/wireless/wpa_supplicant-rtos/freertos/src;../../../../../middleware/wireless/wpa_supplicant-rtos/src;../../../../../middleware/wireless/wpa_supplicant-rtos/src/ap;../../../../../middleware/wireless/wpa_supplicant-rtos/src/common;../../../../../middleware/wireless/wpa_supplicant-rtos/src/crypto;../../../../../middleware/wireless/wpa_supplicant-rtos/src/drivers;../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_common;../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_peer;../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_server;../../../../../middleware/wireless/wpa_supplicant-rtos/src/eapol_auth;../../../../../middleware/wireless/wpa_supplicant-rtos/src/eapol_supp;../../../../../middleware/wireless/wpa_supplicant-rtos/src/fst;../../../../../middleware/wireless/wpa_supplicant-rtos/src/l2_packet;../../../../../middleware/wireless/wpa_supplicant-rtos/src/p2p;../../../../../middleware/wireless/wpa_supplicant-rtos/src/pae;../../../../../middleware/wireless/wpa_supplicant-rtos/src/radius;../../../../../middleware/wireless/wpa_supplicant-rtos/src/rsn_supp;../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls;../../../../../middleware/wireless/wpa_supplicant-rtos/src/utils;../../../../../middleware/wireless/wpa_supplicant-rtos/src/wps;../../../../../middleware/wireless/wpa_supplicant-rtos/port/mbedtls;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/sdmmc/sdio;../../../../../components/gpio;../../../../../rtos/freertos/freertos-kernel/include;../../../../../middleware/wifi_nxp/dhcpd;../../../../../middleware/wifi_nxp/incl/port/lwip;../../../../../middleware/wifi_nxp/port/lwip;../../../../../middleware/wifi_nxp/incl/port/lwip/hooks;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../middleware/lwip/src/include/lwip/apps;../../../../../middleware/wifi_nxp/cli;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../components/uart;../../../flash_config;../../../../../components/serial_manager;../../../../../components/lists;../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../middleware/wifi_nxp/incl/port/os;../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../middleware/mbedtls/port/ksdk;../../../../../components/osa;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../common;../../..;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../devices/MIMXRT685S/drivers;../../../../../components/pca9420;../../../../../middleware/wifi_nxp/incl;../../../../../middleware/wifi_nxp/incl/wlcmgr;../../../../../middleware/wifi_nxp/wifidriver;../../../../../middleware/wifi_nxp/wifidriver/incl;../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if;../../../../../middleware/wifi_nxp/wifidriver/wpa_supp_if/incl;../../../../../middleware/wifi_nxp/certs;../../../../../middleware/wifi_nxp/firmware_dnld;../../../../../middleware/wifi_nxp/sdio_nxp_abs;../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/wireless/wpa_supplicant-rtos;../../../../../middleware/wireless/wpa_supplicant-rtos/src;../../../../../middleware/wireless/wpa_supplicant-rtos/src/utils;../../../../../middleware/wireless/wpa_supplicant-rtos/src/common;../../../../../middleware/wireless/wpa_supplicant-rtos/src/crypto;../../../../../middleware/wireless/wpa_supplicant-rtos/src/ap;../../../../../middleware/wireless/wpa_supplicant-rtos/src/drivers;../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_common;../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_peer;../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_server;../../../../../middleware/wireless/wpa_supplicant-rtos/src/eapol_auth;../../../../../middleware/wireless/wpa_supplicant-rtos/src/eapol_supp;../../../../../middleware/wireless/wpa_supplicant-rtos/src/fst;../../../../../middleware/wireless/wpa_supplicant-rtos/src/l2_packet;../../../../../middleware/wireless/wpa_supplicant-rtos/src/p2p;../../../../../middleware/wireless/wpa_supplicant-rtos/src/pae;../../../../../middleware/wireless/wpa_supplicant-rtos/src/radius;../../../../../middleware/wireless/wpa_supplicant-rtos/src/rsn_supp;../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls;../../../../../middleware/wireless/wpa_supplicant-rtos/src/wps;../../../../../middleware/wireless/wpa_supplicant-rtos/port/mbedtls;../../../../../middleware/wireless/wpa_supplicant-rtos/hostapd;../../../../../middleware/wireless/wpa_supplicant-rtos/wpa_supplicant;../../../../../middleware/wireless/wpa_supplicant-rtos/freertos;../../../../../middleware/wireless/wpa_supplicant-rtos/freertos/src;../../../../../middleware/sdmmc/host/usdhc;../../../../../middleware/sdmmc/sdio;../../../../../components/gpio;../../../../../rtos/freertos/freertos-kernel/include;../../../../../middleware/wifi_nxp/dhcpd;../../../../../middleware/wifi_nxp/incl/port/lwip;../../../../../middleware/wifi_nxp/port/lwip;../../../../../middleware/wifi_nxp/incl/port/lwip/hooks;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../middleware/lwip/src/include/lwip/apps;../../../../../middleware/wifi_nxp/cli;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../devices/MIMXRT685S/utilities;../../../../../components/uart;../../../flash_config;../../../../../components/serial_manager;../../../../../components/lists;../../../../../middleware/wifi_nxp/incl/wifidriver;../../../../../middleware/wifi_nxp/incl/port/os;../../../../../middleware/wifi_nxp/wifi_bt_firmware;../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits;../../../../../components/wifi_bt_module/incl;../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801;../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416;../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987;../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x;../../../../../middleware/wifi_nxp/fwdnld_intf_abs;../../../../../middleware/mbedtls/port/ksdk;../../../../../components/osa;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/osa;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -384,11 +384,6 @@
               <FilePath>../main.c</FilePath>
             </File>
             <File>
-              <FileName>lwipopts.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../lwipopts.h</FilePath>
-            </File>
-            <File>
               <FileName>lwippools.h</FileName>
               <FileType>5</FileType>
               <FilePath>../lwippools.h</FilePath>
@@ -407,6 +402,11 @@
               <FileName>wifi_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../wifi_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>lwipopts.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../lwipopts.h</FilePath>
             </File>
             <File>
               <FileName>app_config.h</FileName>
@@ -474,9 +474,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -884,11 +884,6 @@
               <FilePath>../../../../../middleware/wifi_nxp/wifidriver/wifi-wps.c</FilePath>
             </File>
             <File>
-              <FileName>mlan_sdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/mlan_sdio.c</FilePath>
-            </File>
-            <File>
               <FileName>wifi-sdio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/wifi_nxp/wifidriver/wifi-sdio.h</FilePath>
@@ -902,16 +897,6 @@
               <FileName>sdio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/wifi_nxp/wifidriver/sdio.h</FilePath>
-            </File>
-            <File>
-              <FileName>firmware_dnld.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/firmware_dnld.c</FilePath>
-            </File>
-            <File>
-              <FileName>firmware_dnld.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/firmware_dnld.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1007,11 +992,6 @@
               <FileName>wifi_nxp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/wifi_nxp/incl/wifidriver/wifi_nxp.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_sdio_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/incl/wifidriver/mlan_sdio_api.h</FilePath>
             </File>
             <File>
               <FileName>wifi-decl.h</FileName>
@@ -1147,16 +1127,6 @@
               <FileName>type_decls.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/type_decls.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_sdio_defs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_sdio_defs.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_sdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifidriver/incl/mlan_sdio.h</FilePath>
             </File>
             <File>
               <FileName>mlan_decl.h</FileName>
@@ -2348,6 +2318,16 @@
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/port/mbedtls/wpa_supp_mbedtls_config.h</FilePath>
             </File>
+            <File>
+              <FileName>wpa_supp_els_pkc_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/port/mbedtls/wpa_supp_els_pkc_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>wpa_supp_ele_s400_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/port/mbedtls/wpa_supp_ele_s400_mbedtls_config.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2392,6 +2372,46 @@
               <FileName>gas.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/common/gas.c</FilePath>
+            </File>
+            <File>
+              <FileName>dpp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/common/dpp.c</FilePath>
+            </File>
+            <File>
+              <FileName>dpp_auth.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/common/dpp_auth.c</FilePath>
+            </File>
+            <File>
+              <FileName>dpp_backup.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/common/dpp_backup.c</FilePath>
+            </File>
+            <File>
+              <FileName>dpp_crypto.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/common/dpp_crypto.c</FilePath>
+            </File>
+            <File>
+              <FileName>dpp_pkex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/common/dpp_pkex.c</FilePath>
+            </File>
+            <File>
+              <FileName>dpp_reconfig.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/common/dpp_reconfig.c</FilePath>
+            </File>
+            <File>
+              <FileName>dpp_tcp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/common/dpp_tcp.c</FilePath>
+            </File>
+            <File>
+              <FileName>gas_server.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/common/gas_server.c</FilePath>
             </File>
             <File>
               <FileName>brcm_vendor.h</FileName>
@@ -2634,9 +2654,9 @@
               <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/utils/block_alloc.c</FilePath>
             </File>
             <File>
-              <FileName>wlist.h</FileName>
+              <FileName>dl_list.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/utils/wlist.h</FilePath>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/utils/dl_list.h</FilePath>
             </File>
             <File>
               <FileName>wpa_debug.c</FileName>
@@ -2652,6 +2672,11 @@
               <FileName>eloop_freertos.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/utils/eloop_freertos.c</FilePath>
+            </File>
+            <File>
+              <FileName>json.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/utils/json.c</FilePath>
             </File>
             <File>
               <FileName>base64.h</FileName>
@@ -3068,6 +3093,16 @@
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/wpa_supplicant/wps_supplicant.c</FilePath>
             </File>
+            <File>
+              <FileName>dpp_supplicant.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/wpa_supplicant/dpp_supplicant.c</FilePath>
+            </File>
+            <File>
+              <FileName>interworking.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/wpa_supplicant/interworking.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3107,6 +3142,16 @@
               <FileName>supp_api.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/freertos/src/supp_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>wpa_cli.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/freertos/src/wpa_cli.h</FilePath>
+            </File>
+            <File>
+              <FileName>wpa_cli.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/freertos/src/wpa_cli.c</FilePath>
             </File>
             <File>
               <FileName>supp_main.c</FileName>
@@ -3317,6 +3362,21 @@
               <FileName>acs.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/ap/acs.h</FilePath>
+            </File>
+            <File>
+              <FileName>dpp_hostapd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/ap/dpp_hostapd.c</FilePath>
+            </File>
+            <File>
+              <FileName>gas_query_ap.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/ap/gas_query_ap.c</FilePath>
+            </File>
+            <File>
+              <FileName>gas_serv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/ap/gas_serv.c</FilePath>
             </File>
             <File>
               <FileName>accounting.h</FileName>
@@ -3569,6 +3629,16 @@
               <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_common/chap.c</FilePath>
             </File>
             <File>
+              <FileName>eap_fast_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_common/eap_fast_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>eap_sim_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_common/eap_sim_common.c</FilePath>
+            </File>
+            <File>
               <FileName>chap.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_common/chap.h</FilePath>
@@ -3689,6 +3759,11 @@
               <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_server/eap_server_tls.c</FilePath>
             </File>
             <File>
+              <FileName>eap_sim_db.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_server/eap_sim_db.c</FilePath>
+            </File>
+            <File>
               <FileName>eap_server_ttls.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_server/eap_server_ttls.c</FilePath>
@@ -3717,6 +3792,21 @@
               <FileName>eap_server_gtc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_server/eap_server_gtc.c</FilePath>
+            </File>
+            <File>
+              <FileName>eap_server_fast.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_server/eap_server_fast.c</FilePath>
+            </File>
+            <File>
+              <FileName>eap_server_sim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_server/eap_server_sim.c</FilePath>
+            </File>
+            <File>
+              <FileName>eap_server_aka.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_server/eap_server_aka.c</FilePath>
             </File>
             <File>
               <FileName>eap.h</FileName>
@@ -3849,6 +3939,11 @@
               <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/crypto/sha1-internal.c</FilePath>
             </File>
             <File>
+              <FileName>fips_prf_internal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/crypto/fips_prf_internal.c</FilePath>
+            </File>
+            <File>
               <FileName>sha256-internal.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/crypto/sha256-internal.c</FilePath>
@@ -3937,6 +4032,11 @@
               <FileName>sha512-kdf.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/crypto/sha512-kdf.c</FilePath>
+            </File>
+            <File>
+              <FileName>milenage.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/crypto/milenage.c</FilePath>
             </File>
             <File>
               <FileName>aes.h</FileName>
@@ -4219,9 +4319,29 @@
               <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_peer/mschapv2.c</FilePath>
             </File>
             <File>
+              <FileName>eap_fast.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_peer/eap_fast.c</FilePath>
+            </File>
+            <File>
+              <FileName>eap_fast_pac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_peer/eap_fast_pac.c</FilePath>
+            </File>
+            <File>
               <FileName>eap_gtc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_peer/eap_gtc.c</FilePath>
+            </File>
+            <File>
+              <FileName>eap_sim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_peer/eap_sim.c</FilePath>
+            </File>
+            <File>
+              <FileName>eap_aka.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/eap_peer/eap_aka.c</FilePath>
             </File>
             <File>
               <FileName>eap_config.h</FileName>
@@ -4409,6 +4529,11 @@
           <GroupName>wpa_supplicant-rtos/hostapd</GroupName>
           <Files>
             <File>
+              <FileName>hlr_auc_gw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/hostapd/hlr_auc_gw.c</FilePath>
+            </File>
+            <File>
               <FileName>ctrl_iface.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/hostapd/ctrl_iface.c</FilePath>
@@ -4482,6 +4607,86 @@
               <FileName>radius_server.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/radius/radius_server.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wpa_supplicant-rtos/src/tls</GroupName>
+          <Files>
+            <File>
+              <FileName>asn1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/asn1.c</FilePath>
+            </File>
+            <File>
+              <FileName>asn1.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/asn1.h</FilePath>
+            </File>
+            <File>
+              <FileName>bignum.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/bignum.h</FilePath>
+            </File>
+            <File>
+              <FileName>pkcs1.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/pkcs1.h</FilePath>
+            </File>
+            <File>
+              <FileName>pkcs5.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/pkcs5.h</FilePath>
+            </File>
+            <File>
+              <FileName>pkcs8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/pkcs8.h</FilePath>
+            </File>
+            <File>
+              <FileName>rsa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/rsa.h</FilePath>
+            </File>
+            <File>
+              <FileName>tlsv1_client.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/tlsv1_client.h</FilePath>
+            </File>
+            <File>
+              <FileName>tlsv1_client_i.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/tlsv1_client_i.h</FilePath>
+            </File>
+            <File>
+              <FileName>tlsv1_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/tlsv1_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>tlsv1_cred.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/tlsv1_cred.h</FilePath>
+            </File>
+            <File>
+              <FileName>tlsv1_record.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/tlsv1_record.h</FilePath>
+            </File>
+            <File>
+              <FileName>tlsv1_server.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/tlsv1_server.h</FilePath>
+            </File>
+            <File>
+              <FileName>tlsv1_server_i.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/tlsv1_server_i.h</FilePath>
+            </File>
+            <File>
+              <FileName>x509v3.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/x509v3.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4562,81 +4767,6 @@
               <FileName>ieee802_1x_secy_ops.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/pae/ieee802_1x_secy_ops.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wpa_supplicant-rtos/src/tls</GroupName>
-          <Files>
-            <File>
-              <FileName>asn1.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/asn1.h</FilePath>
-            </File>
-            <File>
-              <FileName>bignum.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/bignum.h</FilePath>
-            </File>
-            <File>
-              <FileName>pkcs1.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/pkcs1.h</FilePath>
-            </File>
-            <File>
-              <FileName>pkcs5.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/pkcs5.h</FilePath>
-            </File>
-            <File>
-              <FileName>pkcs8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/pkcs8.h</FilePath>
-            </File>
-            <File>
-              <FileName>rsa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/rsa.h</FilePath>
-            </File>
-            <File>
-              <FileName>tlsv1_client.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/tlsv1_client.h</FilePath>
-            </File>
-            <File>
-              <FileName>tlsv1_client_i.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/tlsv1_client_i.h</FilePath>
-            </File>
-            <File>
-              <FileName>tlsv1_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/tlsv1_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>tlsv1_cred.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/tlsv1_cred.h</FilePath>
-            </File>
-            <File>
-              <FileName>tlsv1_record.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/tlsv1_record.h</FilePath>
-            </File>
-            <File>
-              <FileName>tlsv1_server.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/tlsv1_server.h</FilePath>
-            </File>
-            <File>
-              <FileName>tlsv1_server_i.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/tlsv1_server_i.h</FilePath>
-            </File>
-            <File>
-              <FileName>x509v3.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wireless/wpa_supplicant-rtos/src/tls/x509v3.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5064,29 +5194,9 @@
           <GroupName>lwip/src/api</GroupName>
           <Files>
             <File>
-              <FileName>sockets.c</FileName>
+              <FileName>api_lib.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/api/sockets.c</FilePath>
-            </File>
-            <File>
-              <FileName>netifapi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/api/netifapi.c</FilePath>
-            </File>
-            <File>
-              <FileName>netdb.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/api/netdb.c</FilePath>
-            </File>
-            <File>
-              <FileName>netbuf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/api/netbuf.c</FilePath>
-            </File>
-            <File>
-              <FileName>tcpip.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/api/tcpip.c</FilePath>
+              <FilePath>../../../../../middleware/lwip/src/api/api_lib.c</FilePath>
             </File>
             <File>
               <FileName>api_msg.c</FileName>
@@ -5104,9 +5214,29 @@
               <FilePath>../../../../../middleware/lwip/src/api/if_api.c</FilePath>
             </File>
             <File>
-              <FileName>api_lib.c</FileName>
+              <FileName>netbuf.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/api/api_lib.c</FilePath>
+              <FilePath>../../../../../middleware/lwip/src/api/netbuf.c</FilePath>
+            </File>
+            <File>
+              <FileName>netdb.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/src/api/netdb.c</FilePath>
+            </File>
+            <File>
+              <FileName>netifapi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/src/api/netifapi.c</FilePath>
+            </File>
+            <File>
+              <FileName>sockets.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/src/api/sockets.c</FilePath>
+            </File>
+            <File>
+              <FileName>tcpip.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/src/api/tcpip.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5114,39 +5244,14 @@
           <GroupName>lwip/src/core</GroupName>
           <Files>
             <File>
-              <FileName>memp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/core/memp.c</FilePath>
-            </File>
-            <File>
-              <FileName>def.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/core/def.c</FilePath>
-            </File>
-            <File>
-              <FileName>ip.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/core/ip.c</FilePath>
-            </File>
-            <File>
-              <FileName>pbuf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/core/pbuf.c</FilePath>
-            </File>
-            <File>
               <FileName>altcp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lwip/src/core/altcp.c</FilePath>
             </File>
             <File>
-              <FileName>tcp_out.c</FileName>
+              <FileName>altcp_alloc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/core/tcp_out.c</FilePath>
-            </File>
-            <File>
-              <FileName>raw.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/core/raw.c</FilePath>
+              <FilePath>../../../../../middleware/lwip/src/core/altcp_alloc.c</FilePath>
             </File>
             <File>
               <FileName>altcp_tcp.c</FileName>
@@ -5154,54 +5259,9 @@
               <FilePath>../../../../../middleware/lwip/src/core/altcp_tcp.c</FilePath>
             </File>
             <File>
-              <FileName>sys.c</FileName>
+              <FileName>def.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/core/sys.c</FilePath>
-            </File>
-            <File>
-              <FileName>init.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/core/init.c</FilePath>
-            </File>
-            <File>
-              <FileName>inet_chksum.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/core/inet_chksum.c</FilePath>
-            </File>
-            <File>
-              <FileName>timeouts.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/core/timeouts.c</FilePath>
-            </File>
-            <File>
-              <FileName>tcp_in.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/core/tcp_in.c</FilePath>
-            </File>
-            <File>
-              <FileName>netif.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/core/netif.c</FilePath>
-            </File>
-            <File>
-              <FileName>mem.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/core/mem.c</FilePath>
-            </File>
-            <File>
-              <FileName>udp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/core/udp.c</FilePath>
-            </File>
-            <File>
-              <FileName>tcp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/core/tcp.c</FilePath>
-            </File>
-            <File>
-              <FileName>stats.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/core/stats.c</FilePath>
+              <FilePath>../../../../../middleware/lwip/src/core/def.c</FilePath>
             </File>
             <File>
               <FileName>dns.c</FileName>
@@ -5209,59 +5269,79 @@
               <FilePath>../../../../../middleware/lwip/src/core/dns.c</FilePath>
             </File>
             <File>
-              <FileName>altcp_alloc.c</FileName>
+              <FileName>inet_chksum.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/core/altcp_alloc.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lwip/src/core/ipv6</GroupName>
-          <Files>
-            <File>
-              <FileName>ethip6.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/core/ipv6/ethip6.c</FilePath>
+              <FilePath>../../../../../middleware/lwip/src/core/inet_chksum.c</FilePath>
             </File>
             <File>
-              <FileName>dhcp6.c</FileName>
+              <FileName>init.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/core/ipv6/dhcp6.c</FilePath>
+              <FilePath>../../../../../middleware/lwip/src/core/init.c</FilePath>
             </File>
             <File>
-              <FileName>ip6_addr.c</FileName>
+              <FileName>ip.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/core/ipv6/ip6_addr.c</FilePath>
+              <FilePath>../../../../../middleware/lwip/src/core/ip.c</FilePath>
             </File>
             <File>
-              <FileName>nd6.c</FileName>
+              <FileName>mem.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/core/ipv6/nd6.c</FilePath>
+              <FilePath>../../../../../middleware/lwip/src/core/mem.c</FilePath>
             </File>
             <File>
-              <FileName>mld6.c</FileName>
+              <FileName>memp.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/core/ipv6/mld6.c</FilePath>
+              <FilePath>../../../../../middleware/lwip/src/core/memp.c</FilePath>
             </File>
             <File>
-              <FileName>icmp6.c</FileName>
+              <FileName>netif.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/core/ipv6/icmp6.c</FilePath>
+              <FilePath>../../../../../middleware/lwip/src/core/netif.c</FilePath>
             </File>
             <File>
-              <FileName>ip6_frag.c</FileName>
+              <FileName>pbuf.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/core/ipv6/ip6_frag.c</FilePath>
+              <FilePath>../../../../../middleware/lwip/src/core/pbuf.c</FilePath>
             </File>
             <File>
-              <FileName>ip6.c</FileName>
+              <FileName>raw.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/core/ipv6/ip6.c</FilePath>
+              <FilePath>../../../../../middleware/lwip/src/core/raw.c</FilePath>
             </File>
             <File>
-              <FileName>inet6.c</FileName>
+              <FileName>stats.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/core/ipv6/inet6.c</FilePath>
+              <FilePath>../../../../../middleware/lwip/src/core/stats.c</FilePath>
+            </File>
+            <File>
+              <FileName>sys.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/src/core/sys.c</FilePath>
+            </File>
+            <File>
+              <FileName>tcp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/src/core/tcp.c</FilePath>
+            </File>
+            <File>
+              <FileName>tcp_in.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/src/core/tcp_in.c</FilePath>
+            </File>
+            <File>
+              <FileName>tcp_out.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/src/core/tcp_out.c</FilePath>
+            </File>
+            <File>
+              <FileName>timeouts.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/src/core/timeouts.c</FilePath>
+            </File>
+            <File>
+              <FileName>udp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/src/core/udp.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5269,14 +5349,9 @@
           <GroupName>lwip/src/core/ipv4</GroupName>
           <Files>
             <File>
-              <FileName>dhcp.c</FileName>
+              <FileName>acd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/core/ipv4/dhcp.c</FilePath>
-            </File>
-            <File>
-              <FileName>ip4.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/core/ipv4/ip4.c</FilePath>
+              <FilePath>../../../../../middleware/lwip/src/core/ipv4/acd.c</FilePath>
             </File>
             <File>
               <FileName>autoip.c</FileName>
@@ -5284,14 +5359,9 @@
               <FilePath>../../../../../middleware/lwip/src/core/ipv4/autoip.c</FilePath>
             </File>
             <File>
-              <FileName>icmp.c</FileName>
+              <FileName>dhcp.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/core/ipv4/icmp.c</FilePath>
-            </File>
-            <File>
-              <FileName>acd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/core/ipv4/acd.c</FilePath>
+              <FilePath>../../../../../middleware/lwip/src/core/ipv4/dhcp.c</FilePath>
             </File>
             <File>
               <FileName>etharp.c</FileName>
@@ -5299,14 +5369,24 @@
               <FilePath>../../../../../middleware/lwip/src/core/ipv4/etharp.c</FilePath>
             </File>
             <File>
-              <FileName>ip4_addr.c</FileName>
+              <FileName>icmp.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lwip/src/core/ipv4/ip4_addr.c</FilePath>
+              <FilePath>../../../../../middleware/lwip/src/core/ipv4/icmp.c</FilePath>
             </File>
             <File>
               <FileName>igmp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lwip/src/core/ipv4/igmp.c</FilePath>
+            </File>
+            <File>
+              <FileName>ip4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/src/core/ipv4/ip4.c</FilePath>
+            </File>
+            <File>
+              <FileName>ip4_addr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/src/core/ipv4/ip4_addr.c</FilePath>
             </File>
             <File>
               <FileName>ip4_frag.c</FileName>
@@ -5316,12 +5396,72 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lwip/src/include/compat/stdc</GroupName>
+          <GroupName>lwip/src/core/ipv6</GroupName>
           <Files>
             <File>
-              <FileName>errno.h</FileName>
+              <FileName>dhcp6.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/src/core/ipv6/dhcp6.c</FilePath>
+            </File>
+            <File>
+              <FileName>ethip6.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/src/core/ipv6/ethip6.c</FilePath>
+            </File>
+            <File>
+              <FileName>icmp6.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/src/core/ipv6/icmp6.c</FilePath>
+            </File>
+            <File>
+              <FileName>inet6.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/src/core/ipv6/inet6.c</FilePath>
+            </File>
+            <File>
+              <FileName>ip6.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/src/core/ipv6/ip6.c</FilePath>
+            </File>
+            <File>
+              <FileName>ip6_addr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/src/core/ipv6/ip6_addr.c</FilePath>
+            </File>
+            <File>
+              <FileName>ip6_frag.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/src/core/ipv6/ip6_frag.c</FilePath>
+            </File>
+            <File>
+              <FileName>mld6.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/src/core/ipv6/mld6.c</FilePath>
+            </File>
+            <File>
+              <FileName>nd6.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lwip/src/core/ipv6/nd6.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lwip/src/include/compat/posix/arpa</GroupName>
+          <Files>
+            <File>
+              <FileName>inet.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/compat/stdc/errno.h</FilePath>
+              <FilePath>../../../../../middleware/lwip/src/include/compat/posix/arpa/inet.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lwip/src/include/compat/posix/net</GroupName>
+          <Files>
+            <File>
+              <FileName>if.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/compat/posix/net/if.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5346,22 +5486,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lwip/src/include/compat/posix/net</GroupName>
+          <GroupName>lwip/src/include/compat/stdc</GroupName>
           <Files>
             <File>
-              <FileName>if.h</FileName>
+              <FileName>errno.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/compat/posix/net/if.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lwip/src/include/compat/posix/arpa</GroupName>
-          <Files>
-            <File>
-              <FileName>inet.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/compat/posix/arpa/inet.h</FilePath>
+              <FilePath>../../../../../middleware/lwip/src/include/compat/stdc/errno.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5644,6 +5774,11 @@
               <FilePath>../../../../../middleware/lwip/src/include/lwip/priv/altcp_priv.h</FilePath>
             </File>
             <File>
+              <FileName>api_msg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/lwip/priv/api_msg.h</FilePath>
+            </File>
+            <File>
               <FileName>mem_priv.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lwip/src/include/lwip/priv/mem_priv.h</FilePath>
@@ -5659,24 +5794,9 @@
               <FilePath>../../../../../middleware/lwip/src/include/lwip/priv/memp_std.h</FilePath>
             </File>
             <File>
-              <FileName>api_msg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/lwip/priv/api_msg.h</FilePath>
-            </File>
-            <File>
               <FileName>nd6_priv.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lwip/src/include/lwip/priv/nd6_priv.h</FilePath>
-            </File>
-            <File>
-              <FileName>tcpip_priv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/lwip/priv/tcpip_priv.h</FilePath>
-            </File>
-            <File>
-              <FileName>tcp_priv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/lwip/priv/tcp_priv.h</FilePath>
             </File>
             <File>
               <FileName>raw_priv.h</FileName>
@@ -5688,50 +5808,25 @@
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lwip/src/include/lwip/priv/sockets_priv.h</FilePath>
             </File>
+            <File>
+              <FileName>tcp_priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/lwip/priv/tcp_priv.h</FilePath>
+            </File>
+            <File>
+              <FileName>tcpip_priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/lwip/priv/tcpip_priv.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>lwip/src/include/lwip/prot</GroupName>
           <Files>
             <File>
-              <FileName>ip6.h</FileName>
+              <FileName>acd.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/ip6.h</FilePath>
-            </File>
-            <File>
-              <FileName>udp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/udp.h</FilePath>
-            </File>
-            <File>
-              <FileName>mld6.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/mld6.h</FilePath>
-            </File>
-            <File>
-              <FileName>ip4.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/ip4.h</FilePath>
-            </File>
-            <File>
-              <FileName>icmp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/icmp.h</FilePath>
-            </File>
-            <File>
-              <FileName>igmp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/igmp.h</FilePath>
-            </File>
-            <File>
-              <FileName>dhcp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/dhcp.h</FilePath>
-            </File>
-            <File>
-              <FileName>tcp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/tcp.h</FilePath>
+              <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/acd.h</FilePath>
             </File>
             <File>
               <FileName>autoip.h</FileName>
@@ -5739,44 +5834,9 @@
               <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/autoip.h</FilePath>
             </File>
             <File>
-              <FileName>iana.h</FileName>
+              <FileName>dhcp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/iana.h</FilePath>
-            </File>
-            <File>
-              <FileName>ieee.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/ieee.h</FilePath>
-            </File>
-            <File>
-              <FileName>dns.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/dns.h</FilePath>
-            </File>
-            <File>
-              <FileName>icmp6.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/icmp6.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethernet.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/ethernet.h</FilePath>
-            </File>
-            <File>
-              <FileName>nd6.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/nd6.h</FilePath>
-            </File>
-            <File>
-              <FileName>ip.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/ip.h</FilePath>
-            </File>
-            <File>
-              <FileName>acd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/acd.h</FilePath>
+              <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/dhcp.h</FilePath>
             </File>
             <File>
               <FileName>dhcp6.h</FileName>
@@ -5784,9 +5844,79 @@
               <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/dhcp6.h</FilePath>
             </File>
             <File>
+              <FileName>dns.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/dns.h</FilePath>
+            </File>
+            <File>
               <FileName>etharp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/etharp.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethernet.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/ethernet.h</FilePath>
+            </File>
+            <File>
+              <FileName>iana.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/iana.h</FilePath>
+            </File>
+            <File>
+              <FileName>icmp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/icmp.h</FilePath>
+            </File>
+            <File>
+              <FileName>icmp6.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/icmp6.h</FilePath>
+            </File>
+            <File>
+              <FileName>ieee.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/ieee.h</FilePath>
+            </File>
+            <File>
+              <FileName>igmp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/igmp.h</FilePath>
+            </File>
+            <File>
+              <FileName>ip.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/ip.h</FilePath>
+            </File>
+            <File>
+              <FileName>ip4.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/ip4.h</FilePath>
+            </File>
+            <File>
+              <FileName>ip6.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/ip6.h</FilePath>
+            </File>
+            <File>
+              <FileName>mld6.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/mld6.h</FilePath>
+            </File>
+            <File>
+              <FileName>nd6.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/nd6.h</FilePath>
+            </File>
+            <File>
+              <FileName>tcp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/tcp.h</FilePath>
+            </File>
+            <File>
+              <FileName>udp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/lwip/prot/udp.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5799,14 +5929,19 @@
               <FilePath>../../../../../middleware/lwip/src/include/netif/bridgeif.h</FilePath>
             </File>
             <File>
-              <FileName>zepif.h</FileName>
+              <FileName>bridgeif_opts.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/netif/zepif.h</FilePath>
+              <FilePath>../../../../../middleware/lwip/src/include/netif/bridgeif_opts.h</FilePath>
             </File>
             <File>
-              <FileName>lowpan6.h</FileName>
+              <FileName>etharp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/netif/lowpan6.h</FilePath>
+              <FilePath>../../../../../middleware/lwip/src/include/netif/etharp.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethernet.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/netif/ethernet.h</FilePath>
             </File>
             <File>
               <FileName>ieee802154.h</FileName>
@@ -5814,9 +5949,14 @@
               <FilePath>../../../../../middleware/lwip/src/include/netif/ieee802154.h</FilePath>
             </File>
             <File>
-              <FileName>ethernet.h</FileName>
+              <FileName>lowpan6.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/netif/ethernet.h</FilePath>
+              <FilePath>../../../../../middleware/lwip/src/include/netif/lowpan6.h</FilePath>
+            </File>
+            <File>
+              <FileName>lowpan6_ble.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/netif/lowpan6_ble.h</FilePath>
             </File>
             <File>
               <FileName>lowpan6_common.h</FileName>
@@ -5829,24 +5969,14 @@
               <FilePath>../../../../../middleware/lwip/src/include/netif/lowpan6_opts.h</FilePath>
             </File>
             <File>
-              <FileName>bridgeif_opts.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/netif/bridgeif_opts.h</FilePath>
-            </File>
-            <File>
               <FileName>slipif.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lwip/src/include/netif/slipif.h</FilePath>
             </File>
             <File>
-              <FileName>lowpan6_ble.h</FileName>
+              <FileName>zepif.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/netif/lowpan6_ble.h</FilePath>
-            </File>
-            <File>
-              <FileName>etharp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/netif/etharp.h</FilePath>
+              <FilePath>../../../../../middleware/lwip/src/include/netif/zepif.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5854,79 +5984,14 @@
           <GroupName>lwip/src/include/netif/ppp</GroupName>
           <Files>
             <File>
-              <FileName>ipv6cp.h</FileName>
+              <FileName>ccp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/ipv6cp.h</FilePath>
+              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/ccp.h</FilePath>
             </File>
             <File>
-              <FileName>pppapi.h</FileName>
+              <FileName>chap-md5.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/pppapi.h</FilePath>
-            </File>
-            <File>
-              <FileName>magic.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/magic.h</FilePath>
-            </File>
-            <File>
-              <FileName>ppp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/ppp.h</FilePath>
-            </File>
-            <File>
-              <FileName>upap.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/upap.h</FilePath>
-            </File>
-            <File>
-              <FileName>mppe.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/mppe.h</FilePath>
-            </File>
-            <File>
-              <FileName>pppol2tp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/pppol2tp.h</FilePath>
-            </File>
-            <File>
-              <FileName>pppoe.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/pppoe.h</FilePath>
-            </File>
-            <File>
-              <FileName>ipcp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/ipcp.h</FilePath>
-            </File>
-            <File>
-              <FileName>pppdebug.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/pppdebug.h</FilePath>
-            </File>
-            <File>
-              <FileName>eap.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/eap.h</FilePath>
-            </File>
-            <File>
-              <FileName>pppos.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/pppos.h</FilePath>
-            </File>
-            <File>
-              <FileName>ppp_opts.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/ppp_opts.h</FilePath>
-            </File>
-            <File>
-              <FileName>pppcrypt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/pppcrypt.h</FilePath>
-            </File>
-            <File>
-              <FileName>vj.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/vj.h</FilePath>
+              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/chap-md5.h</FilePath>
             </File>
             <File>
               <FileName>chap-new.h</FileName>
@@ -5934,19 +5999,14 @@
               <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/chap-new.h</FilePath>
             </File>
             <File>
-              <FileName>eui64.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/eui64.h</FilePath>
-            </File>
-            <File>
               <FileName>chap_ms.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/chap_ms.h</FilePath>
             </File>
             <File>
-              <FileName>ccp.h</FileName>
+              <FileName>eap.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/ccp.h</FilePath>
+              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/eap.h</FilePath>
             </File>
             <File>
               <FileName>ecp.h</FileName>
@@ -5954,9 +6014,9 @@
               <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/ecp.h</FilePath>
             </File>
             <File>
-              <FileName>lcp.h</FileName>
+              <FileName>eui64.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/lcp.h</FilePath>
+              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/eui64.h</FilePath>
             </File>
             <File>
               <FileName>fsm.h</FileName>
@@ -5964,14 +6024,84 @@
               <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/fsm.h</FilePath>
             </File>
             <File>
+              <FileName>ipcp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/ipcp.h</FilePath>
+            </File>
+            <File>
+              <FileName>ipv6cp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/ipv6cp.h</FilePath>
+            </File>
+            <File>
+              <FileName>lcp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/lcp.h</FilePath>
+            </File>
+            <File>
+              <FileName>magic.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/magic.h</FilePath>
+            </File>
+            <File>
+              <FileName>mppe.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/mppe.h</FilePath>
+            </File>
+            <File>
+              <FileName>ppp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/ppp.h</FilePath>
+            </File>
+            <File>
               <FileName>ppp_impl.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/ppp_impl.h</FilePath>
             </File>
             <File>
-              <FileName>chap-md5.h</FileName>
+              <FileName>ppp_opts.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/chap-md5.h</FilePath>
+              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/ppp_opts.h</FilePath>
+            </File>
+            <File>
+              <FileName>pppapi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/pppapi.h</FilePath>
+            </File>
+            <File>
+              <FileName>pppcrypt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/pppcrypt.h</FilePath>
+            </File>
+            <File>
+              <FileName>pppdebug.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/pppdebug.h</FilePath>
+            </File>
+            <File>
+              <FileName>pppoe.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/pppoe.h</FilePath>
+            </File>
+            <File>
+              <FileName>pppol2tp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/pppol2tp.h</FilePath>
+            </File>
+            <File>
+              <FileName>pppos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/pppos.h</FilePath>
+            </File>
+            <File>
+              <FileName>upap.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/upap.h</FilePath>
+            </File>
+            <File>
+              <FileName>vj.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/vj.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5979,9 +6109,9 @@
           <GroupName>lwip/src/include/netif/ppp/polarssl</GroupName>
           <Files>
             <File>
-              <FileName>sha1.h</FileName>
+              <FileName>arc4.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/polarssl/sha1.h</FilePath>
+              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/polarssl/arc4.h</FilePath>
             </File>
             <File>
               <FileName>des.h</FileName>
@@ -5989,19 +6119,19 @@
               <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/polarssl/des.h</FilePath>
             </File>
             <File>
-              <FileName>md5.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/polarssl/md5.h</FilePath>
-            </File>
-            <File>
               <FileName>md4.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/polarssl/md4.h</FilePath>
             </File>
             <File>
-              <FileName>arc4.h</FileName>
+              <FileName>md5.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/polarssl/arc4.h</FilePath>
+              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/polarssl/md5.h</FilePath>
+            </File>
+            <File>
+              <FileName>sha1.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lwip/src/include/netif/ppp/polarssl/sha1.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6308,6 +6438,11 @@
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/utilities/fsl_assert.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/utilities/fsl_assert.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -6411,6 +6546,46 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>wifi/sdio_nxp_abs</GroupName>
+          <Files>
+            <File>
+              <FileName>mlan_sdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/sdio_nxp_abs/mlan_sdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fwdnld_sdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/sdio_nxp_abs/fwdnld_sdio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/sdio_nxp_abs/incl</GroupName>
+          <Files>
+            <File>
+              <FileName>fwdnld_sdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl/fwdnld_sdio.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_sdio_defs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl/mlan_sdio_defs.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_sdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl/mlan_sdio.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_sdio_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/sdio_nxp_abs/incl/mlan_sdio_api.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>wifi/incl/port/os</GroupName>
           <Files>
             <File>
@@ -6427,26 +6602,6 @@
               <FileName>wlan_bt_fw.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/wlan_bt_fw.h</FilePath>
-            </File>
-            <File>
-              <FileName>sd8801_wlan.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sd8801_wlan.h</FilePath>
-            </File>
-            <File>
-              <FileName>sduartIW416_wlan_bt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduartIW416_wlan_bt.h</FilePath>
-            </File>
-            <File>
-              <FileName>sduart8987_wlan_bt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduart8987_wlan_bt.h</FilePath>
-            </File>
-            <File>
-              <FileName>sduart_nw61x.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduart_nw61x.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6469,49 +6624,9 @@
           <GroupName>component/wifi_bt_module/Murata/tx_pwr_limits</GroupName>
           <Files>
             <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_1XK_CA.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_CA.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_1XK_EU.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_EU.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_1XK_JP.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_JP.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_1XK_US.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_US.h</FilePath>
-            </File>
-            <File>
               <FileName>wlan_txpwrlimit_cfg_murata_1XK_WW.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_WW.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_CA.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_CA.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_EU.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_EU.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_JP.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_JP.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_US.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_US.h</FilePath>
             </File>
             <File>
               <FileName>wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FileName>
@@ -6519,29 +6634,134 @@
               <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FilePath>
             </File>
             <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_2DS_CA.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_CA.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_2DS_EU.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_EU.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_2DS_JP.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_JP.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_txpwrlimit_cfg_murata_2DS_US.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_US.h</FilePath>
-            </File>
-            <File>
               <FileName>wlan_txpwrlimit_cfg_murata_2DS_WW.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_WW.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2EL_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2EL_WW.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/wifi_bt_module/u-blox/tx_pwr_limits</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_jody_w5_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/u-blox/tx_pwr_limits/wlan_txpwrlimit_cfg_jody_w5_WW.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/wifi_bt_module/incl</GroupName>
+          <Files>
+            <File>
+              <FileName>wifi_bt_module_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/incl/wifi_bt_module_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/wifi_bt_firmware/8801</GroupName>
+          <Files>
+            <File>
+              <FileName>sd8801_wlan.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/8801/sd8801_wlan.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/wifi_bt_firmware/IW416</GroupName>
+          <Files>
+            <File>
+              <FileName>sduartIW416_wlan_bt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416/sduartIW416_wlan_bt.h</FilePath>
+            </File>
+            <File>
+              <FileName>sdIW416_wlan.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416/sdIW416_wlan.h</FilePath>
+            </File>
+            <File>
+              <FileName>uartIW416_bt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/IW416/uartIW416_bt.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/wifi_bt_firmware/8987</GroupName>
+          <Files>
+            <File>
+              <FileName>sduart8987_wlan_bt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987/sduart8987_wlan_bt.h</FilePath>
+            </File>
+            <File>
+              <FileName>sd8987_wlan.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987/sd8987_wlan.h</FilePath>
+            </File>
+            <File>
+              <FileName>uart8987_bt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/8987/uart8987_bt.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/wifi_bt_firmware/nw61x</GroupName>
+          <Files>
+            <File>
+              <FileName>sduart_nw61x_se.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x/sduart_nw61x_se.h</FilePath>
+            </File>
+            <File>
+              <FileName>sd_nw61x_se.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x/sd_nw61x_se.h</FilePath>
+            </File>
+            <File>
+              <FileName>uart_nw61x_se.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/nw61x/uart_nw61x_se.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/firmware_dnld</GroupName>
+          <Files>
+            <File>
+              <FileName>firmware_dnld.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/firmware_dnld/firmware_dnld.c</FilePath>
+            </File>
+            <File>
+              <FileName>firmware_dnld.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/firmware_dnld/firmware_dnld.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/fwdnld_intf_abs</GroupName>
+          <Files>
+            <File>
+              <FileName>fwdnld_intf_abs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/fwdnld_intf_abs/fwdnld_intf_abs.c</FilePath>
+            </File>
+            <File>
+              <FileName>fwdnld_intf_abs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi_nxp/fwdnld_intf_abs/fwdnld_intf_abs.h</FilePath>
             </File>
           </Files>
         </Group>

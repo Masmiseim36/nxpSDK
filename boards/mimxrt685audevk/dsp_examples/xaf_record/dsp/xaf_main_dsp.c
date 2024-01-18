@@ -41,8 +41,8 @@
 
 #define NOTIF_EVT_RPMSG_RECEIVED_DATA (1 << 0)
 #define NOTIF_EVT                     (NOTIF_EVT_RPMSG_RECEIVED_DATA)
-#define DSP_THREAD_STACK_SIZE (10 * 1024)
-#define DSP_THREAD_PRIORITY   (XOS_MAX_PRIORITY - 3)
+#define DSP_MAIN_THREAD_STACK_SIZE (20 * 1024)
+#define DSP_MAIN_THREAD_PRIORITY   (XOS_MAX_PRIORITY - 3)
 
 /*******************************************************************************
  * Prototypes
@@ -57,7 +57,7 @@ extern int NonCacheable_start, NonCacheable_end;
 extern int NonCacheable_init_start, NonCacheable_init_end;
 
 dsp_handle_t dsp;
-static uint8_t dsp_thread_stack[DSP_THREAD_STACK_SIZE];
+static uint8_t dsp_main_thread_stack[DSP_MAIN_THREAD_STACK_SIZE];
 
 /*******************************************************************************
  * Code
@@ -316,8 +316,8 @@ int main(void)
     /* SEMA42 init */
     SEMA42_Init(APP_SEMA42);
 
-    xos_thread_create(&thread_main, NULL, DSP_Main, &dsp, "DSP Main", dsp_thread_stack, DSP_THREAD_STACK_SIZE,
-                      DSP_THREAD_PRIORITY, 0, 0);
+    xos_thread_create(&thread_main, NULL, DSP_Main, &dsp, "DSP Main", dsp_main_thread_stack, DSP_MAIN_THREAD_STACK_SIZE,
+                      DSP_MAIN_THREAD_PRIORITY, 0, 0);
 
     /* Start XOS scheduler - does not return */
     xos_start(0);

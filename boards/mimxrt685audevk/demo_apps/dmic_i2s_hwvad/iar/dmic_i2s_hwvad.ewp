@@ -362,6 +362,7 @@
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/../../../../../components/sx1502</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/codec/cs42448</state>
           <state>$PROJ_DIR$/../../../../../components/codec/port/cs42448</state>
           <state>$PROJ_DIR$/../../../../../components/codec/port</state>
@@ -1459,6 +1460,7 @@
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/../../../../../components/sx1502</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/codec/cs42448</state>
           <state>$PROJ_DIR$/../../../../../components/codec/port/cs42448</state>
           <state>$PROJ_DIR$/../../../../../components/codec/port</state>
@@ -2554,6 +2556,7 @@
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/../../../../../components/sx1502</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/codec/cs42448</state>
           <state>$PROJ_DIR$/../../../../../components/codec/port/cs42448</state>
           <state>$PROJ_DIR$/../../../../../components/codec/port</state>
@@ -3651,6 +3654,7 @@
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
           <state>$PROJ_DIR$/../../../../../components/sx1502</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/codec/cs42448</state>
           <state>$PROJ_DIR$/../../../../../components/codec/port/cs42448</state>
           <state>$PROJ_DIR$/../../../../../components/codec/port</state>
@@ -4417,7 +4421,7 @@
   <group>
     <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
   <group>
@@ -4643,6 +4647,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/utilities/fsl_assert.h</name>
     </file>
   </group>
   <group>

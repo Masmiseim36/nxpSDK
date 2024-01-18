@@ -11,7 +11,8 @@
 #define MCU_EPT_ADDR (40)
 
 /* Address of RAM, where the image for DSP should be copied */
-#define DSP_BOOT_ADDRESS (uint32_t *)0x24000000
+#define DSP_LITERAL_ADDRESS (uint32_t *)0x24000000
+#define DSP_BOOT_ADDRESS (uint32_t *)0x24020000
 #define DSP_SRAM_ADDRESS (uint32_t *)0x00200000
 
 /* Inter processor communication common RAM */

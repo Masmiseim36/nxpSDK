@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2006-2021 Cadence Design Systems, Inc.
+# Copyright (c) 2006-2023 Cadence Design Systems, Inc.
 # 
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -63,7 +63,7 @@ endif
 ifeq ($(CPU), gcc)
 	CC = g++ -m32
 else
-	CC = xt-xcc
+	CC = xt-clang
 	ISS = xt-run
 	CONFIGDIR := $(shell $(ISS) --show-config=config)
 	include $(CONFIGDIR)/misc/hostenv.mk
@@ -76,7 +76,7 @@ else
 endif
 
 ISSFLAGS = $(EXTRA_ISSFLAGS)
-
+LDFLAGS = 
 ifeq ($(CPU), gcc)
 	CFLAGS += -D__XTENSA_EL__=1 -DCSTUB_HIFI2 -I$(ROOTDIR)/../algo/include 
 else	
@@ -86,7 +86,7 @@ endif
 ifdef END_FRAME
   CFLAGS += -DEND_FRAME=$(END_FRAME)
 endif
-
+LDFLAGS += $(EXTRA_LDFLAGS)
 
 SRCDIR = $(ROOTDIR)/src
 TESTINPDIR = $(ROOTDIR)/test_inp
@@ -109,7 +109,7 @@ all: xa_vorbis_dec_test_bin
 xa_vorbis_dec_test_bin:$(VORBISDECBIN)
 
 $(VORBISDECBIN): $(OBJDIR) $(OBJS_OBJS) $(LIBS)
-	$(CC) -o $@ $(OBJS_OBJS) $(LIBS) $(EXTRA_LDFLAGS)
+	$(CC) -o $@ $(OBJS_OBJS) $(LIBS) $(LDFLAGS)
 
 $(OBJDIR):
 	-$(MKPATH) $(OBJDIR)

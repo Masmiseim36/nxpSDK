@@ -21,10 +21,13 @@ extern "C" {
 
 /****************************************************************************************/
 /*                                                                                      */
-/*  Valid VIT Configurations                                                            */
+/*  VIT Configurations                                                            */
 /*                                                                                      */
 /****************************************************************************************/
 
+// VIT API defintions supporting 2 VIT lib variants:
+//       - v4.x.y : VAD, Wakeword, Voice Commands
+//       - v6.x.y : VAD, Wakeword, Speech to Intent
 
 /****************************************************************************************/
 /*                                                                                      */
@@ -38,10 +41,12 @@ typedef enum { _1CHAN = 1, _2CHAN, _3CHAN} NumberOfChannel_en;
 // Clarifications :
 //     - a SAMPLE can have 1, 2 or N channels (N defined by VIT_MAX_NUMBER_OF_CHANNEL here after)
 
-#define VIT_SAMPLES_PER_10MS_FRAME        160                 // corresponds to 10ms @16kHz
 #define VIT_SAMPLES_PER_30MS_FRAME        480                 // corresponds to 30ms @16kHz
 #define VIT_SAMPLE_RATE                   16000               // sample rate in Hz
 #define VIT_MAX_NUMBER_OF_CHANNEL         _1CHAN
+
+#define MAX_NUMBER_TAG               10
+#define MAX_NUMBER_WORDS_PER_TAG     10
 
 // Error type
 typedef enum
@@ -53,18 +58,19 @@ typedef enum
     VIT_INVALID_PARAMETER_OUTOFRANGE    = 4,                  ///< Out of range parameter
     VIT_INVALID_SAMPLE_RATE             = 5,                  ///< Sample rate not supported
     VIT_INVALID_FRAME_SIZE              = 6,                  ///< Frame size not supported
-    VIT_INVALID_MODEL                   = 7,                  ///< Model not supported
-    VIT_INVALID_API_VERSION             = 8,                  ///< wrong API version
-    VIT_INVALID_STATE                   = 9,                  ///< State machine error
-    VIT_INVALID_DEVICE                  = 10,                 ///< VIT not running on expected Device
-    VIT_SYSTEM_ERROR                    = 11,                 ///< System error
-    VIT_ERROR_UNDEFINED                 = 12,                 ///< Unknow error
+    VIT_INVALID_MODEL                   = 7,                  ///< Error in the Model
+    VIT_WRONG_MODEL                     = 8,                  ///< Model and lib not aligned (Voice commands vs SpeechToIntent)
+    VIT_INVALID_API_VERSION             = 9,                  ///< wrong API version
+    VIT_INVALID_STATE                   = 10,                 ///< State machine error
+    VIT_INVALID_DEVICE                  = 11,                 ///< VIT not running on expected Device 
+    VIT_SYSTEM_ERROR                    = 12,                 ///< System error
+    VIT_ERROR_UNDEFINED                 = 13,                 ///< Unknow error
     VIT_DUMMY_ERROR                     = PL_MAXENUM
 }VIT_ReturnStatus_en;
 
 
-#define VIT_API_VERSION_MAJOR 2
-#define VIT_API_VERSION_MINOR 2
+#define VIT_API_VERSION_MAJOR 3
+#define VIT_API_VERSION_MINOR 0
 #define VIT_API_VERSION       ((VIT_API_VERSION_MAJOR<<16) | (VIT_API_VERSION_MINOR<<8))
 
 /****************************************************************************************/
@@ -99,7 +105,7 @@ typedef enum
     VIT_LPVAD_ENABLE              = 2,     // Low power VAD module activated
     VIT_WAKEWORD_ENABLE           = 4,     // Wake Word module activated
     VIT_VOICECMD_ENABLE           = 8,     // Voice Commands module activated
-    VIT_ALL_MODULE_ENABLE         = VIT_LPVAD_ENABLE | VIT_WAKEWORD_ENABLE | VIT_VOICECMD_ENABLE, // LPVAD, Wake word and Voice commands activated
+    VIT_SPEECHTOINTENT_ENABLE     = 16,    // Speech To Intent module activated
     VIT_DUMMY_OPERATINGMODE       = PL_MAXENUM
 }VIT_OperatingMode_en;
 
@@ -130,7 +136,8 @@ typedef enum
     VIT_LPC55S69,                              // LPC55S69   : VIT running on Cortex-M33+PowerQuad
     VIT_IMX8MMINIM4,                           // I.MX8MINI  : VIT running on Cortex-M4
     VIT_IMX8MPLUSM7,                           // I.MX8PLUS  : VIT running on Cortex-M7
-    VIT_IMX8MA53,                              // I.MX8MA53  : VIT running on Cortex-A (i.MX8MPlus and i.MX8MMini)
+    VIT_IMX8MA53,                              // I.MX8MA53  : VIT running on Cortex-A53 (i.MX8MPlus, i.MX8MMini, i.MX8MNano and i.MX8QM)
+    VIT_IMX8ULPA35,                            // I.MX8ULPA35: VIT running on Cortex-A35 (i.MX8ULP)
     VIT_IMX9XA55,                              // I.MX9XA55  : VIT running on Cortex-A (i.MX9X)
 
     VIT_NB_OF_DEVICES = VIT_IMX9XA55,
@@ -146,6 +153,7 @@ typedef enum
     VIT_NO_DETECTION    = 0,               // Nothing detected
     VIT_WW_DETECTED     = 1,               // WakeWord Detected
     VIT_VC_DETECTED     = 2,               // a Voice Command Detected
+    VIT_INTENT_DETECTED = 3,               // an Intent Detected
     VIT_DUMMY_DETECTION = PL_MAXENUM
 }VIT_DetectionStatus_en;
 
@@ -179,6 +187,15 @@ typedef struct
     const char                   *pName;
 } VIT_VoiceCommand_st;
 
+typedef struct
+{
+    const char   *pIntentName[MAX_NUMBER_TAG];
+    const char   *pTagName[MAX_NUMBER_TAG];
+    PL_INT16     IntentTag_count;
+    const char   *pTagValueName[MAX_NUMBER_TAG*MAX_NUMBER_WORDS_PER_TAG];
+    PL_INT16     TagValue_count[MAX_NUMBER_TAG];
+} VIT_Intent_st;
+
 /* Control Parameter structure */
 typedef struct
 {
@@ -199,6 +216,10 @@ typedef struct
     const char                   *pWakeWord_List;
     PL_UINT16                    NbOfVoiceCmds;
     const char                   *pVoiceCmds_List;
+    PL_UINT16                    NbOfIntentTag;
+    const char                   *pIntentTag_List;
+    PL_UINT16                    NbOfWords;
+    const char                   *pWords_List;
 }
 VIT_ModelInfo_st;
 
@@ -234,7 +255,7 @@ typedef struct
 /****************************************************************************************/
 
 /**
-* @brief Set the VIT model address 
+* @brief Set the VIT model address.
 *
 * This function is used to pass the VIT Model address to the VIT Lib
 *
@@ -494,13 +515,13 @@ VIT_ReturnStatus_en VIT_GetStatusParameters( VIT_Handle_t           phInstance,
 * @note The function shall be called only when VIT_Process() is informing that a Wakeword is detected (*pVIT_DetectionResults==VIT_WW_DETECTED)
 *
 */
-VIT_ReturnStatus_en VIT_GetWakeWordFound     ( VIT_Handle_t         pVIT_Instance,
-                                               VIT_WakeWord_st      *pWakeWord
-                                             );
+VIT_ReturnStatus_en VIT_GetWakeWordFound ( VIT_Handle_t         pVIT_Instance,
+                                           VIT_WakeWord_st      *pWakeWord
+                                         );
 
 
 /**
-* @brief Retrieve the Voice Command Detected.
+* @brief Retrieve the Voice Command Detected (only supported in VIT_v4.x.y libraries).
 *
 * This function returns the Voice Command Id and string (when present in model) detected by the VIT instance.
 * The function shall be called only when VIT_Process() is informing that a Voice Command is detected (*pVIT_DetectionResults==VIT_VC_DETECTED)
@@ -523,6 +544,32 @@ VIT_ReturnStatus_en VIT_GetWakeWordFound     ( VIT_Handle_t         pVIT_Instanc
 VIT_ReturnStatus_en VIT_GetVoiceCommandFound ( VIT_Handle_t         pVIT_Instance,
                                                VIT_VoiceCommand_st  *pVoiceCommand
                                              );
+
+/**
+* @brief Retrieve the Intent Detected (only supported in VIT_v6.x.y libraries).
+*
+* This function returns the Slot Tag and Values from the Intent detected by the VIT instance.
+* The function shall be called only when VIT_Process() is informing that a Intent is detected (*pVIT_DetectionResults==VIT_INTENT_DETECTED)
+* The function will return VIT_INVALID_STATE if the calling sequence is not followed (i.e VIT_GetIntentFound() to be called after VIT_Process()
+* only if an intent has been detected). 
+*
+* @param phInstance                   Instance handle
+*
+* @pre   phInstance should be valid handle.
+*
+* @pre   pIntent should be allocated by caller.
+* @post  pIntent will be filled with the Slot and Value Id of the intent detected.
+*
+* @return VIT_SUCCESS                  Succeeded
+* @return VIT_INVALID_NULLADDRESS      When phInstance or pIntent is NULL
+*
+* @note The function shall be called only when VIT_Process() is informing that an Intent is detected (*pVIT_DetectionResults==VIT_INTENT_DETECTED)
+*
+*/
+
+VIT_ReturnStatus_en VIT_GetIntentFound ( VIT_Handle_t pVIT_Instance,
+                                         VIT_Intent_st *pSpeechIntent
+                                       );
 
 
 /**

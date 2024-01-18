@@ -29,11 +29,6 @@
 #define NS_HEAP_SIZE            (0x0001000)
 #define NS_STACK_SIZE           (0x00001E0)
 
-/* This size of buffer is big enough to store an attestation
- * token produced by initial attestation service
- */
-#define PSA_INITIAL_ATTEST_TOKEN_MAX_SIZE   (0x250)
-
 /* [RT600] The boot image should be program at offset 0x08001000. 
 XIP Image layout (FlexSPI):
 Offset      Width (Bytes) Field Description

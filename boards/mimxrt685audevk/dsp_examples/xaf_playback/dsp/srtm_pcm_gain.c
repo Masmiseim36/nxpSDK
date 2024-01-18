@@ -13,7 +13,7 @@
 #include <xtensa/xos.h>
 
 #include "xaf-utils-test.h"
-
+#include "xaf-fio-test.h"
 #include "audio/xa-pcm-gain-api.h"
 
 #include "srtm_utils.h"
@@ -28,6 +28,9 @@
  ******************************************************************************/
 #define AUDIO_FRMWK_BUF_SIZE (256 * 256)
 #define AUDIO_COMP_BUF_SIZE  (128 * 1024)
+extern int audio_frmwk_buf_size;
+extern int audio_comp_buf_size;
+
 
 // component parameters
 static unsigned int SRTM_PCM_GAIN_SAMPLE_WIDTH = 16;
@@ -147,17 +150,13 @@ int srtm_pcm_gain(dsp_handle_t *dsp, unsigned int *pCmdParams)
 
     xaf_adev_config_default_init(&device_config);
 
-    device_config.pmem_malloc                 = DSP_Malloc;
-    device_config.pmem_free                   = DSP_Free;
-    device_config.audio_component_buffer_size = AUDIO_COMP_BUF_SIZE;
-    device_config.audio_framework_buffer_size = AUDIO_FRMWK_BUF_SIZE;
+    audio_frmwk_buf_size = AUDIO_FRMWK_BUF_SIZE;
+    audio_comp_buf_size = AUDIO_COMP_BUF_SIZE;
+    device_config.audio_component_buffer_size[XAF_MEM_ID_COMP] = AUDIO_COMP_BUF_SIZE;
+    device_config.audio_framework_buffer_size[XAF_MEM_ID_DEV] = AUDIO_FRMWK_BUF_SIZE;
+    device_config.core = XF_CORE_ID;
 
-    ret = xaf_adev_open(&p_adev, &device_config);
-    if (ret != XAF_NO_ERR)
-    {
-        DSP_PRINTF("[DSP Gain] xaf_adev_open failure: %d\r\n", ret);
-        return -1;
-    }
+    TST_CHK_API_ADEV_OPEN(p_adev, device_config, "[DSP Codec] Audio Device Open\r\n");
 
     DSP_PRINTF("[DSP Gain] Audio Device Ready\r\n");
 
@@ -246,13 +245,7 @@ int srtm_pcm_gain(dsp_handle_t *dsp, unsigned int *pCmdParams)
         return -1;
     }
 
-    ret = xaf_adev_close(p_adev, XAF_ADEV_NORMAL_CLOSE);
-    if (ret != XAF_NO_ERR)
-    {
-        DSP_PRINTF("[DSP Gain] xaf_adev_close failure: %d\r\n", ret);
-        return -1;
-    }
-
+    TST_CHK_API_ADEV_CLOSE(p_adev, XAF_ADEV_NORMAL_CLOSE, device_config, "xaf_adev_close");
     DSP_PRINTF("[DSP Gain] Audio device closed\r\n\r\n");
 
     /* Report the size of the input and decoded output buffer */

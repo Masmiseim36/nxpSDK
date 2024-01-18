@@ -8,10 +8,10 @@
  * \note This file may not be included directly. Applications must
  * include psa/crypto.h.
  *
- * \note This header and its content is not part of the Mbed TLS API and
+ * \note This header and its content are not part of the Mbed TLS API and
  * applications must not depend on it. Its main purpose is to define the
  * multi-part state objects of the PSA drivers included in the cryptographic
- * library. The definition of these objects are then used by crypto_struct.h
+ * library. The definitions of these objects are then used by crypto_struct.h
  * to define the implementation-defined types of PSA multi-part state objects.
  */
 /*  Copyright The Mbed TLS Contributors
@@ -43,6 +43,10 @@
 
 #if defined(MBEDTLS_TEST_LIBTESTDRIVER1)
 #include <libtestdriver1/include/psa/crypto.h>
+#endif
+
+#if defined(PSA_CRYPTO_DRIVER_ELE_S4XX)
+#include "ele_s4xx_crypto_primitives.h"
 #endif
 
 #if defined(PSA_CRYPTO_DRIVER_TEST)
@@ -79,6 +83,7 @@ typedef mbedtls_psa_hash_operation_t
 #endif /* MBEDTLS_TEST_LIBTESTDRIVER1 &&
           LIBTESTDRIVER1_MBEDTLS_PSA_BUILTIN_HASH */
 
+
 typedef struct {
     unsigned int initialised : 1;
     mbedtls_transparent_test_driver_cipher_operation_t ctx;
@@ -94,13 +99,16 @@ typedef struct {
  *
  * The union members are the driver's context structures, and the member names
  * are formatted as `'drivername'_ctx`. This allows for procedural generation
- * of both this file and the content of psa_crypto_driver_wrappers.c */
+ * of both this file and the content of psa_crypto_driver_wrappers.h */
 
 typedef union {
     unsigned dummy; /* Make sure this union is always non-empty */
     mbedtls_psa_hash_operation_t mbedtls_ctx;
 #if defined(PSA_CRYPTO_DRIVER_TEST)
     mbedtls_transparent_test_driver_hash_operation_t test_driver_ctx;
+#endif
+#if defined(PSA_CRYPTO_DRIVER_ELE_S4XX)
+    ele_s4xx_hash_operation_t ele_driver_ctx;
 #endif
 } psa_driver_hash_context_t;
 

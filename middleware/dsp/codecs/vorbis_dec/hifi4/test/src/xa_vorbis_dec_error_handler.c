@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2006-2021 Cadence Design Systems, Inc.
+ * Copyright (c) 2006-2023 Cadence Design Systems, Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -88,9 +88,9 @@ const char *ppb_xa_vorbis_dec_execute_fatal[] =
 {
     "Error in Memory Allocation from Persist Memory",
     "Error in Memory Allocation from Scratch Memory",  
-   // "API Error: - Vorbis Decoder API command called out of sequence",
     "Corrupt/unsupported stream.",
-    "Insufficient input buffer size to fit new Ogg page"
+    "Insufficient input buffer size to fit new Ogg page",
+	"API Error: - Vorbis Decoder API command called out of sequence"
 };
 
 /*****************************************************************************/
@@ -154,7 +154,7 @@ void xa_testbench_error_handler_init()
 xa_error_info_struct xa_vorbis_dec_error_info = 
 {
 	/* The Module Name	*/
-	"Tensilica Vorbis Decoder",
+	"Cadence Vorbis Decoder",
 	{
 		/* The Class Names	*/
 		"API",

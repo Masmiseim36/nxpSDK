@@ -1,12 +1,13 @@
 var a00059 =
 [
-    [ "ocotp_timing_t", "a00059.html#a00470", [
-      [ "wait", "a00059.html#acd8c4f8763dcb388f62bfa50d6e97a64", null ],
-      [ "relax", "a00059.html#a9fea8ef8e47c7341a275e2dae68efa0e", null ],
-      [ "strobe_prog", "a00059.html#a8e99b30121ba46182baae7906e68ca21", null ],
-      [ "strobe_read", "a00059.html#abef3ec7b5191795eba9de0374b4e15cc", null ]
+    [ "_ocotp_timing", "a00059.html#a00462", [
+      [ "wait", "a00059.html#a209b71517255bb7c7de795f2aa940d74", null ],
+      [ "relax", "a00059.html#afe864c7e56ce16eea8845349a8246a73", null ],
+      [ "strobe_prog", "a00059.html#a6dc87b120b1b5ef51f7aa07b9d21f37b", null ],
+      [ "strobe_read", "a00059.html#aebc7d26f1553dd924b5868a66ec8e417", null ]
     ] ],
-    [ "FSL_OCOTP_DRIVER_VERSION", "a00059.html#ga211ad512cb6afc3a8649a61c4f887dd5", [
+    [ "FSL_OCOTP_DRIVER_VERSION", "a00059.html#ga211ad512cb6afc3a8649a61c4f887dd5", null ],
+    [ "ocotp_timing_t", "a00059.html#ga8f3dfc0636f2758f21ed76d4e7196c4f", [
       [ "kStatus_OCOTP_AccessError", "a00059.html#ggaeb8e1c282570d629a6b603a94a4650d6a6133e2fb03bd09bc490982251048c8de", null ],
       [ "kStatus_OCOTP_CrcFail", "a00059.html#ggaeb8e1c282570d629a6b603a94a4650d6a6c5aa99c2965029cf80feaf36cd0763a", null ],
       [ "kStatus_OCOTP_ReloadError", "a00059.html#ggaeb8e1c282570d629a6b603a94a4650d6aa1a3a69603c6973128021852a03cf9ce", null ],

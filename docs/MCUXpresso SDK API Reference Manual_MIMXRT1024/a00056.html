@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: PIT: Periodic Interrupt Timer</title>
+<title>MCUXpresso SDK API Reference Manual: OCOTP: On Chip One-Time Programmable controller.</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -100,232 +100,257 @@ $(document).ready(function(){initNavTree('a00056.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">PIT: Periodic Interrupt Timer</div>  </div>
+<div class="title">OCOTP: On Chip One-Time Programmable controller.</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a driver for the Periodic Interrupt Timer (PIT) of MCUXpresso SDK devices.</p>
-<h1><a class="anchor" id="PITFunc"></a>
-Function groups</h1>
-<p>The PIT driver supports operating the module as a time counter.</p>
-<h2><a class="anchor" id="PITInit"></a>
-Initialization and deinitialization</h2>
-<p>The function <a class="el" href="a00056.html#ga51eb6396276b3f1ec564bd1879c97c06" title="Ungates the PIT clock, enables the PIT module, and configures the peripheral for basic operations...">PIT_Init()</a> initializes the PIT with specified configurations. The function <a class="el" href="a00056.html#gae7dc830a1a71ec7597ba78ccc76abfb6" title="Fills in the PIT configuration structure with the default settings. ">PIT_GetDefaultConfig()</a> gets the default configurations. The initialization function configures the PIT operation in debug mode.</p>
-<p>The function <a class="el" href="a00056.html#gabe6831cfb502ca058f15fcf065cd13de" title="Enables or disables chaining a timer with the previous timer. ">PIT_SetTimerChainMode()</a> configures the chain mode operation of each PIT channel.</p>
-<p>The function <a class="el" href="a00056.html#ga1f9b6d5e9e463844f85e31102458c1fc" title="Gates the PIT clock and disables the PIT module. ">PIT_Deinit()</a> disables the PIT timers and disables the module clock.</p>
-<h2><a class="anchor" id="PITTimerPeriodOperation"></a>
-Timer period Operations</h2>
-<p>The function PITR_SetTimerPeriod() sets the timer period in units of count. Timers begin counting down from the value set by this function until it reaches 0.</p>
-<p>The function <a class="el" href="a00056.html#ga1ffacaa2e8582f59194436ebc6de2db9" title="Reads the current timer counting value. ">PIT_GetCurrentTimerCount()</a> reads the current timer counting value. This function returns the real-time timer counting value, in a range from 0 to a timer period.</p>
-<p>The timer period operation functions takes the count value in ticks. Users can call the utility macros provided in fsl_common.h to convert to microseconds or milliseconds.</p>
-<h2><a class="anchor" id="PITStartStopOperation"></a>
-Start and Stop timer operations</h2>
-<p>The function <a class="el" href="a00056.html#ga3f6b9762079e4ce2de6799e030b14964" title="Starts the timer counting. ">PIT_StartTimer()</a> starts the timer counting. After calling this function, the timer loads the period value set earlier via the PIT_SetPeriod() function and starts counting down to 0. When the timer reaches 0, it generates a trigger pulse and sets the timeout interrupt flag.</p>
-<p>The function <a class="el" href="a00056.html#ga32f1b8ca9cf0fc82ef192890e97899b8" title="Stops the timer counting. ">PIT_StopTimer()</a> stops the timer counting.</p>
-<h2><a class="anchor" id="PITStatus"></a>
-Status</h2>
-<p>Provides functions to get and clear the PIT status.</p>
-<h2><a class="anchor" id="PITInterrupt"></a>
-Interrupt</h2>
-<p>Provides functions to enable/disable PIT interrupts and get current enabled interrupts.</p>
-<h1><a class="anchor" id="PITUseCase"></a>
-Typical use case</h1>
-<h2><a class="anchor" id="PITTick"></a>
-PIT tick example</h2>
-<p>Updates the PIT period and toggles an LED periodically. Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/pit </p>
+<p>The MCUXpresso SDK provides a peripheral driver for the OCOTP module of MCUXpresso SDK devices.</p>
+<p>This section contains information describing the requirements for the on-chip eFuse OTP controller along with details about the block functionality and implementation.</p>
+<h1><a class="anchor" id="OCOTPFunc"></a>
+OCOTP function group</h1>
+<p>The OCOTP driver support operaing API to allow read and write the fuse map.</p>
+<h2><a class="anchor" id="OCOTPInit"></a>
+Initialization and de-initialization</h2>
+<p>The funciton <a class="el" href="a00056.html#ga54480b3c489116b8cb76053b16f02c89" title="Initializes OCOTP controller. ">OCOTP_Init()</a> is to initialize the OCOTP with peripheral base address and source clock frequency.</p>
+<p>The function <a class="el" href="a00056.html#gaafffa3b5fe3f1f69f077e88ba5a7e107" title="De-initializes OCOTP controller. ">OCOTP_Deinit()</a> is to de-initialize the OCOTP controller with peripheral base address.</p>
+<h2><a class="anchor" id="OCOTPReadWrite"></a>
+Read and Write operation</h2>
+<p>The function <a class="el" href="a00056.html#ga7a7b1cd03383fafde15157a06fdda557" title="Reload the shadow register. ">OCOTP_ReloadShadowRegister()</a> is to reload the value from the fuse map. this API should be called firstly before reading the register.</p>
+<p>The <a class="el" href="a00056.html#gaecc991ccf4be0c49286fb13cba97e389" title="Read the fuse shadow register with the fuse addess. ">OCOTP_ReadFuseShadowRegister()</a> is to read the value from a given address, if operation is success, a known value will be return, othwise, a value of 0xBADABADA will be returned.</p>
+<p>The function <a class="el" href="a00056.html#ga43636ab96125958c9a14fe82c176e33e" title="Write the fuse shadow register with the fuse addess and data. ">OCOTP_WriteFuseShadowRegister()</a> will write a specific value to a known address. please check the return status o make sure whether the access to register is success.</p>
+<h1><a class="anchor" id="OCOTPExample"></a>
+OCOTP example</h1>
+<p>This example shows how to get the controller version using API. Due to the eFuse is One-Time programmable, example will only print the information of OCOTP controller version. If more operations are needed, please using the API to implement the write and read operation.</p>
+<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/ocotp </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00445"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#a00445">pit_config_t</a></td></tr>
-<tr class="memdesc:a00445"><td class="mdescLeft">&#160;</td><td class="mdescRight">PIT configuration structure.  <a href="a00056.html#a00445">More...</a><br/></td></tr>
-<tr class="separator:a00445"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00438"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#a00438">_ocotp_timing</a></td></tr>
+<tr class="memdesc:a00438"><td class="mdescLeft">&#160;</td><td class="mdescRight">OCOTP timing structure.  <a href="a00056.html#a00438">More...</a><br/></td></tr>
+<tr class="separator:a00438"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga8f3dfc0636f2758f21ed76d4e7196c4f"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00056.html#a00438">_ocotp_timing</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga8f3dfc0636f2758f21ed76d4e7196c4f">ocotp_timing_t</a></td></tr>
+<tr class="memdesc:ga8f3dfc0636f2758f21ed76d4e7196c4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">OCOTP timing structure.  <a href="#ga8f3dfc0636f2758f21ed76d4e7196c4f">More...</a><br/></td></tr>
+<tr class="separator:ga8f3dfc0636f2758f21ed76d4e7196c4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga7628036278f539e87bd3f76795917737"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00056.html#gga7628036278f539e87bd3f76795917737a771abd65f098ad80d8f693e0b97a7e76">kPIT_Chnl_0</a> = 0U, 
+<tr class="memitem:gaedcf2109f459315e1a7f2af73ec9b603"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<a class="el" href="a00056.html#ggaedcf2109f459315e1a7f2af73ec9b603a6133e2fb03bd09bc490982251048c8de">kStatus_OCOTP_AccessError</a> = MAKE_STATUS(kStatusGroup_SDK_OCOTP, 0), 
 <br/>
-&#160;&#160;<a class="el" href="a00056.html#gga7628036278f539e87bd3f76795917737ac7733ad1c04ea00e2f7890a3c737cb7b">kPIT_Chnl_1</a>, 
+&#160;&#160;<a class="el" href="a00056.html#ggaedcf2109f459315e1a7f2af73ec9b603a6c5aa99c2965029cf80feaf36cd0763a">kStatus_OCOTP_CrcFail</a> = MAKE_STATUS(kStatusGroup_SDK_OCOTP, 1), 
 <br/>
-&#160;&#160;<a class="el" href="a00056.html#gga7628036278f539e87bd3f76795917737ad12ab59290845fcaebd2d9f01ae2f561">kPIT_Chnl_2</a>, 
+&#160;&#160;<a class="el" href="a00056.html#ggaedcf2109f459315e1a7f2af73ec9b603aa1a3a69603c6973128021852a03cf9ce">kStatus_OCOTP_ReloadError</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00056.html#gga7628036278f539e87bd3f76795917737a4666db554c10bce47cfa628e8bb4ab93">kPIT_Chnl_3</a>
+&#160;&#160;<a class="el" href="a00056.html#ggaedcf2109f459315e1a7f2af73ec9b603ae3aafd3ae27db94a954965038445d240">kStatus_OCOTP_ProgramFail</a> = MAKE_STATUS(kStatusGroup_SDK_OCOTP, 3), 
+<br/>
+&#160;&#160;<a class="el" href="a00056.html#ggaedcf2109f459315e1a7f2af73ec9b603a3a38a5c2c3c0f0146c9b773e855812a6">kStatus_OCOTP_Locked</a> = MAKE_STATUS(kStatusGroup_SDK_OCOTP, 4)
 <br/>
  }</td></tr>
-<tr class="memdesc:ga7628036278f539e87bd3f76795917737"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of PIT channels.  <a href="a00056.html#ga7628036278f539e87bd3f76795917737">More...</a><br/></td></tr>
-<tr class="separator:ga7628036278f539e87bd3f76795917737"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa7063bba27d49c1195a3369b88a85bcd"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#gaa7063bba27d49c1195a3369b88a85bcd">pit_interrupt_enable_t</a> { <a class="el" href="a00056.html#ggaa7063bba27d49c1195a3369b88a85bcda98c517b7246326afb50c93fe515916e0">kPIT_TimerInterruptEnable</a> = PIT_TCTRL_TIE_MASK
- }</td></tr>
-<tr class="memdesc:gaa7063bba27d49c1195a3369b88a85bcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of PIT interrupts.  <a href="a00056.html#gaa7063bba27d49c1195a3369b88a85bcd">More...</a><br/></td></tr>
-<tr class="separator:gaa7063bba27d49c1195a3369b88a85bcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga83e319df67d942ffb2988f55803eebbb"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga83e319df67d942ffb2988f55803eebbb">pit_status_flags_t</a> { <a class="el" href="a00056.html#gga83e319df67d942ffb2988f55803eebbba6792e6d30409cb5054b3f12c4e735cc0">kPIT_TimerFlag</a> = PIT_TFLG_TIF_MASK
- }</td></tr>
-<tr class="memdesc:ga83e319df67d942ffb2988f55803eebbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of PIT status flags.  <a href="a00056.html#ga83e319df67d942ffb2988f55803eebbb">More...</a><br/></td></tr>
-<tr class="separator:ga83e319df67d942ffb2988f55803eebbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gaedcf2109f459315e1a7f2af73ec9b603"><td class="mdescLeft">&#160;</td><td class="mdescRight">_ocotp_status Error codes for the OCOTP driver.  <a href="a00056.html#gaedcf2109f459315e1a7f2af73ec9b603">More...</a><br/></td></tr>
+<tr class="separator:gaedcf2109f459315e1a7f2af73ec9b603"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga54480b3c489116b8cb76053b16f02c89"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga54480b3c489116b8cb76053b16f02c89">OCOTP_Init</a> (OCOTP_Type *base, uint32_t srcClock_Hz)</td></tr>
+<tr class="memdesc:ga54480b3c489116b8cb76053b16f02c89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes OCOTP controller.  <a href="#ga54480b3c489116b8cb76053b16f02c89">More...</a><br/></td></tr>
+<tr class="separator:ga54480b3c489116b8cb76053b16f02c89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaafffa3b5fe3f1f69f077e88ba5a7e107"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#gaafffa3b5fe3f1f69f077e88ba5a7e107">OCOTP_Deinit</a> (OCOTP_Type *base)</td></tr>
+<tr class="memdesc:gaafffa3b5fe3f1f69f077e88ba5a7e107"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-initializes OCOTP controller.  <a href="#gaafffa3b5fe3f1f69f077e88ba5a7e107">More...</a><br/></td></tr>
+<tr class="separator:gaafffa3b5fe3f1f69f077e88ba5a7e107"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa3040092099624ec476dd81bd022712c"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#gaa3040092099624ec476dd81bd022712c">OCOTP_CheckBusyStatus</a> (OCOTP_Type *base)</td></tr>
+<tr class="memdesc:gaa3040092099624ec476dd81bd022712c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checking the BUSY bit in CTRL register.  <a href="#gaa3040092099624ec476dd81bd022712c">More...</a><br/></td></tr>
+<tr class="separator:gaa3040092099624ec476dd81bd022712c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf0ee0166ccd35b0273d468b7eb72c954"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#gaf0ee0166ccd35b0273d468b7eb72c954">OCOTP_CheckErrorStatus</a> (OCOTP_Type *base)</td></tr>
+<tr class="memdesc:gaf0ee0166ccd35b0273d468b7eb72c954"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checking the ERROR bit in CTRL register.  <a href="#gaf0ee0166ccd35b0273d468b7eb72c954">More...</a><br/></td></tr>
+<tr class="separator:gaf0ee0166ccd35b0273d468b7eb72c954"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad9294be0c39be4dfaa1eea436ac85171"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#gad9294be0c39be4dfaa1eea436ac85171">OCOTP_ClearErrorStatus</a> (OCOTP_Type *base)</td></tr>
+<tr class="memdesc:gad9294be0c39be4dfaa1eea436ac85171"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the error bit if this bit is set.  <a href="#gad9294be0c39be4dfaa1eea436ac85171">More...</a><br/></td></tr>
+<tr class="separator:gad9294be0c39be4dfaa1eea436ac85171"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7a7b1cd03383fafde15157a06fdda557"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00259.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga7a7b1cd03383fafde15157a06fdda557">OCOTP_ReloadShadowRegister</a> (OCOTP_Type *base)</td></tr>
+<tr class="memdesc:ga7a7b1cd03383fafde15157a06fdda557"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reload the shadow register.  <a href="#ga7a7b1cd03383fafde15157a06fdda557">More...</a><br/></td></tr>
+<tr class="separator:ga7a7b1cd03383fafde15157a06fdda557"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaecc991ccf4be0c49286fb13cba97e389"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#gaecc991ccf4be0c49286fb13cba97e389">OCOTP_ReadFuseShadowRegister</a> (OCOTP_Type *base, uint32_t address)</td></tr>
+<tr class="memdesc:gaecc991ccf4be0c49286fb13cba97e389"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the fuse shadow register with the fuse addess.  <a href="#gaecc991ccf4be0c49286fb13cba97e389">More...</a><br/></td></tr>
+<tr class="separator:gaecc991ccf4be0c49286fb13cba97e389"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa1b0f813fa5ca43225d71d9218c48a28"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00259.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#gaa1b0f813fa5ca43225d71d9218c48a28">OCOTP_ReadFuseShadowRegisterExt</a> (OCOTP_Type *base, uint32_t address, uint32_t *data, uint8_t fuseWords)</td></tr>
+<tr class="memdesc:gaa1b0f813fa5ca43225d71d9218c48a28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the fuse shadow register from the fuse addess.  <a href="#gaa1b0f813fa5ca43225d71d9218c48a28">More...</a><br/></td></tr>
+<tr class="separator:gaa1b0f813fa5ca43225d71d9218c48a28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga43636ab96125958c9a14fe82c176e33e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00259.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga43636ab96125958c9a14fe82c176e33e">OCOTP_WriteFuseShadowRegister</a> (OCOTP_Type *base, uint32_t address, uint32_t data)</td></tr>
+<tr class="memdesc:ga43636ab96125958c9a14fe82c176e33e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the fuse shadow register with the fuse addess and data.  <a href="#ga43636ab96125958c9a14fe82c176e33e">More...</a><br/></td></tr>
+<tr class="separator:ga43636ab96125958c9a14fe82c176e33e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4f837c7b4a66ffe3153f2975fd5c6388"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00259.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga4f837c7b4a66ffe3153f2975fd5c6388">OCOTP_WriteFuseShadowRegisterWithLock</a> (OCOTP_Type *base, uint32_t address, uint32_t data, bool lock)</td></tr>
+<tr class="memdesc:ga4f837c7b4a66ffe3153f2975fd5c6388"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the fuse shadow register and lock it.  <a href="#ga4f837c7b4a66ffe3153f2975fd5c6388">More...</a><br/></td></tr>
+<tr class="separator:ga4f837c7b4a66ffe3153f2975fd5c6388"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga38c12a5cb815d9330cd8f2c04e8e1ec5"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga38c12a5cb815d9330cd8f2c04e8e1ec5">OCOTP_GetVersion</a> (OCOTP_Type *base)</td></tr>
+<tr class="memdesc:ga38c12a5cb815d9330cd8f2c04e8e1ec5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the OCOTP controller version from the register.  <a href="#ga38c12a5cb815d9330cd8f2c04e8e1ec5">More...</a><br/></td></tr>
+<tr class="separator:ga38c12a5cb815d9330cd8f2c04e8e1ec5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga55a6c6a9b7ee34302c636f9496d0ea2f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga55a6c6a9b7ee34302c636f9496d0ea2f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga55a6c6a9b7ee34302c636f9496d0ea2f">FSL_PIT_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00257.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 4))</td></tr>
-<tr class="memdesc:ga55a6c6a9b7ee34302c636f9496d0ea2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">PIT Driver Version 2.0.4. <br/></td></tr>
-<tr class="separator:ga55a6c6a9b7ee34302c636f9496d0ea2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Initialization and deinitialization</h2></td></tr>
-<tr class="memitem:ga51eb6396276b3f1ec564bd1879c97c06"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga51eb6396276b3f1ec564bd1879c97c06">PIT_Init</a> (PIT_Type *base, const <a class="el" href="a00056.html#a00445">pit_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga51eb6396276b3f1ec564bd1879c97c06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ungates the PIT clock, enables the PIT module, and configures the peripheral for basic operations.  <a href="#ga51eb6396276b3f1ec564bd1879c97c06">More...</a><br/></td></tr>
-<tr class="separator:ga51eb6396276b3f1ec564bd1879c97c06"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1f9b6d5e9e463844f85e31102458c1fc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga1f9b6d5e9e463844f85e31102458c1fc">PIT_Deinit</a> (PIT_Type *base)</td></tr>
-<tr class="memdesc:ga1f9b6d5e9e463844f85e31102458c1fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gates the PIT clock and disables the PIT module.  <a href="#ga1f9b6d5e9e463844f85e31102458c1fc">More...</a><br/></td></tr>
-<tr class="separator:ga1f9b6d5e9e463844f85e31102458c1fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae7dc830a1a71ec7597ba78ccc76abfb6"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#gae7dc830a1a71ec7597ba78ccc76abfb6">PIT_GetDefaultConfig</a> (<a class="el" href="a00056.html#a00445">pit_config_t</a> *config)</td></tr>
-<tr class="memdesc:gae7dc830a1a71ec7597ba78ccc76abfb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills in the PIT configuration structure with the default settings.  <a href="#gae7dc830a1a71ec7597ba78ccc76abfb6">More...</a><br/></td></tr>
-<tr class="separator:gae7dc830a1a71ec7597ba78ccc76abfb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabe6831cfb502ca058f15fcf065cd13de"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#gabe6831cfb502ca058f15fcf065cd13de">PIT_SetTimerChainMode</a> (PIT_Type *base, <a class="el" href="a00056.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a> channel, bool enable)</td></tr>
-<tr class="memdesc:gabe6831cfb502ca058f15fcf065cd13de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables chaining a timer with the previous timer.  <a href="#gabe6831cfb502ca058f15fcf065cd13de">More...</a><br/></td></tr>
-<tr class="separator:gabe6831cfb502ca058f15fcf065cd13de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Interrupt Interface</h2></td></tr>
-<tr class="memitem:ga157360547de18885d6a783d2b510d87e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga157360547de18885d6a783d2b510d87e">PIT_EnableInterrupts</a> (PIT_Type *base, <a class="el" href="a00056.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a> channel, uint32_t mask)</td></tr>
-<tr class="memdesc:ga157360547de18885d6a783d2b510d87e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the selected PIT interrupts.  <a href="#ga157360547de18885d6a783d2b510d87e">More...</a><br/></td></tr>
-<tr class="separator:ga157360547de18885d6a783d2b510d87e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga12d03e0905453194bd5c3560996eb976"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga12d03e0905453194bd5c3560996eb976">PIT_DisableInterrupts</a> (PIT_Type *base, <a class="el" href="a00056.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a> channel, uint32_t mask)</td></tr>
-<tr class="memdesc:ga12d03e0905453194bd5c3560996eb976"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the selected PIT interrupts.  <a href="#ga12d03e0905453194bd5c3560996eb976">More...</a><br/></td></tr>
-<tr class="separator:ga12d03e0905453194bd5c3560996eb976"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9ecb3ef65be040e9002a0277b13bb8e3"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga9ecb3ef65be040e9002a0277b13bb8e3">PIT_GetEnabledInterrupts</a> (PIT_Type *base, <a class="el" href="a00056.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a> channel)</td></tr>
-<tr class="memdesc:ga9ecb3ef65be040e9002a0277b13bb8e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the enabled PIT interrupts.  <a href="#ga9ecb3ef65be040e9002a0277b13bb8e3">More...</a><br/></td></tr>
-<tr class="separator:ga9ecb3ef65be040e9002a0277b13bb8e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Status Interface</h2></td></tr>
-<tr class="memitem:ga503619dd8ee2244edd12da3e27fa13e2"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga503619dd8ee2244edd12da3e27fa13e2">PIT_GetStatusFlags</a> (PIT_Type *base, <a class="el" href="a00056.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a> channel)</td></tr>
-<tr class="memdesc:ga503619dd8ee2244edd12da3e27fa13e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the PIT status flags.  <a href="#ga503619dd8ee2244edd12da3e27fa13e2">More...</a><br/></td></tr>
-<tr class="separator:ga503619dd8ee2244edd12da3e27fa13e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadc0f51c2e1b91fb0c529d752b71477e6"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#gadc0f51c2e1b91fb0c529d752b71477e6">PIT_ClearStatusFlags</a> (PIT_Type *base, <a class="el" href="a00056.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a> channel, uint32_t mask)</td></tr>
-<tr class="memdesc:gadc0f51c2e1b91fb0c529d752b71477e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the PIT status flags.  <a href="#gadc0f51c2e1b91fb0c529d752b71477e6">More...</a><br/></td></tr>
-<tr class="separator:gadc0f51c2e1b91fb0c529d752b71477e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Read and Write the timer period</h2></td></tr>
-<tr class="memitem:ga944e9c9bd6848d861a9eb17b617d72f7"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga944e9c9bd6848d861a9eb17b617d72f7">PIT_SetTimerPeriod</a> (PIT_Type *base, <a class="el" href="a00056.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a> channel, uint32_t count)</td></tr>
-<tr class="memdesc:ga944e9c9bd6848d861a9eb17b617d72f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the timer period in units of count.  <a href="#ga944e9c9bd6848d861a9eb17b617d72f7">More...</a><br/></td></tr>
-<tr class="separator:ga944e9c9bd6848d861a9eb17b617d72f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1ffacaa2e8582f59194436ebc6de2db9"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga1ffacaa2e8582f59194436ebc6de2db9">PIT_GetCurrentTimerCount</a> (PIT_Type *base, <a class="el" href="a00056.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a> channel)</td></tr>
-<tr class="memdesc:ga1ffacaa2e8582f59194436ebc6de2db9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the current timer counting value.  <a href="#ga1ffacaa2e8582f59194436ebc6de2db9">More...</a><br/></td></tr>
-<tr class="separator:ga1ffacaa2e8582f59194436ebc6de2db9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Timer Start and Stop</h2></td></tr>
-<tr class="memitem:ga3f6b9762079e4ce2de6799e030b14964"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga3f6b9762079e4ce2de6799e030b14964">PIT_StartTimer</a> (PIT_Type *base, <a class="el" href="a00056.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a> channel)</td></tr>
-<tr class="memdesc:ga3f6b9762079e4ce2de6799e030b14964"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the timer counting.  <a href="#ga3f6b9762079e4ce2de6799e030b14964">More...</a><br/></td></tr>
-<tr class="separator:ga3f6b9762079e4ce2de6799e030b14964"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga32f1b8ca9cf0fc82ef192890e97899b8"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga32f1b8ca9cf0fc82ef192890e97899b8">PIT_StopTimer</a> (PIT_Type *base, <a class="el" href="a00056.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a> channel)</td></tr>
-<tr class="memdesc:ga32f1b8ca9cf0fc82ef192890e97899b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the timer counting.  <a href="#ga32f1b8ca9cf0fc82ef192890e97899b8">More...</a><br/></td></tr>
-<tr class="separator:ga32f1b8ca9cf0fc82ef192890e97899b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga211ad512cb6afc3a8649a61c4f887dd5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ga211ad512cb6afc3a8649a61c4f887dd5">FSL_OCOTP_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00259.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 3))</td></tr>
+<tr class="memdesc:ga211ad512cb6afc3a8649a61c4f887dd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">OCOTP driver version.  <a href="#ga211ad512cb6afc3a8649a61c4f887dd5">More...</a><br/></td></tr>
+<tr class="separator:ga211ad512cb6afc3a8649a61c4f887dd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00445" id="a00445"></a>
+<a name="a00438" id="a00438"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct pit_config_t</td>
+          <td class="memname">struct _ocotp_timing</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>This structure holds the configuration settings for the PIT peripheral. To initialize this structure to reasonable defaults, call the <a class="el" href="a00056.html#gae7dc830a1a71ec7597ba78ccc76abfb6" title="Fills in the PIT configuration structure with the default settings. ">PIT_GetDefaultConfig()</a> function and pass a pointer to your config structure instance.</p>
-<p>The configuration structure can be made constant so it resides in flash. </p>
+<div class="textblock"><p>Note that, these value are used for calcalating the read/write timings. And the values should statisfy below rules:</p>
+<p>Tsp_rd=(WAIT+1)/ipg_clk_freq should be &gt;= 150ns; Tsp_pgm=(RELAX+1)/ipg_clk_freq should be &gt;= 100ns; Trd = ((STROBE_READ+1)- 2*(RELAX_READ+1)) /ipg_clk_freq, The Trd is required to be larger than 40 ns. Tpgm = ((STROBE_PROG+1)- 2*(RELAX_PROG+1)) /ipg_clk_freq; The Tpgm should be configured within the range of 9000 ns &lt; Tpgm &lt; 11000 ns; </p>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:ade3a74504e1c6ecf10eb1f30fe5c0921"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ade3a74504e1c6ecf10eb1f30fe5c0921"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#ade3a74504e1c6ecf10eb1f30fe5c0921">enableRunInDebug</a></td></tr>
-<tr class="memdesc:ade3a74504e1c6ecf10eb1f30fe5c0921"><td class="mdescLeft">&#160;</td><td class="mdescRight">true: Timers run in debug mode; false: Timers stop in debug mode <br/></td></tr>
-<tr class="separator:ade3a74504e1c6ecf10eb1f30fe5c0921"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a209b71517255bb7c7de795f2aa940d74"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#a209b71517255bb7c7de795f2aa940d74">wait</a></td></tr>
+<tr class="memdesc:a209b71517255bb7c7de795f2aa940d74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait time value to fill in the TIMING register.  <a href="#a209b71517255bb7c7de795f2aa940d74">More...</a><br/></td></tr>
+<tr class="separator:a209b71517255bb7c7de795f2aa940d74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe864c7e56ce16eea8845349a8246a73"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#afe864c7e56ce16eea8845349a8246a73">relax</a></td></tr>
+<tr class="memdesc:afe864c7e56ce16eea8845349a8246a73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Relax time value to fill in the TIMING register.  <a href="#afe864c7e56ce16eea8845349a8246a73">More...</a><br/></td></tr>
+<tr class="separator:afe864c7e56ce16eea8845349a8246a73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6dc87b120b1b5ef51f7aa07b9d21f37b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#a6dc87b120b1b5ef51f7aa07b9d21f37b">strobe_prog</a></td></tr>
+<tr class="memdesc:a6dc87b120b1b5ef51f7aa07b9d21f37b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Storbe program time value to fill in the TIMING register.  <a href="#a6dc87b120b1b5ef51f7aa07b9d21f37b">More...</a><br/></td></tr>
+<tr class="separator:a6dc87b120b1b5ef51f7aa07b9d21f37b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebc7d26f1553dd924b5868a66ec8e417"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html#aebc7d26f1553dd924b5868a66ec8e417">strobe_read</a></td></tr>
+<tr class="memdesc:aebc7d26f1553dd924b5868a66ec8e417"><td class="mdescLeft">&#160;</td><td class="mdescRight">Storbe read time value to fill in the TIMING register.  <a href="#aebc7d26f1553dd924b5868a66ec8e417">More...</a><br/></td></tr>
+<tr class="separator:aebc7d26f1553dd924b5868a66ec8e417"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="a209b71517255bb7c7de795f2aa940d74"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t _ocotp_timing::wait</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="afe864c7e56ce16eea8845349a8246a73"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t _ocotp_timing::relax</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a6dc87b120b1b5ef51f7aa07b9d21f37b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t _ocotp_timing::strobe_prog</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aebc7d26f1553dd924b5868a66ec8e417"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t _ocotp_timing::strobe_read</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga211ad512cb6afc3a8649a61c4f887dd5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FSL_OCOTP_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00259.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 3))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga8f3dfc0636f2758f21ed76d4e7196c4f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00056.html#a00438">_ocotp_timing</a>  <a class="el" href="a00056.html#ga8f3dfc0636f2758f21ed76d4e7196c4f">ocotp_timing_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Note that, these value are used for calcalating the read/write timings. And the values should statisfy below rules:</p>
+<p>Tsp_rd=(WAIT+1)/ipg_clk_freq should be &gt;= 150ns; Tsp_pgm=(RELAX+1)/ipg_clk_freq should be &gt;= 100ns; Trd = ((STROBE_READ+1)- 2*(RELAX_READ+1)) /ipg_clk_freq, The Trd is required to be larger than 40 ns. Tpgm = ((STROBE_PROG+1)- 2*(RELAX_PROG+1)) /ipg_clk_freq; The Tpgm should be configured within the range of 9000 ns &lt; Tpgm &lt; 11000 ns; </p>
 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga7628036278f539e87bd3f76795917737"></a>
+<a class="anchor" id="gaedcf2109f459315e1a7f2af73ec9b603"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00056.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>Actual number of available channels is SoC dependent </dd></dl>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga7628036278f539e87bd3f76795917737a771abd65f098ad80d8f693e0b97a7e76"></a>kPIT_Chnl_0</em>&nbsp;</td><td class="fielddoc">
-<p>PIT channel number 0. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7628036278f539e87bd3f76795917737ac7733ad1c04ea00e2f7890a3c737cb7b"></a>kPIT_Chnl_1</em>&nbsp;</td><td class="fielddoc">
-<p>PIT channel number 1. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7628036278f539e87bd3f76795917737ad12ab59290845fcaebd2d9f01ae2f561"></a>kPIT_Chnl_2</em>&nbsp;</td><td class="fielddoc">
-<p>PIT channel number 2. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7628036278f539e87bd3f76795917737a4666db554c10bce47cfa628e8bb4ab93"></a>kPIT_Chnl_3</em>&nbsp;</td><td class="fielddoc">
-<p>PIT channel number 3. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gaa7063bba27d49c1195a3369b88a85bcd"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00056.html#gaa7063bba27d49c1195a3369b88a85bcd">pit_interrupt_enable_t</a></td>
+          <td class="memname">anonymous enum</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaa7063bba27d49c1195a3369b88a85bcda98c517b7246326afb50c93fe515916e0"></a>kPIT_TimerInterruptEnable</em>&nbsp;</td><td class="fielddoc">
-<p>Timer interrupt enable. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaedcf2109f459315e1a7f2af73ec9b603a6133e2fb03bd09bc490982251048c8de"></a>kStatus_OCOTP_AccessError</em>&nbsp;</td><td class="fielddoc">
+<p>eFuse and shadow register access error. </p>
 </td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga83e319df67d942ffb2988f55803eebbb"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00056.html#ga83e319df67d942ffb2988f55803eebbb">pit_status_flags_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga83e319df67d942ffb2988f55803eebbba6792e6d30409cb5054b3f12c4e735cc0"></a>kPIT_TimerFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Timer flag. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaedcf2109f459315e1a7f2af73ec9b603a6c5aa99c2965029cf80feaf36cd0763a"></a>kStatus_OCOTP_CrcFail</em>&nbsp;</td><td class="fielddoc">
+<p>CRC check failed. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaedcf2109f459315e1a7f2af73ec9b603aa1a3a69603c6973128021852a03cf9ce"></a>kStatus_OCOTP_ReloadError</em>&nbsp;</td><td class="fielddoc">
+<p>Error happens during reload shadow register. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaedcf2109f459315e1a7f2af73ec9b603ae3aafd3ae27db94a954965038445d240"></a>kStatus_OCOTP_ProgramFail</em>&nbsp;</td><td class="fielddoc">
+<p>Fuse programming failed. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaedcf2109f459315e1a7f2af73ec9b603a3a38a5c2c3c0f0146c9b773e855812a6"></a>kStatus_OCOTP_Locked</em>&nbsp;</td><td class="fielddoc">
+<p>Fuse is locked and cannot be programmed. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga51eb6396276b3f1ec564bd1879c97c06"></a>
+<a class="anchor" id="ga54480b3c489116b8cb76053b16f02c89"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void PIT_Init </td>
+          <td class="memname">void OCOTP_Init </td>
           <td>(</td>
-          <td class="paramtype">PIT_Type *&#160;</td>
+          <td class="paramtype">OCOTP_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00056.html#a00445">pit_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>srcClock_Hz</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -334,40 +359,39 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>This API should be called at the beginning of the application using the PIT driver.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>PIT peripheral base address </td></tr>
-    <tr><td class="paramname">config</td><td>Pointer to the user's PIT config structure </td></tr>
+    <tr><td class="paramname">base</td><td>OCOTP peripheral base address. </td></tr>
+    <tr><td class="paramname">srcClock_Hz</td><td>source clock frequency in unit of Hz. When the macro FSL_FEATURE_OCOTP_HAS_TIMING_CTRL is defined as 0, this parameter is not used, application could pass in 0 in this case. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga1f9b6d5e9e463844f85e31102458c1fc"></a>
+<a class="anchor" id="gaafffa3b5fe3f1f69f077e88ba5a7e107"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void PIT_Deinit </td>
+          <td class="memname">void OCOTP_Deinit </td>
           <td>(</td>
-          <td class="paramtype">PIT_Type *&#160;</td>
+          <td class="paramtype">OCOTP_Type *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PIT peripheral base address </td></tr>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>upon successful execution, error status otherwise. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gae7dc830a1a71ec7597ba78ccc76abfb6"></a>
+<a class="anchor" id="gaa3040092099624ec476dd81bd022712c"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -375,10 +399,10 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void PIT_GetDefaultConfig </td>
+          <td class="memname">static bool OCOTP_CheckBusyStatus </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00056.html#a00445">pit_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em></td><td>)</td>
+          <td class="paramtype">OCOTP_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -388,19 +412,23 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
   </tr>
 </table>
 </div><div class="memdoc">
-<p>The default values are as follows. </p>
-<div class="fragment"><div class="line">*     config-&gt;enableRunInDebug = <span class="keyword">false</span>;</div>
-<div class="line">* </div>
-</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
+<p>Checking this BUSY bit will help confirm if the OCOTP controller is ready for access.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">config</td><td>Pointer to the configuration structure. </td></tr>
+    <tr><td class="paramname">base</td><td>OCOTP peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>for bit set and false for cleared. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gabe6831cfb502ca058f15fcf065cd13de"></a>
+<a class="anchor" id="gaf0ee0166ccd35b0273d468b7eb72c954"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -408,22 +436,258 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void PIT_SetTimerChainMode </td>
+          <td class="memname">static bool OCOTP_CheckErrorStatus </td>
           <td>(</td>
-          <td class="paramtype">PIT_Type *&#160;</td>
+          <td class="paramtype">OCOTP_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>OCOTP peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>for bit set and false for cleared. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gad9294be0c39be4dfaa1eea436ac85171"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void OCOTP_ClearErrorStatus </td>
+          <td>(</td>
+          <td class="paramtype">OCOTP_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>OCOTP peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga7a7b1cd03383fafde15157a06fdda557"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00259.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> OCOTP_ReloadShadowRegister </td>
+          <td>(</td>
+          <td class="paramtype">OCOTP_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function will help reload the shadow register without reseting the OCOTP module. Please make sure the OCOTP has been initialized before calling this API.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>OCOTP peripheral base addess. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Reload success. </td></tr>
+    <tr><td class="paramname">kStatus_OCOTP_ReloadError</td><td>Reload failed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaecc991ccf4be0c49286fb13cba97e389"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t OCOTP_ReadFuseShadowRegister </td>
+          <td>(</td>
+          <td class="paramtype">OCOTP_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00056.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a>&#160;</td>
-          <td class="paramname"><em>channel</em>, </td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="a00296.html#_deprecated000011">Deprecated:</a></b></dt><dd>Use <a class="el" href="a00056.html#gaa1b0f813fa5ca43225d71d9218c48a28">OCOTP_ReadFuseShadowRegisterExt</a> instead of this function.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>OCOTP peripheral base address. </td></tr>
+    <tr><td class="paramname">address</td><td>the fuse address to be read from. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The read out data. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa1b0f813fa5ca43225d71d9218c48a28"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00259.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> OCOTP_ReadFuseShadowRegisterExt </td>
+          <td>(</td>
+          <td class="paramtype">OCOTP_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>fuseWords</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function reads fuse from <code>address</code>, how many words to read is specified by the parameter <code>fuseWords</code>. This function could read at most OCOTP_READ_FUSE_DATA_COUNT fuse word one time.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>OCOTP peripheral base address. </td></tr>
+    <tr><td class="paramname">address</td><td>the fuse address to be read from. </td></tr>
+    <tr><td class="paramname">data</td><td>Data array to save the readout fuse value. </td></tr>
+    <tr><td class="paramname">fuseWords</td><td>How many words to read. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Read success. </td></tr>
+    <tr><td class="paramname">kStatus_Fail</td><td>Error occurs during read. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga43636ab96125958c9a14fe82c176e33e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00259.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> OCOTP_WriteFuseShadowRegister </td>
+          <td>(</td>
+          <td class="paramtype">OCOTP_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Please make sure the wrtie address is not locked while calling this API.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>OCOTP peripheral base address. </td></tr>
+    <tr><td class="paramname">address</td><td>the fuse address to be written. </td></tr>
+    <tr><td class="paramname">data</td><td>the value will be writen to fuse address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">write</td><td>status, kStatus_Success for success and kStatus_Fail for failed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga4f837c7b4a66ffe3153f2975fd5c6388"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00259.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> OCOTP_WriteFuseShadowRegisterWithLock </td>
+          <td>(</td>
+          <td class="paramtype">OCOTP_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
+          <td class="paramname"><em>lock</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -431,25 +695,32 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<p>When a timer has a chain mode enabled, it only counts after the previous timer has expired. If the timer n-1 has counted down to 0, counter n decrements the value by one. Each timer is 32-bits, which allows the developers to chain timers together and form a longer timer (64-bits and larger). The first timer (timer 0) can't be chained to any other timer.</p>
+<p>Please make sure the wrtie address is not locked while calling this API.</p>
+<p>Some OCOTP controller supports ECC mode and redundancy mode (see reference mananual for more details). OCOTP controller will auto select ECC or redundancy mode to program the fuse word according to fuse map definition. In ECC mode, the 32 fuse bits in one word can only be written once. In redundancy mode, the word can be written more than once as long as they are different fuse bits. Set parameter <code>lock</code> as true to force use ECC mode.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>PIT peripheral base address </td></tr>
-    <tr><td class="paramname">channel</td><td>Timer channel number which is chained with the previous timer </td></tr>
-    <tr><td class="paramname">enable</td><td>Enable or disable chain. true: Current timer is chained with the previous timer. false: Timer doesn't chain with other timers. </td></tr>
+    <tr><td class="paramname">base</td><td>OCOTP peripheral base address. </td></tr>
+    <tr><td class="paramname">address</td><td>The fuse address to be written. </td></tr>
+    <tr><td class="paramname">data</td><td>The value will be writen to fuse address. </td></tr>
+    <tr><td class="paramname">lock</td><td>Lock or unlock write fuse shadow register operation. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Program and reload success. </td></tr>
+    <tr><td class="paramname">kStatus_OCOTP_Locked</td><td>The eFuse word is locked and cannot be programmed. </td></tr>
+    <tr><td class="paramname">kStatus_OCOTP_ProgramFail</td><td>eFuse word programming failed. </td></tr>
+    <tr><td class="paramname">kStatus_OCOTP_ReloadError</td><td>eFuse word programming success, but error happens during reload the values. </td></tr>
+    <tr><td class="paramname">kStatus_OCOTP_AccessError</td><td>Cannot access eFuse word. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga157360547de18885d6a783d2b510d87e"></a>
+<a class="anchor" id="ga38c12a5cb815d9330cd8f2c04e8e1ec5"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -457,27 +728,11 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void PIT_EnableInterrupts </td>
+          <td class="memname">static uint32_t OCOTP_GetVersion </td>
           <td>(</td>
-          <td class="paramtype">PIT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">OCOTP_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00056.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a>&#160;</td>
-          <td class="paramname"><em>channel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -488,367 +743,13 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>PIT peripheral base address </td></tr>
-    <tr><td class="paramname">channel</td><td>Timer channel number </td></tr>
-    <tr><td class="paramname">mask</td><td>The interrupts to enable. This is a logical OR of members of the enumeration <a class="el" href="a00056.html#gaa7063bba27d49c1195a3369b88a85bcd" title="List of PIT interrupts. ">pit_interrupt_enable_t</a> </td></tr>
+    <tr><td class="paramname">base</td><td>OCOTP peripheral base address. </td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a class="anchor" id="ga12d03e0905453194bd5c3560996eb976"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PIT_DisableInterrupts </td>
-          <td>(</td>
-          <td class="paramtype">PIT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00056.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a>&#160;</td>
-          <td class="paramname"><em>channel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PIT peripheral base address </td></tr>
-    <tr><td class="paramname">channel</td><td>Timer channel number </td></tr>
-    <tr><td class="paramname">mask</td><td>The interrupts to disable. This is a logical OR of members of the enumeration <a class="el" href="a00056.html#gaa7063bba27d49c1195a3369b88a85bcd" title="List of PIT interrupts. ">pit_interrupt_enable_t</a> </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga9ecb3ef65be040e9002a0277b13bb8e3"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t PIT_GetEnabledInterrupts </td>
-          <td>(</td>
-          <td class="paramtype">PIT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00056.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a>&#160;</td>
-          <td class="paramname"><em>channel</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PIT peripheral base address </td></tr>
-    <tr><td class="paramname">channel</td><td>Timer channel number</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The enabled interrupts. This is the logical OR of members of the enumeration <a class="el" href="a00056.html#gaa7063bba27d49c1195a3369b88a85bcd" title="List of PIT interrupts. ">pit_interrupt_enable_t</a> </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga503619dd8ee2244edd12da3e27fa13e2"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t PIT_GetStatusFlags </td>
-          <td>(</td>
-          <td class="paramtype">PIT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00056.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a>&#160;</td>
-          <td class="paramname"><em>channel</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PIT peripheral base address </td></tr>
-    <tr><td class="paramname">channel</td><td>Timer channel number</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The status flags. This is the logical OR of members of the enumeration <a class="el" href="a00056.html#ga83e319df67d942ffb2988f55803eebbb" title="List of PIT status flags. ">pit_status_flags_t</a> </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gadc0f51c2e1b91fb0c529d752b71477e6"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PIT_ClearStatusFlags </td>
-          <td>(</td>
-          <td class="paramtype">PIT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00056.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a>&#160;</td>
-          <td class="paramname"><em>channel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PIT peripheral base address </td></tr>
-    <tr><td class="paramname">channel</td><td>Timer channel number </td></tr>
-    <tr><td class="paramname">mask</td><td>The status flags to clear. This is a logical OR of members of the enumeration <a class="el" href="a00056.html#ga83e319df67d942ffb2988f55803eebbb" title="List of PIT status flags. ">pit_status_flags_t</a> </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga944e9c9bd6848d861a9eb17b617d72f7"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PIT_SetTimerPeriod </td>
-          <td>(</td>
-          <td class="paramtype">PIT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00056.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a>&#160;</td>
-          <td class="paramname"><em>channel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>count</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Timers begin counting from the value set by this function until it reaches 0, then it generates an interrupt and load this register value again. Writing a new value to this register does not restart the timer. Instead, the value is loaded after the timer expires.</p>
-<dl class="section note"><dt>Note</dt><dd>Users can call the utility macros provided in fsl_common.h to convert to ticks.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PIT peripheral base address </td></tr>
-    <tr><td class="paramname">channel</td><td>Timer channel number </td></tr>
-    <tr><td class="paramname">count</td><td>Timer period in units of ticks </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga1ffacaa2e8582f59194436ebc6de2db9"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t PIT_GetCurrentTimerCount </td>
-          <td>(</td>
-          <td class="paramtype">PIT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00056.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a>&#160;</td>
-          <td class="paramname"><em>channel</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function returns the real-time timer counting value, in a range from 0 to a timer period.</p>
-<dl class="section note"><dt>Note</dt><dd>Users can call the utility macros provided in fsl_common.h to convert ticks to usec or msec.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PIT peripheral base address </td></tr>
-    <tr><td class="paramname">channel</td><td>Timer channel number</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Current timer counting value in ticks </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga3f6b9762079e4ce2de6799e030b14964"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PIT_StartTimer </td>
-          <td>(</td>
-          <td class="paramtype">PIT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00056.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a>&#160;</td>
-          <td class="paramname"><em>channel</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>After calling this function, timers load period value, count down to 0 and then load the respective start value again. Each time a timer reaches 0, it generates a trigger pulse and sets the timeout interrupt flag.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PIT peripheral base address </td></tr>
-    <tr><td class="paramname">channel</td><td>Timer channel number. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga32f1b8ca9cf0fc82ef192890e97899b8"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PIT_StopTimer </td>
-          <td>(</td>
-          <td class="paramtype">PIT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00056.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a>&#160;</td>
-          <td class="paramname"><em>channel</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function stops every timer counting. Timers reload their periods respectively after the next time they call the PIT_DRV_StartTimer.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PIT peripheral base address </td></tr>
-    <tr><td class="paramname">channel</td><td>Timer channel number. </td></tr>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">return</td><td>the version value. </td></tr>
   </table>
   </dd>
 </dl>

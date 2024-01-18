@@ -1266,7 +1266,7 @@ CK_RV vCodeVerifyPubKeyProvisioning()
 
     if (xResult == CKR_OK)
     {
-        xResult = xProvisionPublicKey(xSession, keyCODE_VERIFY_PUB_KEY_PEM, sizeof(keyCODE_VERIFY_PUB_KEY_PEM), CKK_EC,
+        xResult = xProvisionPublicKey(xSession, (uint8_t *)keyCODE_VERIFY_PUB_KEY_PEM, sizeof(keyCODE_VERIFY_PUB_KEY_PEM), CKK_EC,
                                (uint8_t *)pkcs11configLABEL_CODE_VERIFICATION_KEY, &xObject);
 
         if ((xResult != CKR_OK) || (xObject == CK_INVALID_HANDLE))

@@ -28,7 +28,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Maestro Audio Framework
-   &#160;<span id="projectnumber">v 1.6</span>
+   &#160;<span id="projectnumber">v 1.7</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -86,7 +86,8 @@ $(document).ready(function(){initNavTree('file__src__freertos_8c.html',''); init
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">file_src_freertos.c File Reference</div>  </div>
 </div><!--header-->
@@ -156,6 +157,14 @@ Functions</h2></td></tr>
 <tr class="memitem:a7c5113c681dd9b5d994d440f03c40ff6"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="file__src__freertos_8c.html#a7c5113c681dd9b5d994d440f03c40ff6">file_query</a> (int32_t fd, <a class="el" href="streamer__api_8h.html#a8e68395db0ce8e45c688b6baf7bef1b5">StreamInfoType</a> info, <a class="el" href="unionStreamData.html">StreamData</a> *data)</td></tr>
 <tr class="memdesc:a7c5113c681dd9b5d994d440f03c40ff6"><td class="mdescLeft">&#160;</td><td class="mdescRight">file_query  <a href="file__src__freertos_8c.html#a7c5113c681dd9b5d994d440f03c40ff6">More...</a><br /></td></tr>
 <tr class="separator:a7c5113c681dd9b5d994d440f03c40ff6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17d147a4281fedd5498802cea608e548"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="file__src__freertos_8c.html#a17d147a4281fedd5498802cea608e548">file_src_get_decoder_type</a> (char *filename, <a class="el" href="structStreamerFileSrcConfig.html">StreamerFileSrcConfig</a> *config)</td></tr>
+<tr class="memdesc:a17d147a4281fedd5498802cea608e548"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the file source decoder and parser type.  <a href="file__src__freertos_8c.html#a17d147a4281fedd5498802cea608e548">More...</a><br /></td></tr>
+<tr class="separator:a17d147a4281fedd5498802cea608e548"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a757f61c596fb099d79210130ce1e1d2b"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structStreamerFileSrcConfig.html">StreamerFileSrcConfig</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="file__src__freertos_8c.html#a757f61c596fb099d79210130ce1e1d2b">file_src_cfg_lookup_table</a> []</td></tr>
+<tr class="separator:a757f61c596fb099d79210130ce1e1d2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a6061631a7f748af8f10d50213464fecc"></a>
@@ -909,6 +918,93 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a17d147a4281fedd5498802cea608e548"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17d147a4281fedd5498802cea608e548">&#9670;&nbsp;</a></span>file_src_get_decoder_type()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t file_src_get_decoder_type </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>filename</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structStreamerFileSrcConfig.html">StreamerFileSrcConfig</a> *&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>name of the file </td></tr>
+    <tr><td class="paramname">config</td><td>file source information</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>StreamReturnType </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">STREAM_OK</td><td>if successful </td></tr>
+    <tr><td class="paramname">STREAM_ERR_GENERAL</td><td>means either file does not contain an extension or the file type is not supported </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a757f61c596fb099d79210130ce1e1d2b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a757f61c596fb099d79210130ce1e1d2b">&#9670;&nbsp;</a></span>file_src_cfg_lookup_table</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structStreamerFileSrcConfig.html">StreamerFileSrcConfig</a> file_src_cfg_lookup_table[]</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">    {<span class="stringliteral">&quot;&quot;</span>, <a class="code" href="streamer__api_8h.html#a477bc238b10958849277f79d585eff2aac00b0cad682ca1a4b681dba7aca43eed">LAST_DECODER_TYPE</a>, <a class="code" href="streamer__api_8h.html#a4c55c16d7c784070b26231f015e33a10abd1aed9929cedc986f225551223b67cf">LAST_PARSER_TYPE</a>}}</div>
+<div class="ttc" id="astreamer__api_8h_html_a477bc238b10958849277f79d585eff2aac00b0cad682ca1a4b681dba7aca43eed"><div class="ttname"><a href="streamer__api_8h.html#a477bc238b10958849277f79d585eff2aac00b0cad682ca1a4b681dba7aca43eed">LAST_DECODER_TYPE</a></div><div class="ttdeci">@ LAST_DECODER_TYPE</div><div class="ttdoc">Placeholder.</div><div class="ttdef"><b>Definition:</b> streamer_api.h:340</div></div>
+<div class="ttc" id="astreamer__api_8h_html_a4c55c16d7c784070b26231f015e33a10abd1aed9929cedc986f225551223b67cf"><div class="ttname"><a href="streamer__api_8h.html#a4c55c16d7c784070b26231f015e33a10abd1aed9929cedc986f225551223b67cf">LAST_PARSER_TYPE</a></div><div class="ttdeci">@ LAST_PARSER_TYPE</div><div class="ttdoc">Placeholder.</div><div class="ttdef"><b>Definition:</b> streamer_api.h:357</div></div>
+</div><!-- fragment --><p>This table is used by File source to select the appropriate decoder and parser based on the extension of the file. This is needed to properly configure the pipeline when switching between different audio file types. </p>
 
 </div>
 </div>

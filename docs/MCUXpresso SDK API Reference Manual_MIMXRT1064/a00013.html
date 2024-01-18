@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -100,6 +100,7 @@ $(document).ready(function(){initNavTree('a00013.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">CMP: Analog Comparator Driver</div>  </div>
@@ -119,15 +120,39 @@ Interrupt Configuration</h2>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00359"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#a00359">cmp_config_t</a></td></tr>
-<tr class="memdesc:a00359"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the comparator.  <a href="a00013.html#a00359">More...</a><br/></td></tr>
-<tr class="separator:a00359"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00361"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#a00361">cmp_filter_config_t</a></td></tr>
-<tr class="memdesc:a00361"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the filter.  <a href="a00013.html#a00361">More...</a><br/></td></tr>
-<tr class="separator:a00361"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00360"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#a00360">cmp_dac_config_t</a></td></tr>
-<tr class="memdesc:a00360"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the internal DAC.  <a href="a00013.html#a00360">More...</a><br/></td></tr>
-<tr class="separator:a00360"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00327"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#a00327">_cmp_config</a></td></tr>
+<tr class="memdesc:a00327"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the comparator.  <a href="a00013.html#a00327">More...</a><br/></td></tr>
+<tr class="separator:a00327"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00329"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#a00329">_cmp_filter_config</a></td></tr>
+<tr class="memdesc:a00329"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the filter.  <a href="a00013.html#a00329">More...</a><br/></td></tr>
+<tr class="separator:a00329"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00328"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#a00328">_cmp_dac_config</a></td></tr>
+<tr class="memdesc:a00328"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the internal DAC.  <a href="a00013.html#a00328">More...</a><br/></td></tr>
+<tr class="separator:a00328"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gad606ea9114e4593de53101b73bb23da1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad606ea9114e4593de53101b73bb23da1"></a>
+typedef enum <a class="el" href="a00013.html#ga99173caa09ae81a28f0284b345176811">_cmp_hysteresis_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#gad606ea9114e4593de53101b73bb23da1">cmp_hysteresis_mode_t</a></td></tr>
+<tr class="memdesc:gad606ea9114e4593de53101b73bb23da1"><td class="mdescLeft">&#160;</td><td class="mdescRight">CMP Hysteresis mode. <br/></td></tr>
+<tr class="separator:gad606ea9114e4593de53101b73bb23da1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3cd8ccd0cb5dc3836b212e9e3f10a020"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3cd8ccd0cb5dc3836b212e9e3f10a020"></a>
+typedef enum <br class="typebreak"/>
+<a class="el" href="a00013.html#ga8bbd3dfaa2704cc7db111cb555894ca0">_cmp_reference_voltage_source</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ga3cd8ccd0cb5dc3836b212e9e3f10a020">cmp_reference_voltage_source_t</a></td></tr>
+<tr class="memdesc:ga3cd8ccd0cb5dc3836b212e9e3f10a020"><td class="mdescLeft">&#160;</td><td class="mdescRight">CMP Voltage Reference source. <br/></td></tr>
+<tr class="separator:ga3cd8ccd0cb5dc3836b212e9e3f10a020"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga09627e0e7baa3c87d42f7f2c786f2673"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga09627e0e7baa3c87d42f7f2c786f2673"></a>
+typedef struct <a class="el" href="a00013.html#a00327">_cmp_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ga09627e0e7baa3c87d42f7f2c786f2673">cmp_config_t</a></td></tr>
+<tr class="memdesc:ga09627e0e7baa3c87d42f7f2c786f2673"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the comparator. <br/></td></tr>
+<tr class="separator:ga09627e0e7baa3c87d42f7f2c786f2673"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad5c9168316f2497bcba2848cdff18e0b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad5c9168316f2497bcba2848cdff18e0b"></a>
+typedef struct <a class="el" href="a00013.html#a00329">_cmp_filter_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#gad5c9168316f2497bcba2848cdff18e0b">cmp_filter_config_t</a></td></tr>
+<tr class="memdesc:gad5c9168316f2497bcba2848cdff18e0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the filter. <br/></td></tr>
+<tr class="separator:gad5c9168316f2497bcba2848cdff18e0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga058f4e1be6fc2f948ee6f6715db7c547"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga058f4e1be6fc2f948ee6f6715db7c547"></a>
+typedef struct <a class="el" href="a00013.html#a00328">_cmp_dac_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ga058f4e1be6fc2f948ee6f6715db7c547">cmp_dac_config_t</a></td></tr>
+<tr class="memdesc:ga058f4e1be6fc2f948ee6f6715db7c547"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the internal DAC. <br/></td></tr>
+<tr class="separator:ga058f4e1be6fc2f948ee6f6715db7c547"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -149,26 +174,26 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:ga948ec869580a67bebaff6f2e0f3e42c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Status flags' mask.  <a href="a00013.html#ga948ec869580a67bebaff6f2e0f3e42c8">More...</a><br/></td></tr>
 <tr class="separator:ga948ec869580a67bebaff6f2e0f3e42c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab375044e3121d8cf7d56a528f075b4c9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#gab375044e3121d8cf7d56a528f075b4c9">cmp_hysteresis_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00013.html#ggab375044e3121d8cf7d56a528f075b4c9a204ac01271f075b8f56785c3777b61ba">kCMP_HysteresisLevel0</a> = 0U, 
+<tr class="memitem:ga99173caa09ae81a28f0284b345176811"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ga99173caa09ae81a28f0284b345176811">_cmp_hysteresis_mode</a> { <br/>
+&#160;&#160;<a class="el" href="a00013.html#gga99173caa09ae81a28f0284b345176811a204ac01271f075b8f56785c3777b61ba">kCMP_HysteresisLevel0</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00013.html#ggab375044e3121d8cf7d56a528f075b4c9a1f34db50168b964cf653f7ee8b8a3afb">kCMP_HysteresisLevel1</a> = 1U, 
+&#160;&#160;<a class="el" href="a00013.html#gga99173caa09ae81a28f0284b345176811a1f34db50168b964cf653f7ee8b8a3afb">kCMP_HysteresisLevel1</a> = 1U, 
 <br/>
-&#160;&#160;<a class="el" href="a00013.html#ggab375044e3121d8cf7d56a528f075b4c9a5e86245ea1f88cdcc54482707c7dc2d2">kCMP_HysteresisLevel2</a> = 2U, 
+&#160;&#160;<a class="el" href="a00013.html#gga99173caa09ae81a28f0284b345176811a5e86245ea1f88cdcc54482707c7dc2d2">kCMP_HysteresisLevel2</a> = 2U, 
 <br/>
-&#160;&#160;<a class="el" href="a00013.html#ggab375044e3121d8cf7d56a528f075b4c9a3923e973b3f6a0f2b6d0ffd271b3735d">kCMP_HysteresisLevel3</a> = 3U
-<br/>
- }</td></tr>
-<tr class="memdesc:gab375044e3121d8cf7d56a528f075b4c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">CMP Hysteresis mode.  <a href="a00013.html#gab375044e3121d8cf7d56a528f075b4c9">More...</a><br/></td></tr>
-<tr class="separator:gab375044e3121d8cf7d56a528f075b4c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2f0d85949fd79dbb3b10fa0fde34f329"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ga2f0d85949fd79dbb3b10fa0fde34f329">cmp_reference_voltage_source_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00013.html#gga2f0d85949fd79dbb3b10fa0fde34f329ac567b56a364a1bc2816bfe68a4696b95">kCMP_VrefSourceVin1</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00013.html#gga2f0d85949fd79dbb3b10fa0fde34f329a4debdbdd1f9e6ade8b7ef646332251ca">kCMP_VrefSourceVin2</a> = 1U
+&#160;&#160;<a class="el" href="a00013.html#gga99173caa09ae81a28f0284b345176811a3923e973b3f6a0f2b6d0ffd271b3735d">kCMP_HysteresisLevel3</a> = 3U
 <br/>
  }</td></tr>
-<tr class="memdesc:ga2f0d85949fd79dbb3b10fa0fde34f329"><td class="mdescLeft">&#160;</td><td class="mdescRight">CMP Voltage Reference source.  <a href="a00013.html#ga2f0d85949fd79dbb3b10fa0fde34f329">More...</a><br/></td></tr>
-<tr class="separator:ga2f0d85949fd79dbb3b10fa0fde34f329"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga99173caa09ae81a28f0284b345176811"><td class="mdescLeft">&#160;</td><td class="mdescRight">CMP Hysteresis mode.  <a href="a00013.html#ga99173caa09ae81a28f0284b345176811">More...</a><br/></td></tr>
+<tr class="separator:ga99173caa09ae81a28f0284b345176811"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8bbd3dfaa2704cc7db111cb555894ca0"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ga8bbd3dfaa2704cc7db111cb555894ca0">_cmp_reference_voltage_source</a> { <br/>
+&#160;&#160;<a class="el" href="a00013.html#gga8bbd3dfaa2704cc7db111cb555894ca0ac567b56a364a1bc2816bfe68a4696b95">kCMP_VrefSourceVin1</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00013.html#gga8bbd3dfaa2704cc7db111cb555894ca0a4debdbdd1f9e6ade8b7ef646332251ca">kCMP_VrefSourceVin2</a> = 1U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga8bbd3dfaa2704cc7db111cb555894ca0"><td class="mdescLeft">&#160;</td><td class="mdescRight">CMP Voltage Reference source.  <a href="a00013.html#ga8bbd3dfaa2704cc7db111cb555894ca0">More...</a><br/></td></tr>
+<tr class="separator:ga8bbd3dfaa2704cc7db111cb555894ca0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
@@ -178,7 +203,7 @@ Driver version</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Initialization</h2></td></tr>
-<tr class="memitem:ga6f62245ac63801ce51bfaf9188c9bc99"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ga6f62245ac63801ce51bfaf9188c9bc99">CMP_Init</a> (CMP_Type *base, const <a class="el" href="a00013.html#a00359">cmp_config_t</a> *config)</td></tr>
+<tr class="memitem:ga6f62245ac63801ce51bfaf9188c9bc99"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ga6f62245ac63801ce51bfaf9188c9bc99">CMP_Init</a> (CMP_Type *base, const <a class="el" href="a00013.html#ga09627e0e7baa3c87d42f7f2c786f2673">cmp_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga6f62245ac63801ce51bfaf9188c9bc99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the CMP.  <a href="#ga6f62245ac63801ce51bfaf9188c9bc99">More...</a><br/></td></tr>
 <tr class="separator:ga6f62245ac63801ce51bfaf9188c9bc99"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3b6fb1ead2c6dd4b13246b630a91f4d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ga3b6fb1ead2c6dd4b13246b630a91f4d8">CMP_Deinit</a> (CMP_Type *base)</td></tr>
@@ -187,7 +212,7 @@ Initialization</h2></td></tr>
 <tr class="memitem:ga265b23b5d173fc389289aeac99f94402"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ga265b23b5d173fc389289aeac99f94402">CMP_Enable</a> (CMP_Type *base, bool enable)</td></tr>
 <tr class="memdesc:ga265b23b5d173fc389289aeac99f94402"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables/disables the CMP module.  <a href="#ga265b23b5d173fc389289aeac99f94402">More...</a><br/></td></tr>
 <tr class="separator:ga265b23b5d173fc389289aeac99f94402"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae3f987e58dece632e66665514c01e109"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#gae3f987e58dece632e66665514c01e109">CMP_GetDefaultConfig</a> (<a class="el" href="a00013.html#a00359">cmp_config_t</a> *config)</td></tr>
+<tr class="memitem:gae3f987e58dece632e66665514c01e109"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#gae3f987e58dece632e66665514c01e109">CMP_GetDefaultConfig</a> (<a class="el" href="a00013.html#ga09627e0e7baa3c87d42f7f2c786f2673">cmp_config_t</a> *config)</td></tr>
 <tr class="memdesc:gae3f987e58dece632e66665514c01e109"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the CMP user configuration structure.  <a href="#gae3f987e58dece632e66665514c01e109">More...</a><br/></td></tr>
 <tr class="separator:gae3f987e58dece632e66665514c01e109"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7021cf6a3df2d233781d9763d4562260"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ga7021cf6a3df2d233781d9763d4562260">CMP_SetInputChannels</a> (CMP_Type *base, uint8_t positiveChannel, uint8_t negativeChannel)</td></tr>
@@ -202,10 +227,10 @@ Advanced Features</h2></td></tr>
 <tr class="memitem:ga51ddc6286d9078a971af1c21fcd67b35"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ga51ddc6286d9078a971af1c21fcd67b35">CMP_EnableWindowMode</a> (CMP_Type *base, bool enable)</td></tr>
 <tr class="memdesc:ga51ddc6286d9078a971af1c21fcd67b35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables/disables the window mode.  <a href="#ga51ddc6286d9078a971af1c21fcd67b35">More...</a><br/></td></tr>
 <tr class="separator:ga51ddc6286d9078a971af1c21fcd67b35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga57bade782c390ef4b805bde6198fa611"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ga57bade782c390ef4b805bde6198fa611">CMP_SetFilterConfig</a> (CMP_Type *base, const <a class="el" href="a00013.html#a00361">cmp_filter_config_t</a> *config)</td></tr>
+<tr class="memitem:ga57bade782c390ef4b805bde6198fa611"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ga57bade782c390ef4b805bde6198fa611">CMP_SetFilterConfig</a> (CMP_Type *base, const <a class="el" href="a00013.html#gad5c9168316f2497bcba2848cdff18e0b">cmp_filter_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga57bade782c390ef4b805bde6198fa611"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the filter.  <a href="#ga57bade782c390ef4b805bde6198fa611">More...</a><br/></td></tr>
 <tr class="separator:ga57bade782c390ef4b805bde6198fa611"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga61434c1828d7ef35a349eef6ec37d0c2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ga61434c1828d7ef35a349eef6ec37d0c2">CMP_SetDACConfig</a> (CMP_Type *base, const <a class="el" href="a00013.html#a00360">cmp_dac_config_t</a> *config)</td></tr>
+<tr class="memitem:ga61434c1828d7ef35a349eef6ec37d0c2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ga61434c1828d7ef35a349eef6ec37d0c2">CMP_SetDACConfig</a> (CMP_Type *base, const <a class="el" href="a00013.html#ga058f4e1be6fc2f948ee6f6715db7c547">cmp_dac_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga61434c1828d7ef35a349eef6ec37d0c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the internal DAC.  <a href="#ga61434c1828d7ef35a349eef6ec37d0c2">More...</a><br/></td></tr>
 <tr class="separator:ga61434c1828d7ef35a349eef6ec37d0c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9e7dc0f35a19a4b10894d0eca547befb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ga9e7dc0f35a19a4b10894d0eca547befb">CMP_EnableInterrupts</a> (CMP_Type *base, uint32_t mask)</td></tr>
@@ -225,103 +250,103 @@ Results</h2></td></tr>
 <tr class="separator:gae9ff11446780bc7a7e76a66660a5072a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00359" id="a00359"></a>
+<a name="a00327" id="a00327"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct cmp_config_t</td>
+          <td class="memname">struct _cmp_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a87248f8e354fbe0310fa9968d2437db3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#a87248f8e354fbe0310fa9968d2437db3">enableCmp</a></td></tr>
-<tr class="memdesc:a87248f8e354fbe0310fa9968d2437db3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the CMP module.  <a href="#a87248f8e354fbe0310fa9968d2437db3">More...</a><br/></td></tr>
-<tr class="separator:a87248f8e354fbe0310fa9968d2437db3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4e3d61d0cbbf97ef31d633ea731eb58"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00013.html#gab375044e3121d8cf7d56a528f075b4c9">cmp_hysteresis_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#aa4e3d61d0cbbf97ef31d633ea731eb58">hysteresisMode</a></td></tr>
-<tr class="memdesc:aa4e3d61d0cbbf97ef31d633ea731eb58"><td class="mdescLeft">&#160;</td><td class="mdescRight">CMP Hysteresis mode.  <a href="#aa4e3d61d0cbbf97ef31d633ea731eb58">More...</a><br/></td></tr>
-<tr class="separator:aa4e3d61d0cbbf97ef31d633ea731eb58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0449a799c02a2b534609c576509af9ee"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#a0449a799c02a2b534609c576509af9ee">enableHighSpeed</a></td></tr>
-<tr class="memdesc:a0449a799c02a2b534609c576509af9ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable High-speed (HS) comparison mode.  <a href="#a0449a799c02a2b534609c576509af9ee">More...</a><br/></td></tr>
-<tr class="separator:a0449a799c02a2b534609c576509af9ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e1cfbd954c1ce419a47a0f495b011ed"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#a5e1cfbd954c1ce419a47a0f495b011ed">enableInvertOutput</a></td></tr>
-<tr class="memdesc:a5e1cfbd954c1ce419a47a0f495b011ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the inverted comparator output.  <a href="#a5e1cfbd954c1ce419a47a0f495b011ed">More...</a><br/></td></tr>
-<tr class="separator:a5e1cfbd954c1ce419a47a0f495b011ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe5cb349fa86a64a7fa195655d8be65b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#afe5cb349fa86a64a7fa195655d8be65b">useUnfilteredOutput</a></td></tr>
-<tr class="memdesc:afe5cb349fa86a64a7fa195655d8be65b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the compare output(COUT) to equal COUTA(true) or COUT(false).  <a href="#afe5cb349fa86a64a7fa195655d8be65b">More...</a><br/></td></tr>
-<tr class="separator:afe5cb349fa86a64a7fa195655d8be65b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2dee30cf50e5df9902360f800d0bbe69"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#a2dee30cf50e5df9902360f800d0bbe69">enablePinOut</a></td></tr>
-<tr class="memdesc:a2dee30cf50e5df9902360f800d0bbe69"><td class="mdescLeft">&#160;</td><td class="mdescRight">The comparator output is available on the associated pin.  <a href="#a2dee30cf50e5df9902360f800d0bbe69">More...</a><br/></td></tr>
-<tr class="separator:a2dee30cf50e5df9902360f800d0bbe69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afed45b7b1d675c55e5c9c5c26600e9c9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#afed45b7b1d675c55e5c9c5c26600e9c9">enableCmp</a></td></tr>
+<tr class="memdesc:afed45b7b1d675c55e5c9c5c26600e9c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the CMP module.  <a href="#afed45b7b1d675c55e5c9c5c26600e9c9">More...</a><br/></td></tr>
+<tr class="separator:afed45b7b1d675c55e5c9c5c26600e9c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a334c5f94f4eec56c197c86fb820951af"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00013.html#gad606ea9114e4593de53101b73bb23da1">cmp_hysteresis_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#a334c5f94f4eec56c197c86fb820951af">hysteresisMode</a></td></tr>
+<tr class="memdesc:a334c5f94f4eec56c197c86fb820951af"><td class="mdescLeft">&#160;</td><td class="mdescRight">CMP Hysteresis mode.  <a href="#a334c5f94f4eec56c197c86fb820951af">More...</a><br/></td></tr>
+<tr class="separator:a334c5f94f4eec56c197c86fb820951af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fe079694afdfc0273499b3deb368909"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#a5fe079694afdfc0273499b3deb368909">enableHighSpeed</a></td></tr>
+<tr class="memdesc:a5fe079694afdfc0273499b3deb368909"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable High-speed (HS) comparison mode.  <a href="#a5fe079694afdfc0273499b3deb368909">More...</a><br/></td></tr>
+<tr class="separator:a5fe079694afdfc0273499b3deb368909"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae45d5e73c1a0ae12a3994dea77479f08"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ae45d5e73c1a0ae12a3994dea77479f08">enableInvertOutput</a></td></tr>
+<tr class="memdesc:ae45d5e73c1a0ae12a3994dea77479f08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the inverted comparator output.  <a href="#ae45d5e73c1a0ae12a3994dea77479f08">More...</a><br/></td></tr>
+<tr class="separator:ae45d5e73c1a0ae12a3994dea77479f08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa24d83ef6008baab057c6142c97b3b34"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#aa24d83ef6008baab057c6142c97b3b34">useUnfilteredOutput</a></td></tr>
+<tr class="memdesc:aa24d83ef6008baab057c6142c97b3b34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the compare output(COUT) to equal COUTA(true) or COUT(false).  <a href="#aa24d83ef6008baab057c6142c97b3b34">More...</a><br/></td></tr>
+<tr class="separator:aa24d83ef6008baab057c6142c97b3b34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af54e86e502b0065d7ad715d82508cf4e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#af54e86e502b0065d7ad715d82508cf4e">enablePinOut</a></td></tr>
+<tr class="memdesc:af54e86e502b0065d7ad715d82508cf4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The comparator output is available on the associated pin.  <a href="#af54e86e502b0065d7ad715d82508cf4e">More...</a><br/></td></tr>
+<tr class="separator:af54e86e502b0065d7ad715d82508cf4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a87248f8e354fbe0310fa9968d2437db3"></a>
+<a class="anchor" id="afed45b7b1d675c55e5c9c5c26600e9c9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool cmp_config_t::enableCmp</td>
+          <td class="memname">bool _cmp_config::enableCmp</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="aa4e3d61d0cbbf97ef31d633ea731eb58"></a>
+<a class="anchor" id="a334c5f94f4eec56c197c86fb820951af"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00013.html#gab375044e3121d8cf7d56a528f075b4c9">cmp_hysteresis_mode_t</a> cmp_config_t::hysteresisMode</td>
+          <td class="memname"><a class="el" href="a00013.html#gad606ea9114e4593de53101b73bb23da1">cmp_hysteresis_mode_t</a> _cmp_config::hysteresisMode</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a0449a799c02a2b534609c576509af9ee"></a>
+<a class="anchor" id="a5fe079694afdfc0273499b3deb368909"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool cmp_config_t::enableHighSpeed</td>
+          <td class="memname">bool _cmp_config::enableHighSpeed</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a5e1cfbd954c1ce419a47a0f495b011ed"></a>
+<a class="anchor" id="ae45d5e73c1a0ae12a3994dea77479f08"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool cmp_config_t::enableInvertOutput</td>
+          <td class="memname">bool _cmp_config::enableInvertOutput</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="afe5cb349fa86a64a7fa195655d8be65b"></a>
+<a class="anchor" id="aa24d83ef6008baab057c6142c97b3b34"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool cmp_config_t::useUnfilteredOutput</td>
+          <td class="memname">bool _cmp_config::useUnfilteredOutput</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a2dee30cf50e5df9902360f800d0bbe69"></a>
+<a class="anchor" id="af54e86e502b0065d7ad715d82508cf4e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool cmp_config_t::enablePinOut</td>
+          <td class="memname">bool _cmp_config::enablePinOut</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -331,46 +356,46 @@ Results</h2></td></tr>
 
 </div>
 </div>
-<a name="a00361" id="a00361"></a>
+<a name="a00329" id="a00329"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct cmp_filter_config_t</td>
+          <td class="memname">struct _cmp_filter_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:ad84aa6fee10de5e95b8c933296923df9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ad84aa6fee10de5e95b8c933296923df9">enableSample</a></td></tr>
-<tr class="memdesc:ad84aa6fee10de5e95b8c933296923df9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Using the external SAMPLE as a sampling clock input or using a divided bus clock.  <a href="#ad84aa6fee10de5e95b8c933296923df9">More...</a><br/></td></tr>
-<tr class="separator:ad84aa6fee10de5e95b8c933296923df9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1ee3e17eae70b6efa023d51367c9d798"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#a1ee3e17eae70b6efa023d51367c9d798">filterCount</a></td></tr>
-<tr class="memdesc:a1ee3e17eae70b6efa023d51367c9d798"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filter Sample Count.  <a href="#a1ee3e17eae70b6efa023d51367c9d798">More...</a><br/></td></tr>
-<tr class="separator:a1ee3e17eae70b6efa023d51367c9d798"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac56e3c13889d8eee7c595a58718c8964"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ac56e3c13889d8eee7c595a58718c8964">filterPeriod</a></td></tr>
-<tr class="memdesc:ac56e3c13889d8eee7c595a58718c8964"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filter Sample Period.  <a href="#ac56e3c13889d8eee7c595a58718c8964">More...</a><br/></td></tr>
-<tr class="separator:ac56e3c13889d8eee7c595a58718c8964"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaaaa4cd46c1880e1237fd4b014a7dfa7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#aaaaa4cd46c1880e1237fd4b014a7dfa7">enableSample</a></td></tr>
+<tr class="memdesc:aaaaa4cd46c1880e1237fd4b014a7dfa7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Using the external SAMPLE as a sampling clock input or using a divided bus clock.  <a href="#aaaaa4cd46c1880e1237fd4b014a7dfa7">More...</a><br/></td></tr>
+<tr class="separator:aaaaa4cd46c1880e1237fd4b014a7dfa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0a31df25618c3ede2511e940fe0afa2"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#af0a31df25618c3ede2511e940fe0afa2">filterCount</a></td></tr>
+<tr class="memdesc:af0a31df25618c3ede2511e940fe0afa2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filter Sample Count.  <a href="#af0a31df25618c3ede2511e940fe0afa2">More...</a><br/></td></tr>
+<tr class="separator:af0a31df25618c3ede2511e940fe0afa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0334dcbdcb9564440b62f81b7b5979c8"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#a0334dcbdcb9564440b62f81b7b5979c8">filterPeriod</a></td></tr>
+<tr class="memdesc:a0334dcbdcb9564440b62f81b7b5979c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filter Sample Period.  <a href="#a0334dcbdcb9564440b62f81b7b5979c8">More...</a><br/></td></tr>
+<tr class="separator:a0334dcbdcb9564440b62f81b7b5979c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="ad84aa6fee10de5e95b8c933296923df9"></a>
+<a class="anchor" id="aaaaa4cd46c1880e1237fd4b014a7dfa7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool cmp_filter_config_t::enableSample</td>
+          <td class="memname">bool _cmp_filter_config::enableSample</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a1ee3e17eae70b6efa023d51367c9d798"></a>
+<a class="anchor" id="af0a31df25618c3ede2511e940fe0afa2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t cmp_filter_config_t::filterCount</td>
+          <td class="memname">uint8_t _cmp_filter_config::filterCount</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -378,12 +403,12 @@ Results</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac56e3c13889d8eee7c595a58718c8964"></a>
+<a class="anchor" id="a0334dcbdcb9564440b62f81b7b5979c8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t cmp_filter_config_t::filterPeriod</td>
+          <td class="memname">uint8_t _cmp_filter_config::filterPeriod</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -394,43 +419,43 @@ Results</h2></td></tr>
 
 </div>
 </div>
-<a name="a00360" id="a00360"></a>
+<a name="a00328" id="a00328"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct cmp_dac_config_t</td>
+          <td class="memname">struct _cmp_dac_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a01753d40f590d16345dd45abefb8bbe6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00013.html#ga2f0d85949fd79dbb3b10fa0fde34f329">cmp_reference_voltage_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#a01753d40f590d16345dd45abefb8bbe6">referenceVoltageSource</a></td></tr>
-<tr class="memdesc:a01753d40f590d16345dd45abefb8bbe6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Supply voltage reference source.  <a href="#a01753d40f590d16345dd45abefb8bbe6">More...</a><br/></td></tr>
-<tr class="separator:a01753d40f590d16345dd45abefb8bbe6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa44061486be24d6276a2aae0283c8153"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#aa44061486be24d6276a2aae0283c8153">DACValue</a></td></tr>
-<tr class="memdesc:aa44061486be24d6276a2aae0283c8153"><td class="mdescLeft">&#160;</td><td class="mdescRight">Value for the DAC Output Voltage.  <a href="#aa44061486be24d6276a2aae0283c8153">More...</a><br/></td></tr>
-<tr class="separator:aa44061486be24d6276a2aae0283c8153"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaca56ee51e349356986acc0024c0a6d3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00013.html#ga3cd8ccd0cb5dc3836b212e9e3f10a020">cmp_reference_voltage_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#aaca56ee51e349356986acc0024c0a6d3">referenceVoltageSource</a></td></tr>
+<tr class="memdesc:aaca56ee51e349356986acc0024c0a6d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Supply voltage reference source.  <a href="#aaca56ee51e349356986acc0024c0a6d3">More...</a><br/></td></tr>
+<tr class="separator:aaca56ee51e349356986acc0024c0a6d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9903a46fab79c7ea854ae520dd88c96"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ac9903a46fab79c7ea854ae520dd88c96">DACValue</a></td></tr>
+<tr class="memdesc:ac9903a46fab79c7ea854ae520dd88c96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Value for the DAC Output Voltage.  <a href="#ac9903a46fab79c7ea854ae520dd88c96">More...</a><br/></td></tr>
+<tr class="separator:ac9903a46fab79c7ea854ae520dd88c96"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a01753d40f590d16345dd45abefb8bbe6"></a>
+<a class="anchor" id="aaca56ee51e349356986acc0024c0a6d3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00013.html#ga2f0d85949fd79dbb3b10fa0fde34f329">cmp_reference_voltage_source_t</a> cmp_dac_config_t::referenceVoltageSource</td>
+          <td class="memname"><a class="el" href="a00013.html#ga3cd8ccd0cb5dc3836b212e9e3f10a020">cmp_reference_voltage_source_t</a> _cmp_dac_config::referenceVoltageSource</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="aa44061486be24d6276a2aae0283c8153"></a>
+<a class="anchor" id="ac9903a46fab79c7ea854ae520dd88c96"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t cmp_dac_config_t::DACValue</td>
+          <td class="memname">uint8_t _cmp_dac_config::DACValue</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -498,46 +523,46 @@ Results</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gab375044e3121d8cf7d56a528f075b4c9"></a>
+<a class="anchor" id="ga99173caa09ae81a28f0284b345176811"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00013.html#gab375044e3121d8cf7d56a528f075b4c9">cmp_hysteresis_mode_t</a></td>
+          <td class="memname">enum <a class="el" href="a00013.html#ga99173caa09ae81a28f0284b345176811">_cmp_hysteresis_mode</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab375044e3121d8cf7d56a528f075b4c9a204ac01271f075b8f56785c3777b61ba"></a>kCMP_HysteresisLevel0</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga99173caa09ae81a28f0284b345176811a204ac01271f075b8f56785c3777b61ba"></a>kCMP_HysteresisLevel0</em>&nbsp;</td><td class="fielddoc">
 <p>Hysteresis level 0. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab375044e3121d8cf7d56a528f075b4c9a1f34db50168b964cf653f7ee8b8a3afb"></a>kCMP_HysteresisLevel1</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga99173caa09ae81a28f0284b345176811a1f34db50168b964cf653f7ee8b8a3afb"></a>kCMP_HysteresisLevel1</em>&nbsp;</td><td class="fielddoc">
 <p>Hysteresis level 1. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab375044e3121d8cf7d56a528f075b4c9a5e86245ea1f88cdcc54482707c7dc2d2"></a>kCMP_HysteresisLevel2</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga99173caa09ae81a28f0284b345176811a5e86245ea1f88cdcc54482707c7dc2d2"></a>kCMP_HysteresisLevel2</em>&nbsp;</td><td class="fielddoc">
 <p>Hysteresis level 2. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab375044e3121d8cf7d56a528f075b4c9a3923e973b3f6a0f2b6d0ffd271b3735d"></a>kCMP_HysteresisLevel3</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga99173caa09ae81a28f0284b345176811a3923e973b3f6a0f2b6d0ffd271b3735d"></a>kCMP_HysteresisLevel3</em>&nbsp;</td><td class="fielddoc">
 <p>Hysteresis level 3. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga2f0d85949fd79dbb3b10fa0fde34f329"></a>
+<a class="anchor" id="ga8bbd3dfaa2704cc7db111cb555894ca0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00013.html#ga2f0d85949fd79dbb3b10fa0fde34f329">cmp_reference_voltage_source_t</a></td>
+          <td class="memname">enum <a class="el" href="a00013.html#ga8bbd3dfaa2704cc7db111cb555894ca0">_cmp_reference_voltage_source</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga2f0d85949fd79dbb3b10fa0fde34f329ac567b56a364a1bc2816bfe68a4696b95"></a>kCMP_VrefSourceVin1</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga8bbd3dfaa2704cc7db111cb555894ca0ac567b56a364a1bc2816bfe68a4696b95"></a>kCMP_VrefSourceVin1</em>&nbsp;</td><td class="fielddoc">
 <p>Vin1 is selected as a resistor ladder network supply reference Vin. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga2f0d85949fd79dbb3b10fa0fde34f329a4debdbdd1f9e6ade8b7ef646332251ca"></a>kCMP_VrefSourceVin2</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga8bbd3dfaa2704cc7db111cb555894ca0a4debdbdd1f9e6ade8b7ef646332251ca"></a>kCMP_VrefSourceVin2</em>&nbsp;</td><td class="fielddoc">
 <p>Vin2 is selected as a resistor ladder network supply reference Vin. </p>
 </td></tr>
 </table>
@@ -558,7 +583,7 @@ Results</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00013.html#a00359">cmp_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00013.html#ga09627e0e7baa3c87d42f7f2c786f2673">cmp_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -660,7 +685,7 @@ Results</h2></td></tr>
         <tr>
           <td class="memname">void CMP_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00013.html#a00359">cmp_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00013.html#ga09627e0e7baa3c87d42f7f2c786f2673">cmp_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
@@ -668,7 +693,7 @@ Results</h2></td></tr>
 </div><div class="memdoc">
 <p>This function initializes the user configuration structure to these default values. </p>
 <div class="fragment"><div class="line">*   config-&gt;enableCmp           = <span class="keyword">true</span>;</div>
-<div class="line">*   config-&gt;hysteresisMode      = <a class="code" href="a00013.html#ggab375044e3121d8cf7d56a528f075b4c9a204ac01271f075b8f56785c3777b61ba">kCMP_HysteresisLevel0</a>;</div>
+<div class="line">*   config-&gt;hysteresisMode      = <a class="code" href="a00013.html#gga99173caa09ae81a28f0284b345176811a204ac01271f075b8f56785c3777b61ba">kCMP_HysteresisLevel0</a>;</div>
 <div class="line">*   config-&gt;enableHighSpeed     = <span class="keyword">false</span>;</div>
 <div class="line">*   config-&gt;enableInvertOutput  = <span class="keyword">false</span>;</div>
 <div class="line">*   config-&gt;useUnfilteredOutput = <span class="keyword">false</span>;</div>
@@ -813,7 +838,7 @@ Results</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00013.html#a00361">cmp_filter_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00013.html#gad5c9168316f2497bcba2848cdff18e0b">cmp_filter_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -846,7 +871,7 @@ Results</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00013.html#a00360">cmp_dac_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00013.html#ga058f4e1be6fc2f948ee6f6715db7c547">cmp_dac_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>

@@ -1089,11 +1089,11 @@ static void M1_StateRunFreewheelFast(void)
 RAM_FUNC_LIB
 static void M1_StateRunCalibSlow(void)
 {
-    /* Write calibrated offset values */
-    M1_MCDRV_CURR_3PH_CALIB_SET(&g_sM1AdcSensor);
 
     if (--g_sM1Drive.ui16CounterState == 0U)
     {
+	  /* Write calibrated offset values */
+      M1_MCDRV_CURR_3PH_CALIB_SET(&g_sM1AdcSensor);
       /* To switch to the RUN READY sub-state */
       M1_TransRunCalibReady();
     }

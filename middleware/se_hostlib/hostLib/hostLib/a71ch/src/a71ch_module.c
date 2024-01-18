@@ -583,6 +583,7 @@ U16 A71_GetSha256(U8 *data, U16 dataLen, U8 *sha, U16 *shaLen)
     {
         // Split up in multiple transactions ...
         // Send out first chunk (SHA256_Init)
+        AllocateAPDUBuffer(pApdu);
         pApdu->p2    = P2_SHA256_INIT;
         SetApduHeader(pApdu, USE_STANDARD_APDU_LEN);
         toSend = maxChunk;
@@ -604,6 +605,7 @@ U16 A71_GetSha256(U8 *data, U16 dataLen, U8 *sha, U16 *shaLen)
         while (remainingData > maxChunk)
         {
             // Send out 'middle' chunks (SHA256_Update)
+            AllocateAPDUBuffer(pApdu);
             pApdu->p2    = P2_SHA256_UPDATE;
             SetApduHeader(pApdu, USE_STANDARD_APDU_LEN);
             toSend = maxChunk;
@@ -624,6 +626,7 @@ U16 A71_GetSha256(U8 *data, U16 dataLen, U8 *sha, U16 *shaLen)
         }
 
         // Always close with SHA256_Final
+        AllocateAPDUBuffer(pApdu);
         pApdu->p2    = P2_SHA256_FINAL;
         SetApduHeader(pApdu, USE_STANDARD_APDU_LEN);
         toSend = remainingData;

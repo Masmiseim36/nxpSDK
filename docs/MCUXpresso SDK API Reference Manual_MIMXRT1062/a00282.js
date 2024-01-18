@@ -1,8 +1,5 @@
 var a00282 =
 [
-    [ "FSL_GPC_DRIVER_VERSION", "a00282.html#ga91a1b6b08dc09200c3b0ee314b362b74", null ],
-    [ "GPC_EnableIRQ", "a00282.html#ga7c73d81bfb34ebb7ca40a5ad2a63ad7e", null ],
-    [ "GPC_DisableIRQ", "a00282.html#gacfd07601d1a0e90e3b80fffe14830010", null ],
-    [ "GPC_GetIRQStatusFlag", "a00282.html#ga1118000efd3c822329c63a7155bbe12e", null ],
-    [ "GPC_RequestMEGAPowerOn", "a00282.html#gaac50bee55eb34b329680e6fd0d2a9582", null ]
+    [ "FlexCAN Driver", "a00027.html", "a00027" ],
+    [ "FlexCAN eDMA Driver", "a00028.html", "a00028" ]
 ];

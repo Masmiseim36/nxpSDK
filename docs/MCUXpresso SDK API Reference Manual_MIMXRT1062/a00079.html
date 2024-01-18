@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -101,6 +101,7 @@ $(document).ready(function(){initNavTree('a00079.html','');});
   <div class="summary">
 <a href="#files">Files</a> &#124;
 <a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
@@ -123,37 +124,46 @@ TEMPMON Operations</h2>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
 Files</h2></td></tr>
-<tr class="memitem:a00250"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00250.html">fsl_tempmon.h</a></td></tr>
+<tr class="memitem:a00252"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00252.html">fsl_tempmon.h</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00541"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a00541">tempmon_config_t</a></td></tr>
-<tr class="memdesc:a00541"><td class="mdescLeft">&#160;</td><td class="mdescRight">TEMPMON temperature structure.  <a href="a00079.html#a00541">More...</a><br/></td></tr>
-<tr class="separator:a00541"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00535"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a00535">_tempmon_config</a></td></tr>
+<tr class="memdesc:a00535"><td class="mdescLeft">&#160;</td><td class="mdescRight">TEMPMON temperature structure.  <a href="a00079.html#a00535">More...</a><br/></td></tr>
+<tr class="separator:a00535"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga7d83f2e7eaf7b3833a9ce786a758b867"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00079.html#a00535">_tempmon_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga7d83f2e7eaf7b3833a9ce786a758b867">tempmon_config_t</a></td></tr>
+<tr class="memdesc:ga7d83f2e7eaf7b3833a9ce786a758b867"><td class="mdescLeft">&#160;</td><td class="mdescRight">TEMPMON temperature structure.  <a href="#ga7d83f2e7eaf7b3833a9ce786a758b867">More...</a><br/></td></tr>
+<tr class="separator:ga7d83f2e7eaf7b3833a9ce786a758b867"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae299ab75db04e087bad01ec6df1b82e6"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00079.html#gaa902d39a9a0944943dfa1652a1c191da">_tempmon_alarm_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#gae299ab75db04e087bad01ec6df1b82e6">tempmon_alarm_mode</a></td></tr>
+<tr class="memdesc:gae299ab75db04e087bad01ec6df1b82e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">TEMPMON alarm mode.  <a href="#gae299ab75db04e087bad01ec6df1b82e6">More...</a><br/></td></tr>
+<tr class="separator:gae299ab75db04e087bad01ec6df1b82e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga2d8a033ed3d80771d8417dbf68bfd58b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga2d8a033ed3d80771d8417dbf68bfd58b">tempmon_alarm_mode</a> { <br/>
-&#160;&#160;<a class="el" href="a00079.html#gga2d8a033ed3d80771d8417dbf68bfd58ba6c34f34b411e7f880a5782d0329f732f">kTEMPMON_HighAlarmMode</a> = 0U, 
+<tr class="memitem:gaa902d39a9a0944943dfa1652a1c191da"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#gaa902d39a9a0944943dfa1652a1c191da">_tempmon_alarm_mode</a> { <br/>
+&#160;&#160;<a class="el" href="a00079.html#ggaa902d39a9a0944943dfa1652a1c191daa6c34f34b411e7f880a5782d0329f732f">kTEMPMON_HighAlarmMode</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00079.html#gga2d8a033ed3d80771d8417dbf68bfd58ba3cafbb2449dbb58abb5ef078907ba6b0">kTEMPMON_PanicAlarmMode</a> = 1U, 
+&#160;&#160;<a class="el" href="a00079.html#ggaa902d39a9a0944943dfa1652a1c191daa3cafbb2449dbb58abb5ef078907ba6b0">kTEMPMON_PanicAlarmMode</a> = 1U, 
 <br/>
-&#160;&#160;<a class="el" href="a00079.html#gga2d8a033ed3d80771d8417dbf68bfd58ba3b1e1531c3d0529cba956f38568140f5">kTEMPMON_LowAlarmMode</a> = 2U
+&#160;&#160;<a class="el" href="a00079.html#ggaa902d39a9a0944943dfa1652a1c191daa3b1e1531c3d0529cba956f38568140f5">kTEMPMON_LowAlarmMode</a> = 2U
 <br/>
  }</td></tr>
-<tr class="memdesc:ga2d8a033ed3d80771d8417dbf68bfd58b"><td class="mdescLeft">&#160;</td><td class="mdescRight">TEMPMON alarm mode.  <a href="a00079.html#ga2d8a033ed3d80771d8417dbf68bfd58b">More...</a><br/></td></tr>
-<tr class="separator:ga2d8a033ed3d80771d8417dbf68bfd58b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gaa902d39a9a0944943dfa1652a1c191da"><td class="mdescLeft">&#160;</td><td class="mdescRight">TEMPMON alarm mode.  <a href="a00079.html#gaa902d39a9a0944943dfa1652a1c191da">More...</a><br/></td></tr>
+<tr class="separator:gaa902d39a9a0944943dfa1652a1c191da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gad74d3cd12c87cd031afefa47a40c4ffa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#gad74d3cd12c87cd031afefa47a40c4ffa">TEMPMON_Init</a> (TEMPMON_Type *base, const <a class="el" href="a00079.html#a00541">tempmon_config_t</a> *config)</td></tr>
+<tr class="memitem:gad74d3cd12c87cd031afefa47a40c4ffa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#gad74d3cd12c87cd031afefa47a40c4ffa">TEMPMON_Init</a> (TEMPMON_Type *base, const <a class="el" href="a00079.html#ga7d83f2e7eaf7b3833a9ce786a758b867">tempmon_config_t</a> *config)</td></tr>
 <tr class="memdesc:gad74d3cd12c87cd031afefa47a40c4ffa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the TEMPMON module.  <a href="#gad74d3cd12c87cd031afefa47a40c4ffa">More...</a><br/></td></tr>
 <tr class="separator:gad74d3cd12c87cd031afefa47a40c4ffa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9300a134aeda04212a2e84d1ccdb3e4a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga9300a134aeda04212a2e84d1ccdb3e4a">TEMPMON_Deinit</a> (TEMPMON_Type *base)</td></tr>
 <tr class="memdesc:ga9300a134aeda04212a2e84d1ccdb3e4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the TEMPMON module.  <a href="#ga9300a134aeda04212a2e84d1ccdb3e4a">More...</a><br/></td></tr>
 <tr class="separator:ga9300a134aeda04212a2e84d1ccdb3e4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad39681b64944bdc56124fc4dcd66a81e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#gad39681b64944bdc56124fc4dcd66a81e">TEMPMON_GetDefaultConfig</a> (<a class="el" href="a00079.html#a00541">tempmon_config_t</a> *config)</td></tr>
+<tr class="memitem:gad39681b64944bdc56124fc4dcd66a81e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#gad39681b64944bdc56124fc4dcd66a81e">TEMPMON_GetDefaultConfig</a> (<a class="el" href="a00079.html#ga7d83f2e7eaf7b3833a9ce786a758b867">tempmon_config_t</a> *config)</td></tr>
 <tr class="memdesc:gad39681b64944bdc56124fc4dcd66a81e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the default configuration structure.  <a href="#gad39681b64944bdc56124fc4dcd66a81e">More...</a><br/></td></tr>
 <tr class="separator:gad39681b64944bdc56124fc4dcd66a81e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab591e289ffce94b52811b716f9e00fbb"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#gab591e289ffce94b52811b716f9e00fbb">TEMPMON_StartMeasure</a> (TEMPMON_Type *base)</td></tr>
@@ -165,84 +175,84 @@ Functions</h2></td></tr>
 <tr class="memitem:gafd97504a28d73d0ffbd8cd4c8f0810b8"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#gafd97504a28d73d0ffbd8cd4c8f0810b8">TEMPMON_GetCurrentTemperature</a> (TEMPMON_Type *base)</td></tr>
 <tr class="memdesc:gafd97504a28d73d0ffbd8cd4c8f0810b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current temperature with the fused temperature calibration data.  <a href="#gafd97504a28d73d0ffbd8cd4c8f0810b8">More...</a><br/></td></tr>
 <tr class="separator:gafd97504a28d73d0ffbd8cd4c8f0810b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab78940fbc3cc7a3b8e3562a5981803ca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#gab78940fbc3cc7a3b8e3562a5981803ca">TEMPMON_SetTempAlarm</a> (TEMPMON_Type *base, int8_t tempVal, <a class="el" href="a00079.html#ga2d8a033ed3d80771d8417dbf68bfd58b">tempmon_alarm_mode</a> alarmMode)</td></tr>
+<tr class="memitem:gab78940fbc3cc7a3b8e3562a5981803ca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#gab78940fbc3cc7a3b8e3562a5981803ca">TEMPMON_SetTempAlarm</a> (TEMPMON_Type *base, int8_t tempVal, <a class="el" href="a00079.html#gae299ab75db04e087bad01ec6df1b82e6">tempmon_alarm_mode</a> alarmMode)</td></tr>
 <tr class="memdesc:gab78940fbc3cc7a3b8e3562a5981803ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the temperature count (raw sensor output) that will generate an alarm interrupt.  <a href="#gab78940fbc3cc7a3b8e3562a5981803ca">More...</a><br/></td></tr>
 <tr class="separator:gab78940fbc3cc7a3b8e3562a5981803ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga8c820cc4dbb86ea6a99e674e7f8ff1ba"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga8c820cc4dbb86ea6a99e674e7f8ff1ba">FSL_TEMPMON_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00275.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 1))</td></tr>
+<tr class="memitem:ga8c820cc4dbb86ea6a99e674e7f8ff1ba"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga8c820cc4dbb86ea6a99e674e7f8ff1ba">FSL_TEMPMON_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00277.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 1))</td></tr>
 <tr class="memdesc:ga8c820cc4dbb86ea6a99e674e7f8ff1ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">TEMPMON driver version.  <a href="#ga8c820cc4dbb86ea6a99e674e7f8ff1ba">More...</a><br/></td></tr>
 <tr class="separator:ga8c820cc4dbb86ea6a99e674e7f8ff1ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00541" id="a00541"></a>
+<a name="a00535" id="a00535"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct tempmon_config_t</td>
+          <td class="memname">struct _tempmon_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a207108996ebfd8421548f96bd4d3afaf"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a207108996ebfd8421548f96bd4d3afaf">frequency</a></td></tr>
-<tr class="memdesc:a207108996ebfd8421548f96bd4d3afaf"><td class="mdescLeft">&#160;</td><td class="mdescRight">The temperature measure frequency.  <a href="#a207108996ebfd8421548f96bd4d3afaf">More...</a><br/></td></tr>
-<tr class="separator:a207108996ebfd8421548f96bd4d3afaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7d970f8778383bb43e202e1cb3d45691"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a7d970f8778383bb43e202e1cb3d45691">highAlarmTemp</a></td></tr>
-<tr class="memdesc:a7d970f8778383bb43e202e1cb3d45691"><td class="mdescLeft">&#160;</td><td class="mdescRight">The high alarm temperature.  <a href="#a7d970f8778383bb43e202e1cb3d45691">More...</a><br/></td></tr>
-<tr class="separator:a7d970f8778383bb43e202e1cb3d45691"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad5fca8b29572f08204642e2ed8d9dbce"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ad5fca8b29572f08204642e2ed8d9dbce">panicAlarmTemp</a></td></tr>
-<tr class="memdesc:ad5fca8b29572f08204642e2ed8d9dbce"><td class="mdescLeft">&#160;</td><td class="mdescRight">The panic alarm temperature.  <a href="#ad5fca8b29572f08204642e2ed8d9dbce">More...</a><br/></td></tr>
-<tr class="separator:ad5fca8b29572f08204642e2ed8d9dbce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a129a45c78e03e2b25ba4c403636b6b01"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a129a45c78e03e2b25ba4c403636b6b01">lowAlarmTemp</a></td></tr>
-<tr class="memdesc:a129a45c78e03e2b25ba4c403636b6b01"><td class="mdescLeft">&#160;</td><td class="mdescRight">The low alarm temperature.  <a href="#a129a45c78e03e2b25ba4c403636b6b01">More...</a><br/></td></tr>
-<tr class="separator:a129a45c78e03e2b25ba4c403636b6b01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7abc547e53d2bf57d98a8c53aba24d73"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a7abc547e53d2bf57d98a8c53aba24d73">frequency</a></td></tr>
+<tr class="memdesc:a7abc547e53d2bf57d98a8c53aba24d73"><td class="mdescLeft">&#160;</td><td class="mdescRight">The temperature measure frequency.  <a href="#a7abc547e53d2bf57d98a8c53aba24d73">More...</a><br/></td></tr>
+<tr class="separator:a7abc547e53d2bf57d98a8c53aba24d73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef9a15b388394ba5b01c773a904e6161"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#aef9a15b388394ba5b01c773a904e6161">highAlarmTemp</a></td></tr>
+<tr class="memdesc:aef9a15b388394ba5b01c773a904e6161"><td class="mdescLeft">&#160;</td><td class="mdescRight">The high alarm temperature.  <a href="#aef9a15b388394ba5b01c773a904e6161">More...</a><br/></td></tr>
+<tr class="separator:aef9a15b388394ba5b01c773a904e6161"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ee843733473a886d67a422d4a155f64"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a4ee843733473a886d67a422d4a155f64">panicAlarmTemp</a></td></tr>
+<tr class="memdesc:a4ee843733473a886d67a422d4a155f64"><td class="mdescLeft">&#160;</td><td class="mdescRight">The panic alarm temperature.  <a href="#a4ee843733473a886d67a422d4a155f64">More...</a><br/></td></tr>
+<tr class="separator:a4ee843733473a886d67a422d4a155f64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b800f87335e6569c4122baecdae621d"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a3b800f87335e6569c4122baecdae621d">lowAlarmTemp</a></td></tr>
+<tr class="memdesc:a3b800f87335e6569c4122baecdae621d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The low alarm temperature.  <a href="#a3b800f87335e6569c4122baecdae621d">More...</a><br/></td></tr>
+<tr class="separator:a3b800f87335e6569c4122baecdae621d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a207108996ebfd8421548f96bd4d3afaf"></a>
+<a class="anchor" id="a7abc547e53d2bf57d98a8c53aba24d73"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t tempmon_config_t::frequency</td>
+          <td class="memname">uint16_t _tempmon_config::frequency</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a7d970f8778383bb43e202e1cb3d45691"></a>
+<a class="anchor" id="aef9a15b388394ba5b01c773a904e6161"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int8_t tempmon_config_t::highAlarmTemp</td>
+          <td class="memname">int8_t _tempmon_config::highAlarmTemp</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ad5fca8b29572f08204642e2ed8d9dbce"></a>
+<a class="anchor" id="a4ee843733473a886d67a422d4a155f64"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int8_t tempmon_config_t::panicAlarmTemp</td>
+          <td class="memname">int8_t _tempmon_config::panicAlarmTemp</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a129a45c78e03e2b25ba4c403636b6b01"></a>
+<a class="anchor" id="a3b800f87335e6569c4122baecdae621d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int8_t tempmon_config_t::lowAlarmTemp</td>
+          <td class="memname">int8_t _tempmon_config::lowAlarmTemp</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -258,7 +268,32 @@ Driver version</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_TEMPMON_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00275.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 1))</td>
+          <td class="memname">#define FSL_TEMPMON_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00277.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 1))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga7d83f2e7eaf7b3833a9ce786a758b867"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00079.html#a00535">_tempmon_config</a>  <a class="el" href="a00079.html#ga7d83f2e7eaf7b3833a9ce786a758b867">tempmon_config_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gae299ab75db04e087bad01ec6df1b82e6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00079.html#gaa902d39a9a0944943dfa1652a1c191da">_tempmon_alarm_mode</a>  <a class="el" href="a00079.html#gae299ab75db04e087bad01ec6df1b82e6">tempmon_alarm_mode</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -266,23 +301,23 @@ Driver version</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga2d8a033ed3d80771d8417dbf68bfd58b"></a>
+<a class="anchor" id="gaa902d39a9a0944943dfa1652a1c191da"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00079.html#ga2d8a033ed3d80771d8417dbf68bfd58b">tempmon_alarm_mode</a></td>
+          <td class="memname">enum <a class="el" href="a00079.html#gaa902d39a9a0944943dfa1652a1c191da">_tempmon_alarm_mode</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga2d8a033ed3d80771d8417dbf68bfd58ba6c34f34b411e7f880a5782d0329f732f"></a>kTEMPMON_HighAlarmMode</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaa902d39a9a0944943dfa1652a1c191daa6c34f34b411e7f880a5782d0329f732f"></a>kTEMPMON_HighAlarmMode</em>&nbsp;</td><td class="fielddoc">
 <p>The high alarm temperature interrupt mode. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga2d8a033ed3d80771d8417dbf68bfd58ba3cafbb2449dbb58abb5ef078907ba6b0"></a>kTEMPMON_PanicAlarmMode</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa902d39a9a0944943dfa1652a1c191daa3cafbb2449dbb58abb5ef078907ba6b0"></a>kTEMPMON_PanicAlarmMode</em>&nbsp;</td><td class="fielddoc">
 <p>The panic alarm temperature interrupt mode. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga2d8a033ed3d80771d8417dbf68bfd58ba3b1e1531c3d0529cba956f38568140f5"></a>kTEMPMON_LowAlarmMode</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa902d39a9a0944943dfa1652a1c191daa3b1e1531c3d0529cba956f38568140f5"></a>kTEMPMON_LowAlarmMode</em>&nbsp;</td><td class="fielddoc">
 <p>The low alarm temperature interrupt mode. </p>
 </td></tr>
 </table>
@@ -303,7 +338,7 @@ Driver version</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00079.html#a00541">tempmon_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00079.html#ga7d83f2e7eaf7b3833a9ce786a758b867">tempmon_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -352,7 +387,7 @@ Driver version</h2></td></tr>
         <tr>
           <td class="memname">void TEMPMON_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00079.html#a00541">tempmon_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00079.html#ga7d83f2e7eaf7b3833a9ce786a758b867">tempmon_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
@@ -470,7 +505,7 @@ Driver version</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00079.html#ga2d8a033ed3d80771d8417dbf68bfd58b">tempmon_alarm_mode</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00079.html#gae299ab75db04e087bad01ec6df1b82e6">tempmon_alarm_mode</a>&#160;</td>
           <td class="paramname"><em>alarmMode</em>&#160;</td>
         </tr>
         <tr>

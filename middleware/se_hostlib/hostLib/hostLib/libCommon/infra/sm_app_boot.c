@@ -50,7 +50,9 @@
 
 #if AX_EMBEDDED
 #if defined(MBEDTLS)
+#if !defined(NORDIC_MCU)
 #include "ksdk_mbedtls.h"
+#endif
 #endif
 #endif /* FREEDOM */
 
@@ -185,7 +187,7 @@ int app_boot_Init()
 
 int app_boot_Init_RTOS()
 {
-#if (AX_EMBEDDED) && defined(MBEDTLS)
+#if (AX_EMBEDDED) && defined(MBEDTLS) && !defined(NORDIC_MCU)
     CRYPTO_InitHardware();
 #if defined(FSL_FEATURE_SOC_SHA_COUNT) && (FSL_FEATURE_SOC_SHA_COUNT > 0)
     CLOCK_EnableClock(kCLOCK_Sha0);

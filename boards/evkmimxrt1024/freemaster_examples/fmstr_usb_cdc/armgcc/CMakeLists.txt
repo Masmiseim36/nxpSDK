@@ -45,30 +45,30 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
-"${ProjDirPath}/../main.c"
-"${ProjDirPath}/../clock_config.c"
-"${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../pin_mux.c"
-"${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../freemaster_cfg.h"
-"${SdkRootDirPath}/boards/evkmimxrt1024/freemaster_examples/common/fmstr_example/freemaster_example.c"
-"${SdkRootDirPath}/boards/evkmimxrt1024/freemaster_examples/common/fmstr_example/freemaster_example.h"
-"${SdkRootDirPath}/middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb.c"
-"${SdkRootDirPath}/middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb.h"
-"${SdkRootDirPath}/middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb_device_descriptor.c"
-"${SdkRootDirPath}/middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb_device_descriptor.h"
-"${SdkRootDirPath}/middleware/freemaster/src/support/mcuxsdk_usb/usb_device_config.h"
-"${SdkRootDirPath}/middleware/freemaster/src/support/mcuxsdk_usb/usb_device_descriptor.h"
-"${ProjDirPath}/../board.c"
-"${ProjDirPath}/../board.h"
-"${SdkRootDirPath}/boards/evkmimxrt1024/freemaster_examples/common/fmstr_example/data_example_pmp.h"
-"${SdkRootDirPath}/boards/evkmimxrt1024/freemaster_examples/common/fmstr_example/data_img_logo.h"
-"${SdkRootDirPath}/boards/evkmimxrt1024/freemaster_examples/common/fmstr_example/data_img_file.h"
-"${SdkRootDirPath}/boards/evkmimxrt1024/freemaster_examples/common/fmstr_example/data_img_fmstrlogo.h"
-"${SdkRootDirPath}/boards/evkmimxrt1024/freemaster_examples/common/fmstr_example/data_html_index.h"
-"${SdkRootDirPath}/boards/evkmimxrt1024/freemaster_examples/common/fmstr_example/example_data.h"
-"${ProjDirPath}/../dcd.c"
-"${ProjDirPath}/../dcd.h"
+"${ProjDirPath}/../source/main.c"
+"${ProjDirPath}/../source/board/clock_config.c"
+"${ProjDirPath}/../source/board/clock_config.h"
+"${ProjDirPath}/../source/board/pin_mux.c"
+"${ProjDirPath}/../source/board/pin_mux.h"
+"${ProjDirPath}/../source/freemaster_cfg.h"
+"${ProjDirPath}/../source/freemaster_example.c"
+"${ProjDirPath}/../source/freemaster_example.h"
+"${ProjDirPath}/../source/freemaster_usb.c"
+"${ProjDirPath}/../source/freemaster_usb.h"
+"${ProjDirPath}/../source/freemaster_usb_device_descriptor.c"
+"${ProjDirPath}/../source/freemaster_usb_device_descriptor.h"
+"${ProjDirPath}/../source/usb_device_config.h"
+"${ProjDirPath}/../source/usb_device_descriptor.h"
+"${ProjDirPath}/../source/board/board.c"
+"${ProjDirPath}/../source/board/board.h"
+"${ProjDirPath}/../source/example_data/data_example_pmp.h"
+"${ProjDirPath}/../source/example_data/data_img_logo.h"
+"${ProjDirPath}/../source/example_data/data_img_file.h"
+"${ProjDirPath}/../source/example_data/data_img_fmstrlogo.h"
+"${ProjDirPath}/../source/example_data/data_html_index.h"
+"${ProjDirPath}/../source/example_data/example_data.h"
+"${ProjDirPath}/../source/board/dcd.c"
+"${ProjDirPath}/../source/board/dcd.h"
 "${ProjDirPath}/../usb_device_ch9.c"
 "${ProjDirPath}/../usb_device_ch9.h"
 "${ProjDirPath}/../usb_device_class.c"
@@ -78,13 +78,14 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/..
-    ${SdkRootDirPath}/boards/evkmimxrt1024/freemaster_examples/common/fmstr_example
+    ${ProjDirPath}/../source/board
+    ${ProjDirPath}/../source
     ${SdkRootDirPath}/middleware/freemaster/src/support/mcuxsdk_usb
+    ${ProjDirPath}/../source/example_data
+    ${ProjDirPath}/..
 )
 
-set_source_files_properties("${ProjDirPath}/../freemaster_cfg.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_fmstr_npw_cfg_gen32le")
-set_source_files_properties("${SdkRootDirPath}/middleware/freemaster/src/support/mcuxsdk_usb/usb_device_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_usb_device_ehci_config_header")
+set_source_files_properties("${ProjDirPath}/../source/usb_device_config.h" PROPERTIES COMPONENT_CONFIG_FILE "middleware_usb_device_ehci_config_header")
 
 include(${SdkRootDirPath}/devices/MIMXRT1024/all_lib_device.cmake)
 

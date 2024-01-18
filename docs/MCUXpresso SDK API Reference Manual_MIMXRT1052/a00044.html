@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -100,6 +100,7 @@ $(document).ready(function(){initNavTree('a00044.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">GPIO: General-Purpose Input/Output Driver</div>  </div>
@@ -115,46 +116,58 @@ Input Operation</h2>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00443"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#a00443">gpio_pin_config_t</a></td></tr>
-<tr class="memdesc:a00443"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPIO Init structure definition.  <a href="a00044.html#a00443">More...</a><br/></td></tr>
-<tr class="separator:a00443"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00426"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#a00426">_gpio_pin_config</a></td></tr>
+<tr class="memdesc:a00426"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPIO Init structure definition.  <a href="a00044.html#a00426">More...</a><br/></td></tr>
+<tr class="separator:a00426"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gaf7d75755774a0f20385fbdda546f1f1d"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00044.html#ga0df4be96fa56f3bdd7bfa048fdaacd6b">_gpio_pin_direction</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#gaf7d75755774a0f20385fbdda546f1f1d">gpio_pin_direction_t</a></td></tr>
+<tr class="memdesc:gaf7d75755774a0f20385fbdda546f1f1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPIO direction definition.  <a href="#gaf7d75755774a0f20385fbdda546f1f1d">More...</a><br/></td></tr>
+<tr class="separator:gaf7d75755774a0f20385fbdda546f1f1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga964d88636cc5631275c0da96d4a83b5d"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00044.html#gaf47c6be402417bd9d15316732e2e2ffe">_gpio_interrupt_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#ga964d88636cc5631275c0da96d4a83b5d">gpio_interrupt_mode_t</a></td></tr>
+<tr class="memdesc:ga964d88636cc5631275c0da96d4a83b5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPIO interrupt mode definition.  <a href="#ga964d88636cc5631275c0da96d4a83b5d">More...</a><br/></td></tr>
+<tr class="separator:ga964d88636cc5631275c0da96d4a83b5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9279df0a87f2432dc3c5d596028223b7"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00044.html#a00426">_gpio_pin_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#ga9279df0a87f2432dc3c5d596028223b7">gpio_pin_config_t</a></td></tr>
+<tr class="memdesc:ga9279df0a87f2432dc3c5d596028223b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPIO Init structure definition.  <a href="#ga9279df0a87f2432dc3c5d596028223b7">More...</a><br/></td></tr>
+<tr class="separator:ga9279df0a87f2432dc3c5d596028223b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:gada41ca0a2ce239fe125ee96833e715c0"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#gada41ca0a2ce239fe125ee96833e715c0">gpio_pin_direction_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00044.html#ggada41ca0a2ce239fe125ee96833e715c0abacf19933be1940ab40c83535e6a46d4">kGPIO_DigitalInput</a> = 0U, 
+<tr class="memitem:ga0df4be96fa56f3bdd7bfa048fdaacd6b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#ga0df4be96fa56f3bdd7bfa048fdaacd6b">_gpio_pin_direction</a> { <br/>
+&#160;&#160;<a class="el" href="a00044.html#gga0df4be96fa56f3bdd7bfa048fdaacd6babacf19933be1940ab40c83535e6a46d4">kGPIO_DigitalInput</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00044.html#ggada41ca0a2ce239fe125ee96833e715c0a509ebcd228fc813cf4afcacd258680f9">kGPIO_DigitalOutput</a> = 1U
-<br/>
- }</td></tr>
-<tr class="memdesc:gada41ca0a2ce239fe125ee96833e715c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPIO direction definition.  <a href="a00044.html#gada41ca0a2ce239fe125ee96833e715c0">More...</a><br/></td></tr>
-<tr class="separator:gada41ca0a2ce239fe125ee96833e715c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1b9ad57f43a7be04e31c2e43e92aca39"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#ga1b9ad57f43a7be04e31c2e43e92aca39">gpio_interrupt_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00044.html#gga1b9ad57f43a7be04e31c2e43e92aca39a69d618dcf6fc01e5c8315ef1dd4aa66d">kGPIO_NoIntmode</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00044.html#gga1b9ad57f43a7be04e31c2e43e92aca39af6c9ba431378e6290d7033b643e554da">kGPIO_IntLowLevel</a> = 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00044.html#gga1b9ad57f43a7be04e31c2e43e92aca39aa445f82a63c5aa94a1e53cdcf52b71d3">kGPIO_IntHighLevel</a> = 2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00044.html#gga1b9ad57f43a7be04e31c2e43e92aca39ab874f7d31c4bf2f964bf52466d5c40f4">kGPIO_IntRisingEdge</a> = 3U, 
-<br/>
-&#160;&#160;<a class="el" href="a00044.html#gga1b9ad57f43a7be04e31c2e43e92aca39a369cc36a7fda0eb55c4f509070c2d887">kGPIO_IntFallingEdge</a> = 4U, 
-<br/>
-&#160;&#160;<a class="el" href="a00044.html#gga1b9ad57f43a7be04e31c2e43e92aca39ac1d74f985cbebbe8441f6053b8074a50">kGPIO_IntRisingOrFallingEdge</a> = 5U
+&#160;&#160;<a class="el" href="a00044.html#gga0df4be96fa56f3bdd7bfa048fdaacd6ba509ebcd228fc813cf4afcacd258680f9">kGPIO_DigitalOutput</a> = 1U
 <br/>
  }</td></tr>
-<tr class="memdesc:ga1b9ad57f43a7be04e31c2e43e92aca39"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPIO interrupt mode definition.  <a href="a00044.html#ga1b9ad57f43a7be04e31c2e43e92aca39">More...</a><br/></td></tr>
-<tr class="separator:ga1b9ad57f43a7be04e31c2e43e92aca39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga0df4be96fa56f3bdd7bfa048fdaacd6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPIO direction definition.  <a href="a00044.html#ga0df4be96fa56f3bdd7bfa048fdaacd6b">More...</a><br/></td></tr>
+<tr class="separator:ga0df4be96fa56f3bdd7bfa048fdaacd6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf47c6be402417bd9d15316732e2e2ffe"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#gaf47c6be402417bd9d15316732e2e2ffe">_gpio_interrupt_mode</a> { <br/>
+&#160;&#160;<a class="el" href="a00044.html#ggaf47c6be402417bd9d15316732e2e2ffea69d618dcf6fc01e5c8315ef1dd4aa66d">kGPIO_NoIntmode</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00044.html#ggaf47c6be402417bd9d15316732e2e2ffeaf6c9ba431378e6290d7033b643e554da">kGPIO_IntLowLevel</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00044.html#ggaf47c6be402417bd9d15316732e2e2ffeaa445f82a63c5aa94a1e53cdcf52b71d3">kGPIO_IntHighLevel</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00044.html#ggaf47c6be402417bd9d15316732e2e2ffeab874f7d31c4bf2f964bf52466d5c40f4">kGPIO_IntRisingEdge</a> = 3U, 
+<br/>
+&#160;&#160;<a class="el" href="a00044.html#ggaf47c6be402417bd9d15316732e2e2ffea369cc36a7fda0eb55c4f509070c2d887">kGPIO_IntFallingEdge</a> = 4U, 
+<br/>
+&#160;&#160;<a class="el" href="a00044.html#ggaf47c6be402417bd9d15316732e2e2ffeac1d74f985cbebbe8441f6053b8074a50">kGPIO_IntRisingOrFallingEdge</a> = 5U
+<br/>
+ }</td></tr>
+<tr class="memdesc:gaf47c6be402417bd9d15316732e2e2ffe"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPIO interrupt mode definition.  <a href="a00044.html#gaf47c6be402417bd9d15316732e2e2ffe">More...</a><br/></td></tr>
+<tr class="separator:gaf47c6be402417bd9d15316732e2e2ffe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga5aa5229cbd041b11bcf8417ba12896b2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#ga5aa5229cbd041b11bcf8417ba12896b2">FSL_GPIO_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00270.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 6))</td></tr>
+<tr class="memitem:ga5aa5229cbd041b11bcf8417ba12896b2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#ga5aa5229cbd041b11bcf8417ba12896b2">FSL_GPIO_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00272.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 6))</td></tr>
 <tr class="memdesc:ga5aa5229cbd041b11bcf8417ba12896b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPIO driver version.  <a href="#ga5aa5229cbd041b11bcf8417ba12896b2">More...</a><br/></td></tr>
 <tr class="separator:ga5aa5229cbd041b11bcf8417ba12896b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 GPIO Initialization and Configuration functions</h2></td></tr>
-<tr class="memitem:ga8d3aa26ad7e88ef1427e51242a70c259"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#ga8d3aa26ad7e88ef1427e51242a70c259">GPIO_PinInit</a> (GPIO_Type *base, uint32_t pin, const <a class="el" href="a00044.html#a00443">gpio_pin_config_t</a> *Config)</td></tr>
+<tr class="memitem:ga8d3aa26ad7e88ef1427e51242a70c259"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#ga8d3aa26ad7e88ef1427e51242a70c259">GPIO_PinInit</a> (GPIO_Type *base, uint32_t pin, const <a class="el" href="a00044.html#ga9279df0a87f2432dc3c5d596028223b7">gpio_pin_config_t</a> *Config)</td></tr>
 <tr class="memdesc:ga8d3aa26ad7e88ef1427e51242a70c259"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the GPIO peripheral according to the specified parameters in the initConfig.  <a href="#ga8d3aa26ad7e88ef1427e51242a70c259">More...</a><br/></td></tr>
 <tr class="separator:ga8d3aa26ad7e88ef1427e51242a70c259"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -199,10 +212,10 @@ GPIO Reads Pad Status Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Interrupts and flags management functions</h2></td></tr>
-<tr class="memitem:gac704735fb3cf3a56676f2fb90e67b10f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#gac704735fb3cf3a56676f2fb90e67b10f">GPIO_PinSetInterruptConfig</a> (GPIO_Type *base, uint32_t pin, <a class="el" href="a00044.html#ga1b9ad57f43a7be04e31c2e43e92aca39">gpio_interrupt_mode_t</a> pinInterruptMode)</td></tr>
+<tr class="memitem:gac704735fb3cf3a56676f2fb90e67b10f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#gac704735fb3cf3a56676f2fb90e67b10f">GPIO_PinSetInterruptConfig</a> (GPIO_Type *base, uint32_t pin, <a class="el" href="a00044.html#ga964d88636cc5631275c0da96d4a83b5d">gpio_interrupt_mode_t</a> pinInterruptMode)</td></tr>
 <tr class="memdesc:gac704735fb3cf3a56676f2fb90e67b10f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the current pin interrupt mode.  <a href="#gac704735fb3cf3a56676f2fb90e67b10f">More...</a><br/></td></tr>
 <tr class="separator:gac704735fb3cf3a56676f2fb90e67b10f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga364fe6d19b98557e44282f95ccc5e63d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#ga364fe6d19b98557e44282f95ccc5e63d">GPIO_SetPinInterruptConfig</a> (GPIO_Type *base, uint32_t pin, <a class="el" href="a00044.html#ga1b9ad57f43a7be04e31c2e43e92aca39">gpio_interrupt_mode_t</a> pinInterruptMode)</td></tr>
+<tr class="memitem:ga364fe6d19b98557e44282f95ccc5e63d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#ga364fe6d19b98557e44282f95ccc5e63d">GPIO_SetPinInterruptConfig</a> (GPIO_Type *base, uint32_t pin, <a class="el" href="a00044.html#ga964d88636cc5631275c0da96d4a83b5d">gpio_interrupt_mode_t</a> pinInterruptMode)</td></tr>
 <tr class="memdesc:ga364fe6d19b98557e44282f95ccc5e63d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the current pin interrupt mode.  <a href="#ga364fe6d19b98557e44282f95ccc5e63d">More...</a><br/></td></tr>
 <tr class="separator:ga364fe6d19b98557e44282f95ccc5e63d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2a62aa9cd2aeacf2a81dc4d644f9b0b1"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#ga2a62aa9cd2aeacf2a81dc4d644f9b0b1">GPIO_PortEnableInterrupts</a> (GPIO_Type *base, uint32_t mask)</td></tr>
@@ -231,47 +244,47 @@ Interrupts and flags management functions</h2></td></tr>
 <tr class="separator:ga0b1ad50f4212dfb839fd059503f03bed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00443" id="a00443"></a>
+<a name="a00426" id="a00426"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct gpio_pin_config_t</td>
+          <td class="memname">struct _gpio_pin_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a5eae83ead0519707b896cfa9082c4e82"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00044.html#gada41ca0a2ce239fe125ee96833e715c0">gpio_pin_direction_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#a5eae83ead0519707b896cfa9082c4e82">direction</a></td></tr>
-<tr class="memdesc:a5eae83ead0519707b896cfa9082c4e82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies the pin direction.  <a href="#a5eae83ead0519707b896cfa9082c4e82">More...</a><br/></td></tr>
-<tr class="separator:a5eae83ead0519707b896cfa9082c4e82"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d37ffd9a2943f10a91095759bd52da5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9d37ffd9a2943f10a91095759bd52da5"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#a9d37ffd9a2943f10a91095759bd52da5">outputLogic</a></td></tr>
-<tr class="memdesc:a9d37ffd9a2943f10a91095759bd52da5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a default output logic, which has no use in input. <br/></td></tr>
-<tr class="separator:a9d37ffd9a2943f10a91095759bd52da5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2aaf4ec1e85d3fcea653b422c673441e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00044.html#ga1b9ad57f43a7be04e31c2e43e92aca39">gpio_interrupt_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#a2aaf4ec1e85d3fcea653b422c673441e">interruptMode</a></td></tr>
-<tr class="memdesc:a2aaf4ec1e85d3fcea653b422c673441e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies the pin interrupt mode, a value of <a class="el" href="a00044.html#ga1b9ad57f43a7be04e31c2e43e92aca39">gpio_interrupt_mode_t</a>.  <a href="#a2aaf4ec1e85d3fcea653b422c673441e">More...</a><br/></td></tr>
-<tr class="separator:a2aaf4ec1e85d3fcea653b422c673441e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2c31773fec33b396d84be5f45e01064"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00044.html#gaf7d75755774a0f20385fbdda546f1f1d">gpio_pin_direction_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#ae2c31773fec33b396d84be5f45e01064">direction</a></td></tr>
+<tr class="memdesc:ae2c31773fec33b396d84be5f45e01064"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies the pin direction.  <a href="#ae2c31773fec33b396d84be5f45e01064">More...</a><br/></td></tr>
+<tr class="separator:ae2c31773fec33b396d84be5f45e01064"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70ede6dc868ff6dd15987ba62c5d574b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a70ede6dc868ff6dd15987ba62c5d574b"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#a70ede6dc868ff6dd15987ba62c5d574b">outputLogic</a></td></tr>
+<tr class="memdesc:a70ede6dc868ff6dd15987ba62c5d574b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a default output logic, which has no use in input. <br/></td></tr>
+<tr class="separator:a70ede6dc868ff6dd15987ba62c5d574b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acdfcc9d2e83559e63ce2fd7e97ceef7f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00044.html#ga964d88636cc5631275c0da96d4a83b5d">gpio_interrupt_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#acdfcc9d2e83559e63ce2fd7e97ceef7f">interruptMode</a></td></tr>
+<tr class="memdesc:acdfcc9d2e83559e63ce2fd7e97ceef7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies the pin interrupt mode, a value of <a class="el" href="a00044.html#ga964d88636cc5631275c0da96d4a83b5d">gpio_interrupt_mode_t</a>.  <a href="#acdfcc9d2e83559e63ce2fd7e97ceef7f">More...</a><br/></td></tr>
+<tr class="separator:acdfcc9d2e83559e63ce2fd7e97ceef7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a5eae83ead0519707b896cfa9082c4e82"></a>
+<a class="anchor" id="ae2c31773fec33b396d84be5f45e01064"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00044.html#gada41ca0a2ce239fe125ee96833e715c0">gpio_pin_direction_t</a> gpio_pin_config_t::direction</td>
+          <td class="memname"><a class="el" href="a00044.html#gaf7d75755774a0f20385fbdda546f1f1d">gpio_pin_direction_t</a> _gpio_pin_config::direction</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a2aaf4ec1e85d3fcea653b422c673441e"></a>
+<a class="anchor" id="acdfcc9d2e83559e63ce2fd7e97ceef7f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00044.html#ga1b9ad57f43a7be04e31c2e43e92aca39">gpio_interrupt_mode_t</a> gpio_pin_config_t::interruptMode</td>
+          <td class="memname"><a class="el" href="a00044.html#ga964d88636cc5631275c0da96d4a83b5d">gpio_interrupt_mode_t</a> _gpio_pin_config::interruptMode</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -287,7 +300,44 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_GPIO_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00270.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 6))</td>
+          <td class="memname">#define FSL_GPIO_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00272.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 6))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="gaf7d75755774a0f20385fbdda546f1f1d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00044.html#ga0df4be96fa56f3bdd7bfa048fdaacd6b">_gpio_pin_direction</a>  <a class="el" href="a00044.html#gaf7d75755774a0f20385fbdda546f1f1d">gpio_pin_direction_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga964d88636cc5631275c0da96d4a83b5d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00044.html#gaf47c6be402417bd9d15316732e2e2ffe">_gpio_interrupt_mode</a>  <a class="el" href="a00044.html#ga964d88636cc5631275c0da96d4a83b5d">gpio_interrupt_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga9279df0a87f2432dc3c5d596028223b7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00044.html#a00426">_gpio_pin_config</a>  <a class="el" href="a00044.html#ga9279df0a87f2432dc3c5d596028223b7">gpio_pin_config_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -295,52 +345,52 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gada41ca0a2ce239fe125ee96833e715c0"></a>
+<a class="anchor" id="ga0df4be96fa56f3bdd7bfa048fdaacd6b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00044.html#gada41ca0a2ce239fe125ee96833e715c0">gpio_pin_direction_t</a></td>
+          <td class="memname">enum <a class="el" href="a00044.html#ga0df4be96fa56f3bdd7bfa048fdaacd6b">_gpio_pin_direction</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggada41ca0a2ce239fe125ee96833e715c0abacf19933be1940ab40c83535e6a46d4"></a>kGPIO_DigitalInput</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga0df4be96fa56f3bdd7bfa048fdaacd6babacf19933be1940ab40c83535e6a46d4"></a>kGPIO_DigitalInput</em>&nbsp;</td><td class="fielddoc">
 <p>Set current pin as digital input. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggada41ca0a2ce239fe125ee96833e715c0a509ebcd228fc813cf4afcacd258680f9"></a>kGPIO_DigitalOutput</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga0df4be96fa56f3bdd7bfa048fdaacd6ba509ebcd228fc813cf4afcacd258680f9"></a>kGPIO_DigitalOutput</em>&nbsp;</td><td class="fielddoc">
 <p>Set current pin as digital output. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga1b9ad57f43a7be04e31c2e43e92aca39"></a>
+<a class="anchor" id="gaf47c6be402417bd9d15316732e2e2ffe"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00044.html#ga1b9ad57f43a7be04e31c2e43e92aca39">gpio_interrupt_mode_t</a></td>
+          <td class="memname">enum <a class="el" href="a00044.html#gaf47c6be402417bd9d15316732e2e2ffe">_gpio_interrupt_mode</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga1b9ad57f43a7be04e31c2e43e92aca39a69d618dcf6fc01e5c8315ef1dd4aa66d"></a>kGPIO_NoIntmode</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaf47c6be402417bd9d15316732e2e2ffea69d618dcf6fc01e5c8315ef1dd4aa66d"></a>kGPIO_NoIntmode</em>&nbsp;</td><td class="fielddoc">
 <p>Set current pin general IO functionality. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1b9ad57f43a7be04e31c2e43e92aca39af6c9ba431378e6290d7033b643e554da"></a>kGPIO_IntLowLevel</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf47c6be402417bd9d15316732e2e2ffeaf6c9ba431378e6290d7033b643e554da"></a>kGPIO_IntLowLevel</em>&nbsp;</td><td class="fielddoc">
 <p>Set current pin interrupt is low-level sensitive. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1b9ad57f43a7be04e31c2e43e92aca39aa445f82a63c5aa94a1e53cdcf52b71d3"></a>kGPIO_IntHighLevel</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf47c6be402417bd9d15316732e2e2ffeaa445f82a63c5aa94a1e53cdcf52b71d3"></a>kGPIO_IntHighLevel</em>&nbsp;</td><td class="fielddoc">
 <p>Set current pin interrupt is high-level sensitive. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1b9ad57f43a7be04e31c2e43e92aca39ab874f7d31c4bf2f964bf52466d5c40f4"></a>kGPIO_IntRisingEdge</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf47c6be402417bd9d15316732e2e2ffeab874f7d31c4bf2f964bf52466d5c40f4"></a>kGPIO_IntRisingEdge</em>&nbsp;</td><td class="fielddoc">
 <p>Set current pin interrupt is rising-edge sensitive. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1b9ad57f43a7be04e31c2e43e92aca39a369cc36a7fda0eb55c4f509070c2d887"></a>kGPIO_IntFallingEdge</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf47c6be402417bd9d15316732e2e2ffea369cc36a7fda0eb55c4f509070c2d887"></a>kGPIO_IntFallingEdge</em>&nbsp;</td><td class="fielddoc">
 <p>Set current pin interrupt is falling-edge sensitive. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1b9ad57f43a7be04e31c2e43e92aca39ac1d74f985cbebbe8441f6053b8074a50"></a>kGPIO_IntRisingOrFallingEdge</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf47c6be402417bd9d15316732e2e2ffeac1d74f985cbebbe8441f6053b8074a50"></a>kGPIO_IntRisingOrFallingEdge</em>&nbsp;</td><td class="fielddoc">
 <p>Enable the edge select bit to override the ICR register's configuration. </p>
 </td></tr>
 </table>
@@ -367,7 +417,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00044.html#a00443">gpio_pin_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00044.html#ga9279df0a87f2432dc3c5d596028223b7">gpio_pin_config_t</a> *&#160;</td>
           <td class="paramname"><em>Config</em>&#160;</td>
         </tr>
         <tr>
@@ -381,7 +431,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
   <table class="params">
     <tr><td class="paramname">base</td><td>GPIO base pointer. </td></tr>
     <tr><td class="paramname">pin</td><td>Specifies the pin number </td></tr>
-    <tr><td class="paramname">Config</td><td>pointer to a <a class="el" href="a00044.html#a00443">gpio_pin_config_t</a> structure that contains the configuration information. </td></tr>
+    <tr><td class="paramname">Config</td><td>pointer to a <a class="el" href="a00044.html#ga9279df0a87f2432dc3c5d596028223b7">gpio_pin_config_t</a> structure that contains the configuration information. </td></tr>
   </table>
   </dd>
 </dl>
@@ -849,7 +899,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00044.html#ga1b9ad57f43a7be04e31c2e43e92aca39">gpio_interrupt_mode_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00044.html#ga964d88636cc5631275c0da96d4a83b5d">gpio_interrupt_mode_t</a>&#160;</td>
           <td class="paramname"><em>pinInterruptMode</em>&#160;</td>
         </tr>
         <tr>
@@ -863,7 +913,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
   <table class="params">
     <tr><td class="paramname">base</td><td>GPIO base pointer. </td></tr>
     <tr><td class="paramname">pin</td><td>GPIO port pin number. </td></tr>
-    <tr><td class="paramname">pinInterruptMode</td><td>pointer to a <a class="el" href="a00044.html#ga1b9ad57f43a7be04e31c2e43e92aca39">gpio_interrupt_mode_t</a> structure that contains the interrupt mode information. </td></tr>
+    <tr><td class="paramname">pinInterruptMode</td><td>pointer to a <a class="el" href="a00044.html#ga964d88636cc5631275c0da96d4a83b5d">gpio_interrupt_mode_t</a> structure that contains the interrupt mode information. </td></tr>
   </table>
   </dd>
 </dl>
@@ -892,7 +942,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00044.html#ga1b9ad57f43a7be04e31c2e43e92aca39">gpio_interrupt_mode_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00044.html#ga964d88636cc5631275c0da96d4a83b5d">gpio_interrupt_mode_t</a>&#160;</td>
           <td class="paramname"><em>pinInterruptMode</em>&#160;</td>
         </tr>
         <tr>

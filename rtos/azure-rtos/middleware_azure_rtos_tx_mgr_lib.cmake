@@ -4,7 +4,6 @@ include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-  ${CMAKE_CURRENT_LIST_DIR}/threadx/common/src/tx_misra.c
   ${CMAKE_CURRENT_LIST_DIR}/threadx/common/src/tx_block_allocate.c
   ${CMAKE_CURRENT_LIST_DIR}/threadx/common/src/tx_block_pool_cleanup.c
   ${CMAKE_CURRENT_LIST_DIR}/threadx/common/src/tx_block_pool_create.c
@@ -39,6 +38,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/threadx/common/src/tx_initialize_high_level.c
   ${CMAKE_CURRENT_LIST_DIR}/threadx/common/src/tx_initialize_kernel_enter.c
   ${CMAKE_CURRENT_LIST_DIR}/threadx/common/src/tx_initialize_kernel_setup.c
+  ${CMAKE_CURRENT_LIST_DIR}/threadx/common/src/tx_misra.c
   ${CMAKE_CURRENT_LIST_DIR}/threadx/common/src/tx_mutex_cleanup.c
   ${CMAKE_CURRENT_LIST_DIR}/threadx/common/src/tx_mutex_create.c
   ${CMAKE_CURRENT_LIST_DIR}/threadx/common/src/tx_mutex_delete.c
@@ -220,63 +220,63 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 
 if(CONFIG_TOOLCHAIN STREQUAL iar AND CONFIG_CORE STREQUAL cm7f)
   target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/iar/module_manager/src/tx_thread_interrupt_control.s
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/iar/module_manager/src/tx_timer_interrupt.s
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/iar/module_manager/src/txm_module_manager_external_memory_enable.c
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/iar/module_manager/src/txm_module_manager_alignment_adjust.c
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/iar/module_manager/src/txm_module_manager_memory_fault_handler.c
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/iar/module_manager/src/tx_thread_interrupt_restore.s
       ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/iar/module_manager/src/tx_iar.c
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/iar/module_manager/src/tx_thread_schedule.s
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/iar/module_manager/src/tx_thread_stack_build.s
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/iar/module_manager/src/tx_thread_system_return.s
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/iar/module_manager/src/txm_module_manager_mm_register_setup.c
       ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/iar/module_manager/src/tx_misra.s
       ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/iar/module_manager/src/tx_thread_context_restore.s
       ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/iar/module_manager/src/tx_thread_context_save.s
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/iar/module_manager/src/txm_module_manager_memory_fault_notify.c
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/iar/module_manager/src/txm_module_manager_thread_stack_build.s
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/iar/module_manager/src/tx_thread_interrupt_control.s
       ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/iar/module_manager/src/tx_thread_interrupt_disable.s
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/iar/module_manager/src/tx_thread_interrupt_restore.s
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/iar/module_manager/src/tx_thread_schedule.s
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/iar/module_manager/src/tx_thread_stack_build.s
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/iar/module_manager/src/tx_thread_system_return.s
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/iar/module_manager/src/tx_timer_interrupt.s
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/iar/module_manager/src/txm_module_manager_alignment_adjust.c
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/iar/module_manager/src/txm_module_manager_external_memory_enable.c
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/iar/module_manager/src/txm_module_manager_memory_fault_handler.c
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/iar/module_manager/src/txm_module_manager_memory_fault_notify.c
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/iar/module_manager/src/txm_module_manager_mm_register_setup.c
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/iar/module_manager/src/txm_module_manager_thread_stack_build.s
   )
 endif()
 
 if(CONFIG_TOOLCHAIN STREQUAL mdk AND CONFIG_CORE STREQUAL cm7f)
   target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/ac6/module_manager/src/tx_thread_schedule.S
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/ac6/module_manager/src/txm_module_manager_external_memory_enable.c
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/ac6/module_manager/src/tx_thread_stack_build.S
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/ac6/module_manager/src/tx_thread_system_return.S
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/ac6/module_manager/src/txm_module_manager_alignment_adjust.c
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/ac6/module_manager/src/txm_module_manager_memory_fault_handler.c
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/ac6/module_manager/src/tx_thread_interrupt_disable.S
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/ac6/module_manager/src/tx_timer_interrupt.S
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/ac6/module_manager/src/tx_thread_interrupt_restore.S
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/ac6/module_manager/src/txm_module_manager_mm_register_setup.c
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/ac6/module_manager/src/tx_thread_interrupt_control.S
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/ac6/module_manager/src/txm_module_manager_memory_fault_notify.c
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/ac6/module_manager/src/txm_module_manager_thread_stack_build.S
       ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/ac6/module_manager/src/tx_thread_context_restore.S
       ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/ac6/module_manager/src/tx_thread_context_save.S
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/ac6/module_manager/src/tx_thread_interrupt_control.S
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/ac6/module_manager/src/tx_thread_interrupt_disable.S
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/ac6/module_manager/src/tx_thread_interrupt_restore.S
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/ac6/module_manager/src/tx_thread_schedule.S
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/ac6/module_manager/src/tx_thread_stack_build.S
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/ac6/module_manager/src/tx_thread_system_return.S
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/ac6/module_manager/src/tx_timer_interrupt.S
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/ac6/module_manager/src/txm_module_manager_alignment_adjust.c
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/ac6/module_manager/src/txm_module_manager_external_memory_enable.c
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/ac6/module_manager/src/txm_module_manager_memory_fault_handler.c
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/ac6/module_manager/src/txm_module_manager_memory_fault_notify.c
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/ac6/module_manager/src/txm_module_manager_mm_register_setup.c
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/ac6/module_manager/src/txm_module_manager_thread_stack_build.S
   )
 endif()
 
 if(CONFIG_TOOLCHAIN STREQUAL mcux AND CONFIG_CORE STREQUAL cm7f)
   target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/gnu/module_manager/src/tx_thread_schedule.S
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/gnu/module_manager/src/txm_module_manager_external_memory_enable.c
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/gnu/module_manager/src/tx_thread_stack_build.S
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/gnu/module_manager/src/tx_thread_system_return.S
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/gnu/module_manager/src/txm_module_manager_alignment_adjust.c
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/gnu/module_manager/src/txm_module_manager_memory_fault_handler.c
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/gnu/module_manager/src/tx_thread_interrupt_disable.S
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/gnu/module_manager/src/tx_timer_interrupt.S
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/gnu/module_manager/src/tx_thread_interrupt_restore.S
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/gnu/module_manager/src/txm_module_manager_mm_register_setup.c
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/gnu/module_manager/src/tx_thread_interrupt_control.S
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/gnu/module_manager/src/txm_module_manager_memory_fault_notify.c
-      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/gnu/module_manager/src/txm_module_manager_thread_stack_build.s
       ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/gnu/module_manager/src/tx_thread_context_restore.S
       ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/gnu/module_manager/src/tx_thread_context_save.S
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/gnu/module_manager/src/tx_thread_interrupt_control.S
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/gnu/module_manager/src/tx_thread_interrupt_disable.S
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/gnu/module_manager/src/tx_thread_interrupt_restore.S
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/gnu/module_manager/src/tx_thread_schedule.S
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/gnu/module_manager/src/tx_thread_stack_build.S
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/gnu/module_manager/src/tx_thread_system_return.S
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/gnu/module_manager/src/tx_timer_interrupt.S
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/gnu/module_manager/src/txm_module_manager_alignment_adjust.c
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/gnu/module_manager/src/txm_module_manager_external_memory_enable.c
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/gnu/module_manager/src/txm_module_manager_memory_fault_handler.c
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/gnu/module_manager/src/txm_module_manager_memory_fault_notify.c
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/gnu/module_manager/src/txm_module_manager_mm_register_setup.c
+      ${CMAKE_CURRENT_LIST_DIR}/threadx/ports_module/cortex_m7/gnu/module_manager/src/txm_module_manager_thread_stack_build.s
   )
 endif()
 

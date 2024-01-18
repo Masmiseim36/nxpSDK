@@ -1,10 +1,8 @@
 /*
  * Copyright 2019-2023 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /*
@@ -13,7 +11,6 @@
  */
 
 #include "mpp_config.h"
-#include "board_config.h"
 #include "hal_graphics_dev.h"
 #include "hal_debug.h"
 #if (defined HAL_ENABLE_2D_IMGPROC) && (HAL_ENABLE_GFX_DEV_Pxp == 1)
@@ -201,6 +198,7 @@ int HAL_GfxDev_Pxp_Getbufdesc(const gfx_dev_t *dev, hw_buf_desc_t *in_buf, hw_bu
         *policy = HAL_MEM_ALLOC_NONE;
         /* set hw requirement */
         in_buf->alignment = 0;
+        in_buf->nb_lines = 0;
         in_buf->cacheable = false;
         in_buf->stride = 0;
         out_buf->alignment = 0;
@@ -428,7 +426,7 @@ static int set_output_buffer_format(pxp_output_buffer_config_t *pOutputBufferCon
     switch (pDst->format)
     {
     /* TODO support RGB 32 bits unpacked */
-#if (PXP_WORKAROUND_OUT_RGB == 1)
+#if (HAL_PXP_WORKAROUND_OUT_RGB == 1)
         case MPP_PIXEL_BGR:
 #endif
         case MPP_PIXEL_RGB:
@@ -710,7 +708,7 @@ static int HAL_GfxDev_Pxp_YUYV1P422ToYUV420P(gfx_surface_t *pSrc, gfx_surface_t 
     return 0;
 }
 
-#if (PXP_WORKAROUND_OUT_RGB == 1)
+#if (HAL_PXP_WORKAROUND_OUT_RGB == 1)
 /*
  * software conversion from BGR24 to RGB24
  */
@@ -918,7 +916,7 @@ int HAL_GfxDev_Pxp_Blit(
 
     _HAL_GfxDev_Pxp_Unlock();
 
-#if (PXP_WORKAROUND_OUT_RGB == 1)
+#if (HAL_PXP_WORKAROUND_OUT_RGB == 1)
     /* Workaround for the PXP bug where BGR888 is output instead of RGB888 [MPP-97].
      * For the output format kPXP_OutputPixelFormatRGB888P, a software conversion
      * applies to invert blue and red pixels.

@@ -4,6 +4,7 @@ var searchData=
   ['sai_5fclock_5fpolarity_5ft',['sai_clock_polarity_t',['../a00063.html#ga311302fe418002fddb7b0e553e73d22d',1,'fsl_sai.h']]],
   ['sai_5fdata_5forder_5ft',['sai_data_order_t',['../a00063.html#ga671f20a72e99f08a11498b79d7259e05',1,'fsl_sai.h']]],
   ['sai_5fdata_5fpin_5fstate_5ft',['sai_data_pin_state_t',['../a00063.html#gae4a409d44282959d52f804c0d754764c',1,'fsl_sai.h']]],
+  ['sai_5fedma_5finterleave_5ft',['sai_edma_interleave_t',['../a00064.html#ga2aa82efb6aae4e8fedd69020bc3904ea',1,'fsl_sai_edma.h']]],
   ['sai_5ffifo_5fcombine_5ft',['sai_fifo_combine_t',['../a00063.html#gadb4e57ea2e6e1905168287b68908cd32',1,'fsl_sai.h']]],
   ['sai_5ffifo_5fpacking_5ft',['sai_fifo_packing_t',['../a00063.html#ga0741098d4c9a5a481746c2c27980e4ad',1,'fsl_sai.h']]],
   ['sai_5fframe_5fsync_5flen_5ft',['sai_frame_sync_len_t',['../a00063.html#ga056a1e38dc9903ca4b960182e5187e61',1,'fsl_sai.h']]],

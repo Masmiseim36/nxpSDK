@@ -1,25 +1,29 @@
 var a00088 =
 [
-    [ "xbara_control_config_t", "a00088.html#a00570", [
-      [ "activeEdge", "a00088.html#a115969c58f3d6d8642a1095a7c685167", null ],
-      [ "requestType", "a00088.html#ae5ec7c11cc4f3164a562917fbc8f9183", null ]
+    [ "XBARAControlConfig", "a00088.html#a00570", [
+      [ "activeEdge", "a00088.html#a719e0f6dc2653f02bf80649520a7d773", null ],
+      [ "requestType", "a00088.html#a1e0cd92fa945d26323a7427afa4dec62", null ]
     ] ],
-    [ "xbara_active_edge_t", "a00088.html#gacf40a09fdbb3dd3f141697fb08ce224c", [
-      [ "kXBARA_EdgeNone", "a00088.html#ggacf40a09fdbb3dd3f141697fb08ce224ca0b1f05aab008cc333fc9d221dc471ad2", null ],
-      [ "kXBARA_EdgeRising", "a00088.html#ggacf40a09fdbb3dd3f141697fb08ce224caa9f6a89ba6b33bb42492a01a32e125d2", null ],
-      [ "kXBARA_EdgeFalling", "a00088.html#ggacf40a09fdbb3dd3f141697fb08ce224cadd352c2692d10c47e0565b5db9c0aaad", null ],
-      [ "kXBARA_EdgeRisingAndFalling", "a00088.html#ggacf40a09fdbb3dd3f141697fb08ce224cab5a8f839c97e6895864cf9c9acdf3acc", null ]
+    [ "xbara_active_edge_t", "a00088.html#ga13767542b858cfba49c5db98eaf4555e", null ],
+    [ "xbara_request_t", "a00088.html#gaebc4ca2212f5faabce2f8678fd23338c", null ],
+    [ "xbara_status_flag_t", "a00088.html#gab6314ef7be163cd6a1867d874d9bbc1d", null ],
+    [ "xbara_control_config_t", "a00088.html#gaf08a77e84be753067f00baa38275f3da", null ],
+    [ "_xbara_active_edge", "a00088.html#ga5ce2a1edfa4a79a50b926c21331478a7", [
+      [ "kXBARA_EdgeNone", "a00088.html#gga5ce2a1edfa4a79a50b926c21331478a7a0b1f05aab008cc333fc9d221dc471ad2", null ],
+      [ "kXBARA_EdgeRising", "a00088.html#gga5ce2a1edfa4a79a50b926c21331478a7aa9f6a89ba6b33bb42492a01a32e125d2", null ],
+      [ "kXBARA_EdgeFalling", "a00088.html#gga5ce2a1edfa4a79a50b926c21331478a7add352c2692d10c47e0565b5db9c0aaad", null ],
+      [ "kXBARA_EdgeRisingAndFalling", "a00088.html#gga5ce2a1edfa4a79a50b926c21331478a7ab5a8f839c97e6895864cf9c9acdf3acc", null ]
     ] ],
-    [ "xbara_request_t", "a00088.html#ga8e4281860299afa4b037f46a43d194bc", [
-      [ "kXBARA_RequestDisable", "a00088.html#gga8e4281860299afa4b037f46a43d194bca67befcfe617c522f75f9c58aca037aef", null ],
-      [ "kXBARA_RequestDMAEnable", "a00088.html#gga8e4281860299afa4b037f46a43d194bca074420520b90004cbbc9fe1cf6d95b18", null ],
-      [ "kXBARA_RequestInterruptEnable", "a00088.html#gga8e4281860299afa4b037f46a43d194bca90c054b76f1e59c9e159e2bb89f82541", null ]
+    [ "_xbar_request", "a00088.html#ga73169ee17867a3ce8ffbf19abd42b9e1", [
+      [ "kXBARA_RequestDisable", "a00088.html#gga73169ee17867a3ce8ffbf19abd42b9e1a67befcfe617c522f75f9c58aca037aef", null ],
+      [ "kXBARA_RequestDMAEnable", "a00088.html#gga73169ee17867a3ce8ffbf19abd42b9e1a074420520b90004cbbc9fe1cf6d95b18", null ],
+      [ "kXBARA_RequestInterruptEnable", "a00088.html#gga73169ee17867a3ce8ffbf19abd42b9e1a90c054b76f1e59c9e159e2bb89f82541", null ]
     ] ],
-    [ "xbara_status_flag_t", "a00088.html#ga0c8c0b6bbacda08f8d646f2ba109158e", [
-      [ "kXBARA_EdgeDetectionOut0", "a00088.html#gga0c8c0b6bbacda08f8d646f2ba109158ea7fd07691d8d5cd8b7cbfa21c080464af", null ],
-      [ "kXBARA_EdgeDetectionOut1", "a00088.html#gga0c8c0b6bbacda08f8d646f2ba109158eaa9104d5388f116228e21a65116dabd6d", null ],
-      [ "kXBARA_EdgeDetectionOut2", "a00088.html#gga0c8c0b6bbacda08f8d646f2ba109158ea53460b197642d46a4f04eadda3cb4bd2", null ],
-      [ "kXBARA_EdgeDetectionOut3", "a00088.html#gga0c8c0b6bbacda08f8d646f2ba109158eaa26a7c1cbca51e3ffa9362c03ac5a0d1", null ]
+    [ "_xbara_status_flag_t", "a00088.html#ga492702c207ed1b605061f54b80c62f6a", [
+      [ "kXBARA_EdgeDetectionOut0", "a00088.html#gga492702c207ed1b605061f54b80c62f6aa7fd07691d8d5cd8b7cbfa21c080464af", null ],
+      [ "kXBARA_EdgeDetectionOut1", "a00088.html#gga492702c207ed1b605061f54b80c62f6aaa9104d5388f116228e21a65116dabd6d", null ],
+      [ "kXBARA_EdgeDetectionOut2", "a00088.html#gga492702c207ed1b605061f54b80c62f6aa53460b197642d46a4f04eadda3cb4bd2", null ],
+      [ "kXBARA_EdgeDetectionOut3", "a00088.html#gga492702c207ed1b605061f54b80c62f6aaa26a7c1cbca51e3ffa9362c03ac5a0d1", null ]
     ] ],
     [ "XBARA_Init", "a00088.html#ga5c026c940af4df8e13962eb78d4e0f13", null ],
     [ "XBARA_Deinit", "a00088.html#ga951d45c9a0884c2ea35d98b71a7ea889", null ],

@@ -1,0 +1,299 @@
+<!--
+* Copyright 2017-2018 NXP
+* The CFG element contains a list of recognized usb devices.
+*  DEV elements provide a name, class, vid and pid for each device.
+*
+* Each LIST element contains a list of update instructions.
+*
+* Each CMD element contains one update instruction of attribute type.
+*  "boot" - Finds configured device, forces it to "body" device and downloads "file".
+*  "find" - Waits for "timeout" seconds for the "body" device to connect.
+*  "blhost" - Executes a blhost command.
+-->
+
+
+<UCL>
+
+<CFG>
+    <STATE name="BootStrap" dev="MXRT106X" vid="1FC9" pid="0135"/> <!-- I.MX SDP USB-HID -->
+    <STATE name="Blhost" dev="KBL-HID" vid="15A2" pid="0073"/>   <!--KIBBLE USB-HID-->
+</CFG>
+
+<!--
+      NOTE: This option is mainly used for downloading KSDK XiP example for EVK board
+            In this KSDK example, both the Flash Config block, IVT and boot data are provided in the 
+            KSDK example source code, so the boot image should start at address 0x6000_0000
+
+            To use this List, users need to 
+            1. Compile the KSDK example, and generate the binary file
+            2. Rename the binary file to boot_image.bin and drag it to <mfgtool_dir>/Profiles/MXRT106x/OS Firmware/
+            3. Update <mfgtool_dir>/cfg.ini, change the name to "MXRT106x-DevBootSerialFlashXiP"
+-->
+
+<LIST name="MXRT106x-DevBootSerialFlashXiP" desc="Manufacturing with Flashloader">
+<!-- Stage 1, load and execute Flashloader -->    
+    <CMD state="BootStrap" type="boot" body="BootStrap" file="ivt_flashloader.bin" > Loading Flashloader. </CMD>
+    <CMD state="BootStrap" type="jump"  onError = "ignore"> Jumping to Flashloader. </CMD>
+
+<!-- Stage 2, Program boot image into external memory using Flashloader -->   
+    <CMD state="Blhost" type="blhost" body="get-property 1" > Get Property 1. </CMD> <!--Used to test if flashloader runs successfully-->
+    <CMD state="Blhost" type="blhost" body="fill-memory 0x2000 4 0xc0000007"> Prepare Flash Configuration option </CMD>
+    <CMD state="Blhost" type="blhost" body="configure-memory 0x9 0x2000"> Configure QuadSPI NOR Flash </CMD>
+    <!-- This erase size need to be updated based on the actual boot image size-->
+    <CMD state="Blhost" type="blhost" timeout="30000" body="flash-erase-region 0x60000000 0x100000" > Erase 1MBytes </CMD>  
+    <CMD state="Blhost" type="blhost" timeout="15000" body="write-memory 0x60000000 \"Profiles\\MXRT106X\\OS Firmware\\boot_image.bin\"" > Program Boot Image. </CMD> 
+    <CMD state="Blhost" type="blhost" body="Update Completed!">Done</CMD>
+</LIST>
+
+
+<LIST name="MXRT106x-DevBootSerialFlashXiP_NoConfigBlock" desc="Manufacturing with Flashloader">
+<!-- Stage 1, load and execute Flashloader -->    
+    <CMD state="BootStrap" type="boot" body="BootStrap" file="ivt_flashloader.bin" > Loading Flashloader. </CMD>
+    <CMD state="BootStrap" type="jump"  onError = "ignore"> Jumping to Flashloader. </CMD>
+
+<!-- Stage 2, Program boot image into external memory using Flashloader -->
+    <CMD state="Blhost" type="blhost" body="get-property 1" > Get Property 1. </CMD> <!--Used to test if flashloader runs successfully-->
+    <CMD state="Blhost" type="blhost" body="fill-memory 0x2000 4 0xc0000007"> Prepare Flash Configuration option </CMD>
+    <CMD state="Blhost" type="blhost" body="configure-memory 0x9 0x2000"> Configure Serial FLASH </CMD>
+    <!-- This erase size need to be updated based on the actual boot image size-->
+    <CMD state="Blhost" type="blhost" timeout="30000" body="flash-erase-region 0x60000000 0x10000" > Erase 64KBytes </CMD>  
+    <CMD state="Blhost" type="blhost" body="fill-memory 0x3000 4 0xf000000f"> Prepare Magic nubmer for config block programming </CMD>
+    <CMD state="Blhost" type="blhost" body="configure-memory 0x9 0x3000"> Write auto-generated config block to QuadSPI NOR Flash </CMD>
+    <CMD state="Blhost" type="blhost" timeout="15000" body="write-memory 0x60001000 \"Profiles\\MXRT106X\\OS Firmware\\boot_image.bin\"" > Program Boot Image. </CMD> 
+    <CMD state="Blhost" type="blhost" body="Update Completed!">Done</CMD>
+</LIST>
+
+<LIST name="MXRT106x-DevBootSerialFlashXiP_NoConfigBlockBootData" desc="Manufacturing with Flashloader">
+<!-- Stage 1, load and execute Flashloader -->    
+    <CMD state="BootStrap" type="boot" body="BootStrap" file="ivt_flashloader.bin" > Loading Flashloader. </CMD>
+    <CMD state="BootStrap" type="jump"  onError = "ignore"> Jumping to Flashloader. </CMD>
+
+<!-- Stage 2, Program boot image into external memory using Flashloader -->
+    <CMD state="Blhost" type="blhost" body="get-property 1" > Get Property 1. </CMD> <!--Used to test if flashloader runs successfully-->
+    <CMD state="Blhost" type="blhost" body="fill-memory 0x2000 4 0xc0000007"> Prepare Flash Configuration option </CMD>
+    <CMD state="Blhost" type="blhost" body="configure-memory 0x9 0x2000"> Configure Serial FLASH </CMD>
+    <!-- This erase size need to be updated based on the actual boot image size-->
+    <CMD state="Blhost" type="blhost" timeout="30000" body="flash-erase-region 0x60000000 0x100000" > Erase 1MBytes </CMD>  
+    <CMD state="Blhost" type="blhost" body="fill-memory 0x3000 4 0xf000000f"> Prepare Magic nubmer for config block programming </CMD>
+    <CMD state="Blhost" type="blhost" body="configure-memory 0x9 0x3000"> Write auto-generated config block to QuadSPI NOR Flash </CMD>
+    <CMD state="Blhost" type="blhost" timeout="15000" body="write-memory 0x60001000 \"Profiles\\MXRT106X\\OS Firmware\\ivt_bootdata_0x6000_2000.bin\"" > Program IVT and Boot data. </CMD> 
+    <CMD state="Blhost" type="blhost" timeout="15000" body="write-memory 0x60002000 \"Profiles\\MXRT106X\\OS Firmware\\boot_image.bin\"" > Program Boot Image. </CMD> 
+    <CMD state="Blhost" type="blhost" body="Update Completed!">Done</CMD>
+</LIST>
+
+
+<LIST name="MXRT106x-DevBootSerialFlashNonXiP_ITCM_0x0000_1400" desc="Manufacturing with Flashloader">
+<!-- Stage 1, load and execute Flashloader -->    
+    <CMD state="BootStrap" type="boot" body="BootStrap" file="ivt_flashloader.bin" > Loading Flashloader. </CMD>
+    <CMD state="BootStrap" type="jump"  onError = "ignore"> Jumping to Flashloader. </CMD>
+
+<!-- Stage 2, Program boot image into external memory using Flashloader -->
+    <CMD state="Blhost" type="blhost" body="get-property 1" > Get Property 1. </CMD> <!--Used to test if flashloader runs successfully-->
+    <CMD state="Blhost" type="blhost" body="fill-memory 0x2000 4 0xc0000007"> Prepare Flash Configuration option </CMD>
+    <CMD state="Blhost" type="blhost" body="configure-memory 0x9 0x2000"> Configure Serial FLASH </CMD>
+    <!-- This erase size need to be updated based on the actual boot image size-->
+    <CMD state="Blhost" type="blhost" timeout="30000" body="flash-erase-region 0x60000000 0x40000" > Erase 256KBytes </CMD>  
+    <CMD state="Blhost" type="blhost" body="fill-memory 0x3000 4 0xf000000f"> Prepare Magic nubmer for config block programming </CMD>
+    <CMD state="Blhost" type="blhost" body="configure-memory 0x9 0x3000"> Write auto-generated config block to QuadSPI NOR Flash </CMD>
+    <CMD state="Blhost" type="blhost" timeout="15000" body="write-memory 0x60001000 \"Profiles\\MXRT106X\\OS Firmware\\ivt_bootdata_0x0000_1400.bin\"" > Program IVT, Boot data. </CMD> 
+	<CMD state="Blhost" type="blhost" timeout="15000" body="write-memory 0x60001300 \"Profiles\\MXRT106X\\OS Firmware\\boot_image.bin\"" > Program Boot image. </CMD> 
+    <CMD state="Blhost" type="blhost" body="Update Completed!">Done</CMD>
+</LIST>
+
+
+<LIST name="MXRT106x-DevBootSerialFlashNonXiP_DTCM_0x2000_2000" desc="Manufacturing with Flashloader">
+<!-- Stage 1, load and execute Flashloader -->    
+    <CMD state="BootStrap" type="boot" body="BootStrap" file="ivt_flashloader.bin" > Loading Flashloader. </CMD>
+    <CMD state="BootStrap" type="jump"  onError = "ignore"> Jumping to Flashloader. </CMD>
+
+<!-- Stage 2, Program boot image into external memory using Flashloader -->
+    <CMD state="Blhost" type="blhost" body="get-property 1" > Get Property 1. </CMD> <!--Used to test if flashloader runs successfully-->
+    <CMD state="Blhost" type="blhost" body="fill-memory 0x2000 4 0xc0000007"> Prepare Flash Configuration option </CMD>
+    <CMD state="Blhost" type="blhost" body="configure-memory 0x9 0x2000"> Configure Serial FLASH </CMD>
+    <!-- This erase size need to be updated based on the actual boot image size-->
+    <CMD state="Blhost" type="blhost" timeout="30000" body="flash-erase-region 0x60000000 0x40000" > Erase 256KBytes </CMD>  
+    <CMD state="Blhost" type="blhost" body="fill-memory 0x3000 4 0xf000000f"> Prepare Magic nubmer for config block programming </CMD>
+    <CMD state="Blhost" type="blhost" body="configure-memory 0x9 0x3000"> Write auto-generated config block to QuadSPI NOR Flash </CMD>
+    <CMD state="Blhost" type="blhost" timeout="15000" body="write-memory 0x60001000 \"Profiles\\MXRT106X\\OS Firmware\\ivt_bootdata_0x2000_2000.bin\"" > Program IVT, Boot data. </CMD> 
+	<CMD state="Blhost" type="blhost" timeout="15000" body="write-memory 0x60002000 \"Profiles\\MXRT106X\\OS Firmware\\boot_image.bin\"" > Program Boot image. </CMD> 
+    <CMD state="Blhost" type="blhost" body="Update Completed!">Done</CMD>
+</LIST>
+
+
+
+<LIST name="MXRT106x-DevBootSerialFlashNonXiP_OCRAM_0x2020_a000" desc="Manufacturing with Flashloader">
+<!-- Stage 1, load and execute Flashloader -->    
+    <CMD state="BootStrap" type="boot" body="BootStrap" file="ivt_flashloader.bin" > Loading Flashloader. </CMD>
+    <CMD state="BootStrap" type="jump"  onError = "ignore"> Jumping to Flashloader. </CMD>
+
+<!-- Stage 2, Program boot image into external memory using Flashloader -->
+    <CMD state="Blhost" type="blhost" body="get-property 1" > Get Property 1. </CMD> <!--Used to test if flashloader runs successfully-->
+    <CMD state="Blhost" type="blhost" body="fill-memory 0x2000 4 0xc0000007"> Prepare Flash Configuration option </CMD>
+    <CMD state="Blhost" type="blhost" body="configure-memory 0x9 0x2000"> Configure Serial FLASH </CMD>
+    <!-- This erase size need to be updated based on the actual boot image size-->
+    <CMD state="Blhost" type="blhost" timeout="30000" body="flash-erase-region 0x60000000 0x100000" > Erase 1MBytes </CMD>  
+    <CMD state="Blhost" type="blhost" body="fill-memory 0x3000 4 0xf000000f"> Prepare Magic nubmer for config block programming </CMD>
+    <CMD state="Blhost" type="blhost" body="configure-memory 0x9 0x3000"> Write auto-generated config block to QuadSPI NOR Flash </CMD>
+    <CMD state="Blhost" type="blhost" timeout="15000" body="write-memory 0x60001000 \"Profiles\\MXRT106X\\OS Firmware\\ivt_bootdata_0x2020_a000.bin\"" > Program IVT, Boot data. </CMD> 
+	<CMD state="Blhost" type="blhost" timeout="15000" body="write-memory 0x60002000 \"Profiles\\MXRT106X\\OS Firmware\\boot_image.bin\"" > Program Boot image. </CMD> 
+    <CMD state="Blhost" type="blhost" body="Update Completed!">Done</CMD>
+</LIST>
+
+<LIST name="MXRT106x-DevBoot" desc="Manufacturing with Flashloader">
+<!-- Stage 1, load and execute Flashloader -->    
+    <CMD state="BootStrap" type="boot" body="BootStrap" file="ivt_flashloader.bin" > Loading Flashloader. </CMD>
+    <CMD state="BootStrap" type="jump"  onError = "ignore"> Jumping to Flashloader. </CMD>
+
+<!-- Stage 2, Program boot image into external memory using Flashloader -->   
+    <CMD state="Blhost" type="blhost" body="get-property 1" > Get Property 1. </CMD> <!--Used to test if flashloader runs successfully-->
+    <CMD state="Blhost" type="blhost" timeout="15000" body="receive-sb-file \"Profiles\\MXRT106X\\OS Firmware\\boot_image.sb\"" > Program Boot image </CMD> 
+    <CMD state="Blhost" type="blhost" body="Update Completed!">Done</CMD>
+</LIST>
+
+<LIST name="MXRT106x-SecureBoot" desc="Boot Signed Flashloader">
+<!-- Stage 1, load and execute Flashloader -->
+    <CMD state="BootStrap" type="boot" body="BootStrap" file="ivt_flashloader_signed.bin" > Loading Flashloader. </CMD>
+    <CMD state="BootStrap" type="jump" onError="ignore"> Jumping to Flashloader. </CMD>
+
+<!-- Stage 2, Enable HAB closed mode using Flashloader -->  
+    <CMD state="Blhost" type="blhost" body="get-property 1" ifhab="Open" > Get Property 1. </CMD> <!--Used to test if flashloader runs successfully-->
+    <CMD state="Blhost" type="blhost" body="receive-sb-file \"Profiles\\MXRT106X\\OS Firmware\\enable_hab.sb\"" ifhab="Open" > Program Boot Image. </CMD>
+    <CMD state="Blhost" type="blhost" body="reset" ifhab="Open"> Reset. </CMD> <!--Reset device to enable HAB Close Mode-->
+
+<!-- Stage 3, Program signed image into external memory using Flashloader -->    
+    <CMD state="Blhost" type="blhost" body="get-property 1" ifhab="Close"> Get Property 1. </CMD> <!--Used to test if flashloader runs successfully-->
+    <CMD state="Blhost" type="blhost" timeout="15000" body="receive-sb-file \"Profiles\\MXRT106X\\OS Firmware\\boot_image.sb\"" ifhab="Close" > Program Boot Image. </CMD> 
+    <CMD state="Blhost" type="blhost" body="Update Completed!" ifhab="Close" >Done</CMD>
+</LIST>
+
+
+<!--
+      NOTE: This option is mainly used for downloading KSDK XiP example for EVK board
+            In this KSDK example, both the Flash Config block, IVT and boot data are provided in the 
+            KSDK example source code, so the boot image should start at address 0x7000_0000
+
+            To use this List, users need to 
+            1. Compile the KSDK example, and generate the binary file
+            2. Rename the binary file to boot_image.bin and drag it to <mfgtool_dir>/Profiles/MXRT106x/OS Firmware/
+            3. Update <mfgtool_dir>/cfg.ini, change the name to "MXRT1064-DevBootSerialFlashXiP"
+-->
+
+<LIST name="MXRT1064-DevBootSerialFlashXiP" desc="Manufacturing with Flashloader">
+<!-- Stage 1, load and execute Flashloader -->    
+    <CMD state="BootStrap" type="boot" body="BootStrap" file="ivt_flashloader.bin" > Loading Flashloader. </CMD>
+    <CMD state="BootStrap" type="jump"  onError = "ignore"> Jumping to Flashloader. </CMD>
+
+<!-- Stage 2, Program boot image into external memory using Flashloader -->   
+    <CMD state="Blhost" type="blhost" body="get-property 1" > Get Property 1. </CMD> <!--Used to test if flashloader runs successfully-->
+    <CMD state="Blhost" type="blhost" body="fill-memory 0x2000 4 0xc0000007"> Prepare Flash Configuration option </CMD>
+    <CMD state="Blhost" type="blhost" body="configure-memory 0x9 0x2000"> Configure QuadSPI NOR Flash </CMD>
+    <!-- This erase size need to be updated based on the actual boot image size-->
+    <CMD state="Blhost" type="blhost" timeout="30000" body="flash-erase-region 0x70000000 0x40000" > Erase 256KBytes </CMD>  
+    <CMD state="Blhost" type="blhost" timeout="15000" body="write-memory 0x70000000 \"Profiles\\MXRT106X\\OS Firmware\\boot_image.bin\"" > Program Boot Image. </CMD> 
+    <CMD state="Blhost" type="blhost" body="Update Completed!">Done</CMD>
+</LIST>
+
+<LIST name="MXRT1064-DevBootSerialFlashXiP_NoConfigBlockBootData" desc="Manufacturing with Flashloader">
+<!-- Stage 1, load and execute Flashloader -->    
+    <CMD state="BootStrap" type="boot" body="BootStrap" file="ivt_flashloader.bin" > Loading Flashloader. </CMD>
+    <CMD state="BootStrap" type="jump"  onError = "ignore"> Jumping to Flashloader. </CMD>
+
+<!-- Stage 2, Program boot image into external memory using Flashloader -->
+    <CMD state="Blhost" type="blhost" body="get-property 1" > Get Property 1. </CMD> <!--Used to test if flashloader runs successfully-->
+    <CMD state="Blhost" type="blhost" body="fill-memory 0x2000 4 0xc0000007"> Prepare Flash Configuration option </CMD>
+    <CMD state="Blhost" type="blhost" body="configure-memory 0x9 0x2000"> Configure Serial FLASH </CMD>
+    <!-- This erase size need to be updated based on the actual boot image size-->
+    <CMD state="Blhost" type="blhost" timeout="30000" body="flash-erase-region 0x70000000 0x40000" > Erase 256KBytes </CMD>  
+    <CMD state="Blhost" type="blhost" body="fill-memory 0x3000 4 0xf000000f"> Prepare Magic nubmer for config block programming </CMD>
+    <CMD state="Blhost" type="blhost" body="configure-memory 0x9 0x3000"> Write auto-generated config block to QuadSPI NOR Flash </CMD>
+    <CMD state="Blhost" type="blhost" timeout="15000" body="write-memory 0x70001000 \"Profiles\\MXRT106X\\OS Firmware\\ivt_bootdata_0x7000_2000.bin\"" > Program IVT and Boot data. </CMD> 
+    <CMD state="Blhost" type="blhost" timeout="15000" body="write-memory 0x70002000 \"Profiles\\MXRT106X\\OS Firmware\\boot_image.bin\"" > Program Boot Image. </CMD> 
+    <CMD state="Blhost" type="blhost" body="Update Completed!">Done</CMD>
+</LIST>
+
+
+<LIST name="MXRT1064-DevBootSerialFlashNonXiP_ITCM_0x0000_1400" desc="Manufacturing with Flashloader">
+<!-- Stage 1, load and execute Flashloader -->    
+    <CMD state="BootStrap" type="boot" body="BootStrap" file="ivt_flashloader.bin" > Loading Flashloader. </CMD>
+    <CMD state="BootStrap" type="jump"  onError = "ignore"> Jumping to Flashloader. </CMD>
+
+<!-- Stage 2, Program boot image into external memory using Flashloader -->
+    <CMD state="Blhost" type="blhost" body="get-property 1" > Get Property 1. </CMD> <!--Used to test if flashloader runs successfully-->
+    <CMD state="Blhost" type="blhost" body="fill-memory 0x2000 4 0xc0000007"> Prepare Flash Configuration option </CMD>
+    <CMD state="Blhost" type="blhost" body="configure-memory 0x9 0x2000"> Configure Serial FLASH </CMD>
+    <!-- This erase size need to be updated based on the actual boot image size-->
+    <CMD state="Blhost" type="blhost" timeout="30000" body="flash-erase-region 0x70000000 0x40000" > Erase 256KBytes </CMD>  
+    <CMD state="Blhost" type="blhost" body="fill-memory 0x3000 4 0xf000000f"> Prepare Magic nubmer for config block programming </CMD>
+    <CMD state="Blhost" type="blhost" body="configure-memory 0x9 0x3000"> Write auto-generated config block to QuadSPI NOR Flash </CMD>
+    <CMD state="Blhost" type="blhost" timeout="15000" body="write-memory 0x70001000 \"Profiles\\MXRT106X\\OS Firmware\\ivt_bootdata_0x0000_1400.bin\"" > Program IVT, Boot data. </CMD> 
+	<CMD state="Blhost" type="blhost" timeout="15000" body="write-memory 0x70001300 \"Profiles\\MXRT106X\\OS Firmware\\boot_image.bin\"" > Program Boot image. </CMD> 
+    <CMD state="Blhost" type="blhost" body="Update Completed!">Done</CMD>
+</LIST>
+
+
+<LIST name="MXRT1064-DevBootSerialFlashNonXiP_DTCM_0x2000_2000" desc="Manufacturing with Flashloader">
+<!-- Stage 1, load and execute Flashloader -->    
+    <CMD state="BootStrap" type="boot" body="BootStrap" file="ivt_flashloader.bin" > Loading Flashloader. </CMD>
+    <CMD state="BootStrap" type="jump"  onError = "ignore"> Jumping to Flashloader. </CMD>
+
+<!-- Stage 2, Program boot image into external memory using Flashloader -->
+    <CMD state="Blhost" type="blhost" body="get-property 1" > Get Property 1. </CMD> <!--Used to test if flashloader runs successfully-->
+    <CMD state="Blhost" type="blhost" body="fill-memory 0x2000 4 0xc0000007"> Prepare Flash Configuration option </CMD>
+    <CMD state="Blhost" type="blhost" body="configure-memory 0x9 0x2000"> Configure Serial FLASH </CMD>
+    <!-- This erase size need to be updated based on the actual boot image size-->
+    <CMD state="Blhost" type="blhost" timeout="30000" body="flash-erase-region 0x70000000 0x40000" > Erase 256KBytes </CMD>  
+    <CMD state="Blhost" type="blhost" body="fill-memory 0x3000 4 0xf000000f"> Prepare Magic nubmer for config block programming </CMD>
+    <CMD state="Blhost" type="blhost" body="configure-memory 0x9 0x3000"> Write auto-generated config block to QuadSPI NOR Flash </CMD>
+    <CMD state="Blhost" type="blhost" timeout="15000" body="write-memory 0x70001000 \"Profiles\\MXRT106X\\OS Firmware\\ivt_bootdata_0x2000_2000.bin\"" > Program IVT, Boot data. </CMD> 
+	<CMD state="Blhost" type="blhost" timeout="15000" body="write-memory 0x70002000 \"Profiles\\MXRT106X\\OS Firmware\\boot_image.bin\"" > Program Boot image. </CMD> 
+    <CMD state="Blhost" type="blhost" body="Update Completed!">Done</CMD>
+</LIST>
+
+
+
+<LIST name="MXRT1064-DevBootSerialFlashNonXiP_OCRAM_0x2020_a000" desc="Manufacturing with Flashloader">
+<!-- Stage 1, load and execute Flashloader -->    
+    <CMD state="BootStrap" type="boot" body="BootStrap" file="ivt_flashloader.bin" > Loading Flashloader. </CMD>
+    <CMD state="BootStrap" type="jump"  onError = "ignore"> Jumping to Flashloader. </CMD>
+
+<!-- Stage 2, Program boot image into external memory using Flashloader -->
+    <CMD state="Blhost" type="blhost" body="get-property 1" > Get Property 1. </CMD> <!--Used to test if flashloader runs successfully-->
+    <CMD state="Blhost" type="blhost" body="fill-memory 0x2000 4 0xc0000007"> Prepare Flash Configuration option </CMD>
+    <CMD state="Blhost" type="blhost" body="configure-memory 0x9 0x2000"> Configure Serial FLASH </CMD>
+    <!-- This erase size need to be updated based on the actual boot image size-->
+    <CMD state="Blhost" type="blhost" timeout="30000" body="flash-erase-region 0x70000000 0x100000" > Erase 1MBytes </CMD>  
+    <CMD state="Blhost" type="blhost" body="fill-memory 0x3000 4 0xf000000f"> Prepare Magic nubmer for config block programming </CMD>
+    <CMD state="Blhost" type="blhost" body="configure-memory 0x9 0x3000"> Write auto-generated config block to QuadSPI NOR Flash </CMD>
+    <CMD state="Blhost" type="blhost" timeout="15000" body="write-memory 0x70001000 \"Profiles\\MXRT106X\\OS Firmware\\ivt_bootdata_0x2020_a000.bin\"" > Program IVT, Boot data. </CMD> 
+	<CMD state="Blhost" type="blhost" timeout="15000" body="write-memory 0x70002000 \"Profiles\\MXRT106X\\OS Firmware\\boot_image.bin\"" > Program Boot image. </CMD> 
+    <CMD state="Blhost" type="blhost" body="Update Completed!">Done</CMD>
+</LIST>
+
+<LIST name="MXRT1064-DevBoot" desc="Manufacturing with Flashloader">
+<!-- Stage 1, load and execute Flashloader -->    
+    <CMD state="BootStrap" type="boot" body="BootStrap" file="ivt_flashloader.bin" > Loading Flashloader. </CMD>
+    <CMD state="BootStrap" type="jump"  onError = "ignore"> Jumping to Flashloader. </CMD>
+
+<!-- Stage 2, Program boot image into external memory using Flashloader -->   
+    <CMD state="Blhost" type="blhost" body="get-property 1" > Get Property 1. </CMD> <!--Used to test if flashloader runs successfully-->
+    <CMD state="Blhost" type="blhost" timeout="15000" body="receive-sb-file \"Profiles\\MXRT106X\\OS Firmware\\boot_image.sb\"" > Program Boot image </CMD> 
+    <CMD state="Blhost" type="blhost" body="Update Completed!">Done</CMD>
+</LIST>
+
+<LIST name="MXRT1064-SecureBoot" desc="Boot Signed Flashloader">
+<!-- Stage 1, load and execute Flashloader -->
+    <CMD state="BootStrap" type="boot" body="BootStrap" file="ivt_flashloader_signed.bin" > Loading Flashloader. </CMD>
+    <CMD state="BootStrap" type="jump" onError="ignore"> Jumping to Flashloader. </CMD>
+
+<!-- Stage 2, Enable HAB closed mode using Flashloader -->  
+    <CMD state="Blhost" type="blhost" body="get-property 1" ifhab="Open" > Get Property 1. </CMD> <!--Used to test if flashloader runs successfully-->
+    <CMD state="Blhost" type="blhost" body="receive-sb-file \"Profiles\\MXRT106X\\OS Firmware\\enable_hab.sb\"" ifhab="Open" > Program Boot Image. </CMD>
+    <CMD state="Blhost" type="blhost" body="reset" ifhab="Open"> Reset. </CMD> <!--Reset device to enable HAB Close Mode-->
+
+<!-- Stage 3, Program signed image into external memory using Flashloader -->    
+    <CMD state="Blhost" type="blhost" body="get-property 1" ifhab="Close"> Get Property 1. </CMD> <!--Used to test if flashloader runs successfully-->
+    <CMD state="Blhost" type="blhost" timeout="15000" body="receive-sb-file \"Profiles\\MXRT106X\\OS Firmware\\boot_image.sb\"" ifhab="Close" > Program Boot Image. </CMD> 
+    <CMD state="Blhost" type="blhost" body="Update Completed!" ifhab="Close" >Done</CMD>
+</LIST>
+
+</UCL>

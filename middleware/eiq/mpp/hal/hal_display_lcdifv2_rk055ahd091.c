@@ -1,10 +1,8 @@
 /*
  * Copyright 2020-2023 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /*
@@ -12,7 +10,6 @@
  */
 
 #include "mpp_config.h"
-#include "board_config.h"
 #include "mpp_api_types.h"
 #include "hal_debug.h"
 #include "hal_display_dev.h"
@@ -114,14 +111,6 @@ static void DISPLAY_BufferSwitchOffCallback(void *param, void *switchOffBuffer)
     s_newFrameShown = true;
     /* TODO allow buffer switching */
     s_lcdActiveFbIdx ^= 1;
-
-#if (ENABLE_FB_CHEKSUM == 1)
-    display_dev_private_capability_t *cap = param;
-    checksum_data_t checksum;
-    checksum.type = CHECKSUM_TYPE_CRC_ELCDIF;
-    checksum.value = DCIC_GetRegionCalculatedCrc(APP_DCIC, 0);
-    if (cap->callback != NULL) cap->callback(NULL, MPP_EVENT_INTERNAL_TEST_RESERVED, (void *) &checksum, cap->user_data);
-#endif
 }
 
 static hal_display_status_t DISPLAY_InitDisplay(display_dev_private_capability_t *cap)
@@ -321,6 +310,24 @@ hal_display_status_t HAL_DisplayDev_Lcdifv2Rk055ah_Blit(const display_dev_t *dev
     hal_display_status_t ret = kStatus_HAL_DisplaySuccess;
     HAL_LOGD("++HAL_DisplayDev_Lcdifv2Rk055ah_Blit\n");
     g_dc.ops->setFrameBuffer(&g_dc, 0, frame);
+
+#if (ENABLE_FB_CHEKSUM == 1)
+    /* wait for end of frame, but ignore CRC
+     * as frame transfer may have started while pipeline was drawing */
+    s_newFrameShown = false;
+    while(!s_newFrameShown) {};
+    g_dc.ops->setFrameBuffer(&g_dc, 0, frame);    /* needed to re-enable lcdif callback */
+    /* wait for end of frame, and read CRC
+     * as frame on screen is now stabilized */
+    s_newFrameShown = false;
+    while(!s_newFrameShown) {};
+    const display_dev_private_capability_t *cap = &(dev->cap);
+    checksum_data_t checksum;
+    checksum.type = CHECKSUM_TYPE_CRC_ELCDIF;
+    checksum.value = DCIC_GetRegionCalculatedCrc(APP_DCIC, 0);
+    if (cap->callback != NULL) cap->callback(NULL, MPP_EVENT_INTERNAL_TEST_RESERVED, (void *) &checksum, cap->user_data);
+#endif
+
     HAL_LOGD("--HAL_DisplayDev_Lcdifv2Rk055ah_Blit\n");
     return ret;
 }
@@ -341,6 +348,7 @@ hal_display_status_t HAL_DisplayDev_Lcdifv2Rk055ah_Getbufdesc(const display_dev_
         /* set memory policy */
         *policy = HAL_MEM_ALLOC_INPUT;
         in_buf->alignment = FRAME_BUFFER_ALIGN;
+        in_buf->nb_lines = DISPLAY_DEV_Lcdifv2Rk055ah_HEIGHT;  /* display requires a specific number of lines */
         in_buf->cacheable = false;
         in_buf->stride = dev->cap.pitch;
         in_buf->addr = (unsigned char *) (s_LcdBuffer[s_lcdActiveFbIdx]);

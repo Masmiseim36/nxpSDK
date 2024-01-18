@@ -14,6 +14,7 @@
 #include <se05x_APDU.h>
 #include <se05x_const.h>
 #include <se05x_tlv.h>
+#include <nxEnsure.h>
 #include <string.h>
 
 int add_taglength_to_data(
@@ -194,6 +195,9 @@ int add_taglength_to_data(
     *pBuf++ = (uint8_t)tag;
 
     if (!extendedLength) {
+        if (cmdLen > UINT8_MAX) {
+            return 1;
+        }
         *pBuf++        = (uint8_t)cmdLen;
         size_of_length = 1;
     }
@@ -206,7 +210,15 @@ int add_taglength_to_data(
         return 1;
     }
 
+    if ((size_t)(1 + size_of_length + cmdLen) >= (size_t)(1UL << ((sizeof(size_t) * 4) - 1))) {
+        return 1;
+    }
+
     size_of_tlv = 1 + size_of_length + cmdLen;
+
+    if ((size_t)(*bufLen + size_of_tlv) >= (size_t)(1UL << ((sizeof(size_t) * 4) - 1))) {
+        return 1;
+    }
 
     if ((cmdLen > 0) && (cmd != NULL)) {
         while (cmdLen-- > 0) {
@@ -391,16 +403,18 @@ smStatus_t Se05x_i2c_master_attst_txn(sss_session_t *sess,
     uint8_t remainingCnt                        = 0;
     int tlvRet                                  = 0;
     uint32_t attestID;
+    uint8_t *rspTag         = NULL;
+    unsigned int rspPos     = 0;
+    uint16_t reportedRead   = 0;
+    uint8_t *pCmdbuf        = &buffer[0];
+    const uint8_t *pSendbuf = &buffer[0];
+    size_t SendLen          = 0;
 
     sss_se05x_session_t *se05x_session = (sss_se05x_session_t *)sess;
     Se05xSession_t *se050session_id    = NULL;
 
     sss_se05x_object_t *keyObject_attst = (sss_se05x_object_t *)keyObject;
     attestID                            = keyObject_attst->keyId;
-
-    uint8_t *pCmdbuf        = &buffer[0];
-    const uint8_t *pSendbuf = &buffer[0];
-    size_t SendLen          = 0;
 
     if (se05x_session->subsystem == kType_SSS_SE_SE05x) {
         se050session_id = &se05x_session->s_ctx;
@@ -492,10 +506,13 @@ smStatus_t Se05x_i2c_master_attst_txn(sss_session_t *sess,
          * In principle the order of results matches the order the incoming commands.
          * Exception: Structural error in format incoming commands
          */
-        uint8_t *rspTag     = &rspbuffer[0];
-        unsigned int rspPos = 1u;
+        ENSURE_OR_GO_CLEANUP(*rspbufferLen > 0);
+        ENSURE_OR_GO_CLEANUP((size_t)(*rspbufferLen) < (size_t)(1UL << ((sizeof(size_t) * 4) - 1)))
+        rspTag = &rspbuffer[0];
+        rspPos = 1u;
         for (iCnt = 0; iCnt < noOftags; iCnt++) {
             if (*rspTag == kSE05x_I2CM_StructuralIssue) {
+                ENSURE_OR_GO_CLEANUP(*rspbufferLen > rspPos);
                 /* Modify TLV type of command to report back error */
                 p[iCnt].type                  = kSE05x_I2CM_StructuralIssue;
                 p[iCnt].cmd.issue.issueStatus = (SE05x_I2CM_status_t) rspbuffer[rspPos];
@@ -507,7 +524,8 @@ smStatus_t Se05x_i2c_master_attst_txn(sss_session_t *sess,
                     LOG_W("Response out-of-order");
                     break;
                 }
-                p[iCnt].cmd.cfg.status = (SE05x_I2CM_status_t) rspbuffer[rspPos];
+                ENSURE_OR_GO_CLEANUP(*rspbufferLen > rspPos);
+                p[iCnt].cmd.cfg.status = rspbuffer[rspPos];
             }
             //else if (p[iCnt].type == kSE05x_I2CM_Security) {
             //}
@@ -517,7 +535,8 @@ smStatus_t Se05x_i2c_master_attst_txn(sss_session_t *sess,
                     LOG_W("Response out-of-order");
                     break;
                 }
-                p[iCnt].cmd.w.wrStatus = (SE05x_I2CM_status_t) rspbuffer[rspPos];
+                ENSURE_OR_GO_CLEANUP(*rspbufferLen > rspPos);
+                p[iCnt].cmd.w.wrStatus = rspbuffer[rspPos];
             }
             else if (p[iCnt].type == kSE05x_I2CM_Read) {
                 /* Check whether response is in expected order */
@@ -525,10 +544,12 @@ smStatus_t Se05x_i2c_master_attst_txn(sss_session_t *sess,
                     LOG_W("Response out-of-order");
                     break;
                 }
-                p[iCnt].cmd.rd.rdStatus = (SE05x_I2CM_status_t) rspbuffer[rspPos];
+                ENSURE_OR_GO_CLEANUP(*rspbufferLen > rspPos);
+                p[iCnt].cmd.rd.rdStatus = rspbuffer[rspPos];
                 if (p[iCnt].cmd.rd.rdStatus == kSE05x_I2CM_Success) {
                     /* Receiving less data than requested is not considered an error */
-                    uint16_t reportedRead = (rspbuffer[rspPos + 1] << 8) + rspbuffer[rspPos + 2];
+                    ENSURE_OR_GO_CLEANUP(*rspbufferLen > (rspPos + 2));
+                    reportedRead = (rspbuffer[rspPos + 1] << 8) + rspbuffer[rspPos + 2];
                     rspPos += 2;
                     if (reportedRead < p[iCnt].cmd.rd.readLength) {
                         LOG_W("kSE05x_I2CM_Read: Requested %d, Received %d byte",
@@ -574,7 +595,7 @@ cleanup:
 /**
  * Returns the applet version compiled by MW
  */
-uint32_t se05x_GetAppletVersion()
+uint32_t se05x_GetAppletVersion(void)
 {
     return APPLET_SE050_VER_MAJOR_MINOR;
 }

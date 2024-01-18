@@ -1,6 +1,6 @@
-// SPDX-License-Identifier: GPL-2.0+
 /*
- * Copyright 2022 NXP
+ * Licensed under the GNU General Public License version 2 with exceptions. See
+ * LICENSE file in the project root for full license information
  */
 
 #ifndef __SOEM_ENET_H___

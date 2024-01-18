@@ -1,17 +1,17 @@
 var a00028 =
 [
-    [ "flexio_i2s_edma_handle_t", "a00028.html#a00264", [
-      [ "dmaHandle", "a00028.html#a12a2f2c760cbe15e7fb1f0951a0c7d9b", null ],
-      [ "bytesPerFrame", "a00028.html#abd5c06ded3088c6359591a31379ad075", null ],
-      [ "nbytes", "a00028.html#a0c4f3ae0b658cf448c53bb0c85859989", null ],
-      [ "state", "a00028.html#a1914d6f6e3efa0da7924366c731ad11b", null ],
-      [ "callback", "a00028.html#a90f9cdd7736391eeb16a983b2644c0f8", null ],
-      [ "userData", "a00028.html#a34ceb56e6f77b98a7318c84166fe03df", null ],
-      [ "tcd", "a00028.html#aa8bbd32f95ed33f3c19038edffb4d347", null ],
-      [ "queue", "a00028.html#a8d7523f896a595c8e08b569fe48827eb", null ],
-      [ "transferSize", "a00028.html#a19bca6ba23dcef0fe530fa94e62c0ef9", null ],
-      [ "queueUser", "a00028.html#a04c1f185a11c9e9004163b14eb510525", null ],
-      [ "queueDriver", "a00028.html#a8652d38a3a09641beee105cfb6d744c3", null ]
+    [ "_flexio_i2s_edma_handle", "a00028.html#a00312", [
+      [ "dmaHandle", "a00028.html#a3f65d1b94c07b14fb29fa83ad7ebddae", null ],
+      [ "bytesPerFrame", "a00028.html#afd0695c3ec5acfd3bdd9792deb3415e6", null ],
+      [ "nbytes", "a00028.html#a78dcdba57cf5066213ea461457dffcb6", null ],
+      [ "state", "a00028.html#abaf1edffa9f9b13aa76524f0551ae629", null ],
+      [ "callback", "a00028.html#a8013ebccbc10e5693c58b7b51e18b635", null ],
+      [ "userData", "a00028.html#aa71c4ede5f0350a9fbac67e58afb4d9d", null ],
+      [ "tcd", "a00028.html#ac283a3b680eaf59122b3456035a8164d", null ],
+      [ "queue", "a00028.html#a2280c1dc77e28686dfbe584a5e128f46", null ],
+      [ "transferSize", "a00028.html#a0c2e243abfed0ecca4c7b5a512a69f62", null ],
+      [ "queueUser", "a00028.html#a402c6b4542c7edae50a9741406cec231", null ],
+      [ "queueDriver", "a00028.html#abb2aa0af51c8b0bea6b19560ec8ba00b", null ]
     ] ],
     [ "FSL_FLEXIO_I2S_EDMA_DRIVER_VERSION", "a00028.html#gaa43bc2ccc6c5bfc9c6a10fa1dc814dc5", null ],
     [ "flexio_i2s_edma_callback_t", "a00028.html#gac8ad14418234f5c3f326cad96b2c72d2", null ],

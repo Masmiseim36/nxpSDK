@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['valid',['valid',['../a00048.html#ac3b63de8b750379ea5624f7d74531be5',1,'otfad_encryption_config_t']]],
-  ['validityconfig',['validityConfig',['../a00061.html#a662ae617d9706faedff59b4e7ebfc563',1,'spdif_config_t']]],
-  ['value1',['value1',['../a00008.html#a40873953dfaca82e7f8e0346a312e2e0',1,'adc_hardware_compare_config_t']]],
-  ['value2',['value2',['../a00008.html#a6bee6b6b6d9376acf6a05e0a3855a6c9',1,'adc_hardware_compare_config_t']]]
+  ['valid',['valid',['../a00049.html#a1cb78fa06289056ac14f0fc005a1668a',1,'_otfad_encryption_config']]],
+  ['validityconfig',['validityConfig',['../a00061.html#a9a83edf589636900df9dc414f5c0641d',1,'_spdif_config']]],
+  ['value1',['value1',['../a00008.html#af43819fab6fc458219d97b101f997d7f',1,'_adc_hardware_compare_config']]],
+  ['value2',['value2',['../a00008.html#afb22aa8187675eb8f1694e6bd7f5a0f2',1,'_adc_hardware_compare_config']]]
 ];

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -103,70 +103,80 @@ $(document).ready(function(){initNavTree('a00051.html','');});
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">LPSPI eDMA Driver<div class="ingroups"><a class="el" href="a00281.html">LPSPI: Low Power Serial Peripheral Interface</a></div></div>  </div>
+<div class="title">LPSPI eDMA Driver<div class="ingroups"><a class="el" href="a00283.html">LPSPI: Low Power Serial Peripheral Interface</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00331"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a00331">lpspi_master_edma_handle_t</a></td></tr>
-<tr class="memdesc:a00331"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI master eDMA transfer handle structure used for transactional API.  <a href="a00051.html#a00331">More...</a><br/></td></tr>
-<tr class="separator:a00331"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00333"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a00333">lpspi_slave_edma_handle_t</a></td></tr>
-<tr class="memdesc:a00333"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI slave eDMA transfer handle structure used for transactional API.  <a href="a00051.html#a00333">More...</a><br/></td></tr>
-<tr class="separator:a00333"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00438"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a00438">_lpspi_master_edma_handle</a></td></tr>
+<tr class="memdesc:a00438"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI master eDMA transfer handle structure used for transactional API.  <a href="a00051.html#a00438">More...</a><br/></td></tr>
+<tr class="separator:a00438"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00441"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a00441">_lpspi_slave_edma_handle</a></td></tr>
+<tr class="memdesc:a00441"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI slave eDMA transfer handle structure used for transactional API.  <a href="a00051.html#a00441">More...</a><br/></td></tr>
+<tr class="separator:a00441"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:gac7830d169e650c0f0239bfe22fe044f0"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gac7830d169e650c0f0239bfe22fe044f0">lpspi_master_edma_transfer_callback_t</a> )(LPSPI_Type *base, lpspi_master_edma_handle_t *handle, <a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
+<tr class="memitem:ga5e5059737abd91565874d70c4a74e6ea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5e5059737abd91565874d70c4a74e6ea"></a>
+typedef struct <br class="typebreak"/>
+<a class="el" href="a00051.html#a00438">_lpspi_master_edma_handle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga5e5059737abd91565874d70c4a74e6ea">lpspi_master_edma_handle_t</a></td></tr>
+<tr class="memdesc:ga5e5059737abd91565874d70c4a74e6ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forward declaration of the <a class="el" href="a00051.html#a00438" title="LPSPI master eDMA transfer handle structure used for transactional API. ">_lpspi_master_edma_handle</a> typedefs. <br/></td></tr>
+<tr class="separator:ga5e5059737abd91565874d70c4a74e6ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadcc74e390971e456d935c86389d51835"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gadcc74e390971e456d935c86389d51835"></a>
+typedef struct <br class="typebreak"/>
+<a class="el" href="a00051.html#a00441">_lpspi_slave_edma_handle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gadcc74e390971e456d935c86389d51835">lpspi_slave_edma_handle_t</a></td></tr>
+<tr class="memdesc:gadcc74e390971e456d935c86389d51835"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forward declaration of the <a class="el" href="a00051.html#a00441" title="LPSPI slave eDMA transfer handle structure used for transactional API. ">_lpspi_slave_edma_handle</a> typedefs. <br/></td></tr>
+<tr class="separator:gadcc74e390971e456d935c86389d51835"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac7830d169e650c0f0239bfe22fe044f0"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gac7830d169e650c0f0239bfe22fe044f0">lpspi_master_edma_transfer_callback_t</a> )(LPSPI_Type *base, <a class="el" href="a00051.html#ga5e5059737abd91565874d70c4a74e6ea">lpspi_master_edma_handle_t</a> *handle, <a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
 <tr class="memdesc:gac7830d169e650c0f0239bfe22fe044f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Completion callback function pointer type.  <a href="#gac7830d169e650c0f0239bfe22fe044f0">More...</a><br/></td></tr>
 <tr class="separator:gac7830d169e650c0f0239bfe22fe044f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafab27c360b0c9a27c0c3f2327cdf8fd8"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gafab27c360b0c9a27c0c3f2327cdf8fd8">lpspi_slave_edma_transfer_callback_t</a> )(LPSPI_Type *base, lpspi_slave_edma_handle_t *handle, <a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
+<tr class="memitem:gafab27c360b0c9a27c0c3f2327cdf8fd8"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gafab27c360b0c9a27c0c3f2327cdf8fd8">lpspi_slave_edma_transfer_callback_t</a> )(LPSPI_Type *base, <a class="el" href="a00051.html#gadcc74e390971e456d935c86389d51835">lpspi_slave_edma_handle_t</a> *handle, <a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
 <tr class="memdesc:gafab27c360b0c9a27c0c3f2327cdf8fd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Completion callback function pointer type.  <a href="#gafab27c360b0c9a27c0c3f2327cdf8fd8">More...</a><br/></td></tr>
 <tr class="separator:gafab27c360b0c9a27c0c3f2327cdf8fd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga0e311cb35cbf6f7d4c8027773214c75e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga0e311cb35cbf6f7d4c8027773214c75e">LPSPI_MasterTransferCreateHandleEDMA</a> (LPSPI_Type *base, lpspi_master_edma_handle_t *handle, <a class="el" href="a00051.html#gac7830d169e650c0f0239bfe22fe044f0">lpspi_master_edma_transfer_callback_t</a> callback, void *userData, <a class="el" href="a00022.html#a00383">edma_handle_t</a> *edmaRxRegToRxDataHandle, <a class="el" href="a00022.html#a00383">edma_handle_t</a> *edmaTxDataToTxRegHandle)</td></tr>
+<tr class="memitem:ga0e311cb35cbf6f7d4c8027773214c75e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga0e311cb35cbf6f7d4c8027773214c75e">LPSPI_MasterTransferCreateHandleEDMA</a> (LPSPI_Type *base, <a class="el" href="a00051.html#ga5e5059737abd91565874d70c4a74e6ea">lpspi_master_edma_handle_t</a> *handle, <a class="el" href="a00051.html#gac7830d169e650c0f0239bfe22fe044f0">lpspi_master_edma_transfer_callback_t</a> callback, void *userData, <a class="el" href="a00022.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *edmaRxRegToRxDataHandle, <a class="el" href="a00022.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *edmaTxDataToTxRegHandle)</td></tr>
 <tr class="memdesc:ga0e311cb35cbf6f7d4c8027773214c75e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the LPSPI master eDMA handle.  <a href="#ga0e311cb35cbf6f7d4c8027773214c75e">More...</a><br/></td></tr>
 <tr class="separator:ga0e311cb35cbf6f7d4c8027773214c75e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabcd43b45998e6fe655192d9b7f0d641c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gabcd43b45998e6fe655192d9b7f0d641c">LPSPI_MasterTransferEDMA</a> (LPSPI_Type *base, lpspi_master_edma_handle_t *handle, <a class="el" href="a00050.html#a00452">lpspi_transfer_t</a> *transfer)</td></tr>
+<tr class="memitem:gabcd43b45998e6fe655192d9b7f0d641c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gabcd43b45998e6fe655192d9b7f0d641c">LPSPI_MasterTransferEDMA</a> (LPSPI_Type *base, <a class="el" href="a00051.html#ga5e5059737abd91565874d70c4a74e6ea">lpspi_master_edma_handle_t</a> *handle, <a class="el" href="a00050.html#ga9e5674e4c10c43e897588cb02b92e0fe">lpspi_transfer_t</a> *transfer)</td></tr>
 <tr class="memdesc:gabcd43b45998e6fe655192d9b7f0d641c"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI master transfer data using eDMA.  <a href="#gabcd43b45998e6fe655192d9b7f0d641c">More...</a><br/></td></tr>
 <tr class="separator:gabcd43b45998e6fe655192d9b7f0d641c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6c4f28559a68d96e00b7c11be92e225f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga6c4f28559a68d96e00b7c11be92e225f">LPSPI_MasterTransferPrepareEDMALite</a> (LPSPI_Type *base, lpspi_master_edma_handle_t *handle, uint32_t configFlags)</td></tr>
+<tr class="memitem:ga6c4f28559a68d96e00b7c11be92e225f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga6c4f28559a68d96e00b7c11be92e225f">LPSPI_MasterTransferPrepareEDMALite</a> (LPSPI_Type *base, <a class="el" href="a00051.html#ga5e5059737abd91565874d70c4a74e6ea">lpspi_master_edma_handle_t</a> *handle, uint32_t configFlags)</td></tr>
 <tr class="memdesc:ga6c4f28559a68d96e00b7c11be92e225f"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI master config transfer parameter while using eDMA.  <a href="#ga6c4f28559a68d96e00b7c11be92e225f">More...</a><br/></td></tr>
 <tr class="separator:ga6c4f28559a68d96e00b7c11be92e225f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga119d8a1202b226e3714c72d6d7be9dfb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga119d8a1202b226e3714c72d6d7be9dfb">LPSPI_MasterTransferEDMALite</a> (LPSPI_Type *base, lpspi_master_edma_handle_t *handle, <a class="el" href="a00050.html#a00452">lpspi_transfer_t</a> *transfer)</td></tr>
+<tr class="memitem:ga119d8a1202b226e3714c72d6d7be9dfb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga119d8a1202b226e3714c72d6d7be9dfb">LPSPI_MasterTransferEDMALite</a> (LPSPI_Type *base, <a class="el" href="a00051.html#ga5e5059737abd91565874d70c4a74e6ea">lpspi_master_edma_handle_t</a> *handle, <a class="el" href="a00050.html#ga9e5674e4c10c43e897588cb02b92e0fe">lpspi_transfer_t</a> *transfer)</td></tr>
 <tr class="memdesc:ga119d8a1202b226e3714c72d6d7be9dfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI master transfer data using eDMA without configs.  <a href="#ga119d8a1202b226e3714c72d6d7be9dfb">More...</a><br/></td></tr>
 <tr class="separator:ga119d8a1202b226e3714c72d6d7be9dfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabe586c4f55bdf08b9e2e1f9c708f7cfc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gabe586c4f55bdf08b9e2e1f9c708f7cfc">LPSPI_MasterTransferAbortEDMA</a> (LPSPI_Type *base, lpspi_master_edma_handle_t *handle)</td></tr>
+<tr class="memitem:gabe586c4f55bdf08b9e2e1f9c708f7cfc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gabe586c4f55bdf08b9e2e1f9c708f7cfc">LPSPI_MasterTransferAbortEDMA</a> (LPSPI_Type *base, <a class="el" href="a00051.html#ga5e5059737abd91565874d70c4a74e6ea">lpspi_master_edma_handle_t</a> *handle)</td></tr>
 <tr class="memdesc:gabe586c4f55bdf08b9e2e1f9c708f7cfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI master aborts a transfer which is using eDMA.  <a href="#gabe586c4f55bdf08b9e2e1f9c708f7cfc">More...</a><br/></td></tr>
 <tr class="separator:gabe586c4f55bdf08b9e2e1f9c708f7cfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga002238d5b9e570fb8a0afb6fcbc04be6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga002238d5b9e570fb8a0afb6fcbc04be6">LPSPI_MasterTransferGetCountEDMA</a> (LPSPI_Type *base, lpspi_master_edma_handle_t *handle, size_t *count)</td></tr>
+<tr class="memitem:ga002238d5b9e570fb8a0afb6fcbc04be6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga002238d5b9e570fb8a0afb6fcbc04be6">LPSPI_MasterTransferGetCountEDMA</a> (LPSPI_Type *base, <a class="el" href="a00051.html#ga5e5059737abd91565874d70c4a74e6ea">lpspi_master_edma_handle_t</a> *handle, size_t *count)</td></tr>
 <tr class="memdesc:ga002238d5b9e570fb8a0afb6fcbc04be6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the master eDMA transfer remaining bytes.  <a href="#ga002238d5b9e570fb8a0afb6fcbc04be6">More...</a><br/></td></tr>
 <tr class="separator:ga002238d5b9e570fb8a0afb6fcbc04be6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac41d24f3bffe0f4fb09f59fa632c793f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gac41d24f3bffe0f4fb09f59fa632c793f">LPSPI_SlaveTransferCreateHandleEDMA</a> (LPSPI_Type *base, lpspi_slave_edma_handle_t *handle, <a class="el" href="a00051.html#gafab27c360b0c9a27c0c3f2327cdf8fd8">lpspi_slave_edma_transfer_callback_t</a> callback, void *userData, <a class="el" href="a00022.html#a00383">edma_handle_t</a> *edmaRxRegToRxDataHandle, <a class="el" href="a00022.html#a00383">edma_handle_t</a> *edmaTxDataToTxRegHandle)</td></tr>
+<tr class="memitem:gac41d24f3bffe0f4fb09f59fa632c793f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gac41d24f3bffe0f4fb09f59fa632c793f">LPSPI_SlaveTransferCreateHandleEDMA</a> (LPSPI_Type *base, <a class="el" href="a00051.html#gadcc74e390971e456d935c86389d51835">lpspi_slave_edma_handle_t</a> *handle, <a class="el" href="a00051.html#gafab27c360b0c9a27c0c3f2327cdf8fd8">lpspi_slave_edma_transfer_callback_t</a> callback, void *userData, <a class="el" href="a00022.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *edmaRxRegToRxDataHandle, <a class="el" href="a00022.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *edmaTxDataToTxRegHandle)</td></tr>
 <tr class="memdesc:gac41d24f3bffe0f4fb09f59fa632c793f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the LPSPI slave eDMA handle.  <a href="#gac41d24f3bffe0f4fb09f59fa632c793f">More...</a><br/></td></tr>
 <tr class="separator:gac41d24f3bffe0f4fb09f59fa632c793f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac4b006dcf6f81a13249bd18a991e5c9d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gac4b006dcf6f81a13249bd18a991e5c9d">LPSPI_SlaveTransferEDMA</a> (LPSPI_Type *base, lpspi_slave_edma_handle_t *handle, <a class="el" href="a00050.html#a00452">lpspi_transfer_t</a> *transfer)</td></tr>
+<tr class="memitem:gac4b006dcf6f81a13249bd18a991e5c9d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gac4b006dcf6f81a13249bd18a991e5c9d">LPSPI_SlaveTransferEDMA</a> (LPSPI_Type *base, <a class="el" href="a00051.html#gadcc74e390971e456d935c86389d51835">lpspi_slave_edma_handle_t</a> *handle, <a class="el" href="a00050.html#ga9e5674e4c10c43e897588cb02b92e0fe">lpspi_transfer_t</a> *transfer)</td></tr>
 <tr class="memdesc:gac4b006dcf6f81a13249bd18a991e5c9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI slave transfers data using eDMA.  <a href="#gac4b006dcf6f81a13249bd18a991e5c9d">More...</a><br/></td></tr>
 <tr class="separator:gac4b006dcf6f81a13249bd18a991e5c9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga56077376e3e8eae57c110ecde471d6f0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga56077376e3e8eae57c110ecde471d6f0">LPSPI_SlaveTransferAbortEDMA</a> (LPSPI_Type *base, lpspi_slave_edma_handle_t *handle)</td></tr>
+<tr class="memitem:ga56077376e3e8eae57c110ecde471d6f0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga56077376e3e8eae57c110ecde471d6f0">LPSPI_SlaveTransferAbortEDMA</a> (LPSPI_Type *base, <a class="el" href="a00051.html#gadcc74e390971e456d935c86389d51835">lpspi_slave_edma_handle_t</a> *handle)</td></tr>
 <tr class="memdesc:ga56077376e3e8eae57c110ecde471d6f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI slave aborts a transfer which is using eDMA.  <a href="#ga56077376e3e8eae57c110ecde471d6f0">More...</a><br/></td></tr>
 <tr class="separator:ga56077376e3e8eae57c110ecde471d6f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacd05a23bb61b471d2e1c289ce076148e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gacd05a23bb61b471d2e1c289ce076148e">LPSPI_SlaveTransferGetCountEDMA</a> (LPSPI_Type *base, lpspi_slave_edma_handle_t *handle, size_t *count)</td></tr>
+<tr class="memitem:gacd05a23bb61b471d2e1c289ce076148e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gacd05a23bb61b471d2e1c289ce076148e">LPSPI_SlaveTransferGetCountEDMA</a> (LPSPI_Type *base, <a class="el" href="a00051.html#gadcc74e390971e456d935c86389d51835">lpspi_slave_edma_handle_t</a> *handle, size_t *count)</td></tr>
 <tr class="memdesc:gacd05a23bb61b471d2e1c289ce076148e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the slave eDMA transfer remaining bytes.  <a href="#gacd05a23bb61b471d2e1c289ce076148e">More...</a><br/></td></tr>
 <tr class="separator:gacd05a23bb61b471d2e1c289ce076148e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:gaa083089fda62238f6cdcd9b6289913c7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gaa083089fda62238f6cdcd9b6289913c7">FSL_LPSPI_EDMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00270.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 4, 0))</td></tr>
+<tr class="memitem:gaa083089fda62238f6cdcd9b6289913c7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gaa083089fda62238f6cdcd9b6289913c7">FSL_LPSPI_EDMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00272.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 4, 2))</td></tr>
 <tr class="memdesc:gaa083089fda62238f6cdcd9b6289913c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI EDMA driver version.  <a href="#gaa083089fda62238f6cdcd9b6289913c7">More...</a><br/></td></tr>
 <tr class="separator:gaa083089fda62238f6cdcd9b6289913c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00331" id="a00331"></a>
+<a name="a00438" id="a00438"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -175,336 +185,335 @@ Driver version</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>Forward declaration of the <a class="el" href="a00051.html#a00331" title="LPSPI master eDMA transfer handle structure used for transactional API. ">_lpspi_master_edma_handle</a> typedefs.</p>
-</div><table class="memberdecls">
+<div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a46fe35e5026b495d125d0adbb3f7800c"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a46fe35e5026b495d125d0adbb3f7800c">isPcsContinuous</a></td></tr>
-<tr class="memdesc:a46fe35e5026b495d125d0adbb3f7800c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is PCS continuous in transfer.  <a href="#a46fe35e5026b495d125d0adbb3f7800c">More...</a><br/></td></tr>
-<tr class="separator:a46fe35e5026b495d125d0adbb3f7800c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad0fb215abc5c73d7571757cacddd25e3"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ad0fb215abc5c73d7571757cacddd25e3">isByteSwap</a></td></tr>
-<tr class="memdesc:ad0fb215abc5c73d7571757cacddd25e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">A flag that whether should byte swap.  <a href="#ad0fb215abc5c73d7571757cacddd25e3">More...</a><br/></td></tr>
-<tr class="separator:ad0fb215abc5c73d7571757cacddd25e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab73f9ad736231a96b1d1fe9b36d0f4d9"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ab73f9ad736231a96b1d1fe9b36d0f4d9">fifoSize</a></td></tr>
-<tr class="memdesc:ab73f9ad736231a96b1d1fe9b36d0f4d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">FIFO dataSize.  <a href="#ab73f9ad736231a96b1d1fe9b36d0f4d9">More...</a><br/></td></tr>
-<tr class="separator:ab73f9ad736231a96b1d1fe9b36d0f4d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01d930b119bcc61e29cbb575dce5e615"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a01d930b119bcc61e29cbb575dce5e615">rxWatermark</a></td></tr>
-<tr class="memdesc:a01d930b119bcc61e29cbb575dce5e615"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rx watermark.  <a href="#a01d930b119bcc61e29cbb575dce5e615">More...</a><br/></td></tr>
-<tr class="separator:a01d930b119bcc61e29cbb575dce5e615"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad556ccbe02c6857f1729b0aeb7b5a2df"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ad556ccbe02c6857f1729b0aeb7b5a2df">bytesEachWrite</a></td></tr>
-<tr class="memdesc:ad556ccbe02c6857f1729b0aeb7b5a2df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bytes for each write TDR.  <a href="#ad556ccbe02c6857f1729b0aeb7b5a2df">More...</a><br/></td></tr>
-<tr class="separator:ad556ccbe02c6857f1729b0aeb7b5a2df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0fc9ec30c6a3768af78a9f42e753bb59"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a0fc9ec30c6a3768af78a9f42e753bb59">bytesEachRead</a></td></tr>
-<tr class="memdesc:a0fc9ec30c6a3768af78a9f42e753bb59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bytes for each read RDR.  <a href="#a0fc9ec30c6a3768af78a9f42e753bb59">More...</a><br/></td></tr>
-<tr class="separator:a0fc9ec30c6a3768af78a9f42e753bb59"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a78c832134cc772eb2047b436204f9e4d"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a78c832134cc772eb2047b436204f9e4d">bytesLastRead</a></td></tr>
-<tr class="memdesc:a78c832134cc772eb2047b436204f9e4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bytes for last read RDR.  <a href="#a78c832134cc772eb2047b436204f9e4d">More...</a><br/></td></tr>
-<tr class="separator:a78c832134cc772eb2047b436204f9e4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe44259465c061dc2e9903e3998839ae"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#afe44259465c061dc2e9903e3998839ae">isThereExtraRxBytes</a></td></tr>
-<tr class="memdesc:afe44259465c061dc2e9903e3998839ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is there extra RX byte.  <a href="#afe44259465c061dc2e9903e3998839ae">More...</a><br/></td></tr>
-<tr class="separator:afe44259465c061dc2e9903e3998839ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa9d47588e6ee08e6afc2003f08fbf061"><td class="memItemLeft" align="right" valign="top">uint8_t *volatile&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#aa9d47588e6ee08e6afc2003f08fbf061">txData</a></td></tr>
-<tr class="memdesc:aa9d47588e6ee08e6afc2003f08fbf061"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send buffer.  <a href="#aa9d47588e6ee08e6afc2003f08fbf061">More...</a><br/></td></tr>
-<tr class="separator:aa9d47588e6ee08e6afc2003f08fbf061"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7d633dc7680601b7e9945492b8ceb0c3"><td class="memItemLeft" align="right" valign="top">uint8_t *volatile&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a7d633dc7680601b7e9945492b8ceb0c3">rxData</a></td></tr>
-<tr class="memdesc:a7d633dc7680601b7e9945492b8ceb0c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive buffer.  <a href="#a7d633dc7680601b7e9945492b8ceb0c3">More...</a><br/></td></tr>
-<tr class="separator:a7d633dc7680601b7e9945492b8ceb0c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a33b7d908890788fa86707be356465bf9"><td class="memItemLeft" align="right" valign="top">volatile size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a33b7d908890788fa86707be356465bf9">txRemainingByteCount</a></td></tr>
-<tr class="memdesc:a33b7d908890788fa86707be356465bf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bytes remaining to send.  <a href="#a33b7d908890788fa86707be356465bf9">More...</a><br/></td></tr>
-<tr class="separator:a33b7d908890788fa86707be356465bf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a40f69c223ec3606147163a841ee0cb69"><td class="memItemLeft" align="right" valign="top">volatile size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a40f69c223ec3606147163a841ee0cb69">rxRemainingByteCount</a></td></tr>
-<tr class="memdesc:a40f69c223ec3606147163a841ee0cb69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bytes remaining to receive.  <a href="#a40f69c223ec3606147163a841ee0cb69">More...</a><br/></td></tr>
-<tr class="separator:a40f69c223ec3606147163a841ee0cb69"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34302d1017f6334c10d3e7bcc51792d9"><td class="memItemLeft" align="right" valign="top">volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a34302d1017f6334c10d3e7bcc51792d9">writeRegRemainingTimes</a></td></tr>
-<tr class="memdesc:a34302d1017f6334c10d3e7bcc51792d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write TDR register remaining times.  <a href="#a34302d1017f6334c10d3e7bcc51792d9">More...</a><br/></td></tr>
-<tr class="separator:a34302d1017f6334c10d3e7bcc51792d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae8a6105ac4b2617d229365b10d1be1a9"><td class="memItemLeft" align="right" valign="top">volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ae8a6105ac4b2617d229365b10d1be1a9">readRegRemainingTimes</a></td></tr>
-<tr class="memdesc:ae8a6105ac4b2617d229365b10d1be1a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read RDR register remaining times.  <a href="#ae8a6105ac4b2617d229365b10d1be1a9">More...</a><br/></td></tr>
-<tr class="separator:ae8a6105ac4b2617d229365b10d1be1a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b81e39587dd95e07d211c974d8cf427"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6b81e39587dd95e07d211c974d8cf427"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a6b81e39587dd95e07d211c974d8cf427">totalByteCount</a></td></tr>
-<tr class="memdesc:a6b81e39587dd95e07d211c974d8cf427"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of transfer bytes. <br/></td></tr>
-<tr class="separator:a6b81e39587dd95e07d211c974d8cf427"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a69cd02bb8e5dd9dfd3167e5a9b6eeba6"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a69cd02bb8e5dd9dfd3167e5a9b6eeba6">txBuffIfNull</a></td></tr>
-<tr class="memdesc:a69cd02bb8e5dd9dfd3167e5a9b6eeba6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used if there is not txData for DMA purpose.  <a href="#a69cd02bb8e5dd9dfd3167e5a9b6eeba6">More...</a><br/></td></tr>
-<tr class="separator:a69cd02bb8e5dd9dfd3167e5a9b6eeba6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a32570ed62f20341301be87e2c57bee1d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a32570ed62f20341301be87e2c57bee1d">rxBuffIfNull</a></td></tr>
-<tr class="memdesc:a32570ed62f20341301be87e2c57bee1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used if there is not rxData for DMA purpose.  <a href="#a32570ed62f20341301be87e2c57bee1d">More...</a><br/></td></tr>
-<tr class="separator:a32570ed62f20341301be87e2c57bee1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa1c93b195e005e6b5fe53303841cc6c6"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#aa1c93b195e005e6b5fe53303841cc6c6">transmitCommand</a></td></tr>
-<tr class="memdesc:aa1c93b195e005e6b5fe53303841cc6c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to write TCR for DMA purpose.  <a href="#aa1c93b195e005e6b5fe53303841cc6c6">More...</a><br/></td></tr>
-<tr class="separator:aa1c93b195e005e6b5fe53303841cc6c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d27eb7e660ba9f2b01c7e8c78a92550"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a5d27eb7e660ba9f2b01c7e8c78a92550">state</a></td></tr>
-<tr class="memdesc:a5d27eb7e660ba9f2b01c7e8c78a92550"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI transfer state , _lpspi_transfer_state.  <a href="#a5d27eb7e660ba9f2b01c7e8c78a92550">More...</a><br/></td></tr>
-<tr class="separator:a5d27eb7e660ba9f2b01c7e8c78a92550"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6cb0ef8b643f0c8da471897277a79e11"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a6cb0ef8b643f0c8da471897277a79e11">nbytes</a></td></tr>
-<tr class="memdesc:a6cb0ef8b643f0c8da471897277a79e11"><td class="mdescLeft">&#160;</td><td class="mdescRight">eDMA minor byte transfer count initially configured.  <a href="#a6cb0ef8b643f0c8da471897277a79e11">More...</a><br/></td></tr>
-<tr class="separator:a6cb0ef8b643f0c8da471897277a79e11"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67544c9fa44d534b535c6d45983e7385"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00051.html#gac7830d169e650c0f0239bfe22fe044f0">lpspi_master_edma_transfer_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a67544c9fa44d534b535c6d45983e7385">callback</a></td></tr>
-<tr class="memdesc:a67544c9fa44d534b535c6d45983e7385"><td class="mdescLeft">&#160;</td><td class="mdescRight">Completion callback.  <a href="#a67544c9fa44d534b535c6d45983e7385">More...</a><br/></td></tr>
-<tr class="separator:a67544c9fa44d534b535c6d45983e7385"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a314643d8584c345051a7e389ad68cd32"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a314643d8584c345051a7e389ad68cd32">userData</a></td></tr>
-<tr class="memdesc:a314643d8584c345051a7e389ad68cd32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback user data.  <a href="#a314643d8584c345051a7e389ad68cd32">More...</a><br/></td></tr>
-<tr class="separator:a314643d8584c345051a7e389ad68cd32"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a02594ec906631b7188c0b56888c5239a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a02594ec906631b7188c0b56888c5239a"></a>
-<a class="el" href="a00022.html#a00383">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a02594ec906631b7188c0b56888c5239a">edmaRxRegToRxDataHandle</a></td></tr>
-<tr class="memdesc:a02594ec906631b7188c0b56888c5239a"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="a00022.html#a00383" title="eDMA transfer handle structure ">edma_handle_t</a> handle point used for RxReg to RxData buff <br/></td></tr>
-<tr class="separator:a02594ec906631b7188c0b56888c5239a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7040efe4741c60f8924c0988178af2f5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7040efe4741c60f8924c0988178af2f5"></a>
-<a class="el" href="a00022.html#a00383">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a7040efe4741c60f8924c0988178af2f5">edmaTxDataToTxRegHandle</a></td></tr>
-<tr class="memdesc:a7040efe4741c60f8924c0988178af2f5"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="a00022.html#a00383" title="eDMA transfer handle structure ">edma_handle_t</a> handle point used for TxData to TxReg buff <br/></td></tr>
-<tr class="separator:a7040efe4741c60f8924c0988178af2f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1610cd02da7febac3e0cb624bd5f54af"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1610cd02da7febac3e0cb624bd5f54af"></a>
-<a class="el" href="a00022.html#a00385">edma_tcd_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a1610cd02da7febac3e0cb624bd5f54af">lpspiSoftwareTCD</a> [3]</td></tr>
-<tr class="memdesc:a1610cd02da7febac3e0cb624bd5f54af"><td class="mdescLeft">&#160;</td><td class="mdescRight">SoftwareTCD, internal used. <br/></td></tr>
-<tr class="separator:a1610cd02da7febac3e0cb624bd5f54af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa41a139d51a18f9189b8257b7deded08"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#aa41a139d51a18f9189b8257b7deded08">isPcsContinuous</a></td></tr>
+<tr class="memdesc:aa41a139d51a18f9189b8257b7deded08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is PCS continuous in transfer.  <a href="#aa41a139d51a18f9189b8257b7deded08">More...</a><br/></td></tr>
+<tr class="separator:aa41a139d51a18f9189b8257b7deded08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bd05ddf3d2cbf2b5a35ba827726b30b"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a3bd05ddf3d2cbf2b5a35ba827726b30b">isByteSwap</a></td></tr>
+<tr class="memdesc:a3bd05ddf3d2cbf2b5a35ba827726b30b"><td class="mdescLeft">&#160;</td><td class="mdescRight">A flag that whether should byte swap.  <a href="#a3bd05ddf3d2cbf2b5a35ba827726b30b">More...</a><br/></td></tr>
+<tr class="separator:a3bd05ddf3d2cbf2b5a35ba827726b30b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a411a8aeb23f712370f9c2ca84464f5"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a1a411a8aeb23f712370f9c2ca84464f5">fifoSize</a></td></tr>
+<tr class="memdesc:a1a411a8aeb23f712370f9c2ca84464f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">FIFO dataSize.  <a href="#a1a411a8aeb23f712370f9c2ca84464f5">More...</a><br/></td></tr>
+<tr class="separator:a1a411a8aeb23f712370f9c2ca84464f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6edd56462b841848db93cbac96999193"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a6edd56462b841848db93cbac96999193">rxWatermark</a></td></tr>
+<tr class="memdesc:a6edd56462b841848db93cbac96999193"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rx watermark.  <a href="#a6edd56462b841848db93cbac96999193">More...</a><br/></td></tr>
+<tr class="separator:a6edd56462b841848db93cbac96999193"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ccf9b683e0b71a6e4bafa029893d32c"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a2ccf9b683e0b71a6e4bafa029893d32c">bytesEachWrite</a></td></tr>
+<tr class="memdesc:a2ccf9b683e0b71a6e4bafa029893d32c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bytes for each write TDR.  <a href="#a2ccf9b683e0b71a6e4bafa029893d32c">More...</a><br/></td></tr>
+<tr class="separator:a2ccf9b683e0b71a6e4bafa029893d32c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8dc44727556a6cd69e1525d3f7f0495e"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a8dc44727556a6cd69e1525d3f7f0495e">bytesEachRead</a></td></tr>
+<tr class="memdesc:a8dc44727556a6cd69e1525d3f7f0495e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bytes for each read RDR.  <a href="#a8dc44727556a6cd69e1525d3f7f0495e">More...</a><br/></td></tr>
+<tr class="separator:a8dc44727556a6cd69e1525d3f7f0495e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ef8ff1198d478cc77dcb15b44c1ee28"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a5ef8ff1198d478cc77dcb15b44c1ee28">bytesLastRead</a></td></tr>
+<tr class="memdesc:a5ef8ff1198d478cc77dcb15b44c1ee28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bytes for last read RDR.  <a href="#a5ef8ff1198d478cc77dcb15b44c1ee28">More...</a><br/></td></tr>
+<tr class="separator:a5ef8ff1198d478cc77dcb15b44c1ee28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f8c45daac2507df2e132b26e0b3bc36"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a8f8c45daac2507df2e132b26e0b3bc36">isThereExtraRxBytes</a></td></tr>
+<tr class="memdesc:a8f8c45daac2507df2e132b26e0b3bc36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is there extra RX byte.  <a href="#a8f8c45daac2507df2e132b26e0b3bc36">More...</a><br/></td></tr>
+<tr class="separator:a8f8c45daac2507df2e132b26e0b3bc36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d53c745d07f3b681734d37305b3b960"><td class="memItemLeft" align="right" valign="top">uint8_t *volatile&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a4d53c745d07f3b681734d37305b3b960">txData</a></td></tr>
+<tr class="memdesc:a4d53c745d07f3b681734d37305b3b960"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send buffer.  <a href="#a4d53c745d07f3b681734d37305b3b960">More...</a><br/></td></tr>
+<tr class="separator:a4d53c745d07f3b681734d37305b3b960"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9683cefe7426a92dfbd36d73135fab66"><td class="memItemLeft" align="right" valign="top">uint8_t *volatile&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a9683cefe7426a92dfbd36d73135fab66">rxData</a></td></tr>
+<tr class="memdesc:a9683cefe7426a92dfbd36d73135fab66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive buffer.  <a href="#a9683cefe7426a92dfbd36d73135fab66">More...</a><br/></td></tr>
+<tr class="separator:a9683cefe7426a92dfbd36d73135fab66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac905a6d74fbc2e7b2d608dfea6616367"><td class="memItemLeft" align="right" valign="top">volatile size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ac905a6d74fbc2e7b2d608dfea6616367">txRemainingByteCount</a></td></tr>
+<tr class="memdesc:ac905a6d74fbc2e7b2d608dfea6616367"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bytes remaining to send.  <a href="#ac905a6d74fbc2e7b2d608dfea6616367">More...</a><br/></td></tr>
+<tr class="separator:ac905a6d74fbc2e7b2d608dfea6616367"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c90791ec14cb935974f17c430b86416"><td class="memItemLeft" align="right" valign="top">volatile size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a6c90791ec14cb935974f17c430b86416">rxRemainingByteCount</a></td></tr>
+<tr class="memdesc:a6c90791ec14cb935974f17c430b86416"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bytes remaining to receive.  <a href="#a6c90791ec14cb935974f17c430b86416">More...</a><br/></td></tr>
+<tr class="separator:a6c90791ec14cb935974f17c430b86416"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b292c2724d5b2c99b16ceef8f60fe77"><td class="memItemLeft" align="right" valign="top">volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a4b292c2724d5b2c99b16ceef8f60fe77">writeRegRemainingTimes</a></td></tr>
+<tr class="memdesc:a4b292c2724d5b2c99b16ceef8f60fe77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write TDR register remaining times.  <a href="#a4b292c2724d5b2c99b16ceef8f60fe77">More...</a><br/></td></tr>
+<tr class="separator:a4b292c2724d5b2c99b16ceef8f60fe77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43ad846fccb80f7915e3028c2e705863"><td class="memItemLeft" align="right" valign="top">volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a43ad846fccb80f7915e3028c2e705863">readRegRemainingTimes</a></td></tr>
+<tr class="memdesc:a43ad846fccb80f7915e3028c2e705863"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read RDR register remaining times.  <a href="#a43ad846fccb80f7915e3028c2e705863">More...</a><br/></td></tr>
+<tr class="separator:a43ad846fccb80f7915e3028c2e705863"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae91291c4b4a99e346c1e72a0177b814a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae91291c4b4a99e346c1e72a0177b814a"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ae91291c4b4a99e346c1e72a0177b814a">totalByteCount</a></td></tr>
+<tr class="memdesc:ae91291c4b4a99e346c1e72a0177b814a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of transfer bytes. <br/></td></tr>
+<tr class="separator:ae91291c4b4a99e346c1e72a0177b814a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26c737cc99c3729020ab95f44fae7ca8"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a26c737cc99c3729020ab95f44fae7ca8">txBuffIfNull</a></td></tr>
+<tr class="memdesc:a26c737cc99c3729020ab95f44fae7ca8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used if there is not txData for DMA purpose.  <a href="#a26c737cc99c3729020ab95f44fae7ca8">More...</a><br/></td></tr>
+<tr class="separator:a26c737cc99c3729020ab95f44fae7ca8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab96df245c21726d54f4d6d9dfb16d377"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ab96df245c21726d54f4d6d9dfb16d377">rxBuffIfNull</a></td></tr>
+<tr class="memdesc:ab96df245c21726d54f4d6d9dfb16d377"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used if there is not rxData for DMA purpose.  <a href="#ab96df245c21726d54f4d6d9dfb16d377">More...</a><br/></td></tr>
+<tr class="separator:ab96df245c21726d54f4d6d9dfb16d377"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50fd9f76ef5f709202ad695200af83fe"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a50fd9f76ef5f709202ad695200af83fe">transmitCommand</a></td></tr>
+<tr class="memdesc:a50fd9f76ef5f709202ad695200af83fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to write TCR for DMA purpose.  <a href="#a50fd9f76ef5f709202ad695200af83fe">More...</a><br/></td></tr>
+<tr class="separator:a50fd9f76ef5f709202ad695200af83fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a242147fbf556caf04fe1de8ce86b0572"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a242147fbf556caf04fe1de8ce86b0572">state</a></td></tr>
+<tr class="memdesc:a242147fbf556caf04fe1de8ce86b0572"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI transfer state , _lpspi_transfer_state.  <a href="#a242147fbf556caf04fe1de8ce86b0572">More...</a><br/></td></tr>
+<tr class="separator:a242147fbf556caf04fe1de8ce86b0572"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5f995d95b3dd80cfb40c242fcd2210b"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ac5f995d95b3dd80cfb40c242fcd2210b">nbytes</a></td></tr>
+<tr class="memdesc:ac5f995d95b3dd80cfb40c242fcd2210b"><td class="mdescLeft">&#160;</td><td class="mdescRight">eDMA minor byte transfer count initially configured.  <a href="#ac5f995d95b3dd80cfb40c242fcd2210b">More...</a><br/></td></tr>
+<tr class="separator:ac5f995d95b3dd80cfb40c242fcd2210b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06ffd32721b86901b352cc7865fc9cf4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00051.html#gac7830d169e650c0f0239bfe22fe044f0">lpspi_master_edma_transfer_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a06ffd32721b86901b352cc7865fc9cf4">callback</a></td></tr>
+<tr class="memdesc:a06ffd32721b86901b352cc7865fc9cf4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Completion callback.  <a href="#a06ffd32721b86901b352cc7865fc9cf4">More...</a><br/></td></tr>
+<tr class="separator:a06ffd32721b86901b352cc7865fc9cf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acba2b98f25d234a28016d9f85f5f271d"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#acba2b98f25d234a28016d9f85f5f271d">userData</a></td></tr>
+<tr class="memdesc:acba2b98f25d234a28016d9f85f5f271d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback user data.  <a href="#acba2b98f25d234a28016d9f85f5f271d">More...</a><br/></td></tr>
+<tr class="separator:acba2b98f25d234a28016d9f85f5f271d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4b826e5ed9bd3e55752d7de6f038eb3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac4b826e5ed9bd3e55752d7de6f038eb3"></a>
+<a class="el" href="a00022.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ac4b826e5ed9bd3e55752d7de6f038eb3">edmaRxRegToRxDataHandle</a></td></tr>
+<tr class="memdesc:ac4b826e5ed9bd3e55752d7de6f038eb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">edma_handle_t handle point used for RxReg to RxData buff <br/></td></tr>
+<tr class="separator:ac4b826e5ed9bd3e55752d7de6f038eb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa170b87557f01e8d56ca5028f6c96df6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa170b87557f01e8d56ca5028f6c96df6"></a>
+<a class="el" href="a00022.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#aa170b87557f01e8d56ca5028f6c96df6">edmaTxDataToTxRegHandle</a></td></tr>
+<tr class="memdesc:aa170b87557f01e8d56ca5028f6c96df6"><td class="mdescLeft">&#160;</td><td class="mdescRight">edma_handle_t handle point used for TxData to TxReg buff <br/></td></tr>
+<tr class="separator:aa170b87557f01e8d56ca5028f6c96df6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02c5f5413fb96f62919456e66f5056ff"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a02c5f5413fb96f62919456e66f5056ff"></a>
+<a class="el" href="a00022.html#gacff054f9816fb678fc49f5e66a4d7649">edma_tcd_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a02c5f5413fb96f62919456e66f5056ff">lpspiSoftwareTCD</a> [3]</td></tr>
+<tr class="memdesc:a02c5f5413fb96f62919456e66f5056ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">SoftwareTCD, internal used. <br/></td></tr>
+<tr class="separator:a02c5f5413fb96f62919456e66f5056ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a46fe35e5026b495d125d0adbb3f7800c"></a>
+<a class="anchor" id="aa41a139d51a18f9189b8257b7deded08"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile bool lpspi_master_edma_handle_t::isPcsContinuous</td>
+          <td class="memname">volatile bool _lpspi_master_edma_handle::isPcsContinuous</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ad0fb215abc5c73d7571757cacddd25e3"></a>
+<a class="anchor" id="a3bd05ddf3d2cbf2b5a35ba827726b30b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile bool lpspi_master_edma_handle_t::isByteSwap</td>
+          <td class="memname">volatile bool _lpspi_master_edma_handle::isByteSwap</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ab73f9ad736231a96b1d1fe9b36d0f4d9"></a>
+<a class="anchor" id="a1a411a8aeb23f712370f9c2ca84464f5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile uint8_t lpspi_master_edma_handle_t::fifoSize</td>
+          <td class="memname">volatile uint8_t _lpspi_master_edma_handle::fifoSize</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a01d930b119bcc61e29cbb575dce5e615"></a>
+<a class="anchor" id="a6edd56462b841848db93cbac96999193"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile uint8_t lpspi_master_edma_handle_t::rxWatermark</td>
+          <td class="memname">volatile uint8_t _lpspi_master_edma_handle::rxWatermark</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ad556ccbe02c6857f1729b0aeb7b5a2df"></a>
+<a class="anchor" id="a2ccf9b683e0b71a6e4bafa029893d32c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile uint8_t lpspi_master_edma_handle_t::bytesEachWrite</td>
+          <td class="memname">volatile uint8_t _lpspi_master_edma_handle::bytesEachWrite</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a0fc9ec30c6a3768af78a9f42e753bb59"></a>
+<a class="anchor" id="a8dc44727556a6cd69e1525d3f7f0495e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile uint8_t lpspi_master_edma_handle_t::bytesEachRead</td>
+          <td class="memname">volatile uint8_t _lpspi_master_edma_handle::bytesEachRead</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a78c832134cc772eb2047b436204f9e4d"></a>
+<a class="anchor" id="a5ef8ff1198d478cc77dcb15b44c1ee28"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile uint8_t lpspi_master_edma_handle_t::bytesLastRead</td>
+          <td class="memname">volatile uint8_t _lpspi_master_edma_handle::bytesLastRead</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="afe44259465c061dc2e9903e3998839ae"></a>
+<a class="anchor" id="a8f8c45daac2507df2e132b26e0b3bc36"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile bool lpspi_master_edma_handle_t::isThereExtraRxBytes</td>
+          <td class="memname">volatile bool _lpspi_master_edma_handle::isThereExtraRxBytes</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="aa9d47588e6ee08e6afc2003f08fbf061"></a>
+<a class="anchor" id="a4d53c745d07f3b681734d37305b3b960"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* volatile lpspi_master_edma_handle_t::txData</td>
+          <td class="memname">uint8_t* volatile _lpspi_master_edma_handle::txData</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a7d633dc7680601b7e9945492b8ceb0c3"></a>
+<a class="anchor" id="a9683cefe7426a92dfbd36d73135fab66"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* volatile lpspi_master_edma_handle_t::rxData</td>
+          <td class="memname">uint8_t* volatile _lpspi_master_edma_handle::rxData</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a33b7d908890788fa86707be356465bf9"></a>
+<a class="anchor" id="ac905a6d74fbc2e7b2d608dfea6616367"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile size_t lpspi_master_edma_handle_t::txRemainingByteCount</td>
+          <td class="memname">volatile size_t _lpspi_master_edma_handle::txRemainingByteCount</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a40f69c223ec3606147163a841ee0cb69"></a>
+<a class="anchor" id="a6c90791ec14cb935974f17c430b86416"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile size_t lpspi_master_edma_handle_t::rxRemainingByteCount</td>
+          <td class="memname">volatile size_t _lpspi_master_edma_handle::rxRemainingByteCount</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a34302d1017f6334c10d3e7bcc51792d9"></a>
+<a class="anchor" id="a4b292c2724d5b2c99b16ceef8f60fe77"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile uint32_t lpspi_master_edma_handle_t::writeRegRemainingTimes</td>
+          <td class="memname">volatile uint32_t _lpspi_master_edma_handle::writeRegRemainingTimes</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ae8a6105ac4b2617d229365b10d1be1a9"></a>
+<a class="anchor" id="a43ad846fccb80f7915e3028c2e705863"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile uint32_t lpspi_master_edma_handle_t::readRegRemainingTimes</td>
+          <td class="memname">volatile uint32_t _lpspi_master_edma_handle::readRegRemainingTimes</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a69cd02bb8e5dd9dfd3167e5a9b6eeba6"></a>
+<a class="anchor" id="a26c737cc99c3729020ab95f44fae7ca8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t lpspi_master_edma_handle_t::txBuffIfNull</td>
+          <td class="memname">uint32_t _lpspi_master_edma_handle::txBuffIfNull</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a32570ed62f20341301be87e2c57bee1d"></a>
+<a class="anchor" id="ab96df245c21726d54f4d6d9dfb16d377"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t lpspi_master_edma_handle_t::rxBuffIfNull</td>
+          <td class="memname">uint32_t _lpspi_master_edma_handle::rxBuffIfNull</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="aa1c93b195e005e6b5fe53303841cc6c6"></a>
+<a class="anchor" id="a50fd9f76ef5f709202ad695200af83fe"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t lpspi_master_edma_handle_t::transmitCommand</td>
+          <td class="memname">uint32_t _lpspi_master_edma_handle::transmitCommand</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a5d27eb7e660ba9f2b01c7e8c78a92550"></a>
+<a class="anchor" id="a242147fbf556caf04fe1de8ce86b0572"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile uint8_t lpspi_master_edma_handle_t::state</td>
+          <td class="memname">volatile uint8_t _lpspi_master_edma_handle::state</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a6cb0ef8b643f0c8da471897277a79e11"></a>
+<a class="anchor" id="ac5f995d95b3dd80cfb40c242fcd2210b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t lpspi_master_edma_handle_t::nbytes</td>
+          <td class="memname">uint8_t _lpspi_master_edma_handle::nbytes</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a67544c9fa44d534b535c6d45983e7385"></a>
+<a class="anchor" id="a06ffd32721b86901b352cc7865fc9cf4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00051.html#gac7830d169e650c0f0239bfe22fe044f0">lpspi_master_edma_transfer_callback_t</a> lpspi_master_edma_handle_t::callback</td>
+          <td class="memname"><a class="el" href="a00051.html#gac7830d169e650c0f0239bfe22fe044f0">lpspi_master_edma_transfer_callback_t</a> _lpspi_master_edma_handle::callback</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a314643d8584c345051a7e389ad68cd32"></a>
+<a class="anchor" id="acba2b98f25d234a28016d9f85f5f271d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void* lpspi_master_edma_handle_t::userData</td>
+          <td class="memname">void* _lpspi_master_edma_handle::userData</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -514,7 +523,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 </div>
 </div>
-<a name="a00333" id="a00333"></a>
+<a name="a00441" id="a00441"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -523,321 +532,320 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>Forward declaration of the <a class="el" href="a00051.html#a00333" title="LPSPI slave eDMA transfer handle structure used for transactional API. ">_lpspi_slave_edma_handle</a> typedefs.</p>
-</div><table class="memberdecls">
+<div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:adde5846fcb7d9b727fa48199e097ebe0"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#adde5846fcb7d9b727fa48199e097ebe0">isByteSwap</a></td></tr>
-<tr class="memdesc:adde5846fcb7d9b727fa48199e097ebe0"><td class="mdescLeft">&#160;</td><td class="mdescRight">A flag that whether should byte swap.  <a href="#adde5846fcb7d9b727fa48199e097ebe0">More...</a><br/></td></tr>
-<tr class="separator:adde5846fcb7d9b727fa48199e097ebe0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a32ff741b430eafb22d754ac1c915c0d2"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a32ff741b430eafb22d754ac1c915c0d2">fifoSize</a></td></tr>
-<tr class="memdesc:a32ff741b430eafb22d754ac1c915c0d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">FIFO dataSize.  <a href="#a32ff741b430eafb22d754ac1c915c0d2">More...</a><br/></td></tr>
-<tr class="separator:a32ff741b430eafb22d754ac1c915c0d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae71513d9bb2d3555688dc788f59e95e3"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ae71513d9bb2d3555688dc788f59e95e3">rxWatermark</a></td></tr>
-<tr class="memdesc:ae71513d9bb2d3555688dc788f59e95e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rx watermark.  <a href="#ae71513d9bb2d3555688dc788f59e95e3">More...</a><br/></td></tr>
-<tr class="separator:ae71513d9bb2d3555688dc788f59e95e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae9008e89e02e5cd9541a5675850bf51f"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ae9008e89e02e5cd9541a5675850bf51f">bytesEachWrite</a></td></tr>
-<tr class="memdesc:ae9008e89e02e5cd9541a5675850bf51f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bytes for each write TDR.  <a href="#ae9008e89e02e5cd9541a5675850bf51f">More...</a><br/></td></tr>
-<tr class="separator:ae9008e89e02e5cd9541a5675850bf51f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad619dd29fdd066a2cb447759d73fa3f8"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ad619dd29fdd066a2cb447759d73fa3f8">bytesEachRead</a></td></tr>
-<tr class="memdesc:ad619dd29fdd066a2cb447759d73fa3f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bytes for each read RDR.  <a href="#ad619dd29fdd066a2cb447759d73fa3f8">More...</a><br/></td></tr>
-<tr class="separator:ad619dd29fdd066a2cb447759d73fa3f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a60a19410542dacf7966928b1d8125099"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a60a19410542dacf7966928b1d8125099">bytesLastRead</a></td></tr>
-<tr class="memdesc:a60a19410542dacf7966928b1d8125099"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bytes for last read RDR.  <a href="#a60a19410542dacf7966928b1d8125099">More...</a><br/></td></tr>
-<tr class="separator:a60a19410542dacf7966928b1d8125099"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a357209584b821a5db546148779107f97"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a357209584b821a5db546148779107f97">isThereExtraRxBytes</a></td></tr>
-<tr class="memdesc:a357209584b821a5db546148779107f97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is there extra RX byte.  <a href="#a357209584b821a5db546148779107f97">More...</a><br/></td></tr>
-<tr class="separator:a357209584b821a5db546148779107f97"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac4304fd510994667fcc72cf37ef1345a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ac4304fd510994667fcc72cf37ef1345a">nbytes</a></td></tr>
-<tr class="memdesc:ac4304fd510994667fcc72cf37ef1345a"><td class="mdescLeft">&#160;</td><td class="mdescRight">eDMA minor byte transfer count initially configured.  <a href="#ac4304fd510994667fcc72cf37ef1345a">More...</a><br/></td></tr>
-<tr class="separator:ac4304fd510994667fcc72cf37ef1345a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a74bd7b77c24b4239d0a1ba515c007b01"><td class="memItemLeft" align="right" valign="top">uint8_t *volatile&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a74bd7b77c24b4239d0a1ba515c007b01">txData</a></td></tr>
-<tr class="memdesc:a74bd7b77c24b4239d0a1ba515c007b01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send buffer.  <a href="#a74bd7b77c24b4239d0a1ba515c007b01">More...</a><br/></td></tr>
-<tr class="separator:a74bd7b77c24b4239d0a1ba515c007b01"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5dc6dfcb4b91259fa028d4b7e40c61bf"><td class="memItemLeft" align="right" valign="top">uint8_t *volatile&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a5dc6dfcb4b91259fa028d4b7e40c61bf">rxData</a></td></tr>
-<tr class="memdesc:a5dc6dfcb4b91259fa028d4b7e40c61bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive buffer.  <a href="#a5dc6dfcb4b91259fa028d4b7e40c61bf">More...</a><br/></td></tr>
-<tr class="separator:a5dc6dfcb4b91259fa028d4b7e40c61bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21805cc6572bac9409823c6fcffe3b9d"><td class="memItemLeft" align="right" valign="top">volatile size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a21805cc6572bac9409823c6fcffe3b9d">txRemainingByteCount</a></td></tr>
-<tr class="memdesc:a21805cc6572bac9409823c6fcffe3b9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bytes remaining to send.  <a href="#a21805cc6572bac9409823c6fcffe3b9d">More...</a><br/></td></tr>
-<tr class="separator:a21805cc6572bac9409823c6fcffe3b9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a541744df6a1f4544ad0357b31a6bf409"><td class="memItemLeft" align="right" valign="top">volatile size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a541744df6a1f4544ad0357b31a6bf409">rxRemainingByteCount</a></td></tr>
-<tr class="memdesc:a541744df6a1f4544ad0357b31a6bf409"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bytes remaining to receive.  <a href="#a541744df6a1f4544ad0357b31a6bf409">More...</a><br/></td></tr>
-<tr class="separator:a541744df6a1f4544ad0357b31a6bf409"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a873152d857c6ad13535fed538bb5cff0"><td class="memItemLeft" align="right" valign="top">volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a873152d857c6ad13535fed538bb5cff0">writeRegRemainingTimes</a></td></tr>
-<tr class="memdesc:a873152d857c6ad13535fed538bb5cff0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write TDR register remaining times.  <a href="#a873152d857c6ad13535fed538bb5cff0">More...</a><br/></td></tr>
-<tr class="separator:a873152d857c6ad13535fed538bb5cff0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a669d63ac9184cbd10dac8285cda6fe58"><td class="memItemLeft" align="right" valign="top">volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a669d63ac9184cbd10dac8285cda6fe58">readRegRemainingTimes</a></td></tr>
-<tr class="memdesc:a669d63ac9184cbd10dac8285cda6fe58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read RDR register remaining times.  <a href="#a669d63ac9184cbd10dac8285cda6fe58">More...</a><br/></td></tr>
-<tr class="separator:a669d63ac9184cbd10dac8285cda6fe58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a512e165fa686d1a380196cce4a286433"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a512e165fa686d1a380196cce4a286433"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a512e165fa686d1a380196cce4a286433">totalByteCount</a></td></tr>
-<tr class="memdesc:a512e165fa686d1a380196cce4a286433"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of transfer bytes. <br/></td></tr>
-<tr class="separator:a512e165fa686d1a380196cce4a286433"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4bdc0431ca2b191568c98fb3b65378b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#aa4bdc0431ca2b191568c98fb3b65378b">txBuffIfNull</a></td></tr>
-<tr class="memdesc:aa4bdc0431ca2b191568c98fb3b65378b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used if there is not txData for DMA purpose.  <a href="#aa4bdc0431ca2b191568c98fb3b65378b">More...</a><br/></td></tr>
-<tr class="separator:aa4bdc0431ca2b191568c98fb3b65378b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a009bf53e4946ef033f48a6ab069cacc1"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a009bf53e4946ef033f48a6ab069cacc1">rxBuffIfNull</a></td></tr>
-<tr class="memdesc:a009bf53e4946ef033f48a6ab069cacc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used if there is not rxData for DMA purpose.  <a href="#a009bf53e4946ef033f48a6ab069cacc1">More...</a><br/></td></tr>
-<tr class="separator:a009bf53e4946ef033f48a6ab069cacc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a184435a8954fccc6ced49ee8c0d00597"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a184435a8954fccc6ced49ee8c0d00597">state</a></td></tr>
-<tr class="memdesc:a184435a8954fccc6ced49ee8c0d00597"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI transfer state.  <a href="#a184435a8954fccc6ced49ee8c0d00597">More...</a><br/></td></tr>
-<tr class="separator:a184435a8954fccc6ced49ee8c0d00597"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a714af7dbfd409d724c2766fbf2c070e1"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a714af7dbfd409d724c2766fbf2c070e1">errorCount</a></td></tr>
-<tr class="memdesc:a714af7dbfd409d724c2766fbf2c070e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Error count for slave transfer.  <a href="#a714af7dbfd409d724c2766fbf2c070e1">More...</a><br/></td></tr>
-<tr class="separator:a714af7dbfd409d724c2766fbf2c070e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e23d946870dac99dd4e15bc96a51dd7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00051.html#gafab27c360b0c9a27c0c3f2327cdf8fd8">lpspi_slave_edma_transfer_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a3e23d946870dac99dd4e15bc96a51dd7">callback</a></td></tr>
-<tr class="memdesc:a3e23d946870dac99dd4e15bc96a51dd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Completion callback.  <a href="#a3e23d946870dac99dd4e15bc96a51dd7">More...</a><br/></td></tr>
-<tr class="separator:a3e23d946870dac99dd4e15bc96a51dd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae4827ac81285a661d014146716aa3889"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ae4827ac81285a661d014146716aa3889">userData</a></td></tr>
-<tr class="memdesc:ae4827ac81285a661d014146716aa3889"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback user data.  <a href="#ae4827ac81285a661d014146716aa3889">More...</a><br/></td></tr>
-<tr class="separator:ae4827ac81285a661d014146716aa3889"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0c648d914e0a3cac170577ddd5d2f4a4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0c648d914e0a3cac170577ddd5d2f4a4"></a>
-<a class="el" href="a00022.html#a00383">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a0c648d914e0a3cac170577ddd5d2f4a4">edmaRxRegToRxDataHandle</a></td></tr>
-<tr class="memdesc:a0c648d914e0a3cac170577ddd5d2f4a4"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="a00022.html#a00383" title="eDMA transfer handle structure ">edma_handle_t</a> handle point used for RxReg to RxData buff <br/></td></tr>
-<tr class="separator:a0c648d914e0a3cac170577ddd5d2f4a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf7f0d220ddc8aaeaff77b316c32210e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abf7f0d220ddc8aaeaff77b316c32210e"></a>
-<a class="el" href="a00022.html#a00383">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#abf7f0d220ddc8aaeaff77b316c32210e">edmaTxDataToTxRegHandle</a></td></tr>
-<tr class="memdesc:abf7f0d220ddc8aaeaff77b316c32210e"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="a00022.html#a00383" title="eDMA transfer handle structure ">edma_handle_t</a> handle point used for TxData to TxReg <br/></td></tr>
-<tr class="separator:abf7f0d220ddc8aaeaff77b316c32210e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1aa47d8c4f4d937202d9e5407500d918"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1aa47d8c4f4d937202d9e5407500d918"></a>
-<a class="el" href="a00022.html#a00385">edma_tcd_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a1aa47d8c4f4d937202d9e5407500d918">lpspiSoftwareTCD</a> [2]</td></tr>
-<tr class="memdesc:a1aa47d8c4f4d937202d9e5407500d918"><td class="mdescLeft">&#160;</td><td class="mdescRight">SoftwareTCD, internal used. <br/></td></tr>
-<tr class="separator:a1aa47d8c4f4d937202d9e5407500d918"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01e8c39ff805fe2976c87cdfe72a9ce7"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a01e8c39ff805fe2976c87cdfe72a9ce7">isByteSwap</a></td></tr>
+<tr class="memdesc:a01e8c39ff805fe2976c87cdfe72a9ce7"><td class="mdescLeft">&#160;</td><td class="mdescRight">A flag that whether should byte swap.  <a href="#a01e8c39ff805fe2976c87cdfe72a9ce7">More...</a><br/></td></tr>
+<tr class="separator:a01e8c39ff805fe2976c87cdfe72a9ce7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8bbcdd6904a0582149a6bbc934b7efb7"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a8bbcdd6904a0582149a6bbc934b7efb7">fifoSize</a></td></tr>
+<tr class="memdesc:a8bbcdd6904a0582149a6bbc934b7efb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">FIFO dataSize.  <a href="#a8bbcdd6904a0582149a6bbc934b7efb7">More...</a><br/></td></tr>
+<tr class="separator:a8bbcdd6904a0582149a6bbc934b7efb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68a5e2d91a877ea183f389f1193b0b4a"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a68a5e2d91a877ea183f389f1193b0b4a">rxWatermark</a></td></tr>
+<tr class="memdesc:a68a5e2d91a877ea183f389f1193b0b4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rx watermark.  <a href="#a68a5e2d91a877ea183f389f1193b0b4a">More...</a><br/></td></tr>
+<tr class="separator:a68a5e2d91a877ea183f389f1193b0b4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c091eb491b971c38537cae919967d79"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a6c091eb491b971c38537cae919967d79">bytesEachWrite</a></td></tr>
+<tr class="memdesc:a6c091eb491b971c38537cae919967d79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bytes for each write TDR.  <a href="#a6c091eb491b971c38537cae919967d79">More...</a><br/></td></tr>
+<tr class="separator:a6c091eb491b971c38537cae919967d79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32f66de5f0f4aea3b0e10f98ee582085"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a32f66de5f0f4aea3b0e10f98ee582085">bytesEachRead</a></td></tr>
+<tr class="memdesc:a32f66de5f0f4aea3b0e10f98ee582085"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bytes for each read RDR.  <a href="#a32f66de5f0f4aea3b0e10f98ee582085">More...</a><br/></td></tr>
+<tr class="separator:a32f66de5f0f4aea3b0e10f98ee582085"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5b31fa5b7bbec87da6e394e25dab60e"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#af5b31fa5b7bbec87da6e394e25dab60e">bytesLastRead</a></td></tr>
+<tr class="memdesc:af5b31fa5b7bbec87da6e394e25dab60e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bytes for last read RDR.  <a href="#af5b31fa5b7bbec87da6e394e25dab60e">More...</a><br/></td></tr>
+<tr class="separator:af5b31fa5b7bbec87da6e394e25dab60e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae30ca6b517a9ab8ff903d4f49de67f87"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ae30ca6b517a9ab8ff903d4f49de67f87">isThereExtraRxBytes</a></td></tr>
+<tr class="memdesc:ae30ca6b517a9ab8ff903d4f49de67f87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is there extra RX byte.  <a href="#ae30ca6b517a9ab8ff903d4f49de67f87">More...</a><br/></td></tr>
+<tr class="separator:ae30ca6b517a9ab8ff903d4f49de67f87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a062641d46358cc81299b44f13e954bea"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a062641d46358cc81299b44f13e954bea">nbytes</a></td></tr>
+<tr class="memdesc:a062641d46358cc81299b44f13e954bea"><td class="mdescLeft">&#160;</td><td class="mdescRight">eDMA minor byte transfer count initially configured.  <a href="#a062641d46358cc81299b44f13e954bea">More...</a><br/></td></tr>
+<tr class="separator:a062641d46358cc81299b44f13e954bea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69a6dbe79088a4203aa206df1ef11998"><td class="memItemLeft" align="right" valign="top">uint8_t *volatile&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a69a6dbe79088a4203aa206df1ef11998">txData</a></td></tr>
+<tr class="memdesc:a69a6dbe79088a4203aa206df1ef11998"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send buffer.  <a href="#a69a6dbe79088a4203aa206df1ef11998">More...</a><br/></td></tr>
+<tr class="separator:a69a6dbe79088a4203aa206df1ef11998"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50c5068aec3bb0e9f31c02ea441b14cf"><td class="memItemLeft" align="right" valign="top">uint8_t *volatile&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a50c5068aec3bb0e9f31c02ea441b14cf">rxData</a></td></tr>
+<tr class="memdesc:a50c5068aec3bb0e9f31c02ea441b14cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive buffer.  <a href="#a50c5068aec3bb0e9f31c02ea441b14cf">More...</a><br/></td></tr>
+<tr class="separator:a50c5068aec3bb0e9f31c02ea441b14cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad62145e0aa8a875374cc3325cf2867ed"><td class="memItemLeft" align="right" valign="top">volatile size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ad62145e0aa8a875374cc3325cf2867ed">txRemainingByteCount</a></td></tr>
+<tr class="memdesc:ad62145e0aa8a875374cc3325cf2867ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bytes remaining to send.  <a href="#ad62145e0aa8a875374cc3325cf2867ed">More...</a><br/></td></tr>
+<tr class="separator:ad62145e0aa8a875374cc3325cf2867ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac03996666ed1a9781f56508c07a17108"><td class="memItemLeft" align="right" valign="top">volatile size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ac03996666ed1a9781f56508c07a17108">rxRemainingByteCount</a></td></tr>
+<tr class="memdesc:ac03996666ed1a9781f56508c07a17108"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bytes remaining to receive.  <a href="#ac03996666ed1a9781f56508c07a17108">More...</a><br/></td></tr>
+<tr class="separator:ac03996666ed1a9781f56508c07a17108"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8dc68d46f48bd0d65d6297cb6f14e128"><td class="memItemLeft" align="right" valign="top">volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a8dc68d46f48bd0d65d6297cb6f14e128">writeRegRemainingTimes</a></td></tr>
+<tr class="memdesc:a8dc68d46f48bd0d65d6297cb6f14e128"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write TDR register remaining times.  <a href="#a8dc68d46f48bd0d65d6297cb6f14e128">More...</a><br/></td></tr>
+<tr class="separator:a8dc68d46f48bd0d65d6297cb6f14e128"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb88b47a23df5db98e90d805e66ce360"><td class="memItemLeft" align="right" valign="top">volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#acb88b47a23df5db98e90d805e66ce360">readRegRemainingTimes</a></td></tr>
+<tr class="memdesc:acb88b47a23df5db98e90d805e66ce360"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read RDR register remaining times.  <a href="#acb88b47a23df5db98e90d805e66ce360">More...</a><br/></td></tr>
+<tr class="separator:acb88b47a23df5db98e90d805e66ce360"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedeef780f8b4c315d32899f310b754f8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aedeef780f8b4c315d32899f310b754f8"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#aedeef780f8b4c315d32899f310b754f8">totalByteCount</a></td></tr>
+<tr class="memdesc:aedeef780f8b4c315d32899f310b754f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of transfer bytes. <br/></td></tr>
+<tr class="separator:aedeef780f8b4c315d32899f310b754f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a213a6bf5cc799e39a1aa41fd29bc4d92"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a213a6bf5cc799e39a1aa41fd29bc4d92">txBuffIfNull</a></td></tr>
+<tr class="memdesc:a213a6bf5cc799e39a1aa41fd29bc4d92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used if there is not txData for DMA purpose.  <a href="#a213a6bf5cc799e39a1aa41fd29bc4d92">More...</a><br/></td></tr>
+<tr class="separator:a213a6bf5cc799e39a1aa41fd29bc4d92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f274f23a77823b57d44681bd96b2e4a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a4f274f23a77823b57d44681bd96b2e4a">rxBuffIfNull</a></td></tr>
+<tr class="memdesc:a4f274f23a77823b57d44681bd96b2e4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used if there is not rxData for DMA purpose.  <a href="#a4f274f23a77823b57d44681bd96b2e4a">More...</a><br/></td></tr>
+<tr class="separator:a4f274f23a77823b57d44681bd96b2e4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60f61ed66ea020991ae79edf4828c019"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a60f61ed66ea020991ae79edf4828c019">state</a></td></tr>
+<tr class="memdesc:a60f61ed66ea020991ae79edf4828c019"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI transfer state.  <a href="#a60f61ed66ea020991ae79edf4828c019">More...</a><br/></td></tr>
+<tr class="separator:a60f61ed66ea020991ae79edf4828c019"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a884fefbcb8953283264bf23f3041d54e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a884fefbcb8953283264bf23f3041d54e">errorCount</a></td></tr>
+<tr class="memdesc:a884fefbcb8953283264bf23f3041d54e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Error count for slave transfer.  <a href="#a884fefbcb8953283264bf23f3041d54e">More...</a><br/></td></tr>
+<tr class="separator:a884fefbcb8953283264bf23f3041d54e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a798930df84fc8d7610661f2a11280eef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00051.html#gafab27c360b0c9a27c0c3f2327cdf8fd8">lpspi_slave_edma_transfer_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a798930df84fc8d7610661f2a11280eef">callback</a></td></tr>
+<tr class="memdesc:a798930df84fc8d7610661f2a11280eef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Completion callback.  <a href="#a798930df84fc8d7610661f2a11280eef">More...</a><br/></td></tr>
+<tr class="separator:a798930df84fc8d7610661f2a11280eef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53121e1dce5bbd72ea9321fde33fdc21"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a53121e1dce5bbd72ea9321fde33fdc21">userData</a></td></tr>
+<tr class="memdesc:a53121e1dce5bbd72ea9321fde33fdc21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback user data.  <a href="#a53121e1dce5bbd72ea9321fde33fdc21">More...</a><br/></td></tr>
+<tr class="separator:a53121e1dce5bbd72ea9321fde33fdc21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e2542b60cc87774f12c728cf994f827"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3e2542b60cc87774f12c728cf994f827"></a>
+<a class="el" href="a00022.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a3e2542b60cc87774f12c728cf994f827">edmaRxRegToRxDataHandle</a></td></tr>
+<tr class="memdesc:a3e2542b60cc87774f12c728cf994f827"><td class="mdescLeft">&#160;</td><td class="mdescRight">edma_handle_t handle point used for RxReg to RxData buff <br/></td></tr>
+<tr class="separator:a3e2542b60cc87774f12c728cf994f827"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a026dd2bb58661017d5ae3e15637c65c5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a026dd2bb58661017d5ae3e15637c65c5"></a>
+<a class="el" href="a00022.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a026dd2bb58661017d5ae3e15637c65c5">edmaTxDataToTxRegHandle</a></td></tr>
+<tr class="memdesc:a026dd2bb58661017d5ae3e15637c65c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">edma_handle_t handle point used for TxData to TxReg <br/></td></tr>
+<tr class="separator:a026dd2bb58661017d5ae3e15637c65c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c1424903ecaad4939aa568c694a83c7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3c1424903ecaad4939aa568c694a83c7"></a>
+<a class="el" href="a00022.html#gacff054f9816fb678fc49f5e66a4d7649">edma_tcd_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a3c1424903ecaad4939aa568c694a83c7">lpspiSoftwareTCD</a> [2]</td></tr>
+<tr class="memdesc:a3c1424903ecaad4939aa568c694a83c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">SoftwareTCD, internal used. <br/></td></tr>
+<tr class="separator:a3c1424903ecaad4939aa568c694a83c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="adde5846fcb7d9b727fa48199e097ebe0"></a>
+<a class="anchor" id="a01e8c39ff805fe2976c87cdfe72a9ce7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile bool lpspi_slave_edma_handle_t::isByteSwap</td>
+          <td class="memname">volatile bool _lpspi_slave_edma_handle::isByteSwap</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a32ff741b430eafb22d754ac1c915c0d2"></a>
+<a class="anchor" id="a8bbcdd6904a0582149a6bbc934b7efb7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile uint8_t lpspi_slave_edma_handle_t::fifoSize</td>
+          <td class="memname">volatile uint8_t _lpspi_slave_edma_handle::fifoSize</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ae71513d9bb2d3555688dc788f59e95e3"></a>
+<a class="anchor" id="a68a5e2d91a877ea183f389f1193b0b4a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile uint8_t lpspi_slave_edma_handle_t::rxWatermark</td>
+          <td class="memname">volatile uint8_t _lpspi_slave_edma_handle::rxWatermark</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ae9008e89e02e5cd9541a5675850bf51f"></a>
+<a class="anchor" id="a6c091eb491b971c38537cae919967d79"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile uint8_t lpspi_slave_edma_handle_t::bytesEachWrite</td>
+          <td class="memname">volatile uint8_t _lpspi_slave_edma_handle::bytesEachWrite</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ad619dd29fdd066a2cb447759d73fa3f8"></a>
+<a class="anchor" id="a32f66de5f0f4aea3b0e10f98ee582085"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile uint8_t lpspi_slave_edma_handle_t::bytesEachRead</td>
+          <td class="memname">volatile uint8_t _lpspi_slave_edma_handle::bytesEachRead</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a60a19410542dacf7966928b1d8125099"></a>
+<a class="anchor" id="af5b31fa5b7bbec87da6e394e25dab60e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile uint8_t lpspi_slave_edma_handle_t::bytesLastRead</td>
+          <td class="memname">volatile uint8_t _lpspi_slave_edma_handle::bytesLastRead</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a357209584b821a5db546148779107f97"></a>
+<a class="anchor" id="ae30ca6b517a9ab8ff903d4f49de67f87"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile bool lpspi_slave_edma_handle_t::isThereExtraRxBytes</td>
+          <td class="memname">volatile bool _lpspi_slave_edma_handle::isThereExtraRxBytes</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ac4304fd510994667fcc72cf37ef1345a"></a>
+<a class="anchor" id="a062641d46358cc81299b44f13e954bea"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t lpspi_slave_edma_handle_t::nbytes</td>
+          <td class="memname">uint8_t _lpspi_slave_edma_handle::nbytes</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a74bd7b77c24b4239d0a1ba515c007b01"></a>
+<a class="anchor" id="a69a6dbe79088a4203aa206df1ef11998"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* volatile lpspi_slave_edma_handle_t::txData</td>
+          <td class="memname">uint8_t* volatile _lpspi_slave_edma_handle::txData</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a5dc6dfcb4b91259fa028d4b7e40c61bf"></a>
+<a class="anchor" id="a50c5068aec3bb0e9f31c02ea441b14cf"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* volatile lpspi_slave_edma_handle_t::rxData</td>
+          <td class="memname">uint8_t* volatile _lpspi_slave_edma_handle::rxData</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a21805cc6572bac9409823c6fcffe3b9d"></a>
+<a class="anchor" id="ad62145e0aa8a875374cc3325cf2867ed"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile size_t lpspi_slave_edma_handle_t::txRemainingByteCount</td>
+          <td class="memname">volatile size_t _lpspi_slave_edma_handle::txRemainingByteCount</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a541744df6a1f4544ad0357b31a6bf409"></a>
+<a class="anchor" id="ac03996666ed1a9781f56508c07a17108"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile size_t lpspi_slave_edma_handle_t::rxRemainingByteCount</td>
+          <td class="memname">volatile size_t _lpspi_slave_edma_handle::rxRemainingByteCount</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a873152d857c6ad13535fed538bb5cff0"></a>
+<a class="anchor" id="a8dc68d46f48bd0d65d6297cb6f14e128"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile uint32_t lpspi_slave_edma_handle_t::writeRegRemainingTimes</td>
+          <td class="memname">volatile uint32_t _lpspi_slave_edma_handle::writeRegRemainingTimes</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a669d63ac9184cbd10dac8285cda6fe58"></a>
+<a class="anchor" id="acb88b47a23df5db98e90d805e66ce360"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile uint32_t lpspi_slave_edma_handle_t::readRegRemainingTimes</td>
+          <td class="memname">volatile uint32_t _lpspi_slave_edma_handle::readRegRemainingTimes</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="aa4bdc0431ca2b191568c98fb3b65378b"></a>
+<a class="anchor" id="a213a6bf5cc799e39a1aa41fd29bc4d92"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t lpspi_slave_edma_handle_t::txBuffIfNull</td>
+          <td class="memname">uint32_t _lpspi_slave_edma_handle::txBuffIfNull</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a009bf53e4946ef033f48a6ab069cacc1"></a>
+<a class="anchor" id="a4f274f23a77823b57d44681bd96b2e4a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t lpspi_slave_edma_handle_t::rxBuffIfNull</td>
+          <td class="memname">uint32_t _lpspi_slave_edma_handle::rxBuffIfNull</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a184435a8954fccc6ced49ee8c0d00597"></a>
+<a class="anchor" id="a60f61ed66ea020991ae79edf4828c019"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile uint8_t lpspi_slave_edma_handle_t::state</td>
+          <td class="memname">volatile uint8_t _lpspi_slave_edma_handle::state</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a714af7dbfd409d724c2766fbf2c070e1"></a>
+<a class="anchor" id="a884fefbcb8953283264bf23f3041d54e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t lpspi_slave_edma_handle_t::errorCount</td>
+          <td class="memname">uint32_t _lpspi_slave_edma_handle::errorCount</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a3e23d946870dac99dd4e15bc96a51dd7"></a>
+<a class="anchor" id="a798930df84fc8d7610661f2a11280eef"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00051.html#gafab27c360b0c9a27c0c3f2327cdf8fd8">lpspi_slave_edma_transfer_callback_t</a> lpspi_slave_edma_handle_t::callback</td>
+          <td class="memname"><a class="el" href="a00051.html#gafab27c360b0c9a27c0c3f2327cdf8fd8">lpspi_slave_edma_transfer_callback_t</a> _lpspi_slave_edma_handle::callback</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ae4827ac81285a661d014146716aa3889"></a>
+<a class="anchor" id="a53121e1dce5bbd72ea9321fde33fdc21"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void* lpspi_slave_edma_handle_t::userData</td>
+          <td class="memname">void* _lpspi_slave_edma_handle::userData</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -853,7 +861,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_LPSPI_EDMA_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00270.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 4, 0))</td>
+          <td class="memname">#define FSL_LPSPI_EDMA_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00272.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 4, 2))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -866,7 +874,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* lpspi_master_edma_transfer_callback_t)(LPSPI_Type *base, lpspi_master_edma_handle_t *handle, <a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
+          <td class="memname">typedef void(* lpspi_master_edma_transfer_callback_t)(LPSPI_Type *base, <a class="el" href="a00051.html#ga5e5059737abd91565874d70c4a74e6ea">lpspi_master_edma_handle_t</a> *handle, <a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -887,7 +895,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* lpspi_slave_edma_transfer_callback_t)(LPSPI_Type *base, lpspi_slave_edma_handle_t *handle, <a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
+          <td class="memname">typedef void(* lpspi_slave_edma_transfer_callback_t)(LPSPI_Type *base, <a class="el" href="a00051.html#gadcc74e390971e456d935c86389d51835">lpspi_slave_edma_handle_t</a> *handle, <a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -917,7 +925,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpspi_master_edma_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00051.html#ga5e5059737abd91565874d70c4a74e6ea">lpspi_master_edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -935,13 +943,13 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00022.html#a00383">edma_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00022.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>edmaRxRegToRxDataHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00022.html#a00383">edma_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00022.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>edmaTxDataToTxRegHandle</em>&#160;</td>
         </tr>
         <tr>
@@ -959,8 +967,8 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
     <tr><td class="paramname">handle</td><td>LPSPI handle pointer to lpspi_master_edma_handle_t. </td></tr>
     <tr><td class="paramname">callback</td><td>LPSPI callback. </td></tr>
     <tr><td class="paramname">userData</td><td>callback function parameter. </td></tr>
-    <tr><td class="paramname">edmaRxRegToRxDataHandle</td><td>edmaRxRegToRxDataHandle pointer to <a class="el" href="a00022.html#a00383" title="eDMA transfer handle structure ">edma_handle_t</a>. </td></tr>
-    <tr><td class="paramname">edmaTxDataToTxRegHandle</td><td>edmaTxDataToTxRegHandle pointer to <a class="el" href="a00022.html#a00383" title="eDMA transfer handle structure ">edma_handle_t</a>. </td></tr>
+    <tr><td class="paramname">edmaRxRegToRxDataHandle</td><td>edmaRxRegToRxDataHandle pointer to edma_handle_t. </td></tr>
+    <tr><td class="paramname">edmaTxDataToTxRegHandle</td><td>edmaTxDataToTxRegHandle pointer to edma_handle_t. </td></tr>
   </table>
   </dd>
 </dl>
@@ -972,7 +980,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPSPI_MasterTransferEDMA </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPSPI_MasterTransferEDMA </td>
           <td>(</td>
           <td class="paramtype">LPSPI_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -980,13 +988,13 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpspi_master_edma_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00051.html#ga5e5059737abd91565874d70c4a74e6ea">lpspi_master_edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00050.html#a00452">lpspi_transfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00050.html#ga9e5674e4c10c43e897588cb02b92e0fe">lpspi_transfer_t</a> *&#160;</td>
           <td class="paramname"><em>transfer</em>&#160;</td>
         </tr>
         <tr>
@@ -1002,7 +1010,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
   <table class="params">
     <tr><td class="paramname">base</td><td>LPSPI peripheral base address. </td></tr>
     <tr><td class="paramname">handle</td><td>pointer to lpspi_master_edma_handle_t structure which stores the transfer state. </td></tr>
-    <tr><td class="paramname">transfer</td><td>pointer to <a class="el" href="a00050.html#a00452" title="LPSPI master/slave transfer structure. ">lpspi_transfer_t</a> structure. </td></tr>
+    <tr><td class="paramname">transfer</td><td>pointer to lpspi_transfer_t structure. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1015,7 +1023,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPSPI_MasterTransferPrepareEDMALite </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPSPI_MasterTransferPrepareEDMALite </td>
           <td>(</td>
           <td class="paramtype">LPSPI_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1023,7 +1031,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpspi_master_edma_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00051.html#ga5e5059737abd91565874d70c4a74e6ea">lpspi_master_edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -1064,7 +1072,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPSPI_MasterTransferEDMALite </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPSPI_MasterTransferEDMALite </td>
           <td>(</td>
           <td class="paramtype">LPSPI_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1072,13 +1080,13 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpspi_master_edma_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00051.html#ga5e5059737abd91565874d70c4a74e6ea">lpspi_master_edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00050.html#a00452">lpspi_transfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00050.html#ga9e5674e4c10c43e897588cb02b92e0fe">lpspi_transfer_t</a> *&#160;</td>
           <td class="paramname"><em>transfer</em>&#160;</td>
         </tr>
         <tr>
@@ -1094,7 +1102,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
   <table class="params">
     <tr><td class="paramname">base</td><td>LPSPI peripheral base address. </td></tr>
     <tr><td class="paramname">handle</td><td>pointer to lpspi_master_edma_handle_t structure which stores the transfer state. </td></tr>
-    <tr><td class="paramname">transfer</td><td>pointer to <a class="el" href="a00050.html#a00452" title="LPSPI master/slave transfer structure. ">lpspi_transfer_t</a> structure, config field is not uesed. </td></tr>
+    <tr><td class="paramname">transfer</td><td>pointer to lpspi_transfer_t structure, config field is not uesed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1123,7 +1131,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpspi_master_edma_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00051.html#ga5e5059737abd91565874d70c4a74e6ea">lpspi_master_edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>&#160;</td>
         </tr>
         <tr>
@@ -1149,7 +1157,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPSPI_MasterTransferGetCountEDMA </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPSPI_MasterTransferGetCountEDMA </td>
           <td>(</td>
           <td class="paramtype">LPSPI_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1157,7 +1165,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpspi_master_edma_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00051.html#ga5e5059737abd91565874d70c4a74e6ea">lpspi_master_edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -1199,7 +1207,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpspi_slave_edma_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00051.html#gadcc74e390971e456d935c86389d51835">lpspi_slave_edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -1217,13 +1225,13 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00022.html#a00383">edma_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00022.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>edmaRxRegToRxDataHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00022.html#a00383">edma_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00022.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>edmaTxDataToTxRegHandle</em>&#160;</td>
         </tr>
         <tr>
@@ -1242,8 +1250,8 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
     <tr><td class="paramname">handle</td><td>LPSPI handle pointer to lpspi_slave_edma_handle_t. </td></tr>
     <tr><td class="paramname">callback</td><td>LPSPI callback. </td></tr>
     <tr><td class="paramname">userData</td><td>callback function parameter. </td></tr>
-    <tr><td class="paramname">edmaRxRegToRxDataHandle</td><td>edmaRxRegToRxDataHandle pointer to <a class="el" href="a00022.html#a00383" title="eDMA transfer handle structure ">edma_handle_t</a>. </td></tr>
-    <tr><td class="paramname">edmaTxDataToTxRegHandle</td><td>edmaTxDataToTxRegHandle pointer to <a class="el" href="a00022.html#a00383" title="eDMA transfer handle structure ">edma_handle_t</a>. </td></tr>
+    <tr><td class="paramname">edmaRxRegToRxDataHandle</td><td>edmaRxRegToRxDataHandle pointer to edma_handle_t. </td></tr>
+    <tr><td class="paramname">edmaTxDataToTxRegHandle</td><td>edmaTxDataToTxRegHandle pointer to edma_handle_t. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1255,7 +1263,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPSPI_SlaveTransferEDMA </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPSPI_SlaveTransferEDMA </td>
           <td>(</td>
           <td class="paramtype">LPSPI_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1263,13 +1271,13 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpspi_slave_edma_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00051.html#gadcc74e390971e456d935c86389d51835">lpspi_slave_edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00050.html#a00452">lpspi_transfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00050.html#ga9e5674e4c10c43e897588cb02b92e0fe">lpspi_transfer_t</a> *&#160;</td>
           <td class="paramname"><em>transfer</em>&#160;</td>
         </tr>
         <tr>
@@ -1285,7 +1293,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
   <table class="params">
     <tr><td class="paramname">base</td><td>LPSPI peripheral base address. </td></tr>
     <tr><td class="paramname">handle</td><td>pointer to lpspi_slave_edma_handle_t structure which stores the transfer state. </td></tr>
-    <tr><td class="paramname">transfer</td><td>pointer to <a class="el" href="a00050.html#a00452" title="LPSPI master/slave transfer structure. ">lpspi_transfer_t</a> structure. </td></tr>
+    <tr><td class="paramname">transfer</td><td>pointer to lpspi_transfer_t structure. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1306,7 +1314,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpspi_slave_edma_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00051.html#gadcc74e390971e456d935c86389d51835">lpspi_slave_edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>&#160;</td>
         </tr>
         <tr>
@@ -1332,7 +1340,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPSPI_SlaveTransferGetCountEDMA </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPSPI_SlaveTransferGetCountEDMA </td>
           <td>(</td>
           <td class="paramtype">LPSPI_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1340,7 +1348,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpspi_slave_edma_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00051.html#gadcc74e390971e456d935c86389d51835">lpspi_slave_edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>

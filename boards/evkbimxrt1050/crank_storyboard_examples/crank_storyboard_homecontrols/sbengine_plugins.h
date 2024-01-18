@@ -27,7 +27,6 @@ extern int gre_plugin_sbimage_soil(gr_plugin_state_t *);
 
 const gr_plugin_create_func_t sb_plugins[] = {
 		gre_plugin_animate,
-		gre_plugin_script_lua,
 		gre_plugin_greio,
 		gre_plugin_circle,
 		gre_plugin_logger,

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018, 2019, 2020, 2021 NXP
+ * Copyright 2018-2021, 2023 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -18,6 +18,7 @@
 #include <openssl/evp.h>
 #endif
 #if SSS_HAVE_HOSTCRYPTO_MBEDTLS
+#include <mbedtls/version.h>
 #include <mbedtls/sha256.h>
 #endif
 
@@ -115,6 +116,7 @@ iot_agent_status_t iot_agent_service_calculate_cofiguration_checksum(const iot_a
 	ASSERT_OR_EXIT_MSG((header->length >= offset), "Header length is lower than offset");
 	remaining = header->length - offset;
 
+#if defined(MBEDTLS_VERSION_NUMBER) && (MBEDTLS_VERSION_NUMBER < 0x03010000)
 	mbedtls_sha256_context digest_context;
 	mbedtls_sha256_init(&digest_context);
 	mbedtls_sha256_starts_ret(&digest_context, 0);
@@ -133,7 +135,26 @@ iot_agent_status_t iot_agent_service_calculate_cofiguration_checksum(const iot_a
 	if (!failed) {
 		failed |= mbedtls_sha256_finish_ret(&digest_context, &calculated_checksum[0]);
 	}
+#else
+	mbedtls_sha256_context digest_context;
+	mbedtls_sha256_init(&digest_context);
+	mbedtls_sha256_starts(&digest_context, 0);
 
+	int failed = 0;
+	while ((!failed) && (remaining > 0))
+	{
+		size_t chunk_size = remaining < sizeof(buffer) ? remaining : sizeof(buffer);
+		iot_agent_service_read_buffer(ctx, offset, &buffer[0], chunk_size);
+		failed |= mbedtls_sha256_update(&digest_context, &buffer[0], chunk_size);
+
+		remaining -= chunk_size;
+		offset += chunk_size;
+	}
+
+	if (!failed) {
+		failed |= mbedtls_sha256_finish(&digest_context, &calculated_checksum[0]);
+	}
+#endif
 	ASSERT_OR_EXIT_MSG((failed == 0), "Error in checksum calculation");
 exit:
 	return agent_status;

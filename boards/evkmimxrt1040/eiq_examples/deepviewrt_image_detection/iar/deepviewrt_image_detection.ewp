@@ -282,7 +282,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pe111,Pe191,Pe167,Pe177,Pe236,Pe546,Pe550</state>
+          <state>Pe111,Pe191,Pe167,Pe177,Pe236,Pe546,Pe550,Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -319,11 +319,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -1387,7 +1387,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pe111,Pe191,Pe167,Pe177,Pe236,Pe546,Pe550</state>
+          <state>Pe111,Pe191,Pe167,Pe177,Pe236,Pe546,Pe550,Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1424,11 +1424,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -2250,12 +2250,6 @@
       <name>$PROJ_DIR$/../board_init.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../clock_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/retarget.c</name>
     </file>
     <file>
@@ -2278,12 +2272,6 @@
     </file>
   </group>
   <group>
-    <name>doc</name>
-    <file>
-      <name>$PROJ_DIR$/../doc/readme.txt</name>
-    </file>
-  </group>
-  <group>
     <name>utilities</name>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1042/utilities/str/fsl_str.c</name>
@@ -2299,6 +2287,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1042/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1042/utilities/debug_console_lite/fsl_assert.h</name>
     </file>
   </group>
   <group>
@@ -2500,6 +2491,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/mpu_armv7.h</name>
+    </file>
+  </group>
+  <group>
+    <name>doc</name>
+    <file>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
 </project>

@@ -2215,9 +2215,6 @@
         <group>
           <name>src</name>
           <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/src/tx_misra.c</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/src/tx_block_allocate.c</name>
           </file>
           <file>
@@ -2318,6 +2315,9 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/src/tx_initialize_kernel_setup.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/src/tx_misra.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/src/tx_mutex_cleanup.c</name>
@@ -2899,37 +2899,7 @@
               <group>
                 <name>src</name>
                 <file>
-                  <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports_module/cortex_m7/iar/module_manager/src/tx_thread_interrupt_control.s</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports_module/cortex_m7/iar/module_manager/src/tx_timer_interrupt.s</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports_module/cortex_m7/iar/module_manager/src/txm_module_manager_external_memory_enable.c</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports_module/cortex_m7/iar/module_manager/src/txm_module_manager_alignment_adjust.c</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports_module/cortex_m7/iar/module_manager/src/txm_module_manager_memory_fault_handler.c</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports_module/cortex_m7/iar/module_manager/src/tx_thread_interrupt_restore.s</name>
-                </file>
-                <file>
                   <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports_module/cortex_m7/iar/module_manager/src/tx_iar.c</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports_module/cortex_m7/iar/module_manager/src/tx_thread_schedule.s</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports_module/cortex_m7/iar/module_manager/src/tx_thread_stack_build.s</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports_module/cortex_m7/iar/module_manager/src/tx_thread_system_return.s</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports_module/cortex_m7/iar/module_manager/src/txm_module_manager_mm_register_setup.c</name>
                 </file>
                 <file>
                   <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports_module/cortex_m7/iar/module_manager/src/tx_misra.s</name>
@@ -2941,13 +2911,43 @@
                   <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports_module/cortex_m7/iar/module_manager/src/tx_thread_context_save.s</name>
                 </file>
                 <file>
-                  <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports_module/cortex_m7/iar/module_manager/src/txm_module_manager_memory_fault_notify.c</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports_module/cortex_m7/iar/module_manager/src/txm_module_manager_thread_stack_build.s</name>
+                  <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports_module/cortex_m7/iar/module_manager/src/tx_thread_interrupt_control.s</name>
                 </file>
                 <file>
                   <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports_module/cortex_m7/iar/module_manager/src/tx_thread_interrupt_disable.s</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports_module/cortex_m7/iar/module_manager/src/tx_thread_interrupt_restore.s</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports_module/cortex_m7/iar/module_manager/src/tx_thread_schedule.s</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports_module/cortex_m7/iar/module_manager/src/tx_thread_stack_build.s</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports_module/cortex_m7/iar/module_manager/src/tx_thread_system_return.s</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports_module/cortex_m7/iar/module_manager/src/tx_timer_interrupt.s</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports_module/cortex_m7/iar/module_manager/src/txm_module_manager_alignment_adjust.c</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports_module/cortex_m7/iar/module_manager/src/txm_module_manager_external_memory_enable.c</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports_module/cortex_m7/iar/module_manager/src/txm_module_manager_memory_fault_handler.c</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports_module/cortex_m7/iar/module_manager/src/txm_module_manager_memory_fault_notify.c</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports_module/cortex_m7/iar/module_manager/src/txm_module_manager_mm_register_setup.c</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports_module/cortex_m7/iar/module_manager/src/txm_module_manager_thread_stack_build.s</name>
                 </file>
               </group>
             </group>

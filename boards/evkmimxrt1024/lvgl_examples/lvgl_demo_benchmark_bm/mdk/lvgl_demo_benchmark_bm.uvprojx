@@ -330,7 +330,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1024DAG5A, LV_CONF_INCLUDE_SIMPLE=1, MCUXPRESSO_SDK, LV_CONF_INCLUDE_SIMPLE</Define>
               <Undefine/>
-              <IncludePath>../..;..;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT1024/drivers;../../../../../devices/MIMXRT1024/cmsis_drivers;../../../../../devices/MIMXRT1024/utilities/str;../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../middleware/lvgl/lvgl/demos;../../../../../middleware/lvgl/lvgl/demos/benchmark;../../../../../middleware/lvgl/lvgl/examples/assets;../../../../../middleware/lvgl/lvgl/demos/stress/assets;../../../../../middleware/lvgl/lvgl;../../../../../middleware/lvgl/lvgl/src;../../../../../middleware/lvgl;../../../../../devices/MIMXRT1024;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT1024/template;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../..;..;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT1024/drivers;../../../../../devices/MIMXRT1024/cmsis_drivers;../../../../../devices/MIMXRT1024/utilities/str;../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../middleware/lvgl/lvgl/demos;../../../../../middleware/lvgl/lvgl/demos/benchmark;../../../../../middleware/lvgl/lvgl;../../../../../middleware/lvgl/lvgl/src;../../../../../middleware/lvgl;../../../../../devices/MIMXRT1024;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT1024/template;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -461,9 +461,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -674,6 +674,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1349,6 +1354,26 @@
               <FileName>lv_gpu_stm32_dma2d.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/stm32_dma2d/lv_gpu_stm32_dma2d.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/draw/renesas</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_gpu_d2_ra6m3.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/renesas/lv_gpu_d2_ra6m3.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_d2_ra6m3.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/renesas/lv_gpu_d2_ra6m3.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_d2_draw_label.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/renesas/lv_gpu_d2_draw_label.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3261,7 +3286,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1024DAG5A, LV_CONF_INCLUDE_SIMPLE=1, MCUXPRESSO_SDK, LV_CONF_INCLUDE_SIMPLE</Define>
               <Undefine/>
-              <IncludePath>../..;..;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT1024/drivers;../../../../../devices/MIMXRT1024/cmsis_drivers;../../../../../devices/MIMXRT1024/utilities/str;../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../middleware/lvgl/lvgl/demos;../../../../../middleware/lvgl/lvgl/demos/benchmark;../../../../../middleware/lvgl/lvgl/examples/assets;../../../../../middleware/lvgl/lvgl/demos/stress/assets;../../../../../middleware/lvgl/lvgl;../../../../../middleware/lvgl/lvgl/src;../../../../../middleware/lvgl;../../../../../devices/MIMXRT1024;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT1024/template;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../..;..;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT1024/drivers;../../../../../devices/MIMXRT1024/cmsis_drivers;../../../../../devices/MIMXRT1024/utilities/str;../../../../../devices/MIMXRT1024/utilities/debug_console_lite;../../../../../middleware/lvgl/lvgl/demos;../../../../../middleware/lvgl/lvgl/demos/benchmark;../../../../../middleware/lvgl/lvgl;../../../../../middleware/lvgl/lvgl/src;../../../../../middleware/lvgl;../../../../../devices/MIMXRT1024;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT1024/template;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3392,9 +3417,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -3605,6 +3630,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1024/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4280,6 +4310,26 @@
               <FileName>lv_gpu_stm32_dma2d.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/stm32_dma2d/lv_gpu_stm32_dma2d.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/draw/renesas</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_gpu_d2_ra6m3.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/renesas/lv_gpu_d2_ra6m3.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_d2_ra6m3.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/renesas/lv_gpu_d2_ra6m3.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_d2_draw_label.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/renesas/lv_gpu_d2_draw_label.c</FilePath>
             </File>
           </Files>
         </Group>

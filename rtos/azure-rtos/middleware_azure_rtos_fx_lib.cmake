@@ -266,9 +266,21 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
 )
 endif()
 
+if(CONFIG_TOOLCHAIN STREQUAL mcux AND CONFIG_CORE STREQUAL cm4f)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+  ${CMAKE_CURRENT_LIST_DIR}/threadx/ports/cortex_m4/gnu/inc
+)
+endif()
+
 if(CONFIG_TOOLCHAIN STREQUAL mdk AND CONFIG_CORE STREQUAL cm7f)
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
   ${CMAKE_CURRENT_LIST_DIR}/threadx/ports/cortex_m7/ac6/inc
+)
+endif()
+
+if(CONFIG_TOOLCHAIN STREQUAL mdk AND CONFIG_CORE STREQUAL cm4f)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+  ${CMAKE_CURRENT_LIST_DIR}/threadx/ports/cortex_m4/ac6/inc
 )
 endif()
 
@@ -297,7 +309,13 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
 )
 endif()
 
-if((CONFIG_TOOLCHAIN STREQUAL mdk OR CONFIG_TOOLCHAIN STREQUAL iar) AND (CONFIG_CORE STREQUAL cm7f OR CONFIG_CORE STREQUAL cm33))
+if((CONFIG_TOOLCHAIN STREQUAL mcux OR CONFIG_TOOLCHAIN STREQUAL armgcc) AND CONFIG_CORE STREQUAL cm4f)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+  ${CMAKE_CURRENT_LIST_DIR}/filex/ports/cortex_m4/gnu/inc
+)
+endif()
+
+if((CONFIG_TOOLCHAIN STREQUAL mdk OR CONFIG_TOOLCHAIN STREQUAL iar) AND (CONFIG_CORE STREQUAL cm7f OR CONFIG_CORE STREQUAL cm33 OR CONFIG_CORE STREQUAL cm4f))
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
   ${CMAKE_CURRENT_LIST_DIR}/filex/ports/generic/inc
 )

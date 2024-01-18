@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -101,6 +101,7 @@ $(document).ready(function(){initNavTree('a00013.html','');});
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
@@ -112,9 +113,9 @@ $(document).ready(function(){initNavTree('a00013.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00290"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#a00290">codec_i2c_config_t</a></td></tr>
-<tr class="memdesc:a00290"><td class="mdescLeft">&#160;</td><td class="mdescRight">CODEC I2C configurations structure.  <a href="a00013.html#a00290">More...</a><br/></td></tr>
-<tr class="separator:a00290"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00265"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#a00265">_codec_i2c_config</a></td></tr>
+<tr class="memdesc:a00265"><td class="mdescLeft">&#160;</td><td class="mdescRight">CODEC I2C configurations structure.  <a href="a00013.html#a00265">More...</a><br/></td></tr>
+<tr class="separator:a00265"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
@@ -123,104 +124,142 @@ Macros</h2></td></tr>
 <tr class="memdesc:ga708be0fda3516367fe0461a5f054118c"><td class="mdescLeft">&#160;</td><td class="mdescRight">codec i2c handler <br/></td></tr>
 <tr class="separator:ga708be0fda3516367fe0461a5f054118c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga90c62d9a9e394ab582060679be5cb554"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00013.html#ga5a34176c2a3f609443b47b9330229d9b">_codec_reg_addr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ga90c62d9a9e394ab582060679be5cb554">codec_reg_addr_t</a></td></tr>
+<tr class="memdesc:ga90c62d9a9e394ab582060679be5cb554"><td class="mdescLeft">&#160;</td><td class="mdescRight">CODEC device register address type.  <a href="#ga90c62d9a9e394ab582060679be5cb554">More...</a><br/></td></tr>
+<tr class="separator:ga90c62d9a9e394ab582060679be5cb554"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad3867f845f6ad48a4949239d71241c88"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00013.html#gaadb6fb128d5ed1fb9edcdb1e533dd218">_codec_reg_width</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#gad3867f845f6ad48a4949239d71241c88">codec_reg_width_t</a></td></tr>
+<tr class="memdesc:gad3867f845f6ad48a4949239d71241c88"><td class="mdescLeft">&#160;</td><td class="mdescRight">CODEC device register width.  <a href="#gad3867f845f6ad48a4949239d71241c88">More...</a><br/></td></tr>
+<tr class="separator:gad3867f845f6ad48a4949239d71241c88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7cef6c41744cbf081437214aa3a6acec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7cef6c41744cbf081437214aa3a6acec"></a>
+typedef struct <a class="el" href="a00013.html#a00265">_codec_i2c_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ga7cef6c41744cbf081437214aa3a6acec">codec_i2c_config_t</a></td></tr>
+<tr class="memdesc:ga7cef6c41744cbf081437214aa3a6acec"><td class="mdescLeft">&#160;</td><td class="mdescRight">CODEC I2C configurations structure. <br/></td></tr>
+<tr class="separator:ga7cef6c41744cbf081437214aa3a6acec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga0efd6653dc35bf1c3ac3516b8580c560"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ga0efd6653dc35bf1c3ac3516b8580c560">codec_reg_addr_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00013.html#gga0efd6653dc35bf1c3ac3516b8580c560a1ee21f0f2d15f0a1e3708aa041c67977">kCODEC_RegAddr8Bit</a> = 1U, 
+<tr class="memitem:ga5a34176c2a3f609443b47b9330229d9b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ga5a34176c2a3f609443b47b9330229d9b">_codec_reg_addr</a> { <br/>
+&#160;&#160;<a class="el" href="a00013.html#gga5a34176c2a3f609443b47b9330229d9ba1ee21f0f2d15f0a1e3708aa041c67977">kCODEC_RegAddr8Bit</a> = 1U, 
 <br/>
-&#160;&#160;<a class="el" href="a00013.html#gga0efd6653dc35bf1c3ac3516b8580c560a6bb003f6339c896cab91d395e515431d">kCODEC_RegAddr16Bit</a> = 2U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga0efd6653dc35bf1c3ac3516b8580c560"><td class="mdescLeft">&#160;</td><td class="mdescRight">CODEC device register address type.  <a href="a00013.html#ga0efd6653dc35bf1c3ac3516b8580c560">More...</a><br/></td></tr>
-<tr class="separator:ga0efd6653dc35bf1c3ac3516b8580c560"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga29f27d00fb6b1d4207c919daf85c99e4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ga29f27d00fb6b1d4207c919daf85c99e4">codec_reg_width_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00013.html#gga29f27d00fb6b1d4207c919daf85c99e4a6924318365a3be4d1f806bbf822f24a7">kCODEC_RegWidth8Bit</a> = 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00013.html#gga29f27d00fb6b1d4207c919daf85c99e4adcf918639278d1d38a99f9b40030861a">kCODEC_RegWidth16Bit</a> = 2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00013.html#gga29f27d00fb6b1d4207c919daf85c99e4a1135b4284f4e9e0d83113250763b955f">kCODEC_RegWidth32Bit</a> = 4U
+&#160;&#160;<a class="el" href="a00013.html#gga5a34176c2a3f609443b47b9330229d9ba6bb003f6339c896cab91d395e515431d">kCODEC_RegAddr16Bit</a> = 2U
 <br/>
  }</td></tr>
-<tr class="memdesc:ga29f27d00fb6b1d4207c919daf85c99e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">CODEC device register width.  <a href="a00013.html#ga29f27d00fb6b1d4207c919daf85c99e4">More...</a><br/></td></tr>
-<tr class="separator:ga29f27d00fb6b1d4207c919daf85c99e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga5a34176c2a3f609443b47b9330229d9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">CODEC device register address type.  <a href="a00013.html#ga5a34176c2a3f609443b47b9330229d9b">More...</a><br/></td></tr>
+<tr class="separator:ga5a34176c2a3f609443b47b9330229d9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaadb6fb128d5ed1fb9edcdb1e533dd218"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#gaadb6fb128d5ed1fb9edcdb1e533dd218">_codec_reg_width</a> { <br/>
+&#160;&#160;<a class="el" href="a00013.html#ggaadb6fb128d5ed1fb9edcdb1e533dd218a6924318365a3be4d1f806bbf822f24a7">kCODEC_RegWidth8Bit</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00013.html#ggaadb6fb128d5ed1fb9edcdb1e533dd218adcf918639278d1d38a99f9b40030861a">kCODEC_RegWidth16Bit</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00013.html#ggaadb6fb128d5ed1fb9edcdb1e533dd218a1135b4284f4e9e0d83113250763b955f">kCODEC_RegWidth32Bit</a> = 4U
+<br/>
+ }</td></tr>
+<tr class="memdesc:gaadb6fb128d5ed1fb9edcdb1e533dd218"><td class="mdescLeft">&#160;</td><td class="mdescRight">CODEC device register width.  <a href="a00013.html#gaadb6fb128d5ed1fb9edcdb1e533dd218">More...</a><br/></td></tr>
+<tr class="separator:gaadb6fb128d5ed1fb9edcdb1e533dd218"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gadf64ef142b3bbc5a2f9ba1b7e01e5356"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#gadf64ef142b3bbc5a2f9ba1b7e01e5356">CODEC_I2C_Init</a> (void *handle, uint32_t i2cInstance, uint32_t i2cBaudrate, uint32_t i2cSourceClockHz)</td></tr>
+<tr class="memitem:gadf64ef142b3bbc5a2f9ba1b7e01e5356"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#gadf64ef142b3bbc5a2f9ba1b7e01e5356">CODEC_I2C_Init</a> (void *handle, uint32_t i2cInstance, uint32_t i2cBaudrate, uint32_t i2cSourceClockHz)</td></tr>
 <tr class="memdesc:gadf64ef142b3bbc5a2f9ba1b7e01e5356"><td class="mdescLeft">&#160;</td><td class="mdescRight">Codec i2c bus initilization.  <a href="#gadf64ef142b3bbc5a2f9ba1b7e01e5356">More...</a><br/></td></tr>
 <tr class="separator:gadf64ef142b3bbc5a2f9ba1b7e01e5356"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2c33fdd5bd6fe377e53f92cbbb03223b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ga2c33fdd5bd6fe377e53f92cbbb03223b">CODEC_I2C_Deinit</a> (void *handle)</td></tr>
+<tr class="memitem:ga2c33fdd5bd6fe377e53f92cbbb03223b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ga2c33fdd5bd6fe377e53f92cbbb03223b">CODEC_I2C_Deinit</a> (void *handle)</td></tr>
 <tr class="memdesc:ga2c33fdd5bd6fe377e53f92cbbb03223b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Codec i2c de-initilization.  <a href="#ga2c33fdd5bd6fe377e53f92cbbb03223b">More...</a><br/></td></tr>
 <tr class="separator:ga2c33fdd5bd6fe377e53f92cbbb03223b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaadd85b986313b7ee984cd57bc9b883b4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#gaadd85b986313b7ee984cd57bc9b883b4">CODEC_I2C_Send</a> (void *handle, uint8_t deviceAddress, uint32_t subAddress, uint8_t subaddressSize, uint8_t *txBuff, uint8_t txBuffSize)</td></tr>
+<tr class="memitem:gaadd85b986313b7ee984cd57bc9b883b4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#gaadd85b986313b7ee984cd57bc9b883b4">CODEC_I2C_Send</a> (void *handle, uint8_t deviceAddress, uint32_t subAddress, uint8_t subaddressSize, uint8_t *txBuff, uint8_t txBuffSize)</td></tr>
 <tr class="memdesc:gaadd85b986313b7ee984cd57bc9b883b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">codec i2c send function.  <a href="#gaadd85b986313b7ee984cd57bc9b883b4">More...</a><br/></td></tr>
 <tr class="separator:gaadd85b986313b7ee984cd57bc9b883b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae0da3dcb4574fedde25b82432890e2ec"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#gae0da3dcb4574fedde25b82432890e2ec">CODEC_I2C_Receive</a> (void *handle, uint8_t deviceAddress, uint32_t subAddress, uint8_t subaddressSize, uint8_t *rxBuff, uint8_t rxBuffSize)</td></tr>
+<tr class="memitem:gae0da3dcb4574fedde25b82432890e2ec"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#gae0da3dcb4574fedde25b82432890e2ec">CODEC_I2C_Receive</a> (void *handle, uint8_t deviceAddress, uint32_t subAddress, uint8_t subaddressSize, uint8_t *rxBuff, uint8_t rxBuffSize)</td></tr>
 <tr class="memdesc:gae0da3dcb4574fedde25b82432890e2ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">codec i2c receive function.  <a href="#gae0da3dcb4574fedde25b82432890e2ec">More...</a><br/></td></tr>
 <tr class="separator:gae0da3dcb4574fedde25b82432890e2ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00290" id="a00290"></a>
+<a name="a00265" id="a00265"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct codec_i2c_config_t</td>
+          <td class="memname">struct _codec_i2c_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:afc9ec0baf7efc35817e3ecf2c8a58337"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afc9ec0baf7efc35817e3ecf2c8a58337"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#afc9ec0baf7efc35817e3ecf2c8a58337">codecI2CInstance</a></td></tr>
-<tr class="memdesc:afc9ec0baf7efc35817e3ecf2c8a58337"><td class="mdescLeft">&#160;</td><td class="mdescRight">i2c bus instance <br/></td></tr>
-<tr class="separator:afc9ec0baf7efc35817e3ecf2c8a58337"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37cb8111dd268ac2496202faf07568b9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a37cb8111dd268ac2496202faf07568b9"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#a37cb8111dd268ac2496202faf07568b9">codecI2CSourceClock</a></td></tr>
-<tr class="memdesc:a37cb8111dd268ac2496202faf07568b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">i2c bus source clock frequency <br/></td></tr>
-<tr class="separator:a37cb8111dd268ac2496202faf07568b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ec85738d9527900de39508911dd0169"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3ec85738d9527900de39508911dd0169"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#a3ec85738d9527900de39508911dd0169">codecI2CInstance</a></td></tr>
+<tr class="memdesc:a3ec85738d9527900de39508911dd0169"><td class="mdescLeft">&#160;</td><td class="mdescRight">i2c bus instance <br/></td></tr>
+<tr class="separator:a3ec85738d9527900de39508911dd0169"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a562815d5c51bef1ccb7f5655173ace47"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a562815d5c51bef1ccb7f5655173ace47"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#a562815d5c51bef1ccb7f5655173ace47">codecI2CSourceClock</a></td></tr>
+<tr class="memdesc:a562815d5c51bef1ccb7f5655173ace47"><td class="mdescLeft">&#160;</td><td class="mdescRight">i2c bus source clock frequency <br/></td></tr>
+<tr class="separator:a562815d5c51bef1ccb7f5655173ace47"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
 </div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga0efd6653dc35bf1c3ac3516b8580c560"></a>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga90c62d9a9e394ab582060679be5cb554"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00013.html#ga0efd6653dc35bf1c3ac3516b8580c560">codec_reg_addr_t</a></td>
+          <td class="memname">typedef enum <a class="el" href="a00013.html#ga5a34176c2a3f609443b47b9330229d9b">_codec_reg_addr</a>  <a class="el" href="a00013.html#ga90c62d9a9e394ab582060679be5cb554">codec_reg_addr_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gad3867f845f6ad48a4949239d71241c88"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00013.html#gaadb6fb128d5ed1fb9edcdb1e533dd218">_codec_reg_width</a>  <a class="el" href="a00013.html#gad3867f845f6ad48a4949239d71241c88">codec_reg_width_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="ga5a34176c2a3f609443b47b9330229d9b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00013.html#ga5a34176c2a3f609443b47b9330229d9b">_codec_reg_addr</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga0efd6653dc35bf1c3ac3516b8580c560a1ee21f0f2d15f0a1e3708aa041c67977"></a>kCODEC_RegAddr8Bit</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga5a34176c2a3f609443b47b9330229d9ba1ee21f0f2d15f0a1e3708aa041c67977"></a>kCODEC_RegAddr8Bit</em>&nbsp;</td><td class="fielddoc">
 <p>8-bit register address. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0efd6653dc35bf1c3ac3516b8580c560a6bb003f6339c896cab91d395e515431d"></a>kCODEC_RegAddr16Bit</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga5a34176c2a3f609443b47b9330229d9ba6bb003f6339c896cab91d395e515431d"></a>kCODEC_RegAddr16Bit</em>&nbsp;</td><td class="fielddoc">
 <p>16-bit register address. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga29f27d00fb6b1d4207c919daf85c99e4"></a>
+<a class="anchor" id="gaadb6fb128d5ed1fb9edcdb1e533dd218"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00013.html#ga29f27d00fb6b1d4207c919daf85c99e4">codec_reg_width_t</a></td>
+          <td class="memname">enum <a class="el" href="a00013.html#gaadb6fb128d5ed1fb9edcdb1e533dd218">_codec_reg_width</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga29f27d00fb6b1d4207c919daf85c99e4a6924318365a3be4d1f806bbf822f24a7"></a>kCODEC_RegWidth8Bit</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaadb6fb128d5ed1fb9edcdb1e533dd218a6924318365a3be4d1f806bbf822f24a7"></a>kCODEC_RegWidth8Bit</em>&nbsp;</td><td class="fielddoc">
 <p>8-bit register width. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga29f27d00fb6b1d4207c919daf85c99e4adcf918639278d1d38a99f9b40030861a"></a>kCODEC_RegWidth16Bit</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggaadb6fb128d5ed1fb9edcdb1e533dd218adcf918639278d1d38a99f9b40030861a"></a>kCODEC_RegWidth16Bit</em>&nbsp;</td><td class="fielddoc">
 <p>16-bit register width. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga29f27d00fb6b1d4207c919daf85c99e4a1135b4284f4e9e0d83113250763b955f"></a>kCODEC_RegWidth32Bit</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggaadb6fb128d5ed1fb9edcdb1e533dd218a1135b4284f4e9e0d83113250763b955f"></a>kCODEC_RegWidth32Bit</em>&nbsp;</td><td class="fielddoc">
 <p>32-bit register width. </p>
 </td></tr>
 </table>
@@ -233,7 +272,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CODEC_I2C_Init </td>
+          <td class="memname"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CODEC_I2C_Init </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
@@ -281,7 +320,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CODEC_I2C_Deinit </td>
+          <td class="memname"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CODEC_I2C_Deinit </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>handle</em></td><td>)</td>
@@ -304,7 +343,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CODEC_I2C_Send </td>
+          <td class="memname"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CODEC_I2C_Send </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
@@ -366,7 +405,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CODEC_I2C_Receive </td>
+          <td class="memname"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CODEC_I2C_Receive </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>

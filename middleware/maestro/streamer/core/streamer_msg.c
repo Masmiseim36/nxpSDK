@@ -1,10 +1,7 @@
 /*
  * Copyright 2018-2023 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /*!
@@ -19,21 +16,12 @@
 
 #include <string.h>
 #include "pipeline.h"
-#include "streamer_fs.h"
-#include "streamer_mic2file.h"
-#include "streamer_vit.h"
-#include "streamer_testeapfile2file.h"
-#include "streamer_audiosrc.h"
+#include "file_src_freertos.h"
 #include "streamer_element_properties.h"
-#include "streamer_pcm_speaker.h"
-#include "streamer_pcm_speaker_mem.h"
-#include "streamer_vit_filesink.h"
 
 #ifdef STREAMER_ENABLE_MEM_SRC
 #include "mem_src.h"
 #endif
-
-#include "streamer_opusmem2mem.h"
 
 /*!
  * @ingroup streamer_msg
@@ -63,199 +51,26 @@ typedef struct
  * is associated with. Properties can be used to configure the individual
  * pipeline elements.
  */
-static ElementPropertyLookup property_lookup_table[] = {{PROP_AUDIOSRC_MASK, ELEMENT_AUDIO_SRC_INDEX},
+static ElementPropertyLookup property_lookup_table[] = {{PROP_MICROPHONE_MASK, ELEMENT_MICROPHONE_INDEX},
                                                         {PROP_FILESRC_MASK, ELEMENT_FILE_SRC_INDEX},
                                                         {PROP_MEMSRC_MASK, ELEMENT_MEM_SRC_INDEX},
                                                         {PROP_NETBUFSRC_MASK, ELEMENT_NETBUF_SRC_INDEX},
                                                         {PROP_DECODER_MASK, ELEMENT_DECODER_INDEX},
-                                                        {PROP_AUDIOSINK_MASK, ELEMENT_AUDIO_SINK_INDEX},
+                                                        {PROP_SPEAKER_MASK, ELEMENT_SPEAKER_INDEX},
                                                         {PROP_FILESINK_MASK, ELEMENT_FILE_SINK_INDEX},
                                                         {PROP_MEMSINK_MASK, ELEMENT_MEM_SINK_INDEX},
-                                                        {PROP_VITSINK_PROC_MASK, ELEMENT_VIT_INDEX},
-                                                        {PROP_EAP_PROC_MASK, ELEMENT_EAP_PROC_INDEX},
-                                                        {PROP_VOICESEEKER_PROC_MASK, ELEMENT_VOICESEEKER_PROC_INDEX},
-                                                        {PROP_SRC_PROC_MASK, ELEMENT_SRC_PROC_INDEX},
-                                                        {PROP_ENCODER_MASK, ELEMENT_ENCODER_INDEX}};
+                                                        {PROP_VITSINK_MASK, ELEMENT_VIT_INDEX},
+                                                        {PROP_VIT_PROC_MASK, ELEMENT_VIT_PROC_INDEX},
+                                                        {PROP_VOICESEEKER_MASK, ELEMENT_VOICESEEKER_INDEX},
+                                                        {PROP_SRC_MASK, ELEMENT_SRC_INDEX},
+                                                        {PROP_ENCODER_MASK, ELEMENT_ENCODER_INDEX},
+                                                        {PROP_USB_SRC_MASK, ELEMENT_USB_SRC_INDEX},
+                                                        {PROP_USB_SINK_MASK, ELEMENT_USB_SINK_INDEX},
+                                                        {PROP_ASRC_MASK, ELEMENT_ASRC_INDEX}};
 
 /*
  * GLOBAL FUNCTIONS
  */
-
-/*!
- * @brief   Streamer Create Pipeline
- *
- * @details Handles request to create a pipeline object.
- *
- * @param   [in] task_data   Pointer to task data structure
- * @param   [in] msg_data    Pointer to Message Data
- * @returns Error Status
- *
- * @retval STREAM_OK                Success
- * @retval STREAM_ERR_INVALID_ARGS  Invalid argument
- * @retval STREAM_ERR_NO_MEM        Out of memory
- */
-int streamer_msg_create_pipeline(STREAMER_T *task_data, void *msg_data)
-{
-    STREAMER_MSG_T *streamer_msg;
-    int ret = STREAM_OK;
-
-    STREAMER_FUNC_ENTER(DBG_CORE);
-
-    streamer_msg = (STREAMER_MSG_T *)msg_data;
-
-    if (streamer_msg->pipeline_index >= MAX_PIPELINES)
-    {
-        ret = STREAM_ERR_INVALID_ARGS;
-    }
-    else if (0 != task_data->pipes[streamer_msg->pipeline_index])
-    {
-        /* Index already in use */
-        ret = STREAM_ERR_INVALID_ARGS;
-    }
-    else
-    {
-        switch (streamer_msg->pipeline_type)
-        {
-            case STREAM_PIPELINE_FILESYSTEM:
-            case STREAM_PIPELINE_MEM:
-            case STREAM_PIPELINE_NETBUF:
-                ret = streamer_build_fs_pipeline(streamer_msg->pipeline_index, streamer_msg->out_dev_name,
-                                                 streamer_msg->pipeline_type, task_data);
-                break;
-            case STREAM_PIPELINE_PCM:
-                ret = streamer_build_audiosrc_pipeline(streamer_msg->pipeline_index, streamer_msg->in_dev_name,
-                                                       streamer_msg->out_dev_name, streamer_msg->pipeline_type,
-                                                       task_data);
-                break;
-            case STREAM_PIPELINE_MIC2FILE:
-                ret = streamer_build_mic2file_pipeline(streamer_msg->pipeline_index, streamer_msg->in_dev_name,
-                                                       streamer_msg->out_dev_name, streamer_msg->pipeline_type,
-                                                       task_data);
-                break;
-            case STREAM_PIPELINE_VIT:
-                ret = streamer_build_vit_pipeline(streamer_msg->pipeline_index, streamer_msg->in_dev_name,
-                                                  streamer_msg->out_dev_name, streamer_msg->pipeline_type, task_data);
-                break;
-            case STREAM_PIPELINE_VIT_FILESINK:
-                ret = streamer_build_vit_filesink_pipeline(streamer_msg->pipeline_index, streamer_msg->in_dev_name,
-                                                           streamer_msg->out_dev_name, streamer_msg->pipeline_type,
-                                                           task_data);
-                break;
-            case STREAM_PIPELINE_OPUS_MEM2MEM:
-                ret = streamer_build_opusmem2mem_pipeline(streamer_msg->pipeline_index, streamer_msg->pipeline_type,
-                                                          task_data);
-                break;
-
-            case STREAM_PIPELINE_PCM_AUDIO:
-            case STREAM_PIPELINE_PCM_EAP_PROC_AUDIO:
-                ret = streamer_build_pcm_speaker_pipeline(streamer_msg->pipeline_index, streamer_msg->pipeline_type,
-                                                          task_data);
-                break;
-
-            case STREAM_PIPELINE_PCM_AUDIO_MEM:
-                ret = streamer_build_pcm_speaker_mem_pipeline(streamer_msg->pipeline_index, streamer_msg->pipeline_type,
-                                                              task_data);
-                break;
-            case STREAM_PIPELINE_TEST_AUDIO_PROCFILE2FILE:
-                ret = streamer_build_audio_procfile2file_pipeline(streamer_msg->pipeline_index,
-                                                                  streamer_msg->pipeline_type, task_data);
-                break;
-
-            default:
-                ret = STREAM_ERR_INVALID_ARGS;
-                break;
-        }
-    }
-
-    streamer_msg->errorcode = ret;
-
-    STREAMER_FUNC_EXIT(DBG_CORE);
-    return ret;
-}
-
-/*!
- * @brief   Streamer Destroy Pipeline
- *
- * @details Handles request to destroy a pipeline object.
- *
- * @param   [in] task_data Pointer to task data structure
- * @param   [in] msg_data  Pointer to Message Data
- *
- * @returns Error Status
- *
- * @retval STREAM_OK                        Success
- * @retval STREAM_ERR_INVALID_ARGS          Invalid value
- */
-int streamer_msg_destroy_pipeline(STREAMER_T *task_data, void *msg_data)
-{
-    STREAMER_MSG_T *streamer_msg;
-    int ret = STREAM_OK;
-
-    STREAMER_FUNC_ENTER(DBG_CORE);
-
-    streamer_msg = (STREAMER_MSG_T *)msg_data;
-
-    if (streamer_msg->pipeline_index >= MAX_PIPELINES)
-    {
-        ret = STREAM_ERR_INVALID_ARGS;
-    }
-    else if (0 == task_data->pipes[streamer_msg->pipeline_index])
-    {
-        /* Invalid Pipeline */
-        ret = STREAM_ERR_INVALID_ARGS;
-    }
-    else
-    {
-        Pipeline *pipeline = (Pipeline *)task_data->pipes[streamer_msg->pipeline_index];
-        switch (pipeline->type)
-        {
-            case STREAM_PIPELINE_FILESYSTEM:
-            case STREAM_PIPELINE_MEM:
-            case STREAM_PIPELINE_NETBUF:
-                ret = streamer_destroy_fs_pipeline(streamer_msg->pipeline_index, task_data);
-                break;
-
-            case STREAM_PIPELINE_PCM:
-                ret = streamer_destroy_audiosrc_pipeline(streamer_msg->pipeline_index, task_data);
-                break;
-
-            case STREAM_PIPELINE_OPUS_MEM2MEM:
-                ret = streamer_destroy_opusmem2mem_pipeline(streamer_msg->pipeline_index, task_data);
-                break;
-
-                break;
-            case STREAM_PIPELINE_MIC2FILE:
-                ret = streamer_destroy_mic2file_pipeline(streamer_msg->pipeline_index, task_data);
-                break;
-            case STREAM_PIPELINE_VIT:
-                ret = streamer_destroy_vit_pipeline(streamer_msg->pipeline_index, task_data);
-                break;
-            case STREAM_PIPELINE_VIT_FILESINK:
-                ret = streamer_destroy_vit_filesink_pipeline(streamer_msg->pipeline_index, task_data);
-                break;
-            case STREAM_PIPELINE_PCM_AUDIO:
-            case STREAM_PIPELINE_PCM_EAP_PROC_AUDIO:
-                ret = streamer_destroy_pcm_speaker_pipeline(streamer_msg->pipeline_index, task_data);
-                break;
-            case STREAM_PIPELINE_PCM_AUDIO_MEM:
-                ret = streamer_destroy_pcm_speaker_mem_pipeline(streamer_msg->pipeline_index, task_data);
-                break;
-
-            case STREAM_PIPELINE_TEST_AUDIO_PROCFILE2FILE:
-                ret = streamer_destroy_audio_procfile2file_pipeline(streamer_msg->pipeline_index, task_data);
-                break;
-
-            default:
-                ret = STREAM_ERR_INVALID_ARGS;
-                break;
-        }
-    }
-
-    streamer_msg->errorcode = ret;
-
-    STREAMER_FUNC_EXIT(DBG_CORE);
-    return ret;
-}
 
 /*!
  * @brief   Streamer Get Track Inforamtion from a pipeline
@@ -632,7 +447,7 @@ int streamer_msg_set_file(STREAMER_T *task_data, void *msg_data)
     }
 
     /* DETERMINE THE DECODER AND PARSER TYPE BASED ON FILENAME */
-    ret = streamer_get_fs_pipeline_config(filename, &config);
+    ret = file_src_get_decoder_type(filename, &config);
     if (STREAM_OK != ret)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "streamer_get_fs_pipeline_config failed:%d\n", ret);
@@ -645,7 +460,7 @@ int streamer_msg_set_file(STREAMER_T *task_data, void *msg_data)
     {
         property.prop = PROP_FILESRC_SET_LOCATION;
         ret           = element_set_property(task_data->elems[streamer_msg->pipeline_index][ELEMENT_FILE_SRC_INDEX],
-                                   property.prop, property.val);
+                                             property.prop, property.val);
         if (STREAM_OK != ret)
         {
             STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "set element(%d) property(%d) failed:%d\n",
@@ -680,7 +495,7 @@ int streamer_msg_set_file(STREAMER_T *task_data, void *msg_data)
             property.prop = PROP_FILESRC_SET_CHUNK_SIZE;
             property.val  = STREAMER_WAVE_FILE_CHUNK_SIZE;
             ret           = element_set_property(task_data->elems[streamer_msg->pipeline_index][ELEMENT_FILE_SRC_INDEX],
-                                       property.prop, property.val);
+                                                 property.prop, property.val);
 
             if (STREAM_OK != ret)
             {

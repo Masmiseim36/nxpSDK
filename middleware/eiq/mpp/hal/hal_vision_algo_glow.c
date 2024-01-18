@@ -1,12 +1,8 @@
 /*
  * Copyright 2022 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in
- * accordance with the license terms that accompany it. By expressly accepting
- * such terms or by downloading, installing, activating and/or otherwise using
- * the software, you are agreeing that you have read, and that you agree to
- * comply with and are bound by, such license terms. If you do not agree to be
- * bound by the applicable license terms, then you may not retain, install,
- * activate or otherwise use the software.
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /*
@@ -34,11 +30,11 @@
 #define MPP_GLOW_GET_ADDR(mutableBaseAddr, placeholderOff)  (((uint8_t*)(mutableBaseAddr)) + placeholderOff)
 
 MPP_GLOW_MEM_ALIGN(GLOW_MEMORY_ALIGN)
-uint8_t constantWeight[GLOW_CONSTANT_WEIGHTS_MAX_MEMSIZE];
+uint8_t constantWeight[HAL_GLOW_CONSTANT_WEIGHTS_MAX_MEMSIZE];
 MPP_GLOW_MEM_ALIGN(GLOW_MEMORY_ALIGN)
-uint8_t mutableWeight[GLOW_MUTABLE_WEIGHTS_MAX_MEMSIZE];
+uint8_t mutableWeight[HAL_GLOW_MUTABLE_WEIGHTS_MAX_MEMSIZE];
 MPP_GLOW_MEM_ALIGN(GLOW_MEMORY_ALIGN)
-uint8_t activations[GLOW_ACTIVATIONS_MAX_MEMSIZE];
+uint8_t activations[HAL_GLOW_ACTIVATIONS_MAX_MEMSIZE];
 
 /* Glow input parameters */
 typedef struct {
@@ -73,27 +69,27 @@ static hal_valgo_status_t HAL_VisionAlgoDev_Glow_Init(vision_algo_dev_t *dev, mo
 	int img_bytes, comp_bytes;
 	HAL_LOGD("++HAL_VisionAlgoDev_Glow_Init\n");
 
-	if (param->inference_params.constant_weight_MemSize > GLOW_CONSTANT_WEIGHTS_MAX_MEMSIZE)
+	if (param->inference_params.constant_weight_MemSize > HAL_GLOW_CONSTANT_WEIGHTS_MAX_MEMSIZE)
 	{
 	    HAL_LOGE("--HAL_VisionAlgoDev_Glow_Init: "
 	            "ERROR: constant weights memory size (%d) exceeds max limit (%d)\n",
-	            (int)(param->inference_params.constant_weight_MemSize), GLOW_CONSTANT_WEIGHTS_MAX_MEMSIZE);
+	            (int)(param->inference_params.constant_weight_MemSize), HAL_GLOW_CONSTANT_WEIGHTS_MAX_MEMSIZE);
 	    ret = kStatus_HAL_ValgoInitError ;
 	    return ret;
 	}
-	if (param->inference_params.mutable_weight_MemSize > GLOW_MUTABLE_WEIGHTS_MAX_MEMSIZE)
+	if (param->inference_params.mutable_weight_MemSize > HAL_GLOW_MUTABLE_WEIGHTS_MAX_MEMSIZE)
 	{
 	    HAL_LOGE("--HAL_VisionAlgoDev_Glow_Init: "
 	            "ERROR: mutable weights memory size (%d) exceeds max limit (%d)\n",
-	            (int)(param->inference_params.mutable_weight_MemSize), GLOW_MUTABLE_WEIGHTS_MAX_MEMSIZE);
+	            (int)(param->inference_params.mutable_weight_MemSize), HAL_GLOW_MUTABLE_WEIGHTS_MAX_MEMSIZE);
 	    ret = kStatus_HAL_ValgoInitError ;
 	    return ret;
 	}
-	if (param->inference_params.activations_MemSize > GLOW_ACTIVATIONS_MAX_MEMSIZE)
+	if (param->inference_params.activations_MemSize > HAL_GLOW_ACTIVATIONS_MAX_MEMSIZE)
 	{
 	    HAL_LOGE("--HAL_VisionAlgoDev_Glow_Init: "
 	            "ERROR: activations memory size (%d) exceeds max limit (%d)\n",
-	            (int)(param->inference_params.activations_MemSize), GLOW_ACTIVATIONS_MAX_MEMSIZE);
+	            (int)(param->inference_params.activations_MemSize), HAL_GLOW_ACTIVATIONS_MAX_MEMSIZE);
 	    ret = kStatus_HAL_ValgoInitError ;
 	    return ret;
 	}
@@ -216,13 +212,13 @@ static hal_valgo_status_t HAL_VisionAlgoDev_Glow_Run(const vision_algo_dev_t *de
 		HAL_LOGE("ERROR: Failed to convert input buffer\n");
 	}
 	/* run the inference and compute the duration */
-	start_time = TICK_TO_MS(GET_TICK());
+	start_time = hal_get_exec_time();
 	if (kStatus_Success != GLOW_MODEL_RunInference(glow_model_param->bundlefuntion,
 	        glow_model_param->constantWeight, glow_model_param->mutableWeight, glow_model_param->activations)) {
 		HAL_LOGE("ERROR: MODEL_RunInference() failed\n");
 		return kStatus_HAL_ValgoError;
 	}
-	stop_time = TICK_TO_MS(GET_TICK());
+	stop_time = hal_get_exec_time();
 	/* get inference outputs */
     for(int i=0; i < glow_model_param->num_outputs; i++){
         glow_model_param->out_param.out_tensors[i]->data = glow_model_param->outputsAddrs[i] ;
@@ -257,6 +253,7 @@ static hal_valgo_status_t HAL_VisionAlgoDev_Glow_getBufDesc(const vision_algo_de
 
 	/* set the pointer in device data that will be passed via Fwk Msg */
     in_buf->alignment = 0;
+    in_buf->nb_lines = glow_model_param->inputParams.height; /* number of lines required is the input height */
     in_buf->cacheable = true;
     in_buf->stride = glow_model_param->inputParams.width * glow_model_param->inputParams.num_channels; /* width * channels */
     in_buf->addr = glow_model_param->inputAddr;

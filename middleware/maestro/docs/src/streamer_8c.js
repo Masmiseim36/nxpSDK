@@ -10,7 +10,7 @@ var streamer_8c =
     [ "streamer_msg_handler", "streamer_8c.html#a9dba12ce0e879830b34f8540468b26af", null ],
     [ "streamer_process_pipelines", "streamer_8c.html#ad66e6eff9e2db74dc4534d4eef780005", null ],
     [ "streamer_handle_msg", "streamer_8c.html#a2330327d6a002085d9bb31cac2929372", null ],
-    [ "streamer_create_pipeline", "streamer_8c.html#a156ccb8aa582b294d35020e7c441f256", null ],
+    [ "streamer_create_pipeline", "streamer_8c.html#a47df6189721825d9fa1484c54f75132f", null ],
     [ "streamer_destroy_pipeline", "streamer_8c.html#aa9fd155271d1be13af4f4863426e9644", null ],
     [ "streamer_get_track_info", "streamer_8c.html#aa88e33f84253c92449d3727f67e77b4b", null ],
     [ "streamer_set_state", "streamer_8c.html#a7c39d455d90e3782718c0e6bcfc25b8b", null ],
@@ -21,6 +21,7 @@ var streamer_8c =
     [ "streamer_get_property", "streamer_8c.html#a658f8d4402d58c392acaa13f2941f210", null ],
     [ "streamer_set_file", "streamer_8c.html#a8a8df893844981d514c96e7531f5b1ec", null ],
     [ "streamer_set_repeat", "streamer_8c.html#a7f33f78b4303617006927d7578be435e", null ],
+    [ "type_lookup_table", "streamer_8c.html#aebd4370454e20c690fc838d4f93cd2a0", null ],
     [ "msg_handler_table", "streamer_8c.html#a4a79e8c3a703b70253d05d663e3bcb45", null ],
     [ "g_cci_meta_location", "streamer_8c.html#abc2cb3b7c8d90a0b8f10c47ddafa5292", null ]
 ];

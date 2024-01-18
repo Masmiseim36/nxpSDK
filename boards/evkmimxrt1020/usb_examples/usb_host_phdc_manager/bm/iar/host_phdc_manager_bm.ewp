@@ -359,8 +359,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
@@ -1453,8 +1453,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
@@ -2549,8 +2549,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
@@ -3643,8 +3643,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
@@ -4737,8 +4737,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
@@ -5833,8 +5833,8 @@
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
@@ -6762,6 +6762,9 @@
     <name>utilities</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/debug_console_lite/fsl_assert.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/str/fsl_str.c</name>

@@ -330,7 +330,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1021DAG5A, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, DEBUG_CONSOLE_ASSERT_DISABLE=1, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/i2c;../../../../../../devices/MIMXRT1021/drivers;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../components/osa;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1021;../../../../../evkmimxrt1020/xip;../../../../../../devices/MIMXRT1021/xip;../../../../../../devices/MIMXRT1021/utilities/str;../../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../../middleware/usb/include;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../components/i2c;../../../../../../devices/MIMXRT1021/drivers;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../components/osa;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1021;../../../../../evkmimxrt1020/xip;../../../../../../devices/MIMXRT1021/xip;../../../../../../devices/MIMXRT1021/utilities;../../../../../../devices/MIMXRT1021/utilities/str;../../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../../middleware/usb/include;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -971,6 +971,11 @@
               <FilePath>../../../../../../devices/MIMXRT1021/utilities/fsl_assert.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1021/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_str.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1021/utilities/str/fsl_str.c</FilePath>
@@ -1386,7 +1391,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, _DEBUG=0, CPU_MIMXRT1021DAG5A, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, DEBUG_CONSOLE_ASSERT_DISABLE=1, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/i2c;../../../../../../devices/MIMXRT1021/drivers;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../components/osa;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1021;../../../../../evkmimxrt1020/xip;../../../../../../devices/MIMXRT1021/xip;../../../../../../devices/MIMXRT1021/utilities/str;../../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../../middleware/usb/include;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../components/i2c;../../../../../../devices/MIMXRT1021/drivers;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../components/osa;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1021;../../../../../evkmimxrt1020/xip;../../../../../../devices/MIMXRT1021/xip;../../../../../../devices/MIMXRT1021/utilities;../../../../../../devices/MIMXRT1021/utilities/str;../../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../../middleware/usb/include;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2027,6 +2032,11 @@
               <FilePath>../../../../../../devices/MIMXRT1021/utilities/fsl_assert.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1021/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_str.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1021/utilities/str/fsl_str.c</FilePath>
@@ -2442,7 +2452,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, _DEBUG=0, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, CPU_MIMXRT1021DAG5A, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, DEBUG_CONSOLE_ASSERT_DISABLE=1, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/i2c;../../../../../../devices/MIMXRT1021/drivers;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../components/osa;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1021;../../../../../evkmimxrt1020/xip;../../../../../../devices/MIMXRT1021/xip;../../../../../../devices/MIMXRT1021/utilities/str;../../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../../middleware/usb/include;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../components/i2c;../../../../../../devices/MIMXRT1021/drivers;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../components/osa;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1021;../../../../../evkmimxrt1020/xip;../../../../../../devices/MIMXRT1021/xip;../../../../../../devices/MIMXRT1021/utilities;../../../../../../devices/MIMXRT1021/utilities/str;../../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../../middleware/usb/include;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3083,6 +3093,11 @@
               <FilePath>../../../../../../devices/MIMXRT1021/utilities/fsl_assert.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1021/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_str.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1021/utilities/str/fsl_str.c</FilePath>
@@ -3498,7 +3513,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, _DEBUG=0, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, CPU_MIMXRT1021DAG5A, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, DEBUG_CONSOLE_ASSERT_DISABLE=1, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/i2c;../../../../../../devices/MIMXRT1021/drivers;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../components/osa;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1021;../../../../../evkmimxrt1020/xip;../../../../../../devices/MIMXRT1021/xip;../../../../../../devices/MIMXRT1021/utilities/str;../../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../../middleware/usb/include;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../components/i2c;../../../../../../devices/MIMXRT1021/drivers;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../components/osa;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1021;../../../../../evkmimxrt1020/xip;../../../../../../devices/MIMXRT1021/xip;../../../../../../devices/MIMXRT1021/utilities;../../../../../../devices/MIMXRT1021/utilities/str;../../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../../middleware/usb/include;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4137,6 +4152,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1021/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1021/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>

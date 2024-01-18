@@ -19,7 +19,8 @@ var a00017 =
       [ "slaveAddress", "a00017.html#a96c83c71328687c66d5f2647256b2897", null ],
       [ "i2cConfig", "a00017.html#af81839448e888dfdfd12c37f755dc25d", null ],
       [ "sysClkSource", "a00017.html#a545d9de5fb4daa0eeea6e23ddab53e00", null ],
-      [ "pll", "a00017.html#aece86acd54a2e5dc52e3216ddd7bc262", null ]
+      [ "pll", "a00017.html#aece86acd54a2e5dc52e3216ddd7bc262", null ],
+      [ "inputSource", "a00017.html#a7bab1bfd86290c09c2a2539ee3ae7e1c", null ]
     ] ],
     [ "da7212_handle_t", "a00017.html#a00362", [
       [ "config", "a00017.html#aeb416840b7dddbcd19845c98aa307703", null ],

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: OTFAD: On The Fly AES-128 Decryption Driver</title>
+<title>MCUXpresso SDK API Reference Manual: OCOTP: On Chip One-Time Programmable controller.</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -100,196 +100,213 @@ $(document).ready(function(){initNavTree('a00048.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">OTFAD: On The Fly AES-128 Decryption Driver</div>  </div>
+<div class="title">OCOTP: On Chip One-Time Programmable controller.</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a peripheral driver for On The Fly AES-128 Decryption (OTFAD) module of MCUXpresso SDK devices.</p>
-<p>This example code shows how to decrypt ciphertext in external memory using the OTFAD driver.</p>
-<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/otfad </p>
+<p>The MCUXpresso SDK provides a peripheral driver for the OCOTP module of MCUXpresso SDK devices.</p>
+<p>This section contains information describing the requirements for the on-chip eFuse OTP controller along with details about the block functionality and implementation.</p>
+<h1><a class="anchor" id="OCOTPFunc"></a>
+OCOTP function group</h1>
+<p>The OCOTP driver support operaing API to allow read and write the fuse map.</p>
+<h2><a class="anchor" id="OCOTPInit"></a>
+Initialization and de-initialization</h2>
+<p>The funciton <a class="el" href="a00048.html#ga54480b3c489116b8cb76053b16f02c89" title="Initializes OCOTP controller. ">OCOTP_Init()</a> is to initialize the OCOTP with peripheral base address and source clock frequency.</p>
+<p>The function <a class="el" href="a00048.html#gaafffa3b5fe3f1f69f077e88ba5a7e107" title="De-initializes OCOTP controller. ">OCOTP_Deinit()</a> is to de-initialize the OCOTP controller with peripheral base address.</p>
+<h2><a class="anchor" id="OCOTPReadWrite"></a>
+Read and Write operation</h2>
+<p>The function <a class="el" href="a00048.html#ga7a7b1cd03383fafde15157a06fdda557" title="Reload the shadow register. ">OCOTP_ReloadShadowRegister()</a> is to reload the value from the fuse map. this API should be called firstly before reading the register.</p>
+<p>The <a class="el" href="a00048.html#gaecc991ccf4be0c49286fb13cba97e389" title="Read the fuse shadow register with the fuse addess. ">OCOTP_ReadFuseShadowRegister()</a> is to read the value from a given address, if operation is success, a known value will be return, othwise, a value of 0xBADABADA will be returned.</p>
+<p>The function <a class="el" href="a00048.html#ga43636ab96125958c9a14fe82c176e33e" title="Write the fuse shadow register with the fuse addess and data. ">OCOTP_WriteFuseShadowRegister()</a> will write a specific value to a known address. please check the return status o make sure whether the access to register is success.</p>
+<h1><a class="anchor" id="OCOTPExample"></a>
+OCOTP example</h1>
+<p>This example shows how to get the controller version using API. Due to the eFuse is One-Time programmable, example will only print the information of OCOTP controller version. If more operations are needed, please using the API to implement the write and read operation.</p>
+<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/ocotp </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00359"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a00359">otfad_encryption_config_t</a></td></tr>
-<tr class="memdesc:a00359"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD encryption configuration structure.  <a href="a00048.html#a00359">More...</a><br/></td></tr>
-<tr class="separator:a00359"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00358"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a00358">otfad_config_t</a></td></tr>
-<tr class="memdesc:a00358"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD configuration structure.  <a href="a00048.html#a00358">More...</a><br/></td></tr>
-<tr class="separator:a00358"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00353"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a00353">_ocotp_timing</a></td></tr>
+<tr class="memdesc:a00353"><td class="mdescLeft">&#160;</td><td class="mdescRight">OCOTP timing structure.  <a href="a00048.html#a00353">More...</a><br/></td></tr>
+<tr class="separator:a00353"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga8f3dfc0636f2758f21ed76d4e7196c4f"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00048.html#a00353">_ocotp_timing</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga8f3dfc0636f2758f21ed76d4e7196c4f">ocotp_timing_t</a></td></tr>
+<tr class="memdesc:ga8f3dfc0636f2758f21ed76d4e7196c4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">OCOTP timing structure.  <a href="#ga8f3dfc0636f2758f21ed76d4e7196c4f">More...</a><br/></td></tr>
+<tr class="separator:ga8f3dfc0636f2758f21ed76d4e7196c4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:gaac34dfe6c6b73b43a4656c9dce041034"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00048.html#ggaac34dfe6c6b73b43a4656c9dce041034ab86672f372b394bddf19bc570929597c">kStatus_OTFAD_ResRegAccessMode</a> = MAKE_STATUS(kStatusGroup_OTFAD, 0), 
+<tr class="memitem:ga5d76b81b0ad4c19007a781d4edb8181f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<a class="el" href="a00048.html#gga5d76b81b0ad4c19007a781d4edb8181fa6133e2fb03bd09bc490982251048c8de">kStatus_OCOTP_AccessError</a> = MAKE_STATUS(kStatusGroup_SDK_OCOTP, 0), 
 <br/>
-&#160;&#160;<a class="el" href="a00048.html#ggaac34dfe6c6b73b43a4656c9dce041034ada2a68470d9b60529fde6beab292e72f">kStatus_OTFAD_AddressError</a> = MAKE_STATUS(kStatusGroup_OTFAD, 1), 
+&#160;&#160;<a class="el" href="a00048.html#gga5d76b81b0ad4c19007a781d4edb8181fa6c5aa99c2965029cf80feaf36cd0763a">kStatus_OCOTP_CrcFail</a> = MAKE_STATUS(kStatusGroup_SDK_OCOTP, 1), 
 <br/>
-&#160;&#160;<a class="el" href="a00048.html#ggaac34dfe6c6b73b43a4656c9dce041034a94765e8e9e448cfa441e2134f87a842f">kStatus_OTFAD_RegionOverlap</a>, 
+&#160;&#160;<a class="el" href="a00048.html#gga5d76b81b0ad4c19007a781d4edb8181faa1a3a69603c6973128021852a03cf9ce">kStatus_OCOTP_ReloadError</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00048.html#ggaac34dfe6c6b73b43a4656c9dce041034ab98da10f5a46caedb11ea21bcb4b6328">kStatus_OTFAD_RegionMiss</a>
+&#160;&#160;<a class="el" href="a00048.html#gga5d76b81b0ad4c19007a781d4edb8181fae3aafd3ae27db94a954965038445d240">kStatus_OCOTP_ProgramFail</a> = MAKE_STATUS(kStatusGroup_SDK_OCOTP, 3), 
 <br/>
- }</td></tr>
-<tr class="memdesc:gaac34dfe6c6b73b43a4656c9dce041034"><td class="mdescLeft">&#160;</td><td class="mdescRight">Status codes for the OTFAD driver.  <a href="a00048.html#gaac34dfe6c6b73b43a4656c9dce041034">More...</a><br/></td></tr>
-<tr class="separator:gaac34dfe6c6b73b43a4656c9dce041034"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0ed680fdb405e7195d9f14032851eebb"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00048.html#gga0ed680fdb405e7195d9f14032851eebba289054cf51b8d6cb3c32a87884400e17">kOTFAD_Context_0</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00048.html#gga0ed680fdb405e7195d9f14032851eebbabe9a603f23afef05bfdeb1583713f336">kOTFAD_Context_1</a> = 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00048.html#gga0ed680fdb405e7195d9f14032851eebba3769e4cee63954e3dfaceea80109ce08">kOTFAD_Context_2</a> = 2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00048.html#gga0ed680fdb405e7195d9f14032851eebbad32231e169446492d32c3674354dbf4d">kOTFAD_Context_3</a> = 3U
+&#160;&#160;<a class="el" href="a00048.html#gga5d76b81b0ad4c19007a781d4edb8181fa3a38a5c2c3c0f0146c9b773e855812a6">kStatus_OCOTP_Locked</a> = MAKE_STATUS(kStatusGroup_SDK_OCOTP, 4)
 <br/>
  }</td></tr>
-<tr class="memdesc:ga0ed680fdb405e7195d9f14032851eebb"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD context type.  <a href="a00048.html#ga0ed680fdb405e7195d9f14032851eebb">More...</a><br/></td></tr>
-<tr class="separator:ga0ed680fdb405e7195d9f14032851eebb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0944a4353780132eeab7b06e3e42291d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00048.html#gga0944a4353780132eeab7b06e3e42291da46b06bacd1a8297969a3a61810b5366f">kOTFAD_NRM</a> = 0x00U, 
-<br/>
-&#160;&#160;<a class="el" href="a00048.html#gga0944a4353780132eeab7b06e3e42291dafa7c009b2feed9501056ff7ef74bec34">kOTFAD_SVM</a> = 0x02U, 
-<br/>
-&#160;&#160;<a class="el" href="a00048.html#gga0944a4353780132eeab7b06e3e42291dafe2dfe963d9f93d97d2f7ebfcc3ccc96">kOTFAD_LDM</a> = 0x03U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga0944a4353780132eeab7b06e3e42291d"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD operate mode.  <a href="a00048.html#ga0944a4353780132eeab7b06e3e42291d">More...</a><br/></td></tr>
-<tr class="separator:ga0944a4353780132eeab7b06e3e42291d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga5d76b81b0ad4c19007a781d4edb8181f"><td class="mdescLeft">&#160;</td><td class="mdescRight">_ocotp_status Error codes for the OCOTP driver.  <a href="a00048.html#ga5d76b81b0ad4c19007a781d4edb8181f">More...</a><br/></td></tr>
+<tr class="separator:ga5d76b81b0ad4c19007a781d4edb8181f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga54480b3c489116b8cb76053b16f02c89"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga54480b3c489116b8cb76053b16f02c89">OCOTP_Init</a> (OCOTP_Type *base, uint32_t srcClock_Hz)</td></tr>
+<tr class="memdesc:ga54480b3c489116b8cb76053b16f02c89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes OCOTP controller.  <a href="#ga54480b3c489116b8cb76053b16f02c89">More...</a><br/></td></tr>
+<tr class="separator:ga54480b3c489116b8cb76053b16f02c89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaafffa3b5fe3f1f69f077e88ba5a7e107"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gaafffa3b5fe3f1f69f077e88ba5a7e107">OCOTP_Deinit</a> (OCOTP_Type *base)</td></tr>
+<tr class="memdesc:gaafffa3b5fe3f1f69f077e88ba5a7e107"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-initializes OCOTP controller.  <a href="#gaafffa3b5fe3f1f69f077e88ba5a7e107">More...</a><br/></td></tr>
+<tr class="separator:gaafffa3b5fe3f1f69f077e88ba5a7e107"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa3040092099624ec476dd81bd022712c"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gaa3040092099624ec476dd81bd022712c">OCOTP_CheckBusyStatus</a> (OCOTP_Type *base)</td></tr>
+<tr class="memdesc:gaa3040092099624ec476dd81bd022712c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checking the BUSY bit in CTRL register.  <a href="#gaa3040092099624ec476dd81bd022712c">More...</a><br/></td></tr>
+<tr class="separator:gaa3040092099624ec476dd81bd022712c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf0ee0166ccd35b0273d468b7eb72c954"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gaf0ee0166ccd35b0273d468b7eb72c954">OCOTP_CheckErrorStatus</a> (OCOTP_Type *base)</td></tr>
+<tr class="memdesc:gaf0ee0166ccd35b0273d468b7eb72c954"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checking the ERROR bit in CTRL register.  <a href="#gaf0ee0166ccd35b0273d468b7eb72c954">More...</a><br/></td></tr>
+<tr class="separator:gaf0ee0166ccd35b0273d468b7eb72c954"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad9294be0c39be4dfaa1eea436ac85171"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gad9294be0c39be4dfaa1eea436ac85171">OCOTP_ClearErrorStatus</a> (OCOTP_Type *base)</td></tr>
+<tr class="memdesc:gad9294be0c39be4dfaa1eea436ac85171"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the error bit if this bit is set.  <a href="#gad9294be0c39be4dfaa1eea436ac85171">More...</a><br/></td></tr>
+<tr class="separator:gad9294be0c39be4dfaa1eea436ac85171"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7a7b1cd03383fafde15157a06fdda557"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga7a7b1cd03383fafde15157a06fdda557">OCOTP_ReloadShadowRegister</a> (OCOTP_Type *base)</td></tr>
+<tr class="memdesc:ga7a7b1cd03383fafde15157a06fdda557"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reload the shadow register.  <a href="#ga7a7b1cd03383fafde15157a06fdda557">More...</a><br/></td></tr>
+<tr class="separator:ga7a7b1cd03383fafde15157a06fdda557"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaecc991ccf4be0c49286fb13cba97e389"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gaecc991ccf4be0c49286fb13cba97e389">OCOTP_ReadFuseShadowRegister</a> (OCOTP_Type *base, uint32_t address)</td></tr>
+<tr class="memdesc:gaecc991ccf4be0c49286fb13cba97e389"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the fuse shadow register with the fuse addess.  <a href="#gaecc991ccf4be0c49286fb13cba97e389">More...</a><br/></td></tr>
+<tr class="separator:gaecc991ccf4be0c49286fb13cba97e389"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa1b0f813fa5ca43225d71d9218c48a28"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gaa1b0f813fa5ca43225d71d9218c48a28">OCOTP_ReadFuseShadowRegisterExt</a> (OCOTP_Type *base, uint32_t address, uint32_t *data, uint8_t fuseWords)</td></tr>
+<tr class="memdesc:gaa1b0f813fa5ca43225d71d9218c48a28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the fuse shadow register from the fuse addess.  <a href="#gaa1b0f813fa5ca43225d71d9218c48a28">More...</a><br/></td></tr>
+<tr class="separator:gaa1b0f813fa5ca43225d71d9218c48a28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga43636ab96125958c9a14fe82c176e33e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga43636ab96125958c9a14fe82c176e33e">OCOTP_WriteFuseShadowRegister</a> (OCOTP_Type *base, uint32_t address, uint32_t data)</td></tr>
+<tr class="memdesc:ga43636ab96125958c9a14fe82c176e33e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the fuse shadow register with the fuse addess and data.  <a href="#ga43636ab96125958c9a14fe82c176e33e">More...</a><br/></td></tr>
+<tr class="separator:ga43636ab96125958c9a14fe82c176e33e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4f837c7b4a66ffe3153f2975fd5c6388"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga4f837c7b4a66ffe3153f2975fd5c6388">OCOTP_WriteFuseShadowRegisterWithLock</a> (OCOTP_Type *base, uint32_t address, uint32_t data, bool lock)</td></tr>
+<tr class="memdesc:ga4f837c7b4a66ffe3153f2975fd5c6388"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the fuse shadow register and lock it.  <a href="#ga4f837c7b4a66ffe3153f2975fd5c6388">More...</a><br/></td></tr>
+<tr class="separator:ga4f837c7b4a66ffe3153f2975fd5c6388"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga38c12a5cb815d9330cd8f2c04e8e1ec5"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga38c12a5cb815d9330cd8f2c04e8e1ec5">OCOTP_GetVersion</a> (OCOTP_Type *base)</td></tr>
+<tr class="memdesc:ga38c12a5cb815d9330cd8f2c04e8e1ec5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the OCOTP controller version from the register.  <a href="#ga38c12a5cb815d9330cd8f2c04e8e1ec5">More...</a><br/></td></tr>
+<tr class="separator:ga38c12a5cb815d9330cd8f2c04e8e1ec5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga20f3f7f4a4d28843e4dcba42fe074de4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga20f3f7f4a4d28843e4dcba42fe074de4">FSL_OTFAD_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2U, 1U, 3U))</td></tr>
-<tr class="memdesc:ga20f3f7f4a4d28843e4dcba42fe074de4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver version.  <a href="#ga20f3f7f4a4d28843e4dcba42fe074de4">More...</a><br/></td></tr>
-<tr class="separator:ga20f3f7f4a4d28843e4dcba42fe074de4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Initialization and deinitialization</h2></td></tr>
-<tr class="memitem:ga7ec529b7e632085d191bc1c772efaa2e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga7ec529b7e632085d191bc1c772efaa2e">OTFAD_GetDefaultConfig</a> (<a class="el" href="a00048.html#a00358">otfad_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga7ec529b7e632085d191bc1c772efaa2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD module initialization function.  <a href="#ga7ec529b7e632085d191bc1c772efaa2e">More...</a><br/></td></tr>
-<tr class="separator:ga7ec529b7e632085d191bc1c772efaa2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga50c3cc55c76ff1feacb5291ff2428a6c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga50c3cc55c76ff1feacb5291ff2428a6c">OTFAD_Init</a> (OTFAD_Type *base, const <a class="el" href="a00048.html#a00358">otfad_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga50c3cc55c76ff1feacb5291ff2428a6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD module initialization function.  <a href="#ga50c3cc55c76ff1feacb5291ff2428a6c">More...</a><br/></td></tr>
-<tr class="separator:ga50c3cc55c76ff1feacb5291ff2428a6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8a04f4e827eaee49fc2dc31e54d05397"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8a04f4e827eaee49fc2dc31e54d05397"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga8a04f4e827eaee49fc2dc31e54d05397">OTFAD_Deinit</a> (OTFAD_Type *base)</td></tr>
-<tr class="memdesc:ga8a04f4e827eaee49fc2dc31e54d05397"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the OTFAD. <br/></td></tr>
-<tr class="separator:ga8a04f4e827eaee49fc2dc31e54d05397"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Status</h2></td></tr>
-<tr class="memitem:ga97f6956807f1b567e8cf98a2306a4b1f"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga97f6956807f1b567e8cf98a2306a4b1f">OTFAD_GetOperateMode</a> (OTFAD_Type *base)</td></tr>
-<tr class="memdesc:ga97f6956807f1b567e8cf98a2306a4b1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD module get operate mode.  <a href="#ga97f6956807f1b567e8cf98a2306a4b1f">More...</a><br/></td></tr>
-<tr class="separator:ga97f6956807f1b567e8cf98a2306a4b1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac7760cfc19871898542641394ca4526d"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gac7760cfc19871898542641394ca4526d">OTFAD_GetStatus</a> (OTFAD_Type *base)</td></tr>
-<tr class="memdesc:gac7760cfc19871898542641394ca4526d"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD module get status.  <a href="#gac7760cfc19871898542641394ca4526d">More...</a><br/></td></tr>
-<tr class="separator:gac7760cfc19871898542641394ca4526d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-functional</h2></td></tr>
-<tr class="memitem:ga49d9425e4b8a8d626be9713e5a7c9537"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga49d9425e4b8a8d626be9713e5a7c9537">OTFAD_SetEncryptionConfig</a> (OTFAD_Type *base, const <a class="el" href="a00048.html#a00359">otfad_encryption_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga49d9425e4b8a8d626be9713e5a7c9537"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD module set encryption configuration.  <a href="#ga49d9425e4b8a8d626be9713e5a7c9537">More...</a><br/></td></tr>
-<tr class="separator:ga49d9425e4b8a8d626be9713e5a7c9537"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga98b5cbfb4a1e6a8fe8af63df3965161d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga98b5cbfb4a1e6a8fe8af63df3965161d">OTFAD_GetEncryptionConfig</a> (OTFAD_Type *base, <a class="el" href="a00048.html#a00359">otfad_encryption_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga98b5cbfb4a1e6a8fe8af63df3965161d"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD module get encryption configuration.  <a href="#ga98b5cbfb4a1e6a8fe8af63df3965161d">More...</a><br/></td></tr>
-<tr class="separator:ga98b5cbfb4a1e6a8fe8af63df3965161d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga874fd2f27989b88104253600094be09a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga874fd2f27989b88104253600094be09a">OTFAD_HitDetermination</a> (OTFAD_Type *base, uint32_t address, uint8_t *contextIndex)</td></tr>
-<tr class="memdesc:ga874fd2f27989b88104253600094be09a"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD module do hit determination.  <a href="#ga874fd2f27989b88104253600094be09a">More...</a><br/></td></tr>
-<tr class="separator:ga874fd2f27989b88104253600094be09a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga211ad512cb6afc3a8649a61c4f887dd5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga211ad512cb6afc3a8649a61c4f887dd5">FSL_OCOTP_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00216.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 3))</td></tr>
+<tr class="memdesc:ga211ad512cb6afc3a8649a61c4f887dd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">OCOTP driver version.  <a href="#ga211ad512cb6afc3a8649a61c4f887dd5">More...</a><br/></td></tr>
+<tr class="separator:ga211ad512cb6afc3a8649a61c4f887dd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00359" id="a00359"></a>
+<a name="a00353" id="a00353"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct otfad_encryption_config_t</td>
+          <td class="memname">struct _ocotp_timing</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
+<div class="textblock"><p>Note that, these value are used for calcalating the read/write timings. And the values should statisfy below rules:</p>
+<p>Tsp_rd=(WAIT+1)/ipg_clk_freq should be &gt;= 150ns; Tsp_pgm=(RELAX+1)/ipg_clk_freq should be &gt;= 100ns; Trd = ((STROBE_READ+1)- 2*(RELAX_READ+1)) /ipg_clk_freq, The Trd is required to be larger than 40 ns. Tpgm = ((STROBE_PROG+1)- 2*(RELAX_PROG+1)) /ipg_clk_freq; The Tpgm should be configured within the range of 9000 ns &lt; Tpgm &lt; 11000 ns; </p>
+</div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:ac3b63de8b750379ea5624f7d74531be5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac3b63de8b750379ea5624f7d74531be5"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ac3b63de8b750379ea5624f7d74531be5">valid</a></td></tr>
-<tr class="memdesc:ac3b63de8b750379ea5624f7d74531be5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The context is valid or not. <br/></td></tr>
-<tr class="separator:ac3b63de8b750379ea5624f7d74531be5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af3b269b47f488c714d5eb1ad437d7256"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af3b269b47f488c714d5eb1ad437d7256"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#af3b269b47f488c714d5eb1ad437d7256">AESdecryption</a></td></tr>
-<tr class="memdesc:af3b269b47f488c714d5eb1ad437d7256"><td class="mdescLeft">&#160;</td><td class="mdescRight">AES decryption enable. <br/></td></tr>
-<tr class="separator:af3b269b47f488c714d5eb1ad437d7256"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d3e2eb36d914a36177a9da94b8e2d58"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1d3e2eb36d914a36177a9da94b8e2d58"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a1d3e2eb36d914a36177a9da94b8e2d58">readOnly</a></td></tr>
-<tr class="memdesc:a1d3e2eb36d914a36177a9da94b8e2d58"><td class="mdescLeft">&#160;</td><td class="mdescRight">read write attribute for the entire set of context registers <br/></td></tr>
-<tr class="separator:a1d3e2eb36d914a36177a9da94b8e2d58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5070e3bdeacf35ab6193b802e2018bed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5070e3bdeacf35ab6193b802e2018bed"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a5070e3bdeacf35ab6193b802e2018bed">contextIndex</a></td></tr>
-<tr class="memdesc:a5070e3bdeacf35ab6193b802e2018bed"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD context index. <br/></td></tr>
-<tr class="separator:a5070e3bdeacf35ab6193b802e2018bed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ff083c0b5489ee6d8b5a04e64368daf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5ff083c0b5489ee6d8b5a04e64368daf"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a5ff083c0b5489ee6d8b5a04e64368daf">startAddr</a></td></tr>
-<tr class="memdesc:a5ff083c0b5489ee6d8b5a04e64368daf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start address. <br/></td></tr>
-<tr class="separator:a5ff083c0b5489ee6d8b5a04e64368daf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a68bcebd88fbdfaf8520e351beb35299d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a68bcebd88fbdfaf8520e351beb35299d"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a68bcebd88fbdfaf8520e351beb35299d">endAddr</a></td></tr>
-<tr class="memdesc:a68bcebd88fbdfaf8520e351beb35299d"><td class="mdescLeft">&#160;</td><td class="mdescRight">End address. <br/></td></tr>
-<tr class="separator:a68bcebd88fbdfaf8520e351beb35299d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a97f159aa4d63c763126f1622446d2dd9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a97f159aa4d63c763126f1622446d2dd9"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a97f159aa4d63c763126f1622446d2dd9">key</a> [4]</td></tr>
-<tr class="memdesc:a97f159aa4d63c763126f1622446d2dd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encryption key. <br/></td></tr>
-<tr class="separator:a97f159aa4d63c763126f1622446d2dd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0fcc7e04b556eeefa09a33c64886fc88"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0fcc7e04b556eeefa09a33c64886fc88"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a0fcc7e04b556eeefa09a33c64886fc88">counter</a> [2]</td></tr>
-<tr class="memdesc:a0fcc7e04b556eeefa09a33c64886fc88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encryption counter. <br/></td></tr>
-<tr class="separator:a0fcc7e04b556eeefa09a33c64886fc88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a209b71517255bb7c7de795f2aa940d74"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a209b71517255bb7c7de795f2aa940d74">wait</a></td></tr>
+<tr class="memdesc:a209b71517255bb7c7de795f2aa940d74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait time value to fill in the TIMING register.  <a href="#a209b71517255bb7c7de795f2aa940d74">More...</a><br/></td></tr>
+<tr class="separator:a209b71517255bb7c7de795f2aa940d74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe864c7e56ce16eea8845349a8246a73"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#afe864c7e56ce16eea8845349a8246a73">relax</a></td></tr>
+<tr class="memdesc:afe864c7e56ce16eea8845349a8246a73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Relax time value to fill in the TIMING register.  <a href="#afe864c7e56ce16eea8845349a8246a73">More...</a><br/></td></tr>
+<tr class="separator:afe864c7e56ce16eea8845349a8246a73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6dc87b120b1b5ef51f7aa07b9d21f37b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a6dc87b120b1b5ef51f7aa07b9d21f37b">strobe_prog</a></td></tr>
+<tr class="memdesc:a6dc87b120b1b5ef51f7aa07b9d21f37b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Storbe program time value to fill in the TIMING register.  <a href="#a6dc87b120b1b5ef51f7aa07b9d21f37b">More...</a><br/></td></tr>
+<tr class="separator:a6dc87b120b1b5ef51f7aa07b9d21f37b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebc7d26f1553dd924b5868a66ec8e417"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#aebc7d26f1553dd924b5868a66ec8e417">strobe_read</a></td></tr>
+<tr class="memdesc:aebc7d26f1553dd924b5868a66ec8e417"><td class="mdescLeft">&#160;</td><td class="mdescRight">Storbe read time value to fill in the TIMING register.  <a href="#aebc7d26f1553dd924b5868a66ec8e417">More...</a><br/></td></tr>
+<tr class="separator:aebc7d26f1553dd924b5868a66ec8e417"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="a209b71517255bb7c7de795f2aa940d74"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t _ocotp_timing::wait</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
-<a name="a00358" id="a00358"></a>
+<a class="anchor" id="afe864c7e56ce16eea8845349a8246a73"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct otfad_config_t</td>
+          <td class="memname">uint32_t _ocotp_timing::relax</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a16643b191f1894c6fc34ed9962901cda"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a16643b191f1894c6fc34ed9962901cda"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a16643b191f1894c6fc34ed9962901cda">forceSVM</a></td></tr>
-<tr class="memdesc:a16643b191f1894c6fc34ed9962901cda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Force entry into SVM after a write. <br/></td></tr>
-<tr class="separator:a16643b191f1894c6fc34ed9962901cda"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3387ca22cc5f1bae397650f2f19255a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac3387ca22cc5f1bae397650f2f19255a"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ac3387ca22cc5f1bae397650f2f19255a">forceLDM</a></td></tr>
-<tr class="memdesc:ac3387ca22cc5f1bae397650f2f19255a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Force entry into LDM after a write. <br/></td></tr>
-<tr class="separator:ac3387ca22cc5f1bae397650f2f19255a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b97e383ed84409188ed2bd96217b735"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6b97e383ed84409188ed2bd96217b735"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a6b97e383ed84409188ed2bd96217b735">restrictedRegAccess</a></td></tr>
-<tr class="memdesc:a6b97e383ed84409188ed2bd96217b735"><td class="mdescLeft">&#160;</td><td class="mdescRight">Restricted register access enable. <br/></td></tr>
-<tr class="separator:a6b97e383ed84409188ed2bd96217b735"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae9ecf4b2fc829d31f9fbe2ffa0e0ebd5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae9ecf4b2fc829d31f9fbe2ffa0e0ebd5"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ae9ecf4b2fc829d31f9fbe2ffa0e0ebd5">enableOTFAD</a></td></tr>
-<tr class="memdesc:ae9ecf4b2fc829d31f9fbe2ffa0e0ebd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD has decryption enabled. <br/></td></tr>
-<tr class="separator:ae9ecf4b2fc829d31f9fbe2ffa0e0ebd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
+
+</div>
+</div>
+<a class="anchor" id="a6dc87b120b1b5ef51f7aa07b9d21f37b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t _ocotp_timing::strobe_prog</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aebc7d26f1553dd924b5868a66ec8e417"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t _ocotp_timing::strobe_read</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 
 </div>
 </div>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga20f3f7f4a4d28843e4dcba42fe074de4"></a>
+<a class="anchor" id="ga211ad512cb6afc3a8649a61c4f887dd5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_OTFAD_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2U, 1U, 3U))</td>
+          <td class="memname">#define FSL_OCOTP_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00216.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 3))</td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga8f3dfc0636f2758f21ed76d4e7196c4f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00048.html#a00353">_ocotp_timing</a>  <a class="el" href="a00048.html#ga8f3dfc0636f2758f21ed76d4e7196c4f">ocotp_timing_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Note that, these value are used for calcalating the read/write timings. And the values should statisfy below rules:</p>
+<p>Tsp_rd=(WAIT+1)/ipg_clk_freq should be &gt;= 150ns; Tsp_pgm=(RELAX+1)/ipg_clk_freq should be &gt;= 100ns; Trd = ((STROBE_READ+1)- 2*(RELAX_READ+1)) /ipg_clk_freq, The Trd is required to be larger than 40 ns. Tpgm = ((STROBE_PROG+1)- 2*(RELAX_PROG+1)) /ipg_clk_freq; The Tpgm should be configured within the range of 9000 ns &lt; Tpgm &lt; 11000 ns; </p>
 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gaac34dfe6c6b73b43a4656c9dce041034"></a>
+<a class="anchor" id="ga5d76b81b0ad4c19007a781d4edb8181f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -299,109 +316,41 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaac34dfe6c6b73b43a4656c9dce041034ab86672f372b394bddf19bc570929597c"></a>kStatus_OTFAD_ResRegAccessMode</em>&nbsp;</td><td class="fielddoc">
-<p>Restricted register mode. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga5d76b81b0ad4c19007a781d4edb8181fa6133e2fb03bd09bc490982251048c8de"></a>kStatus_OCOTP_AccessError</em>&nbsp;</td><td class="fielddoc">
+<p>eFuse and shadow register access error. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaac34dfe6c6b73b43a4656c9dce041034ada2a68470d9b60529fde6beab292e72f"></a>kStatus_OTFAD_AddressError</em>&nbsp;</td><td class="fielddoc">
-<p>End address less than start address. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga5d76b81b0ad4c19007a781d4edb8181fa6c5aa99c2965029cf80feaf36cd0763a"></a>kStatus_OCOTP_CrcFail</em>&nbsp;</td><td class="fielddoc">
+<p>CRC check failed. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaac34dfe6c6b73b43a4656c9dce041034a94765e8e9e448cfa441e2134f87a842f"></a>kStatus_OTFAD_RegionOverlap</em>&nbsp;</td><td class="fielddoc">
-<p>the OTFAD does not support any form of memory region overlap, for system accesses that hit in multiple contexts or no contexts, the fetched data is simply bypassed </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga5d76b81b0ad4c19007a781d4edb8181faa1a3a69603c6973128021852a03cf9ce"></a>kStatus_OCOTP_ReloadError</em>&nbsp;</td><td class="fielddoc">
+<p>Error happens during reload shadow register. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaac34dfe6c6b73b43a4656c9dce041034ab98da10f5a46caedb11ea21bcb4b6328"></a>kStatus_OTFAD_RegionMiss</em>&nbsp;</td><td class="fielddoc">
-<p>For accesses that hit in a single context, but not the selected one. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga5d76b81b0ad4c19007a781d4edb8181fae3aafd3ae27db94a954965038445d240"></a>kStatus_OCOTP_ProgramFail</em>&nbsp;</td><td class="fielddoc">
+<p>Fuse programming failed. </p>
 </td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga0ed680fdb405e7195d9f14032851eebb"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">anonymous enum</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga0ed680fdb405e7195d9f14032851eebba289054cf51b8d6cb3c32a87884400e17"></a>kOTFAD_Context_0</em>&nbsp;</td><td class="fielddoc">
-<p>context 0 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0ed680fdb405e7195d9f14032851eebbabe9a603f23afef05bfdeb1583713f336"></a>kOTFAD_Context_1</em>&nbsp;</td><td class="fielddoc">
-<p>context 1 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0ed680fdb405e7195d9f14032851eebba3769e4cee63954e3dfaceea80109ce08"></a>kOTFAD_Context_2</em>&nbsp;</td><td class="fielddoc">
-<p>context 2 </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0ed680fdb405e7195d9f14032851eebbad32231e169446492d32c3674354dbf4d"></a>kOTFAD_Context_3</em>&nbsp;</td><td class="fielddoc">
-<p>context 3 </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga0944a4353780132eeab7b06e3e42291d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">anonymous enum</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga0944a4353780132eeab7b06e3e42291da46b06bacd1a8297969a3a61810b5366f"></a>kOTFAD_NRM</em>&nbsp;</td><td class="fielddoc">
-<p>Normal Mode. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0944a4353780132eeab7b06e3e42291dafa7c009b2feed9501056ff7ef74bec34"></a>kOTFAD_SVM</em>&nbsp;</td><td class="fielddoc">
-<p>Security Violation Mode. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0944a4353780132eeab7b06e3e42291dafe2dfe963d9f93d97d2f7ebfcc3ccc96"></a>kOTFAD_LDM</em>&nbsp;</td><td class="fielddoc">
-<p>Logically Disabled Mode. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga5d76b81b0ad4c19007a781d4edb8181fa3a38a5c2c3c0f0146c9b773e855812a6"></a>kStatus_OCOTP_Locked</em>&nbsp;</td><td class="fielddoc">
+<p>Fuse is locked and cannot be programmed. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga7ec529b7e632085d191bc1c772efaa2e"></a>
+<a class="anchor" id="ga54480b3c489116b8cb76053b16f02c89"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void OTFAD_GetDefaultConfig </td>
+          <td class="memname">void OCOTP_Init </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00048.html#a00358">otfad_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">config</td><td>OTFAD configuration. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga50c3cc55c76ff1feacb5291ff2428a6c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void OTFAD_Init </td>
-          <td>(</td>
-          <td class="paramtype">OTFAD_Type *&#160;</td>
+          <td class="paramtype">OCOTP_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00048.html#a00358">otfad_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>srcClock_Hz</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -412,15 +361,37 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>OTFAD base address. </td></tr>
-    <tr><td class="paramname">config</td><td>OTFAD configuration. </td></tr>
+    <tr><td class="paramname">base</td><td>OCOTP peripheral base address. </td></tr>
+    <tr><td class="paramname">srcClock_Hz</td><td>source clock frequency in unit of Hz. When the macro FSL_FEATURE_OCOTP_HAS_TIMING_CTRL is defined as 0, this parameter is not used, application could pass in 0 in this case. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga97f6956807f1b567e8cf98a2306a4b1f"></a>
+<a class="anchor" id="gaafffa3b5fe3f1f69f077e88ba5a7e107"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void OCOTP_Deinit </td>
+          <td>(</td>
+          <td class="paramtype">OCOTP_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>upon successful execution, error status otherwise. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa3040092099624ec476dd81bd022712c"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -428,9 +399,46 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static uint32_t OTFAD_GetOperateMode </td>
+          <td class="memname">static bool OCOTP_CheckBusyStatus </td>
           <td>(</td>
-          <td class="paramtype">OTFAD_Type *&#160;</td>
+          <td class="paramtype">OCOTP_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Checking this BUSY bit will help confirm if the OCOTP controller is ready for access.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>OCOTP peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>for bit set and false for cleared. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaf0ee0166ccd35b0273d468b7eb72c954"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool OCOTP_CheckErrorStatus </td>
+          <td>(</td>
+          <td class="paramtype">OCOTP_Type *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
@@ -443,14 +451,20 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>OTFAD base address. </td></tr>
+    <tr><td class="paramname">base</td><td>OCOTP peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>for bit set and false for cleared. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gac7760cfc19871898542641394ca4526d"></a>
+<a class="anchor" id="gad9294be0c39be4dfaa1eea436ac85171"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -458,9 +472,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static uint32_t OTFAD_GetStatus </td>
+          <td class="memname">static void OCOTP_ClearErrorStatus </td>
           <td>(</td>
-          <td class="paramtype">OTFAD_Type *&#160;</td>
+          <td class="paramtype">OCOTP_Type *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
@@ -473,28 +487,58 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>OTFAD base address. </td></tr>
+    <tr><td class="paramname">base</td><td>OCOTP peripheral base address. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga49d9425e4b8a8d626be9713e5a7c9537"></a>
+<a class="anchor" id="ga7a7b1cd03383fafde15157a06fdda557"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> OTFAD_SetEncryptionConfig </td>
+          <td class="memname"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> OCOTP_ReloadShadowRegister </td>
           <td>(</td>
-          <td class="paramtype">OTFAD_Type *&#160;</td>
+          <td class="paramtype">OCOTP_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function will help reload the shadow register without reseting the OCOTP module. Please make sure the OCOTP has been initialized before calling this API.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>OCOTP peripheral base addess. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Reload success. </td></tr>
+    <tr><td class="paramname">kStatus_OCOTP_ReloadError</td><td>Reload failed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaecc991ccf4be0c49286fb13cba97e389"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t OCOTP_ReadFuseShadowRegister </td>
+          <td>(</td>
+          <td class="paramtype">OCOTP_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00048.html#a00359">otfad_encryption_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -503,59 +547,26 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="a00248.html#_deprecated000009">Deprecated:</a></b></dt><dd>Use <a class="el" href="a00048.html#gaa1b0f813fa5ca43225d71d9218c48a28">OCOTP_ReadFuseShadowRegisterExt</a> instead of this function.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>OTFAD base address. </td></tr>
-    <tr><td class="paramname">config</td><td>encryption configuration.</td></tr>
+    <tr><td class="paramname">base</td><td>OCOTP peripheral base address. </td></tr>
+    <tr><td class="paramname">address</td><td>the fuse address to be read from. </td></tr>
   </table>
   </dd>
 </dl>
-<p>Note: if enable keyblob process, the first 256 bytes external memory is use for keyblob data, so this region shouldn't be in OTFAD region. </p>
+<dl class="section return"><dt>Returns</dt><dd>The read out data. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga98b5cbfb4a1e6a8fe8af63df3965161d"></a>
+<a class="anchor" id="gaa1b0f813fa5ca43225d71d9218c48a28"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> OTFAD_GetEncryptionConfig </td>
+          <td class="memname"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> OCOTP_ReadFuseShadowRegisterExt </td>
           <td>(</td>
-          <td class="paramtype">OTFAD_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00048.html#a00359">otfad_encryption_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>OTFAD base address. </td></tr>
-    <tr><td class="paramname">config</td><td>encryption configuration.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>Note: if enable keyblob process, the first 256 bytes external memory is use for keyblob data, so this region shouldn't be in OTFAD region. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga874fd2f27989b88104253600094be09a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> OTFAD_HitDetermination </td>
-          <td>(</td>
-          <td class="paramtype">OTFAD_Type *&#160;</td>
+          <td class="paramtype">OCOTP_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -567,8 +578,14 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>contextIndex</em>&#160;</td>
+          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>fuseWords</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -577,15 +594,165 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         </tr>
       </table>
 </div><div class="memdoc">
+<p>This function reads fuse from <code>address</code>, how many words to read is specified by the parameter <code>fuseWords</code>. This function could read at most OCOTP_READ_FUSE_DATA_COUNT fuse word one time.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>OTFAD base address. </td></tr>
-    <tr><td class="paramname">address</td><td>the physical address space assigned to the QuadSPI(FlexSPI) module. </td></tr>
-    <tr><td class="paramname">contextIndex</td><td>hitted context region index. </td></tr>
+    <tr><td class="paramname">base</td><td>OCOTP peripheral base address. </td></tr>
+    <tr><td class="paramname">address</td><td>the fuse address to be read from. </td></tr>
+    <tr><td class="paramname">data</td><td>Data array to save the readout fuse value. </td></tr>
+    <tr><td class="paramname">fuseWords</td><td>How many words to read. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>status, such as kStatus_Success or kStatus_OTFAD_ResRegAccessMode. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Read success. </td></tr>
+    <tr><td class="paramname">kStatus_Fail</td><td>Error occurs during read. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga43636ab96125958c9a14fe82c176e33e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> OCOTP_WriteFuseShadowRegister </td>
+          <td>(</td>
+          <td class="paramtype">OCOTP_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Please make sure the wrtie address is not locked while calling this API.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>OCOTP peripheral base address. </td></tr>
+    <tr><td class="paramname">address</td><td>the fuse address to be written. </td></tr>
+    <tr><td class="paramname">data</td><td>the value will be writen to fuse address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">write</td><td>status, kStatus_Success for success and kStatus_Fail for failed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga4f837c7b4a66ffe3153f2975fd5c6388"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> OCOTP_WriteFuseShadowRegisterWithLock </td>
+          <td>(</td>
+          <td class="paramtype">OCOTP_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>lock</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Please make sure the wrtie address is not locked while calling this API.</p>
+<p>Some OCOTP controller supports ECC mode and redundancy mode (see reference mananual for more details). OCOTP controller will auto select ECC or redundancy mode to program the fuse word according to fuse map definition. In ECC mode, the 32 fuse bits in one word can only be written once. In redundancy mode, the word can be written more than once as long as they are different fuse bits. Set parameter <code>lock</code> as true to force use ECC mode.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>OCOTP peripheral base address. </td></tr>
+    <tr><td class="paramname">address</td><td>The fuse address to be written. </td></tr>
+    <tr><td class="paramname">data</td><td>The value will be writen to fuse address. </td></tr>
+    <tr><td class="paramname">lock</td><td>Lock or unlock write fuse shadow register operation. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Program and reload success. </td></tr>
+    <tr><td class="paramname">kStatus_OCOTP_Locked</td><td>The eFuse word is locked and cannot be programmed. </td></tr>
+    <tr><td class="paramname">kStatus_OCOTP_ProgramFail</td><td>eFuse word programming failed. </td></tr>
+    <tr><td class="paramname">kStatus_OCOTP_ReloadError</td><td>eFuse word programming success, but error happens during reload the values. </td></tr>
+    <tr><td class="paramname">kStatus_OCOTP_AccessError</td><td>Cannot access eFuse word. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga38c12a5cb815d9330cd8f2c04e8e1ec5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t OCOTP_GetVersion </td>
+          <td>(</td>
+          <td class="paramtype">OCOTP_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>OCOTP peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">return</td><td>the version value. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

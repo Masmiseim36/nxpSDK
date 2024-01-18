@@ -1,5 +1,5 @@
 /*
- * Copyright 2020, 2021 NXP
+ * Copyright 2020-2021 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -7,9 +7,11 @@
 
 #ifndef _NXP_IOT_AGENT_TIME_H_
 #define _NXP_IOT_AGENT_TIME_H_
-#include <nxp_iot_agent_config.h>
+
+#include <nxp_iot_agent_common.h>
 
 #if IOT_AGENT_TIME_MEASUREMENT_ENABLE
+
 #include <nxp_iot_agent.h>
 #include "tst_sm_time.h"
 

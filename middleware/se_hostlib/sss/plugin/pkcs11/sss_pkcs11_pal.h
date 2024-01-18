@@ -16,58 +16,31 @@
 /* FreeRTOS includes. */
 #if defined(USE_RTOS) && USE_RTOS == 1
 #include "FreeRTOS.h"
-//#include "iot_crypto.h" /* From older freeRTOS library */
 #include "semphr.h"
 #include "task.h"
 #endif
+
+#include "sss_pkcs11_utils.h"
 #include "core_pkcs11.h"
-
-/* mbedTLS includes. */
-#if !defined(MBEDTLS_CONFIG_FILE)
-#include "mbedtls/config.h"
-#else
-#include MBEDTLS_CONFIG_FILE
-#endif
-
-#include "mbedtls/base64.h"
-#include "mbedtls/ctr_drbg.h"
-#include "mbedtls/entropy.h"
-#include "mbedtls/oid.h"
-#include "mbedtls/pk.h"
-#include "mbedtls/pk_internal.h"
-#include "mbedtls/sha256.h"
-#include "mbedtls/x509_crt.h"
-#include "pkcs11_mbedtls_utils.h"
-#if SSS_HAVE_MBEDTLS_ALT
-#include "mbedtls/ssl.h"
-#endif
 
 /*Other includes */
 #include <nxEnsure.h>
 // #define NX_LOG_ENABLE_PKCS11_DEBUG 1
 #include <nxLog_pkcs11.h>
 
-#include "HLSEAPI.h"
 #include "ex_sss.h"
-#if SSS_HAVE_MBEDTLS_ALT_A71CH
-#include "ax_mbedtls.h"
-#endif
-#if SSS_HAVE_MBEDTLS_ALT_SSS
-#include "sss_mbedtls.h"
-#endif
 
+/*  se05x includes. */
 #if SSS_HAVE_APPLET_SE05X_IOT
 #include <fsl_sss_se05x_apis.h>
 #include <se05x_APDU.h>
 #include <se05x_const.h>
-
 #include "se05x_APDU_apis.h"
 #include "se05x_enums.h"
 #include "se05x_tlv.h"
 #endif
 
 #if defined(PKCS11_LIBRARY)
-#include <projdefs.h>
 
 #if (__GNUC__ && !AX_EMBEDDED)
 #include <errno.h>
@@ -88,6 +61,7 @@ extern SemaphoreHandle_t xSemaphore;
 /* C runtime includes. */
 #include <PlugAndTrust_Pkg_Ver.h>
 #include <fsl_sss_util_asn1_der.h>
+#include "ex_sss_ports.h"
 #include <ex_sss_boot.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -199,14 +173,70 @@ extern SemaphoreHandle_t xSemaphore;
 #define DEFAULT_POLICY_BIN_COUNT_PCR (POLICY_OBJ_ALLOW_DELETE | POLICY_OBJ_ALLOW_WRITE | POLICY_OBJ_ALLOW_READ)
 #define DEFAULT_POLICY_USERID (POLICY_OBJ_ALLOW_DELETE | POLICY_OBJ_ALLOW_WRITE)
 
-typedef int (*pfnMbedTlsSign)(void *ctx,
-    mbedtls_md_type_t md_alg,
-    const unsigned char *hash,
-    size_t hash_len,
-    unsigned char *sig,
-    size_t *sig_len,
-    int (*f_rng)(void *, unsigned char *, size_t),
-    void *p_rng);
+/*
+ * Top level OID tuples
+ */
+#define MBEDTLS_OID_ISO_MEMBER_BODIES "\x2a"  /* {iso(1) member-body(2)} */
+#define MBEDTLS_OID_ISO_IDENTIFIED_ORG "\x2b" /* {iso(1) identified-organization(3)} */
+#define MBEDTLS_OID_ISO_CCITT_DS "\x55"       /* {joint-iso-ccitt(2) ds(5)} */
+#define MBEDTLS_OID_ISO_ITU_COUNTRY "\x60"    /* {joint-iso-itu-t(2) country(16)} */
+
+/*
+ * ISO Member bodies OID parts
+ */
+#define MBEDTLS_OID_COUNTRY_US "\x86\x48"                /* {us(840)} */
+#define MBEDTLS_OID_ORG_RSA_DATA_SECURITY "\x86\xf7\x0d" /* {rsadsi(113549)} */
+#define MBEDTLS_OID_RSA_COMPANY                          \
+    MBEDTLS_OID_ISO_MEMBER_BODIES MBEDTLS_OID_COUNTRY_US \
+        MBEDTLS_OID_ORG_RSA_DATA_SECURITY     /* {iso(1) member-body(2) us(840) rsadsi(113549)} */
+#define MBEDTLS_OID_ORG_ANSI_X9_62 "\xce\x3d" /* ansi-X9-62(10045) */
+#define MBEDTLS_OID_ANSI_X9_62 MBEDTLS_OID_ISO_MEMBER_BODIES MBEDTLS_OID_COUNTRY_US MBEDTLS_OID_ORG_ANSI_X9_62
+
+/*
+ * ISO Identified organization OID parts
+ */
+#define MBEDTLS_OID_ORG_DOD "\x06" /* {dod(6)} */
+#define MBEDTLS_OID_ORG_OIW "\x0e"
+#define MBEDTLS_OID_OIW_SECSIG MBEDTLS_OID_ORG_OIW "\x03"
+#define MBEDTLS_OID_OIW_SECSIG_ALG MBEDTLS_OID_OIW_SECSIG "\x02"
+#define MBEDTLS_OID_OIW_SECSIG_SHA1 MBEDTLS_OID_OIW_SECSIG_ALG "\x1a"
+#define MBEDTLS_OID_ORG_CERTICOM "\x81\x04" /* certicom(132) */
+#define MBEDTLS_OID_CERTICOM MBEDTLS_OID_ISO_IDENTIFIED_ORG MBEDTLS_OID_ORG_CERTICOM
+#define MBEDTLS_OID_ORG_TELETRUST "\x24" /* teletrust(36) */
+#define MBEDTLS_OID_TELETRUST MBEDTLS_OID_ISO_IDENTIFIED_ORG MBEDTLS_OID_ORG_TELETRUST
+
+/*
+ * ECParameters namedCurve identifiers, from RFC 5480, RFC 5639, and SEC2
+ */
+
+/* secp192r1 OBJECT IDENTIFIER ::= {
+ *   iso(1) member-body(2) us(840) ansi-X9-62(10045) curves(3) prime(1) 1 } */
+#define MBEDTLS_OID_EC_GRP_SECP192R1 MBEDTLS_OID_ANSI_X9_62 "\x03\x01\x01"
+
+/* secp224r1 OBJECT IDENTIFIER ::= {
+ *   iso(1) identified-organization(3) certicom(132) curve(0) 33 } */
+#define MBEDTLS_OID_EC_GRP_SECP224R1 MBEDTLS_OID_CERTICOM "\x00\x21"
+
+/* secp256r1 OBJECT IDENTIFIER ::= {
+ *   iso(1) member-body(2) us(840) ansi-X9-62(10045) curves(3) prime(1) 7 } */
+#define MBEDTLS_OID_EC_GRP_SECP256R1 MBEDTLS_OID_ANSI_X9_62 "\x03\x01\x07"
+
+/* secp384r1 OBJECT IDENTIFIER ::= {
+ *   iso(1) identified-organization(3) certicom(132) curve(0) 34 } */
+#define MBEDTLS_OID_EC_GRP_SECP384R1 MBEDTLS_OID_CERTICOM "\x00\x22"
+
+/* secp521r1 OBJECT IDENTIFIER ::= {
+ *   iso(1) identified-organization(3) certicom(132) curve(0) 35 } */
+#define MBEDTLS_OID_EC_GRP_SECP521R1 MBEDTLS_OID_CERTICOM "\x00\x23"
+
+/* State of the Keypair*/
+typedef enum
+{
+    PrivateKeySize = 0, // This state returns the size of private key
+    PrivateKeyAttr,     // This state returns the attributes of private key
+    PublicKeySize,      // This state returns the size of public key
+    PublicKeyAttr,      // This state returns the attributes of public key
+} key_state_t;
 
 typedef struct
 {
@@ -215,26 +245,20 @@ typedef struct
 } SwKeyStore_t, *SwKeyStorePtr_t;
 
 /**
- * @brief Key structure.
+ * @brief Handling keypair structure.
  */
-typedef struct P11Key
+typedef struct HandleP11KeyPair
 {
-    mbedtls_pk_context xMbedPkCtx;
-    mbedtls_x509_crt xMbedX509Cli;
-    mbedtls_pk_info_t xMbedPkInfo;
-    pfnMbedTlsSign pfnSavedMbedSign;
-    void *pvSavedMbedPkCtx;
-    uint16_t pem_len_client;
-    uint16_t pem_len_client_ca;
-    unsigned char *certificate_buf; //[2500];
-} P11Key_t, *P11KeyPtr_t;
+    CK_BBOOL xSetPublicKey;
+    uint8_t keyState;
+    CK_OBJECT_HANDLE keyPairObjHandle;
+} HandleP11KeyPair_t, *HandleP11KeyPairPtr_t;
 
 /**
  * @brief Session structure.
  */
 typedef struct P11Session
 {
-    P11KeyPtr_t pxCurrentKey;
     CK_ULONG ulState;
     CK_BBOOL xOpened;
     CK_MECHANISM_TYPE xOperationInProgress;
@@ -245,10 +269,8 @@ typedef struct P11Session
     uint32_t xFindObjectTotalFound;
     uint16_t xFindObjectOutputOffset;
     CK_KEY_TYPE xFindObjectKeyType;
-    mbedtls_ctr_drbg_context xMbedDrbgCtx;
-    mbedtls_entropy_context xMbedEntropyContext;
-    mbedtls_pk_context xPublicKey;
-    mbedtls_sha256_context xSHA256Context;
+    HandleP11KeyPairPtr_t pFindObject;
+    HandleP11KeyPairPtr_t pAttrKey;
     CK_BBOOL labelPresent;
     CK_BBOOL keyIdPresent;
     uint32_t keyId;
@@ -287,13 +309,11 @@ CK_RV ParseEncryptionMechanism(P11SessionPtr_t pxSession, sss_algorithm_t *algor
 CK_RV ParseDigestMechanism(P11SessionPtr_t pxSession, sss_algorithm_t *algorithm);
 CK_RV GetAttributeParameterIndex(
     CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_ATTRIBUTE_TYPE type, CK_ULONG_PTR index);
-CK_RV GetSSSAlgorithm(const sss_algorithm_t algorithm, sss_algorithm_t *digest_algo);
+CK_RV GetDigestAlgorithm(const sss_algorithm_t algorithm, sss_algorithm_t *digest_algo);
 CK_RV SetASNTLV(uint8_t tag, uint8_t *component, const size_t componentLen, uint8_t *key, size_t *keyLen);
 #if SSS_HAVE_APPLET_SE05X_IOT
 CK_RV read_object_size(uint32_t keyId, uint16_t *keyLen);
 #endif // SSS_HAVE_APPLET_SE05X_IOT
-CK_RV CreateRawPrivateKey(CK_ATTRIBUTE_PTR pxTemplate, CK_ULONG ulCount, uint8_t *key, size_t *keyLen);
-CK_RV CreateRawPublicKey(CK_ATTRIBUTE_PTR pxTemplate, CK_ULONG ulCount, uint8_t *key, size_t *keyLen);
 CK_RV EcSignatureToRandS(uint8_t *signature, size_t *sigLen);
 CK_RV EcRandSToSignature(uint8_t *rands, const size_t rands_len, uint8_t *output, size_t *outputLen);
 CK_RV EcPublickeyGetEcParams(uint8_t *input, size_t *dataLen);
@@ -359,7 +379,6 @@ U16 HLSE_Create_token(
 
 extern ex_sss_boot_ctx_t *pex_sss_demo_boot_ctx;
 extern ex_sss_cloud_ctx_t *pex_sss_demo_tls_ctx;
-mbedtls_ecp_group_id EcParametersToGrpId(uint8_t *ecparameters, size_t len);
 #endif // (SSS_HAVE_SSCP || SSS_HAVE_APPLET_SE05X_IOT || SSS_HAVE_APPLET_NONE)
 
 #endif // __SSS_PKCS11_PAL_H__

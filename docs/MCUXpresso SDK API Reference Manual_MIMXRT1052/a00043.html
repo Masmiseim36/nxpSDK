@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -101,6 +101,7 @@ $(document).ready(function(){initNavTree('a00043.html','');});
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">ROMAPI Driver</div>  </div>
@@ -117,25 +118,25 @@ $(document).ready(function(){initNavTree('a00043.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00438"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a00438">flexspi_lut_seq_t</a></td></tr>
-<tr class="memdesc:a00438"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXSPI LUT Sequence structure.  <a href="a00043.html#a00438">More...</a><br/></td></tr>
-<tr class="separator:a00438"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00439"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a00439">flexspi_mem_config_t</a></td></tr>
-<tr class="memdesc:a00439"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXSPI Memory Configuration Block.  <a href="a00043.html#a00439">More...</a><br/></td></tr>
-<tr class="separator:a00439"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00440"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a00440">flexspi_nor_config_t</a></td></tr>
-<tr class="memdesc:a00440"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serial NOR configuration block.  <a href="a00043.html#a00440">More...</a><br/></td></tr>
-<tr class="separator:a00440"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00442"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a00442">flexspi_xfer_t</a></td></tr>
-<tr class="memdesc:a00442"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXSPI Transfer Context.  <a href="a00043.html#a00442">More...</a><br/></td></tr>
-<tr class="separator:a00442"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00421"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a00421">_flexspi_lut_seq</a></td></tr>
+<tr class="memdesc:a00421"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXSPI LUT Sequence structure.  <a href="a00043.html#a00421">More...</a><br/></td></tr>
+<tr class="separator:a00421"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00422"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a00422">_flexspi_mem_config</a></td></tr>
+<tr class="memdesc:a00422"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXSPI Memory Configuration Block.  <a href="a00043.html#a00422">More...</a><br/></td></tr>
+<tr class="separator:a00422"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00423"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a00423">_flexspi_nor_config</a></td></tr>
+<tr class="memdesc:a00423"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serial NOR configuration block.  <a href="a00043.html#a00423">More...</a><br/></td></tr>
+<tr class="separator:a00423"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00425"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a00425">_flexspi_xfer</a></td></tr>
+<tr class="memdesc:a00425"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXSPI Transfer Context.  <a href="a00043.html#a00425">More...</a><br/></td></tr>
+<tr class="separator:a00425"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga5062d3567422d8a16f2e0931f679b2e5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ga5062d3567422d8a16f2e0931f679b2e5">FSL_ROM_ROMAPI_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00270.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(1U, 1U, 1U))</td></tr>
+<tr class="memitem:ga5062d3567422d8a16f2e0931f679b2e5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ga5062d3567422d8a16f2e0931f679b2e5">FSL_ROM_ROMAPI_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00272.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(1U, 1U, 1U))</td></tr>
 <tr class="memdesc:ga5062d3567422d8a16f2e0931f679b2e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">ROMAPI version 1.1.1.  <a href="#ga5062d3567422d8a16f2e0931f679b2e5">More...</a><br/></td></tr>
 <tr class="separator:ga5062d3567422d8a16f2e0931f679b2e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf7e472a05a2e5d7313b30c486d715794"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#gaf7e472a05a2e5d7313b30c486d715794">FSL_ROM_FLEXSPINOR_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00270.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(1U, 4U, 0U))</td></tr>
+<tr class="memitem:gaf7e472a05a2e5d7313b30c486d715794"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#gaf7e472a05a2e5d7313b30c486d715794">FSL_ROM_FLEXSPINOR_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00272.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(1U, 4U, 0U))</td></tr>
 <tr class="memdesc:gaf7e472a05a2e5d7313b30c486d715794"><td class="mdescLeft">&#160;</td><td class="mdescRight">ROM FLEXSPI NOR driver version 1.4.0.  <a href="#gaf7e472a05a2e5d7313b30c486d715794">More...</a><br/></td></tr>
 <tr class="separator:gaf7e472a05a2e5d7313b30c486d715794"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7145ba6d6e9319cc062ec94b8f173f08"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ga7145ba6d6e9319cc062ec94b8f173f08">kROM_StatusGroup_FLEXSPI</a>&#160;&#160;&#160;60U</td></tr>
@@ -203,6 +204,17 @@ Macros</h2></td></tr>
 <tr class="memdesc:ga0f2f8c0e82b16b55f0ded9476d60c26d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exit 0-4-4/0-8-8 mode sequence id in lookupTable stored in config blobk. <br/></td></tr>
 <tr class="separator:ga0f2f8c0e82b16b55f0ded9476d60c26d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga4bafff7836c4afa78ad3825d64ca2811"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4bafff7836c4afa78ad3825d64ca2811"></a>
+typedef enum <a class="el" href="a00043.html#ga8a6df539f6a28ac1b3011a984120b55d">_flexspi_operation</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ga4bafff7836c4afa78ad3825d64ca2811">flexspi_operation_t</a></td></tr>
+<tr class="memdesc:ga4bafff7836c4afa78ad3825d64ca2811"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXSPI Operation Context. <br/></td></tr>
+<tr class="separator:ga4bafff7836c4afa78ad3825d64ca2811"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga600d38b0051e7290aa07e734f51892da"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga600d38b0051e7290aa07e734f51892da"></a>
+typedef struct <a class="el" href="a00043.html#a00425">_flexspi_xfer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ga600d38b0051e7290aa07e734f51892da">flexspi_xfer_t</a></td></tr>
+<tr class="memdesc:ga600d38b0051e7290aa07e734f51892da"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXSPI Transfer Context. <br/></td></tr>
+<tr class="separator:ga600d38b0051e7290aa07e734f51892da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr class="memitem:ga0411cd49bb5b71852cecd93bcbf0ca2d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
@@ -233,17 +245,18 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:ga05dc3f1fb8704a958f48f18ad04c2f0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">ROM FLEXSPI NOR flash status.  <a href="a00043.html#ga05dc3f1fb8704a958f48f18ad04c2f0f">More...</a><br/></td></tr>
 <tr class="separator:ga05dc3f1fb8704a958f48f18ad04c2f0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga52dac475f85d2de2b79fc27cfa2ff4b9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ga52dac475f85d2de2b79fc27cfa2ff4b9">flexspi_operation_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00043.html#gga52dac475f85d2de2b79fc27cfa2ff4b9aa73bb31a76659e2419aec1420927ed2a">kFLEXSPIOperation_Command</a>, 
+<tr class="memitem:ga8a6df539f6a28ac1b3011a984120b55d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ga8a6df539f6a28ac1b3011a984120b55d">_flexspi_operation</a> { <br/>
+&#160;&#160;<a class="el" href="a00043.html#gga8a6df539f6a28ac1b3011a984120b55daa73bb31a76659e2419aec1420927ed2a">kFLEXSPIOperation_Command</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00043.html#gga52dac475f85d2de2b79fc27cfa2ff4b9ae98598c12ba38f7f85e9a0876f4f8123">kFLEXSPIOperation_Config</a>, 
+&#160;&#160;<a class="el" href="a00043.html#gga8a6df539f6a28ac1b3011a984120b55dae98598c12ba38f7f85e9a0876f4f8123">kFLEXSPIOperation_Config</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00043.html#gga52dac475f85d2de2b79fc27cfa2ff4b9a8a456f6d10104afde17054ca24c77525">kFLEXSPIOperation_Write</a>, 
+&#160;&#160;<a class="el" href="a00043.html#gga8a6df539f6a28ac1b3011a984120b55da8a456f6d10104afde17054ca24c77525">kFLEXSPIOperation_Write</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00043.html#gga52dac475f85d2de2b79fc27cfa2ff4b9ae402eb664a55aad6a4b9aaf920bf5d4e">kFLEXSPIOperation_Read</a>
+&#160;&#160;<a class="el" href="a00043.html#gga8a6df539f6a28ac1b3011a984120b55dae402eb664a55aad6a4b9aaf920bf5d4e">kFLEXSPIOperation_Read</a>
 <br/>
  }</td></tr>
-<tr class="separator:ga52dac475f85d2de2b79fc27cfa2ff4b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga8a6df539f6a28ac1b3011a984120b55d"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXSPI Operation Context.  <a href="a00043.html#ga8a6df539f6a28ac1b3011a984120b55d">More...</a><br/></td></tr>
+<tr class="separator:ga8a6df539f6a28ac1b3011a984120b55d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Common ROMAPI fearures info defines</h2></td></tr>
@@ -351,209 +364,266 @@ Support for init FLEXSPI NOR configuration</h2></td></tr>
 <br/>
  }</td></tr>
 <tr class="separator:ga726ca809ffd3d67ab4b8476646f26635"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+FLEXSPI NOR Configuration</h2></td></tr>
+<tr class="memitem:gad8fe10de4d31b77ff54d5692f2e8d905"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad8fe10de4d31b77ff54d5692f2e8d905"></a>
+typedef struct <a class="el" href="a00043.html#a00421">_flexspi_lut_seq</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#gad8fe10de4d31b77ff54d5692f2e8d905">flexspi_lut_seq_t</a></td></tr>
+<tr class="memdesc:gad8fe10de4d31b77ff54d5692f2e8d905"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXSPI LUT Sequence structure. <br/></td></tr>
+<tr class="separator:gad8fe10de4d31b77ff54d5692f2e8d905"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga176711a7e1d381dca7be1c09fd3023f5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga176711a7e1d381dca7be1c09fd3023f5"></a>
+typedef struct <a class="el" href="a00043.html#a00422">_flexspi_mem_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ga176711a7e1d381dca7be1c09fd3023f5">flexspi_mem_config_t</a></td></tr>
+<tr class="memdesc:ga176711a7e1d381dca7be1c09fd3023f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXSPI Memory Configuration Block. <br/></td></tr>
+<tr class="separator:ga176711a7e1d381dca7be1c09fd3023f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7dc65c6a085d126b96b28231f9800655"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7dc65c6a085d126b96b28231f9800655"></a>
+typedef struct <a class="el" href="a00043.html#a00423">_flexspi_nor_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ga7dc65c6a085d126b96b28231f9800655">flexspi_nor_config_t</a></td></tr>
+<tr class="memdesc:ga7dc65c6a085d126b96b28231f9800655"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serial NOR configuration block. <br/></td></tr>
+<tr class="separator:ga7dc65c6a085d126b96b28231f9800655"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Initialization</h2></td></tr>
+<tr class="memitem:ga1b60529d8bcad669f3a102bad7683f61"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ga1b60529d8bcad669f3a102bad7683f61">ROM_FLEXSPI_NorFlash_Init</a> (uint32_t instance, <a class="el" href="a00043.html#ga7dc65c6a085d126b96b28231f9800655">flexspi_nor_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga1b60529d8bcad669f3a102bad7683f61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize Serial NOR flash via FLEXSPI.  <a href="#ga1b60529d8bcad669f3a102bad7683f61">More...</a><br/></td></tr>
+<tr class="separator:ga1b60529d8bcad669f3a102bad7683f61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Programming</h2></td></tr>
+<tr class="memitem:ga405f13e4d9e5577ce7448f16400e3d95"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ga405f13e4d9e5577ce7448f16400e3d95">ROM_FLEXSPI_NorFlash_ProgramPage</a> (uint32_t instance, <a class="el" href="a00043.html#ga7dc65c6a085d126b96b28231f9800655">flexspi_nor_config_t</a> *config, uint32_t dstAddr, const uint32_t *src)</td></tr>
+<tr class="memdesc:ga405f13e4d9e5577ce7448f16400e3d95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Program data to Serial NOR flash via FLEXSPI.  <a href="#ga405f13e4d9e5577ce7448f16400e3d95">More...</a><br/></td></tr>
+<tr class="separator:ga405f13e4d9e5577ce7448f16400e3d95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Erasing</h2></td></tr>
+<tr class="memitem:gae0440a55313e88b098d9a92be7000b7e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#gae0440a55313e88b098d9a92be7000b7e">ROM_FLEXSPI_NorFlash_EraseSector</a> (uint32_t instance, <a class="el" href="a00043.html#ga7dc65c6a085d126b96b28231f9800655">flexspi_nor_config_t</a> *config, uint32_t address)</td></tr>
+<tr class="memdesc:gae0440a55313e88b098d9a92be7000b7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Erase one sector specified by address.  <a href="#gae0440a55313e88b098d9a92be7000b7e">More...</a><br/></td></tr>
+<tr class="separator:gae0440a55313e88b098d9a92be7000b7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab9973fecd15f6fc4efff3b04500a06cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#gab9973fecd15f6fc4efff3b04500a06cc">ROM_FLEXSPI_NorFlash_EraseAll</a> (uint32_t instance, <a class="el" href="a00043.html#ga7dc65c6a085d126b96b28231f9800655">flexspi_nor_config_t</a> *config)</td></tr>
+<tr class="memdesc:gab9973fecd15f6fc4efff3b04500a06cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Erase all the Serial NOR flash connected on FLEXSPI.  <a href="#gab9973fecd15f6fc4efff3b04500a06cc">More...</a><br/></td></tr>
+<tr class="separator:gab9973fecd15f6fc4efff3b04500a06cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8bacc55d5400a01919eb0fffda66c8f3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ga8bacc55d5400a01919eb0fffda66c8f3">ROM_FLEXSPI_NorFlash_Erase</a> (uint32_t instance, <a class="el" href="a00043.html#ga7dc65c6a085d126b96b28231f9800655">flexspi_nor_config_t</a> *config, uint32_t start, uint32_t length)</td></tr>
+<tr class="memdesc:ga8bacc55d5400a01919eb0fffda66c8f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Erase Flash Region specified by address and length.  <a href="#ga8bacc55d5400a01919eb0fffda66c8f3">More...</a><br/></td></tr>
+<tr class="separator:ga8bacc55d5400a01919eb0fffda66c8f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Command</h2></td></tr>
+<tr class="memitem:ga8b947c721d05786806da5c58a6f85ca1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ga8b947c721d05786806da5c58a6f85ca1">ROM_FLEXSPI_NorFlash_CommandXfer</a> (uint32_t instance, <a class="el" href="a00043.html#ga600d38b0051e7290aa07e734f51892da">flexspi_xfer_t</a> *xfer)</td></tr>
+<tr class="memdesc:ga8b947c721d05786806da5c58a6f85ca1"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXSPI command.  <a href="#ga8b947c721d05786806da5c58a6f85ca1">More...</a><br/></td></tr>
+<tr class="separator:ga8b947c721d05786806da5c58a6f85ca1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+UpdateLut</h2></td></tr>
+<tr class="memitem:gac42c8067456c8d95090fb42b2e873afa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#gac42c8067456c8d95090fb42b2e873afa">ROM_FLEXSPI_NorFlash_UpdateLut</a> (uint32_t instance, uint32_t seqIndex, const uint32_t *lutBase, uint32_t seqNumber)</td></tr>
+<tr class="memdesc:gac42c8067456c8d95090fb42b2e873afa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure FLEXSPI Lookup table.  <a href="#gac42c8067456c8d95090fb42b2e873afa">More...</a><br/></td></tr>
+<tr class="separator:gac42c8067456c8d95090fb42b2e873afa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+ClearCache</h2></td></tr>
+<tr class="memitem:ga56298a44838b796603200497c3539a14"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ga56298a44838b796603200497c3539a14">ROM_FLEXSPI_NorFlash_ClearCache</a> (uint32_t instance)</td></tr>
+<tr class="memdesc:ga56298a44838b796603200497c3539a14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Software reset for the FLEXSPI logic.  <a href="#ga56298a44838b796603200497c3539a14">More...</a><br/></td></tr>
+<tr class="separator:ga56298a44838b796603200497c3539a14"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00438" id="a00438"></a>
+<a name="a00421" id="a00421"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct flexspi_lut_seq_t</td>
+          <td class="memname">struct _flexspi_lut_seq</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:aff1517c9311e2e44312c6dd8f06cbdb0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aff1517c9311e2e44312c6dd8f06cbdb0"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#aff1517c9311e2e44312c6dd8f06cbdb0">seqNum</a></td></tr>
-<tr class="memdesc:aff1517c9311e2e44312c6dd8f06cbdb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sequence Number, valid number: 1-16. <br/></td></tr>
-<tr class="separator:aff1517c9311e2e44312c6dd8f06cbdb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab372af7ca830c7dde741839c8c3216d4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab372af7ca830c7dde741839c8c3216d4"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ab372af7ca830c7dde741839c8c3216d4">seqId</a></td></tr>
-<tr class="memdesc:ab372af7ca830c7dde741839c8c3216d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sequence Index, valid number: 0-15. <br/></td></tr>
-<tr class="separator:ab372af7ca830c7dde741839c8c3216d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44c6ec1fae0e6abca856e675400bb7f9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a44c6ec1fae0e6abca856e675400bb7f9"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a44c6ec1fae0e6abca856e675400bb7f9">seqNum</a></td></tr>
+<tr class="memdesc:a44c6ec1fae0e6abca856e675400bb7f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sequence Number, valid number: 1-16. <br/></td></tr>
+<tr class="separator:a44c6ec1fae0e6abca856e675400bb7f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c7ac6e48c90b1f08d464c5c14bd6eea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5c7ac6e48c90b1f08d464c5c14bd6eea"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a5c7ac6e48c90b1f08d464c5c14bd6eea">seqId</a></td></tr>
+<tr class="memdesc:a5c7ac6e48c90b1f08d464c5c14bd6eea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sequence Index, valid number: 0-15. <br/></td></tr>
+<tr class="separator:a5c7ac6e48c90b1f08d464c5c14bd6eea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
 </div>
-<a name="a00439" id="a00439"></a>
+<a name="a00422" id="a00422"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct flexspi_mem_config_t</td>
+          <td class="memname">struct _flexspi_mem_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a99319a06c3809df78d7cb6fecf26bc19"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a99319a06c3809df78d7cb6fecf26bc19"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a99319a06c3809df78d7cb6fecf26bc19">tag</a></td></tr>
-<tr class="memdesc:a99319a06c3809df78d7cb6fecf26bc19"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x000-0x003] Tag, fixed value 0x42464346UL <br/></td></tr>
-<tr class="separator:a99319a06c3809df78d7cb6fecf26bc19"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa49ced79294c5520ed442d6260b5b821"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa49ced79294c5520ed442d6260b5b821"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#aa49ced79294c5520ed442d6260b5b821">version</a></td></tr>
-<tr class="memdesc:aa49ced79294c5520ed442d6260b5b821"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x004-0x007] Version,[31:24] -'V', [23:16] - Major, [15:8] - Minor, [7:0] - bugfix <br/></td></tr>
-<tr class="separator:aa49ced79294c5520ed442d6260b5b821"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4cea73af30b9cfea1f1cf57304e7f9f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab4cea73af30b9cfea1f1cf57304e7f9f"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ab4cea73af30b9cfea1f1cf57304e7f9f">reserved0</a></td></tr>
-<tr class="memdesc:ab4cea73af30b9cfea1f1cf57304e7f9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x008-0x00b] Reserved for future use <br/></td></tr>
-<tr class="separator:ab4cea73af30b9cfea1f1cf57304e7f9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a40bf386d7fc38d0533346eeb77d3c775"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a40bf386d7fc38d0533346eeb77d3c775"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a40bf386d7fc38d0533346eeb77d3c775">readSampleClkSrc</a></td></tr>
-<tr class="memdesc:a40bf386d7fc38d0533346eeb77d3c775"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x00c-0x00c] Read Sample Clock Source, valid value: 0/1/3 <br/></td></tr>
-<tr class="separator:a40bf386d7fc38d0533346eeb77d3c775"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adae202d8fe97a6e55890ee687b6babb2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adae202d8fe97a6e55890ee687b6babb2"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#adae202d8fe97a6e55890ee687b6babb2">csHoldTime</a></td></tr>
-<tr class="memdesc:adae202d8fe97a6e55890ee687b6babb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x00d-0x00d] Data hold time, default value: 3 <br/></td></tr>
-<tr class="separator:adae202d8fe97a6e55890ee687b6babb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab0da2fc30a3425b8954772b12d55ed80"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab0da2fc30a3425b8954772b12d55ed80"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ab0da2fc30a3425b8954772b12d55ed80">csSetupTime</a></td></tr>
-<tr class="memdesc:ab0da2fc30a3425b8954772b12d55ed80"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x00e-0x00e] Date setup time, default value: 3 <br/></td></tr>
-<tr class="separator:ab0da2fc30a3425b8954772b12d55ed80"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaa31169eb54287e7267667e47bc16636"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaa31169eb54287e7267667e47bc16636"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#aaa31169eb54287e7267667e47bc16636">columnAddressWidth</a></td></tr>
-<tr class="memdesc:aaa31169eb54287e7267667e47bc16636"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x00f-0x00f] Column Address with, for HyperBus protocol, it is fixed to 3, For Serial NAND, need to refer to datasheet <br/></td></tr>
-<tr class="separator:aaa31169eb54287e7267667e47bc16636"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af8bc6d4ef6a5c000827aae7d1dae8258"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af8bc6d4ef6a5c000827aae7d1dae8258"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#af8bc6d4ef6a5c000827aae7d1dae8258">deviceModeCfgEnable</a></td></tr>
-<tr class="memdesc:af8bc6d4ef6a5c000827aae7d1dae8258"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x010-0x010] Device Mode Configure enable flag, 1 - Enable, 0 - Disable <br/></td></tr>
-<tr class="separator:af8bc6d4ef6a5c000827aae7d1dae8258"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21d4c9f8f654e3d98b591daaac482bd8"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a21d4c9f8f654e3d98b591daaac482bd8">deviceModeType</a></td></tr>
-<tr class="memdesc:a21d4c9f8f654e3d98b591daaac482bd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x011-0x011] Specify the configuration command type:Quad Enable, DPI/QPI/OPI switch, Generic configuration, etc.  <a href="#a21d4c9f8f654e3d98b591daaac482bd8">More...</a><br/></td></tr>
-<tr class="separator:a21d4c9f8f654e3d98b591daaac482bd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb7ca6c640a810dc395d75fd542edf53"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abb7ca6c640a810dc395d75fd542edf53"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#abb7ca6c640a810dc395d75fd542edf53">waitTimeCfgCommands</a></td></tr>
-<tr class="memdesc:abb7ca6c640a810dc395d75fd542edf53"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x012-0x013] Wait time for all configuration commands, unit: 100us, Used for DPI/QPI/OPI switch or reset command <br/></td></tr>
-<tr class="separator:abb7ca6c640a810dc395d75fd542edf53"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a98ef4d876eccf374cbb5414616f45d63"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a98ef4d876eccf374cbb5414616f45d63"></a>
-<a class="el" href="a00043.html#a00438">flexspi_lut_seq_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a98ef4d876eccf374cbb5414616f45d63">deviceModeSeq</a></td></tr>
-<tr class="memdesc:a98ef4d876eccf374cbb5414616f45d63"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x014-0x017] Device mode sequence info, [7:0] - LUT sequence id, [15:8] - LUt sequence number, [31:16] Reserved <br/></td></tr>
-<tr class="separator:a98ef4d876eccf374cbb5414616f45d63"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0fa2f2e7e3189e1d3ed8165ecf5b0c34"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0fa2f2e7e3189e1d3ed8165ecf5b0c34"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a0fa2f2e7e3189e1d3ed8165ecf5b0c34">deviceModeArg</a></td></tr>
-<tr class="memdesc:a0fa2f2e7e3189e1d3ed8165ecf5b0c34"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x018-0x01b] Argument/Parameter for device configuration <br/></td></tr>
-<tr class="separator:a0fa2f2e7e3189e1d3ed8165ecf5b0c34"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa9716d40e3a566d8365ebdd7a38e0e26"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa9716d40e3a566d8365ebdd7a38e0e26"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#aa9716d40e3a566d8365ebdd7a38e0e26">configCmdEnable</a></td></tr>
-<tr class="memdesc:aa9716d40e3a566d8365ebdd7a38e0e26"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x01c-0x01c] Configure command Enable Flag, 1 - Enable, 0 - Disable <br/></td></tr>
-<tr class="separator:aa9716d40e3a566d8365ebdd7a38e0e26"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace7acccf7b57dcaf9d2a0ee893b4dc03"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ace7acccf7b57dcaf9d2a0ee893b4dc03"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ace7acccf7b57dcaf9d2a0ee893b4dc03">configModeType</a> [3]</td></tr>
-<tr class="memdesc:ace7acccf7b57dcaf9d2a0ee893b4dc03"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x01d-0x01f] Configure Mode Type, similar as deviceModeTpe <br/></td></tr>
-<tr class="separator:ace7acccf7b57dcaf9d2a0ee893b4dc03"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f0a1b4862e45722e8748606f539cddb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3f0a1b4862e45722e8748606f539cddb"></a>
-<a class="el" href="a00043.html#a00438">flexspi_lut_seq_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a3f0a1b4862e45722e8748606f539cddb">configCmdSeqs</a> [3]</td></tr>
-<tr class="memdesc:a3f0a1b4862e45722e8748606f539cddb"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x020-0x02b] Sequence info for Device Configuration command, similar as deviceModeSeq <br/></td></tr>
-<tr class="separator:a3f0a1b4862e45722e8748606f539cddb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9af45b0f8dd379e6f2aa18f73944b7db"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9af45b0f8dd379e6f2aa18f73944b7db"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a9af45b0f8dd379e6f2aa18f73944b7db">reserved1</a></td></tr>
-<tr class="memdesc:a9af45b0f8dd379e6f2aa18f73944b7db"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x02c-0x02f] Reserved for future use <br/></td></tr>
-<tr class="separator:a9af45b0f8dd379e6f2aa18f73944b7db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acbc7d1a32c9014660d7cda4ab7f9592f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acbc7d1a32c9014660d7cda4ab7f9592f"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#acbc7d1a32c9014660d7cda4ab7f9592f">configCmdArgs</a> [3]</td></tr>
-<tr class="memdesc:acbc7d1a32c9014660d7cda4ab7f9592f"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x030-0x03b] Arguments/Parameters for device Configuration commands <br/></td></tr>
-<tr class="separator:acbc7d1a32c9014660d7cda4ab7f9592f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc99a67e1a68fc20e96f083d9e951f57"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acc99a67e1a68fc20e96f083d9e951f57"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#acc99a67e1a68fc20e96f083d9e951f57">reserved2</a></td></tr>
-<tr class="memdesc:acc99a67e1a68fc20e96f083d9e951f57"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x03c-0x03f] Reserved for future use <br/></td></tr>
-<tr class="separator:acc99a67e1a68fc20e96f083d9e951f57"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acfba0840d27f4dc2398a4b9ec6b87faf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acfba0840d27f4dc2398a4b9ec6b87faf"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#acfba0840d27f4dc2398a4b9ec6b87faf">controllerMiscOption</a></td></tr>
-<tr class="memdesc:acfba0840d27f4dc2398a4b9ec6b87faf"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x040-0x043] Controller Misc Options, see Misc feature bit definitions for more details <br/></td></tr>
-<tr class="separator:acfba0840d27f4dc2398a4b9ec6b87faf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5403b77afad5f95fa163845e97e0f7ef"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5403b77afad5f95fa163845e97e0f7ef"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a5403b77afad5f95fa163845e97e0f7ef">deviceType</a></td></tr>
-<tr class="memdesc:a5403b77afad5f95fa163845e97e0f7ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x044-0x044] Device Type: See Flash Type Definition for more details <br/></td></tr>
-<tr class="separator:a5403b77afad5f95fa163845e97e0f7ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0043a5ad27c9d9147b53a22678a42fb6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0043a5ad27c9d9147b53a22678a42fb6"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a0043a5ad27c9d9147b53a22678a42fb6">sflashPadType</a></td></tr>
-<tr class="memdesc:a0043a5ad27c9d9147b53a22678a42fb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x045-0x045] Serial Flash Pad Type: 1 - Single, 2 - Dual, 4 - Quad, 8 - Octal <br/></td></tr>
-<tr class="separator:a0043a5ad27c9d9147b53a22678a42fb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac537968b65fea22389aeae4debf98c94"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac537968b65fea22389aeae4debf98c94"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ac537968b65fea22389aeae4debf98c94">serialClkFreq</a></td></tr>
-<tr class="memdesc:ac537968b65fea22389aeae4debf98c94"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x046-0x046] Serial Flash Frequencey, device specific definitions, See System Boot Chapter for more details <br/></td></tr>
-<tr class="separator:ac537968b65fea22389aeae4debf98c94"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad63b36bf42c5699533e4ca61c6359eba"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad63b36bf42c5699533e4ca61c6359eba"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ad63b36bf42c5699533e4ca61c6359eba">lutCustomSeqEnable</a></td></tr>
-<tr class="memdesc:ad63b36bf42c5699533e4ca61c6359eba"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x047-0x047] LUT customization Enable, it is required if the program/erase cannot be done using 1 LUT sequence, currently, only applicable to HyperFLASH <br/></td></tr>
-<tr class="separator:ad63b36bf42c5699533e4ca61c6359eba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9e32029bd2740aa8045fda274e8f6320"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9e32029bd2740aa8045fda274e8f6320"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a9e32029bd2740aa8045fda274e8f6320">reserved3</a> [2]</td></tr>
-<tr class="memdesc:a9e32029bd2740aa8045fda274e8f6320"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x048-0x04f] Reserved for future use <br/></td></tr>
-<tr class="separator:a9e32029bd2740aa8045fda274e8f6320"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a195b930b0c29cced22be271a5df9a139"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a195b930b0c29cced22be271a5df9a139"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a195b930b0c29cced22be271a5df9a139">sflashA1Size</a></td></tr>
-<tr class="memdesc:a195b930b0c29cced22be271a5df9a139"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x050-0x053] Size of Flash connected to A1 <br/></td></tr>
-<tr class="separator:a195b930b0c29cced22be271a5df9a139"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac8a21a0cde9f94094a96e81b226cf7d7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac8a21a0cde9f94094a96e81b226cf7d7"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ac8a21a0cde9f94094a96e81b226cf7d7">sflashA2Size</a></td></tr>
-<tr class="memdesc:ac8a21a0cde9f94094a96e81b226cf7d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x054-0x057] Size of Flash connected to A2 <br/></td></tr>
-<tr class="separator:ac8a21a0cde9f94094a96e81b226cf7d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab14f86428a55cb3bb3b37990a3c2a46f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab14f86428a55cb3bb3b37990a3c2a46f"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ab14f86428a55cb3bb3b37990a3c2a46f">sflashB1Size</a></td></tr>
-<tr class="memdesc:ab14f86428a55cb3bb3b37990a3c2a46f"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x058-0x05b] Size of Flash connected to B1 <br/></td></tr>
-<tr class="separator:ab14f86428a55cb3bb3b37990a3c2a46f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a83be0b5608ba57935bee440342016dd0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a83be0b5608ba57935bee440342016dd0"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a83be0b5608ba57935bee440342016dd0">sflashB2Size</a></td></tr>
-<tr class="memdesc:a83be0b5608ba57935bee440342016dd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x05c-0x05f] Size of Flash connected to B2 <br/></td></tr>
-<tr class="separator:a83be0b5608ba57935bee440342016dd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8683e6e2fafe025096c1c3958182ccaa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8683e6e2fafe025096c1c3958182ccaa"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a8683e6e2fafe025096c1c3958182ccaa">csPadSettingOverride</a></td></tr>
-<tr class="memdesc:a8683e6e2fafe025096c1c3958182ccaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x060-0x063] CS pad setting override value <br/></td></tr>
-<tr class="separator:a8683e6e2fafe025096c1c3958182ccaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e97dc81d3e010416bf971b36721b4f1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3e97dc81d3e010416bf971b36721b4f1"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a3e97dc81d3e010416bf971b36721b4f1">sclkPadSettingOverride</a></td></tr>
-<tr class="memdesc:a3e97dc81d3e010416bf971b36721b4f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x064-0x067] SCK pad setting override value <br/></td></tr>
-<tr class="separator:a3e97dc81d3e010416bf971b36721b4f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0970af7ffa0692f291495692002d7c4e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0970af7ffa0692f291495692002d7c4e"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a0970af7ffa0692f291495692002d7c4e">dataPadSettingOverride</a></td></tr>
-<tr class="memdesc:a0970af7ffa0692f291495692002d7c4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x068-0x06b] data pad setting override value <br/></td></tr>
-<tr class="separator:a0970af7ffa0692f291495692002d7c4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4dbd92486efc9011f5d9f9279e23176"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab4dbd92486efc9011f5d9f9279e23176"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ab4dbd92486efc9011f5d9f9279e23176">dqsPadSettingOverride</a></td></tr>
-<tr class="memdesc:ab4dbd92486efc9011f5d9f9279e23176"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x06c-0x06f] DQS pad setting override value <br/></td></tr>
-<tr class="separator:ab4dbd92486efc9011f5d9f9279e23176"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45cf0998ebe296a05e155722086c3495"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a45cf0998ebe296a05e155722086c3495"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a45cf0998ebe296a05e155722086c3495">timeoutInMs</a></td></tr>
-<tr class="memdesc:a45cf0998ebe296a05e155722086c3495"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x070-0x073] Timeout threshold for read status command <br/></td></tr>
-<tr class="separator:a45cf0998ebe296a05e155722086c3495"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7fc7be9ed6ccc2bd6d7465aa9254bc8d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7fc7be9ed6ccc2bd6d7465aa9254bc8d"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a7fc7be9ed6ccc2bd6d7465aa9254bc8d">commandInterval</a></td></tr>
-<tr class="memdesc:a7fc7be9ed6ccc2bd6d7465aa9254bc8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x074-0x077] CS deselect interval between two commands <br/></td></tr>
-<tr class="separator:a7fc7be9ed6ccc2bd6d7465aa9254bc8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1fca94dd68b1a4bb316d5c7527d31704"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1fca94dd68b1a4bb316d5c7527d31704"></a>
-flexspi_dll_time_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a1fca94dd68b1a4bb316d5c7527d31704">dataValidTime</a> [2]</td></tr>
-<tr class="memdesc:a1fca94dd68b1a4bb316d5c7527d31704"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x078-0x07b] CLK edge to data valid time for PORT A and PORT B <br/></td></tr>
-<tr class="separator:a1fca94dd68b1a4bb316d5c7527d31704"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e9d67f5c2a757f3ecaaa989d25111cb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4e9d67f5c2a757f3ecaaa989d25111cb"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a4e9d67f5c2a757f3ecaaa989d25111cb">busyOffset</a></td></tr>
-<tr class="memdesc:a4e9d67f5c2a757f3ecaaa989d25111cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x07c-0x07d] Busy offset, valid value: 0-31 <br/></td></tr>
-<tr class="separator:a4e9d67f5c2a757f3ecaaa989d25111cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09c877b34168d13362b0cba4ac8f7db3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a09c877b34168d13362b0cba4ac8f7db3"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a09c877b34168d13362b0cba4ac8f7db3">busyBitPolarity</a></td></tr>
-<tr class="memdesc:a09c877b34168d13362b0cba4ac8f7db3"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x07e-0x07f] Busy flag polarity, 0 - busy flag is 1 when flash device is busy, 1 - busy flag is 0 when flash device is busy <br/></td></tr>
-<tr class="separator:a09c877b34168d13362b0cba4ac8f7db3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a541c201b1802555f4fffa7582f011133"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a541c201b1802555f4fffa7582f011133"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a541c201b1802555f4fffa7582f011133">lookupTable</a> [64]</td></tr>
-<tr class="memdesc:a541c201b1802555f4fffa7582f011133"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x080-0x17f] Lookup table holds Flash command sequences <br/></td></tr>
-<tr class="separator:a541c201b1802555f4fffa7582f011133"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37f516a14df0cb7a31e66e261da310f3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a37f516a14df0cb7a31e66e261da310f3"></a>
-<a class="el" href="a00043.html#a00438">flexspi_lut_seq_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a37f516a14df0cb7a31e66e261da310f3">lutCustomSeq</a> [12]</td></tr>
-<tr class="memdesc:a37f516a14df0cb7a31e66e261da310f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x180-0x1af] Customizable LUT Sequences <br/></td></tr>
-<tr class="separator:a37f516a14df0cb7a31e66e261da310f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1f47195d49377256398680d90d916e70"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1f47195d49377256398680d90d916e70"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a1f47195d49377256398680d90d916e70">reserved4</a> [4]</td></tr>
-<tr class="memdesc:a1f47195d49377256398680d90d916e70"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x1b0-0x1bf] Reserved for future use <br/></td></tr>
-<tr class="separator:a1f47195d49377256398680d90d916e70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad20718a8722b6ae286fc01e270e2cc0c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad20718a8722b6ae286fc01e270e2cc0c"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ad20718a8722b6ae286fc01e270e2cc0c">tag</a></td></tr>
+<tr class="memdesc:ad20718a8722b6ae286fc01e270e2cc0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x000-0x003] Tag, fixed value 0x42464346UL <br/></td></tr>
+<tr class="separator:ad20718a8722b6ae286fc01e270e2cc0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a621a8797dc305e19afcacf3ee5b9d9eb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a621a8797dc305e19afcacf3ee5b9d9eb"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a621a8797dc305e19afcacf3ee5b9d9eb">version</a></td></tr>
+<tr class="memdesc:a621a8797dc305e19afcacf3ee5b9d9eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x004-0x007] Version,[31:24] -'V', [23:16] - Major, [15:8] - Minor, [7:0] - bugfix <br/></td></tr>
+<tr class="separator:a621a8797dc305e19afcacf3ee5b9d9eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29c80db0ef12e7f6a51a9e4942ed053a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a29c80db0ef12e7f6a51a9e4942ed053a"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a29c80db0ef12e7f6a51a9e4942ed053a">reserved0</a></td></tr>
+<tr class="memdesc:a29c80db0ef12e7f6a51a9e4942ed053a"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x008-0x00b] Reserved for future use <br/></td></tr>
+<tr class="separator:a29c80db0ef12e7f6a51a9e4942ed053a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a208316b32a6796fc21503079ffd00551"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a208316b32a6796fc21503079ffd00551"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a208316b32a6796fc21503079ffd00551">readSampleClkSrc</a></td></tr>
+<tr class="memdesc:a208316b32a6796fc21503079ffd00551"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x00c-0x00c] Read Sample Clock Source, valid value: 0/1/3 <br/></td></tr>
+<tr class="separator:a208316b32a6796fc21503079ffd00551"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac2017402760ae91550aac0731e5fe61"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aac2017402760ae91550aac0731e5fe61"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#aac2017402760ae91550aac0731e5fe61">csHoldTime</a></td></tr>
+<tr class="memdesc:aac2017402760ae91550aac0731e5fe61"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x00d-0x00d] Data hold time, default value: 3 <br/></td></tr>
+<tr class="separator:aac2017402760ae91550aac0731e5fe61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb7ee4b7e0c78eb252dedc90103c8ec4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afb7ee4b7e0c78eb252dedc90103c8ec4"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#afb7ee4b7e0c78eb252dedc90103c8ec4">csSetupTime</a></td></tr>
+<tr class="memdesc:afb7ee4b7e0c78eb252dedc90103c8ec4"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x00e-0x00e] Date setup time, default value: 3 <br/></td></tr>
+<tr class="separator:afb7ee4b7e0c78eb252dedc90103c8ec4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e6f14aa25e249f5a8d06c3c631789f3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7e6f14aa25e249f5a8d06c3c631789f3"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a7e6f14aa25e249f5a8d06c3c631789f3">columnAddressWidth</a></td></tr>
+<tr class="memdesc:a7e6f14aa25e249f5a8d06c3c631789f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x00f-0x00f] Column Address with, for HyperBus protocol, it is fixed to 3, For Serial NAND, need to refer to datasheet <br/></td></tr>
+<tr class="separator:a7e6f14aa25e249f5a8d06c3c631789f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbf3f8dc755f6bab3698bad7ff21cec7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adbf3f8dc755f6bab3698bad7ff21cec7"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#adbf3f8dc755f6bab3698bad7ff21cec7">deviceModeCfgEnable</a></td></tr>
+<tr class="memdesc:adbf3f8dc755f6bab3698bad7ff21cec7"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x010-0x010] Device Mode Configure enable flag, 1 - Enable, 0 - Disable <br/></td></tr>
+<tr class="separator:adbf3f8dc755f6bab3698bad7ff21cec7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55c3b044c56f6f079fb54c49332f59d9"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a55c3b044c56f6f079fb54c49332f59d9">deviceModeType</a></td></tr>
+<tr class="memdesc:a55c3b044c56f6f079fb54c49332f59d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x011-0x011] Specify the configuration command type:Quad Enable, DPI/QPI/OPI switch, Generic configuration, etc.  <a href="#a55c3b044c56f6f079fb54c49332f59d9">More...</a><br/></td></tr>
+<tr class="separator:a55c3b044c56f6f079fb54c49332f59d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2670041dda0dca132b66c961a2362ae7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2670041dda0dca132b66c961a2362ae7"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a2670041dda0dca132b66c961a2362ae7">waitTimeCfgCommands</a></td></tr>
+<tr class="memdesc:a2670041dda0dca132b66c961a2362ae7"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x012-0x013] Wait time for all configuration commands, unit: 100us, Used for DPI/QPI/OPI switch or reset command <br/></td></tr>
+<tr class="separator:a2670041dda0dca132b66c961a2362ae7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5c18197316934f11d84e55bb6cbdf5e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab5c18197316934f11d84e55bb6cbdf5e"></a>
+<a class="el" href="a00043.html#gad8fe10de4d31b77ff54d5692f2e8d905">flexspi_lut_seq_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ab5c18197316934f11d84e55bb6cbdf5e">deviceModeSeq</a></td></tr>
+<tr class="memdesc:ab5c18197316934f11d84e55bb6cbdf5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x014-0x017] Device mode sequence info, [7:0] - LUT sequence id, [15:8] - LUt sequence number, [31:16] Reserved <br/></td></tr>
+<tr class="separator:ab5c18197316934f11d84e55bb6cbdf5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d50761e5fcae3549eec9de1ca7b11e9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5d50761e5fcae3549eec9de1ca7b11e9"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a5d50761e5fcae3549eec9de1ca7b11e9">deviceModeArg</a></td></tr>
+<tr class="memdesc:a5d50761e5fcae3549eec9de1ca7b11e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x018-0x01b] Argument/Parameter for device configuration <br/></td></tr>
+<tr class="separator:a5d50761e5fcae3549eec9de1ca7b11e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8e67155c6057e916fdc65886dc44693"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa8e67155c6057e916fdc65886dc44693"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#aa8e67155c6057e916fdc65886dc44693">configCmdEnable</a></td></tr>
+<tr class="memdesc:aa8e67155c6057e916fdc65886dc44693"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x01c-0x01c] Configure command Enable Flag, 1 - Enable, 0 - Disable <br/></td></tr>
+<tr class="separator:aa8e67155c6057e916fdc65886dc44693"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affd5296103f6340e038f756e8c520e63"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="affd5296103f6340e038f756e8c520e63"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#affd5296103f6340e038f756e8c520e63">configModeType</a> [3]</td></tr>
+<tr class="memdesc:affd5296103f6340e038f756e8c520e63"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x01d-0x01f] Configure Mode Type, similar as deviceModeTpe <br/></td></tr>
+<tr class="separator:affd5296103f6340e038f756e8c520e63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d4a6a1785199bd25bf773c8e6468e4d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5d4a6a1785199bd25bf773c8e6468e4d"></a>
+<a class="el" href="a00043.html#gad8fe10de4d31b77ff54d5692f2e8d905">flexspi_lut_seq_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a5d4a6a1785199bd25bf773c8e6468e4d">configCmdSeqs</a> [3]</td></tr>
+<tr class="memdesc:a5d4a6a1785199bd25bf773c8e6468e4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x020-0x02b] Sequence info for Device Configuration command, similar as deviceModeSeq <br/></td></tr>
+<tr class="separator:a5d4a6a1785199bd25bf773c8e6468e4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeff34c191a46294e281c6ff177afc3bf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeff34c191a46294e281c6ff177afc3bf"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#aeff34c191a46294e281c6ff177afc3bf">reserved1</a></td></tr>
+<tr class="memdesc:aeff34c191a46294e281c6ff177afc3bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x02c-0x02f] Reserved for future use <br/></td></tr>
+<tr class="separator:aeff34c191a46294e281c6ff177afc3bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73b228a268ecddb6982bc1ceecf45c90"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a73b228a268ecddb6982bc1ceecf45c90"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a73b228a268ecddb6982bc1ceecf45c90">configCmdArgs</a> [3]</td></tr>
+<tr class="memdesc:a73b228a268ecddb6982bc1ceecf45c90"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x030-0x03b] Arguments/Parameters for device Configuration commands <br/></td></tr>
+<tr class="separator:a73b228a268ecddb6982bc1ceecf45c90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac564217e2227234131926e885667331f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac564217e2227234131926e885667331f"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ac564217e2227234131926e885667331f">reserved2</a></td></tr>
+<tr class="memdesc:ac564217e2227234131926e885667331f"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x03c-0x03f] Reserved for future use <br/></td></tr>
+<tr class="separator:ac564217e2227234131926e885667331f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed831814985a3de44a2f879d278078b2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aed831814985a3de44a2f879d278078b2"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#aed831814985a3de44a2f879d278078b2">controllerMiscOption</a></td></tr>
+<tr class="memdesc:aed831814985a3de44a2f879d278078b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x040-0x043] Controller Misc Options, see Misc feature bit definitions for more details <br/></td></tr>
+<tr class="separator:aed831814985a3de44a2f879d278078b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abca5556d45f916f4e707984e7131cae2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abca5556d45f916f4e707984e7131cae2"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#abca5556d45f916f4e707984e7131cae2">deviceType</a></td></tr>
+<tr class="memdesc:abca5556d45f916f4e707984e7131cae2"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x044-0x044] Device Type: See Flash Type Definition for more details <br/></td></tr>
+<tr class="separator:abca5556d45f916f4e707984e7131cae2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe686b34b7133974832d9376ccef92ef"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abe686b34b7133974832d9376ccef92ef"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#abe686b34b7133974832d9376ccef92ef">sflashPadType</a></td></tr>
+<tr class="memdesc:abe686b34b7133974832d9376ccef92ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x045-0x045] Serial Flash Pad Type: 1 - Single, 2 - Dual, 4 - Quad, 8 - Octal <br/></td></tr>
+<tr class="separator:abe686b34b7133974832d9376ccef92ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a793b3de71c5848287a7b5b2bf9aa5265"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a793b3de71c5848287a7b5b2bf9aa5265"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a793b3de71c5848287a7b5b2bf9aa5265">serialClkFreq</a></td></tr>
+<tr class="memdesc:a793b3de71c5848287a7b5b2bf9aa5265"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x046-0x046] Serial Flash Frequencey, device specific definitions, See System Boot Chapter for more details <br/></td></tr>
+<tr class="separator:a793b3de71c5848287a7b5b2bf9aa5265"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67c8b457bfea892b4a691785cc268600"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a67c8b457bfea892b4a691785cc268600"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a67c8b457bfea892b4a691785cc268600">lutCustomSeqEnable</a></td></tr>
+<tr class="memdesc:a67c8b457bfea892b4a691785cc268600"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x047-0x047] LUT customization Enable, it is required if the program/erase cannot be done using 1 LUT sequence, currently, only applicable to HyperFLASH <br/></td></tr>
+<tr class="separator:a67c8b457bfea892b4a691785cc268600"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d9b8067d691e1a2000249a33c4f2163"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7d9b8067d691e1a2000249a33c4f2163"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a7d9b8067d691e1a2000249a33c4f2163">reserved3</a> [2]</td></tr>
+<tr class="memdesc:a7d9b8067d691e1a2000249a33c4f2163"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x048-0x04f] Reserved for future use <br/></td></tr>
+<tr class="separator:a7d9b8067d691e1a2000249a33c4f2163"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a956099cc6bea0bacbb960f734ee8a1c2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a956099cc6bea0bacbb960f734ee8a1c2"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a956099cc6bea0bacbb960f734ee8a1c2">sflashA1Size</a></td></tr>
+<tr class="memdesc:a956099cc6bea0bacbb960f734ee8a1c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x050-0x053] Size of Flash connected to A1 <br/></td></tr>
+<tr class="separator:a956099cc6bea0bacbb960f734ee8a1c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e3a76b36e53eccbfc0e325c38cf65bc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6e3a76b36e53eccbfc0e325c38cf65bc"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a6e3a76b36e53eccbfc0e325c38cf65bc">sflashA2Size</a></td></tr>
+<tr class="memdesc:a6e3a76b36e53eccbfc0e325c38cf65bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x054-0x057] Size of Flash connected to A2 <br/></td></tr>
+<tr class="separator:a6e3a76b36e53eccbfc0e325c38cf65bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a448fa6bb2fddc958ea8803e45af6edde"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a448fa6bb2fddc958ea8803e45af6edde"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a448fa6bb2fddc958ea8803e45af6edde">sflashB1Size</a></td></tr>
+<tr class="memdesc:a448fa6bb2fddc958ea8803e45af6edde"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x058-0x05b] Size of Flash connected to B1 <br/></td></tr>
+<tr class="separator:a448fa6bb2fddc958ea8803e45af6edde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d5a0bc4e54402bec3fa40457ed0f314"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7d5a0bc4e54402bec3fa40457ed0f314"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a7d5a0bc4e54402bec3fa40457ed0f314">sflashB2Size</a></td></tr>
+<tr class="memdesc:a7d5a0bc4e54402bec3fa40457ed0f314"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x05c-0x05f] Size of Flash connected to B2 <br/></td></tr>
+<tr class="separator:a7d5a0bc4e54402bec3fa40457ed0f314"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea82b3c4f4b90e89ea8bffa1ec4d61fd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aea82b3c4f4b90e89ea8bffa1ec4d61fd"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#aea82b3c4f4b90e89ea8bffa1ec4d61fd">csPadSettingOverride</a></td></tr>
+<tr class="memdesc:aea82b3c4f4b90e89ea8bffa1ec4d61fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x060-0x063] CS pad setting override value <br/></td></tr>
+<tr class="separator:aea82b3c4f4b90e89ea8bffa1ec4d61fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac53d53dd5ae4108c40f2a991282b525b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac53d53dd5ae4108c40f2a991282b525b"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ac53d53dd5ae4108c40f2a991282b525b">sclkPadSettingOverride</a></td></tr>
+<tr class="memdesc:ac53d53dd5ae4108c40f2a991282b525b"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x064-0x067] SCK pad setting override value <br/></td></tr>
+<tr class="separator:ac53d53dd5ae4108c40f2a991282b525b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fc9125f45b27d63982da1ad94b4f1c4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9fc9125f45b27d63982da1ad94b4f1c4"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a9fc9125f45b27d63982da1ad94b4f1c4">dataPadSettingOverride</a></td></tr>
+<tr class="memdesc:a9fc9125f45b27d63982da1ad94b4f1c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x068-0x06b] data pad setting override value <br/></td></tr>
+<tr class="separator:a9fc9125f45b27d63982da1ad94b4f1c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c4c5a87f34ef5e0da833af7b5d344e1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4c4c5a87f34ef5e0da833af7b5d344e1"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a4c4c5a87f34ef5e0da833af7b5d344e1">dqsPadSettingOverride</a></td></tr>
+<tr class="memdesc:a4c4c5a87f34ef5e0da833af7b5d344e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x06c-0x06f] DQS pad setting override value <br/></td></tr>
+<tr class="separator:a4c4c5a87f34ef5e0da833af7b5d344e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc65534396c3d6370c5a440774472849"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abc65534396c3d6370c5a440774472849"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#abc65534396c3d6370c5a440774472849">timeoutInMs</a></td></tr>
+<tr class="memdesc:abc65534396c3d6370c5a440774472849"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x070-0x073] Timeout threshold for read status command <br/></td></tr>
+<tr class="separator:abc65534396c3d6370c5a440774472849"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fe0e1c3b2914a2f85dc7a9f9197a449"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1fe0e1c3b2914a2f85dc7a9f9197a449"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a1fe0e1c3b2914a2f85dc7a9f9197a449">commandInterval</a></td></tr>
+<tr class="memdesc:a1fe0e1c3b2914a2f85dc7a9f9197a449"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x074-0x077] CS deselect interval between two commands <br/></td></tr>
+<tr class="separator:a1fe0e1c3b2914a2f85dc7a9f9197a449"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a555cb5b555d187f0667c48cae7021819"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a555cb5b555d187f0667c48cae7021819"></a>
+flexspi_dll_time_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a555cb5b555d187f0667c48cae7021819">dataValidTime</a> [2]</td></tr>
+<tr class="memdesc:a555cb5b555d187f0667c48cae7021819"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x078-0x07b] CLK edge to data valid time for PORT A and PORT B <br/></td></tr>
+<tr class="separator:a555cb5b555d187f0667c48cae7021819"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a849f6a579c0cb55afd840d5384166238"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a849f6a579c0cb55afd840d5384166238"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a849f6a579c0cb55afd840d5384166238">busyOffset</a></td></tr>
+<tr class="memdesc:a849f6a579c0cb55afd840d5384166238"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x07c-0x07d] Busy offset, valid value: 0-31 <br/></td></tr>
+<tr class="separator:a849f6a579c0cb55afd840d5384166238"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50ae3b6018ca1639cddf03dfca3fe9e4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a50ae3b6018ca1639cddf03dfca3fe9e4"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a50ae3b6018ca1639cddf03dfca3fe9e4">busyBitPolarity</a></td></tr>
+<tr class="memdesc:a50ae3b6018ca1639cddf03dfca3fe9e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x07e-0x07f] Busy flag polarity, 0 - busy flag is 1 when flash device is busy, 1 - busy flag is 0 when flash device is busy <br/></td></tr>
+<tr class="separator:a50ae3b6018ca1639cddf03dfca3fe9e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58e812dd079c63ba07f63867d72db736"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a58e812dd079c63ba07f63867d72db736"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a58e812dd079c63ba07f63867d72db736">lookupTable</a> [64]</td></tr>
+<tr class="memdesc:a58e812dd079c63ba07f63867d72db736"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x080-0x17f] Lookup table holds Flash command sequences <br/></td></tr>
+<tr class="separator:a58e812dd079c63ba07f63867d72db736"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe46b0b2e6624c65d7bc94cf567eefab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abe46b0b2e6624c65d7bc94cf567eefab"></a>
+<a class="el" href="a00043.html#gad8fe10de4d31b77ff54d5692f2e8d905">flexspi_lut_seq_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#abe46b0b2e6624c65d7bc94cf567eefab">lutCustomSeq</a> [12]</td></tr>
+<tr class="memdesc:abe46b0b2e6624c65d7bc94cf567eefab"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x180-0x1af] Customizable LUT Sequences <br/></td></tr>
+<tr class="separator:abe46b0b2e6624c65d7bc94cf567eefab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43d272828a2e15c9867a3a681b1e803d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a43d272828a2e15c9867a3a681b1e803d"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a43d272828a2e15c9867a3a681b1e803d">reserved4</a> [4]</td></tr>
+<tr class="memdesc:a43d272828a2e15c9867a3a681b1e803d"><td class="mdescLeft">&#160;</td><td class="mdescRight">[0x1b0-0x1bf] Reserved for future use <br/></td></tr>
+<tr class="separator:a43d272828a2e15c9867a3a681b1e803d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a21d4c9f8f654e3d98b591daaac482bd8"></a>
+<a class="anchor" id="a55c3b044c56f6f079fb54c49332f59d9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t flexspi_mem_config_t::deviceModeType</td>
+          <td class="memname">uint8_t _flexspi_mem_config::deviceModeType</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -563,120 +633,120 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 </div>
 </div>
-<a name="a00440" id="a00440"></a>
+<a name="a00423" id="a00423"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct flexspi_nor_config_t</td>
+          <td class="memname">struct _flexspi_nor_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a78513beda2ef037851178bac828e30f7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a78513beda2ef037851178bac828e30f7"></a>
-<a class="el" href="a00043.html#a00439">flexspi_mem_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a78513beda2ef037851178bac828e30f7">memConfig</a></td></tr>
-<tr class="memdesc:a78513beda2ef037851178bac828e30f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Common memory configuration info via FLEXSPI. <br/></td></tr>
-<tr class="separator:a78513beda2ef037851178bac828e30f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a778ff87c62d497a46f5eba64a4319a37"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a778ff87c62d497a46f5eba64a4319a37"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a778ff87c62d497a46f5eba64a4319a37">pageSize</a></td></tr>
-<tr class="memdesc:a778ff87c62d497a46f5eba64a4319a37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Page size of Serial NOR. <br/></td></tr>
-<tr class="separator:a778ff87c62d497a46f5eba64a4319a37"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f924e5e21868b8371553a03f1c85e23"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6f924e5e21868b8371553a03f1c85e23"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a6f924e5e21868b8371553a03f1c85e23">sectorSize</a></td></tr>
-<tr class="memdesc:a6f924e5e21868b8371553a03f1c85e23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sector size of Serial NOR. <br/></td></tr>
-<tr class="separator:a6f924e5e21868b8371553a03f1c85e23"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab7a2b6fa69151f00a01308d915b5c92d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab7a2b6fa69151f00a01308d915b5c92d"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ab7a2b6fa69151f00a01308d915b5c92d">ipcmdSerialClkFreq</a></td></tr>
-<tr class="memdesc:ab7a2b6fa69151f00a01308d915b5c92d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clock frequency for IP command. <br/></td></tr>
-<tr class="separator:ab7a2b6fa69151f00a01308d915b5c92d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2615ff5c3c34d72be0c9f547b9c06d5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad2615ff5c3c34d72be0c9f547b9c06d5"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ad2615ff5c3c34d72be0c9f547b9c06d5">isUniformBlockSize</a></td></tr>
-<tr class="memdesc:ad2615ff5c3c34d72be0c9f547b9c06d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sector/Block size is the same. <br/></td></tr>
-<tr class="separator:ad2615ff5c3c34d72be0c9f547b9c06d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a23481473283144cae4625c669eff2e84"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a23481473283144cae4625c669eff2e84"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a23481473283144cae4625c669eff2e84">isDataOrderSwapped</a></td></tr>
-<tr class="memdesc:a23481473283144cae4625c669eff2e84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data order (D0, D1, D2, D3) is swapped (D1,D0, D3, D2) <br/></td></tr>
-<tr class="separator:a23481473283144cae4625c669eff2e84"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa7a86ca5a3f8d25c62a1f41d3ee3fc5d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa7a86ca5a3f8d25c62a1f41d3ee3fc5d"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#aa7a86ca5a3f8d25c62a1f41d3ee3fc5d">reserved0</a> [1]</td></tr>
-<tr class="memdesc:aa7a86ca5a3f8d25c62a1f41d3ee3fc5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reserved for future use. <br/></td></tr>
-<tr class="separator:aa7a86ca5a3f8d25c62a1f41d3ee3fc5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a028423a6452eb2f2bca3ded8d8db660b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a028423a6452eb2f2bca3ded8d8db660b"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a028423a6452eb2f2bca3ded8d8db660b">serialNorType</a></td></tr>
-<tr class="memdesc:a028423a6452eb2f2bca3ded8d8db660b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serial NOR Flash type: 0/1/2/3. <br/></td></tr>
-<tr class="separator:a028423a6452eb2f2bca3ded8d8db660b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad7d4a91907e6f084ce2027e6290698a6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad7d4a91907e6f084ce2027e6290698a6"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ad7d4a91907e6f084ce2027e6290698a6">needExitNoCmdMode</a></td></tr>
-<tr class="memdesc:ad7d4a91907e6f084ce2027e6290698a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Need to exit NoCmd mode before other IP command. <br/></td></tr>
-<tr class="separator:ad7d4a91907e6f084ce2027e6290698a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc608ba9342bf1f3d75efc331ccf7ab1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acc608ba9342bf1f3d75efc331ccf7ab1"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#acc608ba9342bf1f3d75efc331ccf7ab1">halfClkForNonReadCmd</a></td></tr>
-<tr class="memdesc:acc608ba9342bf1f3d75efc331ccf7ab1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Half the Serial Clock for non-read command: true/false. <br/></td></tr>
-<tr class="separator:acc608ba9342bf1f3d75efc331ccf7ab1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7653a17acc4e4952defa540923c3f414"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7653a17acc4e4952defa540923c3f414"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a7653a17acc4e4952defa540923c3f414">needRestoreNoCmdMode</a></td></tr>
-<tr class="memdesc:a7653a17acc4e4952defa540923c3f414"><td class="mdescLeft">&#160;</td><td class="mdescRight">Need to Restore NoCmd mode after IP commmand execution. <br/></td></tr>
-<tr class="separator:a7653a17acc4e4952defa540923c3f414"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec6195ce139affc45cf05ce4be42c4ea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aec6195ce139affc45cf05ce4be42c4ea"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#aec6195ce139affc45cf05ce4be42c4ea">blockSize</a></td></tr>
-<tr class="memdesc:aec6195ce139affc45cf05ce4be42c4ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Block size. <br/></td></tr>
-<tr class="separator:aec6195ce139affc45cf05ce4be42c4ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc8bd60af94a8c51a3bd5edc56803658"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adc8bd60af94a8c51a3bd5edc56803658"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#adc8bd60af94a8c51a3bd5edc56803658">reserve2</a> [11]</td></tr>
-<tr class="memdesc:adc8bd60af94a8c51a3bd5edc56803658"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reserved for future use. <br/></td></tr>
-<tr class="separator:adc8bd60af94a8c51a3bd5edc56803658"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a006ff9a51fa7c10465fd9d005880a399"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a006ff9a51fa7c10465fd9d005880a399"></a>
+<a class="el" href="a00043.html#ga176711a7e1d381dca7be1c09fd3023f5">flexspi_mem_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a006ff9a51fa7c10465fd9d005880a399">memConfig</a></td></tr>
+<tr class="memdesc:a006ff9a51fa7c10465fd9d005880a399"><td class="mdescLeft">&#160;</td><td class="mdescRight">Common memory configuration info via FLEXSPI. <br/></td></tr>
+<tr class="separator:a006ff9a51fa7c10465fd9d005880a399"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6df0762158a3417668e58ee7d7c042f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac6df0762158a3417668e58ee7d7c042f"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ac6df0762158a3417668e58ee7d7c042f">pageSize</a></td></tr>
+<tr class="memdesc:ac6df0762158a3417668e58ee7d7c042f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Page size of Serial NOR. <br/></td></tr>
+<tr class="separator:ac6df0762158a3417668e58ee7d7c042f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed05462888e2e7299c385a0f1921419c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aed05462888e2e7299c385a0f1921419c"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#aed05462888e2e7299c385a0f1921419c">sectorSize</a></td></tr>
+<tr class="memdesc:aed05462888e2e7299c385a0f1921419c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sector size of Serial NOR. <br/></td></tr>
+<tr class="separator:aed05462888e2e7299c385a0f1921419c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48eb54c81e6bfe5d4ea716ebe5625fa6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a48eb54c81e6bfe5d4ea716ebe5625fa6"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a48eb54c81e6bfe5d4ea716ebe5625fa6">ipcmdSerialClkFreq</a></td></tr>
+<tr class="memdesc:a48eb54c81e6bfe5d4ea716ebe5625fa6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clock frequency for IP command. <br/></td></tr>
+<tr class="separator:a48eb54c81e6bfe5d4ea716ebe5625fa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97ef1199f176d07178294b0f1a23a014"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a97ef1199f176d07178294b0f1a23a014"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a97ef1199f176d07178294b0f1a23a014">isUniformBlockSize</a></td></tr>
+<tr class="memdesc:a97ef1199f176d07178294b0f1a23a014"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sector/Block size is the same. <br/></td></tr>
+<tr class="separator:a97ef1199f176d07178294b0f1a23a014"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1c8df4f8ac1b2b6fd220ea094e6b614"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af1c8df4f8ac1b2b6fd220ea094e6b614"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#af1c8df4f8ac1b2b6fd220ea094e6b614">isDataOrderSwapped</a></td></tr>
+<tr class="memdesc:af1c8df4f8ac1b2b6fd220ea094e6b614"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data order (D0, D1, D2, D3) is swapped (D1,D0, D3, D2) <br/></td></tr>
+<tr class="separator:af1c8df4f8ac1b2b6fd220ea094e6b614"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a85e7d67de78cc92a200484ea6afca0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6a85e7d67de78cc92a200484ea6afca0"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a6a85e7d67de78cc92a200484ea6afca0">reserved0</a> [1]</td></tr>
+<tr class="memdesc:a6a85e7d67de78cc92a200484ea6afca0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reserved for future use. <br/></td></tr>
+<tr class="separator:a6a85e7d67de78cc92a200484ea6afca0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60098aaeb3a2dd076b3252c494d50c69"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a60098aaeb3a2dd076b3252c494d50c69"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a60098aaeb3a2dd076b3252c494d50c69">serialNorType</a></td></tr>
+<tr class="memdesc:a60098aaeb3a2dd076b3252c494d50c69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serial NOR Flash type: 0/1/2/3. <br/></td></tr>
+<tr class="separator:a60098aaeb3a2dd076b3252c494d50c69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1d08e9725d30a5d16f0cf198ddfb44e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae1d08e9725d30a5d16f0cf198ddfb44e"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ae1d08e9725d30a5d16f0cf198ddfb44e">needExitNoCmdMode</a></td></tr>
+<tr class="memdesc:ae1d08e9725d30a5d16f0cf198ddfb44e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Need to exit NoCmd mode before other IP command. <br/></td></tr>
+<tr class="separator:ae1d08e9725d30a5d16f0cf198ddfb44e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fa0ea6317615b72b59b3c725f0a2861"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4fa0ea6317615b72b59b3c725f0a2861"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a4fa0ea6317615b72b59b3c725f0a2861">halfClkForNonReadCmd</a></td></tr>
+<tr class="memdesc:a4fa0ea6317615b72b59b3c725f0a2861"><td class="mdescLeft">&#160;</td><td class="mdescRight">Half the Serial Clock for non-read command: true/false. <br/></td></tr>
+<tr class="separator:a4fa0ea6317615b72b59b3c725f0a2861"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af69c168ff5f822b48746412d13cda3b1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af69c168ff5f822b48746412d13cda3b1"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#af69c168ff5f822b48746412d13cda3b1">needRestoreNoCmdMode</a></td></tr>
+<tr class="memdesc:af69c168ff5f822b48746412d13cda3b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Need to Restore NoCmd mode after IP commmand execution. <br/></td></tr>
+<tr class="separator:af69c168ff5f822b48746412d13cda3b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e328ffd7e86163e15ed73b4d4f62613"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4e328ffd7e86163e15ed73b4d4f62613"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a4e328ffd7e86163e15ed73b4d4f62613">blockSize</a></td></tr>
+<tr class="memdesc:a4e328ffd7e86163e15ed73b4d4f62613"><td class="mdescLeft">&#160;</td><td class="mdescRight">Block size. <br/></td></tr>
+<tr class="separator:a4e328ffd7e86163e15ed73b4d4f62613"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ea37a7f5efa424b0f343a3209a2533f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1ea37a7f5efa424b0f343a3209a2533f"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a1ea37a7f5efa424b0f343a3209a2533f">reserve2</a> [11]</td></tr>
+<tr class="memdesc:a1ea37a7f5efa424b0f343a3209a2533f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reserved for future use. <br/></td></tr>
+<tr class="separator:a1ea37a7f5efa424b0f343a3209a2533f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
 </div>
-<a name="a00442" id="a00442"></a>
+<a name="a00425" id="a00425"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct flexspi_xfer_t</td>
+          <td class="memname">struct _flexspi_xfer</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a96151c62f0647e5a512c8877d71283c2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a96151c62f0647e5a512c8877d71283c2"></a>
-<a class="el" href="a00043.html#ga52dac475f85d2de2b79fc27cfa2ff4b9">flexspi_operation_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a96151c62f0647e5a512c8877d71283c2">operation</a></td></tr>
-<tr class="memdesc:a96151c62f0647e5a512c8877d71283c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXSPI operation. <br/></td></tr>
-<tr class="separator:a96151c62f0647e5a512c8877d71283c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4de700520c744c3cf8e800e9043ee225"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4de700520c744c3cf8e800e9043ee225"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a4de700520c744c3cf8e800e9043ee225">baseAddress</a></td></tr>
-<tr class="memdesc:a4de700520c744c3cf8e800e9043ee225"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXSPI operation base address. <br/></td></tr>
-<tr class="separator:a4de700520c744c3cf8e800e9043ee225"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a02b7b0481bb77341a8fbc33ae1469cd3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a02b7b0481bb77341a8fbc33ae1469cd3"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a02b7b0481bb77341a8fbc33ae1469cd3">seqId</a></td></tr>
-<tr class="memdesc:a02b7b0481bb77341a8fbc33ae1469cd3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sequence Id. <br/></td></tr>
-<tr class="separator:a02b7b0481bb77341a8fbc33ae1469cd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c7ff6e862fd5c1b3a47037325cd9bac"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3c7ff6e862fd5c1b3a47037325cd9bac"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a3c7ff6e862fd5c1b3a47037325cd9bac">seqNum</a></td></tr>
-<tr class="memdesc:a3c7ff6e862fd5c1b3a47037325cd9bac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sequence Number. <br/></td></tr>
-<tr class="separator:a3c7ff6e862fd5c1b3a47037325cd9bac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b441f52f997124cbfe1d684ab8f302c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0b441f52f997124cbfe1d684ab8f302c"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a0b441f52f997124cbfe1d684ab8f302c">isParallelModeEnable</a></td></tr>
-<tr class="memdesc:a0b441f52f997124cbfe1d684ab8f302c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is a parallel transfer. <br/></td></tr>
-<tr class="separator:a0b441f52f997124cbfe1d684ab8f302c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ce6041a32f2f797f15af1b0c6963582"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5ce6041a32f2f797f15af1b0c6963582"></a>
-uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a5ce6041a32f2f797f15af1b0c6963582">txBuffer</a></td></tr>
-<tr class="memdesc:a5ce6041a32f2f797f15af1b0c6963582"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tx buffer. <br/></td></tr>
-<tr class="separator:a5ce6041a32f2f797f15af1b0c6963582"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf18800eb1f39f8f28c7cb543621a273"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abf18800eb1f39f8f28c7cb543621a273"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#abf18800eb1f39f8f28c7cb543621a273">txSize</a></td></tr>
-<tr class="memdesc:abf18800eb1f39f8f28c7cb543621a273"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tx size in bytes. <br/></td></tr>
-<tr class="separator:abf18800eb1f39f8f28c7cb543621a273"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac94d954c85d949b9e03b680046054e2e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac94d954c85d949b9e03b680046054e2e"></a>
-uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ac94d954c85d949b9e03b680046054e2e">rxBuffer</a></td></tr>
-<tr class="memdesc:ac94d954c85d949b9e03b680046054e2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rx buffer. <br/></td></tr>
-<tr class="separator:ac94d954c85d949b9e03b680046054e2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5f3def06f7afea1b88dc8362c4206c94"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5f3def06f7afea1b88dc8362c4206c94"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a5f3def06f7afea1b88dc8362c4206c94">rxSize</a></td></tr>
-<tr class="memdesc:a5f3def06f7afea1b88dc8362c4206c94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rx size in bytes. <br/></td></tr>
-<tr class="separator:a5f3def06f7afea1b88dc8362c4206c94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82e1054070d4a7af58af802443d5b9b4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a82e1054070d4a7af58af802443d5b9b4"></a>
+<a class="el" href="a00043.html#ga4bafff7836c4afa78ad3825d64ca2811">flexspi_operation_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a82e1054070d4a7af58af802443d5b9b4">operation</a></td></tr>
+<tr class="memdesc:a82e1054070d4a7af58af802443d5b9b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXSPI operation. <br/></td></tr>
+<tr class="separator:a82e1054070d4a7af58af802443d5b9b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb243149fbe0c732cf810a18b3d5f1fa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abb243149fbe0c732cf810a18b3d5f1fa"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#abb243149fbe0c732cf810a18b3d5f1fa">baseAddress</a></td></tr>
+<tr class="memdesc:abb243149fbe0c732cf810a18b3d5f1fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXSPI operation base address. <br/></td></tr>
+<tr class="separator:abb243149fbe0c732cf810a18b3d5f1fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab968b18a776109a974221d68487d9ee2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab968b18a776109a974221d68487d9ee2"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ab968b18a776109a974221d68487d9ee2">seqId</a></td></tr>
+<tr class="memdesc:ab968b18a776109a974221d68487d9ee2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sequence Id. <br/></td></tr>
+<tr class="separator:ab968b18a776109a974221d68487d9ee2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30bb5547b1d4d349cc069fab684c65ab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a30bb5547b1d4d349cc069fab684c65ab"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a30bb5547b1d4d349cc069fab684c65ab">seqNum</a></td></tr>
+<tr class="memdesc:a30bb5547b1d4d349cc069fab684c65ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sequence Number. <br/></td></tr>
+<tr class="separator:a30bb5547b1d4d349cc069fab684c65ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33bf5718ed1a502a4e59fe7f54e5b233"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a33bf5718ed1a502a4e59fe7f54e5b233"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a33bf5718ed1a502a4e59fe7f54e5b233">isParallelModeEnable</a></td></tr>
+<tr class="memdesc:a33bf5718ed1a502a4e59fe7f54e5b233"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is a parallel transfer. <br/></td></tr>
+<tr class="separator:a33bf5718ed1a502a4e59fe7f54e5b233"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d5dc8e3b8847ff9e6efd2dd441ba655"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8d5dc8e3b8847ff9e6efd2dd441ba655"></a>
+uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a8d5dc8e3b8847ff9e6efd2dd441ba655">txBuffer</a></td></tr>
+<tr class="memdesc:a8d5dc8e3b8847ff9e6efd2dd441ba655"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tx buffer. <br/></td></tr>
+<tr class="separator:a8d5dc8e3b8847ff9e6efd2dd441ba655"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af149bcafc05f8c2f5cc746ea29605f2b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af149bcafc05f8c2f5cc746ea29605f2b"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#af149bcafc05f8c2f5cc746ea29605f2b">txSize</a></td></tr>
+<tr class="memdesc:af149bcafc05f8c2f5cc746ea29605f2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tx size in bytes. <br/></td></tr>
+<tr class="separator:af149bcafc05f8c2f5cc746ea29605f2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a964383bbd25327b266d3a4fcbdeb9f49"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a964383bbd25327b266d3a4fcbdeb9f49"></a>
+uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a964383bbd25327b266d3a4fcbdeb9f49">rxBuffer</a></td></tr>
+<tr class="memdesc:a964383bbd25327b266d3a4fcbdeb9f49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rx buffer. <br/></td></tr>
+<tr class="separator:a964383bbd25327b266d3a4fcbdeb9f49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34020d4ec0644e7ddaae9794608f1106"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a34020d4ec0644e7ddaae9794608f1106"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a34020d4ec0644e7ddaae9794608f1106">rxSize</a></td></tr>
+<tr class="memdesc:a34020d4ec0644e7ddaae9794608f1106"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rx size in bytes. <br/></td></tr>
+<tr class="separator:a34020d4ec0644e7ddaae9794608f1106"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
@@ -687,7 +757,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_ROM_ROMAPI_VERSION&#160;&#160;&#160;(<a class="el" href="a00270.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(1U, 1U, 1U))</td>
+          <td class="memname">#define FSL_ROM_ROMAPI_VERSION&#160;&#160;&#160;(<a class="el" href="a00272.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(1U, 1U, 1U))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -699,7 +769,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_ROM_FLEXSPINOR_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00270.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(1U, 4U, 0U))</td>
+          <td class="memname">#define FSL_ROM_FLEXSPINOR_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00272.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(1U, 4U, 0U))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -948,29 +1018,406 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 </div>
 </div>
-<a class="anchor" id="ga52dac475f85d2de2b79fc27cfa2ff4b9"></a>
+<a class="anchor" id="ga8a6df539f6a28ac1b3011a984120b55d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00043.html#ga52dac475f85d2de2b79fc27cfa2ff4b9">flexspi_operation_t</a></td>
+          <td class="memname">enum <a class="el" href="a00043.html#ga8a6df539f6a28ac1b3011a984120b55d">_flexspi_operation</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga52dac475f85d2de2b79fc27cfa2ff4b9aa73bb31a76659e2419aec1420927ed2a"></a>kFLEXSPIOperation_Command</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga8a6df539f6a28ac1b3011a984120b55daa73bb31a76659e2419aec1420927ed2a"></a>kFLEXSPIOperation_Command</em>&nbsp;</td><td class="fielddoc">
 <p>FLEXSPI operation: Only command, both TX and RX buffer are ignored. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga52dac475f85d2de2b79fc27cfa2ff4b9ae98598c12ba38f7f85e9a0876f4f8123"></a>kFLEXSPIOperation_Config</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga8a6df539f6a28ac1b3011a984120b55dae98598c12ba38f7f85e9a0876f4f8123"></a>kFLEXSPIOperation_Config</em>&nbsp;</td><td class="fielddoc">
 <p>FLEXSPI operation: Configure device mode, the TX FIFO size is fixed in LUT. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga52dac475f85d2de2b79fc27cfa2ff4b9a8a456f6d10104afde17054ca24c77525"></a>kFLEXSPIOperation_Write</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga8a6df539f6a28ac1b3011a984120b55da8a456f6d10104afde17054ca24c77525"></a>kFLEXSPIOperation_Write</em>&nbsp;</td><td class="fielddoc">
 <p>FLEXSPI operation: Write, only TX buffer is effective. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga52dac475f85d2de2b79fc27cfa2ff4b9ae402eb664a55aad6a4b9aaf920bf5d4e"></a>kFLEXSPIOperation_Read</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga8a6df539f6a28ac1b3011a984120b55dae402eb664a55aad6a4b9aaf920bf5d4e"></a>kFLEXSPIOperation_Read</em>&nbsp;</td><td class="fielddoc">
 <p>FLEXSPI operation: Read, only Rx Buffer is effective. </p>
 </td></tr>
 </table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga1b60529d8bcad669f3a102bad7683f61"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ROM_FLEXSPI_NorFlash_Init </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>instance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00043.html#ga7dc65c6a085d126b96b28231f9800655">flexspi_nor_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function checks and initializes the FLEXSPI module for the other FLEXSPI APIs.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">instance</td><td>storage the instance of FLEXSPI. </td></tr>
+    <tr><td class="paramname">config</td><td>A pointer to the storage for the driver runtime state.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Api was executed succesfuly. </td></tr>
+    <tr><td class="paramname">kStatus_InvalidArgument</td><td>A invalid argument is provided. </td></tr>
+    <tr><td class="paramname">kStatus_ROM_FLEXSPI_InvalidSequence</td><td>A invalid Sequence is provided. </td></tr>
+    <tr><td class="paramname">kStatus_ROM_FLEXSPI_SequenceExecutionTimeout</td><td>Sequence Execution timeout. </td></tr>
+    <tr><td class="paramname">kStatus_ROM_FLEXSPI_DeviceTimeout</td><td>the device timeout </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga405f13e4d9e5577ce7448f16400e3d95"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ROM_FLEXSPI_NorFlash_ProgramPage </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>instance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00043.html#ga7dc65c6a085d126b96b28231f9800655">flexspi_nor_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>dstAddr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint32_t *&#160;</td>
+          <td class="paramname"><em>src</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function programs the NOR flash memory with the dest address for a given flash area as determined by the dst address and the length.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">instance</td><td>storage the instance of FLEXSPI. </td></tr>
+    <tr><td class="paramname">config</td><td>A pointer to the storage for the driver runtime state. </td></tr>
+    <tr><td class="paramname">dstAddr</td><td>A pointer to the desired flash memory to be programmed. NOTE: It is recommended that use page aligned access; If the dstAddr is not aligned to page,the driver automatically aligns address down with the page address. </td></tr>
+    <tr><td class="paramname">src</td><td>A pointer to the source buffer of data that is to be programmed into the NOR flash.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Api was executed succesfuly. </td></tr>
+    <tr><td class="paramname">kStatus_InvalidArgument</td><td>A invalid argument is provided. </td></tr>
+    <tr><td class="paramname">kStatus_ROM_FLEXSPI_InvalidSequence</td><td>A invalid Sequence is provided. </td></tr>
+    <tr><td class="paramname">kStatus_ROM_FLEXSPI_SequenceExecutionTimeout</td><td>Sequence Execution timeout. </td></tr>
+    <tr><td class="paramname">kStatus_ROM_FLEXSPI_DeviceTimeout</td><td>the device timeout </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gae0440a55313e88b098d9a92be7000b7e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ROM_FLEXSPI_NorFlash_EraseSector </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>instance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00043.html#ga7dc65c6a085d126b96b28231f9800655">flexspi_nor_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function erases one of NOR flash sectors based on the desired address.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">instance</td><td>storage the index of FLEXSPI. </td></tr>
+    <tr><td class="paramname">config</td><td>A pointer to the storage for the driver runtime state. </td></tr>
+    <tr><td class="paramname">address</td><td>The start address of the desired NOR flash memory to be erased. NOTE: It is recommended that use sector-aligned access nor device; If dstAddr is not aligned with the sector,The driver automatically aligns address down with the sector address.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Api was executed succesfuly. </td></tr>
+    <tr><td class="paramname">kStatus_InvalidArgument</td><td>A invalid argument is provided. </td></tr>
+    <tr><td class="paramname">kStatus_ROM_FLEXSPI_InvalidSequence</td><td>A invalid Sequence is provided. </td></tr>
+    <tr><td class="paramname">kStatus_ROM_FLEXSPI_SequenceExecutionTimeout</td><td>Sequence Execution timeout. </td></tr>
+    <tr><td class="paramname">kStatus_ROM_FLEXSPI_DeviceTimeout</td><td>the device timeout </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gab9973fecd15f6fc4efff3b04500a06cc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ROM_FLEXSPI_NorFlash_EraseAll </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>instance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00043.html#ga7dc65c6a085d126b96b28231f9800655">flexspi_nor_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">instance</td><td>storage the instance of FLEXSPI. </td></tr>
+    <tr><td class="paramname">config</td><td>A pointer to the storage for the driver runtime state.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Api was executed succesfuly. </td></tr>
+    <tr><td class="paramname">kStatus_InvalidArgument</td><td>A invalid argument is provided. </td></tr>
+    <tr><td class="paramname">kStatus_ROM_FLEXSPI_InvalidSequence</td><td>A invalid Sequence is provided. </td></tr>
+    <tr><td class="paramname">kStatus_ROM_FLEXSPI_SequenceExecutionTimeout</td><td>Sequence Execution timeout. </td></tr>
+    <tr><td class="paramname">kStatus_ROM_FLEXSPI_DeviceTimeout</td><td>the device timeout </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga8bacc55d5400a01919eb0fffda66c8f3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ROM_FLEXSPI_NorFlash_Erase </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>instance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00043.html#ga7dc65c6a085d126b96b28231f9800655">flexspi_nor_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>start</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>length</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function erases the appropriate number of flash sectors based on the desired start address and length.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">instance</td><td>storage the index of FLEXSPI. </td></tr>
+    <tr><td class="paramname">config</td><td>A pointer to the storage for the driver runtime state. </td></tr>
+    <tr><td class="paramname">start</td><td>The start address of the desired NOR flash memory to be erased. NOTE: It is recommended that use sector-aligned access NOR flash; If dstAddr is not aligned with the sector,the driver automatically aligns address down with the sector address. </td></tr>
+    <tr><td class="paramname">length</td><td>The length, given in bytes to be erased. NOTE: It is recommended that use sector-aligned access NOR flash; If length is not aligned with the sector,the driver automatically aligns up with the sector. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Api was executed succesfuly. </td></tr>
+    <tr><td class="paramname">kStatus_InvalidArgument</td><td>A invalid argument is provided. </td></tr>
+    <tr><td class="paramname">kStatus_ROM_FLEXSPI_InvalidSequence</td><td>A invalid Sequence is provided. </td></tr>
+    <tr><td class="paramname">kStatus_ROM_FLEXSPI_SequenceExecutionTimeout</td><td>Sequence Execution timeout. </td></tr>
+    <tr><td class="paramname">kStatus_ROM_FLEXSPI_DeviceTimeout</td><td>the device timeout </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga8b947c721d05786806da5c58a6f85ca1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ROM_FLEXSPI_NorFlash_CommandXfer </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>instance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00043.html#ga600d38b0051e7290aa07e734f51892da">flexspi_xfer_t</a> *&#160;</td>
+          <td class="paramname"><em>xfer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function is used to perform the command write sequence to the NOR flash.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">instance</td><td>storage the index of FLEXSPI. </td></tr>
+    <tr><td class="paramname">xfer</td><td>A pointer to the storage FLEXSPI Transfer Context.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Api was executed succesfuly. </td></tr>
+    <tr><td class="paramname">kStatus_InvalidArgument</td><td>A invalid argument is provided. </td></tr>
+    <tr><td class="paramname">kStatus_ROM_FLEXSPI_InvalidSequence</td><td>A invalid Sequence is provided. </td></tr>
+    <tr><td class="paramname">kStatus_ROM_FLEXSPI_SequenceExecutionTimeout</td><td>Sequence Execution timeout. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gac42c8067456c8d95090fb42b2e873afa"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ROM_FLEXSPI_NorFlash_UpdateLut </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>instance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>seqIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint32_t *&#160;</td>
+          <td class="paramname"><em>lutBase</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>seqNumber</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">instance</td><td>storage the index of FLEXSPI. </td></tr>
+    <tr><td class="paramname">seqIndex</td><td>storage the sequence Id. </td></tr>
+    <tr><td class="paramname">lutBase</td><td>A pointer to the look-up-table for command sequences. </td></tr>
+    <tr><td class="paramname">seqNumber</td><td>storage sequence number.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Api was executed succesfuly. </td></tr>
+    <tr><td class="paramname">kStatus_InvalidArgument</td><td>A invalid argument is provided. </td></tr>
+    <tr><td class="paramname">kStatus_ROM_FLEXSPI_InvalidSequence</td><td>A invalid Sequence is provided. </td></tr>
+    <tr><td class="paramname">kStatus_ROM_FLEXSPI_SequenceExecutionTimeout</td><td>Sequence Execution timeout. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga56298a44838b796603200497c3539a14"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ROM_FLEXSPI_NorFlash_ClearCache </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>instance</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function sets the software reset flags for both AHB and buffer domain and resets both AHB buffer and also IP FIFOs.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">instance</td><td>storage the index of FLEXSPI. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

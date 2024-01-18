@@ -71,6 +71,10 @@ CK_RV SymmetricEncrypt(P11SessionPtr_t pxSessionObj,
             // return CKR_DEVICE_ERROR;
         }
 
+        if ((pxSessionObj->xOperationKeyHandle) > UINT32_MAX) {
+            pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
+            UNLOCK_MUTEX_FOR_RTOS_RET(CKR_DEVICE_ERROR)
+        }
         status = sss_key_object_get_handle(&symmObject, pxSessionObj->xOperationKeyHandle);
         if (status != kStatus_SSS_Success) {
             pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
@@ -186,6 +190,10 @@ CK_RV SymmetricDecrypt(P11SessionPtr_t pxSessionObj,
             UNLOCK_MUTEX_FOR_RTOS_RET(CKR_DEVICE_ERROR)
         }
 
+        if ((pxSessionObj->xOperationKeyHandle) > UINT32_MAX) {
+            pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
+            UNLOCK_MUTEX_FOR_RTOS_RET(CKR_DEVICE_ERROR)
+        }
         status = sss_key_object_get_handle(&symmObject, pxSessionObj->xOperationKeyHandle);
         if (status != kStatus_SSS_Success) {
             pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;

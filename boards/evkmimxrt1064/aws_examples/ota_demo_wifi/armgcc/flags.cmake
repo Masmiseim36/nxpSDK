@@ -37,6 +37,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DCPU_MIMXRT1064DVL6A \
     -DUSE_RTOS=1 \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
+    -DCBOR_NO_FLOATING_POINT \
+    -DDISABLE_LOGGING \
     -DMCUXPRESSO_SDK \
     -DMFLASH_FILE_BASEADDR=3670016 \
     -DSDIO_ENABLED \
@@ -48,8 +50,10 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DLWIP_NETIF_STATUS_CALLBACK=1 \
     -DLWIP_IGMP=1 \
     -DMQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG \
+    -DMBEDTLS_THREADING_ALT \
+    -DMBEDTLS_THREADING_C \
+    -O1 \
     -g \
-    -O0 \
     -mcpu=cortex-m7 \
     -Wall \
     -mthumb \
@@ -62,6 +66,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -fomit-frame-pointer \
+    -Wno-unused-function \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -74,6 +80,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DCPU_MIMXRT1064DVL6A \
     -DUSE_RTOS=1 \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
+    -DCBOR_NO_FLOATING_POINT \
+    -DDISABLE_LOGGING \
     -DMCUXPRESSO_SDK \
     -DMFLASH_FILE_BASEADDR=3670016 \
     -DSDIO_ENABLED \
@@ -85,6 +93,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DLWIP_NETIF_STATUS_CALLBACK=1 \
     -DLWIP_IGMP=1 \
     -DMQTT_AGENT_DO_NOT_USE_CUSTOM_CONFIG \
+    -DMBEDTLS_THREADING_ALT \
+    -DMBEDTLS_THREADING_C \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \
@@ -98,6 +108,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -fomit-frame-pointer \
+    -Wno-unused-function \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -177,7 +189,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     --defsym=__heap_size__=0x200 \
     ${FPU} \
     ${SPECS} \
-    -T${ProjDirPath}/linker/MIMXRT1064xxxxx_flexspi_nor.ld -static \
+    -T\"${ProjDirPath}/linker/MIMXRT1064xxxxx_flexspi_nor.ld\" -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} \
@@ -207,5 +219,5 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     --defsym=__heap_size__=0x200 \
     ${FPU} \
     ${SPECS} \
-    -T${ProjDirPath}/linker/MIMXRT1064xxxxx_flexspi_nor.ld -static \
+    -T\"${ProjDirPath}/linker/MIMXRT1064xxxxx_flexspi_nor.ld\" -static \
 ")

@@ -5,7 +5,6 @@ var structSTREAMER__MSG__T =
     [ "id", "structSTREAMER__MSG__T.html#acad00358d45583c826e261c4f8e6ed29", null ],
     [ "errorcode", "structSTREAMER__MSG__T.html#ab4ed3c5a4127717fa376542f8898369c", null ],
     [ "pipeline_index", "structSTREAMER__MSG__T.html#a35d353959a209f3c7f318a9814462f58", null ],
-    [ "pipeline_type", "structSTREAMER__MSG__T.html#a794f2d427114dd2a9d6eeca5ab39958a", null ],
     [ "element_property", "structSTREAMER__MSG__T.html#afe58d356e8a81809598881b9b1910204", null ],
     [ "state", "structSTREAMER__MSG__T.html#a08bde0577baea25e445dfd170ec865a0", null ],
     [ "query_type", "structSTREAMER__MSG__T.html#addac96a9a03a5a892e913060cbafcc08", null ],

@@ -89,6 +89,18 @@ extern volatile float g_fltMIDspeedScale;
 extern volatile float g_fltMIDspeedAngularScale;
 extern volatile float g_fltMIDspeedMechanicalScale;
 
+/* EstimRL variables */
+extern MCAA_ESTIMRL_T_FLT g_sEstimRLStruct;
+extern MCAA_ESTIMRL_RUN_T_FLT g_sEstimRLCtrlRun;
+extern rl_estim_cfg_params_t g_sEstimRLInitFMSTR;
+extern float_t	fltIDcPlot;
+extern float_t	fltLdPlot;
+extern float_t	fltLqPlot;
+extern uint8_t u8ModeEstimRL;
+
+/* Control FOC and MID */
+extern mid_pmsm_t g_sMidDrive;          // -> mid_sm_states.h
+
 /*******************************************************************************
  * API
  ******************************************************************************/

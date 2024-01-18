@@ -1,10 +1,7 @@
 /*
  * Copyright 2018-2022 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef AUDIO_SINK_PCMRTOS_H
@@ -52,7 +49,6 @@
  */
 typedef struct _PCMSinkDeviceInfo
 {
-    pcm_rtos_t *pcm_handle;                     /*!< @brief Pointer to pcm handle  */
     char *unaligned_buf[AUDIO_SINK_BUFFER_NUM]; /*!< @brief Pointers to unaligned audio buffers */
     char *audbuf[AUDIO_SINK_BUFFER_NUM];        /*!< @brief Pointers to aligned audio buffers */
     uint32_t alloc_size;                        /*!< @brief Unaligned_buf allocated size */

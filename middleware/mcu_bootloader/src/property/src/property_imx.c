@@ -208,10 +208,10 @@ status_t bootloader_property_init(void)
     propertyStore->UniqueDeviceId.uid[0] = OCOTP->FUSEN[16].FUSE;
     propertyStore->UniqueDeviceId.uid[1] = OCOTP->FUSEN[17].FUSE;
 #elif defined(MIMXRT1189_cm33_SERIES)
-    propertyStore->UniqueDeviceId.uid[0] = OCOTP_FSB->OTP_SHADOW_PARTA[51];
-    propertyStore->UniqueDeviceId.uid[1] = OCOTP_FSB->OTP_SHADOW_PARTA[50];
-    propertyStore->UniqueDeviceId.uid[2] = OCOTP_FSB->OTP_SHADOW_PARTA[49];
-    propertyStore->UniqueDeviceId.uid[3] = OCOTP_FSB->OTP_SHADOW_PARTA[48];
+    propertyStore->UniqueDeviceId.uid[0] = OCOTP_FSB->OTP_SHADOW_PARTA[48];
+    propertyStore->UniqueDeviceId.uid[1] = OCOTP_FSB->OTP_SHADOW_PARTA[49];
+    propertyStore->UniqueDeviceId.uid[2] = OCOTP_FSB->OTP_SHADOW_PARTA[50];
+    propertyStore->UniqueDeviceId.uid[3] = OCOTP_FSB->OTP_SHADOW_PARTA[51];
 #else
     propertyStore->UniqueDeviceId.uid[0] = OCOTP->CFG0;
     propertyStore->UniqueDeviceId.uid[1] = OCOTP->CFG1;

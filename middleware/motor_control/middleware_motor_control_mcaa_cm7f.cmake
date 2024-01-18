@@ -3,7 +3,7 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-if((CONFIG_CORE STREQUAL cm7f))
+if((CONFIG_CORE STREQUAL cm7f) AND CONFIG_USE_middleware_rtcesl_cm7f)
 
 if(CONFIG_TOOLCHAIN STREQUAL iar)
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC

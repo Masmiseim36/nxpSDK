@@ -1,0 +1,115 @@
+$version 10.00
+
+$rect <10,10,210,50>
+$output false
+class DeviceClass : Templates::DeviceClass
+{
+  $rect <230,90,430,130>
+  onset AcceleratorActive
+  {
+    pure AcceleratorActive = value;
+
+    /* forward the accelerator state (active/inactive) to the underlying system */
+    $if !$prototyper
+      native ( value )
+      {
+        extern void GfxUseGraphicsAccelerator( int aActive );
+
+        GfxUseGraphicsAccelerator( value );
+      }
+    $endif
+
+    // Notify all associated property observers.
+    notifyobservers ^AcceleratorActive;
+  }
+
+  // This property represents the current state of the graphics accelerator (active/inactive).
+  $rect <30,90,230,130>
+  property bool AcceleratorActive = true;
+
+  // The method 'GetCpuLoad' returns the current CPU usage in percent since last \
+  // call of this method.
+  $rect <30,210,230,250>
+  method int32 GetCpuLoad()
+  {
+    $if $prototyper
+      return 0;
+    $endif
+
+    /* get the real CPU usage from the underlying system */
+    $if !$prototyper
+
+      var int32 result = 0;
+
+      native ( result )
+      {
+        extern int EwBspClockGetCpuLoad( void );
+        result = EwBspClockGetCpuLoad();
+      }
+
+      return result;
+    $endif
+  }
+
+  // Interface to switch on/off the graphics accelerator usage of graphics subsystem
+  note group Note1
+  {
+    attr Bounds = <10,10,450,160>;
+  }
+
+  // Interface to read the current CPU usage
+  note group Note3
+  {
+    attr Bounds = <10,170,450,270>;
+  }
+
+  $rect <30,290,230,330>
+  method void Init()
+  {
+    /* ensure to activate graphics accelerator when demo is started */
+    $if !$prototyper
+      native
+      {
+        extern void GfxUseGraphicsAccelerator( int aActive );
+
+        GfxUseGraphicsAccelerator( 1 );
+      }
+    $endif
+
+  }
+
+  $rect <30,340,230,380>
+  method void Done()
+  {
+    /* ensure to activate graphics accelerator when demo is closed */
+    $if !$prototyper
+      native
+      {
+        extern void GfxUseGraphicsAccelerator( int aActive );
+
+        GfxUseGraphicsAccelerator( 1 );
+      }
+    $endif
+
+  }
+}
+
+$rect <210,10,410,50>
+autoobject GraphicsSystem::DeviceClass Device;
+
+// The class 'GraphicsSystem::DeviceClass' implements the interface between the GUI \
+// application and the graphics hardware.
+// The object 'Device' represents the instance of the device interface. As an autoobject \
+// it is globally available for all GUI components within the project.
+note legend Note
+{
+  attr Bounds = <420,10,910,130>;
+}
+
+$rect <10,120,210,160>
+$output false
+const bool IsAcceleratorAvailable = true;
+
+$rect <10,80,210,120>
+$output false
+const bool IsCpuUsageAvailable = true;

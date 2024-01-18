@@ -28,6 +28,9 @@ void DEMO_InitUsTimer(void);
 /* Get current time in microsecond. */
 uint32_t DEMO_GetUsTimer(void);
 
+/* Get elapsed time in microsecond. No more than 4.3 sec. */
+uint32_t DEMO_GetUsElapsed(uint32_t start);
+
 /* Get CPU clock frequency. */
 uint32_t DEMO_GetCpuClockFreq(void);
 

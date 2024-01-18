@@ -96,6 +96,8 @@ typedef union {
 
 typedef struct {
     mpp_stats_t *stats; /*!< API stats */
+    unsigned int rc_cycle_min;  /*!< minimum cycle duration for RC tasks (ms), 0: sets default value */
+    unsigned int rc_cycle_inc;  /*!< time increment for RC tasks (ms),  0: sets default value */
 } mpp_api_params_t;
 
 /** Pipeline creation parameters */

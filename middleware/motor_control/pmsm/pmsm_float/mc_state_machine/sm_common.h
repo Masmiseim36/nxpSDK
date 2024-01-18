@@ -41,11 +41,12 @@ typedef enum _run_substate_t
 /*! @brief Control modes of the motor */
 typedef enum _mcs_ctrl_mode_t
 {
-    kControlMode_Scalar     = 0,
-    kControlMode_VoltageFOC = 1,
-    kControlMode_CurrentFOC = 2,
-    kControlMode_SpeedFOC   = 3,
-	kControlMode_OpenLoop 	= 4
+    kControlMode_Scalar      = 0,
+    kControlMode_VoltageFOC  = 1,
+    kControlMode_CurrentFOC  = 2,
+    kControlMode_SpeedFOC    = 3,
+    kControlMode_PositionFOC = 4,
+    kControlMode_OpenLoop    = 5
 } mcs_ctrl_mode_t;
 
 /*! @brief Device fault thresholds */
@@ -65,8 +66,9 @@ typedef struct _mcdef_fault_thresholds_t
 typedef struct _mcdef_pmsm_t
 {
     mcs_pmsm_foc_t sFocPMSM;                   /* Field Oriented Control structure */
-    mcs_speed_t sSpeed;                        /* Speed control loop structure */
-    mcs_openloop_t sOpenloop;
+    mcs_speed_t sSpeed;                           /* Speed control loop structure */
+    mcs_openloop_t sOpenloop;                     /* Open loop control structure */
+    mcs_position_t sPosition;                  /* Position control loop structure */
     mcs_pmsm_startup_t sStartUp;               /* Open loop start-up */
     mcs_alignment_t sAlignment;                /* PMSM simple two-step Ud voltage alignment */
     mcs_mcat_ctrl_t sMCATctrl;                 /* Structure containing control variables directly updated from MCAT */
@@ -87,6 +89,9 @@ typedef struct _mcdef_pmsm_t
     uint16_t ui16BlockRotorCnt;                    /* Blocked rotor fault counter */
     uint16_t ui16FastCtrlLoopFreq;                 /* Pass fast loop frequency to FreeMASTER */
     uint16_t ui16SlowCtrlLoopFreq;                 /* Pass slow loop frequency to FreeMASTER */
+    uint32_t ui32CpuFrequency;                     /* Pass CPU frequency to FreeMASTER */
+    float_t fltSpeedEnc;                           /* Encoder speed */
+    frac16_t f16PosElEnc;                          /* Encoder electrical position */
     bool_t bFaultClearMan;                         /* Manual fault clear detection */
 } mcdef_pmsm_t;
 

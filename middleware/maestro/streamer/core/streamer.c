@@ -1,10 +1,7 @@
 /*
  * Copyright 2018-2022 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /*!
@@ -40,6 +37,19 @@
  */
 
 /**
+ * @brief Element type lookup table for getting element type from element index
+ */
+static ElementTypeLookup type_lookup_table[] = {
+    {TYPE_ELEMENT_FILE_SRC, ELEMENT_FILE_SRC_INDEX},     {TYPE_ELEMENT_MEM_SRC, ELEMENT_MEM_SRC_INDEX},
+    {TYPE_ELEMENT_NETBUF_SRC, ELEMENT_NETBUF_SRC_INDEX}, {TYPE_ELEMENT_AUDIO_SRC, ELEMENT_MICROPHONE_INDEX},
+    {TYPE_ELEMENT_FILE_SINK, ELEMENT_FILE_SINK_INDEX},   {TYPE_ELEMENT_MEM_SINK, ELEMENT_MEM_SINK_INDEX},
+    {TYPE_ELEMENT_AUDIO_SINK, ELEMENT_SPEAKER_INDEX},    {TYPE_ELEMENT_DECODER, ELEMENT_DECODER_INDEX},
+    {TYPE_ELEMENT_ENCODER, ELEMENT_ENCODER_INDEX},       {TYPE_ELEMENT_VIT_SINK, ELEMENT_VIT_INDEX},
+    {TYPE_ELEMENT_AUDIO_PROC, ELEMENT_VIT_PROC_INDEX},   {TYPE_ELEMENT_AUDIO_PROC, ELEMENT_VOICESEEKER_INDEX},
+    {TYPE_ELEMENT_AUDIO_PROC, ELEMENT_SRC_INDEX},        {TYPE_ELEMENT_AUDIO_SRC, ELEMENT_USB_SRC_INDEX},
+    {TYPE_ELEMENT_AUDIO_SINK, ELEMENT_USB_SINK_INDEX},   {TYPE_ELEMENT_AUDIO_PROC, ELEMENT_ASRC_INDEX}};
+
+/**
  * @brief Osa task handle object
  *
  */
@@ -50,16 +60,11 @@ OSA_TASK_HANDLE_DEFINE(thread_hdl);
  * Specifies the function to handle incoming message requests within the
  * streamer task.
  */
-const STREAMER_MSG_HANDLER_T msg_handler_table[] = {{STREAM_MSG_CREATE_PIPELINE, streamer_msg_create_pipeline},
-                                                    {STREAM_MSG_DESTROY_PIPELINE, streamer_msg_destroy_pipeline},
-                                                    {STREAM_MSG_SET_FILE, streamer_msg_set_file},
-                                                    {STREAM_MSG_SET_STATE, streamer_msg_set_state},
-                                                    {STREAM_MSG_GET_STATE, streamer_msg_get_state},
-                                                    {STREAM_MSG_QUERY_PIPELINE, streamer_msg_send_query},
-                                                    {STREAM_MSG_SET_PROPERTY, streamer_msg_set_property},
-                                                    {STREAM_MSG_GET_PROPERTY, streamer_msg_get_property},
-                                                    {STREAM_MSG_SEEK_PIPELINE, streamer_msg_seek_pipeline},
-                                                    {STREAM_MSG_SET_REPEAT, streamer_msg_set_repeat}};
+const STREAMER_MSG_HANDLER_T msg_handler_table[] = {
+    {STREAM_MSG_SET_FILE, streamer_msg_set_file},           {STREAM_MSG_SET_STATE, streamer_msg_set_state},
+    {STREAM_MSG_GET_STATE, streamer_msg_get_state},         {STREAM_MSG_QUERY_PIPELINE, streamer_msg_send_query},
+    {STREAM_MSG_SET_PROPERTY, streamer_msg_set_property},   {STREAM_MSG_GET_PROPERTY, streamer_msg_get_property},
+    {STREAM_MSG_SEEK_PIPELINE, streamer_msg_seek_pipeline}, {STREAM_MSG_SET_REPEAT, streamer_msg_set_repeat}};
 /*!
  * @brief    Streamer deinit
  * @details  Deinit all data associated with Streamer Task
@@ -125,8 +130,8 @@ STREAMER_T *streamer_create(STREAMER_CREATE_PARAM *task_param)
                 if (streamer->is_active)
                 {
                     /* create pipeline */
-                    ret = streamer_create_pipeline(streamer, 0, task_param->pipeline_type, task_param->in_dev_name,
-                                                    task_param->out_dev_name, false);
+                    ret = streamer_create_pipeline(streamer, 0, task_param->in_dev_name, task_param->out_dev_name,
+                                                   task_param->elements, false);
                     if (ERRCODE_NO_ERROR == ret)
                     {
                         STREAMER_FUNC_EXIT(DBG_CORE);
@@ -354,15 +359,6 @@ void streamer_task(void *args)
             } while (((uint8_t) false == msg_timed_out) && ((uint8_t) false == streamer->exit_thread));
 
             streamer_process_pipelines(streamer);
-
-            for (loop_count = 0; loop_count < MAX_PIPELINES; loop_count++)
-            {
-                if (streamer->pipeline_type[loop_count] == STREAM_PIPELINE_TEST_AUDIO_PROCFILE2FILE)
-                {
-                    // Due to forcing a context switch
-                    OSA_TimeDelay(1);
-                }
-            }
         }
     }
 
@@ -575,36 +571,46 @@ static int32_t streamer_handle_msg(STREAMER_T *streamer, STREAMER_MSG_T *msg, bo
 
 int32_t streamer_create_pipeline(STREAMER_T *streamer,
                                  int32_t pipeline_id,
-                                 StreamPipelineType pipeline_type,
                                  const char *in_dev_name,
                                  const char *out_dev_name,
+                                 PipelineElements elements,
                                  bool block)
 {
-    int32_t ret        = ERRCODE_NO_ERROR;
-    STREAMER_MSG_T msg = {0};
+    int32_t ret = ERRCODE_NO_ERROR, i = 0, level = 0;
 
     STREAMER_FUNC_ENTER(DBG_CORE);
 
-    if (!streamer)
+    if (!streamer || elements.num_elements < 2 || elements.element_ids == NULL)
     {
         STREAMER_FUNC_EXIT(DBG_CORE);
         return ERRCODE_INVALID_ARGUMENT;
     }
 
-    msg.id             = STREAM_MSG_CREATE_PIPELINE;
-    msg.pipeline_index = pipeline_id;
-    msg.pipeline_type  = pipeline_type;
-    msg.in_dev_name    = in_dev_name;
-    msg.out_dev_name   = out_dev_name;
-    if (block)
+    streamer->elements[pipeline_id]               = OSA_MemoryAllocate(sizeof(PipelineElements));
+    streamer->elements[pipeline_id]->element_ids  = OSA_MemoryAllocate(elements.num_elements * sizeof(ElementIndex));
+    streamer->elements[pipeline_id]->num_elements = elements.num_elements;
+    for (; i < elements.num_elements; i++)
     {
-        /* process throught message queue */
-        ret = streamer_handle_msg(streamer, &msg, true);
+        streamer->elements[pipeline_id]->element_ids[i] = elements.element_ids[i];
     }
-    else
+
+    CHECK_RET(create_pipeline(&streamer->pipes[pipeline_id], pipeline_id, &streamer->mq_out), "create_pipeline");
+
+    for (i = 0; i < elements.num_elements; i++)
     {
-        /* call internal function directly */
-        ret = streamer_msg_create_pipeline(streamer, &msg);
+        CHECK_RET(create_element(&streamer->elems[pipeline_id][elements.element_ids[i]],
+                                 type_lookup_table[elements.element_ids[i]].type, 0),
+                  "create_element");
+        CHECK_RET(add_element_pipeline(streamer->pipes[pipeline_id],
+                                       streamer->elems[pipeline_id][elements.element_ids[i]], level++),
+                  "add_element_pipeline");
+    }
+
+    for (i = 0; i < elements.num_elements - 1; i++)
+    {
+        CHECK_RET(link_elements(streamer->elems[pipeline_id][elements.element_ids[i]], 0,
+                                streamer->elems[pipeline_id][elements.element_ids[i + 1]], 0),
+                  "link_elements");
     }
 
     STREAMER_FUNC_EXIT(DBG_CORE);
@@ -613,8 +619,8 @@ int32_t streamer_create_pipeline(STREAMER_T *streamer,
 
 int32_t streamer_destroy_pipeline(STREAMER_T *streamer, int32_t pipeline_id, bool block)
 {
-    int32_t ret        = ERRCODE_NO_ERROR;
-    STREAMER_MSG_T msg = {0};
+    int32_t ret = ERRCODE_NO_ERROR;
+    int i       = 0;
 
     STREAMER_FUNC_ENTER(DBG_CORE);
 
@@ -623,19 +629,25 @@ int32_t streamer_destroy_pipeline(STREAMER_T *streamer, int32_t pipeline_id, boo
         STREAMER_FUNC_EXIT(DBG_CORE);
         return ERRCODE_INVALID_ARGUMENT;
     }
+    PipelineElements *pipelineElements = streamer->elements[pipeline_id];
+    ElementIndex *element_ids          = pipelineElements->element_ids;
 
-    msg.id             = STREAM_MSG_DESTROY_PIPELINE;
-    msg.pipeline_index = pipeline_id;
-    if (block)
+    for (; i < pipelineElements->num_elements - 1; i++)
     {
-        /* process through message queue */
-        ret = streamer_handle_msg(streamer, &msg, true);
+        CHECK_RET(unlink_elements(streamer->elems[pipeline_id][element_ids[i]], 0,
+                                  streamer->elems[pipeline_id][element_ids[i + 1]], 0),
+                  "unlink_elements");
     }
-    else
+
+    for (i = 0; i < pipelineElements->num_elements; i++)
     {
-        /* call internal function directly */
-        ret = streamer_msg_destroy_pipeline(streamer, &msg);
+        CHECK_RET(remove_element_pipeline(streamer->pipes[pipeline_id], streamer->elems[pipeline_id][element_ids[i]]),
+                  "remove_element_pipeline");
     }
+
+    OSA_MemoryFree(streamer->elements[pipeline_id]);
+    OSA_MemoryFree(streamer->elements[pipeline_id]->element_ids);
+    streamer->elements[pipeline_id] = NULL;
 
     STREAMER_FUNC_EXIT(DBG_CORE);
     return ret;

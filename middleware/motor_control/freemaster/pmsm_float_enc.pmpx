@@ -5,7 +5,7 @@
 	</main>
 	<objects>
 		<object name="ObjId0000" type="CPrjDoc">
-			<member name="version" type="string">3.2.1.6</member>
+			<member name="version" type="string">3.2.2.2</member>
 			<member name="enum_db_man" type="CEnumList">ObjId0001</member>
 			<member name="variables" type="CObListEx">ObjId0003</member>
 			<member name="stimulators" type="CObListEx">ObjId0004</member>
@@ -19,7 +19,7 @@
 			<member name="mapfile_pre_select" type="sint32">0</member>
 			<member name="comm_params_saved" type="sint32">0</member>
 			<member name="comm_state_saved" type="sint32">0</member>
-			<member name="comm_state_enabled" type="sint32">0</member>
+			<member name="comm_state_enabled" type="sint32">1</member>
 			<member name="cthread_boosting" type="sint32">0</member>
 			<member name="cthread_prio_base" type="sint32">3</member>
 			<member name="cthread_prio_boost" type="sint32">3</member>
@@ -901,7 +901,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">300</member>
 			<member name="address" type="string">g_sM1Ctrl.eState</member>
-			<member name="last_addr" type="uint32">0x20000016</member>
+			<member name="last_addr" type="uint32">0x2000000E</member>
 			<member name="byte_size" type="sint32">1</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -950,7 +950,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_bM1SwitchAppOnOff</member>
-			<member name="last_addr" type="uint32">0x20001E6C</member>
+			<member name="last_addr" type="uint32">0x20002084</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -999,7 +999,7 @@
 			<member name="unit" type="string">Volts</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.fltUDcBus</member>
-			<member name="last_addr" type="uint32">0x200005DC</member>
+			<member name="last_addr" type="uint32">0x20001834</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1048,7 +1048,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_eM1StateRun</member>
-			<member name="last_addr" type="uint32">0x20001E7E</member>
+			<member name="last_addr" type="uint32">0x20002096</member>
 			<member name="byte_size" type="sint32">1</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1097,7 +1097,7 @@
 			<member name="unit" type="string">Amps</member>
 			<member name="period" type="sint32">100</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.sIABC.fltA</member>
-			<member name="last_addr" type="uint32">0x20000508</member>
+			<member name="last_addr" type="uint32">0x20001760</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1146,7 +1146,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">100</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.ui16SectorSVM</member>
-			<member name="last_addr" type="uint32">0x200005D0</member>
+			<member name="last_addr" type="uint32">0x20001828</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1195,7 +1195,7 @@
 			<member name="unit" type="string">deg</member>
 			<member name="period" type="sint32">100</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.f16PosEl</member>
-			<member name="last_addr" type="uint32">0x200005D2</member>
+			<member name="last_addr" type="uint32">0x2000182A</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1254,7 +1254,7 @@
 			<member name="unit" type="string">rpm</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sSpeed.fltSpeedRamp</member>
-			<member name="last_addr" type="uint32">0x2000063C</member>
+			<member name="last_addr" type="uint32">0x20001894</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1313,7 +1313,7 @@
 			<member name="unit" type="string">rpm/rad.sec-1</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_fltM1speedAngularScale</member>
-			<member name="last_addr" type="uint32">0x20000790</member>
+			<member name="last_addr" type="uint32">0x200019E8</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1362,7 +1362,7 @@
 			<member name="unit" type="string">rpm</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sSpeed.fltSpeedCmd</member>
-			<member name="last_addr" type="uint32">0x20000640</member>
+			<member name="last_addr" type="uint32">0x20001898</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1421,7 +1421,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sSpeed.sSpeedPiParams.fltPGain</member>
-			<member name="last_addr" type="uint32">0x20000608</member>
+			<member name="last_addr" type="uint32">0x20001860</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1470,7 +1470,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sSpeed.sSpeedPiParams.fltIGain</member>
-			<member name="last_addr" type="uint32">0x2000060C</member>
+			<member name="last_addr" type="uint32">0x20001864</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1519,7 +1519,7 @@
 			<member name="unit" type="string">Hz</member>
 			<member name="period" type="sint32">100</member>
 			<member name="address" type="string">g_sM1Drive.sScalarCtrl.fltFreqRamp</member>
-			<member name="last_addr" type="uint32">0x20000710</member>
+			<member name="last_addr" type="uint32">0x20001968</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1568,7 +1568,7 @@
 			<member name="unit" type="string">deg</member>
 			<member name="period" type="sint32">100</member>
 			<member name="address" type="string">g_sM1Drive.sScalarCtrl.f16PosElScalar</member>
-			<member name="last_addr" type="uint32">0x20000714</member>
+			<member name="last_addr" type="uint32">0x2000196C</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1627,7 +1627,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.eControl</member>
-			<member name="last_addr" type="uint32">0x20000748</member>
+			<member name="last_addr" type="uint32">0x200019A0</member>
 			<member name="byte_size" type="sint32">1</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1676,7 +1676,7 @@
 			<member name="unit" type="string">Volts</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sMCATctrl.sUDQReqMCAT.fltQ</member>
-			<member name="last_addr" type="uint32">0x200006E0</member>
+			<member name="last_addr" type="uint32">0x20001938</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1725,7 +1725,7 @@
 			<member name="unit" type="string">rpm</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_fltM1speedScale</member>
-			<member name="last_addr" type="uint32">0x2000078C</member>
+			<member name="last_addr" type="uint32">0x200019E4</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1774,7 +1774,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_fltM1voltageScale</member>
-			<member name="last_addr" type="uint32">0x20000780</member>
+			<member name="last_addr" type="uint32">0x200019D8</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1823,7 +1823,7 @@
 			<member name="unit" type="string">Amps</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_fltM1currentScale</member>
-			<member name="last_addr" type="uint32">0x20000788</member>
+			<member name="last_addr" type="uint32">0x200019E0</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1872,7 +1872,7 @@
 			<member name="unit" type="string">Amps</member>
 			<member name="period" type="sint32">100</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.sIABC.fltB</member>
-			<member name="last_addr" type="uint32">0x2000050C</member>
+			<member name="last_addr" type="uint32">0x20001764</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1921,7 +1921,7 @@
 			<member name="unit" type="string">Amps</member>
 			<member name="period" type="sint32">100</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.sIABC.fltC</member>
-			<member name="last_addr" type="uint32">0x20000510</member>
+			<member name="last_addr" type="uint32">0x20001768</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -1970,7 +1970,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_fltM1DCBvoltageScale</member>
-			<member name="last_addr" type="uint32">0x20000784</member>
+			<member name="last_addr" type="uint32">0x200019DC</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2019,7 +2019,7 @@
 			<member name="unit" type="string">Volts</member>
 			<member name="period" type="sint32">100</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.fltUDcBusFilt</member>
-			<member name="last_addr" type="uint32">0x200005E4</member>
+			<member name="last_addr" type="uint32">0x2000183C</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2068,7 +2068,7 @@
 			<member name="unit" type="string">rpm</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sSpeed.fltSpeedFilt</member>
-			<member name="last_addr" type="uint32">0x20000634</member>
+			<member name="last_addr" type="uint32">0x2000188C</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2127,7 +2127,7 @@
 			<member name="unit" type="string">Hz</member>
 			<member name="period" type="sint32">100</member>
 			<member name="address" type="string">g_sM1Drive.sScalarCtrl.fltFreqCmd</member>
-			<member name="last_addr" type="uint32">0x20000708</member>
+			<member name="last_addr" type="uint32">0x20001960</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2176,7 +2176,7 @@
 			<member name="unit" type="string">Amps</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sMCATctrl.sIDQReqMCAT.fltQ</member>
-			<member name="last_addr" type="uint32">0x200006D8</member>
+			<member name="last_addr" type="uint32">0x20001930</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2225,7 +2225,7 @@
 			<member name="unit" type="string">Amps</member>
 			<member name="period" type="sint32">100</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.sIAlBe.fltAlpha</member>
-			<member name="last_addr" type="uint32">0x20000514</member>
+			<member name="last_addr" type="uint32">0x2000176C</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2274,7 +2274,7 @@
 			<member name="unit" type="string">Amps</member>
 			<member name="period" type="sint32">100</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.sIAlBe.fltBeta</member>
-			<member name="last_addr" type="uint32">0x20000518</member>
+			<member name="last_addr" type="uint32">0x20001770</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2323,7 +2323,7 @@
 			<member name="unit" type="string">Amps</member>
 			<member name="period" type="sint32">100</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.sIDQ.fltD</member>
-			<member name="last_addr" type="uint32">0x2000051C</member>
+			<member name="last_addr" type="uint32">0x20001774</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2372,7 +2372,7 @@
 			<member name="unit" type="string">Amps</member>
 			<member name="period" type="sint32">100</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.sIDQ.fltQ</member>
-			<member name="last_addr" type="uint32">0x20000520</member>
+			<member name="last_addr" type="uint32">0x20001778</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2421,7 +2421,7 @@
 			<member name="unit" type="string">Volts</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sAlignment.fltUdReq</member>
-			<member name="last_addr" type="uint32">0x200006C8</member>
+			<member name="last_addr" type="uint32">0x20001920</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2470,7 +2470,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sAlignment.ui16Time</member>
-			<member name="last_addr" type="uint32">0x200006CC</member>
+			<member name="last_addr" type="uint32">0x20001924</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2519,7 +2519,7 @@
 			<member name="unit" type="string">Amps</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sMCATctrl.sIDQReqMCAT.fltD</member>
-			<member name="last_addr" type="uint32">0x200006D4</member>
+			<member name="last_addr" type="uint32">0x2000192C</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2568,7 +2568,7 @@
 			<member name="unit" type="string">Volts</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sMCATctrl.sUDQReqMCAT.fltD</member>
-			<member name="last_addr" type="uint32">0x200006DC</member>
+			<member name="last_addr" type="uint32">0x20001934</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2617,7 +2617,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sSpeed.sSpeedPiParams.fltLowerLim</member>
-			<member name="last_addr" type="uint32">0x2000061C</member>
+			<member name="last_addr" type="uint32">0x20001874</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2666,7 +2666,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sSpeed.sSpeedPiParams.fltUpperLim</member>
-			<member name="last_addr" type="uint32">0x20000618</member>
+			<member name="last_addr" type="uint32">0x20001870</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2715,7 +2715,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sSpeed.sSpeedRampParams.fltRampUp</member>
-			<member name="last_addr" type="uint32">0x20000624</member>
+			<member name="last_addr" type="uint32">0x2000187C</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2764,7 +2764,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sSpeed.sSpeedRampParams.fltRampDown</member>
-			<member name="last_addr" type="uint32">0x20000628</member>
+			<member name="last_addr" type="uint32">0x20001880</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2813,7 +2813,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.sIdPiParams.fltIGain</member>
-			<member name="last_addr" type="uint32">0x200004B8</member>
+			<member name="last_addr" type="uint32">0x20001710</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2862,7 +2862,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.sIdPiParams.fltPGain</member>
-			<member name="last_addr" type="uint32">0x200004B4</member>
+			<member name="last_addr" type="uint32">0x2000170C</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2911,7 +2911,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.sIqPiParams.fltIGain</member>
-			<member name="last_addr" type="uint32">0x200004D4</member>
+			<member name="last_addr" type="uint32">0x2000172C</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -2960,7 +2960,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.sIqPiParams.fltPGain</member>
-			<member name="last_addr" type="uint32">0x200004D0</member>
+			<member name="last_addr" type="uint32">0x20001728</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3009,7 +3009,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sScalarCtrl.fltVHzGain</member>
-			<member name="last_addr" type="uint32">0x20000718</member>
+			<member name="last_addr" type="uint32">0x20001970</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3058,7 +3058,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sMCATctrl.ui16PospeSensor</member>
-			<member name="last_addr" type="uint32">0x200006E4</member>
+			<member name="last_addr" type="uint32">0x2000193C</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3107,7 +3107,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sScalarCtrl.sFreqRampParams.fltRampDown</member>
-			<member name="last_addr" type="uint32">0x200006EC</member>
+			<member name="last_addr" type="uint32">0x20001944</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3156,7 +3156,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sScalarCtrl.sFreqRampParams.fltRampUp</member>
-			<member name="last_addr" type="uint32">0x200006E8</member>
+			<member name="last_addr" type="uint32">0x20001940</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3205,7 +3205,7 @@
 			<member name="unit" type="string">%</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.fltDutyCycleLimit</member>
-			<member name="last_addr" type="uint32">0x200005D8</member>
+			<member name="last_addr" type="uint32">0x20001830</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3254,7 +3254,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sStartUp.sSpeedRampOpenLoopParams.fltRampUp</member>
-			<member name="last_addr" type="uint32">0x20000698</member>
+			<member name="last_addr" type="uint32">0x200018F0</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3303,7 +3303,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sStartUp.fltCurrentStartup</member>
-			<member name="last_addr" type="uint32">0x200006C0</member>
+			<member name="last_addr" type="uint32">0x20001918</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3352,7 +3352,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sStartUp.f16CoeffMerging</member>
-			<member name="last_addr" type="uint32">0x200006B4</member>
+			<member name="last_addr" type="uint32">0x2000190C</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3401,7 +3401,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sStartUp.fltSpeedCatchUp</member>
-			<member name="last_addr" type="uint32">0x200006BC</member>
+			<member name="last_addr" type="uint32">0x20001914</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3450,7 +3450,7 @@
 			<member name="unit" type="string">deg</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.f16PosElEst</member>
-			<member name="last_addr" type="uint32">0x200005D6</member>
+			<member name="last_addr" type="uint32">0x2000182E</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3509,7 +3509,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">100</member>
 			<member name="address" type="string">g_sM1Drive.sStartUp.f16RatioMerging</member>
-			<member name="last_addr" type="uint32">0x200006B6</member>
+			<member name="last_addr" type="uint32">0x2000190E</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3558,7 +3558,7 @@
 			<member name="unit" type="string">rpm</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sStartUp.fltSpeedRampOpenLoop</member>
-			<member name="last_addr" type="uint32">0x200006B0</member>
+			<member name="last_addr" type="uint32">0x20001908</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3613,7 +3613,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.sBemfObsrv.fltEGain</member>
-			<member name="last_addr" type="uint32">0x20000594</member>
+			<member name="last_addr" type="uint32">0x200017EC</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3662,7 +3662,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.sBemfObsrv.fltIGain</member>
-			<member name="last_addr" type="uint32">0x20000588</member>
+			<member name="last_addr" type="uint32">0x200017E0</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3711,7 +3711,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.sBemfObsrv.fltUGain</member>
-			<member name="last_addr" type="uint32">0x2000058C</member>
+			<member name="last_addr" type="uint32">0x200017E4</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3760,7 +3760,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.sBemfObsrv.fltWIGain</member>
-			<member name="last_addr" type="uint32">0x20000590</member>
+			<member name="last_addr" type="uint32">0x200017E8</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3809,7 +3809,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.sBemfObsrv.sCtrl.fltPGain</member>
-			<member name="last_addr" type="uint32">0x20000580</member>
+			<member name="last_addr" type="uint32">0x200017D8</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3858,7 +3858,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.sBemfObsrv.sCtrl.fltIGain</member>
-			<member name="last_addr" type="uint32">0x20000584</member>
+			<member name="last_addr" type="uint32">0x200017DC</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3907,7 +3907,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sStartUp.fltSpeedCatchUp</member>
-			<member name="last_addr" type="uint32">0x200006BC</member>
+			<member name="last_addr" type="uint32">0x20001914</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -3956,7 +3956,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sSpeed.sSpeedFilter.sFltCoeff.fltB0</member>
-			<member name="last_addr" type="uint32">0x200005F4</member>
+			<member name="last_addr" type="uint32">0x2000184C</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -4005,7 +4005,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sSpeed.sSpeedFilter.sFltCoeff.fltB1</member>
-			<member name="last_addr" type="uint32">0x200005F8</member>
+			<member name="last_addr" type="uint32">0x20001850</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -4054,7 +4054,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sSpeed.sSpeedFilter.sFltCoeff.fltA1</member>
-			<member name="last_addr" type="uint32">0x200005FC</member>
+			<member name="last_addr" type="uint32">0x20001854</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -4103,7 +4103,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sStartUp.sSpeedRampOpenLoopParams.fltRampDown</member>
-			<member name="last_addr" type="uint32">0x2000069C</member>
+			<member name="last_addr" type="uint32">0x200018F4</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -4152,7 +4152,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFaultIdCaptured</member>
-			<member name="last_addr" type="uint32">0x20000722</member>
+			<member name="last_addr" type="uint32">0x2000197A</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -4201,7 +4201,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFaultIdCaptured</member>
-			<member name="last_addr" type="uint32">0x20000722</member>
+			<member name="last_addr" type="uint32">0x2000197A</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -4250,7 +4250,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFaultIdCaptured</member>
-			<member name="last_addr" type="uint32">0x20000722</member>
+			<member name="last_addr" type="uint32">0x2000197A</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -4299,7 +4299,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFaultIdCaptured</member>
-			<member name="last_addr" type="uint32">0x20000722</member>
+			<member name="last_addr" type="uint32">0x2000197A</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -4348,7 +4348,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFaultIdCaptured</member>
-			<member name="last_addr" type="uint32">0x20000722</member>
+			<member name="last_addr" type="uint32">0x2000197A</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -4397,7 +4397,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFaultIdPending</member>
-			<member name="last_addr" type="uint32">0x20000724</member>
+			<member name="last_addr" type="uint32">0x2000197C</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -4446,7 +4446,7 @@
 			<member name="unit" type="string">rpm</member>
 			<member name="period" type="sint32">100</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.fltSpeedElEst</member>
-			<member name="last_addr" type="uint32">0x200005CC</member>
+			<member name="last_addr" type="uint32">0x20001824</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -4505,7 +4505,7 @@
 			<member name="unit" type="string">V</member>
 			<member name="period" type="sint32">100</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.sUDQReq.fltQ</member>
-			<member name="last_addr" type="uint32">0x20000554</member>
+			<member name="last_addr" type="uint32">0x200017AC</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -4554,7 +4554,7 @@
 			<member name="unit" type="string">Amps</member>
 			<member name="period" type="sint32">100</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.sIDQReq.fltQ</member>
-			<member name="last_addr" type="uint32">0x20000528</member>
+			<member name="last_addr" type="uint32">0x20001780</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -4603,7 +4603,7 @@
 			<member name="unit" type="string">deg</member>
 			<member name="period" type="sint32">100</member>
 			<member name="address" type="string">g_sM1Drive.sStartUp.f16PosGen</member>
-			<member name="last_addr" type="uint32">0x200006B8</member>
+			<member name="last_addr" type="uint32">0x20001910</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -4662,7 +4662,7 @@
 			<member name="unit" type="string">V</member>
 			<member name="period" type="sint32">100</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.sUDQReq.fltD</member>
-			<member name="last_addr" type="uint32">0x20000550</member>
+			<member name="last_addr" type="uint32">0x200017A8</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -4711,7 +4711,7 @@
 			<member name="unit" type="string">rpm</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFaultThresholds.fltSpeedMin</member>
-			<member name="last_addr" type="uint32">0x20000738</member>
+			<member name="last_addr" type="uint32">0x20001990</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -4760,7 +4760,7 @@
 			<member name="unit" type="string">rpm</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFaultThresholds.fltSpeedNom</member>
-			<member name="last_addr" type="uint32">0x2000073C</member>
+			<member name="last_addr" type="uint32">0x20001994</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -4809,7 +4809,7 @@
 			<member name="unit" type="string">rpm</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFaultThresholds.fltSpeedOver</member>
-			<member name="last_addr" type="uint32">0x20000734</member>
+			<member name="last_addr" type="uint32">0x2000198C</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -4858,7 +4858,7 @@
 			<member name="unit" type="string">V</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFaultThresholds.fltUDcBusOver</member>
-			<member name="last_addr" type="uint32">0x20000728</member>
+			<member name="last_addr" type="uint32">0x20001980</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -4907,7 +4907,7 @@
 			<member name="unit" type="string">V</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFaultThresholds.fltUDcBusUnder</member>
-			<member name="last_addr" type="uint32">0x2000072C</member>
+			<member name="last_addr" type="uint32">0x20001984</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -4956,7 +4956,7 @@
 			<member name="unit" type="string">deg</member>
 			<member name="period" type="sint32">100</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.f16PosElExt</member>
-			<member name="last_addr" type="uint32">0x200005D4</member>
+			<member name="last_addr" type="uint32">0x2000182C</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -5015,7 +5015,7 @@
 			<member name="unit" type="string">Amps</member>
 			<member name="period" type="sint32">100</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.sIDQReq.fltD</member>
-			<member name="last_addr" type="uint32">0x20000524</member>
+			<member name="last_addr" type="uint32">0x2000177C</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -5064,7 +5064,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.bFaultClearMan</member>
-			<member name="last_addr" type="uint32">0x2000077E</member>
+			<member name="last_addr" type="uint32">0x200019D6</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -5113,7 +5113,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFaultIdCaptured</member>
-			<member name="last_addr" type="uint32">0x20000722</member>
+			<member name="last_addr" type="uint32">0x2000197A</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -5162,7 +5162,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">100</member>
 			<member name="address" type="string">g_ui32NumberOfCycles</member>
-			<member name="last_addr" type="uint32">0x20000798</member>
+			<member name="last_addr" type="uint32">0x200019F0</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -5211,7 +5211,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">100</member>
 			<member name="address" type="string">g_ui32MaxNumberOfCycles</member>
-			<member name="last_addr" type="uint32">0x2000079C</member>
+			<member name="last_addr" type="uint32">0x200019F4</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -5260,7 +5260,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">-1</member>
 			<member name="address" type="string">g_sAppIdFM.cBoardID</member>
-			<member name="last_addr" type="uint32">0x20000018</member>
+			<member name="last_addr" type="uint32">0x20000010</member>
 			<member name="byte_size" type="sint32">20</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -5309,7 +5309,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">bDemoModeSpeed</member>
-			<member name="last_addr" type="uint32">0x20001E6E</member>
+			<member name="last_addr" type="uint32">0x20002086</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -5358,7 +5358,7 @@
 			<member name="unit" type="string">Hz</member>
 			<member name="period" type="sint32">-1</member>
 			<member name="address" type="string">g_sM1Drive.ui16FastCtrlLoopFreq</member>
-			<member name="last_addr" type="uint32">0x2000076E</member>
+			<member name="last_addr" type="uint32">0x200019C6</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -5407,7 +5407,7 @@
 			<member name="unit" type="string">Hz</member>
 			<member name="period" type="sint32">-1</member>
 			<member name="address" type="string">g_sM1Drive.ui16SlowCtrlLoopFreq</member>
-			<member name="last_addr" type="uint32">0x20000770</member>
+			<member name="last_addr" type="uint32">0x200019C8</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -5456,7 +5456,7 @@
 			<member name="unit" type="string">rpm</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFaultThresholds.fltUqBemf</member>
-			<member name="last_addr" type="uint32">0x20000740</member>
+			<member name="last_addr" type="uint32">0x20001998</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -5505,7 +5505,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.sTo.fltIGain</member>
-			<member name="last_addr" type="uint32">0x200005A8</member>
+			<member name="last_addr" type="uint32">0x20001800</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -5554,7 +5554,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.sTo.fltPGain</member>
-			<member name="last_addr" type="uint32">0x200005AC</member>
+			<member name="last_addr" type="uint32">0x20001804</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -5603,7 +5603,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.sTo.fltThGain</member>
-			<member name="last_addr" type="uint32">0x200005B0</member>
+			<member name="last_addr" type="uint32">0x20001808</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -5652,7 +5652,7 @@
 			<member name="unit" type="string">rpm</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sScalarCtrl.fltFreqMax</member>
-			<member name="last_addr" type="uint32">0x2000070C</member>
+			<member name="last_addr" type="uint32">0x20001964</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -5701,7 +5701,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Enc.sTo.fltIGain</member>
-			<member name="last_addr" type="uint32">0x20000890</member>
+			<member name="last_addr" type="uint32">0x20001AA8</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -5750,7 +5750,7 @@
 			<member name="unit" type="string">deg</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Enc.f16PosMe</member>
-			<member name="last_addr" type="uint32">0x200008B4</member>
+			<member name="last_addr" type="uint32">0x20001ACC</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -5809,7 +5809,7 @@
 			<member name="unit" type="string">rpm</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Enc.fltSpdMeEst</member>
-			<member name="last_addr" type="uint32">0x200008B0</member>
+			<member name="last_addr" type="uint32">0x20001AC8</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -5868,7 +5868,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">-1</member>
 			<member name="address" type="string">g_fltM1speedMechanicalScale</member>
-			<member name="last_addr" type="uint32">0x20000794</member>
+			<member name="last_addr" type="uint32">0x200019EC</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -5917,7 +5917,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Enc.bDirection</member>
-			<member name="last_addr" type="uint32">0x200008BA</member>
+			<member name="last_addr" type="uint32">0x20001AD2</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -5966,14 +5966,14 @@
 			<member name="unit" type="string">rev</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sPosition.a32PositionCmd</member>
-			<member name="last_addr" type="uint32">0x20000684</member>
+			<member name="last_addr" type="uint32">0x200018DC</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
 			<member name="virtual" type="sint32">0</member>
 			<member name="virtual_default" type="string">0</member>
 			<member name="treat_as" type="sint32">3</member>
-			<member name="type_fmt" type="string">Q15.16 &lt;-32768,32768)</member>
+			<member name="type_fmt" type="string">Q16.15 &lt;-65536,65536)</member>
 			<member name="bit_shift" type="sint32">0</member>
 			<member name="bit_mask" type="string">no mask (-1)</member>
 			<member name="value_trf" type="CObject_ptr">NULL</member>
@@ -6015,14 +6015,14 @@
 			<member name="unit" type="string">rev</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sPosition.a32Position</member>
-			<member name="last_addr" type="uint32">0x2000067C</member>
+			<member name="last_addr" type="uint32">0x200018D4</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
 			<member name="virtual" type="sint32">0</member>
 			<member name="virtual_default" type="string">0</member>
 			<member name="treat_as" type="sint32">3</member>
-			<member name="type_fmt" type="string">Q15.16 &lt;-32768,32768)</member>
+			<member name="type_fmt" type="string">Q16.15 &lt;-65536,65536)</member>
 			<member name="bit_shift" type="sint32">0</member>
 			<member name="bit_mask" type="string">no mask (-1)</member>
 			<member name="value_trf" type="CObject_ptr">NULL</member>
@@ -6064,7 +6064,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sSpeed.sSpeedPiParams.fltIGain</member>
-			<member name="last_addr" type="uint32">0x2000060C</member>
+			<member name="last_addr" type="uint32">0x20001864</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -6113,7 +6113,7 @@
 			<member name="unit" type="string">rpm</member>
 			<member name="period" type="sint32">100</member>
 			<member name="address" type="string">g_sM1Drive.sSpeed.fltSpeedFilt</member>
-			<member name="last_addr" type="uint32">0x20000634</member>
+			<member name="last_addr" type="uint32">0x2000188C</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -6172,7 +6172,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">bDemoModePosition</member>
-			<member name="last_addr" type="uint32">0x20001E70</member>
+			<member name="last_addr" type="uint32">0x20002088</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -6221,7 +6221,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFaultThresholds.fltUDcBusTrip</member>
-			<member name="last_addr" type="uint32">0x20000730</member>
+			<member name="last_addr" type="uint32">0x20001988</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -6270,7 +6270,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sPosition.f16PositionPGain</member>
-			<member name="last_addr" type="uint32">0x20000678</member>
+			<member name="last_addr" type="uint32">0x200018D0</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -6319,7 +6319,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Enc.sTo.fltPGain</member>
-			<member name="last_addr" type="uint32">0x20000894</member>
+			<member name="last_addr" type="uint32">0x20001AAC</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -6368,7 +6368,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Enc.sTo.fltThGain</member>
-			<member name="last_addr" type="uint32">0x20000898</member>
+			<member name="last_addr" type="uint32">0x20001AB0</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -6417,7 +6417,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">-1</member>
 			<member name="address" type="string">g_sAppIdFM.cAppVer</member>
-			<member name="last_addr" type="uint32">0x2000004A</member>
+			<member name="last_addr" type="uint32">0x20000042</member>
 			<member name="byte_size" type="sint32">5</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -6466,7 +6466,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFaultIdCaptured</member>
-			<member name="last_addr" type="uint32">0x20000722</member>
+			<member name="last_addr" type="uint32">0x2000197A</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -6515,7 +6515,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sScalarCtrl.fltUqMin</member>
-			<member name="last_addr" type="uint32">0x2000071C</member>
+			<member name="last_addr" type="uint32">0x20001974</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -6564,7 +6564,7 @@
 			<member name="unit" type="string">MHz</member>
 			<member name="period" type="sint32">-1</member>
 			<member name="address" type="string">g_sM1Drive.ui32CpuFrequency</member>
-			<member name="last_addr" type="uint32">0x20000774</member>
+			<member name="last_addr" type="uint32">0x200019CC</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -6619,7 +6619,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_eMidCmd</member>
-			<member name="last_addr" type="uint32">0x20001E7F</member>
+			<member name="last_addr" type="uint32">0x20002097</member>
 			<member name="byte_size" type="sint32">1</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Set "Run"/"Stop" to start/stop identification</member>
@@ -6668,7 +6668,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">sUserMIDStatus.eMIDState</member>
-			<member name="last_addr" type="uint32">0x200008EC</member>
+			<member name="last_addr" type="uint32">0x20001B04</member>
 			<member name="byte_size" type="sint32">1</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Actual state of the MID SM</member>
@@ -6717,7 +6717,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sSpinMidSwitch.eAppState</member>
-			<member name="last_addr" type="uint32">0x200007AC</member>
+			<member name="last_addr" type="uint32">0x20001A10</member>
 			<member name="byte_size" type="sint32">1</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Actual application state (Spin SM, MID SM)</member>
@@ -6766,7 +6766,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sSpinMidSwitch.bCmdRunM1</member>
-			<member name="last_addr" type="uint32">0x200007A8</member>
+			<member name="last_addr" type="uint32">0x20001A0C</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Set "On" to switch to the Spin SM</member>
@@ -6815,7 +6815,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sSpinMidSwitch.bCmdRunMid</member>
-			<member name="last_addr" type="uint32">0x200007AA</member>
+			<member name="last_addr" type="uint32">0x20001A0E</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Set "On" to switch to the MID SM</member>
@@ -6864,7 +6864,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sSpinMidSwitch.sFaultCtrlM1_Mid</member>
-			<member name="last_addr" type="uint32">0x200007AE</member>
+			<member name="last_addr" type="uint32">0x20001A12</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Mode change fault result</member>
@@ -6913,7 +6913,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sMidDrive.sFaultIdPending</member>
-			<member name="last_addr" type="uint32">0x20000BAA</member>
+			<member name="last_addr" type="uint32">0x20001DC2</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Actually pending faults (clears when fault condition disappears)</member>
@@ -6962,7 +6962,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sMidDrive.sFaultIdCaptured</member>
-			<member name="last_addr" type="uint32">0x20000BA8</member>
+			<member name="last_addr" type="uint32">0x20001DC0</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Captured faults (must be cleared manually)</member>
@@ -7011,7 +7011,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sMidDrive.sFaultIdCaptured</member>
-			<member name="last_addr" type="uint32">0x20000BA8</member>
+			<member name="last_addr" type="uint32">0x20001DC0</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -7060,7 +7060,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sMidDrive.sFaultIdCaptured</member>
-			<member name="last_addr" type="uint32">0x20000BA8</member>
+			<member name="last_addr" type="uint32">0x20001DC0</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -7109,7 +7109,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sMidDrive.sFaultIdCaptured</member>
-			<member name="last_addr" type="uint32">0x20000BA8</member>
+			<member name="last_addr" type="uint32">0x20001DC0</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -7158,7 +7158,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sMidDrive.bFaultClearMan</member>
-			<member name="last_addr" type="uint32">0x20000BCC</member>
+			<member name="last_addr" type="uint32">0x20001DE4</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Set "On" to clear Fault Captured</member>
@@ -7207,7 +7207,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">sUserMIDStatus.ui16FaultMID</member>
-			<member name="last_addr" type="uint32">0x200008F8</member>
+			<member name="last_addr" type="uint32">0x20001B10</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Captured Identification faults (clears automatically with MID restart).</member>
@@ -7256,7 +7256,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">sUserMIDStatus.ui16WarnMID</member>
-			<member name="last_addr" type="uint32">0x200008FA</member>
+			<member name="last_addr" type="uint32">0x20001B12</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Captured Identification warnings (clears automatically with MID restart).</member>
@@ -7305,7 +7305,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">eUserMIDMeasType</member>
-			<member name="last_addr" type="uint32">0x20001E80</member>
+			<member name="last_addr" type="uint32">0x20002098</member>
 			<member name="byte_size" type="sint32">1</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Select parameters to be estimated</member>
@@ -7354,7 +7354,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">sUserMIDStatus.ui32FinishedMeas</member>
-			<member name="last_addr" type="uint32">0x200008F0</member>
+			<member name="last_addr" type="uint32">0x20001B08</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -7409,7 +7409,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">sUserMIDStatus.ui32FinishedMeas</member>
-			<member name="last_addr" type="uint32">0x200008F0</member>
+			<member name="last_addr" type="uint32">0x20001B08</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -7464,7 +7464,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">sUserMIDStatus.ui32FinishedMeas</member>
-			<member name="last_addr" type="uint32">0x200008F0</member>
+			<member name="last_addr" type="uint32">0x20001B08</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -7519,7 +7519,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">sUserMIDStatus.ui32FinishedMeas</member>
-			<member name="last_addr" type="uint32">0x200008F0</member>
+			<member name="last_addr" type="uint32">0x20001B08</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -7574,7 +7574,7 @@
 			<member name="unit" type="string">pairs</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">sUserMIDMotorParamsKnown.ui32Pp</member>
-			<member name="last_addr" type="uint32">0x200000A0</member>
+			<member name="last_addr" type="uint32">0x20000098</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -7623,7 +7623,7 @@
 			<member name="unit" type="string">Ohm</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">sUserMIDMotorParamsKnown.fltRs</member>
-			<member name="last_addr" type="uint32">0x20000088</member>
+			<member name="last_addr" type="uint32">0x20000080</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -7672,7 +7672,7 @@
 			<member name="unit" type="string">H</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">sUserMIDMotorParamsKnown.fltLd</member>
-			<member name="last_addr" type="uint32">0x2000008C</member>
+			<member name="last_addr" type="uint32">0x20000084</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -7721,7 +7721,7 @@
 			<member name="unit" type="string">H</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">sUserMIDMotorParamsKnown.fltLq</member>
-			<member name="last_addr" type="uint32">0x20000090</member>
+			<member name="last_addr" type="uint32">0x20000088</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -7770,7 +7770,7 @@
 			<member name="unit" type="string">Vs/rad</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">sUserMIDMotorParamsKnown.fltKe</member>
-			<member name="last_addr" type="uint32">0x20000094</member>
+			<member name="last_addr" type="uint32">0x2000008C</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -7819,7 +7819,7 @@
 			<member name="unit" type="string">kgm^2</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">sUserMIDMotorParamsKnown.fltJ</member>
-			<member name="last_addr" type="uint32">0x20000098</member>
+			<member name="last_addr" type="uint32">0x20000090</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -7868,7 +7868,7 @@
 			<member name="unit" type="string">Nms</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">sUserMIDMotorParamsKnown.fltB</member>
-			<member name="last_addr" type="uint32">0x2000009C</member>
+			<member name="last_addr" type="uint32">0x20000094</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -7917,7 +7917,7 @@
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">ui32UserMIDStartResult</member>
-			<member name="last_addr" type="uint32">0x200008FC</member>
+			<member name="last_addr" type="uint32">0x20001B14</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string">b#00 0000 - Successful initialization
 b#00 0001 - Error during EL_PARAM initialization
@@ -7972,7 +7972,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">pairs</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">sUserMIDMotorParamsMeas.ui32Pp</member>
-			<member name="last_addr" type="uint32">0x200000BC</member>
+			<member name="last_addr" type="uint32">0x200000B4</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Number of pole-pairs</member>
@@ -8021,7 +8021,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">Ohm</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">sUserMIDMotorParamsMeas.fltRs</member>
-			<member name="last_addr" type="uint32">0x200000A4</member>
+			<member name="last_addr" type="uint32">0x2000009C</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Estimated Rs</member>
@@ -8070,7 +8070,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">H</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">sUserMIDMotorParamsMeas.fltLd</member>
-			<member name="last_addr" type="uint32">0x200000A8</member>
+			<member name="last_addr" type="uint32">0x200000A0</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Estimated Ld</member>
@@ -8119,7 +8119,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">H</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">sUserMIDMotorParamsMeas.fltLq</member>
-			<member name="last_addr" type="uint32">0x200000AC</member>
+			<member name="last_addr" type="uint32">0x200000A4</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Estimated Lq</member>
@@ -8168,7 +8168,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">Vs/rad</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">sUserMIDMotorParamsMeas.fltKe</member>
-			<member name="last_addr" type="uint32">0x200000B0</member>
+			<member name="last_addr" type="uint32">0x200000A8</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Estimated Ke</member>
@@ -8217,7 +8217,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">kgm^2</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">sUserMIDMotorParamsMeas.fltJ</member>
-			<member name="last_addr" type="uint32">0x200000B4</member>
+			<member name="last_addr" type="uint32">0x200000AC</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Estimated J</member>
@@ -8266,7 +8266,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">Nms</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">sUserMIDMotorParamsMeas.fltB</member>
-			<member name="last_addr" type="uint32">0x200000B8</member>
+			<member name="last_addr" type="uint32">0x200000B0</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Estimated B</member>
@@ -8315,7 +8315,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">A</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">sUserMIDMeasConfig.fltPpIdReqOpenLoop</member>
-			<member name="last_addr" type="uint32">0x20000060</member>
+			<member name="last_addr" type="uint32">0x20000058</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Required Id current to run Pp assist</member>
@@ -8364,7 +8364,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">Hz</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">sUserMIDMeasConfig.fltPpFreqElReq</member>
-			<member name="last_addr" type="uint32">0x20000064</member>
+			<member name="last_addr" type="uint32">0x2000005C</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Open-loop frequency</member>
@@ -8413,7 +8413,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">A</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">sUserMIDMeasConfig.fltKeIdReqOpenLoop</member>
-			<member name="last_addr" type="uint32">0x20000058</member>
+			<member name="last_addr" type="uint32">0x20000050</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Ke open-loop phase current.</member>
@@ -8462,7 +8462,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">Hz</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">sUserMIDMeasConfig.fltKeFreqElReq</member>
-			<member name="last_addr" type="uint32">0x2000005C</member>
+			<member name="last_addr" type="uint32">0x20000054</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Ke open-loop speed.</member>
@@ -8511,7 +8511,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">Nm/A</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">sUserMIDMeasConfig.fltMechKt</member>
-			<member name="last_addr" type="uint32">0x20000068</member>
+			<member name="last_addr" type="uint32">0x20000060</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Motor torque constant</member>
@@ -8560,7 +8560,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">A</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">sUserMIDMeasConfig.fltMechIqStartup</member>
-			<member name="last_addr" type="uint32">0x2000006C</member>
+			<member name="last_addr" type="uint32">0x20000064</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Open-loop startup current</member>
@@ -8609,7 +8609,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">%</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">sUserMIDMeasConfig.fltMechMergingCoeff</member>
-			<member name="last_addr" type="uint32">0x20000070</member>
+			<member name="last_addr" type="uint32">0x20000068</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Open-loop to closed-loop meging coefficient</member>
@@ -8658,7 +8658,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">A</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">sUserMIDMeasConfig.fltMechIqAccelerate</member>
-			<member name="last_addr" type="uint32">0x20000074</member>
+			<member name="last_addr" type="uint32">0x2000006C</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Torque step-response accelerating current.</member>
@@ -8707,7 +8707,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">A</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">sUserMIDMeasConfig.fltMechIqDecelerate</member>
-			<member name="last_addr" type="uint32">0x20000078</member>
+			<member name="last_addr" type="uint32">0x20000070</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Torque step-response deccelerating current.</member>
@@ -8756,7 +8756,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">rad/s</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">sUserMIDMeasConfig.fltMechSpeedThrsAccel</member>
-			<member name="last_addr" type="uint32">0x2000007C</member>
+			<member name="last_addr" type="uint32">0x20000074</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Torque step-response initial speed.</member>
@@ -8805,7 +8805,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">rad/s</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">sUserMIDMeasConfig.fltMechSpeedThrsInteg</member>
-			<member name="last_addr" type="uint32">0x20000084</member>
+			<member name="last_addr" type="uint32">0x2000007C</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">At this speed, torque and speed integration starts</member>
@@ -8854,7 +8854,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">rad/s</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">sUserMIDMeasConfig.fltMechSpeedThrsDecel</member>
-			<member name="last_addr" type="uint32">0x20000080</member>
+			<member name="last_addr" type="uint32">0x20000078</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Torque step-response target speed.</member>
@@ -8903,7 +8903,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">u8ModeEstimRL</member>
-			<member name="last_addr" type="uint32">0x20001E83</member>
+			<member name="last_addr" type="uint32">0x2000209B</member>
 			<member name="byte_size" type="sint32">1</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Select mode of the electrical parameters estimation</member>
@@ -8952,7 +8952,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sEstimRLCtrlRun.u8LdqSwitch</member>
-			<member name="last_addr" type="uint32">0x20000D6E</member>
+			<member name="last_addr" type="uint32">0x20001F86</member>
 			<member name="byte_size" type="sint32">1</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Select measurement axis (Mode 3)</member>
@@ -9001,7 +9001,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">A</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sEstimRLCtrlRun.fltIDcDReq</member>
-			<member name="last_addr" type="uint32">0x20000D60</member>
+			<member name="last_addr" type="uint32">0x20001F78</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Required DC current in d-axis (Mode 3)</member>
@@ -9050,7 +9050,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">A</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sEstimRLCtrlRun.fltIDcQReq</member>
-			<member name="last_addr" type="uint32">0x20000D64</member>
+			<member name="last_addr" type="uint32">0x20001F7C</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Required DC current in q-axis (Mode 3)</member>
@@ -9099,7 +9099,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">A</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sEstimRLCtrlRun.fltIAcReq</member>
-			<member name="last_addr" type="uint32">0x20000D68</member>
+			<member name="last_addr" type="uint32">0x20001F80</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Required injected AC current (Mode 3)</member>
@@ -9148,7 +9148,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">Hz</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sEstimRLCtrlRun.u16FAc</member>
-			<member name="last_addr" type="uint32">0x20000D6C</member>
+			<member name="last_addr" type="uint32">0x20001F84</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Required frequency of the injected AC current (Mode 3)</member>
@@ -9197,7 +9197,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sEstimRLStruct.pInnerState.fltIDcDReq</member>
-			<member name="last_addr" type="uint32">0x20000C60</member>
+			<member name="last_addr" type="uint32">0x20001E78</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -9246,7 +9246,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sEstimRLStruct.pInnerState.fltIDcD</member>
-			<member name="last_addr" type="uint32">0x20000CF8</member>
+			<member name="last_addr" type="uint32">0x20001F10</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -9295,7 +9295,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sEstimRLStruct.pInnerState.fltIDcQReq</member>
-			<member name="last_addr" type="uint32">0x20000C68</member>
+			<member name="last_addr" type="uint32">0x20001E80</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -9344,7 +9344,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sEstimRLStruct.pInnerState.fltIDcQ</member>
-			<member name="last_addr" type="uint32">0x20000CFC</member>
+			<member name="last_addr" type="uint32">0x20001F14</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -9393,7 +9393,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sEstimRLStruct.pInnerState.fltIAcReq</member>
-			<member name="last_addr" type="uint32">0x20000C58</member>
+			<member name="last_addr" type="uint32">0x20001E70</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -9442,7 +9442,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sEstimRLStruct.pInnerState.pIDQAcFilt.fltD</member>
-			<member name="last_addr" type="uint32">0x20000C1C</member>
+			<member name="last_addr" type="uint32">0x20001E34</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -9491,7 +9491,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sEstimRLStruct.pInnerState.pIDQAcFilt.fltQ</member>
-			<member name="last_addr" type="uint32">0x20000C20</member>
+			<member name="last_addr" type="uint32">0x20001E38</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -9540,7 +9540,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sEstimRLStruct.pInnerState.fltUDcDAcc</member>
-			<member name="last_addr" type="uint32">0x20000CB4</member>
+			<member name="last_addr" type="uint32">0x20001ECC</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -9589,7 +9589,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sEstimRLStruct.fltLd</member>
-			<member name="last_addr" type="uint32">0x20000D4C</member>
+			<member name="last_addr" type="uint32">0x20001F64</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -9638,7 +9638,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sEstimRLStruct.fltLq</member>
-			<member name="last_addr" type="uint32">0x20000D50</member>
+			<member name="last_addr" type="uint32">0x20001F68</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -9687,7 +9687,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">fltIDcPlot</member>
-			<member name="last_addr" type="uint32">0x20000D70</member>
+			<member name="last_addr" type="uint32">0x20001F88</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -9736,7 +9736,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">fltLdPlot</member>
-			<member name="last_addr" type="uint32">0x20000D74</member>
+			<member name="last_addr" type="uint32">0x20001F8C</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -9785,7 +9785,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">fltLqPlot</member>
-			<member name="last_addr" type="uint32">0x20000D78</member>
+			<member name="last_addr" type="uint32">0x20001F90</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -9834,7 +9834,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sEstimRLStruct.pInnerState.fltUDcQAcc</member>
-			<member name="last_addr" type="uint32">0x20000CC0</member>
+			<member name="last_addr" type="uint32">0x20001ED8</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -9883,7 +9883,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">A</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sEstimRLInitFMSTR.fltIDcNom</member>
-			<member name="last_addr" type="uint32">0x200000C0</member>
+			<member name="last_addr" type="uint32">0x200000B8</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Nominal DC current of the motor (Mode 0)</member>
@@ -9932,7 +9932,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">A</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sEstimRLInitFMSTR.fltIDcPosMax</member>
-			<member name="last_addr" type="uint32">0x200000C4</member>
+			<member name="last_addr" type="uint32">0x200000BC</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Maximum injected positive DC current (Mode 1, 2)</member>
@@ -9981,7 +9981,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">A</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sEstimRLInitFMSTR.fltIDcNegMax</member>
-			<member name="last_addr" type="uint32">0x200000C8</member>
+			<member name="last_addr" type="uint32">0x200000C0</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Maximum injected negative DC current (Mode 2)</member>
@@ -10030,7 +10030,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sScalarCtrl.fltVHzGain</member>
-			<member name="last_addr" type="uint32">0x20000718</member>
+			<member name="last_addr" type="uint32">0x20001970</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -10079,7 +10079,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">-1</member>
 			<member name="address" type="string">g_sAppIdFM.cExampleID</member>
-			<member name="last_addr" type="uint32">0x2000002C</member>
+			<member name="last_addr" type="uint32">0x20000024</member>
 			<member name="byte_size" type="sint32">30</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -10128,7 +10128,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">-1</member>
 			<member name="address" type="string">g_sAppIdFM.ui16FeatureSet</member>
-			<member name="last_addr" type="uint32">0x20000050</member>
+			<member name="last_addr" type="uint32">0x20000048</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -10177,7 +10177,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">-1</member>
 			<member name="address" type="string">g_sAppIdFM.ui16FeatureSet</member>
-			<member name="last_addr" type="uint32">0x20000050</member>
+			<member name="last_addr" type="uint32">0x20000048</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -10226,7 +10226,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">-1</member>
 			<member name="address" type="string">g_sAppIdFM.ui16FeatureSet</member>
-			<member name="last_addr" type="uint32">0x20000050</member>
+			<member name="last_addr" type="uint32">0x20000048</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -10275,7 +10275,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">A</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sEstimRLInitFMSTR.fltIDcLd</member>
-			<member name="last_addr" type="uint32">0x200000CC</member>
+			<member name="last_addr" type="uint32">0x200000C4</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">DC current to estimate Ld (Mode 2)</member>
@@ -10324,7 +10324,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">A</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sEstimRLInitFMSTR.fltIDcLq</member>
-			<member name="last_addr" type="uint32">0x200000D0</member>
+			<member name="last_addr" type="uint32">0x200000C8</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">DC current to estimate Lq (Mode 1, 2)</member>
@@ -10373,7 +10373,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">rpm</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_fltMIDspeedScale</member>
-			<member name="last_addr" type="uint32">0x20000BE0</member>
+			<member name="last_addr" type="uint32">0x20001DF8</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -10422,7 +10422,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">rpm/rad.sec-1</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_fltMIDspeedAngularScale</member>
-			<member name="last_addr" type="uint32">0x20000BE4</member>
+			<member name="last_addr" type="uint32">0x20001DFC</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -10471,7 +10471,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">Amps</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_fltMIDcurrentScale</member>
-			<member name="last_addr" type="uint32">0x20000BDC</member>
+			<member name="last_addr" type="uint32">0x20001DF4</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -10520,7 +10520,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_fltMIDvoltageScale</member>
-			<member name="last_addr" type="uint32">0x20000BD4</member>
+			<member name="last_addr" type="uint32">0x20001DEC</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -10569,7 +10569,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">%</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sMidDrive.sFocPMSM.fltDutyCycleLimit</member>
-			<member name="last_addr" type="uint32">0x20000B8C</member>
+			<member name="last_addr" type="uint32">0x20001DA4</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -10618,7 +10618,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">rpm</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sMidDrive.sFaultThresholds.fltUqBemf</member>
-			<member name="last_addr" type="uint32">0x20000BC4</member>
+			<member name="last_addr" type="uint32">0x20001DDC</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -10667,7 +10667,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">V</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sMidDrive.sFaultThresholds.fltUDcBusOver</member>
-			<member name="last_addr" type="uint32">0x20000BAC</member>
+			<member name="last_addr" type="uint32">0x20001DC4</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -10716,7 +10716,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sMidDrive.sFaultThresholds.fltUDcBusTrip</member>
-			<member name="last_addr" type="uint32">0x20000BB4</member>
+			<member name="last_addr" type="uint32">0x20001DCC</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -10765,7 +10765,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">V</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sMidDrive.sFaultThresholds.fltUDcBusUnder</member>
-			<member name="last_addr" type="uint32">0x20000BB0</member>
+			<member name="last_addr" type="uint32">0x20001DC8</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -10814,7 +10814,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">rpm</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sMidDrive.sFaultThresholds.fltSpeedMin</member>
-			<member name="last_addr" type="uint32">0x20000BBC</member>
+			<member name="last_addr" type="uint32">0x20001DD4</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -10863,7 +10863,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">rpm</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sMidDrive.sFaultThresholds.fltSpeedNom</member>
-			<member name="last_addr" type="uint32">0x20000BC0</member>
+			<member name="last_addr" type="uint32">0x20001DD8</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -10912,7 +10912,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">rpm</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sMidDrive.sFaultThresholds.fltSpeedOver</member>
-			<member name="last_addr" type="uint32">0x20000BB8</member>
+			<member name="last_addr" type="uint32">0x20001DD0</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -10961,7 +10961,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sMidDrive.sFocPMSM.sIdPiParams.fltPGain</member>
-			<member name="last_addr" type="uint32">0x20000A68</member>
+			<member name="last_addr" type="uint32">0x20001C80</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -11010,7 +11010,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sMidDrive.sFocPMSM.sIdPiParams.fltIGain</member>
-			<member name="last_addr" type="uint32">0x20000A6C</member>
+			<member name="last_addr" type="uint32">0x20001C84</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -11059,7 +11059,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sMidDrive.sFocPMSM.sIqPiParams.fltPGain</member>
-			<member name="last_addr" type="uint32">0x20000A84</member>
+			<member name="last_addr" type="uint32">0x20001C9C</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -11108,7 +11108,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sMidDrive.sFocPMSM.sIqPiParams.fltIGain</member>
-			<member name="last_addr" type="uint32">0x20000A88</member>
+			<member name="last_addr" type="uint32">0x20001CA0</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -11157,7 +11157,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sMidDrive.sFocPMSM.sBemfObsrv.fltEGain</member>
-			<member name="last_addr" type="uint32">0x20000B48</member>
+			<member name="last_addr" type="uint32">0x20001D60</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -11206,7 +11206,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sMidDrive.sFocPMSM.sBemfObsrv.fltIGain</member>
-			<member name="last_addr" type="uint32">0x20000B3C</member>
+			<member name="last_addr" type="uint32">0x20001D54</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -11255,7 +11255,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sMidDrive.sFocPMSM.sBemfObsrv.sCtrl.fltIGain</member>
-			<member name="last_addr" type="uint32">0x20000B38</member>
+			<member name="last_addr" type="uint32">0x20001D50</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -11304,7 +11304,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sMidDrive.sFocPMSM.sBemfObsrv.sCtrl.fltPGain</member>
-			<member name="last_addr" type="uint32">0x20000B34</member>
+			<member name="last_addr" type="uint32">0x20001D4C</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -11353,7 +11353,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sMidDrive.sFocPMSM.sTo.fltIGain</member>
-			<member name="last_addr" type="uint32">0x20000B5C</member>
+			<member name="last_addr" type="uint32">0x20001D74</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -11402,7 +11402,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sMidDrive.sFocPMSM.sTo.fltPGain</member>
-			<member name="last_addr" type="uint32">0x20000B60</member>
+			<member name="last_addr" type="uint32">0x20001D78</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -11451,7 +11451,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sMidDrive.sFocPMSM.sTo.fltThGain</member>
-			<member name="last_addr" type="uint32">0x20000B64</member>
+			<member name="last_addr" type="uint32">0x20001D7C</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -11500,7 +11500,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sMidDrive.sFocPMSM.sBemfObsrv.fltUGain</member>
-			<member name="last_addr" type="uint32">0x20000B40</member>
+			<member name="last_addr" type="uint32">0x20001D58</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -11549,7 +11549,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sMidDrive.sFocPMSM.sBemfObsrv.fltWIGain</member>
-			<member name="last_addr" type="uint32">0x20000B44</member>
+			<member name="last_addr" type="uint32">0x20001D5C</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -11598,7 +11598,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.ui16TimeFullSpeedFreeWheel</member>
-			<member name="last_addr" type="uint32">0x20000760</member>
+			<member name="last_addr" type="uint32">0x200019B8</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -11647,7 +11647,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.ui16TimeCalibration</member>
-			<member name="last_addr" type="uint32">0x20000762</member>
+			<member name="last_addr" type="uint32">0x200019BA</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -11696,7 +11696,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.ui16TimeFaultRelease</member>
-			<member name="last_addr" type="uint32">0x20000764</member>
+			<member name="last_addr" type="uint32">0x200019BC</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -11745,7 +11745,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFaultThresholds.ui16BlockedPerNum</member>
-			<member name="last_addr" type="uint32">0x20000744</member>
+			<member name="last_addr" type="uint32">0x2000199C</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -11794,7 +11794,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Enc.fltSpdEncMin</member>
-			<member name="last_addr" type="uint32">0x200008BC</member>
+			<member name="last_addr" type="uint32">0x20001AD4</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -11843,7 +11843,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sMidDrive.ui16TimeCalibration</member>
-			<member name="last_addr" type="uint32">0x20000BD0</member>
+			<member name="last_addr" type="uint32">0x20001DE8</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -11892,7 +11892,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sStartUp.sSpeedIntegrator.a32Gain</member>
-			<member name="last_addr" type="uint32">0x2000068C</member>
+			<member name="last_addr" type="uint32">0x200018E4</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -11941,7 +11941,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sScalarCtrl.sFreqIntegrator.a32Gain</member>
-			<member name="last_addr" type="uint32">0x200006FC</member>
+			<member name="last_addr" type="uint32">0x20001954</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -11990,7 +11990,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.sUDcBusFilter.sFltCoeff.fltB0</member>
-			<member name="last_addr" type="uint32">0x200004EC</member>
+			<member name="last_addr" type="uint32">0x20001744</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -12039,7 +12039,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.sUDcBusFilter.sFltCoeff.fltB1</member>
-			<member name="last_addr" type="uint32">0x200004F0</member>
+			<member name="last_addr" type="uint32">0x20001748</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -12088,7 +12088,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.sUDcBusFilter.sFltCoeff.fltA1</member>
-			<member name="last_addr" type="uint32">0x200004F4</member>
+			<member name="last_addr" type="uint32">0x2000174C</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -12137,7 +12137,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.sSpeedElEstFilt.sFltCoeff.fltB0</member>
-			<member name="last_addr" type="uint32">0x200005B4</member>
+			<member name="last_addr" type="uint32">0x2000180C</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -12186,7 +12186,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.sSpeedElEstFilt.sFltCoeff.fltB1</member>
-			<member name="last_addr" type="uint32">0x200005B8</member>
+			<member name="last_addr" type="uint32">0x20001810</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -12235,7 +12235,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.sSpeedElEstFilt.sFltCoeff.fltA1</member>
-			<member name="last_addr" type="uint32">0x200005BC</member>
+			<member name="last_addr" type="uint32">0x20001814</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -12284,7 +12284,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">%</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.sDutyABC.f16A</member>
-			<member name="last_addr" type="uint32">0x20000534</member>
+			<member name="last_addr" type="uint32">0x2000178C</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -12339,7 +12339,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">%</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.sDutyABC.f16B</member>
-			<member name="last_addr" type="uint32">0x20000536</member>
+			<member name="last_addr" type="uint32">0x2000178E</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -12394,7 +12394,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">%</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFocPMSM.sDutyABC.f16C</member>
-			<member name="last_addr" type="uint32">0x20000538</member>
+			<member name="last_addr" type="uint32">0x20001790</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -12449,7 +12449,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Enc.ui16Pp</member>
-			<member name="last_addr" type="uint32">0x200008B8</member>
+			<member name="last_addr" type="uint32">0x20001AD0</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -12498,7 +12498,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Enc.ui16PulseNumber</member>
-			<member name="last_addr" type="uint32">0x200008CE</member>
+			<member name="last_addr" type="uint32">0x20001AE6</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -12547,7 +12547,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Enc.a32PosMeGain</member>
-			<member name="last_addr" type="uint32">0x200008AC</member>
+			<member name="last_addr" type="uint32">0x20001AC4</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -12596,7 +12596,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">Hz</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sOpenloop.fltFreqReq</member>
-			<member name="last_addr" type="uint32">0x2000066C</member>
+			<member name="last_addr" type="uint32">0x200018C4</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -12645,7 +12645,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">Amps</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sOpenloop.sIDQReq.fltD</member>
-			<member name="last_addr" type="uint32">0x20000660</member>
+			<member name="last_addr" type="uint32">0x200018B8</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -12694,7 +12694,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">Volts</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sOpenloop.sUDQReq.fltD</member>
-			<member name="last_addr" type="uint32">0x20000658</member>
+			<member name="last_addr" type="uint32">0x200018B0</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -12743,7 +12743,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">deg</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sOpenloop.f16Theta</member>
-			<member name="last_addr" type="uint32">0x20000672</member>
+			<member name="last_addr" type="uint32">0x200018CA</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Offset</member>
@@ -12798,7 +12798,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sOpenloop.bCurrentControl</member>
-			<member name="last_addr" type="uint32">0x20000670</member>
+			<member name="last_addr" type="uint32">0x200018C8</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string">Cannot be changed in SPIN mode</member>
@@ -12847,7 +12847,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">Amps</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sOpenloop.sIDQReq.fltQ</member>
-			<member name="last_addr" type="uint32">0x20000664</member>
+			<member name="last_addr" type="uint32">0x200018BC</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -12896,7 +12896,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">Volts</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sOpenloop.sUDQReq.fltQ</member>
-			<member name="last_addr" type="uint32">0x2000065C</member>
+			<member name="last_addr" type="uint32">0x200018B4</member>
 			<member name="byte_size" type="sint32">4</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -12945,7 +12945,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFaultIdEnable</member>
-			<member name="last_addr" type="uint32">0x20000720</member>
+			<member name="last_addr" type="uint32">0x20001978</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -12994,7 +12994,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFaultIdEnable</member>
-			<member name="last_addr" type="uint32">0x20000720</member>
+			<member name="last_addr" type="uint32">0x20001978</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -13043,7 +13043,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFaultIdEnable</member>
-			<member name="last_addr" type="uint32">0x20000720</member>
+			<member name="last_addr" type="uint32">0x20001978</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -13092,7 +13092,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFaultIdEnable</member>
-			<member name="last_addr" type="uint32">0x20000720</member>
+			<member name="last_addr" type="uint32">0x20001978</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -13141,7 +13141,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="unit" type="string">unit</member>
 			<member name="period" type="sint32">1000</member>
 			<member name="address" type="string">g_sM1Drive.sFaultIdEnable</member>
-			<member name="last_addr" type="uint32">0x20000720</member>
+			<member name="last_addr" type="uint32">0x20001978</member>
 			<member name="byte_size" type="sint32">2</member>
 			<member name="description" type="string"/>
 			<member name="comment" type="string"/>
@@ -13568,7 +13568,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="scope_x_autoscale" type="sint32">1</member>
 			<member name="scope_x_width" type="real64">1.50000000000000000000e+01</member>
 			<member name="scope_ignore_duplicity" type="sint32">0</member>
-			<sub name="scope_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -13694,7 +13693,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="tree_expand" type="sint32">1</member>
 			<member name="name" type="string">Encoder</member>
 			<member name="href" type="string"/>
-			<member name="graph_buffer" type="sint32">1000</member>
+			<member name="graph_buffer" type="sint32">10000</member>
 			<member name="graph_type" type="sint32">0</member>
 			<member name="graph_x_units" type="sint32">2</member>
 			<member name="graph_x_label" type="string">Time</member>
@@ -13718,11 +13717,10 @@ b#10 0000 - Missing Pp value</member>
 			<member name="yblock3_info" type="CPrjItemRS_YBlockInfo">ObjId0659</member>
 			<member name="yblock4_info" type="CPrjItemRS_YBlockInfo">ObjId0660</member>
 			<member name="yblock5_info" type="CPrjItemRS_YBlockInfo">ObjId0661</member>
-			<member name="scope_period" type="real64">1.00000000000000002082e-02</member>
+			<member name="scope_period" type="real64">0.00000000000000000000e+00</member>
 			<member name="scope_x_autoscale" type="sint32">1</member>
 			<member name="scope_x_width" type="real64">1.00000000000000000000e+01</member>
 			<member name="scope_ignore_duplicity" type="sint32">0</member>
-			<sub name="scope_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -13731,18 +13729,18 @@ b#10 0000 - Missing Pp value</member>
 		</object>
 		<object name="ObjId0654" type="CPrjItemRS_VarInfo">
 			<member name="variable" type="CObject_ptr">ObjId0475</member>
-			<member name="visible" type="sint32">0</member>
-			<member name="y_block" type="sint32">1</member>
+			<member name="visible" type="sint32">1</member>
+			<member name="y_block" type="sint32">0</member>
 			<member name="color" type="uint32">0xFF00</member>
 		</object>
 		<object name="ObjId0655" type="CPrjItemRS_VarInfo">
 			<member name="variable" type="CObject_ptr">ObjId0473</member>
-			<member name="visible" type="sint32">0</member>
-			<member name="y_block" type="sint32">2</member>
+			<member name="visible" type="sint32">1</member>
+			<member name="y_block" type="sint32">1</member>
 			<member name="color" type="uint32">0xFF</member>
 		</object>
 		<object name="ObjId0656" type="CPrjItemRS_YBlockInfo">
-			<member name="join_class" type="sint32">1</member>
+			<member name="join_class" type="sint32">0</member>
 			<member name="laxis_label" type="string">rpm</member>
 			<member name="laxis_style" type="sint32">0</member>
 			<member name="laxis_min" type="real64">-1.00000000000000000000e+01</member>
@@ -13758,7 +13756,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="raxis_subsets" type="sint32">0</member>
 		</object>
 		<object name="ObjId0657" type="CPrjItemRS_YBlockInfo">
-			<member name="join_class" type="sint32">2</member>
+			<member name="join_class" type="sint32">1</member>
 			<member name="laxis_label" type="string">dec</member>
 			<member name="laxis_style" type="sint32">0</member>
 			<member name="laxis_min" type="real64">-1.00000000000000000000e+01</member>
@@ -13842,7 +13840,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="tree_expand" type="sint32">1</member>
 			<member name="name" type="string">Encoder Direction Scope</member>
 			<member name="href" type="string"/>
-			<member name="graph_buffer" type="sint32">1000</member>
+			<member name="graph_buffer" type="sint32">10000</member>
 			<member name="graph_type" type="sint32">0</member>
 			<member name="graph_x_units" type="sint32">2</member>
 			<member name="graph_x_label" type="string">Time</member>
@@ -13866,11 +13864,10 @@ b#10 0000 - Missing Pp value</member>
 			<member name="yblock3_info" type="CPrjItemRS_YBlockInfo">ObjId0668</member>
 			<member name="yblock4_info" type="CPrjItemRS_YBlockInfo">ObjId0669</member>
 			<member name="yblock5_info" type="CPrjItemRS_YBlockInfo">ObjId0670</member>
-			<member name="scope_period" type="real64">1.00000000000000002082e-02</member>
+			<member name="scope_period" type="real64">0.00000000000000000000e+00</member>
 			<member name="scope_x_autoscale" type="sint32">1</member>
 			<member name="scope_x_width" type="real64">1.00000000000000000000e+01</member>
 			<member name="scope_ignore_duplicity" type="sint32">0</member>
-			<sub name="scope_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -13880,13 +13877,13 @@ b#10 0000 - Missing Pp value</member>
 		<object name="ObjId0663" type="CPrjItemRS_VarInfo">
 			<member name="variable" type="CObject_ptr">ObjId0444</member>
 			<member name="visible" type="sint32">1</member>
-			<member name="y_block" type="sint32">1</member>
+			<member name="y_block" type="sint32">0</member>
 			<member name="color" type="uint32">0xFF00</member>
 		</object>
 		<object name="ObjId0664" type="CPrjItemRS_VarInfo">
 			<member name="variable" type="CObject_ptr">ObjId0475</member>
-			<member name="visible" type="sint32">0</member>
-			<member name="y_block" type="sint32">1</member>
+			<member name="visible" type="sint32">1</member>
+			<member name="y_block" type="sint32">0</member>
 			<member name="color" type="uint32">0xFF</member>
 		</object>
 		<object name="ObjId0665" type="CPrjItemRS_YBlockInfo">
@@ -14029,7 +14026,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="trig_hold_delay" type="real64">1.00000000000000000000e+00</member>
 			<member name="trig_zero_x" type="sint32">1</member>
 			<member name="rec_id" type="sint32">0</member>
-			<sub name="rec_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -14214,7 +14210,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="trig_hold_delay" type="real64">1.00000000000000000000e+00</member>
 			<member name="trig_zero_x" type="sint32">1</member>
 			<member name="rec_id" type="sint32">0</member>
-			<sub name="rec_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -14346,12 +14341,13 @@ b#10 0000 - Missing Pp value</member>
 			<member name="backcolor" type="uint32">0xFFFFFF</member>
 			<member name="forecolor" type="uint32">0x0</member>
 		</object>
-		<object name="ObjId0695" type="CObArray" length="5">
+		<object name="ObjId0695" type="CObArray" length="6">
 			<member name="index0" type="CObject_ptr">ObjId0696</member>
 			<member name="index1" type="CObject_ptr">ObjId0697</member>
 			<member name="index2" type="CObject_ptr">ObjId0698</member>
 			<member name="index3" type="CObject_ptr">ObjId0699</member>
 			<member name="index4" type="CObject_ptr">ObjId0700</member>
+			<member name="index5" type="CObject_ptr">ObjId2499</member>
 		</object>
 		<object name="ObjId0696" type="CPrjItemBlock_ColInfo">
 			<member name="column_visible" type="sint32">1</member>
@@ -14377,6 +14373,11 @@ b#10 0000 - Missing Pp value</member>
 			<member name="column_visible" type="sint32">0</member>
 			<member name="column_width" type="sint32">200</member>
 			<member name="column_ix" type="sint32">4</member>
+		</object>
+		<object name="ObjId2499" type="CPrjItemBlock_ColInfo">
+			<member name="column_visible" type="sint32">0</member>
+			<member name="column_width" type="sint32">120</member>
+			<member name="column_ix" type="sint32">5</member>
 		</object>
 		<object name="ObjId0701" type="CMapObToObEx">
 			<member name="key0" type="CObject_ptr">ObjId0366</member>
@@ -15744,7 +15745,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="tree_expand" type="sint32">1</member>
 			<member name="name" type="string">Current Controller</member>
 			<member name="href" type="string"/>
-			<member name="graph_buffer" type="sint32">1000</member>
+			<member name="graph_buffer" type="sint32">10000</member>
 			<member name="graph_type" type="sint32">0</member>
 			<member name="graph_x_units" type="sint32">2</member>
 			<member name="graph_x_label" type="string">Time</member>
@@ -15770,11 +15771,10 @@ b#10 0000 - Missing Pp value</member>
 			<member name="yblock3_info" type="CPrjItemRS_YBlockInfo">ObjId0858</member>
 			<member name="yblock4_info" type="CPrjItemRS_YBlockInfo">ObjId0859</member>
 			<member name="yblock5_info" type="CPrjItemRS_YBlockInfo">ObjId0860</member>
-			<member name="scope_period" type="real64">1.00000000000000002082e-02</member>
+			<member name="scope_period" type="real64">0.00000000000000000000e+00</member>
 			<member name="scope_x_autoscale" type="sint32">1</member>
 			<member name="scope_x_width" type="real64">1.00000000000000000000e+01</member>
 			<member name="scope_ignore_duplicity" type="sint32">0</member>
-			<sub name="scope_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -15943,7 +15943,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="trig_hold_delay" type="real64">1.00000000000000000000e+00</member>
 			<member name="trig_zero_x" type="sint32">1</member>
 			<member name="rec_id" type="sint32">0</member>
-			<sub name="rec_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -16116,7 +16115,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="trig_hold_delay" type="real64">1.00000000000000000000e+00</member>
 			<member name="trig_zero_x" type="sint32">1</member>
 			<member name="rec_id" type="sint32">0</member>
-			<sub name="rec_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -16284,7 +16282,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="trig_hold_delay" type="real64">1.00000000000000000000e+00</member>
 			<member name="trig_zero_x" type="sint32">1</member>
 			<member name="rec_id" type="sint32">0</member>
-			<sub name="rec_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -16422,12 +16419,13 @@ b#10 0000 - Missing Pp value</member>
 			<member name="backcolor" type="uint32">0xFFFFFF</member>
 			<member name="forecolor" type="uint32">0x0</member>
 		</object>
-		<object name="ObjId0894" type="CObArray" length="5">
+		<object name="ObjId0894" type="CObArray" length="6">
 			<member name="index0" type="CObject_ptr">ObjId0895</member>
 			<member name="index1" type="CObject_ptr">ObjId0896</member>
 			<member name="index2" type="CObject_ptr">ObjId0897</member>
 			<member name="index3" type="CObject_ptr">ObjId0898</member>
 			<member name="index4" type="CObject_ptr">ObjId0899</member>
+			<member name="index5" type="CObject_ptr">ObjId2500</member>
 		</object>
 		<object name="ObjId0895" type="CPrjItemBlock_ColInfo">
 			<member name="column_visible" type="sint32">1</member>
@@ -16453,6 +16451,11 @@ b#10 0000 - Missing Pp value</member>
 			<member name="column_visible" type="sint32">0</member>
 			<member name="column_width" type="sint32">200</member>
 			<member name="column_ix" type="sint32">4</member>
+		</object>
+		<object name="ObjId2500" type="CPrjItemBlock_ColInfo">
+			<member name="column_visible" type="sint32">0</member>
+			<member name="column_width" type="sint32">120</member>
+			<member name="column_ix" type="sint32">5</member>
 		</object>
 		<object name="ObjId0900" type="CMapObToObEx">
 			<member name="key0" type="CObject_ptr">ObjId0366</member>
@@ -17640,7 +17643,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="tree_expand" type="sint32">1</member>
 			<member name="name" type="string">Speed</member>
 			<member name="href" type="string"/>
-			<member name="graph_buffer" type="sint32">1000</member>
+			<member name="graph_buffer" type="sint32">10000</member>
 			<member name="graph_type" type="sint32">0</member>
 			<member name="graph_x_units" type="sint32">2</member>
 			<member name="graph_x_label" type="string">Time</member>
@@ -17665,11 +17668,10 @@ b#10 0000 - Missing Pp value</member>
 			<member name="yblock3_info" type="CPrjItemRS_YBlockInfo">ObjId1034</member>
 			<member name="yblock4_info" type="CPrjItemRS_YBlockInfo">ObjId1035</member>
 			<member name="yblock5_info" type="CPrjItemRS_YBlockInfo">ObjId1036</member>
-			<member name="scope_period" type="real64">1.00000000000000002082e-02</member>
+			<member name="scope_period" type="real64">0.00000000000000000000e+00</member>
 			<member name="scope_x_autoscale" type="sint32">1</member>
 			<member name="scope_x_width" type="real64">1.00000000000000000000e+01</member>
 			<member name="scope_ignore_duplicity" type="sint32">0</member>
-			<sub name="scope_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -17679,23 +17681,23 @@ b#10 0000 - Missing Pp value</member>
 		<object name="ObjId1028" type="CPrjItemRS_VarInfo">
 			<member name="variable" type="CObject_ptr">ObjId0377</member>
 			<member name="visible" type="sint32">1</member>
-			<member name="y_block" type="sint32">1</member>
+			<member name="y_block" type="sint32">0</member>
 			<member name="color" type="uint32">0xFF00</member>
 		</object>
 		<object name="ObjId1029" type="CPrjItemRS_VarInfo">
 			<member name="variable" type="CObject_ptr">ObjId0482</member>
 			<member name="visible" type="sint32">1</member>
-			<member name="y_block" type="sint32">1</member>
+			<member name="y_block" type="sint32">0</member>
 			<member name="color" type="uint32">0xFF</member>
 		</object>
 		<object name="ObjId1030" type="CPrjItemRS_VarInfo">
 			<member name="variable" type="CObject_ptr">ObjId0374</member>
 			<member name="visible" type="sint32">1</member>
-			<member name="y_block" type="sint32">1</member>
+			<member name="y_block" type="sint32">0</member>
 			<member name="color" type="uint32">0xFF0000</member>
 		</object>
 		<object name="ObjId1031" type="CPrjItemRS_YBlockInfo">
-			<member name="join_class" type="sint32">1</member>
+			<member name="join_class" type="sint32">0</member>
 			<member name="laxis_label" type="string">rpm</member>
 			<member name="laxis_style" type="sint32">0</member>
 			<member name="laxis_min" type="real64">-7.50000000000000000000e+02</member>
@@ -17795,7 +17797,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="tree_expand" type="sint32">1</member>
 			<member name="name" type="string">Speed Controller</member>
 			<member name="href" type="string"/>
-			<member name="graph_buffer" type="sint32">1000</member>
+			<member name="graph_buffer" type="sint32">10000</member>
 			<member name="graph_type" type="sint32">0</member>
 			<member name="graph_x_units" type="sint32">2</member>
 			<member name="graph_x_label" type="string">Time</member>
@@ -17821,11 +17823,10 @@ b#10 0000 - Missing Pp value</member>
 			<member name="yblock3_info" type="CPrjItemRS_YBlockInfo">ObjId1045</member>
 			<member name="yblock4_info" type="CPrjItemRS_YBlockInfo">ObjId1046</member>
 			<member name="yblock5_info" type="CPrjItemRS_YBlockInfo">ObjId1047</member>
-			<member name="scope_period" type="real64">1.00000000000000002082e-02</member>
+			<member name="scope_period" type="real64">0.00000000000000000000e+00</member>
 			<member name="scope_x_autoscale" type="sint32">1</member>
 			<member name="scope_x_width" type="real64">1.00000000000000000000e+01</member>
 			<member name="scope_ignore_duplicity" type="sint32">0</member>
-			<sub name="scope_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -17835,25 +17836,25 @@ b#10 0000 - Missing Pp value</member>
 		<object name="ObjId1038" type="CPrjItemRS_VarInfo">
 			<member name="variable" type="CObject_ptr">ObjId0374</member>
 			<member name="visible" type="sint32">1</member>
-			<member name="y_block" type="sint32">1</member>
+			<member name="y_block" type="sint32">0</member>
 			<member name="color" type="uint32">0xFF00</member>
 		</object>
 		<object name="ObjId1039" type="CPrjItemRS_VarInfo">
 			<member name="variable" type="CObject_ptr">ObjId0393</member>
 			<member name="visible" type="sint32">1</member>
-			<member name="y_block" type="sint32">1</member>
+			<member name="y_block" type="sint32">0</member>
 			<member name="color" type="uint32">0xFF</member>
 		</object>
 		<object name="ObjId1040" type="CPrjItemRS_VarInfo">
 			<member name="variable" type="CObject_ptr">ObjId0447</member>
 			<member name="visible" type="sint32">1</member>
-			<member name="y_block" type="sint32">2</member>
+			<member name="y_block" type="sint32">1</member>
 			<member name="color" type="uint32">0xFF0000</member>
 		</object>
 		<object name="ObjId1041" type="CPrjItemRS_VarInfo">
 			<member name="variable" type="CObject_ptr">ObjId0400</member>
 			<member name="visible" type="sint32">1</member>
-			<member name="y_block" type="sint32">2</member>
+			<member name="y_block" type="sint32">1</member>
 			<member name="color" type="uint32">0xFFFF00</member>
 		</object>
 		<object name="ObjId1042" type="CPrjItemRS_YBlockInfo">
@@ -17993,7 +17994,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="trig_hold_delay" type="real64">1.00000000000000000000e+00</member>
 			<member name="trig_zero_x" type="sint32">1</member>
 			<member name="rec_id" type="sint32">0</member>
-			<sub name="rec_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -18156,7 +18156,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="trig_hold_delay" type="real64">1.00000000000000000000e+00</member>
 			<member name="trig_zero_x" type="sint32">1</member>
 			<member name="rec_id" type="sint32">0</member>
-			<sub name="rec_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -18325,7 +18324,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="trig_hold_delay" type="real64">1.00000000000000000000e+00</member>
 			<member name="trig_zero_x" type="sint32">1</member>
 			<member name="rec_id" type="sint32">0</member>
-			<sub name="rec_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -18500,7 +18498,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="trig_hold_delay" type="real64">1.00000000000000000000e+00</member>
 			<member name="trig_zero_x" type="sint32">1</member>
 			<member name="rec_id" type="sint32">0</member>
-			<sub name="rec_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -18679,12 +18676,13 @@ b#10 0000 - Missing Pp value</member>
 			<member name="backcolor" type="uint32">0xFFFFFF</member>
 			<member name="forecolor" type="uint32">0x0</member>
 		</object>
-		<object name="ObjId1093" type="CObArray" length="5">
+		<object name="ObjId1093" type="CObArray" length="6">
 			<member name="index0" type="CObject_ptr">ObjId1094</member>
 			<member name="index1" type="CObject_ptr">ObjId1095</member>
 			<member name="index2" type="CObject_ptr">ObjId1096</member>
 			<member name="index3" type="CObject_ptr">ObjId1097</member>
 			<member name="index4" type="CObject_ptr">ObjId1098</member>
+			<member name="index5" type="CObject_ptr">ObjId2501</member>
 		</object>
 		<object name="ObjId1094" type="CPrjItemBlock_ColInfo">
 			<member name="column_visible" type="sint32">1</member>
@@ -18710,6 +18708,11 @@ b#10 0000 - Missing Pp value</member>
 			<member name="column_visible" type="sint32">0</member>
 			<member name="column_width" type="sint32">200</member>
 			<member name="column_ix" type="sint32">4</member>
+		</object>
+		<object name="ObjId2501" type="CPrjItemBlock_ColInfo">
+			<member name="column_visible" type="sint32">0</member>
+			<member name="column_width" type="sint32">120</member>
+			<member name="column_ix" type="sint32">5</member>
 		</object>
 		<object name="ObjId1099" type="CMapObToObEx">
 			<member name="key0" type="CObject_ptr">ObjId0366</member>
@@ -19892,7 +19895,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="tree_expand" type="sint32">1</member>
 			<member name="name" type="string">Position</member>
 			<member name="href" type="string"/>
-			<member name="graph_buffer" type="sint32">1000</member>
+			<member name="graph_buffer" type="sint32">10000</member>
 			<member name="graph_type" type="sint32">0</member>
 			<member name="graph_x_units" type="sint32">2</member>
 			<member name="graph_x_label" type="string">Time</member>
@@ -19918,11 +19921,10 @@ b#10 0000 - Missing Pp value</member>
 			<member name="yblock3_info" type="CPrjItemRS_YBlockInfo">ObjId1234</member>
 			<member name="yblock4_info" type="CPrjItemRS_YBlockInfo">ObjId1235</member>
 			<member name="yblock5_info" type="CPrjItemRS_YBlockInfo">ObjId1236</member>
-			<member name="scope_period" type="real64">1.00000000000000002082e-02</member>
+			<member name="scope_period" type="real64">0.00000000000000000000e+00</member>
 			<member name="scope_x_autoscale" type="sint32">1</member>
 			<member name="scope_x_width" type="real64">1.00000000000000000000e+01</member>
 			<member name="scope_ignore_duplicity" type="sint32">0</member>
-			<sub name="scope_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -19931,26 +19933,26 @@ b#10 0000 - Missing Pp value</member>
 		</object>
 		<object name="ObjId1227" type="CPrjItemRS_VarInfo">
 			<member name="variable" type="CObject_ptr">ObjId0479</member>
-			<member name="visible" type="sint32">0</member>
-			<member name="y_block" type="sint32">1</member>
+			<member name="visible" type="sint32">1</member>
+			<member name="y_block" type="sint32">0</member>
 			<member name="color" type="uint32">0x2E2DED</member>
 		</object>
 		<object name="ObjId1228" type="CPrjItemRS_VarInfo">
 			<member name="variable" type="CObject_ptr">ObjId0480</member>
-			<member name="visible" type="sint32">0</member>
-			<member name="y_block" type="sint32">1</member>
+			<member name="visible" type="sint32">1</member>
+			<member name="y_block" type="sint32">0</member>
 			<member name="color" type="uint32">0x478C00</member>
 		</object>
 		<object name="ObjId1229" type="CPrjItemRS_VarInfo">
 			<member name="variable" type="CObject_ptr">ObjId0377</member>
 			<member name="visible" type="sint32">1</member>
-			<member name="y_block" type="sint32">2</member>
+			<member name="y_block" type="sint32">1</member>
 			<member name="color" type="uint32">0xA95918</member>
 		</object>
 		<object name="ObjId1230" type="CPrjItemRS_VarInfo">
 			<member name="variable" type="CObject_ptr">ObjId0482</member>
 			<member name="visible" type="sint32">1</member>
-			<member name="y_block" type="sint32">2</member>
+			<member name="y_block" type="sint32">1</member>
 			<member name="color" type="uint32">0x227DF3</member>
 		</object>
 		<object name="ObjId1231" type="CPrjItemRS_YBlockInfo">
@@ -20054,7 +20056,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="tree_expand" type="sint32">1</member>
 			<member name="name" type="string">Position Controller</member>
 			<member name="href" type="string"/>
-			<member name="graph_buffer" type="sint32">1000</member>
+			<member name="graph_buffer" type="sint32">10000</member>
 			<member name="graph_type" type="sint32">0</member>
 			<member name="graph_x_units" type="sint32">2</member>
 			<member name="graph_x_label" type="string">Time</member>
@@ -20082,11 +20084,10 @@ b#10 0000 - Missing Pp value</member>
 			<member name="yblock3_info" type="CPrjItemRS_YBlockInfo">ObjId1247</member>
 			<member name="yblock4_info" type="CPrjItemRS_YBlockInfo">ObjId1248</member>
 			<member name="yblock5_info" type="CPrjItemRS_YBlockInfo">ObjId1249</member>
-			<member name="scope_period" type="real64">1.00000000000000002082e-02</member>
+			<member name="scope_period" type="real64">0.00000000000000000000e+00</member>
 			<member name="scope_x_autoscale" type="sint32">1</member>
 			<member name="scope_x_width" type="real64">1.00000000000000000000e+01</member>
 			<member name="scope_ignore_duplicity" type="sint32">0</member>
-			<sub name="scope_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -20095,38 +20096,38 @@ b#10 0000 - Missing Pp value</member>
 		</object>
 		<object name="ObjId1238" type="CPrjItemRS_VarInfo">
 			<member name="variable" type="CObject_ptr">ObjId0479</member>
-			<member name="visible" type="sint32">0</member>
-			<member name="y_block" type="sint32">1</member>
+			<member name="visible" type="sint32">1</member>
+			<member name="y_block" type="sint32">0</member>
 			<member name="color" type="uint32">0x2E2DED</member>
 		</object>
 		<object name="ObjId1239" type="CPrjItemRS_VarInfo">
 			<member name="variable" type="CObject_ptr">ObjId0480</member>
-			<member name="visible" type="sint32">0</member>
-			<member name="y_block" type="sint32">1</member>
+			<member name="visible" type="sint32">1</member>
+			<member name="y_block" type="sint32">0</member>
 			<member name="color" type="uint32">0x478C00</member>
 		</object>
 		<object name="ObjId1240" type="CPrjItemRS_VarInfo">
 			<member name="variable" type="CObject_ptr">ObjId0377</member>
 			<member name="visible" type="sint32">1</member>
-			<member name="y_block" type="sint32">2</member>
+			<member name="y_block" type="sint32">1</member>
 			<member name="color" type="uint32">0xA95918</member>
 		</object>
 		<object name="ObjId1241" type="CPrjItemRS_VarInfo">
 			<member name="variable" type="CObject_ptr">ObjId0482</member>
 			<member name="visible" type="sint32">1</member>
-			<member name="y_block" type="sint32">2</member>
+			<member name="y_block" type="sint32">1</member>
 			<member name="color" type="uint32">0x227DF3</member>
 		</object>
 		<object name="ObjId1242" type="CPrjItemRS_VarInfo">
 			<member name="variable" type="CObject_ptr">ObjId0447</member>
 			<member name="visible" type="sint32">1</member>
-			<member name="y_block" type="sint32">3</member>
+			<member name="y_block" type="sint32">2</member>
 			<member name="color" type="uint32">0x912C66</member>
 		</object>
 		<object name="ObjId1243" type="CPrjItemRS_VarInfo">
 			<member name="variable" type="CObject_ptr">ObjId0400</member>
 			<member name="visible" type="sint32">1</member>
-			<member name="y_block" type="sint32">3</member>
+			<member name="y_block" type="sint32">2</member>
 			<member name="color" type="uint32">0x201DA1</member>
 		</object>
 		<object name="ObjId1244" type="CPrjItemRS_YBlockInfo">
@@ -20230,7 +20231,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="tree_expand" type="sint32">1</member>
 			<member name="name" type="string">Encoder</member>
 			<member name="href" type="string"/>
-			<member name="graph_buffer" type="sint32">1000</member>
+			<member name="graph_buffer" type="sint32">10000</member>
 			<member name="graph_type" type="sint32">0</member>
 			<member name="graph_x_units" type="sint32">2</member>
 			<member name="graph_x_label" type="string">Time</member>
@@ -20254,11 +20255,10 @@ b#10 0000 - Missing Pp value</member>
 			<member name="yblock3_info" type="CPrjItemRS_YBlockInfo">ObjId1256</member>
 			<member name="yblock4_info" type="CPrjItemRS_YBlockInfo">ObjId1257</member>
 			<member name="yblock5_info" type="CPrjItemRS_YBlockInfo">ObjId1258</member>
-			<member name="scope_period" type="real64">1.00000000000000002082e-02</member>
+			<member name="scope_period" type="real64">0.00000000000000000000e+00</member>
 			<member name="scope_x_autoscale" type="sint32">1</member>
 			<member name="scope_x_width" type="real64">1.00000000000000000000e+01</member>
 			<member name="scope_ignore_duplicity" type="sint32">0</member>
-			<sub name="scope_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -20267,18 +20267,18 @@ b#10 0000 - Missing Pp value</member>
 		</object>
 		<object name="ObjId1251" type="CPrjItemRS_VarInfo">
 			<member name="variable" type="CObject_ptr">ObjId0475</member>
-			<member name="visible" type="sint32">0</member>
-			<member name="y_block" type="sint32">1</member>
+			<member name="visible" type="sint32">1</member>
+			<member name="y_block" type="sint32">0</member>
 			<member name="color" type="uint32">0xFF00</member>
 		</object>
 		<object name="ObjId1252" type="CPrjItemRS_VarInfo">
 			<member name="variable" type="CObject_ptr">ObjId0473</member>
-			<member name="visible" type="sint32">0</member>
-			<member name="y_block" type="sint32">2</member>
+			<member name="visible" type="sint32">1</member>
+			<member name="y_block" type="sint32">1</member>
 			<member name="color" type="uint32">0xFF</member>
 		</object>
 		<object name="ObjId1253" type="CPrjItemRS_YBlockInfo">
-			<member name="join_class" type="sint32">1</member>
+			<member name="join_class" type="sint32">0</member>
 			<member name="laxis_label" type="string">rpm</member>
 			<member name="laxis_style" type="sint32">0</member>
 			<member name="laxis_min" type="real64">-1.00000000000000000000e+01</member>
@@ -20294,7 +20294,7 @@ b#10 0000 - Missing Pp value</member>
 			<member name="raxis_subsets" type="sint32">0</member>
 		</object>
 		<object name="ObjId1254" type="CPrjItemRS_YBlockInfo">
-			<member name="join_class" type="sint32">2</member>
+			<member name="join_class" type="sint32">1</member>
 			<member name="laxis_label" type="string">dec</member>
 			<member name="laxis_style" type="sint32">0</member>
 			<member name="laxis_min" type="real64">-1.00000000000000000000e+01</member>
@@ -20384,37 +20384,43 @@ b#10 0000 - Missing Pp value</member>
 			<member name="backcolor" type="uint32">0xFFFFFF</member>
 			<member name="forecolor" type="uint32">0x0</member>
 		</object>
-		<object name="ObjId1260" type="CObArray" length="5">
-			<member name="index0" type="CObject_ptr">ObjId1261</member>
-			<member name="index1" type="CObject_ptr">ObjId1262</member>
-			<member name="index2" type="CObject_ptr">ObjId1263</member>
-			<member name="index3" type="CObject_ptr">ObjId1264</member>
-			<member name="index4" type="CObject_ptr">ObjId1265</member>
+		<object name="ObjId1260" type="CObArray" length="6">
+			<member name="index0" type="CObject_ptr">ObjId2509</member>
+			<member name="index1" type="CObject_ptr">ObjId2510</member>
+			<member name="index2" type="CObject_ptr">ObjId2511</member>
+			<member name="index3" type="CObject_ptr">ObjId2512</member>
+			<member name="index4" type="CObject_ptr">ObjId2513</member>
+			<member name="index5" type="CObject_ptr">ObjId2514</member>
 		</object>
-		<object name="ObjId1261" type="CPrjItemBlock_ColInfo">
+		<object name="ObjId2509" type="CPrjItemBlock_ColInfo">
 			<member name="column_visible" type="sint32">1</member>
 			<member name="column_width" type="sint32">215</member>
 			<member name="column_ix" type="sint32">0</member>
 		</object>
-		<object name="ObjId1262" type="CPrjItemBlock_ColInfo">
+		<object name="ObjId2510" type="CPrjItemBlock_ColInfo">
 			<member name="column_visible" type="sint32">1</member>
 			<member name="column_width" type="sint32">135</member>
 			<member name="column_ix" type="sint32">1</member>
 		</object>
-		<object name="ObjId1263" type="CPrjItemBlock_ColInfo">
+		<object name="ObjId2511" type="CPrjItemBlock_ColInfo">
 			<member name="column_visible" type="sint32">1</member>
 			<member name="column_width" type="sint32">120</member>
 			<member name="column_ix" type="sint32">2</member>
 		</object>
-		<object name="ObjId1264" type="CPrjItemBlock_ColInfo">
+		<object name="ObjId2512" type="CPrjItemBlock_ColInfo">
 			<member name="column_visible" type="sint32">1</member>
 			<member name="column_width" type="sint32">50</member>
 			<member name="column_ix" type="sint32">3</member>
 		</object>
-		<object name="ObjId1265" type="CPrjItemBlock_ColInfo">
+		<object name="ObjId2513" type="CPrjItemBlock_ColInfo">
 			<member name="column_visible" type="sint32">0</member>
 			<member name="column_width" type="sint32">200</member>
 			<member name="column_ix" type="sint32">4</member>
+		</object>
+		<object name="ObjId2514" type="CPrjItemBlock_ColInfo">
+			<member name="column_visible" type="sint32">0</member>
+			<member name="column_width" type="sint32">120</member>
+			<member name="column_ix" type="sint32">5</member>
 		</object>
 		<object name="ObjId1266" type="CMapObToObEx">
 			<member name="key0" type="CObject_ptr">ObjId0366</member>
@@ -21505,11 +21511,10 @@ b#10 0000 - Missing Pp value</member>
 			<member name="yblock3_info" type="CPrjItemRS_YBlockInfo">ObjId1387</member>
 			<member name="yblock4_info" type="CPrjItemRS_YBlockInfo">ObjId1388</member>
 			<member name="yblock5_info" type="CPrjItemRS_YBlockInfo">ObjId1389</member>
-			<member name="scope_period" type="real64">1.00000000000000002082e-02</member>
+			<member name="scope_period" type="real64">0.00000000000000000000e+00</member>
 			<member name="scope_x_autoscale" type="sint32">1</member>
 			<member name="scope_x_width" type="real64">1.00000000000000000000e+01</member>
 			<member name="scope_ignore_duplicity" type="sint32">0</member>
-			<sub name="scope_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -21663,7 +21668,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="trig_hold_delay" type="real64">1.00000000000000000000e+00</member>
 			<member name="trig_zero_x" type="sint32">1</member>
 			<member name="rec_id" type="sint32">0</member>
-			<sub name="rec_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -21813,7 +21817,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="trig_hold_delay" type="real64">1.00000000000000000000e+00</member>
 			<member name="trig_zero_x" type="sint32">1</member>
 			<member name="rec_id" type="sint32">0</member>
-			<sub name="rec_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -21980,7 +21983,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="trig_hold_delay" type="real64">1.00000000000000000000e+00</member>
 			<member name="trig_zero_x" type="sint32">1</member>
 			<member name="rec_id" type="sint32">0</member>
-			<sub name="rec_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -22117,12 +22119,13 @@ b#10 0000 - Missing Pp value</member>
 			<member name="backcolor" type="uint32">0xFFFFFF</member>
 			<member name="forecolor" type="uint32">0x0</member>
 		</object>
-		<object name="ObjId1419" type="CObArray" length="5">
+		<object name="ObjId1419" type="CObArray" length="6">
 			<member name="index0" type="CObject_ptr">ObjId1420</member>
 			<member name="index1" type="CObject_ptr">ObjId1421</member>
 			<member name="index2" type="CObject_ptr">ObjId1422</member>
 			<member name="index3" type="CObject_ptr">ObjId1423</member>
 			<member name="index4" type="CObject_ptr">ObjId1424</member>
+			<member name="index5" type="CObject_ptr">ObjId2503</member>
 		</object>
 		<object name="ObjId1420" type="CPrjItemBlock_ColInfo">
 			<member name="column_visible" type="sint32">1</member>
@@ -22148,6 +22151,11 @@ b#10 0000 - Missing Pp value</member>
 			<member name="column_visible" type="sint32">1</member>
 			<member name="column_width" type="sint32">200</member>
 			<member name="column_ix" type="sint32">4</member>
+		</object>
+		<object name="ObjId2503" type="CPrjItemBlock_ColInfo">
+			<member name="column_visible" type="sint32">0</member>
+			<member name="column_width" type="sint32">120</member>
+			<member name="column_ix" type="sint32">5</member>
 		</object>
 		<object name="ObjId1425" type="CMapObToObEx">
 			<member name="key0" type="CObject_ptr">ObjId0366</member>
@@ -23223,7 +23231,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="scope_x_autoscale" type="sint32">1</member>
 			<member name="scope_x_width" type="real64">1.00000000000000000000e+01</member>
 			<member name="scope_ignore_duplicity" type="sint32">0</member>
-			<sub name="scope_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -23403,7 +23410,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="scope_x_autoscale" type="sint32">1</member>
 			<member name="scope_x_width" type="real64">1.00000000000000000000e+01</member>
 			<member name="scope_ignore_duplicity" type="sint32">0</member>
-			<sub name="scope_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -23565,7 +23571,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="scope_x_autoscale" type="sint32">1</member>
 			<member name="scope_x_width" type="real64">1.00000000000000000000e+01</member>
 			<member name="scope_ignore_duplicity" type="sint32">0</member>
-			<sub name="scope_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -23733,7 +23738,6 @@ b#10 0000 - Missing Pp value</member>
 			<member name="trig_hold_delay" type="real64">1.00000000000000000000e+00</member>
 			<member name="trig_zero_x" type="sint32">1</member>
 			<member name="rec_id" type="sint32">0</member>
-			<sub name="rec_views" length="0"/>
 			<member name="data_capture_mode" type="sint32">0</member>
 			<member name="data_capture_onaction" type="sint32">0</member>
 			<member name="data_capture_file_type" type="sint32">0</member>
@@ -23859,12 +23863,13 @@ b#10 0000 - Missing Pp value</member>
 			<member name="backcolor" type="uint32">0xFFFFFF</member>
 			<member name="forecolor" type="uint32">0x0</member>
 		</object>
-		<object name="ObjId1574" type="CObArray" length="5">
+		<object name="ObjId1574" type="CObArray" length="6">
 			<member name="index0" type="CObject_ptr">ObjId1575</member>
 			<member name="index1" type="CObject_ptr">ObjId1576</member>
 			<member name="index2" type="CObject_ptr">ObjId1577</member>
 			<member name="index3" type="CObject_ptr">ObjId1578</member>
 			<member name="index4" type="CObject_ptr">ObjId1579</member>
+			<member name="index5" type="CObject_ptr">ObjId2504</member>
 		</object>
 		<object name="ObjId1575" type="CPrjItemBlock_ColInfo">
 			<member name="column_visible" type="sint32">1</member>
@@ -23890,6 +23895,11 @@ b#10 0000 - Missing Pp value</member>
 			<member name="column_visible" type="sint32">1</member>
 			<member name="column_width" type="sint32">200</member>
 			<member name="column_ix" type="sint32">4</member>
+		</object>
+		<object name="ObjId2504" type="CPrjItemBlock_ColInfo">
+			<member name="column_visible" type="sint32">0</member>
+			<member name="column_width" type="sint32">120</member>
+			<member name="column_ix" type="sint32">5</member>
 		</object>
 		<object name="ObjId1580" type="CMapObToObEx">
 			<member name="key0" type="CObject_ptr">ObjId0494</member>
@@ -27600,12 +27610,13 @@ b#10 0000 - Missing Pp value</member>
 			<member name="backcolor" type="uint32">0xFFFFFF</member>
 			<member name="forecolor" type="uint32">0x0</member>
 		</object>
-		<object name="ObjId1957" type="CObArray" length="5">
+		<object name="ObjId1957" type="CObArray" length="6">
 			<member name="index0" type="CObject_ptr">ObjId1958</member>
 			<member name="index1" type="CObject_ptr">ObjId1959</member>
 			<member name="index2" type="CObject_ptr">ObjId1960</member>
 			<member name="index3" type="CObject_ptr">ObjId1961</member>
 			<member name="index4" type="CObject_ptr">ObjId1962</member>
+			<member name="index5" type="CObject_ptr">ObjId2505</member>
 		</object>
 		<object name="ObjId1958" type="CPrjItemBlock_ColInfo">
 			<member name="column_visible" type="sint32">1</member>
@@ -27631,6 +27642,11 @@ b#10 0000 - Missing Pp value</member>
 			<member name="column_visible" type="sint32">1</member>
 			<member name="column_width" type="sint32">200</member>
 			<member name="column_ix" type="sint32">4</member>
+		</object>
+		<object name="ObjId2505" type="CPrjItemBlock_ColInfo">
+			<member name="column_visible" type="sint32">0</member>
+			<member name="column_width" type="sint32">120</member>
+			<member name="column_ix" type="sint32">5</member>
 		</object>
 		<object name="ObjId1963" type="CMapObToObEx">
 			<member name="key0" type="CObject_ptr">ObjId0366</member>
@@ -29147,12 +29163,13 @@ b#10 0000 - Missing Pp value</member>
 			<member name="backcolor" type="uint32">0xFFFFFF</member>
 			<member name="forecolor" type="uint32">0x0</member>
 		</object>
-		<object name="ObjId2181" type="CObArray" length="5">
+		<object name="ObjId2181" type="CObArray" length="6">
 			<member name="index0" type="CObject_ptr">ObjId2182</member>
 			<member name="index1" type="CObject_ptr">ObjId2183</member>
 			<member name="index2" type="CObject_ptr">ObjId2184</member>
 			<member name="index3" type="CObject_ptr">ObjId2185</member>
 			<member name="index4" type="CObject_ptr">ObjId2186</member>
+			<member name="index5" type="CObject_ptr">ObjId2506</member>
 		</object>
 		<object name="ObjId2182" type="CPrjItemBlock_ColInfo">
 			<member name="column_visible" type="sint32">1</member>
@@ -29178,6 +29195,11 @@ b#10 0000 - Missing Pp value</member>
 			<member name="column_visible" type="sint32">1</member>
 			<member name="column_width" type="sint32">200</member>
 			<member name="column_ix" type="sint32">4</member>
+		</object>
+		<object name="ObjId2506" type="CPrjItemBlock_ColInfo">
+			<member name="column_visible" type="sint32">0</member>
+			<member name="column_width" type="sint32">120</member>
+			<member name="column_ix" type="sint32">5</member>
 		</object>
 		<object name="ObjId2187" type="CMapObToObEx">
 			<member name="key0" type="CObject_ptr">ObjId0574</member>
@@ -29634,12 +29656,13 @@ b#10 0000 - Missing Pp value</member>
 			<member name="backcolor" type="uint32">0xFFFFFF</member>
 			<member name="forecolor" type="uint32">0x0</member>
 		</object>
-		<object name="ObjId2261" type="CObArray" length="5">
+		<object name="ObjId2261" type="CObArray" length="6">
 			<member name="index0" type="CObject_ptr">ObjId2262</member>
 			<member name="index1" type="CObject_ptr">ObjId2263</member>
 			<member name="index2" type="CObject_ptr">ObjId2264</member>
 			<member name="index3" type="CObject_ptr">ObjId2265</member>
 			<member name="index4" type="CObject_ptr">ObjId2266</member>
+			<member name="index5" type="CObject_ptr">ObjId2507</member>
 		</object>
 		<object name="ObjId2262" type="CPrjItemBlock_ColInfo">
 			<member name="column_visible" type="sint32">1</member>
@@ -29665,6 +29688,11 @@ b#10 0000 - Missing Pp value</member>
 			<member name="column_visible" type="sint32">0</member>
 			<member name="column_width" type="sint32">200</member>
 			<member name="column_ix" type="sint32">4</member>
+		</object>
+		<object name="ObjId2507" type="CPrjItemBlock_ColInfo">
+			<member name="column_visible" type="sint32">0</member>
+			<member name="column_width" type="sint32">120</member>
+			<member name="column_ix" type="sint32">5</member>
 		</object>
 		<object name="ObjId2267" type="CMapObToObEx">
 			<member name="key0" type="CObject_ptr">ObjId0366</member>
@@ -31530,12 +31558,13 @@ b#10 0000 - Missing Pp value</member>
 			<member name="backcolor" type="uint32">0xFFFFFF</member>
 			<member name="forecolor" type="uint32">0x0</member>
 		</object>
-		<object name="ObjId0029" type="CObArray" length="5">
+		<object name="ObjId0029" type="CObArray" length="6">
 			<member name="index0" type="CObject_ptr">ObjId0278</member>
 			<member name="index1" type="CObject_ptr">ObjId0279</member>
 			<member name="index2" type="CObject_ptr">ObjId0280</member>
 			<member name="index3" type="CObject_ptr">ObjId0281</member>
 			<member name="index4" type="CObject_ptr">ObjId0282</member>
+			<member name="index5" type="CObject_ptr">ObjId2508</member>
 		</object>
 		<object name="ObjId0278" type="CPrjItemBlock_ColInfo">
 			<member name="column_visible" type="sint32">1</member>
@@ -31561,6 +31590,11 @@ b#10 0000 - Missing Pp value</member>
 			<member name="column_visible" type="sint32">1</member>
 			<member name="column_width" type="sint32">200</member>
 			<member name="column_ix" type="sint32">4</member>
+		</object>
+		<object name="ObjId2508" type="CPrjItemBlock_ColInfo">
+			<member name="column_visible" type="sint32">0</member>
+			<member name="column_width" type="sint32">120</member>
+			<member name="column_ix" type="sint32">5</member>
 		</object>
 		<object name="ObjId0035" type="CMapObToObEx"/>
 		<object name="ObjId0036" type="CFlashProgDlg">

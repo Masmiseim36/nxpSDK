@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020, 2021, 2022 NXP
+ * Copyright 2018-2023 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -19,22 +19,44 @@
 #endif
 
 #if SSS_HAVE_HOSTCRYPTO_MBEDTLS
+#include "network_mbedtls.h"
+#include <mbedtls/version.h>
 #include <mbedtls/sha256.h>
 #include <mbedtls/oid.h>
 #include <mbedtls/x509_crt.h>
+#include <mbedtls/entropy.h>
+#include <mbedtls/ctr_drbg.h>
+#include "psa_crypto_its.h"
 #endif
 
+#ifdef NXP_IOT_AGENT_ENABLE_LITE
+#include <mcuxClPsaDriver_Oracle_Macros.h>
+#include <mcuxClPsaDriver_Oracle_Utils.h>
 
-#include <fsl_sss_api.h>
+extern const key_recipe_t recipe_el2goconn_auth_prk;
+#endif
 
 #include <nxp_iot_agent.h>
 #include <nxp_iot_agent_service.h>
 #include <nxp_iot_agent_macros.h>
 
-#if (SSS_HAVE_HOSTCRYPTO_OPENSSL) || (AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1)
-static iot_agent_status_t iot_agent_utils_get_cert_from_keystore(sss_key_store_t *keyStore,
-	uint32_t certificate_id, uint8_t* cert, size_t* cert_len);
+#if !(AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1)
+#include <unistd.h>
+#endif //!(AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1)
+
+#if NXP_IOT_AGENT_HAVE_SSS
+#include <fsl_sss_api.h>
+#include <nxp_iot_agent_keystore_sss_se05x.h>
 #endif
+#if NXP_IOT_AGENT_HAVE_PSA
+#if NXP_IOT_AGENT_HAVE_PSA_IMPL_SIMUL
+#else
+#include <fsl_silicon_id.h>
+#endif
+#endif
+
+// AES CBC
+#define AES_CBC_BLOCK_SIZE  		16
 
 #if SSS_HAVE_HOSTCRYPTO_OPENSSL
 
@@ -391,18 +413,17 @@ exit:
 	return agent_status;
 }
 
-iot_agent_status_t iot_agent_utils_write_certificate_pem_from_keystore(sss_key_store_t *keyStore,
-	sss_object_t *keyObject, const uint32_t certid, const char* filename)
+iot_agent_status_t iot_agent_utils_write_certificate_pem_from_keystore(iot_agent_keystore_t *keyStore,
+	const uint32_t certid, const char* filename)
 {
 	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
 	uint8_t cert_buffer[NXP_IOT_AGENT_EDGELOCK2GO_CLIENT_CERTIFICATE_BUFFER_SIZE];
 	size_t cert_len = sizeof(cert_buffer);
 
 	ASSERT_OR_EXIT_MSG(keyStore != NULL, "keyStore is NULL.");
-	ASSERT_OR_EXIT_MSG(keyObject != NULL, "keyObject is NULL.");
 	ASSERT_OR_EXIT_MSG(filename != NULL, "filename is NULL.");
 
-	agent_status = iot_agent_utils_get_cert_from_keystore(keyStore, certid, cert_buffer, &cert_len);
+	agent_status = iot_agent_utils_get_certificate_from_keystore(keyStore, certid, cert_buffer, &cert_len);
 	AGENT_SUCCESS_OR_EXIT();
 
 	ASSERT_OR_EXIT_MSG((strstr(filename, "..")) == NULL, "Filename is not allowed");
@@ -434,7 +455,8 @@ iot_agent_status_t iot_agent_utils_write_key_ref_service_pem(const iot_agent_con
 	agent_status = iot_agent_get_keystore_by_id(ctx, keystore_id, &keystore);
 	AGENT_SUCCESS_OR_EXIT();
 
-	sss_context = keystore->sss_context;
+	agent_status = iot_agent_keystore_sss_se05x_get_sss_key_store(keystore->context, &sss_context);
+	AGENT_SUCCESS_OR_EXIT_MSG("iot_agent_keystore_sss_se05x_get_sss_key_store failed: 0x%08x", agent_status);
 
 	sss_status = sss_key_object_init(&key, sss_context);
 	SSS_SUCCESS_OR_EXIT_MSG("sss_key_object_init failed: 0x%04x.", sss_status);
@@ -454,33 +476,32 @@ exit:
 
 #endif
 
+#if NXP_IOT_AGENT_HAVE_SSS
 static iot_agent_status_t iot_agent_utils_get_keystore_from_service_descriptor(const iot_agent_context_t* ctx,
-	const nxp_iot_ServiceDescriptor* service_descriptor, sss_key_store_t** sss_keystore)
+	const nxp_iot_ServiceDescriptor* service_descriptor, iot_agent_keystore_t** keystore)
 {
 	uint32_t keystore_id = 0U;
-	iot_agent_keystore_t* keystore = NULL;
 	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
 
 	ASSERT_OR_EXIT_MSG(ctx != NULL, "ctx is NULL.");
 	ASSERT_OR_EXIT_MSG(service_descriptor != NULL, "service_descriptor is NULL.");
-	ASSERT_OR_EXIT_MSG(sss_keystore != NULL, "sss_keystore is NULL.");
+	ASSERT_OR_EXIT_MSG(keystore != NULL, "keystore is NULL.");
 
 	keystore_id = service_descriptor->client_certificate_sss_ref.endpoint_id;
 
-	agent_status = iot_agent_get_keystore_by_id(ctx, keystore_id, &keystore);
+	agent_status = iot_agent_get_keystore_by_id(ctx, keystore_id, keystore);
 	AGENT_SUCCESS_OR_EXIT();
-
-	*sss_keystore = keystore->sss_context;
 exit:
 	return agent_status;
 }
+#endif // NXP_IOT_AGENT_HAVE_SSS
 
 #if	(SSS_HAVE_HOSTCRYPTO_OPENSSL)
 iot_agent_status_t iot_agent_utils_write_certificate_pem_cos_over_rtp(iot_agent_context_t* ctx,
 	const nxp_iot_ServiceDescriptor* service_descriptor, const char* filename)
 {
 	uint32_t certificate_id = 0U;
-	sss_key_store_t* sss_keystore = NULL;
+	iot_agent_keystore_t* keystore = NULL;
 	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
 	uint8_t cert_buffer[NXP_IOT_AGENT_EDGELOCK2GO_CLIENT_CERTIFICATE_BUFFER_SIZE];
 	size_t cert_len = sizeof(cert_buffer);
@@ -491,10 +512,10 @@ iot_agent_status_t iot_agent_utils_write_certificate_pem_cos_over_rtp(iot_agent_
 
 	certificate_id = service_descriptor->client_certificate_sss_ref.object_id;
 
-	agent_status = iot_agent_utils_get_keystore_from_service_descriptor(ctx, service_descriptor, &sss_keystore);
+	agent_status = iot_agent_utils_get_keystore_from_service_descriptor(ctx, service_descriptor, &keystore);
 	AGENT_SUCCESS_OR_EXIT();
 
-	agent_status = iot_agent_utils_get_cert_from_keystore(sss_keystore, certificate_id, cert_buffer, &cert_len);
+	agent_status = iot_agent_utils_get_certificate_from_keystore(keystore, certificate_id, cert_buffer, &cert_len);
 	AGENT_SUCCESS_OR_EXIT();
 
 	ASSERT_OR_EXIT_MSG((strstr(filename, "..")) == NULL, "Filename is not allowed");
@@ -510,6 +531,7 @@ iot_agent_status_t iot_agent_utils_write_key_ref_pem_cos_over_rtp(const iot_agen
 {
 	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
 	sss_status_t sss_status;
+	iot_agent_keystore_t* keystore = NULL;
 	sss_key_store_t* sss_keystore = NULL;
 	sss_object_t key = { 0 };
 
@@ -517,8 +539,11 @@ iot_agent_status_t iot_agent_utils_write_key_ref_pem_cos_over_rtp(const iot_agen
 	ASSERT_OR_EXIT_MSG(service_descriptor != NULL, "service_descriptor is NULL.");
 	ASSERT_OR_EXIT_MSG(filename != NULL, "filename is NULL.");
 
-	agent_status = iot_agent_utils_get_keystore_from_service_descriptor(ctx, service_descriptor, &sss_keystore);
+	agent_status = iot_agent_utils_get_keystore_from_service_descriptor(ctx, service_descriptor, &keystore);
 	AGENT_SUCCESS_OR_EXIT();
+
+	agent_status = iot_agent_keystore_sss_se05x_get_sss_key_store(keystore->context, &sss_keystore);
+	AGENT_SUCCESS_OR_EXIT_MSG("iot_agent_keystore_sss_se05x_get_sss_key_store failed: 0x%08x", agent_status);
 
 	sss_status = sss_key_object_init(&key, sss_keystore);
 	SSS_SUCCESS_OR_EXIT_MSG("sss_key_object_init failed: 0x%04x.", sss_status);
@@ -536,7 +561,7 @@ iot_agent_status_t iot_agent_utils_get_certificate_common_name(iot_agent_context
 	const nxp_iot_ServiceDescriptor* service_descriptor, char* common_name, size_t max_size)
 {
 	uint32_t certificate_id = 0U;
-	sss_key_store_t* sss_keystore = NULL;
+	iot_agent_keystore_t* keystore = NULL;
 	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
 	uint8_t cert_buffer[NXP_IOT_AGENT_EDGELOCK2GO_CLIENT_CERTIFICATE_BUFFER_SIZE];
 	size_t cert_len = sizeof(cert_buffer);
@@ -550,10 +575,10 @@ iot_agent_status_t iot_agent_utils_get_certificate_common_name(iot_agent_context
 
 	certificate_id = service_descriptor->client_certificate_sss_ref.object_id;
 
-	agent_status = iot_agent_utils_get_keystore_from_service_descriptor(ctx, service_descriptor, &sss_keystore);
+	agent_status = iot_agent_utils_get_keystore_from_service_descriptor(ctx, service_descriptor, &keystore);
 	AGENT_SUCCESS_OR_EXIT();
 
-	agent_status = iot_agent_utils_get_cert_from_keystore(sss_keystore, certificate_id, cert_buffer, &cert_len);
+	agent_status = iot_agent_utils_get_certificate_from_keystore(keystore, certificate_id, cert_buffer, &cert_len);
 	AGENT_SUCCESS_OR_EXIT();
 
 	bio_in_cert = BIO_new_mem_buf(cert_buffer, (int)cert_len);
@@ -631,7 +656,9 @@ iot_agent_status_t iot_agent_utils_get_certificate_common_name(iot_agent_context
 	const nxp_iot_ServiceDescriptor* service_descriptor, char* common_name, size_t max_size)
 {
 	uint32_t certificate_id = 0U;
-	sss_key_store_t* sss_keystore = NULL;
+#if NXP_IOT_AGENT_HAVE_SSS
+	iot_agent_keystore_t* keystore = NULL;
+#endif
 	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
 	uint8_t cert_buffer[NXP_IOT_AGENT_EDGELOCK2GO_CLIENT_CERTIFICATE_BUFFER_SIZE];
 	size_t cert_len = sizeof(cert_buffer);
@@ -641,13 +668,18 @@ iot_agent_status_t iot_agent_utils_get_certificate_common_name(iot_agent_context
 	ASSERT_OR_EXIT_MSG(common_name != NULL, "common_name is NULL.");
 
 	certificate_id = service_descriptor->client_certificate_sss_ref.object_id;
-
-	agent_status = iot_agent_utils_get_keystore_from_service_descriptor(ctx, service_descriptor, &sss_keystore);
+#if NXP_IOT_AGENT_HAVE_SSS
+	agent_status = iot_agent_utils_get_keystore_from_service_descriptor(ctx, service_descriptor, &keystore);
 	AGENT_SUCCESS_OR_EXIT();
 
-	agent_status = iot_agent_utils_get_cert_from_keystore(sss_keystore, certificate_id, cert_buffer, &cert_len);
+	agent_status = iot_agent_utils_get_certificate_from_keystore(keystore, certificate_id, cert_buffer, &cert_len);
 	AGENT_SUCCESS_OR_EXIT();
-
+#endif
+#if NXP_IOT_AGENT_HAVE_PSA
+	psa_status_t psa_status = PSA_SUCCESS;
+	psa_status = psa_export_key(certificate_id, cert_buffer, sizeof(cert_buffer), &cert_len);
+    PSA_SUCCESS_OR_EXIT_MSG("Error in esporting client certificate");
+#endif
 	agent_status = iot_agent_utils_get_oid_value_in_subject(cert_buffer, cert_len, "CN", common_name, max_size);
 	AGENT_SUCCESS_OR_EXIT();
 
@@ -656,47 +688,61 @@ exit:
 }
 #endif //#if (AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1)
 
-#if (SSS_HAVE_HOSTCRYPTO_OPENSSL) || (AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1)
-static iot_agent_status_t iot_agent_utils_get_cert_from_keystore(sss_key_store_t *keyStore,
+iot_agent_status_t iot_agent_utils_get_certificate_from_keystore(iot_agent_keystore_t* keystore,
 	uint32_t certificate_id, uint8_t* cert, size_t* cert_len)
 {
 	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
+
+	ASSERT_OR_EXIT_MSG(keystore != NULL, "keyStore is NULL.");
+	ASSERT_OR_EXIT_MSG(cert != NULL, "cert is NULL.");
+	ASSERT_OR_EXIT_MSG(cert_len != NULL, "cert_len is NULL.");
+	ASSERT_OR_EXIT_MSG(keystore->type == IOT_AGENT_KS_SSS_SE05X, "keystore type %d is unsupported.", keystore->type);
+
+#if NXP_IOT_AGENT_HAVE_SSS
 	sss_status_t sss_status;
 	sss_object_t certObj = { 0 };
 	size_t cert_lenBits = 0U;
 
-	ASSERT_OR_EXIT_MSG(keyStore != NULL, "keyStore is NULL.");
-	ASSERT_OR_EXIT_MSG(cert != NULL, "cert is NULL.");
-	ASSERT_OR_EXIT_MSG(cert_len != NULL, "cert_len is NULL.");
-
 	cert_lenBits = (*cert_len) * 8U;
+	sss_key_store_t* sss_key_store = NULL;
 
-	sss_status = sss_key_object_init(&certObj, keyStore);
+	agent_status = iot_agent_keystore_sss_se05x_get_sss_key_store(keystore->context, &sss_key_store);
+	AGENT_SUCCESS_OR_EXIT_MSG("iot_agent_keystore_sss_se05x_get_sss_key_store failed: 0x%08x", agent_status);
+
+	sss_status = sss_key_object_init(&certObj, sss_key_store);
 	SSS_SUCCESS_OR_EXIT_MSG("sss_key_object_init failed: 0x%08x.", sss_status);
 
 	sss_status = sss_key_object_get_handle(&certObj, certificate_id);
 	SSS_SUCCESS_OR_EXIT_MSG("sss_key_object_get_handle failed: 0x%08x.", sss_status);
 
-	sss_status = sss_key_store_get_key(keyStore, &certObj, cert, cert_len, &cert_lenBits);
+	// The API needs to be passed a "size in bits" pointer. Does
+	// not make any sense for certificates, but not all keystore types accept NULL,
+	sss_status = sss_key_store_get_key(sss_key_store, &certObj, cert, cert_len, &cert_lenBits);
 	SSS_SUCCESS_OR_EXIT_MSG("sss_key_store_get_key failed: 0x%08x.", sss_status);
+#endif
 exit:
 	return agent_status;
 }
-#endif
 
-iot_agent_status_t iot_agent_get_first_found_object(sss_key_store_t *keystore,
+iot_agent_status_t iot_agent_get_first_found_object(iot_agent_keystore_t* keystore,
 	uint32_t* object_ids, size_t num_objects, uint32_t* object_id)
 {
 	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
-	sss_status_t sss_status;
-
-	sss_object_t sss_object = { 0 };
 
 	ASSERT_OR_EXIT_MSG(keystore != NULL, "keystore is NULL.");
 	ASSERT_OR_EXIT_MSG(object_ids != NULL, "object_ids is NULL.");
 	ASSERT_OR_EXIT_MSG(object_id != NULL, "object_id is NULL.");
+	ASSERT_OR_EXIT_MSG(keystore->type == IOT_AGENT_KS_SSS_SE05X, "keystore type %d is unsupported.", keystore->type);
 
-	sss_status = sss_key_object_init(&sss_object, keystore);
+#if NXP_IOT_AGENT_HAVE_SSS
+	sss_status_t sss_status;
+	sss_object_t sss_object = { 0 };
+
+	sss_key_store_t* sss_key_store = NULL;
+	agent_status = iot_agent_keystore_sss_se05x_get_sss_key_store(keystore->context, &sss_key_store);
+	AGENT_SUCCESS_OR_EXIT_MSG("iot_agent_keystore_sss_se05x_get_sss_key_store failed: 0x%08x", agent_status);
+
+	sss_status = sss_key_object_init(&sss_object, sss_key_store);
 	SSS_SUCCESS_OR_EXIT_MSG("sss_key_object_init failed: 0x%08x.", sss_status);
 
 	for (size_t i = 0U; i < num_objects; i++) {
@@ -706,50 +752,200 @@ iot_agent_status_t iot_agent_get_first_found_object(sss_key_store_t *keystore,
 			break;
 		}
 	}
+#endif
 exit:
 	return agent_status;
 }
 
-
-iot_agent_status_t iot_agent_utils_get_edgelock2go_key_id(sss_key_store_t *keystore, uint32_t* object_id)
+iot_agent_status_t iot_agent_utils_get_edgelock2go_key_id(iot_agent_keystore_t* keystore, uint32_t* object_id)
 {
 	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
-	uint32_t object_ids[] = { EDGELOCK2GO_KEYID_ECC, EDGELOCK2GO_KEYID_RSA };
-	size_t num_objects = sizeof(object_ids) / sizeof(object_ids[0]);
+	if (0) {}
+#if NXP_IOT_AGENT_HAVE_SSS
+	else if (keystore->type == IOT_AGENT_KS_SSS_SE05X) {
 
-	ASSERT_OR_EXIT_MSG(keystore != NULL, "keystore is NULL.");
-	ASSERT_OR_EXIT_MSG(object_id != NULL, "object_id is NULL.");
+		uint32_t object_ids[] = { EDGELOCK2GO_KEYID_ECC, EDGELOCK2GO_KEYID_RSA };
+		size_t num_objects = sizeof(object_ids) / sizeof(object_ids[0]);
 
-	agent_status = iot_agent_get_first_found_object(keystore, object_ids, num_objects, object_id);
-	AGENT_SUCCESS_OR_EXIT_MSG("Neither ECC nor RSA key found.");
-exit:
+		ASSERT_OR_EXIT_MSG(keystore != NULL, "keystore is NULL.");
+		ASSERT_OR_EXIT_MSG(object_id != NULL, "object_id is NULL.");
+
+		agent_status = iot_agent_get_first_found_object(keystore, object_ids, num_objects, object_id);
+		AGENT_SUCCESS_OR_EXIT_MSG("Neither ECC nor RSA key found.");
+	}
+#endif
+#if NXP_IOT_AGENT_HAVE_PSA
+	else if (keystore->type == IOT_AGENT_KS_PSA) {
+		*object_id = EDGELOCK2GO_KEYID_ECC;
+	}
+#endif
+#if NXP_IOT_AGENT_HAVE_SSS
+	exit:
+#endif
 	return agent_status;
 }
 
 
-iot_agent_status_t iot_agent_utils_get_edgelock2go_certificate_id(sss_key_store_t *keystore, uint32_t* object_id)
+iot_agent_status_t iot_agent_utils_get_edgelock2go_certificate_id(iot_agent_keystore_t* keystore, uint32_t* object_id)
 {
 	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
-	uint32_t object_ids[] = { EDGELOCK2GO_CERTID_ECC, EDGELOCK2GO_CERTID_RSA };
-	size_t num_objects = sizeof(object_ids) / sizeof(object_ids[0]);
+	if (0) {}
+#if NXP_IOT_AGENT_HAVE_SSS
+	else if (keystore->type == IOT_AGENT_KS_SSS_SE05X) {
+		uint32_t object_ids[] = { EDGELOCK2GO_CERTID_ECC, EDGELOCK2GO_CERTID_RSA };
+		size_t num_objects = sizeof(object_ids) / sizeof(object_ids[0]);
 
-	ASSERT_OR_EXIT_MSG(keystore != NULL, "keystore is NULL.");
-	ASSERT_OR_EXIT_MSG(object_id != NULL, "object_id is NULL.");
+		ASSERT_OR_EXIT_MSG(keystore != NULL, "keystore is NULL.");
+		ASSERT_OR_EXIT_MSG(object_id != NULL, "object_id is NULL.");
 
-	agent_status = iot_agent_get_first_found_object(keystore, object_ids, num_objects, object_id);
-	AGENT_SUCCESS_OR_EXIT_MSG("Neither ECC nor RSA certificate found.");
+		agent_status = iot_agent_get_first_found_object(keystore, object_ids, num_objects, object_id);
+		AGENT_SUCCESS_OR_EXIT_MSG("Neither ECC nor RSA certificate found.");
+	}
+#endif
+#if NXP_IOT_AGENT_HAVE_PSA
+	else {
+		// set status as failure, but without message
+		agent_status = IOT_AGENT_FAILURE;
+		goto exit;
+	}
+#endif
 exit:
 	return agent_status;
 }
 
+#if NXP_IOT_AGENT_HAVE_PSA
+
+iot_agent_status_t iot_agent_utils_get_device_id(uint8_t* buffer, size_t* len) {
+	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
+
+#if NXP_IOT_AGENT_HAVE_PSA_IMPL_SIMUL
+	// Fake for simulators, the UID in fact is in ITS.
+	ASSERT_OR_EXIT_MSG(*len >= DEVICEID_LENGTH, "buffer is too small for device id, %u bytes are required.", DEVICEID_LENGTH);
+
+	psa_status_t psa_status = psa_its_get(DEVICEID_KEYID, 0, DEVICEID_LENGTH, buffer, len);
+	ASSERT_OR_EXIT_MSG(psa_status == PSA_SUCCESS, "psa_its_get failed: 0x%08x", psa_status);
+#elif NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM
+	// Devices do have an ID which can be retrieved:
+	ASSERT_OR_EXIT_MSG(SILICONID_GetID(buffer, len) == kStatus_Success, "Error in getting the device ID");
+#else
+	agent_status = read_device_uuid(buffer, len);
+#endif
+
+exit:
+	return agent_status;
+}
+
+
+
+iot_agent_status_t iot_agent_utils_create_self_signed_edgelock2go_certificate(
+        iot_agent_keystore_t* keystore, uint8_t* certificate_buffer,
+        size_t* certificate_buffer_size)
+{
+    iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
+    int ret = 1;
+    mbedtls_pk_context loaded_issuer_key;
+    const char* issuer_prefix = "O=NXP,OU=Plug and Trust,CN=NXP_DIE_ID_AUTH,serialNumber=";
+    char issuer_name[256] = {0};
+
+    mbedtls_x509write_cert crt;
+    mbedtls_mpi serial;
+    mbedtls_entropy_context entropy;
+    mbedtls_ctr_drbg_context ctr_drbg;
+    const char *pers = "edglock2go_self_signed_cert";
+
+    mbedtls_x509write_crt_init( &crt );
+    mbedtls_pk_init( &loaded_issuer_key );
+    mbedtls_mpi_init( &serial );
+    mbedtls_ctr_drbg_init( &ctr_drbg );
+    mbedtls_entropy_init( &entropy );
+
+    ret = mbedtls_ctr_drbg_seed( &ctr_drbg, mbedtls_entropy_func, &entropy,
+                               (const unsigned char *) pers,
+                               strlen( pers ) );
+    ASSERT_OR_EXIT_MSG(ret == 0, "mbedtls_ctr_drbg_seed failed: 0x%x", ret);
+
+	uint8_t uuid[20] = { 0 };
+	size_t uuid_len = sizeof(uuid);
+	agent_status = iot_agent_utils_get_device_id(uuid, &uuid_len);
+	ASSERT_OR_EXIT_MSG(agent_status == IOT_AGENT_SUCCESS, "iot_agent_utils_get_device_id failed with 0x%08x", agent_status);
+
+	COMPILE_TIME_ASSERT(sizeof(issuer_name) > sizeof(*issuer_prefix) + sizeof(uuid) * 2);
+	strcpy(issuer_name, issuer_prefix);
+	char* pos = issuer_name + strlen(issuer_prefix);
+	for (size_t i = 0; i < uuid_len; i++) {
+		sprintf(pos, "%02X", uuid[i]);
+		pos += 2;
+	}
+
+#ifdef NXP_IOT_AGENT_ENABLE_LITE
+    psa_key_attributes_t attributes = PSA_KEY_ATTRIBUTES_INIT;
+    psa_set_key_algorithm(&attributes, PSA_ALG_ECDSA(PSA_ALG_SHA_256));
+    psa_set_key_type(&attributes, PSA_KEY_TYPE_ECC_KEY_PAIR(PSA_ECC_FAMILY_SECP_R1));
+    psa_set_key_bits(&attributes, 256);
+    psa_set_key_usage_flags(&attributes, PSA_KEY_USAGE_SIGN_MESSAGE | PSA_KEY_USAGE_VERIFY_MESSAGE | PSA_KEY_USAGE_SIGN_HASH | PSA_KEY_USAGE_VERIFY_HASH);
+    psa_set_key_lifetime(&attributes, PSA_KEY_LIFETIME_FROM_PERSISTENCE_AND_LOCATION(PSA_KEY_PERSISTENCE_DEFAULT, PSA_KEY_LOCATION_S50_KEY_GEN_STORAGE));
+    psa_set_key_id(&attributes, EDGELOCK2GO_KEYID_ECC);
+
+    psa_key_id_t id = 0U;
+    psa_status_t psa_status = psa_import_key(&attributes, (uint8_t const *)&recipe_el2goconn_auth_prk, mcuxClPsaDriver_Oracle_Utils_GetRecipeSize(&recipe_el2goconn_auth_prk), &id);
+    ASSERT_OR_EXIT_MSG(psa_status == PSA_SUCCESS || psa_status == PSA_ERROR_ALREADY_EXISTS, "psa_import_key failed: 0x%x", psa_status);
+#endif
+
+	ret = mbedtls_pk_setup_opaque(&loaded_issuer_key, EDGELOCK2GO_KEYID_ECC);
+	ASSERT_OR_EXIT_MSG(ret == 0, "mbedtls_pk_setup_opaque failed: 0x%x", ret);
+
+    mbedtls_x509write_crt_set_subject_key( &crt, &loaded_issuer_key );
+    mbedtls_x509write_crt_set_issuer_key( &crt, &loaded_issuer_key );
+
+    ret = mbedtls_x509write_crt_set_issuer_name( &crt, issuer_name);
+    ASSERT_OR_EXIT_MSG(ret == 0, "mbedtls_x509write_crt_set_issuer_name failed with 0x%08x", ret);
+
+    ret = mbedtls_x509write_crt_set_subject_name( &crt, issuer_name);
+    ASSERT_OR_EXIT_MSG(ret == 0, "mbedtls_x509write_crt_set_subject_name failed with 0x%08x", ret);
+
+    mbedtls_x509write_crt_set_version( &crt, MBEDTLS_X509_CRT_VERSION_3 );
+
+    mbedtls_md_type_t md_alg = MBEDTLS_MD_SHA256;
+    if (mbedtls_pk_get_bitlen(&loaded_issuer_key) == 384)
+    {
+        md_alg = MBEDTLS_MD_SHA384;
+    }
+    mbedtls_x509write_crt_set_md_alg( &crt, md_alg);
+
+    const uint8_t serial_bytes[1] = {1};
+    ret = mbedtls_mpi_read_binary(&serial, serial_bytes, sizeof(serial_bytes));
+    ASSERT_OR_EXIT_MSG(ret == 0, "mbedtls_mpi_read_binary failed with 0x%08x", ret);
+    ret = mbedtls_x509write_crt_set_serial( &crt, &serial );
+    ASSERT_OR_EXIT_MSG(ret == 0, "mbedtls_x509write_crt_set_serial failed with 0x%08x", ret);
+
+    ret = mbedtls_x509write_crt_set_validity( &crt, "20220101000000", "99991231235959");
+    ASSERT_OR_EXIT_MSG(ret == 0, "mbedtls_x509write_crt_set_validity failed with 0x%08x", ret);
+
+    // Note: mbedtls_x509write_crt_der writes the cert to the end of the buffer!
+    ret = mbedtls_x509write_crt_der(&crt, certificate_buffer, *certificate_buffer_size,
+            mbedtls_ctr_drbg_random, &ctr_drbg);
+    ASSERT_OR_EXIT_MSG(ret > 0, "mbedtls_x509write_crt_der failed with 0x%08x", ret);
+    memmove(certificate_buffer, certificate_buffer + *certificate_buffer_size - ret, ret);
+    *certificate_buffer_size = ret;
+
+exit:
+    mbedtls_x509write_crt_free( &crt );
+    mbedtls_pk_free( &loaded_issuer_key );
+    mbedtls_mpi_free( &serial );
+    mbedtls_ctr_drbg_free( &ctr_drbg );
+    mbedtls_entropy_free( &entropy );
+    return agent_status;
+}
+#endif
 
 iot_agent_status_t iot_agent_utils_write_edgelock2go_datastore(iot_agent_keystore_t *keystore,
 	iot_agent_datastore_t* datastore, const char* hostname, uint32_t port,
-	const pb_bytes_array_t* trusted_root_ca_certificates)
+	const pb_bytes_array_t* trusted_root_ca_certificates, const pb_bytes_array_t* client_certificate)
 {
 
 	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
 	nxp_iot_ServiceDescriptor service_descriptor = nxp_iot_ServiceDescriptor_init_default;
+
 
 	uint32_t object_id = 0U;
 	uint8_t* buffer = NULL;
@@ -767,6 +963,9 @@ iot_agent_status_t iot_agent_utils_write_edgelock2go_datastore(iot_agent_keystor
 #elif SSS_HAVE_HOSTCRYPTO_MBEDTLS
     int failed = 0U;
 #endif
+#if NXP_IOT_AGENT_HAVE_PSA
+	PB_BYTES_ARRAY_T(1024) client_certificate_buffer = { 0 };
+#endif
 
 	ASSERT_OR_EXIT_MSG(keystore != NULL, "keystore is NULL.");
 	ASSERT_OR_EXIT_MSG(datastore != NULL, "datastore is NULL.");
@@ -779,24 +978,39 @@ iot_agent_status_t iot_agent_utils_write_edgelock2go_datastore(iot_agent_keystor
 
 	service_descriptor.has_client_key_sss_ref = true;
 	service_descriptor.client_key_sss_ref.has_type = true;
-	service_descriptor.client_key_sss_ref.type = nxp_iot_EndpointType_KS_SSS_SE05X;
+	service_descriptor.client_key_sss_ref.type = (nxp_iot_EndpointType)keystore->type;
 	service_descriptor.client_key_sss_ref.has_endpoint_id = true;
-
 	service_descriptor.client_key_sss_ref.endpoint_id = keystore->identifier;
 	service_descriptor.client_key_sss_ref.has_object_id = true;
-	agent_status = iot_agent_utils_get_edgelock2go_key_id(keystore->sss_context, &object_id);
+	agent_status = iot_agent_utils_get_edgelock2go_key_id(keystore, &object_id);
 	service_descriptor.client_key_sss_ref.object_id = object_id;
 	AGENT_SUCCESS_OR_EXIT_MSG("iot_agent_utils_get_edgelock2go_key_id failed: 0x%08x", agent_status);
 
-	service_descriptor.has_client_certificate_sss_ref = true;
-	service_descriptor.client_certificate_sss_ref.has_type = true;
-	service_descriptor.client_certificate_sss_ref.type = nxp_iot_EndpointType_KS_SSS_SE05X;
-	service_descriptor.client_certificate_sss_ref.has_endpoint_id = true;
-	service_descriptor.client_certificate_sss_ref.endpoint_id = keystore->identifier;
-	service_descriptor.client_certificate_sss_ref.has_object_id = true;
-	agent_status = iot_agent_utils_get_edgelock2go_certificate_id(keystore->sss_context, &object_id);
-	service_descriptor.client_certificate_sss_ref.object_id = object_id;
-	AGENT_SUCCESS_OR_EXIT_MSG("iot_agent_utils_get_edgelock2go_certificate_id failed: 0x%08x", agent_status);
+	if (client_certificate == NULL) {
+		agent_status = iot_agent_utils_get_edgelock2go_certificate_id(keystore, &object_id);
+		if (agent_status == IOT_AGENT_SUCCESS) {
+			service_descriptor.has_client_certificate_sss_ref = true;
+			service_descriptor.client_certificate_sss_ref.has_type = true;
+			service_descriptor.client_certificate_sss_ref.type = (nxp_iot_EndpointType)keystore->type;
+			service_descriptor.client_certificate_sss_ref.has_endpoint_id = true;
+			service_descriptor.client_certificate_sss_ref.endpoint_id = keystore->identifier;
+			service_descriptor.client_certificate_sss_ref.has_object_id = true;
+			service_descriptor.client_certificate_sss_ref.object_id = object_id;
+		}
+#if NXP_IOT_AGENT_HAVE_PSA
+        else {
+			size_t certificate_buffer_size = sizeof(client_certificate_buffer.bytes);
+            agent_status = iot_agent_utils_create_self_signed_edgelock2go_certificate(keystore,
+                    client_certificate_buffer.bytes, &certificate_buffer_size);
+            AGENT_SUCCESS_OR_EXIT_MSG("iot_agent_utils_create_self_signed_edgelock2go_certificate failed: 0x%08x", agent_status);
+			client_certificate_buffer.size = certificate_buffer_size;
+			service_descriptor.client_certificate = (pb_bytes_array_t*) &client_certificate_buffer;
+		}
+#endif
+	}
+	else {
+		service_descriptor.client_certificate = (pb_bytes_array_t*) client_certificate;
+	}
 
 #if NXP_IOT_AGENT_VERIFY_EDGELOCK_2GO_SERVER_CERTIFICATE
 	// Put the server certificates into the service descriptor.
@@ -836,9 +1050,15 @@ iot_agent_status_t iot_agent_utils_write_edgelock2go_datastore(iot_agent_keystor
 #elif SSS_HAVE_HOSTCRYPTO_MBEDTLS
 	mbedtls_sha256_context digest_context;
 	mbedtls_sha256_init(&digest_context);
+#if defined(MBEDTLS_VERSION_NUMBER) && (MBEDTLS_VERSION_NUMBER < 0x03010000)
 	mbedtls_sha256_starts_ret(&digest_context, 0U);
 	failed |= mbedtls_sha256_update_ret(&digest_context, &buffer[sizeof(header->checksum)], total_size - sizeof(header->checksum));
 	failed |= mbedtls_sha256_finish_ret(&digest_context, header->checksum);
+#else
+	mbedtls_sha256_starts(&digest_context, 0U);
+	failed |= mbedtls_sha256_update(&digest_context, &buffer[sizeof(header->checksum)], total_size - sizeof(header->checksum));
+	failed |= mbedtls_sha256_finish(&digest_context, header->checksum);
+#endif
 	ASSERT_OR_EXIT_MSG(failed == 0U, "Header checksum calculation failed.");
 #endif
 
@@ -883,7 +1103,7 @@ iot_agent_status_t iot_agent_utils_write_edgelock2go_datastore_from_env(iot_agen
 	}
 
     agent_status = iot_agent_utils_write_edgelock2go_datastore(keystore, datastore, hostname, port,
-		iot_agent_trusted_root_ca_certificates);
+		iot_agent_trusted_root_ca_certificates, NULL);
     AGENT_SUCCESS_OR_EXIT();
 
 exit:
@@ -891,7 +1111,7 @@ exit:
     return agent_status;
 }
 
-#if !(defined(__ICCARM__) || defined(__CC_ARM) || defined(__ARMCC_VERSION))
+#if !(AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1)
 iot_agent_status_t iot_agent_keystore_file_existence(const char *Filename, bool forceCreation)
 {
 	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
@@ -912,7 +1132,9 @@ iot_agent_status_t iot_agent_keystore_file_existence(const char *Filename, bool 
 exit:
 	return agent_status;
 }
-#endif
+
+#endif //!(AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1)
+
 iot_agent_status_t iot_agent_utils_convert_service2key_id(uint64_t serviceId, uint32_t *keyId)
 {
 	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
@@ -938,3 +1160,41 @@ exit:
 	return agent_status;
 }
 
+static size_t iot_agent_ceil_to_blocksize(size_t len, size_t blocksize)
+{
+    return ((len + (blocksize - 1)) / blocksize) * blocksize;
+}
+
+iot_agent_status_t nxp_iot_agent_unpad_iso7816d4(uint8_t *data, size_t *data_size) {
+	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
+
+	int count = *data_size -1;
+	while (count > 0 && data[count] == 0) {
+		count--;
+	}
+
+	ASSERT_OR_EXIT_MSG(data[count] == 0x80, "iso_7816_unpad failed, pad block corrupted");
+
+	*data_size -= *data_size - count;
+exit:
+	return agent_status;
+}
+
+iot_agent_status_t iot_agent_pad_iso7816d4(uint8_t *data, size_t data_size,
+        size_t unpadded_length, size_t blocksize, size_t* padded_length)
+{
+	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
+
+    *padded_length = iot_agent_ceil_to_blocksize(
+            unpadded_length + 1 /* always inserted padding 0x80 */, blocksize);
+
+    ASSERT_OR_EXIT_MSG(data_size >= *padded_length, "Buffer size %u is too small to hold "
+            "plaintext of length %u that will be padded up to length %u", data_size,
+            unpadded_length, *padded_length);
+
+    data[unpadded_length] = 0x80;
+    memset(&data[unpadded_length + 1], 0, *padded_length - (unpadded_length + 1));
+
+exit:
+    return agent_status;
+}

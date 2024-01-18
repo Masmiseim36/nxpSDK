@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: PIT: Periodic Interrupt Timer</title>
+<title>MCUXpresso SDK API Reference Manual: OTFAD: On The Fly AES-128 Decryption Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -100,231 +100,336 @@ $(document).ready(function(){initNavTree('a00049.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">PIT: Periodic Interrupt Timer</div>  </div>
+<div class="title">OTFAD: On The Fly AES-128 Decryption Driver</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a driver for the Periodic Interrupt Timer (PIT) of MCUXpresso SDK devices.</p>
-<h1><a class="anchor" id="PITFunc"></a>
-Function groups</h1>
-<p>The PIT driver supports operating the module as a time counter.</p>
-<h2><a class="anchor" id="PITInit"></a>
-Initialization and deinitialization</h2>
-<p>The function <a class="el" href="a00049.html#ga51eb6396276b3f1ec564bd1879c97c06" title="Ungates the PIT clock, enables the PIT module, and configures the peripheral for basic operations...">PIT_Init()</a> initializes the PIT with specified configurations. The function <a class="el" href="a00049.html#gae7dc830a1a71ec7597ba78ccc76abfb6" title="Fills in the PIT configuration structure with the default settings. ">PIT_GetDefaultConfig()</a> gets the default configurations. The initialization function configures the PIT operation in debug mode.</p>
-<p>The function <a class="el" href="a00049.html#gabe6831cfb502ca058f15fcf065cd13de" title="Enables or disables chaining a timer with the previous timer. ">PIT_SetTimerChainMode()</a> configures the chain mode operation of each PIT channel.</p>
-<p>The function <a class="el" href="a00049.html#ga1f9b6d5e9e463844f85e31102458c1fc" title="Gates the PIT clock and disables the PIT module. ">PIT_Deinit()</a> disables the PIT timers and disables the module clock.</p>
-<h2><a class="anchor" id="PITTimerPeriodOperation"></a>
-Timer period Operations</h2>
-<p>The function PITR_SetTimerPeriod() sets the timer period in units of count. Timers begin counting down from the value set by this function until it reaches 0.</p>
-<p>The function <a class="el" href="a00049.html#ga1ffacaa2e8582f59194436ebc6de2db9" title="Reads the current timer counting value. ">PIT_GetCurrentTimerCount()</a> reads the current timer counting value. This function returns the real-time timer counting value, in a range from 0 to a timer period.</p>
-<p>The timer period operation functions takes the count value in ticks. Users can call the utility macros provided in fsl_common.h to convert to microseconds or milliseconds.</p>
-<h2><a class="anchor" id="PITStartStopOperation"></a>
-Start and Stop timer operations</h2>
-<p>The function <a class="el" href="a00049.html#ga3f6b9762079e4ce2de6799e030b14964" title="Starts the timer counting. ">PIT_StartTimer()</a> starts the timer counting. After calling this function, the timer loads the period value set earlier via the PIT_SetPeriod() function and starts counting down to 0. When the timer reaches 0, it generates a trigger pulse and sets the timeout interrupt flag.</p>
-<p>The function <a class="el" href="a00049.html#ga32f1b8ca9cf0fc82ef192890e97899b8" title="Stops the timer counting. ">PIT_StopTimer()</a> stops the timer counting.</p>
-<h2><a class="anchor" id="PITStatus"></a>
-Status</h2>
-<p>Provides functions to get and clear the PIT status.</p>
-<h2><a class="anchor" id="PITInterrupt"></a>
-Interrupt</h2>
-<p>Provides functions to enable/disable PIT interrupts and get current enabled interrupts.</p>
-<h1><a class="anchor" id="PITUseCase"></a>
-Typical use case</h1>
-<h2><a class="anchor" id="PITTick"></a>
-PIT tick example</h2>
-<p>Updates the PIT period and toggles an LED periodically. Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/pit </p>
+<p>The MCUXpresso SDK provides a peripheral driver for On The Fly AES-128 Decryption (OTFAD) module of MCUXpresso SDK devices.</p>
+<p>This example code shows how to decrypt ciphertext in external memory using the OTFAD driver.</p>
+<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/otfad </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00360"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#a00360">pit_config_t</a></td></tr>
-<tr class="memdesc:a00360"><td class="mdescLeft">&#160;</td><td class="mdescRight">PIT configuration structure.  <a href="a00049.html#a00360">More...</a><br/></td></tr>
-<tr class="separator:a00360"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00355"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#a00355">_otfad_encryption_config</a></td></tr>
+<tr class="memdesc:a00355"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD encryption configuration structure.  <a href="a00049.html#a00355">More...</a><br/></td></tr>
+<tr class="separator:a00355"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00354"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#a00354">_otfad_config</a></td></tr>
+<tr class="memdesc:a00354"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD configuration structure.  <a href="a00049.html#a00354">More...</a><br/></td></tr>
+<tr class="separator:a00354"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga828408bc7f3f0b2dfda7411a0c94b8e7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga828408bc7f3f0b2dfda7411a0c94b8e7"></a>
+typedef struct <br class="typebreak"/>
+<a class="el" href="a00049.html#a00355">_otfad_encryption_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga828408bc7f3f0b2dfda7411a0c94b8e7">otfad_encryption_config_t</a></td></tr>
+<tr class="memdesc:ga828408bc7f3f0b2dfda7411a0c94b8e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD encryption configuration structure. <br/></td></tr>
+<tr class="separator:ga828408bc7f3f0b2dfda7411a0c94b8e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga98b90973600f36ddd230dcad13200323"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga98b90973600f36ddd230dcad13200323"></a>
+typedef struct <a class="el" href="a00049.html#a00354">_otfad_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga98b90973600f36ddd230dcad13200323">otfad_config_t</a></td></tr>
+<tr class="memdesc:ga98b90973600f36ddd230dcad13200323"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD configuration structure. <br/></td></tr>
+<tr class="separator:ga98b90973600f36ddd230dcad13200323"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga7628036278f539e87bd3f76795917737"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00049.html#gga7628036278f539e87bd3f76795917737a771abd65f098ad80d8f693e0b97a7e76">kPIT_Chnl_0</a> = 0U, 
+<tr class="memitem:gaac34dfe6c6b73b43a4656c9dce041034"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<a class="el" href="a00049.html#ggaac34dfe6c6b73b43a4656c9dce041034ab86672f372b394bddf19bc570929597c">kStatus_OTFAD_ResRegAccessMode</a> = MAKE_STATUS(kStatusGroup_OTFAD, 0), 
 <br/>
-&#160;&#160;<a class="el" href="a00049.html#gga7628036278f539e87bd3f76795917737ac7733ad1c04ea00e2f7890a3c737cb7b">kPIT_Chnl_1</a>, 
+&#160;&#160;<a class="el" href="a00049.html#ggaac34dfe6c6b73b43a4656c9dce041034ada2a68470d9b60529fde6beab292e72f">kStatus_OTFAD_AddressError</a> = MAKE_STATUS(kStatusGroup_OTFAD, 1), 
 <br/>
-&#160;&#160;<a class="el" href="a00049.html#gga7628036278f539e87bd3f76795917737ad12ab59290845fcaebd2d9f01ae2f561">kPIT_Chnl_2</a>, 
+&#160;&#160;<a class="el" href="a00049.html#ggaac34dfe6c6b73b43a4656c9dce041034a94765e8e9e448cfa441e2134f87a842f">kStatus_OTFAD_RegionOverlap</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00049.html#gga7628036278f539e87bd3f76795917737a4666db554c10bce47cfa628e8bb4ab93">kPIT_Chnl_3</a>
+&#160;&#160;<a class="el" href="a00049.html#ggaac34dfe6c6b73b43a4656c9dce041034ab98da10f5a46caedb11ea21bcb4b6328">kStatus_OTFAD_RegionMiss</a>
 <br/>
  }</td></tr>
-<tr class="memdesc:ga7628036278f539e87bd3f76795917737"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of PIT channels.  <a href="a00049.html#ga7628036278f539e87bd3f76795917737">More...</a><br/></td></tr>
-<tr class="separator:ga7628036278f539e87bd3f76795917737"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa7063bba27d49c1195a3369b88a85bcd"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#gaa7063bba27d49c1195a3369b88a85bcd">pit_interrupt_enable_t</a> { <a class="el" href="a00049.html#ggaa7063bba27d49c1195a3369b88a85bcda98c517b7246326afb50c93fe515916e0">kPIT_TimerInterruptEnable</a> = PIT_TCTRL_TIE_MASK
+<tr class="memdesc:gaac34dfe6c6b73b43a4656c9dce041034"><td class="mdescLeft">&#160;</td><td class="mdescRight">Status codes for the OTFAD driver.  <a href="a00049.html#gaac34dfe6c6b73b43a4656c9dce041034">More...</a><br/></td></tr>
+<tr class="separator:gaac34dfe6c6b73b43a4656c9dce041034"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0ed680fdb405e7195d9f14032851eebb"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<a class="el" href="a00049.html#gga0ed680fdb405e7195d9f14032851eebba289054cf51b8d6cb3c32a87884400e17">kOTFAD_Context_0</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00049.html#gga0ed680fdb405e7195d9f14032851eebbabe9a603f23afef05bfdeb1583713f336">kOTFAD_Context_1</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00049.html#gga0ed680fdb405e7195d9f14032851eebba3769e4cee63954e3dfaceea80109ce08">kOTFAD_Context_2</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00049.html#gga0ed680fdb405e7195d9f14032851eebbad32231e169446492d32c3674354dbf4d">kOTFAD_Context_3</a> = 3U
+<br/>
  }</td></tr>
-<tr class="memdesc:gaa7063bba27d49c1195a3369b88a85bcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of PIT interrupts.  <a href="a00049.html#gaa7063bba27d49c1195a3369b88a85bcd">More...</a><br/></td></tr>
-<tr class="separator:gaa7063bba27d49c1195a3369b88a85bcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga83e319df67d942ffb2988f55803eebbb"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga83e319df67d942ffb2988f55803eebbb">pit_status_flags_t</a> { <a class="el" href="a00049.html#gga83e319df67d942ffb2988f55803eebbba6792e6d30409cb5054b3f12c4e735cc0">kPIT_TimerFlag</a> = PIT_TFLG_TIF_MASK
+<tr class="memdesc:ga0ed680fdb405e7195d9f14032851eebb"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD context type.  <a href="a00049.html#ga0ed680fdb405e7195d9f14032851eebb">More...</a><br/></td></tr>
+<tr class="separator:ga0ed680fdb405e7195d9f14032851eebb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0944a4353780132eeab7b06e3e42291d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<a class="el" href="a00049.html#gga0944a4353780132eeab7b06e3e42291da46b06bacd1a8297969a3a61810b5366f">kOTFAD_NRM</a> = 0x00U, 
+<br/>
+&#160;&#160;<a class="el" href="a00049.html#gga0944a4353780132eeab7b06e3e42291dafa7c009b2feed9501056ff7ef74bec34">kOTFAD_SVM</a> = 0x02U, 
+<br/>
+&#160;&#160;<a class="el" href="a00049.html#gga0944a4353780132eeab7b06e3e42291dafe2dfe963d9f93d97d2f7ebfcc3ccc96">kOTFAD_LDM</a> = 0x03U
+<br/>
  }</td></tr>
-<tr class="memdesc:ga83e319df67d942ffb2988f55803eebbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of PIT status flags.  <a href="a00049.html#ga83e319df67d942ffb2988f55803eebbb">More...</a><br/></td></tr>
-<tr class="separator:ga83e319df67d942ffb2988f55803eebbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga0944a4353780132eeab7b06e3e42291d"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD operate mode.  <a href="a00049.html#ga0944a4353780132eeab7b06e3e42291d">More...</a><br/></td></tr>
+<tr class="separator:ga0944a4353780132eeab7b06e3e42291d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga55a6c6a9b7ee34302c636f9496d0ea2f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga55a6c6a9b7ee34302c636f9496d0ea2f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga55a6c6a9b7ee34302c636f9496d0ea2f">FSL_PIT_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 4))</td></tr>
-<tr class="memdesc:ga55a6c6a9b7ee34302c636f9496d0ea2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">PIT Driver Version 2.0.4. <br/></td></tr>
-<tr class="separator:ga55a6c6a9b7ee34302c636f9496d0ea2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga20f3f7f4a4d28843e4dcba42fe074de4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga20f3f7f4a4d28843e4dcba42fe074de4">FSL_OTFAD_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00216.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2U, 1U, 3U))</td></tr>
+<tr class="memdesc:ga20f3f7f4a4d28843e4dcba42fe074de4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver version.  <a href="#ga20f3f7f4a4d28843e4dcba42fe074de4">More...</a><br/></td></tr>
+<tr class="separator:ga20f3f7f4a4d28843e4dcba42fe074de4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Initialization and deinitialization</h2></td></tr>
-<tr class="memitem:ga51eb6396276b3f1ec564bd1879c97c06"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga51eb6396276b3f1ec564bd1879c97c06">PIT_Init</a> (PIT_Type *base, const <a class="el" href="a00049.html#a00360">pit_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga51eb6396276b3f1ec564bd1879c97c06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ungates the PIT clock, enables the PIT module, and configures the peripheral for basic operations.  <a href="#ga51eb6396276b3f1ec564bd1879c97c06">More...</a><br/></td></tr>
-<tr class="separator:ga51eb6396276b3f1ec564bd1879c97c06"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1f9b6d5e9e463844f85e31102458c1fc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga1f9b6d5e9e463844f85e31102458c1fc">PIT_Deinit</a> (PIT_Type *base)</td></tr>
-<tr class="memdesc:ga1f9b6d5e9e463844f85e31102458c1fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gates the PIT clock and disables the PIT module.  <a href="#ga1f9b6d5e9e463844f85e31102458c1fc">More...</a><br/></td></tr>
-<tr class="separator:ga1f9b6d5e9e463844f85e31102458c1fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae7dc830a1a71ec7597ba78ccc76abfb6"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#gae7dc830a1a71ec7597ba78ccc76abfb6">PIT_GetDefaultConfig</a> (<a class="el" href="a00049.html#a00360">pit_config_t</a> *config)</td></tr>
-<tr class="memdesc:gae7dc830a1a71ec7597ba78ccc76abfb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills in the PIT configuration structure with the default settings.  <a href="#gae7dc830a1a71ec7597ba78ccc76abfb6">More...</a><br/></td></tr>
-<tr class="separator:gae7dc830a1a71ec7597ba78ccc76abfb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabe6831cfb502ca058f15fcf065cd13de"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#gabe6831cfb502ca058f15fcf065cd13de">PIT_SetTimerChainMode</a> (PIT_Type *base, <a class="el" href="a00049.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a> channel, bool enable)</td></tr>
-<tr class="memdesc:gabe6831cfb502ca058f15fcf065cd13de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables chaining a timer with the previous timer.  <a href="#gabe6831cfb502ca058f15fcf065cd13de">More...</a><br/></td></tr>
-<tr class="separator:gabe6831cfb502ca058f15fcf065cd13de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7ec529b7e632085d191bc1c772efaa2e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga7ec529b7e632085d191bc1c772efaa2e">OTFAD_GetDefaultConfig</a> (<a class="el" href="a00049.html#ga98b90973600f36ddd230dcad13200323">otfad_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga7ec529b7e632085d191bc1c772efaa2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD module initialization function.  <a href="#ga7ec529b7e632085d191bc1c772efaa2e">More...</a><br/></td></tr>
+<tr class="separator:ga7ec529b7e632085d191bc1c772efaa2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga50c3cc55c76ff1feacb5291ff2428a6c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga50c3cc55c76ff1feacb5291ff2428a6c">OTFAD_Init</a> (OTFAD_Type *base, const <a class="el" href="a00049.html#ga98b90973600f36ddd230dcad13200323">otfad_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga50c3cc55c76ff1feacb5291ff2428a6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD module initialization function.  <a href="#ga50c3cc55c76ff1feacb5291ff2428a6c">More...</a><br/></td></tr>
+<tr class="separator:ga50c3cc55c76ff1feacb5291ff2428a6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8a04f4e827eaee49fc2dc31e54d05397"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8a04f4e827eaee49fc2dc31e54d05397"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga8a04f4e827eaee49fc2dc31e54d05397">OTFAD_Deinit</a> (OTFAD_Type *base)</td></tr>
+<tr class="memdesc:ga8a04f4e827eaee49fc2dc31e54d05397"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the OTFAD. <br/></td></tr>
+<tr class="separator:ga8a04f4e827eaee49fc2dc31e54d05397"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Interrupt Interface</h2></td></tr>
-<tr class="memitem:ga157360547de18885d6a783d2b510d87e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga157360547de18885d6a783d2b510d87e">PIT_EnableInterrupts</a> (PIT_Type *base, <a class="el" href="a00049.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a> channel, uint32_t mask)</td></tr>
-<tr class="memdesc:ga157360547de18885d6a783d2b510d87e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the selected PIT interrupts.  <a href="#ga157360547de18885d6a783d2b510d87e">More...</a><br/></td></tr>
-<tr class="separator:ga157360547de18885d6a783d2b510d87e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga12d03e0905453194bd5c3560996eb976"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga12d03e0905453194bd5c3560996eb976">PIT_DisableInterrupts</a> (PIT_Type *base, <a class="el" href="a00049.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a> channel, uint32_t mask)</td></tr>
-<tr class="memdesc:ga12d03e0905453194bd5c3560996eb976"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the selected PIT interrupts.  <a href="#ga12d03e0905453194bd5c3560996eb976">More...</a><br/></td></tr>
-<tr class="separator:ga12d03e0905453194bd5c3560996eb976"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9ecb3ef65be040e9002a0277b13bb8e3"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga9ecb3ef65be040e9002a0277b13bb8e3">PIT_GetEnabledInterrupts</a> (PIT_Type *base, <a class="el" href="a00049.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a> channel)</td></tr>
-<tr class="memdesc:ga9ecb3ef65be040e9002a0277b13bb8e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the enabled PIT interrupts.  <a href="#ga9ecb3ef65be040e9002a0277b13bb8e3">More...</a><br/></td></tr>
-<tr class="separator:ga9ecb3ef65be040e9002a0277b13bb8e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Status</h2></td></tr>
+<tr class="memitem:ga97f6956807f1b567e8cf98a2306a4b1f"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga97f6956807f1b567e8cf98a2306a4b1f">OTFAD_GetOperateMode</a> (OTFAD_Type *base)</td></tr>
+<tr class="memdesc:ga97f6956807f1b567e8cf98a2306a4b1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD module get operate mode.  <a href="#ga97f6956807f1b567e8cf98a2306a4b1f">More...</a><br/></td></tr>
+<tr class="separator:ga97f6956807f1b567e8cf98a2306a4b1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac7760cfc19871898542641394ca4526d"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#gac7760cfc19871898542641394ca4526d">OTFAD_GetStatus</a> (OTFAD_Type *base)</td></tr>
+<tr class="memdesc:gac7760cfc19871898542641394ca4526d"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD module get status.  <a href="#gac7760cfc19871898542641394ca4526d">More...</a><br/></td></tr>
+<tr class="separator:gac7760cfc19871898542641394ca4526d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Status Interface</h2></td></tr>
-<tr class="memitem:ga503619dd8ee2244edd12da3e27fa13e2"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga503619dd8ee2244edd12da3e27fa13e2">PIT_GetStatusFlags</a> (PIT_Type *base, <a class="el" href="a00049.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a> channel)</td></tr>
-<tr class="memdesc:ga503619dd8ee2244edd12da3e27fa13e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the PIT status flags.  <a href="#ga503619dd8ee2244edd12da3e27fa13e2">More...</a><br/></td></tr>
-<tr class="separator:ga503619dd8ee2244edd12da3e27fa13e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadc0f51c2e1b91fb0c529d752b71477e6"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#gadc0f51c2e1b91fb0c529d752b71477e6">PIT_ClearStatusFlags</a> (PIT_Type *base, <a class="el" href="a00049.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a> channel, uint32_t mask)</td></tr>
-<tr class="memdesc:gadc0f51c2e1b91fb0c529d752b71477e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the PIT status flags.  <a href="#gadc0f51c2e1b91fb0c529d752b71477e6">More...</a><br/></td></tr>
-<tr class="separator:gadc0f51c2e1b91fb0c529d752b71477e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Read and Write the timer period</h2></td></tr>
-<tr class="memitem:ga944e9c9bd6848d861a9eb17b617d72f7"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga944e9c9bd6848d861a9eb17b617d72f7">PIT_SetTimerPeriod</a> (PIT_Type *base, <a class="el" href="a00049.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a> channel, uint32_t count)</td></tr>
-<tr class="memdesc:ga944e9c9bd6848d861a9eb17b617d72f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the timer period in units of count.  <a href="#ga944e9c9bd6848d861a9eb17b617d72f7">More...</a><br/></td></tr>
-<tr class="separator:ga944e9c9bd6848d861a9eb17b617d72f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1ffacaa2e8582f59194436ebc6de2db9"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga1ffacaa2e8582f59194436ebc6de2db9">PIT_GetCurrentTimerCount</a> (PIT_Type *base, <a class="el" href="a00049.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a> channel)</td></tr>
-<tr class="memdesc:ga1ffacaa2e8582f59194436ebc6de2db9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the current timer counting value.  <a href="#ga1ffacaa2e8582f59194436ebc6de2db9">More...</a><br/></td></tr>
-<tr class="separator:ga1ffacaa2e8582f59194436ebc6de2db9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Timer Start and Stop</h2></td></tr>
-<tr class="memitem:ga3f6b9762079e4ce2de6799e030b14964"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga3f6b9762079e4ce2de6799e030b14964">PIT_StartTimer</a> (PIT_Type *base, <a class="el" href="a00049.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a> channel)</td></tr>
-<tr class="memdesc:ga3f6b9762079e4ce2de6799e030b14964"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the timer counting.  <a href="#ga3f6b9762079e4ce2de6799e030b14964">More...</a><br/></td></tr>
-<tr class="separator:ga3f6b9762079e4ce2de6799e030b14964"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga32f1b8ca9cf0fc82ef192890e97899b8"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga32f1b8ca9cf0fc82ef192890e97899b8">PIT_StopTimer</a> (PIT_Type *base, <a class="el" href="a00049.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a> channel)</td></tr>
-<tr class="memdesc:ga32f1b8ca9cf0fc82ef192890e97899b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the timer counting.  <a href="#ga32f1b8ca9cf0fc82ef192890e97899b8">More...</a><br/></td></tr>
-<tr class="separator:ga32f1b8ca9cf0fc82ef192890e97899b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+functional</h2></td></tr>
+<tr class="memitem:ga49d9425e4b8a8d626be9713e5a7c9537"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga49d9425e4b8a8d626be9713e5a7c9537">OTFAD_SetEncryptionConfig</a> (OTFAD_Type *base, const <a class="el" href="a00049.html#ga828408bc7f3f0b2dfda7411a0c94b8e7">otfad_encryption_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga49d9425e4b8a8d626be9713e5a7c9537"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD module set encryption configuration.  <a href="#ga49d9425e4b8a8d626be9713e5a7c9537">More...</a><br/></td></tr>
+<tr class="separator:ga49d9425e4b8a8d626be9713e5a7c9537"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga98b5cbfb4a1e6a8fe8af63df3965161d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga98b5cbfb4a1e6a8fe8af63df3965161d">OTFAD_GetEncryptionConfig</a> (OTFAD_Type *base, <a class="el" href="a00049.html#ga828408bc7f3f0b2dfda7411a0c94b8e7">otfad_encryption_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga98b5cbfb4a1e6a8fe8af63df3965161d"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD module get encryption configuration.  <a href="#ga98b5cbfb4a1e6a8fe8af63df3965161d">More...</a><br/></td></tr>
+<tr class="separator:ga98b5cbfb4a1e6a8fe8af63df3965161d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga874fd2f27989b88104253600094be09a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga874fd2f27989b88104253600094be09a">OTFAD_HitDetermination</a> (OTFAD_Type *base, uint32_t address, uint8_t *contextIndex)</td></tr>
+<tr class="memdesc:ga874fd2f27989b88104253600094be09a"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD module do hit determination.  <a href="#ga874fd2f27989b88104253600094be09a">More...</a><br/></td></tr>
+<tr class="separator:ga874fd2f27989b88104253600094be09a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00360" id="a00360"></a>
+<a name="a00355" id="a00355"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct pit_config_t</td>
+          <td class="memname">struct _otfad_encryption_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>This structure holds the configuration settings for the PIT peripheral. To initialize this structure to reasonable defaults, call the <a class="el" href="a00049.html#gae7dc830a1a71ec7597ba78ccc76abfb6" title="Fills in the PIT configuration structure with the default settings. ">PIT_GetDefaultConfig()</a> function and pass a pointer to your config structure instance.</p>
-<p>The configuration structure can be made constant so it resides in flash. </p>
-</div><table class="memberdecls">
+<div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:ade3a74504e1c6ecf10eb1f30fe5c0921"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ade3a74504e1c6ecf10eb1f30fe5c0921"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ade3a74504e1c6ecf10eb1f30fe5c0921">enableRunInDebug</a></td></tr>
-<tr class="memdesc:ade3a74504e1c6ecf10eb1f30fe5c0921"><td class="mdescLeft">&#160;</td><td class="mdescRight">true: Timers run in debug mode; false: Timers stop in debug mode <br/></td></tr>
-<tr class="separator:ade3a74504e1c6ecf10eb1f30fe5c0921"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1cb78fa06289056ac14f0fc005a1668a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1cb78fa06289056ac14f0fc005a1668a"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#a1cb78fa06289056ac14f0fc005a1668a">valid</a></td></tr>
+<tr class="memdesc:a1cb78fa06289056ac14f0fc005a1668a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The context is valid or not. <br/></td></tr>
+<tr class="separator:a1cb78fa06289056ac14f0fc005a1668a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb19041cc58492f8a017804a4df4dce8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acb19041cc58492f8a017804a4df4dce8"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#acb19041cc58492f8a017804a4df4dce8">AESdecryption</a></td></tr>
+<tr class="memdesc:acb19041cc58492f8a017804a4df4dce8"><td class="mdescLeft">&#160;</td><td class="mdescRight">AES decryption enable. <br/></td></tr>
+<tr class="separator:acb19041cc58492f8a017804a4df4dce8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b1429dd23d029a4f2836f8339c55b9e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9b1429dd23d029a4f2836f8339c55b9e"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#a9b1429dd23d029a4f2836f8339c55b9e">readOnly</a></td></tr>
+<tr class="memdesc:a9b1429dd23d029a4f2836f8339c55b9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">read write attribute for the entire set of context registers <br/></td></tr>
+<tr class="separator:a9b1429dd23d029a4f2836f8339c55b9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac51567d3c9f496bcecedd3e5cfe328f4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac51567d3c9f496bcecedd3e5cfe328f4"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ac51567d3c9f496bcecedd3e5cfe328f4">contextIndex</a></td></tr>
+<tr class="memdesc:ac51567d3c9f496bcecedd3e5cfe328f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD context index. <br/></td></tr>
+<tr class="separator:ac51567d3c9f496bcecedd3e5cfe328f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab87136c486c1734105d8d43fa946be43"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab87136c486c1734105d8d43fa946be43"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ab87136c486c1734105d8d43fa946be43">startAddr</a></td></tr>
+<tr class="memdesc:ab87136c486c1734105d8d43fa946be43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start address. <br/></td></tr>
+<tr class="separator:ab87136c486c1734105d8d43fa946be43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac828c03229990cbc659bca3ff7ac80ec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac828c03229990cbc659bca3ff7ac80ec"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ac828c03229990cbc659bca3ff7ac80ec">endAddr</a></td></tr>
+<tr class="memdesc:ac828c03229990cbc659bca3ff7ac80ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">End address. <br/></td></tr>
+<tr class="separator:ac828c03229990cbc659bca3ff7ac80ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6427bccbb63e1f833102933d8e4940a2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6427bccbb63e1f833102933d8e4940a2"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#a6427bccbb63e1f833102933d8e4940a2">key</a> [4]</td></tr>
+<tr class="memdesc:a6427bccbb63e1f833102933d8e4940a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encryption key. <br/></td></tr>
+<tr class="separator:a6427bccbb63e1f833102933d8e4940a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4a4171419d04f3e330ddd5781432cec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af4a4171419d04f3e330ddd5781432cec"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#af4a4171419d04f3e330ddd5781432cec">counter</a> [2]</td></tr>
+<tr class="memdesc:af4a4171419d04f3e330ddd5781432cec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encryption counter. <br/></td></tr>
+<tr class="separator:af4a4171419d04f3e330ddd5781432cec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+
+</div>
+</div>
+<a name="a00354" id="a00354"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct _otfad_config</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:af65862d1a3f4236cb2ea4942ceb44a21"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af65862d1a3f4236cb2ea4942ceb44a21"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#af65862d1a3f4236cb2ea4942ceb44a21">forceError</a></td></tr>
+<tr class="memdesc:af65862d1a3f4236cb2ea4942ceb44a21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forces the OTFAD's key blob error flag (SR[KBERR]) to be asserted. <br/></td></tr>
+<tr class="separator:af65862d1a3f4236cb2ea4942ceb44a21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74de234f0a7a7e7f1b292878cb823dfc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a74de234f0a7a7e7f1b292878cb823dfc"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#a74de234f0a7a7e7f1b292878cb823dfc">forceSVM</a></td></tr>
+<tr class="memdesc:a74de234f0a7a7e7f1b292878cb823dfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Force entry into SVM after a write. <br/></td></tr>
+<tr class="separator:a74de234f0a7a7e7f1b292878cb823dfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfe2b6482b0a8e35e6562b2ed10d3b9d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acfe2b6482b0a8e35e6562b2ed10d3b9d"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#acfe2b6482b0a8e35e6562b2ed10d3b9d">forceLDM</a></td></tr>
+<tr class="memdesc:acfe2b6482b0a8e35e6562b2ed10d3b9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Force entry into LDM after a write. <br/></td></tr>
+<tr class="separator:acfe2b6482b0a8e35e6562b2ed10d3b9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6c8000f8fd91e0a55ca7c9d12081cec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae6c8000f8fd91e0a55ca7c9d12081cec"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ae6c8000f8fd91e0a55ca7c9d12081cec">keyBlobScramble</a></td></tr>
+<tr class="memdesc:ae6c8000f8fd91e0a55ca7c9d12081cec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Key blob KEK scrambling. <br/></td></tr>
+<tr class="separator:ae6c8000f8fd91e0a55ca7c9d12081cec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6247dcb39093aff837ab7a1d9d8c5a5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab6247dcb39093aff837ab7a1d9d8c5a5"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ab6247dcb39093aff837ab7a1d9d8c5a5">keyBlobProcess</a></td></tr>
+<tr class="memdesc:ab6247dcb39093aff837ab7a1d9d8c5a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Key blob processing. <br/></td></tr>
+<tr class="separator:ab6247dcb39093aff837ab7a1d9d8c5a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a574ed0c2d81adcbe32f05691164d7770"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a574ed0c2d81adcbe32f05691164d7770"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#a574ed0c2d81adcbe32f05691164d7770">startKeyBlobProcessing</a></td></tr>
+<tr class="memdesc:a574ed0c2d81adcbe32f05691164d7770"><td class="mdescLeft">&#160;</td><td class="mdescRight">key blob processing is initiated <br/></td></tr>
+<tr class="separator:a574ed0c2d81adcbe32f05691164d7770"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2865c0afcc93d19ad54ec6f440ca46bf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2865c0afcc93d19ad54ec6f440ca46bf"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#a2865c0afcc93d19ad54ec6f440ca46bf">restrictedRegAccess</a></td></tr>
+<tr class="memdesc:a2865c0afcc93d19ad54ec6f440ca46bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Restricted register access enable. <br/></td></tr>
+<tr class="separator:a2865c0afcc93d19ad54ec6f440ca46bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5506b60d77173b44913cc06390b753ea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5506b60d77173b44913cc06390b753ea"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#a5506b60d77173b44913cc06390b753ea">enableOTFAD</a></td></tr>
+<tr class="memdesc:a5506b60d77173b44913cc06390b753ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">OTFAD has decryption enabled. <br/></td></tr>
+<tr class="separator:a5506b60d77173b44913cc06390b753ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga20f3f7f4a4d28843e4dcba42fe074de4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FSL_OTFAD_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00216.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2U, 1U, 3U))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga7628036278f539e87bd3f76795917737"></a>
+<a class="anchor" id="gaac34dfe6c6b73b43a4656c9dce041034"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00049.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a></td>
+          <td class="memname">anonymous enum</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>Actual number of available channels is SoC dependent </dd></dl>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga7628036278f539e87bd3f76795917737a771abd65f098ad80d8f693e0b97a7e76"></a>kPIT_Chnl_0</em>&nbsp;</td><td class="fielddoc">
-<p>PIT channel number 0. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaac34dfe6c6b73b43a4656c9dce041034ab86672f372b394bddf19bc570929597c"></a>kStatus_OTFAD_ResRegAccessMode</em>&nbsp;</td><td class="fielddoc">
+<p>Restricted register mode. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7628036278f539e87bd3f76795917737ac7733ad1c04ea00e2f7890a3c737cb7b"></a>kPIT_Chnl_1</em>&nbsp;</td><td class="fielddoc">
-<p>PIT channel number 1. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaac34dfe6c6b73b43a4656c9dce041034ada2a68470d9b60529fde6beab292e72f"></a>kStatus_OTFAD_AddressError</em>&nbsp;</td><td class="fielddoc">
+<p>End address less than start address. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7628036278f539e87bd3f76795917737ad12ab59290845fcaebd2d9f01ae2f561"></a>kPIT_Chnl_2</em>&nbsp;</td><td class="fielddoc">
-<p>PIT channel number 2. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaac34dfe6c6b73b43a4656c9dce041034a94765e8e9e448cfa441e2134f87a842f"></a>kStatus_OTFAD_RegionOverlap</em>&nbsp;</td><td class="fielddoc">
+<p>the OTFAD does not support any form of memory region overlap, for system accesses that hit in multiple contexts or no contexts, the fetched data is simply bypassed </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7628036278f539e87bd3f76795917737a4666db554c10bce47cfa628e8bb4ab93"></a>kPIT_Chnl_3</em>&nbsp;</td><td class="fielddoc">
-<p>PIT channel number 3. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaac34dfe6c6b73b43a4656c9dce041034ab98da10f5a46caedb11ea21bcb4b6328"></a>kStatus_OTFAD_RegionMiss</em>&nbsp;</td><td class="fielddoc">
+<p>For accesses that hit in a single context, but not the selected one. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gaa7063bba27d49c1195a3369b88a85bcd"></a>
+<a class="anchor" id="ga0ed680fdb405e7195d9f14032851eebb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00049.html#gaa7063bba27d49c1195a3369b88a85bcd">pit_interrupt_enable_t</a></td>
+          <td class="memname">anonymous enum</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaa7063bba27d49c1195a3369b88a85bcda98c517b7246326afb50c93fe515916e0"></a>kPIT_TimerInterruptEnable</em>&nbsp;</td><td class="fielddoc">
-<p>Timer interrupt enable. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga0ed680fdb405e7195d9f14032851eebba289054cf51b8d6cb3c32a87884400e17"></a>kOTFAD_Context_0</em>&nbsp;</td><td class="fielddoc">
+<p>context 0 </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0ed680fdb405e7195d9f14032851eebbabe9a603f23afef05bfdeb1583713f336"></a>kOTFAD_Context_1</em>&nbsp;</td><td class="fielddoc">
+<p>context 1 </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0ed680fdb405e7195d9f14032851eebba3769e4cee63954e3dfaceea80109ce08"></a>kOTFAD_Context_2</em>&nbsp;</td><td class="fielddoc">
+<p>context 2 </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0ed680fdb405e7195d9f14032851eebbad32231e169446492d32c3674354dbf4d"></a>kOTFAD_Context_3</em>&nbsp;</td><td class="fielddoc">
+<p>context 3 </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga83e319df67d942ffb2988f55803eebbb"></a>
+<a class="anchor" id="ga0944a4353780132eeab7b06e3e42291d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00049.html#ga83e319df67d942ffb2988f55803eebbb">pit_status_flags_t</a></td>
+          <td class="memname">anonymous enum</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga83e319df67d942ffb2988f55803eebbba6792e6d30409cb5054b3f12c4e735cc0"></a>kPIT_TimerFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Timer flag. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga0944a4353780132eeab7b06e3e42291da46b06bacd1a8297969a3a61810b5366f"></a>kOTFAD_NRM</em>&nbsp;</td><td class="fielddoc">
+<p>Normal Mode. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0944a4353780132eeab7b06e3e42291dafa7c009b2feed9501056ff7ef74bec34"></a>kOTFAD_SVM</em>&nbsp;</td><td class="fielddoc">
+<p>Security Violation Mode. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0944a4353780132eeab7b06e3e42291dafe2dfe963d9f93d97d2f7ebfcc3ccc96"></a>kOTFAD_LDM</em>&nbsp;</td><td class="fielddoc">
+<p>Logically Disabled Mode. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga51eb6396276b3f1ec564bd1879c97c06"></a>
+<a class="anchor" id="ga7ec529b7e632085d191bc1c772efaa2e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void PIT_Init </td>
+          <td class="memname">void OTFAD_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype">PIT_Type *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00049.html#ga98b90973600f36ddd230dcad13200323">otfad_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">config</td><td>OTFAD configuration. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga50c3cc55c76ff1feacb5291ff2428a6c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void OTFAD_Init </td>
+          <td>(</td>
+          <td class="paramtype">OTFAD_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00049.html#a00360">pit_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00049.html#ga98b90973600f36ddd230dcad13200323">otfad_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -334,40 +439,47 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>This API should be called at the beginning of the application using the PIT driver.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>PIT peripheral base address </td></tr>
-    <tr><td class="paramname">config</td><td>Pointer to the user's PIT config structure </td></tr>
+    <tr><td class="paramname">base</td><td>OTFAD base address. </td></tr>
+    <tr><td class="paramname">config</td><td>OTFAD configuration. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga1f9b6d5e9e463844f85e31102458c1fc"></a>
+<a class="anchor" id="ga97f6956807f1b567e8cf98a2306a4b1f"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void PIT_Deinit </td>
+          <td class="memname">static uint32_t OTFAD_GetOperateMode </td>
           <td>(</td>
-          <td class="paramtype">PIT_Type *&#160;</td>
+          <td class="paramtype">OTFAD_Type *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>PIT peripheral base address </td></tr>
+    <tr><td class="paramname">base</td><td>OTFAD base address. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gae7dc830a1a71ec7597ba78ccc76abfb6"></a>
+<a class="anchor" id="gac7760cfc19871898542641394ca4526d"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -375,10 +487,10 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void PIT_GetDefaultConfig </td>
+          <td class="memname">static uint32_t OTFAD_GetStatus </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00049.html#a00360">pit_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em></td><td>)</td>
+          <td class="paramtype">OTFAD_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -388,42 +500,30 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
   </tr>
 </table>
 </div><div class="memdoc">
-<p>The default values are as follows. </p>
-<div class="fragment"><div class="line">*     config-&gt;enableRunInDebug = <span class="keyword">false</span>;</div>
-<div class="line">* </div>
-</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">config</td><td>Pointer to the configuration structure. </td></tr>
+    <tr><td class="paramname">base</td><td>OTFAD base address. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gabe6831cfb502ca058f15fcf065cd13de"></a>
+<a class="anchor" id="ga49d9425e4b8a8d626be9713e5a7c9537"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void PIT_SetTimerChainMode </td>
+          <td class="memname"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> OTFAD_SetEncryptionConfig </td>
           <td>(</td>
-          <td class="paramtype">PIT_Type *&#160;</td>
+          <td class="paramtype">OTFAD_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00049.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a>&#160;</td>
-          <td class="paramname"><em>channel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00049.html#ga828408bc7f3f0b2dfda7411a0c94b8e7">otfad_encryption_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -431,48 +531,73 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<p>When a timer has a chain mode enabled, it only counts after the previous timer has expired. If the timer n-1 has counted down to 0, counter n decrements the value by one. Each timer is 32-bits, which allows the developers to chain timers together and form a longer timer (64-bits and larger). The first timer (timer 0) can't be chained to any other timer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>PIT peripheral base address </td></tr>
-    <tr><td class="paramname">channel</td><td>Timer channel number which is chained with the previous timer </td></tr>
-    <tr><td class="paramname">enable</td><td>Enable or disable chain. true: Current timer is chained with the previous timer. false: Timer doesn't chain with other timers. </td></tr>
+    <tr><td class="paramname">base</td><td>OTFAD base address. </td></tr>
+    <tr><td class="paramname">config</td><td>encryption configuration.</td></tr>
   </table>
   </dd>
 </dl>
+<p>Note: if enable keyblob process, the first 256 bytes external memory is use for keyblob data, so this region shouldn't be in OTFAD region. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga157360547de18885d6a783d2b510d87e"></a>
+<a class="anchor" id="ga98b5cbfb4a1e6a8fe8af63df3965161d"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void PIT_EnableInterrupts </td>
+          <td class="memname"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> OTFAD_GetEncryptionConfig </td>
           <td>(</td>
-          <td class="paramtype">PIT_Type *&#160;</td>
+          <td class="paramtype">OTFAD_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00049.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a>&#160;</td>
-          <td class="paramname"><em>channel</em>, </td>
+          <td class="paramtype"><a class="el" href="a00049.html#ga828408bc7f3f0b2dfda7411a0c94b8e7">otfad_encryption_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>OTFAD base address. </td></tr>
+    <tr><td class="paramname">config</td><td>encryption configuration.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Note: if enable keyblob process, the first 256 bytes external memory is use for keyblob data, so this region shouldn't be in OTFAD region. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga874fd2f27989b88104253600094be09a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> OTFAD_HitDetermination </td>
+          <td>(</td>
+          <td class="paramtype">OTFAD_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>contextIndex</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -480,378 +605,16 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>PIT peripheral base address </td></tr>
-    <tr><td class="paramname">channel</td><td>Timer channel number </td></tr>
-    <tr><td class="paramname">mask</td><td>The interrupts to enable. This is a logical OR of members of the enumeration <a class="el" href="a00049.html#gaa7063bba27d49c1195a3369b88a85bcd" title="List of PIT interrupts. ">pit_interrupt_enable_t</a> </td></tr>
+    <tr><td class="paramname">base</td><td>OTFAD base address. </td></tr>
+    <tr><td class="paramname">address</td><td>the physical address space assigned to the QuadSPI(FlexSPI) module. </td></tr>
+    <tr><td class="paramname">contextIndex</td><td>hitted context region index. </td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a class="anchor" id="ga12d03e0905453194bd5c3560996eb976"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PIT_DisableInterrupts </td>
-          <td>(</td>
-          <td class="paramtype">PIT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00049.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a>&#160;</td>
-          <td class="paramname"><em>channel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PIT peripheral base address </td></tr>
-    <tr><td class="paramname">channel</td><td>Timer channel number </td></tr>
-    <tr><td class="paramname">mask</td><td>The interrupts to disable. This is a logical OR of members of the enumeration <a class="el" href="a00049.html#gaa7063bba27d49c1195a3369b88a85bcd" title="List of PIT interrupts. ">pit_interrupt_enable_t</a> </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga9ecb3ef65be040e9002a0277b13bb8e3"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t PIT_GetEnabledInterrupts </td>
-          <td>(</td>
-          <td class="paramtype">PIT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00049.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a>&#160;</td>
-          <td class="paramname"><em>channel</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PIT peripheral base address </td></tr>
-    <tr><td class="paramname">channel</td><td>Timer channel number</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The enabled interrupts. This is the logical OR of members of the enumeration <a class="el" href="a00049.html#gaa7063bba27d49c1195a3369b88a85bcd" title="List of PIT interrupts. ">pit_interrupt_enable_t</a> </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga503619dd8ee2244edd12da3e27fa13e2"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t PIT_GetStatusFlags </td>
-          <td>(</td>
-          <td class="paramtype">PIT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00049.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a>&#160;</td>
-          <td class="paramname"><em>channel</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PIT peripheral base address </td></tr>
-    <tr><td class="paramname">channel</td><td>Timer channel number</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The status flags. This is the logical OR of members of the enumeration <a class="el" href="a00049.html#ga83e319df67d942ffb2988f55803eebbb" title="List of PIT status flags. ">pit_status_flags_t</a> </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gadc0f51c2e1b91fb0c529d752b71477e6"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PIT_ClearStatusFlags </td>
-          <td>(</td>
-          <td class="paramtype">PIT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00049.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a>&#160;</td>
-          <td class="paramname"><em>channel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PIT peripheral base address </td></tr>
-    <tr><td class="paramname">channel</td><td>Timer channel number </td></tr>
-    <tr><td class="paramname">mask</td><td>The status flags to clear. This is a logical OR of members of the enumeration <a class="el" href="a00049.html#ga83e319df67d942ffb2988f55803eebbb" title="List of PIT status flags. ">pit_status_flags_t</a> </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga944e9c9bd6848d861a9eb17b617d72f7"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PIT_SetTimerPeriod </td>
-          <td>(</td>
-          <td class="paramtype">PIT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00049.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a>&#160;</td>
-          <td class="paramname"><em>channel</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>count</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Timers begin counting from the value set by this function until it reaches 0, then it generates an interrupt and load this register value again. Writing a new value to this register does not restart the timer. Instead, the value is loaded after the timer expires.</p>
-<dl class="section note"><dt>Note</dt><dd>Users can call the utility macros provided in fsl_common.h to convert to ticks.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PIT peripheral base address </td></tr>
-    <tr><td class="paramname">channel</td><td>Timer channel number </td></tr>
-    <tr><td class="paramname">count</td><td>Timer period in units of ticks </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga1ffacaa2e8582f59194436ebc6de2db9"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t PIT_GetCurrentTimerCount </td>
-          <td>(</td>
-          <td class="paramtype">PIT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00049.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a>&#160;</td>
-          <td class="paramname"><em>channel</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function returns the real-time timer counting value, in a range from 0 to a timer period.</p>
-<dl class="section note"><dt>Note</dt><dd>Users can call the utility macros provided in fsl_common.h to convert ticks to usec or msec.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PIT peripheral base address </td></tr>
-    <tr><td class="paramname">channel</td><td>Timer channel number</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Current timer counting value in ticks </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga3f6b9762079e4ce2de6799e030b14964"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PIT_StartTimer </td>
-          <td>(</td>
-          <td class="paramtype">PIT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00049.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a>&#160;</td>
-          <td class="paramname"><em>channel</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>After calling this function, timers load period value, count down to 0 and then load the respective start value again. Each time a timer reaches 0, it generates a trigger pulse and sets the timeout interrupt flag.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PIT peripheral base address </td></tr>
-    <tr><td class="paramname">channel</td><td>Timer channel number. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga32f1b8ca9cf0fc82ef192890e97899b8"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PIT_StopTimer </td>
-          <td>(</td>
-          <td class="paramtype">PIT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00049.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a>&#160;</td>
-          <td class="paramname"><em>channel</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function stops every timer counting. Timers reload their periods respectively after the next time they call the PIT_DRV_StartTimer.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PIT peripheral base address </td></tr>
-    <tr><td class="paramname">channel</td><td>Timer channel number. </td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>status, such as kStatus_Success or kStatus_OTFAD_ResRegAccessMode. </dd></dl>
 
 </div>
 </div>

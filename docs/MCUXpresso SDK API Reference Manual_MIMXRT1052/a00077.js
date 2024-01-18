@@ -1,36 +1,44 @@
 var a00077 =
 [
     [ "SPDIF eDMA Driver", "a00078.html", "a00078" ],
-    [ "spdif_config_t", "a00077.html#a00534", [
-      [ "isTxAutoSync", "a00077.html#aa62aab66a7b03f444074a6abab83294c", null ],
-      [ "isRxAutoSync", "a00077.html#a8e7a4d603d3fdbca6d204c21a9729384", null ],
-      [ "DPLLClkSource", "a00077.html#a51dfc55f76c63adbb2956c9be1802fab", null ],
-      [ "txClkSource", "a00077.html#aae2efeac0c0a15d308758688656f21e7", null ],
-      [ "rxFullSelect", "a00077.html#abad0c032f98e052695e55ba8f8dc51dd", null ],
-      [ "txFullSelect", "a00077.html#a19570d0d87d133c863cea6eb7a374bad", null ],
-      [ "uChannelSrc", "a00077.html#a55644590c92b55f32cccc120df5a91ba", null ],
-      [ "txSource", "a00077.html#add620ef347dc5fc0b5fc4626a6d0816f", null ],
-      [ "validityConfig", "a00077.html#a662ae617d9706faedff59b4e7ebfc563", null ],
-      [ "gain", "a00077.html#af2eeb1f3e4a229d81b00a2e293bd5b8f", null ]
+    [ "_spdif_config", "a00077.html#a00527", [
+      [ "isTxAutoSync", "a00077.html#aa4517cb68d744372f2ce87a7b9e488e3", null ],
+      [ "isRxAutoSync", "a00077.html#a844a072728febf66bd575d1cdc40508f", null ],
+      [ "DPLLClkSource", "a00077.html#a317fb7ffb1c8ada5b9fe222e141c26e6", null ],
+      [ "txClkSource", "a00077.html#a27d7c8aae18da6430ca575d6e55fc725", null ],
+      [ "rxFullSelect", "a00077.html#aab277efcc9f50ddc45f85b368d355f83", null ],
+      [ "txFullSelect", "a00077.html#a9e712702364cc4c68382475b6463b40e", null ],
+      [ "uChannelSrc", "a00077.html#aca785604664026f05093edd6eca97948", null ],
+      [ "txSource", "a00077.html#a949e8755e255e2f9e93603e13b939cb4", null ],
+      [ "validityConfig", "a00077.html#a9a83edf589636900df9dc414f5c0641d", null ],
+      [ "gain", "a00077.html#a3a1e182777e71240d7f049c77cb51cf2", null ]
     ] ],
-    [ "spdif_transfer_t", "a00077.html#a00536", [
-      [ "data", "a00077.html#aafa6dcdb00a7953d3368916ec776f3f2", null ],
-      [ "qdata", "a00077.html#a3f670504281a0bf4ee74d831d965b1c2", null ],
-      [ "udata", "a00077.html#a547ec34f70b0c0b803a212301b0e9bbc", null ],
-      [ "dataSize", "a00077.html#ae44eb4e4b3141f9478e4b35a9bae8af3", null ]
+    [ "_spdif_transfer", "a00077.html#a00531", [
+      [ "data", "a00077.html#abcf8d94d75e7f058279e233dc2503939", null ],
+      [ "qdata", "a00077.html#aa1b12b4293ba55b403ee57e5c8dfd736", null ],
+      [ "udata", "a00077.html#a97fadb7029753c1a233c78402b862c07", null ],
+      [ "dataSize", "a00077.html#a7a7daba96589ecab4566b880160d80d1", null ]
     ] ],
-    [ "spdif_handle_t", "a00077.html#a00340", [
-      [ "state", "a00077.html#a530888b8eb6d5b6383ac803ef5687cac", null ],
-      [ "callback", "a00077.html#ae6a348888f71f09a0a2167064b627fef", null ],
-      [ "userData", "a00077.html#a453888e826bebbf6d3cefbc1d5c37aa2", null ],
-      [ "spdifQueue", "a00077.html#acfad92f425b01b23f503cc6f6cbf0199", null ],
-      [ "transferSize", "a00077.html#a7ba10e18fe4300506084981f16ba7376", null ],
-      [ "queueUser", "a00077.html#a8f24af404b79c5b742fc54aa78c4dc06", null ],
-      [ "queueDriver", "a00077.html#ac3925e65ffb3d41a9c637001844f6560", null ],
-      [ "watermark", "a00077.html#a286a39db68bb63e8d64844dc94cb6b7a", null ]
+    [ "_spdif_handle", "a00077.html#a00530", [
+      [ "state", "a00077.html#a469195fd1f8b0f1680cce1646df7cf9d", null ],
+      [ "callback", "a00077.html#a89241af3b25fc4576db13a20bce66a1f", null ],
+      [ "userData", "a00077.html#a8d1e4bb795cb18be133473bdd42981f4", null ],
+      [ "spdifQueue", "a00077.html#ad3654232d539ca7669796633e16cf600", null ],
+      [ "transferSize", "a00077.html#a37c9c8e6a31eeb43437cedbbb05ef1b9", null ],
+      [ "queueUser", "a00077.html#a4bbb6f77648bf22c5e897550ec08c1ee", null ],
+      [ "queueDriver", "a00077.html#ac8fbcfb70e31ce4b427cf8989555c86a", null ],
+      [ "watermark", "a00077.html#a1edd8fe8442511be2f678b56fb87bc13", null ]
     ] ],
     [ "FSL_SPDIF_DRIVER_VERSION", "a00077.html#ga036bac4f2d40e143c5528a10038767c1", null ],
     [ "SPDIF_XFER_QUEUE_SIZE", "a00077.html#ga3e78a3155b1291a9fa00d0461d6e490c", null ],
+    [ "spdif_rxfull_select_t", "a00077.html#ga320a1ffa3db7e37a913734da0a4b543a", null ],
+    [ "spdif_txempty_select_t", "a00077.html#gad5e952acb85913061d39f05cb69bcf77", null ],
+    [ "spdif_uchannel_source_t", "a00077.html#gad86c23303f42359f3de0f5da856fb962", null ],
+    [ "spdif_gain_select_t", "a00077.html#ga962e90838e3ed4e55c4b541344221eb2", null ],
+    [ "spdif_tx_source_t", "a00077.html#gad790d7edfb44e6a208654ff59bddfd80", null ],
+    [ "spdif_validity_config_t", "a00077.html#gac1f3df5dcf4d4d971698c59a95f21bbf", null ],
+    [ "spdif_config_t", "a00077.html#ga42bdaae7a8b6823fab001c8282269fd4", null ],
+    [ "spdif_transfer_t", "a00077.html#ga28534824bc9ce4a5a406e928bcbdd7d1", null ],
     [ "spdif_transfer_callback_t", "a00077.html#ga8749a36136a9b55600479d61b55596ec", [
       [ "kStatus_SPDIF_RxDPLLLocked", "a00077.html#gga9e93d8eae633734dfeb29e24a1f3a7c0a0489bbc59ac12902e0cf3c134e72363e", null ],
       [ "kStatus_SPDIF_TxFIFOError", "a00077.html#gga9e93d8eae633734dfeb29e24a1f3a7c0a278a5b9459f7c6a06b0026d00ecc63cd", null ],
@@ -50,39 +58,39 @@ var a00077 =
       [ "kStatus_SPDIF_RxIdle", "a00077.html#gga9e93d8eae633734dfeb29e24a1f3a7c0ac458cedc1f2f208c0e04e3f532dc0595", null ],
       [ "kStatus_SPDIF_QueueFull", "a00077.html#gga9e93d8eae633734dfeb29e24a1f3a7c0a700d25ed1454e469f32de0ade5a78e87", null ]
     ] ],
-    [ "spdif_rxfull_select_t", "a00077.html#ga85d08a5eba9eaf262597f4f3dfad19a0", [
-      [ "kSPDIF_RxFull1Sample", "a00077.html#gga85d08a5eba9eaf262597f4f3dfad19a0ad6a45c3b1bb3397ce7dd2e5c9af8c1c9", null ],
-      [ "kSPDIF_RxFull4Samples", "a00077.html#gga85d08a5eba9eaf262597f4f3dfad19a0a84f7309ca36974eefa1a2d970eba7995", null ],
-      [ "kSPDIF_RxFull8Samples", "a00077.html#gga85d08a5eba9eaf262597f4f3dfad19a0a71af34697ac17ca08eb26d7c4d6dd27f", null ],
-      [ "kSPDIF_RxFull16Samples", "a00077.html#gga85d08a5eba9eaf262597f4f3dfad19a0ab585922a28236a3e9b8cffbdd3793cee", null ]
+    [ "_spdif_rxfull_select", "a00077.html#gaf027e919562bb13e676d936e5fe9f102", [
+      [ "kSPDIF_RxFull1Sample", "a00077.html#ggaf027e919562bb13e676d936e5fe9f102ad6a45c3b1bb3397ce7dd2e5c9af8c1c9", null ],
+      [ "kSPDIF_RxFull4Samples", "a00077.html#ggaf027e919562bb13e676d936e5fe9f102a84f7309ca36974eefa1a2d970eba7995", null ],
+      [ "kSPDIF_RxFull8Samples", "a00077.html#ggaf027e919562bb13e676d936e5fe9f102a71af34697ac17ca08eb26d7c4d6dd27f", null ],
+      [ "kSPDIF_RxFull16Samples", "a00077.html#ggaf027e919562bb13e676d936e5fe9f102ab585922a28236a3e9b8cffbdd3793cee", null ]
     ] ],
-    [ "spdif_txempty_select_t", "a00077.html#gad58b90afceef70798b8be683f3017c71", [
-      [ "kSPDIF_TxEmpty0Sample", "a00077.html#ggad58b90afceef70798b8be683f3017c71a835efeacfa1b7bc07a723c3683407b4e", null ],
-      [ "kSPDIF_TxEmpty4Samples", "a00077.html#ggad58b90afceef70798b8be683f3017c71a38d0ed7a9ff015721f0edcd71d696e18", null ],
-      [ "kSPDIF_TxEmpty8Samples", "a00077.html#ggad58b90afceef70798b8be683f3017c71afbd58fcc26965a9b45865764d775284f", null ],
-      [ "kSPDIF_TxEmpty12Samples", "a00077.html#ggad58b90afceef70798b8be683f3017c71a9c74437e11128b87fbd5bb644c4790e4", null ]
+    [ "_spdif_txempty_select", "a00077.html#ga9a8390010ef72478e96c1dddd694af4a", [
+      [ "kSPDIF_TxEmpty0Sample", "a00077.html#gga9a8390010ef72478e96c1dddd694af4aa835efeacfa1b7bc07a723c3683407b4e", null ],
+      [ "kSPDIF_TxEmpty4Samples", "a00077.html#gga9a8390010ef72478e96c1dddd694af4aa38d0ed7a9ff015721f0edcd71d696e18", null ],
+      [ "kSPDIF_TxEmpty8Samples", "a00077.html#gga9a8390010ef72478e96c1dddd694af4aafbd58fcc26965a9b45865764d775284f", null ],
+      [ "kSPDIF_TxEmpty12Samples", "a00077.html#gga9a8390010ef72478e96c1dddd694af4aa9c74437e11128b87fbd5bb644c4790e4", null ]
     ] ],
-    [ "spdif_uchannel_source_t", "a00077.html#ga01edc35977dbab89a7201285c61c4a3e", [
-      [ "kSPDIF_NoUChannel", "a00077.html#gga01edc35977dbab89a7201285c61c4a3eaf159efd3316b59e34b7288448c4b8c4f", null ],
-      [ "kSPDIF_UChannelFromRx", "a00077.html#gga01edc35977dbab89a7201285c61c4a3eaec4bf6dbe6a1346b33c59c392ea1fbe6", null ],
-      [ "kSPDIF_UChannelFromTx", "a00077.html#gga01edc35977dbab89a7201285c61c4a3ea65a3b2cbcb558fdc5870f009d9d6bd80", null ]
+    [ "_spdif_uchannel_source", "a00077.html#ga8e291cb75c4b998ed720a09df3bdd293", [
+      [ "kSPDIF_NoUChannel", "a00077.html#gga8e291cb75c4b998ed720a09df3bdd293af159efd3316b59e34b7288448c4b8c4f", null ],
+      [ "kSPDIF_UChannelFromRx", "a00077.html#gga8e291cb75c4b998ed720a09df3bdd293aec4bf6dbe6a1346b33c59c392ea1fbe6", null ],
+      [ "kSPDIF_UChannelFromTx", "a00077.html#gga8e291cb75c4b998ed720a09df3bdd293a65a3b2cbcb558fdc5870f009d9d6bd80", null ]
     ] ],
-    [ "spdif_gain_select_t", "a00077.html#gab5381bc40ad0b86e9453495598911e2c", [
-      [ "kSPDIF_GAIN_24", "a00077.html#ggab5381bc40ad0b86e9453495598911e2cac438b3169eb2675d11540a839e99f502", null ],
-      [ "kSPDIF_GAIN_16", "a00077.html#ggab5381bc40ad0b86e9453495598911e2caa776465b4de5bf2fa610f1c2366c063f", null ],
-      [ "kSPDIF_GAIN_12", "a00077.html#ggab5381bc40ad0b86e9453495598911e2cad54dc0e7908199d3fe24ef53d608b544", null ],
-      [ "kSPDIF_GAIN_8", "a00077.html#ggab5381bc40ad0b86e9453495598911e2caafee91827c9ea238ad6d6478718e98a0", null ],
-      [ "kSPDIF_GAIN_6", "a00077.html#ggab5381bc40ad0b86e9453495598911e2ca16500e129c2451b60faf4a3f4464df43", null ],
-      [ "kSPDIF_GAIN_4", "a00077.html#ggab5381bc40ad0b86e9453495598911e2ca84750080b7f27da810fe19abe64f776f", null ],
-      [ "kSPDIF_GAIN_3", "a00077.html#ggab5381bc40ad0b86e9453495598911e2ca1008286af785dcb2dde9131765217980", null ]
+    [ "_spdif_gain_select", "a00077.html#ga647e0927c74f8e7d9c8017cd9caffacf", [
+      [ "kSPDIF_GAIN_24", "a00077.html#gga647e0927c74f8e7d9c8017cd9caffacfac438b3169eb2675d11540a839e99f502", null ],
+      [ "kSPDIF_GAIN_16", "a00077.html#gga647e0927c74f8e7d9c8017cd9caffacfaa776465b4de5bf2fa610f1c2366c063f", null ],
+      [ "kSPDIF_GAIN_12", "a00077.html#gga647e0927c74f8e7d9c8017cd9caffacfad54dc0e7908199d3fe24ef53d608b544", null ],
+      [ "kSPDIF_GAIN_8", "a00077.html#gga647e0927c74f8e7d9c8017cd9caffacfaafee91827c9ea238ad6d6478718e98a0", null ],
+      [ "kSPDIF_GAIN_6", "a00077.html#gga647e0927c74f8e7d9c8017cd9caffacfa16500e129c2451b60faf4a3f4464df43", null ],
+      [ "kSPDIF_GAIN_4", "a00077.html#gga647e0927c74f8e7d9c8017cd9caffacfa84750080b7f27da810fe19abe64f776f", null ],
+      [ "kSPDIF_GAIN_3", "a00077.html#gga647e0927c74f8e7d9c8017cd9caffacfa1008286af785dcb2dde9131765217980", null ]
     ] ],
-    [ "spdif_tx_source_t", "a00077.html#ga2847432f45adbafdb2f9f7e5c25d9b2e", [
-      [ "kSPDIF_txFromReceiver", "a00077.html#gga2847432f45adbafdb2f9f7e5c25d9b2eaffd9df4017e5af840e5c34c050791f02", null ],
-      [ "kSPDIF_txNormal", "a00077.html#gga2847432f45adbafdb2f9f7e5c25d9b2ea1e6073994dc81cb60c229a8ce166222f", null ]
+    [ "_spdif_tx_source", "a00077.html#gad738631e5a1776692ef90fa6e8034ba3", [
+      [ "kSPDIF_txFromReceiver", "a00077.html#ggad738631e5a1776692ef90fa6e8034ba3affd9df4017e5af840e5c34c050791f02", null ],
+      [ "kSPDIF_txNormal", "a00077.html#ggad738631e5a1776692ef90fa6e8034ba3a1e6073994dc81cb60c229a8ce166222f", null ]
     ] ],
-    [ "spdif_validity_config_t", "a00077.html#gad5615c4913a612ee1dc67e357e905f2c", [
-      [ "kSPDIF_validityFlagAlwaysSet", "a00077.html#ggad5615c4913a612ee1dc67e357e905f2ca9cf3c378520222b1ffe3e584cae0ac67", null ],
-      [ "kSPDIF_validityFlagAlwaysClear", "a00077.html#ggad5615c4913a612ee1dc67e357e905f2ca96145e43a2a36d2c7dcd6ce5242743b1", null ],
+    [ "_spdif_validity_config", "a00077.html#ga1d5ee2686337a0582f65b0d551088b32", [
+      [ "kSPDIF_validityFlagAlwaysSet", "a00077.html#gga1d5ee2686337a0582f65b0d551088b32a9cf3c378520222b1ffe3e584cae0ac67", null ],
+      [ "kSPDIF_validityFlagAlwaysClear", "a00077.html#gga1d5ee2686337a0582f65b0d551088b32a96145e43a2a36d2c7dcd6ce5242743b1", null ],
       [ "kSPDIF_RxDPLLLocked", "a00077.html#ggaeb8e1c282570d629a6b603a94a4650d6ab8774a200c36eccf9d7b439ba21d1ac8", null ],
       [ "kSPDIF_TxFIFOError", "a00077.html#ggaeb8e1c282570d629a6b603a94a4650d6a74d3b2d4e4ee35eed58f4d30c6d2709b", null ],
       [ "kSPDIF_TxFIFOResync", "a00077.html#ggaeb8e1c282570d629a6b603a94a4650d6af40104f71f214bb1c0a6a2c0fdcdaf36", null ],

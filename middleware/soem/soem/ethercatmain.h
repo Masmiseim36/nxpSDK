@@ -24,7 +24,7 @@ extern "C"
 
 #ifndef EC_MAXSLAVE
 /** max. number of slaves in array */
-#define EC_MAXSLAVE       200
+#define EC_MAXSLAVE       20
 #endif
 
 /** max. number of groups */

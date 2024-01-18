@@ -54,6 +54,12 @@
 #if defined(MBEDTLS_ECP_MULADD_ALT)
     #undef MBEDTLS_ECP_MULADD_ALT
 #endif // MBEDTLS_ECP_MULADD_ALT
+#if defined MBEDTLS_CCM_ALT
+    #undef MBEDTLS_CCM_ALT
+#endif // MBEDTLS_CCM_ALT
+#if defined MBEDTLS_CCM_CRYPT_ALT
+    #undef MBEDTLS_CCM_CRYPT_ALT
+#endif
 #endif // LPC_55x
 
 #if defined(MBEDTLS_AES_ALT)

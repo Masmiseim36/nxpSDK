@@ -287,7 +287,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pe167</state>
+          <state>Pe167,Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -324,11 +324,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -375,6 +375,7 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../components/video/camera/device</state>
           <state>$PROJ_DIR$/../../../../../components/video/camera</state>
@@ -1409,7 +1410,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pe167</state>
+          <state>Pe167,Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1446,11 +1447,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -1497,6 +1498,7 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../components/video/camera/device</state>
           <state>$PROJ_DIR$/../../../../../components/video/camera</state>
@@ -2333,15 +2335,6 @@
     </file>
   </group>
   <group>
-    <name>doc</name>
-    <file>
-      <name>$PROJ_DIR$/../doc/readme.txt</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../doc/board.readme</name>
-    </file>
-  </group>
-  <group>
     <name>scripts</name>
     <file>
       <name>$PROJ_DIR$/../scripts/glow_process_image.py</name>
@@ -2375,6 +2368,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/fsl_assert.h</name>
     </file>
   </group>
   <group>
@@ -2909,6 +2905,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/mpu_armv7.h</name>
+    </file>
+  </group>
+  <group>
+    <name>doc</name>
+    <file>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
 </project>

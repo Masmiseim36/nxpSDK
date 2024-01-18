@@ -127,6 +127,9 @@ CK_RV ParseSignMechanism(P11SessionPtr_t pxSession, sss_algorithm_t *algorithm)
     case CKM_ECDSA_SHA1:
         *algorithm = kAlgorithm_SSS_ECDSA_SHA1;
         break;
+    case CKM_SHA256_HMAC:
+        *algorithm = kAlgorithm_SSS_HMAC_SHA256;
+        break;
 
     default:
         xResult = CKR_MECHANISM_INVALID;
@@ -272,7 +275,7 @@ CK_RV ParseDigestMechanism(P11SessionPtr_t pxSession, sss_algorithm_t *algorithm
  * @retval #CKR_ARGUMENTS_BAD The arguments supplied to the function are not appropriate.
  *
  */
-CK_RV GetSSSAlgorithm(const sss_algorithm_t algorithm, sss_algorithm_t *digest_algo)
+CK_RV GetDigestAlgorithm(const sss_algorithm_t algorithm, sss_algorithm_t *digest_algo)
 {
     switch (algorithm) {
     case kAlgorithm_SSS_SHA1:
@@ -294,6 +297,7 @@ CK_RV GetSSSAlgorithm(const sss_algorithm_t algorithm, sss_algorithm_t *digest_a
     case kAlgorithm_SSS_RSASSA_PKCS1_PSS_MGF1_SHA256:
     case kAlgorithm_SSS_RSAES_PKCS1_OAEP_SHA256:
     case kAlgorithm_SSS_ECDSA_SHA256:
+    case kAlgorithm_SSS_HMAC_SHA256:
         *digest_algo = kAlgorithm_SSS_SHA256;
         break;
     case kAlgorithm_SSS_SHA384:
@@ -332,7 +336,6 @@ CK_BBOOL isX509Certificate(uint32_t xObject)
     uint8_t data[2048]      = {0};
     size_t dataLen          = sizeof(data);
     size_t KeyBitLen        = 0;
-    mbedtls_x509_crt certificate;
 
     /* NOTE: MUTEX LOCK IS NOT USED HERE BECAUSE THIS FUNCTION IS CALLED ONLY WHEN WE HAVE ALREADY LOCKED THE MUTEX */
 
@@ -347,8 +350,7 @@ CK_BBOOL isX509Certificate(uint32_t xObject)
         return xResult;
     }
 
-    mbedtls_x509_crt_init(&certificate);
-    if (0 != mbedtls_x509_crt_parse(&certificate, (const unsigned char *)data, dataLen)) {
+    if (0 != port_parseCert(&data[0], dataLen)){
         return xResult;
     }
 
@@ -468,12 +470,7 @@ CK_RV parseCertificateGetAttribute(
     uint8_t data[2048]               = {0};
     size_t dataLen                   = sizeof(data);
     size_t KeyBitLen                 = 0;
-    mbedtls_x509_crt certificate;
-    mbedtls_pk_context *pk;
-    uint8_t pubdata[2048] = {0};
-    size_t pubdataLen     = sizeof(data);
     size_t i              = 0;
-    int len;
 
     /* NOTE: MUTEX LOCK IS NOT USED HERE BECAUSE THIS FUNCTION IS CALLED ONLY WHEN WE HAVE ALREADY LOCKED THE MUTEX */
 
@@ -488,76 +485,7 @@ CK_RV parseCertificateGetAttribute(
         return xResult;
     }
 
-    mbedtls_x509_crt_init(&certificate);
-    if (0 != mbedtls_x509_crt_parse(&certificate, (const unsigned char *)data, dataLen)) {
-        LOG_E("Unable to parse certificate");
-        return xResult;
-    }
-
-    xResult = CKR_OK;
-    switch (attributeType) {
-    case CKA_HASH_OF_ISSUER_PUBLIC_KEY:
-        if ((certificate.issuer_raw.tag != certificate.subject_raw.tag) ||
-            (certificate.issuer_raw.len != certificate.subject_raw.len) ||
-            (memcmp((void *)certificate.issuer_raw.p, (void *)certificate.subject_raw.p, certificate.subject_raw.len) !=
-                0)) {
-            xResult = CKR_ATTRIBUTE_SENSITIVE;
-        }
-        else {
-            pk  = &certificate.pk;
-            len = mbedtls_pk_write_pubkey_der(pk, pubdata, pubdataLen);
-            if (len < 0) {
-                xResult = CKR_FUNCTION_FAILED;
-                break;
-            }
-
-            if ((int)(*ulAttrLength) < len) {
-                LOG_E("Buffer too small");
-                xResult = CKR_BUFFER_TOO_SMALL;
-                break;
-            }
-            memcpy(pData, &pubdata[pubdataLen - len], len);
-            *ulAttrLength = len;
-        }
-        break;
-    case CKA_HASH_OF_SUBJECT_PUBLIC_KEY:
-        pk  = &certificate.pk;
-        len = mbedtls_pk_write_pubkey_der(pk, pubdata, pubdataLen);
-        if (len < 0) {
-            xResult = CKR_FUNCTION_FAILED;
-            break;
-        }
-
-        if ((int)(*ulAttrLength) < len) {
-            LOG_E("Buffer too small");
-            xResult = CKR_BUFFER_TOO_SMALL;
-            break;
-        }
-        memcpy(pData, &pubdata[pubdataLen - len], len);
-        *ulAttrLength = len;
-
-        break;
-
-    case CKA_SUBJECT:
-        if (certificate.subject_raw.p != NULL) {
-            if ((size_t)(*ulAttrLength) < certificate.subject_raw.len) {
-                LOG_E("Buffer too small");
-                xResult = CKR_BUFFER_TOO_SMALL;
-                break;
-            }
-            memcpy(pData, certificate.subject_raw.p, certificate.subject_raw.len);
-            *ulAttrLength = certificate.subject_raw.len;
-            break;
-        }
-        else {
-            xResult = CKR_FUNCTION_FAILED;
-            break;
-        }
-
-    default:
-        LOG_W("Attribute required : 0x%08lx\n", attributeType);
-        xResult = CKR_ATTRIBUTE_SENSITIVE;
-    }
+    xResult = port_parseCertGetAttr(attributeType, &data[0], dataLen, pData, ulAttrLength);
 
     ENSURE_OR_GO_EXIT(xResult == CKR_OK);
 
@@ -697,13 +625,13 @@ sss_status_t parseAtrribute(se05x_object_attribute *pAttribute,
     CK_BBOOL *pAllow)
 {
     uint32_t i;
-    uint32_t policyEnd;
-    uint32_t policyStart = 14;
-    uint8_t policy_len;   /**< Length of policy. */
-    uint32_t auth_obj_id; /**< Authentication object identifier */
-    uint32_t ar_header;   /**< AR Header */
-    CK_BBOOL found_policy = CK_FALSE;
-    uint32_t default_policy;
+    uint32_t policyEnd      = 0;
+    uint32_t policyStart    = 14;
+    uint8_t policy_len      = 0; /**< Length of policy. */
+    uint32_t auth_obj_id    = 0; /**< Authentication object identifier */
+    uint32_t ar_header      = 0; /**< AR Header */
+    CK_BBOOL found_policy   = CK_FALSE;
+    uint32_t default_policy = 0;
 
     if (rsp == NULL) {
         // Object attribute should be at least 19 bytes (without policy).
@@ -714,6 +642,10 @@ sss_status_t parseAtrribute(se05x_object_attribute *pAttribute,
     if (rspLen < 19) {
         // Object attribute should be at least 19 bytes (without policy).
         LOG_E("Incomplete Object Attribute");
+        return kStatus_SSS_Fail;
+    }
+    if ((rspLen - 5) > UINT32_MAX) {
+        LOG_E("Invalid Object Attribute");
         return kStatus_SSS_Fail;
     }
     policyEnd = (uint32_t)(rspLen - 5);
@@ -731,6 +663,9 @@ sss_status_t parseAtrribute(se05x_object_attribute *pAttribute,
     }
     pAttribute->auth_obj_id = ((rsp[8] << 8 * 3) | (rsp[9] << 8 * 2) | (rsp[10] << 8 * 1) | (rsp[11]));
     pAttribute->origin      = (SE05x_Origin_t)rsp[policyEnd];
+    if ((UINT32_MAX - 4) < policyEnd) {
+        return kStatus_SSS_Fail;
+    }
     pAttribute->version     = (rsp[policyEnd + 1] << 8 * 3) | (rsp[policyEnd + 2] << 8 * 2) |
                           (rsp[policyEnd + 3] << 8 * 1) | (rsp[policyEnd + 4]);
 #ifdef DEBUG_PKCS11_PAL
@@ -760,9 +695,14 @@ sss_status_t parseAtrribute(se05x_object_attribute *pAttribute,
     if (pAllow != NULL) {
         // Check policy set and decide if not allowed.
         for (i = policyStart; i < policyEnd;) {
-            policy_len  = rsp[i];
-            auth_obj_id = ((rsp[i + 1] << 8 * 3) | (rsp[i + 2] << 8 * 2) | (rsp[i + 3] << 8 * 1) | (rsp[i + 4]));
-            ar_header   = ((rsp[i + 5] << 8 * 3) | (rsp[i + 6] << 8 * 2) | (rsp[i + 7] << 8 * 1) | (rsp[i + 8]));
+            policy_len = rsp[i];
+            if (i + 8 < rspLen) {
+                auth_obj_id = ((rsp[i + 1] << 8 * 3) | (rsp[i + 2] << 8 * 2) | (rsp[i + 3] << 8 * 1) | (rsp[i + 4]));
+                ar_header   = ((rsp[i + 5] << 8 * 3) | (rsp[i + 6] << 8 * 2) | (rsp[i + 7] << 8 * 1) | (rsp[i + 8]));
+            }
+            else{
+                return kStatus_SSS_Fail;
+            }
 #ifdef DEBUG_PKCS11_PAL
             LOG_I("Policy auth object Id : 0x%08X", auth_obj_id);
             LOG_I("Policy Access rules : 0x%08X", ar_header);
@@ -891,6 +831,10 @@ sss_status_t get_validated_object_id(P11SessionPtr_t pxSession, CK_OBJECT_HANDLE
     if (pxSession->xFindObjectInit == CK_TRUE) {
         /* Find Objects operation is going on. Read from SW keystore */
         SwKeyStorePtr_t pCurrentKeyStore = pxSession->pCurrentKs;
+        if (xObject > UINT32_MAX) {
+            LOG_E("Key id cannot be greater than 4 bytes");
+            return kStatus_SSS_Fail;
+        }
         for (size_t i = 0; i < pCurrentKeyStore->keyIdListLen; i++) {
             if (pCurrentKeyStore->SSSObjects[i].keyId == (uint32_t)xObject) {
                 /* True */
@@ -904,6 +848,10 @@ sss_status_t get_validated_object_id(P11SessionPtr_t pxSession, CK_OBJECT_HANDLE
         sss_status = sss_key_object_init(&sss_object, &pex_sss_demo_boot_ctx->ks);
         ENSURE_OR_GO_EXIT(sss_status == kStatus_SSS_Success);
 
+        if (xObject > UINT32_MAX) {
+            LOG_E("Key id cannot be greater than 4 bytes");
+            return kStatus_SSS_Fail;
+        }
         sss_status = sss_key_object_get_handle(&sss_object, xObject);
         ENSURE_OR_GO_EXIT(sss_status == kStatus_SSS_Success);
         *keyId = xObject;
@@ -926,6 +874,10 @@ sss_status_t get_validated_cipher_type(
     if (pxSession->xFindObjectInit == CK_TRUE) {
         /* Find Objects operation is going on. Read from SW keystore */
         SwKeyStorePtr_t pCurrentKeyStore = pxSession->pCurrentKs;
+        if (xObject > UINT32_MAX) {
+            LOG_E("Key id cannot be greater than 4 bytes");
+            return kStatus_SSS_Fail;
+        }
         for (size_t i = 0; i < pCurrentKeyStore->keyIdListLen; i++) {
             if (pCurrentKeyStore->SSSObjects[i].keyId == (uint32_t)xObject) {
                 /* True */
@@ -939,6 +891,10 @@ sss_status_t get_validated_cipher_type(
         sss_status = sss_key_object_init(&sss_object, &pex_sss_demo_boot_ctx->ks);
         ENSURE_OR_GO_EXIT(sss_status == kStatus_SSS_Success);
 
+        if (xObject > UINT32_MAX) {
+            LOG_E("Key id cannot be greater than 4 bytes");
+            return kStatus_SSS_Fail;
+        }
         sss_status = sss_key_object_get_handle(&sss_object, xObject);
         ENSURE_OR_GO_EXIT(sss_status == kStatus_SSS_Success);
         *cipherType = (sss_cipher_type_t)(sss_object.cipherType);
@@ -955,6 +911,10 @@ sss_status_t get_validated_sss_object(P11SessionPtr_t pxSession, CK_OBJECT_HANDL
     if (pxSession->xFindObjectInit == CK_TRUE) {
         /* Find Objects operation is going on. Read from SW keystore */
         SwKeyStorePtr_t pCurrentKeyStore = pxSession->pCurrentKs;
+        if (xObject > UINT32_MAX) {
+            LOG_E("Key id cannot be greater than 4 bytes");
+            return kStatus_SSS_Fail;
+        }
         for (size_t i = 0; (i < pCurrentKeyStore->keyIdListLen) && (i < USER_MAX_ID_LIST_SIZE); i++) {
             if (pCurrentKeyStore->SSSObjects[i].keyId == (uint32_t)xObject) {
                 /* True */
@@ -968,6 +928,10 @@ sss_status_t get_validated_sss_object(P11SessionPtr_t pxSession, CK_OBJECT_HANDL
         sss_status = sss_key_object_init(&sss_object, &pex_sss_demo_boot_ctx->ks);
         ENSURE_OR_GO_EXIT(sss_status == kStatus_SSS_Success);
 
+        if (xObject > UINT32_MAX) {
+            LOG_E("Key id cannot be greater than 4 bytes");
+            return kStatus_SSS_Fail;
+        }
         sss_status = sss_key_object_get_handle(&sss_object, xObject);
         ENSURE_OR_GO_EXIT(sss_status == kStatus_SSS_Success);
         memcpy(pSSSObject, &sss_object, sizeof(*pSSSObject));

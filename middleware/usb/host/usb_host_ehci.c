@@ -4170,9 +4170,14 @@ static void USB_HostEhciPortChange(usb_host_ehci_instance_t *ehciInstance)
             (uint8_t)((ehciInstance->ehciIpBase->PORTSC1 & USBHS_PORTSC1_PSPD_MASK) >> USBHS_PORTSC1_PSPD_SHIFT);
         /* enable ehci phy disconnection */
 #if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
-        if (ehciInstance->firstDeviceSpeed == USB_SPEED_HIGH)
+#if defined(FSL_FEATURE_USBHS_SUPPORT_EUSBn)
+        if (0U == (uint32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciInstance->ehciIpBase))
+#endif
         {
-            USB_EhcihostPhyDisconnectDetectCmd(ehciInstance->controllerId, 1);
+            if (ehciInstance->firstDeviceSpeed == USB_SPEED_HIGH)
+            {
+                USB_EhcihostPhyDisconnectDetectCmd(ehciInstance->controllerId, 1);
+            }
         }
 #endif
 
@@ -4196,7 +4201,12 @@ static void USB_HostEhciPortChange(usb_host_ehci_instance_t *ehciInstance)
 #endif
             /* disable ehci phy disconnection */
 #if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
-            USB_EhcihostPhyDisconnectDetectCmd(ehciInstance->controllerId, 0);
+#if defined(FSL_FEATURE_USBHS_SUPPORT_EUSBn)
+            if (0U == (uint32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciInstance->ehciIpBase))
+#endif
+            {
+                USB_EhcihostPhyDisconnectDetectCmd(ehciInstance->controllerId, 0);
+            }
 #endif
             USB_HostEhciLock();
             /* disable async and periodic */
@@ -4380,16 +4390,26 @@ static void USB_HostEhciTimer1(usb_host_ehci_instance_t *ehciInstance)
 #endif
 #endif
 #if (defined(FSL_FEATURE_USBPHY_28FDSOI) && (FSL_FEATURE_USBPHY_28FDSOI > 0U))
-                    ehciInstance->registerPhyBase->USB1_VBUS_DETECT_SET |=
-                        USBPHY_USB1_VBUS_DETECT_VBUSVALID_TO_SESSVALID_MASK;
+#if defined(FSL_FEATURE_USBHS_SUPPORT_EUSBn)
+                    if (0U == (uint32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciInstance->ehciIpBase))
+#endif
+                    {
+                        ehciInstance->registerPhyBase->USB1_VBUS_DETECT_SET |=
+                            USBPHY_USB1_VBUS_DETECT_VBUSVALID_TO_SESSVALID_MASK;
+                    }
 #endif
                     ehciInstance->ehciIpBase->PORTSC1 |= USBHS_PORTSC1_PHCD_MASK;
 #if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
-                    ehciInstance->registerPhyBase->PWD = 0xFFFFFFFFU;
-
-                    while (0U != (ehciInstance->registerPhyBase->CTRL & (USBPHY_CTRL_UTMI_SUSPENDM_MASK)))
+#if defined(FSL_FEATURE_USBHS_SUPPORT_EUSBn)
+                    if (0U == (uint32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciInstance->ehciIpBase))
+#endif
                     {
-                        __NOP();
+                        ehciInstance->registerPhyBase->PWD = 0xFFFFFFFFU;
+
+                        while (0U != (ehciInstance->registerPhyBase->CTRL & (USBPHY_CTRL_UTMI_SUSPENDM_MASK)))
+                        {
+                            __NOP();
+                        }
                     }
 #endif
 #if (defined(FSL_FEATURE_SOC_USBNC_COUNT) && (FSL_FEATURE_SOC_USBNC_COUNT > 0U))
@@ -4404,7 +4424,12 @@ static void USB_HostEhciTimer1(usb_host_ehci_instance_t *ehciInstance)
 #endif
 #endif
 #if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
-                    ehciInstance->registerPhyBase->CTRL |= USBPHY_CTRL_CLKGATE_MASK;
+#if defined(FSL_FEATURE_USBHS_SUPPORT_EUSBn)
+                    if (0U == (uint32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciInstance->ehciIpBase))
+#endif
+                    {
+                        ehciInstance->registerPhyBase->CTRL |= USBPHY_CTRL_CLKGATE_MASK;
+                    }
 #endif
                     (void)hostPointer->deviceCallback(hostPointer->suspendedDevice, NULL,
                                                       kUSB_HostEventSuspended); /* call host callback function */
@@ -4483,7 +4508,12 @@ usb_status_t USB_HostEhciCreate(uint8_t controllerId,
 
 #if (defined(USB_HOST_CONFIG_LOW_POWER_MODE) && (USB_HOST_CONFIG_LOW_POWER_MODE > 0U))
 #if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
-    ehciInstance->registerPhyBase = (USBPHY_Type *)USB_EhciPhyGetBase(controllerId);
+#if defined(FSL_FEATURE_USBHS_SUPPORT_EUSBn)
+    if (0U == (uint32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciInstance->ehciIpBase))
+#endif
+    {
+        ehciInstance->registerPhyBase = (USBPHY_Type *)USB_EhciPhyGetBase(controllerId);
+    }
 #endif
 #if (defined(FSL_FEATURE_SOC_USBNC_COUNT) && (FSL_FEATURE_SOC_USBNC_COUNT > 0U))
     ehciInstance->registerNcBase = (USBNC_Type *)USB_EhciNCGetBase(controllerId);

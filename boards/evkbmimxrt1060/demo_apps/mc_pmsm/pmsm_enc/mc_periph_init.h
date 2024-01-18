@@ -9,7 +9,7 @@
 #ifndef _MC_PERIPH_INIT_H_
 #define _MC_PERIPH_INIT_H_
 
-#include "mcdrv_adc_imxrt.h"
+#include "mcdrv_adcetc_imxrt.h"
 #include "mcdrv_pwm3ph_pwma.h"
 #include "mcdrv_enc_qd.h"
 #include "m1_pmsm_appconfig.h"
@@ -32,13 +32,10 @@ typedef struct _clock_setup
     uint16_t ui16M1PwmDeadTime;
 } clock_setup_t;
 
-/* macro used for TSA table */
-#define PMSM_SNSLESS_ENC
-
 /******************************************************************************
  * Clock & PWM definition for motor 1
  ******************************************************************************/
-#define M1_PWM_FREQ (10000)         /* PWM frequency - 10kHz */
+#define M1_PWM_FREQ (16000)         /* PWM frequency - 16kHz */
 #define M1_FOC_FREQ_VS_PWM_FREQ (1) /* FOC calculation is called every n-th PWM reload */
 #define M1_SPEED_LOOP_FREQ (1000)   /* Speed loop frequency */
 #define M1_PWM_DEADTIME (500)       /* Output PWM deadtime value in nanoseconds */
@@ -52,27 +49,20 @@ typedef struct _clock_setup
 /* Slow control loop frequency */
 #define M1_SLOW_LOOP_FREQ       (1000U)
 
-/* Assignment of eFlexPWM channels to motor 1 phases
- * 0 - PWM channels A0&B0 - sub-module 0
- * 1 - PWM channels A1&B1 - sub-module 1
- * 2 - WPM channels A2&B2 - sub-module 3
- */
-#define M1_PWM_PAIR_PHA (0)
-#define M1_PWM_PAIR_PHB (1)
-#define M1_PWM_PAIR_PHC (3)
-
 /* Over Current Fault detection */
 #define M1_FAULT_NUM (0)
 
 /* Braking resistor macros */
 #define M1_BRAKE_SET()
 #define M1_BRAKE_CLEAR()
+/* DC bus braking threshold hysteresis */
+#define M1_U_DCB_HYSTERESIS (0.05F)
 
 /******************************************************************************
  * ADC measurement definition for motor 1
  ******************************************************************************/
 /* Configuration table of ADC channels according to the input pin signals:
- * Valid for iMXRT1050 together with FRDM-MC-LVPMSM
+ * Valid for iMXRT1060 together with FRDM-MC-LVPMSM
  *
  * Motor 1
  * Quantity     | Module A (ADC1)       | Module B (ADC2)
@@ -87,13 +77,13 @@ typedef struct _clock_setup
 /* Phase current A assigned to ADC1 and ADC2 */
 #define M1_ADC1_PH_A (0)
 #define M1_ADC2_PH_A (0)
-/* Phase current A assigned to ADC1 and ADC2 */
+/* Phase current B assigned to ADC1 and ADC2 */
 #define M1_ADC1_PH_B (5)
 #define M1_ADC2_PH_B (5)
-/* Phase current A assigned to ADC1 and ADC2 */
+/* Phase current C assigned to ADC1 and ADC2 */
 #define M1_ADC1_PH_C (6)
 #define M1_ADC2_PH_C (6)
-/* Phase current A assigned to ADC1 and ADC2 */
+/* Phase voltage UDCB assigned to ADC1 and ADC2 */
 #define M1_ADC1_UDCB (7)
 #define M1_ADC2_UDCB (7)
 
@@ -135,6 +125,7 @@ typedef struct _clock_setup
 #define M1_MCDRV_QD_PERIPH_INIT() M1_InitQD()
 #define M1_MCDRV_QD_GET(par) (MCDRV_QdEncGet(par))
 #define M1_MCDRV_QD_SET_DIRECTION(par) (MCDRV_QdEncSetDirection(par))
+#define M1_MCDRV_QD_SET_PULSES(par) (MCDRV_QdEncSetPulses(par))
 #define M1_MCDRV_QD_CLEAR(par) (MCDRV_QdEncClear(par))
 
 /******************************************************************************
@@ -145,7 +136,7 @@ typedef struct _clock_setup
 /******************************************************************************
  * Global variable definitions
  ******************************************************************************/
-extern mcdrv_adc_t g_sM1AdcSensor;
+extern mcdrv_adcetc_t g_sM1AdcSensor;
 extern mcdrv_pwm3ph_pwma_t g_sM1Pwm3ph;
 extern mcdrv_qd_enc_t g_sM1Enc;
 

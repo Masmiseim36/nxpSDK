@@ -1,10 +1,7 @@
 /*
  * Copyright 2018-2022 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /*!
@@ -461,11 +458,19 @@ static int32_t filesink_change_state(StreamElement *element, PipelineState new_s
             OSA_SemaphoreCreateBinary(file_dump.sem_Read);
             OSA_SemaphoreCreateBinary(file_dump.sem_Write);
             OSA_SemaphoreCreateBinary(file_dump.sem_End);
-            OSA_MutexCreate(&(file_dump.fileDataMutex));
+            OSA_MutexCreate(file_dump.fileDataMutex);
 
             if (xTaskCreate(FILE_Dump_Task, "FILE Dump Task", 512, NULL, configMAX_PRIORITIES - 2, NULL) != pdPASS)
             {
                 STREAMER_LOG_DEBUG(DBG_FILE_SINK, "[File SINK]Failed to create application task\r\n");
+                OSA_SemaphoreDestroy(file_dump.sem_Read);
+                OSA_SemaphoreDestroy(file_dump.sem_Write);
+                OSA_SemaphoreDestroy(file_dump.sem_End);
+                OSA_MutexDestroy(file_dump.fileDataMutex);
+                file_dump.sem_Read[0] = 0;
+                file_dump.sem_Write[0] = 0;
+                file_dump.sem_End[0] = 0;
+                file_dump.fileDataMutex[0] = 0;
                 ret = STREAM_ERR_GENERAL;
                 goto Error;
             }
@@ -479,6 +484,7 @@ static int32_t filesink_change_state(StreamElement *element, PipelineState new_s
         case STATE_CHANGE_READY_TO_NULL:
             /* Create a condition for correct stopping the FILE_Dump_task */
             file_dump.run = false;
+            CHK_ARGS(0 == *file_dump.sem_Read || 0 == *file_dump.sem_Write || 0 == *file_dump.sem_End, STREAM_ERR_GENERAL);
             OSA_SemaphorePost(file_dump.sem_Read);
 
             /* Wait for task ends */
@@ -488,7 +494,11 @@ static int32_t filesink_change_state(StreamElement *element, PipelineState new_s
             OSA_SemaphoreDestroy(file_dump.sem_Read);
             OSA_SemaphoreDestroy(file_dump.sem_Write);
             OSA_SemaphoreDestroy(file_dump.sem_End);
-            OSA_MutexDestroy(&(file_dump.fileDataMutex));
+            OSA_MutexDestroy(file_dump.fileDataMutex);
+            file_dump.sem_Read[0] = 0;
+            file_dump.sem_Write[0] = 0;
+            file_dump.sem_End[0] = 0;
+            file_dump.fileDataMutex[0] = 0;
 
             /* Free up memmory */
             if (file_dump.data_ptr != NULL)
@@ -695,6 +705,7 @@ int32_t filesink_init_element(StreamElement *element)
         pad->query_handler      = filesink_sink_pad_query_handler;
         pad->process_precheck   = NULL;
         pad->process_handler    = filesink_sink_pad_process_handler;
+        pad->scheduling         = SCHEDULING_PUSH;
     }
 
     STREAMER_FUNC_EXIT(DBG_FILE_SINK);

@@ -1,10 +1,7 @@
 /*
  * Copyright 2018-2022 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef FILESRC_H
@@ -49,24 +46,35 @@ struct _ElementFileSrc
     PadSink sink_pad[MAX_NUM_PADS];             /*!< @brief Sink pads */
     struct _StreamElement *sibling;             /*!< @brief Sibling pointer */
 
-    int32_t fd;                              /*!< @brief File descriptor */
-    char location[MAX_LOCATION_PATH_LENGTH]; /*!< @brief File location */
-    int8_t *buffer;                          /*!< @brief Buffer pointer */
-    uint32_t chunk_size;                     /*!< @brief Chunk size */
-    uint8_t end_of_stream;                   /*!< @brief End of stream flag */
-    uint8_t time_seekable;                   /*!< @brief Time seekable flag */
-    uint8_t byte_seekable;                   /*!< @brief Byte seekable flag */
-    uint32_t read_position;                  /*!< @brief Last read offset */
-    uint32_t duration;                       /*!< @brief File duration */
-    uint32_t size;                           /*!< @brief File size */
-    uint8_t file_type;                       /*!< @brief File type */
-    uint32_t sample_rate;                    /*!< @brief Sample rate */
-    uint8_t num_channels;                    /*!< @brief Number of channels */
-    uint8_t bit_width;                       /*!< @brief Bit width */
-    uint32_t g_read_position[MAX_NUM_PADS];  /*!< @brief Global read position */
-    int32_t g_fd[MAX_NUM_PADS];              /*!< @brief Global file descriptor */
+    int32_t fd;                                 /*!< @brief File descriptor */
+    char location[MAX_LOCATION_PATH_LENGTH];    /*!< @brief File location */
+    int8_t *buffer;                             /*!< @brief Buffer pointer */
+    uint32_t chunk_size;                        /*!< @brief Chunk size */
+    uint8_t end_of_stream;                      /*!< @brief End of stream flag */
+    uint8_t time_seekable;                      /*!< @brief Time seekable flag */
+    uint8_t byte_seekable;                      /*!< @brief Byte seekable flag */
+    uint32_t read_position;                     /*!< @brief Last read offset */
+    uint32_t duration;                          /*!< @brief File duration */
+    uint32_t size;                              /*!< @brief File size */
+    uint8_t file_type;                          /*!< @brief File type */
+    uint32_t sample_rate;                       /*!< @brief Sample rate */
+    uint8_t num_channels;                       /*!< @brief Number of channels */
+    uint8_t bit_width;                          /*!< @brief Bit width */
+    uint32_t g_read_position[MAX_NUM_PADS];     /*!< @brief Global read position */
+    int32_t g_fd[MAX_NUM_PADS];                 /*!< @brief Global file descriptor */
 };
 typedef struct _ElementFileSrc ElementFileSrc;
+
+/*!
+ * Stream builder decoder table
+ * This struct is for the decoder file formats table definition
+ */
+typedef struct
+{
+    char *extension;  /*!< @brief Extension name */
+    int decoder_type; /*!< @brief Relate with DecoderType */
+    int parser_type;  /*!< @brief Relate with ParserType */
+} StreamerFileSrcConfig;
 
 /*!
  * @ingroup coreapi
@@ -147,6 +155,20 @@ int32_t filesrc_set_push_chunk_size(ElementHandle element, uint32_t chunk_size);
  *
  */
 int32_t filesrc_get_push_chunk_size(ElementHandle element, uint64_t *chunk_size);
+/*!
+ *
+ * @brief    Get the file source decoder and parser type
+ *
+ * @param  filename name of the file
+ * @param  config file source information
+ *
+ * @returns  StreamReturnType
+ * @retval    STREAM_OK if successful
+ * @retval    STREAM_ERR_GENERAL means either file does not contain an extension or
+ * the file type is not supported
+ *
+ */
+int32_t file_src_get_decoder_type(char *filename, StreamerFileSrcConfig *config);
 
 /*! @} */
 

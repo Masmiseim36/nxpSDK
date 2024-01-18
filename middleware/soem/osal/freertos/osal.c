@@ -55,7 +55,7 @@ ec_timet osal_current_time(void)
     ec_timet return_value;
 
     gettimeofday(&current_time, 0);
-    return_value.sec  = current_time.tv_sec;
+    return_value.sec  = (uint32) current_time.tv_sec;
     return_value.usec = current_time.tv_usec;
     return return_value;
 }
@@ -71,7 +71,7 @@ void osal_timer_start(osal_timert *self, uint32 timeout_usec)
     timeout.tv_usec = timeout_usec % USECS_PER_SEC;
     timeradd(&start_time, &timeout, &stop_time);
 
-    self->stop_time.sec  = stop_time.tv_sec;
+    self->stop_time.sec  = (uint32) stop_time.tv_sec;
     self->stop_time.usec = stop_time.tv_usec;
 }
 

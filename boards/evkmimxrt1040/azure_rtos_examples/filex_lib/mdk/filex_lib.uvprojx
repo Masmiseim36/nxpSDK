@@ -11,6 +11,7 @@
       <TargetOption>
         <TargetCommonOption>
           <Device>MIMXRT1042XJM5B</Device>
+          <Cpu>CPUTYPE("Cortex-M7") FPU3(DFPU)</Cpu>
           <Vendor>NXP</Vendor>
           <IncludePath/>
           <LibPath/>
@@ -62,7 +63,6 @@
           </AfterMake>
           <SelectedForBatchBuild>1</SelectedForBatchBuild>
           <SVCSIdString/>
-          <Cpu>CPUTYPE("Cortex-M7") FPU3(DFPU)</Cpu>
         </TargetCommonOption>
         <CommonProperty>
           <UseCPPCompiler>0</UseCPPCompiler>
@@ -1755,6 +1755,7 @@
       <TargetOption>
         <TargetCommonOption>
           <Device>MIMXRT1042XJM5B</Device>
+          <Cpu>CPUTYPE("Cortex-M7") FPU3(DFPU)</Cpu>
           <Vendor>NXP</Vendor>
           <IncludePath/>
           <LibPath/>
@@ -1806,7 +1807,6 @@
           </AfterMake>
           <SelectedForBatchBuild>1</SelectedForBatchBuild>
           <SVCSIdString/>
-          <Cpu>CPUTYPE("Cortex-M7") FPU3(DFPU)</Cpu>
         </TargetCommonOption>
         <CommonProperty>
           <UseCPPCompiler>0</UseCPPCompiler>

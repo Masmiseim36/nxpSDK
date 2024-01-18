@@ -1,51 +1,57 @@
 var a00072 =
 [
-    [ "snvs_hp_rtc_datetime_t", "a00072.html#a00501", [
-      [ "year", "a00072.html#ad208ce2822d4237a24aa334378163d8e", null ],
-      [ "month", "a00072.html#aeae304d30957ee76f2ae1549118ea383", null ],
-      [ "day", "a00072.html#a01d05e21af560f5185d63247d88b4c07", null ],
-      [ "hour", "a00072.html#a424370e8df7047b5dcab236e52a396f2", null ],
-      [ "minute", "a00072.html#a94effdb46795404af3432392f35e2353", null ],
-      [ "second", "a00072.html#acbb250fa88138295346c157310a47db8", null ]
+    [ "_snvs_hp_rtc_datetime", "a00072.html#a00495", [
+      [ "year", "a00072.html#a836ff503da955a0cdda9fa807f80421f", null ],
+      [ "month", "a00072.html#a6c13973b2b0b18cc220853b0e9f75858", null ],
+      [ "day", "a00072.html#a5ce9de689371f5368b73b0004f1c020f", null ],
+      [ "hour", "a00072.html#a084847db9741c605783cd756d19714e1", null ],
+      [ "minute", "a00072.html#a14e93bfc01d35a263b8dc5eaa3d30444", null ],
+      [ "second", "a00072.html#ac4dbeeb35d7f416515468aeabbac635b", null ]
     ] ],
-    [ "snvs_hp_rtc_config_t", "a00072.html#a00500", [
-      [ "rtcCalEnable", "a00072.html#aadf858054f534311eca1fe14c2d3e11a", null ],
-      [ "rtcCalValue", "a00072.html#ac916583f19d243eb891aa156b6ccd56a", null ],
-      [ "periodicInterruptFreq", "a00072.html#a7ffad480a30cb609a32c67cdd4f9e34c", null ]
+    [ "_snvs_hp_rtc_config", "a00072.html#a00494", [
+      [ "rtcCalEnable", "a00072.html#ab9e6a171d94438bbf84fdcbba15fe534", null ],
+      [ "rtcCalValue", "a00072.html#a6773212694d43f11ef490f7fdf9c499c", null ],
+      [ "periodicInterruptFreq", "a00072.html#af45979d92e9182cd73300a7926fec3fe", null ]
     ] ],
     [ "FSL_SNVS_HP_DRIVER_VERSION", "a00072.html#gaaf7c8c47c4f4124f31c7f48ae5715b75", null ],
     [ "SNVS_MAKE_HP_SV_FLAG", "a00072.html#gaab7985efdc9188a91c4753aca3e61e26", null ],
-    [ "snvs_hp_interrupts_t", "a00072.html#gaee130efedfe6119670086a1c6c712384", [
-      [ "kSNVS_RTC_AlarmInterrupt", "a00072.html#ggaee130efedfe6119670086a1c6c712384a1e479f0d0f6b4d039d2e9bcda6e21396", null ],
-      [ "kSNVS_RTC_PeriodicInterrupt", "a00072.html#ggaee130efedfe6119670086a1c6c712384a58b00c8a408e2f99fa186401a3936176", null ]
+    [ "snvs_hp_interrupts_t", "a00072.html#gaee49d1da41454b8797835662d9cdd0db", null ],
+    [ "snvs_hp_status_flags_t", "a00072.html#ga116ffa0c5592c79a31f12035a5653e50", null ],
+    [ "snvs_hp_sv_status_flags_t", "a00072.html#ga0cf3f316554658ca761fb902e85dac63", null ],
+    [ "snvs_hp_rtc_datetime_t", "a00072.html#ga0e707a31ab358256a85c2acb2c054f2b", null ],
+    [ "snvs_hp_rtc_config_t", "a00072.html#ga9605694d6a038b656b598bea9ca67a24", null ],
+    [ "snvs_hp_ssm_state_t", "a00072.html#ga1cf043a7742a0cf6f4ddb04d3885a4a8", null ],
+    [ "_snvs_hp_interrupts", "a00072.html#ga5c163901f9e11cb0b5005796938b7c78", [
+      [ "kSNVS_RTC_AlarmInterrupt", "a00072.html#gga5c163901f9e11cb0b5005796938b7c78a1e479f0d0f6b4d039d2e9bcda6e21396", null ],
+      [ "kSNVS_RTC_PeriodicInterrupt", "a00072.html#gga5c163901f9e11cb0b5005796938b7c78a58b00c8a408e2f99fa186401a3936176", null ]
     ] ],
-    [ "snvs_hp_status_flags_t", "a00072.html#gadc5f336a077a73ae307e7ae8943e51bf", [
-      [ "kSNVS_RTC_AlarmInterruptFlag", "a00072.html#ggadc5f336a077a73ae307e7ae8943e51bfa19082779de5fd8c7bfaa92039eaf986c", null ],
-      [ "kSNVS_RTC_PeriodicInterruptFlag", "a00072.html#ggadc5f336a077a73ae307e7ae8943e51bfa17d3484ae7d03f9c858096a685b1a3e3", null ],
-      [ "kSNVS_ZMK_ZeroFlag", "a00072.html#ggadc5f336a077a73ae307e7ae8943e51bfa279f722517f638849505663da580be1c", null ],
-      [ "kSNVS_OTPMK_ZeroFlag", "a00072.html#ggadc5f336a077a73ae307e7ae8943e51bfa4e7eae7a06f5e55366e49452e420b600", null ]
+    [ "_snvs_hp_status_flags", "a00072.html#gaabae76e8145eb18ea02a3140a9d510f9", [
+      [ "kSNVS_RTC_AlarmInterruptFlag", "a00072.html#ggaabae76e8145eb18ea02a3140a9d510f9a19082779de5fd8c7bfaa92039eaf986c", null ],
+      [ "kSNVS_RTC_PeriodicInterruptFlag", "a00072.html#ggaabae76e8145eb18ea02a3140a9d510f9a17d3484ae7d03f9c858096a685b1a3e3", null ],
+      [ "kSNVS_ZMK_ZeroFlag", "a00072.html#ggaabae76e8145eb18ea02a3140a9d510f9a279f722517f638849505663da580be1c", null ],
+      [ "kSNVS_OTPMK_ZeroFlag", "a00072.html#ggaabae76e8145eb18ea02a3140a9d510f9a4e7eae7a06f5e55366e49452e420b600", null ]
     ] ],
-    [ "snvs_hp_sv_status_flags_t", "a00072.html#ga6c646413eb25a7b7a32ee3d20bec13ad", [
-      [ "kSNVS_LP_ViolationFlag", "a00072.html#gga6c646413eb25a7b7a32ee3d20bec13adab386522ef551593be1d1e0a3285a003d", null ],
-      [ "kSNVS_ZMK_EccFailFlag", "a00072.html#gga6c646413eb25a7b7a32ee3d20bec13ada72ba4e4d6a1d251e2d2f7360dec9c05a", null ],
-      [ "kSNVS_LP_SoftwareViolationFlag", "a00072.html#gga6c646413eb25a7b7a32ee3d20bec13adad4b177ee0c5f8c3fd5ba9a9f86fcf5ad", null ],
-      [ "kSNVS_FatalSoftwareViolationFlag", "a00072.html#gga6c646413eb25a7b7a32ee3d20bec13adacfd1c986d4df4e3726c737eaa07b22dc", null ],
-      [ "kSNVS_SoftwareViolationFlag", "a00072.html#gga6c646413eb25a7b7a32ee3d20bec13ada69247198a66b059e1a6827e058031271", null ],
-      [ "kSNVS_Violation0Flag", "a00072.html#gga6c646413eb25a7b7a32ee3d20bec13ada64006780a5a990440d4dbd1546e15fd4", null ],
-      [ "kSNVS_Violation1Flag", "a00072.html#gga6c646413eb25a7b7a32ee3d20bec13ada690af4c92ba5760b03ff840b95acaaa3", null ],
-      [ "kSNVS_Violation2Flag", "a00072.html#gga6c646413eb25a7b7a32ee3d20bec13adaf4f88b8dc3de81668fef973ea25712d5", null ],
-      [ "kSNVS_Violation4Flag", "a00072.html#gga6c646413eb25a7b7a32ee3d20bec13ada12a565f3112032d80289d45237d42bb3", null ],
-      [ "kSNVS_Violation5Flag", "a00072.html#gga6c646413eb25a7b7a32ee3d20bec13adae89fe10f0c5b86b00f9f4efdfddd6ce5", null ]
+    [ "_snvs_hp_sv_status_flags", "a00072.html#gade36b8c0d607f8560c18b3fe22fe64e4", [
+      [ "kSNVS_LP_ViolationFlag", "a00072.html#ggade36b8c0d607f8560c18b3fe22fe64e4ab386522ef551593be1d1e0a3285a003d", null ],
+      [ "kSNVS_ZMK_EccFailFlag", "a00072.html#ggade36b8c0d607f8560c18b3fe22fe64e4a72ba4e4d6a1d251e2d2f7360dec9c05a", null ],
+      [ "kSNVS_LP_SoftwareViolationFlag", "a00072.html#ggade36b8c0d607f8560c18b3fe22fe64e4ad4b177ee0c5f8c3fd5ba9a9f86fcf5ad", null ],
+      [ "kSNVS_FatalSoftwareViolationFlag", "a00072.html#ggade36b8c0d607f8560c18b3fe22fe64e4acfd1c986d4df4e3726c737eaa07b22dc", null ],
+      [ "kSNVS_SoftwareViolationFlag", "a00072.html#ggade36b8c0d607f8560c18b3fe22fe64e4a69247198a66b059e1a6827e058031271", null ],
+      [ "kSNVS_Violation0Flag", "a00072.html#ggade36b8c0d607f8560c18b3fe22fe64e4a64006780a5a990440d4dbd1546e15fd4", null ],
+      [ "kSNVS_Violation1Flag", "a00072.html#ggade36b8c0d607f8560c18b3fe22fe64e4a690af4c92ba5760b03ff840b95acaaa3", null ],
+      [ "kSNVS_Violation2Flag", "a00072.html#ggade36b8c0d607f8560c18b3fe22fe64e4af4f88b8dc3de81668fef973ea25712d5", null ],
+      [ "kSNVS_Violation4Flag", "a00072.html#ggade36b8c0d607f8560c18b3fe22fe64e4a12a565f3112032d80289d45237d42bb3", null ],
+      [ "kSNVS_Violation5Flag", "a00072.html#ggade36b8c0d607f8560c18b3fe22fe64e4ae89fe10f0c5b86b00f9f4efdfddd6ce5", null ]
     ] ],
-    [ "snvs_hp_ssm_state_t", "a00072.html#ga3a06a2c2a5797755a7cf3eea163ce808", [
-      [ "kSNVS_SSMInit", "a00072.html#gga3a06a2c2a5797755a7cf3eea163ce808ae7830884d8e5020ccd5e20ae293dad15", null ],
-      [ "kSNVS_SSMHardFail", "a00072.html#gga3a06a2c2a5797755a7cf3eea163ce808af29e28c3c6dfb9f644ce8de542651ac9", null ],
-      [ "kSNVS_SSMSoftFail", "a00072.html#gga3a06a2c2a5797755a7cf3eea163ce808a60a24f4c76cb3ddb67f746eac3bedc25", null ],
-      [ "kSNVS_SSMInitInter", "a00072.html#gga3a06a2c2a5797755a7cf3eea163ce808ab91ee8c742d743ff48b1536df21f249e", null ],
-      [ "kSNVS_SSMCheck", "a00072.html#gga3a06a2c2a5797755a7cf3eea163ce808adec7dce6f5a46ff1f877f170518f1544", null ],
-      [ "kSNVS_SSMNonSecure", "a00072.html#gga3a06a2c2a5797755a7cf3eea163ce808ac673a58e61c466f38a3e8660b0b281f6", null ],
-      [ "kSNVS_SSMTrusted", "a00072.html#gga3a06a2c2a5797755a7cf3eea163ce808ac76e8c274dc67c9be07a1134f8e92a64", null ],
-      [ "kSNVS_SSMSecure", "a00072.html#gga3a06a2c2a5797755a7cf3eea163ce808aab8b6a11c429d8657470496b724f9204", null ]
+    [ "_snvs_hp_ssm_state", "a00072.html#gacb5b9c2a5667fd3c3e9c5c1abd6bda81", [
+      [ "kSNVS_SSMInit", "a00072.html#ggacb5b9c2a5667fd3c3e9c5c1abd6bda81ae7830884d8e5020ccd5e20ae293dad15", null ],
+      [ "kSNVS_SSMHardFail", "a00072.html#ggacb5b9c2a5667fd3c3e9c5c1abd6bda81af29e28c3c6dfb9f644ce8de542651ac9", null ],
+      [ "kSNVS_SSMSoftFail", "a00072.html#ggacb5b9c2a5667fd3c3e9c5c1abd6bda81a60a24f4c76cb3ddb67f746eac3bedc25", null ],
+      [ "kSNVS_SSMInitInter", "a00072.html#ggacb5b9c2a5667fd3c3e9c5c1abd6bda81ab91ee8c742d743ff48b1536df21f249e", null ],
+      [ "kSNVS_SSMCheck", "a00072.html#ggacb5b9c2a5667fd3c3e9c5c1abd6bda81adec7dce6f5a46ff1f877f170518f1544", null ],
+      [ "kSNVS_SSMNonSecure", "a00072.html#ggacb5b9c2a5667fd3c3e9c5c1abd6bda81ac673a58e61c466f38a3e8660b0b281f6", null ],
+      [ "kSNVS_SSMTrusted", "a00072.html#ggacb5b9c2a5667fd3c3e9c5c1abd6bda81ac76e8c274dc67c9be07a1134f8e92a64", null ],
+      [ "kSNVS_SSMSecure", "a00072.html#ggacb5b9c2a5667fd3c3e9c5c1abd6bda81aab8b6a11c429d8657470496b724f9204", null ]
     ] ],
     [ "SNVS_HP_Init", "a00072.html#gada84c18b75cc202b407834f56a8e7f80", null ],
     [ "SNVS_HP_Deinit", "a00072.html#ga805de8a4dd37cd65e384b9fae9d7e4c7", null ],
@@ -56,6 +62,7 @@ var a00072 =
     [ "SNVS_HP_RTC_GetDatetime", "a00072.html#gadfb1241d346995a130f3e2e046bb0d54", null ],
     [ "SNVS_HP_RTC_SetAlarm", "a00072.html#ga10fcc3d2cef1b0bfe722c9a51f4ed7cb", null ],
     [ "SNVS_HP_RTC_GetAlarm", "a00072.html#ga7e0d74a5e589f7c845e4fe4003622c63", null ],
+    [ "SNVS_HP_RTC_TimeSynchronize", "a00072.html#gafdf4a1b2c66ed56d524c803a78a2fcab", null ],
     [ "SNVS_HP_RTC_EnableInterrupts", "a00072.html#gae719f60ac8585937d91c55ed1b469692", null ],
     [ "SNVS_HP_RTC_DisableInterrupts", "a00072.html#gaa41a91bf279a1d7ecd75239468e75ed2", null ],
     [ "SNVS_HP_RTC_GetEnabledInterrupts", "a00072.html#gac719942dfcd56e8d34b62e21b34587b6", null ],

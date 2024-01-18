@@ -28,7 +28,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Maestro Audio Framework
-   &#160;<span id="projectnumber">v 1.6</span>
+   &#160;<span id="projectnumber">v 1.7</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -108,15 +108,12 @@ Supported examples</h1>
 <h2><a class="anchor" id="autotoc_md3"></a>
 maestro_playback</h2>
 <ul>
-<li><b>file</b>: Perform audio file decode (EAP post processing, if enabled in MCUXpresso IDE) and playback to the line-out (speaker).<ul>
+<li><b>file</b>: Perform audio file decode and playback to the line-out (speaker).<ul>
 <li><em>start</em>: Play default (first found) or specified audio track file.</li>
 <li><em>stop</em>: Stops actual playback.</li>
 <li><em>pause</em>: Pause actual track or resume if already paused.</li>
 <li><em>volume</em>: Set volume. The volume can be set from 0 to 100.</li>
 <li><em>seek</em>: Seek currently paused track. Seek time is absolute time in milliseconds.</li>
-<li><em>update</em>: Apply current EAP parameters without attribute value or switch to preset 1-10.</li>
-<li><em>set</em>: Apply current EAP parameters without attribute value or switch to preset 1-10.</li>
-<li><em>get</em>: Sync actual EAP parameters from the library to ATT config structures.</li>
 <li><em>track filename</em>: Select audio track to play.</li>
 <li><em>list</em>: List audio files available on mounted SD card.</li>
 <li><em>info</em>: Prints playback info.</li>
@@ -153,8 +150,8 @@ maestro_sync</h2>
 </ul>
 <h1><a class="anchor" id="autotoc_md8"></a>
 Example applications overview</h1>
-<p>To set up the audio framework properly, it is necessary to create a streamer with <code>streamer_create</code> API. It is also essential to set up the desired hardware peripherals using the functions described in <code><a class="el" href="streamer__pcm_8h.html" title="Streamer PCM API header. Public APIs for configuring the input/output PCM interfaces.">streamer_pcm.h</a></code>. The Maestro example projects consist of several files regarding the audio framework. The initial file is <code>main.c</code> with code to create multiple tasks. For features including SD card (in the maestro_playback examples, reading a file from SD card is supported and in maestro_record writing to SD card is currently supported) the <code>APP_SDCARD_Task</code> is created. The command prompt and connected functionalities are handled by <code>APP_Shell_Task</code>. In the maestro_playback example applications, there is also <code>APP_main_Task</code> that handles states of the application using a state machine in the <code>eap_att.c</code> source file. This is also used for application control from the EAP Audio Tuning Tool. User commands are handled by functions in <code>cmd.c</code>.</p>
-<p>One of the most important parts of the configuration is the <code>streamer_pcm.c</code> where the initialization of the hardware peripherals, input and output buffer management can be found. For further information please see also <code><a class="el" href="streamer__pcm_8h.html" title="Streamer PCM API header. Public APIs for configuring the input/output PCM interfaces.">streamer_pcm.h</a></code></p>
+<p>To set up the audio framework properly, it is necessary to create a streamer with <code>streamer_create</code> API. It is also essential to set up the desired hardware peripherals using the functions described in <code>streamer_pcm.h</code>. The Maestro example projects consist of several files regarding the audio framework. The initial file is <code>main.c</code> with code to create multiple tasks. For features including SD card (in the maestro_playback examples, reading a file from SD card is supported and in maestro_record writing to SD card is currently supported) the <code>APP_SDCARD_Task</code> is created. The command prompt and connected functionalities are handled by <code>APP_Shell_Task</code>.</p>
+<p>One of the most important parts of the configuration is the <code>streamer_pcm.c</code> where the initialization of the hardware peripherals, input and output buffer management can be found. For further information please see also <code>streamer_pcm.h</code></p>
 <p>In the Maestro USB examples (maestro_usb_mic and maestro_usb_speaker), the USB configuration is located in the <code>usb_device_descriptor.c</code>, <code>audio_microphone.c</code> and <code>audio_speaker.c</code> files. For further information please see also <code>usb_device_descriptor.h</code>, <code>audio_microphone.h</code> and <code>audio_speaker.h</code>.</p>
 <p>In order to be able to get the messages from the audio framework, it is necessary to create a thread for receiving the messages from the streamer, which is usually called a <code>Message Task</code>. The message thread is placed in the <code>app_streamer.c</code> file, reads the streamer message queue, and reacts to the following messages:</p>
 <ul>
@@ -175,11 +172,9 @@ file</h2>
 <ul>
 <li>When <code>MULTICHANNEL_EXAMPLE</code> is not defined:<ul>
 <li>The command calls <code>STREAMER_file_Create</code> function that creates the <code>STREAM_PIPELINE_FILESYSTEM</code> pipeline.</li>
-<li>When <code>EAP_PROC</code> is defined, it sets up the processing chain from the file source to the audio sink element, with the decoder and potentially EAP processing in between.</li>
 <li>When <code>SSRC_PROC</code> is defined, the synchronous sample rate converter is added before the audio sink element. &#160; Playback itself can be started with <code>STREAMER_Start</code> function. The pipeline can consist of the following elements:<ul>
 <li>TYPE_ELEMENT_FILE_SRC</li>
 <li>TYPE_ELEMENT_DECODER</li>
-<li>TYPE_ELEMENT_AUDIO_PROC (If <code>EAP_PROC</code> is defined)</li>
 <li>TYPE_ELEMENT_AUDIO_PROC (If <code>SSRC_PROC</code> is defined)</li>
 <li>TYPE_ELEMENT_AUDIO_SINK &#160;</li>
 </ul>
@@ -187,14 +182,13 @@ file</h2>
 </ul>
 </li>
 <li>When <code>MULTICHANNEL_EXAMPLE</code> is defined:<ul>
-<li>The command calls <code>STREAMER_PCM_Create</code> function, which creates either <code>STREAM_PIPELINE_PCM_AUDIO</code> or <code>STREAM_PIPELINE_PCM_EAP_PROC_AUDIO</code> pipeline, depending on whether or not <code>EAP_PROC</code> is defined (EAP processing is used for stereo files only with stereo output).</li>
+<li>The command calls <code>STREAMER_PCM_Create</code> function, which creates <code>STREAM_PIPELINE_PCM_AUDIO</code> pipeline.</li>
 <li>If the input file is an 8 channel PCM file, output to all 8 channels is available.<ul>
 <li>The properties of the PCM file are set in the <code>app_streamer.c</code> file using file source properties sent to the streamer: <code>PROP_FILESRC_SET_SAMPLE_RATE</code> - default value is 96000 [Hz] <code>PROP_FILESRC_SET_NUM_CHANNELS</code> - default value is 8 <code>PROP_FILESRC_SET_BIT_WIDTH</code> - default value is 32</li>
 </ul>
 </li>
 <li>The synchronous sample rate converter is not supported in the multi-channel examples. &#160; Playback itself can be started with <code>STREAMER_Start</code> function. The pipeline can consist of the following elements:<ul>
 <li>TYPE_ELEMENT_FILE_SRC (PCM format only)</li>
-<li>TYPE_ELEMENT_AUDIO_PROC (If <code>EAP_PROC</code> is defined and the input file is stereo)</li>
 <li>TYPE_ELEMENT_AUDIO_SINK</li>
 </ul>
 </li>
@@ -204,24 +198,25 @@ file</h2>
 <p>Other possible element types could be found in the <code><a class="el" href="streamer__api_8h.html" title="Streamer API header. Public APIs for using the maestro streamer framework.">streamer_api.h</a></code>.</p>
 <p>Each of the elements has several properties that can be accessed using <code>streamer_get_property</code>. These properties allow a user to change the values of the appropriate elements. The list of properties can be found in <code><a class="el" href="streamer__element__properties_8h.html" title="Header for streamer element properties.">streamer_element_properties.h</a></code>. See the example of setting property value in the following piece of code from <code>app_streamer.c</code>:</p>
 <div class="fragment"><div class="line"><a class="code" href="structELEMENT__PROPERTY__T.html">ELEMENT_PROPERTY_T</a> prop;</div>
-<div class="line">eap_args.preset_num          = *eap_par;</div>
 <div class="line"> </div>
-<div class="line"><a class="code" href="structEXT__PROCESS__DESC__T.html">EXT_PROCESS_DESC_T</a> eap_proc = {EAP_Initialize_func, EAP_Execute_func, EAP_Deinit_func, &amp;eap_args};</div>
+<div class="line"><a class="code" href="structEXT__PROCESS__DESC__T.html">EXT_PROCESS_DESC_T</a> ssrc_proc = {SSRC_Proc_Init, SSRC_Proc_Execute, SSRC_Proc_Deinit, &amp;get_app_data()-&gt;proc_args};</div>
 <div class="line"> </div>
-<div class="line">prop.<a class="code" href="structELEMENT__PROPERTY__T.html#a40dc39f13a8d25b45d19d63498082e10">prop</a> = PROP_EAP_PROC_FUNCPTR;</div>
-<div class="line">prop.<a class="code" href="structELEMENT__PROPERTY__T.html#ab1013a8983adf70b4cffba4637ad1df8">val</a>  = (uintptr_t)&amp;eap_proc;</div>
+<div class="line">prop.<a class="code" href="structELEMENT__PROPERTY__T.html#a40dc39f13a8d25b45d19d63498082e10">prop</a> = PROP_SRC_PROC_FUNCPTR;</div>
+<div class="line">prop.<a class="code" href="structELEMENT__PROPERTY__T.html#ab1013a8983adf70b4cffba4637ad1df8">val</a>  = (uintptr_t)&amp;ssrc_proc;</div>
 <div class="line"> </div>
-<div class="line"><a class="code" href="streamer__api_8h.html#af0f2ba1e35082e033d66b106438b51e8">streamer_set_property</a>(handle-&gt;streamer, 0, prop, <span class="keyword">true</span>);</div>
+<div class="line"><span class="keywordflow">if</span> (<a class="code" href="streamer__api_8h.html#af0f2ba1e35082e033d66b106438b51e8">streamer_set_property</a>(streamer, 0, prop, <span class="keyword">true</span>) != 0)</div>
+<div class="line">{</div>
+<div class="line">    <span class="keywordflow">return</span> -1;</div>
+<div class="line">}</div>
 <div class="line"> </div>
-<div class="line">prop.<a class="code" href="structELEMENT__PROPERTY__T.html#a40dc39f13a8d25b45d19d63498082e10">prop</a> = PROP_FILESRC_SET_CHUNK_SIZE;</div>
-<div class="line">prop.<a class="code" href="structELEMENT__PROPERTY__T.html#ab1013a8983adf70b4cffba4637ad1df8">val</a>  = 960;</div>
-<div class="line"> </div>
-<div class="line"><a class="code" href="streamer__api_8h.html#af0f2ba1e35082e033d66b106438b51e8">streamer_set_property</a>(handle-&gt;streamer, 0, prop, <span class="keyword">true</span>);</div>
-<div class="ttc" id="astreamer__api_8h_html_af0f2ba1e35082e033d66b106438b51e8"><div class="ttname"><a href="streamer__api_8h.html#af0f2ba1e35082e033d66b106438b51e8">streamer_set_property</a></div><div class="ttdeci">int32_t streamer_set_property(STREAMER_T *streamer, int8_t pipeline_id, ELEMENT_PROPERTY_T prop, bool block)</div><div class="ttdoc">Set element property.</div><div class="ttdef"><b>Definition:</b> streamer.c:772</div></div>
-<div class="ttc" id="astructELEMENT__PROPERTY__T_html"><div class="ttname"><a href="structELEMENT__PROPERTY__T.html">ELEMENT_PROPERTY_T</a></div><div class="ttdoc">Element Property structure.</div><div class="ttdef"><b>Definition:</b> streamer_api.h:548</div></div>
-<div class="ttc" id="astructELEMENT__PROPERTY__T_html_a40dc39f13a8d25b45d19d63498082e10"><div class="ttname"><a href="structELEMENT__PROPERTY__T.html#a40dc39f13a8d25b45d19d63498082e10">ELEMENT_PROPERTY_T::prop</a></div><div class="ttdeci">uint16_t prop</div><div class="ttdoc">property type</div><div class="ttdef"><b>Definition:</b> streamer_api.h:549</div></div>
-<div class="ttc" id="astructELEMENT__PROPERTY__T_html_ab1013a8983adf70b4cffba4637ad1df8"><div class="ttname"><a href="structELEMENT__PROPERTY__T.html#ab1013a8983adf70b4cffba4637ad1df8">ELEMENT_PROPERTY_T::val</a></div><div class="ttdeci">uintptr_t val</div><div class="ttdoc">property value</div><div class="ttdef"><b>Definition:</b> streamer_api.h:550</div></div>
-<div class="ttc" id="astructEXT__PROCESS__DESC__T_html"><div class="ttname"><a href="structEXT__PROCESS__DESC__T.html">EXT_PROCESS_DESC_T</a></div><div class="ttdoc">External processing funcion prototypes and arguments.</div><div class="ttdef"><b>Definition:</b> streamer_element_properties.h:26</div></div>
+<div class="line">prop.<a class="code" href="structELEMENT__PROPERTY__T.html#a40dc39f13a8d25b45d19d63498082e10">prop</a> = PROP_AUDIOSINK_SET_VOLUME;</div>
+<div class="line">prop.<a class="code" href="structELEMENT__PROPERTY__T.html#ab1013a8983adf70b4cffba4637ad1df8">val</a>  = volume;</div>
+<div class="line"><a class="code" href="streamer__api_8h.html#af0f2ba1e35082e033d66b106438b51e8">streamer_set_property</a>(streamer, 0, prop, <span class="keyword">true</span>);</div>
+<div class="ttc" id="astreamer__api_8h_html_af0f2ba1e35082e033d66b106438b51e8"><div class="ttname"><a href="streamer__api_8h.html#af0f2ba1e35082e033d66b106438b51e8">streamer_set_property</a></div><div class="ttdeci">int32_t streamer_set_property(STREAMER_T *streamer, int8_t pipeline_id, ELEMENT_PROPERTY_T prop, bool block)</div><div class="ttdoc">Set element property.</div><div class="ttdef"><b>Definition:</b> streamer.c:784</div></div>
+<div class="ttc" id="astructELEMENT__PROPERTY__T_html"><div class="ttname"><a href="structELEMENT__PROPERTY__T.html">ELEMENT_PROPERTY_T</a></div><div class="ttdoc">Element Property structure.</div><div class="ttdef"><b>Definition:</b> streamer_api.h:567</div></div>
+<div class="ttc" id="astructELEMENT__PROPERTY__T_html_a40dc39f13a8d25b45d19d63498082e10"><div class="ttname"><a href="structELEMENT__PROPERTY__T.html#a40dc39f13a8d25b45d19d63498082e10">ELEMENT_PROPERTY_T::prop</a></div><div class="ttdeci">uint16_t prop</div><div class="ttdoc">property type</div><div class="ttdef"><b>Definition:</b> streamer_api.h:568</div></div>
+<div class="ttc" id="astructELEMENT__PROPERTY__T_html_ab1013a8983adf70b4cffba4637ad1df8"><div class="ttname"><a href="structELEMENT__PROPERTY__T.html#ab1013a8983adf70b4cffba4637ad1df8">ELEMENT_PROPERTY_T::val</a></div><div class="ttdeci">uintptr_t val</div><div class="ttdoc">property value</div><div class="ttdef"><b>Definition:</b> streamer_api.h:569</div></div>
+<div class="ttc" id="astructEXT__PROCESS__DESC__T_html"><div class="ttname"><a href="structEXT__PROCESS__DESC__T.html">EXT_PROCESS_DESC_T</a></div><div class="ttdoc">External processing funcion prototypes and arguments.</div><div class="ttdef"><b>Definition:</b> streamer_element_properties.h:23</div></div>
 </div><!-- fragment --><p>Some of the predefined values can be found in the <code><a class="el" href="streamer__api_8h.html" title="Streamer API header. Public APIs for using the maestro streamer framework.">streamer_api.h</a></code>.</p>
 <h2><a class="anchor" id="autotoc_md12"></a>
 record_mic</h2>
@@ -294,8 +289,6 @@ Configuration options</h1>
 <li><code>STREAM_PIPELINE_VIT</code></li>
 <li><code>STREAM_PIPELINE_MEM</code></li>
 <li><code>STREAM_PIPELINE_OPUS_MEM2MEM</code></li>
-<li><code>STREAM_PIPELINE_PCM_AUDIO_PROC_AUDIO</code></li>
-<li><code>STREAM_PIPELINE_PCM_EAP_PROC_AUDIO</code></li>
 <li><code>STREAM_PIPELINE_PCM_AUDIO</code></li>
 <li><code>STREAM_PIPELINE_PCM_AUDIO_MEM</code></li>
 <li><code>STREAM_PIPELINE_VIT_FILESINK</code></li>
@@ -328,13 +321,13 @@ VIT</h2>
 <p>VIT can be enabled for the <code>record_mic</code> command using the <code>vit</code> option. In the <code>STREAMER_mic_Create</code> function in the <code>app_streamer.c</code> file, the <code>VIT_PROC</code> preprocessor define ensures the creation of pipeline with VIT (<code>STREAM_PIPELINE_VIT</code>). More details about VIT are available in the VIT package, which is located in <code>middleware\vit\{platform}\Doc\</code>(depending on the platform) or via following <a href="https://nxp.com/vit">link</a>.</p>
 <h2><a class="anchor" id="autotoc_md21"></a>
 VoiceSeeker</h2>
-<p>VoiceSeeker can be enabled for the <code>record_mic</code> command using the <code>vit</code> option. In the <code>STREAMER_mic_Create</code> function in the <code>app_streamer.c</code> file, the <code>VIT_PROC</code> and <code>VOICE_SEEKER_PROC</code> preprocessor defines ensure the creation of pipeline with VIT and VoiceSeeker (<code>STREAM_PIPELINE_VIT</code>). More details about VoiceSeeker are available in the VoiceSeeker package, which is located in <code>middleware\voice_seeker\{platform}\Doc\</code>(depending on the platform) or via following <a href="www.nxp.com/voiceseeker">link</a>.</p>
+<p>VoiceSeeker can be enabled for the <code>record_mic</code> command using the <code>vit</code> option. In the <code>STREAMER_mic_Create</code> function in the <code>app_streamer.c</code> file, the <code>VIT_PROC</code> and <code>VOICE_SEEKER_PROC</code> preprocessor defines ensure the creation of pipeline with VIT and VoiceSeeker (<code>STREAM_PIPELINE_VIT</code>). More details about VoiceSeeker are available in the VoiceSeeker package, which is located in <code>middleware\voice_seeker\{platform}\Doc\</code>(depending on the platform) or via following <a href="https://nxp.com/voiceseeker">link</a>.</p>
 <h2><a class="anchor" id="autotoc_md22"></a>
-EAP</h2>
-<p>EAP can be enabled with <code>EAP_PROC</code> preprocessor define for the respective EAP version. With the <code>file</code> command using the <code>set</code> or <code>update</code> option user can switch the different EAP presets as mentioned in the <code>maestro_playback</code> section. In the <code>STREAMER_file_Create</code> function in the <code>app_streamer.c</code> file, the <code>EAP_PROC</code> definition ensures the creation of pipeline with EAP (<code>STREAMER_PIPELINE_AUDIO_PROC</code>). For the platforms that support 32 bit EAP (RT1060-EVKB) users can create the pipeline with <code>MULTICHANNEL_EXAMPLE</code> defined. The function that creates the streamer is <code>STREAMER_PCM_Create</code> in the <code>app_streamer.c</code>. Created pipeline has <code>STREAM_PIPELINE_PCM_AUDIO_PROC_AUDIO</code> type. More details about EAP are available in the EAP package, which is located in <code>middleware\EAP\Doc\</code> or via following <a href="https://nxp.com/eap">link</a>.</p>
-<h2><a class="anchor" id="autotoc_md23"></a>
 SSRC</h2>
-<p>Synchronous sample rate converter can be enabled for the <code>file</code> command. In the <code>STREAMER_file_Create</code> function on the <code>app_streamer.c</code> file <code>SSRC_PROC</code> preprocessor define ensures the creation of pipeline with the synchronous sample rate converter. More details about SSRC are available in the User Guide, which is located in <code>middleware\maestro\mcu-audio\ssrc\doc\</code>. </p>
+<p>Synchronous sample rate converter can be enabled for the <code>file</code> command. In the <code>STREAMER_file_Create</code> function on the <code>app_streamer.c</code> file <code>SSRC_PROC</code> preprocessor define ensures the creation of pipeline with the synchronous sample rate converter. More details about SSRC are available in the User Guide, which is located in <code>middleware\maestro\mcu-audio\ssrc\doc\</code>.</p>
+<h2><a class="anchor" id="autotoc_md23"></a>
+ASRC</h2>
+<p>Asynchronous sample rate converter is not used in our examples, but it is part of the maestro middleware and can be enabled. To enable ASRC, the <code>maestro_framework_asrc</code> and <code>CMSIS_DSP_Library_Source</code> components must be added to the project. Furthermore, it is necessary to switch from Redlib to Newlib (semihost) library and add a platform definition to the project (e.g. for RT1170: <code>PLATFORM_RT1170_CORTEXM7</code>). Supported platforms can be found in the <code>PL_platformTypes.h</code> file. </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->

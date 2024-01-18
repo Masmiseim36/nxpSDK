@@ -7,16 +7,40 @@ if(CONFIG_USE_component_lpuart_adapter AND (CONFIG_DEVICE_ID STREQUAL MIMXRT1062
 
 add_config_file(${CMAKE_CURRENT_LIST_DIR}/board.h "" DEVICES_Project_Template_MIMXRT1062.MIMXRT1062)
 add_config_file(${CMAKE_CURRENT_LIST_DIR}/board.c "" DEVICES_Project_Template_MIMXRT1062.MIMXRT1062)
-add_config_file(${CMAKE_CURRENT_LIST_DIR}/clock_config.h "" DEVICES_Project_Template_MIMXRT1062.MIMXRT1062)
-add_config_file(${CMAKE_CURRENT_LIST_DIR}/clock_config.c "" DEVICES_Project_Template_MIMXRT1062.MIMXRT1062)
-add_config_file(${CMAKE_CURRENT_LIST_DIR}/pin_mux.h "" DEVICES_Project_Template_MIMXRT1062.MIMXRT1062)
-add_config_file(${CMAKE_CURRENT_LIST_DIR}/pin_mux.c "" DEVICES_Project_Template_MIMXRT1062.MIMXRT1062)
-add_config_file(${CMAKE_CURRENT_LIST_DIR}/peripherals.h "" DEVICES_Project_Template_MIMXRT1062.MIMXRT1062)
-add_config_file(${CMAKE_CURRENT_LIST_DIR}/peripherals.c "" DEVICES_Project_Template_MIMXRT1062.MIMXRT1062)
+
+if(CONFIG_DEVICE_ID STREQUAL MIMXRT1062xxxxA)
+  add_config_file(${CMAKE_CURRENT_LIST_DIR}/MIMXRT1062xxxxA/clock_config.h "" DEVICES_Project_Template_MIMXRT1062.MIMXRT1062)
+  add_config_file(${CMAKE_CURRENT_LIST_DIR}/MIMXRT1062xxxxA/clock_config.c "" DEVICES_Project_Template_MIMXRT1062.MIMXRT1062)
+  add_config_file(${CMAKE_CURRENT_LIST_DIR}/MIMXRT1062xxxxA/pin_mux.h "" DEVICES_Project_Template_MIMXRT1062.MIMXRT1062)
+  add_config_file(${CMAKE_CURRENT_LIST_DIR}/MIMXRT1062xxxxA/pin_mux.c "" DEVICES_Project_Template_MIMXRT1062.MIMXRT1062)
+  add_config_file(${CMAKE_CURRENT_LIST_DIR}/MIMXRT1062xxxxA/peripherals.h "" DEVICES_Project_Template_MIMXRT1062.MIMXRT1062)
+  add_config_file(${CMAKE_CURRENT_LIST_DIR}/MIMXRT1062xxxxA/peripherals.c "" DEVICES_Project_Template_MIMXRT1062.MIMXRT1062)
+endif()
+
+if(CONFIG_DEVICE_ID STREQUAL MIMXRT1062xxxxB)
+  add_config_file(${CMAKE_CURRENT_LIST_DIR}/MIMXRT1062xxxxB/clock_config.h "" DEVICES_Project_Template_MIMXRT1062.MIMXRT1062)
+  add_config_file(${CMAKE_CURRENT_LIST_DIR}/MIMXRT1062xxxxB/clock_config.c "" DEVICES_Project_Template_MIMXRT1062.MIMXRT1062)
+  add_config_file(${CMAKE_CURRENT_LIST_DIR}/MIMXRT1062xxxxB/pin_mux.h "" DEVICES_Project_Template_MIMXRT1062.MIMXRT1062)
+  add_config_file(${CMAKE_CURRENT_LIST_DIR}/MIMXRT1062xxxxB/pin_mux.c "" DEVICES_Project_Template_MIMXRT1062.MIMXRT1062)
+  add_config_file(${CMAKE_CURRENT_LIST_DIR}/MIMXRT1062xxxxB/peripherals.h "" DEVICES_Project_Template_MIMXRT1062.MIMXRT1062)
+  add_config_file(${CMAKE_CURRENT_LIST_DIR}/MIMXRT1062xxxxB/peripherals.c "" DEVICES_Project_Template_MIMXRT1062.MIMXRT1062)
+endif()
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
   ${CMAKE_CURRENT_LIST_DIR}/.
 )
+
+if(CONFIG_DEVICE_ID STREQUAL MIMXRT1062xxxxA)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+  ${CMAKE_CURRENT_LIST_DIR}/MIMXRT1062xxxxA
+)
+endif()
+
+if(CONFIG_DEVICE_ID STREQUAL MIMXRT1062xxxxB)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
+  ${CMAKE_CURRENT_LIST_DIR}/MIMXRT1062xxxxB
+)
+endif()
 
 else()
 

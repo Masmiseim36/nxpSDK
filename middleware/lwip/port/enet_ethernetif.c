@@ -38,7 +38,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 #include "fsl_common.h"
-//#include "fsl_enet.h"
+// #include "fsl_enet.h"
 #include "ethernetif_priv.h"
 
 /*******************************************************************************

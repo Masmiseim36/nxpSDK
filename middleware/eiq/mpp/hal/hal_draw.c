@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2022 NXP
+ * Copyright 2019-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -18,6 +18,7 @@
 
 #include "font.h"
 #include "hal_draw.h"
+#include "hal_debug.h"
 #include "mpp_api_types.h"
 
 /*******************************************************************************
@@ -76,7 +77,7 @@ static chgui_font_t _gFontTbl[] =
  * @param lcd_buf LCD buffer address destination for drawing text
 
  */
-void hal_draw_text(uint16_t *lcd_buf, uint16_t fcolor, uint16_t bcolor, uint32_t width,
+void hal_draw_text565(uint16_t *lcd_buf, uint16_t fcolor, uint16_t bcolor, uint32_t width,
                    int x, int y, const char *label)
 {
     int idx = 0;
@@ -128,9 +129,9 @@ static void _GUI_DispChar(uint16_t *lcd_buf, char c, int x, int y, const char *p
             for (t = 0; t < 8; t++)
             {
                 if ((temp >> t) & 0x01) {
-                    hal_draw_pixel(lcd_buf, DECREMENT(x + font_xsize, t), INCREMENT(y, pos), fcolor, width);
+                    hal_draw_pixel565(lcd_buf, DECREMENT(x + font_xsize, t), INCREMENT(y, pos), fcolor, width);
                 } else {
-                    hal_draw_pixel(lcd_buf, DECREMENT(x + font_xsize, t), INCREMENT(y, pos), bcolor, width);
+                    hal_draw_pixel565(lcd_buf, DECREMENT(x + font_xsize, t), INCREMENT(y, pos), bcolor, width);
                 }
             }
         }
@@ -161,24 +162,24 @@ static uint16_t ConvRgb888Rgb565(uint32_t r, uint32_t g, uint32_t b)
     return (uint16_t)(r | g | b);
 }
 
-void hal_draw_rect(uint16_t *lcd_buf, uint32_t x, uint32_t y, uint32_t xsize, uint32_t ysize,
+void hal_draw_rect565(uint16_t *lcd_buf, uint32_t x, uint32_t y, uint32_t xsize, uint32_t ysize,
                   uint32_t r, uint32_t g, uint32_t b, uint32_t width)
 {
     uint16_t color16 = ConvRgb888Rgb565(r,g,b);
 
     /* horizontals */
     for (int i = x; i < x + xsize; i++) {
-        hal_draw_pixel(lcd_buf, i, y, color16, width);
-        hal_draw_pixel(lcd_buf, i, y + ysize - 1, color16, width);
+        hal_draw_pixel565(lcd_buf, i, y, color16, width);
+        hal_draw_pixel565(lcd_buf, i, y + ysize - 1, color16, width);
     }
     /* verticals */
     for (int i = y; i < y + ysize; i++) {
-        hal_draw_pixel(lcd_buf, x, i, color16, width);
-        hal_draw_pixel(lcd_buf, x + xsize - 1, i, color16, width);
+        hal_draw_pixel565(lcd_buf, x, i, color16, width);
+        hal_draw_pixel565(lcd_buf, x + xsize - 1, i, color16, width);
     }
 }
 
-void hal_draw_pixel(uint16_t *pDst, uint32_t x, uint32_t y, uint16_t color, uint32_t lcd_w)
+void hal_draw_pixel565(uint16_t *pDst, uint32_t x, uint32_t y, uint16_t color, uint32_t lcd_w)
 {
     pDst[y * (lcd_w) + x] = color;
 }
@@ -188,6 +189,9 @@ int hal_label_rectangle(uint8_t *frame, int width, int height, mpp_pixel_format_
 {
     uint32_t xsize, ysize, lw;
 
+    /* for now only support RGB565 format */
+    if (format != MPP_PIXEL_RGB565) return MPP_INVALID_PARAM;
+
     xsize = lr->right - lr->left;
     ysize = lr->bottom - lr->top;
 
@@ -195,10 +199,19 @@ int hal_label_rectangle(uint8_t *frame, int width, int height, mpp_pixel_format_
     if (    (lr->left < 0) || (lr->top < 0)
             || (lr->right > width) || (lr->bottom > height)
             || (lr->left > lr->right) || (lr->top > lr->bottom)
-    )   return MPP_INVALID_PARAM;
+    ) return MPP_INVALID_PARAM;
 
-    for (lw = 0; lw < lr -> line_width; lw++) {
-      hal_draw_rect((uint16_t *)frame, lr->left + lw, lr->top + lw,
+    /* check rectangle is large enough to draw lines inside */
+    /* if not, skip the drawing to avoid crash */
+    if (   ( xsize < (2 * lr->line_width) )
+        || ( ysize < (2 * lr->line_width) ) )
+    {
+        HAL_LOGD("rectangle %dx%d too small to draw %d line width\n", xsize, ysize, lr->line_width);
+        return MPP_SUCCESS;
+    }
+
+    for (lw = 0; lw < lr->line_width; lw++) {
+      hal_draw_rect565((uint16_t *)frame, lr->left + lw, lr->top + lw,
                        xsize - (lw*2), ysize - (lw*2), lr->line_color.rgb.R,
                        lr->line_color.rgb.G, lr->line_color.rgb.B, width);
     }
@@ -209,7 +222,7 @@ int hal_label_rectangle(uint8_t *frame, int width, int height, mpp_pixel_format_
             || (lr->top + FONT_YSize > height)
     )   return MPP_INVALID_PARAM;
 
-    hal_draw_text((uint16_t *)frame, WHITE_RGB565, BLACK_RGB565, width,
+    hal_draw_text565((uint16_t *)frame, WHITE_RGB565, BLACK_RGB565, width,
                  lr->left, lr->top, (char *)lr->label);
-    return 0;
+    return MPP_SUCCESS;
 }

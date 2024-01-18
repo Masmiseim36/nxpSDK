@@ -1,5 +1,5 @@
 /*
- * Copyright 2018, 2019, 2020, 2021 NXP
+ * Copyright 2018-2022 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -11,7 +11,7 @@
 #include <nxp_iot_agent_dispatcher.h>
 #include <nxp_iot_agent_time.h>
 
-#if SSS_HAVE_APPLET_SE05X_IOT
+#if NXP_IOT_AGENT_HAVE_SSS
 
 #include <nxp_iot_agent_utils_protobuf.h>
 
@@ -50,7 +50,6 @@ iot_agent_status_t iot_agent_keystore_sss_se05x_init(iot_agent_keystore_t* keyst
 	keystore->iface = iot_agent_keystore_sss_se05x_interface;
 	keystore->type = IOT_AGENT_KS_SSS_SE05X;
 	keystore->identifier = identifier;
-	keystore->sss_context = &boot_context->ks;
 
 	iot_agent_keystore_sss_se05x_context_t* keystore_context =
 		malloc(sizeof(iot_agent_keystore_sss_se05x_context_t));
@@ -59,6 +58,7 @@ iot_agent_status_t iot_agent_keystore_sss_se05x_init(iot_agent_keystore_t* keyst
 	keystore->context = keystore_context;
 
 	keystore_context->boot_context = boot_context;
+	keystore_context->sss_context = &boot_context->ks;
 	keystore_context->session_open = is_session_open;
 
 exit:
@@ -205,4 +205,15 @@ bool iot_agent_keystore_sss_se05x_handle_request(pb_istream_t *istream,
 	return true;
 }
 
-#endif // #if SSS_HAVE_SE05x
+iot_agent_status_t iot_agent_keystore_sss_se05x_get_sss_key_store(iot_agent_keystore_sss_se05x_context_t* context,
+	sss_key_store_t** sss_key_store)
+{
+	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
+	ASSERT_OR_EXIT_MSG(context != NULL, "context is NULL.");
+	*sss_key_store = context->sss_context;
+exit:
+	return agent_status;
+}
+
+
+#endif // NXP_IOT_AGENT_HAVE_SSS

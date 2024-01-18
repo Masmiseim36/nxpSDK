@@ -37,6 +37,7 @@ typedef enum mpp_memory_policy_e {
 /** the hardware specific buffer requirements */
 typedef struct {
     int stride;             /*!< the number of bytes between 2 lines of image */
+    int nb_lines;           /*!< the number of lines required (set to 0 if the element doesn't require a specific number of lines) */
     int alignment;          /*!< alignment requirement in bytes */
     bool cacheable;         /*!< if true, HW will require cache maintenance */
     unsigned char *addr;    /*!< the buffer address */

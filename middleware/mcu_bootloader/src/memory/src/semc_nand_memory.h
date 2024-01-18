@@ -10,6 +10,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+
 #include "bl_semc.h"
 #include "fsl_common.h"
 #include "semc_nand_flash.h"
@@ -82,7 +83,8 @@ typedef struct _semc_nand_dbbt
 typedef struct _semc_nand_img_option
 {
     parallel_nand_config_option_t nandOption;
-    union {
+    union
+    {
         struct
         {
             uint32_t searchCount : 4; //!< Search Count, Minimum 1
@@ -99,6 +101,7 @@ typedef struct _semc_nand_img_option
         uint16_t blockCount; //!< Maximum block count for an application image
         uint16_t blockIndex; //!< Image start block ID
     } imageInfo[SEMC_NAND_FW_MAX_NUM];
+    parallel_nand_config_option_extended_t nandOptionExt;
 } semc_nand_img_option_t;
 
 ////////////////////////////////////////////////////////////////////////////////

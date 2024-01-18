@@ -1,74 +1,85 @@
 var a00018 =
 [
-    [ "dcdc_detection_config_t", "a00018.html#a00354", [
-      [ "enableXtalokDetection", "a00018.html#a26388a555904c467f343d5cee515f268", null ],
-      [ "powerDownOverVoltageDetection", "a00018.html#ade909492fceb456669197dc2375b66e0", null ],
-      [ "powerDownLowVlotageDetection", "a00018.html#a66c8245327afcaeaea7658dc07cd72f0", null ],
-      [ "powerDownOverCurrentDetection", "a00018.html#a6782ff659baff137d41d8945b5ae6e7c", null ],
-      [ "powerDownPeakCurrentDetection", "a00018.html#a260cd48342ce09a1b2c4c79c8d999b2c", null ],
-      [ "powerDownZeroCrossDetection", "a00018.html#ab101a2301403aa70d194c5180e18ca3a", null ],
-      [ "OverCurrentThreshold", "a00018.html#a2cbfaed67e0e2e90e77fce311a24e8c4", null ],
-      [ "PeakCurrentThreshold", "a00018.html#a918a386c698955495c5ae942f8c9d728", null ]
+    [ "_dcdc_detection_config", "a00018.html#a00323", [
+      [ "enableXtalokDetection", "a00018.html#acafdc0e5a6fbc536578310b4962aacb0", null ],
+      [ "powerDownOverVoltageDetection", "a00018.html#af005075e212c4b99807d19bed692de6b", null ],
+      [ "powerDownLowVlotageDetection", "a00018.html#ae34238cf5b3c46e3f5744738bea0963a", null ],
+      [ "powerDownOverCurrentDetection", "a00018.html#a75b25a2e7c541469de8483af9d053275", null ],
+      [ "powerDownPeakCurrentDetection", "a00018.html#a8daa75e60dce3c33fc8b6784aa5936d7", null ],
+      [ "powerDownZeroCrossDetection", "a00018.html#a46275391caeb9c45282524ed53cd7c93", null ],
+      [ "OverCurrentThreshold", "a00018.html#ab04d84d3dca10b925fb29dbcfd369416", null ],
+      [ "PeakCurrentThreshold", "a00018.html#a3ce4c432fc8c583cdc7614b96fd047ec", null ]
     ] ],
-    [ "dcdc_loop_control_config_t", "a00018.html#a00356", [
-      [ "enableCommonHysteresis", "a00018.html#aa585f6efdba3cb2bc66b4c658c0b0e80", null ],
-      [ "enableCommonThresholdDetection", "a00018.html#ad5a97673aa667b4aeb7549173d4e8516", null ],
-      [ "enableInvertHysteresisSign", "a00018.html#afc343fa7b91648dd8823d261c9cf4ab7", null ],
-      [ "enableRCThresholdDetection", "a00018.html#a9a547376d7c56bad98ea1effc3a45f84", null ],
-      [ "enableRCScaleCircuit", "a00018.html#a858dc72ad7c5c7d9222a88e38000aeaf", null ],
-      [ "complementFeedForwardStep", "a00018.html#a82a1dd02ed11c6788782084e2645a388", null ]
+    [ "_dcdc_loop_control_config", "a00018.html#a00325", [
+      [ "enableCommonHysteresis", "a00018.html#ad0a09ad1b990e59530c3ddbb322b9404", null ],
+      [ "enableCommonThresholdDetection", "a00018.html#a7607542942eee2f96a9656490767ffaf", null ],
+      [ "enableInvertHysteresisSign", "a00018.html#addb182f758710930bbfbab6c15c818e3", null ],
+      [ "enableRCThresholdDetection", "a00018.html#a3db7d1710a2b338cceff8d0905457ee3", null ],
+      [ "enableRCScaleCircuit", "a00018.html#ad4dd82791c3ead0097c15d4ef14da153", null ],
+      [ "complementFeedForwardStep", "a00018.html#aeca3ef96cf649922b6e0b413bf5de4e3", null ]
     ] ],
-    [ "dcdc_low_power_config_t", "a00018.html#a00357", [
-      [ "enableOverloadDetection", "a00018.html#a0b5eac5db5131a800abf4d9094239a12", null ],
-      [ "enableAdjustHystereticValue", "a00018.html#a5ba90c8ec3b353714b1db3e3951b5013", null ],
-      [ "countChargingTimePeriod", "a00018.html#ae490cc4c07715bb317d3d67d964a3372", null ],
-      [ "countChargingTimeThreshold", "a00018.html#a201277744bf77d5a14a0ed9ecbe3ff54", null ]
+    [ "_dcdc_low_power_config", "a00018.html#a00326", [
+      [ "enableOverloadDetection", "a00018.html#aa18e83c714f4fdfdac3130ce2592045e", null ],
+      [ "enableAdjustHystereticValue", "a00018.html#ac009f10f5d80ab76becf338357dbe36d", null ],
+      [ "countChargingTimePeriod", "a00018.html#a171691876a563d56a0cafa741961092c", null ],
+      [ "countChargingTimeThreshold", "a00018.html#a9c53b1fe26c218727556d1484061a1bd", null ]
     ] ],
-    [ "dcdc_internal_regulator_config_t", "a00018.html#a00355", [
-      [ "enableLoadResistor", "a00018.html#ac44462711fb30cd01799e287a3a4791e", null ],
-      [ "feedbackPoint", "a00018.html#a7494dc737ae93a739c944037610372b2", null ]
+    [ "_dcdc_internal_regulator_config", "a00018.html#a00324", [
+      [ "enableLoadResistor", "a00018.html#a8e0080569788ce24f324ba474e6c5fa5", null ],
+      [ "feedbackPoint", "a00018.html#a9aa87e49e076cbf61c3e2940143ff409", null ]
     ] ],
-    [ "dcdc_min_power_config_t", "a00018.html#a00358", [
-      [ "enableUseHalfFreqForContinuous", "a00018.html#adbe01c99b380a3d872f7fd6f787ab7cc", null ]
+    [ "_dcdc_min_power_config", "a00018.html#a00327", [
+      [ "enableUseHalfFreqForContinuous", "a00018.html#a29dbd85401dd919ad76feac9f7b8818f", null ]
     ] ],
     [ "FSL_DCDC_DRIVER_VERSION", "a00018.html#gaead28d0a1704d502fa7e4d83448530d9", null ],
+    [ "dcdc_comparator_current_bias_t", "a00018.html#ga3856b04d7a6e18755e26653284f4f4b8", null ],
+    [ "dcdc_over_current_threshold_t", "a00018.html#ga59e3e0b7e148c5e030a8568f6ac473fe", null ],
+    [ "dcdc_peak_current_threshold_t", "a00018.html#gab47e027481f2e91e1ae5b7b4ccbf2bfb", null ],
+    [ "dcdc_count_charging_time_period_t", "a00018.html#ga1c97e79cfec4d9459e5cdf30b80b766b", null ],
+    [ "dcdc_count_charging_time_threshold_t", "a00018.html#gaf414cb03d7126f0ad4c892391de4b025", null ],
+    [ "dcdc_clock_source_t", "a00018.html#ga40fff494ecdedc31ea1242440b9b0c3c", null ],
+    [ "dcdc_detection_config_t", "a00018.html#gae7f04205b06fda35c9af21090b5e2d35", null ],
+    [ "dcdc_loop_control_config_t", "a00018.html#gae095713a95d66ad9def6bf3d810a4df0", null ],
+    [ "dcdc_low_power_config_t", "a00018.html#gaedcf25ddb14c22441104010d7948969d", null ],
+    [ "dcdc_internal_regulator_config_t", "a00018.html#gaaecc6335681b6a3630f7b1259364b68a", null ],
+    [ "dcdc_min_power_config_t", "a00018.html#ga85e4a9b6d296b6b816c7ca0b7a2894c7", null ],
     [ "_dcdc_status_flags_t", "a00018.html#gae715f6e4017ad893d5b131cb1b65bd97", [
       [ "kDCDC_LockedOKStatus", "a00018.html#ggae715f6e4017ad893d5b131cb1b65bd97a88bc89752444c6db226ac58686c6dda4", null ]
     ] ],
-    [ "dcdc_comparator_current_bias_t", "a00018.html#ga11a431a6377193c7ecb973f72fee13fa", [
-      [ "kDCDC_ComparatorCurrentBias50nA", "a00018.html#gga11a431a6377193c7ecb973f72fee13faab2be4fb74c74083b5a501e98469237fd", null ],
-      [ "kDCDC_ComparatorCurrentBias100nA", "a00018.html#gga11a431a6377193c7ecb973f72fee13faaf11efa682be88fcdc3dade737c672b0b", null ],
-      [ "kDCDC_ComparatorCurrentBias200nA", "a00018.html#gga11a431a6377193c7ecb973f72fee13faabbe35f83fd7ae207e6c513fcfc26cf29", null ],
-      [ "kDCDC_ComparatorCurrentBias400nA", "a00018.html#gga11a431a6377193c7ecb973f72fee13faa8a7dafad371962ccbc67385d6f812421", null ]
+    [ "_dcdc_comparator_current_bias", "a00018.html#ga8be7a9a7897bb30cf2c6b0352eb0e6ad", [
+      [ "kDCDC_ComparatorCurrentBias50nA", "a00018.html#gga8be7a9a7897bb30cf2c6b0352eb0e6adab2be4fb74c74083b5a501e98469237fd", null ],
+      [ "kDCDC_ComparatorCurrentBias100nA", "a00018.html#gga8be7a9a7897bb30cf2c6b0352eb0e6adaf11efa682be88fcdc3dade737c672b0b", null ],
+      [ "kDCDC_ComparatorCurrentBias200nA", "a00018.html#gga8be7a9a7897bb30cf2c6b0352eb0e6adabbe35f83fd7ae207e6c513fcfc26cf29", null ],
+      [ "kDCDC_ComparatorCurrentBias400nA", "a00018.html#gga8be7a9a7897bb30cf2c6b0352eb0e6ada8a7dafad371962ccbc67385d6f812421", null ]
     ] ],
-    [ "dcdc_over_current_threshold_t", "a00018.html#gab1ee138d1d60e1357b602b5939890bd7", [
-      [ "kDCDC_OverCurrentThresholdAlt0", "a00018.html#ggab1ee138d1d60e1357b602b5939890bd7a5ebbf9b57fe2aef4b3a527c098351fc2", null ],
-      [ "kDCDC_OverCurrentThresholdAlt1", "a00018.html#ggab1ee138d1d60e1357b602b5939890bd7ac85f8a7eedeb6716fd01fa9943a928d6", null ],
-      [ "kDCDC_OverCurrentThresholdAlt2", "a00018.html#ggab1ee138d1d60e1357b602b5939890bd7afe4b9daeed02ac875ce992d3b3e48576", null ],
-      [ "kDCDC_OverCurrentThresholdAlt3", "a00018.html#ggab1ee138d1d60e1357b602b5939890bd7af51b51cf756df6e9753eae157bba3835", null ]
+    [ "_dcdc_over_current_threshold", "a00018.html#gad32fa41098d0723d8e417ecf25b41b51", [
+      [ "kDCDC_OverCurrentThresholdAlt0", "a00018.html#ggad32fa41098d0723d8e417ecf25b41b51a5ebbf9b57fe2aef4b3a527c098351fc2", null ],
+      [ "kDCDC_OverCurrentThresholdAlt1", "a00018.html#ggad32fa41098d0723d8e417ecf25b41b51ac85f8a7eedeb6716fd01fa9943a928d6", null ],
+      [ "kDCDC_OverCurrentThresholdAlt2", "a00018.html#ggad32fa41098d0723d8e417ecf25b41b51afe4b9daeed02ac875ce992d3b3e48576", null ],
+      [ "kDCDC_OverCurrentThresholdAlt3", "a00018.html#ggad32fa41098d0723d8e417ecf25b41b51af51b51cf756df6e9753eae157bba3835", null ]
     ] ],
-    [ "dcdc_peak_current_threshold_t", "a00018.html#gacea8ce1454590ef280751fc9ae4660e4", [
-      [ "kDCDC_PeakCurrentThresholdAlt0", "a00018.html#ggacea8ce1454590ef280751fc9ae4660e4a7fa50866827a30a4ca98def50c92d93d", null ],
-      [ "kDCDC_PeakCurrentThresholdAlt1", "a00018.html#ggacea8ce1454590ef280751fc9ae4660e4a020052660522adca4311d50937784da2", null ],
-      [ "kDCDC_PeakCurrentThresholdAlt2", "a00018.html#ggacea8ce1454590ef280751fc9ae4660e4a1a316a1d5d9b1a8dd90a26eade3c9730", null ],
-      [ "kDCDC_PeakCurrentThresholdAlt3", "a00018.html#ggacea8ce1454590ef280751fc9ae4660e4af9c26a547765bb2b0c26d1d7102ae67c", null ],
-      [ "kDCDC_PeakCurrentThresholdAlt4", "a00018.html#ggacea8ce1454590ef280751fc9ae4660e4a6ed3f7cd3e9c10b9d80458da6aee5c50", null ],
-      [ "kDCDC_PeakCurrentThresholdAlt5", "a00018.html#ggacea8ce1454590ef280751fc9ae4660e4a0e40d22916e03c36c2c562b744cf563e", null ]
+    [ "_dcdc_peak_current_threshold", "a00018.html#ga540bd139751f73aefcb044debf6cce71", [
+      [ "kDCDC_PeakCurrentThresholdAlt0", "a00018.html#gga540bd139751f73aefcb044debf6cce71a7fa50866827a30a4ca98def50c92d93d", null ],
+      [ "kDCDC_PeakCurrentThresholdAlt1", "a00018.html#gga540bd139751f73aefcb044debf6cce71a020052660522adca4311d50937784da2", null ],
+      [ "kDCDC_PeakCurrentThresholdAlt2", "a00018.html#gga540bd139751f73aefcb044debf6cce71a1a316a1d5d9b1a8dd90a26eade3c9730", null ],
+      [ "kDCDC_PeakCurrentThresholdAlt3", "a00018.html#gga540bd139751f73aefcb044debf6cce71af9c26a547765bb2b0c26d1d7102ae67c", null ],
+      [ "kDCDC_PeakCurrentThresholdAlt4", "a00018.html#gga540bd139751f73aefcb044debf6cce71a6ed3f7cd3e9c10b9d80458da6aee5c50", null ],
+      [ "kDCDC_PeakCurrentThresholdAlt5", "a00018.html#gga540bd139751f73aefcb044debf6cce71a0e40d22916e03c36c2c562b744cf563e", null ]
     ] ],
-    [ "dcdc_count_charging_time_period_t", "a00018.html#gad5473e4ea54bf7ceb0d994dbbcf135c1", [
-      [ "kDCDC_CountChargingTimePeriod8Cycle", "a00018.html#ggad5473e4ea54bf7ceb0d994dbbcf135c1ae685b89096384a98737f39b2dde87861", null ],
-      [ "kDCDC_CountChargingTimePeriod16Cycle", "a00018.html#ggad5473e4ea54bf7ceb0d994dbbcf135c1a232c187a9f30ef865b1203bc645973fa", null ]
+    [ "_dcdc_count_charging_time_period", "a00018.html#ga0c52ebad1b0167ff9f1a4d63d7d77d5d", [
+      [ "kDCDC_CountChargingTimePeriod8Cycle", "a00018.html#gga0c52ebad1b0167ff9f1a4d63d7d77d5dae685b89096384a98737f39b2dde87861", null ],
+      [ "kDCDC_CountChargingTimePeriod16Cycle", "a00018.html#gga0c52ebad1b0167ff9f1a4d63d7d77d5da232c187a9f30ef865b1203bc645973fa", null ]
     ] ],
-    [ "dcdc_count_charging_time_threshold_t", "a00018.html#ga2cd4c599e216c88088c4f4e2d3371c6d", [
-      [ "kDCDC_CountChargingTimeThreshold32", "a00018.html#gga2cd4c599e216c88088c4f4e2d3371c6dae17e5a516c544140045c1c6801a9ac4e", null ],
-      [ "kDCDC_CountChargingTimeThreshold64", "a00018.html#gga2cd4c599e216c88088c4f4e2d3371c6da74e57aeb24c45fc8018bd08b4d1082ce", null ],
-      [ "kDCDC_CountChargingTimeThreshold16", "a00018.html#gga2cd4c599e216c88088c4f4e2d3371c6da4c99e35bb7538e4aa165c6556ea9ca0e", null ],
-      [ "kDCDC_CountChargingTimeThreshold8", "a00018.html#gga2cd4c599e216c88088c4f4e2d3371c6daa570ad287107c1b54a846fdae2dd667b", null ]
+    [ "_dcdc_count_charging_time_threshold", "a00018.html#gab985fe4518b1a52eaddef5dcbd98f82b", [
+      [ "kDCDC_CountChargingTimeThreshold32", "a00018.html#ggab985fe4518b1a52eaddef5dcbd98f82bae17e5a516c544140045c1c6801a9ac4e", null ],
+      [ "kDCDC_CountChargingTimeThreshold64", "a00018.html#ggab985fe4518b1a52eaddef5dcbd98f82ba74e57aeb24c45fc8018bd08b4d1082ce", null ],
+      [ "kDCDC_CountChargingTimeThreshold16", "a00018.html#ggab985fe4518b1a52eaddef5dcbd98f82ba4c99e35bb7538e4aa165c6556ea9ca0e", null ],
+      [ "kDCDC_CountChargingTimeThreshold8", "a00018.html#ggab985fe4518b1a52eaddef5dcbd98f82baa570ad287107c1b54a846fdae2dd667b", null ]
     ] ],
-    [ "dcdc_clock_source_t", "a00018.html#ga8035a76b241261c80ef27c1c2baf614b", [
-      [ "kDCDC_ClockAutoSwitch", "a00018.html#gga8035a76b241261c80ef27c1c2baf614ba598ff7757e17e93192bb02060b9e17f7", null ],
-      [ "kDCDC_ClockInternalOsc", "a00018.html#gga8035a76b241261c80ef27c1c2baf614ba9a9fba153517ab7aa481929ab112c7ce", null ],
-      [ "kDCDC_ClockExternalOsc", "a00018.html#gga8035a76b241261c80ef27c1c2baf614baa626d594c9a911bd6d8f36852ae535fd", null ]
+    [ "_dcdc_clock_source", "a00018.html#ga5109f4b35b7d241e65aaaa5e306ad8db", [
+      [ "kDCDC_ClockAutoSwitch", "a00018.html#gga5109f4b35b7d241e65aaaa5e306ad8dba598ff7757e17e93192bb02060b9e17f7", null ],
+      [ "kDCDC_ClockInternalOsc", "a00018.html#gga5109f4b35b7d241e65aaaa5e306ad8dba9a9fba153517ab7aa481929ab112c7ce", null ],
+      [ "kDCDC_ClockExternalOsc", "a00018.html#gga5109f4b35b7d241e65aaaa5e306ad8dbaa626d594c9a911bd6d8f36852ae535fd", null ]
     ] ],
     [ "DCDC_Init", "a00018.html#gade63427da706b28f4bc5fb3df32549fc", null ],
     [ "DCDC_Deinit", "a00018.html#ga6edcfa7b584ed32abeba4aa1ead354b5", null ],

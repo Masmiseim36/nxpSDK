@@ -27,12 +27,10 @@
 #include "sss_pkcs11_pal.h"
 #if (SSS_HAVE_SSCP || SSS_HAVE_APPLET_SE05X_IOT)
 
-/* Remove this later */
-extern char *g_port_name;
-
 #undef DEBUG_PKCS11_PAL
 
 #define pkcs11SLOT_ID 1
+#define MAX_DIGEST_INPUT_DATA 512
 
 #define DEFAULT_POLICY_BIN_COUNT_PCR (POLICY_OBJ_ALLOW_DELETE | POLICY_OBJ_ALLOW_WRITE | POLICY_OBJ_ALLOW_READ)
 #define DEFAULT_POLICY_USERID (POLICY_OBJ_ALLOW_DELETE | POLICY_OBJ_ALLOW_WRITE)
@@ -45,178 +43,11 @@ static bool mutex_initialised   = false;
 SemaphoreHandle_t xSemaphore;
 #endif
 
-// #if (__GNUC__  && !AX_EMBEDDED)
-// #endif
-
-/*-----------------------------------------------------------*/
-// static void prvFreeKey( P11KeyPtr_t pxKey );
-// static int awsRetreieve_certificate(unsigned char *pbuf, uint8_t index, uint32_t *outbuflen);
-// static int convertdertopemformat(const unsigned char * int_ca_cert_der, int len_der, unsigned char * int_ca_cert_pem,
-// int dst_buf_len, U16 *outlength);
-
-#if SSS_HAVE_MBEDTLS_ALT
-static mbedtls_ecp_group_id curve_list[16] = {
-    MBEDTLS_ECP_DP_NONE,
-};
-#endif // SSS_HAVE_MBEDTLS_ALT
-
 #if SSS_HAVE_APPLET_SE05X_IOT
 static CK_RV read_object_size_with_lock(uint32_t keyId, uint16_t *keyLen);
 static uint8_t CheckIfKeyIdExists(uint32_t keyId, pSe05xSession_t session_ctx);
 #endif
-
-static int convertpemtoder(const unsigned char *input, size_t ilen, unsigned char *output, size_t *olen);
-
 static P11SessionPtr_t pkcs11_sessions[MAX_PKCS11_SESSIONS] = {0};
-
-typedef struct _object_identifiers
-{
-    uint32_t identifier[16];
-    size_t indentifier_len;
-    int groupId;
-    char *name;
-} object_identifiers_t;
-static object_identifiers_t object_identifiers[] = {
-    {{1, 2, 840, 10045, 3, 1, 1}, 7, MBEDTLS_ECP_DP_SECP192R1, "MBEDTLS_ECP_DP_SECP192R1"},
-    {{1, 3, 132, 0, 33}, 5, MBEDTLS_ECP_DP_SECP224R1, "MBEDTLS_ECP_DP_SECP224R1"},
-    {{1, 2, 840, 10045, 3, 1, 7}, 7, MBEDTLS_ECP_DP_SECP256R1, "MBEDTLS_ECP_DP_SECP256R1"},
-    {{1, 3, 132, 0, 34}, 5, MBEDTLS_ECP_DP_SECP384R1, "MBEDTLS_ECP_DP_SECP384R1"},
-    {{1, 3, 132, 0, 35}, 5, MBEDTLS_ECP_DP_SECP521R1, "MBEDTLS_ECP_DP_SECP521R1"},
-
-    {{1, 3, 36, 3, 3, 2, 8, 1, 1, 7}, 10, MBEDTLS_ECP_DP_BP256R1, "MBEDTLS_ECP_DP_BP256R1"},
-    {{1, 3, 24, 3, 3, 2, 8, 1, 1, 7}, 10, MBEDTLS_ECP_DP_BP256R1, "MBEDTLS_ECP_DP_BP256R1"},
-    {{1, 3, 36, 3, 3, 2, 8, 1, 1, 11}, 10, MBEDTLS_ECP_DP_BP384R1, "MBEDTLS_ECP_DP_BP384R1"},
-    {{1, 3, 36, 3, 3, 2, 8, 1, 1, 13}, 10, MBEDTLS_ECP_DP_BP512R1, "MBEDTLS_ECP_DP_BP512R1"},
-
-    {{1, 3, 132, 0, 31}, 5, MBEDTLS_ECP_DP_SECP192K1, "MBEDTLS_ECP_DP_SECP192K1"},
-    {{1, 3, 132, 0, 32}, 5, MBEDTLS_ECP_DP_SECP224K1, "MBEDTLS_ECP_DP_SECP224K1"},
-    {{1, 3, 132, 0, 10}, 5, MBEDTLS_ECP_DP_SECP256K1, "MBEDTLS_ECP_DP_SECP256K1"},
-    {
-        {
-            0,
-        },
-        0,
-        0,
-    },
-};
-
-#if SSS_HAVE_MBEDTLS_ALT
-// int mbedtls_ssl_set_curve_list(mbedtls_ssl_config *conf, const char * pcLabelName)
-int mbedtls_ssl_set_curve_list(mbedtls_ssl_config *conf, uint32_t keyIndex)
-{
-    sss_status_t status    = kStatus_SSS_Fail;
-    sss_object_t clientKey = {
-        0,
-    };
-    uint32_t objectId[16] = {
-        0,
-    };
-    uint8_t objectIdLen = sizeof(objectId);
-    int i               = 0;
-    size_t compareLen   = 0;
-    // uint32_t keyIndex = 0;
-    // LabelToKeyId((unsigned char*)pcLabelName, strlen(pcLabelName), &keyIndex);
-
-    // printf(" \n\n%s\n\n", __FUNCTION__);
-    LOCK_MUTEX_FOR_RTOS
-    {
-        status = sss_key_object_init(&clientKey, &pex_sss_demo_boot_ctx->ks);
-        if (status != kStatus_SSS_Success) {
-            UNLOCK_MUTEX_FOR_RTOS_RET(kStatus_SSS_Fail);
-            // return kStatus_SSS_Fail;
-        }
-
-        status = sss_key_object_get_handle(&clientKey, keyIndex);
-        if (status != kStatus_SSS_Success) {
-            UNLOCK_MUTEX_FOR_RTOS_RET(kStatus_SSS_Fail);
-            // return kStatus_SSS_Fail;
-        }
-
-        status = sss_util_asn1_get_oid_from_sssObj(&clientKey, objectId, &objectIdLen);
-        if (status != kStatus_SSS_Success) {
-            UNLOCK_MUTEX_FOR_RTOS_RET(1);
-            // return 1;
-        }
-
-        UNLOCK_MUTEX_FOR_RTOS
-    }
-    while (1) {
-        if (object_identifiers[i].indentifier_len == 0) {
-            break;
-        }
-
-        if (object_identifiers[i].indentifier_len != objectIdLen) {
-            i++;
-            continue;
-        }
-
-        if (objectIdLen * sizeof(uint32_t) > 64) {
-            compareLen = 64;
-        }
-        else {
-            compareLen = objectIdLen * sizeof(uint32_t);
-        }
-        if (0 == memcmp(object_identifiers[i].identifier, objectId, compareLen)) {
-            curve_list[0] = (mbedtls_ecp_group_id) object_identifiers[i].groupId;
-            curve_list[1] = MBEDTLS_ECP_DP_NONE;
-            mbedtls_ssl_conf_curves(conf, curve_list);
-            return 0;
-        }
-
-        i++;
-    }
-
-    return 1;
-}
-
-#endif // SSS_HAVE_MBEDTLS_ALT
-
-/**
- * @brief Maps an opaque caller session handle into its internal state structure.
- */
-P11SessionPtr_t prvSessionPointerFromHandle(CK_SESSION_HANDLE xSession)
-{
-    if (xSession == 0) {
-        return NULL;
-    }
-    if (xSession > MAX_PKCS11_SESSIONS) {
-        return NULL;
-    }
-    return pkcs11_sessions[xSession - 1];
-}
-
-/*-----------------------------------------------------------*/
-
-/**
- * @brief Initializes a key structure.
- */
-
-/*-----------------------------------------------------------*/
-
-/**
- * @brief Load the default key and certificate from storage.
- */
-
-CK_RV GetAttributeParameterIndex(
-    CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_ATTRIBUTE_TYPE type, CK_ULONG_PTR index)
-{
-    CK_RV xResult      = CKR_ARGUMENTS_BAD;
-    CK_ULONG i         = 0;
-    CK_BBOOL foundType = CK_FALSE;
-    for (i = 0; i < ulCount; i++) {
-        if (pTemplate[i].type == type) {
-            foundType = CK_TRUE;
-            xResult   = CKR_OK;
-            break;
-        }
-    }
-    if (foundType) {
-        *index = i;
-    }
-    return xResult;
-}
-
-/*-----------------------------------------------------------*/
 
 /*
  * PKCS#11 module implementation.
@@ -294,6 +125,43 @@ CK_FUNCTION_LIST prvP11FunctionList = {{CRYPTOKI_VERSION_MAJOR, CRYPTOKI_VERSION
     C_CancelFunction,
     C_WaitForSlotEvent};
 
+
+/**
+ * @brief Maps an opaque caller session handle into its internal state structure.
+ */
+P11SessionPtr_t prvSessionPointerFromHandle(CK_SESSION_HANDLE xSession)
+{
+    if (xSession == 0) {
+        return NULL;
+    }
+    if (xSession > MAX_PKCS11_SESSIONS) {
+        return NULL;
+    }
+    return pkcs11_sessions[xSession - 1];
+}
+
+/**
+ * @brief Load the default key and certificate from storage.
+ */
+CK_RV GetAttributeParameterIndex(
+    CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount, CK_ATTRIBUTE_TYPE type, CK_ULONG_PTR index)
+{
+    CK_RV xResult      = CKR_ARGUMENTS_BAD;
+    CK_ULONG i         = 0;
+    CK_BBOOL foundType = CK_FALSE;
+    for (i = 0; i < ulCount; i++) {
+        if (pTemplate[i].type == type) {
+            foundType = CK_TRUE;
+            xResult   = CKR_OK;
+            break;
+        }
+    }
+    if (foundType) {
+        *index = i;
+    }
+    return xResult;
+}
+
 /**
  * @brief Finishes a multiple-part digesting operation.
  */
@@ -318,31 +186,32 @@ CK_DEFINE_FUNCTION(CK_RV, C_DigestFinal)
     }
 
     if (xResult == CKR_OK) {
+        size_t outputLen = 0;
+        switch (pxSession->xOperationInProgress) {
+        case CKM_SHA_1:
+            outputLen = 20;
+            break;
+        case CKM_SHA224:
+            outputLen = 28;
+            break;
+        case CKM_SHA256:
+            outputLen = 32;
+            break;
+        case CKM_SHA384:
+            outputLen = 48;
+            break;
+        case CKM_SHA512:
+            outputLen = 64;
+            break;
+
+        default:
+            xResult = CKR_FUNCTION_FAILED;
+            break;
+        }
+
 #if SSS_HAVE_APPLET
         LOCK_MUTEX_FOR_RTOS
         {
-            size_t outputLen = 0;
-            switch (pxSession->xOperationInProgress) {
-            case CKM_SHA_1:
-                outputLen = 20;
-                break;
-            case CKM_SHA224:
-                outputLen = 28;
-                break;
-            case CKM_SHA256:
-                outputLen = 32;
-                break;
-            case CKM_SHA384:
-                outputLen = 48;
-                break;
-            case CKM_SHA512:
-                outputLen = 64;
-                break;
-
-            default:
-                xResult = CKR_FUNCTION_FAILED;
-                break;
-            }
             if (xResult != CKR_OK) {
                 pxSession->xOperationInProgress = pkcs11NO_OPERATION;
                 sss_digest_context_free(&pxSession->digest_ctx);
@@ -376,22 +245,34 @@ CK_DEFINE_FUNCTION(CK_RV, C_DigestFinal)
         }
 
 #else
-        if (pDigest == NULL) {
-            /* Supply the required buffer size. */
-            *pulDigestLen = pkcs11SHA256_DIGEST_LENGTH;
+        if (xResult != CKR_OK) {
+            pxSession->xOperationInProgress = pkcs11NO_OPERATION;
+            sss_host_digest_context_free(&pxSession->digest_ctx);
+            return xResult;
         }
-        else {
-            if (*pulDigestLen < pkcs11SHA256_DIGEST_LENGTH) {
+
+        if (pDigest) {
+            if (*pulDigestLen < outputLen) {
                 xResult = CKR_BUFFER_TOO_SMALL;
             }
             else {
-                if (0 != mbedtls_sha256_finish_ret(&pxSession->xSHA256Context, pDigest)) {
-                    xResult = CKR_FUNCTION_FAILED;
+                uint8_t digest[64]      = {0};
+                size_t digestLen        = sizeof(digest);
+                sss_status_t sss_status = kStatus_SSS_Fail;
+                sss_status              = sss_host_digest_finish(&pxSession->digest_ctx, digest, &digestLen);
+                sss_host_digest_context_free(&pxSession->digest_ctx);
+                if (sss_status != kStatus_SSS_Success) {
+                    pxSession->xOperationInProgress = pkcs11NO_OPERATION;
+                    xResult                         = CKR_FUNCTION_FAILED;
                 }
-
-                pxSession->xOperationInProgress = pkcs11NO_OPERATION;
+                else {
+                    memcpy(pDigest, digest, digestLen);
+                    pxSession->xOperationInProgress = pkcs11NO_OPERATION;
+                }
             }
         }
+        *pulDigestLen = outputLen;
+
 #endif
     }
 
@@ -408,6 +289,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_DigestUpdate)
     LOG_D("%s", __FUNCTION__);
 
     P11SessionPtr_t pxSession = prvSessionPointerFromHandle(xSession);
+    sss_status_t sss_status   = kStatus_SSS_Fail;
 
     if (pxSession == NULL) {
         xResult = CKR_SESSION_HANDLE_INVALID;
@@ -418,8 +300,9 @@ CK_DEFINE_FUNCTION(CK_RV, C_DigestUpdate)
 
     if (xResult == CKR_OK) {
         pxSession->digestUpdateCalled = CK_TRUE;
+
 #if SSS_HAVE_APPLET
-        sss_status_t sss_status = kStatus_SSS_Fail;
+
         LOCK_MUTEX_FOR_RTOS
         {
             sss_status = sss_digest_update(&pxSession->digest_ctx, pPart, ulPartLen);
@@ -433,9 +316,11 @@ CK_DEFINE_FUNCTION(CK_RV, C_DigestUpdate)
 
         // &pxSession->digest_ctx
 #else
-        if (0 != mbedtls_sha256_update_ret(&pxSession->xSHA256Context, pPart, ulPartLen)) {
-            xResult                         = CKR_FUNCTION_FAILED;
+        sss_status = sss_host_digest_update(&pxSession->digest_ctx, pPart, ulPartLen);
+        if (sss_status != kStatus_SSS_Success) {
+            sss_host_digest_context_free(&pxSession->digest_ctx);
             pxSession->xOperationInProgress = pkcs11NO_OPERATION;
+            xResult                         = CKR_FUNCTION_FAILED;
         }
 #endif
     }
@@ -450,7 +335,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_DigestInit)
 (CK_SESSION_HANDLE xSession, CK_MECHANISM_PTR pMechanism)
 {
     CK_RV xResult = CKR_OK;
-    // return CKR_DEVICE_ERROR;
+
     LOG_D("%s", __FUNCTION__);
 
     P11SessionPtr_t pxSession = prvSessionPointerFromHandle(xSession);
@@ -470,7 +355,6 @@ CK_DEFINE_FUNCTION(CK_RV, C_DigestInit)
         return xResult;
     }
 
-#if SSS_HAVE_APPLET
     sss_status_t sss_status         = kStatus_SSS_Fail;
     sss_algorithm_t algorithm       = kAlgorithm_None;
     pxSession->xOperationInProgress = pMechanism->mechanism;
@@ -479,6 +363,9 @@ CK_DEFINE_FUNCTION(CK_RV, C_DigestInit)
         pxSession->xOperationInProgress = pkcs11NO_OPERATION;
         return xResult;
     }
+
+#if SSS_HAVE_APPLET
+
     LOCK_MUTEX_FOR_RTOS
     {
         sss_status = sss_digest_context_init(
@@ -498,21 +385,26 @@ CK_DEFINE_FUNCTION(CK_RV, C_DigestInit)
     }
 
 #else
-    if (pMechanism->mechanism != CKM_SHA256) {
-        xResult = CKR_MECHANISM_INVALID;
-    }
 
     /*
      * Initialize the requested hash type
      */
     if (xResult == CKR_OK) {
-        mbedtls_sha256_init(&pxSession->xSHA256Context);
-
-        if (0 != mbedtls_sha256_starts_ret(&pxSession->xSHA256Context, 0)) {
-            xResult = CKR_FUNCTION_FAILED;
+#if SSS_HAVE_HOSTCRYPTO_ANY
+        sss_status = sss_host_digest_context_init(
+            &pxSession->digest_ctx, &pex_sss_demo_boot_ctx->host_session, algorithm, kMode_SSS_Digest);
+#else
+        sss_status = kStatus_SSS_Fail;
+#endif
+        if (sss_status != kStatus_SSS_Success) {
+            pxSession->xOperationInProgress = pkcs11NO_OPERATION;
+            return CKR_FUNCTION_FAILED;
         }
-        else {
-            pxSession->xOperationInProgress = pMechanism->mechanism;
+
+        sss_status = sss_host_digest_init(&pxSession->digest_ctx);
+        if (sss_status != kStatus_SSS_Success) {
+            pxSession->xOperationInProgress = pkcs11NO_OPERATION;
+            return CKR_FUNCTION_FAILED;
         }
     }
 #endif
@@ -533,8 +425,6 @@ CK_DEFINE_FUNCTION(CK_RV, C_GenerateRandom)
     CK_RV xResult = CKR_OK;
     LOG_D("%s", __FUNCTION__);
 
-    /*lint !e9072 It's OK to have different parameter name. */
-    // return CKR_DEVICE_ERROR;
 #if SSS_HAVE_APPLET
     (void)(xSession);
 #else
@@ -577,8 +467,21 @@ CK_DEFINE_FUNCTION(CK_RV, C_GenerateRandom)
         }
 
 #else
-        if (0 != mbedtls_ctr_drbg_random(&pxSessionObj->xMbedDrbgCtx, pucRandomData, ulRandomLen)) {
-            xResult = CKR_FUNCTION_FAILED;
+        sss_status_t sss_status = kStatus_SSS_Fail;
+        sss_rng_context_t sss_rng_ctx;
+#if SSS_HAVE_HOSTCRYPTO_ANY
+        sss_status = sss_host_rng_context_init(&sss_rng_ctx, &pex_sss_demo_boot_ctx->host_session /* host Session */);
+#else
+        sss_status = kStatus_SSS_Fail;
+#endif
+        if (sss_status != kStatus_SSS_Success) {
+            return CKR_FUNCTION_FAILED;
+        }
+
+        sss_status = sss_host_rng_get_random(&sss_rng_ctx, pucRandomData, ulRandomLen);
+        sss_host_rng_context_free(&sss_rng_ctx);
+        if (sss_status != kStatus_SSS_Success) {
+            return CKR_FUNCTION_FAILED;
         }
 #endif
     }
@@ -594,8 +497,6 @@ CK_DEFINE_FUNCTION(CK_RV, C_GenerateRandom)
 CK_DEFINE_FUNCTION(CK_RV, C_Verify)
 (CK_SESSION_HANDLE xSession, CK_BYTE_PTR pucData, CK_ULONG ulDataLen, CK_BYTE_PTR pucSignature, CK_ULONG ulSignatureLen)
 {
-    /*lint !e9072 It's OK to have different parameter name. */
-    /* pkcs11tb*/
     CK_RV xResult = CKR_OK;
     LOG_D("%s", __FUNCTION__);
 
@@ -621,6 +522,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_Verify)
     sss_asymmetric_t asymmCtx;
     sss_algorithm_t algorithm;
     sss_algorithm_t digest_algorithm;
+    sss_mac_t ctx_hmac = {0};
 #endif
 
     /*
@@ -690,24 +592,30 @@ CK_DEFINE_FUNCTION(CK_RV, C_Verify)
     uint8_t data[2048] = {0};
     size_t dataLen     = sizeof(data);
     if (pxSessionObj->xOperationInProgress != CKM_RSA_PKCS_PSS && pxSessionObj->xOperationInProgress != CKM_ECDSA &&
-        pxSessionObj->xOperationInProgress != CKM_RSA_PKCS) {
+        pxSessionObj->xOperationInProgress != CKM_RSA_PKCS && pxSessionObj->xOperationInProgress != CKM_SHA256_HMAC) {
         sss_digest_t digestCtx = {0};
         size_t i               = 0;
 
-        xResult = GetSSSAlgorithm(algorithm, &digest_algorithm);
+        xResult = GetDigestAlgorithm(algorithm, &digest_algorithm);
         if (xResult != CKR_OK) {
             pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
             return xResult;
         }
 
+#if SSS_HAVE_HOSTCRYPTO_ANY
         LOCK_MUTEX_FOR_RTOS
         {
+#if SSS_HAVE_HOSTCRYPTO_ANY
             status = sss_digest_context_init(
-                &digestCtx, &pex_sss_demo_boot_ctx->session, digest_algorithm, kMode_SSS_Digest);
+                &digestCtx, &pex_sss_demo_boot_ctx->host_session, digest_algorithm, kMode_SSS_Digest);
+#else
+            status = kStatus_SSS_Fail;
+#endif
             if (status != kStatus_SSS_Success) {
                 pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
                 UNLOCK_MUTEX_FOR_RTOS_RET(CKR_DEVICE_ERROR);
             }
+
             status = sss_digest_init(&digestCtx);
             if (status != kStatus_SSS_Success) {
                 sss_digest_context_free(&digestCtx);
@@ -741,6 +649,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_Verify)
 
             UNLOCK_MUTEX_FOR_RTOS
         }
+#endif
     }
     else {
         memcpy(&data[0], pucData, ulDataLen);
@@ -760,38 +669,67 @@ CK_DEFINE_FUNCTION(CK_RV, C_Verify)
             UNLOCK_MUTEX_FOR_RTOS_RET(CKR_FUNCTION_FAILED)
         }
 
+        if ((pxSessionObj->xOperationKeyHandle) > UINT32_MAX) {
+            LOG_E(" Invalid xOperationKeyHandle");
+            pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
+            UNLOCK_MUTEX_FOR_RTOS_RET(CKR_FUNCTION_FAILED)
+        }
+
         status = sss_key_object_get_handle(&object, (uint32_t)pxSessionObj->xOperationKeyHandle);
         if (status != kStatus_SSS_Success) {
             LOG_E(" sss_key_object_get_handle Failed...");
             UNLOCK_MUTEX_FOR_RTOS_RET(CKR_FUNCTION_FAILED)
         }
 
-        status = sss_asymmetric_context_init(
-            &asymmCtx, &pex_sss_demo_boot_ctx->session, &object, algorithm, kMode_SSS_Verify);
-        if (status != kStatus_SSS_Success) {
-            LOG_E(" sss_asymmetric_context_init verify context Failed...");
-            UNLOCK_MUTEX_FOR_RTOS_RET(CKR_FUNCTION_FAILED)
-        }
-
-        uint8_t buff[2048] = {0};
-        size_t buffLen     = sizeof(buff);
-        if (asymmCtx.keyObject->cipherType == kSSS_CipherType_EC_NIST_P) {
-            xResult = EcRandSToSignature((uint8_t *)pucSignature, (size_t)ulSignatureLen, &buff[0], &buffLen);
+        /* Checking for HMAC and validating */
+        if (algorithm == kAlgorithm_SSS_HMAC_SHA256) {
+            status = sss_mac_context_init(
+                &ctx_hmac, &pex_sss_demo_boot_ctx->session, &object, algorithm, kMode_SSS_Mac_Validate);
+            if (status != kStatus_SSS_Success) {
+                LOG_E(" sss_mac_context_init Failed...");
+                pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
+                UNLOCK_MUTEX_FOR_RTOS_RET(CKR_FUNCTION_FAILED)
+            }
+            uint8_t hmacOutput[32] = {0};
+            size_t hmacOutputLen   = sizeof(hmacOutput);
+            memcpy(&hmacOutput[0], pucSignature, ulSignatureLen);
+            hmacOutputLen = ulSignatureLen;
+            status        = sss_mac_one_go(&ctx_hmac, &data[0], dataLen, hmacOutput, &hmacOutputLen);
+            if (status != kStatus_SSS_Success) {
+                sss_mac_context_free(&ctx_hmac);
+                LOG_E(" sss_mac_one_go Failed...");
+                xResult = CKR_FUNCTION_FAILED;
+            }
+            sss_mac_context_free(&ctx_hmac);
         }
         else {
-            memcpy(&buff[0], pucSignature, ulSignatureLen);
-            buffLen = ulSignatureLen;
-        }
-
-        if (xResult == CKR_OK) {
-            status = sss_asymmetric_verify_digest(&asymmCtx, &data[0], dataLen, buff, buffLen);
+            status = sss_asymmetric_context_init(
+                &asymmCtx, &pex_sss_demo_boot_ctx->session, &object, algorithm, kMode_SSS_Verify);
             if (status != kStatus_SSS_Success) {
-                LOG_E(" sss_asymmetric_verify_digest Failed... %08x", status);
-                xResult = CKR_SIGNATURE_INVALID;
+                LOG_E(" sss_asymmetric_context_init verify context Failed...");
+                UNLOCK_MUTEX_FOR_RTOS_RET(CKR_FUNCTION_FAILED)
             }
-        }
 
-        sss_asymmetric_context_free(&asymmCtx);
+            uint8_t buff[2048] = {0};
+            size_t buffLen     = sizeof(buff);
+            if (asymmCtx.keyObject->cipherType == kSSS_CipherType_EC_NIST_P) {
+                xResult = EcRandSToSignature((uint8_t *)pucSignature, (size_t)ulSignatureLen, &buff[0], &buffLen);
+            }
+            else {
+                memcpy(&buff[0], pucSignature, ulSignatureLen);
+                buffLen = ulSignatureLen;
+            }
+
+            if (xResult == CKR_OK) {
+                status = sss_asymmetric_verify_digest(&asymmCtx, &data[0], dataLen, buff, buffLen);
+                if (status != kStatus_SSS_Success) {
+                    LOG_E(" sss_asymmetric_verify_digest Failed... %08x", status);
+                    xResult = CKR_SIGNATURE_INVALID;
+                }
+            }
+
+            sss_asymmetric_context_free(&asymmCtx);
+        }
 
         UNLOCK_MUTEX_FOR_RTOS
     }
@@ -812,9 +750,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_Sign)
 {
     CK_RV xResult = CKR_OK;
     LOG_D("%s", __FUNCTION__);
-
     P11SessionPtr_t pxSessionObj = prvSessionPointerFromHandle(xSession);
-
     if (pxSessionObj == NULL) {
         xResult = CKR_SESSION_HANDLE_INVALID;
         return xResult;
@@ -836,9 +772,10 @@ CK_DEFINE_FUNCTION(CK_RV, C_Sign)
     sss_asymmetric_t asymmCtx;
     sss_algorithm_t algorithm = kAlgorithm_None;
     sss_algorithm_t digest_algorithm;
+    sss_mac_t ctx_hmac = {0};
 
     xResult = ParseSignMechanism(pxSessionObj, &algorithm);
-    // printf("\nParsed algorithm = %d\n", algorithm);
+
     if (xResult != CKR_OK) {
         pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
         return xResult;
@@ -878,6 +815,12 @@ CK_DEFINE_FUNCTION(CK_RV, C_Sign)
     if (pxSessionObj->xOperationInProgress == CKM_RSA_PKCS) {
         uint16_t keySizeBytes = 0;
 #if SSS_HAVE_APPLET_SE05X_IOT
+        if ((pxSessionObj->xOperationKeyHandle) > UINT32_MAX) {
+            LOG_E(" Invalid operation key handle");
+            pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
+            return CKR_FUNCTION_FAILED;
+
+        }
         xResult = read_object_size_with_lock((uint32_t)pxSessionObj->xOperationKeyHandle, &keySizeBytes);
         if (xResult != CKR_OK) {
             return xResult;
@@ -893,9 +836,10 @@ CK_DEFINE_FUNCTION(CK_RV, C_Sign)
     uint8_t data[2048] = {0};
     size_t dataLen     = sizeof(data);
     if (pxSessionObj->xOperationInProgress == CKM_RSA_PKCS_PSS || pxSessionObj->xOperationInProgress == CKM_ECDSA ||
-        pxSessionObj->xOperationInProgress == CKM_RSA_PKCS) {
+        pxSessionObj->xOperationInProgress == CKM_RSA_PKCS || pxSessionObj->xOperationInProgress == CKM_SHA256_HMAC) {
         if ((algorithm == kAlgorithm_SSS_RSASSA_PKCS1_PSS_MGF1_SHA1) ||
-            /* (algorithm == kAlgorithm_SSS_RSASSA_PKCS1_V1_5_SHA1) ||*/ (algorithm == kAlgorithm_SSS_ECDSA_SHA1)) {
+            /* (algorithm == kAlgorithm_SSS_RSASSA_PKCS1_V1_5_SHA1) ||*/
+            (algorithm == kAlgorithm_SSS_ECDSA_SHA1)) {
             // Check input size
             if (ulDataLen != 20) {
                 // pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
@@ -968,20 +912,25 @@ CK_DEFINE_FUNCTION(CK_RV, C_Sign)
         sss_digest_t digestCtx = {0};
         size_t i               = 0;
 
-        xResult = GetSSSAlgorithm(algorithm, &digest_algorithm);
+        xResult = GetDigestAlgorithm(algorithm, &digest_algorithm);
         if (xResult != CKR_OK) {
             pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
             return xResult;
         }
-
+#if SSS_HAVE_HOSTCRYPTO_ANY
         LOCK_MUTEX_FOR_RTOS
         {
+#if SSS_HAVE_HOSTCRYPTO_ANY
             status = sss_digest_context_init(
-                &digestCtx, &pex_sss_demo_boot_ctx->session, digest_algorithm, kMode_SSS_Digest);
+                &digestCtx, &pex_sss_demo_boot_ctx->host_session, digest_algorithm, kMode_SSS_Digest);
+#else
+            status = kStatus_SSS_Fail;
+#endif
             if (status != kStatus_SSS_Success) {
                 pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
                 UNLOCK_MUTEX_FOR_RTOS_RET(CKR_DEVICE_ERROR);
             }
+
             status = sss_digest_init(&digestCtx);
             if (status != kStatus_SSS_Success) {
                 sss_digest_context_free(&digestCtx);
@@ -1015,8 +964,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_Sign)
 
             UNLOCK_MUTEX_FOR_RTOS
         }
-
-        // dataLen = 0;
+#endif
     }
 
     LOCK_MUTEX_FOR_RTOS
@@ -1028,6 +976,12 @@ CK_DEFINE_FUNCTION(CK_RV, C_Sign)
             UNLOCK_MUTEX_FOR_RTOS_RET(CKR_FUNCTION_FAILED)
         }
 
+        if ((pxSessionObj->xOperationKeyHandle) > UINT32_MAX) {
+            LOG_E(" Invalid xOperationKeyHandle");
+            pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
+            UNLOCK_MUTEX_FOR_RTOS_RET(CKR_FUNCTION_FAILED)
+        }
+
         status = sss_key_object_get_handle(&object, (uint32_t)pxSessionObj->xOperationKeyHandle);
         if (status != kStatus_SSS_Success) {
             LOG_E(" sss_key_object_get_handle Failed...");
@@ -1035,42 +989,75 @@ CK_DEFINE_FUNCTION(CK_RV, C_Sign)
             UNLOCK_MUTEX_FOR_RTOS_RET(CKR_FUNCTION_FAILED)
         }
 
-        status =
-            sss_asymmetric_context_init(&asymmCtx, &pex_sss_demo_boot_ctx->session, &object, algorithm, kMode_SSS_Sign);
-        if (status != kStatus_SSS_Success) {
-            LOG_E(" sss_asymmetric_context_ sign init Failed...");
-            pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
-            UNLOCK_MUTEX_FOR_RTOS_RET(CKR_FUNCTION_FAILED)
-        }
-
-        /* Do Signing */
-        uint8_t signature[512] = {0};
-        size_t sigLen          = sizeof(signature);
-
-        status = sss_asymmetric_sign_digest(&asymmCtx, &data[0], dataLen, &signature[0], &sigLen);
-        if (status != kStatus_SSS_Success) {
-            LOG_E(" sss_asymmetric_sign_digest Failed...");
-            xResult = CKR_FUNCTION_FAILED;
-        }
-        if (xResult == CKR_OK) {
-            if (asymmCtx.keyObject->cipherType == kSSS_CipherType_EC_NIST_P) {
-                xResult = EcSignatureToRandS(signature, &sigLen);
+        /* Checking for HMAC and performing MAC operation */
+        if (algorithm == kAlgorithm_SSS_HMAC_SHA256) {
+            status =
+                sss_mac_context_init(&ctx_hmac, &pex_sss_demo_boot_ctx->session, &object, algorithm, kMode_SSS_Mac);
+            if (status != kStatus_SSS_Success) {
+                LOG_E(" sss_mac_context_init Failed...");
+                pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
+                UNLOCK_MUTEX_FOR_RTOS_RET(CKR_FUNCTION_FAILED)
+            }
+            uint8_t hmacOutput[32] = {0};
+            size_t hmacOutputLen   = sizeof(hmacOutput);
+            status                 = sss_mac_one_go(&ctx_hmac, &data[0], dataLen, &hmacOutput[0], &hmacOutputLen);
+            if (status != kStatus_SSS_Success) {
+                sss_mac_context_free(&ctx_hmac);
+                LOG_E(" sss_mac_one_go Failed...");
+                xResult = CKR_FUNCTION_FAILED;
             }
             if (xResult == CKR_OK) {
                 if (pucSignature) {
-                    if (*pulSignatureLen < sigLen) {
+                    if (*pulSignatureLen < hmacOutputLen) {
                         xResult = CKR_BUFFER_TOO_SMALL;
                     }
                     else {
-                        memcpy(pucSignature, &signature[0], sigLen);
+                        memcpy(pucSignature, &hmacOutput[0], hmacOutputLen);
                         pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
                     }
                 }
-                *pulSignatureLen = sigLen;
+                *pulSignatureLen = hmacOutputLen;
             }
+            sss_mac_context_free(&ctx_hmac);
         }
+        else {
+            status = sss_asymmetric_context_init(
+                &asymmCtx, &pex_sss_demo_boot_ctx->session, &object, algorithm, kMode_SSS_Sign);
+            if (status != kStatus_SSS_Success) {
+                LOG_E(" sss_asymmetric_context_ sign init Failed...");
+                pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
+                UNLOCK_MUTEX_FOR_RTOS_RET(CKR_FUNCTION_FAILED)
+            }
 
-        sss_asymmetric_context_free(&asymmCtx);
+            /* Do Signing */
+            uint8_t signature[512] = {0};
+            size_t sigLen          = sizeof(signature);
+
+            status = sss_asymmetric_sign_digest(&asymmCtx, &data[0], dataLen, &signature[0], &sigLen);
+            if (status != kStatus_SSS_Success) {
+                LOG_E(" sss_asymmetric_sign_digest Failed...");
+                xResult = CKR_FUNCTION_FAILED;
+            }
+            if (xResult == CKR_OK) {
+                if (asymmCtx.keyObject->cipherType == kSSS_CipherType_EC_NIST_P) {
+                    xResult = EcSignatureToRandS(signature, &sigLen);
+                }
+                if (xResult == CKR_OK) {
+                    if (pucSignature) {
+                        if (*pulSignatureLen < sigLen) {
+                            xResult = CKR_BUFFER_TOO_SMALL;
+                        }
+                        else {
+                            memcpy(pucSignature, &signature[0], sigLen);
+                            pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
+                        }
+                    }
+                    *pulSignatureLen = sigLen;
+                }
+            }
+
+            sss_asymmetric_context_free(&asymmCtx);
+        }
 
         UNLOCK_MUTEX_FOR_RTOS
     }
@@ -1115,7 +1102,7 @@ sss_status_t sss_create_token(sss_key_store_t *keystore,
     uint8_t output[4096] = {0};
     size_t olen          = sizeof(output);
 
-    int a = convertpemtoder((unsigned char *)buffer, (size_t)bufferLen, &output[0], &olen);
+    int a = port_parseConvertPemToDer((unsigned char *)buffer, (size_t)bufferLen, &output[0], &olen);
     if (a == 0) {
         // Data was in PEM format. Nothing to be done.
     }
@@ -1184,7 +1171,6 @@ static uint8_t CheckIfKeyIdExists(uint32_t keyId, pSe05xSession_t session_ctx)
         retStatus = Se05x_API_CheckObjectExists(session_ctx, keyId, &IdExists);
         if (retStatus == SM_OK) {
             if (IdExists == kSE05x_Result_SUCCESS) {
-                // LOG_D("Key Id 0x%X exists", keyId);
                 exists = 1;
             }
         }
@@ -1205,7 +1191,7 @@ static uint8_t CheckIfKeyIdExists(uint32_t keyId, pSe05xSession_t session_ctx)
  */
 CK_DEFINE_FUNCTION(CK_RV, C_GetFunctionList)
 (CK_FUNCTION_LIST_PTR_PTR ppxFunctionList)
-{ /*lint !e9072 It's OK to have different parameter name. */
+{
     CK_RV xResult = CKR_OK;
     LOG_D("%s", __FUNCTION__);
 
@@ -1223,7 +1209,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_GetFunctionList)
  * @brief Initialize the Cryptoki module for use.
  */
 CK_DEFINE_FUNCTION(CK_RV, C_Initialize)(CK_VOID_PTR pvInitArgs)
-{ /*lint !e9072 It's OK to have different parameter name. */
+{
     CK_RV status = CKR_OK;
     if (cryptokiInitialized) {
         return CKR_CRYPTOKI_ALREADY_INITIALIZED;
@@ -1232,41 +1218,26 @@ CK_DEFINE_FUNCTION(CK_RV, C_Initialize)(CK_VOID_PTR pvInitArgs)
 
     if (pvInitArgs) {
         CK_C_INITIALIZE_ARGS_PTR initArgs = (CK_C_INITIALIZE_ARGS_PTR)(pvInitArgs);
-        if (initArgs->flags & CKF_LIBRARY_CANT_CREATE_OS_THREADS) {
-            //     //Library should not create OS threads. If this is not possible, return CKR_NEED_TO_CREATE_THREADS
-#if (__GNUC__ && !AX_EMBEDDED)
-            return CKR_NEED_TO_CREATE_THREADS;
-#endif
-#if defined(USE_RTOS) && USE_RTOS == 1
-            return CKR_NEED_TO_CREATE_THREADS;
-#endif
-        }
         if (initArgs->flags & CKF_OS_LOCKING_OK) {
             // Application will call from multiple threads. Library should use locks.
             if ((initArgs->CreateMutex) && (initArgs->DestroyMutex) && (initArgs->LockMutex) &&
                 (initArgs->UnlockMutex)) {
                 // If mutex pointers are not null, library can use either OS locking or provided functions
-                // return CKR_GENERAL_ERROR;
+                LOG_D("Warning: Init Mutex patameters are ignored. Using OS locking \n");
             }
             else if (!(initArgs->CreateMutex) && !(initArgs->DestroyMutex) && !(initArgs->LockMutex) &&
                      !(initArgs->UnlockMutex)) {
                 // If mutex pointers are null, library must use OS locking.
-                // return CKR_CANT_LOCK;
+                LOG_D("Info: Using OS locking \n");
             }
         }
         else {
             return CKR_CANT_LOCK;
-            //     //If mutex pointers are null, application would not access the library simultaneously.
-            //     //If mutex pointers are not null, library should use provided functions to create threads.
-            //      CKR_CANT_LOCK
-            //     // status = CKR_ARGUMENTS_BAD;
-            //     // return status;
         }
     }
 
     if (!mutex_initialised) {
 #if defined(USE_RTOS) && USE_RTOS == 1
-        // memset(&xSemaphore, 0, sizeof(SemaphoreHandle_t));
         xSemaphore = xSemaphoreCreateMutex();
         if (xSemaphore == NULL) {
             status = CKR_CANT_LOCK;
@@ -1288,7 +1259,6 @@ CK_DEFINE_FUNCTION(CK_RV, C_Initialize)(CK_VOID_PTR pvInitArgs)
         while (ret == EBUSY) {
             ret = pthread_mutex_init(&gFilelock, NULL);
         }
-        // ret = pthread_mutex_init(&gSessionlock, NULL);
 #endif
 
         mutex_initialised = true;
@@ -1306,7 +1276,7 @@ exit:
  * @brief Un-initialize the Cryptoki module.
  */
 CK_DEFINE_FUNCTION(CK_RV, C_Finalize)(CK_VOID_PTR pvReserved)
-{ /*lint !e9072 It's OK to have different parameter name. */
+{
     CK_RV xResult = CKR_OK;
     LOG_D("%s", __FUNCTION__);
 
@@ -1322,6 +1292,9 @@ CK_DEFINE_FUNCTION(CK_RV, C_Finalize)(CK_VOID_PTR pvReserved)
 #if defined(USE_RTOS) && USE_RTOS == 1
         vSemaphoreDelete(xSemaphore);
 #endif
+#if (__GNUC__ && !AX_EMBEDDED)
+        //TODO - thread destroy
+#endif
         mutex_initialised = false;
     }
 
@@ -1335,7 +1308,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_Finalize)(CK_VOID_PTR pvReserved)
  */
 CK_DEFINE_FUNCTION(CK_RV, C_OpenSession)
 (CK_SLOT_ID xSlotID, CK_FLAGS xFlags, CK_VOID_PTR pvApplication, CK_NOTIFY xNotify, CK_SESSION_HANDLE_PTR pxSession)
-{ /*lint !e9072 It's OK to have different parameter name. */
+{
     AX_UNUSED_ARG(pvApplication);
     AX_UNUSED_ARG(xNotify);
     CK_RV xResult                = CKR_OK;
@@ -1343,12 +1316,6 @@ CK_DEFINE_FUNCTION(CK_RV, C_OpenSession)
     bool foundEmptySessionSlot   = false;
     size_t i                     = 0;
     LOG_D("%s", __FUNCTION__);
-
-    // ( void ) ( xSlotID );
-    // ( void ) ( pvApplication );
-    // ( void ) ( xNotify );
-
-    /* Check arguments. */
 
     if (!cryptokiInitialized) {
         return CKR_CRYPTOKI_NOT_INITIALIZED;
@@ -1393,14 +1360,32 @@ CK_DEFINE_FUNCTION(CK_RV, C_OpenSession)
     if (CKR_OK == xResult) {
         memset(pxSessionObj, 0, sizeof(P11Session_t));
     }
-
-    /*
-     * Initialize RNG.
-     */
-
-    if (CKR_OK == xResult) {
-        memset(&pxSessionObj->xMbedEntropyContext, 0, sizeof(pxSessionObj->xMbedEntropyContext));
+    else {
+        SSS_FREE(pxSessionObj);
+        return xResult;
     }
+
+    pxSessionObj->pAttrKey = (HandleP11KeyPairPtr_t)SSS_MALLOC(sizeof(HandleP11KeyPair_t));
+    if (NULL == pxSessionObj->pAttrKey) {
+        xResult = CKR_HOST_MEMORY;
+        SSS_FREE(pxSessionObj);
+        return xResult;
+    }
+    memset(pxSessionObj->pAttrKey, 0, sizeof(HandleP11KeyPair_t));
+
+    pxSessionObj->pFindObject = (HandleP11KeyPairPtr_t)SSS_MALLOC(sizeof(HandleP11KeyPair_t));
+    if (NULL == pxSessionObj->pFindObject){
+        xResult = CKR_HOST_MEMORY;
+        SSS_FREE(pxSessionObj->pAttrKey);
+        SSS_FREE(pxSessionObj);
+        return xResult;
+    }
+    if (NULL == pxSessionObj->pAttrKey) {
+        xResult = CKR_HOST_MEMORY;
+        SSS_FREE(pxSessionObj);
+        return xResult;
+    }
+    memset(pxSessionObj->pFindObject, 0, sizeof(HandleP11KeyPair_t));
 
     if (CKR_OK == xResult) {
         /*
@@ -1413,6 +1398,12 @@ CK_DEFINE_FUNCTION(CK_RV, C_OpenSession)
 
     if (NULL != pxSessionObj) {
         if (CKR_OK != xResult) {
+            if (NULL != pxSessionObj->pAttrKey) {
+                SSS_FREE(pxSessionObj->pAttrKey);
+            }
+            if (NULL != pxSessionObj->pFindObject) {
+                SSS_FREE(pxSessionObj->pFindObject);
+            }
             SSS_FREE(pxSessionObj);
             return CKR_FUNCTION_FAILED;
         }
@@ -1427,6 +1418,12 @@ CK_DEFINE_FUNCTION(CK_RV, C_OpenSession)
             *pxSession         = (CK_SESSION_HANDLE)(i + 1); // To skip session_id 0
         }
         else {
+            if (NULL != pxSessionObj->pAttrKey) {
+                SSS_FREE(pxSessionObj->pAttrKey);
+            }
+            if (NULL != pxSessionObj->pFindObject) {
+                SSS_FREE(pxSessionObj->pFindObject);
+            }
             SSS_FREE(pxSessionObj);
             return CKR_DEVICE_MEMORY;
         }
@@ -1439,7 +1436,10 @@ CK_DEFINE_FUNCTION(CK_RV, C_OpenSession)
 
 /*Lock for session open - required because multiple session_open will be attempted*/
 #if (__GNUC__ && !AX_EMBEDDED)
-    pthread_mutex_lock(&gSessionlock);
+    if (pthread_mutex_lock(&gSessionlock) != 0) {
+        xResult = CKR_CANT_LOCK;
+        goto error;
+    }
 #endif
 
 #ifdef PKCS11_SESSION_OPEN
@@ -1449,12 +1449,25 @@ CK_DEFINE_FUNCTION(CK_RV, C_OpenSession)
             // if(pex_sss_demo_boot_ctx->session.subsystem == kType_SSS_SubSystem_NONE){
             if (sessionCount == 0) {
                 sss_status_t sss_status = kStatus_SSS_Fail;
-                const char *portName    = g_port_name;
+                char *portName          = NULL;
 
+#if defined(T1oI2C)
                 SM_Close(NULL, 0);
+#endif
                 /* If portname is given in ENV */
                 sss_status = ex_sss_boot_connectstring(0, NULL, &portName);
                 sss_status = ex_sss_boot_open(pex_sss_demo_boot_ctx, portName);
+#if defined(_MSC_VER)
+                if (portName) {
+                    char *dummy_portName = NULL;
+                    size_t dummy_sz      = 0;
+                    _dupenv_s(&dummy_portName, &dummy_sz, EX_SSS_BOOT_SSS_PORT);
+                    if (NULL != dummy_portName) {
+                        free(dummy_portName);
+                        free(portName);
+                    }
+                }
+#endif // _MSC_VER
                 if (sss_status != kStatus_SSS_Success) {
                     LOG_E("Session Open Failed");
                     xResult = CKR_GENERAL_ERROR;
@@ -1467,14 +1480,33 @@ CK_DEFINE_FUNCTION(CK_RV, C_OpenSession)
                     LOG_E("Factory Reset failed");
                 }
 #endif
+#if SSS_HAVE_HOSTCRYPTO_ANY
+                if ((pex_sss_demo_boot_ctx->host_session.subsystem) == kType_SSS_SubSystem_NONE) {
+                    sss_type_t hostsubsystem = kType_SSS_SubSystem_NONE;
+#if SSS_HAVE_HOSTCRYPTO_MBEDTLS
+                    hostsubsystem = kType_SSS_mbedTLS;
+#elif SSS_HAVE_HOSTCRYPTO_OPENSSL
+                    hostsubsystem = kType_SSS_OpenSSL;
+#endif
+                    sss_status = sss_host_session_open(
+                        &pex_sss_demo_boot_ctx->host_session, hostsubsystem, 0, kSSS_ConnectionType_Plain, NULL);
 
+                    if (sss_status != kStatus_SSS_Success) {
+                        LOG_E("Host Session open Failed");
+                        xResult = CKR_FUNCTION_FAILED;
+                        goto error;
+                    }
+                }
+#endif
                 sss_status = ex_sss_key_store_and_object_init(pex_sss_demo_boot_ctx);
                 if (sss_status != kStatus_SSS_Success) {
                     LOG_E("Keystore Init Failed");
                     xResult = CKR_FUNCTION_FAILED;
                     goto error;
                 }
+#if SSS_HAVE_HOSTCRYPTO_ANY
                 pex_sss_demo_tls_ctx->pHost_ks = &pex_sss_demo_boot_ctx->host_ks;
+#endif
                 sss_status = sss_key_object_init(&pex_sss_demo_tls_ctx->obj, &pex_sss_demo_boot_ctx->ks);
                 if (sss_status != kStatus_SSS_Success) {
                     LOG_E("Object init failed");
@@ -1500,6 +1532,11 @@ CK_DEFINE_FUNCTION(CK_RV, C_OpenSession)
                 if (pex_sss_demo_boot_ctx->session.subsystem != kType_SSS_SubSystem_NONE) {
                     ex_sss_session_close(pex_sss_demo_boot_ctx);
                 }
+#if SSS_HAVE_HOSTCRYPTO_ANY
+                if ((pex_sss_demo_boot_ctx->host_session.subsystem) != kType_SSS_SubSystem_NONE) {
+                    sss_host_session_close(&pex_sss_demo_boot_ctx->host_session);
+                }
+#endif
             }
         }
 
@@ -1514,7 +1551,7 @@ exit:
 /*Unlock for session open - required because multiple session_open will be attempted*/
 #if (__GNUC__ && !AX_EMBEDDED)
     pthread_mutex_unlock(&gSessionlock);
-    LOG_D("Destroyed mutex");
+    LOG_D("Unlock mutex");
 #endif
 
     return xResult;
@@ -1524,7 +1561,7 @@ exit:
  * @brief Terminate a session and release resources.
  */
 CK_DEFINE_FUNCTION(CK_RV, C_CloseSession)(CK_SESSION_HANDLE xSession)
-{ /*lint !e9072 It's OK to have different parameter name. */
+{
     CK_RV xResult             = CKR_OK;
     P11SessionPtr_t pxSession = prvSessionPointerFromHandle(xSession);
     LOG_D("%s", __FUNCTION__);
@@ -1533,6 +1570,12 @@ CK_DEFINE_FUNCTION(CK_RV, C_CloseSession)(CK_SESSION_HANDLE xSession)
         /*
          * Tear down the session.
          */
+        if (NULL != pxSession->pAttrKey) {
+            SSS_FREE(pxSession->pAttrKey);
+        }
+        if (NULL != pxSession->pFindObject) {
+            SSS_FREE(pxSession->pFindObject);
+        }
 #if defined(USE_RTOS) && USE_RTOS == 1
         vPortFree(pxSession);
 #else
@@ -1542,15 +1585,13 @@ CK_DEFINE_FUNCTION(CK_RV, C_CloseSession)(CK_SESSION_HANDLE xSession)
         pkcs11_sessions[xSession - 1] = NULL;
 /*Lock for session open - required because multiple session_open will be attempted*/
 #if (__GNUC__ && !AX_EMBEDDED)
-        pthread_mutex_lock(&gSessionlock);
+        if (pthread_mutex_lock(&gSessionlock) != 0) {
+            xResult = CKR_CANT_LOCK;
+        }
 #endif
         if (CKR_OK == xResult) {
 #ifdef PKCS11_SESSION_OPEN
-            // static const char *g_port_name;
-            // printf("\nIn session close");
             if (sessionCount == 1) {
-                // printf("\nsessionCount = 1");
-                // sss_status_t sss_status = kStatus_SSS_Fail;
                 LOCK_MUTEX_FOR_RTOS
                 {
                     sss_key_object_free(&pex_sss_demo_tls_ctx->obj);
@@ -1558,6 +1599,11 @@ CK_DEFINE_FUNCTION(CK_RV, C_CloseSession)(CK_SESSION_HANDLE xSession)
                     sss_key_object_free(&pex_sss_demo_tls_ctx->interCaCert);
                     sss_key_object_free(&pex_sss_demo_tls_ctx->pub_obj);
                     ex_sss_session_close(pex_sss_demo_boot_ctx);
+#if SSS_HAVE_HOSTCRYPTO_ANY
+                    if ((pex_sss_demo_boot_ctx->host_session.subsystem) != kType_SSS_SubSystem_NONE) {
+                        sss_host_session_close(&pex_sss_demo_boot_ctx->host_session);
+                    }
+#endif
                     UNLOCK_MUTEX_FOR_RTOS
                 }
             }
@@ -1581,67 +1627,6 @@ CK_DEFINE_FUNCTION(CK_RV, C_CloseSession)(CK_SESSION_HANDLE xSession)
 }
 
 /**
- * @brief Cleans up a key structure.
- */
-
-static int convertpemtoder(const unsigned char *input, size_t ilen, unsigned char *output, size_t *olen)
-{
-    int ret;
-    const unsigned char *s1, *s2, *end = input + ilen;
-    size_t len = 0;
-
-    s1 = (unsigned char *)strstr((const char *)input, "-----BEGIN");
-    if (s1 == NULL) {
-        return (-1);
-    }
-
-    s2 = (unsigned char *)strstr((const char *)input, "-----END");
-    if (s2 == NULL) {
-        return (-1);
-    }
-
-    s1 += 10;
-    while (s1 < end && *s1 != '-')
-        s1++;
-    while (s1 < end && *s1 == '-')
-        s1++;
-    if (*s1 == '\r') {
-        s1++;
-    }
-    if (*s1 == '\n') {
-        s1++;
-    }
-
-    if (s2 <= s1 || s2 > end) {
-        return (-1);
-    }
-
-    ret = mbedtls_base64_decode(NULL, 0, &len, (const unsigned char *)s1, s2 - s1);
-    if (ret == MBEDTLS_ERR_BASE64_INVALID_CHARACTER) {
-        return (ret);
-    }
-
-    if (len > *olen) {
-        return (-1);
-    }
-
-    if ((ret = mbedtls_base64_decode(output, len, &len, (const unsigned char *)s1, s2 - s1)) != 0) {
-        return (ret);
-    }
-
-    *olen = len;
-
-    return (0);
-}
-
-#if AX_EMBEDDED
-BaseType_t PKCS11_PAL_SaveFile(char *pcFileName, uint8_t *pucData, uint32_t ulDataSize)
-{
-    return false;
-}
-#endif /* AX_EMBEDDED */
-
-/**
  * @brief Begin a digital signature verification session.
  */
 
@@ -1653,10 +1638,6 @@ CK_DEFINE_FUNCTION(CK_RV, C_VerifyInit)
 
     P11SessionPtr_t pxSession = prvSessionPointerFromHandle(xSession);
     // pxSession->xOperationInProgress = pxMechanism->mechanism;
-
-    /*lint !e9072 It's OK to have different parameter name. */
-    // ( void ) ( xSession );
-    // ( void ) ( xKey );
 
     if (pxSession == NULL) {
         xResult = CKR_SESSION_HANDLE_INVALID;
@@ -1693,15 +1674,10 @@ CK_DEFINE_FUNCTION(CK_RV, C_SignInit)
 (CK_SESSION_HANDLE xSession, CK_MECHANISM_PTR pxMechanism, CK_OBJECT_HANDLE xKey)
 {
     CK_RV xResult = CKR_OK;
-    // LOG_I("KeyId = %ld", (uint32_t) xKey);
+
     LOG_D("%s", __FUNCTION__);
 
     P11SessionPtr_t pxSession = prvSessionPointerFromHandle(xSession);
-    // pxSession->xOperationInProgress = pxMechanism->mechanism;
-
-    /*lint !e9072 It's OK to have different parameter name. */
-    // ( void ) ( xSession );
-    // ( void ) ( xKey );
 
     if (pxSession == NULL) {
         xResult = CKR_SESSION_HANDLE_INVALID;
@@ -1736,12 +1712,10 @@ CK_DEFINE_FUNCTION(CK_RV, C_SignInit)
  */
 CK_DEFINE_FUNCTION(CK_RV, C_GetSlotList)
 (CK_BBOOL xTokenPresent, CK_SLOT_ID_PTR pxSlotList, CK_ULONG_PTR pulCount)
-{ /*lint !e9072 It's OK to have different parameter name. */
+{
     AX_UNUSED_ARG(xTokenPresent);
     CK_RV xResult = CKR_OK;
     LOG_D("%s", __FUNCTION__);
-
-    // ( void ) ( xTokenPresent );
 
     if (NULL == pulCount) {
         xResult = CKR_ARGUMENTS_BAD;
@@ -1750,7 +1724,6 @@ CK_DEFINE_FUNCTION(CK_RV, C_GetSlotList)
         *pulCount = 1;
     }
     else {
-        // if( 0u == *pulCount )
         if (*pulCount < 1) {
             xResult = CKR_BUFFER_TOO_SMALL;
         }
@@ -1774,7 +1747,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_Decrypt)
     CK_ULONG_PTR pulDataLen)
 {
     CK_RV xResult = CKR_OK;
-    // return CKR_ARGUMENTS_BAD;
+
     LOG_D("%s", __FUNCTION__);
 
     P11SessionPtr_t pxSessionObj = prvSessionPointerFromHandle(hSession);
@@ -1789,13 +1762,10 @@ CK_DEFINE_FUNCTION(CK_RV, C_Decrypt)
         return CKR_ARGUMENTS_BAD;
     }
 
-    // sss_status_t status;
-    // sss_asymmetric_t asymmCtx;
     sss_algorithm_t algorithm = kAlgorithm_None;
-    // sss_algorithm_t digest_algorithm = kAlgorithm_None;
 
     xResult = ParseEncryptionMechanism(pxSessionObj, &algorithm);
-    // printf("\nEncrypt Mechanism = %08x\n", pxSessionObj->xOperationInProgress);
+
     if (xResult != CKR_OK) {
         pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
         return xResult;
@@ -1904,6 +1874,9 @@ CK_DEFINE_FUNCTION(CK_RV, C_DeriveKey)
     LOG_D("%s", __FUNCTION__);
     CK_RV xResult = CKR_FUNCTION_NOT_SUPPORTED;
 #if SSS_HAVE_APPLET_SE05X_IOT
+    if (hBaseKey > UINT32_MAX) {
+        return CKR_ARGUMENTS_BAD;
+    }
     uint32_t keyId                     = (uint32_t)hBaseKey;
     sss_se05x_session_t *se05x_session = (sss_se05x_session_t *)&pex_sss_demo_boot_ctx->session;
     sss_algorithm_t algorithm          = kAlgorithm_SSS_ECDH;
@@ -2094,6 +2067,11 @@ CK_DEFINE_FUNCTION(CK_RV, C_DeriveKey)
             publicKeyBuffer,
             &publicKeyBufferLen);
         ENSURE_OR_GO_EXIT(xResult == CKR_OK);
+
+        if (publicKeyBufferLen > sizeof(publicKeyBuffer)) {
+            xResult = CKR_FUNCTION_FAILED;
+            goto exit;
+        }
 
         len = sizeof(publicKeyBuffer) - publicKeyBufferLen;
 
@@ -2379,11 +2357,10 @@ CK_DEFINE_FUNCTION(CK_RV, C_Encrypt)
         return CKR_ARGUMENTS_BAD;
     }
 
-    // sss_status_t status;
     sss_algorithm_t algorithm = kAlgorithm_None;
 
     xResult = ParseEncryptionMechanism(pxSessionObj, &algorithm);
-    // printf("\nEncrypt Mechanism = %08x\n", pxSessionObj->xOperationInProgress);
+
     if (xResult != CKR_OK) {
         pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
         return xResult;
@@ -2492,10 +2469,10 @@ CK_DEFINE_FUNCTION(CK_RV, C_GetInfo)(CK_INFO_PTR pInfo)
 
     pInfo->cryptokiVersion.major = CRYPTOKI_VERSION_MAJOR;
     pInfo->cryptokiVersion.minor = CRYPTOKI_VERSION_MINOR;
-    memset(&pInfo->manufacturerID[0], ' ', sizeof(pInfo->manufacturerID));
-    memset(&pInfo->libraryDescription[0], ' ', sizeof(pInfo->libraryDescription));
+    memset(pInfo->manufacturerID, ' ', sizeof(pInfo->manufacturerID));
+    memset(pInfo->libraryDescription, ' ', sizeof(pInfo->libraryDescription));
     pInfo->flags = 0;
-    // { CRYPTOKI_VERSION_MAJOR, CRYPTOKI_VERSION_MINOR },
+    pInfo->libraryVersion = PKCS11_LIBRARY_VERSION;
     return CKR_OK;
 }
 
@@ -2673,16 +2650,28 @@ CK_DEFINE_FUNCTION(CK_RV, C_GetMechanismInfo)
         mech_info.flags        = mech_info.flags | CKF_GENERATE;
         xResult                = CKR_OK;
     }
+    else if (type == CKM_DES3_KEY_GEN) {
+        mech_info.ulMinKeySize = 192;
+        mech_info.ulMaxKeySize = 192;
+        mech_info.flags        = mech_info.flags | CKF_GENERATE;
+        xResult                = CKR_OK;
+    }
     else if (type == CKM_ECDH1_DERIVE) {
         mech_info.ulMinKeySize = 128;
         mech_info.ulMaxKeySize = 256;
         mech_info.flags        = mech_info.flags | CKF_DERIVE;
         xResult                = CKR_OK;
     }
-    else if (type == CKM_RSA_X_509) {
+    else if (type == CKM_RSA_X_509) { // TODO - Required ? Not present in C_GetMechanismList
         mech_info.ulMinKeySize = 1024;
         mech_info.ulMaxKeySize = 4096;
         mech_info.flags        = mech_info.flags | CKF_VERIFY;
+        xResult                = CKR_OK;
+    }
+    else if (type == CKM_SHA256_HMAC) {
+        mech_info.ulMinKeySize = 1024;
+        mech_info.ulMaxKeySize = 4096;
+        mech_info.flags        = mech_info.flags | CKF_SIGN | CKF_VERIFY;
         xResult                = CKR_OK;
     }
 
@@ -2708,7 +2697,8 @@ CK_DEFINE_FUNCTION(CK_RV, C_GetMechanismList)
         return CKR_ARGUMENTS_BAD;
     }
 
-    CK_MECHANISM_TYPE mechanisms[] = {/* RSA Algorithms */
+    CK_MECHANISM_TYPE mechanisms[] = {
+        /* RSA Algorithms */
         CKM_RSA_PKCS,
         CKM_SHA1_RSA_PKCS,
         CKM_SHA224_RSA_PKCS,
@@ -2735,6 +2725,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_GetMechanismList)
         /* ECDSA */
         CKM_ECDSA,
         CKM_ECDSA_SHA1,
+        //TODO - Add other algo
         /* Key Generation algorithms */
         CKM_EC_KEY_PAIR_GEN,
         CKM_RSA_PKCS_KEY_PAIR_GEN,
@@ -2742,16 +2733,23 @@ CK_DEFINE_FUNCTION(CK_RV, C_GetMechanismList)
         CKM_DES2_KEY_GEN,
         CKM_DES3_KEY_GEN,
         /* Key Derivation algorithms */
-        CKM_ECDH1_DERIVE};
+        CKM_ECDH1_DERIVE,
+        /* HMAC algorithms */
+        CKM_SHA256_HMAC};
+
+    CK_ULONG numOfMechs = sizeof(mechanisms) / sizeof(mechanisms[0]);
+
     if (pMechanismList) {
-        if (*pulCount < sizeof(mechanisms)) {
+        if (*pulCount < numOfMechs) {
             xResult = CKR_BUFFER_TOO_SMALL;
         }
         else {
             memcpy(pMechanismList, &mechanisms[0], sizeof(mechanisms));
         }
     }
-    *pulCount = sizeof(mechanisms);
+
+    *pulCount = numOfMechs;
+
     return xResult;
 }
 
@@ -2856,7 +2854,8 @@ CK_DEFINE_FUNCTION(CK_RV, C_SeedRandom)
     AX_UNUSED_ARG(ulSeedLen);
     LOG_D("%s", __FUNCTION__);
 
-    return CKR_OK;
+    /* Nothing is done */
+    return CKR_RANDOM_SEED_NOT_SUPPORTED;
 }
 
 /**
@@ -2880,12 +2879,99 @@ CK_DEFINE_FUNCTION(CK_RV, C_SetAttributeValue)
 CK_DEFINE_FUNCTION(CK_RV, C_SignFinal)
 (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pSignature, CK_ULONG_PTR pulSignatureLen)
 {
-    AX_UNUSED_ARG(hSession);
-    AX_UNUSED_ARG(pSignature);
-    AX_UNUSED_ARG(pulSignatureLen);
+    CK_RV xResult = CKR_OK;
     LOG_D("%s", __FUNCTION__);
+    P11SessionPtr_t pxSessionObj = prvSessionPointerFromHandle(hSession);
+    if (pxSessionObj == NULL) {
+        xResult = CKR_SESSION_HANDLE_INVALID;
+        return xResult;
+    }
 
-    return CKR_FUNCTION_NOT_SUPPORTED;
+    if (!pulSignatureLen) {
+        pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
+        xResult                            = CKR_ARGUMENTS_BAD;
+        return xResult;
+    }
+
+    sss_status_t status;
+    sss_object_t object;
+    sss_asymmetric_t asymmCtx;
+    sss_algorithm_t algorithm = kAlgorithm_None;
+    uint8_t data[64]          = {0};
+    size_t dataLen            = sizeof(data);
+
+    xResult = ParseSignMechanism(pxSessionObj, &algorithm);
+    if (xResult != CKR_OK) {
+        pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
+        return xResult;
+    }
+#if SSS_HAVE_HOSTCRYPTO_ANY
+    LOCK_MUTEX_FOR_RTOS
+    {
+        status = sss_digest_finish(&pxSessionObj->digest_ctx, &data[0], &dataLen);
+        if (status != kStatus_SSS_Success) {
+            sss_digest_context_free(&pxSessionObj->digest_ctx);
+            pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
+            UNLOCK_MUTEX_FOR_RTOS_RET(CKR_DEVICE_ERROR);
+        }
+        sss_digest_context_free(&pxSessionObj->digest_ctx);
+
+        UNLOCK_MUTEX_FOR_RTOS
+    }
+#endif //SSS_HAVE_HOSTCRYPTO_ANY
+
+    LOCK_MUTEX_FOR_RTOS
+    {
+        status = sss_key_object_init(&object, &pex_sss_demo_boot_ctx->ks);
+        if (status != kStatus_SSS_Success) {
+            LOG_E(" sss_key_object_init Failed...");
+            pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
+            UNLOCK_MUTEX_FOR_RTOS_RET(CKR_FUNCTION_FAILED)
+        }
+
+        status = sss_key_object_get_handle(&object, (uint32_t)pxSessionObj->xOperationKeyHandle);
+        if (status != kStatus_SSS_Success) {
+            LOG_E(" sss_key_object_get_handle Failed...");
+            pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
+            UNLOCK_MUTEX_FOR_RTOS_RET(CKR_FUNCTION_FAILED)
+        }
+
+        status =
+            sss_asymmetric_context_init(&asymmCtx, &pex_sss_demo_boot_ctx->session, &object, algorithm, kMode_SSS_Sign);
+        if (status != kStatus_SSS_Success) {
+            LOG_E(" sss_asymmetric_context_ sign init Failed...");
+            pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
+            UNLOCK_MUTEX_FOR_RTOS_RET(CKR_FUNCTION_FAILED)
+        }
+
+        /* Do Signing */
+        uint8_t signature[512] = {0};
+        size_t sigLen          = sizeof(signature);
+
+        status = sss_asymmetric_sign_digest(&asymmCtx, &data[0], dataLen, &signature[0], &sigLen);
+        if (status != kStatus_SSS_Success) {
+            LOG_E(" sss_asymmetric_sign_digest Failed...");
+            xResult = CKR_FUNCTION_FAILED;
+        }
+        if (xResult == CKR_OK) {
+            if (pSignature) {
+                if (*pulSignatureLen < sigLen) {
+                    xResult = CKR_BUFFER_TOO_SMALL;
+                }
+                else {
+                    memcpy(pSignature, &signature[0], sigLen);
+                    pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
+                }
+            }
+            *pulSignatureLen = sigLen;
+        }
+
+        sss_asymmetric_context_free(&asymmCtx);
+
+        UNLOCK_MUTEX_FOR_RTOS
+    }
+
+    return xResult;
 }
 
 /**
@@ -2894,12 +2980,85 @@ CK_DEFINE_FUNCTION(CK_RV, C_SignFinal)
 CK_DEFINE_FUNCTION(CK_RV, C_SignUpdate)
 (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen)
 {
-    AX_UNUSED_ARG(hSession);
-    AX_UNUSED_ARG(pPart);
-    AX_UNUSED_ARG(ulPartLen);
+    CK_RV xResult = CKR_OK;
     LOG_D("%s", __FUNCTION__);
+    P11SessionPtr_t pxSessionObj = prvSessionPointerFromHandle(hSession);
+    if (pxSessionObj == NULL) {
+        xResult = CKR_SESSION_HANDLE_INVALID;
+        return xResult;
+    }
 
-    return CKR_FUNCTION_NOT_SUPPORTED;
+    if (!pPart) {
+        pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
+        xResult                            = CKR_ARGUMENTS_BAD;
+        return xResult;
+    }
+
+    sss_status_t status;
+    sss_algorithm_t algorithm = kAlgorithm_None;
+    sss_algorithm_t digest_algorithm;
+    size_t chunk            = 0;
+    size_t offset           = 0;
+
+    /* Check for mechanisms having multistep support */
+    if (pxSessionObj->xOperationInProgress != CKM_RSA_PKCS_PSS && pxSessionObj->xOperationInProgress != CKM_ECDSA &&
+        pxSessionObj->xOperationInProgress != CKM_RSA_PKCS && pxSessionObj->xOperationInProgress != CKM_SHA256_HMAC) {
+        xResult = ParseSignMechanism(pxSessionObj, &algorithm);
+
+        if (xResult != CKR_OK) {
+            pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
+            return xResult;
+        }
+
+        xResult = GetDigestAlgorithm(algorithm, &digest_algorithm);
+        if (xResult != CKR_OK) {
+            pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
+            return xResult;
+        }
+#if SSS_HAVE_HOSTCRYPTO_ANY
+
+        LOCK_MUTEX_FOR_RTOS
+        {
+            status = sss_digest_context_init(
+                &pxSessionObj->digest_ctx, &pex_sss_demo_boot_ctx->host_session, digest_algorithm, kMode_SSS_Digest);
+            if (status != kStatus_SSS_Success) {
+                pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
+                UNLOCK_MUTEX_FOR_RTOS_RET(CKR_DEVICE_ERROR);
+            }
+            status = sss_digest_init(&pxSessionObj->digest_ctx);
+            if (status != kStatus_SSS_Success) {
+                sss_digest_context_free(&pxSessionObj->digest_ctx);
+                pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
+                UNLOCK_MUTEX_FOR_RTOS_RET(CKR_DEVICE_ERROR);
+            }
+            do {
+                chunk = (ulPartLen > MAX_DIGEST_INPUT_DATA) ? MAX_DIGEST_INPUT_DATA : ulPartLen;
+
+                status = sss_digest_update(&pxSessionObj->digest_ctx, pPart + offset, chunk);
+                if (status != kStatus_SSS_Success) {
+                    sss_digest_context_free(&pxSessionObj->digest_ctx);
+                    pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
+                    UNLOCK_MUTEX_FOR_RTOS_RET(CKR_DEVICE_ERROR);
+                }
+                if ((UINT_MAX - offset) < chunk) {
+                    sss_digest_context_free(&pxSessionObj->digest_ctx);
+                    pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
+                    UNLOCK_MUTEX_FOR_RTOS_RET(CKR_DEVICE_ERROR);
+                }
+                offset    += chunk;
+                ulPartLen -= chunk;
+            } while (ulPartLen > 0);
+
+            UNLOCK_MUTEX_FOR_RTOS
+        }
+#endif //SSS_HAVE_HOSTCRYPTO_ANY
+    }
+    else {
+        LOG_E("Mechanism is unsupported");
+        xResult = CKR_MECHANISM_INVALID;
+    }
+
+    return xResult;
 }
 
 /**
@@ -2935,12 +3094,81 @@ CK_DEFINE_FUNCTION(CK_RV, C_UnwrapKey)
 CK_DEFINE_FUNCTION(CK_RV, C_VerifyFinal)
 (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pSignature, CK_ULONG ulSignatureLen)
 {
-    AX_UNUSED_ARG(hSession);
-    AX_UNUSED_ARG(pSignature);
-    AX_UNUSED_ARG(ulSignatureLen);
+    CK_RV xResult = CKR_OK;
     LOG_D("%s", __FUNCTION__);
 
-    return CKR_FUNCTION_NOT_SUPPORTED;
+    P11SessionPtr_t pxSessionObj = prvSessionPointerFromHandle(hSession);
+
+    if (pxSessionObj == NULL) {
+        xResult = CKR_SESSION_HANDLE_INVALID;
+        return xResult;
+    }
+
+    sss_status_t status;
+    sss_object_t object;
+    sss_asymmetric_t asymmCtx;
+    sss_algorithm_t algorithm;
+    uint8_t data[64] = {0};
+    size_t dataLen     = sizeof(data);
+
+    xResult = ParseSignMechanism(pxSessionObj, &algorithm);
+    if (xResult != CKR_OK) {
+        pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
+        return xResult;
+    }
+
+#if SSS_HAVE_HOSTCRYPTO_ANY
+    LOCK_MUTEX_FOR_RTOS
+    {
+        status = sss_digest_finish(&pxSessionObj->digest_ctx, &data[0], &dataLen);
+        if (status != kStatus_SSS_Success) {
+            sss_digest_context_free(&pxSessionObj->digest_ctx);
+            pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
+            UNLOCK_MUTEX_FOR_RTOS_RET(CKR_DEVICE_ERROR);
+        }
+        sss_digest_context_free(&pxSessionObj->digest_ctx);
+
+        UNLOCK_MUTEX_FOR_RTOS
+    }
+#endif
+
+    pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
+
+    LOCK_MUTEX_FOR_RTOS
+    {
+        status = sss_key_object_init(&object, &pex_sss_demo_boot_ctx->ks);
+        if (status != kStatus_SSS_Success) {
+            LOG_E(" sss_key_object_init Failed...");
+            UNLOCK_MUTEX_FOR_RTOS_RET(CKR_FUNCTION_FAILED)
+        }
+
+        status = sss_key_object_get_handle(&object, (uint32_t)pxSessionObj->xOperationKeyHandle);
+        if (status != kStatus_SSS_Success) {
+            LOG_E(" sss_key_object_get_handle Failed...");
+            UNLOCK_MUTEX_FOR_RTOS_RET(CKR_FUNCTION_FAILED)
+        }
+
+        status = sss_asymmetric_context_init(
+            &asymmCtx, &pex_sss_demo_boot_ctx->session, &object, algorithm, kMode_SSS_Verify);
+        if (status != kStatus_SSS_Success) {
+            LOG_E(" sss_asymmetric_context_init verify context Failed...");
+            UNLOCK_MUTEX_FOR_RTOS_RET(CKR_FUNCTION_FAILED)
+        }
+
+        if (xResult == CKR_OK) {
+            status = sss_asymmetric_verify_digest(&asymmCtx, &data[0], dataLen, pSignature, ulSignatureLen);
+            if (status != kStatus_SSS_Success) {
+                LOG_E(" sss_asymmetric_verify_digest Failed... %08x", status);
+                xResult = CKR_SIGNATURE_INVALID;
+            }
+        }
+
+        sss_asymmetric_context_free(&asymmCtx);
+
+        UNLOCK_MUTEX_FOR_RTOS
+    }
+
+    return xResult;
 }
 
 /**
@@ -2949,12 +3177,87 @@ CK_DEFINE_FUNCTION(CK_RV, C_VerifyFinal)
 CK_DEFINE_FUNCTION(CK_RV, C_VerifyUpdate)
 (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen)
 {
-    AX_UNUSED_ARG(hSession);
-    AX_UNUSED_ARG(pPart);
-    AX_UNUSED_ARG(ulPartLen);
+    CK_RV xResult = CKR_OK;
     LOG_D("%s", __FUNCTION__);
 
-    return CKR_FUNCTION_NOT_SUPPORTED;
+    P11SessionPtr_t pxSessionObj = prvSessionPointerFromHandle(hSession);
+
+    if (pxSessionObj == NULL) {
+        xResult = CKR_SESSION_HANDLE_INVALID;
+        return xResult;
+    }
+
+    sss_status_t status;
+    sss_algorithm_t algorithm;
+    sss_algorithm_t digest_algorithm;
+    size_t chunk            = 0;
+    size_t offset           = 0;
+
+    /*
+     * Check parameters.
+     */
+    if (NULL == pPart) {
+        xResult = CKR_ARGUMENTS_BAD;
+        return xResult;
+    }
+
+    /* Check for mechanisms having multistep support */
+    if (pxSessionObj->xOperationInProgress != CKM_RSA_PKCS_PSS && pxSessionObj->xOperationInProgress != CKM_ECDSA &&
+        pxSessionObj->xOperationInProgress != CKM_RSA_PKCS && pxSessionObj->xOperationInProgress != CKM_SHA256_HMAC) {
+        xResult = ParseSignMechanism(pxSessionObj, &algorithm);
+        if (xResult != CKR_OK) {
+            pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
+            return xResult;
+        }
+
+        xResult = GetDigestAlgorithm(algorithm, &digest_algorithm);
+        if (xResult != CKR_OK) {
+            pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
+            return xResult;
+        }
+
+#if SSS_HAVE_HOSTCRYPTO_ANY
+        LOCK_MUTEX_FOR_RTOS
+        {
+            status = sss_digest_context_init(
+                &pxSessionObj->digest_ctx, &pex_sss_demo_boot_ctx->host_session, digest_algorithm, kMode_SSS_Digest);
+            if (status != kStatus_SSS_Success) {
+                pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
+                UNLOCK_MUTEX_FOR_RTOS_RET(CKR_DEVICE_ERROR);
+            }
+            status = sss_digest_init(&pxSessionObj->digest_ctx);
+            if (status != kStatus_SSS_Success) {
+                sss_digest_context_free(&pxSessionObj->digest_ctx);
+                pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
+                UNLOCK_MUTEX_FOR_RTOS_RET(CKR_DEVICE_ERROR);
+            }
+            do {
+                chunk = (ulPartLen > MAX_DIGEST_INPUT_DATA) ? MAX_DIGEST_INPUT_DATA : ulPartLen;
+
+                status = sss_digest_update(&pxSessionObj->digest_ctx, pPart + offset, chunk);
+                if (status != kStatus_SSS_Success) {
+                    sss_digest_context_free(&pxSessionObj->digest_ctx);
+                    pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
+                    UNLOCK_MUTEX_FOR_RTOS_RET(CKR_DEVICE_ERROR);
+                }
+                if ((UINT_MAX - offset) < chunk) {
+                    sss_digest_context_free(&pxSessionObj->digest_ctx);
+                    pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
+                    UNLOCK_MUTEX_FOR_RTOS_RET(CKR_DEVICE_ERROR);
+                }
+                offset    += chunk;
+                ulPartLen -= chunk;
+            } while (ulPartLen > 0);
+
+            UNLOCK_MUTEX_FOR_RTOS
+        }
+#endif //SSS_HAVE_HOSTCRYPTO_ANY
+    }
+    else {
+        LOG_E("Mechanism is unsupported");
+        xResult = CKR_MECHANISM_INVALID;
+    }
+    return xResult;
 }
 
 /**
@@ -3045,7 +3348,10 @@ CK_DEFINE_FUNCTION(CK_RV, C_GetSessionInfo)
     LOG_D("%s", __FUNCTION__);
     CK_RV xResult = CKR_SESSION_CLOSED;
 #if (__GNUC__ && !AX_EMBEDDED)
-    pthread_mutex_lock(&gSessionlock);
+    if (pthread_mutex_lock(&gSessionlock) != 0) {
+        xResult = CKR_CANT_LOCK;
+        return xResult;
+    }
 #endif
     LOCK_MUTEX_FOR_RTOS
     {
@@ -3055,7 +3361,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_GetSessionInfo)
 #if defined(USE_RTOS) && USE_RTOS == 1
 #elif (__GNUC__ && !AX_EMBEDDED)
 #else
-        session_info.flags = session_info.flags | CKF_SERIAL_SESSION;
+            session_info.flags = session_info.flags | CKF_SERIAL_SESSION;
 #endif
 
         if (sessionCount) {

@@ -358,6 +358,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/drivers</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -1449,6 +1450,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/drivers</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -2538,6 +2540,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/drivers</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -3629,6 +3632,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/drivers</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
@@ -4445,7 +4449,7 @@
   <group>
     <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
   <group>
@@ -4686,6 +4690,9 @@
     <name>utilities</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/fsl_assert.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/str/fsl_str.c</name>

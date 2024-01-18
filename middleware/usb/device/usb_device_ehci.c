@@ -975,7 +975,11 @@ static void USB_DeviceEhciInterruptSuspend(usb_device_ehci_state_struct_t *ehciS
 #if (defined(FSL_FEATURE_SOC_USBNC_COUNT) && (FSL_FEATURE_SOC_USBNC_COUNT > 0U))
 #else
 #if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
-        if (0U != (ehciState->registerPhyBase->USB1_VBUS_DET_STAT & USBPHY_USB1_VBUS_DET_STAT_VBUS_VALID_3V_MASK))
+#if defined(FSL_FEATURE_USBHS_SUPPORT_EUSBn)
+        if (0U == (uint32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciState->registerBase))
+        {
+#endif
+            if (0U != (ehciState->registerPhyBase->USB1_VBUS_DET_STAT & USBPHY_USB1_VBUS_DET_STAT_VBUS_VALID_3V_MASK))
 #endif
 #endif
         {
@@ -993,6 +997,14 @@ static void USB_DeviceEhciInterruptSuspend(usb_device_ehci_state_struct_t *ehciS
             (void)USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
 #endif
         }
+#if (defined(FSL_FEATURE_SOC_USBNC_COUNT) && (FSL_FEATURE_SOC_USBNC_COUNT > 0U))
+#else
+#if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
+#if defined(FSL_FEATURE_USBHS_SUPPORT_EUSBn)
+        }
+#endif
+#endif
+#endif
     }
 }
 #endif /* USB_DEVICE_CONFIG_LOW_POWER_MODE */
@@ -1398,9 +1410,13 @@ usb_status_t USB_DeviceEhciInit(uint8_t controllerId,
     ehciState->registerBase = (USBHS_Type *)ehci_base[controllerId - (uint8_t)kUSB_ControllerEhci0];
 #if (defined(USB_DEVICE_CONFIG_LOW_POWER_MODE) && (USB_DEVICE_CONFIG_LOW_POWER_MODE > 0U))
 #if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
-    ehciState->registerPhyBase = (USBPHY_Type *)USB_EhciPhyGetBase(controllerId);
+#if defined(FSL_FEATURE_USBHS_SUPPORT_EUSBn)
+    if (0U == (uint32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciState->registerBase))
 #endif
-
+    {
+        ehciState->registerPhyBase = (USBPHY_Type *)USB_EhciPhyGetBase(controllerId);
+    }
+#endif
 #if (defined(FSL_FEATURE_SOC_USBNC_COUNT) && (FSL_FEATURE_SOC_USBNC_COUNT > 0U))
     ehciState->registerNcBase =
         (USBNC_Type *)USB_EhciGetBase(controllerId, &usbnc_base[0], sizeof(usbnc_base) / sizeof(uint32_t));
@@ -1935,26 +1951,42 @@ usb_status_t USB_DeviceEhciControl(usb_device_controller_handle ehciHandle, usb_
             /* ehciState->registerBase->PLL_CONTROL_1 |= USBC_PLL_CONTROL_1_PLL_SUSPEND_EN(1); */
 #endif
 #if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
-            ehciState->registerPhyBase->PWD = 0xFFFFFFFFU;
-            /* ehciState->registerBase->OTGCTL |= ((1U<<10) | (1U<<17) | (1U<<16)); */
-            while (0U != (ehciState->registerPhyBase->CTRL & (USBPHY_CTRL_UTMI_SUSPENDM_MASK)))
+#if defined(FSL_FEATURE_USBHS_SUPPORT_EUSBn)
+            if (0U == (uint32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciState->registerBase))
+#endif
             {
-                __NOP();
+                ehciState->registerPhyBase->PWD = 0xFFFFFFFFU;
+                /* ehciState->registerBase->OTGCTL |= ((1U<<10) | (1U<<17) | (1U<<16)); */
+                while (0U != (ehciState->registerPhyBase->CTRL & (USBPHY_CTRL_UTMI_SUSPENDM_MASK)))
+                {
+                    __NOP();
+                }
             }
 #endif
             /* ehciState->registerPhyBase->CTRL |= ((1U << 21) | (1U << 22) | (1U << 23)); */
             ehciState->registerBase->USBSTS |= USBHS_USBSTS_SRI_MASK;
 #if (defined(FSL_FEATURE_USBPHY_28FDSOI) && (FSL_FEATURE_USBPHY_28FDSOI > 0U))
 #if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
-            ehciState->registerPhyBase->USB1_VBUS_DETECT_SET |= USBPHY_USB1_VBUS_DETECT_VBUSVALID_TO_SESSVALID_MASK;
+#if defined(FSL_FEATURE_USBHS_SUPPORT_EUSBn)
+            if (0U == (uint32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciState->registerBase))
+#endif
+            {
+                ehciState->registerPhyBase->USB1_VBUS_DETECT_SET |= USBPHY_USB1_VBUS_DETECT_VBUSVALID_TO_SESSVALID_MASK;
+            }
 #endif
 #endif
             ehciState->registerBase->PORTSC1 |= USBHS_PORTSC1_PHCD_MASK;
 #if (defined(FSL_FEATURE_SOC_USBNC_COUNT) && (FSL_FEATURE_SOC_USBNC_COUNT > 0U))
 #if (defined(USBPHY_CTRL_ENVBUSCHG_WKUP_MASK))
 #if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
-            ehciState->registerPhyBase->CTRL |= USBPHY_CTRL_ENVBUSCHG_WKUP_MASK | USBPHY_CTRL_ENIDCHG_WKUP_MASK |
-                                                USBPHY_CTRL_ENDPDMCHG_WKUP_MASK | USBPHY_CTRL_ENIRQRESUMEDETECT_MASK;
+#if defined(FSL_FEATURE_USBHS_SUPPORT_EUSBn)
+            if (0U == (uint32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciState->registerBase))
+#endif
+            {
+                ehciState->registerPhyBase->CTRL |= USBPHY_CTRL_ENVBUSCHG_WKUP_MASK | USBPHY_CTRL_ENIDCHG_WKUP_MASK |
+                                                    USBPHY_CTRL_ENDPDMCHG_WKUP_MASK |
+                                                    USBPHY_CTRL_ENIRQRESUMEDETECT_MASK;
+            }
 #endif
 #endif
             ehciState->registerNcBase->USB_OTGn_CTRL |= USBNC_USB_OTGn_CTRL_WKUP_ID_EN_MASK |
@@ -1969,7 +2001,12 @@ usb_status_t USB_DeviceEhciControl(usb_device_controller_handle ehciHandle, usb_
 #endif
 #endif
 #if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
-            ehciState->registerPhyBase->CTRL |= USBPHY_CTRL_CLKGATE_MASK;
+#if defined(FSL_FEATURE_USBHS_SUPPORT_EUSBn)
+            if (0U == (uint32_t)FSL_FEATURE_USBHS_SUPPORT_EUSBn(ehciState->registerBase))
+#endif
+            {
+                ehciState->registerPhyBase->CTRL |= USBPHY_CTRL_CLKGATE_MASK;
+            }
 #endif
             ehciState->isSuspending = 1U;
             error                   = kStatus_USB_Success;

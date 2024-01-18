@@ -1,10 +1,7 @@
 /*
  * Copyright 2018-2022 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef _OPUS_ENC_H_
@@ -35,18 +32,18 @@ typedef struct
     PadSink sink_pad[MAX_NUM_PADS];             /*!< @brief Sink pads */
     struct _StreamElement *sibling;             /*!< @brief Sibling pointer */
 
-    uint32_t chunk_size;              /*!< @brief Chunk size */
-    uint8_t bitstream_info_specified; /*!< @brief Bitstream info flag */
-    CeiBitstreamInfo bitstream_info;  /*!< @brief Bitstream info */
-    uint8_t initialized;              /*!< @brief Initialized flag */
-    uint8_t eos_done;                 /*!< @brief End of stream flag */
-    uint32_t offset;                  /*!< @brief Input buffer offset */
-    uint32_t outOffset;               /*!< @brief Output buffer offset */
-    CeiEncoderType enc_type;          /*!< @brief Encoder type */
-    void *enc_info;                   /*!< @brief Pointer to encoder info structure */
-    void *initial_config_ptr;         /*!< @brief Initial configuration pointer */
-    BufferInfo inBuf;                 /*!< @brief Input buffer info */
-    BufferInfo outBuf;                /*!< @brief Output buffer info */
+    uint32_t chunk_size;                        /*!< @brief Chunk size */
+    uint8_t bitstream_info_specified;           /*!< @brief Bitstream info flag */
+    CeiBitstreamInfo bitstream_info;            /*!< @brief Bitstream info */
+    uint8_t initialized;                        /*!< @brief Initialized flag */
+    uint8_t eos_done;                           /*!< @brief End of stream flag */
+    uint32_t offset;                            /*!< @brief Input buffer offset */
+    uint32_t outOffset;                         /*!< @brief Output buffer offset */
+    CeiEncoderType enc_type;                    /*!< @brief Encoder type */
+    void *enc_info;                             /*!< @brief Pointer to encoder info structure */
+    void *initial_config_ptr;                   /*!< @brief Initial configuration pointer */
+    BufferInfo inBuf;                           /*!< @brief Input buffer info */
+    BufferInfo outBuf;                          /*!< @brief Output buffer info */
 } ElementEncoder;
 
 int32_t encoder_init_element(StreamElement *element);

@@ -7,6 +7,8 @@ var searchData=
   ['udshc_5fselectvoltage',['UDSHC_SelectVoltage',['../a00081.html#ga9c799070ca0a2983b3d4fd31dd004f35',1,'fsl_usdhc.h']]],
   ['uhsausize',['uhsAuSize',['../a00054.html#a2c4de6b50d23ee9b48d9d150fcc16fcd',1,'sd_status_t']]],
   ['uhsspeedgrade',['uhsSpeedGrade',['../a00054.html#a6cc825664732275578762e431ab7d90e',1,'sd_status_t']]],
+  ['uint16_5fmax',['UINT16_MAX',['../a00266.html#ga3ea490c9b3617d4479bd80ef93cd5602',1,'fsl_common.h']]],
+  ['uint32_5fmax',['UINT32_MAX',['../a00266.html#gab5eb23180f7cc12b7d6c04a8ec067fdd',1,'fsl_common.h']]],
   ['usb_20device_20configuration',['USB Device Configuration',['../a00300.html',1,'']]],
   ['usb_5fdevice_5finterrupt_5fpriority',['USB_DEVICE_INTERRUPT_PRIORITY',['../a00072.html#ga9fb260c0db8e2e75fa339416c82084b9',1,'fsl_component_serial_port_usb.h']]],
   ['usdhc_3a_20ultra_20secured_20digital_20host_20controller_20driver',['USDHC: Ultra Secured Digital Host Controller Driver',['../a00081.html',1,'']]],

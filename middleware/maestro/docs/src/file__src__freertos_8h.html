@@ -28,7 +28,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Maestro Audio Framework
-   &#160;<span id="projectnumber">v 1.6</span>
+   &#160;<span id="projectnumber">v 1.7</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -103,6 +103,8 @@ $(document).ready(function(){initNavTree('file__src__freertos_8h.html',''); init
 Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct__ElementFileSrc.html">ElementFileSrc</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structStreamerFileSrcConfig.html">StreamerFileSrcConfig</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
@@ -127,6 +129,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a763c2ca3611a6c14f0008a2fd59f2bda"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="file__src__freertos_8h.html#a763c2ca3611a6c14f0008a2fd59f2bda">filesrc_get_push_chunk_size</a> (<a class="el" href="streamer__api_8h.html#aa38d4845534a71686ee5281c5df9c6cb">ElementHandle</a> element, uint64_t *chunk_size)</td></tr>
 <tr class="memdesc:a763c2ca3611a6c14f0008a2fd59f2bda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the chunk size in which the file source sends the data in push mode.  <a href="file__src__freertos_8h.html#a763c2ca3611a6c14f0008a2fd59f2bda">More...</a><br /></td></tr>
 <tr class="separator:a763c2ca3611a6c14f0008a2fd59f2bda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17d147a4281fedd5498802cea608e548"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="file__src__freertos_8h.html#a17d147a4281fedd5498802cea608e548">file_src_get_decoder_type</a> (char *filename, <a class="el" href="structStreamerFileSrcConfig.html">StreamerFileSrcConfig</a> *config)</td></tr>
+<tr class="memdesc:a17d147a4281fedd5498802cea608e548"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the file source decoder and parser type.  <a href="file__src__freertos_8h.html#a17d147a4281fedd5498802cea608e548">More...</a><br /></td></tr>
+<tr class="separator:a17d147a4281fedd5498802cea608e548"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="a2bb1b36d00f97558e46d06ae36ae2092"></a>
@@ -343,6 +348,49 @@ Functions</h2></td></tr>
   <table class="retval">
     <tr><td class="paramname">STREAM_OK</td><td>if successful </td></tr>
     <tr><td class="paramname">STREAM_ERR_INVALID_ARGS</td><td>means invalid arguments </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a17d147a4281fedd5498802cea608e548"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17d147a4281fedd5498802cea608e548">&#9670;&nbsp;</a></span>file_src_get_decoder_type()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t file_src_get_decoder_type </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>filename</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structStreamerFileSrcConfig.html">StreamerFileSrcConfig</a> *&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>name of the file </td></tr>
+    <tr><td class="paramname">config</td><td>file source information</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>StreamReturnType </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">STREAM_OK</td><td>if successful </td></tr>
+    <tr><td class="paramname">STREAM_ERR_GENERAL</td><td>means either file does not contain an extension or the file type is not supported </td></tr>
   </table>
   </dd>
 </dl>

@@ -20,6 +20,7 @@
  */
 
 #include <ex_sss.h>
+#include "ex_sss_ports.h"
 #include <ex_sss_boot.h>
 #include <nxLog_App.h>
 
@@ -46,7 +47,7 @@ int CreateAndRunDemoTask()
 {
     int ret = 1;
     sss_status_t status;
-    const char *portName;
+    char *portName;
 
     status = ex_sss_boot_connectstring(0, NULL, &portName);
     if (kStatus_SSS_Success != status) {
@@ -82,5 +83,17 @@ int CreateAndRunDemoTask()
 
     ret = 0;
 cleanup:
+#if defined(_MSC_VER)
+    if (portName) {
+        char *dummy_portName = NULL;
+        size_t dummy_sz      = 0;
+        _dupenv_s(&dummy_portName, &dummy_sz, EX_SSS_BOOT_SSS_PORT);
+        if (NULL != dummy_portName) {
+            free(dummy_portName);
+            free(portName);
+        }
+    }
+#endif // _MSC_VER
+
     return ret;
 }

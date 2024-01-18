@@ -90,5 +90,6 @@ var a00038 =
     [ "FLEXIO_UART_TransferReceiveNonBlocking", "a00038.html#gab42bbc26c0a6a8186d7b0d7373861bd4", null ],
     [ "FLEXIO_UART_TransferAbortReceive", "a00038.html#ga3530ff683b0a4a0c2c2822c1e3626aab", null ],
     [ "FLEXIO_UART_TransferGetReceiveCount", "a00038.html#ga3bc3658a7fb5825e12d2a74e879b9930", null ],
-    [ "FLEXIO_UART_TransferHandleIRQ", "a00038.html#ga3c30d66f4471bfebd2021a8a3f1a1f04", null ]
+    [ "FLEXIO_UART_TransferHandleIRQ", "a00038.html#ga3c30d66f4471bfebd2021a8a3f1a1f04", null ],
+    [ "FLEXIO_UART_FlushShifters", "a00038.html#ga4825d566bedb5d350a95f08fe926085b", null ]
 ];

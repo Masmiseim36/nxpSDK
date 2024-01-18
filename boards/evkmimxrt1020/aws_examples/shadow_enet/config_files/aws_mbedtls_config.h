@@ -350,7 +350,7 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
 #define MBEDTLS_MPI_WINDOW_SIZE 1
 #define MBEDTLS_ECP_WINDOW_SIZE 2
 #define MBEDTLS_MPI_MAX_SIZE 512 /* Maximum number of bytes for usable MPIs. */
-#define MBEDTLS_ECP_MAX_BITS 384 /* Maximum bit size of groups */
+#define MBEDTLS_ECP_MAX_BITS 521 /* Maximum bit size of groups */
 
 /**************************** KSDK end ****************************************/
 
@@ -1801,7 +1801,7 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
  *
  * Uncomment this to allow your own alternate threading implementation.
  */
-#define MBEDTLS_THREADING_ALT
+//#define MBEDTLS_THREADING_ALT
 
 /**
  * \def MBEDTLS_THREADING_PTHREAD
@@ -2899,7 +2899,7 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
  *
  * Enable this layer to allow use of mutexes within mbed TLS
  */
-#define MBEDTLS_THREADING_C
+//#define MBEDTLS_THREADING_C
 
 /**
  * \def MBEDTLS_TIMING_C

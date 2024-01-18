@@ -369,6 +369,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
@@ -1468,6 +1469,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
@@ -2568,6 +2570,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
@@ -3688,6 +3691,9 @@
     <name>utilities</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/fsl_assert.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1015/utilities/str/fsl_str.c</name>

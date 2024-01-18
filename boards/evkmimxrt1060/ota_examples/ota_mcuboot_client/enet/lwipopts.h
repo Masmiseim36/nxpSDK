@@ -154,10 +154,10 @@ void sys_mark_tcpip_thread(void);
  */
 
 #ifdef CONFIG_IPV6
-#define LWIP_IPV6 1
-#define IP6_DEBUG        LWIP_DBG_OFF
-#define ICMP6_DEBUG      LWIP_DBG_OFF
-#define DHCP6_DEBUG      LWIP_DBG_OFF
+#define LWIP_IPV6   1
+#define IP6_DEBUG   LWIP_DBG_OFF
+#define ICMP6_DEBUG LWIP_DBG_OFF
+#define DHCP6_DEBUG LWIP_DBG_OFF
 #endif
 
 /* ---------- TCP options ---------- */
@@ -245,7 +245,7 @@ Some MCU allow computing and verifying the IP, UDP, TCP and ICMP checksums by ha
  - To use this feature let the following define uncommented.
  - To disable it and process by CPU comment the  the checksum.
 */
-//#define CHECKSUM_BY_HARDWARE
+// #define CHECKSUM_BY_HARDWARE
 
 #ifdef CHECKSUM_BY_HARDWARE
 /* CHECKSUM_GEN_IP==0: Generate checksums by hardware for outgoing IP packets.*/
@@ -359,7 +359,6 @@ u32_t lwip_rand(void);
  * @see netif_ext_status_callback
  */
 #define LWIP_NETIF_EXT_STATUS_CALLBACK 1
-
 
 /**
  * IP_REASS_MAX_PBUFS: Number of buffers reserved for IP fragment reassembly.

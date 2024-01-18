@@ -80,6 +80,7 @@ var searchData=
   ['pwm_5fstoptimer',['PWM_StopTimer',['../a00059.html#ga542db369e1459b8b7847d005937a5be9',1,'fsl_pwm.h']]],
   ['pwm_5fupdatepwmdutycycle',['PWM_UpdatePwmDutycycle',['../a00059.html#ga8324acc824d28acc111006c67746d6ae',1,'fsl_pwm.h']]],
   ['pwm_5fupdatepwmdutycyclehighaccuracy',['PWM_UpdatePwmDutycycleHighAccuracy',['../a00059.html#ga46eebd874652ec8e9c9b128bbd6057df',1,'fsl_pwm.h']]],
+  ['pwm_5fupdatepwmperiodanddutycycle',['PWM_UpdatePwmPeriodAndDutycycle',['../a00059.html#gad7b7c9c350cb85b47cba12ce6d68b5aa',1,'fsl_pwm.h']]],
   ['pxp_5fbuildrect',['PXP_BuildRect',['../a00060.html#gaf75a0bda73f3b24179509cf9e1eff23d',1,'fsl_pxp.h']]],
   ['pxp_5fcancelnextcommand',['PXP_CancelNextCommand',['../a00060.html#ga8261582d4b35311cd03231e4d27b8a19',1,'fsl_pxp.h']]],
   ['pxp_5fclearstatusflags',['PXP_ClearStatusFlags',['../a00060.html#ga03abdf1ea37da9eb1d87d279068250aa',1,'fsl_pxp.h']]],

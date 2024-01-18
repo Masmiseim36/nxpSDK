@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: FlexIO: FlexIO Driver</title>
+<title>MCUXpresso SDK API Reference Manual: ENET CMSIS Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -98,33 +98,104 @@ $(document).ready(function(){initNavTree('a00276.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">FlexIO: FlexIO Driver</div>  </div>
+<div class="title">ENET CMSIS Driver<div class="ingroups"><a class="el" href="a00025.html">ENET: Ethernet MAC Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a generic driver and multiple protocol-specific FlexIO drivers for the FlexIO module of MCUXpresso SDK devices. </p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00028"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html">FlexIO Camera Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00030"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00030.html">FlexIO Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00031"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html">FlexIO I2C Master Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00032"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00032.html">FlexIO I2S Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00034"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00034.html">FlexIO MCU Interface LCD Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00036"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00036.html">FlexIO SPI Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00038"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html">FlexIO UART Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-</div><!-- contents -->
+<p>This section describes the programming interface of the ENET Cortex Microcontroller Software Interface Standard (CMSIS) driver. This driver defines generic peripheral driver interfaces for middleware making it reusable across a wide range of supported microcontroller devices. The API connects microcontroller peripherals with middleware that implements for example communication stacks, file systems, or graphic user interfaces. More information and usage methord see <a href="http://www.keil.com/pack/doc/cmsis/Driver/html/index.html">http://www.keil.com/pack/doc/cmsis/Driver/html/index.html</a>.</p>
+<p>The ENET CMSIS driver includes transactional APIs.</p>
+<p>Transactional APIs are transaction target high-level APIs. The transactional APIs can be used to enable the peripheral quickly and also in the application if the code size and performance of transactional APIs satisfy the requirements. If the code size and performance are critical requirements, see the transactional API implementation and write custom code accessing the hardware registers.</p>
+<h1><a class="anchor" id="ENETTpyUC"></a>
+Typical use case</h1>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> ENET_SignalEvent_t(uint32_t event)</div>
+<div class="line">{</div>
+<div class="line">    <span class="keywordflow">if</span> (event == ARM_ETH_MAC_EVENT_RX_FRAME)</div>
+<div class="line">    {</div>
+<div class="line">        uint32_t size;</div>
+<div class="line">        uint32_t len;</div>
+<div class="line"></div>
+<div class="line">        <span class="comment">/* Get the Frame size */</span></div>
+<div class="line">        size =  EXAMPLE_ENET.GetRxFrameSize();</div>
+<div class="line">        <span class="comment">/* Call ENET_ReadFrame when there is a received frame. */</span></div>
+<div class="line">        <span class="keywordflow">if</span> (size != 0)</div>
+<div class="line">        {</div>
+<div class="line">            <span class="comment">/* Received valid frame. Deliver the rx buffer with the size equal to length. */</span></div>
+<div class="line">            uint8_t *data = (uint8_t *)malloc(size);</div>
+<div class="line">            <span class="keywordflow">if</span> (data)</div>
+<div class="line">            {</div>
+<div class="line">                len = EXAMPLE_ENET.ReadFrame(data, size);</div>
+<div class="line">                <span class="keywordflow">if</span> (size == len)</div>
+<div class="line">                {</div>
+<div class="line">                    <span class="comment">/* Increase the received frame numbers. */</span></div>
+<div class="line">                    <span class="keywordflow">if</span> (g_rxIndex &lt; ENET_EXAMPLE_LOOP_COUNT)</div>
+<div class="line">                    {</div>
+<div class="line">                        g_rxIndex++;</div>
+<div class="line">                    }                        </div>
+<div class="line">                }</div>
+<div class="line">                free(data);                             </div>
+<div class="line">            }</div>
+<div class="line">         }</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">if</span> (event == ARM_ETH_MAC_EVENT_TX_FRAME)</div>
+<div class="line">    {</div>
+<div class="line">        g_testTxNum ++;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">/* Initialize the ENET module. */</span></div>
+<div class="line">    EXAMPLE_ENET.Initialize(ENET_SignalEvent_t);</div>
+<div class="line">    EXAMPLE_ENET.PowerControl(ARM_POWER_FULL);</div>
+<div class="line">    EXAMPLE_ENET.SetMacAddress((ARM_ETH_MAC_ADDR *)g_macAddr); </div>
+<div class="line">    EXAMPLE_ENET.Control(ARM_ETH_MAC_CONFIGURE, linkInfo.speed &lt;&lt; ARM_ETH_MAC_SPEED_Pos  |</div>
+<div class="line">                 linkInfo.duplex &lt;&lt; ARM_ETH_MAC_DUPLEX_Pos | ARM_ETH_MAC_ADDRESS_BROADCAST);  </div>
+<div class="line">    EXAMPLE_ENET_PHY.PowerControl(ARM_POWER_FULL);</div>
+<div class="line">    EXAMPLE_ENET_PHY.SetMode(ARM_ETH_PHY_AUTO_NEGOTIATE);</div>
+<div class="line">      EXAMPLE_ENET.Control(ARM_ETH_MAC_CONTROL_RX, 1);</div>
+<div class="line">    EXAMPLE_ENET.Control(ARM_ETH_MAC_CONTROL_TX, 1);</div>
+<div class="line">    <span class="keywordflow">if</span> (EXAMPLE_ENET_PHY.GetLinkState() == ARM_ETH_LINK_UP)</div>
+<div class="line">    {</div>
+<div class="line">        linkInfo = EXAMPLE_ENET_PHY.GetLinkInfo();</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">else</span></div>
+<div class="line">    {</div>
+<div class="line">        <a class="code" href="a00293.html#gae1649fc947ca37a86917a08354f48d1a">PRINTF</a>(<span class="stringliteral">&quot;\r\nPHY Link down, please check the cable connection and link partner setting.\r\n&quot;</span>);</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">/* Build broadcast for sending. */</span></div>
+<div class="line">    ENET_BuildBroadCastFrame();</div>
+<div class="line"></div>
+<div class="line">    <span class="keywordflow">while</span> (1)</div>
+<div class="line">    {</div>
+<div class="line">        <span class="comment">/* Check the total number of received number. */</span></div>
+<div class="line">        <span class="keywordflow">if</span> (g_rxCheckIdx != g_rxIndex)</div>
+<div class="line">        {</div>
+<div class="line">            <a class="code" href="a00293.html#gae1649fc947ca37a86917a08354f48d1a">PRINTF</a>(<span class="stringliteral">&quot;The %d frame has been successfuly received!\r\n&quot;</span>, g_rxIndex);</div>
+<div class="line">            g_rxCheckIdx = g_rxIndex;</div>
+<div class="line">        }          </div>
+<div class="line">        <span class="keywordflow">if</span> ( g_testTxNum &amp;&amp; (g_txCheckIdx != g_testTxNum))</div>
+<div class="line">        {</div>
+<div class="line">            g_txCheckIdx = g_testTxNum;</div>
+<div class="line">            <a class="code" href="a00293.html#gae1649fc947ca37a86917a08354f48d1a">PRINTF</a>(<span class="stringliteral">&quot;The %d frame transmitted success!\r\n&quot;</span>, g_txCheckIdx);</div>
+<div class="line">        }</div>
+<div class="line">        <span class="comment">/* Get the Frame size */</span></div>
+<div class="line">        <span class="keywordflow">if</span> (txnumber &lt; ENET_EXAMPLE_LOOP_COUNT)</div>
+<div class="line">        {</div>
+<div class="line">            txnumber ++;</div>
+<div class="line">            <span class="comment">/* Send a multicast frame when the PHY is link up. */</span></div>
+<div class="line">            <span class="keywordflow">if</span> (EXAMPLE_ENET.SendFrame(&amp;g_frame[0], ENET_DATA_LENGTH, ARM_ETH_MAC_TX_FRAME_EVENT) == ARM_DRIVER_OK)</div>
+<div class="line">            {</div>
+<div class="line">                <span class="keywordflow">for</span> (uint32_t count = 0; count &lt; 0x3FF; count++)</div>
+<div class="line">                {</div>
+<div class="line">                    __ASM(<span class="stringliteral">&quot;nop&quot;</span>);</div>
+<div class="line">                }</div>
+<div class="line">            }</div>
+<div class="line">            <span class="keywordflow">else</span></div>
+<div class="line">            {</div>
+<div class="line">                <a class="code" href="a00293.html#gae1649fc947ca37a86917a08354f48d1a">PRINTF</a>(<span class="stringliteral">&quot; \r\nTransmit frame failed!\r\n&quot;</span>);</div>
+<div class="line">            }</div>
+<div class="line">         }</div>
+<div class="line">    }</div>
+</div><!-- fragment --> </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->
 <!-- start footer part -->

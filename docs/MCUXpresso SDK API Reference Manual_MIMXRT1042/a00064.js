@@ -14,15 +14,19 @@ var a00064 =
       [ "tcd", "a00064.html#a6270bea65d16835b479649d9083bfddc", null ],
       [ "saiQueue", "a00064.html#a8d5ec64db292ea91cacf543c6fe4f22b", null ],
       [ "transferSize", "a00064.html#a28d0ac4b3b16fd68dfbb8ecf303397a3", null ],
+      [ "interleaveType", "a00064.html#ae5beeed26d28272073b5e5bede080c6e", null ],
       [ "queueUser", "a00064.html#a13a45007eebf06db42ed42bb83ee3dbd", null ],
       [ "queueDriver", "a00064.html#a969d922d9b8b82ac4fee2d9bb63b6a5a", null ]
     ] ],
     [ "FSL_SAI_EDMA_DRIVER_VERSION", "a00064.html#gadec154552382f7b68bce82ce829f3911", null ],
     [ "sai_edma_callback_t", "a00064.html#gaeb6ca21880d8cd8f5f954d38bfa73d63", null ],
+    [ "sai_edma_interleave_t", "a00064.html#ga2aa82efb6aae4e8fedd69020bc3904ea", [
+      [ "kSAI_EDMAInterleavePerChannelSample", "a00064.html#gga2aa82efb6aae4e8fedd69020bc3904eaad6dca42e6eb6f605c9628cc2a5eabfd5", null ],
+      [ "kSAI_EDMAInterleavePerChannelBlock", "a00064.html#gga2aa82efb6aae4e8fedd69020bc3904eaabe869d52b4b9f0883e963214b470d28e", null ]
+    ] ],
     [ "SAI_TransferTxCreateHandleEDMA", "a00064.html#ga84f148e1d3fe186ce6604d637f89c2c1", null ],
     [ "SAI_TransferRxCreateHandleEDMA", "a00064.html#ga44a719a507630fdcc25ba93690098a89", null ],
-    [ "SAI_TransferTxSetFormatEDMA", "a00064.html#ga78b693c7c4667056f74c4763f47c6e14", null ],
-    [ "SAI_TransferRxSetFormatEDMA", "a00064.html#ga69b84d866cc9c5736780276c668df495", null ],
+    [ "SAI_TransferSetInterleaveType", "a00064.html#gada84bfce187319b89b6e89c802164478", null ],
     [ "SAI_TransferTxSetConfigEDMA", "a00064.html#ga5295038a021787aef619bdd9f96981da", null ],
     [ "SAI_TransferRxSetConfigEDMA", "a00064.html#gaed5d72de0d0aa0ac71de3222924e4aa7", null ],
     [ "SAI_TransferSendEDMA", "a00064.html#ga7a2c125e1f975c9f718dcb820ac46f63", null ],

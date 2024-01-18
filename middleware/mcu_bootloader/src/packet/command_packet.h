@@ -86,6 +86,7 @@ enum _command_tags
     kCommandTag_KeyProvisioning = 0x15,
     kCommandTag_KeyProvisioningResponse = 0xb5,
     kCommandTag_LifeCycleUpdate = 0x18U,
+    KCommandTag_EleMessage = 0x19,
 
     kCommandTag_ConfigureI2c = 0xc1, //! Reserved command tag for Bus Pal
     kCommandTag_ConfigureSpi = 0xc2, //! Reserved command tag for Bus Pal
@@ -94,7 +95,7 @@ enum _command_tags
     kFirstCommandTag = kCommandTag_FlashEraseAll,
 
     //! Maximum linearly incrementing command tag value, excluding the response commands and bus pal commands.
-    kLastCommandTag = kCommandTag_LifeCycleUpdate,
+    kLastCommandTag = KCommandTag_EleMessage,
 
     kResponseCommandHighNibbleMask =
         0xa0 //!< Mask for the high nibble of a command tag that identifies it as a response command.
@@ -383,6 +384,17 @@ typedef struct KeyProvisioningResponsePacket
     uint32_t status;                //!< parameter 0
     uint32_t keyByteCount;          //!< parameter 1
 } key_provisioning_response_packet_t;
+
+//! @brief Secure Communication command response packet format.
+typedef struct EleMessagePayload
+{
+    command_packet_t commandPacket; //!< header
+    uint32_t eleSubCommand;         //!< 32 bit reserved for future use (currently set to 0x00000000)
+    uint32_t cmdMsgAddr;            //!< address in RAM where is prepared the command message words
+    uint32_t cmdMsgCnt;             //!< count of 32bits command words
+    uint32_t respMsgAddr;           //!< address in RAM where the command store the response
+    uint32_t respMsgCnt;            //!< count of 32bits response words
+} ele_message_payload;
 //@}
 
 //! @}

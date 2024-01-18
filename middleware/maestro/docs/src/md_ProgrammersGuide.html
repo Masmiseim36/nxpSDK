@@ -28,7 +28,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Maestro Audio Framework
-   &#160;<span id="projectnumber">v 1.6</span>
+   &#160;<span id="projectnumber">v 1.7</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -98,20 +98,7 @@ Architecture overview</h1>
 <h1><a class="anchor" id="autotoc_md27"></a>
 Pipeline</h1>
 <p><img src="maestro.svg" alt="" style="pointer-events: none;" class="inline" title="maestro overview"/></p>
-<p>The pipeline itself is created within the <code>streamer_create</code> API using the <code>streamer_create_pipeline</code> call. In the underlying <code>streamer_msg_create_pipeline</code> call the correct pipeline type is selected and then the specific <code>streamer_build_pipeline</code> is used. In order to create a new user defined pipeline it is necessary to create a new source file in the pipeline folder. The new pipeline type needs to be added into the <code>StreamPipelineType</code> enum in the <code><a class="el" href="streamer__api_8h.html" title="Streamer API header. Public APIs for using the maestro streamer framework.">streamer_api.h</a></code> file. Then in the <code>streamer_msg_create_pipeline</code> function it is necessary to add a case for that particular pipeline in the <code>switch(streamer_msg-&gt;pipeline_type)</code> statement. The <code>streamer_build_new_pipeline</code> function needs to implement the building of the desired pipeline using following API:</p>
-<ul>
-<li><code>create_pipeline</code> - allocate memory for a new pipeline and initialize the maximum elements</li>
-<li><code>create_element</code> - create an element with the desired type, initialize its source and sink pads</li>
-<li><code>add_element_pipeline</code> - add the created elements into the pipeline</li>
-<li><code>link_elements</code> - connect the elements together linking the source pads to sink pads and the other way round</li>
-</ul>
-<p>Then it is also necessary to implement a new function for destroying the pipeline and register it in the <code>streamer_msg_destroy_pipeline</code> function, i.e. <code>stream_destroy_new_pipeline</code> using following API:</p>
-<ul>
-<li><code>unlink_elements</code> - disconnect the elements</li>
-<li><code>remove_element_pipeline</code> - remove the elements from the pipeline</li>
-<li><code>destroy_element</code> - destroy the elements and free the memory</li>
-<li><code>destroy_pipeline</code> - destroy the pipeline and free the memory</li>
-</ul>
+<p>The pipeline is created within the <code>streamer_create</code> API using the <code>streamer_create_pipeline</code> call. In the example applications provided in the MCUXpresso SDK the pipeline is created in the <code>app_streamer.c</code> file. In order to create a pipeline user needs to provide a <code><a class="el" href="structPipelineElements.html">PipelineElements</a></code> structure consisting of array of element indices <code>ElementIndex</code> and the number of elements in the pipeline. Then the pipeline is built automatically and user can specify the properties of the elements using the <code>streamer_set_property</code> API. All the element properties can be found in the <code><a class="el" href="streamer__element__properties_8h.html" title="Header for streamer element properties.">streamer_element_properties.h</a></code> file.</p>
 <h1><a class="anchor" id="autotoc_md28"></a>
 Elements and Pads</h1>
 <p>Pads are elements' inputs and outputs. A pad can be viewed as a "plug" or "port" on an element where links may be made with other elements, and through which data can flow to or from those elements. Data flows out of an element through a source pad, and elements accept incoming data through a sink pad. Source and sink elements have only source and sink pads, respectively. For detailed information about pads, please see the API reference from <code><a class="el" href="pad_8c.html" title="This file contains the streamer element pad implementation.">pad.c</a></code>.</p>
@@ -184,9 +171,9 @@ Adding new decoders to the CCI</h2>
 <div class="line">    }</div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"><span class="preprocessor">};</span></div>
-<div class="ttc" id="acodec__interface_8h_html_adbf65f9930616f17efccab5bc69e4121"><div class="ttname"><a href="codec__interface_8h.html#adbf65f9930616f17efccab5bc69e4121">g_codec_function_table</a></div><div class="ttdeci">const codec_interface_function_table_t g_codec_function_table[STREAM_TYPE_COUNT]</div><div class="ttdoc">Global table with function pointers for different codecs.</div><div class="ttdef"><b>Definition:</b> codec_interface.c:31</div></div>
-<div class="ttc" id="acodec__interface__public__api_8h_html_a617edfb76567ff93543b9ee637a07d5ca013ee54b5460e514f9559a138744f6f1"><div class="ttname"><a href="codec__interface__public__api_8h.html#a617edfb76567ff93543b9ee637a07d5ca013ee54b5460e514f9559a138744f6f1">STREAM_TYPE_COUNT</a></div><div class="ttdeci">@ STREAM_TYPE_COUNT</div><div class="ttdoc">count of stream type</div><div class="ttdef"><b>Definition:</b> codec_interface_public_api.h:47</div></div>
-<div class="ttc" id="astructcodec__interface__function__table__t_html"><div class="ttname"><a href="structcodec__interface__function__table__t.html">codec_interface_function_table_t</a></div><div class="ttdoc">Codec Interface Function Table.</div><div class="ttdef"><b>Definition:</b> codec_interface.h:70</div></div>
+<div class="ttc" id="acodec__interface_8h_html_adbf65f9930616f17efccab5bc69e4121"><div class="ttname"><a href="codec__interface_8h.html#adbf65f9930616f17efccab5bc69e4121">g_codec_function_table</a></div><div class="ttdeci">const codec_interface_function_table_t g_codec_function_table[STREAM_TYPE_COUNT]</div><div class="ttdoc">Global table with function pointers for different codecs.</div><div class="ttdef"><b>Definition:</b> codec_interface.c:28</div></div>
+<div class="ttc" id="acodec__interface__public__api_8h_html_a617edfb76567ff93543b9ee637a07d5ca013ee54b5460e514f9559a138744f6f1"><div class="ttname"><a href="codec__interface__public__api_8h.html#a617edfb76567ff93543b9ee637a07d5ca013ee54b5460e514f9559a138744f6f1">STREAM_TYPE_COUNT</a></div><div class="ttdeci">@ STREAM_TYPE_COUNT</div><div class="ttdoc">count of stream type</div><div class="ttdef"><b>Definition:</b> codec_interface_public_api.h:44</div></div>
+<div class="ttc" id="astructcodec__interface__function__table__t_html"><div class="ttname"><a href="structcodec__interface__function__table__t.html">codec_interface_function_table_t</a></div><div class="ttdoc">Codec Interface Function Table.</div><div class="ttdef"><b>Definition:</b> codec_interface.h:67</div></div>
 </div><!-- fragment --><ul>
 <li>Enable or Disable Decoder<ul>
 <li>Define <code>VORBIS_CODEC</code> macro in audio_cfg.h file.</li>
@@ -212,26 +199,46 @@ Common encoder interface</h2>
 Maestro performance</h1>
 <h2><a class="anchor" id="autotoc_md37"></a>
 Memory information</h2>
-<p>The memory usage of the framework (data obtained from IAR compiler) in bytes is:</p><ul>
-<li>Code/flash = 77678</li>
-<li>RAM = 5013</li>
-</ul>
+<p>The memory usage of the framework components (data obtained from GNU ARM compiler) in bytes is:</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
-<th class="markdownTableHeadRight">Section   </th><th class="markdownTableHeadRight">Size    </th></tr>
+<th class="markdownTableHeadRight">text   </th><th class="markdownTableHeadRight">data   </th><th class="markdownTableHeadRight">bss   </th><th class="markdownTableHeadRight">component    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyRight">.text   </td><td class="markdownTableBodyRight">77678    </td></tr>
+<td class="markdownTableBodyRight">48790   </td><td class="markdownTableBodyRight">2752   </td><td class="markdownTableBodyRight">4   </td><td class="markdownTableBodyRight">aac decoder    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyRight">.bss   </td><td class="markdownTableBodyRight">5013   </td></tr>
+<td class="markdownTableBodyRight">4348   </td><td class="markdownTableBodyRight">16400   </td><td class="markdownTableBodyRight">212   </td><td class="markdownTableBodyRight">asrc    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyRight">15512   </td><td class="markdownTableBodyRight">0   </td><td class="markdownTableBodyRight">4   </td><td class="markdownTableBodyRight">flac decoder    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyRight">76462   </td><td class="markdownTableBodyRight">16   </td><td class="markdownTableBodyRight">5013   </td><td class="markdownTableBodyRight">maestro    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyRight">34211   </td><td class="markdownTableBodyRight">0   </td><td class="markdownTableBodyRight">4   </td><td class="markdownTableBodyRight">mp3 decoder    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyRight">211974   </td><td class="markdownTableBodyRight">0   </td><td class="markdownTableBodyRight">0   </td><td class="markdownTableBodyRight">opus    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyRight">65446   </td><td class="markdownTableBodyRight">0   </td><td class="markdownTableBodyRight">4   </td><td class="markdownTableBodyRight">ssrc    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyRight">5850   </td><td class="markdownTableBodyRight">16   </td><td class="markdownTableBodyRight">12   </td><td class="markdownTableBodyRight">wav decoder   </td></tr>
 </table>
+<p>Maestro framework uses dynamic allocation of audio buffers. The total amount of memory allocated for the pipeline depends on the following parameters:</p><ul>
+<li>Number of elements in the pipeline</li>
+<li>Element types</li>
+<li>Audio stream properties<ul>
+<li>Sampling rate</li>
+<li>Bit width</li>
+<li>Channel number</li>
+<li>Frame size</li>
+</ul>
+</li>
+</ul>
 <h2><a class="anchor" id="autotoc_md38"></a>
 CPU usage</h2>
-<p>The performance of the decoder was measured using the real hardware platform (RT1060).</p><ul>
+<p>The performance of the pipeline was measured using the real hardware platform (RT1060).</p><ul>
 <li>CPU core clock in MHz: 600.</li>
 </ul>
 <table class="markdownTable">
 <tr class="markdownTableHead">
-<th class="markdownTableHeadCenter">Pipeline type   </th><th class="markdownTableHeadCenter">Performance MIPS of codec (in MHz)    </th></tr>
+<th class="markdownTableHeadCenter">Pipeline type   </th><th class="markdownTableHeadCenter">Performance MIPS of pipeline (in MHz)    </th></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyCenter">audio source -&gt; audio sink   </td><td class="markdownTableBodyCenter">~10.26 MHz    </td></tr>
 <tr class="markdownTableRowEven">

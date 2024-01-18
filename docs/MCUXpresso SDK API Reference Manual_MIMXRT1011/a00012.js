@@ -6,35 +6,41 @@ var a00012 =
     [ "SGTL5000 Adapter", "a00241.html", "a00241" ],
     [ "WM8904 Adapter", "a00243.html", "a00243" ],
     [ "WM8960 Adapter", "a00242.html", "a00242" ],
-    [ "codec_config_t", "a00012.html#a00289", [
-      [ "codecDevType", "a00012.html#a0f68e054507c31a257a298cc9839729e", null ],
-      [ "codecDevConfig", "a00012.html#a6b9cc87b16b5275a006f34477a04f96e", null ]
+    [ "_codec_config", "a00012.html#a00263", [
+      [ "codecDevType", "a00012.html#a19f6a6bf5f0093ad6a058f5dd47104da", null ],
+      [ "codecDevConfig", "a00012.html#a1e27cce4db7b33cd3885c3a9b6d2dbc0", null ]
     ] ],
-    [ "codec_capability_t", "a00012.html#a00288", [
-      [ "codecModuleCapability", "a00012.html#a3309e0df5a46d24b5bf533f792276169", null ],
-      [ "codecPlayCapability", "a00012.html#acda24c6b9b8efe9624996cee729ccecb", null ],
-      [ "codecRecordCapability", "a00012.html#a5df326e2f2b2e3c02e74f4ca53302176", null ],
-      [ "codecVolumeCapability", "a00012.html#a4d0d68ff05679d9b0b0f24f600faa093", null ]
+    [ "_codec_capability", "a00012.html#a00262", [
+      [ "codecModuleCapability", "a00012.html#a3fe95c7fc12640d6f9223189a42a80d6", null ],
+      [ "codecPlayCapability", "a00012.html#a96cdbff811b71b87f90084ab1f88a768", null ],
+      [ "codecRecordCapability", "a00012.html#a9cf01f5e61e9272a0501507022b939b5", null ],
+      [ "codecVolumeCapability", "a00012.html#ac842df85752dc88582e5ea8e3e666b82", null ]
     ] ],
-    [ "codec_handle_t", "a00012.html#a00250", [
-      [ "codecConfig", "a00012.html#a5329fc06c178bf451e290727c6b65af0", null ],
-      [ "codecCapability", "a00012.html#a615896799601a79f4b41448ef3eac6a6", null ],
-      [ "codecDevHandle", "a00012.html#ad1119b5bf61bcd4fef27470977a4bf82", null ]
+    [ "_codec_handle", "a00012.html#a00264", [
+      [ "codecConfig", "a00012.html#a499d9c627029d44869a67cdc52b0954b", null ],
+      [ "codecCapability", "a00012.html#ae2e92c6b68d34d3849f06870ecab8e75", null ],
+      [ "codecDevHandle", "a00012.html#a252f8145a3a46fc85f61bb6a4fd01f2b", null ]
     ] ],
     [ "FSL_CODEC_DRIVER_VERSION", "a00012.html#gae52496bc4f4ec5198c11b6a81a1b4554", null ],
-    [ "CODEC_VOLUME_MAX_VALUE", "a00012.html#ga1676aac1111be81840d71ae360c7a55e", [
+    [ "CODEC_VOLUME_MAX_VALUE", "a00012.html#ga1676aac1111be81840d71ae360c7a55e", null ],
+    [ "codec_audio_protocol_t", "a00012.html#gab8bda00eb4131077da1cc080e538ddaf", null ],
+    [ "codec_module_t", "a00012.html#ga9228529622c5053291e10d4993a7a3da", null ],
+    [ "codec_module_ctrl_cmd_t", "a00012.html#ga937d008d5c72d2c0dc1c4610574872c7", null ],
+    [ "codec_handle_t", "a00012.html#ga20f13bdb318173610c77341b6b0fb68e", null ],
+    [ "codec_config_t", "a00012.html#ga510bfdb1ccf8ad0261215e1420101ff1", null ],
+    [ "codec_capability_t", "a00012.html#gac7544e852cdcbe42213cc25d62a675f1", [
       [ "kStatus_CODEC_NotSupport", "a00012.html#gga394b3903fbf00ba2b6243f60689a5a5fae615242ac4056c3aa41c0a2cacb12a58", null ],
       [ "kStatus_CODEC_DeviceNotRegistered", "a00012.html#gga394b3903fbf00ba2b6243f60689a5a5fa87ececfc264e837d6d95aa4167777f39", null ],
       [ "kStatus_CODEC_I2CBusInitialFailed", "a00012.html#gga394b3903fbf00ba2b6243f60689a5a5faf100e4cac23563bbe7344a035f0a8be6", null ],
       [ "kStatus_CODEC_I2CCommandTransferFailed", "a00012.html#gga394b3903fbf00ba2b6243f60689a5a5fa5baa54f823e6d30deb9f29c71f241a4b", null ]
     ] ],
-    [ "codec_audio_protocol_t", "a00012.html#gacb61ff2fd2c5789dc307bb82124345c0", [
-      [ "kCODEC_BusI2S", "a00012.html#ggacb61ff2fd2c5789dc307bb82124345c0a86a707c430d31a2650df43f5e38d7043", null ],
-      [ "kCODEC_BusLeftJustified", "a00012.html#ggacb61ff2fd2c5789dc307bb82124345c0a86bebdc586a5a0edaade3b57d883fd67", null ],
-      [ "kCODEC_BusRightJustified", "a00012.html#ggacb61ff2fd2c5789dc307bb82124345c0a47b4b1521ffa83f6653b75e172b51193", null ],
-      [ "kCODEC_BusPCMA", "a00012.html#ggacb61ff2fd2c5789dc307bb82124345c0adb687afb93721bb8114ad397b9d5316b", null ],
-      [ "kCODEC_BusPCMB", "a00012.html#ggacb61ff2fd2c5789dc307bb82124345c0ab0b058e1c494b451060a9108cc39db40", null ],
-      [ "kCODEC_BusTDM", "a00012.html#ggacb61ff2fd2c5789dc307bb82124345c0afedd5c66852ce2b42397327fd807b826", null ],
+    [ "_codec_audio_protocol", "a00012.html#ga88c5442974fa183a3100b8923045ad6e", [
+      [ "kCODEC_BusI2S", "a00012.html#gga88c5442974fa183a3100b8923045ad6ea86a707c430d31a2650df43f5e38d7043", null ],
+      [ "kCODEC_BusLeftJustified", "a00012.html#gga88c5442974fa183a3100b8923045ad6ea86bebdc586a5a0edaade3b57d883fd67", null ],
+      [ "kCODEC_BusRightJustified", "a00012.html#gga88c5442974fa183a3100b8923045ad6ea47b4b1521ffa83f6653b75e172b51193", null ],
+      [ "kCODEC_BusPCMA", "a00012.html#gga88c5442974fa183a3100b8923045ad6eadb687afb93721bb8114ad397b9d5316b", null ],
+      [ "kCODEC_BusPCMB", "a00012.html#gga88c5442974fa183a3100b8923045ad6eab0b058e1c494b451060a9108cc39db40", null ],
+      [ "kCODEC_BusTDM", "a00012.html#gga88c5442974fa183a3100b8923045ad6eafedd5c66852ce2b42397327fd807b826", null ],
       [ "kCODEC_AudioSampleRate8KHz", "a00012.html#ggac205be2172292384dd687b5471a87eddac2670f9c4a9361e6186f41bd406f007f", null ],
       [ "kCODEC_AudioSampleRate11025Hz", "a00012.html#ggac205be2172292384dd687b5471a87edda9071e3e0d19cd30751f09341c438550d", null ],
       [ "kCODEC_AudioSampleRate12KHz", "a00012.html#ggac205be2172292384dd687b5471a87edda145abe8d6bc2556773d185467df325a2", null ],
@@ -52,23 +58,23 @@ var a00012 =
       [ "kCODEC_AudioBitWidth24bit", "a00012.html#gga157d5577a5b2f5986037d0d09c7dc77dade2462c5c328527b8620abd51d0bcc56", null ],
       [ "kCODEC_AudioBitWidth32bit", "a00012.html#gga157d5577a5b2f5986037d0d09c7dc77dae7adfa93a86ff16d2d0d9a3a800466a3", null ]
     ] ],
-    [ "codec_module_t", "a00012.html#ga4fd5e17281a41a27986e98d1a6318ff6", [
-      [ "kCODEC_ModuleADC", "a00012.html#gga4fd5e17281a41a27986e98d1a6318ff6a7c40f1e873b61e5eddd6ef832cda8394", null ],
-      [ "kCODEC_ModuleDAC", "a00012.html#gga4fd5e17281a41a27986e98d1a6318ff6ab3b89400c76c74bcc50ff7b2b91fa6c6", null ],
-      [ "kCODEC_ModulePGA", "a00012.html#gga4fd5e17281a41a27986e98d1a6318ff6adb2d5840ca369765fa601f37e13b06b1", null ],
-      [ "kCODEC_ModuleHeadphone", "a00012.html#gga4fd5e17281a41a27986e98d1a6318ff6aa7ff9641255008cb0ebdf9f5e5812043", null ],
-      [ "kCODEC_ModuleSpeaker", "a00012.html#gga4fd5e17281a41a27986e98d1a6318ff6a19285488caaaa2ef6d3d4c40e606ab37", null ],
-      [ "kCODEC_ModuleLinein", "a00012.html#gga4fd5e17281a41a27986e98d1a6318ff6a7943b6db19251b61c632404efb8de1b0", null ],
-      [ "kCODEC_ModuleLineout", "a00012.html#gga4fd5e17281a41a27986e98d1a6318ff6a117909b882db9abfb546c4793559c2ed", null ],
-      [ "kCODEC_ModuleVref", "a00012.html#gga4fd5e17281a41a27986e98d1a6318ff6a16c1a0929fef86f326b748908c834730", null ],
-      [ "kCODEC_ModuleMicbias", "a00012.html#gga4fd5e17281a41a27986e98d1a6318ff6ac4aab737927ff7c9b6665567deb95992", null ],
-      [ "kCODEC_ModuleMic", "a00012.html#gga4fd5e17281a41a27986e98d1a6318ff6af897f755c6228d4fedcdc60a3ef8ac1f", null ],
-      [ "kCODEC_ModuleI2SIn", "a00012.html#gga4fd5e17281a41a27986e98d1a6318ff6ae29f2fb0b8d8fab96be796903fca8859", null ],
-      [ "kCODEC_ModuleI2SOut", "a00012.html#gga4fd5e17281a41a27986e98d1a6318ff6a58f5103479cf0558eda8f04e8b799da0", null ],
-      [ "kCODEC_ModuleMixer", "a00012.html#gga4fd5e17281a41a27986e98d1a6318ff6a006667147ebd071cb91ac69864fafe82", null ]
+    [ "_codec_module", "a00012.html#ga9871807eceed24deab66da23ca75dc8d", [
+      [ "kCODEC_ModuleADC", "a00012.html#gga9871807eceed24deab66da23ca75dc8da7c40f1e873b61e5eddd6ef832cda8394", null ],
+      [ "kCODEC_ModuleDAC", "a00012.html#gga9871807eceed24deab66da23ca75dc8dab3b89400c76c74bcc50ff7b2b91fa6c6", null ],
+      [ "kCODEC_ModulePGA", "a00012.html#gga9871807eceed24deab66da23ca75dc8dadb2d5840ca369765fa601f37e13b06b1", null ],
+      [ "kCODEC_ModuleHeadphone", "a00012.html#gga9871807eceed24deab66da23ca75dc8daa7ff9641255008cb0ebdf9f5e5812043", null ],
+      [ "kCODEC_ModuleSpeaker", "a00012.html#gga9871807eceed24deab66da23ca75dc8da19285488caaaa2ef6d3d4c40e606ab37", null ],
+      [ "kCODEC_ModuleLinein", "a00012.html#gga9871807eceed24deab66da23ca75dc8da7943b6db19251b61c632404efb8de1b0", null ],
+      [ "kCODEC_ModuleLineout", "a00012.html#gga9871807eceed24deab66da23ca75dc8da117909b882db9abfb546c4793559c2ed", null ],
+      [ "kCODEC_ModuleVref", "a00012.html#gga9871807eceed24deab66da23ca75dc8da16c1a0929fef86f326b748908c834730", null ],
+      [ "kCODEC_ModuleMicbias", "a00012.html#gga9871807eceed24deab66da23ca75dc8dac4aab737927ff7c9b6665567deb95992", null ],
+      [ "kCODEC_ModuleMic", "a00012.html#gga9871807eceed24deab66da23ca75dc8daf897f755c6228d4fedcdc60a3ef8ac1f", null ],
+      [ "kCODEC_ModuleI2SIn", "a00012.html#gga9871807eceed24deab66da23ca75dc8dae29f2fb0b8d8fab96be796903fca8859", null ],
+      [ "kCODEC_ModuleI2SOut", "a00012.html#gga9871807eceed24deab66da23ca75dc8da58f5103479cf0558eda8f04e8b799da0", null ],
+      [ "kCODEC_ModuleMixer", "a00012.html#gga9871807eceed24deab66da23ca75dc8da006667147ebd071cb91ac69864fafe82", null ]
     ] ],
-    [ "codec_module_ctrl_cmd_t", "a00012.html#gab22469ad24122987e781861c07d9d872", [
-      [ "kCODEC_ModuleSwitchI2SInInterface", "a00012.html#ggab22469ad24122987e781861c07d9d872a4c5ea06025b76ec84d4ca596b2a7b073", null ],
+    [ "_codec_module_ctrl_cmd", "a00012.html#gaa85e65fa8be57eb50f7d59433d50c0a6", [
+      [ "kCODEC_ModuleSwitchI2SInInterface", "a00012.html#ggaa85e65fa8be57eb50f7d59433d50c0a6a4c5ea06025b76ec84d4ca596b2a7b073", null ],
       [ "kCODEC_ModuleI2SInInterfacePCM", "a00012.html#gga1fb9092bcdeada2d206bdc74afbbe122a20a0dcb77172efb2aa6957ef0a0787e5", null ],
       [ "kCODEC_ModuleI2SInInterfaceDSD", "a00012.html#gga1fb9092bcdeada2d206bdc74afbbe122af9f9d6abaa41b9d284b4b8065572bdc0", null ],
       [ "kCODEC_RecordSourceDifferentialLine", "a00012.html#gga84627a72058502328269676b81780f89ab0f547b9df89fdd4ce284ed186455f0b", null ],

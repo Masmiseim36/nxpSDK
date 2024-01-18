@@ -228,6 +228,7 @@
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_SWO=1</state>
         </option>
@@ -353,6 +354,7 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
@@ -1313,6 +1315,7 @@
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_SWO=1</state>
         </option>
@@ -1438,6 +1441,7 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
@@ -2398,6 +2402,7 @@
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_SWO=1</state>
         </option>
@@ -2523,6 +2528,7 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
@@ -3486,6 +3492,7 @@
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_SWO=1</state>
         </option>
@@ -3611,6 +3618,7 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
@@ -4570,6 +4578,7 @@
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_SWO=1</state>
         </option>
@@ -4695,6 +4704,7 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
@@ -5653,6 +5663,7 @@
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_SWO=1</state>
         </option>
@@ -5778,6 +5789,7 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
@@ -6736,6 +6748,7 @@
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_SWO=1</state>
         </option>
@@ -6861,6 +6874,7 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
@@ -7821,6 +7835,7 @@
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_SWO=1</state>
         </option>
@@ -7946,6 +7961,7 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
@@ -8906,6 +8922,7 @@
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_SWO=1</state>
         </option>
@@ -9031,6 +9048,7 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
@@ -9994,6 +10012,7 @@
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_SWO=1</state>
         </option>
@@ -10119,6 +10138,7 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
@@ -11078,6 +11098,7 @@
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_SWO=1</state>
         </option>
@@ -11203,6 +11224,7 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
@@ -12161,6 +12183,7 @@
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_SWO=1</state>
         </option>
@@ -12286,6 +12309,7 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
@@ -13053,7 +13077,7 @@
   <group>
     <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
   <group>
@@ -13075,6 +13099,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/fsl_assert.h</name>
     </file>
   </group>
   <group>

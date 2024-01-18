@@ -5,17 +5,18 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include <string.h>
+
+#include "bl_context.h"
 #include "bootloader.h"
 #include "bootloader_common.h"
+#include "crc32.h"
+#include "fsl_assert.h"
 #include "fsl_device_registers.h"
+#include "fsl_rtos_abstraction.h"
 #include "memory.h"
 #include "semc_nand_flash.h"
 #include "semc_nand_memory.h"
-#include <string.h>
-#include "bl_context.h"
-#include "crc32.h"
-#include "fsl_assert.h"
-#include "fsl_rtos_abstraction.h"
 #if BL_FEATURE_GEN_KEYBLOB
 #include "bl_keyblob.h"
 #endif // BL_FEATURE_GEN_KEYBLOB
@@ -358,7 +359,7 @@ status_t semc_nand_mem_config(uint32_t *config)
 
     // Try to get FCB based on an option
     semc_nand_img_option_t *nandImgOption = (semc_nand_img_option_t *)config;
-    
+
 #if BL_FEATURE_GEN_KEYBLOB
     keyblob_info_t *keyblob_info = (keyblob_info_t *)config;
 #endif // BL_FEATURE_GEN_KEYBLOB
@@ -418,14 +419,7 @@ status_t semc_nand_mem_config(uint32_t *config)
         }
 
         // Default FCB(config block) shouldn't depend on eFUSE setting
-        s_semcNandFcb.nandConfig.readyCheckOption = kSemcNandReadyCheckOption_SR;
         s_semcNandFcb.nandConfig.memConfig.asyncClkFreq = SEMC_2ND_MAX_CLK_FREQ;
-        s_semcNandFcb.nandConfig.statusCommandType = kSemcNandStatusCommandType_Common;
-        s_semcNandFcb.nandConfig.memConfig.accessCommandType = kSemcAccessCommandType_IPBUSCMD;
-        // s_semcNandFcb.nandConfig.memConfig.nandMemConfig.rdyPortPolarity = kSemcPortPloarity_LowActive;
-        // s_semcNandFcb.nandConfig.memConfig.nandMemConfig.arrayAddressOption = kSemcNandAddressOption_5byte_CA2RA3;
-        // s_semcNandFcb.nandConfig.memConfig.nandMemConfig.columnAddressWidth = 12;
-        // s_semcNandFcb.nandConfig.pagesInBlock = 64;
 
         // Configure nand memory according to Option
         s_semcNandFcb.nandConfig.onfiVersion = nandImgOption->nandOption.option.B.onfiVersion;
@@ -437,6 +431,183 @@ status_t semc_nand_mem_config(uint32_t *config)
             nandImgOption->nandOption.option.B.pcsSelection;
         s_semcNandFcb.nandConfig.eccCheckType = nandImgOption->nandOption.option.B.eccType;
         s_semcNandFcb.nandConfig.deviceEccStatus = nandImgOption->nandOption.option.B.eccStatus;
+
+        // Configure nand memory according to extended Option
+        if (nandImgOption->nandOption.option.B.extOptionSize > 0)
+        {
+            s_semcNandFcb.nandConfig.memConfig.accessCommandType =
+                (nandImgOption->nandOptionExt.option0.B.accessCommandType) ? kSemcAccessCommandType_AXI32CMD :
+                                                                             kSemcAccessCommandType_IPBUSCMD;
+            s_semcNandFcb.nandConfig.statusCommandType = (nandImgOption->nandOptionExt.option0.B.statusCommandType) ?
+                                                             kSemcNandStatusCommandType_Enhanced :
+                                                             kSemcNandStatusCommandType_Common;
+            s_semcNandFcb.nandConfig.memConfig.nandMemConfig.rdyPortPolarity =
+                (nandImgOption->nandOptionExt.option0.B.rdyPolarity) ? kSemcPortPloarity_HighActive :
+                                                                       kSemcPortPloarity_LowActive;
+            s_semcNandFcb.nandConfig.readyCheckOption = (nandImgOption->nandOptionExt.option0.B.readyCheckOption) ?
+                                                            kSemcNandReadyCheckOption_RB :
+                                                            kSemcNandReadyCheckOption_SR;
+
+            switch (nandImgOption->nandOptionExt.option0.B.rowColAddrMode)
+            {
+                case 2:
+                    s_semcNandFcb.nandConfig.memConfig.nandMemConfig.arrayAddressOption =
+                        kSemcNandAddressOption_4byte_CA2RA2;
+                    break;
+                case 3:
+                    s_semcNandFcb.nandConfig.memConfig.nandMemConfig.arrayAddressOption =
+                        kSemcNandAddressOption_3byte_CA2RA1;
+                    break;
+                case 4:
+                case 5:
+                    s_semcNandFcb.nandConfig.memConfig.nandMemConfig.arrayAddressOption =
+                        kSemcNandAddressOption_4byte_CA1RA3;
+                    break;
+                case 6:
+                    s_semcNandFcb.nandConfig.memConfig.nandMemConfig.arrayAddressOption =
+                        kSemcNandAddressOption_3byte_CA1RA2;
+                    break;
+                case 7:
+                    s_semcNandFcb.nandConfig.memConfig.nandMemConfig.arrayAddressOption =
+                        kSemcNandAddressOption_2byte_CA1RA1;
+                    break;
+                case 0:
+                case 1:
+                default:
+                    s_semcNandFcb.nandConfig.memConfig.nandMemConfig.arrayAddressOption =
+                        kSemcNandAddressOption_5byte_CA2RA3;
+                    break;
+            }
+
+            switch (nandImgOption->nandOptionExt.option0.B.columnAddressWidth)
+            {
+                case 1:
+                    s_semcNandFcb.nandConfig.memConfig.nandMemConfig.columnAddressWidth = 9;
+                    break;
+                case 2:
+                    s_semcNandFcb.nandConfig.memConfig.nandMemConfig.columnAddressWidth = 10;
+                    break;
+                case 3:
+                    s_semcNandFcb.nandConfig.memConfig.nandMemConfig.columnAddressWidth = 11;
+                    break;
+                case 4:
+                    s_semcNandFcb.nandConfig.memConfig.nandMemConfig.columnAddressWidth = 13;
+                    break;
+                case 5:
+                    s_semcNandFcb.nandConfig.memConfig.nandMemConfig.columnAddressWidth = 14;
+                    break;
+                case 6:
+                    s_semcNandFcb.nandConfig.memConfig.nandMemConfig.columnAddressWidth = 15;
+                    break;
+                case 7:
+                    s_semcNandFcb.nandConfig.memConfig.nandMemConfig.columnAddressWidth = 16;
+                    break;
+                case 0:
+                default:
+                    s_semcNandFcb.nandConfig.memConfig.nandMemConfig.columnAddressWidth = 12;
+                    break;
+            }
+
+            switch (nandImgOption->nandOptionExt.option0.B.pagesInBlock)
+            {
+                case 1:
+                    s_semcNandFcb.nandConfig.pagesInBlock = 8;
+                    break;
+                case 2:
+                    s_semcNandFcb.nandConfig.pagesInBlock = 16;
+                    break;
+                case 3:
+                    s_semcNandFcb.nandConfig.pagesInBlock = 32;
+                    break;
+                case 4:
+                    s_semcNandFcb.nandConfig.pagesInBlock = 64;
+                    break;
+                case 5:
+                    s_semcNandFcb.nandConfig.pagesInBlock = 256;
+                    break;
+                case 6:
+                    s_semcNandFcb.nandConfig.pagesInBlock = 512;
+                    break;
+                case 7:
+                    s_semcNandFcb.nandConfig.pagesInBlock = 1024;
+                    break;
+                case 0:
+                default:
+                    s_semcNandFcb.nandConfig.pagesInBlock = 128;
+                    break;
+            }
+
+            switch (nandImgOption->nandOptionExt.option0.B.semcBchSectorSize)
+            {
+                default:
+                case 0:
+                    s_semcNandFcb.nandConfig.memConfig.nandMemConfig.semcBchSectorSize = 512;
+                    break;
+                case 1:
+                    s_semcNandFcb.nandConfig.memConfig.nandMemConfig.semcBchSectorSize = 1024;
+                    break;
+                case 2:
+                    s_semcNandFcb.nandConfig.memConfig.nandMemConfig.semcBchSectorSize = 2048;
+                    break;
+            }
+
+            switch (nandImgOption->nandOptionExt.option0.B.semcBchSectorNumber)
+            {
+                default:
+                case 0:
+                    s_semcNandFcb.nandConfig.memConfig.nandMemConfig.semcBchSectorNumber = 4;
+                    break;
+                case 1:
+                    s_semcNandFcb.nandConfig.memConfig.nandMemConfig.semcBchSectorNumber = 2;
+                    break;
+                case 2:
+                    s_semcNandFcb.nandConfig.memConfig.nandMemConfig.semcBchSectorNumber = 1;
+                    break;
+            }
+
+            switch (nandImgOption->nandOptionExt.option0.B.semcBchEccMode)
+            {
+                default:
+                case 0:
+                    s_semcNandFcb.nandConfig.memConfig.nandMemConfig.semcBchMode = 0; // No SEMC BCH ECC
+                    break;
+                case 1:
+                    s_semcNandFcb.nandConfig.memConfig.nandMemConfig.semcBchMode = 1; // SEMC BCH4 ECC
+                    break;
+                case 2:
+                    s_semcNandFcb.nandConfig.memConfig.nandMemConfig.semcBchMode = 2; // SEMC BCH8 ECC
+                    break;
+            }
+
+            switch (nandImgOption->nandOptionExt.option0.B.eccType)
+            {
+                default:
+                case 0:
+                    s_semcNandFcb.nandConfig.eccCheckType = kSemcNandEccCheckType_DeviceECC;
+                    break;
+                case 1:
+                    s_semcNandFcb.nandConfig.eccCheckType = kSemcNandEccCheckType_SoftwareECC;
+                    break;
+                case 2:
+                    s_semcNandFcb.nandConfig.eccCheckType = kSemcNandEccCheckType_SemcBchECC;
+                    break;
+            }
+
+            switch (nandImgOption->nandOption.option.B.ioPortDiv8)
+            {
+                default:
+                case 2:
+                    s_semcNandFcb.nandConfig.bytesInPageDataArea =
+                        1 << (s_semcNandFcb.nandConfig.memConfig.nandMemConfig.columnAddressWidth + 1);
+                    s_semcNandFcb.nandConfig.bytesInPageSpareArea = s_semcNandFcb.nandConfig.bytesInPageDataArea / 32;
+                    break;
+                case 1:
+                    s_semcNandFcb.nandConfig.bytesInPageDataArea =
+                        1 << s_semcNandFcb.nandConfig.memConfig.nandMemConfig.columnAddressWidth;
+                    s_semcNandFcb.nandConfig.bytesInPageSpareArea = s_semcNandFcb.nandConfig.bytesInPageDataArea / 32;
+                    break;
+            }
+        }
 
         // Re-Init SEMC peripheral using new FCB.
         status = semc_nand_flash_init(&s_semcNandFcb.nandConfig);
@@ -956,7 +1127,7 @@ static status_t semc_nand_flush_one_page_from_buffer(void)
 #if BL_FEATURE_FLASH_CHECK_CUMULATIVE_WRITE
     if (semc_nand_flash_verify_erase(&s_semcNandFcb.nandConfig, srcPageIndex, 1) != kStatus_Success)
     {
-        //return kStatusMemoryCumulativeWrite;
+        // return kStatusMemoryCumulativeWrite;
     }
 #endif // #if BL_FEATURE_FLASH_CHECK_CUMULATIVE_WRITE
 

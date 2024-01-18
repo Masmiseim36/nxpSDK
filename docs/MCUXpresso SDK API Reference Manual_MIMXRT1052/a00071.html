@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -101,6 +101,7 @@ $(document).ready(function(){initNavTree('a00071.html','');});
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">Serial Port SWO<div class="ingroups"><a class="el" href="a00070.html">Serial Manager</a></div></div>  </div>
@@ -110,9 +111,9 @@ $(document).ready(function(){initNavTree('a00071.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00523"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00071.html#a00523">serial_port_swo_config_t</a></td></tr>
-<tr class="memdesc:a00523"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial port swo config struct  <a href="a00071.html#a00523">More...</a><br/></td></tr>
-<tr class="separator:a00523"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00517"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00071.html#a00517">_serial_port_swo_config</a></td></tr>
+<tr class="memdesc:a00517"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial port swo config struct  <a href="a00071.html#a00517">More...</a><br/></td></tr>
+<tr class="separator:a00517"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
@@ -121,64 +122,77 @@ Macros</h2></td></tr>
 <tr class="memdesc:ga65f815f28e5af3d42712ebefdd8662dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial port swo handle size <br/></td></tr>
 <tr class="separator:ga65f815f28e5af3d42712ebefdd8662dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga1e634ea19560f9e2d606756235883437"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1e634ea19560f9e2d606756235883437"></a>
+typedef enum <br class="typebreak"/>
+<a class="el" href="a00071.html#gaac62961b355a7fec0861e08d2f043e80">_serial_port_swo_protocol</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00071.html#ga1e634ea19560f9e2d606756235883437">serial_port_swo_protocol_t</a></td></tr>
+<tr class="memdesc:ga1e634ea19560f9e2d606756235883437"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial port swo protocol <br/></td></tr>
+<tr class="separator:ga1e634ea19560f9e2d606756235883437"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac2292866fff5df310fbcabf13dc79aaa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac2292866fff5df310fbcabf13dc79aaa"></a>
+typedef struct <br class="typebreak"/>
+<a class="el" href="a00071.html#a00517">_serial_port_swo_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00071.html#gac2292866fff5df310fbcabf13dc79aaa">serial_port_swo_config_t</a></td></tr>
+<tr class="memdesc:gac2292866fff5df310fbcabf13dc79aaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial port swo config struct <br/></td></tr>
+<tr class="separator:gac2292866fff5df310fbcabf13dc79aaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:gab72244db50e88efd6d079d157558932d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00071.html#gab72244db50e88efd6d079d157558932d">serial_port_swo_protocol_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00071.html#ggab72244db50e88efd6d079d157558932da57feeffbb98d786af19111f49bd6d733">kSerialManager_SwoProtocolManchester</a> = 1U, 
+<tr class="memitem:gaac62961b355a7fec0861e08d2f043e80"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00071.html#gaac62961b355a7fec0861e08d2f043e80">_serial_port_swo_protocol</a> { <br/>
+&#160;&#160;<a class="el" href="a00071.html#ggaac62961b355a7fec0861e08d2f043e80a57feeffbb98d786af19111f49bd6d733">kSerialManager_SwoProtocolManchester</a> = 1U, 
 <br/>
-&#160;&#160;<a class="el" href="a00071.html#ggab72244db50e88efd6d079d157558932da1178f82728f1b7f27f28af46f8550d95">kSerialManager_SwoProtocolNrz</a> = 2U
+&#160;&#160;<a class="el" href="a00071.html#ggaac62961b355a7fec0861e08d2f043e80a1178f82728f1b7f27f28af46f8550d95">kSerialManager_SwoProtocolNrz</a> = 2U
 <br/>
  }</td></tr>
-<tr class="memdesc:gab72244db50e88efd6d079d157558932d"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial port swo protocol  <a href="a00071.html#gab72244db50e88efd6d079d157558932d">More...</a><br/></td></tr>
-<tr class="separator:gab72244db50e88efd6d079d157558932d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gaac62961b355a7fec0861e08d2f043e80"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial port swo protocol  <a href="a00071.html#gaac62961b355a7fec0861e08d2f043e80">More...</a><br/></td></tr>
+<tr class="separator:gaac62961b355a7fec0861e08d2f043e80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00523" id="a00523"></a>
+<a name="a00517" id="a00517"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct serial_port_swo_config_t</td>
+          <td class="memname">struct _serial_port_swo_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a515e2f5ca8778fd65e10a0ac7f77d309"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a515e2f5ca8778fd65e10a0ac7f77d309"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00071.html#a515e2f5ca8778fd65e10a0ac7f77d309">clockRate</a></td></tr>
-<tr class="memdesc:a515e2f5ca8778fd65e10a0ac7f77d309"><td class="mdescLeft">&#160;</td><td class="mdescRight">clock rate <br/></td></tr>
-<tr class="separator:a515e2f5ca8778fd65e10a0ac7f77d309"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af06ab1ceb2156bba95ee5b125ef77e40"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af06ab1ceb2156bba95ee5b125ef77e40"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00071.html#af06ab1ceb2156bba95ee5b125ef77e40">baudRate</a></td></tr>
-<tr class="memdesc:af06ab1ceb2156bba95ee5b125ef77e40"><td class="mdescLeft">&#160;</td><td class="mdescRight">baud rate <br/></td></tr>
-<tr class="separator:af06ab1ceb2156bba95ee5b125ef77e40"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeab85500212c4b7945515d3acdf24aee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeab85500212c4b7945515d3acdf24aee"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00071.html#aeab85500212c4b7945515d3acdf24aee">port</a></td></tr>
-<tr class="memdesc:aeab85500212c4b7945515d3acdf24aee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Port used to transfer data. <br/></td></tr>
-<tr class="separator:aeab85500212c4b7945515d3acdf24aee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1fee1b1db63edc021f9b1d2e5808ecc0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1fee1b1db63edc021f9b1d2e5808ecc0"></a>
-<a class="el" href="a00071.html#gab72244db50e88efd6d079d157558932d">serial_port_swo_protocol_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00071.html#a1fee1b1db63edc021f9b1d2e5808ecc0">protocol</a></td></tr>
-<tr class="memdesc:a1fee1b1db63edc021f9b1d2e5808ecc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">SWO protocol. <br/></td></tr>
-<tr class="separator:a1fee1b1db63edc021f9b1d2e5808ecc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa087885d2aa11f88ed4780461f722bb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afa087885d2aa11f88ed4780461f722bb"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00071.html#afa087885d2aa11f88ed4780461f722bb">clockRate</a></td></tr>
+<tr class="memdesc:afa087885d2aa11f88ed4780461f722bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">clock rate <br/></td></tr>
+<tr class="separator:afa087885d2aa11f88ed4780461f722bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb6bc31ef5a59c6faa9a26c07639a01b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afb6bc31ef5a59c6faa9a26c07639a01b"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00071.html#afb6bc31ef5a59c6faa9a26c07639a01b">baudRate</a></td></tr>
+<tr class="memdesc:afb6bc31ef5a59c6faa9a26c07639a01b"><td class="mdescLeft">&#160;</td><td class="mdescRight">baud rate <br/></td></tr>
+<tr class="separator:afb6bc31ef5a59c6faa9a26c07639a01b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b10120e3b493fcff903753b15091990"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0b10120e3b493fcff903753b15091990"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00071.html#a0b10120e3b493fcff903753b15091990">port</a></td></tr>
+<tr class="memdesc:a0b10120e3b493fcff903753b15091990"><td class="mdescLeft">&#160;</td><td class="mdescRight">Port used to transfer data. <br/></td></tr>
+<tr class="separator:a0b10120e3b493fcff903753b15091990"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8e8d34045de51d22bfb63b421f3a665"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa8e8d34045de51d22bfb63b421f3a665"></a>
+<a class="el" href="a00071.html#ga1e634ea19560f9e2d606756235883437">serial_port_swo_protocol_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00071.html#aa8e8d34045de51d22bfb63b421f3a665">protocol</a></td></tr>
+<tr class="memdesc:aa8e8d34045de51d22bfb63b421f3a665"><td class="mdescLeft">&#160;</td><td class="mdescRight">SWO protocol. <br/></td></tr>
+<tr class="separator:aa8e8d34045de51d22bfb63b421f3a665"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gab72244db50e88efd6d079d157558932d"></a>
+<a class="anchor" id="gaac62961b355a7fec0861e08d2f043e80"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00071.html#gab72244db50e88efd6d079d157558932d">serial_port_swo_protocol_t</a></td>
+          <td class="memname">enum <a class="el" href="a00071.html#gaac62961b355a7fec0861e08d2f043e80">_serial_port_swo_protocol</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab72244db50e88efd6d079d157558932da57feeffbb98d786af19111f49bd6d733"></a>kSerialManager_SwoProtocolManchester</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaac62961b355a7fec0861e08d2f043e80a57feeffbb98d786af19111f49bd6d733"></a>kSerialManager_SwoProtocolManchester</em>&nbsp;</td><td class="fielddoc">
 <p>SWO Manchester protocol. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab72244db50e88efd6d079d157558932da1178f82728f1b7f27f28af46f8550d95"></a>kSerialManager_SwoProtocolNrz</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggaac62961b355a7fec0861e08d2f043e80a1178f82728f1b7f27f28af46f8550d95"></a>kSerialManager_SwoProtocolNrz</em>&nbsp;</td><td class="fielddoc">
 <p>SWO UART/NRZ protocol. </p>
 </td></tr>
 </table>

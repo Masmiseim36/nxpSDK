@@ -1,74 +1,74 @@
 var a00027 =
 [
-    [ "flexcan_frame_t", "a00027.html#a00407", [
-      [ "timestamp", "a00027.html#acf56bef24748e5d4498edfbaac4e174c", null ],
-      [ "length", "a00027.html#a86c748c660b5a447d73b601d65464d68", null ],
-      [ "type", "a00027.html#a21ceef28a120648fbd3bf3c72c414e89", null ],
-      [ "format", "a00027.html#ac8c11ad3b0de16980ae1cb45d9e5bdde", null ],
-      [ "__pad0__", "a00027.html#a5517886b0d42a645edfee41cb5f62218", null ],
-      [ "idhit", "a00027.html#a2c49a36e59aed74b59fae67da2ec5f67", null ],
-      [ "id", "a00027.html#a2d5b2e002f982e1a33244362e8fdcd08", null ],
-      [ "dataWord0", "a00027.html#a5333734602acf1681855ee540076034e", null ],
-      [ "dataWord1", "a00027.html#aaf4b0995ba55fae4d85765d6b62c2e57", null ],
-      [ "dataByte3", "a00027.html#a3730fc502fc6955573a4bf495fbff2ba", null ],
-      [ "dataByte2", "a00027.html#a4d3bc8f3e2d4343ead866a6ea3dc874a", null ],
-      [ "dataByte1", "a00027.html#a23f690780c3b7336cd38dcd8272b6799", null ],
-      [ "dataByte0", "a00027.html#aac272e3fc846654dedc2174b9050c493", null ],
-      [ "dataByte7", "a00027.html#a541d16b28a8c2d4959262f581d52f1b9", null ],
-      [ "dataByte6", "a00027.html#a08bb816509e5c2a8e62cf14f3e7a820d", null ],
-      [ "dataByte5", "a00027.html#a7fb79a7e48cef3eef8c2bb652d521404", null ],
-      [ "dataByte4", "a00027.html#a744b38402f1ccd4fbb0b1f851401ea87", null ]
+    [ "_flexcan_frame", "a00027.html#a00377", [
+      [ "timestamp", "a00027.html#a2d574a318bed8991a6c173865e2bf578", null ],
+      [ "length", "a00027.html#a79577000abdd0aead2ccbae8fff1ca66", null ],
+      [ "type", "a00027.html#a868664b2368610412f00f8ec6559da6c", null ],
+      [ "format", "a00027.html#aaff5a9182ce8649e4d1205c299ebc211", null ],
+      [ "__pad0__", "a00027.html#abfaf8783ae029aa6defb8a4a3758244c", null ],
+      [ "idhit", "a00027.html#a70846d71d225a859a7df8fcf77609e81", null ],
+      [ "id", "a00027.html#ae189ca072cc012dc5b76838d5b556e87", null ],
+      [ "dataWord0", "a00027.html#a437a25715db24dbd4beb727d3f8e443f", null ],
+      [ "dataWord1", "a00027.html#af0aced0351f2207fbebf0a5e78a58bbc", null ],
+      [ "dataByte3", "a00027.html#a541853dd37bce5eb5b2ed6142c5556ee", null ],
+      [ "dataByte2", "a00027.html#a882ac7b21153fe910cd17d02962c443e", null ],
+      [ "dataByte1", "a00027.html#a4ce659f8fb04760570fdf08523fd2f76", null ],
+      [ "dataByte0", "a00027.html#a191d245c850e51072da0f6fbe8c272df", null ],
+      [ "dataByte7", "a00027.html#a94525fc776e0eb4ceb579356f5b15bf1", null ],
+      [ "dataByte6", "a00027.html#a91b3355e1077c092b756d9d070be4d1b", null ],
+      [ "dataByte5", "a00027.html#a598ddfb685ffb0f2287821a5708ceef8", null ],
+      [ "dataByte4", "a00027.html#a0401aa7e547f5109bc748f4d118a1e29", null ]
     ] ],
-    [ "flexcan_timing_config_t", "a00027.html#a00411", [
-      [ "preDivider", "a00027.html#ab9be8b37a583ead557316b6e8a52087a", null ],
-      [ "rJumpwidth", "a00027.html#a328cafc9d9d4536e888a2392c52936af", null ],
-      [ "phaseSeg1", "a00027.html#a70c5ba7b5325b4cc0d8579bd93701541", null ],
-      [ "phaseSeg2", "a00027.html#a6c11e2dde54a7fa384b956a79793aa30", null ],
-      [ "propSeg", "a00027.html#a08a892d0d2f41c0065ef72d9ebb66d66", null ]
+    [ "_flexcan_timing_config", "a00027.html#a00382", [
+      [ "preDivider", "a00027.html#a094250169e8e286eff95dedfdae9e0e6", null ],
+      [ "rJumpwidth", "a00027.html#af296065f4a2ac8f604503bc4fe6a41bc", null ],
+      [ "phaseSeg1", "a00027.html#abe55f38d4790119e5507e7f0978a6bf1", null ],
+      [ "phaseSeg2", "a00027.html#aeb138f9e109693108eff8f491781fbe4", null ],
+      [ "propSeg", "a00027.html#a60963025a3ccbbcda0108334ac0199dd", null ]
     ] ],
-    [ "flexcan_config_t", "a00027.html#a00405", [
-      [ "baudRate", "a00027.html#a19acff49da11171e316b5c02d08fe898", null ],
-      [ "bitRate", "a00027.html#ac166a2d27b9be4d8ff39c67c28f5d9c9", null ],
-      [ "clkSrc", "a00027.html#a088675118b1081ed959119ba00080412", null ],
-      [ "wakeupSrc", "a00027.html#aceb89e2f7bc92e8d4e562a26ee181b78", null ],
-      [ "maxMbNum", "a00027.html#a1f78425cda4ca2be4ffca627aac9db05", null ],
-      [ "enableLoopBack", "a00027.html#a3b15eb7994ec581aee06873d718fd216", null ],
-      [ "enableTimerSync", "a00027.html#a84926c82a524ef20359dfbc4802e4eaf", null ],
-      [ "enableSelfWakeup", "a00027.html#a1b849e3e26f5798fa96abd6f5afb5b3c", null ],
-      [ "enableIndividMask", "a00027.html#a176576d19ca09ef38155318486d5e0a0", null ],
-      [ "disableSelfReception", "a00027.html#a4b01e6d8180a4e27683a67690eaf4c27", null ],
-      [ "enableListenOnlyMode", "a00027.html#ac063de8f3095c8af11d0ecf2ee4a12fb", null ],
-      [ "enableSupervisorMode", "a00027.html#a736619274ca8b05eef29c6d3234ec2c1", null ]
+    [ "_flexcan_config", "a00027.html#a00375", [
+      [ "baudRate", "a00027.html#a7a997a5d07d195dc35002e5e104196d3", null ],
+      [ "bitRate", "a00027.html#a22c7375fbe9674f6f510bd73b652a3d4", null ],
+      [ "clkSrc", "a00027.html#aaa32055fc52c20ef39fd5d9ac94477f9", null ],
+      [ "wakeupSrc", "a00027.html#a850b9dd463f62bb70615fe7d0d510a0a", null ],
+      [ "maxMbNum", "a00027.html#a1ae77c3e01271290dd48fdcb6b6b76a8", null ],
+      [ "enableLoopBack", "a00027.html#ab214e057c895d952a25de43eb2078505", null ],
+      [ "enableTimerSync", "a00027.html#a18602c62c54ffa3780a4d3d9b0a4ed72", null ],
+      [ "enableSelfWakeup", "a00027.html#a512a3e7d71b55d33e2a98efd04bfb24b", null ],
+      [ "enableIndividMask", "a00027.html#afeb862955d4d952cde78becbcf1b79ef", null ],
+      [ "disableSelfReception", "a00027.html#a92d32b00b96b0eab648c5c263b4180a9", null ],
+      [ "enableListenOnlyMode", "a00027.html#a40ea6cba6268eb966b9fe98014bc9bbd", null ],
+      [ "enableSupervisorMode", "a00027.html#ac2ca9141608d5b021391d1c720da63d9", null ]
     ] ],
-    [ "flexcan_rx_mb_config_t", "a00027.html#a00410", [
-      [ "id", "a00027.html#a711c0fe1870b35216e51c48b615af102", null ],
-      [ "format", "a00027.html#aa7f296319a192fb82f137f82bb126f7a", null ],
-      [ "type", "a00027.html#a258245b77982b70b8d82fc75ee993503", null ]
+    [ "_flexcan_rx_mb_config", "a00027.html#a00381", [
+      [ "id", "a00027.html#a4ff5fa151c2ba5ba98319bf0a649a6fc", null ],
+      [ "format", "a00027.html#ad8e7c29dfd88c333b2b67aa1907a0532", null ],
+      [ "type", "a00027.html#a126ff20c8635183bfc9ea22c8d0145d4", null ]
     ] ],
-    [ "flexcan_rx_fifo_config_t", "a00027.html#a00409", [
-      [ "idFilterTable", "a00027.html#abbf208769efc96e928bd623fc7f5da19", null ],
-      [ "idFilterNum", "a00027.html#a02ebd3a71c29bb55faf784e871324c52", null ],
-      [ "idFilterType", "a00027.html#a35f41ecbd9d9dd163b05758f0aa51e6e", null ],
-      [ "priority", "a00027.html#a2247025f9a26b65bc6fa4d59f507657c", null ]
+    [ "_flexcan_rx_fifo_config", "a00027.html#a00380", [
+      [ "idFilterTable", "a00027.html#aea31cb6b0d8d0043b8fef0bf5643e023", null ],
+      [ "idFilterNum", "a00027.html#a618071167b1c2d692ae2300f0aca11e8", null ],
+      [ "idFilterType", "a00027.html#a054a415ae6706180c56d45a23c043144", null ],
+      [ "priority", "a00027.html#a1c243a04b67b2e884cd5a5412e0c180a", null ]
     ] ],
-    [ "flexcan_mb_transfer_t", "a00027.html#a00408", [
-      [ "frame", "a00027.html#af38b9852b65061e18ee7d6232a7ef3be", null ],
-      [ "mbIdx", "a00027.html#a35b306312bcc47c5569f770f3341543d", null ]
+    [ "_flexcan_mb_transfer", "a00027.html#a00379", [
+      [ "frame", "a00027.html#a0fbc2630619824ada84a7c8f1fb6d8e5", null ],
+      [ "mbIdx", "a00027.html#a57d98d8dfa64c50572a30ff7c4039748", null ]
     ] ],
-    [ "flexcan_fifo_transfer_t", "a00027.html#a00406", [
-      [ "frame", "a00027.html#ad3420cfcbd536444d54b6a223b615d6f", null ],
-      [ "frameNum", "a00027.html#ab7f277f9a0f8a1369657808a5c9c8ff6", null ]
+    [ "_flexcan_fifo_transfer", "a00027.html#a00376", [
+      [ "frame", "a00027.html#af301237fe1da56ad6a2b3b4b11f00ea2", null ],
+      [ "frameNum", "a00027.html#a212435fed34842a51bccef58f80adf21", null ]
     ] ],
-    [ "flexcan_handle_t", "a00027.html#a00314", [
-      [ "callback", "a00027.html#afd5494a415932b8008ce8db6a9ea2b6f", null ],
-      [ "userData", "a00027.html#ab6e0932c11eba224663bec6ead9f5e78", null ],
-      [ "mbFrameBuf", "a00027.html#ad7693cd6966ea1e887a60c39a7a0c029", null ],
-      [ "rxFifoFrameBuf", "a00027.html#a1e76f915479b5c4fe23c24954634faf8", null ],
-      [ "rxFifoFrameNum", "a00027.html#aa33f86df32629b7ffc61a61e10044550", null ],
-      [ "rxFifoTransferTotalNum", "a00027.html#aabd825a6ed8377575679217520274d3d", null ],
-      [ "mbState", "a00027.html#a3820f2ca76a985e46b733b4eedcaddcb", null ],
-      [ "rxFifoState", "a00027.html#aefb8a038351ac7c4fa6ac8307bccb70e", null ],
-      [ "timestamp", "a00027.html#a606bf5d8de8e942f19755b563e6418c8", null ]
+    [ "_flexcan_handle", "a00027.html#a00378", [
+      [ "callback", "a00027.html#aa0c17cc65cf1fecab95fc2188a0d89c1", null ],
+      [ "userData", "a00027.html#a7e044b14352b7636ba3e0fd1b45539b7", null ],
+      [ "mbFrameBuf", "a00027.html#a26b7974562fe0615291b95692898e901", null ],
+      [ "rxFifoFrameBuf", "a00027.html#ad160a9a193827a3712ce223ae39c24ce", null ],
+      [ "rxFifoFrameNum", "a00027.html#a33fe55c86676d52b152e2b0364c73c01", null ],
+      [ "rxFifoTransferTotalNum", "a00027.html#a7ac653ab1139b4a2fffc01833172eb33", null ],
+      [ "mbState", "a00027.html#a91d0b2f65dbd43073733e1f4ad937bf1", null ],
+      [ "rxFifoState", "a00027.html#aa154e640aaa260a060d1eab7b94c6a8d", null ],
+      [ "timestamp", "a00027.html#acb3591cdbc867674156892bb4b6c03ff", null ]
     ] ],
     [ "FSL_FLEXCAN_DRIVER_VERSION", "a00027.html#ga77da4800ee90257a6be4be815bf067cb", null ],
     [ "FLEXCAN_ID_STD", "a00027.html#ga83f8199eb0d7d86106313a6b33a9633d", null ],
@@ -105,7 +105,21 @@ var a00027 =
     [ "FLEXCAN_RX_FIFO_EXT_FILTER_TYPE_C_LOW", "a00027.html#ga27da42c8a78913659c440075d7f8c367", null ],
     [ "FLEXCAN_ERROR_AND_STATUS_INIT_FLAG", "a00027.html#gaa5d8c84b645534dfc7aa5d692c97c989", null ],
     [ "FLEXCAN_MEMORY_ENHANCED_RX_FIFO_INIT_FLAG", "a00027.html#gaa96c3d61745b922c3a046e95b87f8cc2", null ],
-    [ "FLEXCAN_CALLBACK", "a00027.html#gaa4c5f1690a09bd7a862d6ebf66034291", [
+    [ "FLEXCAN_CALLBACK", "a00027.html#gaa4c5f1690a09bd7a862d6ebf66034291", null ],
+    [ "flexcan_frame_format_t", "a00027.html#ga0fc17844cbc32ec0963c4a845ac9a562", null ],
+    [ "flexcan_frame_type_t", "a00027.html#gaff98da53a2fd874c9225b7e86c8c0f7f", null ],
+    [ "flexcan_clock_source_t", "a00027.html#ga7a0c31eb0515955961c22bae95ed12c3", null ],
+    [ "flexcan_wake_up_source_t", "a00027.html#ga185b971e55a824ad258ccfb3d87448ea", null ],
+    [ "flexcan_rx_fifo_filter_type_t", "a00027.html#ga0befca3f06184321dfac3b65e8b8b310", null ],
+    [ "flexcan_rx_fifo_priority_t", "a00027.html#gad8108b0166e7f9ca1d922de8ab47307f", null ],
+    [ "flexcan_frame_t", "a00027.html#ga8e99cd0558e81decabdcafae1ed4ca49", null ],
+    [ "flexcan_timing_config_t", "a00027.html#ga3d6bee81bd27ba7bf1d48845f2a5db19", null ],
+    [ "flexcan_config_t", "a00027.html#gac92b53682cc4684bb19d63533abaf950", null ],
+    [ "flexcan_rx_mb_config_t", "a00027.html#ga4fe64f2317d8cd6a28fa9bcd1a34889d", null ],
+    [ "flexcan_rx_fifo_config_t", "a00027.html#ga75f18778025a1fcdbe2e8a6b1bf9f41b", null ],
+    [ "flexcan_mb_transfer_t", "a00027.html#gae1e20e9dfdfebdeed7e86aa0b4396550", null ],
+    [ "flexcan_fifo_transfer_t", "a00027.html#ga093ac9e4fcaf26e413a1bc88c473c3e7", null ],
+    [ "flexcan_handle_t", "a00027.html#gafb040d05eeb1eb0edd80fd97e419dee8", [
       [ "kStatus_FLEXCAN_TxBusy", "a00027.html#gga16af7b253440dadd46a80a4b9fddba4da0080617424605a0a0a95e3333f24b3e4", null ],
       [ "kStatus_FLEXCAN_TxIdle", "a00027.html#gga16af7b253440dadd46a80a4b9fddba4da91fc36f54041f079bd0cbec9dedac200", null ],
       [ "kStatus_FLEXCAN_TxSwitchToRx", "a00027.html#gga16af7b253440dadd46a80a4b9fddba4da1faddda6dd8b232ad54604365e2d605d", null ],
@@ -122,33 +136,33 @@ var a00027 =
       [ "kStatus_FLEXCAN_UnHandled", "a00027.html#gga16af7b253440dadd46a80a4b9fddba4da853b75a2a57e9d380ee85ab69da946cc", null ],
       [ "kStatus_FLEXCAN_RxRemote", "a00027.html#gga16af7b253440dadd46a80a4b9fddba4daaf941c1bd407869facec54259129a97c", null ]
     ] ],
-    [ "flexcan_frame_format_t", "a00027.html#ga89e76f77a571693c1adeec47796c97df", [
-      [ "kFLEXCAN_FrameFormatStandard", "a00027.html#gga89e76f77a571693c1adeec47796c97dfa82e576bc13cb647a948eed52564d109b", null ],
-      [ "kFLEXCAN_FrameFormatExtend", "a00027.html#gga89e76f77a571693c1adeec47796c97dfa2acf770880d063c0522a5cc762ab2638", null ]
+    [ "_flexcan_frame_format", "a00027.html#ga30fad6511b6899d718319e257fd38007", [
+      [ "kFLEXCAN_FrameFormatStandard", "a00027.html#gga30fad6511b6899d718319e257fd38007a82e576bc13cb647a948eed52564d109b", null ],
+      [ "kFLEXCAN_FrameFormatExtend", "a00027.html#gga30fad6511b6899d718319e257fd38007a2acf770880d063c0522a5cc762ab2638", null ]
     ] ],
-    [ "flexcan_frame_type_t", "a00027.html#gacec96742e2b0b51a5bf3246bfc57a455", [
-      [ "kFLEXCAN_FrameTypeData", "a00027.html#ggacec96742e2b0b51a5bf3246bfc57a455a650a94706925910caaaef592a99f77b3", null ],
-      [ "kFLEXCAN_FrameTypeRemote", "a00027.html#ggacec96742e2b0b51a5bf3246bfc57a455ab8f92265dc2dadff64259080c78fa35e", null ]
+    [ "_flexcan_frame_type", "a00027.html#gabe8bc300867c9ad1f76934834f2a75f2", [
+      [ "kFLEXCAN_FrameTypeData", "a00027.html#ggabe8bc300867c9ad1f76934834f2a75f2a650a94706925910caaaef592a99f77b3", null ],
+      [ "kFLEXCAN_FrameTypeRemote", "a00027.html#ggabe8bc300867c9ad1f76934834f2a75f2ab8f92265dc2dadff64259080c78fa35e", null ]
     ] ],
-    [ "flexcan_clock_source_t", "a00027.html#gaa0b3ac1e2e7416950b82014d2a2b40ee", [
-      [ "kFLEXCAN_ClkSrcOsc", "a00027.html#ggaa0b3ac1e2e7416950b82014d2a2b40eead9cb66012e8d50e9ee3e154a36c1cff1", null ],
-      [ "kFLEXCAN_ClkSrcPeri", "a00027.html#ggaa0b3ac1e2e7416950b82014d2a2b40eea962bcf8760c6a23e054980b1d0c5a922", null ],
-      [ "kFLEXCAN_ClkSrc0", "a00027.html#ggaa0b3ac1e2e7416950b82014d2a2b40eea0025de2b1ce9650dc67c39a3b4d2d163", null ],
-      [ "kFLEXCAN_ClkSrc1", "a00027.html#ggaa0b3ac1e2e7416950b82014d2a2b40eea83c9af2bd0d2e239bf3c75ed72aee115", null ]
+    [ "_flexcan_clock_source", "a00027.html#ga6314aeebe2488fe50d9dd1fffbf366c8", [
+      [ "kFLEXCAN_ClkSrcOsc", "a00027.html#gga6314aeebe2488fe50d9dd1fffbf366c8ad9cb66012e8d50e9ee3e154a36c1cff1", null ],
+      [ "kFLEXCAN_ClkSrcPeri", "a00027.html#gga6314aeebe2488fe50d9dd1fffbf366c8a962bcf8760c6a23e054980b1d0c5a922", null ],
+      [ "kFLEXCAN_ClkSrc0", "a00027.html#gga6314aeebe2488fe50d9dd1fffbf366c8a0025de2b1ce9650dc67c39a3b4d2d163", null ],
+      [ "kFLEXCAN_ClkSrc1", "a00027.html#gga6314aeebe2488fe50d9dd1fffbf366c8a83c9af2bd0d2e239bf3c75ed72aee115", null ]
     ] ],
-    [ "flexcan_wake_up_source_t", "a00027.html#ga5ca4fd15317c08e08c9e163defc60d05", [
-      [ "kFLEXCAN_WakeupSrcUnfiltered", "a00027.html#gga5ca4fd15317c08e08c9e163defc60d05a7ce5f9548568e6af39398d517ea19e41", null ],
-      [ "kFLEXCAN_WakeupSrcFiltered", "a00027.html#gga5ca4fd15317c08e08c9e163defc60d05a268e3487326cba1981bcffc8f4baf14b", null ]
+    [ "_flexcan_wake_up_source", "a00027.html#gab9559b001234cdb38e5811396a4632f6", [
+      [ "kFLEXCAN_WakeupSrcUnfiltered", "a00027.html#ggab9559b001234cdb38e5811396a4632f6a7ce5f9548568e6af39398d517ea19e41", null ],
+      [ "kFLEXCAN_WakeupSrcFiltered", "a00027.html#ggab9559b001234cdb38e5811396a4632f6a268e3487326cba1981bcffc8f4baf14b", null ]
     ] ],
-    [ "flexcan_rx_fifo_filter_type_t", "a00027.html#ga1b8c38cce54aff2f24b6cd45da80f353", [
-      [ "kFLEXCAN_RxFifoFilterTypeA", "a00027.html#gga1b8c38cce54aff2f24b6cd45da80f353a1791608b19ef6a27483f55fee614f764", null ],
-      [ "kFLEXCAN_RxFifoFilterTypeB", "a00027.html#gga1b8c38cce54aff2f24b6cd45da80f353a0989630ff89813979a12fd56e772073c", null ],
-      [ "kFLEXCAN_RxFifoFilterTypeC", "a00027.html#gga1b8c38cce54aff2f24b6cd45da80f353ae4f020795b2ffb38eafb9a3648270a19", null ],
-      [ "kFLEXCAN_RxFifoFilterTypeD", "a00027.html#gga1b8c38cce54aff2f24b6cd45da80f353a6b221467793b4268bf84cd475b92780d", null ]
+    [ "_flexcan_rx_fifo_filter_type", "a00027.html#gaae011835245de279ed387ee0ff61d7cc", [
+      [ "kFLEXCAN_RxFifoFilterTypeA", "a00027.html#ggaae011835245de279ed387ee0ff61d7cca1791608b19ef6a27483f55fee614f764", null ],
+      [ "kFLEXCAN_RxFifoFilterTypeB", "a00027.html#ggaae011835245de279ed387ee0ff61d7cca0989630ff89813979a12fd56e772073c", null ],
+      [ "kFLEXCAN_RxFifoFilterTypeC", "a00027.html#ggaae011835245de279ed387ee0ff61d7ccae4f020795b2ffb38eafb9a3648270a19", null ],
+      [ "kFLEXCAN_RxFifoFilterTypeD", "a00027.html#ggaae011835245de279ed387ee0ff61d7cca6b221467793b4268bf84cd475b92780d", null ]
     ] ],
-    [ "flexcan_rx_fifo_priority_t", "a00027.html#ga5d139af23e8c1094b39d1cf26d85271b", [
-      [ "kFLEXCAN_RxFifoPrioLow", "a00027.html#gga5d139af23e8c1094b39d1cf26d85271babc83bc44026aa8c9eef2a4b259e05ecd", null ],
-      [ "kFLEXCAN_RxFifoPrioHigh", "a00027.html#gga5d139af23e8c1094b39d1cf26d85271bac2b9710c6248536f992bdd832d05f8cf", null ]
+    [ "_flexcan_rx_fifo_priority", "a00027.html#gafb8c23ce204d47e4528edced437e8a7d", [
+      [ "kFLEXCAN_RxFifoPrioLow", "a00027.html#ggafb8c23ce204d47e4528edced437e8a7dabc83bc44026aa8c9eef2a4b259e05ecd", null ],
+      [ "kFLEXCAN_RxFifoPrioHigh", "a00027.html#ggafb8c23ce204d47e4528edced437e8a7dac2b9710c6248536f992bdd832d05f8cf", null ]
     ] ],
     [ "_flexcan_interrupt_enable", "a00027.html#ga339a68a513c218f67756e2a04985428e", [
       [ "kFLEXCAN_BusOffInterruptEnable", "a00027.html#gga339a68a513c218f67756e2a04985428eac07643ed5772e0666315c8cf38d1912a", null ],
@@ -200,12 +214,12 @@ var a00027 =
     [ "FLEXCAN_GetStatusFlags", "a00027.html#ga46217b1ae979c927ae59b98fbbb181e3", null ],
     [ "FLEXCAN_ClearStatusFlags", "a00027.html#gace1fd2bc62b4f7c71d1fce292adf3b3a", null ],
     [ "FLEXCAN_GetBusErrCount", "a00027.html#gae5590e5f4a5c9cc23bf58bbba6466b9b", null ],
-    [ "FLEXCAN_GetMbStatusFlags", "a00027.html#gaf7de339e9d94a4c59f05c04655a23a6e", null ],
-    [ "FLEXCAN_ClearMbStatusFlags", "a00027.html#ga7199f7d1bf8198e03522d1d9706d50f2", null ],
+    [ "FLEXCAN_GetMbStatusFlags", "a00027.html#ga82d61a62e50d1ac7e520141156e01d96", null ],
+    [ "FLEXCAN_ClearMbStatusFlags", "a00027.html#ga4761779a4e4a67b638fa8c74d94afb9a", null ],
     [ "FLEXCAN_EnableInterrupts", "a00027.html#ga406e9c07a20ed89504c5716f02efb957", null ],
     [ "FLEXCAN_DisableInterrupts", "a00027.html#gad6e220545b129d120fac805e8f9d82ab", null ],
-    [ "FLEXCAN_EnableMbInterrupts", "a00027.html#gadbb25b3a7667fa94162f5c98a9dd8fed", null ],
-    [ "FLEXCAN_DisableMbInterrupts", "a00027.html#gac99226a65d8458ab9fb13a7ebfb75b49", null ],
+    [ "FLEXCAN_EnableMbInterrupts", "a00027.html#ga3c1b52fa316941bd352f7f13e92852a7", null ],
+    [ "FLEXCAN_DisableMbInterrupts", "a00027.html#gac340f1eabdcbbb6c7234d4bb7994b125", null ],
     [ "FLEXCAN_Enable", "a00027.html#ga20f79302d5fad90306a26b667f58fe4d", null ],
     [ "FLEXCAN_WriteTxMb", "a00027.html#ga9aa3cbde78272a0983317d6c79740a3d", null ],
     [ "FLEXCAN_ReadRxMb", "a00027.html#gad41dd26b58b8e36a1bf79425b46a275c", null ],

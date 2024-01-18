@@ -16,5 +16,7 @@ var file__src__freertos_8c =
     [ "filesrc_set_push_chunk_size", "file__src__freertos_8c.html#aeee857921280a7cd6222e4400bfd8f01", null ],
     [ "filesrc_get_push_chunk_size", "file__src__freertos_8c.html#a763c2ca3611a6c14f0008a2fd59f2bda", null ],
     [ "filesrc_read", "file__src__freertos_8c.html#a4928ae0fbcf3dcb8e0ff19ae32e6e310", null ],
-    [ "file_query", "file__src__freertos_8c.html#a7c5113c681dd9b5d994d440f03c40ff6", null ]
+    [ "file_query", "file__src__freertos_8c.html#a7c5113c681dd9b5d994d440f03c40ff6", null ],
+    [ "file_src_get_decoder_type", "file__src__freertos_8c.html#a17d147a4281fedd5498802cea608e548", null ],
+    [ "file_src_cfg_lookup_table", "file__src__freertos_8c.html#a757f61c596fb099d79210130ce1e1d2b", null ]
 ];

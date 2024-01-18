@@ -380,6 +380,9 @@ static void M1_StateInitFast(void)
     g_sM1AdcSensor.pui16SVMSector = &(g_sM1Drive.sFocPMSM.ui16SectorSVM);
     g_sM1AdcSensor.pui16AuxChan   = &(g_sM1Drive.f16AdcAuxSample);
 
+    /* get all adc samples - DC-bus voltage, current, bemf and aux sample */
+    M1_MCDRV_ADC_GET(&g_sM1AdcSensor);
+
     /* For ENC driver */
     g_sM1Enc.pf16PosElEst = &(g_sM1Drive.f16PosElEnc);
     g_sM1Enc.pfltSpdMeEst = &(g_sM1Drive.fltSpeedEnc);
@@ -681,7 +684,7 @@ static void M1_TransStopRun(void)
     g_sM1Drive.ui16CounterState = g_sM1Drive.ui16TimeCalibration;
 
     /* Update modulo counter */
-    MCDRV_QdEncSetPulses(&g_sM1Enc);
+    M1_MCDRV_QD_SET_PULSES(&g_sM1Enc);
 
     /* Calibration sub-state when transition to RUN */
     g_eM1StateRun = kRunState_Calib;
@@ -1171,11 +1174,10 @@ static void M1_StateRunFreewheelFast(void)
 RAM_FUNC_LIB
 static void M1_StateRunCalibSlow(void)
 {
-    /* Write calibrated offset values */
-    M1_MCDRV_CURR_3PH_CALIB_SET(&g_sM1AdcSensor);
-
     if (--g_sM1Drive.ui16CounterState == 0U)
     {
+	  /* Write calibrated offset values */
+	  M1_MCDRV_CURR_3PH_CALIB_SET(&g_sM1AdcSensor);
       /* To switch to the RUN READY sub-state */
       M1_TransRunCalibReady();
     }

@@ -1,10 +1,7 @@
 /*
  * Copyright 2018-2021 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /*!
@@ -496,11 +493,13 @@ static int32_t audiosink_get_property(StreamElement *element_ptr, uint16_t prop,
 
     switch (prop)
     {
-        case PROP_AUDIOSINK_DEVICE_DRIVER_TYPE:
+        case PROP_SPEAKER_DEVICE_DRIVER_TYPE:
+        case PROP_USB_SINK_DEVICE_DRIVER_TYPE:
             *val_ptr = audio_sink_ptr->device_driver_type;
             break;
 
-        case PROP_AUDIOSINK_TIME_UPDATE_MS:
+        case PROP_SPEAKER_TIME_UPDATE_MS:
+        case PROP_USB_SINK_TIME_UPDATE_MS:
             *val_ptr = audio_sink_ptr->time_report_diff;
             break;
 
@@ -540,7 +539,8 @@ static int32_t audiosink_set_property(StreamElement *element_ptr, uint16_t prop,
     STREAMER_LOG_DEBUG(DBG_AUDIO_SINK, "[Audio sink] audiosink_set_property: %d\n", prop);
     switch (prop)
     {
-        case PROP_AUDIOSINK_DEVICE_DRIVER_TYPE:
+        case PROP_SPEAKER_DEVICE_DRIVER_TYPE:
+        case PROP_USB_SINK_DEVICE_DRIVER_TYPE:
             STREAMER_LOG_DEBUG(DBG_AUDIO_SINK, "[Audio sink] driver type: %d\n", val);
             ret =
                 audiosink_set_device_driver_type((ElementHandle)(uintptr_t)element_ptr, (AudioSinkDeviceDriverType)val);
@@ -550,25 +550,41 @@ static int32_t audiosink_set_property(StreamElement *element_ptr, uint16_t prop,
             }
             break;
 
-        case PROP_AUDIOSINK_TIME_UPDATE_MS:
+        case PROP_SPEAKER_TIME_UPDATE_MS:
+        case PROP_USB_SINK_TIME_UPDATE_MS:
             audio_sink_ptr->time_report_diff = val;
             break;
 
-        case PROP_AUDIOSINK_DEVICE_DRIVER_STRING_NAME:
+        case PROP_SPEAKER_DEVICE_DRIVER_STRING_NAME:
+        case PROP_USB_SINK_DEVICE_DRIVER_STRING_NAME:
             ret = audiosink_set_device_string_name((ElementHandle)(uintptr_t)element_ptr, (char *)(uintptr_t)val);
             break;
 
-        case PROP_AUDIOSINK_BUFFER_USE_CHUNK_SIZE:
+        case PROP_SPEAKER_BUFFER_USE_CHUNK_SIZE:
+        case PROP_USB_SINK_BUFFER_USE_CHUNK_SIZE:
             audio_sink_ptr->buffer_use_chunk_size = (bool)val;
             break;
 
-        case PROP_AUDIOSINK_SET_VOLUME:
+        case PROP_SPEAKER_SET_VOLUME:
+        case PROP_USB_SINK_SET_VOLUME:
             _ret = audio_sink_ptr->device_ptr->set_volume_func(audio_sink_ptr, (int)val);
             if (_ret != AUDIO_SINK_SUCCESS)
                 ret = STREAM_ERR_GENERAL;
             break;
-        case PROP_AUDIOSINK_SET_REFDATA_ELEMENT:
+        case PROP_SPEAKER_SET_REFDATA_ELEMENT:
+        case PROP_USB_SINK_SET_REFDATA_ELEMENT:
             audio_sink_ptr->refData_element = (ElementHandle)val;
+            break;
+        case PROP_SPEAKER_SET_APP_FUNCTIONS:
+        case PROP_USB_SINK_SET_APP_FUNCTIONS:
+            audio_sink_ptr->appFunctions.open_func      = ((EXT_AUDIOELEMENT_DESC_T *)val)->open_func;
+            audio_sink_ptr->appFunctions.close_func     = ((EXT_AUDIOELEMENT_DESC_T *)val)->close_func;
+            audio_sink_ptr->appFunctions.start_func     = ((EXT_AUDIOELEMENT_DESC_T *)val)->start_func;
+            audio_sink_ptr->appFunctions.process_func   = ((EXT_AUDIOELEMENT_DESC_T *)val)->process_func;
+            audio_sink_ptr->appFunctions.set_param_func = ((EXT_AUDIOELEMENT_DESC_T *)val)->set_param_func;
+            audio_sink_ptr->appFunctions.get_param_func = ((EXT_AUDIOELEMENT_DESC_T *)val)->get_param_func;
+            audio_sink_ptr->appFunctions.mute_func      = ((EXT_AUDIOELEMENT_DESC_T *)val)->mute_func;
+            audio_sink_ptr->appFunctions.volume_func    = ((EXT_AUDIOELEMENT_DESC_T *)val)->volume_func;
             break;
         default:
             ret = AUDIO_SINK_ERROR_NO_RESOURCE;
@@ -609,12 +625,21 @@ int32_t audiosink_init_element(StreamElement *element)
     audio_sink_ptr->num_channels       = 0;
     audio_sink_ptr->sample_rate        = 0;
     audio_sink_ptr->format             = 0;
-    audio_sink_ptr->device_ptr         = NULL;
+    audio_sink_ptr->device_ptr         = &audio_sink_device_pcmrtos;
     audio_sink_ptr->error_element      = AUDIO_SINK_SUCCESS;
     audio_sink_ptr->device_name        = AUDIO_SINK_DEVICE_DEFAULT;
     audio_sink_ptr->device_info        = NULL;
     audio_sink_ptr->device_started     = false;
     audio_sink_ptr->refData_element    = (ElementHandle)NULL;
+
+    audio_sink_ptr->appFunctions.open_func      = NULL;
+    audio_sink_ptr->appFunctions.close_func     = NULL;
+    audio_sink_ptr->appFunctions.start_func     = NULL;
+    audio_sink_ptr->appFunctions.process_func   = NULL;
+    audio_sink_ptr->appFunctions.set_param_func = NULL;
+    audio_sink_ptr->appFunctions.get_param_func = NULL;
+    audio_sink_ptr->appFunctions.mute_func      = NULL;
+    audio_sink_ptr->appFunctions.volume_func    = NULL;
 
     /* initialize only sink pads handlers, no src pads for audio sink */
     for (i = 0; i < NUM_SINKS(TYPE_ELEMENT_AUDIO_SINK); i++)
@@ -626,6 +651,7 @@ int32_t audiosink_init_element(StreamElement *element)
         pad->query_handler      = audiosink_sink_pad_query_handler;
         pad->process_precheck   = NULL;
         pad->process_handler    = audiosink_sink_pad_process_handler;
+        pad->scheduling         = SCHEDULING_PUSH;
     }
 
 ERR:

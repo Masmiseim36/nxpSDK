@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: LPI2C: Low Power Inter-Integrated Circuit Driver</title>
+<title>MCUXpresso SDK API Reference Manual: FlexIO: FlexIO Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,137 +99,31 @@ $(document).ready(function(){initNavTree('a00220.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">LPI2C: Low Power Inter-Integrated Circuit Driver</div>  </div>
+<div class="title">FlexIO: FlexIO Driver</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
+<p>The MCUXpresso SDK provides a generic driver and multiple protocol-specific FlexIO drivers for the FlexIO module of MCUXpresso SDK devices. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
 Modules</h2></td></tr>
-<tr class="memitem:a00222"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00222.html">LPI2C CMSIS Driver</a></td></tr>
+<tr class="memitem:a00021"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00021.html">FlexIO Camera Driver</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00221"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00221.html">LPI2C FreeRTOS Driver</a></td></tr>
+<tr class="memitem:a00023"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00023.html">FlexIO Driver</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00040"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html">LPI2C Master DMA Driver</a></td></tr>
+<tr class="memitem:a00024"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html">FlexIO I2C Master Driver</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00039"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00039.html">LPI2C Master Driver</a></td></tr>
+<tr class="memitem:a00025"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00025.html">FlexIO I2S Driver</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00041"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html">LPI2C Slave Driver</a></td></tr>
+<tr class="memitem:a00027"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html">FlexIO MCU Interface LCD Driver</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gaac288786aaa7d0cb947c91591baf42d7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00220.html#gaac288786aaa7d0cb947c91591baf42d7">I2C_RETRY_TIMES</a>&#160;&#160;&#160;0U /* Define to zero means keep waiting until the flag is assert/deassert. */</td></tr>
-<tr class="memdesc:gaac288786aaa7d0cb947c91591baf42d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retry times for waiting flag.  <a href="#gaac288786aaa7d0cb947c91591baf42d7">More...</a><br/></td></tr>
-<tr class="separator:gaac288786aaa7d0cb947c91591baf42d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:gaae05225933a42f81e7c4a9fb286596f9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00220.html#ggaae05225933a42f81e7c4a9fb286596f9af52a270e301641b8855edf3fcc843814">kStatus_LPI2C_Busy</a> = MAKE_STATUS(kStatusGroup_LPI2C, 0), 
-<br/>
-&#160;&#160;<a class="el" href="a00220.html#ggaae05225933a42f81e7c4a9fb286596f9a6603ec1135f58532c9d4accc3661bc27">kStatus_LPI2C_Idle</a> = MAKE_STATUS(kStatusGroup_LPI2C, 1), 
-<br/>
-&#160;&#160;<a class="el" href="a00220.html#ggaae05225933a42f81e7c4a9fb286596f9a75dbc01ed590c24e787fadb97ba2f684">kStatus_LPI2C_Nak</a> = MAKE_STATUS(kStatusGroup_LPI2C, 2), 
-<br/>
-&#160;&#160;<a class="el" href="a00220.html#ggaae05225933a42f81e7c4a9fb286596f9a5b3634e1fedb0ad8cc38476aac29477e">kStatus_LPI2C_FifoError</a> = MAKE_STATUS(kStatusGroup_LPI2C, 3), 
-<br/>
-&#160;&#160;<a class="el" href="a00220.html#ggaae05225933a42f81e7c4a9fb286596f9aa08b2b2938831610ff303e2415291be6">kStatus_LPI2C_BitError</a> = MAKE_STATUS(kStatusGroup_LPI2C, 4), 
-<br/>
-&#160;&#160;<a class="el" href="a00220.html#ggaae05225933a42f81e7c4a9fb286596f9a5169d7e655df8bde3b4fc6d49ae8777a">kStatus_LPI2C_ArbitrationLost</a> = MAKE_STATUS(kStatusGroup_LPI2C, 5), 
-<br/>
-&#160;&#160;<a class="el" href="a00220.html#ggaae05225933a42f81e7c4a9fb286596f9aa8c558fc024cbde751d7861ea6efca78">kStatus_LPI2C_PinLowTimeout</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00220.html#ggaae05225933a42f81e7c4a9fb286596f9aa301f3640e63a3d3d951429b9b7ee866">kStatus_LPI2C_NoTransferInProgress</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00220.html#ggaae05225933a42f81e7c4a9fb286596f9a14d70db977f150497fd4a9d232dc2cd8">kStatus_LPI2C_DmaRequestFail</a> = MAKE_STATUS(kStatusGroup_LPI2C, 8), 
-<br/>
-&#160;&#160;<a class="el" href="a00220.html#ggaae05225933a42f81e7c4a9fb286596f9a002394fe77437f41ea82506d69646d66">kStatus_LPI2C_Timeout</a> = MAKE_STATUS(kStatusGroup_LPI2C, 9)
-<br/>
- }</td></tr>
-<tr class="memdesc:gaae05225933a42f81e7c4a9fb286596f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPI2C status return codes.  <a href="a00220.html#gaae05225933a42f81e7c4a9fb286596f9">More...</a><br/></td></tr>
-<tr class="separator:gaae05225933a42f81e7c4a9fb286596f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Driver version</h2></td></tr>
-<tr class="memitem:gad5469acd31ed336234c60b02cf7c424a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00220.html#gad5469acd31ed336234c60b02cf7c424a">FSL_LPI2C_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 5, 0))</td></tr>
-<tr class="memdesc:gad5469acd31ed336234c60b02cf7c424a"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPI2C driver version.  <a href="#gad5469acd31ed336234c60b02cf7c424a">More...</a><br/></td></tr>
-<tr class="separator:gad5469acd31ed336234c60b02cf7c424a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00029"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00029.html">FlexIO SPI Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00031"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00031.html">FlexIO UART Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gad5469acd31ed336234c60b02cf7c424a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FSL_LPI2C_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 5, 0))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="gaac288786aaa7d0cb947c91591baf42d7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define I2C_RETRY_TIMES&#160;&#160;&#160;0U /* Define to zero means keep waiting until the flag is assert/deassert. */</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gaae05225933a42f81e7c4a9fb286596f9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">anonymous enum</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaae05225933a42f81e7c4a9fb286596f9af52a270e301641b8855edf3fcc843814"></a>kStatus_LPI2C_Busy</em>&nbsp;</td><td class="fielddoc">
-<p>The master is already performing a transfer. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaae05225933a42f81e7c4a9fb286596f9a6603ec1135f58532c9d4accc3661bc27"></a>kStatus_LPI2C_Idle</em>&nbsp;</td><td class="fielddoc">
-<p>The slave driver is idle. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaae05225933a42f81e7c4a9fb286596f9a75dbc01ed590c24e787fadb97ba2f684"></a>kStatus_LPI2C_Nak</em>&nbsp;</td><td class="fielddoc">
-<p>The slave device sent a NAK in response to a byte. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaae05225933a42f81e7c4a9fb286596f9a5b3634e1fedb0ad8cc38476aac29477e"></a>kStatus_LPI2C_FifoError</em>&nbsp;</td><td class="fielddoc">
-<p>FIFO under run or overrun. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaae05225933a42f81e7c4a9fb286596f9aa08b2b2938831610ff303e2415291be6"></a>kStatus_LPI2C_BitError</em>&nbsp;</td><td class="fielddoc">
-<p>Transferred bit was not seen on the bus. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaae05225933a42f81e7c4a9fb286596f9a5169d7e655df8bde3b4fc6d49ae8777a"></a>kStatus_LPI2C_ArbitrationLost</em>&nbsp;</td><td class="fielddoc">
-<p>Arbitration lost error. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaae05225933a42f81e7c4a9fb286596f9aa8c558fc024cbde751d7861ea6efca78"></a>kStatus_LPI2C_PinLowTimeout</em>&nbsp;</td><td class="fielddoc">
-<p>SCL or SDA were held low longer than the timeout. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaae05225933a42f81e7c4a9fb286596f9aa301f3640e63a3d3d951429b9b7ee866"></a>kStatus_LPI2C_NoTransferInProgress</em>&nbsp;</td><td class="fielddoc">
-<p>Attempt to abort a transfer when one is not in progress. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaae05225933a42f81e7c4a9fb286596f9a14d70db977f150497fd4a9d232dc2cd8"></a>kStatus_LPI2C_DmaRequestFail</em>&nbsp;</td><td class="fielddoc">
-<p>DMA request failed. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaae05225933a42f81e7c4a9fb286596f9a002394fe77437f41ea82506d69646d66"></a>kStatus_LPI2C_Timeout</em>&nbsp;</td><td class="fielddoc">
-<p>Timeout polling status flags. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->

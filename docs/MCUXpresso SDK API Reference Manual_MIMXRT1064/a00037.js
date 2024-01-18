@@ -1,54 +1,62 @@
 var a00037 =
 [
     [ "FlexIO eDMA SPI Driver", "a00038.html", "a00038" ],
-    [ "FLEXIO_SPI_Type", "a00037.html#a00434", [
-      [ "flexioBase", "a00037.html#a6f884e3d820db0fa2c2974d9e8feaca1", null ],
-      [ "SDOPinIndex", "a00037.html#a5df20f69be0906774c5b3d9c06821868", null ],
-      [ "SDIPinIndex", "a00037.html#a176d632a86bd48ee20db504ddb5ace5d", null ],
-      [ "SCKPinIndex", "a00037.html#a5bd00a1e1450d172c1c651036af261bc", null ],
-      [ "CSnPinIndex", "a00037.html#af3462a62b5058e897b7d8387daf30317", null ],
-      [ "shifterIndex", "a00037.html#ad2ab114592f4a5982720447f8cd9e90d", null ],
-      [ "timerIndex", "a00037.html#a952204114daf59aeeb9437af1abc6eef", null ]
+    [ "_flexio_spi_type", "a00037.html#a00412", [
+      [ "flexioBase", "a00037.html#a4dc08bcdfef224a823fe5655f1351079", null ],
+      [ "SDOPinIndex", "a00037.html#a13c3a1fc33229ca2958e0a74c6675dc4", null ],
+      [ "SDIPinIndex", "a00037.html#a27df7a01b0fed892b728fe34587fe983", null ],
+      [ "SCKPinIndex", "a00037.html#ab045d54defde2a17569dba649a4a7b2a", null ],
+      [ "CSnPinIndex", "a00037.html#ae876af2d130b3624acc52b97a3aff3bf", null ],
+      [ "shifterIndex", "a00037.html#a8b4806ac616f6fbbab5edb677cf4561c", null ],
+      [ "timerIndex", "a00037.html#a24ab8783c327151df41d4cd5fe0c9f30", null ]
     ] ],
-    [ "flexio_spi_master_config_t", "a00037.html#a00431", [
-      [ "enableMaster", "a00037.html#abfa7b62cfa5ecc303b203c9206e8511b", null ],
-      [ "enableInDoze", "a00037.html#ace1bcfad14f01d682d72126fe8977379", null ],
-      [ "enableInDebug", "a00037.html#ae25034f9e6018e4fb4688ed8867c6b18", null ],
-      [ "enableFastAccess", "a00037.html#aca4f2130311c4dea49126cfba678669c", null ],
-      [ "baudRate_Bps", "a00037.html#a6f95fac4a0afc21630b3837787bbb353", null ],
-      [ "phase", "a00037.html#a76cac3e67183266b66cf25a29c2669bf", null ],
-      [ "dataMode", "a00037.html#a1ed3e04044edd43a3ab1658b83cc7a70", null ]
+    [ "_flexio_spi_master_config", "a00037.html#a00407", [
+      [ "enableMaster", "a00037.html#a567386226d7df91faf4d60b9b3005cb9", null ],
+      [ "enableInDoze", "a00037.html#ac278230317cf87c458c532bc22d4da8c", null ],
+      [ "enableInDebug", "a00037.html#a3bde3f256e4ab5e75790c4eb5d2ec91c", null ],
+      [ "enableFastAccess", "a00037.html#a1812dbcee1a3125fea63d5ab97bfcb5e", null ],
+      [ "baudRate_Bps", "a00037.html#a0b29db4775a69b9a97ec326da0d14d25", null ],
+      [ "phase", "a00037.html#a1ef09b527bdeaca4a6cd0af74174ee18", null ],
+      [ "dataMode", "a00037.html#a6e294aa10c5ec01a08f7aa86b27d6b81", null ]
     ] ],
-    [ "flexio_spi_slave_config_t", "a00037.html#a00432", [
-      [ "enableSlave", "a00037.html#a5fcf34758ddd907b1860679305858de1", null ],
-      [ "enableInDoze", "a00037.html#ab13e01169ca99c72157d7e927e9c7d6f", null ],
-      [ "enableInDebug", "a00037.html#af4180104efb170139a0e4ab731e38361", null ],
-      [ "enableFastAccess", "a00037.html#a431d5f78a4038ee716d38905334e558e", null ],
-      [ "phase", "a00037.html#a5ba29aaf41caf774f7077f1e8fe64404", null ],
-      [ "dataMode", "a00037.html#a5b7c853f42ed1b2e53e07034daf3d26f", null ]
+    [ "_flexio_spi_slave_config", "a00037.html#a00410", [
+      [ "enableSlave", "a00037.html#ae499fbfb72599cb20bce91435aa523ae", null ],
+      [ "enableInDoze", "a00037.html#aa9fca18ad65df7eb3b2391d780def4eb", null ],
+      [ "enableInDebug", "a00037.html#a91046bd3f90ec29de679e20721ee5b72", null ],
+      [ "enableFastAccess", "a00037.html#adb6362ae39a47f90dd92103c2af70f0b", null ],
+      [ "phase", "a00037.html#a734c4f75ee49fb5207b633c727481fde", null ],
+      [ "dataMode", "a00037.html#a3613b4e5b514b11026f91692d5e24080", null ]
     ] ],
-    [ "flexio_spi_transfer_t", "a00037.html#a00433", [
-      [ "txData", "a00037.html#adce5c034b8842ec6a9d3c3d2f12f2b72", null ],
-      [ "rxData", "a00037.html#a5a1a761e9cc6c90947ad55b701324258", null ],
-      [ "dataSize", "a00037.html#a5e76062efe44914a5bbb2f4fc3ca3aac", null ],
-      [ "flags", "a00037.html#a890b496be606905d29d43abedf7e753b", null ]
+    [ "_flexio_spi_transfer", "a00037.html#a00411", [
+      [ "txData", "a00037.html#a25d9c2eba39a591d122105446594d628", null ],
+      [ "rxData", "a00037.html#a5790b55749df9533289b7a3df2a2a62e", null ],
+      [ "dataSize", "a00037.html#a5ef46e695ae4a85fd4eb767b359bc949", null ],
+      [ "flags", "a00037.html#a0287079938a673a719ab4efc7e185e15", null ]
     ] ],
-    [ "flexio_spi_master_handle_t", "a00037.html#a00324", [
-      [ "txData", "a00037.html#a9a8bad99d5d80699be0d248092ac8d80", null ],
-      [ "rxData", "a00037.html#a6f04ebbd2ad671dd6657be16c26bd1e6", null ],
-      [ "transferSize", "a00037.html#aee24e8b68706ac6bb69c501295b8f289", null ],
-      [ "txRemainingBytes", "a00037.html#aeecd6ae001c1bbdfab21eb288f0ca8a9", null ],
-      [ "rxRemainingBytes", "a00037.html#aee7be6e3dd2109f9d5374a1b2fb45ade", null ],
-      [ "state", "a00037.html#a25ee5785454882c9d0856f3a0fb8e23a", null ],
-      [ "bytePerFrame", "a00037.html#ab0c81d09878eaff0b35189d7b7d4441a", null ],
-      [ "direction", "a00037.html#a8ab5ab2070ea63f0c52d1c6da2786459", null ],
-      [ "callback", "a00037.html#ac4118ced7c959f43005a9b4cdc48786d", null ],
-      [ "userData", "a00037.html#a7d3fb8c3a3c3b23a1908c0bb70230166", null ]
+    [ "_flexio_spi_master_handle", "a00037.html#a00409", [
+      [ "txData", "a00037.html#a7ac65bf28b4ef86c5635ecaecc0e68b6", null ],
+      [ "rxData", "a00037.html#a61c91cb060d0f514dc9408dda09bea9f", null ],
+      [ "transferSize", "a00037.html#a0907f74a10d6b516058f9275b08d6013", null ],
+      [ "txRemainingBytes", "a00037.html#a4f76b4e4c94aa41b259ec8deec2fbb19", null ],
+      [ "rxRemainingBytes", "a00037.html#a9916bce5bb037e40583016f2af53f59c", null ],
+      [ "state", "a00037.html#a656eb9c3108db3cb9d1afe15cc8aa0ff", null ],
+      [ "bytePerFrame", "a00037.html#ae1f02bf197fab7d9163df46a1b4abef2", null ],
+      [ "direction", "a00037.html#a30994854f66b9fac60f38871fcafc7f5", null ],
+      [ "callback", "a00037.html#adf93396cda91ca91dca225f8c572a493", null ],
+      [ "userData", "a00037.html#a3e1d615968076345696ea1dda6c62cc2", null ]
     ] ],
     [ "FSL_FLEXIO_SPI_DRIVER_VERSION", "a00037.html#gadd4392d8b86be4236270866fa214dcbe", null ],
     [ "FLEXIO_SPI_DUMMYDATA", "a00037.html#gad411a43e379e70215b462831b24c5c5b", null ],
     [ "SPI_RETRY_TIMES", "a00037.html#gaa4717c15ca9604c505a5e5c60df29ebe", null ],
     [ "FLEXIO_SPI_XFER_DATA_FORMAT", "a00037.html#ga7b59f53366b1e5bb10a0491a20543382", null ],
+    [ "flexio_spi_clock_phase_t", "a00037.html#gaf8848e79c5dc0c60907289557dca3acf", null ],
+    [ "flexio_spi_shift_direction_t", "a00037.html#ga8ee59b2ba60e4cfd1fcdd5f403968759", null ],
+    [ "flexio_spi_data_bitcount_mode_t", "a00037.html#ga35007f9d18a27c436b3342cd87d07763", null ],
+    [ "FLEXIO_SPI_Type", "a00037.html#gabbf9b6da1adb43559aa1b75433cdd7d1", null ],
+    [ "flexio_spi_master_config_t", "a00037.html#gaec04efd2d8f6c4782eba4a1fe22387c0", null ],
+    [ "flexio_spi_slave_config_t", "a00037.html#gad203cea9b4cf3751fd78ddb36653246d", null ],
+    [ "flexio_spi_transfer_t", "a00037.html#gac381494803bf8b1c2dd9be82bae1f849", null ],
+    [ "flexio_spi_master_handle_t", "a00037.html#gae91f9b442547c1143f1d0a19deee74a2", null ],
     [ "flexio_spi_slave_handle_t", "a00037.html#ga1950678efd37cb3665e303e094cec428", null ],
     [ "flexio_spi_master_transfer_callback_t", "a00037.html#ga9c8b509b90588dea1921de0bdb3cfec8", null ],
     [ "flexio_spi_slave_transfer_callback_t", "a00037.html#gad2accadc980b51b0d65e41d122abe261", [
@@ -57,18 +65,18 @@ var a00037 =
       [ "kStatus_FLEXIO_SPI_Error", "a00037.html#ggafccd240f973cf154952fb917c9209719a4ae19baeae73d05d2dcf34dc4c54c6c4", null ],
       [ "kStatus_FLEXIO_SPI_Timeout", "a00037.html#ggafccd240f973cf154952fb917c9209719ae001cfaa37d2b750cd88808cbc3d7522", null ]
     ] ],
-    [ "flexio_spi_clock_phase_t", "a00037.html#gac059394d6eabe169d3a1ee8a8b6f7edd", [
-      [ "kFLEXIO_SPI_ClockPhaseFirstEdge", "a00037.html#ggac059394d6eabe169d3a1ee8a8b6f7eddad07a920661cea5317982da4405bfd9e1", null ],
-      [ "kFLEXIO_SPI_ClockPhaseSecondEdge", "a00037.html#ggac059394d6eabe169d3a1ee8a8b6f7edda9d85a76b5ce670c1d47e5f95f4a46e6c", null ]
+    [ "_flexio_spi_clock_phase", "a00037.html#ga8766d433030d910dc953df84de513e94", [
+      [ "kFLEXIO_SPI_ClockPhaseFirstEdge", "a00037.html#gga8766d433030d910dc953df84de513e94ad07a920661cea5317982da4405bfd9e1", null ],
+      [ "kFLEXIO_SPI_ClockPhaseSecondEdge", "a00037.html#gga8766d433030d910dc953df84de513e94a9d85a76b5ce670c1d47e5f95f4a46e6c", null ]
     ] ],
-    [ "flexio_spi_shift_direction_t", "a00037.html#ga25594db149526d67b23d92724487e87f", [
-      [ "kFLEXIO_SPI_MsbFirst", "a00037.html#gga25594db149526d67b23d92724487e87fad6c96f26bda5bc22af19be1e7906f3f2", null ],
-      [ "kFLEXIO_SPI_LsbFirst", "a00037.html#gga25594db149526d67b23d92724487e87faa2a981323f199d9359c61d39cb059795", null ]
+    [ "_flexio_spi_shift_direction", "a00037.html#ga94c0a678c0641bdad93ff2e6d8512301", [
+      [ "kFLEXIO_SPI_MsbFirst", "a00037.html#gga94c0a678c0641bdad93ff2e6d8512301ad6c96f26bda5bc22af19be1e7906f3f2", null ],
+      [ "kFLEXIO_SPI_LsbFirst", "a00037.html#gga94c0a678c0641bdad93ff2e6d8512301aa2a981323f199d9359c61d39cb059795", null ]
     ] ],
-    [ "flexio_spi_data_bitcount_mode_t", "a00037.html#gae4e518a5b077982fca7b6bf1025c7aaf", [
-      [ "kFLEXIO_SPI_8BitMode", "a00037.html#ggae4e518a5b077982fca7b6bf1025c7aafaef0c633539e44547b47ad7b754234752", null ],
-      [ "kFLEXIO_SPI_16BitMode", "a00037.html#ggae4e518a5b077982fca7b6bf1025c7aafa343c7a9db539019f0c99fb82b4adab35", null ],
-      [ "kFLEXIO_SPI_32BitMode", "a00037.html#ggae4e518a5b077982fca7b6bf1025c7aafa7f4a057b24ac43b60fa4795d2a79b25a", null ]
+    [ "_flexio_spi_data_bitcount_mode", "a00037.html#gacb3d3ee6ee94929d708ec78489a83909", [
+      [ "kFLEXIO_SPI_8BitMode", "a00037.html#ggacb3d3ee6ee94929d708ec78489a83909aef0c633539e44547b47ad7b754234752", null ],
+      [ "kFLEXIO_SPI_16BitMode", "a00037.html#ggacb3d3ee6ee94929d708ec78489a83909a343c7a9db539019f0c99fb82b4adab35", null ],
+      [ "kFLEXIO_SPI_32BitMode", "a00037.html#ggacb3d3ee6ee94929d708ec78489a83909a7f4a057b24ac43b60fa4795d2a79b25a", null ]
     ] ],
     [ "_flexio_spi_interrupt_enable", "a00037.html#ga239e9a0ff79e0d36ecf6ae7c68dfd357", [
       [ "kFLEXIO_SPI_TxEmptyInterruptEnable", "a00037.html#gga239e9a0ff79e0d36ecf6ae7c68dfd357a5243ceb746eebfdeef2ba2d791e32ff9", null ],

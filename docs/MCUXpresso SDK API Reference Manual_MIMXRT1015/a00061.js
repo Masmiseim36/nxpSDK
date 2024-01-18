@@ -1,11 +1,11 @@
 var a00061 =
 [
-    [ "shell_command_t", "a00061.html#a00400", [
-      [ "pcCommand", "a00061.html#a9bcf2ff85f63adcaa4c03f4ef85e8df9", null ],
-      [ "pcHelpString", "a00061.html#af6bfe76160c7aeeb3c32cc2fe117541b", null ],
-      [ "pFuncCallBack", "a00061.html#aa5d55bf1f33b397949eb926c9ee48e6d", null ],
-      [ "cExpectedNumberOfParameters", "a00061.html#a4a72da17de3b4a0af7b4072d726449c6", null ],
-      [ "link", "a00061.html#a8178558fd61934e49498c79f2e47792e", null ]
+    [ "_shell_command", "a00061.html#a00397", [
+      [ "pcCommand", "a00061.html#a02e67ebfd942afb269dbfa8906dabb4a", null ],
+      [ "pcHelpString", "a00061.html#acce9b1b9a25275d44a705457522151b6", null ],
+      [ "pFuncCallBack", "a00061.html#ab6ae0c867566014c33620c413c568a68", null ],
+      [ "cExpectedNumberOfParameters", "a00061.html#a9304a184b0817140b357805e4e324f58", null ],
+      [ "link", "a00061.html#ab656143c38d8fc0338aa2e58e76d73a2", null ]
     ] ],
     [ "SHELL_NON_BLOCKING_MODE", "a00061.html#ga30f0f53e0fd0ab3f7f4696f8f8e3e8ab", null ],
     [ "SHELL_AUTO_COMPLETE", "a00061.html#ga30882f4b5fc99cbc21459cc960ef9ffe", null ],
@@ -20,14 +20,16 @@ var a00061 =
     [ "SHELL_HANDLE_DEFINE", "a00061.html#gafdb2c68b2d83d459fc196ab0f58d7ab3", null ],
     [ "SHELL_COMMAND_DEFINE", "a00061.html#gacd1f7ee25cd791efee6a45e753ec9824", null ],
     [ "SHELL_COMMAND", "a00061.html#ga16dd6cfbd9db7dafdaa802eda58564b5", null ],
+    [ "shell_status_t", "a00061.html#ga404a8f9575fa7e73f64e24e4a1876195", null ],
     [ "shell_handle_t", "a00061.html#ga818c3ca274bd83d1dc870a5618eb21f2", null ],
     [ "cmd_function_t", "a00061.html#ga7ace1ddfb1e83ac1516ac44be90cf822", null ],
-    [ "shell_status_t", "a00061.html#ga16424f17c6492c580e65adf9a4e1ac61", [
-      [ "kStatus_SHELL_Success", "a00061.html#gga16424f17c6492c580e65adf9a4e1ac61aeb6cf57843c8b47b87ae07417d53df3e", null ],
-      [ "kStatus_SHELL_Error", "a00061.html#gga16424f17c6492c580e65adf9a4e1ac61ae1a9ae61e350888892f4cde21f8dd7f9", null ],
-      [ "kStatus_SHELL_OpenWriteHandleFailed", "a00061.html#gga16424f17c6492c580e65adf9a4e1ac61a25ff80ec847b1028041ae913beec2b5b", null ],
-      [ "kStatus_SHELL_OpenReadHandleFailed", "a00061.html#gga16424f17c6492c580e65adf9a4e1ac61a14f89a732b5c11a35e8c9b91d4e22ad8", null ],
-      [ "kStatus_SHELL_RetUsage", "a00061.html#gga16424f17c6492c580e65adf9a4e1ac61ad139f389943f49d948bbff024d6c5a26", null ]
+    [ "shell_command_t", "a00061.html#ga408f7fb32b47f13f37eb195eb51074fe", null ],
+    [ "_shell_status", "a00061.html#gaefa59271a266a79694a5c9574f1db8b5", [
+      [ "kStatus_SHELL_Success", "a00061.html#ggaefa59271a266a79694a5c9574f1db8b5aeb6cf57843c8b47b87ae07417d53df3e", null ],
+      [ "kStatus_SHELL_Error", "a00061.html#ggaefa59271a266a79694a5c9574f1db8b5ae1a9ae61e350888892f4cde21f8dd7f9", null ],
+      [ "kStatus_SHELL_OpenWriteHandleFailed", "a00061.html#ggaefa59271a266a79694a5c9574f1db8b5a25ff80ec847b1028041ae913beec2b5b", null ],
+      [ "kStatus_SHELL_OpenReadHandleFailed", "a00061.html#ggaefa59271a266a79694a5c9574f1db8b5a14f89a732b5c11a35e8c9b91d4e22ad8", null ],
+      [ "kStatus_SHELL_RetUsage", "a00061.html#ggaefa59271a266a79694a5c9574f1db8b5ad139f389943f49d948bbff024d6c5a26", null ]
     ] ],
     [ "SHELL_Init", "a00061.html#ga7961e946400cd244c315cfbbd36ae5d1", null ],
     [ "SHELL_RegisterCommand", "a00061.html#gab5f85f3ba2cc7dd58bc85076c19c5177", null ],

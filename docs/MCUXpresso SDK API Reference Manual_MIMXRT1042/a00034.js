@@ -25,9 +25,10 @@ var a00034 =
     ] ],
     [ "flexio_mculcd_transfer_t", "a00034.html#a00419", [
       [ "command", "a00034.html#aa447f012ca360d9b06b569879f0342c7", null ],
-      [ "mode", "a00034.html#ac69465289fcc81b805c8ee84d4f5f526", null ],
       [ "dataAddrOrSameValue", "a00034.html#a8dc56304688ac3d2ecf1084316e06202", null ],
-      [ "dataSize", "a00034.html#ac9fefa4bb4e9dbf94a8769d5dc6369f4", null ]
+      [ "dataSize", "a00034.html#ac9fefa4bb4e9dbf94a8769d5dc6369f4", null ],
+      [ "mode", "a00034.html#ac69465289fcc81b805c8ee84d4f5f526", null ],
+      [ "dataOnly", "a00034.html#a30cf1a1bd9447f72e9d9d77045215295", null ]
     ] ],
     [ "flexio_mculcd_handle_t", "a00034.html#a00314", [
       [ "dataAddrOrSameValue", "a00034.html#afd6b5ba7856e4a60b09284d8648927f6", null ],

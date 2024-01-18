@@ -1,5 +1,5 @@
-/* 
- * Copyright 2018, 2019, 2020, 2021, 2022 NXP
+/*
+ * Copyright 2018-2022 NXP
  * 
  * SPDX-License-Identifier: Apache-2.0
  * 
@@ -13,6 +13,7 @@
 #include "./protobuf/Dispatcher.pb.h"
 #include "./protobuf/Datastore.pb.h"
 
+#if !(AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1)
 #define IOT_AGENT_DATASTORE_FS_VERSION_MAJOR (1U)
 #define IOT_AGENT_DATASTORE_FS_VERSION_MINOR (0U)
 #define IOT_AGENT_DATASTORE_FS_VERSION_PATCH (0U)
@@ -431,5 +432,5 @@ bool iot_agent_datastore_fs_handle_request(pb_istream_t *istream,
 exit:
 	return result;
 }
-#endif
-
+#endif //!(AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1)
+#endif //!(defined(__ICCARM__) || defined(__CC_ARM) || defined(__ARMCC_VERSION))

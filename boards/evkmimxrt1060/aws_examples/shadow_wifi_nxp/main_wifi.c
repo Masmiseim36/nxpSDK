@@ -33,7 +33,15 @@
 #include "clock_config.h"
 #include "board.h"
 
+#if defined(MBEDTLS_MCUX_ELE_S400_API)
+#include "ele_mbedtls.h"
+#elif defined(MBEDTLS_MCUX_ELS_PKC_API)
+#include "platform_hw_ip.h"
+#include "els_pkc_mbedtls.h"
+#else
 #include "ksdk_mbedtls.h"
+#endif
+
 #include "mflash_file.h"
 #include "kvstore.h"
 

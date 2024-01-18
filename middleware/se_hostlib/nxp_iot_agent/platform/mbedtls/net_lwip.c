@@ -20,29 +20,31 @@
  *
  *  This file is part of mbed TLS (https://tls.mbed.org)
  */
-
+/* Copyright 2019-2022 NXP
+ */
 #if defined(USE_RTOS) && USE_RTOS == 1
-
-#if !(defined(__ICCARM__) || defined(__CC_ARM) || defined(__ARMCC_VERSION))
-#include <sys/time.h>
-#endif
 
 #define LWIP_SOCKET 1
 #if !(defined(__ICCARM__) || defined(__CC_ARM) || defined(__ARMCC_VERSION))
+#include <sys/types.h>
+#include <unistd.h>
+#include <sys/time.h>
 #define LWIP_TIMEVAL_PRIVATE 0
 #endif
+
 #include "../include/lwip/sockets.h"
 #include <lwip/netdb.h>
 
+#include <mbedtls/version.h>
 
+#if defined(MBEDTLS_VERSION_NUMBER) && (MBEDTLS_VERSION_NUMBER < 0x03010000)
 #include "mbedtls/net.h"
+#else
+#include "mbedtls/net_sockets.h"
+#endif //MBEDTLS_VERSION_NUMBER < 0x03010000
 
 #include <string.h>
 
-#if !(defined(__ICCARM__) || defined(__CC_ARM) || defined(__ARMCC_VERSION))
-#include <sys/types.h>
-#include <unistd.h>
-#endif
 #include <errno.h>
 
 #include <stdlib.h>

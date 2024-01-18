@@ -1,11 +1,12 @@
 /*
- * Copyright 2018, 2019, 2020, 2021 NXP
+ * Copyright 2018-2023 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
  */
 
 #include <nxp_iot_agent_config_certificates.h>
+#include <nxp_iot_agent_config_credentials.h>
 
 #ifndef _NXP_IOT_AGENT_CONFIG_H_
 #define _NXP_IOT_AGENT_CONFIG_H_
@@ -13,10 +14,10 @@
 #define NXP_IOT_AGENT_MAX_NUM_KEYSTORES       (1U)
 #define NXP_IOT_AGENT_MAX_NUM_DATASTORES      (1U)
 
-#define NXP_IOT_AGENT_MAX_NUM_ENDPOINTS    \
-    ((size_t)(1U /* agent itself */                  \
+#define NXP_IOT_AGENT_MAX_NUM_ENDPOINTS     \
+    ((size_t)(1U /* agent itself */         \
 	+ 1U /* edgelock2go datastore */        \
-	+ NXP_IOT_AGENT_MAX_NUM_KEYSTORES      \
+	+ NXP_IOT_AGENT_MAX_NUM_KEYSTORES       \
 	+ NXP_IOT_AGENT_MAX_NUM_DATASTORES))
 
 /**
@@ -117,11 +118,15 @@
  *   - NXP_IOT_AGENT_TRUSTED_ROOT_CA_CERT_RSA_PROD
  */
 
-#if EXTERNAL_CUSTOMER_BUILD_CONFIGURATION
+#if defined(EXTERNAL_CUSTOMER_BUILD_CONFIGURATION) && (EXTERNAL_CUSTOMER_BUILD_CONFIGURATION == 1)
 #define NXP_IOT_AGENT_TRUSTED_ROOT_CA_CERTIFICATES { \
     NXP_IOT_AGENT_TRUSTED_ROOT_CA_CERT_RSA_PROD,    \
     NXP_IOT_AGENT_TRUSTED_ROOT_CA_CERT_ECC_PROD     \
 }
+
+#define NXP_IOT_AGENT_CLAIMCODE_KEY_AGREEMENT_PUBLIC_KEY        NXP_IOT_AGENT_CLAIMCODE_KEY_AGREEMENT_PUBLIC_KEY_PROD
+#define NXP_IOT_AGENT_CLAIMCODE_KEY_AGREEMENT_PUBLIC_KEY_SIZE   NXP_IOT_AGENT_CLAIMCODE_KEY_AGREEMENT_PUBLIC_KEY_PROD_SIZE
+
 
 /**
  * Total size of the trusted root ca certificates. This must match the certificates configured in
@@ -142,18 +147,16 @@
     NXP_IOT_AGENT_TRUSTED_ROOT_CA_CERT_RSA_SANDBOX_SIZE + \
     NXP_IOT_AGENT_TRUSTED_ROOT_CA_CERT_ECC_SANDBOX_SIZE
 
+#define NXP_IOT_AGENT_CLAIMCODE_KEY_AGREEMENT_PUBLIC_KEY        NXP_IOT_AGENT_CLAIMCODE_KEY_AGREEMENT_PUBLIC_KEY_SANDBOX
+#define NXP_IOT_AGENT_CLAIMCODE_KEY_AGREEMENT_PUBLIC_KEY_SIZE   NXP_IOT_AGENT_CLAIMCODE_KEY_AGREEMENT_PUBLIC_KEY_SANDBOX_SIZE
+
 #endif
 
 /**
-* Flag to enable or disable measurement performance timings of EdgeLock 2GO Agent.
-*/
+ * Flag to enable or disable measurement performance timings of EdgeLock 2GO Agent.
+ */
 #define IOT_AGENT_TIME_MEASUREMENT_ENABLE     1
-
-/**
-* Flag to enable or disable claimcode injection into secure element.
-*/
-#define IOT_AGENT_CLAIMCODE_INJECT_ENABLE     0
-
+ 
 /**
  * Set the log-level that is used for output of messages of the openssl engine. The level is a 
  * combination of flags for different message types:
@@ -162,6 +165,11 @@
  *   - 0x01 : Flow messages
  */
 #define NXP_IOT_AGENT_OPENSSL_ENGINE_LOG_LEVEL 0x04
+
+/**
+ * Set the maximum possible size of key data that can be received from EdgeLock 2GO. 
+ */
+#define NXP_IOT_AGENT_MAX_KEY_DATA_SIZE (10*1024)
 
 #ifndef ENABLE_IOT_AGENT_TRACE
 #define ENABLE_IOT_AGENT_TRACE     0

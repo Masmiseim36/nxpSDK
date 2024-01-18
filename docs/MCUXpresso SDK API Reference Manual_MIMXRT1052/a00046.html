@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -100,6 +100,7 @@ $(document).ready(function(){initNavTree('a00046.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">KPP: KeyPad Port Driver</div>  </div>
@@ -117,38 +118,50 @@ Typical use case</h1>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00445"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a00445">kpp_config_t</a></td></tr>
-<tr class="memdesc:a00445"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lists of KPP status.  <a href="a00046.html#a00445">More...</a><br/></td></tr>
-<tr class="separator:a00445"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00428"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a00428">_kpp_config</a></td></tr>
+<tr class="memdesc:a00428"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lists of KPP status.  <a href="a00046.html#a00428">More...</a><br/></td></tr>
+<tr class="separator:a00428"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga750601427065c87c4daf8fc07091d039"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00046.html#ga8c6f14f0861416aab52182b088863d5b">_kpp_interrupt_enable</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga750601427065c87c4daf8fc07091d039">kpp_interrupt_enable_t</a></td></tr>
+<tr class="memdesc:ga750601427065c87c4daf8fc07091d039"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of interrupts supported by the peripheral.  <a href="#ga750601427065c87c4daf8fc07091d039">More...</a><br/></td></tr>
+<tr class="separator:ga750601427065c87c4daf8fc07091d039"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5c752eb676c0517a7cd9bfc52e4744aa"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00046.html#gafab0e664fb713522de61aa4907426ca3">_kpp_sync_operation</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga5c752eb676c0517a7cd9bfc52e4744aa">kpp_sync_operation_t</a></td></tr>
+<tr class="memdesc:ga5c752eb676c0517a7cd9bfc52e4744aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lists of KPP synchronize chain operation.  <a href="#ga5c752eb676c0517a7cd9bfc52e4744aa">More...</a><br/></td></tr>
+<tr class="separator:ga5c752eb676c0517a7cd9bfc52e4744aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf36399349f3826313f180a4798ac3275"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00046.html#a00428">_kpp_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gaf36399349f3826313f180a4798ac3275">kpp_config_t</a></td></tr>
+<tr class="memdesc:gaf36399349f3826313f180a4798ac3275"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lists of KPP status.  <a href="#gaf36399349f3826313f180a4798ac3275">More...</a><br/></td></tr>
+<tr class="separator:gaf36399349f3826313f180a4798ac3275"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga405aea9bdb57ab7a5a7d0aecdc0edc72"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga405aea9bdb57ab7a5a7d0aecdc0edc72">kpp_interrupt_enable_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00046.html#gga405aea9bdb57ab7a5a7d0aecdc0edc72ab4f673ab2f4dfc055981eed98465d8b2">kKPP_keyDepressInterrupt</a> = KPP_KPSR_KDIE_MASK, 
+<tr class="memitem:ga8c6f14f0861416aab52182b088863d5b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga8c6f14f0861416aab52182b088863d5b">_kpp_interrupt_enable</a> { <br/>
+&#160;&#160;<a class="el" href="a00046.html#gga8c6f14f0861416aab52182b088863d5bab4f673ab2f4dfc055981eed98465d8b2">kKPP_keyDepressInterrupt</a> = KPP_KPSR_KDIE_MASK, 
 <br/>
-&#160;&#160;<a class="el" href="a00046.html#gga405aea9bdb57ab7a5a7d0aecdc0edc72a760b827e5a10ba43afac4c5a5f4449df">kKPP_keyReleaseInterrupt</a> = KPP_KPSR_KRIE_MASK
-<br/>
- }</td></tr>
-<tr class="memdesc:ga405aea9bdb57ab7a5a7d0aecdc0edc72"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of interrupts supported by the peripheral.  <a href="a00046.html#ga405aea9bdb57ab7a5a7d0aecdc0edc72">More...</a><br/></td></tr>
-<tr class="separator:ga405aea9bdb57ab7a5a7d0aecdc0edc72"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0c44e479c6d310cf4d9a701c09f73485"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga0c44e479c6d310cf4d9a701c09f73485">kpp_sync_operation_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00046.html#gga0c44e479c6d310cf4d9a701c09f73485a362de7775b6d24295feddbb8cc93550b">kKPP_ClearKeyDepressSyncChain</a> = KPP_KPSR_KDSC_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00046.html#gga0c44e479c6d310cf4d9a701c09f73485a2938765c6adf7fcf5128895478876aa5">kKPP_SetKeyReleasesSyncChain</a> = KPP_KPSR_KRSS_MASK
+&#160;&#160;<a class="el" href="a00046.html#gga8c6f14f0861416aab52182b088863d5ba760b827e5a10ba43afac4c5a5f4449df">kKPP_keyReleaseInterrupt</a> = KPP_KPSR_KRIE_MASK
 <br/>
  }</td></tr>
-<tr class="memdesc:ga0c44e479c6d310cf4d9a701c09f73485"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lists of KPP synchronize chain operation.  <a href="a00046.html#ga0c44e479c6d310cf4d9a701c09f73485">More...</a><br/></td></tr>
-<tr class="separator:ga0c44e479c6d310cf4d9a701c09f73485"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga8c6f14f0861416aab52182b088863d5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of interrupts supported by the peripheral.  <a href="a00046.html#ga8c6f14f0861416aab52182b088863d5b">More...</a><br/></td></tr>
+<tr class="separator:ga8c6f14f0861416aab52182b088863d5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafab0e664fb713522de61aa4907426ca3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gafab0e664fb713522de61aa4907426ca3">_kpp_sync_operation</a> { <br/>
+&#160;&#160;<a class="el" href="a00046.html#ggafab0e664fb713522de61aa4907426ca3a362de7775b6d24295feddbb8cc93550b">kKPP_ClearKeyDepressSyncChain</a> = KPP_KPSR_KDSC_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00046.html#ggafab0e664fb713522de61aa4907426ca3a2938765c6adf7fcf5128895478876aa5">kKPP_SetKeyReleasesSyncChain</a> = KPP_KPSR_KRSS_MASK
+<br/>
+ }</td></tr>
+<tr class="memdesc:gafab0e664fb713522de61aa4907426ca3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lists of KPP synchronize chain operation.  <a href="a00046.html#gafab0e664fb713522de61aa4907426ca3">More...</a><br/></td></tr>
+<tr class="separator:gafab0e664fb713522de61aa4907426ca3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga35c20878a9d0b578ca2bbf50d98666a8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga35c20878a9d0b578ca2bbf50d98666a8">FSL_KPP_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00270.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 0))</td></tr>
+<tr class="memitem:ga35c20878a9d0b578ca2bbf50d98666a8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga35c20878a9d0b578ca2bbf50d98666a8">FSL_KPP_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00272.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 0))</td></tr>
 <tr class="memdesc:ga35c20878a9d0b578ca2bbf50d98666a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">KPP driver version 2.0.0.  <a href="#ga35c20878a9d0b578ca2bbf50d98666a8">More...</a><br/></td></tr>
 <tr class="separator:ga35c20878a9d0b578ca2bbf50d98666a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Initialization and De-initialization</h2></td></tr>
-<tr class="memitem:ga773203cef9b50a6c5864f78c05cb0c83"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga773203cef9b50a6c5864f78c05cb0c83">KPP_Init</a> (KPP_Type *base, <a class="el" href="a00046.html#a00445">kpp_config_t</a> *configure)</td></tr>
+<tr class="memitem:ga773203cef9b50a6c5864f78c05cb0c83"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga773203cef9b50a6c5864f78c05cb0c83">KPP_Init</a> (KPP_Type *base, <a class="el" href="a00046.html#gaf36399349f3826313f180a4798ac3275">kpp_config_t</a> *configure)</td></tr>
 <tr class="memdesc:ga773203cef9b50a6c5864f78c05cb0c83"><td class="mdescLeft">&#160;</td><td class="mdescRight">KPP initialize.  <a href="#ga773203cef9b50a6c5864f78c05cb0c83">More...</a><br/></td></tr>
 <tr class="separator:ga773203cef9b50a6c5864f78c05cb0c83"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga910f3aec15296a1d993f9b4963a152fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga910f3aec15296a1d993f9b4963a152fd">KPP_Deinit</a> (KPP_Type *base)</td></tr>
@@ -177,58 +190,58 @@ KPP Basic Operation</h2></td></tr>
 <tr class="separator:ga636803e3b1c99ec6dc9756548d9ef7b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00445" id="a00445"></a>
+<a name="a00428" id="a00428"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct kpp_config_t</td>
+          <td class="memname">struct _kpp_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:affe1c0fe7c98a7bbd90e5da557a77029"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#affe1c0fe7c98a7bbd90e5da557a77029">activeRow</a></td></tr>
-<tr class="memdesc:affe1c0fe7c98a7bbd90e5da557a77029"><td class="mdescLeft">&#160;</td><td class="mdescRight">The row number: bit 7 ~ 0 represents the row 7 ~ 0.  <a href="#affe1c0fe7c98a7bbd90e5da557a77029">More...</a><br/></td></tr>
-<tr class="separator:affe1c0fe7c98a7bbd90e5da557a77029"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a17262e678dbf479fc6fea48e685e94be"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a17262e678dbf479fc6fea48e685e94be">activeColumn</a></td></tr>
-<tr class="memdesc:a17262e678dbf479fc6fea48e685e94be"><td class="mdescLeft">&#160;</td><td class="mdescRight">The column number: bit 7 ~ 0 represents the column 7 ~ 0.  <a href="#a17262e678dbf479fc6fea48e685e94be">More...</a><br/></td></tr>
-<tr class="separator:a17262e678dbf479fc6fea48e685e94be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f6f88fe9bcaf13690da0506e52f8bd9"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a3f6f88fe9bcaf13690da0506e52f8bd9">interrupt</a></td></tr>
-<tr class="memdesc:a3f6f88fe9bcaf13690da0506e52f8bd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">KPP interrupt source.  <a href="#a3f6f88fe9bcaf13690da0506e52f8bd9">More...</a><br/></td></tr>
-<tr class="separator:a3f6f88fe9bcaf13690da0506e52f8bd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c9fb5f79cfb2b03b884a47718ccd007"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a5c9fb5f79cfb2b03b884a47718ccd007">activeRow</a></td></tr>
+<tr class="memdesc:a5c9fb5f79cfb2b03b884a47718ccd007"><td class="mdescLeft">&#160;</td><td class="mdescRight">The row number: bit 7 ~ 0 represents the row 7 ~ 0.  <a href="#a5c9fb5f79cfb2b03b884a47718ccd007">More...</a><br/></td></tr>
+<tr class="separator:a5c9fb5f79cfb2b03b884a47718ccd007"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7ef5ba717a420f79db47bf54059c53f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ae7ef5ba717a420f79db47bf54059c53f">activeColumn</a></td></tr>
+<tr class="memdesc:ae7ef5ba717a420f79db47bf54059c53f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The column number: bit 7 ~ 0 represents the column 7 ~ 0.  <a href="#ae7ef5ba717a420f79db47bf54059c53f">More...</a><br/></td></tr>
+<tr class="separator:ae7ef5ba717a420f79db47bf54059c53f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad095a892349a9e98cb99b75a3cf82723"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ad095a892349a9e98cb99b75a3cf82723">interrupt</a></td></tr>
+<tr class="memdesc:ad095a892349a9e98cb99b75a3cf82723"><td class="mdescLeft">&#160;</td><td class="mdescRight">KPP interrupt source.  <a href="#ad095a892349a9e98cb99b75a3cf82723">More...</a><br/></td></tr>
+<tr class="separator:ad095a892349a9e98cb99b75a3cf82723"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="affe1c0fe7c98a7bbd90e5da557a77029"></a>
+<a class="anchor" id="a5c9fb5f79cfb2b03b884a47718ccd007"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t kpp_config_t::activeRow</td>
+          <td class="memname">uint8_t _kpp_config::activeRow</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a17262e678dbf479fc6fea48e685e94be"></a>
+<a class="anchor" id="ae7ef5ba717a420f79db47bf54059c53f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t kpp_config_t::activeColumn</td>
+          <td class="memname">uint8_t _kpp_config::activeColumn</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a3f6f88fe9bcaf13690da0506e52f8bd9"></a>
+<a class="anchor" id="ad095a892349a9e98cb99b75a3cf82723"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t kpp_config_t::interrupt</td>
+          <td class="memname">uint16_t _kpp_config::interrupt</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -245,7 +258,45 @@ KPP Basic Operation</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_KPP_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00270.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 0))</td>
+          <td class="memname">#define FSL_KPP_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00272.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 0))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga750601427065c87c4daf8fc07091d039"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00046.html#ga8c6f14f0861416aab52182b088863d5b">_kpp_interrupt_enable</a>  <a class="el" href="a00046.html#ga750601427065c87c4daf8fc07091d039">kpp_interrupt_enable_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This enumeration uses one-bot encoding to allow a logical OR of multiple members. Members usually map to interrupt enable bits in one or more peripheral registers. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga5c752eb676c0517a7cd9bfc52e4744aa"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00046.html#gafab0e664fb713522de61aa4907426ca3">_kpp_sync_operation</a>  <a class="el" href="a00046.html#ga5c752eb676c0517a7cd9bfc52e4744aa">kpp_sync_operation_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gaf36399349f3826313f180a4798ac3275"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00046.html#a00428">_kpp_config</a>  <a class="el" href="a00046.html#gaf36399349f3826313f180a4798ac3275">kpp_config_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -253,41 +304,41 @@ KPP Basic Operation</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga405aea9bdb57ab7a5a7d0aecdc0edc72"></a>
+<a class="anchor" id="ga8c6f14f0861416aab52182b088863d5b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00046.html#ga405aea9bdb57ab7a5a7d0aecdc0edc72">kpp_interrupt_enable_t</a></td>
+          <td class="memname">enum <a class="el" href="a00046.html#ga8c6f14f0861416aab52182b088863d5b">_kpp_interrupt_enable</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>This enumeration uses one-bot encoding to allow a logical OR of multiple members. Members usually map to interrupt enable bits in one or more peripheral registers. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga405aea9bdb57ab7a5a7d0aecdc0edc72ab4f673ab2f4dfc055981eed98465d8b2"></a>kKPP_keyDepressInterrupt</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga8c6f14f0861416aab52182b088863d5bab4f673ab2f4dfc055981eed98465d8b2"></a>kKPP_keyDepressInterrupt</em>&nbsp;</td><td class="fielddoc">
 <p>Keypad depress interrupt source. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga405aea9bdb57ab7a5a7d0aecdc0edc72a760b827e5a10ba43afac4c5a5f4449df"></a>kKPP_keyReleaseInterrupt</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga8c6f14f0861416aab52182b088863d5ba760b827e5a10ba43afac4c5a5f4449df"></a>kKPP_keyReleaseInterrupt</em>&nbsp;</td><td class="fielddoc">
 <p>Keypad release interrupt source. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga0c44e479c6d310cf4d9a701c09f73485"></a>
+<a class="anchor" id="gafab0e664fb713522de61aa4907426ca3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00046.html#ga0c44e479c6d310cf4d9a701c09f73485">kpp_sync_operation_t</a></td>
+          <td class="memname">enum <a class="el" href="a00046.html#gafab0e664fb713522de61aa4907426ca3">_kpp_sync_operation</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga0c44e479c6d310cf4d9a701c09f73485a362de7775b6d24295feddbb8cc93550b"></a>kKPP_ClearKeyDepressSyncChain</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggafab0e664fb713522de61aa4907426ca3a362de7775b6d24295feddbb8cc93550b"></a>kKPP_ClearKeyDepressSyncChain</em>&nbsp;</td><td class="fielddoc">
 <p>Keypad depress interrupt status. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0c44e479c6d310cf4d9a701c09f73485a2938765c6adf7fcf5128895478876aa5"></a>kKPP_SetKeyReleasesSyncChain</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggafab0e664fb713522de61aa4907426ca3a2938765c6adf7fcf5128895478876aa5"></a>kKPP_SetKeyReleasesSyncChain</em>&nbsp;</td><td class="fielddoc">
 <p>Keypad release interrupt status. </p>
 </td></tr>
 </table>
@@ -308,7 +359,7 @@ KPP Basic Operation</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00046.html#a00445">kpp_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00046.html#gaf36399349f3826313f180a4798ac3275">kpp_config_t</a> *&#160;</td>
           <td class="paramname"><em>configure</em>&#160;</td>
         </tr>
         <tr>

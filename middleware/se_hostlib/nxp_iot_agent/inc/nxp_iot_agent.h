@@ -1,5 +1,5 @@
 /* 
- * Copyright 2018-2020, 2021 NXP
+ * Copyright 2018-2023 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  * 
@@ -16,8 +16,6 @@
 #include <nxp_iot_agent_datastore.h>
 #include <nxp_iot_agent_context.h>
 #include <nxp_iot_agent_dispatcher.h>
-
-#include <ex_sss_boot.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -48,12 +46,13 @@ extern "C" {
  */
 #define EDGELOCK2GO_KEYSTORE_ID                 0x70000010U
 
+
+#if NXP_IOT_AGENT_HAVE_SSS
 /**@ brief Start of the range of keys to use for keys of cloud services provisioned by EdgeLock 2GO. */
 #define EDGELOCK2GO_MANAGED_SERVICE_KEY_MIN	0x80000000U
 
 /**@ brief End of the range of keys to use for keys of cloud services provisioned by EdgeLock 2GO. */
 #define EDGELOCK2GO_MANAGED_SERVICE_KEY_MAX	0x81000000U
-
 
 /**
  * @brief The keyid on the SSS API to use for the keystore and keypair to use for connecting to
@@ -72,6 +71,60 @@ extern "C" {
  */
 #define EDGELOCK2GO_ATTESTATION_KEY_ECC         0xF0000012U
 #define EDGELOCK2GO_ATTESTATION_KEY_RSA         0xF0000010U
+
+#elif NXP_IOT_AGENT_HAVE_PSA
+
+ // TODO: Agree on all of these ids!
+
+ /**@ brief Start of the range of keys to use for keys of cloud services provisioned by EdgeLock 2GO. */
+#define EDGELOCK2GO_MANAGED_SERVICE_KEY_MIN	0x08000000U
+
+/**@ brief End of the range of keys to use for keys of cloud services provisioned by EdgeLock 2GO. */
+#define EDGELOCK2GO_MANAGED_SERVICE_KEY_MAX	0x08100000U
+
+/**
+ * @brief The keyid on the PSA API to use for connecting to the EdgeLock 2GO cloud service.
+ */
+#if NXP_IOT_AGENT_HAVE_PSA_IMPL_SIMUL || NXP_IOT_AGENT_ENABLE_LITE
+#define EDGELOCK2GO_KEYID_ECC              0x3fff0201U
+#else
+#define EDGELOCK2GO_KEYID_ECC              0x7FFF816CU
+#endif
+
+/**
+ * @brief The keyid on the PSA API to use for unwrapping EdgeLock 2GO cloud service key blobs into Sentinel50 slots.
+ */
+#define EL2GOIMPORT_KEK_SK                 0x3fff0210U
+
+/**
+   * @brief The keyid on the PSA API to use for decrypting EdgeLock 2GO cloud service key blobs into TF-M.
+   */
+#define EL2GOIMPORTTFM_KEK_SK                 0x3fff0211U
+
+/**
+	* @brief The keyid on the PSA API to use for validation of EdgeLock 2GO cloud service key blobs.
+	*/
+#define EL2GOIMPORT_AUTH_SK                 0x3fff0212U
+
+  
+/**
+ * @brief The keyid on the PSA API to use for fetching the device ID.
+ */
+#define DEVICEID_KEYID                     0x3fff0220U
+#define DEVICEID_LENGTH                            16U
+
+ /**
+  * @brief The keyid on the PSA API to use for fetching a claimcode.
+  */
+#define CLAIMCODE_OBJ_ID    		       0xf00000e0
+
+  /**
+   * @brief The keyid on the PSA API to use for OEM specific objects.
+   */
+#define EL2GO_OEM_FW_AUTH_KEY_HASH			0x7fff817a
+#define EL2GO_OEM_FW_DECRYPT_KEY			0x7fff817b
+
+#endif
 
 
 typedef struct _nxp_iot_UpdateStatusReport nxp_iot_UpdateStatusReport;

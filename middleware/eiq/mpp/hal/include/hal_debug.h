@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 NXP
+ * Copyright 2022-2023 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -13,13 +13,6 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif
-
-#ifndef EMULATOR
-#include "fsl_debug_console.h"
-#else
-#include <stdio.h>
-#define PRINTF printf
 #endif
 
 #define LOG_LVL_ERR       0

@@ -153,6 +153,13 @@ enum
     kFlexSpiDeviceType_MCP_NOR_RAM = 0x13,  //!< Flash deivce is MCP device, A1 is Serial NOR, A2 is Serial RAMs
 };
 
+//!@brief Flash pinmux group.
+enum
+{
+    kFlexSpiPinGroup_Primary = 0,
+    kFlexSpiPinGroup_Secondary = 1,
+};
+
 //!@brief Flash Pad Definitions
 enum
 {
@@ -221,15 +228,23 @@ typedef struct _FlexSPIConfig
     //! Chapter for more details
     uint8_t lutCustomSeqEnable; //!< [0x047-0x047] LUT customization Enable, it is required if the program/erase cannot
     //! be done using 1 LUT sequence, currently, only applicable to HyperFLASH
-    uint32_t reserved3[2];               //!< [0x048-0x04f] Reserved for future use
-    uint32_t sflashA1Size;               //!< [0x050-0x053] Size of Flash connected to A1
-    uint32_t sflashA2Size;               //!< [0x054-0x057] Size of Flash connected to A2
-    uint32_t sflashB1Size;               //!< [0x058-0x05b] Size of Flash connected to B1
-    uint32_t sflashB2Size;               //!< [0x05c-0x05f] Size of Flash connected to B2
-    uint32_t csPadSettingOverride;       //!< [0x060-0x063] CS pad setting override value
-    uint32_t sclkPadSettingOverride;     //!< [0x064-0x067] SCK pad setting override value
-    uint32_t dataPadSettingOverride;     //!< [0x068-0x06b] data pad setting override value
-    uint32_t dqsPadSettingOverride;      //!< [0x06c-0x06f] DQS pad setting override value
+    uint32_t reserved3[2]; //!< [0x048-0x04f] Reserved for future use
+    uint32_t sflashA1Size; //!< [0x050-0x053] Size of Flash connected to A1
+    uint32_t sflashA2Size; //!< [0x054-0x057] Size of Flash connected to A2
+    uint32_t sflashB1Size; //!< [0x058-0x05b] Size of Flash connected to B1
+    uint32_t sflashB2Size; //!< [0x05c-0x05f] Size of Flash connected to B2
+    uint16_t reserved4;    //!< [0x060-0x063] CS pad setting override value
+    uint8_t csPadSettingOverrideEn;
+    uint8_t csPadSettingOverride;
+    uint16_t reserved5; //!< [0x064-0x067] SCK pad setting override value
+    uint8_t sclkPadSettingOverrideEn;
+    uint8_t sclkPadSettingOverride;
+    uint16_t reserved6; //!< [0x068-0x06b] data pad setting override value
+    uint8_t dataPadSettingOverrideEn;
+    uint8_t dataPadSettingOverride;
+    uint16_t reserved7; //!< [0x06c-0x06f] DQS pad setting override value
+    uint8_t dqsPadSettingOverrideEn;
+    uint8_t dqsPadSettingOverride;
     uint32_t timeoutInMs;                //!< [0x070-0x073] Timeout threshold for read status command
     uint32_t commandInterval;            //!< [0x074-0x077] CS deselect interval between two commands
     flexspi_dll_time_t dataValidTime[2]; //!< [0x078-0x07b] CLK edge to data valid time for PORT A and PORT B
@@ -238,7 +253,7 @@ typedef struct _FlexSPIConfig
     //! busy flag is 0 when flash device is busy
     uint32_t lookupTable[64];           //!< [0x080-0x17f] Lookup table holds Flash command sequences
     flexspi_lut_seq_t lutCustomSeq[12]; //!< [0x180-0x1af] Customizable LUT Sequences
-    uint32_t reserved4[4];              //!< [0x1b0-0x1bf] Reserved for future use
+    uint32_t reserved8[4];              //!< [0x1b0-0x1bf] Reserved for future use
 } flexspi_mem_config_t;
 
 typedef enum _FlexSPIOperationType
@@ -373,8 +388,11 @@ extern "C"
     extern status_t flexspi_get_max_supported_freq(uint32_t instance, uint32_t *freq, uint32_t clkMode);
 
     extern void flexspi_sw_delay_us(uint64_t us);
-
+#ifdef MIMXRT1189_cm33_SERIES
+    extern void flexspi_update_padsetting(uint32_t instance, flexspi_mem_config_t *config, uint32_t padSetting);
+#else
     extern void flexspi_update_padsetting(flexspi_mem_config_t *config, uint32_t driveStrength);
+#endif
 
 #ifdef __cplusplus
 }

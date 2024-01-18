@@ -65,12 +65,12 @@ var searchData=
   ['hal_5fcodec_5fwm8960_5fsetrecord',['HAL_CODEC_WM8960_SetRecord',['../a00253.html#ga6420c82d923e4ab79e8a6bdc5c7401af',1,'fsl_codec_wm8960_adapter.h']]],
   ['hal_5fcodec_5fwm8960_5fsetrecordchannel',['HAL_CODEC_WM8960_SetRecordChannel',['../a00253.html#gab6e73177e29f3c2d8a5b6f00a56d2633',1,'fsl_codec_wm8960_adapter.h']]],
   ['hal_5fcodec_5fwm8960_5fsetvolume',['HAL_CODEC_WM8960_SetVolume',['../a00253.html#ga55c11378ca3cec863c496efc29975aa3',1,'fsl_codec_wm8960_adapter.h']]],
-  ['halfclkfornonreadcmd',['halfClkForNonReadCmd',['../a00038.html#acc608ba9342bf1f3d75efc331ccf7ab1',1,'flexspi_nor_config_t']]],
-  ['hardwarecomparemode',['hardwareCompareMode',['../a00008.html#af1db114f296c68ff883b773d45b1964a',1,'adc_hardware_compare_config_t']]],
-  ['header',['header',['../a00020.html#a5af4b292d3fbfa8026530ffdf9949633',1,'edma_handle_t']]],
-  ['highalarmtemp',['highAlarmTemp',['../a00066.html#a7d970f8778383bb43e202e1cb3d45691',1,'tempmon_config_t']]],
-  ['hometriggermode',['HOMETriggerMode',['../a00021.html#a6ae2c5f9ba4a1dafbaac4b5b5eadd04d',1,'enc_config_t']]],
-  ['hostrequest',['hostRequest',['../a00042.html#a5991a54d9ec22c9b6342047f6aba78f6',1,'lpi2c_master_config_t']]],
-  ['hour',['hour',['../a00062.html#a424370e8df7047b5dcab236e52a396f2',1,'snvs_hp_rtc_datetime_t::hour()'],['../a00063.html#a4a70a512ba988adb1fb1e4e62ba11f29',1,'snvs_lp_srtc_datetime_t::hour()']]],
-  ['hrefpinidx',['hrefPinIdx',['../a00023.html#a94080448fa200271bb412af6ac64293d',1,'FLEXIO_CAMERA_Type']]]
+  ['halfclkfornonreadcmd',['halfClkForNonReadCmd',['../a00038.html#a4fa0ea6317615b72b59b3c725f0a2861',1,'_flexspi_nor_config']]],
+  ['hardwarecomparemode',['hardwareCompareMode',['../a00008.html#a37ce59ff82eef4d02418739db16ec95f',1,'_adc_hardware_compare_config']]],
+  ['header',['header',['../a00020.html#a23541d41c3b2d7c067d03882cf12afc9',1,'_edma_handle']]],
+  ['highalarmtemp',['highAlarmTemp',['../a00066.html#aef9a15b388394ba5b01c773a904e6161',1,'_tempmon_config']]],
+  ['hometriggermode',['HOMETriggerMode',['../a00021.html#a4c57c0fef10c4148b7bbf0014af81e27',1,'_enc_config']]],
+  ['hostrequest',['hostRequest',['../a00042.html#a9317d5712d01a55b5f5c09825df055fc',1,'_lpi2c_master_config']]],
+  ['hour',['hour',['../a00062.html#a084847db9741c605783cd756d19714e1',1,'_snvs_hp_rtc_datetime::hour()'],['../a00063.html#a647588c72e388e217fec4a88742d3c61',1,'_snvs_lp_srtc_datetime::hour()']]],
+  ['hrefpinidx',['hrefPinIdx',['../a00023.html#a657a9a6cc5342e311ae19cfc9c9f6b01',1,'_flexio_camera_type']]]
 ];

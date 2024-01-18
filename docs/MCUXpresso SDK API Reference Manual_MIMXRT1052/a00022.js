@@ -1,110 +1,122 @@
 var a00022 =
 [
-    [ "edma_config_t", "a00022.html#a00382", [
-      [ "enableContinuousLinkMode", "a00022.html#aa45bd940803ec470b60e5b5d5bd0356b", null ],
-      [ "enableHaltOnError", "a00022.html#a4d319e29ce0ab4f2406aae26a136422a", null ],
-      [ "enableRoundRobinArbitration", "a00022.html#aef3200ba1711d6649c69fca888cf3468", null ],
-      [ "enableDebugMode", "a00022.html#a7929ad2b37282a423c5ac5d7f4c7e744", null ]
+    [ "_edma_config", "a00022.html#a00351", [
+      [ "enableContinuousLinkMode", "a00022.html#a2f5753be86f4c45b162a32ddd89c8fd1", null ],
+      [ "enableHaltOnError", "a00022.html#a921adebbd4948fec2817459133f32b80", null ],
+      [ "enableRoundRobinArbitration", "a00022.html#ab556e6a55d0b93c23665f5958ad3a173", null ],
+      [ "enableDebugMode", "a00022.html#a5a9f1a4e9f410a0f3271516584e61b88", null ]
     ] ],
-    [ "edma_transfer_config_t", "a00022.html#a00386", [
-      [ "srcAddr", "a00022.html#aa1ff988241ea8238e8793f4236c55553", null ],
-      [ "destAddr", "a00022.html#a70e10c552f356c4d2935e9f308a3317a", null ],
-      [ "srcTransferSize", "a00022.html#ae5f96bb8d80f6f7a6c8a687e8a42a77e", null ],
-      [ "destTransferSize", "a00022.html#afe8f8da3ed5f7c4079c818ef0197a4d7", null ],
-      [ "srcOffset", "a00022.html#a25b479621f01e4e2cf7fcdab62d6e266", null ],
-      [ "destOffset", "a00022.html#a09907c86542286a95a655e748789ba3e", null ],
-      [ "minorLoopBytes", "a00022.html#a6f4c2ec17c05de3741d67447f784f721", null ],
-      [ "majorLoopCounts", "a00022.html#accd14b645237edae7fa51c5db6aa6998", null ]
+    [ "_edma_transfer_config", "a00022.html#a00355", [
+      [ "srcAddr", "a00022.html#ad18d4df5ad6fe40eafbe14247eaf5de1", null ],
+      [ "destAddr", "a00022.html#a7081ee578053abd938d22ba10ecd73f3", null ],
+      [ "srcTransferSize", "a00022.html#a82b15361a50d8dcbfc20d40fc9ba1bae", null ],
+      [ "destTransferSize", "a00022.html#a124f88bd560bc1a3ef0418a0a30105f0", null ],
+      [ "srcOffset", "a00022.html#a3641461b86e9027c5637020e9a288cbd", null ],
+      [ "destOffset", "a00022.html#a189f5e87427eb8cf7e3990fde8179e55", null ],
+      [ "minorLoopBytes", "a00022.html#a9a0cb03809d9710d92eee8842254ad91", null ],
+      [ "majorLoopCounts", "a00022.html#a3263406ba0ddf6b58d3c3e99d1aa1a72", null ]
     ] ],
-    [ "edma_channel_Preemption_config_t", "a00022.html#a00381", [
-      [ "enableChannelPreemption", "a00022.html#aa1230352459f3f47b0e396ef7971bbd6", null ],
-      [ "enablePreemptAbility", "a00022.html#ab7329f8b16f7e8bb0283c9305d9902ce", null ],
-      [ "channelPriority", "a00022.html#a38fbcb827c573361d0043d95faca2d8f", null ]
+    [ "_edma_channel_Preemption_config", "a00022.html#a00350", [
+      [ "enableChannelPreemption", "a00022.html#aa70af51bcec6f44932b76a492f98bf1a", null ],
+      [ "enablePreemptAbility", "a00022.html#a965df5c57cd4d2e3c61be4e02c1fb115", null ],
+      [ "channelPriority", "a00022.html#a15330f71acbe244f11d9bdae6aa8bbfa", null ]
     ] ],
-    [ "edma_minor_offset_config_t", "a00022.html#a00384", [
-      [ "enableSrcMinorOffset", "a00022.html#aa2b34fbdc053b7f2f3ea476048e9f80f", null ],
-      [ "enableDestMinorOffset", "a00022.html#a5a2ce555e51bc7694fec6443c191fb5b", null ],
-      [ "minorOffset", "a00022.html#aff7bae6e4e019c2b49508bbfec6cd1ea", null ]
+    [ "_edma_minor_offset_config", "a00022.html#a00353", [
+      [ "enableSrcMinorOffset", "a00022.html#ad372a9eaf48876bd7ee01f0abff9fa8e", null ],
+      [ "enableDestMinorOffset", "a00022.html#abd3047acc6f7952f6428a8c6a47e4733", null ],
+      [ "minorOffset", "a00022.html#a69981f5e94bebb1a210273b9ae4b773d", null ]
     ] ],
-    [ "edma_tcd_t", "a00022.html#a00385", [
-      [ "SADDR", "a00022.html#a0390d1bdd79814503542ca534da58e90", null ],
-      [ "SOFF", "a00022.html#a28284a4d47a0b15aa5eabc67888f9a2a", null ],
-      [ "ATTR", "a00022.html#a4ac302b14c968761b4bd8bc4e620d9f6", null ],
-      [ "NBYTES", "a00022.html#ada2a3af3cbf20ed38a3669c963d49f7d", null ],
-      [ "SLAST", "a00022.html#a95d71d585f55cc4c5565df98c1941be0", null ],
-      [ "DADDR", "a00022.html#af499a2c9e1a20435bebad40224fa577f", null ],
-      [ "DOFF", "a00022.html#a7f90a8871ce94801ae7bc3ed9c94ef29", null ],
-      [ "CITER", "a00022.html#a96f0c927b263c679c4463c74830968c1", null ],
-      [ "DLAST_SGA", "a00022.html#a892f3dec0f15e33b64f9a966416e9ca6", null ],
-      [ "CSR", "a00022.html#aa49f8458af67a904d9f5dae1dc829a10", null ],
-      [ "BITER", "a00022.html#a4c5331d08a6b43c9ebc15d41c5734140", null ]
+    [ "_edma_tcd", "a00022.html#a00354", [
+      [ "SADDR", "a00022.html#aa5cfe412d48ae01ee972d177a918f2e7", null ],
+      [ "SOFF", "a00022.html#ad09fe59dbe1d8b5219fa5ef039c822e7", null ],
+      [ "ATTR", "a00022.html#adaf5bd1c5cd5530c283ea329531dd54b", null ],
+      [ "NBYTES", "a00022.html#ad18f3c5a19e9bb70c46541ce7caa537c", null ],
+      [ "SLAST", "a00022.html#a7227caadb70fa2a46868f292c845afe9", null ],
+      [ "DADDR", "a00022.html#a3926ac0ce1799d7318bcda727187356c", null ],
+      [ "DOFF", "a00022.html#ab6ba8fab607c4d44e50ac420d457b653", null ],
+      [ "CITER", "a00022.html#a8e3d47e76f36ce26cf8abece509d1300", null ],
+      [ "DLAST_SGA", "a00022.html#a7f04b495cedf5a2c9329eb6ead13950b", null ],
+      [ "CSR", "a00022.html#a6090b3e353ea079cd48f726e898cc98b", null ],
+      [ "BITER", "a00022.html#a61981659b3b26d3b2f04ad3ed0ec8b5d", null ]
     ] ],
-    [ "edma_handle_t", "a00022.html#a00383", [
-      [ "callback", "a00022.html#a2103986f2733a5b6ce42b5983eabcb11", null ],
-      [ "userData", "a00022.html#a6af5d18677d40167da0d0219cb3bed01", null ],
-      [ "base", "a00022.html#aac2e55c398c06eb64a7cd00b0d5dc6e3", null ],
-      [ "tcdPool", "a00022.html#a04740b740ff76e5d1301a069509a7588", null ],
-      [ "channel", "a00022.html#ada5950638afd0310331d32760695089f", null ],
-      [ "header", "a00022.html#a5af4b292d3fbfa8026530ffdf9949633", null ],
-      [ "tail", "a00022.html#a86059d052b3d4fff045e21120b9d28a7", null ],
-      [ "tcdUsed", "a00022.html#ad13ee25dd17eed61d772b88fda12badc", null ],
-      [ "tcdSize", "a00022.html#a1e1640f38c69ed7cf38ef12615e341f0", null ],
-      [ "flags", "a00022.html#a3be13f114e3b653751645b65972fad2f", null ]
+    [ "_edma_handle", "a00022.html#a00352", [
+      [ "callback", "a00022.html#a477ceaab5626a5283c7f21bbf0365ba7", null ],
+      [ "userData", "a00022.html#ae7ae511b440ea695410a84a8c8510ada", null ],
+      [ "base", "a00022.html#a224fed6f3c431fee4bef697e39d609fe", null ],
+      [ "tcdPool", "a00022.html#a764e6c2f7a4be497385b3be22c833cf0", null ],
+      [ "channel", "a00022.html#ab685b8268377f03b6c660ceca8f119c3", null ],
+      [ "header", "a00022.html#a23541d41c3b2d7c067d03882cf12afc9", null ],
+      [ "tail", "a00022.html#ad4166d825a2b7056e658c76eda4d8f1e", null ],
+      [ "tcdUsed", "a00022.html#a6803c59bbed8716fc173a729329e3b66", null ],
+      [ "tcdSize", "a00022.html#a73894bc1747b5419548e6a5b25f52c24", null ],
+      [ "flags", "a00022.html#ad9a5cd410a273519eaa6d8c335272b40", null ]
     ] ],
     [ "FSL_EDMA_DRIVER_VERSION", "a00022.html#ga5f0841e9527b371724ef4418e6807643", null ],
     [ "DMA_DCHPRI_INDEX", "a00022.html#ga6f2ecddbfb5e68cd1c9243dc141ec275", null ],
+    [ "edma_transfer_size_t", "a00022.html#ga3cd26ca8831986959f668621f2e52d32", null ],
+    [ "edma_modulo_t", "a00022.html#ga567f4aba444f1fb55ac796ea3c12b1f6", null ],
+    [ "edma_bandwidth_t", "a00022.html#gad89636a4c3415f4135e6bba5a2c9ef05", null ],
+    [ "edma_channel_link_type_t", "a00022.html#ga50827ea4b70cafb243ce0d3c7bc3b22e", null ],
+    [ "edma_interrupt_enable_t", "a00022.html#ga48adc39f62293fe6079c4d3d6c46478f", null ],
+    [ "edma_transfer_type_t", "a00022.html#gaa83dd6eee540d7e11857adad93262ea2", null ],
+    [ "edma_config_t", "a00022.html#gaf1d2168d9617f37e639bc4d7c516ad09", null ],
+    [ "edma_transfer_config_t", "a00022.html#gaaf79d8c43b2777cfae8cfa4f2c6ed80f", null ],
+    [ "edma_channel_Preemption_config_t", "a00022.html#gab24fe9738be9cca448dec8bb98dfdd83", null ],
+    [ "edma_minor_offset_config_t", "a00022.html#gad566af76d80682c94afb6c305eae9e0a", null ],
+    [ "edma_tcd_t", "a00022.html#gacff054f9816fb678fc49f5e66a4d7649", null ],
     [ "edma_callback", "a00022.html#ga9ee3a34d12fbb39bc972f62ba6357022", null ],
-    [ "edma_transfer_size_t", "a00022.html#gafeb85400b3b87188983f5d62e9e26cb6", [
-      [ "kEDMA_TransferSize1Bytes", "a00022.html#ggafeb85400b3b87188983f5d62e9e26cb6acb4e50cd0e23c0d36edf958be77c8dc2", null ],
-      [ "kEDMA_TransferSize2Bytes", "a00022.html#ggafeb85400b3b87188983f5d62e9e26cb6a589480546c8db2d1372e62a7946fbb2c", null ],
-      [ "kEDMA_TransferSize4Bytes", "a00022.html#ggafeb85400b3b87188983f5d62e9e26cb6a4d91559541642b997418406ec927c454", null ],
-      [ "kEDMA_TransferSize8Bytes", "a00022.html#ggafeb85400b3b87188983f5d62e9e26cb6a3c361ee4008e6ba8097557e3d4a55ce8", null ],
-      [ "kEDMA_TransferSize16Bytes", "a00022.html#ggafeb85400b3b87188983f5d62e9e26cb6a0d4cdfd536f2985eea3e8111eecd3c43", null ],
-      [ "kEDMA_TransferSize32Bytes", "a00022.html#ggafeb85400b3b87188983f5d62e9e26cb6ad7e2421e513fc84a29cd20ab47409229", null ]
+    [ "edma_handle_t", "a00022.html#ga00acb9562f35755920b20fde1bc9973e", null ],
+    [ "_edma_transfer_size", "a00022.html#ga4ffcbd8f86285f5c162ae70a6fe155bd", [
+      [ "kEDMA_TransferSize1Bytes", "a00022.html#gga4ffcbd8f86285f5c162ae70a6fe155bdacb4e50cd0e23c0d36edf958be77c8dc2", null ],
+      [ "kEDMA_TransferSize2Bytes", "a00022.html#gga4ffcbd8f86285f5c162ae70a6fe155bda589480546c8db2d1372e62a7946fbb2c", null ],
+      [ "kEDMA_TransferSize4Bytes", "a00022.html#gga4ffcbd8f86285f5c162ae70a6fe155bda4d91559541642b997418406ec927c454", null ],
+      [ "kEDMA_TransferSize8Bytes", "a00022.html#gga4ffcbd8f86285f5c162ae70a6fe155bda3c361ee4008e6ba8097557e3d4a55ce8", null ],
+      [ "kEDMA_TransferSize16Bytes", "a00022.html#gga4ffcbd8f86285f5c162ae70a6fe155bda0d4cdfd536f2985eea3e8111eecd3c43", null ],
+      [ "kEDMA_TransferSize32Bytes", "a00022.html#gga4ffcbd8f86285f5c162ae70a6fe155bdad7e2421e513fc84a29cd20ab47409229", null ]
     ] ],
-    [ "edma_modulo_t", "a00022.html#ga13ac7c9e76c11d3dce06f8976d9e4dd7", [
-      [ "kEDMA_ModuloDisable", "a00022.html#gga13ac7c9e76c11d3dce06f8976d9e4dd7ab77c38c19ddcc44212b258bdafe2f207", null ],
-      [ "kEDMA_Modulo2bytes", "a00022.html#gga13ac7c9e76c11d3dce06f8976d9e4dd7af7cbe0618a06406e5473ec1aa11195a0", null ],
-      [ "kEDMA_Modulo4bytes", "a00022.html#gga13ac7c9e76c11d3dce06f8976d9e4dd7a2eaf98fea83570be353ff21fde4b8d53", null ],
-      [ "kEDMA_Modulo8bytes", "a00022.html#gga13ac7c9e76c11d3dce06f8976d9e4dd7a99fad23e0502470cddec1391edc483e2", null ],
-      [ "kEDMA_Modulo16bytes", "a00022.html#gga13ac7c9e76c11d3dce06f8976d9e4dd7abd6ec81a3b0822ea6c3a7c77215e85a8", null ],
-      [ "kEDMA_Modulo32bytes", "a00022.html#gga13ac7c9e76c11d3dce06f8976d9e4dd7acd0d2322a93a86bb7bb1160217184569", null ],
-      [ "kEDMA_Modulo64bytes", "a00022.html#gga13ac7c9e76c11d3dce06f8976d9e4dd7af60e65e2fdc306df458cabaa77c0a62c", null ],
-      [ "kEDMA_Modulo128bytes", "a00022.html#gga13ac7c9e76c11d3dce06f8976d9e4dd7ac5b734f88d8fbe08c19f4b881e643ebd", null ],
-      [ "kEDMA_Modulo256bytes", "a00022.html#gga13ac7c9e76c11d3dce06f8976d9e4dd7ab6354112d539cb71083057f72a43f282", null ],
-      [ "kEDMA_Modulo512bytes", "a00022.html#gga13ac7c9e76c11d3dce06f8976d9e4dd7a56d31f1fa472122b9edf4d8c8d437359", null ],
-      [ "kEDMA_Modulo1Kbytes", "a00022.html#gga13ac7c9e76c11d3dce06f8976d9e4dd7a7b85b92e30afea2d7d2eb11e40751496", null ],
-      [ "kEDMA_Modulo2Kbytes", "a00022.html#gga13ac7c9e76c11d3dce06f8976d9e4dd7acd26e0c0dc1a6518dca27c0a418df484", null ],
-      [ "kEDMA_Modulo4Kbytes", "a00022.html#gga13ac7c9e76c11d3dce06f8976d9e4dd7ae9f8fd54c7f183214653a750775b1e1c", null ],
-      [ "kEDMA_Modulo8Kbytes", "a00022.html#gga13ac7c9e76c11d3dce06f8976d9e4dd7a568ad80f68673d4f57362dc48701aec6", null ],
-      [ "kEDMA_Modulo16Kbytes", "a00022.html#gga13ac7c9e76c11d3dce06f8976d9e4dd7a6e8595a1168272eab8923212c1cabaee", null ],
-      [ "kEDMA_Modulo32Kbytes", "a00022.html#gga13ac7c9e76c11d3dce06f8976d9e4dd7af12cea48af625688f7d3a6e9e2d19d56", null ],
-      [ "kEDMA_Modulo64Kbytes", "a00022.html#gga13ac7c9e76c11d3dce06f8976d9e4dd7aab39052aeb4a70843c6ddd61b94f95a0", null ],
-      [ "kEDMA_Modulo128Kbytes", "a00022.html#gga13ac7c9e76c11d3dce06f8976d9e4dd7afb80c06c8d24882fdeb592a37673e499", null ],
-      [ "kEDMA_Modulo256Kbytes", "a00022.html#gga13ac7c9e76c11d3dce06f8976d9e4dd7ae1c82fe430bd6a43cd8bfca46671cca1", null ],
-      [ "kEDMA_Modulo512Kbytes", "a00022.html#gga13ac7c9e76c11d3dce06f8976d9e4dd7aff7dbf518027bc1d2a84a4dcfe7f0adc", null ],
-      [ "kEDMA_Modulo1Mbytes", "a00022.html#gga13ac7c9e76c11d3dce06f8976d9e4dd7a48ff619715bb526b6d917d6b37686b8a", null ],
-      [ "kEDMA_Modulo2Mbytes", "a00022.html#gga13ac7c9e76c11d3dce06f8976d9e4dd7a5c2909e6956a01efc28bb70a73ddb9f5", null ],
-      [ "kEDMA_Modulo4Mbytes", "a00022.html#gga13ac7c9e76c11d3dce06f8976d9e4dd7a4b07b0456e0aadbde3a32790e423f4d7", null ],
-      [ "kEDMA_Modulo8Mbytes", "a00022.html#gga13ac7c9e76c11d3dce06f8976d9e4dd7ad4f068091510d3fc90b8a21bd2492a38", null ],
-      [ "kEDMA_Modulo16Mbytes", "a00022.html#gga13ac7c9e76c11d3dce06f8976d9e4dd7a3ff219951928d6e40f658f612f9106c0", null ],
-      [ "kEDMA_Modulo32Mbytes", "a00022.html#gga13ac7c9e76c11d3dce06f8976d9e4dd7ade7587c87a42242eb0e47a1dbac5f686", null ],
-      [ "kEDMA_Modulo64Mbytes", "a00022.html#gga13ac7c9e76c11d3dce06f8976d9e4dd7aedc3a67726be1cdac9385a37556c7056", null ],
-      [ "kEDMA_Modulo128Mbytes", "a00022.html#gga13ac7c9e76c11d3dce06f8976d9e4dd7a0f2c2ca6e26fcf1edefe6bd091504041", null ],
-      [ "kEDMA_Modulo256Mbytes", "a00022.html#gga13ac7c9e76c11d3dce06f8976d9e4dd7a50818bce765be0d7ccfac7490242c119", null ],
-      [ "kEDMA_Modulo512Mbytes", "a00022.html#gga13ac7c9e76c11d3dce06f8976d9e4dd7a2289cd131c9052e9ab097abbff3499e7", null ],
-      [ "kEDMA_Modulo1Gbytes", "a00022.html#gga13ac7c9e76c11d3dce06f8976d9e4dd7a22c8078316841b5cc5886d506f95a8e3", null ],
-      [ "kEDMA_Modulo2Gbytes", "a00022.html#gga13ac7c9e76c11d3dce06f8976d9e4dd7ab4a779add96a309505f06a540d75340f", null ]
+    [ "_edma_modulo", "a00022.html#ga1a7d7ef429d6168ce7c9e43cee40d539", [
+      [ "kEDMA_ModuloDisable", "a00022.html#gga1a7d7ef429d6168ce7c9e43cee40d539ab77c38c19ddcc44212b258bdafe2f207", null ],
+      [ "kEDMA_Modulo2bytes", "a00022.html#gga1a7d7ef429d6168ce7c9e43cee40d539af7cbe0618a06406e5473ec1aa11195a0", null ],
+      [ "kEDMA_Modulo4bytes", "a00022.html#gga1a7d7ef429d6168ce7c9e43cee40d539a2eaf98fea83570be353ff21fde4b8d53", null ],
+      [ "kEDMA_Modulo8bytes", "a00022.html#gga1a7d7ef429d6168ce7c9e43cee40d539a99fad23e0502470cddec1391edc483e2", null ],
+      [ "kEDMA_Modulo16bytes", "a00022.html#gga1a7d7ef429d6168ce7c9e43cee40d539abd6ec81a3b0822ea6c3a7c77215e85a8", null ],
+      [ "kEDMA_Modulo32bytes", "a00022.html#gga1a7d7ef429d6168ce7c9e43cee40d539acd0d2322a93a86bb7bb1160217184569", null ],
+      [ "kEDMA_Modulo64bytes", "a00022.html#gga1a7d7ef429d6168ce7c9e43cee40d539af60e65e2fdc306df458cabaa77c0a62c", null ],
+      [ "kEDMA_Modulo128bytes", "a00022.html#gga1a7d7ef429d6168ce7c9e43cee40d539ac5b734f88d8fbe08c19f4b881e643ebd", null ],
+      [ "kEDMA_Modulo256bytes", "a00022.html#gga1a7d7ef429d6168ce7c9e43cee40d539ab6354112d539cb71083057f72a43f282", null ],
+      [ "kEDMA_Modulo512bytes", "a00022.html#gga1a7d7ef429d6168ce7c9e43cee40d539a56d31f1fa472122b9edf4d8c8d437359", null ],
+      [ "kEDMA_Modulo1Kbytes", "a00022.html#gga1a7d7ef429d6168ce7c9e43cee40d539a7b85b92e30afea2d7d2eb11e40751496", null ],
+      [ "kEDMA_Modulo2Kbytes", "a00022.html#gga1a7d7ef429d6168ce7c9e43cee40d539acd26e0c0dc1a6518dca27c0a418df484", null ],
+      [ "kEDMA_Modulo4Kbytes", "a00022.html#gga1a7d7ef429d6168ce7c9e43cee40d539ae9f8fd54c7f183214653a750775b1e1c", null ],
+      [ "kEDMA_Modulo8Kbytes", "a00022.html#gga1a7d7ef429d6168ce7c9e43cee40d539a568ad80f68673d4f57362dc48701aec6", null ],
+      [ "kEDMA_Modulo16Kbytes", "a00022.html#gga1a7d7ef429d6168ce7c9e43cee40d539a6e8595a1168272eab8923212c1cabaee", null ],
+      [ "kEDMA_Modulo32Kbytes", "a00022.html#gga1a7d7ef429d6168ce7c9e43cee40d539af12cea48af625688f7d3a6e9e2d19d56", null ],
+      [ "kEDMA_Modulo64Kbytes", "a00022.html#gga1a7d7ef429d6168ce7c9e43cee40d539aab39052aeb4a70843c6ddd61b94f95a0", null ],
+      [ "kEDMA_Modulo128Kbytes", "a00022.html#gga1a7d7ef429d6168ce7c9e43cee40d539afb80c06c8d24882fdeb592a37673e499", null ],
+      [ "kEDMA_Modulo256Kbytes", "a00022.html#gga1a7d7ef429d6168ce7c9e43cee40d539ae1c82fe430bd6a43cd8bfca46671cca1", null ],
+      [ "kEDMA_Modulo512Kbytes", "a00022.html#gga1a7d7ef429d6168ce7c9e43cee40d539aff7dbf518027bc1d2a84a4dcfe7f0adc", null ],
+      [ "kEDMA_Modulo1Mbytes", "a00022.html#gga1a7d7ef429d6168ce7c9e43cee40d539a48ff619715bb526b6d917d6b37686b8a", null ],
+      [ "kEDMA_Modulo2Mbytes", "a00022.html#gga1a7d7ef429d6168ce7c9e43cee40d539a5c2909e6956a01efc28bb70a73ddb9f5", null ],
+      [ "kEDMA_Modulo4Mbytes", "a00022.html#gga1a7d7ef429d6168ce7c9e43cee40d539a4b07b0456e0aadbde3a32790e423f4d7", null ],
+      [ "kEDMA_Modulo8Mbytes", "a00022.html#gga1a7d7ef429d6168ce7c9e43cee40d539ad4f068091510d3fc90b8a21bd2492a38", null ],
+      [ "kEDMA_Modulo16Mbytes", "a00022.html#gga1a7d7ef429d6168ce7c9e43cee40d539a3ff219951928d6e40f658f612f9106c0", null ],
+      [ "kEDMA_Modulo32Mbytes", "a00022.html#gga1a7d7ef429d6168ce7c9e43cee40d539ade7587c87a42242eb0e47a1dbac5f686", null ],
+      [ "kEDMA_Modulo64Mbytes", "a00022.html#gga1a7d7ef429d6168ce7c9e43cee40d539aedc3a67726be1cdac9385a37556c7056", null ],
+      [ "kEDMA_Modulo128Mbytes", "a00022.html#gga1a7d7ef429d6168ce7c9e43cee40d539a0f2c2ca6e26fcf1edefe6bd091504041", null ],
+      [ "kEDMA_Modulo256Mbytes", "a00022.html#gga1a7d7ef429d6168ce7c9e43cee40d539a50818bce765be0d7ccfac7490242c119", null ],
+      [ "kEDMA_Modulo512Mbytes", "a00022.html#gga1a7d7ef429d6168ce7c9e43cee40d539a2289cd131c9052e9ab097abbff3499e7", null ],
+      [ "kEDMA_Modulo1Gbytes", "a00022.html#gga1a7d7ef429d6168ce7c9e43cee40d539a22c8078316841b5cc5886d506f95a8e3", null ],
+      [ "kEDMA_Modulo2Gbytes", "a00022.html#gga1a7d7ef429d6168ce7c9e43cee40d539ab4a779add96a309505f06a540d75340f", null ]
     ] ],
-    [ "edma_bandwidth_t", "a00022.html#ga77dde4bf7218f5dff3f5eeeccd565d0f", [
-      [ "kEDMA_BandwidthStallNone", "a00022.html#gga77dde4bf7218f5dff3f5eeeccd565d0faeb09bbf3022f40b276ab9b94035ef308", null ],
-      [ "kEDMA_BandwidthStall4Cycle", "a00022.html#gga77dde4bf7218f5dff3f5eeeccd565d0fa443b7698b1950201d47d97de1b643f3c", null ],
-      [ "kEDMA_BandwidthStall8Cycle", "a00022.html#gga77dde4bf7218f5dff3f5eeeccd565d0fac21c278bddfbadae35d53cc565bca9d9", null ]
+    [ "_edma_bandwidth", "a00022.html#ga273a47c42205f63e7a5457114d5b1e21", [
+      [ "kEDMA_BandwidthStallNone", "a00022.html#gga273a47c42205f63e7a5457114d5b1e21aeb09bbf3022f40b276ab9b94035ef308", null ],
+      [ "kEDMA_BandwidthStall4Cycle", "a00022.html#gga273a47c42205f63e7a5457114d5b1e21a443b7698b1950201d47d97de1b643f3c", null ],
+      [ "kEDMA_BandwidthStall8Cycle", "a00022.html#gga273a47c42205f63e7a5457114d5b1e21ac21c278bddfbadae35d53cc565bca9d9", null ]
     ] ],
-    [ "edma_channel_link_type_t", "a00022.html#ga9b736ab8d1dd10d8a277712904b29c91", [
-      [ "kEDMA_LinkNone", "a00022.html#gga9b736ab8d1dd10d8a277712904b29c91aba8b1349b47c8e99c950c179b5548caa", null ],
-      [ "kEDMA_MinorLink", "a00022.html#gga9b736ab8d1dd10d8a277712904b29c91a804db702dd385d11a01dd512f3e1606c", null ],
-      [ "kEDMA_MajorLink", "a00022.html#gga9b736ab8d1dd10d8a277712904b29c91ab9798ac8a18b9632a7d3fabf0bd76881", null ],
+    [ "_edma_channel_link_type", "a00022.html#ga3c4715f55d4d2460fa6ea7e579088eb3", [
+      [ "kEDMA_LinkNone", "a00022.html#gga3c4715f55d4d2460fa6ea7e579088eb3aba8b1349b47c8e99c950c179b5548caa", null ],
+      [ "kEDMA_MinorLink", "a00022.html#gga3c4715f55d4d2460fa6ea7e579088eb3a804db702dd385d11a01dd512f3e1606c", null ],
+      [ "kEDMA_MajorLink", "a00022.html#gga3c4715f55d4d2460fa6ea7e579088eb3ab9798ac8a18b9632a7d3fabf0bd76881", null ],
       [ "kEDMA_DoneFlag", "a00022.html#gga385c44f6fb256e5716a2302a5b940388a3fc49e0e9df4c15438fac350d2d7da56", null ],
       [ "kEDMA_ErrorFlag", "a00022.html#gga385c44f6fb256e5716a2302a5b940388a2c5dd54b1cb8bd4917b99a914c7bdc84", null ],
       [ "kEDMA_InterruptFlag", "a00022.html#gga385c44f6fb256e5716a2302a5b940388afca58961c7da506e2f1c05451d16f4d9", null ],
@@ -121,16 +133,16 @@ var a00022 =
       [ "kEDMA_TransferCanceledFlag", "a00022.html#ggabc5c98fcc1211af2b80116dd6e0a035da1c6f9d050df7f2f0aa945b5f1c46e230", null ],
       [ "kEDMA_ValidFlag", "a00022.html#ggabc5c98fcc1211af2b80116dd6e0a035dab930c63068a6d7ee6ccb21df993bd48f", null ]
     ] ],
-    [ "edma_interrupt_enable_t", "a00022.html#ga345805161c8c8ca55c0866085e3d3f76", [
-      [ "kEDMA_ErrorInterruptEnable", "a00022.html#gga345805161c8c8ca55c0866085e3d3f76ab2be76dc7af93bec6801d76376f924c0", null ],
-      [ "kEDMA_MajorInterruptEnable", "a00022.html#gga345805161c8c8ca55c0866085e3d3f76a19c5998906a159df3204e818033a3c0e", null ],
-      [ "kEDMA_HalfInterruptEnable", "a00022.html#gga345805161c8c8ca55c0866085e3d3f76a2f1573636dcd4a54d9189bdee4cf39d0", null ]
+    [ "_edma_interrupt_enable", "a00022.html#ga4b9e8a6e5ac90d2b80f8b995a9e8e7ef", [
+      [ "kEDMA_ErrorInterruptEnable", "a00022.html#gga4b9e8a6e5ac90d2b80f8b995a9e8e7efab2be76dc7af93bec6801d76376f924c0", null ],
+      [ "kEDMA_MajorInterruptEnable", "a00022.html#gga4b9e8a6e5ac90d2b80f8b995a9e8e7efa19c5998906a159df3204e818033a3c0e", null ],
+      [ "kEDMA_HalfInterruptEnable", "a00022.html#gga4b9e8a6e5ac90d2b80f8b995a9e8e7efa2f1573636dcd4a54d9189bdee4cf39d0", null ]
     ] ],
-    [ "edma_transfer_type_t", "a00022.html#ga7803399034b374663f76a589da7d8419", [
-      [ "kEDMA_MemoryToMemory", "a00022.html#gga7803399034b374663f76a589da7d8419aba1ccd03368799d9752bd6001f5373a5", null ],
-      [ "kEDMA_PeripheralToMemory", "a00022.html#gga7803399034b374663f76a589da7d8419a1041287c7dc311d81017f529a51734e6", null ],
-      [ "kEDMA_MemoryToPeripheral", "a00022.html#gga7803399034b374663f76a589da7d8419a172d3e1f201639f3157563f4a1a275bf", null ],
-      [ "kEDMA_PeripheralToPeripheral", "a00022.html#gga7803399034b374663f76a589da7d8419a5c9cc27e04a3c22204b90ba07b860727", null ],
+    [ "_edma_transfer_type", "a00022.html#ga2ff12bc109f968bb2841fca1a9d3499e", [
+      [ "kEDMA_MemoryToMemory", "a00022.html#gga2ff12bc109f968bb2841fca1a9d3499eaba1ccd03368799d9752bd6001f5373a5", null ],
+      [ "kEDMA_PeripheralToMemory", "a00022.html#gga2ff12bc109f968bb2841fca1a9d3499ea1041287c7dc311d81017f529a51734e6", null ],
+      [ "kEDMA_MemoryToPeripheral", "a00022.html#gga2ff12bc109f968bb2841fca1a9d3499ea172d3e1f201639f3157563f4a1a275bf", null ],
+      [ "kEDMA_PeripheralToPeripheral", "a00022.html#gga2ff12bc109f968bb2841fca1a9d3499ea5c9cc27e04a3c22204b90ba07b860727", null ],
       [ "kStatus_EDMA_QueueFull", "a00022.html#ggac36f475ca5b446f4fde4c9b90bec77c8a6d33d9a7019b18917669f16d51085b32", null ],
       [ "kStatus_EDMA_Busy", "a00022.html#ggac36f475ca5b446f4fde4c9b90bec77c8a96aa3062c73a9f439f63c0ed24f09c07", null ]
     ] ],
@@ -147,6 +159,7 @@ var a00022 =
     [ "EDMA_SetChannelLink", "a00022.html#ga8cd3ca8512357b64af15846a2b87edd6", null ],
     [ "EDMA_SetBandWidth", "a00022.html#gaf2997a300751b52e3c2e699e3f2296f2", null ],
     [ "EDMA_SetModulo", "a00022.html#gaa3f4855fe92ed80276487771b9bd2705", null ],
+    [ "EDMA_EnableAsyncRequest", "a00022.html#ga0e5cbacd0f64515239695b9f94bb78a4", null ],
     [ "EDMA_EnableAutoStopRequest", "a00022.html#gac3ef15106efff13ea6a25441fc228349", null ],
     [ "EDMA_EnableChannelInterrupts", "a00022.html#ga15df898b3b420958f51c4df22dc85b98", null ],
     [ "EDMA_DisableChannelInterrupts", "a00022.html#ga251561e70531dfcea586b5f1fff9c916", null ],

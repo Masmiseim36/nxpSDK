@@ -168,7 +168,6 @@ static int s_touchResolutionY;
 static ft5406_rt_handle_t touchHandle;
 #endif
 
-
 SDK_ALIGN(static uint8_t s_frameBuffer[2][DEMO_FB_SIZE], DEMO_FB_ALIGN);
 
 /*******************************************************************************
@@ -194,8 +193,8 @@ void lv_port_disp_init(void)
      * Register the display in LittlevGL
      *----------------------------------*/
 
-    static lv_disp_drv_t disp_drv;      /*Descriptor of a display driver*/
-    lv_disp_drv_init(&disp_drv); /*Basic initialization*/
+    static lv_disp_drv_t disp_drv; /*Descriptor of a display driver*/
+    lv_disp_drv_init(&disp_drv);   /*Basic initialization*/
 
     /*Set up the functions to access to your display*/
 

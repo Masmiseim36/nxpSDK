@@ -17,7 +17,7 @@ var pipeline_8h =
       [ "STATE_CHANGE_READY_TO_NULL", "pipeline_8h.html#ae6800cf261c0c336b76befe5a00a84c9a9d3fc167bc07bfaad15a5889d9bbca5f", null ]
     ] ],
     [ "process_pipeline", "pipeline_8h.html#a2efa41bf33e7ff61aca9572eb0fdb904", null ],
-    [ "create_pipeline", "pipeline_8h.html#a826f42bc49d505e38ec0effde8b51a53", null ],
+    [ "create_pipeline", "pipeline_8h.html#ae595bafc8ba38042cd2934e5c284c841", null ],
     [ "destroy_pipeline", "pipeline_8h.html#a7a5a385a732f83a8fb7388137d064e01", null ],
     [ "get_state_pipeline", "pipeline_8h.html#a5019d8166e8c2c182f56f3f520429b2c", null ],
     [ "set_state_pipeline", "pipeline_8h.html#aa9bdde4e0d07adb9648ab8d9c6219396", null ],

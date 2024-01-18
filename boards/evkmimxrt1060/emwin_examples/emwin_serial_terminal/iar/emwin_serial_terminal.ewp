@@ -2225,7 +2225,7 @@
   <group>
     <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
   <group>
@@ -2328,6 +2328,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</name>
     </file>
   </group>
   <group>
@@ -2530,6 +2533,9 @@
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_Private.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_Resource.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_SPRITE_Private.h</name>
       </file>
       <file>
@@ -2581,6 +2587,9 @@
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/IP_FS.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/JPEGConf.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/KEYBOARD.h</name>
       </file>
       <file>
@@ -2606,6 +2615,18 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/LCD_SIM.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/LCD_X_8080_16.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/LCD_X_8080_8.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/LCD_X_I2C.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/LCD_X_Serial_3Pin.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/LISTBOX.h</name>

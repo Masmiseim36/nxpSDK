@@ -273,7 +273,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state>Pa082,Pa050,Pa089,Go029,Pe188,Pe111,Pe236,Pe546</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -310,11 +310,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa089,Go029,Pe188,Pe111,Pe236,Pe546</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -373,6 +373,7 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
@@ -1374,7 +1375,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state>Pa082,Pa050,Pa089,Go029,Pe188,Pe111,Pe236,Pe546</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1411,11 +1412,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa089,Go029,Pe188,Pe111,Pe236,Pe546</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -1474,6 +1475,7 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
@@ -2296,7 +2298,7 @@
   <group>
     <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
   <group>
@@ -2746,6 +2748,18 @@
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/stm32_dma2d/lv_gpu_stm32_dma2d.h</name>
+            </file>
+          </group>
+          <group>
+            <name>renesas</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/renesas/lv_gpu_d2_ra6m3.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/renesas/lv_gpu_d2_ra6m3.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/renesas/lv_gpu_d2_draw_label.c</name>
             </file>
           </group>
           <group>
@@ -3641,6 +3655,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/fsl_assert.h</name>
     </file>
   </group>
   <group>

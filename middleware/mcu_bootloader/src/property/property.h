@@ -86,6 +86,12 @@ enum _available_commands
 #if BL_FEATURE_ERASEALL_UNSECURE
         | HAS_CMD(kCommandTag_FlashEraseAllUnsecure)
 #endif // BL_FEATURE_ERASEALL_UNSECURE
+#if BL_FEATURE_LIFECYCLE_UPDATE
+        | HAS_CMD(kCommandTag_LifeCycleUpdate)
+#endif // BL_FEATURE_LIFECYCLE_UPDATE
+#if BL_FEATURE_EDGELOCK_MODULE
+        | HAS_CMD(KCommandTag_EleMessage)
+#endif // BL_FEATURE_EDGELOCK_MODULE
 #endif // BL_FEATURE_MIN_PROFILE
             )
 };

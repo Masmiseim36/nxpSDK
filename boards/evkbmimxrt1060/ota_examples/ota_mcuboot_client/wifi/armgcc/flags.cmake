@@ -44,6 +44,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DLWIP_DHCP=1 \
     -DENET_RXBUFF_NUM=14 \
     -DSHELL_BUFFER_SIZE=128U \
+    -DCPU_MIMXRT1062DVL6B_cm7 \
     -DMCUXPRESSO_SDK \
     -DMFLASH_FILE_BASEADDR=7340032 \
     -DSDIO_ENABLED \
@@ -68,6 +69,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -fomit-frame-pointer \
+    -Wno-unused-function \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -87,6 +90,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DLWIP_DHCP=1 \
     -DENET_RXBUFF_NUM=14 \
     -DSHELL_BUFFER_SIZE=128U \
+    -DCPU_MIMXRT1062DVL6B_cm7 \
     -DMCUXPRESSO_SDK \
     -DMFLASH_FILE_BASEADDR=7340032 \
     -DSDIO_ENABLED \
@@ -110,6 +114,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -fomit-frame-pointer \
+    -Wno-unused-function \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -189,7 +195,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     --defsym=__heap_size__=0x200 \
     ${FPU} \
     ${SPECS} \
-    -T${ProjDirPath}/MIMXRT1062xxxxx_flexspi_nor_mcuboot.ld -static \
+    -T\"${ProjDirPath}/MIMXRT1062xxxxx_flexspi_nor_mcuboot.ld\" -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} \
@@ -219,5 +225,5 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     --defsym=__heap_size__=0x200 \
     ${FPU} \
     ${SPECS} \
-    -T${ProjDirPath}/MIMXRT1062xxxxx_flexspi_nor_mcuboot.ld -static \
+    -T\"${ProjDirPath}/MIMXRT1062xxxxx_flexspi_nor_mcuboot.ld\" -static \
 ")

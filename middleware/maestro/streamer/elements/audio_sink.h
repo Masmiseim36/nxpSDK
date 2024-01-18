@@ -1,10 +1,7 @@
 /*
  * Copyright 2018-2022 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef AUDIO_SINK_H
@@ -16,6 +13,7 @@
  */
 
 #include "streamer_element.h"
+#include "streamer_element_properties.h"
 
 /*! Maximum number of APP allowed */
 #define MAX_NO_OF_APP 1
@@ -221,11 +219,13 @@ struct _ElementAudioSink
     uint32_t last_num_channels;                      /*!< @brief last time number of audio channels */
     uint32_t last_chunk_size;                        /*!< @brief last time chunk size */
 
-    bool device_started;           /*!< Indicates whether the device was started */
-    uint8_t codec_num_channels;    /*!< @brief Number of channels for HW codec*/
-    uint8_t codec_bits_per_sample; /*!< @brief Sample width for HW codec*/
+    bool device_started;                             /*!< Indicates whether the device was started */
+    uint8_t codec_num_channels;                      /*!< @brief Number of channels for HW codec*/
+    uint8_t codec_bits_per_sample;                   /*!< @brief Sample width for HW codec*/
 
     ElementHandle refData_element; /*!< @brief Element handle where reference audio data will be sent (VoiceSeeker) */
+
+    EXT_AUDIOELEMENT_DESC_T appFunctions; /*!< @brief Function defined in the application. */
 };
 
 /*!

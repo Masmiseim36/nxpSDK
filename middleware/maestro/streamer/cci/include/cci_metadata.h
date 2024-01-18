@@ -1,10 +1,7 @@
 /*
  * Copyright 2018-2022 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /*! @file cci_metadata.h
@@ -27,9 +24,9 @@ extern "C" {
 /*
  * Definitions
  */
-#define MAX_PTP_STRING_CHARS       64 /*!< @brief Maximum ptp string chars */
-#define MAX_PTP_STRING_CHARS_GENRE 34 /*!< @brief Maximum ptp string chars genre */
-#define MAX_PTP_STRING_CHARS_YEAR  5  /*!< @brief Maximum ptp string chars year */
+#define MAX_PTP_STRING_CHARS       64              /*!< @brief Maximum ptp string chars */
+#define MAX_PTP_STRING_CHARS_GENRE 34              /*!< @brief Maximum ptp string chars genre */
+#define MAX_PTP_STRING_CHARS_YEAR  5               /*!< @brief Maximum ptp string chars year */
 
 #define META_DATA_FOUND              (WORD)(0)     /*!< @brief Metadata was found.*/
 #define META_DATA_NOT_FOUND          (WORD)(0x100) /*!< @brief Metadata was not found.*/
@@ -103,8 +100,8 @@ typedef enum _codec_bitrate_type
  */
 typedef struct
 {
-    void *user_data; /*!< @brief Holds file pointer (in case of direct file interface)
-                      or CCIDecInfo context (in case of streamer interface)*/
+    void *user_data;                                   /*!< @brief Holds file pointer (in case of direct file interface)
+                                                        or CCIDecInfo context (in case of streamer interface)*/
     int32_t (*cci_dec_read)(
         int32_t, uint8_t *, int32_t, int32_t, void *); /*!< @brief CCI interface callback API for read operation*/
     int32_t (*cci_dec_seek)(int32_t,

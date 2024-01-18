@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -509,7 +509,7 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:gaa668f10e7e0820c4d504f124ef506b59"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#gaa668f10e7e0820c4d504f124ef506b59">FSL_FLEXIO_UART_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 4, 0))</td></tr>
+<tr class="memitem:gaa668f10e7e0820c4d504f124ef506b59"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#gaa668f10e7e0820c4d504f124ef506b59">FSL_FLEXIO_UART_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 5, 0))</td></tr>
 <tr class="memdesc:gaa668f10e7e0820c4d504f124ef506b59"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexIO UART driver version.  <a href="#gaa668f10e7e0820c4d504f124ef506b59">More...</a><br/></td></tr>
 <tr class="separator:gaa668f10e7e0820c4d504f124ef506b59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -608,6 +608,9 @@ Transactional</h2></td></tr>
 <tr class="memitem:ga3c30d66f4471bfebd2021a8a3f1a1f04"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#ga3c30d66f4471bfebd2021a8a3f1a1f04">FLEXIO_UART_TransferHandleIRQ</a> (void *uartType, void *uartHandle)</td></tr>
 <tr class="memdesc:ga3c30d66f4471bfebd2021a8a3f1a1f04"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexIO UART IRQ handler function.  <a href="#ga3c30d66f4471bfebd2021a8a3f1a1f04">More...</a><br/></td></tr>
 <tr class="separator:ga3c30d66f4471bfebd2021a8a3f1a1f04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4825d566bedb5d350a95f08fe926085b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#ga4825d566bedb5d350a95f08fe926085b">FLEXIO_UART_FlushShifters</a> (<a class="el" href="a00038.html#a00429">FLEXIO_UART_Type</a> *base)</td></tr>
+<tr class="memdesc:ga4825d566bedb5d350a95f08fe926085b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush tx/rx shifters.  <a href="#ga4825d566bedb5d350a95f08fe926085b">More...</a><br/></td></tr>
+<tr class="separator:ga4825d566bedb5d350a95f08fe926085b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="a00429" id="a00429"></a>
@@ -1061,7 +1064,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_FLEXIO_UART_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 4, 0))</td>
+          <td class="memname">#define FSL_FLEXIO_UART_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 5, 0))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -2248,6 +2251,28 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
   <table class="params">
     <tr><td class="paramname">uartType</td><td>Pointer to the <a class="el" href="a00038.html#a00429" title="Define FlexIO UART access structure typedef. ">FLEXIO_UART_Type</a> structure. </td></tr>
     <tr><td class="paramname">uartHandle</td><td>Pointer to the flexio_uart_handle_t structure to store the transfer state. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga4825d566bedb5d350a95f08fe926085b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FLEXIO_UART_FlushShifters </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00038.html#a00429">FLEXIO_UART_Type</a> *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00038.html#a00429" title="Define FlexIO UART access structure typedef. ">FLEXIO_UART_Type</a> structure. </td></tr>
   </table>
   </dd>
 </dl>

@@ -25,7 +25,6 @@ var a00070 =
     [ "SERIAL_PORT_TYPE_SPI_MASTER", "a00070.html#ga0930f57cce1c63e56b8ce280e7423304", null ],
     [ "SERIAL_PORT_TYPE_SPI_SLAVE", "a00070.html#ga78917d72251361c814cc6c09177fbbf4", null ],
     [ "SERIAL_PORT_TYPE_BLE_WU", "a00070.html#gafe87e3d59c182fdceba8b869a5cf0a33", null ],
-    [ "SERIAL_MANAGER_TASK_HANDLE_TX", "a00070.html#gab26fb3c93b19327a8e346d1fd762c720", null ],
     [ "SERIAL_MANAGER_WRITE_TIME_DELAY_DEFAULT_VALUE", "a00070.html#gaefd7b994ea13ed385804afbe3268db7c", null ],
     [ "SERIAL_MANAGER_READ_TIME_DELAY_DEFAULT_VALUE", "a00070.html#ga5e349416c81a583a8a98e99683624929", null ],
     [ "SERIAL_MANAGER_TASK_HANDLE_RX_AVAILABLE_NOTIFY", "a00070.html#gacb98bd8be88e9a526f1e517bc6215a8d", null ],
@@ -68,7 +67,7 @@ var a00070 =
       [ "kStatus_SerialManager_RingBufferOverflow", "a00070.html#ggae9a330e1f3a81509399832c7b2c2872fa41631953d2191b631fbe8443bfa856c8", null ],
       [ "kStatus_SerialManager_NotConnected", "a00070.html#ggae9a330e1f3a81509399832c7b2c2872fa1e09ebaf03a4d8599170987750b17ce6", null ]
     ] ],
-    [ "SerialManager_Init", "a00070.html#gac9ad820108a6713516ff44ef109fadf4", null ],
+    [ "SerialManager_Init", "a00070.html#ga3a3439526ad4444ea2dc535cd6f69608", null ],
     [ "SerialManager_Deinit", "a00070.html#ga467c8a817003eacd48f86aaef1ce8306", null ],
     [ "SerialManager_OpenWriteHandle", "a00070.html#ga3d26249a8331e6ca17e9c60838b56d20", null ],
     [ "SerialManager_CloseWriteHandle", "a00070.html#gadb8df1d54da32e6de17680264ca4106a", null ],

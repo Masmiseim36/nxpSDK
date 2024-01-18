@@ -1,5 +1,5 @@
 /*
- * Copyright 2020, 2021 NXP
+ * Copyright 2020-2021 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -10,11 +10,12 @@
 #include <nxp_iot_agent_time.h>
 #include <nxp_iot_agent_macros.h>
 
+#if IOT_AGENT_TIME_MEASUREMENT_ENABLE
+
 #if (!AX_EMBEDDED)
 #include <time.h>
 #endif
 
-#if IOT_AGENT_TIME_MEASUREMENT_ENABLE
 iot_agent_time_t iot_agent_time = {0};
 
 iot_agent_status_t iot_agent_log_performance_timing()

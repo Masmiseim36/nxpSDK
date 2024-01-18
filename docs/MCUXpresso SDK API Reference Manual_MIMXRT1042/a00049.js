@@ -12,6 +12,7 @@ var a00049 =
       [ "whichPcs", "a00049.html#ac5514f7f0b043d78c956874d968c95f4", null ],
       [ "pcsActiveHighOrLow", "a00049.html#a7da7b2e2a9a0e959b0f4c5f7b1618c48", null ],
       [ "pinCfg", "a00049.html#a52fed669c402348f070df8322e4bc8b1", null ],
+      [ "pcsFunc", "a00049.html#ae365b8da86e65c9eb5fe909d734b5e1d", null ],
       [ "dataOutConfig", "a00049.html#acc0422bcb70e685bb66f3a216aa66088", null ],
       [ "enableInputDelay", "a00049.html#a1b0faf93c78ceb12d7e12dc036c930c0", null ]
     ] ],
@@ -76,6 +77,8 @@ var a00049 =
     [ "SPI_RETRY_TIMES", "a00049.html#gaa4717c15ca9604c505a5e5c60df29ebe", null ],
     [ "LPSPI_MASTER_PCS_SHIFT", "a00049.html#gaa83009bb8d3485984bbda804eef3a1e5", null ],
     [ "LPSPI_MASTER_PCS_MASK", "a00049.html#ga00b2709c8cb35f28de79e13a46f625ef", null ],
+    [ "LPSPI_MASTER_WIDTH_SHIFT", "a00049.html#ga5949fed47396cb00822ab0fbd4f57f36", null ],
+    [ "LPSPI_MASTER_WIDTH_MASK", "a00049.html#ga6bf82e075782b63115017ca65232366c", null ],
     [ "LPSPI_SLAVE_PCS_SHIFT", "a00049.html#gab14deb887bd54221e34f013a2e7afcf7", null ],
     [ "LPSPI_SLAVE_PCS_MASK", "a00049.html#gac143084740a5ba788e1ac73fefc6f5e4", null ],
     [ "lpspi_master_transfer_callback_t", "a00049.html#gaeecf1622c161a2d202eace4a4699dc3a", null ],
@@ -169,6 +172,10 @@ var a00049 =
       [ "kLpspiDataOutRetained", "a00049.html#gga134cbe42b20647e752e66aaeabbc10d4a82a3d2bf52e339c016ea5b55b6e5a0b5", null ],
       [ "kLpspiDataOutTristate", "a00049.html#gga134cbe42b20647e752e66aaeabbc10d4ad88e6541ea02827476f10ca3a7906129", null ]
     ] ],
+    [ "lpspi_pcs_function_config_t", "a00049.html#ga2d1f723773c106d6dcf40a714f29a43d", [
+      [ "kLPSPI_PcsAsCs", "a00049.html#gga2d1f723773c106d6dcf40a714f29a43da8ad031df810adf64ba4c40e72a77c26e", null ],
+      [ "kLPSPI_PcsAsData", "a00049.html#gga2d1f723773c106d6dcf40a714f29a43dae822c1f6a84ed7f036994e173ba6f35d", null ]
+    ] ],
     [ "lpspi_transfer_width_t", "a00049.html#gaa5d9038e390c8a7610dc72375da252a7", [
       [ "kLPSPI_SingleBitXfer", "a00049.html#ggaa5d9038e390c8a7610dc72375da252a7a56986005418db6d0910782c58ed92dc0", null ],
       [ "kLPSPI_TwoBitXfer", "a00049.html#ggaa5d9038e390c8a7610dc72375da252a7aeb5365dd5861043f098db28e9945c191", null ],
@@ -184,6 +191,9 @@ var a00049 =
       [ "kLPSPI_MasterPcs1", "a00049.html#gga8c2566783079ecdbb478f06658375005a1b57aa21038a9d2fe7affdda155a21d0", null ],
       [ "kLPSPI_MasterPcs2", "a00049.html#gga8c2566783079ecdbb478f06658375005abd22976ae5150a0f57f27f439d25e6d0", null ],
       [ "kLPSPI_MasterPcs3", "a00049.html#gga8c2566783079ecdbb478f06658375005a38ce619f68339f607e63affd7ce012a5", null ],
+      [ "kLPSPI_MasterWidth1", "a00049.html#gga8c2566783079ecdbb478f06658375005aff8514d8d46a4610015f98df7247b6b4", null ],
+      [ "kLPSPI_MasterWidth2", "a00049.html#gga8c2566783079ecdbb478f06658375005a168579d6bb4cb836885cb1058c653a17", null ],
+      [ "kLPSPI_MasterWidth4", "a00049.html#gga8c2566783079ecdbb478f06658375005a8063ab42ea8fd08e0d6f33071028165c", null ],
       [ "kLPSPI_MasterPcsContinuous", "a00049.html#gga8c2566783079ecdbb478f06658375005a81e8942cb9a3dc01b6900fa0fc44a807", null ],
       [ "kLPSPI_MasterByteSwap", "a00049.html#gga8c2566783079ecdbb478f06658375005aada04eea6a730a7536682944531385bb", null ]
     ] ],
@@ -245,5 +255,6 @@ var a00049 =
     [ "LPSPI_SlaveTransferGetCount", "a00049.html#ga16197357d88a58ecc4ad0365ac360714", null ],
     [ "LPSPI_SlaveTransferAbort", "a00049.html#gad7ada4345cd33086f7dff776123f9477", null ],
     [ "LPSPI_SlaveTransferHandleIRQ", "a00049.html#gab03f7964e02570aec3ca7c990200c7ed", null ],
+    [ "LPSPI_WaitTxFifoEmpty", "a00049.html#gade281936673c58a0e2fde843dacac814", null ],
     [ "g_lpspiDummyData", "a00049.html#ga95e4847cd333277614975d46280df9dd", null ]
 ];

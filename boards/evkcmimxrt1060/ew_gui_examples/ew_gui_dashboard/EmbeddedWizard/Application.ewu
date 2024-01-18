@@ -1,0 +1,128 @@
+$version 10.00
+
+// This is the root component of the entire GUI application.
+$rect <10,40,210,80>
+$output false
+class Application : Core::Root
+{
+  $rect <680,369,880,409>
+  inherited method HandleEvent()
+  {
+    var Core::CursorGrabEvent event = (Core::CursorGrabEvent)aEvent;
+    if ( (event != null) && (event.Down) )
+    {
+      // Restart the timer on user input
+      inactiveTimer.Enabled = false;
+      inactiveTimer.Enabled = true;
+
+      // Disable the auto demo mode
+      device.AutoDemoMode = false;
+    }
+
+    return super( aEvent );
+  }
+
+  $rect <0,289,200,329>
+  inherited property Bounds;
+
+  $rect <0,329,200,369>
+  inherited method Init()
+  {
+    Bounds.size = $ScreenSize;
+
+    // Just at the initialization time of the application present the first (main) dialog
+    PresentDialog( new Dashboard::StartScreen, Dashboard::FadeInOutCentered, null, null, null, null, null, null, null, false );
+  }
+
+  $rect <220,329,420,369>
+  var Dashboard::DeviceClass device = Dashboard::Device;
+
+  // autoobject handle
+  note group Note
+  {
+    attr Bounds = <210,289,430,389>;
+  }
+
+  // Demo Mode
+  note group Note2
+  {
+    attr Bounds = <670,289,890,499>;
+  }
+
+  // FPS
+  note group Note1
+  {
+    attr Bounds = <440,289,660,419>;
+  }
+
+  $rect <450,369,650,409>
+  slot onFpsSlot
+  {
+    Text.String = "FPS: " + string( GetFPS() );
+  }
+
+  $rect <450,329,650,369>
+  object Core::Timer fpsTimer
+  {
+    preset OnTrigger = onFpsSlot;
+    preset Enabled = true;
+  }
+
+  $rect <680,409,880,449>
+  object Effects::EffectTimerClass inactiveTimer
+  {
+    preset OnTrigger = onInactive;
+    preset Period = 0;
+    preset Begin = 10000;
+    preset Enabled = true;
+  }
+
+  $rect <680,449,880,489>
+  slot onInactive
+  {
+    // Start the auto demo mode
+    device.AutoDemoMode = true;
+  }
+
+  $rect <680,329,880,369>
+  object Dashboard::DemoMode DemoMode;
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Background
+  {
+    preset Bounds = rect(<0,0>,$ScreenSize);
+    preset Color = Dashboard::Colors.Background;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text Text
+  {
+    preset StackingPriority = 100;
+    preset Bounds = <375,242,475,272>;
+    preset Alignment = Views::TextAlignment[AlignHorzRight, AlignVertCenter];
+    preset String = "FPS: 0";
+    preset Font = Resources::DefaultFont;
+  }
+
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler AutoDemoTouchHandler
+  {
+    preset Point4 = <0,0>;
+    preset Point3 = <480,0>;
+    preset Point2 = <480,272>;
+    preset Point1 = <0,272>;
+  }
+}
+
+// Application class of the example
+note group Note4
+{
+  attr Bounds = <0,0,410,90>;
+}
+
+// The Application class launches the dashboard demo. All ingredients for the dashboard \
+// are implemented within the unit 'Dashboard'.
+note legend Note
+{
+  attr Bounds = <420,0,900,90>;
+}

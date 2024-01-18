@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,6 +99,7 @@ $(document).ready(function(){initNavTree('a00289.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">PMU: Power Management Unit</div>  </div>
@@ -108,6 +109,28 @@ $(document).ready(function(){initNavTree('a00289.html','');});
 <p>The MCUXpresso SDK provides a peripheral driver for the Power Management Unit (PMU) module of MCUXpresso SDK devices. The power management unit (PMU) is designed to simplify the external power interface. The power system can be split into the input power sources and their characteristics, the integrated power transforming and controlling elements, and the final load interconnection and requirements. By using the internal LDO regulators, the number of external supplies is greatly reduced.</p>
 <p>The PMU driver provides the APIs to adjust the work condition of each regulator, and can gate the power of some modules. </p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gac79c9571d0cb06152ee392397db13a2c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac79c9571d0cb06152ee392397db13a2c"></a>
+typedef enum <br class="typebreak"/>
+<a class="el" href="a00289.html#ga2c956f69c55d850d66407f0a4ee20e27">_pmu_1p1_weak_reference_source</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html#gac79c9571d0cb06152ee392397db13a2c">pmu_1p1_weak_reference_source_t</a></td></tr>
+<tr class="memdesc:gac79c9571d0cb06152ee392397db13a2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The source for the reference voltage of the weak 1P1 regulator. <br/></td></tr>
+<tr class="separator:gac79c9571d0cb06152ee392397db13a2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga291b21d9f6cacd46dc26ae53db762627"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga291b21d9f6cacd46dc26ae53db762627"></a>
+typedef enum <br class="typebreak"/>
+<a class="el" href="a00289.html#ga1d45d6657b1af8265e1a35a915c20a1f">_pmu_3p0_vbus_voltage_source</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html#ga291b21d9f6cacd46dc26ae53db762627">pmu_3p0_vbus_voltage_source_t</a></td></tr>
+<tr class="memdesc:ga291b21d9f6cacd46dc26ae53db762627"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input voltage source for LDO_3P0 from USB VBus. <br/></td></tr>
+<tr class="separator:ga291b21d9f6cacd46dc26ae53db762627"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga267502cff989a844b6290ab0f20689d2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga267502cff989a844b6290ab0f20689d2"></a>
+typedef enum <br class="typebreak"/>
+<a class="el" href="a00289.html#ga3d98e6d6c9f9355e8580ab06b9b4355d">_pmu_core_reg_voltage_ramp_rate</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html#ga267502cff989a844b6290ab0f20689d2">pmu_core_reg_voltage_ramp_rate_t</a></td></tr>
+<tr class="memdesc:ga267502cff989a844b6290ab0f20689d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Regulator voltage ramp rate. <br/></td></tr>
+<tr class="separator:ga267502cff989a844b6290ab0f20689d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga095c7f91d0c7fe3a2a51ab782bd0c144"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga095c7f91d0c7fe3a2a51ab782bd0c144"></a>
+typedef enum <a class="el" href="a00289.html#gab59ff9490241915d2415be3a13348987">_pmu_power_bandgap</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html#ga095c7f91d0c7fe3a2a51ab782bd0c144">pmu_power_bandgap_t</a></td></tr>
+<tr class="memdesc:ga095c7f91d0c7fe3a2a51ab782bd0c144"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bandgap select. <br/></td></tr>
+<tr class="separator:ga095c7f91d0c7fe3a2a51ab782bd0c144"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr class="memitem:ga109bfaad92bd6d348dab484aec11edbb"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
@@ -126,42 +149,42 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:ga109bfaad92bd6d348dab484aec11edbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">PMU Status flags.  <a href="a00289.html#ga109bfaad92bd6d348dab484aec11edbb">More...</a><br/></td></tr>
 <tr class="separator:ga109bfaad92bd6d348dab484aec11edbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6b47a2e7d1775049cdcfb744b37ecadb"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html#ga6b47a2e7d1775049cdcfb744b37ecadb">pmu_1p1_weak_reference_source_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00289.html#gga6b47a2e7d1775049cdcfb744b37ecadba66d71c9d447ecdb90b6b2b1bd025168e">kPMU_1P1WeakReferenceSourceAlt0</a> = 0U, 
+<tr class="memitem:ga2c956f69c55d850d66407f0a4ee20e27"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html#ga2c956f69c55d850d66407f0a4ee20e27">_pmu_1p1_weak_reference_source</a> { <br/>
+&#160;&#160;<a class="el" href="a00289.html#gga2c956f69c55d850d66407f0a4ee20e27a66d71c9d447ecdb90b6b2b1bd025168e">kPMU_1P1WeakReferenceSourceAlt0</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00289.html#gga6b47a2e7d1775049cdcfb744b37ecadbace5078924f5b087c2791e3fc6ba958e4">kPMU_1P1WeakReferenceSourceAlt1</a> = 1U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga6b47a2e7d1775049cdcfb744b37ecadb"><td class="mdescLeft">&#160;</td><td class="mdescRight">The source for the reference voltage of the weak 1P1 regulator.  <a href="a00289.html#ga6b47a2e7d1775049cdcfb744b37ecadb">More...</a><br/></td></tr>
-<tr class="separator:ga6b47a2e7d1775049cdcfb744b37ecadb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf7f949a78166a27563c8a0f2ebc0af31"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html#gaf7f949a78166a27563c8a0f2ebc0af31">pmu_3p0_vbus_voltage_source_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00289.html#ggaf7f949a78166a27563c8a0f2ebc0af31a825e44d25be34386eadd03f99b66f857">kPMU_3P0VBusVoltageSourceAlt0</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00289.html#ggaf7f949a78166a27563c8a0f2ebc0af31aefdca33e631b3b7b3b9b6a412254b2f7">kPMU_3P0VBusVoltageSourceAlt1</a> = 1U
+&#160;&#160;<a class="el" href="a00289.html#gga2c956f69c55d850d66407f0a4ee20e27ace5078924f5b087c2791e3fc6ba958e4">kPMU_1P1WeakReferenceSourceAlt1</a> = 1U
 <br/>
  }</td></tr>
-<tr class="memdesc:gaf7f949a78166a27563c8a0f2ebc0af31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input voltage source for LDO_3P0 from USB VBus.  <a href="a00289.html#gaf7f949a78166a27563c8a0f2ebc0af31">More...</a><br/></td></tr>
-<tr class="separator:gaf7f949a78166a27563c8a0f2ebc0af31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4a1cbd5cfe295ba24ff9d6460c3f660e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html#ga4a1cbd5cfe295ba24ff9d6460c3f660e">pmu_core_reg_voltage_ramp_rate_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00289.html#gga4a1cbd5cfe295ba24ff9d6460c3f660eacf2fdfb31db3e83e3306c3d98ffbe9f9">kPMU_CoreRegVoltageRampRateFast</a> = 0U, 
+<tr class="memdesc:ga2c956f69c55d850d66407f0a4ee20e27"><td class="mdescLeft">&#160;</td><td class="mdescRight">The source for the reference voltage of the weak 1P1 regulator.  <a href="a00289.html#ga2c956f69c55d850d66407f0a4ee20e27">More...</a><br/></td></tr>
+<tr class="separator:ga2c956f69c55d850d66407f0a4ee20e27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1d45d6657b1af8265e1a35a915c20a1f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html#ga1d45d6657b1af8265e1a35a915c20a1f">_pmu_3p0_vbus_voltage_source</a> { <br/>
+&#160;&#160;<a class="el" href="a00289.html#gga1d45d6657b1af8265e1a35a915c20a1fa825e44d25be34386eadd03f99b66f857">kPMU_3P0VBusVoltageSourceAlt0</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00289.html#gga4a1cbd5cfe295ba24ff9d6460c3f660eadab48795d60139c6009a5de52277aa7f">kPMU_CoreRegVoltageRampRateMediumFast</a> = 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00289.html#gga4a1cbd5cfe295ba24ff9d6460c3f660ea2afb37a84985c3eeb1146aaee869f891">kPMU_CoreRegVoltageRampRateMediumSlow</a> = 2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00289.html#gga4a1cbd5cfe295ba24ff9d6460c3f660ea8744a5ed680a59150feca86ba0357d12">kPMU_CoreRegVoltageRampRateSlow</a> = 0U
+&#160;&#160;<a class="el" href="a00289.html#gga1d45d6657b1af8265e1a35a915c20a1faefdca33e631b3b7b3b9b6a412254b2f7">kPMU_3P0VBusVoltageSourceAlt1</a> = 1U
 <br/>
  }</td></tr>
-<tr class="memdesc:ga4a1cbd5cfe295ba24ff9d6460c3f660e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Regulator voltage ramp rate.  <a href="a00289.html#ga4a1cbd5cfe295ba24ff9d6460c3f660e">More...</a><br/></td></tr>
-<tr class="separator:ga4a1cbd5cfe295ba24ff9d6460c3f660e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8178a1394f1448946497f11062aac986"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html#ga8178a1394f1448946497f11062aac986">pmu_power_bandgap_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00289.html#gga8178a1394f1448946497f11062aac986a47cf46f2e5470bebdd7babc9b4d3cd20">kPMU_NormalPowerBandgap</a> = 0U, 
+<tr class="memdesc:ga1d45d6657b1af8265e1a35a915c20a1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input voltage source for LDO_3P0 from USB VBus.  <a href="a00289.html#ga1d45d6657b1af8265e1a35a915c20a1f">More...</a><br/></td></tr>
+<tr class="separator:ga1d45d6657b1af8265e1a35a915c20a1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3d98e6d6c9f9355e8580ab06b9b4355d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html#ga3d98e6d6c9f9355e8580ab06b9b4355d">_pmu_core_reg_voltage_ramp_rate</a> { <br/>
+&#160;&#160;<a class="el" href="a00289.html#gga3d98e6d6c9f9355e8580ab06b9b4355dacf2fdfb31db3e83e3306c3d98ffbe9f9">kPMU_CoreRegVoltageRampRateFast</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00289.html#gga8178a1394f1448946497f11062aac986a8f4daf5e5847e848d7feb71b99685763">kPMU_LowPowerBandgap</a> = 1U
+&#160;&#160;<a class="el" href="a00289.html#gga3d98e6d6c9f9355e8580ab06b9b4355dadab48795d60139c6009a5de52277aa7f">kPMU_CoreRegVoltageRampRateMediumFast</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00289.html#gga3d98e6d6c9f9355e8580ab06b9b4355da2afb37a84985c3eeb1146aaee869f891">kPMU_CoreRegVoltageRampRateMediumSlow</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00289.html#gga3d98e6d6c9f9355e8580ab06b9b4355da8744a5ed680a59150feca86ba0357d12">kPMU_CoreRegVoltageRampRateSlow</a> = 0U
 <br/>
  }</td></tr>
-<tr class="memdesc:ga8178a1394f1448946497f11062aac986"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bandgap select.  <a href="a00289.html#ga8178a1394f1448946497f11062aac986">More...</a><br/></td></tr>
-<tr class="separator:ga8178a1394f1448946497f11062aac986"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga3d98e6d6c9f9355e8580ab06b9b4355d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Regulator voltage ramp rate.  <a href="a00289.html#ga3d98e6d6c9f9355e8580ab06b9b4355d">More...</a><br/></td></tr>
+<tr class="separator:ga3d98e6d6c9f9355e8580ab06b9b4355d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab59ff9490241915d2415be3a13348987"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html#gab59ff9490241915d2415be3a13348987">_pmu_power_bandgap</a> { <br/>
+&#160;&#160;<a class="el" href="a00289.html#ggab59ff9490241915d2415be3a13348987a47cf46f2e5470bebdd7babc9b4d3cd20">kPMU_NormalPowerBandgap</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00289.html#ggab59ff9490241915d2415be3a13348987a8f4daf5e5847e848d7feb71b99685763">kPMU_LowPowerBandgap</a> = 1U
+<br/>
+ }</td></tr>
+<tr class="memdesc:gab59ff9490241915d2415be3a13348987"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bandgap select.  <a href="a00289.html#gab59ff9490241915d2415be3a13348987">More...</a><br/></td></tr>
+<tr class="separator:gab59ff9490241915d2415be3a13348987"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
@@ -177,7 +200,7 @@ Status.</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 1P1 Regular</h2></td></tr>
-<tr class="memitem:gac2f5999f1ad10dcddb29788b4033bb34"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html#gac2f5999f1ad10dcddb29788b4033bb34">PMU_1P1SetWeakReferenceSource</a> (PMU_Type *base, <a class="el" href="a00289.html#ga6b47a2e7d1775049cdcfb744b37ecadb">pmu_1p1_weak_reference_source_t</a> option)</td></tr>
+<tr class="memitem:gac2f5999f1ad10dcddb29788b4033bb34"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html#gac2f5999f1ad10dcddb29788b4033bb34">PMU_1P1SetWeakReferenceSource</a> (PMU_Type *base, <a class="el" href="a00289.html#gac79c9571d0cb06152ee392397db13a2c">pmu_1p1_weak_reference_source_t</a> option)</td></tr>
 <tr class="memdesc:gac2f5999f1ad10dcddb29788b4033bb34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects the source for the reference voltage of the weak 1P1 regulator.  <a href="#gac2f5999f1ad10dcddb29788b4033bb34">More...</a><br/></td></tr>
 <tr class="separator:gac2f5999f1ad10dcddb29788b4033bb34"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaac00c4a1c3df766df1d580e7803ade42"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html#gaac00c4a1c3df766df1d580e7803ade42">PMU_1P1EnableWeakRegulator</a> (PMU_Type *base, bool enable)</td></tr>
@@ -207,7 +230,7 @@ Status.</h2></td></tr>
 <tr class="memitem:ga49c8b1d40457140252c6d71e9760ef96"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html#ga49c8b1d40457140252c6d71e9760ef96">PMU_3P0SetRegulatorOutputVoltage</a> (PMU_Type *base, uint32_t value)</td></tr>
 <tr class="memdesc:ga49c8b1d40457140252c6d71e9760ef96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adjust the 3P0 regulator output voltage.  <a href="#ga49c8b1d40457140252c6d71e9760ef96">More...</a><br/></td></tr>
 <tr class="separator:ga49c8b1d40457140252c6d71e9760ef96"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7fd889f7fac239475cae5e1fdd9eb220"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html#ga7fd889f7fac239475cae5e1fdd9eb220">PMU_3P0SetVBusVoltageSource</a> (PMU_Type *base, <a class="el" href="a00289.html#gaf7f949a78166a27563c8a0f2ebc0af31">pmu_3p0_vbus_voltage_source_t</a> option)</td></tr>
+<tr class="memitem:ga7fd889f7fac239475cae5e1fdd9eb220"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html#ga7fd889f7fac239475cae5e1fdd9eb220">PMU_3P0SetVBusVoltageSource</a> (PMU_Type *base, <a class="el" href="a00289.html#ga291b21d9f6cacd46dc26ae53db762627">pmu_3p0_vbus_voltage_source_t</a> option)</td></tr>
 <tr class="memdesc:ga7fd889f7fac239475cae5e1fdd9eb220"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select input voltage source for LDO_3P0.  <a href="#ga7fd889f7fac239475cae5e1fdd9eb220">More...</a><br/></td></tr>
 <tr class="separator:ga7fd889f7fac239475cae5e1fdd9eb220"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga255543472ab3f09a168bf03fd33d584f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html#ga255543472ab3f09a168bf03fd33d584f">PMU_3P0SetBrownoutOffsetVoltage</a> (PMU_Type *base, uint32_t value)</td></tr>
@@ -255,7 +278,7 @@ Core Regulator</h2></td></tr>
 <tr class="memitem:ga7baf539021e407e5f32ee4334ce31371"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html#ga7baf539021e407e5f32ee4334ce31371">PMU_CoreEnableIncreaseGateDrive</a> (PMU_Type *base, bool enable)</td></tr>
 <tr class="memdesc:ga7baf539021e407e5f32ee4334ce31371"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increase the gate drive on power gating FETs.  <a href="#ga7baf539021e407e5f32ee4334ce31371">More...</a><br/></td></tr>
 <tr class="separator:ga7baf539021e407e5f32ee4334ce31371"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaebff0c51866f730270db5076508552d7"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html#gaebff0c51866f730270db5076508552d7">PMU_CoreSetRegulatorVoltageRampRate</a> (PMU_Type *base, <a class="el" href="a00289.html#ga4a1cbd5cfe295ba24ff9d6460c3f660e">pmu_core_reg_voltage_ramp_rate_t</a> option)</td></tr>
+<tr class="memitem:gaebff0c51866f730270db5076508552d7"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html#gaebff0c51866f730270db5076508552d7">PMU_CoreSetRegulatorVoltageRampRate</a> (PMU_Type *base, <a class="el" href="a00289.html#ga267502cff989a844b6290ab0f20689d2">pmu_core_reg_voltage_ramp_rate_t</a> option)</td></tr>
 <tr class="memdesc:gaebff0c51866f730270db5076508552d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the CORE regulator voltage ramp rate.  <a href="#gaebff0c51866f730270db5076508552d7">More...</a><br/></td></tr>
 <tr class="separator:gaebff0c51866f730270db5076508552d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga24fdaba5fbb1713f5b67e649979124f1"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html#ga24fdaba5fbb1713f5b67e649979124f1">PMU_CoreSetSOCDomainVoltage</a> (PMU_Type *base, uint32_t value)</td></tr>
@@ -315,86 +338,86 @@ Core Regulator</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga6b47a2e7d1775049cdcfb744b37ecadb"></a>
+<a class="anchor" id="ga2c956f69c55d850d66407f0a4ee20e27"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00289.html#ga6b47a2e7d1775049cdcfb744b37ecadb">pmu_1p1_weak_reference_source_t</a></td>
+          <td class="memname">enum <a class="el" href="a00289.html#ga2c956f69c55d850d66407f0a4ee20e27">_pmu_1p1_weak_reference_source</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga6b47a2e7d1775049cdcfb744b37ecadba66d71c9d447ecdb90b6b2b1bd025168e"></a>kPMU_1P1WeakReferenceSourceAlt0</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga2c956f69c55d850d66407f0a4ee20e27a66d71c9d447ecdb90b6b2b1bd025168e"></a>kPMU_1P1WeakReferenceSourceAlt0</em>&nbsp;</td><td class="fielddoc">
 <p>Weak-linreg output tracks low-power-bandgap voltage. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6b47a2e7d1775049cdcfb744b37ecadbace5078924f5b087c2791e3fc6ba958e4"></a>kPMU_1P1WeakReferenceSourceAlt1</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga2c956f69c55d850d66407f0a4ee20e27ace5078924f5b087c2791e3fc6ba958e4"></a>kPMU_1P1WeakReferenceSourceAlt1</em>&nbsp;</td><td class="fielddoc">
 <p>Weak-linreg output tracks VDD_SOC_CAP voltage. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gaf7f949a78166a27563c8a0f2ebc0af31"></a>
+<a class="anchor" id="ga1d45d6657b1af8265e1a35a915c20a1f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00289.html#gaf7f949a78166a27563c8a0f2ebc0af31">pmu_3p0_vbus_voltage_source_t</a></td>
+          <td class="memname">enum <a class="el" href="a00289.html#ga1d45d6657b1af8265e1a35a915c20a1f">_pmu_3p0_vbus_voltage_source</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaf7f949a78166a27563c8a0f2ebc0af31a825e44d25be34386eadd03f99b66f857"></a>kPMU_3P0VBusVoltageSourceAlt0</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga1d45d6657b1af8265e1a35a915c20a1fa825e44d25be34386eadd03f99b66f857"></a>kPMU_3P0VBusVoltageSourceAlt0</em>&nbsp;</td><td class="fielddoc">
 <p>USB_OTG1_VBUS - Utilize VBUS OTG1 for power. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf7f949a78166a27563c8a0f2ebc0af31aefdca33e631b3b7b3b9b6a412254b2f7"></a>kPMU_3P0VBusVoltageSourceAlt1</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga1d45d6657b1af8265e1a35a915c20a1faefdca33e631b3b7b3b9b6a412254b2f7"></a>kPMU_3P0VBusVoltageSourceAlt1</em>&nbsp;</td><td class="fielddoc">
 <p>USB_OTG2_VBUS - Utilize VBUS OTG2 for power. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga4a1cbd5cfe295ba24ff9d6460c3f660e"></a>
+<a class="anchor" id="ga3d98e6d6c9f9355e8580ab06b9b4355d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00289.html#ga4a1cbd5cfe295ba24ff9d6460c3f660e">pmu_core_reg_voltage_ramp_rate_t</a></td>
+          <td class="memname">enum <a class="el" href="a00289.html#ga3d98e6d6c9f9355e8580ab06b9b4355d">_pmu_core_reg_voltage_ramp_rate</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga4a1cbd5cfe295ba24ff9d6460c3f660eacf2fdfb31db3e83e3306c3d98ffbe9f9"></a>kPMU_CoreRegVoltageRampRateFast</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga3d98e6d6c9f9355e8580ab06b9b4355dacf2fdfb31db3e83e3306c3d98ffbe9f9"></a>kPMU_CoreRegVoltageRampRateFast</em>&nbsp;</td><td class="fielddoc">
 <p>Fast. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga4a1cbd5cfe295ba24ff9d6460c3f660eadab48795d60139c6009a5de52277aa7f"></a>kPMU_CoreRegVoltageRampRateMediumFast</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga3d98e6d6c9f9355e8580ab06b9b4355dadab48795d60139c6009a5de52277aa7f"></a>kPMU_CoreRegVoltageRampRateMediumFast</em>&nbsp;</td><td class="fielddoc">
 <p>Medium Fast. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga4a1cbd5cfe295ba24ff9d6460c3f660ea2afb37a84985c3eeb1146aaee869f891"></a>kPMU_CoreRegVoltageRampRateMediumSlow</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga3d98e6d6c9f9355e8580ab06b9b4355da2afb37a84985c3eeb1146aaee869f891"></a>kPMU_CoreRegVoltageRampRateMediumSlow</em>&nbsp;</td><td class="fielddoc">
 <p>Medium Slow. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga4a1cbd5cfe295ba24ff9d6460c3f660ea8744a5ed680a59150feca86ba0357d12"></a>kPMU_CoreRegVoltageRampRateSlow</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga3d98e6d6c9f9355e8580ab06b9b4355da8744a5ed680a59150feca86ba0357d12"></a>kPMU_CoreRegVoltageRampRateSlow</em>&nbsp;</td><td class="fielddoc">
 <p>Slow. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga8178a1394f1448946497f11062aac986"></a>
+<a class="anchor" id="gab59ff9490241915d2415be3a13348987"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00289.html#ga8178a1394f1448946497f11062aac986">pmu_power_bandgap_t</a></td>
+          <td class="memname">enum <a class="el" href="a00289.html#gab59ff9490241915d2415be3a13348987">_pmu_power_bandgap</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga8178a1394f1448946497f11062aac986a47cf46f2e5470bebdd7babc9b4d3cd20"></a>kPMU_NormalPowerBandgap</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab59ff9490241915d2415be3a13348987a47cf46f2e5470bebdd7babc9b4d3cd20"></a>kPMU_NormalPowerBandgap</em>&nbsp;</td><td class="fielddoc">
 <p>Normal power bandgap. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga8178a1394f1448946497f11062aac986a8f4daf5e5847e848d7feb71b99685763"></a>kPMU_LowPowerBandgap</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggab59ff9490241915d2415be3a13348987a8f4daf5e5847e848d7feb71b99685763"></a>kPMU_LowPowerBandgap</em>&nbsp;</td><td class="fielddoc">
 <p>Low power bandgap. </p>
 </td></tr>
 </table>
@@ -441,7 +464,7 @@ Core Regulator</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00289.html#ga6b47a2e7d1775049cdcfb744b37ecadb">pmu_1p1_weak_reference_source_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00289.html#gac79c9571d0cb06152ee392397db13a2c">pmu_1p1_weak_reference_source_t</a>&#160;</td>
           <td class="paramname"><em>option</em>&#160;</td>
         </tr>
         <tr>
@@ -459,7 +482,7 @@ Core Regulator</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">base</td><td>PMU peripheral base address. </td></tr>
-    <tr><td class="paramname">option</td><td>The option for reference voltage source, see to <a class="el" href="a00289.html#ga6b47a2e7d1775049cdcfb744b37ecadb" title="The source for the reference voltage of the weak 1P1 regulator. ">pmu_1p1_weak_reference_source_t</a>. </td></tr>
+    <tr><td class="paramname">option</td><td>The option for reference voltage source, see to <a class="el" href="a00289.html#gac79c9571d0cb06152ee392397db13a2c" title="The source for the reference voltage of the weak 1P1 regulator. ">pmu_1p1_weak_reference_source_t</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -826,7 +849,7 @@ Core Regulator</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00289.html#gaf7f949a78166a27563c8a0f2ebc0af31">pmu_3p0_vbus_voltage_source_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00289.html#ga291b21d9f6cacd46dc26ae53db762627">pmu_3p0_vbus_voltage_source_t</a>&#160;</td>
           <td class="paramname"><em>option</em>&#160;</td>
         </tr>
         <tr>
@@ -1406,7 +1429,7 @@ Core Regulator</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00289.html#ga4a1cbd5cfe295ba24ff9d6460c3f660e">pmu_core_reg_voltage_ramp_rate_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00289.html#ga267502cff989a844b6290ab0f20689d2">pmu_core_reg_voltage_ramp_rate_t</a>&#160;</td>
           <td class="paramname"><em>option</em>&#160;</td>
         </tr>
         <tr>
@@ -1424,7 +1447,7 @@ Core Regulator</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">base</td><td>PMU peripheral base address. </td></tr>
-    <tr><td class="paramname">option</td><td>User-defined option for voltage ramp rate, see to <a class="el" href="a00289.html#ga4a1cbd5cfe295ba24ff9d6460c3f660e" title="Regulator voltage ramp rate. ">pmu_core_reg_voltage_ramp_rate_t</a>. </td></tr>
+    <tr><td class="paramname">option</td><td>User-defined option for voltage ramp rate, see to <a class="el" href="a00289.html#ga267502cff989a844b6290ab0f20689d2" title="Regulator voltage ramp rate. ">pmu_core_reg_voltage_ramp_rate_t</a>. </td></tr>
   </table>
   </dd>
 </dl>

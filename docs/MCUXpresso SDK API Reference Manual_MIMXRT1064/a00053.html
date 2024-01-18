@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -117,15 +117,15 @@ LPUART Operation</h2>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00457"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a00457">lpuart_config_t</a></td></tr>
-<tr class="memdesc:a00457"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART configuration structure.  <a href="a00053.html#a00457">More...</a><br/></td></tr>
-<tr class="separator:a00457"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00459"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a00459">lpuart_transfer_t</a></td></tr>
-<tr class="memdesc:a00459"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART transfer structure.  <a href="a00053.html#a00459">More...</a><br/></td></tr>
-<tr class="separator:a00459"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00338"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a00338">lpuart_handle_t</a></td></tr>
-<tr class="memdesc:a00338"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART handle structure.  <a href="a00053.html#a00338">More...</a><br/></td></tr>
-<tr class="separator:a00338"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00447"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a00447">_lpuart_config</a></td></tr>
+<tr class="memdesc:a00447"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART configuration structure.  <a href="a00053.html#a00447">More...</a><br/></td></tr>
+<tr class="separator:a00447"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00451"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a00451">_lpuart_transfer</a></td></tr>
+<tr class="memdesc:a00451"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART transfer structure.  <a href="a00053.html#a00451">More...</a><br/></td></tr>
+<tr class="separator:a00451"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00449"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a00449">_lpuart_handle</a></td></tr>
+<tr class="memdesc:a00449"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART handle structure.  <a href="a00053.html#a00449">More...</a><br/></td></tr>
+<tr class="separator:a00449"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
@@ -135,7 +135,37 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga7ab1637091d166aa8b69517350fb05c8"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga7ab1637091d166aa8b69517350fb05c8">lpuart_transfer_callback_t</a> )(LPUART_Type *base, lpuart_handle_t *handle, <a class="el" href="a00273.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
+<tr class="memitem:gab5b7fa64ce57a2f68327e745f4a3e0b2"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00053.html#ga22a746cfd0fffff30eaf27f8795b2059">_lpuart_parity_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#gab5b7fa64ce57a2f68327e745f4a3e0b2">lpuart_parity_mode_t</a></td></tr>
+<tr class="memdesc:gab5b7fa64ce57a2f68327e745f4a3e0b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART parity mode.  <a href="#gab5b7fa64ce57a2f68327e745f4a3e0b2">More...</a><br/></td></tr>
+<tr class="separator:gab5b7fa64ce57a2f68327e745f4a3e0b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad36b5360ffc95732471dab9bd8f74c3b"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00053.html#ga565561e02414c90014f13391a1dd7dd5">_lpuart_data_bits</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#gad36b5360ffc95732471dab9bd8f74c3b">lpuart_data_bits_t</a></td></tr>
+<tr class="memdesc:gad36b5360ffc95732471dab9bd8f74c3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART data bits count.  <a href="#gad36b5360ffc95732471dab9bd8f74c3b">More...</a><br/></td></tr>
+<tr class="separator:gad36b5360ffc95732471dab9bd8f74c3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5c25153c13c99b8c63d8e78cdfeea30f"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00053.html#gad19fe7bcda436707337f6d529d5da155">_lpuart_stop_bit_count</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga5c25153c13c99b8c63d8e78cdfeea30f">lpuart_stop_bit_count_t</a></td></tr>
+<tr class="memdesc:ga5c25153c13c99b8c63d8e78cdfeea30f"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART stop bit count.  <a href="#ga5c25153c13c99b8c63d8e78cdfeea30f">More...</a><br/></td></tr>
+<tr class="separator:ga5c25153c13c99b8c63d8e78cdfeea30f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga36ff933c6ff4ac7a125878f03fc79831"><td class="memItemLeft" align="right" valign="top">typedef enum <br class="typebreak"/>
+<a class="el" href="a00053.html#gaf6493de629a2c036f4308f1a154c44b3">_lpuart_transmit_cts_source</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga36ff933c6ff4ac7a125878f03fc79831">lpuart_transmit_cts_source_t</a></td></tr>
+<tr class="memdesc:ga36ff933c6ff4ac7a125878f03fc79831"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART transmit CTS source.  <a href="#ga36ff933c6ff4ac7a125878f03fc79831">More...</a><br/></td></tr>
+<tr class="separator:ga36ff933c6ff4ac7a125878f03fc79831"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5b4e2d09e452e3514e4533ee9510be97"><td class="memItemLeft" align="right" valign="top">typedef enum <br class="typebreak"/>
+<a class="el" href="a00053.html#gaeb6f0b173f630f703a5ec4f4f6eb57d9">_lpuart_transmit_cts_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga5b4e2d09e452e3514e4533ee9510be97">lpuart_transmit_cts_config_t</a></td></tr>
+<tr class="memdesc:ga5b4e2d09e452e3514e4533ee9510be97"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART transmit CTS configure.  <a href="#ga5b4e2d09e452e3514e4533ee9510be97">More...</a><br/></td></tr>
+<tr class="separator:ga5b4e2d09e452e3514e4533ee9510be97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad2f95b94d8a055a75e2099e11df4aece"><td class="memItemLeft" align="right" valign="top">typedef enum <br class="typebreak"/>
+<a class="el" href="a00053.html#ga5f767cb7f8458682f742f2e7d4bda63d">_lpuart_idle_type_select</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#gad2f95b94d8a055a75e2099e11df4aece">lpuart_idle_type_select_t</a></td></tr>
+<tr class="memdesc:gad2f95b94d8a055a75e2099e11df4aece"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART idle flag type defines when the receiver starts counting.  <a href="#gad2f95b94d8a055a75e2099e11df4aece">More...</a><br/></td></tr>
+<tr class="separator:gad2f95b94d8a055a75e2099e11df4aece"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga48780347b56ffcf164d92df6957c8ab4"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00053.html#ga13c97cefe85629e606de5281d4eef25b">_lpuart_idle_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga48780347b56ffcf164d92df6957c8ab4">lpuart_idle_config_t</a></td></tr>
+<tr class="memdesc:ga48780347b56ffcf164d92df6957c8ab4"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART idle detected configuration.  <a href="#ga48780347b56ffcf164d92df6957c8ab4">More...</a><br/></td></tr>
+<tr class="separator:ga48780347b56ffcf164d92df6957c8ab4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga35757fcc752984cb90dafc2e815c3d05"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00053.html#a00447">_lpuart_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga35757fcc752984cb90dafc2e815c3d05">lpuart_config_t</a></td></tr>
+<tr class="memdesc:ga35757fcc752984cb90dafc2e815c3d05"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART configuration structure.  <a href="#ga35757fcc752984cb90dafc2e815c3d05">More...</a><br/></td></tr>
+<tr class="separator:ga35757fcc752984cb90dafc2e815c3d05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1d4707ebc5d49dd655eedb7e5acd27fd"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00053.html#a00451">_lpuart_transfer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga1d4707ebc5d49dd655eedb7e5acd27fd">lpuart_transfer_t</a></td></tr>
+<tr class="memdesc:ga1d4707ebc5d49dd655eedb7e5acd27fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART transfer structure.  <a href="#ga1d4707ebc5d49dd655eedb7e5acd27fd">More...</a><br/></td></tr>
+<tr class="separator:ga1d4707ebc5d49dd655eedb7e5acd27fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7ab1637091d166aa8b69517350fb05c8"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga7ab1637091d166aa8b69517350fb05c8">lpuart_transfer_callback_t</a> )(LPUART_Type *base, <a class="el" href="a00053.html#a00449">lpuart_handle_t</a> *handle, <a class="el" href="a00273.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
 <tr class="memdesc:ga7ab1637091d166aa8b69517350fb05c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART transfer callback function.  <a href="#ga7ab1637091d166aa8b69517350fb05c8">More...</a><br/></td></tr>
 <tr class="separator:ga7ab1637091d166aa8b69517350fb05c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -177,76 +207,76 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:ga8628933cde20921c453a6d2607bdad62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Error codes for the LPUART driver.  <a href="a00053.html#ga8628933cde20921c453a6d2607bdad62">More...</a><br/></td></tr>
 <tr class="separator:ga8628933cde20921c453a6d2607bdad62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6fcd73abf900b8a17dab1f2b1f3f53c7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga6fcd73abf900b8a17dab1f2b1f3f53c7">lpuart_parity_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00053.html#gga6fcd73abf900b8a17dab1f2b1f3f53c7a0e5bdb8fc4e1010930d05e1490a75b1a">kLPUART_ParityDisabled</a> = 0x0U, 
+<tr class="memitem:ga22a746cfd0fffff30eaf27f8795b2059"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga22a746cfd0fffff30eaf27f8795b2059">_lpuart_parity_mode</a> { <br/>
+&#160;&#160;<a class="el" href="a00053.html#gga22a746cfd0fffff30eaf27f8795b2059a0e5bdb8fc4e1010930d05e1490a75b1a">kLPUART_ParityDisabled</a> = 0x0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00053.html#gga6fcd73abf900b8a17dab1f2b1f3f53c7ac92adb3fdf11240ca5dee6c6543b6ff7">kLPUART_ParityEven</a> = 0x2U, 
+&#160;&#160;<a class="el" href="a00053.html#gga22a746cfd0fffff30eaf27f8795b2059ac92adb3fdf11240ca5dee6c6543b6ff7">kLPUART_ParityEven</a> = 0x2U, 
 <br/>
-&#160;&#160;<a class="el" href="a00053.html#gga6fcd73abf900b8a17dab1f2b1f3f53c7adab63856e98e0715f4ab289ac0da3575">kLPUART_ParityOdd</a> = 0x3U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga6fcd73abf900b8a17dab1f2b1f3f53c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART parity mode.  <a href="a00053.html#ga6fcd73abf900b8a17dab1f2b1f3f53c7">More...</a><br/></td></tr>
-<tr class="separator:ga6fcd73abf900b8a17dab1f2b1f3f53c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9c4d95a2016ff0cb826d50035a1ba216"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga9c4d95a2016ff0cb826d50035a1ba216">lpuart_data_bits_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00053.html#gga9c4d95a2016ff0cb826d50035a1ba216aaa10fe51f0b83d5c0a2e060dab983899">kLPUART_EightDataBits</a> = 0x0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00053.html#gga9c4d95a2016ff0cb826d50035a1ba216a39e919f0523d445c9e35034b15329031">kLPUART_SevenDataBits</a> = 0x1U
+&#160;&#160;<a class="el" href="a00053.html#gga22a746cfd0fffff30eaf27f8795b2059adab63856e98e0715f4ab289ac0da3575">kLPUART_ParityOdd</a> = 0x3U
 <br/>
  }</td></tr>
-<tr class="memdesc:ga9c4d95a2016ff0cb826d50035a1ba216"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART data bits count.  <a href="a00053.html#ga9c4d95a2016ff0cb826d50035a1ba216">More...</a><br/></td></tr>
-<tr class="separator:ga9c4d95a2016ff0cb826d50035a1ba216"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7540d87bc3fa8a605d8da53fe08219f0"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga7540d87bc3fa8a605d8da53fe08219f0">lpuart_stop_bit_count_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00053.html#gga7540d87bc3fa8a605d8da53fe08219f0a4304f0ee73a5fabfadfc05ca1fbd3901">kLPUART_OneStopBit</a> = 0U, 
+<tr class="memdesc:ga22a746cfd0fffff30eaf27f8795b2059"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART parity mode.  <a href="a00053.html#ga22a746cfd0fffff30eaf27f8795b2059">More...</a><br/></td></tr>
+<tr class="separator:ga22a746cfd0fffff30eaf27f8795b2059"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga565561e02414c90014f13391a1dd7dd5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga565561e02414c90014f13391a1dd7dd5">_lpuart_data_bits</a> { <br/>
+&#160;&#160;<a class="el" href="a00053.html#gga565561e02414c90014f13391a1dd7dd5aaa10fe51f0b83d5c0a2e060dab983899">kLPUART_EightDataBits</a> = 0x0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00053.html#gga7540d87bc3fa8a605d8da53fe08219f0a6e049e0faaf89ed2dfe493ad8f6c93d4">kLPUART_TwoStopBit</a> = 1U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga7540d87bc3fa8a605d8da53fe08219f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART stop bit count.  <a href="a00053.html#ga7540d87bc3fa8a605d8da53fe08219f0">More...</a><br/></td></tr>
-<tr class="separator:ga7540d87bc3fa8a605d8da53fe08219f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadd3cf9892416c5503dce7f0567e8c41f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#gadd3cf9892416c5503dce7f0567e8c41f">lpuart_transmit_cts_source_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00053.html#ggadd3cf9892416c5503dce7f0567e8c41fab9dc5632b86f32ceb88d8aa882471bf5">kLPUART_CtsSourcePin</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00053.html#ggadd3cf9892416c5503dce7f0567e8c41fa75ac72fc4281ef68f2a97ff96e90654b">kLPUART_CtsSourceMatchResult</a> = 1U
+&#160;&#160;<a class="el" href="a00053.html#gga565561e02414c90014f13391a1dd7dd5a39e919f0523d445c9e35034b15329031">kLPUART_SevenDataBits</a> = 0x1U
 <br/>
  }</td></tr>
-<tr class="memdesc:gadd3cf9892416c5503dce7f0567e8c41f"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART transmit CTS source.  <a href="a00053.html#gadd3cf9892416c5503dce7f0567e8c41f">More...</a><br/></td></tr>
-<tr class="separator:gadd3cf9892416c5503dce7f0567e8c41f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafe1039afd48853bd649e23bdfa034540"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#gafe1039afd48853bd649e23bdfa034540">lpuart_transmit_cts_config_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00053.html#ggafe1039afd48853bd649e23bdfa034540ad32cfafeb9de4981efcaccfd15787500">kLPUART_CtsSampleAtStart</a> = 0U, 
+<tr class="memdesc:ga565561e02414c90014f13391a1dd7dd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART data bits count.  <a href="a00053.html#ga565561e02414c90014f13391a1dd7dd5">More...</a><br/></td></tr>
+<tr class="separator:ga565561e02414c90014f13391a1dd7dd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad19fe7bcda436707337f6d529d5da155"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#gad19fe7bcda436707337f6d529d5da155">_lpuart_stop_bit_count</a> { <br/>
+&#160;&#160;<a class="el" href="a00053.html#ggad19fe7bcda436707337f6d529d5da155a4304f0ee73a5fabfadfc05ca1fbd3901">kLPUART_OneStopBit</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00053.html#ggafe1039afd48853bd649e23bdfa034540afa8f0e420059feab07c6efa7c3ca9d91">kLPUART_CtsSampleAtIdle</a> = 1U
-<br/>
- }</td></tr>
-<tr class="memdesc:gafe1039afd48853bd649e23bdfa034540"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART transmit CTS configure.  <a href="a00053.html#gafe1039afd48853bd649e23bdfa034540">More...</a><br/></td></tr>
-<tr class="separator:gafe1039afd48853bd649e23bdfa034540"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac2792920d552d2a9eab5c1b857b695e1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#gac2792920d552d2a9eab5c1b857b695e1">lpuart_idle_type_select_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00053.html#ggac2792920d552d2a9eab5c1b857b695e1a0644f6b95813c520dede56ee3a944267">kLPUART_IdleTypeStartBit</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00053.html#ggac2792920d552d2a9eab5c1b857b695e1a69545f21a3401c126bf295b5cf94225b">kLPUART_IdleTypeStopBit</a> = 1U
+&#160;&#160;<a class="el" href="a00053.html#ggad19fe7bcda436707337f6d529d5da155a6e049e0faaf89ed2dfe493ad8f6c93d4">kLPUART_TwoStopBit</a> = 1U
 <br/>
  }</td></tr>
-<tr class="memdesc:gac2792920d552d2a9eab5c1b857b695e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART idle flag type defines when the receiver starts counting.  <a href="a00053.html#gac2792920d552d2a9eab5c1b857b695e1">More...</a><br/></td></tr>
-<tr class="separator:gac2792920d552d2a9eab5c1b857b695e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0a377113a8abdeeb03d68fa749a5eb0c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga0a377113a8abdeeb03d68fa749a5eb0c">lpuart_idle_config_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00053.html#gga0a377113a8abdeeb03d68fa749a5eb0ca955e0bb4d3e75e577eef544b440c24be">kLPUART_IdleCharacter1</a> = 0U, 
+<tr class="memdesc:gad19fe7bcda436707337f6d529d5da155"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART stop bit count.  <a href="a00053.html#gad19fe7bcda436707337f6d529d5da155">More...</a><br/></td></tr>
+<tr class="separator:gad19fe7bcda436707337f6d529d5da155"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf6493de629a2c036f4308f1a154c44b3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#gaf6493de629a2c036f4308f1a154c44b3">_lpuart_transmit_cts_source</a> { <br/>
+&#160;&#160;<a class="el" href="a00053.html#ggaf6493de629a2c036f4308f1a154c44b3ab9dc5632b86f32ceb88d8aa882471bf5">kLPUART_CtsSourcePin</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00053.html#gga0a377113a8abdeeb03d68fa749a5eb0ca270caa8e77b08697404771af82abd131">kLPUART_IdleCharacter2</a> = 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00053.html#gga0a377113a8abdeeb03d68fa749a5eb0cacab443d3d053070635ea1f859b73f34c">kLPUART_IdleCharacter4</a> = 2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00053.html#gga0a377113a8abdeeb03d68fa749a5eb0caf125ff40887939add6dd0f42d4485bf3">kLPUART_IdleCharacter8</a> = 3U, 
-<br/>
-&#160;&#160;<a class="el" href="a00053.html#gga0a377113a8abdeeb03d68fa749a5eb0cace45d3af9a0c590f053df7bb00e6582a">kLPUART_IdleCharacter16</a> = 4U, 
-<br/>
-&#160;&#160;<a class="el" href="a00053.html#gga0a377113a8abdeeb03d68fa749a5eb0ca1daee04c54b7e37ca5e7331a3e1e7374">kLPUART_IdleCharacter32</a> = 5U, 
-<br/>
-&#160;&#160;<a class="el" href="a00053.html#gga0a377113a8abdeeb03d68fa749a5eb0cac497a53ed2755d26961f3b72fbd180ed">kLPUART_IdleCharacter64</a> = 6U, 
-<br/>
-&#160;&#160;<a class="el" href="a00053.html#gga0a377113a8abdeeb03d68fa749a5eb0ca4e080722efa87475f1710f5524e50c67">kLPUART_IdleCharacter128</a> = 7U
+&#160;&#160;<a class="el" href="a00053.html#ggaf6493de629a2c036f4308f1a154c44b3a75ac72fc4281ef68f2a97ff96e90654b">kLPUART_CtsSourceMatchResult</a> = 1U
 <br/>
  }</td></tr>
-<tr class="memdesc:ga0a377113a8abdeeb03d68fa749a5eb0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART idle detected configuration.  <a href="a00053.html#ga0a377113a8abdeeb03d68fa749a5eb0c">More...</a><br/></td></tr>
-<tr class="separator:ga0a377113a8abdeeb03d68fa749a5eb0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gaf6493de629a2c036f4308f1a154c44b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART transmit CTS source.  <a href="a00053.html#gaf6493de629a2c036f4308f1a154c44b3">More...</a><br/></td></tr>
+<tr class="separator:gaf6493de629a2c036f4308f1a154c44b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeb6f0b173f630f703a5ec4f4f6eb57d9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#gaeb6f0b173f630f703a5ec4f4f6eb57d9">_lpuart_transmit_cts_config</a> { <br/>
+&#160;&#160;<a class="el" href="a00053.html#ggaeb6f0b173f630f703a5ec4f4f6eb57d9ad32cfafeb9de4981efcaccfd15787500">kLPUART_CtsSampleAtStart</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00053.html#ggaeb6f0b173f630f703a5ec4f4f6eb57d9afa8f0e420059feab07c6efa7c3ca9d91">kLPUART_CtsSampleAtIdle</a> = 1U
+<br/>
+ }</td></tr>
+<tr class="memdesc:gaeb6f0b173f630f703a5ec4f4f6eb57d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART transmit CTS configure.  <a href="a00053.html#gaeb6f0b173f630f703a5ec4f4f6eb57d9">More...</a><br/></td></tr>
+<tr class="separator:gaeb6f0b173f630f703a5ec4f4f6eb57d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5f767cb7f8458682f742f2e7d4bda63d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga5f767cb7f8458682f742f2e7d4bda63d">_lpuart_idle_type_select</a> { <br/>
+&#160;&#160;<a class="el" href="a00053.html#gga5f767cb7f8458682f742f2e7d4bda63da0644f6b95813c520dede56ee3a944267">kLPUART_IdleTypeStartBit</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00053.html#gga5f767cb7f8458682f742f2e7d4bda63da69545f21a3401c126bf295b5cf94225b">kLPUART_IdleTypeStopBit</a> = 1U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga5f767cb7f8458682f742f2e7d4bda63d"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART idle flag type defines when the receiver starts counting.  <a href="a00053.html#ga5f767cb7f8458682f742f2e7d4bda63d">More...</a><br/></td></tr>
+<tr class="separator:ga5f767cb7f8458682f742f2e7d4bda63d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga13c97cefe85629e606de5281d4eef25b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga13c97cefe85629e606de5281d4eef25b">_lpuart_idle_config</a> { <br/>
+&#160;&#160;<a class="el" href="a00053.html#gga13c97cefe85629e606de5281d4eef25ba955e0bb4d3e75e577eef544b440c24be">kLPUART_IdleCharacter1</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00053.html#gga13c97cefe85629e606de5281d4eef25ba270caa8e77b08697404771af82abd131">kLPUART_IdleCharacter2</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00053.html#gga13c97cefe85629e606de5281d4eef25bacab443d3d053070635ea1f859b73f34c">kLPUART_IdleCharacter4</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00053.html#gga13c97cefe85629e606de5281d4eef25baf125ff40887939add6dd0f42d4485bf3">kLPUART_IdleCharacter8</a> = 3U, 
+<br/>
+&#160;&#160;<a class="el" href="a00053.html#gga13c97cefe85629e606de5281d4eef25bace45d3af9a0c590f053df7bb00e6582a">kLPUART_IdleCharacter16</a> = 4U, 
+<br/>
+&#160;&#160;<a class="el" href="a00053.html#gga13c97cefe85629e606de5281d4eef25ba1daee04c54b7e37ca5e7331a3e1e7374">kLPUART_IdleCharacter32</a> = 5U, 
+<br/>
+&#160;&#160;<a class="el" href="a00053.html#gga13c97cefe85629e606de5281d4eef25bac497a53ed2755d26961f3b72fbd180ed">kLPUART_IdleCharacter64</a> = 6U, 
+<br/>
+&#160;&#160;<a class="el" href="a00053.html#gga13c97cefe85629e606de5281d4eef25ba4e080722efa87475f1710f5524e50c67">kLPUART_IdleCharacter128</a> = 7U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga13c97cefe85629e606de5281d4eef25b"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART idle detected configuration.  <a href="a00053.html#ga13c97cefe85629e606de5281d4eef25b">More...</a><br/></td></tr>
+<tr class="separator:ga13c97cefe85629e606de5281d4eef25b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga199a157d391291a9d003bf23954f9603"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga199a157d391291a9d003bf23954f9603">_lpuart_interrupt_enable</a> { <br/>
 &#160;&#160;<a class="el" href="a00053.html#gga199a157d391291a9d003bf23954f9603ade355c45064ff74257d57eb42d475adb">kLPUART_LinBreakInterruptEnable</a> = (LPUART_BAUD_LBKDIE_MASK &gt;&gt; 8U), 
 <br/>
@@ -320,7 +350,7 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga0870fb824ece32739bd35f819f8c408e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga0870fb824ece32739bd35f819f8c408e">FSL_LPUART_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00273.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 7, 3))</td></tr>
+<tr class="memitem:ga0870fb824ece32739bd35f819f8c408e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga0870fb824ece32739bd35f819f8c408e">FSL_LPUART_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00273.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 7, 6))</td></tr>
 <tr class="memdesc:ga0870fb824ece32739bd35f819f8c408e"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART driver version.  <a href="#ga0870fb824ece32739bd35f819f8c408e">More...</a><br/></td></tr>
 <tr class="separator:ga0870fb824ece32739bd35f819f8c408e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -332,13 +362,13 @@ Software Reset</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Initialization and deinitialization</h2></td></tr>
-<tr class="memitem:ga26ce3e5d63d8dd5d317a83f22af9682c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00273.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga26ce3e5d63d8dd5d317a83f22af9682c">LPUART_Init</a> (LPUART_Type *base, const <a class="el" href="a00053.html#a00457">lpuart_config_t</a> *config, uint32_t srcClock_Hz)</td></tr>
+<tr class="memitem:ga26ce3e5d63d8dd5d317a83f22af9682c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00273.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga26ce3e5d63d8dd5d317a83f22af9682c">LPUART_Init</a> (LPUART_Type *base, const <a class="el" href="a00053.html#ga35757fcc752984cb90dafc2e815c3d05">lpuart_config_t</a> *config, uint32_t srcClock_Hz)</td></tr>
 <tr class="memdesc:ga26ce3e5d63d8dd5d317a83f22af9682c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes an LPUART instance with the user configuration structure and the peripheral clock.  <a href="#ga26ce3e5d63d8dd5d317a83f22af9682c">More...</a><br/></td></tr>
 <tr class="separator:ga26ce3e5d63d8dd5d317a83f22af9682c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga303ff3b77767bafa449d96f1e8c921e0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga303ff3b77767bafa449d96f1e8c921e0">LPUART_Deinit</a> (LPUART_Type *base)</td></tr>
 <tr class="memdesc:ga303ff3b77767bafa449d96f1e8c921e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes a LPUART instance.  <a href="#ga303ff3b77767bafa449d96f1e8c921e0">More...</a><br/></td></tr>
 <tr class="separator:ga303ff3b77767bafa449d96f1e8c921e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga95dfe3c3886692f1fe32023d59708440"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga95dfe3c3886692f1fe32023d59708440">LPUART_GetDefaultConfig</a> (<a class="el" href="a00053.html#a00457">lpuart_config_t</a> *config)</td></tr>
+<tr class="memitem:ga95dfe3c3886692f1fe32023d59708440"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga95dfe3c3886692f1fe32023d59708440">LPUART_GetDefaultConfig</a> (<a class="el" href="a00053.html#ga35757fcc752984cb90dafc2e815c3d05">lpuart_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga95dfe3c3886692f1fe32023d59708440"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the default configuration structure.  <a href="#ga95dfe3c3886692f1fe32023d59708440">More...</a><br/></td></tr>
 <tr class="separator:ga95dfe3c3886692f1fe32023d59708440"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -431,34 +461,34 @@ Bus Operations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Transactional</h2></td></tr>
-<tr class="memitem:ga10eae12610523a624c1016882f8dba5f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga10eae12610523a624c1016882f8dba5f">LPUART_TransferCreateHandle</a> (LPUART_Type *base, lpuart_handle_t *handle, <a class="el" href="a00053.html#ga7ab1637091d166aa8b69517350fb05c8">lpuart_transfer_callback_t</a> callback, void *userData)</td></tr>
+<tr class="memitem:ga10eae12610523a624c1016882f8dba5f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga10eae12610523a624c1016882f8dba5f">LPUART_TransferCreateHandle</a> (LPUART_Type *base, <a class="el" href="a00053.html#a00449">lpuart_handle_t</a> *handle, <a class="el" href="a00053.html#ga7ab1637091d166aa8b69517350fb05c8">lpuart_transfer_callback_t</a> callback, void *userData)</td></tr>
 <tr class="memdesc:ga10eae12610523a624c1016882f8dba5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the LPUART handle.  <a href="#ga10eae12610523a624c1016882f8dba5f">More...</a><br/></td></tr>
 <tr class="separator:ga10eae12610523a624c1016882f8dba5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafba986c473e5935131e63cb882cf26ff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00273.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#gafba986c473e5935131e63cb882cf26ff">LPUART_TransferSendNonBlocking</a> (LPUART_Type *base, lpuart_handle_t *handle, <a class="el" href="a00053.html#a00459">lpuart_transfer_t</a> *xfer)</td></tr>
+<tr class="memitem:gafba986c473e5935131e63cb882cf26ff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00273.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#gafba986c473e5935131e63cb882cf26ff">LPUART_TransferSendNonBlocking</a> (LPUART_Type *base, <a class="el" href="a00053.html#a00449">lpuart_handle_t</a> *handle, <a class="el" href="a00053.html#ga1d4707ebc5d49dd655eedb7e5acd27fd">lpuart_transfer_t</a> *xfer)</td></tr>
 <tr class="memdesc:gafba986c473e5935131e63cb882cf26ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmits a buffer of data using the interrupt method.  <a href="#gafba986c473e5935131e63cb882cf26ff">More...</a><br/></td></tr>
 <tr class="separator:gafba986c473e5935131e63cb882cf26ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5257b77491042af5913a8d91c66318e1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga5257b77491042af5913a8d91c66318e1">LPUART_TransferStartRingBuffer</a> (LPUART_Type *base, lpuart_handle_t *handle, uint8_t *ringBuffer, size_t ringBufferSize)</td></tr>
+<tr class="memitem:ga5257b77491042af5913a8d91c66318e1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga5257b77491042af5913a8d91c66318e1">LPUART_TransferStartRingBuffer</a> (LPUART_Type *base, <a class="el" href="a00053.html#a00449">lpuart_handle_t</a> *handle, uint8_t *ringBuffer, size_t ringBufferSize)</td></tr>
 <tr class="memdesc:ga5257b77491042af5913a8d91c66318e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up the RX ring buffer.  <a href="#ga5257b77491042af5913a8d91c66318e1">More...</a><br/></td></tr>
 <tr class="separator:ga5257b77491042af5913a8d91c66318e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad6a230a664808592aab153ea20e3d60b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#gad6a230a664808592aab153ea20e3d60b">LPUART_TransferStopRingBuffer</a> (LPUART_Type *base, lpuart_handle_t *handle)</td></tr>
+<tr class="memitem:gad6a230a664808592aab153ea20e3d60b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#gad6a230a664808592aab153ea20e3d60b">LPUART_TransferStopRingBuffer</a> (LPUART_Type *base, <a class="el" href="a00053.html#a00449">lpuart_handle_t</a> *handle)</td></tr>
 <tr class="memdesc:gad6a230a664808592aab153ea20e3d60b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the background transfer and uninstalls the ring buffer.  <a href="#gad6a230a664808592aab153ea20e3d60b">More...</a><br/></td></tr>
 <tr class="separator:gad6a230a664808592aab153ea20e3d60b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga550523d301acfa413919c2f979228bcc"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga550523d301acfa413919c2f979228bcc">LPUART_TransferGetRxRingBufferLength</a> (LPUART_Type *base, lpuart_handle_t *handle)</td></tr>
+<tr class="memitem:ga550523d301acfa413919c2f979228bcc"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga550523d301acfa413919c2f979228bcc">LPUART_TransferGetRxRingBufferLength</a> (LPUART_Type *base, <a class="el" href="a00053.html#a00449">lpuart_handle_t</a> *handle)</td></tr>
 <tr class="memdesc:ga550523d301acfa413919c2f979228bcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the length of received data in RX ring buffer.  <a href="#ga550523d301acfa413919c2f979228bcc">More...</a><br/></td></tr>
 <tr class="separator:ga550523d301acfa413919c2f979228bcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6dfe9efe9656e126c70ee79fa03f2be3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga6dfe9efe9656e126c70ee79fa03f2be3">LPUART_TransferAbortSend</a> (LPUART_Type *base, lpuart_handle_t *handle)</td></tr>
+<tr class="memitem:ga6dfe9efe9656e126c70ee79fa03f2be3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga6dfe9efe9656e126c70ee79fa03f2be3">LPUART_TransferAbortSend</a> (LPUART_Type *base, <a class="el" href="a00053.html#a00449">lpuart_handle_t</a> *handle)</td></tr>
 <tr class="memdesc:ga6dfe9efe9656e126c70ee79fa03f2be3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the interrupt-driven data transmit.  <a href="#ga6dfe9efe9656e126c70ee79fa03f2be3">More...</a><br/></td></tr>
 <tr class="separator:ga6dfe9efe9656e126c70ee79fa03f2be3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad80d2469dce0de9361e731e4cefde9fd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00273.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#gad80d2469dce0de9361e731e4cefde9fd">LPUART_TransferGetSendCount</a> (LPUART_Type *base, lpuart_handle_t *handle, uint32_t *count)</td></tr>
+<tr class="memitem:gad80d2469dce0de9361e731e4cefde9fd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00273.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#gad80d2469dce0de9361e731e4cefde9fd">LPUART_TransferGetSendCount</a> (LPUART_Type *base, <a class="el" href="a00053.html#a00449">lpuart_handle_t</a> *handle, uint32_t *count)</td></tr>
 <tr class="memdesc:gad80d2469dce0de9361e731e4cefde9fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of bytes that have been sent out to bus.  <a href="#gad80d2469dce0de9361e731e4cefde9fd">More...</a><br/></td></tr>
 <tr class="separator:gad80d2469dce0de9361e731e4cefde9fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8bdb584704ce7955004751e32627f918"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00273.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga8bdb584704ce7955004751e32627f918">LPUART_TransferReceiveNonBlocking</a> (LPUART_Type *base, lpuart_handle_t *handle, <a class="el" href="a00053.html#a00459">lpuart_transfer_t</a> *xfer, size_t *receivedBytes)</td></tr>
+<tr class="memitem:ga8bdb584704ce7955004751e32627f918"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00273.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga8bdb584704ce7955004751e32627f918">LPUART_TransferReceiveNonBlocking</a> (LPUART_Type *base, <a class="el" href="a00053.html#a00449">lpuart_handle_t</a> *handle, <a class="el" href="a00053.html#ga1d4707ebc5d49dd655eedb7e5acd27fd">lpuart_transfer_t</a> *xfer, size_t *receivedBytes)</td></tr>
 <tr class="memdesc:ga8bdb584704ce7955004751e32627f918"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives a buffer of data using the interrupt method.  <a href="#ga8bdb584704ce7955004751e32627f918">More...</a><br/></td></tr>
 <tr class="separator:ga8bdb584704ce7955004751e32627f918"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4950fa0f3835992251c109f655a3ca7d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga4950fa0f3835992251c109f655a3ca7d">LPUART_TransferAbortReceive</a> (LPUART_Type *base, lpuart_handle_t *handle)</td></tr>
+<tr class="memitem:ga4950fa0f3835992251c109f655a3ca7d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga4950fa0f3835992251c109f655a3ca7d">LPUART_TransferAbortReceive</a> (LPUART_Type *base, <a class="el" href="a00053.html#a00449">lpuart_handle_t</a> *handle)</td></tr>
 <tr class="memdesc:ga4950fa0f3835992251c109f655a3ca7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the interrupt-driven data receiving.  <a href="#ga4950fa0f3835992251c109f655a3ca7d">More...</a><br/></td></tr>
 <tr class="separator:ga4950fa0f3835992251c109f655a3ca7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabfcdc658c463e9e7523cc60c5e8f9672"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00273.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#gabfcdc658c463e9e7523cc60c5e8f9672">LPUART_TransferGetReceiveCount</a> (LPUART_Type *base, lpuart_handle_t *handle, uint32_t *count)</td></tr>
+<tr class="memitem:gabfcdc658c463e9e7523cc60c5e8f9672"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00273.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#gabfcdc658c463e9e7523cc60c5e8f9672">LPUART_TransferGetReceiveCount</a> (LPUART_Type *base, <a class="el" href="a00053.html#a00449">lpuart_handle_t</a> *handle, uint32_t *count)</td></tr>
 <tr class="memdesc:gabfcdc658c463e9e7523cc60c5e8f9672"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of bytes that have been received.  <a href="#gabfcdc658c463e9e7523cc60c5e8f9672">More...</a><br/></td></tr>
 <tr class="separator:gabfcdc658c463e9e7523cc60c5e8f9672"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6377050807e670565fe51b71c95a923c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga6377050807e670565fe51b71c95a923c">LPUART_TransferHandleIRQ</a> (LPUART_Type *base, void *irqHandle)</td></tr>
@@ -469,95 +499,95 @@ Transactional</h2></td></tr>
 <tr class="separator:ga277f4cfc074cf67c2c27082df630f2da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00457" id="a00457"></a>
+<a name="a00447" id="a00447"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct lpuart_config_t</td>
+          <td class="memname">struct _lpuart_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a09d359de28dc114424b2d702df014d1c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a09d359de28dc114424b2d702df014d1c"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a09d359de28dc114424b2d702df014d1c">baudRate_Bps</a></td></tr>
-<tr class="memdesc:a09d359de28dc114424b2d702df014d1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART baud rate. <br/></td></tr>
-<tr class="separator:a09d359de28dc114424b2d702df014d1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae7ce86796f025a059c973c540d5a94ad"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae7ce86796f025a059c973c540d5a94ad"></a>
-<a class="el" href="a00053.html#ga6fcd73abf900b8a17dab1f2b1f3f53c7">lpuart_parity_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ae7ce86796f025a059c973c540d5a94ad">parityMode</a></td></tr>
-<tr class="memdesc:ae7ce86796f025a059c973c540d5a94ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parity mode, disabled (default), even, odd. <br/></td></tr>
-<tr class="separator:ae7ce86796f025a059c973c540d5a94ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a58ce25b71bde98b9c09875481637d120"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a58ce25b71bde98b9c09875481637d120"></a>
-<a class="el" href="a00053.html#ga9c4d95a2016ff0cb826d50035a1ba216">lpuart_data_bits_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a58ce25b71bde98b9c09875481637d120">dataBitsCount</a></td></tr>
-<tr class="memdesc:a58ce25b71bde98b9c09875481637d120"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data bits count, eight (default), seven. <br/></td></tr>
-<tr class="separator:a58ce25b71bde98b9c09875481637d120"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae9f69c98294d67da66edbce283f029b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aae9f69c98294d67da66edbce283f029b"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#aae9f69c98294d67da66edbce283f029b">isMsb</a></td></tr>
-<tr class="memdesc:aae9f69c98294d67da66edbce283f029b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data bits order, LSB (default), MSB. <br/></td></tr>
-<tr class="separator:aae9f69c98294d67da66edbce283f029b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad133820d48c8f20f3f14194947d0e811"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad133820d48c8f20f3f14194947d0e811"></a>
-<a class="el" href="a00053.html#ga7540d87bc3fa8a605d8da53fe08219f0">lpuart_stop_bit_count_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ad133820d48c8f20f3f14194947d0e811">stopBitCount</a></td></tr>
-<tr class="memdesc:ad133820d48c8f20f3f14194947d0e811"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of stop bits, 1 stop bit (default) or 2 stop bits. <br/></td></tr>
-<tr class="separator:ad133820d48c8f20f3f14194947d0e811"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a824836b1509114ff1af39cb6180bfc05"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a824836b1509114ff1af39cb6180bfc05"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a824836b1509114ff1af39cb6180bfc05">txFifoWatermark</a></td></tr>
-<tr class="memdesc:a824836b1509114ff1af39cb6180bfc05"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX FIFO watermark. <br/></td></tr>
-<tr class="separator:a824836b1509114ff1af39cb6180bfc05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab7ccf42982268a314684ef0cc9130daa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab7ccf42982268a314684ef0cc9130daa"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ab7ccf42982268a314684ef0cc9130daa">rxFifoWatermark</a></td></tr>
-<tr class="memdesc:ab7ccf42982268a314684ef0cc9130daa"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX FIFO watermark. <br/></td></tr>
-<tr class="separator:ab7ccf42982268a314684ef0cc9130daa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a25d3592044284b02ce8a99be55f8375e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a25d3592044284b02ce8a99be55f8375e"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a25d3592044284b02ce8a99be55f8375e">enableRxRTS</a></td></tr>
-<tr class="memdesc:a25d3592044284b02ce8a99be55f8375e"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX RTS enable. <br/></td></tr>
-<tr class="separator:a25d3592044284b02ce8a99be55f8375e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a366656f224548055712aac31b264b30c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a366656f224548055712aac31b264b30c"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a366656f224548055712aac31b264b30c">enableTxCTS</a></td></tr>
-<tr class="memdesc:a366656f224548055712aac31b264b30c"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX CTS enable. <br/></td></tr>
-<tr class="separator:a366656f224548055712aac31b264b30c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a086040445ae0fd73e4bee0312d7588b9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a086040445ae0fd73e4bee0312d7588b9"></a>
-<a class="el" href="a00053.html#gadd3cf9892416c5503dce7f0567e8c41f">lpuart_transmit_cts_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a086040445ae0fd73e4bee0312d7588b9">txCtsSource</a></td></tr>
-<tr class="memdesc:a086040445ae0fd73e4bee0312d7588b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX CTS source. <br/></td></tr>
-<tr class="separator:a086040445ae0fd73e4bee0312d7588b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34c837d6370c91f7589d58e0ccbeeeb6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a34c837d6370c91f7589d58e0ccbeeeb6"></a>
-<a class="el" href="a00053.html#gafe1039afd48853bd649e23bdfa034540">lpuart_transmit_cts_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a34c837d6370c91f7589d58e0ccbeeeb6">txCtsConfig</a></td></tr>
-<tr class="memdesc:a34c837d6370c91f7589d58e0ccbeeeb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX CTS configure. <br/></td></tr>
-<tr class="separator:a34c837d6370c91f7589d58e0ccbeeeb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:accbd00b653a769831310e62f8a9045eb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00053.html#gac2792920d552d2a9eab5c1b857b695e1">lpuart_idle_type_select_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#accbd00b653a769831310e62f8a9045eb">rxIdleType</a></td></tr>
-<tr class="memdesc:accbd00b653a769831310e62f8a9045eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX IDLE type.  <a href="#accbd00b653a769831310e62f8a9045eb">More...</a><br/></td></tr>
-<tr class="separator:accbd00b653a769831310e62f8a9045eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00e18786e55ac3057c2bc32b8bc0e361"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00053.html#ga0a377113a8abdeeb03d68fa749a5eb0c">lpuart_idle_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a00e18786e55ac3057c2bc32b8bc0e361">rxIdleConfig</a></td></tr>
-<tr class="memdesc:a00e18786e55ac3057c2bc32b8bc0e361"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX IDLE configuration.  <a href="#a00e18786e55ac3057c2bc32b8bc0e361">More...</a><br/></td></tr>
-<tr class="separator:a00e18786e55ac3057c2bc32b8bc0e361"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0d677467cd14ee90f544d688f3dc9b9a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0d677467cd14ee90f544d688f3dc9b9a"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a0d677467cd14ee90f544d688f3dc9b9a">enableTx</a></td></tr>
-<tr class="memdesc:a0d677467cd14ee90f544d688f3dc9b9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable TX. <br/></td></tr>
-<tr class="separator:a0d677467cd14ee90f544d688f3dc9b9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a48d3f37a9364c0093083ef843d5d062e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a48d3f37a9364c0093083ef843d5d062e"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a48d3f37a9364c0093083ef843d5d062e">enableRx</a></td></tr>
-<tr class="memdesc:a48d3f37a9364c0093083ef843d5d062e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable RX. <br/></td></tr>
-<tr class="separator:a48d3f37a9364c0093083ef843d5d062e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae83107a96ce0e34e791aac795a4d04e4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae83107a96ce0e34e791aac795a4d04e4"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ae83107a96ce0e34e791aac795a4d04e4">baudRate_Bps</a></td></tr>
+<tr class="memdesc:ae83107a96ce0e34e791aac795a4d04e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART baud rate. <br/></td></tr>
+<tr class="separator:ae83107a96ce0e34e791aac795a4d04e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4571e45bcd0dc5e23ef6c9491f415636"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4571e45bcd0dc5e23ef6c9491f415636"></a>
+<a class="el" href="a00053.html#gab5b7fa64ce57a2f68327e745f4a3e0b2">lpuart_parity_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a4571e45bcd0dc5e23ef6c9491f415636">parityMode</a></td></tr>
+<tr class="memdesc:a4571e45bcd0dc5e23ef6c9491f415636"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parity mode, disabled (default), even, odd. <br/></td></tr>
+<tr class="separator:a4571e45bcd0dc5e23ef6c9491f415636"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af78b1ec3d4ad983717c0ddb6fc90a7c3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af78b1ec3d4ad983717c0ddb6fc90a7c3"></a>
+<a class="el" href="a00053.html#gad36b5360ffc95732471dab9bd8f74c3b">lpuart_data_bits_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#af78b1ec3d4ad983717c0ddb6fc90a7c3">dataBitsCount</a></td></tr>
+<tr class="memdesc:af78b1ec3d4ad983717c0ddb6fc90a7c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data bits count, eight (default), seven. <br/></td></tr>
+<tr class="separator:af78b1ec3d4ad983717c0ddb6fc90a7c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b1bc6d9fd6be7a792e3f06ef9801ceb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0b1bc6d9fd6be7a792e3f06ef9801ceb"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a0b1bc6d9fd6be7a792e3f06ef9801ceb">isMsb</a></td></tr>
+<tr class="memdesc:a0b1bc6d9fd6be7a792e3f06ef9801ceb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data bits order, LSB (default), MSB. <br/></td></tr>
+<tr class="separator:a0b1bc6d9fd6be7a792e3f06ef9801ceb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92191efd3c2b43851cab2373f7183143"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a92191efd3c2b43851cab2373f7183143"></a>
+<a class="el" href="a00053.html#ga5c25153c13c99b8c63d8e78cdfeea30f">lpuart_stop_bit_count_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a92191efd3c2b43851cab2373f7183143">stopBitCount</a></td></tr>
+<tr class="memdesc:a92191efd3c2b43851cab2373f7183143"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of stop bits, 1 stop bit (default) or 2 stop bits. <br/></td></tr>
+<tr class="separator:a92191efd3c2b43851cab2373f7183143"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1cb0bd7116d2dd95450ea9e5f605bb6f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1cb0bd7116d2dd95450ea9e5f605bb6f"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a1cb0bd7116d2dd95450ea9e5f605bb6f">txFifoWatermark</a></td></tr>
+<tr class="memdesc:a1cb0bd7116d2dd95450ea9e5f605bb6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX FIFO watermark. <br/></td></tr>
+<tr class="separator:a1cb0bd7116d2dd95450ea9e5f605bb6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05ff5e09b8f4c820a2b07608be7ea7f5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a05ff5e09b8f4c820a2b07608be7ea7f5"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a05ff5e09b8f4c820a2b07608be7ea7f5">rxFifoWatermark</a></td></tr>
+<tr class="memdesc:a05ff5e09b8f4c820a2b07608be7ea7f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX FIFO watermark. <br/></td></tr>
+<tr class="separator:a05ff5e09b8f4c820a2b07608be7ea7f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1aa0d306363e76dfd5d06b2528f71843"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1aa0d306363e76dfd5d06b2528f71843"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a1aa0d306363e76dfd5d06b2528f71843">enableRxRTS</a></td></tr>
+<tr class="memdesc:a1aa0d306363e76dfd5d06b2528f71843"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX RTS enable. <br/></td></tr>
+<tr class="separator:a1aa0d306363e76dfd5d06b2528f71843"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a890f2a760abf8027773e0e77a25f5e58"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a890f2a760abf8027773e0e77a25f5e58"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a890f2a760abf8027773e0e77a25f5e58">enableTxCTS</a></td></tr>
+<tr class="memdesc:a890f2a760abf8027773e0e77a25f5e58"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX CTS enable. <br/></td></tr>
+<tr class="separator:a890f2a760abf8027773e0e77a25f5e58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23efc56ebe06371e2b0957a497f1886e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a23efc56ebe06371e2b0957a497f1886e"></a>
+<a class="el" href="a00053.html#ga36ff933c6ff4ac7a125878f03fc79831">lpuart_transmit_cts_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a23efc56ebe06371e2b0957a497f1886e">txCtsSource</a></td></tr>
+<tr class="memdesc:a23efc56ebe06371e2b0957a497f1886e"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX CTS source. <br/></td></tr>
+<tr class="separator:a23efc56ebe06371e2b0957a497f1886e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a016a408ded64c94de14f2a954855b857"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a016a408ded64c94de14f2a954855b857"></a>
+<a class="el" href="a00053.html#ga5b4e2d09e452e3514e4533ee9510be97">lpuart_transmit_cts_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a016a408ded64c94de14f2a954855b857">txCtsConfig</a></td></tr>
+<tr class="memdesc:a016a408ded64c94de14f2a954855b857"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX CTS configure. <br/></td></tr>
+<tr class="separator:a016a408ded64c94de14f2a954855b857"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45ac9d819675f5cae10bb7234a0f4342"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00053.html#gad2f95b94d8a055a75e2099e11df4aece">lpuart_idle_type_select_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a45ac9d819675f5cae10bb7234a0f4342">rxIdleType</a></td></tr>
+<tr class="memdesc:a45ac9d819675f5cae10bb7234a0f4342"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX IDLE type.  <a href="#a45ac9d819675f5cae10bb7234a0f4342">More...</a><br/></td></tr>
+<tr class="separator:a45ac9d819675f5cae10bb7234a0f4342"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5389e158519dd57c804a10ef5dc3c00"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00053.html#ga48780347b56ffcf164d92df6957c8ab4">lpuart_idle_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ab5389e158519dd57c804a10ef5dc3c00">rxIdleConfig</a></td></tr>
+<tr class="memdesc:ab5389e158519dd57c804a10ef5dc3c00"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX IDLE configuration.  <a href="#ab5389e158519dd57c804a10ef5dc3c00">More...</a><br/></td></tr>
+<tr class="separator:ab5389e158519dd57c804a10ef5dc3c00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9558be2149e5a5730eff2d7bb1fdb28"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab9558be2149e5a5730eff2d7bb1fdb28"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ab9558be2149e5a5730eff2d7bb1fdb28">enableTx</a></td></tr>
+<tr class="memdesc:ab9558be2149e5a5730eff2d7bb1fdb28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable TX. <br/></td></tr>
+<tr class="separator:ab9558be2149e5a5730eff2d7bb1fdb28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5249f5987bbb04eb5ae5e9cfb6e5358"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab5249f5987bbb04eb5ae5e9cfb6e5358"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ab5249f5987bbb04eb5ae5e9cfb6e5358">enableRx</a></td></tr>
+<tr class="memdesc:ab5249f5987bbb04eb5ae5e9cfb6e5358"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable RX. <br/></td></tr>
+<tr class="separator:ab5249f5987bbb04eb5ae5e9cfb6e5358"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="accbd00b653a769831310e62f8a9045eb"></a>
+<a class="anchor" id="a45ac9d819675f5cae10bb7234a0f4342"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00053.html#gac2792920d552d2a9eab5c1b857b695e1">lpuart_idle_type_select_t</a> lpuart_config_t::rxIdleType</td>
+          <td class="memname"><a class="el" href="a00053.html#gad2f95b94d8a055a75e2099e11df4aece">lpuart_idle_type_select_t</a> _lpuart_config::rxIdleType</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a00e18786e55ac3057c2bc32b8bc0e361"></a>
+<a class="anchor" id="ab5389e158519dd57c804a10ef5dc3c00"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00053.html#ga0a377113a8abdeeb03d68fa749a5eb0c">lpuart_idle_config_t</a> lpuart_config_t::rxIdleConfig</td>
+          <td class="memname"><a class="el" href="a00053.html#ga48780347b56ffcf164d92df6957c8ab4">lpuart_idle_config_t</a> _lpuart_config::rxIdleConfig</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -567,73 +597,73 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 
 </div>
 </div>
-<a name="a00459" id="a00459"></a>
+<a name="a00451" id="a00451"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct lpuart_transfer_t</td>
+          <td class="memname">struct _lpuart_transfer</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:ad269a833a8e8e4cdbc0d485d59e256d8"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ad269a833a8e8e4cdbc0d485d59e256d8">dataSize</a></td></tr>
-<tr class="memdesc:ad269a833a8e8e4cdbc0d485d59e256d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The byte count to be transfer.  <a href="#ad269a833a8e8e4cdbc0d485d59e256d8">More...</a><br/></td></tr>
-<tr class="separator:ad269a833a8e8e4cdbc0d485d59e256d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c49cf389dea8ad6f674bff6cedd8e37"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a7c49cf389dea8ad6f674bff6cedd8e37">data</a></td></tr>
-<tr class="memdesc:a7c49cf389dea8ad6f674bff6cedd8e37"><td class="mdescLeft">&#160;</td><td class="mdescRight">The buffer of data to be transfer.  <a href="#a7c49cf389dea8ad6f674bff6cedd8e37">More...</a><br/></td></tr>
-<tr class="separator:a7c49cf389dea8ad6f674bff6cedd8e37"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c7fe6c7d0575874728260e0ee2439df"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a5c7fe6c7d0575874728260e0ee2439df">rxData</a></td></tr>
-<tr class="memdesc:a5c7fe6c7d0575874728260e0ee2439df"><td class="mdescLeft">&#160;</td><td class="mdescRight">The buffer to receive data.  <a href="#a5c7fe6c7d0575874728260e0ee2439df">More...</a><br/></td></tr>
-<tr class="separator:a5c7fe6c7d0575874728260e0ee2439df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6403edb37a03ed860ac5c2cda4d314be"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a6403edb37a03ed860ac5c2cda4d314be">txData</a></td></tr>
-<tr class="memdesc:a6403edb37a03ed860ac5c2cda4d314be"><td class="mdescLeft">&#160;</td><td class="mdescRight">The buffer of data to be sent.  <a href="#a6403edb37a03ed860ac5c2cda4d314be">More...</a><br/></td></tr>
-<tr class="separator:a6403edb37a03ed860ac5c2cda4d314be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa76dae4246c582cb20524f7c3b1be8b"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#aaa76dae4246c582cb20524f7c3b1be8b">dataSize</a></td></tr>
+<tr class="memdesc:aaa76dae4246c582cb20524f7c3b1be8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The byte count to be transfer.  <a href="#aaa76dae4246c582cb20524f7c3b1be8b">More...</a><br/></td></tr>
+<tr class="separator:aaa76dae4246c582cb20524f7c3b1be8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f0e6f0be1311cf09de693c9a9ff9c70"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a5f0e6f0be1311cf09de693c9a9ff9c70">data</a></td></tr>
+<tr class="memdesc:a5f0e6f0be1311cf09de693c9a9ff9c70"><td class="mdescLeft">&#160;</td><td class="mdescRight">The buffer of data to be transfer.  <a href="#a5f0e6f0be1311cf09de693c9a9ff9c70">More...</a><br/></td></tr>
+<tr class="separator:a5f0e6f0be1311cf09de693c9a9ff9c70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f2afdce66073c3fe87da416b90b1a81"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a5f2afdce66073c3fe87da416b90b1a81">rxData</a></td></tr>
+<tr class="memdesc:a5f2afdce66073c3fe87da416b90b1a81"><td class="mdescLeft">&#160;</td><td class="mdescRight">The buffer to receive data.  <a href="#a5f2afdce66073c3fe87da416b90b1a81">More...</a><br/></td></tr>
+<tr class="separator:a5f2afdce66073c3fe87da416b90b1a81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcfd36888905a82337dde365b514e7a1"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#afcfd36888905a82337dde365b514e7a1">txData</a></td></tr>
+<tr class="memdesc:afcfd36888905a82337dde365b514e7a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The buffer of data to be sent.  <a href="#afcfd36888905a82337dde365b514e7a1">More...</a><br/></td></tr>
+<tr class="separator:afcfd36888905a82337dde365b514e7a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a7c49cf389dea8ad6f674bff6cedd8e37"></a>
+<a class="anchor" id="a5f0e6f0be1311cf09de693c9a9ff9c70"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* lpuart_transfer_t::data</td>
+          <td class="memname">uint8_t* _lpuart_transfer::data</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a5c7fe6c7d0575874728260e0ee2439df"></a>
+<a class="anchor" id="a5f2afdce66073c3fe87da416b90b1a81"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* lpuart_transfer_t::rxData</td>
+          <td class="memname">uint8_t* _lpuart_transfer::rxData</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a6403edb37a03ed860ac5c2cda4d314be"></a>
+<a class="anchor" id="afcfd36888905a82337dde365b514e7a1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const uint8_t* lpuart_transfer_t::txData</td>
+          <td class="memname">const uint8_t* _lpuart_transfer::txData</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ad269a833a8e8e4cdbc0d485d59e256d8"></a>
+<a class="anchor" id="aaa76dae4246c582cb20524f7c3b1be8b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">size_t lpuart_transfer_t::dataSize</td>
+          <td class="memname">size_t _lpuart_transfer::dataSize</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -643,7 +673,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 
 </div>
 </div>
-<a name="a00338" id="a00338"></a>
+<a name="a00449" id="a00449"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -654,227 +684,227 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a9d7a97a2805da5949867d433660a09a7"><td class="memItemLeft" align="right" valign="top">const uint8_t *volatile&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a9d7a97a2805da5949867d433660a09a7">txData</a></td></tr>
-<tr class="memdesc:a9d7a97a2805da5949867d433660a09a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Address of remaining data to send.  <a href="#a9d7a97a2805da5949867d433660a09a7">More...</a><br/></td></tr>
-<tr class="separator:a9d7a97a2805da5949867d433660a09a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2114edec74578fe798a62cf852ab0194"><td class="memItemLeft" align="right" valign="top">volatile size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a2114edec74578fe798a62cf852ab0194">txDataSize</a></td></tr>
-<tr class="memdesc:a2114edec74578fe798a62cf852ab0194"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the remaining data to send.  <a href="#a2114edec74578fe798a62cf852ab0194">More...</a><br/></td></tr>
-<tr class="separator:a2114edec74578fe798a62cf852ab0194"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a84153c9f581e7201d5c2a20423a321da"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a84153c9f581e7201d5c2a20423a321da">txDataSizeAll</a></td></tr>
-<tr class="memdesc:a84153c9f581e7201d5c2a20423a321da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the data to send out.  <a href="#a84153c9f581e7201d5c2a20423a321da">More...</a><br/></td></tr>
-<tr class="separator:a84153c9f581e7201d5c2a20423a321da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d3fceca5b3bee7f183116ee7b3a3b93"><td class="memItemLeft" align="right" valign="top">uint8_t *volatile&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a6d3fceca5b3bee7f183116ee7b3a3b93">rxData</a></td></tr>
-<tr class="memdesc:a6d3fceca5b3bee7f183116ee7b3a3b93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Address of remaining data to receive.  <a href="#a6d3fceca5b3bee7f183116ee7b3a3b93">More...</a><br/></td></tr>
-<tr class="separator:a6d3fceca5b3bee7f183116ee7b3a3b93"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b9d688ed6ecbb3b71d6b266bec66edb"><td class="memItemLeft" align="right" valign="top">volatile size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a6b9d688ed6ecbb3b71d6b266bec66edb">rxDataSize</a></td></tr>
-<tr class="memdesc:a6b9d688ed6ecbb3b71d6b266bec66edb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the remaining data to receive.  <a href="#a6b9d688ed6ecbb3b71d6b266bec66edb">More...</a><br/></td></tr>
-<tr class="separator:a6b9d688ed6ecbb3b71d6b266bec66edb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ac2cb3c691238ed65a34410ab8f2920"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a4ac2cb3c691238ed65a34410ab8f2920">rxDataSizeAll</a></td></tr>
-<tr class="memdesc:a4ac2cb3c691238ed65a34410ab8f2920"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the data to receive.  <a href="#a4ac2cb3c691238ed65a34410ab8f2920">More...</a><br/></td></tr>
-<tr class="separator:a4ac2cb3c691238ed65a34410ab8f2920"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3eca0396fcb49d3652a40c7cf49024c8"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a3eca0396fcb49d3652a40c7cf49024c8">rxRingBuffer</a></td></tr>
-<tr class="memdesc:a3eca0396fcb49d3652a40c7cf49024c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start address of the receiver ring buffer.  <a href="#a3eca0396fcb49d3652a40c7cf49024c8">More...</a><br/></td></tr>
-<tr class="separator:a3eca0396fcb49d3652a40c7cf49024c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a12cff540159d2fb592e4856957d820cd"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a12cff540159d2fb592e4856957d820cd">rxRingBufferSize</a></td></tr>
-<tr class="memdesc:a12cff540159d2fb592e4856957d820cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the ring buffer.  <a href="#a12cff540159d2fb592e4856957d820cd">More...</a><br/></td></tr>
-<tr class="separator:a12cff540159d2fb592e4856957d820cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaffed28a2a686bb90e3238a3d8e597b3"><td class="memItemLeft" align="right" valign="top">volatile uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#aaffed28a2a686bb90e3238a3d8e597b3">rxRingBufferHead</a></td></tr>
-<tr class="memdesc:aaffed28a2a686bb90e3238a3d8e597b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index for the driver to store received data into ring buffer.  <a href="#aaffed28a2a686bb90e3238a3d8e597b3">More...</a><br/></td></tr>
-<tr class="separator:aaffed28a2a686bb90e3238a3d8e597b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acecaaa5df8327c5b33815cb7483abd75"><td class="memItemLeft" align="right" valign="top">volatile uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#acecaaa5df8327c5b33815cb7483abd75">rxRingBufferTail</a></td></tr>
-<tr class="memdesc:acecaaa5df8327c5b33815cb7483abd75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index for the user to get data from the ring buffer.  <a href="#acecaaa5df8327c5b33815cb7483abd75">More...</a><br/></td></tr>
-<tr class="separator:acecaaa5df8327c5b33815cb7483abd75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a881c1d7231d1ee0bcb3eb5f1447f75a4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00053.html#ga7ab1637091d166aa8b69517350fb05c8">lpuart_transfer_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a881c1d7231d1ee0bcb3eb5f1447f75a4">callback</a></td></tr>
-<tr class="memdesc:a881c1d7231d1ee0bcb3eb5f1447f75a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function.  <a href="#a881c1d7231d1ee0bcb3eb5f1447f75a4">More...</a><br/></td></tr>
-<tr class="separator:a881c1d7231d1ee0bcb3eb5f1447f75a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9f3989cffe26d3ca63d381da36024be"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ad9f3989cffe26d3ca63d381da36024be">userData</a></td></tr>
-<tr class="memdesc:ad9f3989cffe26d3ca63d381da36024be"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART callback function parameter.  <a href="#ad9f3989cffe26d3ca63d381da36024be">More...</a><br/></td></tr>
-<tr class="separator:ad9f3989cffe26d3ca63d381da36024be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86fe3c8f354afbe67d28a71068206b26"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a86fe3c8f354afbe67d28a71068206b26">txState</a></td></tr>
-<tr class="memdesc:a86fe3c8f354afbe67d28a71068206b26"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX transfer state.  <a href="#a86fe3c8f354afbe67d28a71068206b26">More...</a><br/></td></tr>
-<tr class="separator:a86fe3c8f354afbe67d28a71068206b26"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a088a1e9a009d852b90fb8390fa7cbbcd"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a088a1e9a009d852b90fb8390fa7cbbcd">rxState</a></td></tr>
-<tr class="memdesc:a088a1e9a009d852b90fb8390fa7cbbcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX transfer state.  <a href="#a088a1e9a009d852b90fb8390fa7cbbcd">More...</a><br/></td></tr>
-<tr class="separator:a088a1e9a009d852b90fb8390fa7cbbcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab87c4083ec1d22d639842729f1b08502"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ab87c4083ec1d22d639842729f1b08502">isSevenDataBits</a></td></tr>
-<tr class="memdesc:ab87c4083ec1d22d639842729f1b08502"><td class="mdescLeft">&#160;</td><td class="mdescRight">Seven data bits flag.  <a href="#ab87c4083ec1d22d639842729f1b08502">More...</a><br/></td></tr>
-<tr class="separator:ab87c4083ec1d22d639842729f1b08502"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c35a7a6399c868ddb1def8743c146ea"><td class="memItemLeft" align="right" valign="top">const uint8_t *volatile&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a4c35a7a6399c868ddb1def8743c146ea">txData</a></td></tr>
+<tr class="memdesc:a4c35a7a6399c868ddb1def8743c146ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Address of remaining data to send.  <a href="#a4c35a7a6399c868ddb1def8743c146ea">More...</a><br/></td></tr>
+<tr class="separator:a4c35a7a6399c868ddb1def8743c146ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c7df82f52174be9a8d21f26eba8b63f"><td class="memItemLeft" align="right" valign="top">volatile size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a9c7df82f52174be9a8d21f26eba8b63f">txDataSize</a></td></tr>
+<tr class="memdesc:a9c7df82f52174be9a8d21f26eba8b63f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the remaining data to send.  <a href="#a9c7df82f52174be9a8d21f26eba8b63f">More...</a><br/></td></tr>
+<tr class="separator:a9c7df82f52174be9a8d21f26eba8b63f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2535ea3d50a0e1ebc64ef678792ca143"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a2535ea3d50a0e1ebc64ef678792ca143">txDataSizeAll</a></td></tr>
+<tr class="memdesc:a2535ea3d50a0e1ebc64ef678792ca143"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the data to send out.  <a href="#a2535ea3d50a0e1ebc64ef678792ca143">More...</a><br/></td></tr>
+<tr class="separator:a2535ea3d50a0e1ebc64ef678792ca143"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22f222c17b99b9528dabcc7bc2b2a54b"><td class="memItemLeft" align="right" valign="top">uint8_t *volatile&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a22f222c17b99b9528dabcc7bc2b2a54b">rxData</a></td></tr>
+<tr class="memdesc:a22f222c17b99b9528dabcc7bc2b2a54b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Address of remaining data to receive.  <a href="#a22f222c17b99b9528dabcc7bc2b2a54b">More...</a><br/></td></tr>
+<tr class="separator:a22f222c17b99b9528dabcc7bc2b2a54b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc516aa43ddb7eeec9288820af1ecd89"><td class="memItemLeft" align="right" valign="top">volatile size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#acc516aa43ddb7eeec9288820af1ecd89">rxDataSize</a></td></tr>
+<tr class="memdesc:acc516aa43ddb7eeec9288820af1ecd89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the remaining data to receive.  <a href="#acc516aa43ddb7eeec9288820af1ecd89">More...</a><br/></td></tr>
+<tr class="separator:acc516aa43ddb7eeec9288820af1ecd89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae577a09ca8d3b9eb73f90d308d842e79"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ae577a09ca8d3b9eb73f90d308d842e79">rxDataSizeAll</a></td></tr>
+<tr class="memdesc:ae577a09ca8d3b9eb73f90d308d842e79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the data to receive.  <a href="#ae577a09ca8d3b9eb73f90d308d842e79">More...</a><br/></td></tr>
+<tr class="separator:ae577a09ca8d3b9eb73f90d308d842e79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1100410b5924efeb1a55ec14e15d39f1"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a1100410b5924efeb1a55ec14e15d39f1">rxRingBuffer</a></td></tr>
+<tr class="memdesc:a1100410b5924efeb1a55ec14e15d39f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start address of the receiver ring buffer.  <a href="#a1100410b5924efeb1a55ec14e15d39f1">More...</a><br/></td></tr>
+<tr class="separator:a1100410b5924efeb1a55ec14e15d39f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08db8e558ba77d8c5ece4f60822f60c3"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a08db8e558ba77d8c5ece4f60822f60c3">rxRingBufferSize</a></td></tr>
+<tr class="memdesc:a08db8e558ba77d8c5ece4f60822f60c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the ring buffer.  <a href="#a08db8e558ba77d8c5ece4f60822f60c3">More...</a><br/></td></tr>
+<tr class="separator:a08db8e558ba77d8c5ece4f60822f60c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20aadb739214ab07e45cb9226132192e"><td class="memItemLeft" align="right" valign="top">volatile uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a20aadb739214ab07e45cb9226132192e">rxRingBufferHead</a></td></tr>
+<tr class="memdesc:a20aadb739214ab07e45cb9226132192e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index for the driver to store received data into ring buffer.  <a href="#a20aadb739214ab07e45cb9226132192e">More...</a><br/></td></tr>
+<tr class="separator:a20aadb739214ab07e45cb9226132192e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2777d723511750a6b39f5169135a909f"><td class="memItemLeft" align="right" valign="top">volatile uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a2777d723511750a6b39f5169135a909f">rxRingBufferTail</a></td></tr>
+<tr class="memdesc:a2777d723511750a6b39f5169135a909f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index for the user to get data from the ring buffer.  <a href="#a2777d723511750a6b39f5169135a909f">More...</a><br/></td></tr>
+<tr class="separator:a2777d723511750a6b39f5169135a909f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab50459b72a63e6b30c8ed3671a8af981"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00053.html#ga7ab1637091d166aa8b69517350fb05c8">lpuart_transfer_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ab50459b72a63e6b30c8ed3671a8af981">callback</a></td></tr>
+<tr class="memdesc:ab50459b72a63e6b30c8ed3671a8af981"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function.  <a href="#ab50459b72a63e6b30c8ed3671a8af981">More...</a><br/></td></tr>
+<tr class="separator:ab50459b72a63e6b30c8ed3671a8af981"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2ac81d3089f6b9b2772708b49502441"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ae2ac81d3089f6b9b2772708b49502441">userData</a></td></tr>
+<tr class="memdesc:ae2ac81d3089f6b9b2772708b49502441"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART callback function parameter.  <a href="#ae2ac81d3089f6b9b2772708b49502441">More...</a><br/></td></tr>
+<tr class="separator:ae2ac81d3089f6b9b2772708b49502441"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15865b470edd53b37c580981c718f559"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a15865b470edd53b37c580981c718f559">txState</a></td></tr>
+<tr class="memdesc:a15865b470edd53b37c580981c718f559"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX transfer state.  <a href="#a15865b470edd53b37c580981c718f559">More...</a><br/></td></tr>
+<tr class="separator:a15865b470edd53b37c580981c718f559"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac113a769dffef4a25e7ecac12c412893"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ac113a769dffef4a25e7ecac12c412893">rxState</a></td></tr>
+<tr class="memdesc:ac113a769dffef4a25e7ecac12c412893"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX transfer state.  <a href="#ac113a769dffef4a25e7ecac12c412893">More...</a><br/></td></tr>
+<tr class="separator:ac113a769dffef4a25e7ecac12c412893"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57511414024c9d31dfa339de4b2e1fd5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a57511414024c9d31dfa339de4b2e1fd5">isSevenDataBits</a></td></tr>
+<tr class="memdesc:a57511414024c9d31dfa339de4b2e1fd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Seven data bits flag.  <a href="#a57511414024c9d31dfa339de4b2e1fd5">More...</a><br/></td></tr>
+<tr class="separator:a57511414024c9d31dfa339de4b2e1fd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a9d7a97a2805da5949867d433660a09a7"></a>
+<a class="anchor" id="a4c35a7a6399c868ddb1def8743c146ea"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const uint8_t* volatile lpuart_handle_t::txData</td>
+          <td class="memname">const uint8_t* volatile _lpuart_handle::txData</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a2114edec74578fe798a62cf852ab0194"></a>
+<a class="anchor" id="a9c7df82f52174be9a8d21f26eba8b63f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile size_t lpuart_handle_t::txDataSize</td>
+          <td class="memname">volatile size_t _lpuart_handle::txDataSize</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a84153c9f581e7201d5c2a20423a321da"></a>
+<a class="anchor" id="a2535ea3d50a0e1ebc64ef678792ca143"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">size_t lpuart_handle_t::txDataSizeAll</td>
+          <td class="memname">size_t _lpuart_handle::txDataSizeAll</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a6d3fceca5b3bee7f183116ee7b3a3b93"></a>
+<a class="anchor" id="a22f222c17b99b9528dabcc7bc2b2a54b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* volatile lpuart_handle_t::rxData</td>
+          <td class="memname">uint8_t* volatile _lpuart_handle::rxData</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a6b9d688ed6ecbb3b71d6b266bec66edb"></a>
+<a class="anchor" id="acc516aa43ddb7eeec9288820af1ecd89"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile size_t lpuart_handle_t::rxDataSize</td>
+          <td class="memname">volatile size_t _lpuart_handle::rxDataSize</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a4ac2cb3c691238ed65a34410ab8f2920"></a>
+<a class="anchor" id="ae577a09ca8d3b9eb73f90d308d842e79"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">size_t lpuart_handle_t::rxDataSizeAll</td>
+          <td class="memname">size_t _lpuart_handle::rxDataSizeAll</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a3eca0396fcb49d3652a40c7cf49024c8"></a>
+<a class="anchor" id="a1100410b5924efeb1a55ec14e15d39f1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* lpuart_handle_t::rxRingBuffer</td>
+          <td class="memname">uint8_t* _lpuart_handle::rxRingBuffer</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a12cff540159d2fb592e4856957d820cd"></a>
+<a class="anchor" id="a08db8e558ba77d8c5ece4f60822f60c3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">size_t lpuart_handle_t::rxRingBufferSize</td>
+          <td class="memname">size_t _lpuart_handle::rxRingBufferSize</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="aaffed28a2a686bb90e3238a3d8e597b3"></a>
+<a class="anchor" id="a20aadb739214ab07e45cb9226132192e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile uint16_t lpuart_handle_t::rxRingBufferHead</td>
+          <td class="memname">volatile uint16_t _lpuart_handle::rxRingBufferHead</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="acecaaa5df8327c5b33815cb7483abd75"></a>
+<a class="anchor" id="a2777d723511750a6b39f5169135a909f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile uint16_t lpuart_handle_t::rxRingBufferTail</td>
+          <td class="memname">volatile uint16_t _lpuart_handle::rxRingBufferTail</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a881c1d7231d1ee0bcb3eb5f1447f75a4"></a>
+<a class="anchor" id="ab50459b72a63e6b30c8ed3671a8af981"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00053.html#ga7ab1637091d166aa8b69517350fb05c8">lpuart_transfer_callback_t</a> lpuart_handle_t::callback</td>
+          <td class="memname"><a class="el" href="a00053.html#ga7ab1637091d166aa8b69517350fb05c8">lpuart_transfer_callback_t</a> _lpuart_handle::callback</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ad9f3989cffe26d3ca63d381da36024be"></a>
+<a class="anchor" id="ae2ac81d3089f6b9b2772708b49502441"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void* lpuart_handle_t::userData</td>
+          <td class="memname">void* _lpuart_handle::userData</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a86fe3c8f354afbe67d28a71068206b26"></a>
+<a class="anchor" id="a15865b470edd53b37c580981c718f559"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile uint8_t lpuart_handle_t::txState</td>
+          <td class="memname">volatile uint8_t _lpuart_handle::txState</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a088a1e9a009d852b90fb8390fa7cbbcd"></a>
+<a class="anchor" id="ac113a769dffef4a25e7ecac12c412893"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile uint8_t lpuart_handle_t::rxState</td>
+          <td class="memname">volatile uint8_t _lpuart_handle::rxState</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ab87c4083ec1d22d639842729f1b08502"></a>
+<a class="anchor" id="a57511414024c9d31dfa339de4b2e1fd5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool lpuart_handle_t::isSevenDataBits</td>
+          <td class="memname">bool _lpuart_handle::isSevenDataBits</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -890,7 +920,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_LPUART_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00273.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 7, 3))</td>
+          <td class="memname">#define FSL_LPUART_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00273.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 7, 6))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -910,12 +940,121 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 </div>
 </div>
 <h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="gab5b7fa64ce57a2f68327e745f4a3e0b2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00053.html#ga22a746cfd0fffff30eaf27f8795b2059">_lpuart_parity_mode</a>  <a class="el" href="a00053.html#gab5b7fa64ce57a2f68327e745f4a3e0b2">lpuart_parity_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gad36b5360ffc95732471dab9bd8f74c3b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00053.html#ga565561e02414c90014f13391a1dd7dd5">_lpuart_data_bits</a>  <a class="el" href="a00053.html#gad36b5360ffc95732471dab9bd8f74c3b">lpuart_data_bits_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga5c25153c13c99b8c63d8e78cdfeea30f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00053.html#gad19fe7bcda436707337f6d529d5da155">_lpuart_stop_bit_count</a>  <a class="el" href="a00053.html#ga5c25153c13c99b8c63d8e78cdfeea30f">lpuart_stop_bit_count_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga36ff933c6ff4ac7a125878f03fc79831"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00053.html#gaf6493de629a2c036f4308f1a154c44b3">_lpuart_transmit_cts_source</a>  <a class="el" href="a00053.html#ga36ff933c6ff4ac7a125878f03fc79831">lpuart_transmit_cts_source_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga5b4e2d09e452e3514e4533ee9510be97"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00053.html#gaeb6f0b173f630f703a5ec4f4f6eb57d9">_lpuart_transmit_cts_config</a>  <a class="el" href="a00053.html#ga5b4e2d09e452e3514e4533ee9510be97">lpuart_transmit_cts_config_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gad2f95b94d8a055a75e2099e11df4aece"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00053.html#ga5f767cb7f8458682f742f2e7d4bda63d">_lpuart_idle_type_select</a>  <a class="el" href="a00053.html#gad2f95b94d8a055a75e2099e11df4aece">lpuart_idle_type_select_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga48780347b56ffcf164d92df6957c8ab4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00053.html#ga13c97cefe85629e606de5281d4eef25b">_lpuart_idle_config</a>  <a class="el" href="a00053.html#ga48780347b56ffcf164d92df6957c8ab4">lpuart_idle_config_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This structure defines the number of idle characters that must be received before the IDLE flag is set. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga35757fcc752984cb90dafc2e815c3d05"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00053.html#a00447">_lpuart_config</a>  <a class="el" href="a00053.html#ga35757fcc752984cb90dafc2e815c3d05">lpuart_config_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga1d4707ebc5d49dd655eedb7e5acd27fd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00053.html#a00451">_lpuart_transfer</a>  <a class="el" href="a00053.html#ga1d4707ebc5d49dd655eedb7e5acd27fd">lpuart_transfer_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="ga7ab1637091d166aa8b69517350fb05c8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* lpuart_transfer_callback_t)(LPUART_Type *base, lpuart_handle_t *handle, <a class="el" href="a00273.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
+          <td class="memname">typedef void(* lpuart_transfer_callback_t)(LPUART_Type *base, <a class="el" href="a00053.html#a00449">lpuart_handle_t</a> *handle, <a class="el" href="a00273.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -985,162 +1124,162 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 
 </div>
 </div>
-<a class="anchor" id="ga6fcd73abf900b8a17dab1f2b1f3f53c7"></a>
+<a class="anchor" id="ga22a746cfd0fffff30eaf27f8795b2059"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00053.html#ga6fcd73abf900b8a17dab1f2b1f3f53c7">lpuart_parity_mode_t</a></td>
+          <td class="memname">enum <a class="el" href="a00053.html#ga22a746cfd0fffff30eaf27f8795b2059">_lpuart_parity_mode</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga6fcd73abf900b8a17dab1f2b1f3f53c7a0e5bdb8fc4e1010930d05e1490a75b1a"></a>kLPUART_ParityDisabled</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga22a746cfd0fffff30eaf27f8795b2059a0e5bdb8fc4e1010930d05e1490a75b1a"></a>kLPUART_ParityDisabled</em>&nbsp;</td><td class="fielddoc">
 <p>Parity disabled. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6fcd73abf900b8a17dab1f2b1f3f53c7ac92adb3fdf11240ca5dee6c6543b6ff7"></a>kLPUART_ParityEven</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga22a746cfd0fffff30eaf27f8795b2059ac92adb3fdf11240ca5dee6c6543b6ff7"></a>kLPUART_ParityEven</em>&nbsp;</td><td class="fielddoc">
 <p>Parity enabled, type even, bit setting: PE|PT = 10. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6fcd73abf900b8a17dab1f2b1f3f53c7adab63856e98e0715f4ab289ac0da3575"></a>kLPUART_ParityOdd</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga22a746cfd0fffff30eaf27f8795b2059adab63856e98e0715f4ab289ac0da3575"></a>kLPUART_ParityOdd</em>&nbsp;</td><td class="fielddoc">
 <p>Parity enabled, type odd, bit setting: PE|PT = 11. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga9c4d95a2016ff0cb826d50035a1ba216"></a>
+<a class="anchor" id="ga565561e02414c90014f13391a1dd7dd5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00053.html#ga9c4d95a2016ff0cb826d50035a1ba216">lpuart_data_bits_t</a></td>
+          <td class="memname">enum <a class="el" href="a00053.html#ga565561e02414c90014f13391a1dd7dd5">_lpuart_data_bits</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga9c4d95a2016ff0cb826d50035a1ba216aaa10fe51f0b83d5c0a2e060dab983899"></a>kLPUART_EightDataBits</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga565561e02414c90014f13391a1dd7dd5aaa10fe51f0b83d5c0a2e060dab983899"></a>kLPUART_EightDataBits</em>&nbsp;</td><td class="fielddoc">
 <p>Eight data bit. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9c4d95a2016ff0cb826d50035a1ba216a39e919f0523d445c9e35034b15329031"></a>kLPUART_SevenDataBits</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga565561e02414c90014f13391a1dd7dd5a39e919f0523d445c9e35034b15329031"></a>kLPUART_SevenDataBits</em>&nbsp;</td><td class="fielddoc">
 <p>Seven data bit. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga7540d87bc3fa8a605d8da53fe08219f0"></a>
+<a class="anchor" id="gad19fe7bcda436707337f6d529d5da155"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00053.html#ga7540d87bc3fa8a605d8da53fe08219f0">lpuart_stop_bit_count_t</a></td>
+          <td class="memname">enum <a class="el" href="a00053.html#gad19fe7bcda436707337f6d529d5da155">_lpuart_stop_bit_count</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga7540d87bc3fa8a605d8da53fe08219f0a4304f0ee73a5fabfadfc05ca1fbd3901"></a>kLPUART_OneStopBit</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggad19fe7bcda436707337f6d529d5da155a4304f0ee73a5fabfadfc05ca1fbd3901"></a>kLPUART_OneStopBit</em>&nbsp;</td><td class="fielddoc">
 <p>One stop bit. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7540d87bc3fa8a605d8da53fe08219f0a6e049e0faaf89ed2dfe493ad8f6c93d4"></a>kLPUART_TwoStopBit</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggad19fe7bcda436707337f6d529d5da155a6e049e0faaf89ed2dfe493ad8f6c93d4"></a>kLPUART_TwoStopBit</em>&nbsp;</td><td class="fielddoc">
 <p>Two stop bits. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gadd3cf9892416c5503dce7f0567e8c41f"></a>
+<a class="anchor" id="gaf6493de629a2c036f4308f1a154c44b3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00053.html#gadd3cf9892416c5503dce7f0567e8c41f">lpuart_transmit_cts_source_t</a></td>
+          <td class="memname">enum <a class="el" href="a00053.html#gaf6493de629a2c036f4308f1a154c44b3">_lpuart_transmit_cts_source</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggadd3cf9892416c5503dce7f0567e8c41fab9dc5632b86f32ceb88d8aa882471bf5"></a>kLPUART_CtsSourcePin</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaf6493de629a2c036f4308f1a154c44b3ab9dc5632b86f32ceb88d8aa882471bf5"></a>kLPUART_CtsSourcePin</em>&nbsp;</td><td class="fielddoc">
 <p>CTS resource is the LPUART_CTS pin. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggadd3cf9892416c5503dce7f0567e8c41fa75ac72fc4281ef68f2a97ff96e90654b"></a>kLPUART_CtsSourceMatchResult</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf6493de629a2c036f4308f1a154c44b3a75ac72fc4281ef68f2a97ff96e90654b"></a>kLPUART_CtsSourceMatchResult</em>&nbsp;</td><td class="fielddoc">
 <p>CTS resource is the match result. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gafe1039afd48853bd649e23bdfa034540"></a>
+<a class="anchor" id="gaeb6f0b173f630f703a5ec4f4f6eb57d9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00053.html#gafe1039afd48853bd649e23bdfa034540">lpuart_transmit_cts_config_t</a></td>
+          <td class="memname">enum <a class="el" href="a00053.html#gaeb6f0b173f630f703a5ec4f4f6eb57d9">_lpuart_transmit_cts_config</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggafe1039afd48853bd649e23bdfa034540ad32cfafeb9de4981efcaccfd15787500"></a>kLPUART_CtsSampleAtStart</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaeb6f0b173f630f703a5ec4f4f6eb57d9ad32cfafeb9de4981efcaccfd15787500"></a>kLPUART_CtsSampleAtStart</em>&nbsp;</td><td class="fielddoc">
 <p>CTS input is sampled at the start of each character. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggafe1039afd48853bd649e23bdfa034540afa8f0e420059feab07c6efa7c3ca9d91"></a>kLPUART_CtsSampleAtIdle</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggaeb6f0b173f630f703a5ec4f4f6eb57d9afa8f0e420059feab07c6efa7c3ca9d91"></a>kLPUART_CtsSampleAtIdle</em>&nbsp;</td><td class="fielddoc">
 <p>CTS input is sampled when the transmitter is idle. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gac2792920d552d2a9eab5c1b857b695e1"></a>
+<a class="anchor" id="ga5f767cb7f8458682f742f2e7d4bda63d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00053.html#gac2792920d552d2a9eab5c1b857b695e1">lpuart_idle_type_select_t</a></td>
+          <td class="memname">enum <a class="el" href="a00053.html#ga5f767cb7f8458682f742f2e7d4bda63d">_lpuart_idle_type_select</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggac2792920d552d2a9eab5c1b857b695e1a0644f6b95813c520dede56ee3a944267"></a>kLPUART_IdleTypeStartBit</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga5f767cb7f8458682f742f2e7d4bda63da0644f6b95813c520dede56ee3a944267"></a>kLPUART_IdleTypeStartBit</em>&nbsp;</td><td class="fielddoc">
 <p>Start counting after a valid start bit. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggac2792920d552d2a9eab5c1b857b695e1a69545f21a3401c126bf295b5cf94225b"></a>kLPUART_IdleTypeStopBit</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga5f767cb7f8458682f742f2e7d4bda63da69545f21a3401c126bf295b5cf94225b"></a>kLPUART_IdleTypeStopBit</em>&nbsp;</td><td class="fielddoc">
 <p>Start counting after a stop bit. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga0a377113a8abdeeb03d68fa749a5eb0c"></a>
+<a class="anchor" id="ga13c97cefe85629e606de5281d4eef25b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00053.html#ga0a377113a8abdeeb03d68fa749a5eb0c">lpuart_idle_config_t</a></td>
+          <td class="memname">enum <a class="el" href="a00053.html#ga13c97cefe85629e606de5281d4eef25b">_lpuart_idle_config</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>This structure defines the number of idle characters that must be received before the IDLE flag is set. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga0a377113a8abdeeb03d68fa749a5eb0ca955e0bb4d3e75e577eef544b440c24be"></a>kLPUART_IdleCharacter1</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga13c97cefe85629e606de5281d4eef25ba955e0bb4d3e75e577eef544b440c24be"></a>kLPUART_IdleCharacter1</em>&nbsp;</td><td class="fielddoc">
 <p>the number of idle characters. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0a377113a8abdeeb03d68fa749a5eb0ca270caa8e77b08697404771af82abd131"></a>kLPUART_IdleCharacter2</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga13c97cefe85629e606de5281d4eef25ba270caa8e77b08697404771af82abd131"></a>kLPUART_IdleCharacter2</em>&nbsp;</td><td class="fielddoc">
 <p>the number of idle characters. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0a377113a8abdeeb03d68fa749a5eb0cacab443d3d053070635ea1f859b73f34c"></a>kLPUART_IdleCharacter4</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga13c97cefe85629e606de5281d4eef25bacab443d3d053070635ea1f859b73f34c"></a>kLPUART_IdleCharacter4</em>&nbsp;</td><td class="fielddoc">
 <p>the number of idle characters. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0a377113a8abdeeb03d68fa749a5eb0caf125ff40887939add6dd0f42d4485bf3"></a>kLPUART_IdleCharacter8</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga13c97cefe85629e606de5281d4eef25baf125ff40887939add6dd0f42d4485bf3"></a>kLPUART_IdleCharacter8</em>&nbsp;</td><td class="fielddoc">
 <p>the number of idle characters. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0a377113a8abdeeb03d68fa749a5eb0cace45d3af9a0c590f053df7bb00e6582a"></a>kLPUART_IdleCharacter16</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga13c97cefe85629e606de5281d4eef25bace45d3af9a0c590f053df7bb00e6582a"></a>kLPUART_IdleCharacter16</em>&nbsp;</td><td class="fielddoc">
 <p>the number of idle characters. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0a377113a8abdeeb03d68fa749a5eb0ca1daee04c54b7e37ca5e7331a3e1e7374"></a>kLPUART_IdleCharacter32</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga13c97cefe85629e606de5281d4eef25ba1daee04c54b7e37ca5e7331a3e1e7374"></a>kLPUART_IdleCharacter32</em>&nbsp;</td><td class="fielddoc">
 <p>the number of idle characters. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0a377113a8abdeeb03d68fa749a5eb0cac497a53ed2755d26961f3b72fbd180ed"></a>kLPUART_IdleCharacter64</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga13c97cefe85629e606de5281d4eef25bac497a53ed2755d26961f3b72fbd180ed"></a>kLPUART_IdleCharacter64</em>&nbsp;</td><td class="fielddoc">
 <p>the number of idle characters. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0a377113a8abdeeb03d68fa749a5eb0ca4e080722efa87475f1710f5524e50c67"></a>kLPUART_IdleCharacter128</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga13c97cefe85629e606de5281d4eef25ba4e080722efa87475f1710f5524e50c67"></a>kLPUART_IdleCharacter128</em>&nbsp;</td><td class="fielddoc">
 <p>the number of idle characters. </p>
 </td></tr>
 </table>
@@ -1346,7 +1485,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00053.html#a00457">lpuart_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00053.html#ga35757fcc752984cb90dafc2e815c3d05">lpuart_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>, </td>
         </tr>
         <tr>
@@ -1363,14 +1502,14 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
       </table>
 </div><div class="memdoc">
 <p>This function configures the LPUART module with user-defined settings. Call the <a class="el" href="a00053.html#ga95dfe3c3886692f1fe32023d59708440" title="Gets the default configuration structure. ">LPUART_GetDefaultConfig()</a> function to configure the configuration structure and get the default configuration. The example below shows how to use this API to configure the LPUART. </p>
-<div class="fragment"><div class="line">*  <a class="code" href="a00053.html#a00457">lpuart_config_t</a> lpuartConfig;</div>
-<div class="line">*  lpuartConfig.<a class="code" href="a00053.html#a09d359de28dc114424b2d702df014d1c">baudRate_Bps</a> = 115200U;</div>
-<div class="line">*  lpuartConfig.<a class="code" href="a00053.html#ae7ce86796f025a059c973c540d5a94ad">parityMode</a> = <a class="code" href="a00053.html#gga6fcd73abf900b8a17dab1f2b1f3f53c7a0e5bdb8fc4e1010930d05e1490a75b1a">kLPUART_ParityDisabled</a>;</div>
-<div class="line">*  lpuartConfig.<a class="code" href="a00053.html#a58ce25b71bde98b9c09875481637d120">dataBitsCount</a> = <a class="code" href="a00053.html#gga9c4d95a2016ff0cb826d50035a1ba216aaa10fe51f0b83d5c0a2e060dab983899">kLPUART_EightDataBits</a>;</div>
-<div class="line">*  lpuartConfig.<a class="code" href="a00053.html#aae9f69c98294d67da66edbce283f029b">isMsb</a> = <span class="keyword">false</span>;</div>
-<div class="line">*  lpuartConfig.<a class="code" href="a00053.html#ad133820d48c8f20f3f14194947d0e811">stopBitCount</a> = <a class="code" href="a00053.html#gga7540d87bc3fa8a605d8da53fe08219f0a4304f0ee73a5fabfadfc05ca1fbd3901">kLPUART_OneStopBit</a>;</div>
-<div class="line">*  lpuartConfig.<a class="code" href="a00053.html#a824836b1509114ff1af39cb6180bfc05">txFifoWatermark</a> = 0;</div>
-<div class="line">*  lpuartConfig.<a class="code" href="a00053.html#ab7ccf42982268a314684ef0cc9130daa">rxFifoWatermark</a> = 1;</div>
+<div class="fragment"><div class="line">*  <a class="code" href="a00053.html#a00447">lpuart_config_t</a> lpuartConfig;</div>
+<div class="line">*  lpuartConfig.<a class="code" href="a00053.html#ae83107a96ce0e34e791aac795a4d04e4">baudRate_Bps</a> = 115200U;</div>
+<div class="line">*  lpuartConfig.<a class="code" href="a00053.html#a4571e45bcd0dc5e23ef6c9491f415636">parityMode</a> = <a class="code" href="a00053.html#gga22a746cfd0fffff30eaf27f8795b2059a0e5bdb8fc4e1010930d05e1490a75b1a">kLPUART_ParityDisabled</a>;</div>
+<div class="line">*  lpuartConfig.<a class="code" href="a00053.html#af78b1ec3d4ad983717c0ddb6fc90a7c3">dataBitsCount</a> = <a class="code" href="a00053.html#gga565561e02414c90014f13391a1dd7dd5aaa10fe51f0b83d5c0a2e060dab983899">kLPUART_EightDataBits</a>;</div>
+<div class="line">*  lpuartConfig.<a class="code" href="a00053.html#a0b1bc6d9fd6be7a792e3f06ef9801ceb">isMsb</a> = <span class="keyword">false</span>;</div>
+<div class="line">*  lpuartConfig.<a class="code" href="a00053.html#a92191efd3c2b43851cab2373f7183143">stopBitCount</a> = <a class="code" href="a00053.html#ggad19fe7bcda436707337f6d529d5da155a4304f0ee73a5fabfadfc05ca1fbd3901">kLPUART_OneStopBit</a>;</div>
+<div class="line">*  lpuartConfig.<a class="code" href="a00053.html#a1cb0bd7116d2dd95450ea9e5f605bb6f">txFifoWatermark</a> = 0;</div>
+<div class="line">*  lpuartConfig.<a class="code" href="a00053.html#a05ff5e09b8f4c820a2b07608be7ea7f5">rxFifoWatermark</a> = 1;</div>
 <div class="line">*  <a class="code" href="a00053.html#ga26ce3e5d63d8dd5d317a83f22af9682c">LPUART_Init</a>(LPUART1, &amp;lpuartConfig, 20000000U);</div>
 <div class="line">* </div>
 </div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
@@ -1421,7 +1560,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="memname">void LPUART_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00053.html#a00457">lpuart_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00053.html#ga35757fcc752984cb90dafc2e815c3d05">lpuart_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
@@ -2380,7 +2519,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpuart_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00053.html#a00449">lpuart_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -2429,13 +2568,13 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpuart_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00053.html#a00449">lpuart_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00053.html#a00459">lpuart_transfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00053.html#ga1d4707ebc5d49dd655eedb7e5acd27fd">lpuart_transfer_t</a> *&#160;</td>
           <td class="paramname"><em>xfer</em>&#160;</td>
         </tr>
         <tr>
@@ -2451,7 +2590,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
   <table class="params">
     <tr><td class="paramname">base</td><td>LPUART peripheral base address. </td></tr>
     <tr><td class="paramname">handle</td><td>LPUART handle pointer. </td></tr>
-    <tr><td class="paramname">xfer</td><td>LPUART transfer structure, see <a class="el" href="a00053.html#a00459" title="LPUART transfer structure. ">lpuart_transfer_t</a>. </td></tr>
+    <tr><td class="paramname">xfer</td><td>LPUART transfer structure, see <a class="el" href="a00053.html#ga1d4707ebc5d49dd655eedb7e5acd27fd" title="LPUART transfer structure. ">lpuart_transfer_t</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2479,7 +2618,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpuart_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00053.html#a00449">lpuart_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -2529,7 +2668,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpuart_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00053.html#a00449">lpuart_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>&#160;</td>
         </tr>
         <tr>
@@ -2563,7 +2702,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpuart_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00053.html#a00449">lpuart_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>&#160;</td>
         </tr>
         <tr>
@@ -2597,7 +2736,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpuart_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00053.html#a00449">lpuart_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>&#160;</td>
         </tr>
         <tr>
@@ -2631,7 +2770,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpuart_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00053.html#a00449">lpuart_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -2680,13 +2819,13 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpuart_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00053.html#a00449">lpuart_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00053.html#a00459">lpuart_transfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00053.html#ga1d4707ebc5d49dd655eedb7e5acd27fd">lpuart_transfer_t</a> *&#160;</td>
           <td class="paramname"><em>xfer</em>, </td>
         </tr>
         <tr>
@@ -2736,7 +2875,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpuart_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00053.html#a00449">lpuart_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>&#160;</td>
         </tr>
         <tr>
@@ -2770,7 +2909,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpuart_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00053.html#a00449">lpuart_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>

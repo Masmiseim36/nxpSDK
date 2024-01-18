@@ -33,26 +33,26 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DXIP_EXTERNAL_FLASH=1 \
     -DXIP_BOOT_HEADER_ENABLE=1 \
     -DDEBUG \
-    -DCPU_MIMXRT1062DVL6A \
+    -DCPU_MIMXRT1062DVL6B \
     -DBOARD_USE_VIRTUALCOM=1 \
     -DIMX_RT \
     -DUSB_STACK_BM \
     -DUSB_ISR_REDIRECT \
-    -DPRINTF_ADVANCED_ENABLE=1 \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
+    -DPRINTF_ADVANCED_ENABLE=1 \
+    -DCPU_MIMXRT1062DVL6B_cm7 \
+    -DMCUXPRESSO_SDK \
     -DUSB_DEVICE_CONFIG_CDC_ACM=1 \
     -DMBEDTLS \
     -DSCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC \
+    -DSDK_OS_BAREMETAL \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DT1oI2C \
     -DT1oI2C_UM11225 \
     -DSSS_USE_FTR_FILE \
     -DNO_SECURE_CHANNEL_SUPPORT \
-    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
-    -fomit-frame-pointer \
-    -Wno-unused-function \
     -mcpu=cortex-m7 \
     -Wall \
     -mthumb \
@@ -65,6 +65,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -fomit-frame-pointer \
+    -Wno-unused-function \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -73,25 +75,25 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DXIP_EXTERNAL_FLASH=1 \
     -DXIP_BOOT_HEADER_ENABLE=1 \
     -DNDEBUG \
-    -DCPU_MIMXRT1062DVL6A \
+    -DCPU_MIMXRT1062DVL6B \
     -DBOARD_USE_VIRTUALCOM=1 \
     -DIMX_RT \
     -DUSB_STACK_BM \
     -DUSB_ISR_REDIRECT \
-    -DPRINTF_ADVANCED_ENABLE=1 \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
+    -DPRINTF_ADVANCED_ENABLE=1 \
+    -DCPU_MIMXRT1062DVL6B_cm7 \
+    -DMCUXPRESSO_SDK \
     -DUSB_DEVICE_CONFIG_CDC_ACM=1 \
     -DMBEDTLS \
     -DSCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC \
+    -DSDK_OS_BAREMETAL \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DT1oI2C \
     -DT1oI2C_UM11225 \
     -DSSS_USE_FTR_FILE \
     -DNO_SECURE_CHANNEL_SUPPORT \
-    -DMCUXPRESSO_SDK \
     -Os \
-    -fomit-frame-pointer \
-    -Wno-unused-function \
     -mcpu=cortex-m7 \
     -Wall \
     -mthumb \
@@ -104,19 +106,21 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -fomit-frame-pointer \
+    -Wno-unused-function \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG} \
     -DDEBUG \
-    -DCPU_MIMXRT1062DVL6A \
+    -DCPU_MIMXRT1062DVL6B \
+    -DMCUXPRESSO_SDK \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
     -DUSB_DEVICE_CONFIG_CDC_ACM=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DT1oI2C \
     -DT1oI2C_UM11225 \
-    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
     -mcpu=cortex-m7 \
@@ -138,13 +142,13 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE} \
     -DNDEBUG \
-    -DCPU_MIMXRT1062DVL6A \
+    -DCPU_MIMXRT1062DVL6B \
+    -DMCUXPRESSO_SDK \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
     -DUSB_DEVICE_CONFIG_CDC_ACM=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DT1oI2C \
     -DT1oI2C_UM11225 \
-    -DMCUXPRESSO_SDK \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \
@@ -191,7 +195,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     --defsym=__heap_size__=0x8000 \
     ${FPU} \
     ${SPECS} \
-    -T${ProjDirPath}/MIMXRT1062xxxxx_flexspi_nor.ld -static \
+    -T\"${ProjDirPath}/MIMXRT1062xxxxx_flexspi_nor.ld\" -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} \
@@ -221,5 +225,5 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     --defsym=__heap_size__=0x8000 \
     ${FPU} \
     ${SPECS} \
-    -T${ProjDirPath}/MIMXRT1062xxxxx_flexspi_nor.ld -static \
+    -T\"${ProjDirPath}/MIMXRT1062xxxxx_flexspi_nor.ld\" -static \
 ")

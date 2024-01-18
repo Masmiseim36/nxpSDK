@@ -7,12 +7,6 @@
 #include "mid_mc_api_connector.h"
 #include "mc_periph_init.h"
 
-#ifdef PMSM_SNSLESS_ENC
-#include "m1_sm_snsless_enc.h"
-#else
-#include "m1_sm_snsless.h"
-#endif
-
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

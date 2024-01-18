@@ -8,14 +8,14 @@
 #ifndef _M1_SM_REF_SOL_H_
 #define _M1_SM_REF_SOL_H_
 
-#include "sm_common_enc.h"
+#include "sm_common.h"
 #include "m1_pmsm_appconfig.h"
 #include "state_machine.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define M1_SPEED_CONV_SCALE 628.06F /* Speed conversion scale */
+#define M1_SPEED_CONV_SCALE (628.06F*2) /* Speed conversion scale */
 
 #define MCAT_SENSORLESS_CTRL 0U /* Sensorless control flag */
 #define MCAT_ENC_CTRL 1U        /* Position quadrature encoder control flag */

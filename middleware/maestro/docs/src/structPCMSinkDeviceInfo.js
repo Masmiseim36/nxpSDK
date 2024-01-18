@@ -1,6 +1,5 @@
 var structPCMSinkDeviceInfo =
 [
-    [ "pcm_handle", "structPCMSinkDeviceInfo.html#a0ba02cc0ba42be349dc752f0f7561314", null ],
     [ "unaligned_buf", "structPCMSinkDeviceInfo.html#a4b5814d8d2b5c6cf6630d155896c878c", null ],
     [ "audbuf", "structPCMSinkDeviceInfo.html#a7d618856dd641418cf1f5b5413640359", null ],
     [ "alloc_size", "structPCMSinkDeviceInfo.html#ade93a05540a67242d44016da87362df5", null ],

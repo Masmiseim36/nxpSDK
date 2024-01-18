@@ -1,10 +1,8 @@
 /*
  * Copyright 2023 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "mpp_config.h"
@@ -86,6 +84,7 @@ int HAL_GfxDev_Cpu_Getbufdesc(const gfx_dev_t *dev, hw_buf_desc_t *in_buf, hw_bu
         *policy = HAL_MEM_ALLOC_NONE;
         /* set hw requirement */
         in_buf->alignment = 0;
+        in_buf->nb_lines = 0;
         in_buf->cacheable = true;
         in_buf->stride = 0;
         out_buf->alignment = 0;

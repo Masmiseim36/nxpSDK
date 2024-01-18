@@ -1,17 +1,21 @@
 /*
- * Copyright 2018, 2019, 2020, 2021, 2022, 2023 NXP
+ * Copyright 2018-2023 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
  */
 
-#include "ax_reset.h"
-#include "se_reset_config.h"
-#include "sm_timer.h"
-
 #include "board.h"
 #include "fsl_gpio.h"
 #include "pin_mux.h"
+#include <nxp_iot_agent_status.h>
+#include "fsl_debug_console.h"
+
+#ifndef RW612_SERIES
+#include "ax_reset.h"
+#include "se_reset_config.h"
+#include "sm_timer.h"
+#endif
 
 #if defined(MBEDTLS)
 #include "ksdk_mbedtls.h"
@@ -22,6 +26,7 @@
 #include "FreeRTOSConfig.h"
 #endif /* INC_FREERTOS_H */
 #include "task.h"
+
 
 #include "lwip/opt.h"
 #include "lwip/tcpip.h"
@@ -35,6 +40,7 @@
 #else
 #include "fsl_phyrtl8211f.h"
 #endif
+
 #include <nxp_iot_agent_status.h>
 
 #if defined (LPC_ENET)
@@ -43,6 +49,8 @@
 #define EXAMPLE_CLOCK_FREQ CLOCK_GetRootClockFreq(kCLOCK_Root_Bus)
 #elif defined(CPU_MIMXRT1062DVL6A)
 #define EXAMPLE_CLOCK_FREQ CLOCK_GetFreq(kCLOCK_IpgClk)
+#elif defined(RW612_SERIES)
+#define EXAMPLE_CLOCK_FREQ CLOCK_GetMainClkFreq()
 #else
 #define EXAMPLE_CLOCK_FREQ CLOCK_GetFreq(kCLOCK_CoreSysClk)
 #endif // CPU_MIMXRT1176DVMAA_cm7
@@ -50,16 +58,16 @@
 /* MDIO operations. */
 #define EXAMPLE_MDIO_OPS enet_ops
 
-#if defined(CPU_MIMXRT1062DVL6A)
+#if defined(CPU_MIMXRT1062DVL6A) || defined (RW612_SERIES)
 #include "fsl_enet.h"
 #include "fsl_phyksz8081.h"
-phy_ksz8081_resource_t g_phy_resource;
+phy_ksz8081_resource_t g_phy_resource_agent;
 #endif
 
 #if defined(CPU_MIMXRT1176DVMAA_cm7)
 #include "fsl_enet.h"
 #include "fsl_phyrtl8211f.h"
-phy_rtl8211f_resource_t g_phy_resource;
+phy_rtl8211f_resource_t g_phy_resource_agent;
 #endif
 
 #ifdef EXAMPLE_USE_100M_ENET_PORT
@@ -67,9 +75,10 @@ phy_rtl8211f_resource_t g_phy_resource;
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
 
-extern phy_ksz8081_resource_t g_phy_resource;
+phy_ksz8081_resource_t g_phy_resource_agent;
 /* PHY operations. */
 #define EXAMPLE_PHY_OPS &phyksz8081_ops
+#define EXAMPLE_PHY_RESOURCE &g_phy_resource_agent
 
 /* ENET instance select. */
 #define EXAMPLE_NETIF_INIT_FN ethernetif0_init
@@ -81,15 +90,17 @@ extern phy_ksz8081_resource_t g_phy_resource;
 #define EXAMPLE_PHY_OPS       &phyrtl8211f_ops
 /* ENET instance select. */
 #define EXAMPLE_NETIF_INIT_FN ethernetif1_init
-extern phy_rtl8211f_resource_t g_phy_resource;
+phy_rtl8211f_resource_t g_phy_resource_agent;
 #endif // EXAMPLE_USE_100M_ENET_PORT
-#define EXAMPLE_PHY_RESOURCE &g_phy_resource
+#define EXAMPLE_PHY_RESOURCE &g_phy_resource_agent
 
 #endif  // (LPC_ENET)
 
-
-/* MAC address configuration. */
+#if defined (RW612_SERIES)
+#include "fsl_silicon_id.h"
+#else
 #define configMAC_ADDR {0x04, 0x12, 0x13, 0xB1, 0x11, 0x90}
+#endif
 
 /* Address of PHY interface. */
 
@@ -128,7 +139,7 @@ static phy_handle_t phyHandle;
  ******************************************************************************/
 static struct netif fsl_netif0;
 
-#if defined(CPU_MIMXRT1062DVL6A) || defined(CPU_MIMXRT1176DVMAA_cm7)
+#if defined(CPU_MIMXRT1062DVL6A) || defined(CPU_MIMXRT1176DVMAA_cm7) || defined(RW612_SERIES)
 static void MDIO_Init(void)
 {
     (void)CLOCK_EnableClock(s_enetClock[ENET_GetInstance(EXAMPLE_ENET)]);
@@ -153,13 +164,20 @@ iot_agent_status_t network_init(void)
                                             .phyOps      = EXAMPLE_PHY_OPS,
                                             .phyResource = EXAMPLE_PHY_RESOURCE,
                                             .srcClockHz  = EXAMPLE_CLOCK_FREQ,
+#ifdef configMAC_ADDR
                                             .macAddress = configMAC_ADDR
+#endif
     };
-#if defined(CPU_MIMXRT1062DVL6A) || defined(CPU_MIMXRT1176DVMAA_cm7)
+#if defined(CPU_MIMXRT1062DVL6A) || defined(CPU_MIMXRT1176DVMAA_cm7) || defined(RW612_SERIES)
     MDIO_Init();
-    g_phy_resource.read  = MDIO_Read;
-    g_phy_resource.write = MDIO_Write;
-#endif 
+    g_phy_resource_agent.read  = MDIO_Read;
+    g_phy_resource_agent.write = MDIO_Write;
+#endif
+	    /* Set MAC address. */
+#ifndef configMAC_ADDR
+    (void)SILICONID_ConvertToMacAddr(&fsl_enet_config0.macAddress);
+#endif
+
     tcpip_init(NULL, NULL);
 
     netifapi_netif_add(&fsl_netif0, NULL, NULL, NULL, &fsl_enet_config0, EXAMPLE_NETIF_INIT_FN, tcpip_input);
@@ -185,3 +203,4 @@ iot_agent_status_t network_init(void)
 #endif
     return IOT_AGENT_SUCCESS;
 }
+

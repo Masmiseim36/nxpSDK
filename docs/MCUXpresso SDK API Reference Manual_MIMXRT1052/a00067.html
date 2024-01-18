@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -100,7 +100,8 @@ $(document).ready(function(){initNavTree('a00067.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a>  </div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
 <div class="title">SDMMC OSA<div class="ingroups"><a class="el" href="a00297.html">Cards: Secure Digital Card/Embedded MultiMedia Card/SDIO Card</a></div></div>  </div>
 </div><!--header-->
@@ -110,12 +111,12 @@ $(document).ready(function(){initNavTree('a00067.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00506"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a00506">sdmmc_osa_event_t</a></td></tr>
-<tr class="memdesc:a00506"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdmmc osa event  <a href="a00067.html#a00506">More...</a><br/></td></tr>
-<tr class="separator:a00506"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00507"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a00507">sdmmc_osa_mutex_t</a></td></tr>
-<tr class="memdesc:a00507"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdmmc osa mutex  <a href="a00067.html#a00507">More...</a><br/></td></tr>
-<tr class="separator:a00507"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00500"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a00500">_sdmmc_osa_event</a></td></tr>
+<tr class="memdesc:a00500"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdmmc osa event  <a href="a00067.html#a00500">More...</a><br/></td></tr>
+<tr class="separator:a00500"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00501"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#a00501">_sdmmc_osa_mutex</a></td></tr>
+<tr class="memdesc:a00501"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdmmc osa mutex  <a href="a00067.html#a00501">More...</a><br/></td></tr>
+<tr class="separator:a00501"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
@@ -132,40 +133,51 @@ Macros</h2></td></tr>
 <tr class="memdesc:gae92d4284e8a077044fe31155c914121b"><td class="mdescLeft">&#160;</td><td class="mdescRight">enable semphore by default <br/></td></tr>
 <tr class="separator:gae92d4284e8a077044fe31155c914121b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga0d2253ec8cd6cb6c58b593e53da638b0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0d2253ec8cd6cb6c58b593e53da638b0"></a>
+typedef struct <a class="el" href="a00067.html#a00500">_sdmmc_osa_event</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga0d2253ec8cd6cb6c58b593e53da638b0">sdmmc_osa_event_t</a></td></tr>
+<tr class="memdesc:ga0d2253ec8cd6cb6c58b593e53da638b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdmmc osa event <br/></td></tr>
+<tr class="separator:ga0d2253ec8cd6cb6c58b593e53da638b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab4b501fd4e841889183b1177e468eba9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab4b501fd4e841889183b1177e468eba9"></a>
+typedef struct <a class="el" href="a00067.html#a00501">_sdmmc_osa_mutex</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#gab4b501fd4e841889183b1177e468eba9">sdmmc_osa_mutex_t</a></td></tr>
+<tr class="memdesc:gab4b501fd4e841889183b1177e468eba9"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdmmc osa mutex <br/></td></tr>
+<tr class="separator:gab4b501fd4e841889183b1177e468eba9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 sdmmc osa Function</h2></td></tr>
 <tr class="memitem:ga56578b5f06118520003c8c64845fc74e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga56578b5f06118520003c8c64845fc74e"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga56578b5f06118520003c8c64845fc74e">SDMMC_OSAInit</a> (void)</td></tr>
 <tr class="memdesc:ga56578b5f06118520003c8c64845fc74e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize OSA. <br/></td></tr>
 <tr class="separator:ga56578b5f06118520003c8c64845fc74e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7e27cd46ed9a2c318ed91eddf619963e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga7e27cd46ed9a2c318ed91eddf619963e">SDMMC_OSAEventCreate</a> (void *eventHandle)</td></tr>
+<tr class="memitem:ga7e27cd46ed9a2c318ed91eddf619963e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga7e27cd46ed9a2c318ed91eddf619963e">SDMMC_OSAEventCreate</a> (void *eventHandle)</td></tr>
 <tr class="memdesc:ga7e27cd46ed9a2c318ed91eddf619963e"><td class="mdescLeft">&#160;</td><td class="mdescRight">OSA Create event.  <a href="#ga7e27cd46ed9a2c318ed91eddf619963e">More...</a><br/></td></tr>
 <tr class="separator:ga7e27cd46ed9a2c318ed91eddf619963e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4f3a1084be9f933e9113229ac4a1d0cd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga4f3a1084be9f933e9113229ac4a1d0cd">SDMMC_OSAEventWait</a> (void *eventHandle, uint32_t eventType, uint32_t timeoutMilliseconds, uint32_t *event)</td></tr>
+<tr class="memitem:ga4f3a1084be9f933e9113229ac4a1d0cd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga4f3a1084be9f933e9113229ac4a1d0cd">SDMMC_OSAEventWait</a> (void *eventHandle, uint32_t eventType, uint32_t timeoutMilliseconds, uint32_t *event)</td></tr>
 <tr class="memdesc:ga4f3a1084be9f933e9113229ac4a1d0cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait event.  <a href="#ga4f3a1084be9f933e9113229ac4a1d0cd">More...</a><br/></td></tr>
 <tr class="separator:ga4f3a1084be9f933e9113229ac4a1d0cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga74712ab81ddfaba83db64fa312e478dc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga74712ab81ddfaba83db64fa312e478dc">SDMMC_OSAEventSet</a> (void *eventHandle, uint32_t eventType)</td></tr>
+<tr class="memitem:ga74712ab81ddfaba83db64fa312e478dc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga74712ab81ddfaba83db64fa312e478dc">SDMMC_OSAEventSet</a> (void *eventHandle, uint32_t eventType)</td></tr>
 <tr class="memdesc:ga74712ab81ddfaba83db64fa312e478dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">set event.  <a href="#ga74712ab81ddfaba83db64fa312e478dc">More...</a><br/></td></tr>
 <tr class="separator:ga74712ab81ddfaba83db64fa312e478dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4041592c308b3ae1b56c443b3868cc78"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga4041592c308b3ae1b56c443b3868cc78">SDMMC_OSAEventGet</a> (void *eventHandle, uint32_t eventType, uint32_t *flag)</td></tr>
+<tr class="memitem:ga4041592c308b3ae1b56c443b3868cc78"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga4041592c308b3ae1b56c443b3868cc78">SDMMC_OSAEventGet</a> (void *eventHandle, uint32_t eventType, uint32_t *flag)</td></tr>
 <tr class="memdesc:ga4041592c308b3ae1b56c443b3868cc78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get event flag.  <a href="#ga4041592c308b3ae1b56c443b3868cc78">More...</a><br/></td></tr>
 <tr class="separator:ga4041592c308b3ae1b56c443b3868cc78"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4910eb39c0b87f1561f5dcebf97691b5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga4910eb39c0b87f1561f5dcebf97691b5">SDMMC_OSAEventClear</a> (void *eventHandle, uint32_t eventType)</td></tr>
+<tr class="memitem:ga4910eb39c0b87f1561f5dcebf97691b5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga4910eb39c0b87f1561f5dcebf97691b5">SDMMC_OSAEventClear</a> (void *eventHandle, uint32_t eventType)</td></tr>
 <tr class="memdesc:ga4910eb39c0b87f1561f5dcebf97691b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">clear event flag.  <a href="#ga4910eb39c0b87f1561f5dcebf97691b5">More...</a><br/></td></tr>
 <tr class="separator:ga4910eb39c0b87f1561f5dcebf97691b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9590db7e4c4caa97fca6971f425a835a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga9590db7e4c4caa97fca6971f425a835a">SDMMC_OSAEventDestroy</a> (void *eventHandle)</td></tr>
+<tr class="memitem:ga9590db7e4c4caa97fca6971f425a835a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga9590db7e4c4caa97fca6971f425a835a">SDMMC_OSAEventDestroy</a> (void *eventHandle)</td></tr>
 <tr class="memdesc:ga9590db7e4c4caa97fca6971f425a835a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete event.  <a href="#ga9590db7e4c4caa97fca6971f425a835a">More...</a><br/></td></tr>
 <tr class="separator:ga9590db7e4c4caa97fca6971f425a835a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa584323efcabc7f911f0c1ab1ff94561"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#gaa584323efcabc7f911f0c1ab1ff94561">SDMMC_OSAMutexCreate</a> (void *mutexHandle)</td></tr>
+<tr class="memitem:gaa584323efcabc7f911f0c1ab1ff94561"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#gaa584323efcabc7f911f0c1ab1ff94561">SDMMC_OSAMutexCreate</a> (void *mutexHandle)</td></tr>
 <tr class="memdesc:gaa584323efcabc7f911f0c1ab1ff94561"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a mutex.  <a href="#gaa584323efcabc7f911f0c1ab1ff94561">More...</a><br/></td></tr>
 <tr class="separator:gaa584323efcabc7f911f0c1ab1ff94561"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga544054ba8536595c8fef4e2b4bfd35f9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga544054ba8536595c8fef4e2b4bfd35f9">SDMMC_OSAMutexLock</a> (void *mutexHandle, uint32_t millisec)</td></tr>
+<tr class="memitem:ga544054ba8536595c8fef4e2b4bfd35f9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga544054ba8536595c8fef4e2b4bfd35f9">SDMMC_OSAMutexLock</a> (void *mutexHandle, uint32_t millisec)</td></tr>
 <tr class="memdesc:ga544054ba8536595c8fef4e2b4bfd35f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">set event.  <a href="#ga544054ba8536595c8fef4e2b4bfd35f9">More...</a><br/></td></tr>
 <tr class="separator:ga544054ba8536595c8fef4e2b4bfd35f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga79ee28917c8e3afaa5b116553ba977a8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga79ee28917c8e3afaa5b116553ba977a8">SDMMC_OSAMutexUnlock</a> (void *mutexHandle)</td></tr>
+<tr class="memitem:ga79ee28917c8e3afaa5b116553ba977a8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga79ee28917c8e3afaa5b116553ba977a8">SDMMC_OSAMutexUnlock</a> (void *mutexHandle)</td></tr>
 <tr class="memdesc:ga79ee28917c8e3afaa5b116553ba977a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get event flag.  <a href="#ga79ee28917c8e3afaa5b116553ba977a8">More...</a><br/></td></tr>
 <tr class="separator:ga79ee28917c8e3afaa5b116553ba977a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga78a7785b74c74d596c19729ce426e3df"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga78a7785b74c74d596c19729ce426e3df">SDMMC_OSAMutexDestroy</a> (void *mutexHandle)</td></tr>
+<tr class="memitem:ga78a7785b74c74d596c19729ce426e3df"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga78a7785b74c74d596c19729ce426e3df">SDMMC_OSAMutexDestroy</a> (void *mutexHandle)</td></tr>
 <tr class="memdesc:ga78a7785b74c74d596c19729ce426e3df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete mutex.  <a href="#ga78a7785b74c74d596c19729ce426e3df">More...</a><br/></td></tr>
 <tr class="separator:ga78a7785b74c74d596c19729ce426e3df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga885c6a7de60f8225f903a2d991fd585a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html#ga885c6a7de60f8225f903a2d991fd585a">SDMMC_OSADelay</a> (uint32_t milliseconds)</td></tr>
@@ -176,24 +188,24 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 <tr class="separator:ga2ef80e6970255224f59a284e3f9b31b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00506" id="a00506"></a>
+<a name="a00500" id="a00500"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct sdmmc_osa_event_t</td>
+          <td class="memname">struct _sdmmc_osa_event</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div>
 </div>
 </div>
-<a name="a00507" id="a00507"></a>
+<a name="a00501" id="a00501"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct sdmmc_osa_mutex_t</td>
+          <td class="memname">struct _sdmmc_osa_mutex</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -206,7 +218,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMC_OSAEventCreate </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMC_OSAEventCreate </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>eventHandle</em></td><td>)</td>
@@ -234,7 +246,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMC_OSAEventWait </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMC_OSAEventWait </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>eventHandle</em>, </td>
@@ -287,7 +299,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMC_OSAEventSet </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMC_OSAEventSet </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>eventHandle</em>, </td>
@@ -326,7 +338,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMC_OSAEventGet </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMC_OSAEventGet </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>eventHandle</em>, </td>
@@ -372,7 +384,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMC_OSAEventClear </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMC_OSAEventClear </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>eventHandle</em>, </td>
@@ -411,7 +423,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMC_OSAEventDestroy </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMC_OSAEventDestroy </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>eventHandle</em></td><td>)</td>
@@ -433,7 +445,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMC_OSAMutexCreate </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMC_OSAMutexCreate </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>mutexHandle</em></td><td>)</td>
@@ -461,7 +473,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMC_OSAMutexLock </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMC_OSAMutexLock </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>mutexHandle</em>, </td>
@@ -500,7 +512,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMC_OSAMutexUnlock </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMC_OSAMutexUnlock </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>mutexHandle</em></td><td>)</td>
@@ -528,7 +540,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMC_OSAMutexDestroy </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDMMC_OSAMutexDestroy </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>mutexHandle</em></td><td>)</td>

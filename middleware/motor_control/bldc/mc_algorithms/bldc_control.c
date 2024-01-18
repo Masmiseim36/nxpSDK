@@ -33,8 +33,9 @@
  *
  * @return None
  */
+RAM_FUNC_LIB
 void MCS_BLDCCommutation(mcs_bldc_ctrl_t *psCtrlBLDC)
-{
+{      
     /* select next commutation sector based on direction of spin */
     if (psCtrlBLDC->ui16MotorDir == 0U)
     {
@@ -64,6 +65,7 @@ void MCS_BLDCCommutation(mcs_bldc_ctrl_t *psCtrlBLDC)
  *
  * @return None
  */
+RAM_FUNC_LIB
 void MCS_BLDCAlignment(mcs_bldc_ctrl_t *psCtrlBLDC)
 {
     /* calculate align current error */
@@ -86,12 +88,13 @@ void MCS_BLDCAlignment(mcs_bldc_ctrl_t *psCtrlBLDC)
  *
  * @return None
  */
+RAM_FUNC_LIB
 void MCS_BLDCControl(mcs_bldc_ctrl_t *psCtrlBLDC)
 {
     frac16_t f16SpeedMeasuredAbs;
 
     f16SpeedMeasuredAbs =
-        MLIB_Conv_F16l(MLIB_DivSat_F32(psCtrlBLDC->i16SpeedScaleConst, psCtrlBLDC->ui32PeriodSixCmtSum));
+        MLIB_Conv_F16l(MLIB_DivSat_F32((int32_t)psCtrlBLDC->i16SpeedScaleConst, (int32_t)psCtrlBLDC->ui32PeriodSixCmtSum));
 
     /* required speed ramp calculation */
     psCtrlBLDC->f16SpeedRamp =

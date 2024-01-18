@@ -1,12 +1,8 @@
 /*
  * Copyright 2022 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in
- * accordance with the license terms that accompany it. By expressly accepting
- * such terms or by downloading, installing, activating and/or otherwise using
- * the software, you are agreeing that you have read, and that you agree to
- * comply with and are bound by, such license terms. If you do not agree to be
- * bound by the applicable license terms, then you may not retain, install,
- * activate or otherwise use the software.
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /*
@@ -221,12 +217,12 @@ static hal_valgo_status_t HAL_VisionAlgoDev_TFLite_Run(const vision_algo_dev_t *
             tflite_model_param->model_in_mean,
             tflite_model_param->model_in_std);
 
-    int startTime = TICK_TO_MS(GET_TICK());
+    int startTime = hal_get_exec_time();
     if (kStatus_Success != MODEL_RunInference()) {
         HAL_LOGE("ERROR: MODEL_RunInference() failed\n");
         return kStatus_HAL_ValgoError;
     }
-    tflite_model_param->out_param.inference_time_ms = TICK_TO_MS(GET_TICK()) - startTime;
+    tflite_model_param->out_param.inference_time_ms = hal_get_exec_time() - startTime;
     tflite_model_param->out_param.inference_type = MPP_INFERENCE_TYPE_TFLITE;
 
     tflite_model_param->out_cb(
@@ -259,6 +255,7 @@ static hal_valgo_status_t HAL_VisionAlgoDev_TFLite_getBufDesc(const vision_algo_
      * For now, this is only assuming NHWC order.
      */
     in_buf->alignment = 0;
+    in_buf->nb_lines = tflite_model_param->inputDims.data[1]; /* number of lines required is the input height */
     in_buf->cacheable = true;
     in_buf->stride = tflite_model_param->inputDims.data[2] * tflite_model_param->inputDims.data[3]; /* width * channels */
     in_buf->addr = tflite_model_param->inputData;

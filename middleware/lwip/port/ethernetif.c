@@ -38,6 +38,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "fsl_common.h"
+
 #include "lwip/opt.h"
 #include "lwip/def.h"
 #include "lwip/mem.h"
@@ -66,10 +68,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
-#ifndef ETH_LINK_POLLING_INTERVAL_MS
-#define ETH_LINK_POLLING_INTERVAL_MS (1500)
-#endif
 
 #if ETH_LINK_POLLING_INTERVAL_MS > 0
 static void probe_link_cyclic(void *netif_);
@@ -125,6 +123,61 @@ static netif_status_callback_fn ipv6_valid_state_user_cb;
  * Code
  ******************************************************************************/
 
+#if ETH_LINK_POLLING_INTERVAL_MS == 0 && NO_SYS == 0
+static void phy_irq_synced_handler(void *arg)
+{
+    struct netif *netif_ = (struct netif *)arg;
+    ethernetif_probe_link(netif_);
+}
+
+static void ethernetif_phy_irq_callback(void *arg)
+{
+    struct netif *netif_ = (struct netif *)arg;
+
+    hal_gpio_handle_t gpioHdl = ethernetif_get_int_gpio_hdl(netif_);
+    assert(gpioHdl != NULL);
+
+    phy_handle_t *phy = ethernetif_get_phy(netif_);
+    assert(phy != NULL);
+
+    uint8_t state = 0;
+    if (HAL_GpioGetInput(gpioHdl, &state) != kStatus_HAL_GpioSuccess)
+    {
+        PHY_ClearInterrupt(phy);
+        return;
+    }
+
+    // Spurious interrupt
+    if (state != 0)
+    {
+        PHY_ClearInterrupt(phy);
+        return;
+    }
+
+    PHY_ClearInterrupt(phy);
+    tcpip_try_callback(phy_irq_synced_handler, netif_);
+}
+
+#if defined(FSL_FEATURE_SOC_RGPIO_COUNT) && (FSL_FEATURE_SOC_RGPIO_COUNT > 0)
+static uint8_t ethernetif_gpio_base_to_idx(RGPIO_Type *base)
+{
+    RGPIO_Type *types[] = RGPIO_BASE_PTRS;
+#else
+static uint8_t ethernetif_gpio_base_to_idx(GPIO_Type *base)
+{
+    GPIO_Type *types[] = GPIO_BASE_PTRS;
+#endif
+
+    for (size_t i = 0; i < ARRAY_SIZE(types); i++)
+    {
+        if (types[i] == base)
+            return i;
+    }
+
+    return 0;
+}
+#endif
+
 void ethernetif_phy_init(struct ethernetif *ethernetif, const ethernetif_config_t *ethernetifConfig)
 {
     status_t status;
@@ -135,7 +188,7 @@ void ethernetif_phy_init(struct ethernetif *ethernetif, const ethernetif_config_
         .autoNeg  = true,
     };
 
-    LWIP_PLATFORM_DIAG(("Initializing PHY..."));
+    LWIP_PLATFORM_DIAG(("Initializing PHY...\r\n"));
 
     status = PHY_Init(ethernetifConfig->phyHandle, &phyConfig);
 
@@ -313,6 +366,31 @@ err_t ethernetif_init(struct netif *netif_,
     /* Start polling link state */
 #if ETH_LINK_POLLING_INTERVAL_MS > 0
     probe_link_cyclic(netif_);
+#elif NO_SYS == 0
+    if (ethernetifConfig->phyIntGpio != NULL)
+    {
+        hal_gpio_handle_t gpioHdl = ethernetif_get_int_gpio_hdl(netif_);
+        assert(gpioHdl != NULL);
+
+        hal_gpio_pin_config_t cfg = {.direction = kHAL_GpioDirectionIn,
+                                     .port      = ethernetif_gpio_base_to_idx(ethernetifConfig->phyIntGpio),
+                                     .pin       = ethernetifConfig->phyIntGpioPin};
+
+        if (HAL_GpioInit(gpioHdl, &cfg) != kStatus_HAL_GpioSuccess)
+            return ERR_VAL;
+
+        if (HAL_GpioInstallCallback(gpioHdl, ethernetif_phy_irq_callback, netif_) != kStatus_HAL_GpioSuccess)
+            return ERR_VAL;
+
+        if (HAL_GpioSetTriggerMode(gpioHdl, kHAL_GpioInterruptFallingEdge) != kStatus_HAL_GpioSuccess)
+            return ERR_VAL;
+
+        phy_handle_t *phy = ethernetif_get_phy(netif_);
+        LWIP_ASSERT("PHY component does not implement link interrupt", phy->ops->enableLinkInterrupt != NULL);
+        PHY_EnableLinkInterrupt(phy, kPHY_IntrActiveLow);
+
+        ethernetif_probe_link(netif_);
+    }
 #endif
 
 #if LWIP_IPV6 && LWIP_IPV6_MLD
@@ -472,7 +550,7 @@ err_enum_t ethernetif_wait_linkup_array(struct netif **netif_array, int netif_ar
 
     return ret;
 
-#else /* no RTOS */
+#else  /* no RTOS */
 
     uint32_t now                = sys_now();
     const uint32_t force_wrap   = now >= (UINT32_MAX / 2) ? (UINT32_MAX / 2) : 0U;
@@ -570,7 +648,7 @@ err_enum_t ethernetif_wait_ipv4_valid(struct netif *netif_, long timeout_ms)
 
     return ret;
 
-#else /* no RTOS */
+#else  /* no RTOS */
 
     uint32_t now                = sys_now();
     const uint32_t force_wrap   = now >= (UINT32_MAX / 2) ? (UINT32_MAX / 2) : 0U;
@@ -607,7 +685,7 @@ err_enum_t ethernetif_wait_ipv4_valid(struct netif *netif_, long timeout_ms)
 
 #if ((LWIP_IPV6 == 1) && (LWIP_NETIF_EXT_STATUS_CALLBACK == 1))
 
-static void ipv6_valid_state_cb(struct netif* netif_, netif_nsc_reason_t reason, const netif_ext_callback_args_t* args)
+static void ipv6_valid_state_cb(struct netif *netif_, netif_nsc_reason_t reason, const netif_ext_callback_args_t *args)
 {
     u8_t new_state;
 
@@ -681,7 +759,7 @@ void ethernetif_pbuf_free_safe(struct pbuf *p)
         {
 #ifdef __CA7_REV
             if (SystemGetIRQNestingLevel())
-#else /* __CA7_REV */
+#else  /* __CA7_REV */
             if (__get_IPSR())
 #endif
             {

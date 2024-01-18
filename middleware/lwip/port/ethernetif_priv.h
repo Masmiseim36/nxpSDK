@@ -1,5 +1,5 @@
 /*
- * Copyright 2019,2022 NXP
+ * Copyright 2019,2022-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -9,12 +9,16 @@
 #define ETHERNETIF_PRIV_H
 
 #include "fsl_common.h"
+#include "fsl_adapter_gpio.h"
 
 #include "lwip/err.h"
 #include "lwip/opt.h"
 #include "lwip/netif.h"
 #include "ethernetif.h"
 #include "ethernetif_mmac.h"
+
+/* SDK_SIZEALIGN could not be used in some constant expressions */
+#define CONSTANT_SIZEALIGN(var, alignbytes) (((var) + ((alignbytes)-1U)) & (~((alignbytes)-1U)))
 
 struct ethernetif;
 
@@ -36,12 +40,19 @@ void ethernetif_phy_init(struct ethernetif *ethernetif, const ethernetif_config_
 void *ethernetif_get_enet_base(const uint8_t enetIdx);
 
 /**
- * Returns phy hadle from netif.
+ * Returns phy handle from netif.
  *
  * @param netif_  the lwip network interface
  * @return a phy driver handle
  */
 phy_handle_t *ethernetif_get_phy(struct netif *netif_);
+
+/**
+ * Returns a GPIO handle associated with a pin for PHY state interrupts.
+ * @param netif_ The lwip network interface.
+ * @return The handle.
+ */
+hal_gpio_handle_t ethernetif_get_int_gpio_hdl(struct netif *netif);
 
 /**
  * Informs ethernet MAC driver that link is up or the link speed or duplex has changed.

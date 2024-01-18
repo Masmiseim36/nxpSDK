@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -144,7 +144,7 @@ Enumerations</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
 <tr class="memitem:ga5baa4ad349ae3c543938d4ee773df43e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5baa4ad349ae3c543938d4ee773df43e"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00082.html#ga5baa4ad349ae3c543938d4ee773df43e">FSL_WDOG_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 1))</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00082.html#ga5baa4ad349ae3c543938d4ee773df43e">FSL_WDOG_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 0))</td></tr>
 <tr class="memdesc:ga5baa4ad349ae3c543938d4ee773df43e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines WDOG driver version. <br/></td></tr>
 <tr class="separator:ga5baa4ad349ae3c543938d4ee773df43e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -213,15 +213,15 @@ WDOG Initialization and De-initialization.</h2></td></tr>
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
 <tr class="memitem:ac4c03e680f6c2070c50e9cbb7eae64fc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac4c03e680f6c2070c50e9cbb7eae64fc"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00082.html#ac4c03e680f6c2070c50e9cbb7eae64fc">enableWait</a></td></tr>
-<tr class="memdesc:ac4c03e680f6c2070c50e9cbb7eae64fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">continue or suspend WDOG in wait mode <br/></td></tr>
+<tr class="memdesc:ac4c03e680f6c2070c50e9cbb7eae64fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">If set to true, WDOG continues in wait mode. <br/></td></tr>
 <tr class="separator:ac4c03e680f6c2070c50e9cbb7eae64fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a26f09db30cdfe918931fb6e2ea0545ad"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a26f09db30cdfe918931fb6e2ea0545ad"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00082.html#a26f09db30cdfe918931fb6e2ea0545ad">enableStop</a></td></tr>
-<tr class="memdesc:a26f09db30cdfe918931fb6e2ea0545ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">continue or suspend WDOG in stop mode <br/></td></tr>
+<tr class="memdesc:a26f09db30cdfe918931fb6e2ea0545ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">If set to true, WDOG continues in stop mode. <br/></td></tr>
 <tr class="separator:a26f09db30cdfe918931fb6e2ea0545ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac46160e5425428c3f6b2bd7a9103539e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac46160e5425428c3f6b2bd7a9103539e"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00082.html#ac46160e5425428c3f6b2bd7a9103539e">enableDebug</a></td></tr>
-<tr class="memdesc:ac46160e5425428c3f6b2bd7a9103539e"><td class="mdescLeft">&#160;</td><td class="mdescRight">continue or suspend WDOG in debug mode <br/></td></tr>
+<tr class="memdesc:ac46160e5425428c3f6b2bd7a9103539e"><td class="mdescLeft">&#160;</td><td class="mdescRight">If set to true, WDOG continues in debug mode. <br/></td></tr>
 <tr class="separator:ac46160e5425428c3f6b2bd7a9103539e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
@@ -352,8 +352,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 <p>This function initializes the WDOG configuration structure to default values. The default values are as follows. </p>
 <div class="fragment"><div class="line">*   wdogConfig-&gt;enableWdog = <span class="keyword">true</span>;</div>
 <div class="line">*   wdogConfig-&gt;workMode.enableWait = <span class="keyword">true</span>;</div>
-<div class="line">*   wdogConfig-&gt;workMode.enableStop = <span class="keyword">false</span>;</div>
-<div class="line">*   wdogConfig-&gt;workMode.enableDebug = <span class="keyword">false</span>;</div>
+<div class="line">*   wdogConfig-&gt;workMode.enableStop = <span class="keyword">true</span>;</div>
+<div class="line">*   wdogConfig-&gt;workMode.enableDebug = <span class="keyword">true</span>;</div>
 <div class="line">*   wdogConfig-&gt;enableInterrupt = <span class="keyword">false</span>;</div>
 <div class="line">*   wdogConfig-&gt;enablePowerdown = <span class="keyword">false</span>;</div>
 <div class="line">*   wdogConfig-&gt;resetExtension = flase;</div>

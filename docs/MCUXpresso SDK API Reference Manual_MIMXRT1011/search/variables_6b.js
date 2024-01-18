@@ -1,5 +1,8 @@
 var searchData=
 [
-  ['key',['key',['../a00048.html#a97f159aa4d63c763126f1622446d2dd9',1,'otfad_encryption_config_t']]],
-  ['keyslot',['keySlot',['../a00017.html#a71cde84117fa8d1c3e2d31463fe0ca9a',1,'dcp_handle_t']]]
+  ['key',['key',['../a00049.html#a6427bccbb63e1f833102933d8e4940a2',1,'_otfad_encryption_config']]],
+  ['keyblobprocess',['keyBlobProcess',['../a00049.html#ab6247dcb39093aff837ab7a1d9d8c5a5',1,'_otfad_config']]],
+  ['keyblobscramble',['keyBlobScramble',['../a00049.html#ae6c8000f8fd91e0a55ca7c9d12081cec',1,'_otfad_config']]],
+  ['keyslot',['keySlot',['../a00017.html#a4a44534809a63e3a4c786941b7e48798',1,'_dcp_handle']]],
+  ['klpi2cirqs',['kLpi2cIrqs',['../a00222.html#ga88b6c302a3fb2094ba8a3085cd0c2b16',1,'fsl_lpi2c.h']]]
 ];

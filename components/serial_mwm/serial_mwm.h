@@ -134,7 +134,7 @@ extern "C" {
  */
 int mwm_init(void);
 
-/* @} */
+/*! @} */
 
 /*!
  * @name WLAN API
@@ -172,7 +172,7 @@ int mwm_upgrade(char *type, char *url);
  * @return 0 - success, negative number - error
  */
 int mwm_reboot(void);
-/* @} */
+/*! @} */
 
 /*!
  * @name WLAN API
@@ -251,7 +251,7 @@ int mwm_wlan_connect(void);
  */
 int mwm_wlan_disconnect(void);
 
-/* @} */
+/*! @} */
 
 /*!
  * @name Device Configuration API
@@ -282,7 +282,7 @@ int mwm_get_param(char *module, char *param, char *value, uint32_t val_len);
  * @return 0 - success, negative number - error
  */
 int mwm_set_param(char *module, char *param, char *value);
-/* @} */
+/*! @} */
 
 /*!
  * @name Socket API
@@ -374,11 +374,11 @@ int mwm_recvfrom_timeout(int socket, void *buf, size_t len, int timeout_ms);
  * @return 0 - success, negative number - error
  */
 int mwm_close(int socket);
-/* @} */
+/*! @} */
 
 #if defined(__cplusplus)
 }
 #endif
 
-/* @} */
+/*! @} */
 #endif /* _SERIAL_MWM_H_ */

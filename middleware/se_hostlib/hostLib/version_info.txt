@@ -10,7 +10,7 @@ lang_namespace = ""
 
 v_major  = "04"
 
-v_minor  = "02"
+v_minor  = "04"
 
 v_dev    = "00"
 

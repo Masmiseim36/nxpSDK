@@ -1,19 +1,24 @@
 var a00049 =
 [
-    [ "lpuart_rtos_config_t", "a00049.html#a00371", [
-      [ "base", "a00049.html#abf5491a7b9c911ead3f256fc61357f65", null ],
-      [ "srcclk", "a00049.html#a5209f6a860555957f5d75940b2132ae5", null ],
-      [ "baudrate", "a00049.html#a86b9316f7c8bc63e672f7efd09bbb86a", null ],
-      [ "parity", "a00049.html#a77f066eb41ad7b46edd5a3ee9e72d700", null ],
-      [ "stopbits", "a00049.html#a347be0a813260f445e7829308a58f479", null ],
-      [ "buffer", "a00049.html#a355e354365fe669ddf27d8eb538c83e9", null ],
-      [ "buffer_size", "a00049.html#ad8ba8f4845a222fef29714542876ae55", null ],
-      [ "rx_timeout_constant_ms", "a00049.html#aa8dc452650aae3faefd0f92cffe2b6ab", null ],
-      [ "rx_timeout_multiplier_ms", "a00049.html#a7deed5c320a55485e10ccf7fb6f39d3b", null ],
-      [ "tx_timeout_constant_ms", "a00049.html#a42dc67e6be0ad089f67a8d404aee72d4", null ],
-      [ "tx_timeout_multiplier_ms", "a00049.html#a8fa692dea066c6e1393912ae32a5fc3a", null ]
+    [ "_lpuart_rtos_config", "a00049.html#a00366", [
+      [ "base", "a00049.html#aa4e6cddd1beadc52a71ac5933dd47afd", null ],
+      [ "srcclk", "a00049.html#a3ad0def261b033ab202cd29804387cad", null ],
+      [ "baudrate", "a00049.html#ae145aec6fcd6a1fd8811d47f1b3d69e7", null ],
+      [ "parity", "a00049.html#a590d28ebbfe2cc5eae93559ebcd70aaa", null ],
+      [ "stopbits", "a00049.html#a3bad2260df1b2e44edba5bb1621e5c89", null ],
+      [ "buffer", "a00049.html#a421d97b8a3d56a3fbe80a439d6a12e8b", null ],
+      [ "buffer_size", "a00049.html#ab01354efe7fe0281ec722857d6ff9370", null ],
+      [ "rx_timeout_constant_ms", "a00049.html#af72c515a22bf7a4cd058fafd5ee192b2", null ],
+      [ "rx_timeout_multiplier_ms", "a00049.html#a9459f1a39d576c85bb20cc8d00c641c3", null ],
+      [ "tx_timeout_constant_ms", "a00049.html#a321ae993de2ec70250dac9d19e2f3422", null ],
+      [ "tx_timeout_multiplier_ms", "a00049.html#a1716df2698e5e1c5df95530e90b1d0f6", null ],
+      [ "enableRxRTS", "a00049.html#a22f26846697fdb4a1293f8adc7f6973f", null ],
+      [ "enableTxCTS", "a00049.html#a0029e97fa7a5cc92ddccc62e2a24b700", null ],
+      [ "txCtsSource", "a00049.html#ac33e737fd77ccad71995d979ec1602a7", null ],
+      [ "txCtsConfig", "a00049.html#a3b29bd9c3c89e10dda93c37f23365632", null ]
     ] ],
     [ "FSL_LPUART_FREERTOS_DRIVER_VERSION", "a00049.html#gae78d379ef6bde2ad08e1fe64f1f09bf5", null ],
+    [ "lpuart_rtos_config_t", "a00049.html#gaec3e5cc86ceea303798e171e10f9163a", null ],
     [ "LPUART_RTOS_Init", "a00049.html#ga5be9370b1fa0187c194475769e7138fc", null ],
     [ "LPUART_RTOS_Deinit", "a00049.html#ga057e59dcc578ef4b303850bcd90ca50e", null ],
     [ "LPUART_RTOS_Send", "a00049.html#ga275e067e13ecc77dde83d2d7938c038e", null ],

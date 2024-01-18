@@ -1,10 +1,7 @@
 /*
  * Copyright 2018-2022 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef MEMSINK_H
@@ -40,10 +37,10 @@ struct _ElementMemSink
     PadSink sink_pad[MAX_NUM_PADS];             /*!< @brief Sink pads */
     struct _StreamElement *sibling;             /*!< @brief Sibling pointer */
 
-    char *location;         /*!< @brief pointer to memory buffer start address */
-    uint8_t raw_write;      /*!< @brief raw write mode */
-    uint32_t size;          /*!< @brief memory buffer size */
-    uint32_t current_index; /*!< @brief internal used for memory buffer */
+    char *location;                             /*!< @brief pointer to memory buffer start address */
+    uint8_t raw_write;                          /*!< @brief raw write mode */
+    uint32_t size;                              /*!< @brief memory buffer size */
+    uint32_t current_index;                     /*!< @brief internal used for memory buffer */
 };
 typedef struct _ElementMemSink ElementMemSink;
 

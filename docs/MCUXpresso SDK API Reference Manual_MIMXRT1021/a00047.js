@@ -1,41 +1,47 @@
 var a00047 =
 [
-    [ "lpi2c_slave_config_t", "a00047.html#a00431", [
-      [ "enableSlave", "a00047.html#ad220cfa81b4117fd1d952b43ff0d5511", null ],
-      [ "address0", "a00047.html#a16f171990f815872142d3fe73eb74ff4", null ],
-      [ "address1", "a00047.html#afb3035cd87a9746bdbe5c6618a492034", null ],
-      [ "addressMatchMode", "a00047.html#a1dc82ff6416b69128c0d6d78d533b093", null ],
-      [ "filterDozeEnable", "a00047.html#a4cbbafe55351cb52d25b3de1a71e2231", null ],
-      [ "filterEnable", "a00047.html#a6fcca02d50a48b5a3a2923ea449316ce", null ],
-      [ "enableGeneralCall", "a00047.html#a061ed35a72d6e8ffe9a02be00f633f87", null ],
-      [ "enableAck", "a00047.html#ab2cd4a19f68523031122851dd0ab1386", null ],
-      [ "enableTx", "a00047.html#ad0fea92e29e7afff3d7072ab3c722bc8", null ],
-      [ "enableRx", "a00047.html#aff856d2084ff0ede49f0ff25e6cf5529", null ],
-      [ "enableAddress", "a00047.html#a6ec794389bd9fb5e51c802bb0b9ee26b", null ],
-      [ "ignoreAck", "a00047.html#ae68493537f90f7bff4a421ff534fb7a1", null ],
-      [ "enableReceivedAddressRead", "a00047.html#ac273a825233fe937aa16d98e38664812", null ],
-      [ "sdaGlitchFilterWidth_ns", "a00047.html#a7c28ef56af23d2e059942e8d80e5cd15", null ],
-      [ "sclGlitchFilterWidth_ns", "a00047.html#a793ea7dd26bfb1f68daae2523e70d5a5", null ],
-      [ "dataValidDelay_ns", "a00047.html#a920288e7667b3b363f019384ebc58606", null ],
-      [ "clockHoldTime_ns", "a00047.html#a2e672f5446e7d86eb9d74bdc785df0fb", null ]
+    [ "_lpi2c_slave_config", "a00047.html#a00414", [
+      [ "enableSlave", "a00047.html#ac3fb0e92d308e71ea0a56c5692a9af6b", null ],
+      [ "address0", "a00047.html#a51592e118bf9f0e6d0bb38c68b4e8d35", null ],
+      [ "address1", "a00047.html#a1c2f9dab27e5669a3279365328908239", null ],
+      [ "addressMatchMode", "a00047.html#a1fab947000c02fa50829c4763a70424c", null ],
+      [ "filterDozeEnable", "a00047.html#aabe0a1ce3a576d17f8692a447a5514d5", null ],
+      [ "filterEnable", "a00047.html#abe6298a59eace868a90610dd9d59daf0", null ],
+      [ "enableGeneralCall", "a00047.html#a61a863990318d9970dcb68ff91b1043a", null ],
+      [ "enableAck", "a00047.html#a5ad031c7c309dd7f64877cb6eda6ffd9", null ],
+      [ "enableTx", "a00047.html#a508c0f13de580a4eb678dfc44f0acdb6", null ],
+      [ "enableRx", "a00047.html#a42825f3ec307a2418220c698c6654eb9", null ],
+      [ "enableAddress", "a00047.html#a78a4043f094c5af1fc5ae61119d3eea4", null ],
+      [ "sclStall", "a00047.html#a8fcb5e83b80d97371f892993633f5a3a", null ],
+      [ "ignoreAck", "a00047.html#ae806a978018c1b86097649a6de4549bc", null ],
+      [ "enableReceivedAddressRead", "a00047.html#a1357c28f4de02bbefc7bb1708f38fbc8", null ],
+      [ "sdaGlitchFilterWidth_ns", "a00047.html#ab6886a7d687afb0b485cb1b9b745a770", null ],
+      [ "sclGlitchFilterWidth_ns", "a00047.html#a615aca6391ad513d120d21f1d283abfd", null ],
+      [ "dataValidDelay_ns", "a00047.html#a80b3534a23c4f16f5359625e6f8da332", null ],
+      [ "clockHoldTime_ns", "a00047.html#aee288c9f292ce2ff0908e556586465af", null ]
     ] ],
-    [ "lpi2c_slave_transfer_t", "a00047.html#a00432", [
-      [ "event", "a00047.html#a19df3bc5c35ed8ae03a927dcc89daa48", null ],
-      [ "receivedAddress", "a00047.html#a336e15a483043ed7ace990517fff6686", null ],
-      [ "data", "a00047.html#a54436075594000b4d56471b29dd6734f", null ],
-      [ "dataSize", "a00047.html#afcd4de20f8efd725bd93d72180b32f2d", null ],
-      [ "completionStatus", "a00047.html#aafd14bc835c1c23de6bf06834d1a0b3c", null ],
-      [ "transferredCount", "a00047.html#a67e03ab90367cb1d48d42b718e6438f5", null ]
+    [ "_lpi2c_slave_transfer", "a00047.html#a00416", [
+      [ "event", "a00047.html#a6fd5fcb93c3592681fe6b4ef3a2db4b9", null ],
+      [ "receivedAddress", "a00047.html#a3b845478ed4749c2e0dfe072c55adc22", null ],
+      [ "data", "a00047.html#ae3e135fc8156ca768309bfc89e6661ff", null ],
+      [ "dataSize", "a00047.html#a11dfb00aa164346d73bd5f4c7b4983a7", null ],
+      [ "completionStatus", "a00047.html#af19f9378df0b63f18134eafd0e37c558", null ],
+      [ "transferredCount", "a00047.html#a6118eac86f25540117b453390d4e2a29", null ]
     ] ],
-    [ "lpi2c_slave_handle_t", "a00047.html#a00317", [
-      [ "transfer", "a00047.html#aed2dec763e40c6caa129c082603852d5", null ],
-      [ "isBusy", "a00047.html#a8f0662c2c78df7b8e8b5ed4c1119823d", null ],
-      [ "wasTransmit", "a00047.html#af0a187d43f251bc67fb9c34dedbf9253", null ],
-      [ "eventMask", "a00047.html#a5bceee16dd6f07c8cb6918580e45e540", null ],
-      [ "transferredCount", "a00047.html#ac9f4d0665e8ec4c56eb89e816c4b5324", null ],
-      [ "callback", "a00047.html#a0e16ba71a57adfe84058af632a604e40", null ],
-      [ "userData", "a00047.html#aa394f46d8677c977aa39b64fb0c353ce", null ]
+    [ "_lpi2c_slave_handle", "a00047.html#a00415", [
+      [ "transfer", "a00047.html#a5520be706e136169454d21def1e28614", null ],
+      [ "isBusy", "a00047.html#a3b7952f6dfb5ad946c64aea5851549e2", null ],
+      [ "wasTransmit", "a00047.html#a7695826229e33cce0433243315541ec2", null ],
+      [ "eventMask", "a00047.html#a3a9932a8f6d1fbcf92738417b5a6f808", null ],
+      [ "transferredCount", "a00047.html#a699547af37c4a6981b22a41d366707ca", null ],
+      [ "callback", "a00047.html#aab19804183cca2a3e0d01faf9cda8c02", null ],
+      [ "userData", "a00047.html#a27164f1bf34c373449b8fc039aa60619", null ]
     ] ],
+    [ "lpi2c_slave_address_match_t", "a00047.html#ga533530fcfba274fac752e66fd0a9b5db", null ],
+    [ "lpi2c_slave_config_t", "a00047.html#ga9e6fa1acd6800e0c0eaf99f68dbd4681", null ],
+    [ "lpi2c_slave_transfer_event_t", "a00047.html#gaba49383928407761f900aa0c0dddbfe2", null ],
+    [ "lpi2c_slave_transfer_t", "a00047.html#gad2491beed809164053a8b083f7e55a27", null ],
+    [ "lpi2c_slave_handle_t", "a00047.html#ga230e27460fd44e50f35c3c206eebfa68", null ],
     [ "lpi2c_slave_transfer_callback_t", "a00047.html#ga2640285a708842a5e0e7c4c0090a2f58", null ],
     [ "_lpi2c_slave_flags", "a00047.html#gabd50effc706692c03b42faa72c34269b", [
       [ "kLPI2C_SlaveTxReadyFlag", "a00047.html#ggabd50effc706692c03b42faa72c34269ba80486f66e12276c945b8813269b90c0e", null ],
@@ -55,19 +61,19 @@ var a00047 =
       [ "kLPI2C_SlaveIrqFlags", "a00047.html#ggabd50effc706692c03b42faa72c34269baaf5e40570c34c37fd532dad21b1dca1f", null ],
       [ "kLPI2C_SlaveErrorFlags", "a00047.html#ggabd50effc706692c03b42faa72c34269bacb3e0258d950773e55c13829e787de36", null ]
     ] ],
-    [ "lpi2c_slave_address_match_t", "a00047.html#gac3564395ccab19eb1ce6ab46b36bb5bb", [
-      [ "kLPI2C_MatchAddress0", "a00047.html#ggac3564395ccab19eb1ce6ab46b36bb5bbaaa16a731881882d10f48ebde416f54c5", null ],
-      [ "kLPI2C_MatchAddress0OrAddress1", "a00047.html#ggac3564395ccab19eb1ce6ab46b36bb5bba2941f8a06a17205294e7d0fa5f305675", null ],
-      [ "kLPI2C_MatchAddress0ThroughAddress1", "a00047.html#ggac3564395ccab19eb1ce6ab46b36bb5bba59e460fdd7075191f69e047ef35557eb", null ]
+    [ "_lpi2c_slave_address_match", "a00047.html#ga131a9a0a073edf0d1cc38d0bb63f42ee", [
+      [ "kLPI2C_MatchAddress0", "a00047.html#gga131a9a0a073edf0d1cc38d0bb63f42eeaaa16a731881882d10f48ebde416f54c5", null ],
+      [ "kLPI2C_MatchAddress0OrAddress1", "a00047.html#gga131a9a0a073edf0d1cc38d0bb63f42eea2941f8a06a17205294e7d0fa5f305675", null ],
+      [ "kLPI2C_MatchAddress0ThroughAddress1", "a00047.html#gga131a9a0a073edf0d1cc38d0bb63f42eea59e460fdd7075191f69e047ef35557eb", null ]
     ] ],
-    [ "lpi2c_slave_transfer_event_t", "a00047.html#ga0d99b4dba3841a4e02f7c431a59006c8", [
-      [ "kLPI2C_SlaveAddressMatchEvent", "a00047.html#gga0d99b4dba3841a4e02f7c431a59006c8a10fb8d9bb6ba9cd44fde85466e6eabef", null ],
-      [ "kLPI2C_SlaveTransmitEvent", "a00047.html#gga0d99b4dba3841a4e02f7c431a59006c8a976c8c9aa85026224a46cf5ec742eb49", null ],
-      [ "kLPI2C_SlaveReceiveEvent", "a00047.html#gga0d99b4dba3841a4e02f7c431a59006c8ac737ba9e4e62880a6e2d8aac98ae8f18", null ],
-      [ "kLPI2C_SlaveTransmitAckEvent", "a00047.html#gga0d99b4dba3841a4e02f7c431a59006c8a112af4cf8f8a374407d7c784f024b8e0", null ],
-      [ "kLPI2C_SlaveRepeatedStartEvent", "a00047.html#gga0d99b4dba3841a4e02f7c431a59006c8ae0995aac6808b3726b7577c2d283e4c4", null ],
-      [ "kLPI2C_SlaveCompletionEvent", "a00047.html#gga0d99b4dba3841a4e02f7c431a59006c8a06ef7422d9edf9b914864a2d689f042c", null ],
-      [ "kLPI2C_SlaveAllEvents", "a00047.html#gga0d99b4dba3841a4e02f7c431a59006c8aeed0927f4e909cb161b44434b6f01aec", null ]
+    [ "_lpi2c_slave_transfer_event", "a00047.html#ga379060365b5d4d26dc5bdec675d7c029", [
+      [ "kLPI2C_SlaveAddressMatchEvent", "a00047.html#gga379060365b5d4d26dc5bdec675d7c029a10fb8d9bb6ba9cd44fde85466e6eabef", null ],
+      [ "kLPI2C_SlaveTransmitEvent", "a00047.html#gga379060365b5d4d26dc5bdec675d7c029a976c8c9aa85026224a46cf5ec742eb49", null ],
+      [ "kLPI2C_SlaveReceiveEvent", "a00047.html#gga379060365b5d4d26dc5bdec675d7c029ac737ba9e4e62880a6e2d8aac98ae8f18", null ],
+      [ "kLPI2C_SlaveTransmitAckEvent", "a00047.html#gga379060365b5d4d26dc5bdec675d7c029a112af4cf8f8a374407d7c784f024b8e0", null ],
+      [ "kLPI2C_SlaveRepeatedStartEvent", "a00047.html#gga379060365b5d4d26dc5bdec675d7c029ae0995aac6808b3726b7577c2d283e4c4", null ],
+      [ "kLPI2C_SlaveCompletionEvent", "a00047.html#gga379060365b5d4d26dc5bdec675d7c029a06ef7422d9edf9b914864a2d689f042c", null ],
+      [ "kLPI2C_SlaveAllEvents", "a00047.html#gga379060365b5d4d26dc5bdec675d7c029aeed0927f4e909cb161b44434b6f01aec", null ]
     ] ],
     [ "LPI2C_SlaveGetDefaultConfig", "a00047.html#gadf34085d4557ceb3081fff9fe0e3189a", null ],
     [ "LPI2C_SlaveInit", "a00047.html#gae5cc8a03c784a99bb58b69852dfda5a5", null ],

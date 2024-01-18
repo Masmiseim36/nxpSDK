@@ -45,12 +45,26 @@
 #include "lwip/netif.h"
 #include "fsl_phy.h"
 #include "lwipopts.h"
+#if defined(FSL_FEATURE_SOC_RGPIO_COUNT) && (FSL_FEATURE_SOC_RGPIO_COUNT > 0)
+#include "fsl_rgpio.h"
+#else
+#include "fsl_gpio.h"
+#endif
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 
+/* Disable Rx interrupt when out of RX buffers. Enable when first buffer is freed. */
+#ifndef ENET_DISABLE_RX_INT_WHEN_OUT_OF_BUFFERS
+#define ENET_DISABLE_RX_INT_WHEN_OUT_OF_BUFFERS (!NO_SYS)
+#endif
+
 #define ETHERNETIF_TIMEOUT (0xFFFU)
+
+#ifndef ETH_LINK_POLLING_INTERVAL_MS
+#define ETH_LINK_POLLING_INTERVAL_MS (1500)
+#endif
 
 /* ENET IRQ priority. Used in FreeRTOS. */
 /* Interrupt priorities. */ // FIXME rename or move?
@@ -89,6 +103,15 @@ typedef struct ethernetif_config
     void *phyResource;
     uint32_t srcClockHz;
     uint8_t macAddress[NETIF_MAX_HWADDR_LEN];
+
+#if NO_SYS == 0
+#if defined(FSL_FEATURE_SOC_RGPIO_COUNT) && (FSL_FEATURE_SOC_RGPIO_COUNT > 0)
+    RGPIO_Type *phyIntGpio;
+#else
+    GPIO_Type *phyIntGpio;
+#endif
+    uint8_t phyIntGpioPin;
+#endif
 } ethernetif_config_t;
 
 #if defined(__cplusplus)
@@ -197,6 +220,22 @@ err_enum_t ethernetif_wait_ipv4_valid(struct netif *netif_, long timeout_ms);
 
 #endif /* #if (defined(SDK_OS_FREE_RTOS) && (LWIP_NETIF_EXT_STATUS_CALLBACK == 1)) || \
               (!defined(SDK_OS_FREE_RTOS)) */
+
+/**
+ * Returns interface's last known link speed.
+ *
+ * @param netif_  the lwip network interface
+ * @return the speed
+ */
+phy_speed_t ethernetif_get_link_speed(struct netif *netif_);
+
+/**
+ * Returns interface's last known duplex state.
+ *
+ * @param netif_  the lwip network interface
+ * @return the state
+ */
+phy_duplex_t ethernetif_get_link_duplex(struct netif *netif_);
 
 #if ((LWIP_IPV6 == 1) && (LWIP_NETIF_EXT_STATUS_CALLBACK == 1))
 /**

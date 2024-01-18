@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: LPSPI CMSIS Driver</title>
+<title>MCUXpresso SDK API Reference Manual: LPSPI: Low Power Serial Peripheral Interface</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -98,72 +98,27 @@ $(document).ready(function(){initNavTree('a00270.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">LPSPI CMSIS Driver<div class="ingroups"><a class="el" href="a00268.html">LPSPI: Low Power Serial Peripheral Interface</a></div></div>  </div>
+<div class="title">LPSPI: Low Power Serial Peripheral Interface</div>  </div>
 </div><!--header-->
 <div class="contents">
-<p>This section describes the programming interface of the LPSPI Cortex Microcontroller Software Interface Standard (CMSIS) driver. And this driver defines generic peripheral driver interfaces for middleware making it reusable across a wide range of supported microcontroller devices. The API connects microcontroller peripherals with middleware that implements for example communication stacks, file systems, or graphic user interfaces. More information and usage methord please refer to <a href="http://www.keil.com/pack/doc/cmsis/Driver/html/index.html">http://www.keil.com/pack/doc/cmsis/Driver/html/index.html</a>.</p>
-<h1><a class="anchor" id="LPSPIFunGrps"></a>
-Function groups</h1>
-<h2><a class="anchor" id="LPSPIGetVersionOps"></a>
-LPSPI CMSIS GetVersion Operation</h2>
-<p>This function group will return the DSPI CMSIS Driver version to user.</p>
-<h2><a class="anchor" id="LPSPIGetCapOps"></a>
-LPSPI CMSIS GetCapabilities Operation</h2>
-<p>This function group will return the capabilities of this driver.</p>
-<h2><a class="anchor" id="LPSPIInitResetOps"></a>
-LPSPI CMSIS Initialize and Uninitialize Operation</h2>
-<p>This function will initialize and uninitialize the instance in master mode or slave mode. And this API must be called before you configure an instance or after you Deinit an instance.The right steps to start an instance is that you must initialize the instance which been slected firstly,then you can power on the instance.After these all have been done,you can configure the instance by using control operation.If you want to Uninitialize the instance, you must power off the instance first.</p>
-<h2><a class="anchor" id="LPSPITransOps"></a>
-LPSPI Transfer Operation</h2>
-<p>This function group controls the transfer, master send/receive data, and slave send/receive data.</p>
-<h2><a class="anchor" id="LPSPIStatusOps"></a>
-LPSPI Status Operation</h2>
-<p>This function group gets the LPSPI transfer status.</p>
-<h2><a class="anchor" id="LPSPIControlOps"></a>
-LPSPI CMSIS Control Operation</h2>
-<p>This function can select instance as master mode or slave mode, set baudrate for master mode transfer, get current baudrate of master mode transfer,set transfer data bits and set other control command.</p>
-<h1><a class="anchor" id="LPSPITpyUC"></a>
-Typical use case</h1>
-<h2><a class="anchor" id="LPSPIMasterOps"></a>
-Master Operation</h2>
-<div class="fragment"><div class="line"><span class="comment">/* Variables */</span></div>
-<div class="line">uint8_t masterRxData[TRANSFER_SIZE] = {0U};</div>
-<div class="line">uint8_t masterTxData[TRANSFER_SIZE] = {0U};</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*DSPI master init*/</span></div>
-<div class="line">Driver_SPI0.Initialize(DSPI_MasterSignalEvent_t);</div>
-<div class="line">Driver_SPI0.PowerControl(ARM_POWER_FULL);</div>
-<div class="line">Driver_SPI0.Control(ARM_SPI_MODE_MASTER, TRANSFER_BAUDRATE);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/* Start master transfer */</span></div>
-<div class="line">Driver_SPI0.Transfer(masterTxData, masterRxData, TRANSFER_SIZE);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/* Master power off */</span></div>
-<div class="line">Driver_SPI0.PowerControl(ARM_POWER_OFF);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/* Master uninitialize */</span></div>
-<div class="line">Driver_SPI0.Uninitialize();</div>
-</div><!-- fragment --><h2><a class="anchor" id="LPSPISlaveOps"></a>
-Slave Operation</h2>
-<div class="fragment"><div class="line"><span class="comment">/* Variables */</span></div>
-<div class="line">uint8_t slaveRxData[TRANSFER_SIZE] = {0U};</div>
-<div class="line">uint8_t slaveTxData[TRANSFER_SIZE] = {0U};</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*DSPI slave init*/</span></div>
-<div class="line">Driver_SPI2.Initialize(DSPI_SlaveSignalEvent_t);</div>
-<div class="line">Driver_SPI2.PowerControl(ARM_POWER_FULL);</div>
-<div class="line">Driver_SPI2.Control(ARM_SPI_MODE_SLAVE, <span class="keyword">false</span>);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/* Start slave transfer */</span></div>
-<div class="line">Driver_SPI2.Transfer(slaveTxData, slaveRxData, TRANSFER_SIZE);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/* slave power off */</span></div>
-<div class="line">Driver_SPI2.PowerControl(ARM_POWER_OFF);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/* slave uninitialize */</span></div>
-<div class="line">Driver_SPI2.Uninitialize();</div>
-</div><!-- fragment --> </div><!-- contents -->
+<a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
+<p>The MCUXpresso SDK provides a peripheral driver for the Low Power Serial Peripheral Interface (LPSPI) module of MCUXpresso SDK devices. </p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a00272"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html">LPSPI CMSIS Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00271"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00271.html">LPSPI FreeRTOS Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00048"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html">LPSPI Peripheral driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00049"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html">LPSPI eDMA Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->
 <!-- start footer part -->

@@ -226,6 +226,7 @@
           <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
           <state>CPU_MIMXRT1062DVL6B</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
@@ -1314,6 +1315,7 @@
           <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
           <state>CPU_MIMXRT1062DVL6B</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
@@ -2403,6 +2405,7 @@
           <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
           <state>CPU_MIMXRT1062DVL6B</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
@@ -3489,6 +3492,7 @@
           <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
           <state>CPU_MIMXRT1062DVL6B</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
@@ -4577,6 +4581,7 @@
           <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
           <state>CPU_MIMXRT1062DVL6B</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
@@ -5666,6 +5671,7 @@
           <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
           <state>CPU_MIMXRT1062DVL6B</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
@@ -6563,7 +6569,7 @@
   <group>
     <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
   <group>
@@ -6678,6 +6684,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</name>
     </file>
   </group>
   <group>

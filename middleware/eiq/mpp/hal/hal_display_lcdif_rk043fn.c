@@ -1,10 +1,8 @@
 /*
  * Copyright 2022-2023 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /*
@@ -12,7 +10,6 @@
  */
 
 #include "mpp_config.h"
-#include "board_config.h"
 #include "mpp_api_types.h"
 #include "hal_debug.h"
 #include "hal_display_dev.h"
@@ -325,6 +322,7 @@ hal_display_status_t HAL_DisplayDev_LcdifRk043fn_Getbufdesc(const display_dev_t 
         /* set memory policy */
         *policy = HAL_MEM_ALLOC_INPUT;
         in_buf->alignment = FRAME_BUFFER_ALIGN;
+        in_buf->nb_lines = DISPLAY_DEV_LcdifRk043fn_HEIGHT;  /* display requires a specific number of lines */
         in_buf->cacheable = false;
         in_buf->stride = dev->cap.pitch;
         in_buf->addr = (unsigned char *) (s_LcdBuffer[s_lcdActiveFbIdx]);

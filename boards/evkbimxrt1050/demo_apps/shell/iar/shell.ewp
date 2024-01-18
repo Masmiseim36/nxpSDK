@@ -348,7 +348,7 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str</state>
@@ -356,6 +356,7 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
@@ -1432,7 +1433,7 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str</state>
@@ -1440,6 +1441,7 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
@@ -2516,7 +2518,7 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str</state>
@@ -2524,6 +2526,7 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
@@ -3598,7 +3601,7 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str</state>
@@ -3606,6 +3609,7 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
@@ -4682,7 +4686,7 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str</state>
@@ -4690,6 +4694,7 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
@@ -5766,7 +5771,7 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str</state>
@@ -5774,6 +5779,7 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
@@ -6537,16 +6543,16 @@
   <group>
     <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/fsl_shell.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/shell/fsl_shell.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/fsl_shell.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/shell/fsl_shell.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</name>
@@ -6565,6 +6571,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/fsl_assert.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</name>

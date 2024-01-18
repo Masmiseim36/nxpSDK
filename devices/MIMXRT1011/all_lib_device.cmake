@@ -13,6 +13,9 @@
 #  # description: Utilities which is needed for particular toolchain like the SBRK function required to address limitation between HEAP and STACK in GCC toolchain library.
 #  set(CONFIG_USE_utilities_misc_utilities true)
 
+#  # description: RTT template configuration
+#  set(CONFIG_USE_driver_rtt_template true)
+
 #  # description: Driver nand_flash-common
 #  set(CONFIG_USE_driver_nand_flash-common true)
 
@@ -27,9 +30,6 @@
 
 #  # description: Driver pf3000
 #  set(CONFIG_USE_driver_pf3000 true)
-
-#  # description: RTT template configuration
-#  set(CONFIG_USE_driver_rtt_template true)
 
 #  # description: Devices_project_template MIMXRT1011
 #  set(CONFIG_USE_DEVICES_Project_Template_MIMXRT1011 true)
@@ -117,6 +117,9 @@
 
 #  # description: Utility debug_console
 #  set(CONFIG_USE_utility_debug_console true)
+
+#  # description: SEGGER Real Time Transfer(RTT)
+#  set(CONFIG_USE_driver_rtt true)
 
 #  # description: Component sai_edma_adapter
 #  set(CONFIG_USE_component_audio_sai_edma_adapter true)
@@ -418,9 +421,6 @@
 #  # description: XIP Device Driver
 #  set(CONFIG_USE_driver_xip_device true)
 
-#  # description: SEGGER Real Time Transfer(RTT)
-#  set(CONFIG_USE_driver_rtt true)
-
 #set.CMSIS
 #  # description: CMSIS-CORE for Cortex-M, ARMv8-M, ARMv8.1-M
 #  set(CONFIG_USE_CMSIS_Include_core_cm true)
@@ -576,6 +576,103 @@
 #set.middleware.tinycbor
 #  # description: Concise Binary Object Representation (CBOR) Library
 #  set(CONFIG_USE_middleware_tinycbor true)
+
+#set.middleware.usb
+#  # description: USB device phydcd config header
+#  set(CONFIG_USE_middleware_usb_phydcd_config_header true)
+
+#  # description: USB device hsdcd config header
+#  set(CONFIG_USE_middleware_usb_hsdcd_config_header true)
+
+#  # description: USB device ehci config header
+#  set(CONFIG_USE_middleware_usb_device_ehci_config_header true)
+
+#  # description: Middleware usb common_header
+#  set(CONFIG_USE_middleware_usb_common_header true)
+
+#  # description: Middleware usb device common_header
+#  set(CONFIG_USE_middleware_usb_device_common_header true)
+
+#  # description: Middleware usb device ehci
+#  set(CONFIG_USE_middleware_usb_device_ehci true)
+
+#  # description: Middleware usb phy
+#  set(CONFIG_USE_middleware_usb_phy true)
+
+#  # description: Middleware usb device stack external
+#  set(CONFIG_USE_middleware_usb_device_stack_external true)
+
+#  # description: Middleware usb device audio external
+#  set(CONFIG_USE_middleware_usb_device_audio_external true)
+
+#  # description: Middleware usb device cdc external
+#  set(CONFIG_USE_middleware_usb_device_cdc_external true)
+
+#  # description: Middleware usb device cdc rndis external
+#  set(CONFIG_USE_middleware_usb_device_cdc_rndis_external true)
+
+#  # description: Middleware usb device hid external
+#  set(CONFIG_USE_middleware_usb_device_hid_external true)
+
+#  # description: Middleware usb device dfu external
+#  set(CONFIG_USE_middleware_usb_device_dfu_external true)
+
+#  # description: Middleware usb device msd external
+#  set(CONFIG_USE_middleware_usb_device_msd_external true)
+
+#  # description: Middleware usb device phdc external
+#  set(CONFIG_USE_middleware_usb_device_phdc_external true)
+
+#  # description: Middleware usb device video external
+#  set(CONFIG_USE_middleware_usb_device_video_external true)
+
+#  # description: Middleware usb device ccid external
+#  set(CONFIG_USE_middleware_usb_device_ccid_external true)
+
+#  # description: Middleware usb device printer external
+#  set(CONFIG_USE_middleware_usb_device_printer_external true)
+
+#  # description: Middleware usb PHYDCD (Select manually if needed)
+#  set(CONFIG_USE_middleware_usb_phydcd true)
+
+#  # description: Middleware usb device controller driver
+#  set(CONFIG_USE_middleware_usb_device_controller_driver true)
+
+#  # description: Middleware usb host ehci
+#  set(CONFIG_USE_middleware_usb_host_ehci true)
+
+#  # description: Middleware usb host audio
+#  set(CONFIG_USE_middleware_usb_host_audio true)
+
+#  # description: Middleware usb host cdc
+#  set(CONFIG_USE_middleware_usb_host_cdc true)
+
+#  # description: Middleware usb host cdc_rndis
+#  set(CONFIG_USE_middleware_usb_host_cdc_rndis true)
+
+#  # description: Middleware usb host hid
+#  set(CONFIG_USE_middleware_usb_host_hid true)
+
+#  # description: Middleware usb host msd
+#  set(CONFIG_USE_middleware_usb_host_msd true)
+
+#  # description: Middleware usb host video
+#  set(CONFIG_USE_middleware_usb_host_video true)
+
+#  # description: Middleware usb host phdc
+#  set(CONFIG_USE_middleware_usb_host_phdc true)
+
+#  # description: Middleware usb host printer
+#  set(CONFIG_USE_middleware_usb_host_printer true)
+
+#  # description: Middleware usb host common_header
+#  set(CONFIG_USE_middleware_usb_host_common_header true)
+
+#  # description: USB host ehci config header
+#  set(CONFIG_USE_middleware_usb_host_ehci_config_header true)
+
+#  # description: Middleware usb host stack
+#  set(CONFIG_USE_middleware_usb_host_stack true)
 
 #set.middleware.mbedtls
 #  # description: mbedTLS Template
@@ -752,19 +849,6 @@
 #  # description: ISSDK Host Interface Service
 #  set(CONFIG_USE_middleware_issdk_drivers_host true)
 
-#set.middleware.fmstr
-#  # description: Common FreeMASTER driver code.
-#  set(CONFIG_USE_middleware_fmstr true)
-
-#  # description: DO NOT ADD THIS TO PROJECT. This component contains all FreeMASTER driver source code files for SDK distribution purpose. Not suitable for project build.
-#  set(CONFIG_USE_middleware_fmstr_all_files true)
-
-#  # description: FreeMASTER driver code for 32bit platforms, enabling communication between FreeMASTER or FreeMASTER Lite tools and MCU application. Supports Serial, CAN, USB and BDM/JTAG physical interface.
-#  set(CONFIG_USE_middleware_fmstr_platform_gen32le true)
-
-#  # description: FreeMASTER configuration file template. Contains placeholders and TODOs which need to be filled by user or by using Peripherals ConfigTool.
-#  set(CONFIG_USE_middleware_fmstr_npw_cfg_gen32le true)
-
 #set.middleware.azure_rtos
 #  # description: Azure RTOS Core
 #  set(CONFIG_USE_middleware_azure_rtos_tx_template true)
@@ -856,97 +940,23 @@
 #  # description: A software package that connects to the IoT Hub through Azure RTOS
 #  set(CONFIG_USE_middleware_azure_rtos_azure_iot true)
 
+#set.middleware.fmstr
+#  # description: Common FreeMASTER driver code.
+#  set(CONFIG_USE_middleware_fmstr true)
+
+#  # description: FreeMASTER driver code for 32bit platforms, enabling communication between FreeMASTER or FreeMASTER Lite tools and MCU application. Supports Serial, CAN, USB and BDM/JTAG physical interface.
+#  set(CONFIG_USE_middleware_fmstr_platform_gen32le true)
+
+#  # description: FreeMASTER configuration file template. Contains placeholders and TODOs which need to be filled by user or by using Peripherals ConfigTool.
+#  set(CONFIG_USE_middleware_fmstr_template_cfg_gen32le true)
+
+#set.middleware.corehttp
+#  # description: Client implementation of the HTTP/1.1 specification for embedded devices.
+#  set(CONFIG_USE_middleware_freertos_corehttp true)
+
 #set.middleware.llhttp
 #  # description: HTTP parser in LLVM IR
 #  set(CONFIG_USE_middleware_llhttp true)
-
-#set.middleware.usb
-#  # description: USB device ehci config header
-#  set(CONFIG_USE_middleware_usb_device_ehci_config_header true)
-
-#  # description: Middleware usb common_header
-#  set(CONFIG_USE_middleware_usb_common_header true)
-
-#  # description: Middleware usb device common_header
-#  set(CONFIG_USE_middleware_usb_device_common_header true)
-
-#  # description: Middleware usb device ehci
-#  set(CONFIG_USE_middleware_usb_device_ehci true)
-
-#  # description: Middleware usb phy
-#  set(CONFIG_USE_middleware_usb_phy true)
-
-#  # description: Middleware usb device stack external
-#  set(CONFIG_USE_middleware_usb_device_stack_external true)
-
-#  # description: Middleware usb device audio external
-#  set(CONFIG_USE_middleware_usb_device_audio_external true)
-
-#  # description: Middleware usb device cdc external
-#  set(CONFIG_USE_middleware_usb_device_cdc_external true)
-
-#  # description: Middleware usb device cdc rndis external
-#  set(CONFIG_USE_middleware_usb_device_cdc_rndis_external true)
-
-#  # description: Middleware usb device hid external
-#  set(CONFIG_USE_middleware_usb_device_hid_external true)
-
-#  # description: Middleware usb device dfu external
-#  set(CONFIG_USE_middleware_usb_device_dfu_external true)
-
-#  # description: Middleware usb device msd external
-#  set(CONFIG_USE_middleware_usb_device_msd_external true)
-
-#  # description: Middleware usb device phdc external
-#  set(CONFIG_USE_middleware_usb_device_phdc_external true)
-
-#  # description: Middleware usb device video external
-#  set(CONFIG_USE_middleware_usb_device_video_external true)
-
-#  # description: Middleware usb device ccid external
-#  set(CONFIG_USE_middleware_usb_device_ccid_external true)
-
-#  # description: Middleware usb device printer external
-#  set(CONFIG_USE_middleware_usb_device_printer_external true)
-
-#  # description: Middleware usb device controller driver
-#  set(CONFIG_USE_middleware_usb_device_controller_driver true)
-
-#  # description: Middleware usb host ehci
-#  set(CONFIG_USE_middleware_usb_host_ehci true)
-
-#  # description: Middleware usb host audio
-#  set(CONFIG_USE_middleware_usb_host_audio true)
-
-#  # description: Middleware usb host cdc
-#  set(CONFIG_USE_middleware_usb_host_cdc true)
-
-#  # description: Middleware usb host cdc_rndis
-#  set(CONFIG_USE_middleware_usb_host_cdc_rndis true)
-
-#  # description: Middleware usb host hid
-#  set(CONFIG_USE_middleware_usb_host_hid true)
-
-#  # description: Middleware usb host msd
-#  set(CONFIG_USE_middleware_usb_host_msd true)
-
-#  # description: Middleware usb host video
-#  set(CONFIG_USE_middleware_usb_host_video true)
-
-#  # description: Middleware usb host phdc
-#  set(CONFIG_USE_middleware_usb_host_phdc true)
-
-#  # description: Middleware usb host printer
-#  set(CONFIG_USE_middleware_usb_host_printer true)
-
-#  # description: Middleware usb host common_header
-#  set(CONFIG_USE_middleware_usb_host_common_header true)
-
-#  # description: USB host ehci config header
-#  set(CONFIG_USE_middleware_usb_host_ehci_config_header true)
-
-#  # description: Middleware usb host stack
-#  set(CONFIG_USE_middleware_usb_host_stack true)
 
 #set.component.osa
 #  # description: Component common_task
@@ -1044,6 +1054,7 @@ list(APPEND CMAKE_MODULE_PATH
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/tinycbor
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/usb
   ${CMAKE_CURRENT_LIST_DIR}/../../rtos/azure-rtos
+  ${CMAKE_CURRENT_LIST_DIR}/../../rtos/freertos/corehttp
   ${CMAKE_CURRENT_LIST_DIR}/../../rtos/freertos/freertos-kernel
   ${CMAKE_CURRENT_LIST_DIR}/cmsis_drivers
   ${CMAKE_CURRENT_LIST_DIR}/drivers
@@ -1051,6 +1062,7 @@ list(APPEND CMAKE_MODULE_PATH
   ${CMAKE_CURRENT_LIST_DIR}/template
   ${CMAKE_CURRENT_LIST_DIR}/utilities
   ${CMAKE_CURRENT_LIST_DIR}/utilities/debug_console_lite
+  ${CMAKE_CURRENT_LIST_DIR}/utilities/shell
   ${CMAKE_CURRENT_LIST_DIR}/xip
 )
 
@@ -1260,9 +1272,8 @@ include_if_use(middleware_fatfs_template_sdspi)
 include_if_use(middleware_fatfs_template_usb)
 include_if_use(middleware_fatfs_usb)
 include_if_use(middleware_fmstr)
-include_if_use(middleware_fmstr_all_files)
-include_if_use(middleware_fmstr_npw_cfg_gen32le)
 include_if_use(middleware_fmstr_platform_gen32le)
+include_if_use(middleware_fmstr_template_cfg_gen32le)
 include_if_use(middleware_freertos-kernel)
 include_if_use(middleware_freertos-kernel_extension)
 include_if_use(middleware_freertos-kernel_heap_1)
@@ -1272,6 +1283,7 @@ include_if_use(middleware_freertos-kernel_heap_4)
 include_if_use(middleware_freertos-kernel_heap_5)
 include_if_use(middleware_freertos-kernel_mpu_wrappers)
 include_if_use(middleware_freertos-kernel_template)
+include_if_use(middleware_freertos_corehttp)
 include_if_use(middleware_issdk_drivers_gpio_imx)
 include_if_use(middleware_issdk_drivers_gpio_imx8)
 include_if_use(middleware_issdk_drivers_gpio_imxrt)
@@ -1363,7 +1375,10 @@ include_if_use(middleware_usb_host_phdc)
 include_if_use(middleware_usb_host_printer)
 include_if_use(middleware_usb_host_stack)
 include_if_use(middleware_usb_host_video)
+include_if_use(middleware_usb_hsdcd_config_header)
 include_if_use(middleware_usb_phy)
+include_if_use(middleware_usb_phydcd)
+include_if_use(middleware_usb_phydcd_config_header)
 include_if_use(utilities_misc_utilities.MIMXRT1011)
 include_if_use(utility_assert.MIMXRT1011)
 include_if_use(utility_assert_lite.MIMXRT1011)

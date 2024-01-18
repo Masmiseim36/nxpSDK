@@ -6,6 +6,7 @@ var searchData=
   ['edma_5fdeinit',['EDMA_Deinit',['../a00019.html#ga29aa2b1f72c154c12305d6615845618c',1,'fsl_edma.h']]],
   ['edma_5fdisablechannelinterrupts',['EDMA_DisableChannelInterrupts',['../a00019.html#ga251561e70531dfcea586b5f1fff9c916',1,'fsl_edma.h']]],
   ['edma_5fdisablechannelrequest',['EDMA_DisableChannelRequest',['../a00019.html#ga44708108a447777f25e322063df70c95',1,'fsl_edma.h']]],
+  ['edma_5fenableasyncrequest',['EDMA_EnableAsyncRequest',['../a00019.html#ga0e5cbacd0f64515239695b9f94bb78a4',1,'fsl_edma.h']]],
   ['edma_5fenableautostoprequest',['EDMA_EnableAutoStopRequest',['../a00019.html#gac3ef15106efff13ea6a25441fc228349',1,'fsl_edma.h']]],
   ['edma_5fenablechannelinterrupts',['EDMA_EnableChannelInterrupts',['../a00019.html#ga15df898b3b420958f51c4df22dc85b98',1,'fsl_edma.h']]],
   ['edma_5fenablechannelrequest',['EDMA_EnableChannelRequest',['../a00019.html#gaabbec6b59a4313df50af39872743deaf',1,'fsl_edma.h']]],

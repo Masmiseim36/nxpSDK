@@ -1,10 +1,7 @@
 /*
  * Copyright 2018-2022 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef MEMSRC_H
@@ -47,16 +44,16 @@ struct _ElementMemSrc
     PadSink sink_pad[MAX_NUM_PADS];             /*!< @brief Sink pads */
     struct _StreamElement *sibling;             /*!< @brief Sibling pointer */
 
-    uint32_t chunk_size;    /*!< @brief Chunk size */
-    int8_t *location;       /*!< @brief File location */
-    int8_t *buffer;         /*!< @brief Buffer pointer */
-    uint8_t end_of_stream;  /*!< @brief End of stream flag */
-    uint32_t read_position; /*!< @brief Last read offset */
-    uint32_t size;          /*!< @brief Overall size */
-    uint8_t mem_type;       /*!< @brief Memory type */
-    uint32_t sample_rate;   /*!< @brief Sample rate */
-    uint8_t num_channels;   /*!< @brief Number of channels */
-    uint8_t bit_width;      /*!< @brief Bit width */
+    uint32_t chunk_size;                        /*!< @brief Chunk size */
+    int8_t *location;                           /*!< @brief File location */
+    int8_t *buffer;                             /*!< @brief Buffer pointer */
+    uint8_t end_of_stream;                      /*!< @brief End of stream flag */
+    uint32_t read_position;                     /*!< @brief Last read offset */
+    uint32_t size;                              /*!< @brief Overall size */
+    uint8_t mem_type;                           /*!< @brief Memory type */
+    uint32_t sample_rate;                       /*!< @brief Sample rate */
+    uint8_t num_channels;                       /*!< @brief Number of channels */
+    uint8_t bit_width;                          /*!< @brief Bit width */
 };
 typedef struct _ElementMemSrc ElementMemSrc;
 

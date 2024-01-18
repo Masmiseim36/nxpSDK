@@ -1,10 +1,7 @@
 /*
  * Copyright 2018-2022 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 //! \addtogroup common_interface
@@ -371,14 +368,14 @@ int32_t GetVBRiHeader(
 
     // Now extract the tag information.
     iVBRiPtr += 4;
-    VbrHeader->VBRVersion = ExtractIVar(btVBRUnpack, iVBRiPtr, 2);     // get Version
-    iVBRiPtr += 6;                                                     // Skip Delay & Quality.
-    VbrHeader->VBRStreamBytes = ExtractIVar(btVBRUnpack, iVBRiPtr, 3); // get Hi 3 Bytes - Stream Bytes
+    VbrHeader->VBRVersion = ExtractIVar(btVBRUnpack, iVBRiPtr, 2);                 // get Version
+    iVBRiPtr += 6;                                                                 // Skip Delay & Quality.
+    VbrHeader->VBRStreamBytes = ExtractIVar(btVBRUnpack, iVBRiPtr, 3);             // get Hi 3 Bytes - Stream Bytes
     VbrHeader->VBRStreamBytes <<= 8;
-    iVBRiPtr += 3;                                                      // Point to Low word.
-    VbrHeader->VBRStreamBytes |= ExtractIVar(btVBRUnpack, iVBRiPtr, 1); // get Low Byte - Stream bytes
-    iVBRiPtr += 1;                                                      // Point to Stream Frames.
-    VbrHeader->VBRStreamFrames = ExtractIVar(btVBRUnpack, iVBRiPtr, 3); // get Hi Word - Stream Frames
+    iVBRiPtr += 3;                                                                 // Point to Low word.
+    VbrHeader->VBRStreamBytes |= ExtractIVar(btVBRUnpack, iVBRiPtr, 1);            // get Low Byte - Stream bytes
+    iVBRiPtr += 1;                                                                 // Point to Stream Frames.
+    VbrHeader->VBRStreamFrames = ExtractIVar(btVBRUnpack, iVBRiPtr, 3);            // get Hi Word - Stream Frames
     VbrHeader->VBRStreamFrames <<= 8;
     iVBRiPtr += 3;                                                                 // Point to Low word.
     VbrHeader->VBRStreamFrames |= ExtractIVar(btVBRUnpack, iVBRiPtr, 1);           // get Low Word - Stream Frames
@@ -417,7 +414,7 @@ int32_t GetVBRiHeader(
         {
             ExtractIVar(btVBRUnpack, iVBRiPtr, VbrHeader->VBREntryBytes); // get Data Frames.
         }
-        iVBRiPtr += VbrHeader->VBREntryBytes; // Increment Pointer.
+        iVBRiPtr += VbrHeader->VBREntryBytes;                             // Increment Pointer.
     }
 
     ptrThis->g_wVBRSignature = 'V';

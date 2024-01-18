@@ -259,6 +259,7 @@ var a00059 =
     [ "PWM_SetupPwmPhaseShift", "a00059.html#gab73176c5684ced442299cc8c338ec555", null ],
     [ "PWM_UpdatePwmDutycycle", "a00059.html#ga8324acc824d28acc111006c67746d6ae", null ],
     [ "PWM_UpdatePwmDutycycleHighAccuracy", "a00059.html#ga46eebd874652ec8e9c9b128bbd6057df", null ],
+    [ "PWM_UpdatePwmPeriodAndDutycycle", "a00059.html#gad7b7c9c350cb85b47cba12ce6d68b5aa", null ],
     [ "PWM_SetupInputCapture", "a00059.html#ga714adfb30a4bac917530e4f7ac9f8497", null ],
     [ "PWM_SetupFaultInputFilter", "a00059.html#gac252a848de7f669f38c1c169af2750bd", null ],
     [ "PWM_SetupFaults", "a00059.html#ga6dba321676f0d87b3bd294afd859fd6c", null ],

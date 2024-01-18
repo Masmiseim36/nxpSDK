@@ -331,7 +331,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, _DEBUG=1, CPU_MIMXRT1062DVL6A, DEBUG_CONSOLE_TRANSMIT_BUFFER_LEN=600, NDEBUG, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SDK_OS_FREE_RTOS, DEBUG_CONSOLE_ASSERT_DISABLE=1, I2C_RETRY_TIMES=40000, USB_STACK_FREERTOS_HEAP_SIZE=8192, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../evkmimxrt1060;../../../../../../components/i2c;../../../../../../devices/MIMXRT1062/drivers;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../components/osa;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1062;../../../../../evkmimxrt1060/xip;../../../../../../devices/MIMXRT1062/xip;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../middleware/usb/include;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../evkmimxrt1060;../../../../../../components/i2c;../../../../../../devices/MIMXRT1062/drivers;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../components/osa;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1062;../../../../../evkmimxrt1060/xip;../../../../../../devices/MIMXRT1062/xip;../../../../../../devices/MIMXRT1062/utilities;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../middleware/usb/include;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -989,6 +989,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>
@@ -1577,7 +1582,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1062DVL6A, DEBUG_CONSOLE_TRANSMIT_BUFFER_LEN=600, NDEBUG, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SDK_OS_FREE_RTOS, DEBUG_CONSOLE_ASSERT_DISABLE=1, I2C_RETRY_TIMES=40000, USB_STACK_FREERTOS_HEAP_SIZE=8192, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../evkmimxrt1060;../../../../../../components/i2c;../../../../../../devices/MIMXRT1062/drivers;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../components/osa;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1062;../../../../../evkmimxrt1060/xip;../../../../../../devices/MIMXRT1062/xip;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../middleware/usb/include;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../evkmimxrt1060;../../../../../../components/i2c;../../../../../../devices/MIMXRT1062/drivers;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../components/osa;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1062;../../../../../evkmimxrt1060/xip;../../../../../../devices/MIMXRT1062/xip;../../../../../../devices/MIMXRT1062/utilities;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../middleware/usb/include;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2237,6 +2242,11 @@
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/fsl_assert.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_str.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
@@ -2823,7 +2833,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1062DVL6A, DEBUG_CONSOLE_TRANSMIT_BUFFER_LEN=600, NDEBUG, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SDK_OS_FREE_RTOS, DEBUG_CONSOLE_ASSERT_DISABLE=1, I2C_RETRY_TIMES=40000, USB_STACK_FREERTOS_HEAP_SIZE=8192, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../evkmimxrt1060;../../../../../../components/i2c;../../../../../../devices/MIMXRT1062/drivers;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../components/osa;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1062;../../../../../evkmimxrt1060/xip;../../../../../../devices/MIMXRT1062/xip;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../middleware/usb/include;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../evkmimxrt1060;../../../../../../components/i2c;../../../../../../devices/MIMXRT1062/drivers;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../components/osa;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1062;../../../../../evkmimxrt1060/xip;../../../../../../devices/MIMXRT1062/xip;../../../../../../devices/MIMXRT1062/utilities;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../middleware/usb/include;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3483,6 +3493,11 @@
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/fsl_assert.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_str.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
@@ -4069,7 +4084,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, _DEBUG=0, CPU_MIMXRT1062DVL6A, DEBUG_CONSOLE_TRANSMIT_BUFFER_LEN=600, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SDK_OS_FREE_RTOS, DEBUG_CONSOLE_ASSERT_DISABLE=1, I2C_RETRY_TIMES=40000, USB_STACK_FREERTOS_HEAP_SIZE=8192, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../evkmimxrt1060;../../../../../../components/i2c;../../../../../../devices/MIMXRT1062/drivers;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../components/osa;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1062;../../../../../evkmimxrt1060/xip;../../../../../../devices/MIMXRT1062/xip;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../middleware/usb/include;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../evkmimxrt1060;../../../../../../components/i2c;../../../../../../devices/MIMXRT1062/drivers;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../components/osa;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1062;../../../../../evkmimxrt1060/xip;../../../../../../devices/MIMXRT1062/xip;../../../../../../devices/MIMXRT1062/utilities;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../middleware/usb/include;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4729,6 +4744,11 @@
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/fsl_assert.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_str.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
@@ -5315,7 +5335,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, _DEBUG=0, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, CPU_MIMXRT1062DVL6A, DEBUG_CONSOLE_TRANSMIT_BUFFER_LEN=600, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SDK_OS_FREE_RTOS, DEBUG_CONSOLE_ASSERT_DISABLE=1, I2C_RETRY_TIMES=40000, USB_STACK_FREERTOS_HEAP_SIZE=8192, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../evkmimxrt1060;../../../../../../components/i2c;../../../../../../devices/MIMXRT1062/drivers;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../components/osa;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1062;../../../../../evkmimxrt1060/xip;../../../../../../devices/MIMXRT1062/xip;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../middleware/usb/include;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../evkmimxrt1060;../../../../../../components/i2c;../../../../../../devices/MIMXRT1062/drivers;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../components/osa;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1062;../../../../../evkmimxrt1060/xip;../../../../../../devices/MIMXRT1062/xip;../../../../../../devices/MIMXRT1062/utilities;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../middleware/usb/include;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5975,6 +5995,11 @@
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/fsl_assert.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_str.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
@@ -6561,7 +6586,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, _DEBUG=0, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, CPU_MIMXRT1062DVL6A, DEBUG_CONSOLE_TRANSMIT_BUFFER_LEN=600, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SDK_OS_FREE_RTOS, DEBUG_CONSOLE_ASSERT_DISABLE=1, I2C_RETRY_TIMES=40000, USB_STACK_FREERTOS_HEAP_SIZE=8192, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../evkmimxrt1060;../../../../../../components/i2c;../../../../../../devices/MIMXRT1062/drivers;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../components/osa;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1062;../../../../../evkmimxrt1060/xip;../../../../../../devices/MIMXRT1062/xip;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../middleware/usb/include;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../evkmimxrt1060;../../../../../../components/i2c;../../../../../../devices/MIMXRT1062/drivers;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/phy_interface;../../../../../../components/osa;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1062;../../../../../evkmimxrt1060/xip;../../../../../../devices/MIMXRT1062/xip;../../../../../../devices/MIMXRT1062/utilities;../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../../middleware/usb/include;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -7219,6 +7244,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1062/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1062/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>

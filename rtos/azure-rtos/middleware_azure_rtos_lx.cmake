@@ -3,7 +3,7 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-if(CONFIG_USE_middleware_azure_rtos_fx)
+if(CONFIG_USE_middleware_azure_rtos_fx OR CONFIG_USE_middleware_azure_rtos_fx_sp)
 
 if((CONFIG_TOOLCHAIN STREQUAL iar OR CONFIG_TOOLCHAIN STREQUAL mdk OR CONFIG_TOOLCHAIN STREQUAL mcux))
   target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE

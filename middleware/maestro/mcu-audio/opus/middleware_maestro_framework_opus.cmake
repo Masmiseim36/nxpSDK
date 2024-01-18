@@ -3,6 +3,8 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
+if(CONFIG_USE_middleware_maestro_framework)
+
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/celt/bands.c
   ${CMAKE_CURRENT_LIST_DIR}/celt/celt.c
@@ -150,3 +152,8 @@ if(CONFIG_USE_COMPONENT_CONFIGURATION)
 
 endif()
 
+else()
+
+message(SEND_ERROR "middleware_maestro_framework_opus dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
+
+endif()

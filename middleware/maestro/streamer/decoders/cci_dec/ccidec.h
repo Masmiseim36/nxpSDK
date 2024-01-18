@@ -1,10 +1,7 @@
 /*
  * Copyright 2018-2022 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef CCIDEC_H
@@ -33,30 +30,30 @@
  */
 typedef struct
 {
-    ElementDecoder *element;       /*!< @brief used to access element structure */
-    bool init_done;                /*!< @brief flag for multi-pass initialization */
-    uint8_t *filesrc_buffer[3];    /*!< @brief internal buffer to hold data from
-                                     StreamBuffer buffer until callback
-                                     provides it to decoder */
-    int32_t filesrc_buffer_idx[3]; /*!< @brief index used to track the current buffer position*/
-    int32_t filesrc_size[3];       /*!< @brief size of unused buffer filled from
-                                      StreamBuffer buffer -- read callback will
-                                      decrement this as read from filesrc_buffer */
-    uint32_t filesrc_offset[3];    /*!< @brief represents offset into the file
-                                    (from StreamBuffer buffer.offset) */
+    ElementDecoder *element;                         /*!< @brief used to access element structure */
+    bool init_done;                                  /*!< @brief flag for multi-pass initialization */
+    uint8_t *filesrc_buffer[3];                      /*!< @brief internal buffer to hold data from
+                                                       StreamBuffer buffer until callback
+                                                       provides it to decoder */
+    int32_t filesrc_buffer_idx[3];                   /*!< @brief index used to track the current buffer position*/
+    int32_t filesrc_size[3];                         /*!< @brief size of unused buffer filled from
+                                                        StreamBuffer buffer -- read callback will
+                                                        decrement this as read from filesrc_buffer */
+    uint32_t filesrc_offset[3];                      /*!< @brief represents offset into the file
+                                                      (from StreamBuffer buffer.offset) */
     uint8_t *packed_buffer[NUM_OF_PING_PONG_BUFFER]; /*!< @brief buffer used to create audio packet -
                                  used by StreamBuffer */
-    int32_t dec_frame_size;                                 /*!< @brief Used to keep the maximum buffer size
-                                                                  and depending of the decoder type>*/
+    int32_t dec_frame_size;                          /*!< @brief Used to keep the maximum buffer size
+                                                           and depending of the decoder type>*/
     /* Exact heap allocated unaligned addresses to free later
      * these buffers will be aligned before use via the uint8_t *ptr_buffer
      */
     void *unaligned_filesrc_buffer[3]; /*!< @brief File source buffer pointers */
     void *unaligned_packed_buffer;     /*!< @brief Output buffer pointer */
 
-    int32_t *ccidec_memory;          /*!< @brief pointer to memory allocated for cci */
-    audio_stream_type_t stream_type; /*!< @brief holds converted decoder_type, passed to cci */
-    file_meta_data_t *metadata;      /*!< @brief pointer to metadata structure */
+    int32_t *ccidec_memory;            /*!< @brief pointer to memory allocated for cci */
+    audio_stream_type_t stream_type;   /*!< @brief holds converted decoder_type, passed to cci */
+    file_meta_data_t *metadata;        /*!< @brief pointer to metadata structure */
 
     /* any new member in this structure should be added here */
     bool eos_done;        /*!< @brief End of stream flag */

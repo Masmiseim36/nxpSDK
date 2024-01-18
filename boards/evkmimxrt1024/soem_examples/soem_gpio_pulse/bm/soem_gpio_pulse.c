@@ -31,6 +31,7 @@
 #include "ethercatconfig.h"
 #include "ethercatprint.h"
 #include "enet/soem_enet.h"
+#include "enet/enet.h"
 #include "soem_port.h"
 
 /*******************************************************************************
@@ -53,7 +54,7 @@
 
 
 #define NUM_1M      (1000000UL)
-#define SOEM_PERIOD NUM_1M /* 1 second */
+#define SOEM_PERIOD 125 /* 125 us */
 
 #define OSEM_PORT_NAME "enet0"
 
@@ -209,6 +210,7 @@ static status_t MDIO_Read(uint8_t phyAddr, uint8_t regAddr, uint16_t *pData)
 /* OSHW: register enet port to SOEM stack */
 static int if_port_init(void)
 {
+    struct soem_if_port soem_port;
     (void)CLOCK_EnableClock(s_enetClock[ENET_GetInstance(ENET)]);
     ENET_SetSMI(ENET, CLOCK_GetFreq(kCLOCK_IpgClk), false);
     phy_resource.read  = MDIO_Read;
@@ -227,7 +229,15 @@ static int if_port_init(void)
     if_port.phy_autonego_timeout_count = PHY_AUTONEGO_TIMEOUT_COUNT;
     if_port.phy_stability_delay_us     = PHY_STABILITY_DELAY_US;
 
-    return register_soem_port(OSEM_PORT_NAME, "enet", &if_port);
+    soem_port.port_init = enet_init;
+    soem_port.port_send = enet_send;
+    soem_port.port_recv = enet_recv;
+    soem_port.port_link_status = enet_link_status;
+    soem_port.port_close = enet_close;
+    strncpy(soem_port.ifname, OSEM_PORT_NAME, SOEM_IF_NAME_MAXLEN);
+    strncpy(soem_port.dev_name, "net_ep", SOEM_DEV_NAME_MAXLEN);
+    soem_port.port_pri = &if_port;
+    return register_soem_port(&soem_port);
 }
 
 
@@ -289,12 +299,12 @@ void control_task(char *ifname)
             PRINTF("Operational state reached for all slaves.\r\n");
             /* cyclic loop */
             int is_expired;
+            ec_send_processdata();
             osal_gettime(&last_time);
             while (1)
             {
                 osal_gettime(&current_time);
                 timeradd(&current_time, &sleep_time, &target_time);
-                ec_send_processdata();
                 wkc = ec_receive_processdata(EC_TIMEOUTRET);
                 if (wkc >= expectedWKC)
                 {
@@ -333,8 +343,9 @@ void control_task(char *ifname)
                 if (!is_expired)
                 {
                     timersub(&target_time, &current_time, &sleep_time);
+                    ec_send_processdata();
                     osal_usleep(sleep_time.tv_usec);
-                    sleep_time.tv_usec = 125;
+                    sleep_time.tv_usec = SOEM_PERIOD;
                 }
                 else
                 {
@@ -367,7 +378,7 @@ int main(void)
 
     PRINTF("Start the soem_gpio_pulse baremetal example...\r\n");
 
-    osal_timer_init(SOEM_PERIOD, 0);
+    osal_timer_init(NUM_1M, 0);
     if_port_init();
     control_task(OSEM_PORT_NAME);
     return 0;

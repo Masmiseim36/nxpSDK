@@ -618,14 +618,8 @@ smStatus_t Se05x_i2c_master_txn(sss_session_t *sess, SE05x_I2CM_cmd_t *cmds, uin
  * @param[in] random_attst 16-byte freshness random
  * @param[in] random_attstLen length of freshness random
  * @param[in] attst_algo 1 byte attestationAlgo
- * @param[out] ptimeStamp  timestamp
- * @param[out] timeStampLen  Length for timestamp
- * @param[out] freshness  freshness (random)
- * @param[out] pfreshnessLen Length for freshness
- * @param[out] chipId  unique chip Id
- * @param[out] pchipIdLen Length for chipId
- * @param[out] signature  signature
- * @param[out] psignatureLen Length for signature
+ * @param[out] rspbuffer  The read response
+ * @param[out] rspbufferLen Length of the response
  * @param[in] noOftags Amount of structures contained in ``p``
  *
  * @pre p describes I2C master commands.
@@ -649,7 +643,7 @@ smStatus_t Se05x_i2c_master_attst_txn(sss_session_t *sess,
 /**
  * Returns the applet version compiled by MW
  */
-uint32_t se05x_GetAppletVersion();
+uint32_t se05x_GetAppletVersion(void);
 #endif /* SSS_HAVE_APPLET_SE05X_IOT */
 
 #endif /* SSS_APIS_INC_FSL_SSS_SE05X_TYPES_H_ */

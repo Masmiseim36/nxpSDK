@@ -273,7 +273,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state>Pa082,Pa050,Pe815,Pe111,Pe186,Pe068,Pe177</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -310,11 +310,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pe815,Pe111,Pe186,Pe068,Pe177</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -1384,7 +1384,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state>Pa082,Pa050,Pe815,Pe111,Pe186,Pe068,Pe177</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1421,11 +1421,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pe815,Pe111,Pe186,Pe068,Pe177</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -2427,7 +2427,7 @@
   <group>
     <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
   <group>
@@ -2530,6 +2530,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console_lite/fsl_assert.h</name>
     </file>
   </group>
   <group>

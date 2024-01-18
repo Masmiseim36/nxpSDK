@@ -370,6 +370,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021</state>
           <state>$PROJ_DIR$/../../../../../evkmimxrt1020/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
@@ -1472,6 +1473,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021</state>
           <state>$PROJ_DIR$/../../../../../evkmimxrt1020/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
@@ -2576,6 +2578,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021</state>
           <state>$PROJ_DIR$/../../../../../evkmimxrt1020/xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
@@ -3809,6 +3812,9 @@
     <name>utilities</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/fsl_assert.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/str/fsl_str.c</name>

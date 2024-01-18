@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['ocrambanknum',['ocramBankNum',['../a00033.html#a17779c83dfb613e244bccc31c32ae863',1,'flexram_allocate_ram_t']]],
-  ['offsetvalue',['offsetValue',['../a00008.html#a79136d5e9ab922cd1a0d200812e6e832',1,'adc_offest_config_t']]],
-  ['outputclock_5fhz',['outputClock_HZ',['../a00015.html#aa437baa5261123cd810488ac65e201dd',1,'da7212_pll_config_t::outputClock_HZ()'],['../a00065.html#ab58ab790fa57e24806ef762dc9cbbbae',1,'wm8904_fll_config_t::outputClock_HZ()']]],
-  ['outputlogic',['outputLogic',['../a00036.html#a9d37ffd9a2943f10a91095759bd52da5',1,'gpio_pin_config_t']]],
-  ['overcurrentthreshold',['OverCurrentThreshold',['../a00016.html#a2cbfaed67e0e2e90e77fce311a24e8c4',1,'dcdc_detection_config_t']]]
+  ['ocrambanknum',['ocramBankNum',['../a00033.html#a95e8a79967ab8b942dfa6d88deb5879e',1,'_flexram_allocate_ram']]],
+  ['offsetvalue',['offsetValue',['../a00008.html#a1190b3600ea7d96b6c4766b412296323',1,'_adc_offest_config']]],
+  ['outputclock_5fhz',['outputClock_HZ',['../a00015.html#aace0329aae7fe715ca9396ce4203efd6',1,'_da7212_pll_config::outputClock_HZ()'],['../a00066.html#a9ac3339d53ed40e1b38289b38da0ad5b',1,'_wm8904_fll_config::outputClock_HZ()']]],
+  ['outputlogic',['outputLogic',['../a00036.html#a70ede6dc868ff6dd15987ba62c5d574b',1,'_gpio_pin_config']]],
+  ['overcurrentthreshold',['OverCurrentThreshold',['../a00016.html#ab04d84d3dca10b925fb29dbcfd369416',1,'_dcdc_detection_config']]]
 ];

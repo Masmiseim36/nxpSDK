@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -124,12 +124,12 @@ Modules</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00522"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#a00522">serial_manager_config_t</a></td></tr>
-<tr class="memdesc:a00522"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial manager config structure  <a href="a00070.html#a00522">More...</a><br/></td></tr>
-<tr class="separator:a00522"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00521"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#a00521">serial_manager_callback_message_t</a></td></tr>
-<tr class="memdesc:a00521"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback message structure.  <a href="a00070.html#a00521">More...</a><br/></td></tr>
-<tr class="separator:a00521"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00516"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#a00516">_serial_manager_config</a></td></tr>
+<tr class="memdesc:a00516"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial manager config structure  <a href="a00070.html#a00516">More...</a><br/></td></tr>
+<tr class="separator:a00516"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00515"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#a00515">_serial_manager_callback_message</a></td></tr>
+<tr class="memdesc:a00515"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback message structure.  <a href="a00070.html#a00515">More...</a><br/></td></tr>
+<tr class="separator:a00515"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
@@ -177,10 +177,6 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gafe87e3d59c182fdceba8b869a5cf0a33">SERIAL_PORT_TYPE_BLE_WU</a>&#160;&#160;&#160;(0U)</td></tr>
 <tr class="memdesc:gafe87e3d59c182fdceba8b869a5cf0a33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable BLE WU port (1 - enable, 0 - disable) <br/></td></tr>
 <tr class="separator:gafe87e3d59c182fdceba8b869a5cf0a33"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab26fb3c93b19327a8e346d1fd762c720"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab26fb3c93b19327a8e346d1fd762c720"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gab26fb3c93b19327a8e346d1fd762c720">SERIAL_MANAGER_TASK_HANDLE_TX</a>&#160;&#160;&#160;(0U)</td></tr>
-<tr class="memdesc:gab26fb3c93b19327a8e346d1fd762c720"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable SerialManager_Task() handle TX to prevent recursive calling. <br/></td></tr>
-<tr class="separator:gab26fb3c93b19327a8e346d1fd762c720"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaefd7b994ea13ed385804afbe3268db7c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gaefd7b994ea13ed385804afbe3268db7c">SERIAL_MANAGER_WRITE_TIME_DELAY_DEFAULT_VALUE</a>&#160;&#160;&#160;(1U)</td></tr>
 <tr class="memdesc:gaefd7b994ea13ed385804afbe3268db7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the default delay time in ms used by SerialManager_WriteTimeDelay().  <a href="#gaefd7b994ea13ed385804afbe3268db7c">More...</a><br/></td></tr>
 <tr class="separator:gaefd7b994ea13ed385804afbe3268db7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -231,8 +227,30 @@ typedef void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 typedef void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga8bfec9c49e40728806d775fdb4bbf78e">serial_read_handle_t</a></td></tr>
 <tr class="memdesc:ga8bfec9c49e40728806d775fdb4bbf78e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The read handle of the serial manager module. <br/></td></tr>
 <tr class="separator:ga8bfec9c49e40728806d775fdb4bbf78e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa7dc5f93aacda72d14bb0fa66b0401f3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa7dc5f93aacda72d14bb0fa66b0401f3"></a>
+typedef enum <a class="el" href="a00070.html#ga37012d03963b0a7aac96cda088362180">_serial_port_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gaa7dc5f93aacda72d14bb0fa66b0401f3">serial_port_type_t</a></td></tr>
+<tr class="memdesc:gaa7dc5f93aacda72d14bb0fa66b0401f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial port type <br/></td></tr>
+<tr class="separator:gaa7dc5f93aacda72d14bb0fa66b0401f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac1a68602a30a180467de438a4fc5f560"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac1a68602a30a180467de438a4fc5f560"></a>
+typedef enum <a class="el" href="a00070.html#ga582a4193f06f2d326f72d6ec08d1cf1a">_serial_manager_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gac1a68602a30a180467de438a4fc5f560">serial_manager_type_t</a></td></tr>
+<tr class="memdesc:gac1a68602a30a180467de438a4fc5f560"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial manager type <br/></td></tr>
+<tr class="separator:gac1a68602a30a180467de438a4fc5f560"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaae9cb68d4f20901d9884b690d39a257a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaae9cb68d4f20901d9884b690d39a257a"></a>
+typedef struct <br class="typebreak"/>
+<a class="el" href="a00070.html#a00516">_serial_manager_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gaae9cb68d4f20901d9884b690d39a257a">serial_manager_config_t</a></td></tr>
+<tr class="memdesc:gaae9cb68d4f20901d9884b690d39a257a"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial manager config structure <br/></td></tr>
+<tr class="separator:gaae9cb68d4f20901d9884b690d39a257a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac1d9f848c57ca245ad9da8d049369da9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac1d9f848c57ca245ad9da8d049369da9"></a>
+typedef enum <a class="el" href="a00070.html#ga936dd06c6718edc81ad0423a2bb04ad8">_serial_manager_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a></td></tr>
+<tr class="memdesc:gac1d9f848c57ca245ad9da8d049369da9"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial manager error code <br/></td></tr>
+<tr class="separator:gac1d9f848c57ca245ad9da8d049369da9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaf1dca4823669f7e5e243b1e8826eb85"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaaf1dca4823669f7e5e243b1e8826eb85"></a>
+typedef struct <br class="typebreak"/>
+<a class="el" href="a00070.html#a00515">_serial_manager_callback_message</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gaaf1dca4823669f7e5e243b1e8826eb85">serial_manager_callback_message_t</a></td></tr>
+<tr class="memdesc:gaaf1dca4823669f7e5e243b1e8826eb85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback message structure. <br/></td></tr>
+<tr class="separator:gaaf1dca4823669f7e5e243b1e8826eb85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabe6a6263bb1570ea715938b2420af773"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabe6a6263bb1570ea715938b2420af773"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gabe6a6263bb1570ea715938b2420af773">serial_manager_callback_t</a> )(void *callbackParam, <a class="el" href="a00070.html#a00521">serial_manager_callback_message_t</a> *message, <a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a> status)</td></tr>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gabe6a6263bb1570ea715938b2420af773">serial_manager_callback_t</a> )(void *callbackParam, <a class="el" href="a00070.html#gaaf1dca4823669f7e5e243b1e8826eb85">serial_manager_callback_message_t</a> *message, <a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a> status)</td></tr>
 <tr class="memdesc:gabe6a6263bb1570ea715938b2420af773"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial manager callback function <br/></td></tr>
 <tr class="separator:gabe6a6263bb1570ea715938b2420af773"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab4c4ee505dbfd70c8869c63d8f8155e4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab4c4ee505dbfd70c8869c63d8f8155e4"></a>
@@ -242,113 +260,113 @@ typedef int32_t(*&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga103db7d7f3fc8234978efadef0fdaf80"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga103db7d7f3fc8234978efadef0fdaf80">serial_port_type_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00070.html#gga103db7d7f3fc8234978efadef0fdaf80a8c0a9f0a39981fc49bddc88b23e170fb">kSerialPort_None</a> = 0U, 
+<tr class="memitem:ga37012d03963b0a7aac96cda088362180"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga37012d03963b0a7aac96cda088362180">_serial_port_type</a> { <br/>
+&#160;&#160;<a class="el" href="a00070.html#gga37012d03963b0a7aac96cda088362180a8c0a9f0a39981fc49bddc88b23e170fb">kSerialPort_None</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00070.html#gga103db7d7f3fc8234978efadef0fdaf80a5b4d039d8c91cb19fca7c5dc196f8d77">kSerialPort_Uart</a> = 1U, 
+&#160;&#160;<a class="el" href="a00070.html#gga37012d03963b0a7aac96cda088362180a5b4d039d8c91cb19fca7c5dc196f8d77">kSerialPort_Uart</a> = 1U, 
 <br/>
-&#160;&#160;<a class="el" href="a00070.html#gga103db7d7f3fc8234978efadef0fdaf80a3785825f30826c61a4ef13bf983381c2">kSerialPort_UsbCdc</a>, 
+&#160;&#160;<a class="el" href="a00070.html#gga37012d03963b0a7aac96cda088362180a3785825f30826c61a4ef13bf983381c2">kSerialPort_UsbCdc</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00070.html#gga103db7d7f3fc8234978efadef0fdaf80af6a37935b2767a9ae22825f0bc49ef77">kSerialPort_Swo</a>, 
+&#160;&#160;<a class="el" href="a00070.html#gga37012d03963b0a7aac96cda088362180af6a37935b2767a9ae22825f0bc49ef77">kSerialPort_Swo</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00070.html#gga103db7d7f3fc8234978efadef0fdaf80a1ff49cc235ba1b2cf110d9cad5121aa4">kSerialPort_Virtual</a>, 
+&#160;&#160;<a class="el" href="a00070.html#gga37012d03963b0a7aac96cda088362180a1ff49cc235ba1b2cf110d9cad5121aa4">kSerialPort_Virtual</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00070.html#gga103db7d7f3fc8234978efadef0fdaf80aa0ec8166f72522a029c7bdb44dbd8cbe">kSerialPort_Rpmsg</a>, 
+&#160;&#160;<a class="el" href="a00070.html#gga37012d03963b0a7aac96cda088362180aa0ec8166f72522a029c7bdb44dbd8cbe">kSerialPort_Rpmsg</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00070.html#gga103db7d7f3fc8234978efadef0fdaf80acad7e31b320242ceb4088c8a32635c5e">kSerialPort_UartDma</a>, 
+&#160;&#160;<a class="el" href="a00070.html#gga37012d03963b0a7aac96cda088362180acad7e31b320242ceb4088c8a32635c5e">kSerialPort_UartDma</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00070.html#gga103db7d7f3fc8234978efadef0fdaf80aedeec3b53f1439f00620cadea84b0fea">kSerialPort_SpiMaster</a>, 
+&#160;&#160;<a class="el" href="a00070.html#gga37012d03963b0a7aac96cda088362180aedeec3b53f1439f00620cadea84b0fea">kSerialPort_SpiMaster</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00070.html#gga103db7d7f3fc8234978efadef0fdaf80a7ae48951cbd3ca0ee687468af7f0a99a">kSerialPort_SpiSlave</a>, 
+&#160;&#160;<a class="el" href="a00070.html#gga37012d03963b0a7aac96cda088362180a7ae48951cbd3ca0ee687468af7f0a99a">kSerialPort_SpiSlave</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00070.html#gga103db7d7f3fc8234978efadef0fdaf80a068c303a297863ceefc8359eafc17b7f">kSerialPort_BleWu</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:ga103db7d7f3fc8234978efadef0fdaf80"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial port type  <a href="a00070.html#ga103db7d7f3fc8234978efadef0fdaf80">More...</a><br/></td></tr>
-<tr class="separator:ga103db7d7f3fc8234978efadef0fdaf80"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7799e0e52d9e9fe5bf5198f0a337331d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga7799e0e52d9e9fe5bf5198f0a337331d">serial_manager_type_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00070.html#gga7799e0e52d9e9fe5bf5198f0a337331dacae754a7dbe5f0d48d345a8b6120227c">kSerialManager_NonBlocking</a> = 0x0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00070.html#gga7799e0e52d9e9fe5bf5198f0a337331daa7834e61e5fcc82b73698f0465c3f24e">kSerialManager_Blocking</a> = 0x8F41U
+&#160;&#160;<a class="el" href="a00070.html#gga37012d03963b0a7aac96cda088362180a068c303a297863ceefc8359eafc17b7f">kSerialPort_BleWu</a>
 <br/>
  }</td></tr>
-<tr class="memdesc:ga7799e0e52d9e9fe5bf5198f0a337331d"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial manager type  <a href="a00070.html#ga7799e0e52d9e9fe5bf5198f0a337331d">More...</a><br/></td></tr>
-<tr class="separator:ga7799e0e52d9e9fe5bf5198f0a337331d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae9a330e1f3a81509399832c7b2c2872f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00070.html#ggae9a330e1f3a81509399832c7b2c2872fa1e4ed7376c48b94ec9a60f272a629ed4">kStatus_SerialManager_Success</a> = kStatus_Success, 
+<tr class="memdesc:ga37012d03963b0a7aac96cda088362180"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial port type  <a href="a00070.html#ga37012d03963b0a7aac96cda088362180">More...</a><br/></td></tr>
+<tr class="separator:ga37012d03963b0a7aac96cda088362180"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga582a4193f06f2d326f72d6ec08d1cf1a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga582a4193f06f2d326f72d6ec08d1cf1a">_serial_manager_type</a> { <br/>
+&#160;&#160;<a class="el" href="a00070.html#gga582a4193f06f2d326f72d6ec08d1cf1aacae754a7dbe5f0d48d345a8b6120227c">kSerialManager_NonBlocking</a> = 0x0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00070.html#ggae9a330e1f3a81509399832c7b2c2872fa61e6a331c5f789fe88fcf2bacf8a5553">kStatus_SerialManager_Error</a> = MAKE_STATUS(kStatusGroup_SERIALMANAGER, 1), 
-<br/>
-&#160;&#160;<a class="el" href="a00070.html#ggae9a330e1f3a81509399832c7b2c2872fa67e18fb1e47f4f40dc58988b76a2d876">kStatus_SerialManager_Busy</a> = MAKE_STATUS(kStatusGroup_SERIALMANAGER, 2), 
-<br/>
-&#160;&#160;<a class="el" href="a00070.html#ggae9a330e1f3a81509399832c7b2c2872fabdcdea0fcd8b4c01592728a4ba041154">kStatus_SerialManager_Notify</a> = MAKE_STATUS(kStatusGroup_SERIALMANAGER, 3), 
-<br/>
-&#160;&#160;<a class="el" href="a00070.html#ggae9a330e1f3a81509399832c7b2c2872faf01c3a38751393325ab9791d8181ef38">kStatus_SerialManager_Canceled</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00070.html#ggae9a330e1f3a81509399832c7b2c2872fa9f087536c7a9930159682ed03d8d71ea">kStatus_SerialManager_HandleConflict</a> = MAKE_STATUS(kStatusGroup_SERIALMANAGER, 5), 
-<br/>
-&#160;&#160;<a class="el" href="a00070.html#ggae9a330e1f3a81509399832c7b2c2872fa41631953d2191b631fbe8443bfa856c8">kStatus_SerialManager_RingBufferOverflow</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00070.html#ggae9a330e1f3a81509399832c7b2c2872fa1e09ebaf03a4d8599170987750b17ce6">kStatus_SerialManager_NotConnected</a> = MAKE_STATUS(kStatusGroup_SERIALMANAGER, 7)
+&#160;&#160;<a class="el" href="a00070.html#gga582a4193f06f2d326f72d6ec08d1cf1aaa7834e61e5fcc82b73698f0465c3f24e">kSerialManager_Blocking</a> = 0x8F41U
 <br/>
  }</td></tr>
-<tr class="memdesc:gae9a330e1f3a81509399832c7b2c2872f"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial manager error code  <a href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">More...</a><br/></td></tr>
-<tr class="separator:gae9a330e1f3a81509399832c7b2c2872f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga582a4193f06f2d326f72d6ec08d1cf1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial manager type  <a href="a00070.html#ga582a4193f06f2d326f72d6ec08d1cf1a">More...</a><br/></td></tr>
+<tr class="separator:ga582a4193f06f2d326f72d6ec08d1cf1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga936dd06c6718edc81ad0423a2bb04ad8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga936dd06c6718edc81ad0423a2bb04ad8">_serial_manager_status</a> { <br/>
+&#160;&#160;<a class="el" href="a00070.html#gga936dd06c6718edc81ad0423a2bb04ad8a1e4ed7376c48b94ec9a60f272a629ed4">kStatus_SerialManager_Success</a> = kStatus_Success, 
+<br/>
+&#160;&#160;<a class="el" href="a00070.html#gga936dd06c6718edc81ad0423a2bb04ad8a61e6a331c5f789fe88fcf2bacf8a5553">kStatus_SerialManager_Error</a> = MAKE_STATUS(kStatusGroup_SERIALMANAGER, 1), 
+<br/>
+&#160;&#160;<a class="el" href="a00070.html#gga936dd06c6718edc81ad0423a2bb04ad8a67e18fb1e47f4f40dc58988b76a2d876">kStatus_SerialManager_Busy</a> = MAKE_STATUS(kStatusGroup_SERIALMANAGER, 2), 
+<br/>
+&#160;&#160;<a class="el" href="a00070.html#gga936dd06c6718edc81ad0423a2bb04ad8abdcdea0fcd8b4c01592728a4ba041154">kStatus_SerialManager_Notify</a> = MAKE_STATUS(kStatusGroup_SERIALMANAGER, 3), 
+<br/>
+&#160;&#160;<a class="el" href="a00070.html#gga936dd06c6718edc81ad0423a2bb04ad8af01c3a38751393325ab9791d8181ef38">kStatus_SerialManager_Canceled</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00070.html#gga936dd06c6718edc81ad0423a2bb04ad8a9f087536c7a9930159682ed03d8d71ea">kStatus_SerialManager_HandleConflict</a> = MAKE_STATUS(kStatusGroup_SERIALMANAGER, 5), 
+<br/>
+&#160;&#160;<a class="el" href="a00070.html#gga936dd06c6718edc81ad0423a2bb04ad8a41631953d2191b631fbe8443bfa856c8">kStatus_SerialManager_RingBufferOverflow</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00070.html#gga936dd06c6718edc81ad0423a2bb04ad8a1e09ebaf03a4d8599170987750b17ce6">kStatus_SerialManager_NotConnected</a> = MAKE_STATUS(kStatusGroup_SERIALMANAGER, 7)
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga936dd06c6718edc81ad0423a2bb04ad8"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial manager error code  <a href="a00070.html#ga936dd06c6718edc81ad0423a2bb04ad8">More...</a><br/></td></tr>
+<tr class="separator:ga936dd06c6718edc81ad0423a2bb04ad8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gac9ad820108a6713516ff44ef109fadf4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gac9ad820108a6713516ff44ef109fadf4">SerialManager_Init</a> (<a class="el" href="a00070.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a> serialHandle, const <a class="el" href="a00070.html#a00522">serial_manager_config_t</a> *config)</td></tr>
-<tr class="memdesc:gac9ad820108a6713516ff44ef109fadf4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a serial manager module with the serial manager handle and the user configuration structure.  <a href="#gac9ad820108a6713516ff44ef109fadf4">More...</a><br/></td></tr>
-<tr class="separator:gac9ad820108a6713516ff44ef109fadf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga467c8a817003eacd48f86aaef1ce8306"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga467c8a817003eacd48f86aaef1ce8306">SerialManager_Deinit</a> (<a class="el" href="a00070.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a> serialHandle)</td></tr>
+<tr class="memitem:ga3a3439526ad4444ea2dc535cd6f69608"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga3a3439526ad4444ea2dc535cd6f69608">SerialManager_Init</a> (<a class="el" href="a00070.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a> serialHandle, const <a class="el" href="a00070.html#gaae9cb68d4f20901d9884b690d39a257a">serial_manager_config_t</a> *serialConfig)</td></tr>
+<tr class="memdesc:ga3a3439526ad4444ea2dc535cd6f69608"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a serial manager module with the serial manager handle and the user configuration structure.  <a href="#ga3a3439526ad4444ea2dc535cd6f69608">More...</a><br/></td></tr>
+<tr class="separator:ga3a3439526ad4444ea2dc535cd6f69608"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga467c8a817003eacd48f86aaef1ce8306"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga467c8a817003eacd48f86aaef1ce8306">SerialManager_Deinit</a> (<a class="el" href="a00070.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a> serialHandle)</td></tr>
 <tr class="memdesc:ga467c8a817003eacd48f86aaef1ce8306"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-initializes the serial manager module instance.  <a href="#ga467c8a817003eacd48f86aaef1ce8306">More...</a><br/></td></tr>
 <tr class="separator:ga467c8a817003eacd48f86aaef1ce8306"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3d26249a8331e6ca17e9c60838b56d20"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga3d26249a8331e6ca17e9c60838b56d20">SerialManager_OpenWriteHandle</a> (<a class="el" href="a00070.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a> serialHandle, <a class="el" href="a00070.html#gac8319b6189019680778f230eb319530e">serial_write_handle_t</a> writeHandle)</td></tr>
+<tr class="memitem:ga3d26249a8331e6ca17e9c60838b56d20"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga3d26249a8331e6ca17e9c60838b56d20">SerialManager_OpenWriteHandle</a> (<a class="el" href="a00070.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a> serialHandle, <a class="el" href="a00070.html#gac8319b6189019680778f230eb319530e">serial_write_handle_t</a> writeHandle)</td></tr>
 <tr class="memdesc:ga3d26249a8331e6ca17e9c60838b56d20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens a writing handle for the serial manager module.  <a href="#ga3d26249a8331e6ca17e9c60838b56d20">More...</a><br/></td></tr>
 <tr class="separator:ga3d26249a8331e6ca17e9c60838b56d20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadb8df1d54da32e6de17680264ca4106a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gadb8df1d54da32e6de17680264ca4106a">SerialManager_CloseWriteHandle</a> (<a class="el" href="a00070.html#gac8319b6189019680778f230eb319530e">serial_write_handle_t</a> writeHandle)</td></tr>
+<tr class="memitem:gadb8df1d54da32e6de17680264ca4106a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gadb8df1d54da32e6de17680264ca4106a">SerialManager_CloseWriteHandle</a> (<a class="el" href="a00070.html#gac8319b6189019680778f230eb319530e">serial_write_handle_t</a> writeHandle)</td></tr>
 <tr class="memdesc:gadb8df1d54da32e6de17680264ca4106a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes a writing handle for the serial manager module.  <a href="#gadb8df1d54da32e6de17680264ca4106a">More...</a><br/></td></tr>
 <tr class="separator:gadb8df1d54da32e6de17680264ca4106a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga66915bf8f50a417620ef94951d1df4b8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga66915bf8f50a417620ef94951d1df4b8">SerialManager_OpenReadHandle</a> (<a class="el" href="a00070.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a> serialHandle, <a class="el" href="a00070.html#ga8bfec9c49e40728806d775fdb4bbf78e">serial_read_handle_t</a> readHandle)</td></tr>
+<tr class="memitem:ga66915bf8f50a417620ef94951d1df4b8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga66915bf8f50a417620ef94951d1df4b8">SerialManager_OpenReadHandle</a> (<a class="el" href="a00070.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a> serialHandle, <a class="el" href="a00070.html#ga8bfec9c49e40728806d775fdb4bbf78e">serial_read_handle_t</a> readHandle)</td></tr>
 <tr class="memdesc:ga66915bf8f50a417620ef94951d1df4b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens a reading handle for the serial manager module.  <a href="#ga66915bf8f50a417620ef94951d1df4b8">More...</a><br/></td></tr>
 <tr class="separator:ga66915bf8f50a417620ef94951d1df4b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga09c8831eb6ca6e544881dcbf18dcb4a7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga09c8831eb6ca6e544881dcbf18dcb4a7">SerialManager_CloseReadHandle</a> (<a class="el" href="a00070.html#ga8bfec9c49e40728806d775fdb4bbf78e">serial_read_handle_t</a> readHandle)</td></tr>
+<tr class="memitem:ga09c8831eb6ca6e544881dcbf18dcb4a7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga09c8831eb6ca6e544881dcbf18dcb4a7">SerialManager_CloseReadHandle</a> (<a class="el" href="a00070.html#ga8bfec9c49e40728806d775fdb4bbf78e">serial_read_handle_t</a> readHandle)</td></tr>
 <tr class="memdesc:ga09c8831eb6ca6e544881dcbf18dcb4a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes a reading for the serial manager module.  <a href="#ga09c8831eb6ca6e544881dcbf18dcb4a7">More...</a><br/></td></tr>
 <tr class="separator:ga09c8831eb6ca6e544881dcbf18dcb4a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3fab1d6bffd89459be9f23d40874248e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga3fab1d6bffd89459be9f23d40874248e">SerialManager_WriteBlocking</a> (<a class="el" href="a00070.html#gac8319b6189019680778f230eb319530e">serial_write_handle_t</a> writeHandle, uint8_t *buffer, uint32_t length)</td></tr>
+<tr class="memitem:ga3fab1d6bffd89459be9f23d40874248e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga3fab1d6bffd89459be9f23d40874248e">SerialManager_WriteBlocking</a> (<a class="el" href="a00070.html#gac8319b6189019680778f230eb319530e">serial_write_handle_t</a> writeHandle, uint8_t *buffer, uint32_t length)</td></tr>
 <tr class="memdesc:ga3fab1d6bffd89459be9f23d40874248e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmits data with the blocking mode.  <a href="#ga3fab1d6bffd89459be9f23d40874248e">More...</a><br/></td></tr>
 <tr class="separator:ga3fab1d6bffd89459be9f23d40874248e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga03b1bb5c3dbaa5ea2f0a6e7003f0b4eb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga03b1bb5c3dbaa5ea2f0a6e7003f0b4eb">SerialManager_ReadBlocking</a> (<a class="el" href="a00070.html#ga8bfec9c49e40728806d775fdb4bbf78e">serial_read_handle_t</a> readHandle, uint8_t *buffer, uint32_t length)</td></tr>
+<tr class="memitem:ga03b1bb5c3dbaa5ea2f0a6e7003f0b4eb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga03b1bb5c3dbaa5ea2f0a6e7003f0b4eb">SerialManager_ReadBlocking</a> (<a class="el" href="a00070.html#ga8bfec9c49e40728806d775fdb4bbf78e">serial_read_handle_t</a> readHandle, uint8_t *buffer, uint32_t length)</td></tr>
 <tr class="memdesc:ga03b1bb5c3dbaa5ea2f0a6e7003f0b4eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads data with the blocking mode.  <a href="#ga03b1bb5c3dbaa5ea2f0a6e7003f0b4eb">More...</a><br/></td></tr>
 <tr class="separator:ga03b1bb5c3dbaa5ea2f0a6e7003f0b4eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga195f1c0ebf9a66952302003d25a50e6b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga195f1c0ebf9a66952302003d25a50e6b">SerialManager_WriteNonBlocking</a> (<a class="el" href="a00070.html#gac8319b6189019680778f230eb319530e">serial_write_handle_t</a> writeHandle, uint8_t *buffer, uint32_t length)</td></tr>
+<tr class="memitem:ga195f1c0ebf9a66952302003d25a50e6b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga195f1c0ebf9a66952302003d25a50e6b">SerialManager_WriteNonBlocking</a> (<a class="el" href="a00070.html#gac8319b6189019680778f230eb319530e">serial_write_handle_t</a> writeHandle, uint8_t *buffer, uint32_t length)</td></tr>
 <tr class="memdesc:ga195f1c0ebf9a66952302003d25a50e6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmits data with the non-blocking mode.  <a href="#ga195f1c0ebf9a66952302003d25a50e6b">More...</a><br/></td></tr>
 <tr class="separator:ga195f1c0ebf9a66952302003d25a50e6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga73b6a8e57790ee4d41476ef25488c495"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga73b6a8e57790ee4d41476ef25488c495">SerialManager_ReadNonBlocking</a> (<a class="el" href="a00070.html#ga8bfec9c49e40728806d775fdb4bbf78e">serial_read_handle_t</a> readHandle, uint8_t *buffer, uint32_t length)</td></tr>
+<tr class="memitem:ga73b6a8e57790ee4d41476ef25488c495"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga73b6a8e57790ee4d41476ef25488c495">SerialManager_ReadNonBlocking</a> (<a class="el" href="a00070.html#ga8bfec9c49e40728806d775fdb4bbf78e">serial_read_handle_t</a> readHandle, uint8_t *buffer, uint32_t length)</td></tr>
 <tr class="memdesc:ga73b6a8e57790ee4d41476ef25488c495"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads data with the non-blocking mode.  <a href="#ga73b6a8e57790ee4d41476ef25488c495">More...</a><br/></td></tr>
 <tr class="separator:ga73b6a8e57790ee4d41476ef25488c495"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3f0a934ae5f1e8c20caff894f94bc70e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga3f0a934ae5f1e8c20caff894f94bc70e">SerialManager_TryRead</a> (<a class="el" href="a00070.html#ga8bfec9c49e40728806d775fdb4bbf78e">serial_read_handle_t</a> readHandle, uint8_t *buffer, uint32_t length, uint32_t *receivedLength)</td></tr>
+<tr class="memitem:ga3f0a934ae5f1e8c20caff894f94bc70e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga3f0a934ae5f1e8c20caff894f94bc70e">SerialManager_TryRead</a> (<a class="el" href="a00070.html#ga8bfec9c49e40728806d775fdb4bbf78e">serial_read_handle_t</a> readHandle, uint8_t *buffer, uint32_t length, uint32_t *receivedLength)</td></tr>
 <tr class="memdesc:ga3f0a934ae5f1e8c20caff894f94bc70e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tries to read data.  <a href="#ga3f0a934ae5f1e8c20caff894f94bc70e">More...</a><br/></td></tr>
 <tr class="separator:ga3f0a934ae5f1e8c20caff894f94bc70e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga54a5b67dbaed110666666e24469fad13"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga54a5b67dbaed110666666e24469fad13">SerialManager_CancelWriting</a> (<a class="el" href="a00070.html#gac8319b6189019680778f230eb319530e">serial_write_handle_t</a> writeHandle)</td></tr>
+<tr class="memitem:ga54a5b67dbaed110666666e24469fad13"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga54a5b67dbaed110666666e24469fad13">SerialManager_CancelWriting</a> (<a class="el" href="a00070.html#gac8319b6189019680778f230eb319530e">serial_write_handle_t</a> writeHandle)</td></tr>
 <tr class="memdesc:ga54a5b67dbaed110666666e24469fad13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancels unfinished send transmission.  <a href="#ga54a5b67dbaed110666666e24469fad13">More...</a><br/></td></tr>
 <tr class="separator:ga54a5b67dbaed110666666e24469fad13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7cb009a3fcc17375bfa591b68008c94e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga7cb009a3fcc17375bfa591b68008c94e">SerialManager_CancelReading</a> (<a class="el" href="a00070.html#ga8bfec9c49e40728806d775fdb4bbf78e">serial_read_handle_t</a> readHandle)</td></tr>
+<tr class="memitem:ga7cb009a3fcc17375bfa591b68008c94e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga7cb009a3fcc17375bfa591b68008c94e">SerialManager_CancelReading</a> (<a class="el" href="a00070.html#ga8bfec9c49e40728806d775fdb4bbf78e">serial_read_handle_t</a> readHandle)</td></tr>
 <tr class="memdesc:ga7cb009a3fcc17375bfa591b68008c94e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cancels unfinished receive transmission.  <a href="#ga7cb009a3fcc17375bfa591b68008c94e">More...</a><br/></td></tr>
 <tr class="separator:ga7cb009a3fcc17375bfa591b68008c94e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga59eadfa140fe4cb42b306514a02288d4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga59eadfa140fe4cb42b306514a02288d4">SerialManager_InstallTxCallback</a> (<a class="el" href="a00070.html#gac8319b6189019680778f230eb319530e">serial_write_handle_t</a> writeHandle, <a class="el" href="a00070.html#gabe6a6263bb1570ea715938b2420af773">serial_manager_callback_t</a> callback, void *callbackParam)</td></tr>
+<tr class="memitem:ga59eadfa140fe4cb42b306514a02288d4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga59eadfa140fe4cb42b306514a02288d4">SerialManager_InstallTxCallback</a> (<a class="el" href="a00070.html#gac8319b6189019680778f230eb319530e">serial_write_handle_t</a> writeHandle, <a class="el" href="a00070.html#gabe6a6263bb1570ea715938b2420af773">serial_manager_callback_t</a> callback, void *callbackParam)</td></tr>
 <tr class="memdesc:ga59eadfa140fe4cb42b306514a02288d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Installs a TX callback and callback parameter.  <a href="#ga59eadfa140fe4cb42b306514a02288d4">More...</a><br/></td></tr>
 <tr class="separator:ga59eadfa140fe4cb42b306514a02288d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab8a8947d239858adf3626fe937ccda56"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gab8a8947d239858adf3626fe937ccda56">SerialManager_InstallRxCallback</a> (<a class="el" href="a00070.html#ga8bfec9c49e40728806d775fdb4bbf78e">serial_read_handle_t</a> readHandle, <a class="el" href="a00070.html#gabe6a6263bb1570ea715938b2420af773">serial_manager_callback_t</a> callback, void *callbackParam)</td></tr>
+<tr class="memitem:gab8a8947d239858adf3626fe937ccda56"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gab8a8947d239858adf3626fe937ccda56">SerialManager_InstallRxCallback</a> (<a class="el" href="a00070.html#ga8bfec9c49e40728806d775fdb4bbf78e">serial_read_handle_t</a> readHandle, <a class="el" href="a00070.html#gabe6a6263bb1570ea715938b2420af773">serial_manager_callback_t</a> callback, void *callbackParam)</td></tr>
 <tr class="memdesc:gab8a8947d239858adf3626fe937ccda56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Installs a RX callback and callback parameter.  <a href="#gab8a8947d239858adf3626fe937ccda56">More...</a><br/></td></tr>
 <tr class="separator:gab8a8947d239858adf3626fe937ccda56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga26a6c26eacf1277930e69676ab77cbec"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga26a6c26eacf1277930e69676ab77cbec">SerialManager_needPollingIsr</a> (void)</td></tr>
 <tr class="memdesc:ga26a6c26eacf1277930e69676ab77cbec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if need polling ISR.  <a href="#ga26a6c26eacf1277930e69676ab77cbec">More...</a><br/></td></tr>
 <tr class="separator:ga26a6c26eacf1277930e69676ab77cbec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga32cdccd6df5d87f17037f34cf9f1e416"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga32cdccd6df5d87f17037f34cf9f1e416">SerialManager_EnterLowpower</a> (<a class="el" href="a00070.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a> serialHandle)</td></tr>
+<tr class="memitem:ga32cdccd6df5d87f17037f34cf9f1e416"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga32cdccd6df5d87f17037f34cf9f1e416">SerialManager_EnterLowpower</a> (<a class="el" href="a00070.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a> serialHandle)</td></tr>
 <tr class="memdesc:ga32cdccd6df5d87f17037f34cf9f1e416"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepares to enter low power consumption.  <a href="#ga32cdccd6df5d87f17037f34cf9f1e416">More...</a><br/></td></tr>
 <tr class="separator:ga32cdccd6df5d87f17037f34cf9f1e416"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaef5c404d43871f6d8f761b27dbf183fa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gaef5c404d43871f6d8f761b27dbf183fa">SerialManager_ExitLowpower</a> (<a class="el" href="a00070.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a> serialHandle)</td></tr>
+<tr class="memitem:gaef5c404d43871f6d8f761b27dbf183fa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#gaef5c404d43871f6d8f761b27dbf183fa">SerialManager_ExitLowpower</a> (<a class="el" href="a00070.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a> serialHandle)</td></tr>
 <tr class="memdesc:gaef5c404d43871f6d8f761b27dbf183fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Restores from low power consumption.  <a href="#gaef5c404d43871f6d8f761b27dbf183fa">More...</a><br/></td></tr>
 <tr class="separator:gaef5c404d43871f6d8f761b27dbf183fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga71bd55adb7a6a552ce5dac06b5794cea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ga71bd55adb7a6a552ce5dac06b5794cea">SerialManager_SetLowpowerCriticalCb</a> (const serial_manager_lowpower_critical_CBs_t *pfCallback)</td></tr>
@@ -356,44 +374,44 @@ Functions</h2></td></tr>
 <tr class="separator:ga71bd55adb7a6a552ce5dac06b5794cea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00522" id="a00522"></a>
+<a name="a00516" id="a00516"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct serial_manager_config_t</td>
+          <td class="memname">struct _serial_manager_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a73403169ff2d3c8d8897059435fe7e01"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#a73403169ff2d3c8d8897059435fe7e01">ringBuffer</a></td></tr>
-<tr class="memdesc:a73403169ff2d3c8d8897059435fe7e01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ring buffer address, it is used to buffer data received by the hardware.  <a href="#a73403169ff2d3c8d8897059435fe7e01">More...</a><br/></td></tr>
-<tr class="separator:a73403169ff2d3c8d8897059435fe7e01"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3cdd8d8501bb64e720345207310de89b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3cdd8d8501bb64e720345207310de89b"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#a3cdd8d8501bb64e720345207310de89b">ringBufferSize</a></td></tr>
-<tr class="memdesc:a3cdd8d8501bb64e720345207310de89b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The size of the ring buffer. <br/></td></tr>
-<tr class="separator:a3cdd8d8501bb64e720345207310de89b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a19422220843683406b8487dd40fc2cee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a19422220843683406b8487dd40fc2cee"></a>
-<a class="el" href="a00070.html#ga103db7d7f3fc8234978efadef0fdaf80">serial_port_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#a19422220843683406b8487dd40fc2cee">type</a></td></tr>
-<tr class="memdesc:a19422220843683406b8487dd40fc2cee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serial port type. <br/></td></tr>
-<tr class="separator:a19422220843683406b8487dd40fc2cee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae1f413cf0928c0efdf89ce584adf8007"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae1f413cf0928c0efdf89ce584adf8007"></a>
-<a class="el" href="a00070.html#ga7799e0e52d9e9fe5bf5198f0a337331d">serial_manager_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ae1f413cf0928c0efdf89ce584adf8007">blockType</a></td></tr>
-<tr class="memdesc:ae1f413cf0928c0efdf89ce584adf8007"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serial manager port type. <br/></td></tr>
-<tr class="separator:ae1f413cf0928c0efdf89ce584adf8007"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac91431f403f82ce50784274deab7e640"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac91431f403f82ce50784274deab7e640"></a>
-void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#ac91431f403f82ce50784274deab7e640">portConfig</a></td></tr>
-<tr class="memdesc:ac91431f403f82ce50784274deab7e640"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serial port configuration. <br/></td></tr>
-<tr class="separator:ac91431f403f82ce50784274deab7e640"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab05900ee3fc3efa8b6c04fccc04e53f"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#aab05900ee3fc3efa8b6c04fccc04e53f">ringBuffer</a></td></tr>
+<tr class="memdesc:aab05900ee3fc3efa8b6c04fccc04e53f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ring buffer address, it is used to buffer data received by the hardware.  <a href="#aab05900ee3fc3efa8b6c04fccc04e53f">More...</a><br/></td></tr>
+<tr class="separator:aab05900ee3fc3efa8b6c04fccc04e53f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0050101153ca0b44e74601a3ed10fe2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa0050101153ca0b44e74601a3ed10fe2"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#aa0050101153ca0b44e74601a3ed10fe2">ringBufferSize</a></td></tr>
+<tr class="memdesc:aa0050101153ca0b44e74601a3ed10fe2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The size of the ring buffer. <br/></td></tr>
+<tr class="separator:aa0050101153ca0b44e74601a3ed10fe2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f4a4626ec722139dc792c97bca59adc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2f4a4626ec722139dc792c97bca59adc"></a>
+<a class="el" href="a00070.html#gaa7dc5f93aacda72d14bb0fa66b0401f3">serial_port_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#a2f4a4626ec722139dc792c97bca59adc">type</a></td></tr>
+<tr class="memdesc:a2f4a4626ec722139dc792c97bca59adc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serial port type. <br/></td></tr>
+<tr class="separator:a2f4a4626ec722139dc792c97bca59adc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e3338dd3f68a1960de0415c2563a0d4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8e3338dd3f68a1960de0415c2563a0d4"></a>
+<a class="el" href="a00070.html#gac1a68602a30a180467de438a4fc5f560">serial_manager_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#a8e3338dd3f68a1960de0415c2563a0d4">blockType</a></td></tr>
+<tr class="memdesc:a8e3338dd3f68a1960de0415c2563a0d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serial manager port type. <br/></td></tr>
+<tr class="separator:a8e3338dd3f68a1960de0415c2563a0d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ca883359bc9c8977424d91cf54c867e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3ca883359bc9c8977424d91cf54c867e"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#a3ca883359bc9c8977424d91cf54c867e">portConfig</a></td></tr>
+<tr class="memdesc:a3ca883359bc9c8977424d91cf54c867e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serial port configuration. <br/></td></tr>
+<tr class="separator:a3ca883359bc9c8977424d91cf54c867e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a73403169ff2d3c8d8897059435fe7e01"></a>
+<a class="anchor" id="aab05900ee3fc3efa8b6c04fccc04e53f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* serial_manager_config_t::ringBuffer</td>
+          <td class="memname">uint8_t* _serial_manager_config::ringBuffer</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -404,25 +422,25 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 
 </div>
 </div>
-<a name="a00521" id="a00521"></a>
+<a name="a00515" id="a00515"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct serial_manager_callback_message_t</td>
+          <td class="memname">struct _serial_manager_callback_message</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a80694c056b447b821f7e146122040e0f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a80694c056b447b821f7e146122040e0f"></a>
-uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#a80694c056b447b821f7e146122040e0f">buffer</a></td></tr>
-<tr class="memdesc:a80694c056b447b821f7e146122040e0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transferred buffer. <br/></td></tr>
-<tr class="separator:a80694c056b447b821f7e146122040e0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5eb02d4cb2745ea57f5f78e764f80893"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5eb02d4cb2745ea57f5f78e764f80893"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#a5eb02d4cb2745ea57f5f78e764f80893">length</a></td></tr>
-<tr class="memdesc:a5eb02d4cb2745ea57f5f78e764f80893"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transferred data length. <br/></td></tr>
-<tr class="separator:a5eb02d4cb2745ea57f5f78e764f80893"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57fd13ae8f34fe58cc055bafd936c5f4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a57fd13ae8f34fe58cc055bafd936c5f4"></a>
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#a57fd13ae8f34fe58cc055bafd936c5f4">buffer</a></td></tr>
+<tr class="memdesc:a57fd13ae8f34fe58cc055bafd936c5f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transferred buffer. <br/></td></tr>
+<tr class="separator:a57fd13ae8f34fe58cc055bafd936c5f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18eb3f893e218b84d4d8d0a16627421b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a18eb3f893e218b84d4d8d0a16627421b"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00070.html#a18eb3f893e218b84d4d8d0a16627421b">length</a></td></tr>
+<tr class="memdesc:a18eb3f893e218b84d4d8d0a16627421b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transferred data length. <br/></td></tr>
+<tr class="separator:a18eb3f893e218b84d4d8d0a16627421b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
@@ -583,102 +601,102 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga103db7d7f3fc8234978efadef0fdaf80"></a>
+<a class="anchor" id="ga37012d03963b0a7aac96cda088362180"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00070.html#ga103db7d7f3fc8234978efadef0fdaf80">serial_port_type_t</a></td>
+          <td class="memname">enum <a class="el" href="a00070.html#ga37012d03963b0a7aac96cda088362180">_serial_port_type</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga103db7d7f3fc8234978efadef0fdaf80a8c0a9f0a39981fc49bddc88b23e170fb"></a>kSerialPort_None</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga37012d03963b0a7aac96cda088362180a8c0a9f0a39981fc49bddc88b23e170fb"></a>kSerialPort_None</em>&nbsp;</td><td class="fielddoc">
 <p>Serial port is none. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga103db7d7f3fc8234978efadef0fdaf80a5b4d039d8c91cb19fca7c5dc196f8d77"></a>kSerialPort_Uart</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga37012d03963b0a7aac96cda088362180a5b4d039d8c91cb19fca7c5dc196f8d77"></a>kSerialPort_Uart</em>&nbsp;</td><td class="fielddoc">
 <p>Serial port UART. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga103db7d7f3fc8234978efadef0fdaf80a3785825f30826c61a4ef13bf983381c2"></a>kSerialPort_UsbCdc</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga37012d03963b0a7aac96cda088362180a3785825f30826c61a4ef13bf983381c2"></a>kSerialPort_UsbCdc</em>&nbsp;</td><td class="fielddoc">
 <p>Serial port USB CDC. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga103db7d7f3fc8234978efadef0fdaf80af6a37935b2767a9ae22825f0bc49ef77"></a>kSerialPort_Swo</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga37012d03963b0a7aac96cda088362180af6a37935b2767a9ae22825f0bc49ef77"></a>kSerialPort_Swo</em>&nbsp;</td><td class="fielddoc">
 <p>Serial port SWO. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga103db7d7f3fc8234978efadef0fdaf80a1ff49cc235ba1b2cf110d9cad5121aa4"></a>kSerialPort_Virtual</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga37012d03963b0a7aac96cda088362180a1ff49cc235ba1b2cf110d9cad5121aa4"></a>kSerialPort_Virtual</em>&nbsp;</td><td class="fielddoc">
 <p>Serial port Virtual. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga103db7d7f3fc8234978efadef0fdaf80aa0ec8166f72522a029c7bdb44dbd8cbe"></a>kSerialPort_Rpmsg</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga37012d03963b0a7aac96cda088362180aa0ec8166f72522a029c7bdb44dbd8cbe"></a>kSerialPort_Rpmsg</em>&nbsp;</td><td class="fielddoc">
 <p>Serial port RPMSG. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga103db7d7f3fc8234978efadef0fdaf80acad7e31b320242ceb4088c8a32635c5e"></a>kSerialPort_UartDma</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga37012d03963b0a7aac96cda088362180acad7e31b320242ceb4088c8a32635c5e"></a>kSerialPort_UartDma</em>&nbsp;</td><td class="fielddoc">
 <p>Serial port UART DMA. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga103db7d7f3fc8234978efadef0fdaf80aedeec3b53f1439f00620cadea84b0fea"></a>kSerialPort_SpiMaster</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga37012d03963b0a7aac96cda088362180aedeec3b53f1439f00620cadea84b0fea"></a>kSerialPort_SpiMaster</em>&nbsp;</td><td class="fielddoc">
 <p>Serial port SPIMASTER. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga103db7d7f3fc8234978efadef0fdaf80a7ae48951cbd3ca0ee687468af7f0a99a"></a>kSerialPort_SpiSlave</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga37012d03963b0a7aac96cda088362180a7ae48951cbd3ca0ee687468af7f0a99a"></a>kSerialPort_SpiSlave</em>&nbsp;</td><td class="fielddoc">
 <p>Serial port SPISLAVE. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga103db7d7f3fc8234978efadef0fdaf80a068c303a297863ceefc8359eafc17b7f"></a>kSerialPort_BleWu</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga37012d03963b0a7aac96cda088362180a068c303a297863ceefc8359eafc17b7f"></a>kSerialPort_BleWu</em>&nbsp;</td><td class="fielddoc">
 <p>Serial port BLE WU. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga7799e0e52d9e9fe5bf5198f0a337331d"></a>
+<a class="anchor" id="ga582a4193f06f2d326f72d6ec08d1cf1a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00070.html#ga7799e0e52d9e9fe5bf5198f0a337331d">serial_manager_type_t</a></td>
+          <td class="memname">enum <a class="el" href="a00070.html#ga582a4193f06f2d326f72d6ec08d1cf1a">_serial_manager_type</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga7799e0e52d9e9fe5bf5198f0a337331dacae754a7dbe5f0d48d345a8b6120227c"></a>kSerialManager_NonBlocking</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga582a4193f06f2d326f72d6ec08d1cf1aacae754a7dbe5f0d48d345a8b6120227c"></a>kSerialManager_NonBlocking</em>&nbsp;</td><td class="fielddoc">
 <p>None blocking handle. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7799e0e52d9e9fe5bf5198f0a337331daa7834e61e5fcc82b73698f0465c3f24e"></a>kSerialManager_Blocking</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga582a4193f06f2d326f72d6ec08d1cf1aaa7834e61e5fcc82b73698f0465c3f24e"></a>kSerialManager_Blocking</em>&nbsp;</td><td class="fielddoc">
 <p>Blocking handle. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gae9a330e1f3a81509399832c7b2c2872f"></a>
+<a class="anchor" id="ga936dd06c6718edc81ad0423a2bb04ad8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a></td>
+          <td class="memname">enum <a class="el" href="a00070.html#ga936dd06c6718edc81ad0423a2bb04ad8">_serial_manager_status</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggae9a330e1f3a81509399832c7b2c2872fa1e4ed7376c48b94ec9a60f272a629ed4"></a>kStatus_SerialManager_Success</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga936dd06c6718edc81ad0423a2bb04ad8a1e4ed7376c48b94ec9a60f272a629ed4"></a>kStatus_SerialManager_Success</em>&nbsp;</td><td class="fielddoc">
 <p>Success. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae9a330e1f3a81509399832c7b2c2872fa61e6a331c5f789fe88fcf2bacf8a5553"></a>kStatus_SerialManager_Error</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga936dd06c6718edc81ad0423a2bb04ad8a61e6a331c5f789fe88fcf2bacf8a5553"></a>kStatus_SerialManager_Error</em>&nbsp;</td><td class="fielddoc">
 <p>Failed. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae9a330e1f3a81509399832c7b2c2872fa67e18fb1e47f4f40dc58988b76a2d876"></a>kStatus_SerialManager_Busy</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga936dd06c6718edc81ad0423a2bb04ad8a67e18fb1e47f4f40dc58988b76a2d876"></a>kStatus_SerialManager_Busy</em>&nbsp;</td><td class="fielddoc">
 <p>Busy. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae9a330e1f3a81509399832c7b2c2872fabdcdea0fcd8b4c01592728a4ba041154"></a>kStatus_SerialManager_Notify</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga936dd06c6718edc81ad0423a2bb04ad8abdcdea0fcd8b4c01592728a4ba041154"></a>kStatus_SerialManager_Notify</em>&nbsp;</td><td class="fielddoc">
 <p>Ring buffer is not empty. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae9a330e1f3a81509399832c7b2c2872faf01c3a38751393325ab9791d8181ef38"></a>kStatus_SerialManager_Canceled</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga936dd06c6718edc81ad0423a2bb04ad8af01c3a38751393325ab9791d8181ef38"></a>kStatus_SerialManager_Canceled</em>&nbsp;</td><td class="fielddoc">
 <p>the non-blocking request is canceled </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae9a330e1f3a81509399832c7b2c2872fa9f087536c7a9930159682ed03d8d71ea"></a>kStatus_SerialManager_HandleConflict</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga936dd06c6718edc81ad0423a2bb04ad8a9f087536c7a9930159682ed03d8d71ea"></a>kStatus_SerialManager_HandleConflict</em>&nbsp;</td><td class="fielddoc">
 <p>The handle is opened. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae9a330e1f3a81509399832c7b2c2872fa41631953d2191b631fbe8443bfa856c8"></a>kStatus_SerialManager_RingBufferOverflow</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga936dd06c6718edc81ad0423a2bb04ad8a41631953d2191b631fbe8443bfa856c8"></a>kStatus_SerialManager_RingBufferOverflow</em>&nbsp;</td><td class="fielddoc">
 <p>The ring buffer is overflowed. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae9a330e1f3a81509399832c7b2c2872fa1e09ebaf03a4d8599170987750b17ce6"></a>kStatus_SerialManager_NotConnected</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga936dd06c6718edc81ad0423a2bb04ad8a1e09ebaf03a4d8599170987750b17ce6"></a>kStatus_SerialManager_NotConnected</em>&nbsp;</td><td class="fielddoc">
 <p>The host is not connected. </p>
 </td></tr>
 </table>
@@ -686,12 +704,12 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gac9ad820108a6713516ff44ef109fadf4"></a>
+<a class="anchor" id="ga3a3439526ad4444ea2dc535cd6f69608"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a> SerialManager_Init </td>
+          <td class="memname"><a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a> SerialManager_Init </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00070.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a>&#160;</td>
           <td class="paramname"><em>serialHandle</em>, </td>
@@ -699,8 +717,8 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00070.html#a00522">serial_manager_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00070.html#gaae9cb68d4f20901d9884b690d39a257a">serial_manager_config_t</a> *&#160;</td>
+          <td class="paramname"><em>serialConfig</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -709,47 +727,47 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function configures the Serial Manager module with user-defined settings. The user can configure the configuration structure. The parameter serialHandle is a pointer to point to a memory space of size <a class="el" href="a00070.html#gabc4aa7ae83c31b66e437d7fd264aaebc" title="Definition of serial manager handle size. ">SERIAL_MANAGER_HANDLE_SIZE</a> allocated by the caller. The Serial Manager module supports three types of serial port, UART (includes UART, USART, LPSCI, LPUART, etc), USB CDC and swo. Please refer to <a class="el" href="a00070.html#ga103db7d7f3fc8234978efadef0fdaf80" title="serial port type ">serial_port_type_t</a> for serial port setting. These three types can be set by using <a class="el" href="a00070.html#a00522" title="serial manager config structure ">serial_manager_config_t</a>.</p>
+<p>This function configures the Serial Manager module with user-defined settings. The user can configure the configuration structure. The parameter serialHandle is a pointer to point to a memory space of size <a class="el" href="a00070.html#gabc4aa7ae83c31b66e437d7fd264aaebc" title="Definition of serial manager handle size. ">SERIAL_MANAGER_HANDLE_SIZE</a> allocated by the caller. The Serial Manager module supports three types of serial port, UART (includes UART, USART, LPSCI, LPUART, etc), USB CDC and swo. Please refer to <a class="el" href="a00070.html#gaa7dc5f93aacda72d14bb0fa66b0401f3" title="serial port type ">serial_port_type_t</a> for serial port setting. These three types can be set by using <a class="el" href="a00070.html#gaae9cb68d4f20901d9884b690d39a257a" title="serial manager config structure ">serial_manager_config_t</a>.</p>
 <p>Example below shows how to use this API to configure the Serial Manager. For UART, </p>
 <div class="fragment"><div class="line">*   #define SERIAL_MANAGER_RING_BUFFER_SIZE (256U)</div>
 <div class="line">*   <span class="keyword">static</span> <a class="code" href="a00070.html#gad145f5877828fd4ec335f09b6790c673">SERIAL_MANAGER_HANDLE_DEFINE</a>(s_serialHandle);</div>
 <div class="line">*   <span class="keyword">static</span> uint8_t s_ringBuffer[SERIAL_MANAGER_RING_BUFFER_SIZE];</div>
 <div class="line">*</div>
-<div class="line">*   <a class="code" href="a00070.html#a00522">serial_manager_config_t</a> config;</div>
+<div class="line">*   <a class="code" href="a00070.html#a00516">serial_manager_config_t</a> config;</div>
 <div class="line">*   serial_port_uart_config_t uartConfig;</div>
-<div class="line">*   config.<a class="code" href="a00070.html#a19422220843683406b8487dd40fc2cee">type</a> = <a class="code" href="a00070.html#gga103db7d7f3fc8234978efadef0fdaf80a5b4d039d8c91cb19fca7c5dc196f8d77">kSerialPort_Uart</a>;</div>
-<div class="line">*   config.<a class="code" href="a00070.html#a73403169ff2d3c8d8897059435fe7e01">ringBuffer</a> = &amp;s_ringBuffer[0];</div>
-<div class="line">*   config.<a class="code" href="a00070.html#a3cdd8d8501bb64e720345207310de89b">ringBufferSize</a> = SERIAL_MANAGER_RING_BUFFER_SIZE;</div>
+<div class="line">*   config.<a class="code" href="a00070.html#a2f4a4626ec722139dc792c97bca59adc">type</a> = <a class="code" href="a00070.html#gga37012d03963b0a7aac96cda088362180a5b4d039d8c91cb19fca7c5dc196f8d77">kSerialPort_Uart</a>;</div>
+<div class="line">*   config.<a class="code" href="a00070.html#aab05900ee3fc3efa8b6c04fccc04e53f">ringBuffer</a> = &amp;s_ringBuffer[0];</div>
+<div class="line">*   config.<a class="code" href="a00070.html#aa0050101153ca0b44e74601a3ed10fe2">ringBufferSize</a> = SERIAL_MANAGER_RING_BUFFER_SIZE;</div>
 <div class="line">*   uartConfig.instance = 0;</div>
 <div class="line">*   uartConfig.clockRate = 24000000;</div>
 <div class="line">*   uartConfig.baudRate = 115200;</div>
-<div class="line">*   uartConfig.parityMode = <a class="code" href="a00305.html#gga89a4bbed0c24cfe5e085194add680ccca208958aa923a2c50ac1192a5085ab8b1">kSerialManager_UartParityDisabled</a>;</div>
-<div class="line">*   uartConfig.stopBitCount = <a class="code" href="a00305.html#gga8bdf0213026f54fd54c21971e07f2d56a5caed34146b357a7061aaacfe378e039">kSerialManager_UartOneStopBit</a>;</div>
+<div class="line">*   uartConfig.parityMode = <a class="code" href="a00305.html#gga2d84542a7efc9d896f4e8d7221e1ec98a208958aa923a2c50ac1192a5085ab8b1">kSerialManager_UartParityDisabled</a>;</div>
+<div class="line">*   uartConfig.stopBitCount = <a class="code" href="a00305.html#gga97aea0fa091f5d31407cd8b94bdc5f35a5caed34146b357a7061aaacfe378e039">kSerialManager_UartOneStopBit</a>;</div>
 <div class="line">*   uartConfig.enableRx = 1;</div>
 <div class="line">*   uartConfig.enableTx = 1;</div>
 <div class="line">*   uartConfig.enableRxRTS = 0;</div>
 <div class="line">*   uartConfig.enableTxCTS = 0;</div>
-<div class="line">*   config.<a class="code" href="a00070.html#ac91431f403f82ce50784274deab7e640">portConfig</a> = &amp;uartConfig;</div>
-<div class="line">*   <a class="code" href="a00070.html#gac9ad820108a6713516ff44ef109fadf4">SerialManager_Init</a>((<a class="code" href="a00070.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a>)s_serialHandle, &amp;config);</div>
+<div class="line">*   config.<a class="code" href="a00070.html#a3ca883359bc9c8977424d91cf54c867e">portConfig</a> = &amp;uartConfig;</div>
+<div class="line">*   <a class="code" href="a00070.html#ga3a3439526ad4444ea2dc535cd6f69608">SerialManager_Init</a>((<a class="code" href="a00070.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a>)s_serialHandle, &amp;config);</div>
 <div class="line">*  </div>
 </div><!-- fragment --><p> For USB CDC, </p>
 <div class="fragment"><div class="line">*   #define SERIAL_MANAGER_RING_BUFFER_SIZE (256U)</div>
 <div class="line">*   <span class="keyword">static</span> <a class="code" href="a00070.html#gad145f5877828fd4ec335f09b6790c673">SERIAL_MANAGER_HANDLE_DEFINE</a>(s_serialHandle);</div>
 <div class="line">*   <span class="keyword">static</span> uint8_t s_ringBuffer[SERIAL_MANAGER_RING_BUFFER_SIZE];</div>
 <div class="line">*</div>
-<div class="line">*   <a class="code" href="a00070.html#a00522">serial_manager_config_t</a> config;</div>
-<div class="line">*   <a class="code" href="a00072.html#a00524">serial_port_usb_cdc_config_t</a> usbCdcConfig;</div>
-<div class="line">*   config.<a class="code" href="a00070.html#a19422220843683406b8487dd40fc2cee">type</a> = <a class="code" href="a00070.html#gga103db7d7f3fc8234978efadef0fdaf80a3785825f30826c61a4ef13bf983381c2">kSerialPort_UsbCdc</a>;</div>
-<div class="line">*   config.<a class="code" href="a00070.html#a73403169ff2d3c8d8897059435fe7e01">ringBuffer</a> = &amp;s_ringBuffer[0];</div>
-<div class="line">*   config.<a class="code" href="a00070.html#a3cdd8d8501bb64e720345207310de89b">ringBufferSize</a> = SERIAL_MANAGER_RING_BUFFER_SIZE;</div>
-<div class="line">*   usbCdcConfig.<a class="code" href="a00072.html#a164ef9f84df063b85674cc8aa6edd872">controllerIndex</a> = <a class="code" href="a00072.html#gga0d579054cbf9827f77f7018cd6f84c29aba414efbedc13dd6605fdc76daee832f">kSerialManager_UsbControllerKhci0</a>;</div>
-<div class="line">*   config.<a class="code" href="a00070.html#ac91431f403f82ce50784274deab7e640">portConfig</a> = &amp;usbCdcConfig;</div>
-<div class="line">*   <a class="code" href="a00070.html#gac9ad820108a6713516ff44ef109fadf4">SerialManager_Init</a>((<a class="code" href="a00070.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a>)s_serialHandle, &amp;config);</div>
+<div class="line">*   <a class="code" href="a00070.html#a00516">serial_manager_config_t</a> config;</div>
+<div class="line">*   <a class="code" href="a00072.html#a00518">serial_port_usb_cdc_config_t</a> usbCdcConfig;</div>
+<div class="line">*   config.<a class="code" href="a00070.html#a2f4a4626ec722139dc792c97bca59adc">type</a> = <a class="code" href="a00070.html#gga37012d03963b0a7aac96cda088362180a3785825f30826c61a4ef13bf983381c2">kSerialPort_UsbCdc</a>;</div>
+<div class="line">*   config.<a class="code" href="a00070.html#aab05900ee3fc3efa8b6c04fccc04e53f">ringBuffer</a> = &amp;s_ringBuffer[0];</div>
+<div class="line">*   config.<a class="code" href="a00070.html#aa0050101153ca0b44e74601a3ed10fe2">ringBufferSize</a> = SERIAL_MANAGER_RING_BUFFER_SIZE;</div>
+<div class="line">*   usbCdcConfig.<a class="code" href="a00072.html#a14bbabeb7c5689a76a6a9fde038406cb">controllerIndex</a> = <a class="code" href="a00072.html#gga655b3e8c0c8f2b005fda4d47e4f48c3daba414efbedc13dd6605fdc76daee832f">kSerialManager_UsbControllerKhci0</a>;</div>
+<div class="line">*   config.<a class="code" href="a00070.html#a3ca883359bc9c8977424d91cf54c867e">portConfig</a> = &amp;usbCdcConfig;</div>
+<div class="line">*   <a class="code" href="a00070.html#ga3a3439526ad4444ea2dc535cd6f69608">SerialManager_Init</a>((<a class="code" href="a00070.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a>)s_serialHandle, &amp;config);</div>
 <div class="line">*  </div>
 </div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">serialHandle</td><td>Pointer to point to a memory space of size <a class="el" href="a00070.html#gabc4aa7ae83c31b66e437d7fd264aaebc" title="Definition of serial manager handle size. ">SERIAL_MANAGER_HANDLE_SIZE</a> allocated by the caller. The handle should be 4 byte aligned, because unaligned access doesn't be supported on some devices. You can define the handle in the following two ways: <a class="el" href="a00070.html#gad145f5877828fd4ec335f09b6790c673" title="Defines the serial manager handle. ">SERIAL_MANAGER_HANDLE_DEFINE(serialHandle)</a>; or uint32_t serialHandle[((SERIAL_MANAGER_HANDLE_SIZE + sizeof(uint32_t) - 1U) / sizeof(uint32_t))]; </td></tr>
-    <tr><td class="paramname">config</td><td>Pointer to user-defined configuration structure. </td></tr>
+    <tr><td class="paramname">serialConfig</td><td>Pointer to user-defined configuration structure. </td></tr>
   </table>
   </dd>
 </dl>
@@ -768,7 +786,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a> SerialManager_Deinit </td>
+          <td class="memname"><a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a> SerialManager_Deinit </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00070.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a>&#160;</td>
           <td class="paramname"><em>serialHandle</em></td><td>)</td>
@@ -798,7 +816,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a> SerialManager_OpenWriteHandle </td>
+          <td class="memname"><a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a> SerialManager_OpenWriteHandle </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00070.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a>&#160;</td>
           <td class="paramname"><em>serialHandle</em>, </td>
@@ -862,7 +880,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a> SerialManager_CloseWriteHandle </td>
+          <td class="memname"><a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a> SerialManager_CloseWriteHandle </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00070.html#gac8319b6189019680778f230eb319530e">serial_write_handle_t</a>&#160;</td>
           <td class="paramname"><em>writeHandle</em></td><td>)</td>
@@ -891,7 +909,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a> SerialManager_OpenReadHandle </td>
+          <td class="memname"><a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a> SerialManager_OpenReadHandle </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00070.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a>&#160;</td>
           <td class="paramname"><em>serialHandle</em>, </td>
@@ -944,7 +962,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a> SerialManager_CloseReadHandle </td>
+          <td class="memname"><a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a> SerialManager_CloseReadHandle </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00070.html#ga8bfec9c49e40728806d775fdb4bbf78e">serial_read_handle_t</a>&#160;</td>
           <td class="paramname"><em>readHandle</em></td><td>)</td>
@@ -973,7 +991,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a> SerialManager_WriteBlocking </td>
+          <td class="memname"><a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a> SerialManager_WriteBlocking </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00070.html#gac8319b6189019680778f230eb319530e">serial_write_handle_t</a>&#160;</td>
           <td class="paramname"><em>writeHandle</em>, </td>
@@ -1023,7 +1041,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a> SerialManager_ReadBlocking </td>
+          <td class="memname"><a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a> SerialManager_ReadBlocking </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00070.html#ga8bfec9c49e40728806d775fdb4bbf78e">serial_read_handle_t</a>&#160;</td>
           <td class="paramname"><em>readHandle</em>, </td>
@@ -1073,7 +1091,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a> SerialManager_WriteNonBlocking </td>
+          <td class="memname"><a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a> SerialManager_WriteNonBlocking </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00070.html#gac8319b6189019680778f230eb319530e">serial_write_handle_t</a>&#160;</td>
           <td class="paramname"><em>writeHandle</em>, </td>
@@ -1097,7 +1115,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This is a non-blocking function, which returns directly without waiting for all data to be sent. When all data is sent, the module notifies the upper layer through a TX callback function and passes the status parameter <a class="el" href="a00070.html#ggae9a330e1f3a81509399832c7b2c2872fa1e4ed7376c48b94ec9a60f272a629ed4">kStatus_SerialManager_Success</a>. This function sends data using an interrupt method. The interrupt of the hardware could not be disabled. And There can only one buffer for transmission for the writing handle at the same time.</p>
+<p>This is a non-blocking function, which returns directly without waiting for all data to be sent. When all data is sent, the module notifies the upper layer through a TX callback function and passes the status parameter <a class="el" href="a00070.html#gga936dd06c6718edc81ad0423a2bb04ad8a1e4ed7376c48b94ec9a60f272a629ed4">kStatus_SerialManager_Success</a>. This function sends data using an interrupt method. The interrupt of the hardware could not be disabled. And There can only one buffer for transmission for the writing handle at the same time.</p>
 <dl class="section note"><dt>Note</dt><dd>The function <a class="el" href="a00070.html#ga3fab1d6bffd89459be9f23d40874248e" title="Transmits data with the blocking mode. ">SerialManager_WriteBlocking</a> and the function <a class="el" href="a00070.html#ga195f1c0ebf9a66952302003d25a50e6b" title="Transmits data with the non-blocking mode. ">SerialManager_WriteNonBlocking</a> cannot be used at the same time. And, the TX callback is mandatory before the function could be used.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1123,7 +1141,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a> SerialManager_ReadNonBlocking </td>
+          <td class="memname"><a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a> SerialManager_ReadNonBlocking </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00070.html#ga8bfec9c49e40728806d775fdb4bbf78e">serial_read_handle_t</a>&#160;</td>
           <td class="paramname"><em>readHandle</em>, </td>
@@ -1147,7 +1165,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This is a non-blocking function, which returns directly without waiting for all data to be received. When all data is received, the module driver notifies the upper layer through a RX callback function and passes the status parameter <a class="el" href="a00070.html#ggae9a330e1f3a81509399832c7b2c2872fa1e4ed7376c48b94ec9a60f272a629ed4">kStatus_SerialManager_Success</a>. This function receives data using an interrupt method. The interrupt of the hardware could not be disabled. And There can only one buffer for receiving for the reading handle at the same time.</p>
+<p>This is a non-blocking function, which returns directly without waiting for all data to be received. When all data is received, the module driver notifies the upper layer through a RX callback function and passes the status parameter <a class="el" href="a00070.html#gga936dd06c6718edc81ad0423a2bb04ad8a1e4ed7376c48b94ec9a60f272a629ed4">kStatus_SerialManager_Success</a>. This function receives data using an interrupt method. The interrupt of the hardware could not be disabled. And There can only one buffer for receiving for the reading handle at the same time.</p>
 <dl class="section note"><dt>Note</dt><dd>The function <a class="el" href="a00070.html#ga03b1bb5c3dbaa5ea2f0a6e7003f0b4eb" title="Reads data with the blocking mode. ">SerialManager_ReadBlocking</a> and the function <a class="el" href="a00070.html#ga73b6a8e57790ee4d41476ef25488c495" title="Reads data with the non-blocking mode. ">SerialManager_ReadNonBlocking</a> cannot be used at the same time. And, the RX callback is mandatory before the function could be used.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1173,7 +1191,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a> SerialManager_TryRead </td>
+          <td class="memname"><a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a> SerialManager_TryRead </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00070.html#ga8bfec9c49e40728806d775fdb4bbf78e">serial_read_handle_t</a>&#160;</td>
           <td class="paramname"><em>readHandle</em>, </td>
@@ -1229,7 +1247,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a> SerialManager_CancelWriting </td>
+          <td class="memname"><a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a> SerialManager_CancelWriting </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00070.html#gac8319b6189019680778f230eb319530e">serial_write_handle_t</a>&#160;</td>
           <td class="paramname"><em>writeHandle</em></td><td>)</td>
@@ -1237,7 +1255,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The function cancels unfinished send transmission. When the transfer is canceled, the module notifies the upper layer through a TX callback function and passes the status parameter <a class="el" href="a00070.html#ggae9a330e1f3a81509399832c7b2c2872faf01c3a38751393325ab9791d8181ef38">kStatus_SerialManager_Canceled</a>.</p>
+<p>The function cancels unfinished send transmission. When the transfer is canceled, the module notifies the upper layer through a TX callback function and passes the status parameter <a class="el" href="a00070.html#gga936dd06c6718edc81ad0423a2bb04ad8af01c3a38751393325ab9791d8181ef38">kStatus_SerialManager_Canceled</a>.</p>
 <dl class="section note"><dt>Note</dt><dd>The function <a class="el" href="a00070.html#ga54a5b67dbaed110666666e24469fad13" title="Cancels unfinished send transmission. ">SerialManager_CancelWriting</a> cannot be used to abort the transmission of the function <a class="el" href="a00070.html#ga3fab1d6bffd89459be9f23d40874248e" title="Transmits data with the blocking mode. ">SerialManager_WriteBlocking</a>.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1260,7 +1278,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a> SerialManager_CancelReading </td>
+          <td class="memname"><a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a> SerialManager_CancelReading </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00070.html#ga8bfec9c49e40728806d775fdb4bbf78e">serial_read_handle_t</a>&#160;</td>
           <td class="paramname"><em>readHandle</em></td><td>)</td>
@@ -1268,7 +1286,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The function cancels unfinished receive transmission. When the transfer is canceled, the module notifies the upper layer through a RX callback function and passes the status parameter <a class="el" href="a00070.html#ggae9a330e1f3a81509399832c7b2c2872faf01c3a38751393325ab9791d8181ef38">kStatus_SerialManager_Canceled</a>.</p>
+<p>The function cancels unfinished receive transmission. When the transfer is canceled, the module notifies the upper layer through a RX callback function and passes the status parameter <a class="el" href="a00070.html#gga936dd06c6718edc81ad0423a2bb04ad8af01c3a38751393325ab9791d8181ef38">kStatus_SerialManager_Canceled</a>.</p>
 <dl class="section note"><dt>Note</dt><dd>The function <a class="el" href="a00070.html#ga7cb009a3fcc17375bfa591b68008c94e" title="Cancels unfinished receive transmission. ">SerialManager_CancelReading</a> cannot be used to abort the transmission of the function <a class="el" href="a00070.html#ga03b1bb5c3dbaa5ea2f0a6e7003f0b4eb" title="Reads data with the blocking mode. ">SerialManager_ReadBlocking</a>.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1291,7 +1309,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a> SerialManager_InstallTxCallback </td>
+          <td class="memname"><a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a> SerialManager_InstallTxCallback </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00070.html#gac8319b6189019680778f230eb319530e">serial_write_handle_t</a>&#160;</td>
           <td class="paramname"><em>writeHandle</em>, </td>
@@ -1338,7 +1356,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a> SerialManager_InstallRxCallback </td>
+          <td class="memname"><a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a> SerialManager_InstallRxCallback </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00070.html#ga8bfec9c49e40728806d775fdb4bbf78e">serial_read_handle_t</a>&#160;</td>
           <td class="paramname"><em>readHandle</em>, </td>
@@ -1416,7 +1434,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a> SerialManager_EnterLowpower </td>
+          <td class="memname"><a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a> SerialManager_EnterLowpower </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00070.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a>&#160;</td>
           <td class="paramname"><em>serialHandle</em></td><td>)</td>
@@ -1445,7 +1463,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00070.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a> SerialManager_ExitLowpower </td>
+          <td class="memname"><a class="el" href="a00070.html#gac1d9f848c57ca245ad9da8d049369da9">serial_manager_status_t</a> SerialManager_ExitLowpower </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00070.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a>&#160;</td>
           <td class="paramname"><em>serialHandle</em></td><td>)</td>

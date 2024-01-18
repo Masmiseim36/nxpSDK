@@ -14,6 +14,7 @@ var searchData=
   ['lpspi_5fhost_5frequest_5fselect_5ft',['lpspi_host_request_select_t',['../a00049.html#ga9179eac6fe5a70f9350df669a4547b57',1,'fsl_lpspi.h']]],
   ['lpspi_5fmaster_5fslave_5fmode_5ft',['lpspi_master_slave_mode_t',['../a00049.html#gae28cea6ce513555e39a3ac343d05ad52',1,'fsl_lpspi.h']]],
   ['lpspi_5fmatch_5fconfig_5ft',['lpspi_match_config_t',['../a00049.html#gac44bb22e39759dab2695974b9e232396',1,'fsl_lpspi.h']]],
+  ['lpspi_5fpcs_5ffunction_5fconfig_5ft',['lpspi_pcs_function_config_t',['../a00049.html#ga2d1f723773c106d6dcf40a714f29a43d',1,'fsl_lpspi.h']]],
   ['lpspi_5fpcs_5fpolarity_5fconfig_5ft',['lpspi_pcs_polarity_config_t',['../a00049.html#ga6303bce5095876c64d47e3b19e76bd97',1,'fsl_lpspi.h']]],
   ['lpspi_5fpin_5fconfig_5ft',['lpspi_pin_config_t',['../a00049.html#gae5ea17a161935f47c786934c524bb2af',1,'fsl_lpspi.h']]],
   ['lpspi_5fshift_5fdirection_5ft',['lpspi_shift_direction_t',['../a00049.html#ga4116edfccfda3a0788a9b68bb9b50fcd',1,'fsl_lpspi.h']]],

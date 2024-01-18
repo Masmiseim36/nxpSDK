@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -109,48 +109,48 @@ $(document).ready(function(){initNavTree('a00040.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00329"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#a00329">flexio_uart_edma_handle_t</a></td></tr>
-<tr class="memdesc:a00329"><td class="mdescLeft">&#160;</td><td class="mdescRight">UART eDMA handle.  <a href="a00040.html#a00329">More...</a><br/></td></tr>
-<tr class="separator:a00329"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00419"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#a00419">_flexio_uart_edma_handle</a></td></tr>
+<tr class="memdesc:a00419"><td class="mdescLeft">&#160;</td><td class="mdescRight">UART eDMA handle.  <a href="a00040.html#a00419">More...</a><br/></td></tr>
+<tr class="separator:a00419"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:gab5c1a2db5ce578862b1c444884f72355"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#gab5c1a2db5ce578862b1c444884f72355">flexio_uart_edma_transfer_callback_t</a> )(<a class="el" href="a00039.html#a00440">FLEXIO_UART_Type</a> *base, flexio_uart_edma_handle_t *handle, <a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
+<tr class="memitem:gab5c1a2db5ce578862b1c444884f72355"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#gab5c1a2db5ce578862b1c444884f72355">flexio_uart_edma_transfer_callback_t</a> )(<a class="el" href="a00039.html#ga30185969a31768efa7b63fe6abda7b95">FLEXIO_UART_Type</a> *base, <a class="el" href="a00040.html#a00419">flexio_uart_edma_handle_t</a> *handle, <a class="el" href="a00277.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
 <tr class="memdesc:gab5c1a2db5ce578862b1c444884f72355"><td class="mdescLeft">&#160;</td><td class="mdescRight">UART transfer callback function.  <a href="#gab5c1a2db5ce578862b1c444884f72355">More...</a><br/></td></tr>
 <tr class="separator:gab5c1a2db5ce578862b1c444884f72355"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga27242859be8ca56fdd8d82d7610f4a03"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga27242859be8ca56fdd8d82d7610f4a03">FSL_FLEXIO_UART_EDMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00275.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 4, 1))</td></tr>
+<tr class="memitem:ga27242859be8ca56fdd8d82d7610f4a03"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga27242859be8ca56fdd8d82d7610f4a03">FSL_FLEXIO_UART_EDMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00277.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 4, 1))</td></tr>
 <tr class="memdesc:ga27242859be8ca56fdd8d82d7610f4a03"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexIO UART EDMA driver version.  <a href="#ga27242859be8ca56fdd8d82d7610f4a03">More...</a><br/></td></tr>
 <tr class="separator:ga27242859be8ca56fdd8d82d7610f4a03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 eDMA transactional</h2></td></tr>
-<tr class="memitem:ga12598454b08aa7d100725e73c8630ae7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga12598454b08aa7d100725e73c8630ae7">FLEXIO_UART_TransferCreateHandleEDMA</a> (<a class="el" href="a00039.html#a00440">FLEXIO_UART_Type</a> *base, flexio_uart_edma_handle_t *handle, <a class="el" href="a00040.html#gab5c1a2db5ce578862b1c444884f72355">flexio_uart_edma_transfer_callback_t</a> callback, void *userData, <a class="el" href="a00022.html#a00389">edma_handle_t</a> *txEdmaHandle, <a class="el" href="a00022.html#a00389">edma_handle_t</a> *rxEdmaHandle)</td></tr>
+<tr class="memitem:ga12598454b08aa7d100725e73c8630ae7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00277.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga12598454b08aa7d100725e73c8630ae7">FLEXIO_UART_TransferCreateHandleEDMA</a> (<a class="el" href="a00039.html#ga30185969a31768efa7b63fe6abda7b95">FLEXIO_UART_Type</a> *base, <a class="el" href="a00040.html#a00419">flexio_uart_edma_handle_t</a> *handle, <a class="el" href="a00040.html#gab5c1a2db5ce578862b1c444884f72355">flexio_uart_edma_transfer_callback_t</a> callback, void *userData, <a class="el" href="a00022.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *txEdmaHandle, <a class="el" href="a00022.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *rxEdmaHandle)</td></tr>
 <tr class="memdesc:ga12598454b08aa7d100725e73c8630ae7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the UART handle which is used in transactional functions.  <a href="#ga12598454b08aa7d100725e73c8630ae7">More...</a><br/></td></tr>
 <tr class="separator:ga12598454b08aa7d100725e73c8630ae7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga592b71f9369576017a12ad573c8e5b47"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga592b71f9369576017a12ad573c8e5b47">FLEXIO_UART_TransferSendEDMA</a> (<a class="el" href="a00039.html#a00440">FLEXIO_UART_Type</a> *base, flexio_uart_edma_handle_t *handle, <a class="el" href="a00039.html#a00439">flexio_uart_transfer_t</a> *xfer)</td></tr>
+<tr class="memitem:ga592b71f9369576017a12ad573c8e5b47"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00277.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga592b71f9369576017a12ad573c8e5b47">FLEXIO_UART_TransferSendEDMA</a> (<a class="el" href="a00039.html#ga30185969a31768efa7b63fe6abda7b95">FLEXIO_UART_Type</a> *base, <a class="el" href="a00040.html#a00419">flexio_uart_edma_handle_t</a> *handle, <a class="el" href="a00039.html#ga92f01e08c15b9853ff72059fcbd1c64c">flexio_uart_transfer_t</a> *xfer)</td></tr>
 <tr class="memdesc:ga592b71f9369576017a12ad573c8e5b47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends data using eDMA.  <a href="#ga592b71f9369576017a12ad573c8e5b47">More...</a><br/></td></tr>
 <tr class="separator:ga592b71f9369576017a12ad573c8e5b47"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga68fddc9a6831266a2c1d1830511de33a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga68fddc9a6831266a2c1d1830511de33a">FLEXIO_UART_TransferReceiveEDMA</a> (<a class="el" href="a00039.html#a00440">FLEXIO_UART_Type</a> *base, flexio_uart_edma_handle_t *handle, <a class="el" href="a00039.html#a00439">flexio_uart_transfer_t</a> *xfer)</td></tr>
+<tr class="memitem:ga68fddc9a6831266a2c1d1830511de33a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00277.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga68fddc9a6831266a2c1d1830511de33a">FLEXIO_UART_TransferReceiveEDMA</a> (<a class="el" href="a00039.html#ga30185969a31768efa7b63fe6abda7b95">FLEXIO_UART_Type</a> *base, <a class="el" href="a00040.html#a00419">flexio_uart_edma_handle_t</a> *handle, <a class="el" href="a00039.html#ga92f01e08c15b9853ff72059fcbd1c64c">flexio_uart_transfer_t</a> *xfer)</td></tr>
 <tr class="memdesc:ga68fddc9a6831266a2c1d1830511de33a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives data using eDMA.  <a href="#ga68fddc9a6831266a2c1d1830511de33a">More...</a><br/></td></tr>
 <tr class="separator:ga68fddc9a6831266a2c1d1830511de33a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga32be4133e9bf853fd62697942ac7522d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga32be4133e9bf853fd62697942ac7522d">FLEXIO_UART_TransferAbortSendEDMA</a> (<a class="el" href="a00039.html#a00440">FLEXIO_UART_Type</a> *base, flexio_uart_edma_handle_t *handle)</td></tr>
+<tr class="memitem:ga32be4133e9bf853fd62697942ac7522d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga32be4133e9bf853fd62697942ac7522d">FLEXIO_UART_TransferAbortSendEDMA</a> (<a class="el" href="a00039.html#ga30185969a31768efa7b63fe6abda7b95">FLEXIO_UART_Type</a> *base, <a class="el" href="a00040.html#a00419">flexio_uart_edma_handle_t</a> *handle)</td></tr>
 <tr class="memdesc:ga32be4133e9bf853fd62697942ac7522d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the sent data which using eDMA.  <a href="#ga32be4133e9bf853fd62697942ac7522d">More...</a><br/></td></tr>
 <tr class="separator:ga32be4133e9bf853fd62697942ac7522d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab9d8120552c8ce43a1ae2a1e557e65e8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#gab9d8120552c8ce43a1ae2a1e557e65e8">FLEXIO_UART_TransferAbortReceiveEDMA</a> (<a class="el" href="a00039.html#a00440">FLEXIO_UART_Type</a> *base, flexio_uart_edma_handle_t *handle)</td></tr>
+<tr class="memitem:gab9d8120552c8ce43a1ae2a1e557e65e8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#gab9d8120552c8ce43a1ae2a1e557e65e8">FLEXIO_UART_TransferAbortReceiveEDMA</a> (<a class="el" href="a00039.html#ga30185969a31768efa7b63fe6abda7b95">FLEXIO_UART_Type</a> *base, <a class="el" href="a00040.html#a00419">flexio_uart_edma_handle_t</a> *handle)</td></tr>
 <tr class="memdesc:gab9d8120552c8ce43a1ae2a1e557e65e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the receive data which using eDMA.  <a href="#gab9d8120552c8ce43a1ae2a1e557e65e8">More...</a><br/></td></tr>
 <tr class="separator:gab9d8120552c8ce43a1ae2a1e557e65e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae59921c9719237fdf057a1794b87e87b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#gae59921c9719237fdf057a1794b87e87b">FLEXIO_UART_TransferGetSendCountEDMA</a> (<a class="el" href="a00039.html#a00440">FLEXIO_UART_Type</a> *base, flexio_uart_edma_handle_t *handle, size_t *count)</td></tr>
+<tr class="memitem:gae59921c9719237fdf057a1794b87e87b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00277.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#gae59921c9719237fdf057a1794b87e87b">FLEXIO_UART_TransferGetSendCountEDMA</a> (<a class="el" href="a00039.html#ga30185969a31768efa7b63fe6abda7b95">FLEXIO_UART_Type</a> *base, <a class="el" href="a00040.html#a00419">flexio_uart_edma_handle_t</a> *handle, size_t *count)</td></tr>
 <tr class="memdesc:gae59921c9719237fdf057a1794b87e87b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of bytes sent out.  <a href="#gae59921c9719237fdf057a1794b87e87b">More...</a><br/></td></tr>
 <tr class="separator:gae59921c9719237fdf057a1794b87e87b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga35dc8301e5049ca39a7538a4ae70585a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga35dc8301e5049ca39a7538a4ae70585a">FLEXIO_UART_TransferGetReceiveCountEDMA</a> (<a class="el" href="a00039.html#a00440">FLEXIO_UART_Type</a> *base, flexio_uart_edma_handle_t *handle, size_t *count)</td></tr>
+<tr class="memitem:ga35dc8301e5049ca39a7538a4ae70585a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00277.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ga35dc8301e5049ca39a7538a4ae70585a">FLEXIO_UART_TransferGetReceiveCountEDMA</a> (<a class="el" href="a00039.html#ga30185969a31768efa7b63fe6abda7b95">FLEXIO_UART_Type</a> *base, <a class="el" href="a00040.html#a00419">flexio_uart_edma_handle_t</a> *handle, size_t *count)</td></tr>
 <tr class="memdesc:ga35dc8301e5049ca39a7538a4ae70585a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of bytes received.  <a href="#ga35dc8301e5049ca39a7538a4ae70585a">More...</a><br/></td></tr>
 <tr class="separator:ga35dc8301e5049ca39a7538a4ae70585a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00329" id="a00329"></a>
+<a name="a00419" id="a00419"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -161,126 +161,126 @@ eDMA transactional</h2></td></tr>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a51c14c68c9c8fe8880ce0266d0fb517f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00040.html#gab5c1a2db5ce578862b1c444884f72355">flexio_uart_edma_transfer_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#a51c14c68c9c8fe8880ce0266d0fb517f">callback</a></td></tr>
-<tr class="memdesc:a51c14c68c9c8fe8880ce0266d0fb517f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function.  <a href="#a51c14c68c9c8fe8880ce0266d0fb517f">More...</a><br/></td></tr>
-<tr class="separator:a51c14c68c9c8fe8880ce0266d0fb517f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a776db0493a197eba59938811591e6610"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#a776db0493a197eba59938811591e6610">userData</a></td></tr>
-<tr class="memdesc:a776db0493a197eba59938811591e6610"><td class="mdescLeft">&#160;</td><td class="mdescRight">UART callback function parameter.  <a href="#a776db0493a197eba59938811591e6610">More...</a><br/></td></tr>
-<tr class="separator:a776db0493a197eba59938811591e6610"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a731d5bd7e8955a5b19fed52a9d8ce0d4"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#a731d5bd7e8955a5b19fed52a9d8ce0d4">txDataSizeAll</a></td></tr>
-<tr class="memdesc:a731d5bd7e8955a5b19fed52a9d8ce0d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Total bytes to be sent.  <a href="#a731d5bd7e8955a5b19fed52a9d8ce0d4">More...</a><br/></td></tr>
-<tr class="separator:a731d5bd7e8955a5b19fed52a9d8ce0d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9108ad6de559bd14d3b4bb25b08796f6"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#a9108ad6de559bd14d3b4bb25b08796f6">rxDataSizeAll</a></td></tr>
-<tr class="memdesc:a9108ad6de559bd14d3b4bb25b08796f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Total bytes to be received.  <a href="#a9108ad6de559bd14d3b4bb25b08796f6">More...</a><br/></td></tr>
-<tr class="separator:a9108ad6de559bd14d3b4bb25b08796f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afc8e317c4730e3225433e1328fa73d3d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00022.html#a00389">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#afc8e317c4730e3225433e1328fa73d3d">txEdmaHandle</a></td></tr>
-<tr class="memdesc:afc8e317c4730e3225433e1328fa73d3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The eDMA TX channel used.  <a href="#afc8e317c4730e3225433e1328fa73d3d">More...</a><br/></td></tr>
-<tr class="separator:afc8e317c4730e3225433e1328fa73d3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf875faf83b61232522aa9766657c5dc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00022.html#a00389">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#abf875faf83b61232522aa9766657c5dc">rxEdmaHandle</a></td></tr>
-<tr class="memdesc:abf875faf83b61232522aa9766657c5dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">The eDMA RX channel used.  <a href="#abf875faf83b61232522aa9766657c5dc">More...</a><br/></td></tr>
-<tr class="separator:abf875faf83b61232522aa9766657c5dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a31c522fa133f42dc19a10ce3707a3546"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#a31c522fa133f42dc19a10ce3707a3546">nbytes</a></td></tr>
-<tr class="memdesc:a31c522fa133f42dc19a10ce3707a3546"><td class="mdescLeft">&#160;</td><td class="mdescRight">eDMA minor byte transfer count initially configured.  <a href="#a31c522fa133f42dc19a10ce3707a3546">More...</a><br/></td></tr>
-<tr class="separator:a31c522fa133f42dc19a10ce3707a3546"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a565d9e6fef4177d522cb29a55c9fc13d"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#a565d9e6fef4177d522cb29a55c9fc13d">txState</a></td></tr>
-<tr class="memdesc:a565d9e6fef4177d522cb29a55c9fc13d"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX transfer state.  <a href="#a565d9e6fef4177d522cb29a55c9fc13d">More...</a><br/></td></tr>
-<tr class="separator:a565d9e6fef4177d522cb29a55c9fc13d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a41a55d8ad49ffbf71884686e64b62677"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a41a55d8ad49ffbf71884686e64b62677"></a>
-volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#a41a55d8ad49ffbf71884686e64b62677">rxState</a></td></tr>
-<tr class="memdesc:a41a55d8ad49ffbf71884686e64b62677"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX transfer state. <br/></td></tr>
-<tr class="separator:a41a55d8ad49ffbf71884686e64b62677"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef83e978f70e106922c6a720590cdae9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00040.html#gab5c1a2db5ce578862b1c444884f72355">flexio_uart_edma_transfer_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#aef83e978f70e106922c6a720590cdae9">callback</a></td></tr>
+<tr class="memdesc:aef83e978f70e106922c6a720590cdae9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function.  <a href="#aef83e978f70e106922c6a720590cdae9">More...</a><br/></td></tr>
+<tr class="separator:aef83e978f70e106922c6a720590cdae9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d83eec0c65da6fa5ed583d1ab0a35e1"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#a0d83eec0c65da6fa5ed583d1ab0a35e1">userData</a></td></tr>
+<tr class="memdesc:a0d83eec0c65da6fa5ed583d1ab0a35e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">UART callback function parameter.  <a href="#a0d83eec0c65da6fa5ed583d1ab0a35e1">More...</a><br/></td></tr>
+<tr class="separator:a0d83eec0c65da6fa5ed583d1ab0a35e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45256d7196f9b31fe7e77c72f2ca8c1a"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#a45256d7196f9b31fe7e77c72f2ca8c1a">txDataSizeAll</a></td></tr>
+<tr class="memdesc:a45256d7196f9b31fe7e77c72f2ca8c1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Total bytes to be sent.  <a href="#a45256d7196f9b31fe7e77c72f2ca8c1a">More...</a><br/></td></tr>
+<tr class="separator:a45256d7196f9b31fe7e77c72f2ca8c1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6127da74811a5723b6c7fcf9ee3ad793"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#a6127da74811a5723b6c7fcf9ee3ad793">rxDataSizeAll</a></td></tr>
+<tr class="memdesc:a6127da74811a5723b6c7fcf9ee3ad793"><td class="mdescLeft">&#160;</td><td class="mdescRight">Total bytes to be received.  <a href="#a6127da74811a5723b6c7fcf9ee3ad793">More...</a><br/></td></tr>
+<tr class="separator:a6127da74811a5723b6c7fcf9ee3ad793"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0424ba23043913b6825196c27fa5863c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00022.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#a0424ba23043913b6825196c27fa5863c">txEdmaHandle</a></td></tr>
+<tr class="memdesc:a0424ba23043913b6825196c27fa5863c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The eDMA TX channel used.  <a href="#a0424ba23043913b6825196c27fa5863c">More...</a><br/></td></tr>
+<tr class="separator:a0424ba23043913b6825196c27fa5863c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:addf127a2e5ad1aef6f63d352cee25810"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00022.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#addf127a2e5ad1aef6f63d352cee25810">rxEdmaHandle</a></td></tr>
+<tr class="memdesc:addf127a2e5ad1aef6f63d352cee25810"><td class="mdescLeft">&#160;</td><td class="mdescRight">The eDMA RX channel used.  <a href="#addf127a2e5ad1aef6f63d352cee25810">More...</a><br/></td></tr>
+<tr class="separator:addf127a2e5ad1aef6f63d352cee25810"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae237261bf33afdcd17114cd2b2bde92"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#aae237261bf33afdcd17114cd2b2bde92">nbytes</a></td></tr>
+<tr class="memdesc:aae237261bf33afdcd17114cd2b2bde92"><td class="mdescLeft">&#160;</td><td class="mdescRight">eDMA minor byte transfer count initially configured.  <a href="#aae237261bf33afdcd17114cd2b2bde92">More...</a><br/></td></tr>
+<tr class="separator:aae237261bf33afdcd17114cd2b2bde92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a048c435d538782320171effed4444e98"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#a048c435d538782320171effed4444e98">txState</a></td></tr>
+<tr class="memdesc:a048c435d538782320171effed4444e98"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX transfer state.  <a href="#a048c435d538782320171effed4444e98">More...</a><br/></td></tr>
+<tr class="separator:a048c435d538782320171effed4444e98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1725e1b2282f1d0f9f47ab36247af11"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae1725e1b2282f1d0f9f47ab36247af11"></a>
+volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00040.html#ae1725e1b2282f1d0f9f47ab36247af11">rxState</a></td></tr>
+<tr class="memdesc:ae1725e1b2282f1d0f9f47ab36247af11"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX transfer state. <br/></td></tr>
+<tr class="separator:ae1725e1b2282f1d0f9f47ab36247af11"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a51c14c68c9c8fe8880ce0266d0fb517f"></a>
+<a class="anchor" id="aef83e978f70e106922c6a720590cdae9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00040.html#gab5c1a2db5ce578862b1c444884f72355">flexio_uart_edma_transfer_callback_t</a> flexio_uart_edma_handle_t::callback</td>
+          <td class="memname"><a class="el" href="a00040.html#gab5c1a2db5ce578862b1c444884f72355">flexio_uart_edma_transfer_callback_t</a> _flexio_uart_edma_handle::callback</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a776db0493a197eba59938811591e6610"></a>
+<a class="anchor" id="a0d83eec0c65da6fa5ed583d1ab0a35e1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void* flexio_uart_edma_handle_t::userData</td>
+          <td class="memname">void* _flexio_uart_edma_handle::userData</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a731d5bd7e8955a5b19fed52a9d8ce0d4"></a>
+<a class="anchor" id="a45256d7196f9b31fe7e77c72f2ca8c1a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">size_t flexio_uart_edma_handle_t::txDataSizeAll</td>
+          <td class="memname">size_t _flexio_uart_edma_handle::txDataSizeAll</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a9108ad6de559bd14d3b4bb25b08796f6"></a>
+<a class="anchor" id="a6127da74811a5723b6c7fcf9ee3ad793"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">size_t flexio_uart_edma_handle_t::rxDataSizeAll</td>
+          <td class="memname">size_t _flexio_uart_edma_handle::rxDataSizeAll</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="afc8e317c4730e3225433e1328fa73d3d"></a>
+<a class="anchor" id="a0424ba23043913b6825196c27fa5863c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00022.html#a00389">edma_handle_t</a>* flexio_uart_edma_handle_t::txEdmaHandle</td>
+          <td class="memname"><a class="el" href="a00022.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a>* _flexio_uart_edma_handle::txEdmaHandle</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="abf875faf83b61232522aa9766657c5dc"></a>
+<a class="anchor" id="addf127a2e5ad1aef6f63d352cee25810"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00022.html#a00389">edma_handle_t</a>* flexio_uart_edma_handle_t::rxEdmaHandle</td>
+          <td class="memname"><a class="el" href="a00022.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a>* _flexio_uart_edma_handle::rxEdmaHandle</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a31c522fa133f42dc19a10ce3707a3546"></a>
+<a class="anchor" id="aae237261bf33afdcd17114cd2b2bde92"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t flexio_uart_edma_handle_t::nbytes</td>
+          <td class="memname">uint8_t _flexio_uart_edma_handle::nbytes</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a565d9e6fef4177d522cb29a55c9fc13d"></a>
+<a class="anchor" id="a048c435d538782320171effed4444e98"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile uint8_t flexio_uart_edma_handle_t::txState</td>
+          <td class="memname">volatile uint8_t _flexio_uart_edma_handle::txState</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -296,7 +296,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_FLEXIO_UART_EDMA_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00275.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 4, 1))</td>
+          <td class="memname">#define FSL_FLEXIO_UART_EDMA_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00277.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 4, 1))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -309,7 +309,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* flexio_uart_edma_transfer_callback_t)(<a class="el" href="a00039.html#a00440">FLEXIO_UART_Type</a> *base, flexio_uart_edma_handle_t *handle, <a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
+          <td class="memname">typedef void(* flexio_uart_edma_transfer_callback_t)(<a class="el" href="a00039.html#ga30185969a31768efa7b63fe6abda7b95">FLEXIO_UART_Type</a> *base, <a class="el" href="a00040.html#a00419">flexio_uart_edma_handle_t</a> *handle, <a class="el" href="a00277.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -322,15 +322,15 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_UART_TransferCreateHandleEDMA </td>
+          <td class="memname"><a class="el" href="a00277.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_UART_TransferCreateHandleEDMA </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00039.html#a00440">FLEXIO_UART_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00039.html#ga30185969a31768efa7b63fe6abda7b95">FLEXIO_UART_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">flexio_uart_edma_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00040.html#a00419">flexio_uart_edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -348,13 +348,13 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00022.html#a00389">edma_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00022.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>txEdmaHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00022.html#a00389">edma_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00022.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>rxEdmaHandle</em>&#160;</td>
         </tr>
         <tr>
@@ -366,7 +366,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00039.html#a00440" title="Define FlexIO UART access structure typedef. ">FLEXIO_UART_Type</a>. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to FLEXIO_UART_Type. </td></tr>
     <tr><td class="paramname">handle</td><td>Pointer to flexio_uart_edma_handle_t structure. </td></tr>
     <tr><td class="paramname">callback</td><td>The callback function. </td></tr>
     <tr><td class="paramname">userData</td><td>The parameter of the callback function. </td></tr>
@@ -390,21 +390,21 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_UART_TransferSendEDMA </td>
+          <td class="memname"><a class="el" href="a00277.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_UART_TransferSendEDMA </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00039.html#a00440">FLEXIO_UART_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00039.html#ga30185969a31768efa7b63fe6abda7b95">FLEXIO_UART_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">flexio_uart_edma_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00040.html#a00419">flexio_uart_edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00039.html#a00439">flexio_uart_transfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00039.html#ga92f01e08c15b9853ff72059fcbd1c64c">flexio_uart_transfer_t</a> *&#160;</td>
           <td class="paramname"><em>xfer</em>&#160;</td>
         </tr>
         <tr>
@@ -417,9 +417,9 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <p>This function sends data using eDMA. This is a non-blocking function, which returns right away. When all data is sent out, the send callback function is called.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00039.html#a00440" title="Define FlexIO UART access structure typedef. ">FLEXIO_UART_Type</a> </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to FLEXIO_UART_Type </td></tr>
     <tr><td class="paramname">handle</td><td>UART handle pointer. </td></tr>
-    <tr><td class="paramname">xfer</td><td>UART eDMA transfer structure, see <a class="el" href="a00039.html#a00439" title="Define FlexIO UART transfer structure. ">flexio_uart_transfer_t</a>. </td></tr>
+    <tr><td class="paramname">xfer</td><td>UART eDMA transfer structure, see <a class="el" href="a00039.html#ga92f01e08c15b9853ff72059fcbd1c64c" title="Define FlexIO UART transfer structure. ">flexio_uart_transfer_t</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -438,21 +438,21 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_UART_TransferReceiveEDMA </td>
+          <td class="memname"><a class="el" href="a00277.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_UART_TransferReceiveEDMA </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00039.html#a00440">FLEXIO_UART_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00039.html#ga30185969a31768efa7b63fe6abda7b95">FLEXIO_UART_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">flexio_uart_edma_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00040.html#a00419">flexio_uart_edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00039.html#a00439">flexio_uart_transfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00039.html#ga92f01e08c15b9853ff72059fcbd1c64c">flexio_uart_transfer_t</a> *&#160;</td>
           <td class="paramname"><em>xfer</em>&#160;</td>
         </tr>
         <tr>
@@ -465,9 +465,9 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <p>This function receives data using eDMA. This is a non-blocking function, which returns right away. When all data is received, the receive callback function is called.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00039.html#a00440" title="Define FlexIO UART access structure typedef. ">FLEXIO_UART_Type</a> </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to FLEXIO_UART_Type </td></tr>
     <tr><td class="paramname">handle</td><td>Pointer to flexio_uart_edma_handle_t structure </td></tr>
-    <tr><td class="paramname">xfer</td><td>UART eDMA transfer structure, see <a class="el" href="a00039.html#a00439" title="Define FlexIO UART transfer structure. ">flexio_uart_transfer_t</a>. </td></tr>
+    <tr><td class="paramname">xfer</td><td>UART eDMA transfer structure, see <a class="el" href="a00039.html#ga92f01e08c15b9853ff72059fcbd1c64c" title="Define FlexIO UART transfer structure. ">flexio_uart_transfer_t</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -488,13 +488,13 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
         <tr>
           <td class="memname">void FLEXIO_UART_TransferAbortSendEDMA </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00039.html#a00440">FLEXIO_UART_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00039.html#ga30185969a31768efa7b63fe6abda7b95">FLEXIO_UART_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">flexio_uart_edma_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00040.html#a00419">flexio_uart_edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>&#160;</td>
         </tr>
         <tr>
@@ -507,7 +507,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <p>This function aborts sent data which using eDMA.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00039.html#a00440" title="Define FlexIO UART access structure typedef. ">FLEXIO_UART_Type</a> </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to FLEXIO_UART_Type </td></tr>
     <tr><td class="paramname">handle</td><td>Pointer to flexio_uart_edma_handle_t structure </td></tr>
   </table>
   </dd>
@@ -522,13 +522,13 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
         <tr>
           <td class="memname">void FLEXIO_UART_TransferAbortReceiveEDMA </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00039.html#a00440">FLEXIO_UART_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00039.html#ga30185969a31768efa7b63fe6abda7b95">FLEXIO_UART_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">flexio_uart_edma_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00040.html#a00419">flexio_uart_edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>&#160;</td>
         </tr>
         <tr>
@@ -541,7 +541,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <p>This function aborts the receive data which using eDMA.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00039.html#a00440" title="Define FlexIO UART access structure typedef. ">FLEXIO_UART_Type</a> </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to FLEXIO_UART_Type </td></tr>
     <tr><td class="paramname">handle</td><td>Pointer to flexio_uart_edma_handle_t structure </td></tr>
   </table>
   </dd>
@@ -554,15 +554,15 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_UART_TransferGetSendCountEDMA </td>
+          <td class="memname"><a class="el" href="a00277.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_UART_TransferGetSendCountEDMA </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00039.html#a00440">FLEXIO_UART_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00039.html#ga30185969a31768efa7b63fe6abda7b95">FLEXIO_UART_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">flexio_uart_edma_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00040.html#a00419">flexio_uart_edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -581,7 +581,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <p>This function gets the number of bytes sent out.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00039.html#a00440" title="Define FlexIO UART access structure typedef. ">FLEXIO_UART_Type</a> </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to FLEXIO_UART_Type </td></tr>
     <tr><td class="paramname">handle</td><td>Pointer to flexio_uart_edma_handle_t structure </td></tr>
     <tr><td class="paramname">count</td><td>Number of bytes sent so far by the non-blocking transaction. </td></tr>
   </table>
@@ -602,15 +602,15 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_UART_TransferGetReceiveCountEDMA </td>
+          <td class="memname"><a class="el" href="a00277.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_UART_TransferGetReceiveCountEDMA </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00039.html#a00440">FLEXIO_UART_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00039.html#ga30185969a31768efa7b63fe6abda7b95">FLEXIO_UART_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">flexio_uart_edma_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00040.html#a00419">flexio_uart_edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -629,7 +629,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <p>This function gets the number of bytes received.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to <a class="el" href="a00039.html#a00440" title="Define FlexIO UART access structure typedef. ">FLEXIO_UART_Type</a> </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to FLEXIO_UART_Type </td></tr>
     <tr><td class="paramname">handle</td><td>Pointer to flexio_uart_edma_handle_t structure </td></tr>
     <tr><td class="paramname">count</td><td>Number of bytes received so far by the non-blocking transaction. </td></tr>
   </table>

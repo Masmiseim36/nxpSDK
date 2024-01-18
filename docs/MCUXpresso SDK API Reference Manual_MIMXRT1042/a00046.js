@@ -99,6 +99,8 @@ var a00046 =
     [ "LPI2C_MasterInit", "a00046.html#ga31c7e21bae74602cb831109e7de33ade", null ],
     [ "LPI2C_MasterDeinit", "a00046.html#ga1e5ac26414d36018ac33f31332026b82", null ],
     [ "LPI2C_MasterConfigureDataMatch", "a00046.html#ga050bfe41a14a866968dbf8e88d4a7159", null ],
+    [ "LPI2C_MasterCheckAndClearError", "a00046.html#ga3f45d7022fbebbf34ca852e2b61ddb14", null ],
+    [ "LPI2C_CheckForBusyBus", "a00046.html#ga699f43147cfc18f479f8dad8bbefc973", null ],
     [ "LPI2C_MasterReset", "a00046.html#ga75ac46a8612bfb21b52699a3feb2cd03", null ],
     [ "LPI2C_MasterEnable", "a00046.html#ga46bd9c4d6579fa0273c3a1cc1c94b65a", null ],
     [ "LPI2C_MasterGetStatusFlags", "a00046.html#ga02cab0c6281b9532bd6f8e2b04e5a2ba", null ],

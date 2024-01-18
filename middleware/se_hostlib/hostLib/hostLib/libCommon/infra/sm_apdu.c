@@ -17,6 +17,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <limits.h>
 
 
 #if defined(SSS_USE_FTR_FILE)
@@ -64,6 +65,7 @@ U8 AllocateAPDUBuffer(apdu_t *pApdu)
     // In case of e.g. TGT_A7, pApdu is pointing to a structure defined on the stack
     // so pApdu->pBuf contains random data
     pApdu->pBuf = sharedApduBuffer;
+    pApdu->rxlen = sizeof(sharedApduBuffer);
 
 exit:
     return 0;
@@ -122,7 +124,7 @@ U8 SetApduHeader(apdu_t * pApdu, U8 extendedLength)
     pApdu->buflen = pApdu->offset;
 
     // Set rxlen to default value
-    pApdu->rxlen = 0;
+    //pApdu->rxlen = 0;
 
     ret = (U8)(pApdu->offset);
 exit:
@@ -584,6 +586,9 @@ U16 smApduAppendCmdData(apdu_t *pApdu, const U8 *data, U16 dataLen)
     else
 #endif // SSS_HAVE_APPLET_A71CH_SIM
     {
+        if ((SHRT_MAX - pApdu->lc) < dataLen) {
+            goto exit;
+        }
         pApdu->lc += dataLen;
     }
 
@@ -607,7 +612,13 @@ U16 smApduAppendCmdData(apdu_t *pApdu, const U8 *data, U16 dataLen)
         return ERR_INTERNAL_BUF_TOO_SMALL;
     }
 #else // defined(TGT_A71CH) || defined(TGT_A71CL)
+    if ((MAX_APDU_BUF_LENGTH - pApdu->offset) < dataLen) {
+        goto exit;
+    }
     memcpy(&pApdu->pBuf[pApdu->offset], data, dataLen);
+    if ((SHRT_MAX - pApdu->offset) < dataLen) {
+        goto exit;
+    }
     pApdu->offset += dataLen;
 #endif // defined(TGT_A71CH) || defined(TGT_A71CL)
 
@@ -635,6 +646,9 @@ U16 smGetSw(apdu_t *pApdu, U8 *pIsOk)
     if (pApdu->rxlen >= 2)
     {
         offset = pApdu->rxlen - 2;
+        if (offset >= (MAX_APDU_BUF_LENGTH - 1)) {
+            goto exit;
+        }
         sw = (pApdu->pBuf[offset] << 8) + pApdu->pBuf[offset + 1];
 
         if (sw == SW_OK)
@@ -723,6 +737,9 @@ U16 smApduGetResponseBody(apdu_t *pApdu, U8 *buf, U16 *bufLen)
 #if defined(TGT_A71CL)
                 if (pApdu->rxHasChkSum == 1) {
                     if (smVerifyCrc(pApdu, *bufLen)) {
+                        if ((MAX_APDU_BUF_LENGTH - pApdu->offset) < (*bufLen)) {
+                            goto exit;
+                        }
                         memcpy(buf, &(pApdu->pBuf[pApdu->offset]), *bufLen);
                     } else {
                         return ERR_CRC_CHKSUM_VERIFY;
@@ -732,6 +749,9 @@ U16 smApduGetResponseBody(apdu_t *pApdu, U8 *buf, U16 *bufLen)
 #endif
                 {
                     if (*bufLen) {
+                        if ((MAX_APDU_BUF_LENGTH - pApdu->offset) < (*bufLen)) {
+                            goto exit;
+                        }
                         memcpy(buf, &(pApdu->pBuf[pApdu->offset]), *bufLen);
                     }
                 }
@@ -772,6 +792,7 @@ exit:
 
 bool smApduGetArrayBytes(char *str, size_t *len, uint8_t *buffer, size_t buffer_len)
 {
+    char *pos = NULL;
     if ((strlen(str) % 2) != 0) {
         LOG_E("Invalid length");
         return false;
@@ -784,7 +805,7 @@ bool smApduGetArrayBytes(char *str, size_t *len, uint8_t *buffer, size_t buffer_
         *len = 0;
         return false;
     }
-    char *pos = str;
+    pos = str;
     for (size_t count = 0; count < *len; count++) {
         if (sscanf(pos, "%2hhx", &buffer[count]) < 1) {
             *len = 0;

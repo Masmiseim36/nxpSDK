@@ -16,30 +16,10 @@
 #include "sm_timer.h"
 #include "sm_types.h"
 #include "fsl_common.h"
-#if FSL_FEATURE_SOC_PIT_COUNT
-#include "fsl_pit.h"
-#endif
+#include "se_board_config.h"
 #include "se05x_apis.h"
 
 #if FSL_FEATURE_SOC_PIT_COUNT
-#define SE_PIT_RESET_HANDLER PIT0_IRQHandler
-#ifdef CPU_MIMXRT1062DVL6A
-#define PIT_BASE_ADDR PIT
-#define PIT_IRQ_ID PIT_IRQn
-/* Get source clock for PIT driver */
-#define PIT_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_OscClk)
-#endif // CPU_MIMXRT1062DVL6A
-#ifdef CPU_MIMXRT1176DVMAA_cm7
-#define PIT_BASE_ADDR PIT1
-#define PIT_IRQ_ID PIT1_IRQn
-#define PIT_SOURCE_CLOCK CLOCK_GetRootClockFreq(kCLOCK_Root_Bus)
-#endif // CPU_MIMXRT1176DVMAA_cm7
-#ifdef FRDM_K64F
-#define PIT_BASE_ADDR PIT
-#define PIT_IRQ_ID PIT0_IRQn
-/* Get source clock for PIT driver */
-#define PIT_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_BusClk)
-#endif // FRDM_K64F
 
 void SE_PIT_RESET_HANDLER(void)
 {

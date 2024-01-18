@@ -224,6 +224,7 @@
           <name>CCDefines</name>
           <state>DEBUG</state>
           <state>CPU_MIMXRT1062DVL6B</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
@@ -355,6 +356,7 @@
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/nor</state>
@@ -1308,6 +1310,7 @@
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>DEBUG</state>
           <state>CPU_MIMXRT1062DVL6B</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
@@ -1439,6 +1442,7 @@
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/nor</state>
@@ -2392,6 +2396,7 @@
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT1062DVL6B</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
@@ -2523,6 +2528,7 @@
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/nor</state>
@@ -3474,6 +3480,7 @@
           <name>CCDefines</name>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1062DVL6B</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
@@ -3605,6 +3612,7 @@
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/nor</state>
@@ -4558,6 +4566,7 @@
           <state>SKIP_SYSCLK_INIT</state>
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1062DVL6B</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
@@ -4689,6 +4698,7 @@
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/nor</state>
@@ -5642,6 +5652,7 @@
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1062DVL6B</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
@@ -5773,6 +5784,7 @@
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../components/flash/nor</state>
@@ -6543,7 +6555,7 @@
   <group>
     <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
   <group>
@@ -6643,6 +6655,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/fsl_assert.h</name>
     </file>
   </group>
   <group>

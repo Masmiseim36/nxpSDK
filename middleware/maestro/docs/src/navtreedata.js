@@ -49,8 +49,8 @@ var NAVTREE =
         [ "Codecs", "index.html#autotoc_md19", null ],
         [ "VIT", "index.html#autotoc_md20", null ],
         [ "VoiceSeeker", "index.html#autotoc_md21", null ],
-        [ "EAP", "index.html#autotoc_md22", null ],
-        [ "SSRC", "index.html#autotoc_md23", null ]
+        [ "SSRC", "index.html#autotoc_md22", null ],
+        [ "ASRC", "index.html#autotoc_md23", null ]
       ] ]
     ] ],
     [ "Maestro Audio Framework Programmer's Guide", "md_ProgrammersGuide.html", [
@@ -143,13 +143,13 @@ var NAVTREEINDEX =
 "LVC__Types_8h.html",
 "audio__sink__pcmrtos_8h.html#a043254bd941a12bd9c487f39e3d74990",
 "decoder_8h.html#a10aab45d4e85d74dffe02b5e0b27ded2",
-"globals_defs_y.html",
-"pad_8h.html#a0557c37b7b3093294af1c6794979cca0",
+"globals_defs_x.html",
+"pad_8h.html#a02291801821c51de06e39c5136db8905aebad261a2b86b1b8fd42cf3aa8ac36c6",
 "streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958",
-"streamer__element__properties_8h.html#a3813dce788312ca7db2f66b1392ac236",
-"structElementEncoder.html#a1daa4bc6b8a6731330eabf55d56a82f0",
-"struct__ElementAudioSink.html#abb904fd48c04c976b54fb47d04b4414c",
-"structringbuf.html#af43bcf56233301d218aa6042e5457623"
+"streamer__element__properties_8h.html#a4a97f3d5b16e42e0b55344c550cd0091",
+"structElementNetbufSrc.html",
+"struct__ElementAudioSrc.html#a24a53fd05ab8035693f047d5bc5a63cf",
+"vit__sink_8c.html#abcd2aecfcdc5e56cf91c840acefb5bf9"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

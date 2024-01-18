@@ -13,15 +13,13 @@
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
 **     Reference manual:    IMXRT1060RM Rev.3, 07/2021 | IMXRT106XSRM Rev.0
 **     Version:             rev. 0.2, 2022-03-25
-**     Build:               b221009
+**     Build:               b230508
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2022 NXP
-**     All rights reserved.
-**
+**     Copyright 2016-2023 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -37,7 +35,11 @@ define symbol m_interrupts_start       = 0x60002000;
 define symbol m_interrupts_end         = 0x600023FF;
 
 define symbol m_text_start             = 0x60002400;
+if (isdefinedsymbol(__use_flash16MB__)) {
+define symbol m_text_end               = 0x60FFFFFF;
+} else{
 define symbol m_text_end               = 0x607FFFFF;
+}
 
 define symbol m_interrupts_ram_start   = 0x20000000;
 define symbol m_interrupts_ram_end     = 0x20000000 + __ram_vector_table_offset__;

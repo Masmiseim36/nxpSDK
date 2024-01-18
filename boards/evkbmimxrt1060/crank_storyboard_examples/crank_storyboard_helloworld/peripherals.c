@@ -57,7 +57,7 @@ instance:
 - name: 'LPUART_1'
 - type: 'lpuart'
 - mode: 'polling'
-- type_id: 'lpuart_bebe3e12b6ec22bbd14199038f2bf459'
+- type_id: 'lpuart_65a7af1f2e04f737cb1c75e9f68585ac'
 - functional_group: 'BOARD_InitPeripherals'
 - peripheral: 'LPUART1'
 - config_sets:
@@ -113,7 +113,7 @@ instance:
 - name: 'LPI2C_1'
 - type: 'lpi2c'
 - mode: 'master'
-- type_id: 'lpi2c_db68d4f4f06a22e25ab51fe9bd6db4d2'
+- type_id: 'lpi2c_6b71962515c3208facfccd030afebc98'
 - functional_group: 'BOARD_InitPeripherals'
 - peripheral: 'LPI2C1'
 - config_sets:

@@ -6,8 +6,8 @@
  */
 
 /*! File: frdm_stbi_a8974_shield.h
-* @brief The frdm_stbi_a8974_shield.h file declares arduino pin mapping for frdm_stbi_a8974_shield with frdm-k22f.
-*/
+ * @brief The frdm_stbi_a8974_shield.h file declares arduino pin mapping for frdm_stbi_a8974_shield with frdm-k22f.
+ */
 
 #ifndef _FRDM_STBI_A8974_SHIELD_H_
 #define _FRDM_STBI_A8974_SHIELD_H_

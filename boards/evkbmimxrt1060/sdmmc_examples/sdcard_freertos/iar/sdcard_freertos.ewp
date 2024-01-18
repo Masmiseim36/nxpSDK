@@ -226,6 +226,7 @@
           <state>CPU_MIMXRT1062DVL6B</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SD_ENABLED</state>
           <state>SDK_OS_FREE_RTOS</state>
@@ -363,6 +364,7 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
@@ -1321,6 +1323,7 @@
           <state>CPU_MIMXRT1062DVL6B</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SD_ENABLED</state>
           <state>SDK_OS_FREE_RTOS</state>
@@ -1458,6 +1461,7 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
@@ -2416,6 +2420,7 @@
           <state>CPU_MIMXRT1062DVL6B</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SD_ENABLED</state>
           <state>SDK_OS_FREE_RTOS</state>
@@ -2553,6 +2558,7 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
@@ -3509,6 +3515,7 @@
           <state>CPU_MIMXRT1062DVL6B</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SD_ENABLED</state>
           <state>SDK_OS_FREE_RTOS</state>
@@ -3646,6 +3653,7 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
@@ -4604,6 +4612,7 @@
           <state>CPU_MIMXRT1062DVL6B</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SD_ENABLED</state>
           <state>SDK_OS_FREE_RTOS</state>
@@ -4741,6 +4750,7 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
@@ -5699,6 +5709,7 @@
           <state>CPU_MIMXRT1062DVL6B</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SD_ENABLED</state>
           <state>SDK_OS_FREE_RTOS</state>
@@ -5836,6 +5847,7 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
@@ -6612,7 +6624,7 @@
   <group>
     <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
   <group>
@@ -6943,6 +6955,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/fsl_assert.h</name>
     </file>
   </group>
   <group>

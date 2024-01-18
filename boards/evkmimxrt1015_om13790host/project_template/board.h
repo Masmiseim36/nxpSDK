@@ -56,7 +56,7 @@
 
 #define USER_LED_INIT(output)                                            \
     GPIO_PinWrite(BOARD_USER_LED_GPIO, BOARD_USER_LED_GPIO_PIN, output); \
-    BOARD_USER_LED_GPIO->GDIR |= (1U << BOARD_USER_LED_GPIO_PIN) /*!< Enable target USER_LED */
+    BOARD_USER_LED_GPIO->GDIR |= (1U << BOARD_USER_LED_GPIO_PIN)                        /*!< Enable target USER_LED */
 #define USER_LED_ON() \
     GPIO_PortClear(BOARD_USER_LED_GPIO, 1U << BOARD_USER_LED_GPIO_PIN)                  /*!< Turn off target USER_LED */
 #define USER_LED_OFF() GPIO_PortSet(BOARD_USER_LED_GPIO, 1U << BOARD_USER_LED_GPIO_PIN) /*!<Turn on target USER_LED*/
@@ -86,23 +86,6 @@
 #define BOARD_ARDUINO_INT_IRQ   (GPIO1_Combined_16_31_IRQn)
 #define BOARD_ARDUINO_I2C_IRQ   (LPI2C1_IRQn)
 #define BOARD_ARDUINO_I2C_INDEX (1)
-
-/*! @brief The WIFI-QCA shield pin. */
-#define BOARD_INITSILEX2401SHIELD_PWRON_GPIO      GPIO2               /*!< GPIO device name: GPIO */
-#define BOARD_INITSILEX2401SHIELD_PWRON_PORT      2U                  /*!< PORT device index: 2 */
-#define BOARD_INITSILEX2401SHIELD_PWRON_PIN       7U                  /*!< PIO3 pin index: 7 */
-#define BOARD_INITSILEX2401SHIELD_PWRON_PIN_NAME  GPIO2_07            /*!< Pin name */
-#define BOARD_INITSILEX2401SHIELD_PWRON_LABEL     "PWRON"             /*!< Label */
-#define BOARD_INITSILEX2401SHIELD_PWRON_NAME      "PWRON"             /*!< Identifier name */
-#define BOARD_INITSILEX2401SHIELD_PWRON_DIRECTION kGPIO_DigitalOutput /*!< Direction */
-
-#define BOARD_INITSILEX2401SHIELD_IRQ_GPIO      GPIO2              /*!< GPIO device name: GPIO */
-#define BOARD_INITSILEX2401SHIELD_IRQ_PORT      2U                 /*!< PORT device index: 2 */
-#define BOARD_INITSILEX2401SHIELD_IRQ_PIN       6U                 /*!< PIO2 pin index: 6 */
-#define BOARD_INITSILEX2401SHIELD_IRQ_PIN_NAME  GPIO2_06           /*!< Pin name */
-#define BOARD_INITSILEX2401SHIELD_IRQ_LABEL     "IRQ"              /*!< Label */
-#define BOARD_INITSILEX2401SHIELD_IRQ_NAME      "IRQ"              /*!< Identifier name */
-#define BOARD_INITSILEX2401SHIELD_IRQ_DIRECTION kGPIO_DigitalInput /*!< Direction */
 
 #if defined(__cplusplus)
 extern "C" {

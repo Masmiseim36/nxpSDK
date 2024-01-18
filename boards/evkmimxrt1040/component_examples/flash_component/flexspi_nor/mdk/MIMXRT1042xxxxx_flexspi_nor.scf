@@ -85,6 +85,8 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
     nor_flash_ops.o (+RO +RW +ZI)
     fsl_flexspi.o (+RO +RW +ZI)
     fsl_clock.o (+RO +RW +ZI)
+    memcpy.o (+RO +RW +ZI)
+    memseta.o (+RO +RW +ZI)
     * (NonCacheable.init)
     * (*NonCacheable)
   }

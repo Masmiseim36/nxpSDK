@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -668,8 +668,8 @@ Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
 <tr class="memitem:ga8bda5d1da1f6b7150e002c109a62d083"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8bda5d1da1f6b7150e002c109a62d083"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ga8bda5d1da1f6b7150e002c109a62d083">FSL_PWM_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 6, 1))</td></tr>
-<tr class="memdesc:ga8bda5d1da1f6b7150e002c109a62d083"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version 2.6.1. <br/></td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ga8bda5d1da1f6b7150e002c109a62d083">FSL_PWM_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 8, 3))</td></tr>
+<tr class="memdesc:ga8bda5d1da1f6b7150e002c109a62d083"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version 2.8.3. <br/></td></tr>
 <tr class="separator:ga8bda5d1da1f6b7150e002c109a62d083"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
@@ -698,6 +698,9 @@ Module PWM output</h2></td></tr>
 <tr class="memitem:ga46eebd874652ec8e9c9b128bbd6057df"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ga46eebd874652ec8e9c9b128bbd6057df">PWM_UpdatePwmDutycycleHighAccuracy</a> (PWM_Type *base, <a class="el" href="a00059.html#ga467e18574027c8e3bde8f61a3fe61010">pwm_submodule_t</a> subModule, <a class="el" href="a00059.html#ga595affbbaec64a811545de35ae1914ce">pwm_channels_t</a> pwmSignal, <a class="el" href="a00059.html#ga562b5946a0edd6f5eebb63db7d154d56">pwm_mode_t</a> currPwmMode, uint16_t dutyCycle)</td></tr>
 <tr class="memdesc:ga46eebd874652ec8e9c9b128bbd6057df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the PWM signal's dutycycle with 16-bit accuracy.  <a href="#ga46eebd874652ec8e9c9b128bbd6057df">More...</a><br/></td></tr>
 <tr class="separator:ga46eebd874652ec8e9c9b128bbd6057df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad7b7c9c350cb85b47cba12ce6d68b5aa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#gad7b7c9c350cb85b47cba12ce6d68b5aa">PWM_UpdatePwmPeriodAndDutycycle</a> (PWM_Type *base, <a class="el" href="a00059.html#ga467e18574027c8e3bde8f61a3fe61010">pwm_submodule_t</a> subModule, <a class="el" href="a00059.html#ga595affbbaec64a811545de35ae1914ce">pwm_channels_t</a> pwmSignal, <a class="el" href="a00059.html#ga562b5946a0edd6f5eebb63db7d154d56">pwm_mode_t</a> currPwmMode, uint16_t pulseCnt, uint16_t dutyCycle)</td></tr>
+<tr class="memdesc:gad7b7c9c350cb85b47cba12ce6d68b5aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the PWM signal's period and dutycycle for a PWM submodule.  <a href="#gad7b7c9c350cb85b47cba12ce6d68b5aa">More...</a><br/></td></tr>
+<tr class="separator:gad7b7c9c350cb85b47cba12ce6d68b5aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Interrupts Interface</h2></td></tr>
@@ -1989,7 +1992,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
     <tr><td class="paramname">numOfChnls</td><td>Number of channels to configure, this should be the size of the array passed in. Array size should not be more than 2 as each submodule has 2 pins to output PWM </td></tr>
     <tr><td class="paramname">mode</td><td>PWM operation mode, options available in enumeration <a class="el" href="a00059.html#ga562b5946a0edd6f5eebb63db7d154d56" title="PWM operation mode. ">pwm_mode_t</a> </td></tr>
     <tr><td class="paramname">pwmFreq_Hz</td><td>PWM signal frequency in Hz </td></tr>
-    <tr><td class="paramname">srcClock_Hz</td><td>PWM main counter clock in Hz.</td></tr>
+    <tr><td class="paramname">srcClock_Hz</td><td>PWM source clock of correspond submodule in Hz. If source clock of submodule1,2,3 is from submodule0 AUX_CLK, its source clock is submodule0 source clock divided with submodule0 prescaler value instead of submodule0 source clock.</td></tr>
   </table>
   </dd>
 </dl>
@@ -2057,7 +2060,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
     <tr><td class="paramname">pwmChannel</td><td>PWM channel to configure </td></tr>
     <tr><td class="paramname">pwmFreq_Hz</td><td>PWM signal frequency in Hz </td></tr>
     <tr><td class="paramname">srcClock_Hz</td><td>PWM main counter clock in Hz. </td></tr>
-    <tr><td class="paramname">shiftvalue</td><td>Phase shift value </td></tr>
+    <tr><td class="paramname">shiftvalue</td><td>Phase shift value, range in 0 ~ 50 </td></tr>
     <tr><td class="paramname">doSync</td><td>true: Set LDOK bit for the submodule list; false: LDOK bit don't set, need to call PWM_SetPwmLdok to sync update.</td></tr>
   </table>
   </dd>
@@ -2170,6 +2173,68 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
     <tr><td class="paramname">pwmSignal</td><td>Signal (PWM A or PWM B) to update </td></tr>
     <tr><td class="paramname">currPwmMode</td><td>The current PWM mode set during PWM setup </td></tr>
     <tr><td class="paramname">dutyCycle</td><td>New PWM pulse width, value should be between 0 to 65535 0=inactive signal(0% duty cycle)... 65535=active signal (100% duty cycle) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gad7b7c9c350cb85b47cba12ce6d68b5aa"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PWM_UpdatePwmPeriodAndDutycycle </td>
+          <td>(</td>
+          <td class="paramtype">PWM_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00059.html#ga467e18574027c8e3bde8f61a3fe61010">pwm_submodule_t</a>&#160;</td>
+          <td class="paramname"><em>subModule</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00059.html#ga595affbbaec64a811545de35ae1914ce">pwm_channels_t</a>&#160;</td>
+          <td class="paramname"><em>pwmSignal</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00059.html#ga562b5946a0edd6f5eebb63db7d154d56">pwm_mode_t</a>&#160;</td>
+          <td class="paramname"><em>currPwmMode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>pulseCnt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>dutyCycle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The function updates PWM signal period generated by a specific submodule according to the parameters passed in by the user. This function can also set dutycycle weather you want to keep original dutycycle or update new dutycycle. Call this function in local sync control mode because PWM period is depended by INIT and VAL1 register of each submodule. In master sync initialization control mode, call this function to update INIT and VAL1 register of all submodule because PWM period is depended by INIT and VAL1 register in submodule0. If the dead time insertion logic is enabled, the pulse period is reduced by the dead time period specified by the user. PWM signal will not be generated if its period is less than dead time duration.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>PWM peripheral base address </td></tr>
+    <tr><td class="paramname">subModule</td><td>PWM submodule to configure </td></tr>
+    <tr><td class="paramname">pwmSignal</td><td>Signal (PWM A or PWM B) to update </td></tr>
+    <tr><td class="paramname">currPwmMode</td><td>The current PWM mode set during PWM setup, options available in enumeration <a class="el" href="a00059.html#ga562b5946a0edd6f5eebb63db7d154d56" title="PWM operation mode. ">pwm_mode_t</a> </td></tr>
+    <tr><td class="paramname">pulseCnt</td><td>New PWM period, value should be between 0 to 65535 0=minimum PWM period... 65535=maximum PWM period </td></tr>
+    <tr><td class="paramname">dutyCycle</td><td>New PWM pulse width of channel, value should be between 0 to 65535 0=inactive signal(0% duty cycle)... 65535=active signal (100% duty cycle) You can keep original duty cycle or update new duty cycle </td></tr>
   </table>
   </dd>
 </dl>

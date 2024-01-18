@@ -1,5 +1,5 @@
 /*
- * Copyright 2018, 2019, 2020, 2021 NXP
+ * Copyright 2018-2021 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -41,7 +41,7 @@ void network_free(void* ctx)
 	if (ctx != NULL)
 	{
 		mbedtls_network_context_t* network_ctx = (mbedtls_network_context_t*)ctx;
-		
+
 		mbedtls_ssl_free(&(network_ctx->ssl));
 		mbedtls_ssl_config_free(&(network_ctx->conf));
 		mbedtls_ctr_drbg_free(&(network_ctx->ctr_drbg));
@@ -57,7 +57,7 @@ void network_free(void* ctx)
 
 
 int network_configure(void* opaque_ctx, void* opaque_network_config) {
-	
+
 	int ret = 0;
 	const char *pers = "aws_iot_tls_wrapper";
 
@@ -80,7 +80,6 @@ int network_configure(void* opaque_ctx, void* opaque_network_config) {
 	network_ctx->network_config = *network_config;
 	return ret;
 }
-
 
 int network_connect(void* opaque_ctx)
 {
@@ -106,6 +105,24 @@ int network_connect(void* opaque_ctx)
 		MBEDTLS_SSL_IS_CLIENT, MBEDTLS_SSL_TRANSPORT_STREAM,
 		MBEDTLS_SSL_PRESET_DEFAULT)) != 0) {
 		return -1;
+	}
+
+	{
+		static int allowed_ciphersuites_sha_384[] = {
+			MBEDTLS_TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384,
+			MBEDTLS_TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA384,
+			MBEDTLS_TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,
+			MBEDTLS_TLS_ECDH_RSA_WITH_AES_256_CBC_SHA384,
+			MBEDTLS_TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,
+			MBEDTLS_TLS_ECDH_ECDSA_WITH_AES_256_GCM_SHA384,
+			MBEDTLS_TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
+			MBEDTLS_TLS_ECDH_RSA_WITH_AES_256_GCM_SHA384,
+			0
+		};
+		if (mbedtls_pk_get_bitlen(&network_context->pkey) == 384)
+		{
+				mbedtls_ssl_conf_ciphersuites(&network_context->conf, allowed_ciphersuites_sha_384);
+		}
 	}
 
 #if NXP_IOT_AGENT_VERIFY_EDGELOCK_2GO_SERVER_CERTIFICATE
@@ -159,9 +176,9 @@ int network_connect(void* opaque_ctx)
 	while ((ret = mbedtls_ssl_handshake(&(network_context->ssl))) != 0) {
 		if (ret != MBEDTLS_ERR_SSL_WANT_READ
 			&& ret != MBEDTLS_ERR_SSL_WANT_WRITE) {
-			
+
 			if (ret == MBEDTLS_ERR_X509_CERT_VERIFY_FAILED) {
-				IOT_AGENT_ERROR("mbedtls_ssl_handshake failed with 0x%08x, verify results: 0x%08lx", ret,
+				IOT_AGENT_ERROR("mbedtls_ssl_handshake failed with 0x%08x, verify results: 0x%08x", ret,
 						mbedtls_ssl_get_verify_result(&(network_context->ssl)));
 			}
 
@@ -171,7 +188,7 @@ int network_connect(void* opaque_ctx)
 			return -1;
 		}
 	}
-	
+
 	return ret;
 }
 
@@ -204,17 +221,22 @@ int network_verify_server_certificate(void* context, uint8_t* trusted_bytes, siz
 	uint8_t* crl_bytes, size_t crl_size, uint32_t* error)
 {
     int network_status = 0;
+#if defined(MBEDTLS_VERSION_NUMBER) && (MBEDTLS_VERSION_NUMBER < 0x03010000)
 	mbedtls_network_context_t* network_context = (mbedtls_network_context_t*) context;
 	mbedtls_ssl_context *ssl = &((mbedtls_network_context_t*)context)->ssl;
-
+#endif
 	mbedtls_x509_crl crl;
 	mbedtls_x509_crl_init(&crl);
 	mbedtls_x509_crl_parse_der(&crl, (const unsigned char *)crl_bytes, crl_size);
 
 	*error = 0;
+#if defined(MBEDTLS_VERSION_NUMBER) && (MBEDTLS_VERSION_NUMBER < 0x03010000)
 	network_status = mbedtls_x509_crt_verify(ssl->session->peer_cert, network_context->conf.ca_chain, &crl, NULL, error, NULL, NULL);
+#else
+	//TODO: check which function to use
+#endif //MBEDTLS_VERSION_NUMBER < 0x03010000
     if (*error != 0) {
-		IOT_AGENT_ERROR("Server cert verification with CRL failed. mbedTLS indicates error %lu.", *error)
+		IOT_AGENT_ERROR("Server cert verification with CRL failed. mbedTLS indicates error %u.", *error)
         network_status = MBEDTLS_ERR_X509_CERT_VERIFY_FAILED;
         goto exit;
     }

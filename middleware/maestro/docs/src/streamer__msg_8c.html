@@ -28,7 +28,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Maestro Audio Framework
-   &#160;<span id="projectnumber">v 1.6</span>
+   &#160;<span id="projectnumber">v 1.7</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -96,16 +96,8 @@ $(document).ready(function(){initNavTree('streamer__msg_8c.html',''); initResiza
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;string.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="pipeline_8h.html">pipeline.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="streamer__fs_8h.html">streamer_fs.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="streamer__mic2file_8h.html">streamer_mic2file.h</a>&quot;</code><br />
-<code>#include &quot;streamer_vit.h&quot;</code><br />
-<code>#include &quot;streamer_testeapfile2file.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="streamer__audiosrc_8h.html">streamer_audiosrc.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="file__src__freertos_8h.html">file_src_freertos.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="streamer__element__properties_8h.html">streamer_element_properties.h</a>&quot;</code><br />
-<code>#include &quot;streamer_pcm_speaker.h&quot;</code><br />
-<code>#include &quot;streamer_pcm_speaker_mem.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="streamer__vit__filesink_8h.html">streamer_vit_filesink.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="streamer__opusmem2mem_8h.html">streamer_opusmem2mem.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -118,12 +110,6 @@ Data Structures</h2></td></tr>
 <tr class="separator:a351c29e3b300c4a71f41cbd326b107df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6a6fa8aa9a1a7a0c1419dd160bfe7b10"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structElementPropertyLookup.html">ElementPropertyLookup</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="streamer__msg_8c.html#a6a6fa8aa9a1a7a0c1419dd160bfe7b10">property_lookup_table</a> []</td></tr>
 <tr class="separator:a6a6fa8aa9a1a7a0c1419dd160bfe7b10"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a85e5d0899a655c86168c1b3d4a91b23d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="streamer__msg_8c.html#a85e5d0899a655c86168c1b3d4a91b23d">streamer_msg_create_pipeline</a> (<a class="el" href="structSTREAMER__T.html">STREAMER_T</a> *task_data, void *msg_data)</td></tr>
-<tr class="memdesc:a85e5d0899a655c86168c1b3d4a91b23d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Streamer Create Pipeline.  <a href="streamer__msg_8c.html#a85e5d0899a655c86168c1b3d4a91b23d">More...</a><br /></td></tr>
-<tr class="separator:a85e5d0899a655c86168c1b3d4a91b23d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ee012d80704673ed3f57243eaa762bb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="streamer__msg_8c.html#a6ee012d80704673ed3f57243eaa762bb">streamer_msg_destroy_pipeline</a> (<a class="el" href="structSTREAMER__T.html">STREAMER_T</a> *task_data, void *msg_data)</td></tr>
-<tr class="memdesc:a6ee012d80704673ed3f57243eaa762bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Streamer Destroy Pipeline.  <a href="streamer__msg_8c.html#a6ee012d80704673ed3f57243eaa762bb">More...</a><br /></td></tr>
-<tr class="separator:a6ee012d80704673ed3f57243eaa762bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0417dc49395ed33d643bde9fc52107c3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="streamer__msg_8c.html#a0417dc49395ed33d643bde9fc52107c3">streamer_msg_get_track_info</a> (<a class="el" href="structSTREAMER__T.html">STREAMER_T</a> *streamer, void *msg_data)</td></tr>
 <tr class="memdesc:a0417dc49395ed33d643bde9fc52107c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Streamer Get Track Inforamtion from a pipeline.  <a href="streamer__msg_8c.html#a0417dc49395ed33d643bde9fc52107c3">More...</a><br /></td></tr>
 <tr class="separator:a0417dc49395ed33d643bde9fc52107c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -156,95 +142,6 @@ Data Structures</h2></td></tr>
 <tr class="separator:a38ba7dadc332380568839863650fb98c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a85e5d0899a655c86168c1b3d4a91b23d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a85e5d0899a655c86168c1b3d4a91b23d">&#9670;&nbsp;</a></span>streamer_msg_create_pipeline()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int streamer_msg_create_pipeline </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structSTREAMER__T.html">STREAMER_T</a> *&#160;</td>
-          <td class="paramname"><em>task_data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>msg_data</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handles request to create a pipeline object.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">task_data</td><td>Pointer to task data structure </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">msg_data</td><td>Pointer to Message Data </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Error Status</dd></dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">STREAM_OK</td><td>Success </td></tr>
-    <tr><td class="paramname">STREAM_ERR_INVALID_ARGS</td><td>Invalid argument </td></tr>
-    <tr><td class="paramname">STREAM_ERR_NO_MEM</td><td>Out of memory </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a6ee012d80704673ed3f57243eaa762bb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6ee012d80704673ed3f57243eaa762bb">&#9670;&nbsp;</a></span>streamer_msg_destroy_pipeline()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int streamer_msg_destroy_pipeline </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structSTREAMER__T.html">STREAMER_T</a> *&#160;</td>
-          <td class="paramname"><em>task_data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>msg_data</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handles request to destroy a pipeline object.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">task_data</td><td>Pointer to task data structure </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">msg_data</td><td>Pointer to Message Data</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Error Status</dd></dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">STREAM_OK</td><td>Success </td></tr>
-    <tr><td class="paramname">STREAM_ERR_INVALID_ARGS</td><td>Invalid value </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="a0417dc49395ed33d643bde9fc52107c3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0417dc49395ed33d643bde9fc52107c3">&#9670;&nbsp;</a></span>streamer_msg_get_track_info()</h2>
 
@@ -706,19 +603,22 @@ Data Structures</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {{PROP_AUDIOSRC_MASK, ELEMENT_AUDIO_SRC_INDEX},</div>
+<b>Initial value:</b><div class="fragment"><div class="line">= {{PROP_MICROPHONE_MASK, ELEMENT_MICROPHONE_INDEX},</div>
 <div class="line">                                                        {PROP_FILESRC_MASK, ELEMENT_FILE_SRC_INDEX},</div>
 <div class="line">                                                        {PROP_MEMSRC_MASK, ELEMENT_MEM_SRC_INDEX},</div>
 <div class="line">                                                        {PROP_NETBUFSRC_MASK, ELEMENT_NETBUF_SRC_INDEX},</div>
 <div class="line">                                                        {PROP_DECODER_MASK, ELEMENT_DECODER_INDEX},</div>
-<div class="line">                                                        {PROP_AUDIOSINK_MASK, ELEMENT_AUDIO_SINK_INDEX},</div>
+<div class="line">                                                        {PROP_SPEAKER_MASK, ELEMENT_SPEAKER_INDEX},</div>
 <div class="line">                                                        {PROP_FILESINK_MASK, ELEMENT_FILE_SINK_INDEX},</div>
 <div class="line">                                                        {PROP_MEMSINK_MASK, ELEMENT_MEM_SINK_INDEX},</div>
-<div class="line">                                                        {PROP_VITSINK_PROC_MASK, ELEMENT_VIT_INDEX},</div>
-<div class="line">                                                        {PROP_EAP_PROC_MASK, ELEMENT_EAP_PROC_INDEX},</div>
-<div class="line">                                                        {PROP_VOICESEEKER_PROC_MASK, ELEMENT_VOICESEEKER_PROC_INDEX},</div>
-<div class="line">                                                        {PROP_SRC_PROC_MASK, ELEMENT_SRC_PROC_INDEX},</div>
-<div class="line">                                                        {PROP_ENCODER_MASK, ELEMENT_ENCODER_INDEX}}</div>
+<div class="line">                                                        {PROP_VITSINK_MASK, ELEMENT_VIT_INDEX},</div>
+<div class="line">                                                        {PROP_VIT_PROC_MASK, ELEMENT_VIT_PROC_INDEX},</div>
+<div class="line">                                                        {PROP_VOICESEEKER_MASK, ELEMENT_VOICESEEKER_INDEX},</div>
+<div class="line">                                                        {PROP_SRC_MASK, ELEMENT_SRC_INDEX},</div>
+<div class="line">                                                        {PROP_ENCODER_MASK, ELEMENT_ENCODER_INDEX},</div>
+<div class="line">                                                        {PROP_USB_SRC_MASK, ELEMENT_USB_SRC_INDEX},</div>
+<div class="line">                                                        {PROP_USB_SINK_MASK, ELEMENT_USB_SINK_INDEX},</div>
+<div class="line">                                                        {PROP_ASRC_MASK, ELEMENT_ASRC_INDEX}}</div>
 </div><!-- fragment --><p>This table is used to indentify which element in the pipeline a property is associated with. Properties can be used to configure the individual pipeline elements. </p>
 
 </div>

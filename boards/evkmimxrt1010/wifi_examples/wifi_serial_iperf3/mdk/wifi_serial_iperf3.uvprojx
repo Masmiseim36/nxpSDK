@@ -333,7 +333,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1011DAE5A, BOARD_USE_VIRTUALCOM=1, DEBUG_CONSOLE_IO_USBCDC=1, IPERF3_WIFI=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=1, DEBUG_CONSOLE_ENABLE_ECHO=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_USBCDC=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, USB_DEVICE_CONFIG_CDC_ACM=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>../../common;..;../../../../../components/serial_mwm;../../../../../components/serial_manager;../../../../../components/serial_manager/usb_cdc_adapter;../../../../../middleware/usb/device;../../../../../middleware/usb/include;../../../../../devices/MIMXRT1011/drivers;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../devices/MIMXRT1011;../../../../../devices/MIMXRT1011/utilities/str;../../../../../devices/MIMXRT1011/utilities/debug_console;../../../../../components/lists;../../../../../devices/MIMXRT1011/xip;../../../xip;../../../../../middleware/usb/output/source/device/class;../../../../../middleware/usb/output/source/device;../../../../../components/osa;../../../../../middleware/usb/phy;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../../common;..;../../../../../components/serial_mwm;../../../../../components/serial_manager;../../../../../components/serial_manager/usb_cdc_adapter;../../../../../middleware/usb/device;../../../../../middleware/usb/include;../../../../../devices/MIMXRT1011/drivers;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../devices/MIMXRT1011;../../../../../devices/MIMXRT1011/utilities/str;../../../../../devices/MIMXRT1011/utilities/debug_console;../../../../../components/lists;../../../../../devices/MIMXRT1011/utilities;../../../../../devices/MIMXRT1011/xip;../../../xip;../../../../../middleware/usb/output/source/device/class;../../../../../middleware/usb/output/source/device;../../../../../components/osa;../../../../../middleware/usb/phy;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -438,9 +438,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -891,6 +891,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1011/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1011/utilities/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1421,7 +1426,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1011DAE5A, BOARD_USE_VIRTUALCOM=1, DEBUG_CONSOLE_IO_USBCDC=1, IPERF3_WIFI=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=1, DEBUG_CONSOLE_ENABLE_ECHO=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_USBCDC=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, USB_DEVICE_CONFIG_CDC_ACM=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>../../common;..;../../../../../components/serial_mwm;../../../../../components/serial_manager;../../../../../components/serial_manager/usb_cdc_adapter;../../../../../middleware/usb/device;../../../../../middleware/usb/include;../../../../../devices/MIMXRT1011/drivers;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../devices/MIMXRT1011;../../../../../devices/MIMXRT1011/utilities/str;../../../../../devices/MIMXRT1011/utilities/debug_console;../../../../../components/lists;../../../../../devices/MIMXRT1011/xip;../../../xip;../../../../../middleware/usb/output/source/device/class;../../../../../middleware/usb/output/source/device;../../../../../components/osa;../../../../../middleware/usb/phy;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../../common;..;../../../../../components/serial_mwm;../../../../../components/serial_manager;../../../../../components/serial_manager/usb_cdc_adapter;../../../../../middleware/usb/device;../../../../../middleware/usb/include;../../../../../devices/MIMXRT1011/drivers;../../../../../rtos/freertos/freertos-kernel/include;../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM4F;../../../../../devices/MIMXRT1011;../../../../../devices/MIMXRT1011/utilities/str;../../../../../devices/MIMXRT1011/utilities/debug_console;../../../../../components/lists;../../../../../devices/MIMXRT1011/utilities;../../../../../devices/MIMXRT1011/xip;../../../xip;../../../../../middleware/usb/output/source/device/class;../../../../../middleware/usb/output/source/device;../../../../../components/osa;../../../../../middleware/usb/phy;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1526,9 +1531,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -1979,6 +1984,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1011/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1011/utilities/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>

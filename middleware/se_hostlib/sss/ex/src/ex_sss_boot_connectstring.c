@@ -53,7 +53,7 @@ const char gszReaderDefault[]     = EX_SSS_BOOT_SSS_PCSC_READER_DEFAULT;
  * Public Functions
  * ***************************************************************************************************************** */
 
-sss_status_t ex_sss_boot_connectstring(int argc, const char *argv[], const char **pPortName)
+sss_status_t ex_sss_boot_connectstring(int argc, const char *argv[], char **pPortName)
 {
     const char *portName = NULL;
     sss_status_t status  = kStatus_SSS_Success;
@@ -76,7 +76,7 @@ sss_status_t ex_sss_boot_connectstring(int argc, const char *argv[], const char 
         }
     }
     if (TRUE == last_is_help) {
-        *pPortName = argv[argc - 1]; /* --help */
+        *pPortName = (char *)argv[argc - 1]; /* --help */
         return kStatus_SSS_Success;
     }
     if (argc > 1                    /* Alteast 1 cli argument */
@@ -90,7 +90,13 @@ sss_status_t ex_sss_boot_connectstring(int argc, const char *argv[], const char 
     else
 #endif
     {
+#if defined(_MSC_VER)
+        char *portName_env = NULL;
+        size_t sz          = 0;
+        _dupenv_s(&portName_env, &sz, EX_SSS_BOOT_SSS_PORT);
+#else
         const char *portName_env = getenv(EX_SSS_BOOT_SSS_PORT);
+#endif
         if (portName_env != NULL) {
             portName = portName_env;
             LOG_I("Using PortName='%s' (ENV: %s=%s)", portName, EX_SSS_BOOT_SSS_PORT, portName);
@@ -121,15 +127,15 @@ sss_status_t ex_sss_boot_connectstring(int argc, const char *argv[], const char 
     }
 
     if (status == kStatus_SSS_Success && pPortName != NULL) {
-        *pPortName = portName;
+        *pPortName = (char *)portName;
     }
     return status;
 }
 
 bool ex_sss_boot_isSerialPortName(const char *portName)
 {
-    AX_UNUSED_ARG(portName);
     bool is_vcom = FALSE;
+    AX_UNUSED_ARG(portName);
 #if defined(RJCT_VCOM) && (RJCT_VCOM == 1)
     if (portName == NULL) {
         is_vcom = FALSE;
@@ -153,6 +159,7 @@ bool ex_sss_boot_isSerialPortName(const char *portName)
 bool ex_sss_boot_isSocketPortName(const char *portName)
 {
 #ifdef ACCESS_MGR_UNIX_SOCKETS
+    AX_UNUSED_ARG(portName);
     return TRUE;
 #else
     bool is_socket = FALSE;
@@ -164,6 +171,7 @@ bool ex_sss_boot_isSocketPortName(const char *portName)
         is_socket = TRUE;
     }
 #endif
+    AX_UNUSED_ARG(portName);
     return is_socket;
 #endif
 }

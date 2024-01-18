@@ -5,7 +5,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "fm_tsa_bldc.h"
+
+#include "freemaster.h"
+#include "freemaster_tsa.h"
+
+#include "m1_sm_snsless.h"
 
 /*******************************************************************************
  * Definitions
@@ -45,24 +49,40 @@ FMSTR_TSA_TABLE_BEGIN(gsM1Drive_table)
 
 /* gsM1Drive structure definition */
 FMSTR_TSA_RW_VAR(g_sM1Drive.bFaultClearMan, FMSTR_TSA_UINT16)           /* Fault Clear */
+FMSTR_TSA_RW_VAR(g_sM1Drive.sFaultIdEnable, FMSTR_TSA_UINT16)           /* M1 Fault Enable */
+FMSTR_TSA_RW_VAR(g_sM1Drive.sFaultIdCaptured, FMSTR_TSA_UINT16)         /* M1 Captured Fault */
+FMSTR_TSA_RW_VAR(g_sM1Drive.sFaultIdPending, FMSTR_TSA_UINT16)          /* M1 Pending Fault */
 FMSTR_TSA_RW_VAR(g_sM1Drive.ui16TimeAlignment, FMSTR_TSA_UINT16)        /* Align Duration */
 FMSTR_TSA_RW_VAR(g_sM1Drive.f32UBemfIntegThreshold, FMSTR_TSA_FRAC32)   /* Back-EMF Integration Threshold */
 FMSTR_TSA_RW_VAR(g_sM1Drive.ui16TimeCalibration, FMSTR_TSA_UINT16)      /* Calib Counter */
 FMSTR_TSA_RW_VAR(g_sM1Drive.ui32FreqCmtTimer, FMSTR_TSA_UINT32)         /* Cmt Timer Freq */
+FMSTR_TSA_RW_VAR(g_sM1Drive.ui16TimeFaultRelease, FMSTR_TSA_UINT16)             /* M1 Fault time count number */
 FMSTR_TSA_RW_VAR(g_sM1Drive.ui16CounterCmtError, FMSTR_TSA_UINT16)      /* Commutation Error Counter */
 FMSTR_TSA_RW_VAR(g_sM1Drive.ui16FreqCtrlLoop, FMSTR_TSA_UINT16)         /* Ctrl loop freq */
 FMSTR_TSA_RW_VAR(g_sM1Drive.ui16PeriodFreewheelLong, FMSTR_TSA_UINT16)  /* Freewheel Period Long */
 FMSTR_TSA_RW_VAR(g_sM1Drive.ui16PeriodFreewheelShort, FMSTR_TSA_UINT16) /* Freewheel Period Short */
-FMSTR_TSA_RW_VAR(g_sM1Drive.ui16PeriodCmtNextInit, FMSTR_TSA_UINT16)    /* Next Commutation Period */
+FMSTR_TSA_RW_VAR(g_sM1Drive.ui16PeriodCmtNextInit, FMSTR_TSA_UINT16)    /* Init Commutation Period */
+FMSTR_TSA_RW_VAR(g_sM1Drive.ui16PeriodCmtNext, FMSTR_TSA_UINT16)    /* Next Commutation Period */
 FMSTR_TSA_RW_VAR(g_sM1Drive.ui16PeriodToffInit, FMSTR_TSA_UINT16)       /* Nominal Speed */
 FMSTR_TSA_RW_VAR(g_sM1Drive.ui16FreqPwm, FMSTR_TSA_UINT16)              /* Pwm Freq */
 FMSTR_TSA_RW_VAR(g_sM1Drive.ui16CounterStartCmt, FMSTR_TSA_UINT16)      /* Start Commutation Counter */
-FMSTR_TSA_RW_VAR(g_sM1Drive.f16StartCmtAcceleration, FMSTR_TSA_UINT16)  /* Start Commution Acceleration */
+FMSTR_TSA_RW_VAR(g_sM1Drive.f16StartCmtAcceleration, FMSTR_TSA_FRAC16)  /* Start Commution Acceleration */
+FMSTR_TSA_RW_VAR(g_sM1Drive.ui16SlowCtrlLoopFreq, FMSTR_TSA_UINT16) /* M1 Slow Control Loop Frequency */
+FMSTR_TSA_RW_VAR(g_sM1Drive.ui16FastCtrlLoopFreq, FMSTR_TSA_UINT16) /* M1 Fast Control Loop Frequency */
 
 /* g_sM1Drive.sFaultThresholds definitions */
 FMSTR_TSA_RW_VAR(g_sM1Drive.sFaultThresholds.f16UDcBusOver, FMSTR_TSA_FRAC16)  /* Fault Threshold U DcBusOver */
 FMSTR_TSA_RW_VAR(g_sM1Drive.sFaultThresholds.f16UDcBusUnder, FMSTR_TSA_FRAC16) /* Fault Threshold U DcBusUnder */
 FMSTR_TSA_RW_VAR(g_sM1Drive.sFaultThresholds.f16IDcBusOver, FMSTR_TSA_FRAC16)  /* Fault Threshold I DcBusOver */
+
+/* g_sM1Drive.sCtrlBLDC DC-bus current measurement */
+FMSTR_TSA_RW_VAR(g_sM1Drive.sCtrlBLDC.sIDcBusFilter.sFltCoeff.f32B0, FMSTR_TSA_FRAC32) /* IDC-bus B0 filter */
+FMSTR_TSA_RW_VAR(g_sM1Drive.sCtrlBLDC.sIDcBusFilter.sFltCoeff.f32B1, FMSTR_TSA_FRAC32) /* IDC-bus B1 filter */
+FMSTR_TSA_RW_VAR(g_sM1Drive.sCtrlBLDC.sIDcBusFilter.sFltCoeff.f32A1, FMSTR_TSA_FRAC32) /* IDC-bus A1 filter */
+FMSTR_TSA_RW_VAR(g_sM1Drive.sCtrlBLDC.sUDcBusFilter.sFltCoeff.f32B0, FMSTR_TSA_FRAC32) /* UDC-bus B0 filter */
+FMSTR_TSA_RW_VAR(g_sM1Drive.sCtrlBLDC.sUDcBusFilter.sFltCoeff.f32B1, FMSTR_TSA_FRAC32) /* UDC-bus B1 filter */
+FMSTR_TSA_RW_VAR(g_sM1Drive.sCtrlBLDC.sUDcBusFilter.sFltCoeff.f32A1, FMSTR_TSA_FRAC32) /* UDC-bus A1 filter */
+
 
 /* g_sM1Drive.sCtrlBLDC definitions */
 FMSTR_TSA_RW_VAR(g_sM1Drive.sCtrlBLDC.f16SpeedMeasured, FMSTR_TSA_FRAC16)    /* Actual Speed */
@@ -81,6 +101,11 @@ FMSTR_TSA_RW_VAR(g_sM1Drive.sCtrlBLDC.f16SpeedCmd, FMSTR_TSA_FRAC16)         /* 
 FMSTR_TSA_RW_VAR(g_sM1Drive.sCtrlBLDC.f16SpeedPiErr, FMSTR_TSA_FRAC16)       /* Speed Error */
 FMSTR_TSA_RW_VAR(g_sM1Drive.sCtrlBLDC.f16SpeedMinimal, FMSTR_TSA_FRAC16)     /* Speed Minimal */
 FMSTR_TSA_RW_VAR(g_sM1Drive.sCtrlBLDC.f16SpeedRamp, FMSTR_TSA_FRAC16)        /* Speed Ramp */
+FMSTR_TSA_RW_VAR(g_sM1Drive.sCtrlBLDC.i16SpeedScaleConst, FMSTR_TSA_UINT16)  /* Speed Scale Constant */
+FMSTR_TSA_RW_VAR(g_sM1Drive.ui16StartCmtNumber, FMSTR_TSA_UINT16)            /* Start Commutation Number */
+
+
+
 
 /* sCtrlBLDC.sCtrlBLDC.sIDcBusPiParams definitions */
 FMSTR_TSA_RW_VAR(g_sM1Drive.sCtrlBLDC.sIDcBusPiParams.bLimFlag, FMSTR_TSA_FRAC16)         /* Current Limit Flag */
@@ -144,8 +169,8 @@ FMSTR_TSA_TABLE_END()
 FMSTR_TSA_TABLE_BEGIN(sAppIdFM_table)
 
 /* Board ID structure definition */
-FMSTR_TSA_RO_MEM(g_sAppIdFM.cBoardID, FMSTR_TSA_UINT8, &g_sAppIdFM.cBoardID[0], 15)
-FMSTR_TSA_RO_MEM(g_sAppIdFM.cMotorType, FMSTR_TSA_UINT8, &g_sAppIdFM.cMotorType[0], 4)
+FMSTR_TSA_RO_MEM(g_sAppIdFM.cBoardID, FMSTR_TSA_UINT8, &g_sAppIdFM.cBoardID[0], 20)
+FMSTR_TSA_RO_MEM(g_sAppIdFM.cExampleID, FMSTR_TSA_UINT8, &g_sAppIdFM.cExampleID[0], 30)
 FMSTR_TSA_RO_MEM(g_sAppIdFM.cAppVer, FMSTR_TSA_UINT8, &g_sAppIdFM.cAppVer[0], 5)
 
 FMSTR_TSA_TABLE_END()

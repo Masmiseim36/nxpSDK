@@ -58,8 +58,10 @@
 #include "ethernetif.h"
 #include "lwip/netifapi.h"
 #ifdef EXAMPLE_USE_100M_ENET_PORT
+#include "fsl_enet.h"
 #include "fsl_phyksz8081.h"
 #else
+#include "fsl_enet.h"
 #include "fsl_phyrtl8211f.h"
 #endif
 #endif
@@ -76,26 +78,32 @@
 /* MDIO operations. */
 #define EXAMPLE_MDIO_OPS enet_ops
 
-// P&T MW team to fix this properly when re-enabling example in SDK
 #ifdef EXAMPLE_USE_100M_ENET_PORT
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
-extern phy_ksz8081_resource_t g_phy_resource;
+phy_ksz8081_resource_t g_phy_resource;
 /* PHY operations. */
 #define EXAMPLE_PHY_OPS &phyksz8081_ops
 /* ENET instance select. */
 #define EXAMPLE_NETIF_INIT_FN ethernetif0_init
+#define EXAMPLE_ENET ENET
 #else
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS BOARD_ENET1_PHY_ADDRESS
-extern phy_rtl8211f_resource_t g_phy_resource;
+phy_rtl8211f_resource_t g_phy_resource;
 /* PHY operations. */
 #define EXAMPLE_PHY_OPS &phyrtl8211f_ops
 /* ENET instance select. */
 #define EXAMPLE_NETIF_INIT_FN ethernetif1_init
+#define EXAMPLE_ENET          ENET_1G
 #endif // EXAMPLE_USE_100M_ENET_PORT
 #define EXAMPLE_PHY_RESOURCE &g_phy_resource
 
+#ifdef EXAMPLE_USE_100M_ENET_PORT
+extern phy_ksz8081_resource_t g_phy_resource;
+#else
+extern phy_rtl8211f_resource_t g_phy_resource;
+#endif
 /* PHY operations. */
 #endif // (LPC_ENET)
 
@@ -124,6 +132,22 @@ extern phy_rtl8211f_resource_t g_phy_resource;
  ******************************************************************************/
 static struct netif fsl_netif;
 static phy_handle_t phyHandle;
+
+static void MDIO_Init(void)
+{
+    (void)CLOCK_EnableClock(s_enetClock[ENET_GetInstance(EXAMPLE_ENET)]);
+    ENET_SetSMI(EXAMPLE_ENET, EXAMPLE_CLOCK_FREQ, false);
+}
+
+static status_t MDIO_Write(uint8_t phyAddr, uint8_t regAddr, uint16_t data)
+{
+    return ENET_MDIOWrite(EXAMPLE_ENET, phyAddr, regAddr, data);
+}
+
+static status_t MDIO_Read(uint8_t phyAddr, uint8_t regAddr, uint16_t *pData)
+{
+    return ENET_MDIORead(EXAMPLE_ENET, phyAddr, regAddr, pData);
+}
 
 #endif // LPC_ENET
 
@@ -194,6 +218,10 @@ ethernetif_config_t fsl_enet_config0 = {.phyHandle   = &phyHandle,
                                         .srcClockHz  = EXAMPLE_CLOCK_FREQ,
                                         .macAddress = configMAC_ADDR
     };
+
+    MDIO_Init();
+    g_phy_resource.read  = MDIO_Read;
+    g_phy_resource.write = MDIO_Write;
 
     tcpip_init(NULL, NULL);
 
@@ -420,21 +448,5 @@ int GetHandle_GPstorage(HLSE_OBJECT_INDEX index)
 }
 
 #endif
-
-// P&T MW team to fix this properly when re-enabling example in SDK
-//#if defined(LPC_ENET) || defined(LPC_WIFI)
-///*JSON utility function to check equality */
-//int8_t jsoneq(const char *json, jsmntok_t *tok, const char *s)
-//{
-//    if (tok->type == JSMN_STRING) {
-//        if ((int)strlen(s) == tok->end - tok->start) {
-//            if (strncmp(json + tok->start, s, (size_t)(tok->end - tok->start)) == 0) {
-//                return 0;
-//            }
-//        }
-//    }
-//    return -1;
-//}
-//#endif
 
 #endif /* USE_RTOS */

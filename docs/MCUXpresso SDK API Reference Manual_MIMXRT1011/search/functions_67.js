@@ -1,9 +1,10 @@
 var searchData=
 [
-  ['gpc_5fdisableirq',['GPC_DisableIRQ',['../a00219.html#gacfd07601d1a0e90e3b80fffe14830010',1,'fsl_gpc.h']]],
-  ['gpc_5fenableirq',['GPC_EnableIRQ',['../a00219.html#ga7c73d81bfb34ebb7ca40a5ad2a63ad7e',1,'fsl_gpc.h']]],
-  ['gpc_5fgetirqstatusflag',['GPC_GetIRQStatusFlag',['../a00219.html#ga1118000efd3c822329c63a7155bbe12e',1,'fsl_gpc.h']]],
-  ['gpc_5frequestmegapoweron',['GPC_RequestMEGAPowerOn',['../a00219.html#gaac50bee55eb34b329680e6fd0d2a9582',1,'fsl_gpc.h']]],
+  ['gpc_5fdisableirq',['GPC_DisableIRQ',['../a00221.html#gacfd07601d1a0e90e3b80fffe14830010',1,'fsl_gpc.h']]],
+  ['gpc_5fenableirq',['GPC_EnableIRQ',['../a00221.html#ga7c73d81bfb34ebb7ca40a5ad2a63ad7e',1,'fsl_gpc.h']]],
+  ['gpc_5fgetirqstatusflag',['GPC_GetIRQStatusFlag',['../a00221.html#ga1118000efd3c822329c63a7155bbe12e',1,'fsl_gpc.h']]],
+  ['gpc_5frequestmegapoweron',['GPC_RequestMEGAPowerOn',['../a00221.html#gaac50bee55eb34b329680e6fd0d2a9582',1,'fsl_gpc.h']]],
+  ['gpc_5frequestpdram0powerdown',['GPC_RequestPdram0PowerDown',['../a00221.html#ga8270fba73a065a4e14af1bc895e55969',1,'fsl_gpc.h']]],
   ['gpio_5fclearpinsinterruptflags',['GPIO_ClearPinsInterruptFlags',['../a00036.html#ga0b1ad50f4212dfb839fd059503f03bed',1,'fsl_gpio.h']]],
   ['gpio_5fclearpinsoutput',['GPIO_ClearPinsOutput',['../a00036.html#ga3ac4a7dccb5285b2926f152c3ff12af9',1,'fsl_gpio.h']]],
   ['gpio_5fdisableinterrupts',['GPIO_DisableInterrupts',['../a00036.html#gaa1deaff6764df2649453fa5502ee0fcc',1,'fsl_gpio.h']]],

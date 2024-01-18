@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -101,9 +101,10 @@ $(document).ready(function(){initNavTree('a00027.html','');});
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">FlexCAN Driver<div class="ingroups"><a class="el" href="a00275.html">FlexCAN: Flex Controller Area Network Driver</a></div></div>  </div>
+<div class="title">FlexCAN Driver<div class="ingroups"><a class="el" href="a00277.html">FlexCAN: Flex Controller Area Network Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
@@ -122,30 +123,30 @@ Receive FIFO Operation</h2>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00407"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a00407">flexcan_frame_t</a></td></tr>
-<tr class="memdesc:a00407"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN message frame structure.  <a href="a00027.html#a00407">More...</a><br/></td></tr>
-<tr class="separator:a00407"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00411"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a00411">flexcan_timing_config_t</a></td></tr>
-<tr class="memdesc:a00411"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN protocol timing characteristic configuration structure.  <a href="a00027.html#a00411">More...</a><br/></td></tr>
-<tr class="separator:a00411"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00405"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a00405">flexcan_config_t</a></td></tr>
-<tr class="memdesc:a00405"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN module configuration structure.  <a href="a00027.html#a00405">More...</a><br/></td></tr>
-<tr class="separator:a00405"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00410"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a00410">flexcan_rx_mb_config_t</a></td></tr>
-<tr class="memdesc:a00410"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN Receive Message Buffer configuration structure.  <a href="a00027.html#a00410">More...</a><br/></td></tr>
-<tr class="separator:a00410"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00409"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a00409">flexcan_rx_fifo_config_t</a></td></tr>
-<tr class="memdesc:a00409"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN Legacy Rx FIFO configuration structure.  <a href="a00027.html#a00409">More...</a><br/></td></tr>
-<tr class="separator:a00409"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00408"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a00408">flexcan_mb_transfer_t</a></td></tr>
-<tr class="memdesc:a00408"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN Message Buffer transfer.  <a href="a00027.html#a00408">More...</a><br/></td></tr>
-<tr class="separator:a00408"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00406"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a00406">flexcan_fifo_transfer_t</a></td></tr>
-<tr class="memdesc:a00406"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN Rx FIFO transfer.  <a href="a00027.html#a00406">More...</a><br/></td></tr>
-<tr class="separator:a00406"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00314"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a00314">flexcan_handle_t</a></td></tr>
-<tr class="memdesc:a00314"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN handle structure.  <a href="a00027.html#a00314">More...</a><br/></td></tr>
-<tr class="separator:a00314"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00377"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a00377">_flexcan_frame</a></td></tr>
+<tr class="memdesc:a00377"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN message frame structure.  <a href="a00027.html#a00377">More...</a><br/></td></tr>
+<tr class="separator:a00377"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00382"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a00382">_flexcan_timing_config</a></td></tr>
+<tr class="memdesc:a00382"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN protocol timing characteristic configuration structure.  <a href="a00027.html#a00382">More...</a><br/></td></tr>
+<tr class="separator:a00382"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00375"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a00375">_flexcan_config</a></td></tr>
+<tr class="memdesc:a00375"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN module configuration structure.  <a href="a00027.html#a00375">More...</a><br/></td></tr>
+<tr class="separator:a00375"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00381"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a00381">_flexcan_rx_mb_config</a></td></tr>
+<tr class="memdesc:a00381"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN Receive Message Buffer configuration structure.  <a href="a00027.html#a00381">More...</a><br/></td></tr>
+<tr class="separator:a00381"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00380"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a00380">_flexcan_rx_fifo_config</a></td></tr>
+<tr class="memdesc:a00380"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN Legacy Rx FIFO configuration structure.  <a href="a00027.html#a00380">More...</a><br/></td></tr>
+<tr class="separator:a00380"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00379"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a00379">_flexcan_mb_transfer</a></td></tr>
+<tr class="memdesc:a00379"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN Message Buffer transfer.  <a href="a00027.html#a00379">More...</a><br/></td></tr>
+<tr class="separator:a00379"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00376"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a00376">_flexcan_fifo_transfer</a></td></tr>
+<tr class="memdesc:a00376"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN Rx FIFO transfer.  <a href="a00027.html#a00376">More...</a><br/></td></tr>
+<tr class="separator:a00376"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00378"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a00378">_flexcan_handle</a></td></tr>
+<tr class="memdesc:a00378"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN handle structure.  <a href="a00027.html#a00378">More...</a><br/></td></tr>
+<tr class="separator:a00378"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
@@ -251,9 +252,61 @@ Macros</h2></td></tr>
 <tr class="memitem:gaa96c3d61745b922c3a046e95b87f8cc2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#gaa96c3d61745b922c3a046e95b87f8cc2">FLEXCAN_MEMORY_ENHANCED_RX_FIFO_INIT_FLAG</a>&#160;&#160;&#160;(0U)</td></tr>
 <tr class="memdesc:gaa96c3d61745b922c3a046e95b87f8cc2"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN Enhanced Rx FIFO base address helper macro.  <a href="#gaa96c3d61745b922c3a046e95b87f8cc2">More...</a><br/></td></tr>
 <tr class="separator:gaa96c3d61745b922c3a046e95b87f8cc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa4c5f1690a09bd7a862d6ebf66034291"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#gaa4c5f1690a09bd7a862d6ebf66034291">FLEXCAN_CALLBACK</a>(x)&#160;&#160;&#160;void(x)(CAN_Type * base, flexcan_handle_t * handle, <a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, uint32_t result, void *userData)</td></tr>
+<tr class="memitem:gaa4c5f1690a09bd7a862d6ebf66034291"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#gaa4c5f1690a09bd7a862d6ebf66034291">FLEXCAN_CALLBACK</a>(x)&#160;&#160;&#160;void(x)(CAN_Type * base, <a class="el" href="a00027.html#gafb040d05eeb1eb0edd80fd97e419dee8">flexcan_handle_t</a> * handle, <a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, uint32_t result, void *userData)</td></tr>
 <tr class="memdesc:gaa4c5f1690a09bd7a862d6ebf66034291"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN transfer callback function.  <a href="#gaa4c5f1690a09bd7a862d6ebf66034291">More...</a><br/></td></tr>
 <tr class="separator:gaa4c5f1690a09bd7a862d6ebf66034291"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga0fc17844cbc32ec0963c4a845ac9a562"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00027.html#ga30fad6511b6899d718319e257fd38007">_flexcan_frame_format</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga0fc17844cbc32ec0963c4a845ac9a562">flexcan_frame_format_t</a></td></tr>
+<tr class="memdesc:ga0fc17844cbc32ec0963c4a845ac9a562"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN frame format.  <a href="#ga0fc17844cbc32ec0963c4a845ac9a562">More...</a><br/></td></tr>
+<tr class="separator:ga0fc17844cbc32ec0963c4a845ac9a562"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaff98da53a2fd874c9225b7e86c8c0f7f"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00027.html#gabe8bc300867c9ad1f76934834f2a75f2">_flexcan_frame_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#gaff98da53a2fd874c9225b7e86c8c0f7f">flexcan_frame_type_t</a></td></tr>
+<tr class="memdesc:gaff98da53a2fd874c9225b7e86c8c0f7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN frame type.  <a href="#gaff98da53a2fd874c9225b7e86c8c0f7f">More...</a><br/></td></tr>
+<tr class="separator:gaff98da53a2fd874c9225b7e86c8c0f7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7a0c31eb0515955961c22bae95ed12c3"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00027.html#ga6314aeebe2488fe50d9dd1fffbf366c8">_flexcan_clock_source</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga7a0c31eb0515955961c22bae95ed12c3">flexcan_clock_source_t</a></td></tr>
+<tr class="memdesc:ga7a0c31eb0515955961c22bae95ed12c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN clock source.  <a href="#ga7a0c31eb0515955961c22bae95ed12c3">More...</a><br/></td></tr>
+<tr class="separator:ga7a0c31eb0515955961c22bae95ed12c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga185b971e55a824ad258ccfb3d87448ea"><td class="memItemLeft" align="right" valign="top">typedef enum <br class="typebreak"/>
+<a class="el" href="a00027.html#gab9559b001234cdb38e5811396a4632f6">_flexcan_wake_up_source</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga185b971e55a824ad258ccfb3d87448ea">flexcan_wake_up_source_t</a></td></tr>
+<tr class="memdesc:ga185b971e55a824ad258ccfb3d87448ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN wake up source.  <a href="#ga185b971e55a824ad258ccfb3d87448ea">More...</a><br/></td></tr>
+<tr class="separator:ga185b971e55a824ad258ccfb3d87448ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0befca3f06184321dfac3b65e8b8b310"><td class="memItemLeft" align="right" valign="top">typedef enum <br class="typebreak"/>
+<a class="el" href="a00027.html#gaae011835245de279ed387ee0ff61d7cc">_flexcan_rx_fifo_filter_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga0befca3f06184321dfac3b65e8b8b310">flexcan_rx_fifo_filter_type_t</a></td></tr>
+<tr class="memdesc:ga0befca3f06184321dfac3b65e8b8b310"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN Rx Fifo Filter type.  <a href="#ga0befca3f06184321dfac3b65e8b8b310">More...</a><br/></td></tr>
+<tr class="separator:ga0befca3f06184321dfac3b65e8b8b310"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad8108b0166e7f9ca1d922de8ab47307f"><td class="memItemLeft" align="right" valign="top">typedef enum <br class="typebreak"/>
+<a class="el" href="a00027.html#gafb8c23ce204d47e4528edced437e8a7d">_flexcan_rx_fifo_priority</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#gad8108b0166e7f9ca1d922de8ab47307f">flexcan_rx_fifo_priority_t</a></td></tr>
+<tr class="memdesc:gad8108b0166e7f9ca1d922de8ab47307f"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN Enhanced/Legacy Rx FIFO priority.  <a href="#gad8108b0166e7f9ca1d922de8ab47307f">More...</a><br/></td></tr>
+<tr class="separator:gad8108b0166e7f9ca1d922de8ab47307f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8e99cd0558e81decabdcafae1ed4ca49"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00027.html#a00377">_flexcan_frame</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga8e99cd0558e81decabdcafae1ed4ca49">flexcan_frame_t</a></td></tr>
+<tr class="memdesc:ga8e99cd0558e81decabdcafae1ed4ca49"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN message frame structure.  <a href="#ga8e99cd0558e81decabdcafae1ed4ca49">More...</a><br/></td></tr>
+<tr class="separator:ga8e99cd0558e81decabdcafae1ed4ca49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3d6bee81bd27ba7bf1d48845f2a5db19"><td class="memItemLeft" align="right" valign="top">typedef struct <br class="typebreak"/>
+<a class="el" href="a00027.html#a00382">_flexcan_timing_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga3d6bee81bd27ba7bf1d48845f2a5db19">flexcan_timing_config_t</a></td></tr>
+<tr class="memdesc:ga3d6bee81bd27ba7bf1d48845f2a5db19"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN protocol timing characteristic configuration structure.  <a href="#ga3d6bee81bd27ba7bf1d48845f2a5db19">More...</a><br/></td></tr>
+<tr class="separator:ga3d6bee81bd27ba7bf1d48845f2a5db19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac92b53682cc4684bb19d63533abaf950"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00027.html#a00375">_flexcan_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#gac92b53682cc4684bb19d63533abaf950">flexcan_config_t</a></td></tr>
+<tr class="memdesc:gac92b53682cc4684bb19d63533abaf950"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN module configuration structure.  <a href="#gac92b53682cc4684bb19d63533abaf950">More...</a><br/></td></tr>
+<tr class="separator:gac92b53682cc4684bb19d63533abaf950"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4fe64f2317d8cd6a28fa9bcd1a34889d"><td class="memItemLeft" align="right" valign="top">typedef struct <br class="typebreak"/>
+<a class="el" href="a00027.html#a00381">_flexcan_rx_mb_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga4fe64f2317d8cd6a28fa9bcd1a34889d">flexcan_rx_mb_config_t</a></td></tr>
+<tr class="memdesc:ga4fe64f2317d8cd6a28fa9bcd1a34889d"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN Receive Message Buffer configuration structure.  <a href="#ga4fe64f2317d8cd6a28fa9bcd1a34889d">More...</a><br/></td></tr>
+<tr class="separator:ga4fe64f2317d8cd6a28fa9bcd1a34889d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga75f18778025a1fcdbe2e8a6b1bf9f41b"><td class="memItemLeft" align="right" valign="top">typedef struct <br class="typebreak"/>
+<a class="el" href="a00027.html#a00380">_flexcan_rx_fifo_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga75f18778025a1fcdbe2e8a6b1bf9f41b">flexcan_rx_fifo_config_t</a></td></tr>
+<tr class="memdesc:ga75f18778025a1fcdbe2e8a6b1bf9f41b"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN Legacy Rx FIFO configuration structure.  <a href="#ga75f18778025a1fcdbe2e8a6b1bf9f41b">More...</a><br/></td></tr>
+<tr class="separator:ga75f18778025a1fcdbe2e8a6b1bf9f41b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae1e20e9dfdfebdeed7e86aa0b4396550"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00027.html#a00379">_flexcan_mb_transfer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#gae1e20e9dfdfebdeed7e86aa0b4396550">flexcan_mb_transfer_t</a></td></tr>
+<tr class="memdesc:gae1e20e9dfdfebdeed7e86aa0b4396550"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN Message Buffer transfer.  <a href="#gae1e20e9dfdfebdeed7e86aa0b4396550">More...</a><br/></td></tr>
+<tr class="separator:gae1e20e9dfdfebdeed7e86aa0b4396550"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga093ac9e4fcaf26e413a1bc88c473c3e7"><td class="memItemLeft" align="right" valign="top">typedef struct <br class="typebreak"/>
+<a class="el" href="a00027.html#a00376">_flexcan_fifo_transfer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga093ac9e4fcaf26e413a1bc88c473c3e7">flexcan_fifo_transfer_t</a></td></tr>
+<tr class="memdesc:ga093ac9e4fcaf26e413a1bc88c473c3e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN Rx FIFO transfer.  <a href="#ga093ac9e4fcaf26e413a1bc88c473c3e7">More...</a><br/></td></tr>
+<tr class="separator:ga093ac9e4fcaf26e413a1bc88c473c3e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafb040d05eeb1eb0edd80fd97e419dee8"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00027.html#a00378">_flexcan_handle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#gafb040d05eeb1eb0edd80fd97e419dee8">flexcan_handle_t</a></td></tr>
+<tr class="memdesc:gafb040d05eeb1eb0edd80fd97e419dee8"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN handle structure definition.  <a href="#gafb040d05eeb1eb0edd80fd97e419dee8">More...</a><br/></td></tr>
+<tr class="separator:gafb040d05eeb1eb0edd80fd97e419dee8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -291,62 +344,62 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:ga16af7b253440dadd46a80a4b9fddba4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN transfer status.  <a href="a00027.html#ga16af7b253440dadd46a80a4b9fddba4d">More...</a><br/></td></tr>
 <tr class="separator:ga16af7b253440dadd46a80a4b9fddba4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga89e76f77a571693c1adeec47796c97df"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga89e76f77a571693c1adeec47796c97df">flexcan_frame_format_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00027.html#gga89e76f77a571693c1adeec47796c97dfa82e576bc13cb647a948eed52564d109b">kFLEXCAN_FrameFormatStandard</a> = 0x0U, 
+<tr class="memitem:ga30fad6511b6899d718319e257fd38007"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga30fad6511b6899d718319e257fd38007">_flexcan_frame_format</a> { <br/>
+&#160;&#160;<a class="el" href="a00027.html#gga30fad6511b6899d718319e257fd38007a82e576bc13cb647a948eed52564d109b">kFLEXCAN_FrameFormatStandard</a> = 0x0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00027.html#gga89e76f77a571693c1adeec47796c97dfa2acf770880d063c0522a5cc762ab2638">kFLEXCAN_FrameFormatExtend</a> = 0x1U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga89e76f77a571693c1adeec47796c97df"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN frame format.  <a href="a00027.html#ga89e76f77a571693c1adeec47796c97df">More...</a><br/></td></tr>
-<tr class="separator:ga89e76f77a571693c1adeec47796c97df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacec96742e2b0b51a5bf3246bfc57a455"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#gacec96742e2b0b51a5bf3246bfc57a455">flexcan_frame_type_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00027.html#ggacec96742e2b0b51a5bf3246bfc57a455a650a94706925910caaaef592a99f77b3">kFLEXCAN_FrameTypeData</a> = 0x0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00027.html#ggacec96742e2b0b51a5bf3246bfc57a455ab8f92265dc2dadff64259080c78fa35e">kFLEXCAN_FrameTypeRemote</a> = 0x1U
+&#160;&#160;<a class="el" href="a00027.html#gga30fad6511b6899d718319e257fd38007a2acf770880d063c0522a5cc762ab2638">kFLEXCAN_FrameFormatExtend</a> = 0x1U
 <br/>
  }</td></tr>
-<tr class="memdesc:gacec96742e2b0b51a5bf3246bfc57a455"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN frame type.  <a href="a00027.html#gacec96742e2b0b51a5bf3246bfc57a455">More...</a><br/></td></tr>
-<tr class="separator:gacec96742e2b0b51a5bf3246bfc57a455"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa0b3ac1e2e7416950b82014d2a2b40ee"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#gaa0b3ac1e2e7416950b82014d2a2b40ee">flexcan_clock_source_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00027.html#ggaa0b3ac1e2e7416950b82014d2a2b40eead9cb66012e8d50e9ee3e154a36c1cff1">kFLEXCAN_ClkSrcOsc</a> = 0x0U, 
+<tr class="memdesc:ga30fad6511b6899d718319e257fd38007"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN frame format.  <a href="a00027.html#ga30fad6511b6899d718319e257fd38007">More...</a><br/></td></tr>
+<tr class="separator:ga30fad6511b6899d718319e257fd38007"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabe8bc300867c9ad1f76934834f2a75f2"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#gabe8bc300867c9ad1f76934834f2a75f2">_flexcan_frame_type</a> { <br/>
+&#160;&#160;<a class="el" href="a00027.html#ggabe8bc300867c9ad1f76934834f2a75f2a650a94706925910caaaef592a99f77b3">kFLEXCAN_FrameTypeData</a> = 0x0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00027.html#ggaa0b3ac1e2e7416950b82014d2a2b40eea962bcf8760c6a23e054980b1d0c5a922">kFLEXCAN_ClkSrcPeri</a> = 0x1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00027.html#ggaa0b3ac1e2e7416950b82014d2a2b40eea0025de2b1ce9650dc67c39a3b4d2d163">kFLEXCAN_ClkSrc0</a> = 0x0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00027.html#ggaa0b3ac1e2e7416950b82014d2a2b40eea83c9af2bd0d2e239bf3c75ed72aee115">kFLEXCAN_ClkSrc1</a> = 0x1U
+&#160;&#160;<a class="el" href="a00027.html#ggabe8bc300867c9ad1f76934834f2a75f2ab8f92265dc2dadff64259080c78fa35e">kFLEXCAN_FrameTypeRemote</a> = 0x1U
 <br/>
  }</td></tr>
-<tr class="memdesc:gaa0b3ac1e2e7416950b82014d2a2b40ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN clock source.  <a href="a00027.html#gaa0b3ac1e2e7416950b82014d2a2b40ee">More...</a><br/></td></tr>
-<tr class="separator:gaa0b3ac1e2e7416950b82014d2a2b40ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5ca4fd15317c08e08c9e163defc60d05"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga5ca4fd15317c08e08c9e163defc60d05">flexcan_wake_up_source_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00027.html#gga5ca4fd15317c08e08c9e163defc60d05a7ce5f9548568e6af39398d517ea19e41">kFLEXCAN_WakeupSrcUnfiltered</a> = 0x0U, 
+<tr class="memdesc:gabe8bc300867c9ad1f76934834f2a75f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN frame type.  <a href="a00027.html#gabe8bc300867c9ad1f76934834f2a75f2">More...</a><br/></td></tr>
+<tr class="separator:gabe8bc300867c9ad1f76934834f2a75f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6314aeebe2488fe50d9dd1fffbf366c8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga6314aeebe2488fe50d9dd1fffbf366c8">_flexcan_clock_source</a> { <br/>
+&#160;&#160;<a class="el" href="a00027.html#gga6314aeebe2488fe50d9dd1fffbf366c8ad9cb66012e8d50e9ee3e154a36c1cff1">kFLEXCAN_ClkSrcOsc</a> = 0x0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00027.html#gga5ca4fd15317c08e08c9e163defc60d05a268e3487326cba1981bcffc8f4baf14b">kFLEXCAN_WakeupSrcFiltered</a> = 0x1U
+&#160;&#160;<a class="el" href="a00027.html#gga6314aeebe2488fe50d9dd1fffbf366c8a962bcf8760c6a23e054980b1d0c5a922">kFLEXCAN_ClkSrcPeri</a> = 0x1U, 
 <br/>
- }</td></tr>
-<tr class="memdesc:ga5ca4fd15317c08e08c9e163defc60d05"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN wake up source.  <a href="a00027.html#ga5ca4fd15317c08e08c9e163defc60d05">More...</a><br/></td></tr>
-<tr class="separator:ga5ca4fd15317c08e08c9e163defc60d05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1b8c38cce54aff2f24b6cd45da80f353"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga1b8c38cce54aff2f24b6cd45da80f353">flexcan_rx_fifo_filter_type_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00027.html#gga1b8c38cce54aff2f24b6cd45da80f353a1791608b19ef6a27483f55fee614f764">kFLEXCAN_RxFifoFilterTypeA</a> = 0x0U, 
+&#160;&#160;<a class="el" href="a00027.html#gga6314aeebe2488fe50d9dd1fffbf366c8a0025de2b1ce9650dc67c39a3b4d2d163">kFLEXCAN_ClkSrc0</a> = 0x0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00027.html#gga1b8c38cce54aff2f24b6cd45da80f353a0989630ff89813979a12fd56e772073c">kFLEXCAN_RxFifoFilterTypeB</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00027.html#gga1b8c38cce54aff2f24b6cd45da80f353ae4f020795b2ffb38eafb9a3648270a19">kFLEXCAN_RxFifoFilterTypeC</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00027.html#gga1b8c38cce54aff2f24b6cd45da80f353a6b221467793b4268bf84cd475b92780d">kFLEXCAN_RxFifoFilterTypeD</a> = 0x3U
+&#160;&#160;<a class="el" href="a00027.html#gga6314aeebe2488fe50d9dd1fffbf366c8a83c9af2bd0d2e239bf3c75ed72aee115">kFLEXCAN_ClkSrc1</a> = 0x1U
 <br/>
  }</td></tr>
-<tr class="memdesc:ga1b8c38cce54aff2f24b6cd45da80f353"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN Rx Fifo Filter type.  <a href="a00027.html#ga1b8c38cce54aff2f24b6cd45da80f353">More...</a><br/></td></tr>
-<tr class="separator:ga1b8c38cce54aff2f24b6cd45da80f353"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5d139af23e8c1094b39d1cf26d85271b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga5d139af23e8c1094b39d1cf26d85271b">flexcan_rx_fifo_priority_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00027.html#gga5d139af23e8c1094b39d1cf26d85271babc83bc44026aa8c9eef2a4b259e05ecd">kFLEXCAN_RxFifoPrioLow</a> = 0x0U, 
+<tr class="memdesc:ga6314aeebe2488fe50d9dd1fffbf366c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN clock source.  <a href="a00027.html#ga6314aeebe2488fe50d9dd1fffbf366c8">More...</a><br/></td></tr>
+<tr class="separator:ga6314aeebe2488fe50d9dd1fffbf366c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab9559b001234cdb38e5811396a4632f6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#gab9559b001234cdb38e5811396a4632f6">_flexcan_wake_up_source</a> { <br/>
+&#160;&#160;<a class="el" href="a00027.html#ggab9559b001234cdb38e5811396a4632f6a7ce5f9548568e6af39398d517ea19e41">kFLEXCAN_WakeupSrcUnfiltered</a> = 0x0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00027.html#gga5d139af23e8c1094b39d1cf26d85271bac2b9710c6248536f992bdd832d05f8cf">kFLEXCAN_RxFifoPrioHigh</a> = 0x1U
+&#160;&#160;<a class="el" href="a00027.html#ggab9559b001234cdb38e5811396a4632f6a268e3487326cba1981bcffc8f4baf14b">kFLEXCAN_WakeupSrcFiltered</a> = 0x1U
 <br/>
  }</td></tr>
-<tr class="memdesc:ga5d139af23e8c1094b39d1cf26d85271b"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN Enhanced/Legacy Rx FIFO priority.  <a href="a00027.html#ga5d139af23e8c1094b39d1cf26d85271b">More...</a><br/></td></tr>
-<tr class="separator:ga5d139af23e8c1094b39d1cf26d85271b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gab9559b001234cdb38e5811396a4632f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN wake up source.  <a href="a00027.html#gab9559b001234cdb38e5811396a4632f6">More...</a><br/></td></tr>
+<tr class="separator:gab9559b001234cdb38e5811396a4632f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaae011835245de279ed387ee0ff61d7cc"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#gaae011835245de279ed387ee0ff61d7cc">_flexcan_rx_fifo_filter_type</a> { <br/>
+&#160;&#160;<a class="el" href="a00027.html#ggaae011835245de279ed387ee0ff61d7cca1791608b19ef6a27483f55fee614f764">kFLEXCAN_RxFifoFilterTypeA</a> = 0x0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00027.html#ggaae011835245de279ed387ee0ff61d7cca0989630ff89813979a12fd56e772073c">kFLEXCAN_RxFifoFilterTypeB</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00027.html#ggaae011835245de279ed387ee0ff61d7ccae4f020795b2ffb38eafb9a3648270a19">kFLEXCAN_RxFifoFilterTypeC</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00027.html#ggaae011835245de279ed387ee0ff61d7cca6b221467793b4268bf84cd475b92780d">kFLEXCAN_RxFifoFilterTypeD</a> = 0x3U
+<br/>
+ }</td></tr>
+<tr class="memdesc:gaae011835245de279ed387ee0ff61d7cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN Rx Fifo Filter type.  <a href="a00027.html#gaae011835245de279ed387ee0ff61d7cc">More...</a><br/></td></tr>
+<tr class="separator:gaae011835245de279ed387ee0ff61d7cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafb8c23ce204d47e4528edced437e8a7d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#gafb8c23ce204d47e4528edced437e8a7d">_flexcan_rx_fifo_priority</a> { <br/>
+&#160;&#160;<a class="el" href="a00027.html#ggafb8c23ce204d47e4528edced437e8a7dabc83bc44026aa8c9eef2a4b259e05ecd">kFLEXCAN_RxFifoPrioLow</a> = 0x0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00027.html#ggafb8c23ce204d47e4528edced437e8a7dac2b9710c6248536f992bdd832d05f8cf">kFLEXCAN_RxFifoPrioHigh</a> = 0x1U
+<br/>
+ }</td></tr>
+<tr class="memdesc:gafb8c23ce204d47e4528edced437e8a7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN Enhanced/Legacy Rx FIFO priority.  <a href="a00027.html#gafb8c23ce204d47e4528edced437e8a7d">More...</a><br/></td></tr>
+<tr class="separator:gafb8c23ce204d47e4528edced437e8a7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga339a68a513c218f67756e2a04985428e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga339a68a513c218f67756e2a04985428e">_flexcan_interrupt_enable</a> { <br/>
 &#160;&#160;<a class="el" href="a00027.html#gga339a68a513c218f67756e2a04985428eac07643ed5772e0666315c8cf38d1912a">kFLEXCAN_BusOffInterruptEnable</a> = CAN_CTRL1_BOFFMSK_MASK, 
 <br/>
@@ -418,7 +471,7 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga77da4800ee90257a6be4be815bf067cb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga77da4800ee90257a6be4be815bf067cb">FSL_FLEXCAN_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00270.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 11, 1))</td></tr>
+<tr class="memitem:ga77da4800ee90257a6be4be815bf067cb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga77da4800ee90257a6be4be815bf067cb">FSL_FLEXCAN_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00272.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 11, 4))</td></tr>
 <tr class="memdesc:ga77da4800ee90257a6be4be815bf067cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN driver version.  <a href="#ga77da4800ee90257a6be4be815bf067cb">More...</a><br/></td></tr>
 <tr class="separator:ga77da4800ee90257a6be4be815bf067cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -433,25 +486,25 @@ Initialization and deinitialization</h2></td></tr>
 <tr class="memitem:ga6e7c1ec1c37e7e05ebcc01a038ab09b3"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga6e7c1ec1c37e7e05ebcc01a038ab09b3">FLEXCAN_GetInstance</a> (CAN_Type *base)</td></tr>
 <tr class="memdesc:ga6e7c1ec1c37e7e05ebcc01a038ab09b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the FlexCAN instance from peripheral base address.  <a href="#ga6e7c1ec1c37e7e05ebcc01a038ab09b3">More...</a><br/></td></tr>
 <tr class="separator:ga6e7c1ec1c37e7e05ebcc01a038ab09b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga62e2a39e43049d5e387786608d331e4c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga62e2a39e43049d5e387786608d331e4c">FLEXCAN_CalculateImprovedTimingValues</a> (CAN_Type *base, uint32_t bitRate, uint32_t sourceClock_Hz, <a class="el" href="a00027.html#a00411">flexcan_timing_config_t</a> *pTimingConfig)</td></tr>
+<tr class="memitem:ga62e2a39e43049d5e387786608d331e4c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga62e2a39e43049d5e387786608d331e4c">FLEXCAN_CalculateImprovedTimingValues</a> (CAN_Type *base, uint32_t bitRate, uint32_t sourceClock_Hz, <a class="el" href="a00027.html#ga3d6bee81bd27ba7bf1d48845f2a5db19">flexcan_timing_config_t</a> *pTimingConfig)</td></tr>
 <tr class="memdesc:ga62e2a39e43049d5e387786608d331e4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the improved timing values by specific bit Rates for classical CAN.  <a href="#ga62e2a39e43049d5e387786608d331e4c">More...</a><br/></td></tr>
 <tr class="separator:ga62e2a39e43049d5e387786608d331e4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf432c3df02c778a71a35b41a2ed58f4d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#gaf432c3df02c778a71a35b41a2ed58f4d">FLEXCAN_Init</a> (CAN_Type *base, const <a class="el" href="a00027.html#a00405">flexcan_config_t</a> *pConfig, uint32_t sourceClock_Hz)</td></tr>
+<tr class="memitem:gaf432c3df02c778a71a35b41a2ed58f4d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#gaf432c3df02c778a71a35b41a2ed58f4d">FLEXCAN_Init</a> (CAN_Type *base, const <a class="el" href="a00027.html#gac92b53682cc4684bb19d63533abaf950">flexcan_config_t</a> *pConfig, uint32_t sourceClock_Hz)</td></tr>
 <tr class="memdesc:gaf432c3df02c778a71a35b41a2ed58f4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a FlexCAN instance.  <a href="#gaf432c3df02c778a71a35b41a2ed58f4d">More...</a><br/></td></tr>
 <tr class="separator:gaf432c3df02c778a71a35b41a2ed58f4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0629aa8318a3e515dfb168004e0ce656"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga0629aa8318a3e515dfb168004e0ce656">FLEXCAN_Deinit</a> (CAN_Type *base)</td></tr>
 <tr class="memdesc:ga0629aa8318a3e515dfb168004e0ce656"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-initializes a FlexCAN instance.  <a href="#ga0629aa8318a3e515dfb168004e0ce656">More...</a><br/></td></tr>
 <tr class="separator:ga0629aa8318a3e515dfb168004e0ce656"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3cf52e0cedba0a05f084974c53691f5f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga3cf52e0cedba0a05f084974c53691f5f">FLEXCAN_GetDefaultConfig</a> (<a class="el" href="a00027.html#a00405">flexcan_config_t</a> *pConfig)</td></tr>
+<tr class="memitem:ga3cf52e0cedba0a05f084974c53691f5f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga3cf52e0cedba0a05f084974c53691f5f">FLEXCAN_GetDefaultConfig</a> (<a class="el" href="a00027.html#gac92b53682cc4684bb19d63533abaf950">flexcan_config_t</a> *pConfig)</td></tr>
 <tr class="memdesc:ga3cf52e0cedba0a05f084974c53691f5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the default configuration structure.  <a href="#ga3cf52e0cedba0a05f084974c53691f5f">More...</a><br/></td></tr>
 <tr class="separator:ga3cf52e0cedba0a05f084974c53691f5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Configuration.</h2></td></tr>
-<tr class="memitem:ga6972595ff76958d3af74c7cf9bd23342"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga6972595ff76958d3af74c7cf9bd23342">FLEXCAN_SetTimingConfig</a> (CAN_Type *base, const <a class="el" href="a00027.html#a00411">flexcan_timing_config_t</a> *pConfig)</td></tr>
+<tr class="memitem:ga6972595ff76958d3af74c7cf9bd23342"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga6972595ff76958d3af74c7cf9bd23342">FLEXCAN_SetTimingConfig</a> (CAN_Type *base, const <a class="el" href="a00027.html#ga3d6bee81bd27ba7bf1d48845f2a5db19">flexcan_timing_config_t</a> *pConfig)</td></tr>
 <tr class="memdesc:ga6972595ff76958d3af74c7cf9bd23342"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the FlexCAN classical CAN protocol timing characteristic.  <a href="#ga6972595ff76958d3af74c7cf9bd23342">More...</a><br/></td></tr>
 <tr class="separator:ga6972595ff76958d3af74c7cf9bd23342"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafa01e71db4d256fe3a59323bd7ca57c7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#gafa01e71db4d256fe3a59323bd7ca57c7">FLEXCAN_SetBitRate</a> (CAN_Type *base, uint32_t sourceClock_Hz, uint32_t bitRate_Bps)</td></tr>
+<tr class="memitem:gafa01e71db4d256fe3a59323bd7ca57c7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#gafa01e71db4d256fe3a59323bd7ca57c7">FLEXCAN_SetBitRate</a> (CAN_Type *base, uint32_t sourceClock_Hz, uint32_t bitRate_Bps)</td></tr>
 <tr class="memdesc:gafa01e71db4d256fe3a59323bd7ca57c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set bit rate of FlexCAN classical CAN frame or CAN FD frame nominal phase.  <a href="#gafa01e71db4d256fe3a59323bd7ca57c7">More...</a><br/></td></tr>
 <tr class="separator:gafa01e71db4d256fe3a59323bd7ca57c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga40ec3ab55bd92277d4fa0a5f994313c6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga40ec3ab55bd92277d4fa0a5f994313c6">FLEXCAN_SetRxMbGlobalMask</a> (CAN_Type *base, uint32_t mask)</td></tr>
@@ -466,10 +519,10 @@ Configuration.</h2></td></tr>
 <tr class="memitem:gadbf35cc05ed0d9a73eda5ac4fbb30ff0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#gadbf35cc05ed0d9a73eda5ac4fbb30ff0">FLEXCAN_SetTxMbConfig</a> (CAN_Type *base, uint8_t mbIdx, bool enable)</td></tr>
 <tr class="memdesc:gadbf35cc05ed0d9a73eda5ac4fbb30ff0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures a FlexCAN transmit message buffer.  <a href="#gadbf35cc05ed0d9a73eda5ac4fbb30ff0">More...</a><br/></td></tr>
 <tr class="separator:gadbf35cc05ed0d9a73eda5ac4fbb30ff0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga845cd6e7e8746cf931e8e6aedd307756"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga845cd6e7e8746cf931e8e6aedd307756">FLEXCAN_SetRxMbConfig</a> (CAN_Type *base, uint8_t mbIdx, const <a class="el" href="a00027.html#a00410">flexcan_rx_mb_config_t</a> *pRxMbConfig, bool enable)</td></tr>
+<tr class="memitem:ga845cd6e7e8746cf931e8e6aedd307756"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga845cd6e7e8746cf931e8e6aedd307756">FLEXCAN_SetRxMbConfig</a> (CAN_Type *base, uint8_t mbIdx, const <a class="el" href="a00027.html#ga4fe64f2317d8cd6a28fa9bcd1a34889d">flexcan_rx_mb_config_t</a> *pRxMbConfig, bool enable)</td></tr>
 <tr class="memdesc:ga845cd6e7e8746cf931e8e6aedd307756"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures a FlexCAN Receive Message Buffer.  <a href="#ga845cd6e7e8746cf931e8e6aedd307756">More...</a><br/></td></tr>
 <tr class="separator:ga845cd6e7e8746cf931e8e6aedd307756"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1bced48d76afa2ccd2726aa9c80cc4b7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga1bced48d76afa2ccd2726aa9c80cc4b7">FLEXCAN_SetRxFifoConfig</a> (CAN_Type *base, const <a class="el" href="a00027.html#a00409">flexcan_rx_fifo_config_t</a> *pRxFifoConfig, bool enable)</td></tr>
+<tr class="memitem:ga1bced48d76afa2ccd2726aa9c80cc4b7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga1bced48d76afa2ccd2726aa9c80cc4b7">FLEXCAN_SetRxFifoConfig</a> (CAN_Type *base, const <a class="el" href="a00027.html#ga75f18778025a1fcdbe2e8a6b1bf9f41b">flexcan_rx_fifo_config_t</a> *pRxFifoConfig, bool enable)</td></tr>
 <tr class="memdesc:ga1bced48d76afa2ccd2726aa9c80cc4b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the FlexCAN Legacy Rx FIFO.  <a href="#ga1bced48d76afa2ccd2726aa9c80cc4b7">More...</a><br/></td></tr>
 <tr class="separator:ga1bced48d76afa2ccd2726aa9c80cc4b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -484,12 +537,12 @@ Status</h2></td></tr>
 <tr class="memitem:gae5590e5f4a5c9cc23bf58bbba6466b9b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#gae5590e5f4a5c9cc23bf58bbba6466b9b">FLEXCAN_GetBusErrCount</a> (CAN_Type *base, uint8_t *txErrBuf, uint8_t *rxErrBuf)</td></tr>
 <tr class="memdesc:gae5590e5f4a5c9cc23bf58bbba6466b9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the FlexCAN Bus Error Counter value.  <a href="#gae5590e5f4a5c9cc23bf58bbba6466b9b">More...</a><br/></td></tr>
 <tr class="separator:gae5590e5f4a5c9cc23bf58bbba6466b9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf7de339e9d94a4c59f05c04655a23a6e"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#gaf7de339e9d94a4c59f05c04655a23a6e">FLEXCAN_GetMbStatusFlags</a> (CAN_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:gaf7de339e9d94a4c59f05c04655a23a6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the FlexCAN Message Buffer interrupt flags.  <a href="#gaf7de339e9d94a4c59f05c04655a23a6e">More...</a><br/></td></tr>
-<tr class="separator:gaf7de339e9d94a4c59f05c04655a23a6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7199f7d1bf8198e03522d1d9706d50f2"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga7199f7d1bf8198e03522d1d9706d50f2">FLEXCAN_ClearMbStatusFlags</a> (CAN_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:ga7199f7d1bf8198e03522d1d9706d50f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the FlexCAN Message Buffer interrupt flags.  <a href="#ga7199f7d1bf8198e03522d1d9706d50f2">More...</a><br/></td></tr>
-<tr class="separator:ga7199f7d1bf8198e03522d1d9706d50f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga82d61a62e50d1ac7e520141156e01d96"><td class="memItemLeft" align="right" valign="top">static uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga82d61a62e50d1ac7e520141156e01d96">FLEXCAN_GetMbStatusFlags</a> (CAN_Type *base, uint64_t mask)</td></tr>
+<tr class="memdesc:ga82d61a62e50d1ac7e520141156e01d96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the FlexCAN Message Buffer interrupt flags.  <a href="#ga82d61a62e50d1ac7e520141156e01d96">More...</a><br/></td></tr>
+<tr class="separator:ga82d61a62e50d1ac7e520141156e01d96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4761779a4e4a67b638fa8c74d94afb9a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga4761779a4e4a67b638fa8c74d94afb9a">FLEXCAN_ClearMbStatusFlags</a> (CAN_Type *base, uint64_t mask)</td></tr>
+<tr class="memdesc:ga4761779a4e4a67b638fa8c74d94afb9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the FlexCAN Message Buffer interrupt flags.  <a href="#ga4761779a4e4a67b638fa8c74d94afb9a">More...</a><br/></td></tr>
+<tr class="separator:ga4761779a4e4a67b638fa8c74d94afb9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Interrupts</h2></td></tr>
@@ -499,279 +552,279 @@ Interrupts</h2></td></tr>
 <tr class="memitem:gad6e220545b129d120fac805e8f9d82ab"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#gad6e220545b129d120fac805e8f9d82ab">FLEXCAN_DisableInterrupts</a> (CAN_Type *base, uint32_t mask)</td></tr>
 <tr class="memdesc:gad6e220545b129d120fac805e8f9d82ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables FlexCAN interrupts according to the provided mask.  <a href="#gad6e220545b129d120fac805e8f9d82ab">More...</a><br/></td></tr>
 <tr class="separator:gad6e220545b129d120fac805e8f9d82ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadbb25b3a7667fa94162f5c98a9dd8fed"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#gadbb25b3a7667fa94162f5c98a9dd8fed">FLEXCAN_EnableMbInterrupts</a> (CAN_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:gadbb25b3a7667fa94162f5c98a9dd8fed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables FlexCAN Message Buffer interrupts.  <a href="#gadbb25b3a7667fa94162f5c98a9dd8fed">More...</a><br/></td></tr>
-<tr class="separator:gadbb25b3a7667fa94162f5c98a9dd8fed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac99226a65d8458ab9fb13a7ebfb75b49"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#gac99226a65d8458ab9fb13a7ebfb75b49">FLEXCAN_DisableMbInterrupts</a> (CAN_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:gac99226a65d8458ab9fb13a7ebfb75b49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables FlexCAN Message Buffer interrupts.  <a href="#gac99226a65d8458ab9fb13a7ebfb75b49">More...</a><br/></td></tr>
-<tr class="separator:gac99226a65d8458ab9fb13a7ebfb75b49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3c1b52fa316941bd352f7f13e92852a7"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga3c1b52fa316941bd352f7f13e92852a7">FLEXCAN_EnableMbInterrupts</a> (CAN_Type *base, uint64_t mask)</td></tr>
+<tr class="memdesc:ga3c1b52fa316941bd352f7f13e92852a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables FlexCAN Message Buffer interrupts.  <a href="#ga3c1b52fa316941bd352f7f13e92852a7">More...</a><br/></td></tr>
+<tr class="separator:ga3c1b52fa316941bd352f7f13e92852a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac340f1eabdcbbb6c7234d4bb7994b125"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#gac340f1eabdcbbb6c7234d4bb7994b125">FLEXCAN_DisableMbInterrupts</a> (CAN_Type *base, uint64_t mask)</td></tr>
+<tr class="memdesc:gac340f1eabdcbbb6c7234d4bb7994b125"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables FlexCAN Message Buffer interrupts.  <a href="#gac340f1eabdcbbb6c7234d4bb7994b125">More...</a><br/></td></tr>
+<tr class="separator:gac340f1eabdcbbb6c7234d4bb7994b125"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Bus Operations</h2></td></tr>
 <tr class="memitem:ga20f79302d5fad90306a26b667f58fe4d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga20f79302d5fad90306a26b667f58fe4d">FLEXCAN_Enable</a> (CAN_Type *base, bool enable)</td></tr>
 <tr class="memdesc:ga20f79302d5fad90306a26b667f58fe4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables the FlexCAN module operation.  <a href="#ga20f79302d5fad90306a26b667f58fe4d">More...</a><br/></td></tr>
 <tr class="separator:ga20f79302d5fad90306a26b667f58fe4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9aa3cbde78272a0983317d6c79740a3d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga9aa3cbde78272a0983317d6c79740a3d">FLEXCAN_WriteTxMb</a> (CAN_Type *base, uint8_t mbIdx, const <a class="el" href="a00027.html#a00407">flexcan_frame_t</a> *pTxFrame)</td></tr>
+<tr class="memitem:ga9aa3cbde78272a0983317d6c79740a3d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga9aa3cbde78272a0983317d6c79740a3d">FLEXCAN_WriteTxMb</a> (CAN_Type *base, uint8_t mbIdx, const <a class="el" href="a00027.html#ga8e99cd0558e81decabdcafae1ed4ca49">flexcan_frame_t</a> *pTxFrame)</td></tr>
 <tr class="memdesc:ga9aa3cbde78272a0983317d6c79740a3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes a FlexCAN Message to the Transmit Message Buffer.  <a href="#ga9aa3cbde78272a0983317d6c79740a3d">More...</a><br/></td></tr>
 <tr class="separator:ga9aa3cbde78272a0983317d6c79740a3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad41dd26b58b8e36a1bf79425b46a275c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#gad41dd26b58b8e36a1bf79425b46a275c">FLEXCAN_ReadRxMb</a> (CAN_Type *base, uint8_t mbIdx, <a class="el" href="a00027.html#a00407">flexcan_frame_t</a> *pRxFrame)</td></tr>
+<tr class="memitem:gad41dd26b58b8e36a1bf79425b46a275c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#gad41dd26b58b8e36a1bf79425b46a275c">FLEXCAN_ReadRxMb</a> (CAN_Type *base, uint8_t mbIdx, <a class="el" href="a00027.html#ga8e99cd0558e81decabdcafae1ed4ca49">flexcan_frame_t</a> *pRxFrame)</td></tr>
 <tr class="memdesc:gad41dd26b58b8e36a1bf79425b46a275c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads a FlexCAN Message from Receive Message Buffer.  <a href="#gad41dd26b58b8e36a1bf79425b46a275c">More...</a><br/></td></tr>
 <tr class="separator:gad41dd26b58b8e36a1bf79425b46a275c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga550b616278ffc1a800c3d076a7df850c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga550b616278ffc1a800c3d076a7df850c">FLEXCAN_ReadRxFifo</a> (CAN_Type *base, <a class="el" href="a00027.html#a00407">flexcan_frame_t</a> *pRxFrame)</td></tr>
+<tr class="memitem:ga550b616278ffc1a800c3d076a7df850c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga550b616278ffc1a800c3d076a7df850c">FLEXCAN_ReadRxFifo</a> (CAN_Type *base, <a class="el" href="a00027.html#ga8e99cd0558e81decabdcafae1ed4ca49">flexcan_frame_t</a> *pRxFrame)</td></tr>
 <tr class="memdesc:ga550b616278ffc1a800c3d076a7df850c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads a FlexCAN Message from Legacy Rx FIFO.  <a href="#ga550b616278ffc1a800c3d076a7df850c">More...</a><br/></td></tr>
 <tr class="separator:ga550b616278ffc1a800c3d076a7df850c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Transactional</h2></td></tr>
-<tr class="memitem:ga0f19cea627d6ec305e5ac020d1bde3ea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga0f19cea627d6ec305e5ac020d1bde3ea">FLEXCAN_TransferSendBlocking</a> (CAN_Type *base, uint8_t mbIdx, <a class="el" href="a00027.html#a00407">flexcan_frame_t</a> *pTxFrame)</td></tr>
+<tr class="memitem:ga0f19cea627d6ec305e5ac020d1bde3ea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga0f19cea627d6ec305e5ac020d1bde3ea">FLEXCAN_TransferSendBlocking</a> (CAN_Type *base, uint8_t mbIdx, <a class="el" href="a00027.html#ga8e99cd0558e81decabdcafae1ed4ca49">flexcan_frame_t</a> *pTxFrame)</td></tr>
 <tr class="memdesc:ga0f19cea627d6ec305e5ac020d1bde3ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a polling send transaction on the CAN bus.  <a href="#ga0f19cea627d6ec305e5ac020d1bde3ea">More...</a><br/></td></tr>
 <tr class="separator:ga0f19cea627d6ec305e5ac020d1bde3ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7796d6398521d7c89eed78746f63ce06"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga7796d6398521d7c89eed78746f63ce06">FLEXCAN_TransferReceiveBlocking</a> (CAN_Type *base, uint8_t mbIdx, <a class="el" href="a00027.html#a00407">flexcan_frame_t</a> *pRxFrame)</td></tr>
+<tr class="memitem:ga7796d6398521d7c89eed78746f63ce06"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga7796d6398521d7c89eed78746f63ce06">FLEXCAN_TransferReceiveBlocking</a> (CAN_Type *base, uint8_t mbIdx, <a class="el" href="a00027.html#ga8e99cd0558e81decabdcafae1ed4ca49">flexcan_frame_t</a> *pRxFrame)</td></tr>
 <tr class="memdesc:ga7796d6398521d7c89eed78746f63ce06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a polling receive transaction on the CAN bus.  <a href="#ga7796d6398521d7c89eed78746f63ce06">More...</a><br/></td></tr>
 <tr class="separator:ga7796d6398521d7c89eed78746f63ce06"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9aa472cab1b5172c09f94e1d461b1580"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga9aa472cab1b5172c09f94e1d461b1580">FLEXCAN_TransferReceiveFifoBlocking</a> (CAN_Type *base, <a class="el" href="a00027.html#a00407">flexcan_frame_t</a> *pRxFrame)</td></tr>
+<tr class="memitem:ga9aa472cab1b5172c09f94e1d461b1580"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga9aa472cab1b5172c09f94e1d461b1580">FLEXCAN_TransferReceiveFifoBlocking</a> (CAN_Type *base, <a class="el" href="a00027.html#ga8e99cd0558e81decabdcafae1ed4ca49">flexcan_frame_t</a> *pRxFrame)</td></tr>
 <tr class="memdesc:ga9aa472cab1b5172c09f94e1d461b1580"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a polling receive transaction from Legacy Rx FIFO on the CAN bus.  <a href="#ga9aa472cab1b5172c09f94e1d461b1580">More...</a><br/></td></tr>
 <tr class="separator:ga9aa472cab1b5172c09f94e1d461b1580"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaca661014e03aa709a753a3c499ecba19"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#gaca661014e03aa709a753a3c499ecba19">FLEXCAN_TransferCreateHandle</a> (CAN_Type *base, flexcan_handle_t *handle, flexcan_transfer_callback_t callback, void *userData)</td></tr>
+<tr class="memitem:gaca661014e03aa709a753a3c499ecba19"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#gaca661014e03aa709a753a3c499ecba19">FLEXCAN_TransferCreateHandle</a> (CAN_Type *base, <a class="el" href="a00027.html#gafb040d05eeb1eb0edd80fd97e419dee8">flexcan_handle_t</a> *handle, flexcan_transfer_callback_t callback, void *userData)</td></tr>
 <tr class="memdesc:gaca661014e03aa709a753a3c499ecba19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the FlexCAN handle.  <a href="#gaca661014e03aa709a753a3c499ecba19">More...</a><br/></td></tr>
 <tr class="separator:gaca661014e03aa709a753a3c499ecba19"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2211f26e769ade4da9589e1305630c72"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga2211f26e769ade4da9589e1305630c72">FLEXCAN_TransferSendNonBlocking</a> (CAN_Type *base, flexcan_handle_t *handle, <a class="el" href="a00027.html#a00408">flexcan_mb_transfer_t</a> *pMbXfer)</td></tr>
+<tr class="memitem:ga2211f26e769ade4da9589e1305630c72"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga2211f26e769ade4da9589e1305630c72">FLEXCAN_TransferSendNonBlocking</a> (CAN_Type *base, <a class="el" href="a00027.html#gafb040d05eeb1eb0edd80fd97e419dee8">flexcan_handle_t</a> *handle, <a class="el" href="a00027.html#gae1e20e9dfdfebdeed7e86aa0b4396550">flexcan_mb_transfer_t</a> *pMbXfer)</td></tr>
 <tr class="memdesc:ga2211f26e769ade4da9589e1305630c72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a message using IRQ.  <a href="#ga2211f26e769ade4da9589e1305630c72">More...</a><br/></td></tr>
 <tr class="separator:ga2211f26e769ade4da9589e1305630c72"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga788692aa24fc94eb37799dadc718c6c1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga788692aa24fc94eb37799dadc718c6c1">FLEXCAN_TransferReceiveNonBlocking</a> (CAN_Type *base, flexcan_handle_t *handle, <a class="el" href="a00027.html#a00408">flexcan_mb_transfer_t</a> *pMbXfer)</td></tr>
+<tr class="memitem:ga788692aa24fc94eb37799dadc718c6c1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga788692aa24fc94eb37799dadc718c6c1">FLEXCAN_TransferReceiveNonBlocking</a> (CAN_Type *base, <a class="el" href="a00027.html#gafb040d05eeb1eb0edd80fd97e419dee8">flexcan_handle_t</a> *handle, <a class="el" href="a00027.html#gae1e20e9dfdfebdeed7e86aa0b4396550">flexcan_mb_transfer_t</a> *pMbXfer)</td></tr>
 <tr class="memdesc:ga788692aa24fc94eb37799dadc718c6c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives a message using IRQ.  <a href="#ga788692aa24fc94eb37799dadc718c6c1">More...</a><br/></td></tr>
 <tr class="separator:ga788692aa24fc94eb37799dadc718c6c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0d310c204c7bf1bda4fa2b4d1234f0af"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga0d310c204c7bf1bda4fa2b4d1234f0af">FLEXCAN_TransferReceiveFifoNonBlocking</a> (CAN_Type *base, flexcan_handle_t *handle, <a class="el" href="a00027.html#a00406">flexcan_fifo_transfer_t</a> *pFifoXfer)</td></tr>
+<tr class="memitem:ga0d310c204c7bf1bda4fa2b4d1234f0af"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga0d310c204c7bf1bda4fa2b4d1234f0af">FLEXCAN_TransferReceiveFifoNonBlocking</a> (CAN_Type *base, <a class="el" href="a00027.html#gafb040d05eeb1eb0edd80fd97e419dee8">flexcan_handle_t</a> *handle, <a class="el" href="a00027.html#ga093ac9e4fcaf26e413a1bc88c473c3e7">flexcan_fifo_transfer_t</a> *pFifoXfer)</td></tr>
 <tr class="memdesc:ga0d310c204c7bf1bda4fa2b4d1234f0af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives a message from Rx FIFO using IRQ.  <a href="#ga0d310c204c7bf1bda4fa2b4d1234f0af">More...</a><br/></td></tr>
 <tr class="separator:ga0d310c204c7bf1bda4fa2b4d1234f0af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad6abc98c5432461498d024f70b71594b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#gad6abc98c5432461498d024f70b71594b">FLEXCAN_TransferGetReceiveFifoCount</a> (CAN_Type *base, flexcan_handle_t *handle, size_t *count)</td></tr>
+<tr class="memitem:gad6abc98c5432461498d024f70b71594b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#gad6abc98c5432461498d024f70b71594b">FLEXCAN_TransferGetReceiveFifoCount</a> (CAN_Type *base, <a class="el" href="a00027.html#gafb040d05eeb1eb0edd80fd97e419dee8">flexcan_handle_t</a> *handle, size_t *count)</td></tr>
 <tr class="memdesc:gad6abc98c5432461498d024f70b71594b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the Legacy Rx Fifo transfer status during a interrupt non-blocking receive.  <a href="#gad6abc98c5432461498d024f70b71594b">More...</a><br/></td></tr>
 <tr class="separator:gad6abc98c5432461498d024f70b71594b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadd1890a150798d6154e3f19e8b4a3e63"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#gadd1890a150798d6154e3f19e8b4a3e63">FLEXCAN_GetTimeStamp</a> (flexcan_handle_t *handle, uint8_t mbIdx)</td></tr>
+<tr class="memitem:gadd1890a150798d6154e3f19e8b4a3e63"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#gadd1890a150798d6154e3f19e8b4a3e63">FLEXCAN_GetTimeStamp</a> (<a class="el" href="a00027.html#gafb040d05eeb1eb0edd80fd97e419dee8">flexcan_handle_t</a> *handle, uint8_t mbIdx)</td></tr>
 <tr class="memdesc:gadd1890a150798d6154e3f19e8b4a3e63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the detail index of Mailbox's Timestamp by handle.  <a href="#gadd1890a150798d6154e3f19e8b4a3e63">More...</a><br/></td></tr>
 <tr class="separator:gadd1890a150798d6154e3f19e8b4a3e63"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab1bb142ae44f89723de55aed6879d311"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#gab1bb142ae44f89723de55aed6879d311">FLEXCAN_TransferAbortSend</a> (CAN_Type *base, flexcan_handle_t *handle, uint8_t mbIdx)</td></tr>
+<tr class="memitem:gab1bb142ae44f89723de55aed6879d311"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#gab1bb142ae44f89723de55aed6879d311">FLEXCAN_TransferAbortSend</a> (CAN_Type *base, <a class="el" href="a00027.html#gafb040d05eeb1eb0edd80fd97e419dee8">flexcan_handle_t</a> *handle, uint8_t mbIdx)</td></tr>
 <tr class="memdesc:gab1bb142ae44f89723de55aed6879d311"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the interrupt driven message send process.  <a href="#gab1bb142ae44f89723de55aed6879d311">More...</a><br/></td></tr>
 <tr class="separator:gab1bb142ae44f89723de55aed6879d311"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga96d909308b07c826b8123b45bf46e2e8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga96d909308b07c826b8123b45bf46e2e8">FLEXCAN_TransferAbortReceive</a> (CAN_Type *base, flexcan_handle_t *handle, uint8_t mbIdx)</td></tr>
+<tr class="memitem:ga96d909308b07c826b8123b45bf46e2e8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga96d909308b07c826b8123b45bf46e2e8">FLEXCAN_TransferAbortReceive</a> (CAN_Type *base, <a class="el" href="a00027.html#gafb040d05eeb1eb0edd80fd97e419dee8">flexcan_handle_t</a> *handle, uint8_t mbIdx)</td></tr>
 <tr class="memdesc:ga96d909308b07c826b8123b45bf46e2e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the interrupt driven message receive process.  <a href="#ga96d909308b07c826b8123b45bf46e2e8">More...</a><br/></td></tr>
 <tr class="separator:ga96d909308b07c826b8123b45bf46e2e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9ff071840674c2b3f2e1667e5d0400ac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga9ff071840674c2b3f2e1667e5d0400ac">FLEXCAN_TransferAbortReceiveFifo</a> (CAN_Type *base, flexcan_handle_t *handle)</td></tr>
+<tr class="memitem:ga9ff071840674c2b3f2e1667e5d0400ac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga9ff071840674c2b3f2e1667e5d0400ac">FLEXCAN_TransferAbortReceiveFifo</a> (CAN_Type *base, <a class="el" href="a00027.html#gafb040d05eeb1eb0edd80fd97e419dee8">flexcan_handle_t</a> *handle)</td></tr>
 <tr class="memdesc:ga9ff071840674c2b3f2e1667e5d0400ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the interrupt driven message receive from Rx FIFO process.  <a href="#ga9ff071840674c2b3f2e1667e5d0400ac">More...</a><br/></td></tr>
 <tr class="separator:ga9ff071840674c2b3f2e1667e5d0400ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga929cb775ee9a363295feef9cb06c2425"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga929cb775ee9a363295feef9cb06c2425">FLEXCAN_TransferHandleIRQ</a> (CAN_Type *base, flexcan_handle_t *handle)</td></tr>
+<tr class="memitem:ga929cb775ee9a363295feef9cb06c2425"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga929cb775ee9a363295feef9cb06c2425">FLEXCAN_TransferHandleIRQ</a> (CAN_Type *base, <a class="el" href="a00027.html#gafb040d05eeb1eb0edd80fd97e419dee8">flexcan_handle_t</a> *handle)</td></tr>
 <tr class="memdesc:ga929cb775ee9a363295feef9cb06c2425"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN IRQ handle function.  <a href="#ga929cb775ee9a363295feef9cb06c2425">More...</a><br/></td></tr>
 <tr class="separator:ga929cb775ee9a363295feef9cb06c2425"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00407" id="a00407"></a>
+<a name="a00377" id="a00377"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct flexcan_frame_t</td>
+          <td class="memname">struct _flexcan_frame</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="acf56bef24748e5d4498edfbaac4e174c"></a>
+<a class="anchor" id="a2d574a318bed8991a6c173865e2bf578"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t flexcan_frame_t::timestamp</td>
+          <td class="memname">uint32_t _flexcan_frame::timestamp</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a86c748c660b5a447d73b601d65464d68"></a>
+<a class="anchor" id="a79577000abdd0aead2ccbae8fff1ca66"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t flexcan_frame_t::length</td>
+          <td class="memname">uint32_t _flexcan_frame::length</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a21ceef28a120648fbd3bf3c72c414e89"></a>
+<a class="anchor" id="a868664b2368610412f00f8ec6559da6c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t flexcan_frame_t::type</td>
+          <td class="memname">uint32_t _flexcan_frame::type</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ac8c11ad3b0de16980ae1cb45d9e5bdde"></a>
+<a class="anchor" id="aaff5a9182ce8649e4d1205c299ebc211"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t flexcan_frame_t::format</td>
+          <td class="memname">uint32_t _flexcan_frame::format</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a5517886b0d42a645edfee41cb5f62218"></a>
+<a class="anchor" id="abfaf8783ae029aa6defb8a4a3758244c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t flexcan_frame_t::__pad0__</td>
+          <td class="memname">uint32_t _flexcan_frame::__pad0__</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a2c49a36e59aed74b59fae67da2ec5f67"></a>
+<a class="anchor" id="a70846d71d225a859a7df8fcf77609e81"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t flexcan_frame_t::idhit</td>
+          <td class="memname">uint32_t _flexcan_frame::idhit</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a2d5b2e002f982e1a33244362e8fdcd08"></a>
+<a class="anchor" id="ae189ca072cc012dc5b76838d5b556e87"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t flexcan_frame_t::id</td>
+          <td class="memname">uint32_t _flexcan_frame::id</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a5333734602acf1681855ee540076034e"></a>
+<a class="anchor" id="a437a25715db24dbd4beb727d3f8e443f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t flexcan_frame_t::dataWord0</td>
+          <td class="memname">uint32_t _flexcan_frame::dataWord0</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="aaf4b0995ba55fae4d85765d6b62c2e57"></a>
+<a class="anchor" id="af0aced0351f2207fbebf0a5e78a58bbc"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t flexcan_frame_t::dataWord1</td>
+          <td class="memname">uint32_t _flexcan_frame::dataWord1</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a3730fc502fc6955573a4bf495fbff2ba"></a>
+<a class="anchor" id="a541853dd37bce5eb5b2ed6142c5556ee"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t flexcan_frame_t::dataByte3</td>
+          <td class="memname">uint8_t _flexcan_frame::dataByte3</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a4d3bc8f3e2d4343ead866a6ea3dc874a"></a>
+<a class="anchor" id="a882ac7b21153fe910cd17d02962c443e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t flexcan_frame_t::dataByte2</td>
+          <td class="memname">uint8_t _flexcan_frame::dataByte2</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a23f690780c3b7336cd38dcd8272b6799"></a>
+<a class="anchor" id="a4ce659f8fb04760570fdf08523fd2f76"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t flexcan_frame_t::dataByte1</td>
+          <td class="memname">uint8_t _flexcan_frame::dataByte1</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="aac272e3fc846654dedc2174b9050c493"></a>
+<a class="anchor" id="a191d245c850e51072da0f6fbe8c272df"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t flexcan_frame_t::dataByte0</td>
+          <td class="memname">uint8_t _flexcan_frame::dataByte0</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a541d16b28a8c2d4959262f581d52f1b9"></a>
+<a class="anchor" id="a94525fc776e0eb4ceb579356f5b15bf1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t flexcan_frame_t::dataByte7</td>
+          <td class="memname">uint8_t _flexcan_frame::dataByte7</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a08bb816509e5c2a8e62cf14f3e7a820d"></a>
+<a class="anchor" id="a91b3355e1077c092b756d9d070be4d1b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t flexcan_frame_t::dataByte6</td>
+          <td class="memname">uint8_t _flexcan_frame::dataByte6</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a7fb79a7e48cef3eef8c2bb652d521404"></a>
+<a class="anchor" id="a598ddfb685ffb0f2287821a5708ceef8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t flexcan_frame_t::dataByte5</td>
+          <td class="memname">uint8_t _flexcan_frame::dataByte5</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a744b38402f1ccd4fbb0b1f851401ea87"></a>
+<a class="anchor" id="a0401aa7e547f5109bc748f4d118a1e29"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t flexcan_frame_t::dataByte4</td>
+          <td class="memname">uint8_t _flexcan_frame::dataByte4</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -781,88 +834,88 @@ Transactional</h2></td></tr>
 
 </div>
 </div>
-<a name="a00411" id="a00411"></a>
+<a name="a00382" id="a00382"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct flexcan_timing_config_t</td>
+          <td class="memname">struct _flexcan_timing_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:ab9be8b37a583ead557316b6e8a52087a"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ab9be8b37a583ead557316b6e8a52087a">preDivider</a></td></tr>
-<tr class="memdesc:ab9be8b37a583ead557316b6e8a52087a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Classic CAN or CAN FD nominal phase bit rate prescaler.  <a href="#ab9be8b37a583ead557316b6e8a52087a">More...</a><br/></td></tr>
-<tr class="separator:ab9be8b37a583ead557316b6e8a52087a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a328cafc9d9d4536e888a2392c52936af"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a328cafc9d9d4536e888a2392c52936af">rJumpwidth</a></td></tr>
-<tr class="memdesc:a328cafc9d9d4536e888a2392c52936af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Classic CAN or CAN FD nominal phase Re-sync Jump Width.  <a href="#a328cafc9d9d4536e888a2392c52936af">More...</a><br/></td></tr>
-<tr class="separator:a328cafc9d9d4536e888a2392c52936af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70c5ba7b5325b4cc0d8579bd93701541"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a70c5ba7b5325b4cc0d8579bd93701541">phaseSeg1</a></td></tr>
-<tr class="memdesc:a70c5ba7b5325b4cc0d8579bd93701541"><td class="mdescLeft">&#160;</td><td class="mdescRight">Classic CAN or CAN FD nominal phase Segment 1.  <a href="#a70c5ba7b5325b4cc0d8579bd93701541">More...</a><br/></td></tr>
-<tr class="separator:a70c5ba7b5325b4cc0d8579bd93701541"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c11e2dde54a7fa384b956a79793aa30"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a6c11e2dde54a7fa384b956a79793aa30">phaseSeg2</a></td></tr>
-<tr class="memdesc:a6c11e2dde54a7fa384b956a79793aa30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Classic CAN or CAN FD nominal phase Segment 2.  <a href="#a6c11e2dde54a7fa384b956a79793aa30">More...</a><br/></td></tr>
-<tr class="separator:a6c11e2dde54a7fa384b956a79793aa30"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a08a892d0d2f41c0065ef72d9ebb66d66"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a08a892d0d2f41c0065ef72d9ebb66d66">propSeg</a></td></tr>
-<tr class="memdesc:a08a892d0d2f41c0065ef72d9ebb66d66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Classic CAN or CAN FD nominal phase Propagation Segment.  <a href="#a08a892d0d2f41c0065ef72d9ebb66d66">More...</a><br/></td></tr>
-<tr class="separator:a08a892d0d2f41c0065ef72d9ebb66d66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a094250169e8e286eff95dedfdae9e0e6"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a094250169e8e286eff95dedfdae9e0e6">preDivider</a></td></tr>
+<tr class="memdesc:a094250169e8e286eff95dedfdae9e0e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Classic CAN or CAN FD nominal phase bit rate prescaler.  <a href="#a094250169e8e286eff95dedfdae9e0e6">More...</a><br/></td></tr>
+<tr class="separator:a094250169e8e286eff95dedfdae9e0e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af296065f4a2ac8f604503bc4fe6a41bc"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#af296065f4a2ac8f604503bc4fe6a41bc">rJumpwidth</a></td></tr>
+<tr class="memdesc:af296065f4a2ac8f604503bc4fe6a41bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Classic CAN or CAN FD nominal phase Re-sync Jump Width.  <a href="#af296065f4a2ac8f604503bc4fe6a41bc">More...</a><br/></td></tr>
+<tr class="separator:af296065f4a2ac8f604503bc4fe6a41bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe55f38d4790119e5507e7f0978a6bf1"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#abe55f38d4790119e5507e7f0978a6bf1">phaseSeg1</a></td></tr>
+<tr class="memdesc:abe55f38d4790119e5507e7f0978a6bf1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Classic CAN or CAN FD nominal phase Segment 1.  <a href="#abe55f38d4790119e5507e7f0978a6bf1">More...</a><br/></td></tr>
+<tr class="separator:abe55f38d4790119e5507e7f0978a6bf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb138f9e109693108eff8f491781fbe4"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#aeb138f9e109693108eff8f491781fbe4">phaseSeg2</a></td></tr>
+<tr class="memdesc:aeb138f9e109693108eff8f491781fbe4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Classic CAN or CAN FD nominal phase Segment 2.  <a href="#aeb138f9e109693108eff8f491781fbe4">More...</a><br/></td></tr>
+<tr class="separator:aeb138f9e109693108eff8f491781fbe4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60963025a3ccbbcda0108334ac0199dd"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a60963025a3ccbbcda0108334ac0199dd">propSeg</a></td></tr>
+<tr class="memdesc:a60963025a3ccbbcda0108334ac0199dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Classic CAN or CAN FD nominal phase Propagation Segment.  <a href="#a60963025a3ccbbcda0108334ac0199dd">More...</a><br/></td></tr>
+<tr class="separator:a60963025a3ccbbcda0108334ac0199dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="ab9be8b37a583ead557316b6e8a52087a"></a>
+<a class="anchor" id="a094250169e8e286eff95dedfdae9e0e6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t flexcan_timing_config_t::preDivider</td>
+          <td class="memname">uint16_t _flexcan_timing_config::preDivider</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a328cafc9d9d4536e888a2392c52936af"></a>
+<a class="anchor" id="af296065f4a2ac8f604503bc4fe6a41bc"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t flexcan_timing_config_t::rJumpwidth</td>
+          <td class="memname">uint8_t _flexcan_timing_config::rJumpwidth</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a70c5ba7b5325b4cc0d8579bd93701541"></a>
+<a class="anchor" id="abe55f38d4790119e5507e7f0978a6bf1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t flexcan_timing_config_t::phaseSeg1</td>
+          <td class="memname">uint8_t _flexcan_timing_config::phaseSeg1</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a6c11e2dde54a7fa384b956a79793aa30"></a>
+<a class="anchor" id="aeb138f9e109693108eff8f491781fbe4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t flexcan_timing_config_t::phaseSeg2</td>
+          <td class="memname">uint8_t _flexcan_timing_config::phaseSeg2</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a08a892d0d2f41c0065ef72d9ebb66d66"></a>
+<a class="anchor" id="a60963025a3ccbbcda0108334ac0199dd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t flexcan_timing_config_t::propSeg</td>
+          <td class="memname">uint8_t _flexcan_timing_config::propSeg</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -872,12 +925,12 @@ Transactional</h2></td></tr>
 
 </div>
 </div>
-<a name="a00405" id="a00405"></a>
+<a name="a00375" id="a00375"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct flexcan_config_t</td>
+          <td class="memname">struct _flexcan_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -886,182 +939,182 @@ Transactional</h2></td></tr>
 </dd></dl>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a088675118b1081ed959119ba00080412"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00027.html#gaa0b3ac1e2e7416950b82014d2a2b40ee">flexcan_clock_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a088675118b1081ed959119ba00080412">clkSrc</a></td></tr>
-<tr class="memdesc:a088675118b1081ed959119ba00080412"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clock source for FlexCAN Protocol Engine.  <a href="#a088675118b1081ed959119ba00080412">More...</a><br/></td></tr>
-<tr class="separator:a088675118b1081ed959119ba00080412"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aceb89e2f7bc92e8d4e562a26ee181b78"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00027.html#ga5ca4fd15317c08e08c9e163defc60d05">flexcan_wake_up_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#aceb89e2f7bc92e8d4e562a26ee181b78">wakeupSrc</a></td></tr>
-<tr class="memdesc:aceb89e2f7bc92e8d4e562a26ee181b78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wake up source selection.  <a href="#aceb89e2f7bc92e8d4e562a26ee181b78">More...</a><br/></td></tr>
-<tr class="separator:aceb89e2f7bc92e8d4e562a26ee181b78"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1f78425cda4ca2be4ffca627aac9db05"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a1f78425cda4ca2be4ffca627aac9db05">maxMbNum</a></td></tr>
-<tr class="memdesc:a1f78425cda4ca2be4ffca627aac9db05"><td class="mdescLeft">&#160;</td><td class="mdescRight">The maximum number of Message Buffers used by user.  <a href="#a1f78425cda4ca2be4ffca627aac9db05">More...</a><br/></td></tr>
-<tr class="separator:a1f78425cda4ca2be4ffca627aac9db05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3b15eb7994ec581aee06873d718fd216"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a3b15eb7994ec581aee06873d718fd216">enableLoopBack</a></td></tr>
-<tr class="memdesc:a3b15eb7994ec581aee06873d718fd216"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or Disable Loop Back Self Test Mode.  <a href="#a3b15eb7994ec581aee06873d718fd216">More...</a><br/></td></tr>
-<tr class="separator:a3b15eb7994ec581aee06873d718fd216"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a84926c82a524ef20359dfbc4802e4eaf"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a84926c82a524ef20359dfbc4802e4eaf">enableTimerSync</a></td></tr>
-<tr class="memdesc:a84926c82a524ef20359dfbc4802e4eaf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or Disable Timer Synchronization.  <a href="#a84926c82a524ef20359dfbc4802e4eaf">More...</a><br/></td></tr>
-<tr class="separator:a84926c82a524ef20359dfbc4802e4eaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1b849e3e26f5798fa96abd6f5afb5b3c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a1b849e3e26f5798fa96abd6f5afb5b3c">enableSelfWakeup</a></td></tr>
-<tr class="memdesc:a1b849e3e26f5798fa96abd6f5afb5b3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or Disable Self Wakeup Mode.  <a href="#a1b849e3e26f5798fa96abd6f5afb5b3c">More...</a><br/></td></tr>
-<tr class="separator:a1b849e3e26f5798fa96abd6f5afb5b3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a176576d19ca09ef38155318486d5e0a0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a176576d19ca09ef38155318486d5e0a0">enableIndividMask</a></td></tr>
-<tr class="memdesc:a176576d19ca09ef38155318486d5e0a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or Disable Rx Individual Mask and Queue feature.  <a href="#a176576d19ca09ef38155318486d5e0a0">More...</a><br/></td></tr>
-<tr class="separator:a176576d19ca09ef38155318486d5e0a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b01e6d8180a4e27683a67690eaf4c27"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a4b01e6d8180a4e27683a67690eaf4c27">disableSelfReception</a></td></tr>
-<tr class="memdesc:a4b01e6d8180a4e27683a67690eaf4c27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or Disable Self Reflection.  <a href="#a4b01e6d8180a4e27683a67690eaf4c27">More...</a><br/></td></tr>
-<tr class="separator:a4b01e6d8180a4e27683a67690eaf4c27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac063de8f3095c8af11d0ecf2ee4a12fb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ac063de8f3095c8af11d0ecf2ee4a12fb">enableListenOnlyMode</a></td></tr>
-<tr class="memdesc:ac063de8f3095c8af11d0ecf2ee4a12fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or Disable Listen Only Mode.  <a href="#ac063de8f3095c8af11d0ecf2ee4a12fb">More...</a><br/></td></tr>
-<tr class="separator:ac063de8f3095c8af11d0ecf2ee4a12fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a736619274ca8b05eef29c6d3234ec2c1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a736619274ca8b05eef29c6d3234ec2c1">enableSupervisorMode</a></td></tr>
-<tr class="memdesc:a736619274ca8b05eef29c6d3234ec2c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or Disable Supervisor Mode, enable this mode will make registers allow only Supervisor access.  <a href="#a736619274ca8b05eef29c6d3234ec2c1">More...</a><br/></td></tr>
-<tr class="separator:a736619274ca8b05eef29c6d3234ec2c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a19acff49da11171e316b5c02d08fe898"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a19acff49da11171e316b5c02d08fe898">baudRate</a></td></tr>
-<tr class="memdesc:a19acff49da11171e316b5c02d08fe898"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN bit rate in bps, for classical CAN or CANFD nominal phase.  <a href="#a19acff49da11171e316b5c02d08fe898">More...</a><br/></td></tr>
-<tr class="separator:a19acff49da11171e316b5c02d08fe898"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac166a2d27b9be4d8ff39c67c28f5d9c9"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ac166a2d27b9be4d8ff39c67c28f5d9c9">bitRate</a></td></tr>
-<tr class="memdesc:ac166a2d27b9be4d8ff39c67c28f5d9c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN bit rate in bps, for classical CAN or CANFD nominal phase.  <a href="#ac166a2d27b9be4d8ff39c67c28f5d9c9">More...</a><br/></td></tr>
-<tr class="separator:ac166a2d27b9be4d8ff39c67c28f5d9c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa32055fc52c20ef39fd5d9ac94477f9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00027.html#ga7a0c31eb0515955961c22bae95ed12c3">flexcan_clock_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#aaa32055fc52c20ef39fd5d9ac94477f9">clkSrc</a></td></tr>
+<tr class="memdesc:aaa32055fc52c20ef39fd5d9ac94477f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clock source for FlexCAN Protocol Engine.  <a href="#aaa32055fc52c20ef39fd5d9ac94477f9">More...</a><br/></td></tr>
+<tr class="separator:aaa32055fc52c20ef39fd5d9ac94477f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a850b9dd463f62bb70615fe7d0d510a0a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00027.html#ga185b971e55a824ad258ccfb3d87448ea">flexcan_wake_up_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a850b9dd463f62bb70615fe7d0d510a0a">wakeupSrc</a></td></tr>
+<tr class="memdesc:a850b9dd463f62bb70615fe7d0d510a0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wake up source selection.  <a href="#a850b9dd463f62bb70615fe7d0d510a0a">More...</a><br/></td></tr>
+<tr class="separator:a850b9dd463f62bb70615fe7d0d510a0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ae77c3e01271290dd48fdcb6b6b76a8"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a1ae77c3e01271290dd48fdcb6b6b76a8">maxMbNum</a></td></tr>
+<tr class="memdesc:a1ae77c3e01271290dd48fdcb6b6b76a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The maximum number of Message Buffers used by user.  <a href="#a1ae77c3e01271290dd48fdcb6b6b76a8">More...</a><br/></td></tr>
+<tr class="separator:a1ae77c3e01271290dd48fdcb6b6b76a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab214e057c895d952a25de43eb2078505"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ab214e057c895d952a25de43eb2078505">enableLoopBack</a></td></tr>
+<tr class="memdesc:ab214e057c895d952a25de43eb2078505"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or Disable Loop Back Self Test Mode.  <a href="#ab214e057c895d952a25de43eb2078505">More...</a><br/></td></tr>
+<tr class="separator:ab214e057c895d952a25de43eb2078505"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18602c62c54ffa3780a4d3d9b0a4ed72"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a18602c62c54ffa3780a4d3d9b0a4ed72">enableTimerSync</a></td></tr>
+<tr class="memdesc:a18602c62c54ffa3780a4d3d9b0a4ed72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or Disable Timer Synchronization.  <a href="#a18602c62c54ffa3780a4d3d9b0a4ed72">More...</a><br/></td></tr>
+<tr class="separator:a18602c62c54ffa3780a4d3d9b0a4ed72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a512a3e7d71b55d33e2a98efd04bfb24b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a512a3e7d71b55d33e2a98efd04bfb24b">enableSelfWakeup</a></td></tr>
+<tr class="memdesc:a512a3e7d71b55d33e2a98efd04bfb24b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or Disable Self Wakeup Mode.  <a href="#a512a3e7d71b55d33e2a98efd04bfb24b">More...</a><br/></td></tr>
+<tr class="separator:a512a3e7d71b55d33e2a98efd04bfb24b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afeb862955d4d952cde78becbcf1b79ef"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#afeb862955d4d952cde78becbcf1b79ef">enableIndividMask</a></td></tr>
+<tr class="memdesc:afeb862955d4d952cde78becbcf1b79ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or Disable Rx Individual Mask and Queue feature.  <a href="#afeb862955d4d952cde78becbcf1b79ef">More...</a><br/></td></tr>
+<tr class="separator:afeb862955d4d952cde78becbcf1b79ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92d32b00b96b0eab648c5c263b4180a9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a92d32b00b96b0eab648c5c263b4180a9">disableSelfReception</a></td></tr>
+<tr class="memdesc:a92d32b00b96b0eab648c5c263b4180a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or Disable Self Reflection.  <a href="#a92d32b00b96b0eab648c5c263b4180a9">More...</a><br/></td></tr>
+<tr class="separator:a92d32b00b96b0eab648c5c263b4180a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40ea6cba6268eb966b9fe98014bc9bbd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a40ea6cba6268eb966b9fe98014bc9bbd">enableListenOnlyMode</a></td></tr>
+<tr class="memdesc:a40ea6cba6268eb966b9fe98014bc9bbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or Disable Listen Only Mode.  <a href="#a40ea6cba6268eb966b9fe98014bc9bbd">More...</a><br/></td></tr>
+<tr class="separator:a40ea6cba6268eb966b9fe98014bc9bbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2ca9141608d5b021391d1c720da63d9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ac2ca9141608d5b021391d1c720da63d9">enableSupervisorMode</a></td></tr>
+<tr class="memdesc:ac2ca9141608d5b021391d1c720da63d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or Disable Supervisor Mode, enable this mode will make registers allow only Supervisor access.  <a href="#ac2ca9141608d5b021391d1c720da63d9">More...</a><br/></td></tr>
+<tr class="separator:ac2ca9141608d5b021391d1c720da63d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a997a5d07d195dc35002e5e104196d3"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a7a997a5d07d195dc35002e5e104196d3">baudRate</a></td></tr>
+<tr class="memdesc:a7a997a5d07d195dc35002e5e104196d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN bit rate in bps, for classical CAN or CANFD nominal phase.  <a href="#a7a997a5d07d195dc35002e5e104196d3">More...</a><br/></td></tr>
+<tr class="separator:a7a997a5d07d195dc35002e5e104196d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22c7375fbe9674f6f510bd73b652a3d4"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a22c7375fbe9674f6f510bd73b652a3d4">bitRate</a></td></tr>
+<tr class="memdesc:a22c7375fbe9674f6f510bd73b652a3d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN bit rate in bps, for classical CAN or CANFD nominal phase.  <a href="#a22c7375fbe9674f6f510bd73b652a3d4">More...</a><br/></td></tr>
+<tr class="separator:a22c7375fbe9674f6f510bd73b652a3d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a19acff49da11171e316b5c02d08fe898"></a>
+<a class="anchor" id="a7a997a5d07d195dc35002e5e104196d3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t flexcan_config_t::baudRate</td>
+          <td class="memname">uint32_t _flexcan_config::baudRate</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ac166a2d27b9be4d8ff39c67c28f5d9c9"></a>
+<a class="anchor" id="a22c7375fbe9674f6f510bd73b652a3d4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t flexcan_config_t::bitRate</td>
+          <td class="memname">uint32_t _flexcan_config::bitRate</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a088675118b1081ed959119ba00080412"></a>
+<a class="anchor" id="aaa32055fc52c20ef39fd5d9ac94477f9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00027.html#gaa0b3ac1e2e7416950b82014d2a2b40ee">flexcan_clock_source_t</a> flexcan_config_t::clkSrc</td>
+          <td class="memname"><a class="el" href="a00027.html#ga7a0c31eb0515955961c22bae95ed12c3">flexcan_clock_source_t</a> _flexcan_config::clkSrc</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="aceb89e2f7bc92e8d4e562a26ee181b78"></a>
+<a class="anchor" id="a850b9dd463f62bb70615fe7d0d510a0a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00027.html#ga5ca4fd15317c08e08c9e163defc60d05">flexcan_wake_up_source_t</a> flexcan_config_t::wakeupSrc</td>
+          <td class="memname"><a class="el" href="a00027.html#ga185b971e55a824ad258ccfb3d87448ea">flexcan_wake_up_source_t</a> _flexcan_config::wakeupSrc</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a1f78425cda4ca2be4ffca627aac9db05"></a>
+<a class="anchor" id="a1ae77c3e01271290dd48fdcb6b6b76a8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t flexcan_config_t::maxMbNum</td>
+          <td class="memname">uint8_t _flexcan_config::maxMbNum</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a3b15eb7994ec581aee06873d718fd216"></a>
+<a class="anchor" id="ab214e057c895d952a25de43eb2078505"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool flexcan_config_t::enableLoopBack</td>
+          <td class="memname">bool _flexcan_config::enableLoopBack</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a84926c82a524ef20359dfbc4802e4eaf"></a>
+<a class="anchor" id="a18602c62c54ffa3780a4d3d9b0a4ed72"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool flexcan_config_t::enableTimerSync</td>
+          <td class="memname">bool _flexcan_config::enableTimerSync</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a1b849e3e26f5798fa96abd6f5afb5b3c"></a>
+<a class="anchor" id="a512a3e7d71b55d33e2a98efd04bfb24b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool flexcan_config_t::enableSelfWakeup</td>
+          <td class="memname">bool _flexcan_config::enableSelfWakeup</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a176576d19ca09ef38155318486d5e0a0"></a>
+<a class="anchor" id="afeb862955d4d952cde78becbcf1b79ef"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool flexcan_config_t::enableIndividMask</td>
+          <td class="memname">bool _flexcan_config::enableIndividMask</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a4b01e6d8180a4e27683a67690eaf4c27"></a>
+<a class="anchor" id="a92d32b00b96b0eab648c5c263b4180a9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool flexcan_config_t::disableSelfReception</td>
+          <td class="memname">bool _flexcan_config::disableSelfReception</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ac063de8f3095c8af11d0ecf2ee4a12fb"></a>
+<a class="anchor" id="a40ea6cba6268eb966b9fe98014bc9bbd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool flexcan_config_t::enableListenOnlyMode</td>
+          <td class="memname">bool _flexcan_config::enableListenOnlyMode</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a736619274ca8b05eef29c6d3234ec2c1"></a>
+<a class="anchor" id="ac2ca9141608d5b021391d1c720da63d9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool flexcan_config_t::enableSupervisorMode</td>
+          <td class="memname">bool _flexcan_config::enableSupervisorMode</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1071,59 +1124,59 @@ Transactional</h2></td></tr>
 
 </div>
 </div>
-<a name="a00410" id="a00410"></a>
+<a name="a00381" id="a00381"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct flexcan_rx_mb_config_t</td>
+          <td class="memname">struct _flexcan_rx_mb_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"><p>This structure is used as the parameter of <a class="el" href="a00027.html#ga845cd6e7e8746cf931e8e6aedd307756" title="Configures a FlexCAN Receive Message Buffer. ">FLEXCAN_SetRxMbConfig()</a> function. The <a class="el" href="a00027.html#ga845cd6e7e8746cf931e8e6aedd307756" title="Configures a FlexCAN Receive Message Buffer. ">FLEXCAN_SetRxMbConfig()</a> function is used to configure FlexCAN Receive Message Buffer. The function abort previous receiving process, clean the Message Buffer and activate the Rx Message Buffer using given Message Buffer setting. </p>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a711c0fe1870b35216e51c48b615af102"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a711c0fe1870b35216e51c48b615af102">id</a></td></tr>
-<tr class="memdesc:a711c0fe1870b35216e51c48b615af102"><td class="mdescLeft">&#160;</td><td class="mdescRight">CAN Message Buffer Frame Identifier, should be set using <a class="el" href="a00027.html#ga2f7e9211d67ecdb6ecb43a6de6a24f21" title="Extend Frame ID helper macro. ">FLEXCAN_ID_EXT()</a> or <a class="el" href="a00027.html#ga83f8199eb0d7d86106313a6b33a9633d" title="FlexCAN frame length helper macro. ">FLEXCAN_ID_STD()</a> macro.  <a href="#a711c0fe1870b35216e51c48b615af102">More...</a><br/></td></tr>
-<tr class="separator:a711c0fe1870b35216e51c48b615af102"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa7f296319a192fb82f137f82bb126f7a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00027.html#ga89e76f77a571693c1adeec47796c97df">flexcan_frame_format_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#aa7f296319a192fb82f137f82bb126f7a">format</a></td></tr>
-<tr class="memdesc:aa7f296319a192fb82f137f82bb126f7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">CAN Frame Identifier format(Standard of Extend).  <a href="#aa7f296319a192fb82f137f82bb126f7a">More...</a><br/></td></tr>
-<tr class="separator:aa7f296319a192fb82f137f82bb126f7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a258245b77982b70b8d82fc75ee993503"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00027.html#gacec96742e2b0b51a5bf3246bfc57a455">flexcan_frame_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a258245b77982b70b8d82fc75ee993503">type</a></td></tr>
-<tr class="memdesc:a258245b77982b70b8d82fc75ee993503"><td class="mdescLeft">&#160;</td><td class="mdescRight">CAN Frame Type(Data or Remote).  <a href="#a258245b77982b70b8d82fc75ee993503">More...</a><br/></td></tr>
-<tr class="separator:a258245b77982b70b8d82fc75ee993503"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ff5fa151c2ba5ba98319bf0a649a6fc"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a4ff5fa151c2ba5ba98319bf0a649a6fc">id</a></td></tr>
+<tr class="memdesc:a4ff5fa151c2ba5ba98319bf0a649a6fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">CAN Message Buffer Frame Identifier, should be set using <a class="el" href="a00027.html#ga2f7e9211d67ecdb6ecb43a6de6a24f21" title="Extend Frame ID helper macro. ">FLEXCAN_ID_EXT()</a> or <a class="el" href="a00027.html#ga83f8199eb0d7d86106313a6b33a9633d" title="FlexCAN frame length helper macro. ">FLEXCAN_ID_STD()</a> macro.  <a href="#a4ff5fa151c2ba5ba98319bf0a649a6fc">More...</a><br/></td></tr>
+<tr class="separator:a4ff5fa151c2ba5ba98319bf0a649a6fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8e7c29dfd88c333b2b67aa1907a0532"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00027.html#ga0fc17844cbc32ec0963c4a845ac9a562">flexcan_frame_format_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ad8e7c29dfd88c333b2b67aa1907a0532">format</a></td></tr>
+<tr class="memdesc:ad8e7c29dfd88c333b2b67aa1907a0532"><td class="mdescLeft">&#160;</td><td class="mdescRight">CAN Frame Identifier format(Standard of Extend).  <a href="#ad8e7c29dfd88c333b2b67aa1907a0532">More...</a><br/></td></tr>
+<tr class="separator:ad8e7c29dfd88c333b2b67aa1907a0532"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a126ff20c8635183bfc9ea22c8d0145d4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00027.html#gaff98da53a2fd874c9225b7e86c8c0f7f">flexcan_frame_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a126ff20c8635183bfc9ea22c8d0145d4">type</a></td></tr>
+<tr class="memdesc:a126ff20c8635183bfc9ea22c8d0145d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">CAN Frame Type(Data or Remote).  <a href="#a126ff20c8635183bfc9ea22c8d0145d4">More...</a><br/></td></tr>
+<tr class="separator:a126ff20c8635183bfc9ea22c8d0145d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a711c0fe1870b35216e51c48b615af102"></a>
+<a class="anchor" id="a4ff5fa151c2ba5ba98319bf0a649a6fc"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t flexcan_rx_mb_config_t::id</td>
+          <td class="memname">uint32_t _flexcan_rx_mb_config::id</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="aa7f296319a192fb82f137f82bb126f7a"></a>
+<a class="anchor" id="ad8e7c29dfd88c333b2b67aa1907a0532"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00027.html#ga89e76f77a571693c1adeec47796c97df">flexcan_frame_format_t</a> flexcan_rx_mb_config_t::format</td>
+          <td class="memname"><a class="el" href="a00027.html#ga0fc17844cbc32ec0963c4a845ac9a562">flexcan_frame_format_t</a> _flexcan_rx_mb_config::format</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a258245b77982b70b8d82fc75ee993503"></a>
+<a class="anchor" id="a126ff20c8635183bfc9ea22c8d0145d4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00027.html#gacec96742e2b0b51a5bf3246bfc57a455">flexcan_frame_type_t</a> flexcan_rx_mb_config_t::type</td>
+          <td class="memname"><a class="el" href="a00027.html#gaff98da53a2fd874c9225b7e86c8c0f7f">flexcan_frame_type_t</a> _flexcan_rx_mb_config::type</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1133,73 +1186,73 @@ Transactional</h2></td></tr>
 
 </div>
 </div>
-<a name="a00409" id="a00409"></a>
+<a name="a00380" id="a00380"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct flexcan_rx_fifo_config_t</td>
+          <td class="memname">struct _flexcan_rx_fifo_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:abbf208769efc96e928bd623fc7f5da19"><td class="memItemLeft" align="right" valign="top">uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#abbf208769efc96e928bd623fc7f5da19">idFilterTable</a></td></tr>
-<tr class="memdesc:abbf208769efc96e928bd623fc7f5da19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the FlexCAN Legacy Rx FIFO identifier filter table.  <a href="#abbf208769efc96e928bd623fc7f5da19">More...</a><br/></td></tr>
-<tr class="separator:abbf208769efc96e928bd623fc7f5da19"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a02ebd3a71c29bb55faf784e871324c52"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a02ebd3a71c29bb55faf784e871324c52">idFilterNum</a></td></tr>
-<tr class="memdesc:a02ebd3a71c29bb55faf784e871324c52"><td class="mdescLeft">&#160;</td><td class="mdescRight">The FlexCAN Legacy Rx FIFO Filter elements quantity.  <a href="#a02ebd3a71c29bb55faf784e871324c52">More...</a><br/></td></tr>
-<tr class="separator:a02ebd3a71c29bb55faf784e871324c52"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a35f41ecbd9d9dd163b05758f0aa51e6e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00027.html#ga1b8c38cce54aff2f24b6cd45da80f353">flexcan_rx_fifo_filter_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a35f41ecbd9d9dd163b05758f0aa51e6e">idFilterType</a></td></tr>
-<tr class="memdesc:a35f41ecbd9d9dd163b05758f0aa51e6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The FlexCAN Legacy Rx FIFO Filter type.  <a href="#a35f41ecbd9d9dd163b05758f0aa51e6e">More...</a><br/></td></tr>
-<tr class="separator:a35f41ecbd9d9dd163b05758f0aa51e6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2247025f9a26b65bc6fa4d59f507657c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00027.html#ga5d139af23e8c1094b39d1cf26d85271b">flexcan_rx_fifo_priority_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a2247025f9a26b65bc6fa4d59f507657c">priority</a></td></tr>
-<tr class="memdesc:a2247025f9a26b65bc6fa4d59f507657c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The FlexCAN Legacy Rx FIFO receive priority.  <a href="#a2247025f9a26b65bc6fa4d59f507657c">More...</a><br/></td></tr>
-<tr class="separator:a2247025f9a26b65bc6fa4d59f507657c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea31cb6b0d8d0043b8fef0bf5643e023"><td class="memItemLeft" align="right" valign="top">uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#aea31cb6b0d8d0043b8fef0bf5643e023">idFilterTable</a></td></tr>
+<tr class="memdesc:aea31cb6b0d8d0043b8fef0bf5643e023"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the FlexCAN Legacy Rx FIFO identifier filter table.  <a href="#aea31cb6b0d8d0043b8fef0bf5643e023">More...</a><br/></td></tr>
+<tr class="separator:aea31cb6b0d8d0043b8fef0bf5643e023"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a618071167b1c2d692ae2300f0aca11e8"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a618071167b1c2d692ae2300f0aca11e8">idFilterNum</a></td></tr>
+<tr class="memdesc:a618071167b1c2d692ae2300f0aca11e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The FlexCAN Legacy Rx FIFO Filter elements quantity.  <a href="#a618071167b1c2d692ae2300f0aca11e8">More...</a><br/></td></tr>
+<tr class="separator:a618071167b1c2d692ae2300f0aca11e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a054a415ae6706180c56d45a23c043144"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00027.html#ga0befca3f06184321dfac3b65e8b8b310">flexcan_rx_fifo_filter_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a054a415ae6706180c56d45a23c043144">idFilterType</a></td></tr>
+<tr class="memdesc:a054a415ae6706180c56d45a23c043144"><td class="mdescLeft">&#160;</td><td class="mdescRight">The FlexCAN Legacy Rx FIFO Filter type.  <a href="#a054a415ae6706180c56d45a23c043144">More...</a><br/></td></tr>
+<tr class="separator:a054a415ae6706180c56d45a23c043144"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c243a04b67b2e884cd5a5412e0c180a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00027.html#gad8108b0166e7f9ca1d922de8ab47307f">flexcan_rx_fifo_priority_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a1c243a04b67b2e884cd5a5412e0c180a">priority</a></td></tr>
+<tr class="memdesc:a1c243a04b67b2e884cd5a5412e0c180a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The FlexCAN Legacy Rx FIFO receive priority.  <a href="#a1c243a04b67b2e884cd5a5412e0c180a">More...</a><br/></td></tr>
+<tr class="separator:a1c243a04b67b2e884cd5a5412e0c180a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="abbf208769efc96e928bd623fc7f5da19"></a>
+<a class="anchor" id="aea31cb6b0d8d0043b8fef0bf5643e023"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t* flexcan_rx_fifo_config_t::idFilterTable</td>
+          <td class="memname">uint32_t* _flexcan_rx_fifo_config::idFilterTable</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a02ebd3a71c29bb55faf784e871324c52"></a>
+<a class="anchor" id="a618071167b1c2d692ae2300f0aca11e8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t flexcan_rx_fifo_config_t::idFilterNum</td>
+          <td class="memname">uint8_t _flexcan_rx_fifo_config::idFilterNum</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a35f41ecbd9d9dd163b05758f0aa51e6e"></a>
+<a class="anchor" id="a054a415ae6706180c56d45a23c043144"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00027.html#ga1b8c38cce54aff2f24b6cd45da80f353">flexcan_rx_fifo_filter_type_t</a> flexcan_rx_fifo_config_t::idFilterType</td>
+          <td class="memname"><a class="el" href="a00027.html#ga0befca3f06184321dfac3b65e8b8b310">flexcan_rx_fifo_filter_type_t</a> _flexcan_rx_fifo_config::idFilterType</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a2247025f9a26b65bc6fa4d59f507657c"></a>
+<a class="anchor" id="a1c243a04b67b2e884cd5a5412e0c180a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00027.html#ga5d139af23e8c1094b39d1cf26d85271b">flexcan_rx_fifo_priority_t</a> flexcan_rx_fifo_config_t::priority</td>
+          <td class="memname"><a class="el" href="a00027.html#gad8108b0166e7f9ca1d922de8ab47307f">flexcan_rx_fifo_priority_t</a> _flexcan_rx_fifo_config::priority</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1209,43 +1262,43 @@ Transactional</h2></td></tr>
 
 </div>
 </div>
-<a name="a00408" id="a00408"></a>
+<a name="a00379" id="a00379"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct flexcan_mb_transfer_t</td>
+          <td class="memname">struct _flexcan_mb_transfer</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:af38b9852b65061e18ee7d6232a7ef3be"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00027.html#a00407">flexcan_frame_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#af38b9852b65061e18ee7d6232a7ef3be">frame</a></td></tr>
-<tr class="memdesc:af38b9852b65061e18ee7d6232a7ef3be"><td class="mdescLeft">&#160;</td><td class="mdescRight">The buffer of CAN Message to be transfer.  <a href="#af38b9852b65061e18ee7d6232a7ef3be">More...</a><br/></td></tr>
-<tr class="separator:af38b9852b65061e18ee7d6232a7ef3be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a35b306312bcc47c5569f770f3341543d"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a35b306312bcc47c5569f770f3341543d">mbIdx</a></td></tr>
-<tr class="memdesc:a35b306312bcc47c5569f770f3341543d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The index of Message buffer used to transfer Message.  <a href="#a35b306312bcc47c5569f770f3341543d">More...</a><br/></td></tr>
-<tr class="separator:a35b306312bcc47c5569f770f3341543d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fbc2630619824ada84a7c8f1fb6d8e5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00027.html#ga8e99cd0558e81decabdcafae1ed4ca49">flexcan_frame_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a0fbc2630619824ada84a7c8f1fb6d8e5">frame</a></td></tr>
+<tr class="memdesc:a0fbc2630619824ada84a7c8f1fb6d8e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The buffer of CAN Message to be transfer.  <a href="#a0fbc2630619824ada84a7c8f1fb6d8e5">More...</a><br/></td></tr>
+<tr class="separator:a0fbc2630619824ada84a7c8f1fb6d8e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57d98d8dfa64c50572a30ff7c4039748"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a57d98d8dfa64c50572a30ff7c4039748">mbIdx</a></td></tr>
+<tr class="memdesc:a57d98d8dfa64c50572a30ff7c4039748"><td class="mdescLeft">&#160;</td><td class="mdescRight">The index of Message buffer used to transfer Message.  <a href="#a57d98d8dfa64c50572a30ff7c4039748">More...</a><br/></td></tr>
+<tr class="separator:a57d98d8dfa64c50572a30ff7c4039748"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="af38b9852b65061e18ee7d6232a7ef3be"></a>
+<a class="anchor" id="a0fbc2630619824ada84a7c8f1fb6d8e5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00027.html#a00407">flexcan_frame_t</a>* flexcan_mb_transfer_t::frame</td>
+          <td class="memname"><a class="el" href="a00027.html#ga8e99cd0558e81decabdcafae1ed4ca49">flexcan_frame_t</a>* _flexcan_mb_transfer::frame</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a35b306312bcc47c5569f770f3341543d"></a>
+<a class="anchor" id="a57d98d8dfa64c50572a30ff7c4039748"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t flexcan_mb_transfer_t::mbIdx</td>
+          <td class="memname">uint8_t _flexcan_mb_transfer::mbIdx</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1255,43 +1308,43 @@ Transactional</h2></td></tr>
 
 </div>
 </div>
-<a name="a00406" id="a00406"></a>
+<a name="a00376" id="a00376"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct flexcan_fifo_transfer_t</td>
+          <td class="memname">struct _flexcan_fifo_transfer</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:ad3420cfcbd536444d54b6a223b615d6f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00027.html#a00407">flexcan_frame_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ad3420cfcbd536444d54b6a223b615d6f">frame</a></td></tr>
-<tr class="memdesc:ad3420cfcbd536444d54b6a223b615d6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The buffer of CAN Message to be received from Legacy Rx FIFO.  <a href="#ad3420cfcbd536444d54b6a223b615d6f">More...</a><br/></td></tr>
-<tr class="separator:ad3420cfcbd536444d54b6a223b615d6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab7f277f9a0f8a1369657808a5c9c8ff6"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ab7f277f9a0f8a1369657808a5c9c8ff6">frameNum</a></td></tr>
-<tr class="memdesc:ab7f277f9a0f8a1369657808a5c9c8ff6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of CAN Message need to be received from Legacy or Ehanced Rx FIFO.  <a href="#ab7f277f9a0f8a1369657808a5c9c8ff6">More...</a><br/></td></tr>
-<tr class="separator:ab7f277f9a0f8a1369657808a5c9c8ff6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af301237fe1da56ad6a2b3b4b11f00ea2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00027.html#ga8e99cd0558e81decabdcafae1ed4ca49">flexcan_frame_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#af301237fe1da56ad6a2b3b4b11f00ea2">frame</a></td></tr>
+<tr class="memdesc:af301237fe1da56ad6a2b3b4b11f00ea2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The buffer of CAN Message to be received from Legacy Rx FIFO.  <a href="#af301237fe1da56ad6a2b3b4b11f00ea2">More...</a><br/></td></tr>
+<tr class="separator:af301237fe1da56ad6a2b3b4b11f00ea2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a212435fed34842a51bccef58f80adf21"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a212435fed34842a51bccef58f80adf21">frameNum</a></td></tr>
+<tr class="memdesc:a212435fed34842a51bccef58f80adf21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of CAN Message need to be received from Legacy or Ehanced Rx FIFO.  <a href="#a212435fed34842a51bccef58f80adf21">More...</a><br/></td></tr>
+<tr class="separator:a212435fed34842a51bccef58f80adf21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="ad3420cfcbd536444d54b6a223b615d6f"></a>
+<a class="anchor" id="af301237fe1da56ad6a2b3b4b11f00ea2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00027.html#a00407">flexcan_frame_t</a>* flexcan_fifo_transfer_t::frame</td>
+          <td class="memname"><a class="el" href="a00027.html#ga8e99cd0558e81decabdcafae1ed4ca49">flexcan_frame_t</a>* _flexcan_fifo_transfer::frame</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ab7f277f9a0f8a1369657808a5c9c8ff6"></a>
+<a class="anchor" id="a212435fed34842a51bccef58f80adf21"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">size_t flexcan_fifo_transfer_t::frameNum</td>
+          <td class="memname">size_t _flexcan_fifo_transfer::frameNum</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1301,7 +1354,7 @@ Transactional</h2></td></tr>
 
 </div>
 </div>
-<a name="a00314" id="a00314"></a>
+<a name="a00378" id="a00378"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1310,140 +1363,139 @@ Transactional</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>FlexCAN handle structure definition.</p>
-</div><table class="memberdecls">
+<div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:afd5494a415932b8008ce8db6a9ea2b6f"><td class="memItemLeft" align="right" valign="top">flexcan_transfer_callback_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#afd5494a415932b8008ce8db6a9ea2b6f">callback</a></td></tr>
-<tr class="memdesc:afd5494a415932b8008ce8db6a9ea2b6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function.  <a href="#afd5494a415932b8008ce8db6a9ea2b6f">More...</a><br/></td></tr>
-<tr class="separator:afd5494a415932b8008ce8db6a9ea2b6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab6e0932c11eba224663bec6ead9f5e78"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ab6e0932c11eba224663bec6ead9f5e78">userData</a></td></tr>
-<tr class="memdesc:ab6e0932c11eba224663bec6ead9f5e78"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN callback function parameter.  <a href="#ab6e0932c11eba224663bec6ead9f5e78">More...</a><br/></td></tr>
-<tr class="separator:ab6e0932c11eba224663bec6ead9f5e78"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad7693cd6966ea1e887a60c39a7a0c029"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00027.html#a00407">flexcan_frame_t</a> *volatile&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ad7693cd6966ea1e887a60c39a7a0c029">mbFrameBuf</a> [CAN_WORD1_COUNT]</td></tr>
-<tr class="memdesc:ad7693cd6966ea1e887a60c39a7a0c029"><td class="mdescLeft">&#160;</td><td class="mdescRight">The buffer for received CAN data from Message Buffers.  <a href="#ad7693cd6966ea1e887a60c39a7a0c029">More...</a><br/></td></tr>
-<tr class="separator:ad7693cd6966ea1e887a60c39a7a0c029"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1e76f915479b5c4fe23c24954634faf8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00027.html#a00407">flexcan_frame_t</a> *volatile&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a1e76f915479b5c4fe23c24954634faf8">rxFifoFrameBuf</a></td></tr>
-<tr class="memdesc:a1e76f915479b5c4fe23c24954634faf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The buffer for received CAN data from Legacy Rx FIFO.  <a href="#a1e76f915479b5c4fe23c24954634faf8">More...</a><br/></td></tr>
-<tr class="separator:a1e76f915479b5c4fe23c24954634faf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa33f86df32629b7ffc61a61e10044550"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#aa33f86df32629b7ffc61a61e10044550">rxFifoFrameNum</a></td></tr>
-<tr class="memdesc:aa33f86df32629b7ffc61a61e10044550"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of CAN messages remaining to be received from Legacy or Ehanced Rx FIFO.  <a href="#aa33f86df32629b7ffc61a61e10044550">More...</a><br/></td></tr>
-<tr class="separator:aa33f86df32629b7ffc61a61e10044550"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aabd825a6ed8377575679217520274d3d"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#aabd825a6ed8377575679217520274d3d">rxFifoTransferTotalNum</a></td></tr>
-<tr class="memdesc:aabd825a6ed8377575679217520274d3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Total CAN Message number need to be received from Legacy or Ehanced Rx FIFO.  <a href="#aabd825a6ed8377575679217520274d3d">More...</a><br/></td></tr>
-<tr class="separator:aabd825a6ed8377575679217520274d3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3820f2ca76a985e46b733b4eedcaddcb"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a3820f2ca76a985e46b733b4eedcaddcb">mbState</a> [CAN_WORD1_COUNT]</td></tr>
-<tr class="memdesc:a3820f2ca76a985e46b733b4eedcaddcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Message Buffer transfer state.  <a href="#a3820f2ca76a985e46b733b4eedcaddcb">More...</a><br/></td></tr>
-<tr class="separator:a3820f2ca76a985e46b733b4eedcaddcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aefb8a038351ac7c4fa6ac8307bccb70e"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#aefb8a038351ac7c4fa6ac8307bccb70e">rxFifoState</a></td></tr>
-<tr class="memdesc:aefb8a038351ac7c4fa6ac8307bccb70e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rx FIFO transfer state.  <a href="#aefb8a038351ac7c4fa6ac8307bccb70e">More...</a><br/></td></tr>
-<tr class="separator:aefb8a038351ac7c4fa6ac8307bccb70e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a606bf5d8de8e942f19755b563e6418c8"><td class="memItemLeft" align="right" valign="top">volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a606bf5d8de8e942f19755b563e6418c8">timestamp</a> [CAN_WORD1_COUNT]</td></tr>
-<tr class="memdesc:a606bf5d8de8e942f19755b563e6418c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mailbox transfer timestamp.  <a href="#a606bf5d8de8e942f19755b563e6418c8">More...</a><br/></td></tr>
-<tr class="separator:a606bf5d8de8e942f19755b563e6418c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0c17cc65cf1fecab95fc2188a0d89c1"><td class="memItemLeft" align="right" valign="top">flexcan_transfer_callback_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#aa0c17cc65cf1fecab95fc2188a0d89c1">callback</a></td></tr>
+<tr class="memdesc:aa0c17cc65cf1fecab95fc2188a0d89c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function.  <a href="#aa0c17cc65cf1fecab95fc2188a0d89c1">More...</a><br/></td></tr>
+<tr class="separator:aa0c17cc65cf1fecab95fc2188a0d89c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e044b14352b7636ba3e0fd1b45539b7"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a7e044b14352b7636ba3e0fd1b45539b7">userData</a></td></tr>
+<tr class="memdesc:a7e044b14352b7636ba3e0fd1b45539b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN callback function parameter.  <a href="#a7e044b14352b7636ba3e0fd1b45539b7">More...</a><br/></td></tr>
+<tr class="separator:a7e044b14352b7636ba3e0fd1b45539b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26b7974562fe0615291b95692898e901"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00027.html#ga8e99cd0558e81decabdcafae1ed4ca49">flexcan_frame_t</a> *volatile&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a26b7974562fe0615291b95692898e901">mbFrameBuf</a> [CAN_WORD1_COUNT]</td></tr>
+<tr class="memdesc:a26b7974562fe0615291b95692898e901"><td class="mdescLeft">&#160;</td><td class="mdescRight">The buffer for received CAN data from Message Buffers.  <a href="#a26b7974562fe0615291b95692898e901">More...</a><br/></td></tr>
+<tr class="separator:a26b7974562fe0615291b95692898e901"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad160a9a193827a3712ce223ae39c24ce"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00027.html#ga8e99cd0558e81decabdcafae1ed4ca49">flexcan_frame_t</a> *volatile&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ad160a9a193827a3712ce223ae39c24ce">rxFifoFrameBuf</a></td></tr>
+<tr class="memdesc:ad160a9a193827a3712ce223ae39c24ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">The buffer for received CAN data from Legacy Rx FIFO.  <a href="#ad160a9a193827a3712ce223ae39c24ce">More...</a><br/></td></tr>
+<tr class="separator:ad160a9a193827a3712ce223ae39c24ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33fe55c86676d52b152e2b0364c73c01"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a33fe55c86676d52b152e2b0364c73c01">rxFifoFrameNum</a></td></tr>
+<tr class="memdesc:a33fe55c86676d52b152e2b0364c73c01"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of CAN messages remaining to be received from Legacy or Ehanced Rx FIFO.  <a href="#a33fe55c86676d52b152e2b0364c73c01">More...</a><br/></td></tr>
+<tr class="separator:a33fe55c86676d52b152e2b0364c73c01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ac653ab1139b4a2fffc01833172eb33"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a7ac653ab1139b4a2fffc01833172eb33">rxFifoTransferTotalNum</a></td></tr>
+<tr class="memdesc:a7ac653ab1139b4a2fffc01833172eb33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Total CAN Message number need to be received from Legacy or Ehanced Rx FIFO.  <a href="#a7ac653ab1139b4a2fffc01833172eb33">More...</a><br/></td></tr>
+<tr class="separator:a7ac653ab1139b4a2fffc01833172eb33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91d0b2f65dbd43073733e1f4ad937bf1"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a91d0b2f65dbd43073733e1f4ad937bf1">mbState</a> [CAN_WORD1_COUNT]</td></tr>
+<tr class="memdesc:a91d0b2f65dbd43073733e1f4ad937bf1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Message Buffer transfer state.  <a href="#a91d0b2f65dbd43073733e1f4ad937bf1">More...</a><br/></td></tr>
+<tr class="separator:a91d0b2f65dbd43073733e1f4ad937bf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa154e640aaa260a060d1eab7b94c6a8d"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#aa154e640aaa260a060d1eab7b94c6a8d">rxFifoState</a></td></tr>
+<tr class="memdesc:aa154e640aaa260a060d1eab7b94c6a8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rx FIFO transfer state.  <a href="#aa154e640aaa260a060d1eab7b94c6a8d">More...</a><br/></td></tr>
+<tr class="separator:aa154e640aaa260a060d1eab7b94c6a8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb3591cdbc867674156892bb4b6c03ff"><td class="memItemLeft" align="right" valign="top">volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#acb3591cdbc867674156892bb4b6c03ff">timestamp</a> [CAN_WORD1_COUNT]</td></tr>
+<tr class="memdesc:acb3591cdbc867674156892bb4b6c03ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mailbox transfer timestamp.  <a href="#acb3591cdbc867674156892bb4b6c03ff">More...</a><br/></td></tr>
+<tr class="separator:acb3591cdbc867674156892bb4b6c03ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="afd5494a415932b8008ce8db6a9ea2b6f"></a>
+<a class="anchor" id="aa0c17cc65cf1fecab95fc2188a0d89c1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">flexcan_transfer_callback_t flexcan_handle_t::callback</td>
+          <td class="memname">flexcan_transfer_callback_t _flexcan_handle::callback</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ab6e0932c11eba224663bec6ead9f5e78"></a>
+<a class="anchor" id="a7e044b14352b7636ba3e0fd1b45539b7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void* flexcan_handle_t::userData</td>
+          <td class="memname">void* _flexcan_handle::userData</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ad7693cd6966ea1e887a60c39a7a0c029"></a>
+<a class="anchor" id="a26b7974562fe0615291b95692898e901"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00027.html#a00407">flexcan_frame_t</a>* volatile flexcan_handle_t::mbFrameBuf[CAN_WORD1_COUNT]</td>
+          <td class="memname"><a class="el" href="a00027.html#ga8e99cd0558e81decabdcafae1ed4ca49">flexcan_frame_t</a>* volatile _flexcan_handle::mbFrameBuf[CAN_WORD1_COUNT]</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a1e76f915479b5c4fe23c24954634faf8"></a>
+<a class="anchor" id="ad160a9a193827a3712ce223ae39c24ce"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00027.html#a00407">flexcan_frame_t</a>* volatile flexcan_handle_t::rxFifoFrameBuf</td>
+          <td class="memname"><a class="el" href="a00027.html#ga8e99cd0558e81decabdcafae1ed4ca49">flexcan_frame_t</a>* volatile _flexcan_handle::rxFifoFrameBuf</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="aa33f86df32629b7ffc61a61e10044550"></a>
+<a class="anchor" id="a33fe55c86676d52b152e2b0364c73c01"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">size_t flexcan_handle_t::rxFifoFrameNum</td>
+          <td class="memname">size_t _flexcan_handle::rxFifoFrameNum</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="aabd825a6ed8377575679217520274d3d"></a>
+<a class="anchor" id="a7ac653ab1139b4a2fffc01833172eb33"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">size_t flexcan_handle_t::rxFifoTransferTotalNum</td>
+          <td class="memname">size_t _flexcan_handle::rxFifoTransferTotalNum</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a3820f2ca76a985e46b733b4eedcaddcb"></a>
+<a class="anchor" id="a91d0b2f65dbd43073733e1f4ad937bf1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile uint8_t flexcan_handle_t::mbState[CAN_WORD1_COUNT]</td>
+          <td class="memname">volatile uint8_t _flexcan_handle::mbState[CAN_WORD1_COUNT]</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="aefb8a038351ac7c4fa6ac8307bccb70e"></a>
+<a class="anchor" id="aa154e640aaa260a060d1eab7b94c6a8d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile uint8_t flexcan_handle_t::rxFifoState</td>
+          <td class="memname">volatile uint8_t _flexcan_handle::rxFifoState</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a606bf5d8de8e942f19755b563e6418c8"></a>
+<a class="anchor" id="acb3591cdbc867674156892bb4b6c03ff"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile uint32_t flexcan_handle_t::timestamp[CAN_WORD1_COUNT]</td>
+          <td class="memname">volatile uint32_t _flexcan_handle::timestamp[CAN_WORD1_COUNT]</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1459,7 +1511,7 @@ Transactional</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_FLEXCAN_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00270.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 11, 1))</td>
+          <td class="memname">#define FSL_FLEXCAN_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00272.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 11, 4))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -2311,11 +2363,188 @@ Transactional</h2></td></tr>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">x</td><td>)</td>
-          <td>&#160;&#160;&#160;void(x)(CAN_Type * base, flexcan_handle_t * handle, <a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, uint32_t result, void *userData)</td>
+          <td>&#160;&#160;&#160;void(x)(CAN_Type * base, <a class="el" href="a00027.html#gafb040d05eeb1eb0edd80fd97e419dee8">flexcan_handle_t</a> * handle, <a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, uint32_t result, void *userData)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>The FlexCAN transfer callback returns a value from the underlying layer. If the status equals to kStatus_FLEXCAN_ErrorStatus, the result parameter is the Content of FlexCAN status register which can be used to get the working status(or error status) of FlexCAN module. If the status equals to other FlexCAN Message Buffer transfer status, the result is the index of Message Buffer that generate transfer event. If the status equals to other FlexCAN Message Buffer transfer status, the result is meaningless and should be Ignored. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga0fc17844cbc32ec0963c4a845ac9a562"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00027.html#ga30fad6511b6899d718319e257fd38007">_flexcan_frame_format</a>  <a class="el" href="a00027.html#ga0fc17844cbc32ec0963c4a845ac9a562">flexcan_frame_format_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gaff98da53a2fd874c9225b7e86c8c0f7f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00027.html#gabe8bc300867c9ad1f76934834f2a75f2">_flexcan_frame_type</a>  <a class="el" href="a00027.html#gaff98da53a2fd874c9225b7e86c8c0f7f">flexcan_frame_type_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga7a0c31eb0515955961c22bae95ed12c3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00027.html#ga6314aeebe2488fe50d9dd1fffbf366c8">_flexcan_clock_source</a>  <a class="el" href="a00027.html#ga7a0c31eb0515955961c22bae95ed12c3">flexcan_clock_source_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="a00309.html#_deprecated000002">Deprecated:</a></b></dt><dd><p class="startdd">Do not use the kFLEXCAN_ClkSrcOs. It has been superceded kFLEXCAN_ClkSrc0 </p>
+<p class="enddd">Do not use the kFLEXCAN_ClkSrcPeri. It has been superceded kFLEXCAN_ClkSrc1 </p>
+</dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga185b971e55a824ad258ccfb3d87448ea"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00027.html#gab9559b001234cdb38e5811396a4632f6">_flexcan_wake_up_source</a>  <a class="el" href="a00027.html#ga185b971e55a824ad258ccfb3d87448ea">flexcan_wake_up_source_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga0befca3f06184321dfac3b65e8b8b310"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00027.html#gaae011835245de279ed387ee0ff61d7cc">_flexcan_rx_fifo_filter_type</a>  <a class="el" href="a00027.html#ga0befca3f06184321dfac3b65e8b8b310">flexcan_rx_fifo_filter_type_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gad8108b0166e7f9ca1d922de8ab47307f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00027.html#gafb8c23ce204d47e4528edced437e8a7d">_flexcan_rx_fifo_priority</a>  <a class="el" href="a00027.html#gad8108b0166e7f9ca1d922de8ab47307f">flexcan_rx_fifo_priority_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The matching process starts from the Rx MB(or Enhanced/Legacy Rx FIFO) with higher priority. If no MB(or Enhanced/Legacy Rx FIFO filter) is satisfied, the matching process goes on with the Enhanced/Legacy Rx FIFO(or Rx MB) with lower priority. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga8e99cd0558e81decabdcafae1ed4ca49"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00027.html#a00377">_flexcan_frame</a>  <a class="el" href="a00027.html#ga8e99cd0558e81decabdcafae1ed4ca49">flexcan_frame_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga3d6bee81bd27ba7bf1d48845f2a5db19"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00027.html#a00382">_flexcan_timing_config</a>  <a class="el" href="a00027.html#ga3d6bee81bd27ba7bf1d48845f2a5db19">flexcan_timing_config_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gac92b53682cc4684bb19d63533abaf950"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00027.html#a00375">_flexcan_config</a>  <a class="el" href="a00027.html#gac92b53682cc4684bb19d63533abaf950">flexcan_config_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="a00309.html#_deprecated000003">Deprecated:</a></b></dt><dd><p class="startdd">Do not use the baudRate. It has been superceded bitRate </p>
+<p class="enddd">Do not use the baudRateFD. It has been superceded bitRateFD </p>
+</dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga4fe64f2317d8cd6a28fa9bcd1a34889d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00027.html#a00381">_flexcan_rx_mb_config</a>  <a class="el" href="a00027.html#ga4fe64f2317d8cd6a28fa9bcd1a34889d">flexcan_rx_mb_config_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This structure is used as the parameter of <a class="el" href="a00027.html#ga845cd6e7e8746cf931e8e6aedd307756" title="Configures a FlexCAN Receive Message Buffer. ">FLEXCAN_SetRxMbConfig()</a> function. The <a class="el" href="a00027.html#ga845cd6e7e8746cf931e8e6aedd307756" title="Configures a FlexCAN Receive Message Buffer. ">FLEXCAN_SetRxMbConfig()</a> function is used to configure FlexCAN Receive Message Buffer. The function abort previous receiving process, clean the Message Buffer and activate the Rx Message Buffer using given Message Buffer setting. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga75f18778025a1fcdbe2e8a6b1bf9f41b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00027.html#a00380">_flexcan_rx_fifo_config</a>  <a class="el" href="a00027.html#ga75f18778025a1fcdbe2e8a6b1bf9f41b">flexcan_rx_fifo_config_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gae1e20e9dfdfebdeed7e86aa0b4396550"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00027.html#a00379">_flexcan_mb_transfer</a>  <a class="el" href="a00027.html#gae1e20e9dfdfebdeed7e86aa0b4396550">flexcan_mb_transfer_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga093ac9e4fcaf26e413a1bc88c473c3e7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00027.html#a00376">_flexcan_fifo_transfer</a>  <a class="el" href="a00027.html#ga093ac9e4fcaf26e413a1bc88c473c3e7">flexcan_fifo_transfer_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gafb040d05eeb1eb0edd80fd97e419dee8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00027.html#a00378">_flexcan_handle</a> <a class="el" href="a00027.html#gafb040d05eeb1eb0edd80fd97e419dee8">flexcan_handle_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -2379,52 +2608,52 @@ Transactional</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga89e76f77a571693c1adeec47796c97df"></a>
+<a class="anchor" id="ga30fad6511b6899d718319e257fd38007"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00027.html#ga89e76f77a571693c1adeec47796c97df">flexcan_frame_format_t</a></td>
+          <td class="memname">enum <a class="el" href="a00027.html#ga30fad6511b6899d718319e257fd38007">_flexcan_frame_format</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga89e76f77a571693c1adeec47796c97dfa82e576bc13cb647a948eed52564d109b"></a>kFLEXCAN_FrameFormatStandard</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga30fad6511b6899d718319e257fd38007a82e576bc13cb647a948eed52564d109b"></a>kFLEXCAN_FrameFormatStandard</em>&nbsp;</td><td class="fielddoc">
 <p>Standard frame format attribute. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga89e76f77a571693c1adeec47796c97dfa2acf770880d063c0522a5cc762ab2638"></a>kFLEXCAN_FrameFormatExtend</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga30fad6511b6899d718319e257fd38007a2acf770880d063c0522a5cc762ab2638"></a>kFLEXCAN_FrameFormatExtend</em>&nbsp;</td><td class="fielddoc">
 <p>Extend frame format attribute. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gacec96742e2b0b51a5bf3246bfc57a455"></a>
+<a class="anchor" id="gabe8bc300867c9ad1f76934834f2a75f2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00027.html#gacec96742e2b0b51a5bf3246bfc57a455">flexcan_frame_type_t</a></td>
+          <td class="memname">enum <a class="el" href="a00027.html#gabe8bc300867c9ad1f76934834f2a75f2">_flexcan_frame_type</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggacec96742e2b0b51a5bf3246bfc57a455a650a94706925910caaaef592a99f77b3"></a>kFLEXCAN_FrameTypeData</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggabe8bc300867c9ad1f76934834f2a75f2a650a94706925910caaaef592a99f77b3"></a>kFLEXCAN_FrameTypeData</em>&nbsp;</td><td class="fielddoc">
 <p>Data frame type attribute. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggacec96742e2b0b51a5bf3246bfc57a455ab8f92265dc2dadff64259080c78fa35e"></a>kFLEXCAN_FrameTypeRemote</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggabe8bc300867c9ad1f76934834f2a75f2ab8f92265dc2dadff64259080c78fa35e"></a>kFLEXCAN_FrameTypeRemote</em>&nbsp;</td><td class="fielddoc">
 <p>Remote frame type attribute. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gaa0b3ac1e2e7416950b82014d2a2b40ee"></a>
+<a class="anchor" id="ga6314aeebe2488fe50d9dd1fffbf366c8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00027.html#gaa0b3ac1e2e7416950b82014d2a2b40ee">flexcan_clock_source_t</a></td>
+          <td class="memname">enum <a class="el" href="a00027.html#ga6314aeebe2488fe50d9dd1fffbf366c8">_flexcan_clock_source</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -2432,83 +2661,83 @@ Transactional</h2></td></tr>
 <p class="enddd">Do not use the kFLEXCAN_ClkSrcPeri. It has been superceded kFLEXCAN_ClkSrc1 </p>
 </dd></dl>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaa0b3ac1e2e7416950b82014d2a2b40eead9cb66012e8d50e9ee3e154a36c1cff1"></a>kFLEXCAN_ClkSrcOsc</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga6314aeebe2488fe50d9dd1fffbf366c8ad9cb66012e8d50e9ee3e154a36c1cff1"></a>kFLEXCAN_ClkSrcOsc</em>&nbsp;</td><td class="fielddoc">
 <p>FlexCAN Protocol Engine clock from Oscillator. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa0b3ac1e2e7416950b82014d2a2b40eea962bcf8760c6a23e054980b1d0c5a922"></a>kFLEXCAN_ClkSrcPeri</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga6314aeebe2488fe50d9dd1fffbf366c8a962bcf8760c6a23e054980b1d0c5a922"></a>kFLEXCAN_ClkSrcPeri</em>&nbsp;</td><td class="fielddoc">
 <p>FlexCAN Protocol Engine clock from Peripheral Clock. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa0b3ac1e2e7416950b82014d2a2b40eea0025de2b1ce9650dc67c39a3b4d2d163"></a>kFLEXCAN_ClkSrc0</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga6314aeebe2488fe50d9dd1fffbf366c8a0025de2b1ce9650dc67c39a3b4d2d163"></a>kFLEXCAN_ClkSrc0</em>&nbsp;</td><td class="fielddoc">
 <p>FlexCAN Protocol Engine clock selected by user as SRC == 0. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa0b3ac1e2e7416950b82014d2a2b40eea83c9af2bd0d2e239bf3c75ed72aee115"></a>kFLEXCAN_ClkSrc1</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga6314aeebe2488fe50d9dd1fffbf366c8a83c9af2bd0d2e239bf3c75ed72aee115"></a>kFLEXCAN_ClkSrc1</em>&nbsp;</td><td class="fielddoc">
 <p>FlexCAN Protocol Engine clock selected by user as SRC == 1. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga5ca4fd15317c08e08c9e163defc60d05"></a>
+<a class="anchor" id="gab9559b001234cdb38e5811396a4632f6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00027.html#ga5ca4fd15317c08e08c9e163defc60d05">flexcan_wake_up_source_t</a></td>
+          <td class="memname">enum <a class="el" href="a00027.html#gab9559b001234cdb38e5811396a4632f6">_flexcan_wake_up_source</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga5ca4fd15317c08e08c9e163defc60d05a7ce5f9548568e6af39398d517ea19e41"></a>kFLEXCAN_WakeupSrcUnfiltered</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab9559b001234cdb38e5811396a4632f6a7ce5f9548568e6af39398d517ea19e41"></a>kFLEXCAN_WakeupSrcUnfiltered</em>&nbsp;</td><td class="fielddoc">
 <p>FlexCAN uses unfiltered Rx input to detect edge. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5ca4fd15317c08e08c9e163defc60d05a268e3487326cba1981bcffc8f4baf14b"></a>kFLEXCAN_WakeupSrcFiltered</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggab9559b001234cdb38e5811396a4632f6a268e3487326cba1981bcffc8f4baf14b"></a>kFLEXCAN_WakeupSrcFiltered</em>&nbsp;</td><td class="fielddoc">
 <p>FlexCAN uses filtered Rx input to detect edge. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga1b8c38cce54aff2f24b6cd45da80f353"></a>
+<a class="anchor" id="gaae011835245de279ed387ee0ff61d7cc"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00027.html#ga1b8c38cce54aff2f24b6cd45da80f353">flexcan_rx_fifo_filter_type_t</a></td>
+          <td class="memname">enum <a class="el" href="a00027.html#gaae011835245de279ed387ee0ff61d7cc">_flexcan_rx_fifo_filter_type</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga1b8c38cce54aff2f24b6cd45da80f353a1791608b19ef6a27483f55fee614f764"></a>kFLEXCAN_RxFifoFilterTypeA</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaae011835245de279ed387ee0ff61d7cca1791608b19ef6a27483f55fee614f764"></a>kFLEXCAN_RxFifoFilterTypeA</em>&nbsp;</td><td class="fielddoc">
 <p>One full ID (standard and extended) per ID Filter element. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1b8c38cce54aff2f24b6cd45da80f353a0989630ff89813979a12fd56e772073c"></a>kFLEXCAN_RxFifoFilterTypeB</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggaae011835245de279ed387ee0ff61d7cca0989630ff89813979a12fd56e772073c"></a>kFLEXCAN_RxFifoFilterTypeB</em>&nbsp;</td><td class="fielddoc">
 <p>Two full standard IDs or two partial 14-bit ID slices per ID Filter Table element. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1b8c38cce54aff2f24b6cd45da80f353ae4f020795b2ffb38eafb9a3648270a19"></a>kFLEXCAN_RxFifoFilterTypeC</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggaae011835245de279ed387ee0ff61d7ccae4f020795b2ffb38eafb9a3648270a19"></a>kFLEXCAN_RxFifoFilterTypeC</em>&nbsp;</td><td class="fielddoc">
 <p>Four partial 8-bit Standard or extended ID slices per ID Filter Table element. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1b8c38cce54aff2f24b6cd45da80f353a6b221467793b4268bf84cd475b92780d"></a>kFLEXCAN_RxFifoFilterTypeD</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggaae011835245de279ed387ee0ff61d7cca6b221467793b4268bf84cd475b92780d"></a>kFLEXCAN_RxFifoFilterTypeD</em>&nbsp;</td><td class="fielddoc">
 <p>All frames rejected. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga5d139af23e8c1094b39d1cf26d85271b"></a>
+<a class="anchor" id="gafb8c23ce204d47e4528edced437e8a7d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00027.html#ga5d139af23e8c1094b39d1cf26d85271b">flexcan_rx_fifo_priority_t</a></td>
+          <td class="memname">enum <a class="el" href="a00027.html#gafb8c23ce204d47e4528edced437e8a7d">_flexcan_rx_fifo_priority</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>The matching process starts from the Rx MB(or Enhanced/Legacy Rx FIFO) with higher priority. If no MB(or Enhanced/Legacy Rx FIFO filter) is satisfied, the matching process goes on with the Enhanced/Legacy Rx FIFO(or Rx MB) with lower priority. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga5d139af23e8c1094b39d1cf26d85271babc83bc44026aa8c9eef2a4b259e05ecd"></a>kFLEXCAN_RxFifoPrioLow</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggafb8c23ce204d47e4528edced437e8a7dabc83bc44026aa8c9eef2a4b259e05ecd"></a>kFLEXCAN_RxFifoPrioLow</em>&nbsp;</td><td class="fielddoc">
 <p>Matching process start from Rx Message Buffer first. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5d139af23e8c1094b39d1cf26d85271bac2b9710c6248536f992bdd832d05f8cf"></a>kFLEXCAN_RxFifoPrioHigh</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggafb8c23ce204d47e4528edced437e8a7dac2b9710c6248536f992bdd832d05f8cf"></a>kFLEXCAN_RxFifoPrioHigh</em>&nbsp;</td><td class="fielddoc">
 <p>Matching process start from Enhanced/Legacy Rx FIFO first. </p>
 </td></tr>
 </table>
@@ -2750,7 +2979,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00027.html#a00411">flexcan_timing_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00027.html#ga3d6bee81bd27ba7bf1d48845f2a5db19">flexcan_timing_config_t</a> *&#160;</td>
           <td class="paramname"><em>pTimingConfig</em>&#160;</td>
         </tr>
         <tr>
@@ -2787,7 +3016,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00027.html#a00405">flexcan_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00027.html#gac92b53682cc4684bb19d63533abaf950">flexcan_config_t</a> *&#160;</td>
           <td class="paramname"><em>pConfig</em>, </td>
         </tr>
         <tr>
@@ -2803,17 +3032,17 @@ Transactional</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function initializes the FlexCAN module with user-defined settings. This example shows how to set up the <a class="el" href="a00027.html#a00405" title="FlexCAN module configuration structure. ">flexcan_config_t</a> parameters and how to call the FLEXCAN_Init function by passing in these parameters. </p>
-<div class="fragment"><div class="line">*   <a class="code" href="a00027.html#a00405">flexcan_config_t</a> flexcanConfig;</div>
-<div class="line">*   flexcanConfig.<a class="code" href="a00027.html#a088675118b1081ed959119ba00080412">clkSrc</a>               = <a class="code" href="a00027.html#ggaa0b3ac1e2e7416950b82014d2a2b40eea0025de2b1ce9650dc67c39a3b4d2d163">kFLEXCAN_ClkSrc0</a>;</div>
-<div class="line">*   flexcanConfig.<a class="code" href="a00027.html#ac166a2d27b9be4d8ff39c67c28f5d9c9">bitRate</a>              = 1000000U;</div>
-<div class="line">*   flexcanConfig.<a class="code" href="a00027.html#a1f78425cda4ca2be4ffca627aac9db05">maxMbNum</a>             = 16;</div>
-<div class="line">*   flexcanConfig.<a class="code" href="a00027.html#a3b15eb7994ec581aee06873d718fd216">enableLoopBack</a>       = <span class="keyword">false</span>;</div>
-<div class="line">*   flexcanConfig.<a class="code" href="a00027.html#a1b849e3e26f5798fa96abd6f5afb5b3c">enableSelfWakeup</a>     = <span class="keyword">false</span>;</div>
-<div class="line">*   flexcanConfig.<a class="code" href="a00027.html#a176576d19ca09ef38155318486d5e0a0">enableIndividMask</a>    = <span class="keyword">false</span>;</div>
+<p>This function initializes the FlexCAN module with user-defined settings. This example shows how to set up the flexcan_config_t parameters and how to call the FLEXCAN_Init function by passing in these parameters. </p>
+<div class="fragment"><div class="line">*   <a class="code" href="a00027.html#a00375">flexcan_config_t</a> flexcanConfig;</div>
+<div class="line">*   flexcanConfig.<a class="code" href="a00027.html#aaa32055fc52c20ef39fd5d9ac94477f9">clkSrc</a>               = <a class="code" href="a00027.html#gga6314aeebe2488fe50d9dd1fffbf366c8a0025de2b1ce9650dc67c39a3b4d2d163">kFLEXCAN_ClkSrc0</a>;</div>
+<div class="line">*   flexcanConfig.<a class="code" href="a00027.html#a22c7375fbe9674f6f510bd73b652a3d4">bitRate</a>              = 1000000U;</div>
+<div class="line">*   flexcanConfig.<a class="code" href="a00027.html#a1ae77c3e01271290dd48fdcb6b6b76a8">maxMbNum</a>             = 16;</div>
+<div class="line">*   flexcanConfig.<a class="code" href="a00027.html#ab214e057c895d952a25de43eb2078505">enableLoopBack</a>       = <span class="keyword">false</span>;</div>
+<div class="line">*   flexcanConfig.<a class="code" href="a00027.html#a512a3e7d71b55d33e2a98efd04bfb24b">enableSelfWakeup</a>     = <span class="keyword">false</span>;</div>
+<div class="line">*   flexcanConfig.<a class="code" href="a00027.html#afeb862955d4d952cde78becbcf1b79ef">enableIndividMask</a>    = <span class="keyword">false</span>;</div>
 <div class="line">*   flexcanConfig.enableDoze           = <span class="keyword">false</span>;</div>
-<div class="line">*   flexcanConfig.<a class="code" href="a00027.html#a4b01e6d8180a4e27683a67690eaf4c27">disableSelfReception</a> = <span class="keyword">false</span>;</div>
-<div class="line">*   flexcanConfig.<a class="code" href="a00027.html#ac063de8f3095c8af11d0ecf2ee4a12fb">enableListenOnlyMode</a> = <span class="keyword">false</span>;</div>
+<div class="line">*   flexcanConfig.<a class="code" href="a00027.html#a92d32b00b96b0eab648c5c263b4180a9">disableSelfReception</a> = <span class="keyword">false</span>;</div>
+<div class="line">*   flexcanConfig.<a class="code" href="a00027.html#a40ea6cba6268eb966b9fe98014bc9bbd">enableListenOnlyMode</a> = <span class="keyword">false</span>;</div>
 <div class="line">*   flexcanConfig.timingConfig         = timingConfig;</div>
 <div class="line">*   <a class="code" href="a00027.html#gaf432c3df02c778a71a35b41a2ed58f4d">FLEXCAN_Init</a>(CAN0, &amp;flexcanConfig, 40000000UL);</div>
 <div class="line">*   </div>
@@ -2858,7 +3087,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="memname">void FLEXCAN_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00027.html#a00405">flexcan_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00027.html#gac92b53682cc4684bb19d63533abaf950">flexcan_config_t</a> *&#160;</td>
           <td class="paramname"><em>pConfig</em></td><td>)</td>
           <td></td>
         </tr>
@@ -2887,7 +3116,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00027.html#a00411">flexcan_timing_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00027.html#ga3d6bee81bd27ba7bf1d48845f2a5db19">flexcan_timing_config_t</a> *&#160;</td>
           <td class="paramname"><em>pConfig</em>&#160;</td>
         </tr>
         <tr>
@@ -2914,7 +3143,7 @@ Transactional</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXCAN_SetBitRate </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXCAN_SetBitRate </td>
           <td>(</td>
           <td class="paramtype">CAN_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -3125,7 +3354,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00027.html#a00410">flexcan_rx_mb_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00027.html#ga4fe64f2317d8cd6a28fa9bcd1a34889d">flexcan_rx_mb_config_t</a> *&#160;</td>
           <td class="paramname"><em>pRxMbConfig</em>, </td>
         </tr>
         <tr>
@@ -3171,7 +3400,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00027.html#a00409">flexcan_rx_fifo_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00027.html#ga75f18778025a1fcdbe2e8a6b1bf9f41b">flexcan_rx_fifo_config_t</a> *&#160;</td>
           <td class="paramname"><em>pRxFifoConfig</em>, </td>
         </tr>
         <tr>
@@ -3327,7 +3556,7 @@ Transactional</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gaf7de339e9d94a4c59f05c04655a23a6e"></a>
+<a class="anchor" id="ga82d61a62e50d1ac7e520141156e01d96"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -3335,7 +3564,7 @@ Transactional</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static uint32_t FLEXCAN_GetMbStatusFlags </td>
+          <td class="memname">static uint64_t FLEXCAN_GetMbStatusFlags </td>
           <td>(</td>
           <td class="paramtype">CAN_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -3343,7 +3572,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramtype">uint64_t&#160;</td>
           <td class="paramname"><em>mask</em>&#160;</td>
         </tr>
         <tr>
@@ -3370,7 +3599,7 @@ Transactional</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga7199f7d1bf8198e03522d1d9706d50f2"></a>
+<a class="anchor" id="ga4761779a4e4a67b638fa8c74d94afb9a"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -3386,7 +3615,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramtype">uint64_t&#160;</td>
           <td class="paramname"><em>mask</em>&#160;</td>
         </tr>
         <tr>
@@ -3496,7 +3725,7 @@ Transactional</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gadbb25b3a7667fa94162f5c98a9dd8fed"></a>
+<a class="anchor" id="ga3c1b52fa316941bd352f7f13e92852a7"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -3512,7 +3741,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramtype">uint64_t&#160;</td>
           <td class="paramname"><em>mask</em>&#160;</td>
         </tr>
         <tr>
@@ -3538,7 +3767,7 @@ Transactional</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gac99226a65d8458ab9fb13a7ebfb75b49"></a>
+<a class="anchor" id="gac340f1eabdcbbb6c7234d4bb7994b125"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -3554,7 +3783,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramtype">uint64_t&#160;</td>
           <td class="paramname"><em>mask</em>&#160;</td>
         </tr>
         <tr>
@@ -3627,7 +3856,7 @@ Transactional</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXCAN_WriteTxMb </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXCAN_WriteTxMb </td>
           <td>(</td>
           <td class="paramtype">CAN_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -3641,7 +3870,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00027.html#a00407">flexcan_frame_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00027.html#ga8e99cd0558e81decabdcafae1ed4ca49">flexcan_frame_t</a> *&#160;</td>
           <td class="paramname"><em>pTxFrame</em>&#160;</td>
         </tr>
         <tr>
@@ -3675,7 +3904,7 @@ Transactional</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXCAN_ReadRxMb </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXCAN_ReadRxMb </td>
           <td>(</td>
           <td class="paramtype">CAN_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -3689,7 +3918,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00027.html#a00407">flexcan_frame_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00027.html#ga8e99cd0558e81decabdcafae1ed4ca49">flexcan_frame_t</a> *&#160;</td>
           <td class="paramname"><em>pRxFrame</em>&#160;</td>
         </tr>
         <tr>
@@ -3724,7 +3953,7 @@ Transactional</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXCAN_ReadRxFifo </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXCAN_ReadRxFifo </td>
           <td>(</td>
           <td class="paramtype">CAN_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -3732,7 +3961,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00027.html#a00407">flexcan_frame_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00027.html#ga8e99cd0558e81decabdcafae1ed4ca49">flexcan_frame_t</a> *&#160;</td>
           <td class="paramname"><em>pRxFrame</em>&#160;</td>
         </tr>
         <tr>
@@ -3765,7 +3994,7 @@ Transactional</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXCAN_TransferSendBlocking </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXCAN_TransferSendBlocking </td>
           <td>(</td>
           <td class="paramtype">CAN_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -3779,7 +4008,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00027.html#a00407">flexcan_frame_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00027.html#ga8e99cd0558e81decabdcafae1ed4ca49">flexcan_frame_t</a> *&#160;</td>
           <td class="paramname"><em>pTxFrame</em>&#160;</td>
         </tr>
         <tr>
@@ -3813,7 +4042,7 @@ Transactional</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXCAN_TransferReceiveBlocking </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXCAN_TransferReceiveBlocking </td>
           <td>(</td>
           <td class="paramtype">CAN_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -3827,7 +4056,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00027.html#a00407">flexcan_frame_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00027.html#ga8e99cd0558e81decabdcafae1ed4ca49">flexcan_frame_t</a> *&#160;</td>
           <td class="paramname"><em>pRxFrame</em>&#160;</td>
         </tr>
         <tr>
@@ -3862,7 +4091,7 @@ Transactional</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXCAN_TransferReceiveFifoBlocking </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXCAN_TransferReceiveFifoBlocking </td>
           <td>(</td>
           <td class="paramtype">CAN_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -3870,7 +4099,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00027.html#a00407">flexcan_frame_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00027.html#ga8e99cd0558e81decabdcafae1ed4ca49">flexcan_frame_t</a> *&#160;</td>
           <td class="paramname"><em>pRxFrame</em>&#160;</td>
         </tr>
         <tr>
@@ -3911,7 +4140,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">flexcan_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00027.html#gafb040d05eeb1eb0edd80fd97e419dee8">flexcan_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -3951,7 +4180,7 @@ Transactional</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXCAN_TransferSendNonBlocking </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXCAN_TransferSendNonBlocking </td>
           <td>(</td>
           <td class="paramtype">CAN_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -3959,13 +4188,13 @@ Transactional</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">flexcan_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00027.html#gafb040d05eeb1eb0edd80fd97e419dee8">flexcan_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00027.html#a00408">flexcan_mb_transfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00027.html#gae1e20e9dfdfebdeed7e86aa0b4396550">flexcan_mb_transfer_t</a> *&#160;</td>
           <td class="paramname"><em>pMbXfer</em>&#160;</td>
         </tr>
         <tr>
@@ -3980,7 +4209,7 @@ Transactional</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">base</td><td>FlexCAN peripheral base address. </td></tr>
     <tr><td class="paramname">handle</td><td>FlexCAN handle pointer. </td></tr>
-    <tr><td class="paramname">pMbXfer</td><td>FlexCAN Message Buffer transfer structure. See the <a class="el" href="a00027.html#a00408" title="FlexCAN Message Buffer transfer. ">flexcan_mb_transfer_t</a>. </td></tr>
+    <tr><td class="paramname">pMbXfer</td><td>FlexCAN Message Buffer transfer structure. See the <a class="el" href="a00027.html#gae1e20e9dfdfebdeed7e86aa0b4396550" title="FlexCAN Message Buffer transfer. ">flexcan_mb_transfer_t</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -4000,7 +4229,7 @@ Transactional</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXCAN_TransferReceiveNonBlocking </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXCAN_TransferReceiveNonBlocking </td>
           <td>(</td>
           <td class="paramtype">CAN_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -4008,13 +4237,13 @@ Transactional</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">flexcan_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00027.html#gafb040d05eeb1eb0edd80fd97e419dee8">flexcan_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00027.html#a00408">flexcan_mb_transfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00027.html#gae1e20e9dfdfebdeed7e86aa0b4396550">flexcan_mb_transfer_t</a> *&#160;</td>
           <td class="paramname"><em>pMbXfer</em>&#160;</td>
         </tr>
         <tr>
@@ -4029,7 +4258,7 @@ Transactional</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">base</td><td>FlexCAN peripheral base address. </td></tr>
     <tr><td class="paramname">handle</td><td>FlexCAN handle pointer. </td></tr>
-    <tr><td class="paramname">pMbXfer</td><td>FlexCAN Message Buffer transfer structure. See the <a class="el" href="a00027.html#a00408" title="FlexCAN Message Buffer transfer. ">flexcan_mb_transfer_t</a>. </td></tr>
+    <tr><td class="paramname">pMbXfer</td><td>FlexCAN Message Buffer transfer structure. See the <a class="el" href="a00027.html#gae1e20e9dfdfebdeed7e86aa0b4396550" title="FlexCAN Message Buffer transfer. ">flexcan_mb_transfer_t</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -4048,7 +4277,7 @@ Transactional</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXCAN_TransferReceiveFifoNonBlocking </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXCAN_TransferReceiveFifoNonBlocking </td>
           <td>(</td>
           <td class="paramtype">CAN_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -4056,13 +4285,13 @@ Transactional</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">flexcan_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00027.html#gafb040d05eeb1eb0edd80fd97e419dee8">flexcan_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00027.html#a00406">flexcan_fifo_transfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00027.html#ga093ac9e4fcaf26e413a1bc88c473c3e7">flexcan_fifo_transfer_t</a> *&#160;</td>
           <td class="paramname"><em>pFifoXfer</em>&#160;</td>
         </tr>
         <tr>
@@ -4077,7 +4306,7 @@ Transactional</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">base</td><td>FlexCAN peripheral base address. </td></tr>
     <tr><td class="paramname">handle</td><td>FlexCAN handle pointer. </td></tr>
-    <tr><td class="paramname">pFifoXfer</td><td>FlexCAN Rx FIFO transfer structure. See the <a class="el" href="a00027.html#a00406">flexcan_fifo_transfer_t</a>. </td></tr>
+    <tr><td class="paramname">pFifoXfer</td><td>FlexCAN Rx FIFO transfer structure. See the <a class="el" href="a00027.html#ga093ac9e4fcaf26e413a1bc88c473c3e7">flexcan_fifo_transfer_t</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -4096,7 +4325,7 @@ Transactional</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXCAN_TransferGetReceiveFifoCount </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXCAN_TransferGetReceiveFifoCount </td>
           <td>(</td>
           <td class="paramtype">CAN_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -4104,7 +4333,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">flexcan_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00027.html#gafb040d05eeb1eb0edd80fd97e419dee8">flexcan_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -4145,7 +4374,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="memname">uint32_t FLEXCAN_GetTimeStamp </td>
           <td>(</td>
-          <td class="paramtype">flexcan_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00027.html#gafb040d05eeb1eb0edd80fd97e419dee8">flexcan_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -4191,7 +4420,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">flexcan_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00027.html#gafb040d05eeb1eb0edd80fd97e419dee8">flexcan_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -4232,7 +4461,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">flexcan_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00027.html#gafb040d05eeb1eb0edd80fd97e419dee8">flexcan_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -4273,7 +4502,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">flexcan_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00027.html#gafb040d05eeb1eb0edd80fd97e419dee8">flexcan_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>&#160;</td>
         </tr>
         <tr>
@@ -4307,7 +4536,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">flexcan_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00027.html#gafb040d05eeb1eb0edd80fd97e419dee8">flexcan_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>&#160;</td>
         </tr>
         <tr>

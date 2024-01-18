@@ -32,7 +32,15 @@
 #include "pin_mux.h"
 #include "board.h"
 
+#if defined(MBEDTLS_MCUX_ELE_S400_API)
+#include "ele_mbedtls.h"
+#elif defined(MBEDTLS_MCUX_ELS_PKC_API)
+#include "platform_hw_ip.h"
+#include "els_pkc_mbedtls.h"
+#else
 #include "ksdk_mbedtls.h"
+#endif
+
 #include "mflash_file.h"
 #include "kvstore.h"
 
@@ -132,7 +140,6 @@ static status_t MDIO_Read(uint8_t phyAddr, uint8_t regAddr, uint16_t *pData)
     return ENET_MDIORead(EXAMPLE_ENET, phyAddr, regAddr, pData);
 }
 
-
 /*!
  * @brief Application entry point.
  */
@@ -146,11 +153,8 @@ int main(void)
 
     IOMUXC_EnableMode(IOMUXC_GPR, kIOMUXC_GPR_ENET1TxClkOutputDir, true);
 
-    /* Reset PHY */
-    GPIO_PinWrite(BOARD_INITPINS_PHY_RESET_GPIO, BOARD_INITPINS_PHY_RESET_GPIO_PIN, 0);
-    SDK_DelayAtLeastUs(10000, CLOCK_GetFreq(kCLOCK_CpuClk));
-    GPIO_PinWrite(BOARD_INITPINS_PHY_RESET_GPIO, BOARD_INITPINS_PHY_RESET_GPIO_PIN, 1);
-    SDK_DelayAtLeastUs(100, CLOCK_GetFreq(kCLOCK_CpuClk));
+    /* PHY hardware reset. */
+    BOARD_ENET_PHY_RESET;
 
     MDIO_Init();
     g_phy_resource.read  = MDIO_Read;
@@ -372,12 +376,13 @@ int init_network(void)
         .phyOps      = EXAMPLE_PHY_OPS,
         .phyResource = EXAMPLE_PHY_RESOURCE,
         .srcClockHz  = EXAMPLE_CLOCK_FREQ,
+#ifdef configMAC_ADDR
+        .macAddress = configMAC_ADDR
+#endif
     };
 
     /* Set MAC address. */
-#ifdef configMAC_ADDR
-    enet_config.macAddress = configMAC_ADDR,
-#else
+#ifndef configMAC_ADDR
     (void)SILICONID_ConvertToMacAddr(&enet_config.macAddress);
 #endif
 

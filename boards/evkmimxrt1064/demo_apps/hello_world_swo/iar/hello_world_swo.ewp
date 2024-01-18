@@ -353,6 +353,7 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
@@ -1438,6 +1439,7 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
@@ -2523,6 +2525,7 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
@@ -3607,6 +3610,7 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
@@ -4690,6 +4694,7 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
@@ -5773,6 +5778,7 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
@@ -6858,6 +6864,7 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
@@ -7943,6 +7950,7 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
@@ -9027,6 +9035,7 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
@@ -10110,6 +10119,7 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
@@ -10877,7 +10887,7 @@
   <group>
     <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
   <group>
@@ -10899,6 +10909,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/fsl_assert.h</name>
     </file>
   </group>
   <group>

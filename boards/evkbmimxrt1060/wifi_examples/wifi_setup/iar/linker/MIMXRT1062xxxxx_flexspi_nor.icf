@@ -94,6 +94,10 @@ initialize by copy {
   section DataQuickAccess,
   object portasm.o,
   object queue.o,
+  object mlan_sdio.o,
+  object mlan_11n.o,
+  object mlan_11n_aggr.o,
+  object mlan_11n_rxreorder.o,
   object inet_chksum.o,
   object timers.o,
   object ABImemcpy.o,
@@ -107,7 +111,14 @@ initialize by copy {
   object fsl_sdio.o,
   object sys_arch.o,
   object tcp_out.o,
-  object wifi.o
+  object tcp.o,
+  object tcpip.o,
+  object udp.o,
+  object wifi.o,
+  object sockets.o,
+  object fsl_memcpy.o,
+  object fsl_cache.o,
+  object wifi_netif.o
 };
 do not initialize  { section .noinit };
 

@@ -1,10 +1,7 @@
 /*
  * Copyright 2018-2022 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /*!
@@ -49,12 +46,21 @@ AudioSinkStreamErrorType audiosink_pcmrtos_init_params(ElementAudioSink *audio_s
     STREAMER_LOG_DEBUG(DBG_AUDIO_SINK, "[PCMRTOS Sink] chunk size = %d\n", audio_sink_ptr->chunk_size);
     STREAMER_LOG_DEBUG(DBG_AUDIO_SINK, "[PCMRTOS Sink] bits_per_sample= %d\n", audio_sink_ptr->bits_per_sample);
 
+    /* Check if necessary functions exists */
+    if ((audio_sink_ptr->appFunctions.set_param_func == NULL) ||
+        (audio_sink_ptr->appFunctions.get_param_func == NULL) || (audio_sink_ptr->appFunctions.process_func == NULL))
+    {
+        return AUDIO_SINK_FAILED;
+    }
+
     /* Set samplerate */
     /* Set audio/PCM channel. */
     /* Set PCM data format (bits per sample, tx fmt) */
     /* Setup pipeline in/out ports */
-    ret = streamer_pcm_setparams(dev_info->pcm_handle, audio_sink_ptr->sample_rate, audio_sink_ptr->bits_per_sample,
-                                 audio_sink_ptr->num_channels, true, false, audio_sink_ptr->volume);
+    ret =
+        audio_sink_ptr->appFunctions.set_param_func(audio_sink_ptr->sample_rate, audio_sink_ptr->bits_per_sample,
+                                                    audio_sink_ptr->num_channels, true, false, audio_sink_ptr->volume);
+
     if (ret != 0)
     {
         STREAMER_LOG_ERR(DBG_AUDIO_SINK, ERRCODE_NOT_SUPPORTED, "[PCMRTOS Sink] failed to set device params\n");
@@ -62,7 +68,7 @@ AudioSinkStreamErrorType audiosink_pcmrtos_init_params(ElementAudioSink *audio_s
         return AUDIO_SINK_FAILED;
     }
 
-    streamer_pcm_getparams(dev_info->pcm_handle, &dev_sample_rate, &dev_bit_width, &dev_num_channels);
+    audio_sink_ptr->appFunctions.get_param_func(&dev_sample_rate, &dev_bit_width, &dev_num_channels);
 
     if ((dev_bit_width < audio_sink_ptr->bits_per_sample) || (dev_num_channels < audio_sink_ptr->num_channels))
     {
@@ -78,7 +84,10 @@ AudioSinkStreamErrorType audiosink_pcmrtos_init_params(ElementAudioSink *audio_s
     dev_info->resample = false;
 
     /* START playback */
-    streamer_pcm_start(dev_info->pcm_handle);
+    if (audio_sink_ptr->appFunctions.start_func != NULL)
+    {
+        audio_sink_ptr->appFunctions.start_func();
+    }
 
     STREAMER_FUNC_EXIT(DBG_AUDIO_SINK);
 
@@ -106,13 +115,12 @@ AudioSinkStreamErrorType audiosink_pcmrtos_init_device(ElementAudioSink *audio_s
 
     audio_sink_ptr->device_info = dev_info;
     dev_info->device_state      = AUDIO_SINK_DEVICE_STATE_OPENED;
-    dev_info->pcm_handle        = NULL;
     dev_info->resample          = false;
 
     if (audio_sink_ptr->refData_element)
     {
-        if (STREAM_OK != element_set_property(audio_sink_ptr->refData_element,
-                                              PROP_VOICESEEKER_PROC_REFDATA_NUM_BUFFERS, AUDIO_SINK_BUFFER_NUM))
+        if (STREAM_OK != element_set_property(audio_sink_ptr->refData_element, PROP_VOICESEEKER_REFDATA_NUM_BUFFERS,
+                                              AUDIO_SINK_BUFFER_NUM + 1))
         {
             return AUDIO_SINK_FAILED;
         }
@@ -329,19 +337,18 @@ FlowReturn audiosink_pcmrtos_sink_pad_chain_handler(StreamPad *pad, StreamBuffer
         dev_info->input_size = buffer_size;
 
         /* Write to PCM output driver. */
-        ret = streamer_pcm_write(dev_info->pcm_handle, (uint8_t *)dev_info->audbuf[dev_info->input_index],
-                                 dev_info->input_size);
-        if (ret != 0)
+        ret = audio_sink_ptr->appFunctions.process_func((uint8_t *)dev_info->audbuf[dev_info->input_index],
+                                                        dev_info->input_size);
+        if ((ret != 0) && (ret != 1))
         {
             STREAMER_LOG_ERR(DBG_AUDIO_SINK, ERRCODE_BUSY, "[PCMRTOS Sink] failed to write PCM data\n");
             STREAMER_FUNC_EXIT(DBG_AUDIO_SINK);
             return FLOW_ERROR;
         }
-
-        if (audio_sink_ptr->refData_element)
+        if ((ret == 0) && (audio_sink_ptr->refData_element))
         {
             AudioRefData_t refData = {(uint8_t *)dev_info->audbuf[dev_info->input_index], dev_info->input_size};
-            if (STREAM_OK != element_set_property(audio_sink_ptr->refData_element, PROP_VOICESEEKER_PROC_REFDATA_PUSH,
+            if (STREAM_OK != element_set_property(audio_sink_ptr->refData_element, PROP_VOICESEEKER_REFDATA_PUSH,
                                                   (uintptr_t)&refData))
             {
                 return FLOW_ERROR;
@@ -430,12 +437,15 @@ AudioSinkStreamErrorType audiosink_pcmrtos_start_device(ElementAudioSink *audio_
 
     /* fopen() device */
     dev_info->alloc_size = 0;
-    dev_info->pcm_handle = streamer_pcm_open(AUDIO_SINK_BUFFER_NUM);
-    if (!dev_info->pcm_handle)
+
+    if (audio_sink_ptr->appFunctions.open_func != NULL)
     {
-        STREAMER_LOG_ERR(DBG_AUDIO_SINK, ERRCODE_BUSY, "[PCMRTOS Sink] open file handler failed\n");
-        STREAMER_FUNC_EXIT(DBG_AUDIO_SINK);
-        return AUDIO_SINK_FAILED;
+        if (audio_sink_ptr->appFunctions.open_func(AUDIO_SINK_BUFFER_NUM) != 0)
+        {
+            STREAMER_LOG_ERR(DBG_AUDIO_SINK, ERRCODE_BUSY, "[PCMRTOS Sink] open file handler failed\n");
+            STREAMER_FUNC_EXIT(DBG_AUDIO_SINK);
+            return AUDIO_SINK_FAILED;
+        }
     }
 
     STREAMER_FUNC_EXIT(DBG_AUDIO_SINK);
@@ -464,8 +474,14 @@ AudioSinkStreamErrorType audiosink_pcmrtos_stop_device(ElementAudioSink *audio_s
     }
 
     /* Mute the PCM output to prevent any pops. */
-    streamer_pcm_mute(dev_info->pcm_handle, true);
-    streamer_pcm_close(dev_info->pcm_handle);
+    if (audio_sink_ptr->appFunctions.mute_func != NULL)
+    {
+        audio_sink_ptr->appFunctions.mute_func(true);
+    }
+    if (audio_sink_ptr->appFunctions.close_func != NULL)
+    {
+        audio_sink_ptr->appFunctions.close_func();
+    }
 
     for (int i = 0; i < AUDIO_SINK_BUFFER_NUM; i++)
     {
@@ -477,7 +493,6 @@ AudioSinkStreamErrorType audiosink_pcmrtos_stop_device(ElementAudioSink *audio_s
         }
     }
 
-    dev_info->pcm_handle       = NULL;
     dev_info->init_params_done = false;
 
     STREAMER_FUNC_EXIT(DBG_AUDIO_SINK);
@@ -500,7 +515,10 @@ AudioSinkStreamErrorType audiosink_pcmrtos_play_device(ElementAudioSink *audio_s
     }
 
     /* "Unmute" the PCM output. */
-    streamer_pcm_set_volume(dev_info->pcm_handle, audio_sink_ptr->volume);
+    if (audio_sink_ptr->appFunctions.volume_func != NULL)
+    {
+        audio_sink_ptr->appFunctions.volume_func(audio_sink_ptr->volume);
+    }
 
     STREAMER_FUNC_EXIT(DBG_AUDIO_SINK);
 
@@ -522,7 +540,10 @@ AudioSinkStreamErrorType audiosink_pcmrtos_pause_device(ElementAudioSink *audio_
     }
 
     /* Mute the PCM output to prevent any pops. */
-    streamer_pcm_mute(dev_info->pcm_handle, true);
+    if (audio_sink_ptr->appFunctions.mute_func != NULL)
+    {
+        audio_sink_ptr->appFunctions.mute_func(true);
+    }
 
     STREAMER_FUNC_EXIT(DBG_AUDIO_SINK);
 
@@ -549,7 +570,10 @@ AudioSinkStreamErrorType audiosink_pcmrtos_set_volume(ElementAudioSink *audio_si
     /* Call function only if dev_info is valid - it is invalid before initialization. */
     if (dev_info)
         /* Set volume the PCM output. */
-        streamer_pcm_set_volume(dev_info->pcm_handle, volume);
+        if (audio_sink_ptr->appFunctions.volume_func != NULL)
+        {
+            audio_sink_ptr->appFunctions.volume_func(volume);
+        }
 
     STREAMER_FUNC_EXIT(DBG_AUDIO_SINK);
 

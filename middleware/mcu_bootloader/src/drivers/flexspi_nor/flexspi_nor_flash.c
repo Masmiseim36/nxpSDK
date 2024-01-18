@@ -1321,7 +1321,8 @@ status_t probe_dtr_quad_read_dummy_cycles(uint32_t instance, flexspi_nor_config_
         while ((!dummy_cycle_detected) && (++probe_cnt < max_probe_try))
         {
             memset(lut_seq, 0, sizeof(lut_seq));
-            if ((config->memConfig.sflashA1Size > MAX_24BIT_ADDRESSING_SIZE) || (config->memConfig.sflashB1Size > MAX_24BIT_ADDRESSING_SIZE))
+            if ((config->memConfig.sflashA1Size > MAX_24BIT_ADDRESSING_SIZE) ||
+                (config->memConfig.sflashB1Size > MAX_24BIT_ADDRESSING_SIZE))
             {
                 lut_seq[0] = FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, kSerialNorCmd_Read_DDR_1_4_4_4B, RADDR_DDR,
                                              FLEXSPI_4PAD, 0x20);
@@ -1537,7 +1538,8 @@ status_t parse_sfdp(uint32_t instance,
 
         get_page_sector_block_size_from_sfdp(config, tbl, &sector_erase_cmd, &block_erase_cmd);
 
-        if ((config->memConfig.sflashA1Size > MAX_24BIT_ADDRESSING_SIZE) || (config->memConfig.sflashB1Size > MAX_24BIT_ADDRESSING_SIZE))
+        if ((config->memConfig.sflashA1Size > MAX_24BIT_ADDRESSING_SIZE) ||
+            (config->memConfig.sflashB1Size > MAX_24BIT_ADDRESSING_SIZE))
         {
             address_bits = 32;
         }
@@ -2177,8 +2179,8 @@ status_t flexspi_nor_generate_config_block_hyperflash(uint32_t instance, flexspi
         config->memConfig.columnAddressWidth = 3;
         config->memConfig.sflashPadType = kSerialFlash_8Pads;
         config->memConfig.controllerMiscOption |= FLEXSPI_BITMASK(kFlexSpiMiscOffset_DdrModeEnable) |
-                                                 FLEXSPI_BITMASK(kFlexSpiMiscOffset_WordAddressableEnable) |
-                                                 FLEXSPI_BITMASK(kFlexSpiMiscOffset_SafeConfigFreqEnable);
+                                                  FLEXSPI_BITMASK(kFlexSpiMiscOffset_WordAddressableEnable) |
+                                                  FLEXSPI_BITMASK(kFlexSpiMiscOffset_SafeConfigFreqEnable);
         config->memConfig.readSampleClkSrc = kFlexSPIReadSampleClk_ExternalInputFromDqsPad;
 
         if (is_1v8)
@@ -2796,7 +2798,7 @@ status_t flexspi_nor_generate_config_block_micron_octalflash(uint32_t instance,
         {
             config->memConfig.readSampleClkSrc = kFlexSPIReadSampleClk_ExternalInputFromDqsPad;
             config->memConfig.controllerMiscOption |= FLEXSPI_BITMASK(kFlexSpiMiscOffset_DdrModeEnable) |
-                                                     FLEXSPI_BITMASK(kFlexSpiMiscOffset_SafeConfigFreqEnable);
+                                                      FLEXSPI_BITMASK(kFlexSpiMiscOffset_SafeConfigFreqEnable);
         }
         config->memConfig.sflashPadType = kSerialFlash_8Pads;
 
@@ -2837,7 +2839,7 @@ status_t flexspi_nor_generate_config_block_micron_octalflash(uint32_t instance,
         {
             // Update sample clock source and misc option
             config->memConfig.controllerMiscOption |= FLEXSPI_BITMASK(kFlexSpiMiscOffset_DdrModeEnable) |
-                                                     FLEXSPI_BITMASK(kFlexSpiMiscOffset_SafeConfigFreqEnable);
+                                                      FLEXSPI_BITMASK(kFlexSpiMiscOffset_SafeConfigFreqEnable);
             config->memConfig.readSampleClkSrc = kFlexSPIReadSampleClk_ExternalInputFromDqsPad;
         }
         // Write Enable
@@ -2860,7 +2862,8 @@ status_t flexspi_nor_generate_config_block_micron_octalflash(uint32_t instance,
             {
                 uint32_t address_bits;
                 uint32_t page_program_cmd;
-                if ((config->memConfig.sflashA1Size > MAX_24BIT_ADDRESSING_SIZE) || (config->memConfig.sflashB1Size > MAX_24BIT_ADDRESSING_SIZE))
+                if ((config->memConfig.sflashA1Size > MAX_24BIT_ADDRESSING_SIZE) ||
+                    (config->memConfig.sflashB1Size > MAX_24BIT_ADDRESSING_SIZE))
                 {
                     address_bits = 32;
                     page_program_cmd = 0x8E;
@@ -2898,7 +2901,8 @@ status_t flexspi_nor_generate_config_block_micron_octalflash(uint32_t instance,
                 else
                 {
                     uint32_t read_cmd = 0xCB;
-                    if ((config->memConfig.sflashA1Size > MAX_24BIT_ADDRESSING_SIZE) || (config->memConfig.sflashB1Size > MAX_24BIT_ADDRESSING_SIZE))
+                    if ((config->memConfig.sflashA1Size > MAX_24BIT_ADDRESSING_SIZE) ||
+                        (config->memConfig.sflashB1Size > MAX_24BIT_ADDRESSING_SIZE))
                     {
                         read_cmd = 0xCC;
                     }
@@ -3334,7 +3338,11 @@ status_t flexspi_nor_get_config(uint32_t instance, flexspi_nor_config_t *config,
             // Change the Pad Drive Strength
             if (option->option1.B.drive_strength)
             {
+#ifdef MIMXRT1189_cm33_SERIES
+                flexspi_update_padsetting(instance, &config->memConfig, option->option1.B.drive_strength);
+#else
                 flexspi_update_padsetting(&config->memConfig, option->option1.B.drive_strength);
+#endif
             }
             // Enable parallel mode support
             if (option->option1.B.flash_connection)
@@ -3348,8 +3356,7 @@ status_t flexspi_nor_get_config(uint32_t instance, flexspi_nor_config_t *config,
                         // This is default setting, do nothing here
                         break;
                     case kSerialNorConnection_Parallel:
-                        config->memConfig.controllerMiscOption |=
-                            FLEXSPI_BITMASK(kFlexSpiMiscOffset_ParallelEnable);
+                        config->memConfig.controllerMiscOption |= FLEXSPI_BITMASK(kFlexSpiMiscOffset_ParallelEnable);
                         break;
                     case kSerialNorConnection_SinglePortB:
                         config->memConfig.sflashA1Size = 0;

@@ -230,6 +230,7 @@
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1062DVL6B</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SD_ENABLED</state>
           <state>SDK_OS_FREE_RTOS</state>
@@ -273,7 +274,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state>Pa082,Pa050,Pe815,Pe111,Pe186,Pe068,Pe177</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -310,11 +311,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pe815,Pe111,Pe186,Pe068,Pe177</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -1341,6 +1342,7 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1062DVL6B</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SD_ENABLED</state>
           <state>SDK_OS_FREE_RTOS</state>
@@ -1384,7 +1386,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state>Pa082,Pa050,Pe815,Pe111,Pe186,Pe068,Pe177</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1421,11 +1423,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pe815,Pe111,Pe186,Pe068,Pe177</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -2427,7 +2429,7 @@
   <group>
     <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
   <group>
@@ -2530,6 +2532,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</name>
     </file>
   </group>
   <group>

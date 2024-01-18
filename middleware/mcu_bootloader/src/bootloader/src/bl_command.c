@@ -94,6 +94,7 @@ void handle_generate_key_blob(uint8_t *packet, uint32_t packetLength);
 status_t handle_key_blob_data(bool *hasMoreData);
 #endif
 void handle_lifecycle_update(uint8_t *packet, uint32_t packetLength);
+void handle_ele_message(uint8_t *packet, uint32_t packetLength);
 //@}
 
 //! @name Command responses
@@ -214,6 +215,11 @@ const command_handler_entry_t g_commandHandlerTable[] = {
 #else
     { 0 },
 #endif // BL_FEATURE_LIFECYCLE_UPDATE
+#if BL_FEATURE_EDGELOCK_MODULE
+    { handle_ele_message, NULL },              // KCommandTag_EleMessage = 0x19
+#else
+    { 0 },
+#endif // BL_FEATURE_EDGELOCK_MODULE
 #else  // BL_FEATURE_MIN_PROFILE
     { handle_flash_erase_all, NULL },                     // kCommandTag_FlashEraseAll = 0x01
     { handle_flash_erase_region, NULL },                  // kCommandTag_FlashEraseRegion = 0x02
@@ -267,6 +273,13 @@ const command_handler_entry_t g_commandHandlerTable[] = {
 #else
     { 0 },
 #endif // BL_FEATURE_LIFECYCLE_UPDATE
+#if BL_FEATURE_EDGELOCK_MODULE
+    { handle_ele_message, NULL },              // KCommandTag_EleMessage = 0x19
+#else
+    { 0 },
+#endif // BL_FEATURE_EDGELOCK_MODULE
+//! @}
+
 #endif // BL_FEATURE_MIN_PROFILE
 };
 
@@ -1819,6 +1832,23 @@ void handle_lifecycle_update(uint8_t *packet, uint32_t packetLength)
 }
 #endif // #if BL_FEATURE_LIFECYCLE_UPDATE
 
+#if BL_FEATURE_EDGELOCK_MODULE
+void handle_ele_message(uint8_t *packet, uint32_t packetLength)
+{
+    status_t status = kStatus_InvalidArgument;
+    ele_message_payload *command = (ele_message_payload *)packet;
+
+    if (command->eleSubCommand == 0x0 && command->cmdMsgAddr && command->cmdMsgCnt)
+    {
+        status = EDGELOCK_SendMessage(SxMU, (uint32_t *)command->cmdMsgAddr, command->cmdMsgCnt);
+        if (status == kStatus_Success && command->respMsgCnt > 0)
+        {
+            status = EDGELOCK_ReceiveMessage(SxMU, (uint32_t *)command->respMsgAddr, command->respMsgCnt);
+        }
+    }
+    send_generic_response(status, command->commandPacket.commandTag);
+}
+#endif // #if BL_FEATURE_EDGELOCK_MODULE
 //! @}
 
 ////////////////////////////////////////////////////////////////////////////////

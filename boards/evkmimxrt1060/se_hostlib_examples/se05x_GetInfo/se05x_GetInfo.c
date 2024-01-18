@@ -14,6 +14,7 @@
 #include <string.h>
 #include <nxEnsure.h>
 #include <sm_const.h>
+#include "ex_sss_ports.h"
 
 #include "ex_sss_auth.h"
 #include "global_platf.h"
@@ -34,6 +35,10 @@ static ex_sss_boot_ctx_t gex_sss_get_info_ctx;
 
 #define SEMS_LITE_GETDATA_UUID_TAG 0xFE
 
+/* ************************************************************************** */
+/* Include "main()" with the platform specific startup code for Plug & Trust  */
+/* MW examples which will call ex_sss_entry()                                 */
+/* ************************************************************************** */
 #include <ex_sss_main_inc.h>
 
 static sss_status_t JCOP4_GetDataIdentify(void *conn_ctx);
@@ -103,7 +108,7 @@ cleanup:
 static sss_status_t iot_applet_session_open(ex_sss_boot_ctx_t *pCtx)
 {
     sss_status_t status = kStatus_SSS_Fail;
-    const char *portName;
+    char *portName;
 
     ex_sss_session_close(pCtx);
 
@@ -123,6 +128,17 @@ static sss_status_t iot_applet_session_open(ex_sss_boot_ctx_t *pCtx)
 
     status = kStatus_SSS_Success;
 cleanup:
+#if defined(_MSC_VER)
+    if (portName) {
+        char *dummy_portName = NULL;
+        size_t dummy_sz      = 0;
+        _dupenv_s(&dummy_portName, &dummy_sz, EX_SSS_BOOT_SSS_PORT);
+        if (NULL != dummy_portName) {
+            free(dummy_portName);
+            free(portName);
+        }
+    }
+#endif // _MSC_VER
     return status;
 }
 

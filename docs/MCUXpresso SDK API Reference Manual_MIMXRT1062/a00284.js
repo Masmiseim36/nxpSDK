@@ -1,7 +1,9 @@
 var a00284 =
 [
-    [ "FSL_LPI2C_FREERTOS_DRIVER_VERSION", "a00284.html#gabe1b685d26560cdb8a3eccf81d013a3f", null ],
-    [ "LPI2C_RTOS_Init", "a00284.html#ga537a8859c9c83c8a8ccf6e0188cc8b5c", null ],
-    [ "LPI2C_RTOS_Deinit", "a00284.html#gacacb0612bfdcd7913be1cef8ad19fb9c", null ],
-    [ "LPI2C_RTOS_Transfer", "a00284.html#gab5359e4f864d7f21eebcab8d3229e963", null ]
+    [ "FSL_GPC_DRIVER_VERSION", "a00284.html#ga91a1b6b08dc09200c3b0ee314b362b74", null ],
+    [ "GPC_EnableIRQ", "a00284.html#ga7c73d81bfb34ebb7ca40a5ad2a63ad7e", null ],
+    [ "GPC_DisableIRQ", "a00284.html#gacfd07601d1a0e90e3b80fffe14830010", null ],
+    [ "GPC_GetIRQStatusFlag", "a00284.html#ga1118000efd3c822329c63a7155bbe12e", null ],
+    [ "GPC_RequestPdram0PowerDown", "a00284.html#ga8270fba73a065a4e14af1bc895e55969", null ],
+    [ "GPC_RequestMEGAPowerOn", "a00284.html#gaac50bee55eb34b329680e6fd0d2a9582", null ]
 ];

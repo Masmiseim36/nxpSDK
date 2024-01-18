@@ -280,7 +280,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pe167</state>
+          <state>Pe167,Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -317,11 +317,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -1377,7 +1377,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pe167</state>
+          <state>Pe167,Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1414,11 +1414,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -2223,12 +2223,6 @@
     </file>
   </group>
   <group>
-    <name>doc</name>
-    <file>
-      <name>$PROJ_DIR$/../doc/readme.txt</name>
-    </file>
-  </group>
-  <group>
     <name>board</name>
     <file>
       <name>$PROJ_DIR$/../pin_mux.c</name>
@@ -2292,6 +2286,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1042/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1042/utilities/debug_console_lite/fsl_assert.h</name>
     </file>
   </group>
   <group>
@@ -2439,6 +2436,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/mpu_armv7.h</name>
+    </file>
+  </group>
+  <group>
+    <name>doc</name>
+    <file>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
 </project>

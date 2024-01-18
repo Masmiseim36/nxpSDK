@@ -1,34 +1,41 @@
 var a00024 =
 [
-    [ "enc_config_t", "a00024.html#a00391", [
-      [ "enableReverseDirection", "a00024.html#a522c7ab99e1a8b897de8dd34868a0c75", null ],
-      [ "decoderWorkMode", "a00024.html#a5e87b6b545b87079f90cbecd93e7f809", null ],
-      [ "HOMETriggerMode", "a00024.html#a6ae2c5f9ba4a1dafbaac4b5b5eadd04d", null ],
-      [ "INDEXTriggerMode", "a00024.html#a5e53616ea784ca3a6cd05083cfab2caa", null ],
-      [ "enableTRIGGERClearPositionCounter", "a00024.html#af0b92cd8d3b24f2aaf5d564a2fca4fe6", null ],
-      [ "enableTRIGGERClearHoldPositionCounter", "a00024.html#a347cca3f04709a2372dcb0d1ff706420", null ],
-      [ "enableWatchdog", "a00024.html#a818e09227f3a5892bda5e1128f2a03b4", null ],
-      [ "watchdogTimeoutValue", "a00024.html#a4061699ed317acca6ad5a796cd8ff634", null ],
-      [ "filterCount", "a00024.html#a28e5850a83a55194a165d0cac8f4add1", null ],
-      [ "filterSamplePeriod", "a00024.html#a76b510d862901687d3afe0f9693232b7", null ],
-      [ "positionMatchMode", "a00024.html#aaf23078fa2f9d81476596f10fa6f34c2", null ],
-      [ "positionCompareValue", "a00024.html#a706b9258832c5da9279971b158cefe3b", null ],
-      [ "revolutionCountCondition", "a00024.html#a5c6214d0358540fb9ca7bd31d3961fc4", null ],
-      [ "enableModuloCountMode", "a00024.html#ab41faf266e79e9fbdfbca2c4a568f286", null ],
-      [ "positionModulusValue", "a00024.html#a9c4ca08aaa0a4680a62fae18c1f907a7", null ],
-      [ "positionInitialValue", "a00024.html#a42ff0a11bf950e3383e2c86df34c1380", null ]
+    [ "_enc_config", "a00024.html#a00360", [
+      [ "enableReverseDirection", "a00024.html#ad754ab4be68e450ac01f5c5def997762", null ],
+      [ "decoderWorkMode", "a00024.html#ac55e95a1ebbf9a703c63a05c723e040a", null ],
+      [ "HOMETriggerMode", "a00024.html#a4c57c0fef10c4148b7bbf0014af81e27", null ],
+      [ "INDEXTriggerMode", "a00024.html#a254d6094c2d9f4cb8febc3ef2498ea49", null ],
+      [ "enableTRIGGERClearPositionCounter", "a00024.html#a7ea8fda8e285c9d85d7594272cf026a3", null ],
+      [ "enableTRIGGERClearHoldPositionCounter", "a00024.html#a84c1b8172f384e77bbd71a026ad2087e", null ],
+      [ "enableWatchdog", "a00024.html#a17c4c8a51a6d44a81e0a61fd03525623", null ],
+      [ "watchdogTimeoutValue", "a00024.html#a8a7a86c52cc98695d57781e8323d1491", null ],
+      [ "filterCount", "a00024.html#a51959cb2969010b93e3c0e61a2e7d783", null ],
+      [ "filterSamplePeriod", "a00024.html#a255edb31b7f52fa56a899225183a161d", null ],
+      [ "positionMatchMode", "a00024.html#a19fd34ae83be2d5a24ecc939671bb002", null ],
+      [ "positionCompareValue", "a00024.html#aaec5b01b6e9661c6df0610708c21c44d", null ],
+      [ "revolutionCountCondition", "a00024.html#a7c2b18b1b738a004a1a42eab4318ed03", null ],
+      [ "enableModuloCountMode", "a00024.html#a8b795d9ea719e7cff3951689ab65a930", null ],
+      [ "positionModulusValue", "a00024.html#ad24588974b896443abc282fb81d9a910", null ],
+      [ "positionInitialValue", "a00024.html#adc59884c4cdd242858612d085604c84e", null ]
     ] ],
-    [ "enc_self_test_config_t", "a00024.html#a00392", [
-      [ "signalDirection", "a00024.html#a43c1f46f38185c53d70945706d0f7379", null ],
-      [ "signalCount", "a00024.html#a8aff93755f8b555b1665c5ecff59c4e2", null ],
-      [ "signalPeriod", "a00024.html#aa7425889c344d1b9804603666b7beedc", null ]
+    [ "_enc_self_test_config", "a00024.html#a00361", [
+      [ "signalDirection", "a00024.html#af93dbcfe3bdec619dc4c3137ab435ef0", null ],
+      [ "signalCount", "a00024.html#a88b049ae384312c2b4fb74c59924f7f5", null ],
+      [ "signalPeriod", "a00024.html#a232136f38b57ce15fdf30a430a3ebff3", null ]
     ] ],
+    [ "enc_home_trigger_mode_t", "a00024.html#ga88e8835d32fcf55bb143a1fe619bfd53", null ],
+    [ "enc_index_trigger_mode_t", "a00024.html#ga2c9746fc8a7bcad2cfaa2d3f3f035c90", null ],
+    [ "enc_decoder_work_mode_t", "a00024.html#gab0beff48cfdfaf49f5f3a6e9133e81a5", null ],
+    [ "enc_position_match_mode_t", "a00024.html#gaaee9062a7faa53f64b0f96009613bc2f", null ],
+    [ "enc_revolution_count_condition_t", "a00024.html#ga5f5c9d7aa77ae4e798079e7670f73801", null ],
+    [ "enc_self_test_direction_t", "a00024.html#gadac7b390ef77fd7af12c271abd2a6ebc", null ],
+    [ "enc_config_t", "a00024.html#gaef1fed8a3da13886d58499365e1b6047", null ],
+    [ "enc_self_test_config_t", "a00024.html#ga89f150375e09c8bc136d2498339fa0c3", null ],
     [ "_enc_interrupt_enable", "a00024.html#ga055521dd59bdb3746db74e6ae43f8509", [
       [ "kENC_HOMETransitionInterruptEnable", "a00024.html#gga055521dd59bdb3746db74e6ae43f8509a75ab3bda44fc6a0e49a958c49a8446f9", null ],
       [ "kENC_INDEXPulseInterruptEnable", "a00024.html#gga055521dd59bdb3746db74e6ae43f8509a2f4a6c1f0192740025e83543ff7bb4ff", null ],
       [ "kENC_WatchdogTimeoutInterruptEnable", "a00024.html#gga055521dd59bdb3746db74e6ae43f8509ac9f8e6941282b3208d6e9d800e38e4b4", null ],
       [ "kENC_PositionCompareInerruptEnable", "a00024.html#gga055521dd59bdb3746db74e6ae43f8509a2c8392a5dbb845809d1057342f5c096d", null ],
-      [ "kENC_SimultBothPhaseChangeInterruptEnable", "a00024.html#gga055521dd59bdb3746db74e6ae43f8509a6a2a12f6ba4b1b2546454defbce98432", null ],
       [ "kENC_PositionRollOverInterruptEnable", "a00024.html#gga055521dd59bdb3746db74e6ae43f8509a9db4d5821d6d96decf02a2cecd25bdf5", null ],
       [ "kENC_PositionRollUnderInterruptEnable", "a00024.html#gga055521dd59bdb3746db74e6ae43f8509aa0efb17e632b690b4453599bef9803ae", null ]
     ] ],
@@ -37,7 +44,6 @@ var a00024 =
       [ "kENC_INDEXPulseFlag", "a00024.html#gga19fd9d919dd4a1847677d7199c378bf6a55ba421b0dfb18097ac76ec21c8d0630", null ],
       [ "kENC_WatchdogTimeoutFlag", "a00024.html#gga19fd9d919dd4a1847677d7199c378bf6a8e7a89029ba7dde8e75ae843440f6585", null ],
       [ "kENC_PositionCompareFlag", "a00024.html#gga19fd9d919dd4a1847677d7199c378bf6ac9448fc907e5a1122271afd48e3eff45", null ],
-      [ "kENC_SimultBothPhaseChangeFlag", "a00024.html#gga19fd9d919dd4a1847677d7199c378bf6a71e6dc48bcd9c1e5b0e62ec1f356c315", null ],
       [ "kENC_PositionRollOverFlag", "a00024.html#gga19fd9d919dd4a1847677d7199c378bf6a73afb47bdd635d7a086167e9cbfa4604", null ],
       [ "kENC_PositionRollUnderFlag", "a00024.html#gga19fd9d919dd4a1847677d7199c378bf6a8c44bd8327bdf3ef396d32abdf2c7826", null ],
       [ "kENC_LastCountDirectionFlag", "a00024.html#gga19fd9d919dd4a1847677d7199c378bf6aeac7a2ef9ce248e4ef4d1a824d10edf8", null ]
@@ -52,31 +58,31 @@ var a00024 =
       [ "kENC_FilteredPHBStatusFlag", "a00024.html#ggabcad4dcf0536b020cfbea8cb4374626aa5406ade4d6ac443d8a0430dd4e2cb3b1", null ],
       [ "kENC_FilteredPHAStatusFlag", "a00024.html#ggabcad4dcf0536b020cfbea8cb4374626aab54a4269314ff279f7bdfc84c58af5ff", null ]
     ] ],
-    [ "enc_home_trigger_mode_t", "a00024.html#ga9b19f10c2303de256aab7b1d5c0057c3", [
-      [ "kENC_HOMETriggerDisabled", "a00024.html#gga9b19f10c2303de256aab7b1d5c0057c3a14f8fc3da25b327522b1bf6b9341a10c", null ],
-      [ "kENC_HOMETriggerOnRisingEdge", "a00024.html#gga9b19f10c2303de256aab7b1d5c0057c3a2640b2c847b9d69a9b2382cb7f7a1481", null ],
-      [ "kENC_HOMETriggerOnFallingEdge", "a00024.html#gga9b19f10c2303de256aab7b1d5c0057c3a79e8a6e80fc98d6d88a84c937ef7e378", null ]
+    [ "_enc_home_trigger_mode", "a00024.html#ga3f3efffe910c1611816a08ba17ce7c9e", [
+      [ "kENC_HOMETriggerDisabled", "a00024.html#gga3f3efffe910c1611816a08ba17ce7c9ea14f8fc3da25b327522b1bf6b9341a10c", null ],
+      [ "kENC_HOMETriggerOnRisingEdge", "a00024.html#gga3f3efffe910c1611816a08ba17ce7c9ea2640b2c847b9d69a9b2382cb7f7a1481", null ],
+      [ "kENC_HOMETriggerOnFallingEdge", "a00024.html#gga3f3efffe910c1611816a08ba17ce7c9ea79e8a6e80fc98d6d88a84c937ef7e378", null ]
     ] ],
-    [ "enc_index_trigger_mode_t", "a00024.html#ga986882142c037e6dd8c7845410f1e287", [
-      [ "kENC_INDEXTriggerDisabled", "a00024.html#gga986882142c037e6dd8c7845410f1e287ae8376e76cb334d80c7cfc1c7f77e13ea", null ],
-      [ "kENC_INDEXTriggerOnRisingEdge", "a00024.html#gga986882142c037e6dd8c7845410f1e287ab5095f768a55185cc1bfbc089903d7b3", null ],
-      [ "kENC_INDEXTriggerOnFallingEdge", "a00024.html#gga986882142c037e6dd8c7845410f1e287a1f0da068b8eb44cfbeafb6f88426163b", null ]
+    [ "_enc_index_trigger_mode", "a00024.html#ga29de01f066a7b20c96b51fdb392fe1b4", [
+      [ "kENC_INDEXTriggerDisabled", "a00024.html#gga29de01f066a7b20c96b51fdb392fe1b4ae8376e76cb334d80c7cfc1c7f77e13ea", null ],
+      [ "kENC_INDEXTriggerOnRisingEdge", "a00024.html#gga29de01f066a7b20c96b51fdb392fe1b4ab5095f768a55185cc1bfbc089903d7b3", null ],
+      [ "kENC_INDEXTriggerOnFallingEdge", "a00024.html#gga29de01f066a7b20c96b51fdb392fe1b4a1f0da068b8eb44cfbeafb6f88426163b", null ]
     ] ],
-    [ "enc_decoder_work_mode_t", "a00024.html#ga397e650f9e1a2fef6109896f18378b4c", [
-      [ "kENC_DecoderWorkAsNormalMode", "a00024.html#gga397e650f9e1a2fef6109896f18378b4caf661773e581845df10715016acc53092", null ],
-      [ "kENC_DecoderWorkAsSignalPhaseCountMode", "a00024.html#gga397e650f9e1a2fef6109896f18378b4ca052a9bce9a3071c02b28238615b607a2", null ]
+    [ "_enc_decoder_work_mode", "a00024.html#gab0ab18a69b9eb5c4489686d527be38d1", [
+      [ "kENC_DecoderWorkAsNormalMode", "a00024.html#ggab0ab18a69b9eb5c4489686d527be38d1af661773e581845df10715016acc53092", null ],
+      [ "kENC_DecoderWorkAsSignalPhaseCountMode", "a00024.html#ggab0ab18a69b9eb5c4489686d527be38d1a052a9bce9a3071c02b28238615b607a2", null ]
     ] ],
-    [ "enc_position_match_mode_t", "a00024.html#gaec8ec35691febedfb85e38fc4c311838", [
-      [ "kENC_POSMATCHOnPositionCounterEqualToComapreValue", "a00024.html#ggaec8ec35691febedfb85e38fc4c311838ac7207e66be9333b516ef1b5d4079a6b4", null ],
-      [ "kENC_POSMATCHOnReadingAnyPositionCounter", "a00024.html#ggaec8ec35691febedfb85e38fc4c311838ad546a2325a4a1b0d94ea19024cee663a", null ]
+    [ "_enc_position_match_mode", "a00024.html#gadf524ed65a40db2e53c463e9c47d06c2", [
+      [ "kENC_POSMATCHOnPositionCounterEqualToComapreValue", "a00024.html#ggadf524ed65a40db2e53c463e9c47d06c2ac7207e66be9333b516ef1b5d4079a6b4", null ],
+      [ "kENC_POSMATCHOnReadingAnyPositionCounter", "a00024.html#ggadf524ed65a40db2e53c463e9c47d06c2ad546a2325a4a1b0d94ea19024cee663a", null ]
     ] ],
-    [ "enc_revolution_count_condition_t", "a00024.html#ga645857d43e30752a5bee6d970a1201be", [
-      [ "kENC_RevolutionCountOnINDEXPulse", "a00024.html#gga645857d43e30752a5bee6d970a1201bea6704d1629d730f19652da91096eb5a27", null ],
-      [ "kENC_RevolutionCountOnRollOverModulus", "a00024.html#gga645857d43e30752a5bee6d970a1201bea2ff1ec8052b541a253c50c2a6069dea8", null ]
+    [ "_enc_revolution_count_condition", "a00024.html#gae23ed261bb1bdfd8641019354769e69d", [
+      [ "kENC_RevolutionCountOnINDEXPulse", "a00024.html#ggae23ed261bb1bdfd8641019354769e69da6704d1629d730f19652da91096eb5a27", null ],
+      [ "kENC_RevolutionCountOnRollOverModulus", "a00024.html#ggae23ed261bb1bdfd8641019354769e69da2ff1ec8052b541a253c50c2a6069dea8", null ]
     ] ],
-    [ "enc_self_test_direction_t", "a00024.html#ga0771658dcc0d7fb694a3f6c3df1f7815", [
-      [ "kENC_SelfTestDirectionPositive", "a00024.html#gga0771658dcc0d7fb694a3f6c3df1f7815a15fa41a761cf10c06dc032ad51b9d72c", null ],
-      [ "kENC_SelfTestDirectionNegative", "a00024.html#gga0771658dcc0d7fb694a3f6c3df1f7815a1536128883baf0c538ecf287c5b65a4a", null ]
+    [ "_enc_self_test_direction", "a00024.html#ga638c95c62f924d71ba7e541d916b6df7", [
+      [ "kENC_SelfTestDirectionPositive", "a00024.html#gga638c95c62f924d71ba7e541d916b6df7a15fa41a761cf10c06dc032ad51b9d72c", null ],
+      [ "kENC_SelfTestDirectionNegative", "a00024.html#gga638c95c62f924d71ba7e541d916b6df7a1536128883baf0c538ecf287c5b65a4a", null ]
     ] ],
     [ "ENC_Init", "a00024.html#ga3137a28cb8af9082c19244923faa6c7a", null ],
     [ "ENC_Deinit", "a00024.html#gae5541a81fcbffecd6184d3c88eb7ae4b", null ],

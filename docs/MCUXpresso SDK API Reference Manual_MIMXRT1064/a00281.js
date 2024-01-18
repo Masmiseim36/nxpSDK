@@ -17,5 +17,9 @@ var a00281 =
       [ "kStatus_LPI2C_NoTransferInProgress", "a00281.html#ggaf8654c714018c6241d9ebd01f3fb5a26aa301f3640e63a3d3d951429b9b7ee866", null ],
       [ "kStatus_LPI2C_DmaRequestFail", "a00281.html#ggaf8654c714018c6241d9ebd01f3fb5a26a14d70db977f150497fd4a9d232dc2cd8", null ],
       [ "kStatus_LPI2C_Timeout", "a00281.html#ggaf8654c714018c6241d9ebd01f3fb5a26a002394fe77437f41ea82506d69646d66", null ]
-    ] ]
+    ] ],
+    [ "LPI2C_GetInstance", "a00281.html#gac812c014c01cdc505af7a4df761e8b4c", null ],
+    [ "kLpi2cIrqs", "a00281.html#ga88b6c302a3fb2094ba8a3085cd0c2b16", null ],
+    [ "s_lpi2cMasterIsr", "a00281.html#ga604dde7d01cad3e127825095c47eb9fe", null ],
+    [ "s_lpi2cMasterHandle", "a00281.html#ga42462dd67e8affc0459e72a15714a164", null ]
 ];

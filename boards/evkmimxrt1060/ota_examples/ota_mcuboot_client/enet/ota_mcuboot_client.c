@@ -72,37 +72,36 @@ static shell_status_t shellCmd_wifi(shell_handle_t shellHandle, int32_t argc, ch
  ******************************************************************************/
 phy_ksz8081_resource_t g_phy_resource;
 
-SHELL_COMMAND_DEFINE(ota,
-                     "\n\"ota <imageNumber> <filePath> <host> <port>\": Starts download of OTA image\n",
-                     shellCmd_ota,
-                     SHELL_IGNORE_PARAMETER_COUNT);
+static SHELL_COMMAND_DEFINE(ota,
+                            "\n\"ota <imageNumber> <filePath> <host> <port>\": Starts download of OTA image\n",
+                            shellCmd_ota,
+                            SHELL_IGNORE_PARAMETER_COUNT);
 
-SHELL_COMMAND_DEFINE(image,
-                     "\n\"image [info]\"              : Print image information"
-                     "\n\"image test <imageNumber>\"  : Mark secondary image of given number as ready for test"
-                     "\n\"image accept <imageNumber>\": Mark primary image of given number as accepted"
-                     "\n",
-                     shellCmd_image,
-                     SHELL_IGNORE_PARAMETER_COUNT);
+static SHELL_COMMAND_DEFINE(image,
+                            "\n\"image [info]\"              : Print image information"
+                            "\n\"image test <imageNumber>\"  : Mark secondary image of given number as ready for test"
+                            "\n\"image accept <imageNumber>\": Mark primary image of given number as accepted"
+                            "\n",
+                            shellCmd_image,
+                            SHELL_IGNORE_PARAMETER_COUNT);
 
-SHELL_COMMAND_DEFINE(reboot, "\n\"reboot\": Triggers software reset\n", shellCmd_reboot, 0);
+static SHELL_COMMAND_DEFINE(reboot, "\n\"reboot\": Triggers software reset\n", shellCmd_reboot, 0);
 
 #ifdef WIFI_MODE
-SHELL_COMMAND_DEFINE(wifi,
-                     "\n\"wifi conf [ssid pass]\" : Get/Set WiFi SSID and passphrase"
-                     "\n\"wifi join\"             : Connect to network"
-                     "\n\"wifi leave\"            : Disconnect from network"
-                     "\n",
-                     shellCmd_wifi,
-                     SHELL_IGNORE_PARAMETER_COUNT);
+static SHELL_COMMAND_DEFINE(wifi,
+                            "\n\"wifi conf [ssid pass]\" : Get/Set WiFi SSID and passphrase"
+                            "\n\"wifi join\"             : Connect to network"
+                            "\n\"wifi leave\"            : Disconnect from network"
+                            "\n",
+                            shellCmd_wifi,
+                            SHELL_IGNORE_PARAMETER_COUNT);
 
-char wifi_ssid[32 + 1] = WIFI_SSID;
-char wifi_pass[64 + 1] = WIFI_PASSWORD;
+static char wifi_ssid[32 + 1] = WIFI_SSID;
+static char wifi_pass[64 + 1] = WIFI_PASSWORD;
 #endif
 
 SDK_ALIGN(static uint8_t s_shellHandleBuffer[SHELL_HANDLE_SIZE], 4);
 static shell_handle_t s_shellHandle;
-extern serial_handle_t g_serialHandle;
 
 /*******************************************************************************
  * Code
@@ -150,25 +149,31 @@ static void print_image_info(void)
 
         for (int slot = 0; slot < 2; slot++)
         {
-            int faid                = image * 2 + slot;
-            struct flash_area *fa   = &boot_flash_map[faid];
-            uint32_t slotaddr       = fa->fa_off + BOOT_FLASH_BASE;
-            uint32_t slotsize       = fa->fa_size;
-            struct image_header *ih = (void *)slotaddr;
+            int faid              = image * 2 + slot;
+            struct flash_area *fa = &boot_flash_map[faid];
+            uint32_t slotaddr     = fa->fa_off + BOOT_FLASH_BASE;
+            uint32_t slotsize     = fa->fa_size;
+            static struct image_header ih;
 
-            int img_present = ih->ih_magic == IMAGE_MAGIC;
+            status = mflash_drv_read(fa->fa_off, (uint32_t *)&ih, sizeof(ih));
+            if (status != kStatus_Success)
+            {
+                PRINTF("Failed to read image header\n");
+                return;
+            }
+            int slotused = ih.ih_magic == IMAGE_MAGIC;
 
             PRINTF("  Slot %d; slotAddr %x; slotSize %u\n", faid, slotaddr, slotsize);
 
-            if (img_present)
+            if (slotused)
             {
-                struct image_version *iv = &ih->ih_ver;
+                struct image_version *iv = &ih.ih_ver;
                 char versionstr[40];
 
                 snprintf(versionstr, sizeof(versionstr), "%u.%u.%u.%lu", iv->iv_major, iv->iv_minor, iv->iv_revision,
                          iv->iv_build_num);
 
-                PRINTF("    <IMAGE %s: size %u; version %s>\n", fa->fa_name, ih->ih_img_size, versionstr);
+                PRINTF("    <IMAGE %s: size %u; version %s>\n", fa->fa_name, ih.ih_img_size, versionstr);
             }
             else
             {
@@ -332,14 +337,12 @@ static shell_status_t shellCmd_ota(shell_handle_t shellHandle, int32_t argc, cha
         return kStatus_SHELL_Error;
     }
 
-
     if (bl_get_update_partition_info(image, &storage) != kStatus_Success)
     {
         PRINTF("FAILED to determine address for download\n");
         return kStatus_SHELL_Error;
     }
 
-    
     PRINTF(
         "Started OTA with:\n"
         "    image = %d\n"

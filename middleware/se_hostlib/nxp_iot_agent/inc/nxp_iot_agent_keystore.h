@@ -1,5 +1,5 @@
 /*
- * Copyright 2018, 2019, 2020, 2021 NXP
+ * Copyright 2018-2021 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -12,7 +12,9 @@
 
 #include <nxp_iot_agent_common.h>
 #include <nxp_iot_agent_endpoint.h>
+#if NXP_IOT_AGENT_HAVE_SSS
 #include <fsl_sss_api.h>
+#endif
 
 /*!@defgroup edgelock2go_agent_keystore EdgeLock 2GO agent keystore functionality.
  * @ingroup edgelock2go_agent
@@ -62,7 +64,9 @@ typedef struct iot_agent_keystore_t
 	iot_agent_keystore_interface_t iface;
 	uint32_t type;
 	uint32_t identifier;
+#if NXP_IOT_AGENT_HAVE_SSS
 	sss_key_store_t* sss_context;
+#endif
 	void* context;
 } iot_agent_keystore_t;
 

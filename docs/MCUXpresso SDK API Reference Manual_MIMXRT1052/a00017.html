@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -135,12 +135,12 @@ Typical use case</h1>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00366"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a00366">csi_config_t</a></td></tr>
-<tr class="memdesc:a00366"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configuration to initialize the CSI module.  <a href="a00017.html#a00366">More...</a><br/></td></tr>
-<tr class="separator:a00366"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00312"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a00312">csi_handle_t</a></td></tr>
-<tr class="memdesc:a00312"><td class="mdescLeft">&#160;</td><td class="mdescRight">CSI handle structure.  <a href="a00017.html#a00312">More...</a><br/></td></tr>
-<tr class="separator:a00312"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00335"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a00335">_csi_config</a></td></tr>
+<tr class="memdesc:a00335"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configuration to initialize the CSI module.  <a href="a00017.html#a00335">More...</a><br/></td></tr>
+<tr class="separator:a00335"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00336"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a00336">_csi_handle</a></td></tr>
+<tr class="memdesc:a00336"><td class="mdescLeft">&#160;</td><td class="mdescRight">CSI handle structure.  <a href="a00017.html#a00336">More...</a><br/></td></tr>
+<tr class="separator:a00336"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
@@ -153,7 +153,20 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga68a7e9c86a91b7ffb6547cf762ef6f3f"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga68a7e9c86a91b7ffb6547cf762ef6f3f">csi_transfer_callback_t</a> )(CSI_Type *base, csi_handle_t *handle, <a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
+<tr class="memitem:ga38c28eea487217a99433bc441abcd017"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00017.html#ga612584939135a10bf4b198e805785762">_csi_work_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga38c28eea487217a99433bc441abcd017">csi_work_mode_t</a></td></tr>
+<tr class="memdesc:ga38c28eea487217a99433bc441abcd017"><td class="mdescLeft">&#160;</td><td class="mdescRight">CSI work mode.  <a href="#ga38c28eea487217a99433bc441abcd017">More...</a><br/></td></tr>
+<tr class="separator:ga38c28eea487217a99433bc441abcd017"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad0d5e8a230f4021a71ef3792ee99f8d7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad0d5e8a230f4021a71ef3792ee99f8d7"></a>
+typedef enum <a class="el" href="a00017.html#ga230259b1b2d94e1c0049171840fbb049">_csi_data_bus</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gad0d5e8a230f4021a71ef3792ee99f8d7">csi_data_bus_t</a></td></tr>
+<tr class="memdesc:gad0d5e8a230f4021a71ef3792ee99f8d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">CSI data bus witdh. <br/></td></tr>
+<tr class="separator:gad0d5e8a230f4021a71ef3792ee99f8d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7d2e9074e11fec0878ae4199b708eb31"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00017.html#a00335">_csi_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga7d2e9074e11fec0878ae4199b708eb31">csi_config_t</a></td></tr>
+<tr class="memdesc:ga7d2e9074e11fec0878ae4199b708eb31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configuration to initialize the CSI module.  <a href="#ga7d2e9074e11fec0878ae4199b708eb31">More...</a><br/></td></tr>
+<tr class="separator:ga7d2e9074e11fec0878ae4199b708eb31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3ed868a78c932aa1904d48c0d65cf650"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00017.html#gac3edbdbf7abc89ac49f0a44af06f6f24">_csi_fifo</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga3ed868a78c932aa1904d48c0d65cf650">csi_fifo_t</a></td></tr>
+<tr class="memdesc:ga3ed868a78c932aa1904d48c0d65cf650"><td class="mdescLeft">&#160;</td><td class="mdescRight">The CSI FIFO, used for FIFO operation.  <a href="#ga3ed868a78c932aa1904d48c0d65cf650">More...</a><br/></td></tr>
+<tr class="separator:ga3ed868a78c932aa1904d48c0d65cf650"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga68a7e9c86a91b7ffb6547cf762ef6f3f"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga68a7e9c86a91b7ffb6547cf762ef6f3f">csi_transfer_callback_t</a> )(CSI_Type *base, <a class="el" href="a00017.html#a00336">csi_handle_t</a> *handle, <a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
 <tr class="memdesc:ga68a7e9c86a91b7ffb6547cf762ef6f3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">CSI transfer callback function.  <a href="#ga68a7e9c86a91b7ffb6547cf762ef6f3f">More...</a><br/></td></tr>
 <tr class="separator:ga68a7e9c86a91b7ffb6547cf762ef6f3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -171,26 +184,26 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:gab04a0655cd1e3bcac5e8f48c18df1a57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Error codes for the CSI driver.  <a href="a00017.html#gab04a0655cd1e3bcac5e8f48c18df1a57">More...</a><br/></td></tr>
 <tr class="separator:gab04a0655cd1e3bcac5e8f48c18df1a57"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5539d9ae21ae84983a8ed9418c83cc5f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga5539d9ae21ae84983a8ed9418c83cc5f">csi_work_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00017.html#gga5539d9ae21ae84983a8ed9418c83cc5fab707b88b2c5b3ca70afe6b78f2988571">kCSI_GatedClockMode</a> = CSI_CR1_GCLK_MODE(1U), 
+<tr class="memitem:ga612584939135a10bf4b198e805785762"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga612584939135a10bf4b198e805785762">_csi_work_mode</a> { <br/>
+&#160;&#160;<a class="el" href="a00017.html#gga612584939135a10bf4b198e805785762ab707b88b2c5b3ca70afe6b78f2988571">kCSI_GatedClockMode</a> = CSI_CR1_GCLK_MODE(1U), 
 <br/>
-&#160;&#160;<a class="el" href="a00017.html#gga5539d9ae21ae84983a8ed9418c83cc5faefff73d6d0ed48e20bb12df629036633">kCSI_NonGatedClockMode</a> = 0U, 
+&#160;&#160;<a class="el" href="a00017.html#gga612584939135a10bf4b198e805785762aefff73d6d0ed48e20bb12df629036633">kCSI_NonGatedClockMode</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00017.html#gga5539d9ae21ae84983a8ed9418c83cc5fabab5a5dfbcc1c77bc66513760fdb0ddf">kCSI_CCIR656ProgressiveMode</a> = CSI_CR1_CCIR_EN(1U)
-<br/>
- }</td></tr>
-<tr class="memdesc:ga5539d9ae21ae84983a8ed9418c83cc5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">CSI work mode.  <a href="a00017.html#ga5539d9ae21ae84983a8ed9418c83cc5f">More...</a><br/></td></tr>
-<tr class="separator:ga5539d9ae21ae84983a8ed9418c83cc5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab69baf9a3cfb4a7be68e3ba250716df5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gab69baf9a3cfb4a7be68e3ba250716df5">csi_data_bus_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00017.html#ggab69baf9a3cfb4a7be68e3ba250716df5ae6e9f2234f6b659241d9d504457e04dd">kCSI_DataBus8Bit</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00017.html#ggab69baf9a3cfb4a7be68e3ba250716df5ab41330fa7ebc27664112a4b592b53626">kCSI_DataBus16Bit</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00017.html#ggab69baf9a3cfb4a7be68e3ba250716df5ad26851c8a6a7be5e501625034e0f6a99">kCSI_DataBus24Bit</a>
+&#160;&#160;<a class="el" href="a00017.html#gga612584939135a10bf4b198e805785762abab5a5dfbcc1c77bc66513760fdb0ddf">kCSI_CCIR656ProgressiveMode</a> = CSI_CR1_CCIR_EN(1U)
 <br/>
  }</td></tr>
-<tr class="memdesc:gab69baf9a3cfb4a7be68e3ba250716df5"><td class="mdescLeft">&#160;</td><td class="mdescRight">CSI data bus witdh.  <a href="a00017.html#gab69baf9a3cfb4a7be68e3ba250716df5">More...</a><br/></td></tr>
-<tr class="separator:gab69baf9a3cfb4a7be68e3ba250716df5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga612584939135a10bf4b198e805785762"><td class="mdescLeft">&#160;</td><td class="mdescRight">CSI work mode.  <a href="a00017.html#ga612584939135a10bf4b198e805785762">More...</a><br/></td></tr>
+<tr class="separator:ga612584939135a10bf4b198e805785762"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga230259b1b2d94e1c0049171840fbb049"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga230259b1b2d94e1c0049171840fbb049">_csi_data_bus</a> { <br/>
+&#160;&#160;<a class="el" href="a00017.html#gga230259b1b2d94e1c0049171840fbb049ae6e9f2234f6b659241d9d504457e04dd">kCSI_DataBus8Bit</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#gga230259b1b2d94e1c0049171840fbb049ab41330fa7ebc27664112a4b592b53626">kCSI_DataBus16Bit</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00017.html#gga230259b1b2d94e1c0049171840fbb049ad26851c8a6a7be5e501625034e0f6a99">kCSI_DataBus24Bit</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga230259b1b2d94e1c0049171840fbb049"><td class="mdescLeft">&#160;</td><td class="mdescRight">CSI data bus witdh.  <a href="a00017.html#ga230259b1b2d94e1c0049171840fbb049">More...</a><br/></td></tr>
+<tr class="separator:ga230259b1b2d94e1c0049171840fbb049"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafda41057e6d13039ca0d139b89abde64"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gafda41057e6d13039ca0d139b89abde64">_csi_polarity_flags</a> { <br/>
 &#160;&#160;<a class="el" href="a00017.html#ggafda41057e6d13039ca0d139b89abde64aa1f34086d7ab2823fc0036e30e0b5889">kCSI_HsyncActiveLow</a> = 0U, 
 <br/>
@@ -207,16 +220,16 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:gafda41057e6d13039ca0d139b89abde64"><td class="mdescLeft">&#160;</td><td class="mdescRight">CSI signal polarity.  <a href="a00017.html#gafda41057e6d13039ca0d139b89abde64">More...</a><br/></td></tr>
 <tr class="separator:gafda41057e6d13039ca0d139b89abde64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf354282828a94ddb23079e6e98399520"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gaf354282828a94ddb23079e6e98399520">csi_fifo_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00017.html#ggaf354282828a94ddb23079e6e98399520a2665957976c094c559d20661126fc914">kCSI_RxFifo</a> = (1U &lt;&lt; 0U), 
+<tr class="memitem:gac3edbdbf7abc89ac49f0a44af06f6f24"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gac3edbdbf7abc89ac49f0a44af06f6f24">_csi_fifo</a> { <br/>
+&#160;&#160;<a class="el" href="a00017.html#ggac3edbdbf7abc89ac49f0a44af06f6f24a2665957976c094c559d20661126fc914">kCSI_RxFifo</a> = (1U &lt;&lt; 0U), 
 <br/>
-&#160;&#160;<a class="el" href="a00017.html#ggaf354282828a94ddb23079e6e98399520a36df4b7466c177205c81d8fd4fe8dfa4">kCSI_StatFifo</a> = (1U &lt;&lt; 1U), 
+&#160;&#160;<a class="el" href="a00017.html#ggac3edbdbf7abc89ac49f0a44af06f6f24a36df4b7466c177205c81d8fd4fe8dfa4">kCSI_StatFifo</a> = (1U &lt;&lt; 1U), 
 <br/>
-&#160;&#160;<a class="el" href="a00017.html#ggaf354282828a94ddb23079e6e98399520a960822cab30b37b78e71b03754b1adfc">kCSI_AllFifo</a> = 0x01 | 0x02
+&#160;&#160;<a class="el" href="a00017.html#ggac3edbdbf7abc89ac49f0a44af06f6f24a960822cab30b37b78e71b03754b1adfc">kCSI_AllFifo</a> = 0x01 | 0x02
 <br/>
  }</td></tr>
-<tr class="memdesc:gaf354282828a94ddb23079e6e98399520"><td class="mdescLeft">&#160;</td><td class="mdescRight">The CSI FIFO, used for FIFO operation.  <a href="a00017.html#gaf354282828a94ddb23079e6e98399520">More...</a><br/></td></tr>
-<tr class="separator:gaf354282828a94ddb23079e6e98399520"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gac3edbdbf7abc89ac49f0a44af06f6f24"><td class="mdescLeft">&#160;</td><td class="mdescRight">The CSI FIFO, used for FIFO operation.  <a href="a00017.html#gac3edbdbf7abc89ac49f0a44af06f6f24">More...</a><br/></td></tr>
+<tr class="separator:gac3edbdbf7abc89ac49f0a44af06f6f24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga445b9c8db2ffe230018ced411b88cc3e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga445b9c8db2ffe230018ced411b88cc3e">_csi_interrupt_enable</a> { <br/>
 &#160;&#160;<a class="el" href="a00017.html#gga445b9c8db2ffe230018ced411b88cc3ea7346f16c89a990476f2551ceb7b40065">kCSI_EndOfFrameInterruptEnable</a> = CSI_CR1_EOF_INT_EN_MASK, 
 <br/>
@@ -295,12 +308,12 @@ Enumerations</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
 <tr class="memitem:ga763b9b92933249b8711f9a61b98efe58"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga763b9b92933249b8711f9a61b98efe58"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>FSL_CSI_DRIVER_VERSION</b>&#160;&#160;&#160;(<a class="el" href="a00270.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 5))</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>FSL_CSI_DRIVER_VERSION</b>&#160;&#160;&#160;(<a class="el" href="a00272.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 5))</td></tr>
 <tr class="separator:ga763b9b92933249b8711f9a61b98efe58"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Initialization and deinitialization</h2></td></tr>
-<tr class="memitem:ga6ab1581b894e0addd36e259454d894fb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga6ab1581b894e0addd36e259454d894fb">CSI_Init</a> (CSI_Type *base, const <a class="el" href="a00017.html#a00366">csi_config_t</a> *config)</td></tr>
+<tr class="memitem:ga6ab1581b894e0addd36e259454d894fb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga6ab1581b894e0addd36e259454d894fb">CSI_Init</a> (CSI_Type *base, const <a class="el" href="a00017.html#ga7d2e9074e11fec0878ae4199b708eb31">csi_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga6ab1581b894e0addd36e259454d894fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the CSI.  <a href="#ga6ab1581b894e0addd36e259454d894fb">More...</a><br/></td></tr>
 <tr class="separator:ga6ab1581b894e0addd36e259454d894fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga29130aa6333127427e9945203a941c31"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga29130aa6333127427e9945203a941c31">CSI_Deinit</a> (CSI_Type *base)</td></tr>
@@ -309,19 +322,19 @@ Initialization and deinitialization</h2></td></tr>
 <tr class="memitem:gaaf0c3b036356a13b113c190762035317"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gaaf0c3b036356a13b113c190762035317">CSI_Reset</a> (CSI_Type *base)</td></tr>
 <tr class="memdesc:gaaf0c3b036356a13b113c190762035317"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the CSI.  <a href="#gaaf0c3b036356a13b113c190762035317">More...</a><br/></td></tr>
 <tr class="separator:gaaf0c3b036356a13b113c190762035317"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga44bd4343d5866367abc152651f3d8a03"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga44bd4343d5866367abc152651f3d8a03">CSI_GetDefaultConfig</a> (<a class="el" href="a00017.html#a00366">csi_config_t</a> *config)</td></tr>
+<tr class="memitem:ga44bd4343d5866367abc152651f3d8a03"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga44bd4343d5866367abc152651f3d8a03">CSI_GetDefaultConfig</a> (<a class="el" href="a00017.html#ga7d2e9074e11fec0878ae4199b708eb31">csi_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga44bd4343d5866367abc152651f3d8a03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the default configuration for to initialize the CSI.  <a href="#ga44bd4343d5866367abc152651f3d8a03">More...</a><br/></td></tr>
 <tr class="separator:ga44bd4343d5866367abc152651f3d8a03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Module operation</h2></td></tr>
-<tr class="memitem:gaa9a972883f2e04aefb94bac426fa9c72"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gaa9a972883f2e04aefb94bac426fa9c72">CSI_ClearFifo</a> (CSI_Type *base, <a class="el" href="a00017.html#gaf354282828a94ddb23079e6e98399520">csi_fifo_t</a> fifo)</td></tr>
+<tr class="memitem:gaa9a972883f2e04aefb94bac426fa9c72"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gaa9a972883f2e04aefb94bac426fa9c72">CSI_ClearFifo</a> (CSI_Type *base, <a class="el" href="a00017.html#ga3ed868a78c932aa1904d48c0d65cf650">csi_fifo_t</a> fifo)</td></tr>
 <tr class="memdesc:gaa9a972883f2e04aefb94bac426fa9c72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the CSI FIFO.  <a href="#gaa9a972883f2e04aefb94bac426fa9c72">More...</a><br/></td></tr>
 <tr class="separator:gaa9a972883f2e04aefb94bac426fa9c72"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabd61e583724350ad66feacf6cb55e86c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gabd61e583724350ad66feacf6cb55e86c">CSI_ReflashFifoDma</a> (CSI_Type *base, <a class="el" href="a00017.html#gaf354282828a94ddb23079e6e98399520">csi_fifo_t</a> fifo)</td></tr>
+<tr class="memitem:gabd61e583724350ad66feacf6cb55e86c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gabd61e583724350ad66feacf6cb55e86c">CSI_ReflashFifoDma</a> (CSI_Type *base, <a class="el" href="a00017.html#ga3ed868a78c932aa1904d48c0d65cf650">csi_fifo_t</a> fifo)</td></tr>
 <tr class="memdesc:gabd61e583724350ad66feacf6cb55e86c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reflash the CSI FIFO DMA.  <a href="#gabd61e583724350ad66feacf6cb55e86c">More...</a><br/></td></tr>
 <tr class="separator:gabd61e583724350ad66feacf6cb55e86c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga266530ad9e8aa0e0e4977317b5cd9899"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga266530ad9e8aa0e0e4977317b5cd9899">CSI_EnableFifoDmaRequest</a> (CSI_Type *base, <a class="el" href="a00017.html#gaf354282828a94ddb23079e6e98399520">csi_fifo_t</a> fifo, bool enable)</td></tr>
+<tr class="memitem:ga266530ad9e8aa0e0e4977317b5cd9899"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga266530ad9e8aa0e0e4977317b5cd9899">CSI_EnableFifoDmaRequest</a> (CSI_Type *base, <a class="el" href="a00017.html#ga3ed868a78c932aa1904d48c0d65cf650">csi_fifo_t</a> fifo, bool enable)</td></tr>
 <tr class="memdesc:ga266530ad9e8aa0e0e4977317b5cd9899"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable the CSI FIFO DMA request.  <a href="#ga266530ad9e8aa0e0e4977317b5cd9899">More...</a><br/></td></tr>
 <tr class="separator:ga266530ad9e8aa0e0e4977317b5cd9899"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gace757ddd954a29a1a11c0bdc119b17ad"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gace757ddd954a29a1a11c0bdc119b17ad">CSI_Start</a> (CSI_Type *base)</td></tr>
@@ -354,105 +367,105 @@ Status</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Transactional</h2></td></tr>
-<tr class="memitem:gaff15e4c1cd458f686e4f296ce3d417d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gaff15e4c1cd458f686e4f296ce3d417d5">CSI_TransferCreateHandle</a> (CSI_Type *base, csi_handle_t *handle, <a class="el" href="a00017.html#ga68a7e9c86a91b7ffb6547cf762ef6f3f">csi_transfer_callback_t</a> callback, void *userData)</td></tr>
+<tr class="memitem:gaff15e4c1cd458f686e4f296ce3d417d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gaff15e4c1cd458f686e4f296ce3d417d5">CSI_TransferCreateHandle</a> (CSI_Type *base, <a class="el" href="a00017.html#a00336">csi_handle_t</a> *handle, <a class="el" href="a00017.html#ga68a7e9c86a91b7ffb6547cf762ef6f3f">csi_transfer_callback_t</a> callback, void *userData)</td></tr>
 <tr class="memdesc:gaff15e4c1cd458f686e4f296ce3d417d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the CSI handle.  <a href="#gaff15e4c1cd458f686e4f296ce3d417d5">More...</a><br/></td></tr>
 <tr class="separator:gaff15e4c1cd458f686e4f296ce3d417d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga65a17c86c64297a09857e435588a65d6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga65a17c86c64297a09857e435588a65d6">CSI_TransferStart</a> (CSI_Type *base, csi_handle_t *handle)</td></tr>
+<tr class="memitem:ga65a17c86c64297a09857e435588a65d6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga65a17c86c64297a09857e435588a65d6">CSI_TransferStart</a> (CSI_Type *base, <a class="el" href="a00017.html#a00336">csi_handle_t</a> *handle)</td></tr>
 <tr class="memdesc:ga65a17c86c64297a09857e435588a65d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start the transfer using transactional functions.  <a href="#ga65a17c86c64297a09857e435588a65d6">More...</a><br/></td></tr>
 <tr class="separator:ga65a17c86c64297a09857e435588a65d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac20498234465760225985287ff862751"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gac20498234465760225985287ff862751">CSI_TransferStop</a> (CSI_Type *base, csi_handle_t *handle)</td></tr>
+<tr class="memitem:gac20498234465760225985287ff862751"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gac20498234465760225985287ff862751">CSI_TransferStop</a> (CSI_Type *base, <a class="el" href="a00017.html#a00336">csi_handle_t</a> *handle)</td></tr>
 <tr class="memdesc:gac20498234465760225985287ff862751"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop the transfer using transactional functions.  <a href="#gac20498234465760225985287ff862751">More...</a><br/></td></tr>
 <tr class="separator:gac20498234465760225985287ff862751"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga807a6677a22856cf8ad1e37253b14d44"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga807a6677a22856cf8ad1e37253b14d44">CSI_TransferSubmitEmptyBuffer</a> (CSI_Type *base, csi_handle_t *handle, uint32_t frameBuffer)</td></tr>
+<tr class="memitem:ga807a6677a22856cf8ad1e37253b14d44"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga807a6677a22856cf8ad1e37253b14d44">CSI_TransferSubmitEmptyBuffer</a> (CSI_Type *base, <a class="el" href="a00017.html#a00336">csi_handle_t</a> *handle, uint32_t frameBuffer)</td></tr>
 <tr class="memdesc:ga807a6677a22856cf8ad1e37253b14d44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Submit empty frame buffer to queue.  <a href="#ga807a6677a22856cf8ad1e37253b14d44">More...</a><br/></td></tr>
 <tr class="separator:ga807a6677a22856cf8ad1e37253b14d44"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga36f7bf646f55c098fb12d6fa387d6424"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga36f7bf646f55c098fb12d6fa387d6424">CSI_TransferGetFullBuffer</a> (CSI_Type *base, csi_handle_t *handle, uint32_t *frameBuffer)</td></tr>
+<tr class="memitem:ga36f7bf646f55c098fb12d6fa387d6424"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ga36f7bf646f55c098fb12d6fa387d6424">CSI_TransferGetFullBuffer</a> (CSI_Type *base, <a class="el" href="a00017.html#a00336">csi_handle_t</a> *handle, uint32_t *frameBuffer)</td></tr>
 <tr class="memdesc:ga36f7bf646f55c098fb12d6fa387d6424"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get one full frame buffer from queue.  <a href="#ga36f7bf646f55c098fb12d6fa387d6424">More...</a><br/></td></tr>
 <tr class="separator:ga36f7bf646f55c098fb12d6fa387d6424"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa8118210b401dacd2257dbb75c6a6310"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gaa8118210b401dacd2257dbb75c6a6310">CSI_TransferHandleIRQ</a> (CSI_Type *base, csi_handle_t *handle)</td></tr>
+<tr class="memitem:gaa8118210b401dacd2257dbb75c6a6310"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#gaa8118210b401dacd2257dbb75c6a6310">CSI_TransferHandleIRQ</a> (CSI_Type *base, <a class="el" href="a00017.html#a00336">csi_handle_t</a> *handle)</td></tr>
 <tr class="memdesc:gaa8118210b401dacd2257dbb75c6a6310"><td class="mdescLeft">&#160;</td><td class="mdescRight">CSI IRQ handle function.  <a href="#gaa8118210b401dacd2257dbb75c6a6310">More...</a><br/></td></tr>
 <tr class="separator:gaa8118210b401dacd2257dbb75c6a6310"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00366" id="a00366"></a>
+<a name="a00335" id="a00335"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct csi_config_t</td>
+          <td class="memname">struct _csi_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:ac5d64ed31de712862131d8ba0c0acada"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ac5d64ed31de712862131d8ba0c0acada">width</a></td></tr>
-<tr class="memdesc:ac5d64ed31de712862131d8ba0c0acada"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pixels of the input frame.  <a href="#ac5d64ed31de712862131d8ba0c0acada">More...</a><br/></td></tr>
-<tr class="separator:ac5d64ed31de712862131d8ba0c0acada"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af353234bdd91adf25b2bfa24cec0288e"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#af353234bdd91adf25b2bfa24cec0288e">height</a></td></tr>
-<tr class="memdesc:af353234bdd91adf25b2bfa24cec0288e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lines of the input frame.  <a href="#af353234bdd91adf25b2bfa24cec0288e">More...</a><br/></td></tr>
-<tr class="separator:af353234bdd91adf25b2bfa24cec0288e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5715e589bee1f54aac85ab996a59f204"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a5715e589bee1f54aac85ab996a59f204">polarityFlags</a></td></tr>
-<tr class="memdesc:a5715e589bee1f54aac85ab996a59f204"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timing signal polarity flags, OR'ed value of <a class="el" href="a00017.html#gafda41057e6d13039ca0d139b89abde64">_csi_polarity_flags</a>.  <a href="#a5715e589bee1f54aac85ab996a59f204">More...</a><br/></td></tr>
-<tr class="separator:a5715e589bee1f54aac85ab996a59f204"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae55dcf6dcbf3635432320d5a81ff9c4b"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ae55dcf6dcbf3635432320d5a81ff9c4b">bytesPerPixel</a></td></tr>
-<tr class="memdesc:ae55dcf6dcbf3635432320d5a81ff9c4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bytes per pixel, valid values are:  <a href="#ae55dcf6dcbf3635432320d5a81ff9c4b">More...</a><br/></td></tr>
-<tr class="separator:ae55dcf6dcbf3635432320d5a81ff9c4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae1642a6be28003bcb2642e6931cc75dd"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ae1642a6be28003bcb2642e6931cc75dd">linePitch_Bytes</a></td></tr>
-<tr class="memdesc:ae1642a6be28003bcb2642e6931cc75dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frame buffer line pitch, must be 8-byte aligned.  <a href="#ae1642a6be28003bcb2642e6931cc75dd">More...</a><br/></td></tr>
-<tr class="separator:ae1642a6be28003bcb2642e6931cc75dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a13aec4d48580eed8cd9ea6ee9952b408"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00017.html#ga5539d9ae21ae84983a8ed9418c83cc5f">csi_work_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a13aec4d48580eed8cd9ea6ee9952b408">workMode</a></td></tr>
-<tr class="memdesc:a13aec4d48580eed8cd9ea6ee9952b408"><td class="mdescLeft">&#160;</td><td class="mdescRight">CSI work mode.  <a href="#a13aec4d48580eed8cd9ea6ee9952b408">More...</a><br/></td></tr>
-<tr class="separator:a13aec4d48580eed8cd9ea6ee9952b408"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0c7630ee5ca46f6cf1a23a83378bdb1f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00017.html#gab69baf9a3cfb4a7be68e3ba250716df5">csi_data_bus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a0c7630ee5ca46f6cf1a23a83378bdb1f">dataBus</a></td></tr>
-<tr class="memdesc:a0c7630ee5ca46f6cf1a23a83378bdb1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data bus width.  <a href="#a0c7630ee5ca46f6cf1a23a83378bdb1f">More...</a><br/></td></tr>
-<tr class="separator:a0c7630ee5ca46f6cf1a23a83378bdb1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a436dcb1c1ed0cd25910b9df57267bd02"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a436dcb1c1ed0cd25910b9df57267bd02">useExtVsync</a></td></tr>
-<tr class="memdesc:a436dcb1c1ed0cd25910b9df57267bd02"><td class="mdescLeft">&#160;</td><td class="mdescRight">In CCIR656 progressive mode, set true to use external VSYNC signal, set false to use internal VSYNC signal decoded from SOF.  <a href="#a436dcb1c1ed0cd25910b9df57267bd02">More...</a><br/></td></tr>
-<tr class="separator:a436dcb1c1ed0cd25910b9df57267bd02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa87f4e4a75b55dd3c5abb5c60c04f342"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#aa87f4e4a75b55dd3c5abb5c60c04f342">width</a></td></tr>
+<tr class="memdesc:aa87f4e4a75b55dd3c5abb5c60c04f342"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pixels of the input frame.  <a href="#aa87f4e4a75b55dd3c5abb5c60c04f342">More...</a><br/></td></tr>
+<tr class="separator:aa87f4e4a75b55dd3c5abb5c60c04f342"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad23fb85c17aca752f6ad942892407d2a"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ad23fb85c17aca752f6ad942892407d2a">height</a></td></tr>
+<tr class="memdesc:ad23fb85c17aca752f6ad942892407d2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lines of the input frame.  <a href="#ad23fb85c17aca752f6ad942892407d2a">More...</a><br/></td></tr>
+<tr class="separator:ad23fb85c17aca752f6ad942892407d2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa941eb41b6d5f8d71091a1947326a183"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#aa941eb41b6d5f8d71091a1947326a183">polarityFlags</a></td></tr>
+<tr class="memdesc:aa941eb41b6d5f8d71091a1947326a183"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timing signal polarity flags, OR'ed value of <a class="el" href="a00017.html#gafda41057e6d13039ca0d139b89abde64">_csi_polarity_flags</a>.  <a href="#aa941eb41b6d5f8d71091a1947326a183">More...</a><br/></td></tr>
+<tr class="separator:aa941eb41b6d5f8d71091a1947326a183"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a527fe46ba2e0bc0c0b9b802719b9d6e1"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a527fe46ba2e0bc0c0b9b802719b9d6e1">bytesPerPixel</a></td></tr>
+<tr class="memdesc:a527fe46ba2e0bc0c0b9b802719b9d6e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bytes per pixel, valid values are:  <a href="#a527fe46ba2e0bc0c0b9b802719b9d6e1">More...</a><br/></td></tr>
+<tr class="separator:a527fe46ba2e0bc0c0b9b802719b9d6e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a3fc579a852f34bddbf0f3de5141dd9"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a9a3fc579a852f34bddbf0f3de5141dd9">linePitch_Bytes</a></td></tr>
+<tr class="memdesc:a9a3fc579a852f34bddbf0f3de5141dd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frame buffer line pitch, must be 8-byte aligned.  <a href="#a9a3fc579a852f34bddbf0f3de5141dd9">More...</a><br/></td></tr>
+<tr class="separator:a9a3fc579a852f34bddbf0f3de5141dd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af01a2fa8deb8edb1e2cc4b10d9711b0b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00017.html#ga38c28eea487217a99433bc441abcd017">csi_work_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#af01a2fa8deb8edb1e2cc4b10d9711b0b">workMode</a></td></tr>
+<tr class="memdesc:af01a2fa8deb8edb1e2cc4b10d9711b0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">CSI work mode.  <a href="#af01a2fa8deb8edb1e2cc4b10d9711b0b">More...</a><br/></td></tr>
+<tr class="separator:af01a2fa8deb8edb1e2cc4b10d9711b0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc5877102571c3b2fad7e68d81291a27"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00017.html#gad0d5e8a230f4021a71ef3792ee99f8d7">csi_data_bus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#adc5877102571c3b2fad7e68d81291a27">dataBus</a></td></tr>
+<tr class="memdesc:adc5877102571c3b2fad7e68d81291a27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data bus width.  <a href="#adc5877102571c3b2fad7e68d81291a27">More...</a><br/></td></tr>
+<tr class="separator:adc5877102571c3b2fad7e68d81291a27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a616fc7c4c54c446c200b80b9b45f4b05"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a616fc7c4c54c446c200b80b9b45f4b05">useExtVsync</a></td></tr>
+<tr class="memdesc:a616fc7c4c54c446c200b80b9b45f4b05"><td class="mdescLeft">&#160;</td><td class="mdescRight">In CCIR656 progressive mode, set true to use external VSYNC signal, set false to use internal VSYNC signal decoded from SOF.  <a href="#a616fc7c4c54c446c200b80b9b45f4b05">More...</a><br/></td></tr>
+<tr class="separator:a616fc7c4c54c446c200b80b9b45f4b05"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="ac5d64ed31de712862131d8ba0c0acada"></a>
+<a class="anchor" id="aa87f4e4a75b55dd3c5abb5c60c04f342"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t csi_config_t::width</td>
+          <td class="memname">uint16_t _csi_config::width</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="af353234bdd91adf25b2bfa24cec0288e"></a>
+<a class="anchor" id="ad23fb85c17aca752f6ad942892407d2a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t csi_config_t::height</td>
+          <td class="memname">uint16_t _csi_config::height</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a5715e589bee1f54aac85ab996a59f204"></a>
+<a class="anchor" id="aa941eb41b6d5f8d71091a1947326a183"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t csi_config_t::polarityFlags</td>
+          <td class="memname">uint32_t _csi_config::polarityFlags</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ae55dcf6dcbf3635432320d5a81ff9c4b"></a>
+<a class="anchor" id="a527fe46ba2e0bc0c0b9b802719b9d6e1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t csi_config_t::bytesPerPixel</td>
+          <td class="memname">uint8_t _csi_config::bytesPerPixel</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -463,48 +476,48 @@ Transactional</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ae1642a6be28003bcb2642e6931cc75dd"></a>
+<a class="anchor" id="a9a3fc579a852f34bddbf0f3de5141dd9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t csi_config_t::linePitch_Bytes</td>
+          <td class="memname">uint16_t _csi_config::linePitch_Bytes</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a13aec4d48580eed8cd9ea6ee9952b408"></a>
+<a class="anchor" id="af01a2fa8deb8edb1e2cc4b10d9711b0b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00017.html#ga5539d9ae21ae84983a8ed9418c83cc5f">csi_work_mode_t</a> csi_config_t::workMode</td>
+          <td class="memname"><a class="el" href="a00017.html#ga38c28eea487217a99433bc441abcd017">csi_work_mode_t</a> _csi_config::workMode</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a0c7630ee5ca46f6cf1a23a83378bdb1f"></a>
+<a class="anchor" id="adc5877102571c3b2fad7e68d81291a27"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00017.html#gab69baf9a3cfb4a7be68e3ba250716df5">csi_data_bus_t</a> csi_config_t::dataBus</td>
+          <td class="memname"><a class="el" href="a00017.html#gad0d5e8a230f4021a71ef3792ee99f8d7">csi_data_bus_t</a> _csi_config::dataBus</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a436dcb1c1ed0cd25910b9df57267bd02"></a>
+<a class="anchor" id="a616fc7c4c54c446c200b80b9b45f4b05"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool csi_config_t::useExtVsync</td>
+          <td class="memname">bool _csi_config::useExtVsync</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -514,7 +527,7 @@ Transactional</h2></td></tr>
 
 </div>
 </div>
-<a name="a00312" id="a00312"></a>
+<a name="a00336" id="a00336"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -526,137 +539,137 @@ Transactional</h2></td></tr>
 <div class="textblock"><p>Please see the user guide for the details of the CSI driver queue mechanism. </p>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:aa1a9c395647713b07bc92e4b89a9a547"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#aa1a9c395647713b07bc92e4b89a9a547">frameBufferQueue</a> [CSI_DRIVER_ACTUAL_QUEUE_SIZE]</td></tr>
-<tr class="memdesc:aa1a9c395647713b07bc92e4b89a9a547"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frame buffer queue.  <a href="#aa1a9c395647713b07bc92e4b89a9a547">More...</a><br/></td></tr>
-<tr class="separator:aa1a9c395647713b07bc92e4b89a9a547"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a98aac4e50e3a3375e6dd6199e8135527"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a98aac4e50e3a3375e6dd6199e8135527">queueWriteIdx</a></td></tr>
-<tr class="memdesc:a98aac4e50e3a3375e6dd6199e8135527"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to save incoming item.  <a href="#a98aac4e50e3a3375e6dd6199e8135527">More...</a><br/></td></tr>
-<tr class="separator:a98aac4e50e3a3375e6dd6199e8135527"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe1aaca7fbcc6240601eec4106026bf5"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#afe1aaca7fbcc6240601eec4106026bf5">queueReadIdx</a></td></tr>
-<tr class="memdesc:afe1aaca7fbcc6240601eec4106026bf5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to read out the item.  <a href="#afe1aaca7fbcc6240601eec4106026bf5">More...</a><br/></td></tr>
-<tr class="separator:afe1aaca7fbcc6240601eec4106026bf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aefe7a48a1af919dafb2d60e8a2bd46e7"><td class="memItemLeft" align="right" valign="top">void *volatile&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#aefe7a48a1af919dafb2d60e8a2bd46e7">emptyBuffer</a></td></tr>
-<tr class="memdesc:aefe7a48a1af919dafb2d60e8a2bd46e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to maintain the empty frame buffers.  <a href="#aefe7a48a1af919dafb2d60e8a2bd46e7">More...</a><br/></td></tr>
-<tr class="separator:aefe7a48a1af919dafb2d60e8a2bd46e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee71b528f87fee4bfe8b58d8940e91f2"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#aee71b528f87fee4bfe8b58d8940e91f2">emptyBufferCnt</a></td></tr>
-<tr class="memdesc:aee71b528f87fee4bfe8b58d8940e91f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Empty frame buffers count.  <a href="#aee71b528f87fee4bfe8b58d8940e91f2">More...</a><br/></td></tr>
-<tr class="separator:aee71b528f87fee4bfe8b58d8940e91f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab7f697fa8fe1046abab800cb46b66137"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#ab7f697fa8fe1046abab800cb46b66137">activeBufferNum</a></td></tr>
-<tr class="memdesc:ab7f697fa8fe1046abab800cb46b66137"><td class="mdescLeft">&#160;</td><td class="mdescRight">How many frame buffers are in progres currently.  <a href="#ab7f697fa8fe1046abab800cb46b66137">More...</a><br/></td></tr>
-<tr class="separator:ab7f697fa8fe1046abab800cb46b66137"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2a6ce7912da50c9dcfb863e2f86cfff3"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a2a6ce7912da50c9dcfb863e2f86cfff3">transferStarted</a></td></tr>
-<tr class="memdesc:a2a6ce7912da50c9dcfb863e2f86cfff3"><td class="mdescLeft">&#160;</td><td class="mdescRight">User has called <a class="el" href="a00017.html#ga65a17c86c64297a09857e435588a65d6">CSI_TransferStart</a> to start frame receiving.  <a href="#a2a6ce7912da50c9dcfb863e2f86cfff3">More...</a><br/></td></tr>
-<tr class="separator:a2a6ce7912da50c9dcfb863e2f86cfff3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a902b1fc7c58b91d0c4c41fc271c06a3c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00017.html#ga68a7e9c86a91b7ffb6547cf762ef6f3f">csi_transfer_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a902b1fc7c58b91d0c4c41fc271c06a3c">callback</a></td></tr>
-<tr class="memdesc:a902b1fc7c58b91d0c4c41fc271c06a3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function.  <a href="#a902b1fc7c58b91d0c4c41fc271c06a3c">More...</a><br/></td></tr>
-<tr class="separator:a902b1fc7c58b91d0c4c41fc271c06a3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b8b45ae015b412d2a9bb94925ff844f"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a6b8b45ae015b412d2a9bb94925ff844f">userData</a></td></tr>
-<tr class="memdesc:a6b8b45ae015b412d2a9bb94925ff844f"><td class="mdescLeft">&#160;</td><td class="mdescRight">CSI callback function parameter.  <a href="#a6b8b45ae015b412d2a9bb94925ff844f">More...</a><br/></td></tr>
-<tr class="separator:a6b8b45ae015b412d2a9bb94925ff844f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5f2235f8567d7997b08a1940175e297"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#af5f2235f8567d7997b08a1940175e297">frameBufferQueue</a> [CSI_DRIVER_ACTUAL_QUEUE_SIZE]</td></tr>
+<tr class="memdesc:af5f2235f8567d7997b08a1940175e297"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frame buffer queue.  <a href="#af5f2235f8567d7997b08a1940175e297">More...</a><br/></td></tr>
+<tr class="separator:af5f2235f8567d7997b08a1940175e297"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06c77a80fe42b345ac0f922445efd416"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a06c77a80fe42b345ac0f922445efd416">queueWriteIdx</a></td></tr>
+<tr class="memdesc:a06c77a80fe42b345ac0f922445efd416"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to save incoming item.  <a href="#a06c77a80fe42b345ac0f922445efd416">More...</a><br/></td></tr>
+<tr class="separator:a06c77a80fe42b345ac0f922445efd416"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3cac71e25437352d6aab02cf98b19482"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a3cac71e25437352d6aab02cf98b19482">queueReadIdx</a></td></tr>
+<tr class="memdesc:a3cac71e25437352d6aab02cf98b19482"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to read out the item.  <a href="#a3cac71e25437352d6aab02cf98b19482">More...</a><br/></td></tr>
+<tr class="separator:a3cac71e25437352d6aab02cf98b19482"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79061b46f379dbdadaceabbe7919b037"><td class="memItemLeft" align="right" valign="top">void *volatile&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a79061b46f379dbdadaceabbe7919b037">emptyBuffer</a></td></tr>
+<tr class="memdesc:a79061b46f379dbdadaceabbe7919b037"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to maintain the empty frame buffers.  <a href="#a79061b46f379dbdadaceabbe7919b037">More...</a><br/></td></tr>
+<tr class="separator:a79061b46f379dbdadaceabbe7919b037"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:addbb81150dbfefa8ed9a89ee094e5953"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#addbb81150dbfefa8ed9a89ee094e5953">emptyBufferCnt</a></td></tr>
+<tr class="memdesc:addbb81150dbfefa8ed9a89ee094e5953"><td class="mdescLeft">&#160;</td><td class="mdescRight">Empty frame buffers count.  <a href="#addbb81150dbfefa8ed9a89ee094e5953">More...</a><br/></td></tr>
+<tr class="separator:addbb81150dbfefa8ed9a89ee094e5953"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac982c0d3585d6109c08f250b5e2ba94"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#aac982c0d3585d6109c08f250b5e2ba94">activeBufferNum</a></td></tr>
+<tr class="memdesc:aac982c0d3585d6109c08f250b5e2ba94"><td class="mdescLeft">&#160;</td><td class="mdescRight">How many frame buffers are in progres currently.  <a href="#aac982c0d3585d6109c08f250b5e2ba94">More...</a><br/></td></tr>
+<tr class="separator:aac982c0d3585d6109c08f250b5e2ba94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d27f39310ca972f7cd96e83165435a6"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a5d27f39310ca972f7cd96e83165435a6">transferStarted</a></td></tr>
+<tr class="memdesc:a5d27f39310ca972f7cd96e83165435a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">User has called <a class="el" href="a00017.html#ga65a17c86c64297a09857e435588a65d6">CSI_TransferStart</a> to start frame receiving.  <a href="#a5d27f39310ca972f7cd96e83165435a6">More...</a><br/></td></tr>
+<tr class="separator:a5d27f39310ca972f7cd96e83165435a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74c5d4ac3ea58518a9188d861e101ce8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00017.html#ga68a7e9c86a91b7ffb6547cf762ef6f3f">csi_transfer_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a74c5d4ac3ea58518a9188d861e101ce8">callback</a></td></tr>
+<tr class="memdesc:a74c5d4ac3ea58518a9188d861e101ce8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function.  <a href="#a74c5d4ac3ea58518a9188d861e101ce8">More...</a><br/></td></tr>
+<tr class="separator:a74c5d4ac3ea58518a9188d861e101ce8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4bc56dcea99a9ceeeb2fe84d516476f7"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00017.html#a4bc56dcea99a9ceeeb2fe84d516476f7">userData</a></td></tr>
+<tr class="memdesc:a4bc56dcea99a9ceeeb2fe84d516476f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">CSI callback function parameter.  <a href="#a4bc56dcea99a9ceeeb2fe84d516476f7">More...</a><br/></td></tr>
+<tr class="separator:a4bc56dcea99a9ceeeb2fe84d516476f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="aa1a9c395647713b07bc92e4b89a9a547"></a>
+<a class="anchor" id="af5f2235f8567d7997b08a1940175e297"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t csi_handle_t::frameBufferQueue[CSI_DRIVER_ACTUAL_QUEUE_SIZE]</td>
+          <td class="memname">uint32_t _csi_handle::frameBufferQueue[CSI_DRIVER_ACTUAL_QUEUE_SIZE]</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a98aac4e50e3a3375e6dd6199e8135527"></a>
+<a class="anchor" id="a06c77a80fe42b345ac0f922445efd416"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile uint8_t csi_handle_t::queueWriteIdx</td>
+          <td class="memname">volatile uint8_t _csi_handle::queueWriteIdx</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="afe1aaca7fbcc6240601eec4106026bf5"></a>
+<a class="anchor" id="a3cac71e25437352d6aab02cf98b19482"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile uint8_t csi_handle_t::queueReadIdx</td>
+          <td class="memname">volatile uint8_t _csi_handle::queueReadIdx</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="aefe7a48a1af919dafb2d60e8a2bd46e7"></a>
+<a class="anchor" id="a79061b46f379dbdadaceabbe7919b037"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void* volatile csi_handle_t::emptyBuffer</td>
+          <td class="memname">void* volatile _csi_handle::emptyBuffer</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="aee71b528f87fee4bfe8b58d8940e91f2"></a>
+<a class="anchor" id="addbb81150dbfefa8ed9a89ee094e5953"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile uint8_t csi_handle_t::emptyBufferCnt</td>
+          <td class="memname">volatile uint8_t _csi_handle::emptyBufferCnt</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ab7f697fa8fe1046abab800cb46b66137"></a>
+<a class="anchor" id="aac982c0d3585d6109c08f250b5e2ba94"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile uint8_t csi_handle_t::activeBufferNum</td>
+          <td class="memname">volatile uint8_t _csi_handle::activeBufferNum</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a2a6ce7912da50c9dcfb863e2f86cfff3"></a>
+<a class="anchor" id="a5d27f39310ca972f7cd96e83165435a6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile bool csi_handle_t::transferStarted</td>
+          <td class="memname">volatile bool _csi_handle::transferStarted</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a902b1fc7c58b91d0c4c41fc271c06a3c"></a>
+<a class="anchor" id="a74c5d4ac3ea58518a9188d861e101ce8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00017.html#ga68a7e9c86a91b7ffb6547cf762ef6f3f">csi_transfer_callback_t</a> csi_handle_t::callback</td>
+          <td class="memname"><a class="el" href="a00017.html#ga68a7e9c86a91b7ffb6547cf762ef6f3f">csi_transfer_callback_t</a> _csi_handle::callback</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a6b8b45ae015b412d2a9bb94925ff844f"></a>
+<a class="anchor" id="a4bc56dcea99a9ceeeb2fe84d516476f7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void* csi_handle_t::userData</td>
+          <td class="memname">void* _csi_handle::userData</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -692,12 +705,49 @@ Transactional</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga38c28eea487217a99433bc441abcd017"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00017.html#ga612584939135a10bf4b198e805785762">_csi_work_mode</a>  <a class="el" href="a00017.html#ga38c28eea487217a99433bc441abcd017">csi_work_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The CCIR656 interlace mode is not supported currently. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga7d2e9074e11fec0878ae4199b708eb31"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00017.html#a00335">_csi_config</a>  <a class="el" href="a00017.html#ga7d2e9074e11fec0878ae4199b708eb31">csi_config_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga3ed868a78c932aa1904d48c0d65cf650"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00017.html#gac3edbdbf7abc89ac49f0a44af06f6f24">_csi_fifo</a>  <a class="el" href="a00017.html#ga3ed868a78c932aa1904d48c0d65cf650">csi_fifo_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="ga68a7e9c86a91b7ffb6547cf762ef6f3f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* csi_transfer_callback_t)(CSI_Type *base, csi_handle_t *handle, <a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
+          <td class="memname">typedef void(* csi_transfer_callback_t)(CSI_Type *base, <a class="el" href="a00017.html#a00336">csi_handle_t</a> *handle, <a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -732,47 +782,47 @@ Transactional</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga5539d9ae21ae84983a8ed9418c83cc5f"></a>
+<a class="anchor" id="ga612584939135a10bf4b198e805785762"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00017.html#ga5539d9ae21ae84983a8ed9418c83cc5f">csi_work_mode_t</a></td>
+          <td class="memname">enum <a class="el" href="a00017.html#ga612584939135a10bf4b198e805785762">_csi_work_mode</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>The CCIR656 interlace mode is not supported currently. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga5539d9ae21ae84983a8ed9418c83cc5fab707b88b2c5b3ca70afe6b78f2988571"></a>kCSI_GatedClockMode</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga612584939135a10bf4b198e805785762ab707b88b2c5b3ca70afe6b78f2988571"></a>kCSI_GatedClockMode</em>&nbsp;</td><td class="fielddoc">
 <p>HSYNC, VSYNC, and PIXCLK signals are used. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5539d9ae21ae84983a8ed9418c83cc5faefff73d6d0ed48e20bb12df629036633"></a>kCSI_NonGatedClockMode</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga612584939135a10bf4b198e805785762aefff73d6d0ed48e20bb12df629036633"></a>kCSI_NonGatedClockMode</em>&nbsp;</td><td class="fielddoc">
 <p>VSYNC, and PIXCLK signals are used. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5539d9ae21ae84983a8ed9418c83cc5fabab5a5dfbcc1c77bc66513760fdb0ddf"></a>kCSI_CCIR656ProgressiveMode</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga612584939135a10bf4b198e805785762abab5a5dfbcc1c77bc66513760fdb0ddf"></a>kCSI_CCIR656ProgressiveMode</em>&nbsp;</td><td class="fielddoc">
 <p>CCIR656 progressive mode. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gab69baf9a3cfb4a7be68e3ba250716df5"></a>
+<a class="anchor" id="ga230259b1b2d94e1c0049171840fbb049"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00017.html#gab69baf9a3cfb4a7be68e3ba250716df5">csi_data_bus_t</a></td>
+          <td class="memname">enum <a class="el" href="a00017.html#ga230259b1b2d94e1c0049171840fbb049">_csi_data_bus</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab69baf9a3cfb4a7be68e3ba250716df5ae6e9f2234f6b659241d9d504457e04dd"></a>kCSI_DataBus8Bit</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga230259b1b2d94e1c0049171840fbb049ae6e9f2234f6b659241d9d504457e04dd"></a>kCSI_DataBus8Bit</em>&nbsp;</td><td class="fielddoc">
 <p>8-bit data bus. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab69baf9a3cfb4a7be68e3ba250716df5ab41330fa7ebc27664112a4b592b53626"></a>kCSI_DataBus16Bit</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga230259b1b2d94e1c0049171840fbb049ab41330fa7ebc27664112a4b592b53626"></a>kCSI_DataBus16Bit</em>&nbsp;</td><td class="fielddoc">
 <p>16-bit data bus. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab69baf9a3cfb4a7be68e3ba250716df5ad26851c8a6a7be5e501625034e0f6a99"></a>kCSI_DataBus24Bit</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga230259b1b2d94e1c0049171840fbb049ad26851c8a6a7be5e501625034e0f6a99"></a>kCSI_DataBus24Bit</em>&nbsp;</td><td class="fielddoc">
 <p>24-bit data bus. </p>
 </td></tr>
 </table>
@@ -811,23 +861,23 @@ Transactional</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gaf354282828a94ddb23079e6e98399520"></a>
+<a class="anchor" id="gac3edbdbf7abc89ac49f0a44af06f6f24"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00017.html#gaf354282828a94ddb23079e6e98399520">csi_fifo_t</a></td>
+          <td class="memname">enum <a class="el" href="a00017.html#gac3edbdbf7abc89ac49f0a44af06f6f24">_csi_fifo</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaf354282828a94ddb23079e6e98399520a2665957976c094c559d20661126fc914"></a>kCSI_RxFifo</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggac3edbdbf7abc89ac49f0a44af06f6f24a2665957976c094c559d20661126fc914"></a>kCSI_RxFifo</em>&nbsp;</td><td class="fielddoc">
 <p>RXFIFO. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf354282828a94ddb23079e6e98399520a36df4b7466c177205c81d8fd4fe8dfa4"></a>kCSI_StatFifo</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggac3edbdbf7abc89ac49f0a44af06f6f24a36df4b7466c177205c81d8fd4fe8dfa4"></a>kCSI_StatFifo</em>&nbsp;</td><td class="fielddoc">
 <p>STAT FIFO. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf354282828a94ddb23079e6e98399520a960822cab30b37b78e71b03754b1adfc"></a>kCSI_AllFifo</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggac3edbdbf7abc89ac49f0a44af06f6f24a960822cab30b37b78e71b03754b1adfc"></a>kCSI_AllFifo</em>&nbsp;</td><td class="fielddoc">
 <p>Both RXFIFO and STAT FIFO. </p>
 </td></tr>
 </table>
@@ -983,7 +1033,7 @@ Transactional</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CSI_Init </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CSI_Init </td>
           <td>(</td>
           <td class="paramtype">CSI_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -991,7 +1041,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00017.html#a00366">csi_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00017.html#ga7d2e9074e11fec0878ae4199b708eb31">csi_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -1072,7 +1122,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="memname">void CSI_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00017.html#a00366">csi_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00017.html#ga7d2e9074e11fec0878ae4199b708eb31">csi_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1084,8 +1134,8 @@ Transactional</h2></td></tr>
 <div class="line">config-&gt;polarityFlags = <a class="code" href="a00017.html#ggafda41057e6d13039ca0d139b89abde64aab952a4e21500ee629a8bd16ece03b3f">kCSI_HsyncActiveHigh</a> | <a class="code" href="a00017.html#ggafda41057e6d13039ca0d139b89abde64aa98b2058628ba0d2bff537f81df0bfc9">kCSI_DataLatchOnRisingEdge</a>;</div>
 <div class="line">config-&gt;bytesPerPixel = 2U;</div>
 <div class="line">config-&gt;linePitch_Bytes = 320U * 2U;</div>
-<div class="line">config-&gt;workMode = <a class="code" href="a00017.html#gga5539d9ae21ae84983a8ed9418c83cc5fab707b88b2c5b3ca70afe6b78f2988571">kCSI_GatedClockMode</a>;</div>
-<div class="line">config-&gt;dataBus = <a class="code" href="a00017.html#ggab69baf9a3cfb4a7be68e3ba250716df5ae6e9f2234f6b659241d9d504457e04dd">kCSI_DataBus8Bit</a>;</div>
+<div class="line">config-&gt;workMode = <a class="code" href="a00017.html#gga612584939135a10bf4b198e805785762ab707b88b2c5b3ca70afe6b78f2988571">kCSI_GatedClockMode</a>;</div>
+<div class="line">config-&gt;dataBus = <a class="code" href="a00017.html#gga230259b1b2d94e1c0049171840fbb049ae6e9f2234f6b659241d9d504457e04dd">kCSI_DataBus8Bit</a>;</div>
 <div class="line">config-&gt;useExtVsync = <span class="keyword">true</span>;</div>
 </div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1109,7 +1159,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00017.html#gaf354282828a94ddb23079e6e98399520">csi_fifo_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00017.html#ga3ed868a78c932aa1904d48c0d65cf650">csi_fifo_t</a>&#160;</td>
           <td class="paramname"><em>fifo</em>&#160;</td>
         </tr>
         <tr>
@@ -1143,7 +1193,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00017.html#gaf354282828a94ddb23079e6e98399520">csi_fifo_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00017.html#ga3ed868a78c932aa1904d48c0d65cf650">csi_fifo_t</a>&#160;</td>
           <td class="paramname"><em>fifo</em>&#160;</td>
         </tr>
         <tr>
@@ -1178,7 +1228,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00017.html#gaf354282828a94ddb23079e6e98399520">csi_fifo_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00017.html#ga3ed868a78c932aa1904d48c0d65cf650">csi_fifo_t</a>&#160;</td>
           <td class="paramname"><em>fifo</em>, </td>
         </tr>
         <tr>
@@ -1456,7 +1506,7 @@ Transactional</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CSI_TransferCreateHandle </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CSI_TransferCreateHandle </td>
           <td>(</td>
           <td class="paramtype">CSI_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1464,7 +1514,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">csi_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00017.html#a00336">csi_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -1510,7 +1560,7 @@ Transactional</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CSI_TransferStart </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CSI_TransferStart </td>
           <td>(</td>
           <td class="paramtype">CSI_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1518,7 +1568,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">csi_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00017.html#a00336">csi_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>&#160;</td>
         </tr>
         <tr>
@@ -1551,7 +1601,7 @@ Transactional</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CSI_TransferStop </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CSI_TransferStop </td>
           <td>(</td>
           <td class="paramtype">CSI_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1559,7 +1609,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">csi_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00017.html#a00336">csi_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>&#160;</td>
         </tr>
         <tr>
@@ -1591,7 +1641,7 @@ Transactional</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CSI_TransferSubmitEmptyBuffer </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CSI_TransferSubmitEmptyBuffer </td>
           <td>(</td>
           <td class="paramtype">CSI_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1599,7 +1649,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">csi_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00017.html#a00336">csi_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -1639,7 +1689,7 @@ Transactional</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CSI_TransferGetFullBuffer </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CSI_TransferGetFullBuffer </td>
           <td>(</td>
           <td class="paramtype">CSI_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1647,7 +1697,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">csi_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00017.html#a00336">csi_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -1695,7 +1745,7 @@ Transactional</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">csi_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00017.html#a00336">csi_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>&#160;</td>
         </tr>
         <tr>

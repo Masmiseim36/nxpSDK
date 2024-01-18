@@ -32,6 +32,7 @@ var searchData=
   ['datamaskedword',['dataMaskedWord',['../a00063.html#ac8224253c6c3ed58f1a5219f6f97f231',1,'sai_serial_data_t']]],
   ['datamode',['dataMode',['../a00036.html#a1ed3e04044edd43a3ab1658b83cc7a70',1,'flexio_spi_master_config_t::dataMode()'],['../a00036.html#a5b7c853f42ed1b2e53e07034daf3d26f',1,'flexio_spi_slave_config_t::dataMode()'],['../a00063.html#a3b2bf9ccec21dde86dda8ad3e43db654',1,'sai_serial_data_t::dataMode()']]],
   ['datanum',['dataNum',['../a00028.html#a9c1d2aa1341117602a1f9c72dd1449bc',1,'flexio_camera_transfer_t']]],
+  ['dataonly',['dataOnly',['../a00034.html#a30cf1a1bd9447f72e9d9d77045215295',1,'flexio_mculcd_transfer_t']]],
   ['dataorder',['dataOrder',['../a00063.html#a0d695a6e8766dae568984b61cd14f402',1,'sai_serial_data_t']]],
   ['dataoutconfig',['dataOutConfig',['../a00049.html#acc0422bcb70e685bb66f3a216aa66088',1,'lpspi_master_config_t::dataOutConfig()'],['../a00049.html#af8879b89ada464a0d8b16c33639e87cf',1,'lpspi_slave_config_t::dataOutConfig()']]],
   ['datapadsettingoverride',['dataPadSettingOverride',['../a00043.html#a0970af7ffa0692f291495692002d7c4e',1,'flexspi_mem_config_t']]],

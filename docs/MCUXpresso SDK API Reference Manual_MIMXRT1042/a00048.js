@@ -12,6 +12,7 @@ var a00048 =
       [ "enableTx", "a00048.html#ad0fea92e29e7afff3d7072ab3c722bc8", null ],
       [ "enableRx", "a00048.html#aff856d2084ff0ede49f0ff25e6cf5529", null ],
       [ "enableAddress", "a00048.html#a6ec794389bd9fb5e51c802bb0b9ee26b", null ],
+      [ "sclStall", "a00048.html#a38bb14645d844ee60d310a48be08be24", null ],
       [ "ignoreAck", "a00048.html#ae68493537f90f7bff4a421ff534fb7a1", null ],
       [ "enableReceivedAddressRead", "a00048.html#ac273a825233fe937aa16d98e38664812", null ],
       [ "sdaGlitchFilterWidth_ns", "a00048.html#a7c28ef56af23d2e059942e8d80e5cd15", null ],

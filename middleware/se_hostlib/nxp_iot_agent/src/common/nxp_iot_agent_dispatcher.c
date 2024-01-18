@@ -1,5 +1,5 @@
 /*
-* Copyright 2018-2020, 2021, 2022 NXP
+* Copyright 2018-2022 NXP
 *
 * SPDX-License-Identifier: Apache-2.0
 *
@@ -297,6 +297,7 @@ iot_agent_status_t iot_agent_dispatcher(
 COMPILE_TIME_ASSERT(IOT_AGENT_KS_SSS_A71CH_NOT_SUPPORTED == nxp_iot_EndpointType_KS_SSS_A71CH);
 COMPILE_TIME_ASSERT(IOT_AGENT_KS_SSS_SE05X == nxp_iot_EndpointType_KS_SSS_SE05X);
 COMPILE_TIME_ASSERT(IOT_AGENT_KS_SSS_RPC_NOT_SUPPORTED == nxp_iot_EndpointType_KS_SSS_RPC);
+COMPILE_TIME_ASSERT(IOT_AGENT_KS_PSA == nxp_iot_EndpointType_KS_PSA);
 COMPILE_TIME_ASSERT(IOT_AGENT_DS_FS == nxp_iot_EndpointType_DS_FS);
 COMPILE_TIME_ASSERT(IOT_AGENT_DS_PLAIN == nxp_iot_EndpointType_DS_PLAIN);
 

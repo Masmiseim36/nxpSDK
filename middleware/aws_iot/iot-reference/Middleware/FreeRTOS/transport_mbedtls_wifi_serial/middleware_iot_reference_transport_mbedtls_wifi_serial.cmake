@@ -3,7 +3,7 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-if(CONFIG_USE_middleware_freertos_coremqtt AND CONFIG_USE_middleware_freertos_corepkcs11 AND CONFIG_USE_middleware_pkcs11 AND CONFIG_USE_middleware_mbedtls_port_ksdk AND CONFIG_USE_middleware_iot_reference_template AND CONFIG_USE_component_serial_mwm)
+if(CONFIG_USE_middleware_freertos_coremqtt AND CONFIG_USE_middleware_freertos_corepkcs11 AND CONFIG_USE_middleware_pkcs11 AND CONFIG_USE_middleware_mbedtls AND CONFIG_USE_middleware_iot_reference_template AND CONFIG_USE_component_serial_mwm)
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/using_mbedtls.c

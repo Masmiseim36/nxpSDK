@@ -3,13 +3,13 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-if(CONFIG_USE_middleware_freertos-kernel AND CONFIG_USE_middleware_freertos-kernel_heap_4 AND CONFIG_USE_middleware_eiq_tensorflow_lite_micro AND CONFIG_USE_middleware_eiq_deepviewrt_nnlib)
-
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_camera_mipi_ov5640.c
+  ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_camera_ezh_ov7670.c
   ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_display_lcdifv2_rk055ahd091.c
   ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_camera_csi_mt9m114.c
   ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_display_lcdif_rk043fn.c
+  ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_display_mculcd_ssd1963.c
   ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_draw.c
   ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_freertos.c
   ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_graphics_pxp.c
@@ -32,10 +32,6 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
 
 if(CONFIG_USE_COMPONENT_CONFIGURATION)
   message("===>Import configuration from ${CMAKE_CURRENT_LIST_FILE}")
-
-  target_compile_definitions(${MCUX_SDK_PROJECT_NAME} PUBLIC
-    -DMPP_STATIC_MEMORY
-  )
 
   if(CONFIG_TOOLCHAIN STREQUAL iar)
     target_compile_options(${MCUX_SDK_PROJECT_NAME} PUBLIC
@@ -76,16 +72,11 @@ if(CONFIG_USE_COMPONENT_CONFIGURATION)
 
 endif()
 
-if((CONFIG_TOOLCHAIN STREQUAL mcux OR CONFIG_TOOLCHAIN STREQUAL armgcc))
+if((CONFIG_TOOLCHAIN STREQUAL mcux OR CONFIG_TOOLCHAIN STREQUAL armgcc) AND CONFIG_CORE STREQUAL cm7f)
   target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
     -Wl,--start-group
-      ${CMAKE_CURRENT_LIST_DIR}/mpp/lib/libmpp.a
+      ${CMAKE_CURRENT_LIST_DIR}/mpp/lib/cm7/libmpp.a
       -Wl,--end-group
   )
 endif()
 
-else()
-
-message(SEND_ERROR "middleware_eiq_mpp dependency does not meet, please check ${CMAKE_CURRENT_LIST_FILE}.")
-
-endif()

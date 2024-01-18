@@ -1,5 +1,6 @@
 var streamer__api_8h =
 [
+    [ "ElementTypeLookup", "structElementTypeLookup.html", "structElementTypeLookup" ],
     [ "AlbumArt", "structAlbumArt.html", "structAlbumArt" ],
     [ "TrackInfo", "structTrackInfo.html", "structTrackInfo" ],
     [ "StreamImageType", "structStreamImageType.html", "structStreamImageType" ],
@@ -7,6 +8,7 @@ var streamer__api_8h =
     [ "StreamData", "unionStreamData.html", "unionStreamData" ],
     [ "ELEMENT_PROPERTY_T", "structELEMENT__PROPERTY__T.html", "structELEMENT__PROPERTY__T" ],
     [ "STREAMER_MSG_T", "structSTREAMER__MSG__T.html", "structSTREAMER__MSG__T" ],
+    [ "PipelineElements", "structPipelineElements.html", "structPipelineElements" ],
     [ "STREAMER_CREATE_PARAM", "structSTREAMER__CREATE__PARAM.html", "structSTREAMER__CREATE__PARAM" ],
     [ "STREAMER_T", "structSTREAMER__T.html", "structSTREAMER__T" ],
     [ "AF_MESSAGE_SECTION", "streamer__api_8h.html#a6f251974fbcf31c9df41a48f5699b62d", null ],
@@ -32,6 +34,10 @@ var streamer__api_8h =
     [ "TRACK_ALBUM_LEN", "streamer__api_8h.html#aa285fbb5a18c6374c6c38522850319e3", null ],
     [ "TRACK_GENRE_LEN", "streamer__api_8h.html#a9eae1f6e3fde3f69838ab040702fa49d", null ],
     [ "TRACK_YEAR_LEN", "streamer__api_8h.html#aac2af8c2f02fef9106796da3a3209028", null ],
+    [ "RAW_DATA", "streamer__api_8h.html#a7140d943b6f40ad3c4bdab5a2073c2f6", null ],
+    [ "AUDIO_DATA", "streamer__api_8h.html#ac139bede02cf10a641fa8a11fcb5b120", null ],
+    [ "CHECK_RET", "streamer__api_8h.html#a1278a7aaec2e1e1f63039077ed883562", null ],
+    [ "PIPELINE_SIZE", "streamer__api_8h.html#ab3703cd8bb0754a9473b39b8e23dec25", null ],
     [ "STREAMER_MSG_SIZE", "streamer__api_8h.html#a05026958fbb45aebc34352c8f667ee5b", null ],
     [ "ElementHandle", "streamer__api_8h.html#aa38d4845534a71686ee5281c5df9c6cb", null ],
     [ "PipelineHandle", "streamer__api_8h.html#a91bb040bd7266f74d2b757bb58ad5ac4", null ],
@@ -84,36 +90,23 @@ var streamer__api_8h =
       [ "STATE_PAUSED", "streamer__api_8h.html#aed3a377d6591a396708fdc3e3cc0b1e1a6291ce9aab12208cc66968c97a1ce7dd", null ],
       [ "STATE_PLAYING", "streamer__api_8h.html#aed3a377d6591a396708fdc3e3cc0b1e1af8f1d4013be7a14c51495005d39e7c0e", null ]
     ] ],
-    [ "StreamPipelineType", "streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652", [
-      [ "STREAM_PIPELINE_FILESYSTEM", "streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652a72adfc64c8640cbdd7a99424c2fdd5a3", null ],
-      [ "STREAM_PIPELINE_MEM", "streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652acc938003ee94f0a27587310879764c93", null ],
-      [ "STREAM_PIPELINE_NETBUF", "streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652aad10826276aa260f3203de65efc4ff1c", null ],
-      [ "STREAM_PIPELINE_PCM", "streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652a925d2315d8138872c2c2cf9939a397d7", null ],
-      [ "STREAM_PIPELINE_OPUS_MEM2MEM", "streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652afdae589f641d50d58d0cc39923cdaadd", null ],
-      [ "STREAM_PIPELINE_MIC2FILE", "streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652a8f64bc43447969feee5d8f6d45f2db9e", null ],
-      [ "STREAM_PIPELINE_VIT", "streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652a22911de0e66aafc79bf2ed333d42fba3", null ],
-      [ "STREAM_PIPELINE_PCM_AUDIO", "streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652a2400f4838b64e9c47d7942ce88671cfe", null ],
-      [ "STREAM_PIPELINE_PCM_AUDIO_MEM", "streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652aa1e824d3de79b9bb8bf1eb348449a64f", null ],
-      [ "STREAM_PIPELINE_PCM_AUDIO_PROC_AUDIO", "streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652a525a7f9111e27e9cb5d859cd00257f1b", null ],
-      [ "STREAM_PIPELINE_PCM_EAP_PROC_AUDIO", "streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652ac1f1455fa264488bb2b900e392a06a34", null ],
-      [ "STREAM_PIPELINE_TEST_AUDIO_PROCFILE2FILE", "streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652a5a05d5c05ae7f49d1d56a5c56c7f5fb3", null ],
-      [ "STREAM_PIPELINE_VIT_FILESINK", "streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652af9f99b37a275c07a03fbbc0e6a97e0e8", null ],
-      [ "STREAM_PIPELINE_MAX", "streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652a1606e0823001bcccdd4397fe44a5f4a5", null ]
-    ] ],
     [ "ElementIndex", "streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958", [
       [ "ELEMENT_FILE_SRC_INDEX", "streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958afd7e2ab8e6c0ed98d9c10074750b0f74", null ],
       [ "ELEMENT_MEM_SRC_INDEX", "streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958a8256df0c6d779a5a9aeb16aea4ec52f6", null ],
       [ "ELEMENT_NETBUF_SRC_INDEX", "streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958a32bbd83c77be36e0af9c78ef6e327aa3", null ],
-      [ "ELEMENT_AUDIO_SRC_INDEX", "streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958a18114c0e048d06b88c1fdb452fdc6925", null ],
+      [ "ELEMENT_MICROPHONE_INDEX", "streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958a0b6f886dd8ff8828ca7c665567d00253", null ],
       [ "ELEMENT_FILE_SINK_INDEX", "streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958af34c6dd58cc0e8a42d009d87d0a49ba3", null ],
       [ "ELEMENT_MEM_SINK_INDEX", "streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958a24835dead85f61aff367f76cd59b384f", null ],
-      [ "ELEMENT_AUDIO_SINK_INDEX", "streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958a1cda043f31224c2ad986d61b5da3bdf5", null ],
+      [ "ELEMENT_SPEAKER_INDEX", "streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958a87dacd1e7d0d195741adaea53490a129", null ],
       [ "ELEMENT_DECODER_INDEX", "streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958a6591d6f143cac986cbbc5a3136e5b761", null ],
       [ "ELEMENT_ENCODER_INDEX", "streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958aff55a794cc4b44ae8603f315529ff4bd", null ],
       [ "ELEMENT_VIT_INDEX", "streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958ae991ac1eb5c8f192b9454ae9b34120f8", null ],
-      [ "ELEMENT_EAP_PROC_INDEX", "streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958ae17dba3f356731a89890805a0c889d98", null ],
-      [ "ELEMENT_VOICESEEKER_PROC_INDEX", "streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958a8787d24a89bfa0e4de9667287da41259", null ],
-      [ "ELEMENT_SRC_PROC_INDEX", "streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958ac845ea6a04d52422d843e0ad40bf81e2", null ],
+      [ "ELEMENT_VIT_PROC_INDEX", "streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958a6ee74077bdec548ba01c6bab8f49c556", null ],
+      [ "ELEMENT_VOICESEEKER_INDEX", "streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958ae347d4b36c24af37d602dab14cd74e17", null ],
+      [ "ELEMENT_SRC_INDEX", "streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958a5343a099dd0bfa41219ddb0222f8c1eb", null ],
+      [ "ELEMENT_USB_SRC_INDEX", "streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958aa9d3b9efda3d896744c5449e91c68c28", null ],
+      [ "ELEMENT_USB_SINK_INDEX", "streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958ab549f47169f4b3ef2c8c9935183a7d6d", null ],
+      [ "ELEMENT_ASRC_INDEX", "streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958a3d2f803453442920389481c1fc81cb1b", null ],
       [ "ELEMENT_LAST_INDEX", "streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958a0dd59acb983cb1b1090adfb0a66be575", null ]
     ] ],
     [ "StreamElementType", "streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996d", [
@@ -214,7 +207,7 @@ var streamer__api_8h =
     ] ],
     [ "streamer_create", "streamer__api_8h.html#a6f0a49e8b4d082d5f07955158aafa24b", null ],
     [ "streamer_destroy", "streamer__api_8h.html#ad3e4e6e9194c94d603c7118a159ad1a6", null ],
-    [ "streamer_create_pipeline", "streamer__api_8h.html#a156ccb8aa582b294d35020e7c441f256", null ],
+    [ "streamer_create_pipeline", "streamer__api_8h.html#a47df6189721825d9fa1484c54f75132f", null ],
     [ "streamer_destroy_pipeline", "streamer__api_8h.html#aa9fd155271d1be13af4f4863426e9644", null ],
     [ "streamer_get_track_info", "streamer__api_8h.html#aa88e33f84253c92449d3727f67e77b4b", null ],
     [ "streamer_set_state", "streamer__api_8h.html#a7c39d455d90e3782718c0e6bcfc25b8b", null ],
@@ -224,5 +217,6 @@ var streamer__api_8h =
     [ "streamer_set_property", "streamer__api_8h.html#af0f2ba1e35082e033d66b106438b51e8", null ],
     [ "streamer_get_property", "streamer__api_8h.html#a658f8d4402d58c392acaa13f2941f210", null ],
     [ "streamer_set_file", "streamer__api_8h.html#a8a8df893844981d514c96e7531f5b1ec", null ],
-    [ "streamer_set_repeat", "streamer__api_8h.html#a7f33f78b4303617006927d7578be435e", null ]
+    [ "streamer_set_repeat", "streamer__api_8h.html#a7f33f78b4303617006927d7578be435e", null ],
+    [ "is_element_in_pipeline", "streamer__api_8h.html#af69f0380c59f5c3af1a8fb5947263a2d", null ]
 ];

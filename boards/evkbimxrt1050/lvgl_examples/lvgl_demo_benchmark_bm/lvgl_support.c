@@ -109,8 +109,7 @@
 #define DEMO_FB_ALIGN LV_ATTRIBUTE_MEM_ALIGN_SIZE
 #endif
 
-#define DEMO_FB_SIZE \
-    (((LCD_WIDTH * LCD_HEIGHT * LCD_FB_BYTE_PER_PIXEL) + DEMO_FB_ALIGN - 1) & ~(DEMO_FB_ALIGN - 1))
+#define DEMO_FB_SIZE (((LCD_WIDTH * LCD_HEIGHT * LCD_FB_BYTE_PER_PIXEL) + DEMO_FB_ALIGN - 1) & ~(DEMO_FB_ALIGN - 1))
 
 /*******************************************************************************
  * Prototypes
@@ -196,8 +195,8 @@ void lv_port_disp_init(void)
      * Register the display in LittlevGL
      *----------------------------------*/
 
-    static lv_disp_drv_t disp_drv;      /*Descriptor of a display driver*/
-    lv_disp_drv_init(&disp_drv); /*Basic initialization*/
+    static lv_disp_drv_t disp_drv; /*Descriptor of a display driver*/
+    lv_disp_drv_init(&disp_drv);   /*Basic initialization*/
 
     /*Set up the functions to access to your display*/
 

@@ -1,40 +1,28 @@
 var a00048 =
 [
-    [ "otfad_encryption_config_t", "a00048.html#a00359", [
-      [ "valid", "a00048.html#ac3b63de8b750379ea5624f7d74531be5", null ],
-      [ "AESdecryption", "a00048.html#af3b269b47f488c714d5eb1ad437d7256", null ],
-      [ "readOnly", "a00048.html#a1d3e2eb36d914a36177a9da94b8e2d58", null ],
-      [ "contextIndex", "a00048.html#a5070e3bdeacf35ab6193b802e2018bed", null ],
-      [ "startAddr", "a00048.html#a5ff083c0b5489ee6d8b5a04e64368daf", null ],
-      [ "endAddr", "a00048.html#a68bcebd88fbdfaf8520e351beb35299d", null ],
-      [ "key", "a00048.html#a97f159aa4d63c763126f1622446d2dd9", null ],
-      [ "counter", "a00048.html#a0fcc7e04b556eeefa09a33c64886fc88", null ]
+    [ "_ocotp_timing", "a00048.html#a00353", [
+      [ "wait", "a00048.html#a209b71517255bb7c7de795f2aa940d74", null ],
+      [ "relax", "a00048.html#afe864c7e56ce16eea8845349a8246a73", null ],
+      [ "strobe_prog", "a00048.html#a6dc87b120b1b5ef51f7aa07b9d21f37b", null ],
+      [ "strobe_read", "a00048.html#aebc7d26f1553dd924b5868a66ec8e417", null ]
     ] ],
-    [ "otfad_config_t", "a00048.html#a00358", [
-      [ "forceSVM", "a00048.html#a16643b191f1894c6fc34ed9962901cda", null ],
-      [ "forceLDM", "a00048.html#ac3387ca22cc5f1bae397650f2f19255a", null ],
-      [ "restrictedRegAccess", "a00048.html#a6b97e383ed84409188ed2bd96217b735", null ],
-      [ "enableOTFAD", "a00048.html#ae9ecf4b2fc829d31f9fbe2ffa0e0ebd5", null ]
+    [ "FSL_OCOTP_DRIVER_VERSION", "a00048.html#ga211ad512cb6afc3a8649a61c4f887dd5", null ],
+    [ "ocotp_timing_t", "a00048.html#ga8f3dfc0636f2758f21ed76d4e7196c4f", [
+      [ "kStatus_OCOTP_AccessError", "a00048.html#gga5d76b81b0ad4c19007a781d4edb8181fa6133e2fb03bd09bc490982251048c8de", null ],
+      [ "kStatus_OCOTP_CrcFail", "a00048.html#gga5d76b81b0ad4c19007a781d4edb8181fa6c5aa99c2965029cf80feaf36cd0763a", null ],
+      [ "kStatus_OCOTP_ReloadError", "a00048.html#gga5d76b81b0ad4c19007a781d4edb8181faa1a3a69603c6973128021852a03cf9ce", null ],
+      [ "kStatus_OCOTP_ProgramFail", "a00048.html#gga5d76b81b0ad4c19007a781d4edb8181fae3aafd3ae27db94a954965038445d240", null ],
+      [ "kStatus_OCOTP_Locked", "a00048.html#gga5d76b81b0ad4c19007a781d4edb8181fa3a38a5c2c3c0f0146c9b773e855812a6", null ]
     ] ],
-    [ "FSL_OTFAD_DRIVER_VERSION", "a00048.html#ga20f3f7f4a4d28843e4dcba42fe074de4", [
-      [ "kStatus_OTFAD_ResRegAccessMode", "a00048.html#ggaac34dfe6c6b73b43a4656c9dce041034ab86672f372b394bddf19bc570929597c", null ],
-      [ "kStatus_OTFAD_AddressError", "a00048.html#ggaac34dfe6c6b73b43a4656c9dce041034ada2a68470d9b60529fde6beab292e72f", null ],
-      [ "kStatus_OTFAD_RegionOverlap", "a00048.html#ggaac34dfe6c6b73b43a4656c9dce041034a94765e8e9e448cfa441e2134f87a842f", null ],
-      [ "kStatus_OTFAD_RegionMiss", "a00048.html#ggaac34dfe6c6b73b43a4656c9dce041034ab98da10f5a46caedb11ea21bcb4b6328", null ],
-      [ "kOTFAD_Context_0", "a00048.html#gga0ed680fdb405e7195d9f14032851eebba289054cf51b8d6cb3c32a87884400e17", null ],
-      [ "kOTFAD_Context_1", "a00048.html#gga0ed680fdb405e7195d9f14032851eebbabe9a603f23afef05bfdeb1583713f336", null ],
-      [ "kOTFAD_Context_2", "a00048.html#gga0ed680fdb405e7195d9f14032851eebba3769e4cee63954e3dfaceea80109ce08", null ],
-      [ "kOTFAD_Context_3", "a00048.html#gga0ed680fdb405e7195d9f14032851eebbad32231e169446492d32c3674354dbf4d", null ],
-      [ "kOTFAD_NRM", "a00048.html#gga0944a4353780132eeab7b06e3e42291da46b06bacd1a8297969a3a61810b5366f", null ],
-      [ "kOTFAD_SVM", "a00048.html#gga0944a4353780132eeab7b06e3e42291dafa7c009b2feed9501056ff7ef74bec34", null ],
-      [ "kOTFAD_LDM", "a00048.html#gga0944a4353780132eeab7b06e3e42291dafe2dfe963d9f93d97d2f7ebfcc3ccc96", null ]
-    ] ],
-    [ "OTFAD_GetDefaultConfig", "a00048.html#ga7ec529b7e632085d191bc1c772efaa2e", null ],
-    [ "OTFAD_Init", "a00048.html#ga50c3cc55c76ff1feacb5291ff2428a6c", null ],
-    [ "OTFAD_Deinit", "a00048.html#ga8a04f4e827eaee49fc2dc31e54d05397", null ],
-    [ "OTFAD_GetOperateMode", "a00048.html#ga97f6956807f1b567e8cf98a2306a4b1f", null ],
-    [ "OTFAD_GetStatus", "a00048.html#gac7760cfc19871898542641394ca4526d", null ],
-    [ "OTFAD_SetEncryptionConfig", "a00048.html#ga49d9425e4b8a8d626be9713e5a7c9537", null ],
-    [ "OTFAD_GetEncryptionConfig", "a00048.html#ga98b5cbfb4a1e6a8fe8af63df3965161d", null ],
-    [ "OTFAD_HitDetermination", "a00048.html#ga874fd2f27989b88104253600094be09a", null ]
+    [ "OCOTP_Init", "a00048.html#ga54480b3c489116b8cb76053b16f02c89", null ],
+    [ "OCOTP_Deinit", "a00048.html#gaafffa3b5fe3f1f69f077e88ba5a7e107", null ],
+    [ "OCOTP_CheckBusyStatus", "a00048.html#gaa3040092099624ec476dd81bd022712c", null ],
+    [ "OCOTP_CheckErrorStatus", "a00048.html#gaf0ee0166ccd35b0273d468b7eb72c954", null ],
+    [ "OCOTP_ClearErrorStatus", "a00048.html#gad9294be0c39be4dfaa1eea436ac85171", null ],
+    [ "OCOTP_ReloadShadowRegister", "a00048.html#ga7a7b1cd03383fafde15157a06fdda557", null ],
+    [ "OCOTP_ReadFuseShadowRegister", "a00048.html#gaecc991ccf4be0c49286fb13cba97e389", null ],
+    [ "OCOTP_ReadFuseShadowRegisterExt", "a00048.html#gaa1b0f813fa5ca43225d71d9218c48a28", null ],
+    [ "OCOTP_WriteFuseShadowRegister", "a00048.html#ga43636ab96125958c9a14fe82c176e33e", null ],
+    [ "OCOTP_WriteFuseShadowRegisterWithLock", "a00048.html#ga4f837c7b4a66ffe3153f2975fd5c6388", null ],
+    [ "OCOTP_GetVersion", "a00048.html#ga38c12a5cb815d9330cd8f2c04e8e1ec5", null ]
 ];

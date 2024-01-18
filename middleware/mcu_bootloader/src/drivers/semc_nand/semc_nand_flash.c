@@ -1470,11 +1470,13 @@ status_t semc_nand_set_device_ecc(semc_nand_config_t *config, semc_nand_device_e
 {
     status_t status;
     bool isEccSetAsExpected = false;
+    uint8_t expectedNandEccStatusValue;
 
-    if (config->deviceEccStatus == expectedStatus)
-    {
-        return kStatus_Success;
-    }
+    // Kris: Should remove below code, otherwise, device ECC might be disabled when BCH ECC or SW ECC is used before.
+    // if (config->deviceEccStatus == expectedStatus)
+    // {
+    //     return kStatus_Success;
+    // }
 
     // Note: ECC is enabled by default in most ONFI compliant device,
     //  But for some Micron device, it is disabled by default
@@ -1496,6 +1498,8 @@ status_t semc_nand_set_device_ecc(semc_nand_config_t *config, semc_nand_device_e
             {
                 featureConfig.parameter[0] = kNandDeviceFeature_MT29F_ArrayOperationModeCode_EnableECC;
             }
+
+            expectedNandEccStatusValue = featureConfig.parameter[0];
 
             /*
              * column address bits offset is bit0 if NANDCR0.PS=0(x8)
@@ -1520,7 +1524,7 @@ status_t semc_nand_set_device_ecc(semc_nand_config_t *config, semc_nand_device_e
                 return status;
             }
 
-            if (featureConfig.parameter[0] == 0x08)
+            if (featureConfig.parameter[0] == expectedNandEccStatusValue)
             {
                 isEccSetAsExpected = true;
                 config->deviceEccStatus = expectedStatus;
@@ -1988,7 +1992,7 @@ status_t semc_nand_flash_init(semc_nand_config_t *config)
                 return status;
             }
         }
-        else if ((config->eccCheckType == kSemcNandEccCheckType_SoftwareECC) || 
+        else if ((config->eccCheckType == kSemcNandEccCheckType_SoftwareECC) ||
                  (config->eccCheckType == kSemcNandEccCheckType_SemcBchECC))
         {
             status = semc_nand_set_device_ecc(config, kSemcNandDeviceEccStatus_Disabled);
@@ -2004,10 +2008,10 @@ status_t semc_nand_flash_init(semc_nand_config_t *config)
 
 //!@brief Read page data from Parallel NAND via SEMC
 status_t semc_nand_flash_read_page(semc_nand_config_t *config, uint32_t pageIndex, uint8_t *buffer, uint32_t length)
-{   
-#if (defined(FSL_FEATURE_SEMC_HAS_NAND_HW_ECC) && (FSL_FEATURE_SEMC_HAS_NAND_HW_ECC > 0U))      
+{
+#if (defined(FSL_FEATURE_SEMC_HAS_NAND_HW_ECC) && (FSL_FEATURE_SEMC_HAS_NAND_HW_ECC > 0U))
     semc_nand_configure_ndba_for_buffer_read();
-    
+
     status_t status = kStatus_Success;
     uint32_t ipgCmdAddr, ipgCmdAddr_org, memoryAccessAddr, eccCheckedByte;
     uint8_t count;
@@ -2027,10 +2031,10 @@ status_t semc_nand_flash_read_page(semc_nand_config_t *config, uint32_t pageInde
     {
         ecc_bytes = 0;
     }
-    
+
      /* Configure NANDCR0 register for ECC mode, sector size and number */
     semc_nand_configure_nandcr0_for_buffer_write(&config->memConfig);
-    
+
     /*
      * ECC data is stored in NAND Flash and data will fill in total page including spare area.
      * data is stored in NO.n page, in fact this page index is 2*n.
@@ -2045,7 +2049,7 @@ status_t semc_nand_flash_read_page(semc_nand_config_t *config, uint32_t pageInde
         ipgCmdAddr = pageIndex * config->bytesInPageDataArea;
         ipgCmdAddr_org = ipgCmdAddr;
     }
-    
+
     if (s_nandOnfiParameterConfig.optionalCommands.readStatusEnhanced)
     {
         if (ipgCmdAddr >= config->bytesInPageDataArea * config->pagesInBlock * config->blocksInPlane)
@@ -2061,7 +2065,7 @@ status_t semc_nand_flash_read_page(semc_nand_config_t *config, uint32_t pageInde
     {
         config->statusCommandType = kSemcNandStatusCommandType_Common;
     }
-    
+
     // Validate given pageIndex
     if (ipgCmdAddr >= config->memConfig.nandMemConfig.ipgMemSizeInByte)
     {
@@ -2073,40 +2077,40 @@ status_t semc_nand_flash_read_page(semc_nand_config_t *config, uint32_t pageInde
     {
         return kStatus_SemcNAND_MoreThanOnePageSize;
     }
-    
+
     if (config->memConfig.accessCommandType == kSemcAccessCommandType_AXI32CMD)
     {
         memoryAccessAddr = config->memConfig.nandMemConfig.axiMemBaseAddress;
     }
-    else 
+    else
     {
         ipgCmdAddr = semc_ipg_command_convert_nand_address(&config->memConfig, ipgCmdAddr);
-        s_nandOperationInfo.rowAddressToGetSR = ipgCmdAddr;         
-        memoryAccessAddr = ipgCmdAddr;       
-    }  
-    
+        s_nandOperationInfo.rowAddressToGetSR = ipgCmdAddr;
+        memoryAccessAddr = ipgCmdAddr;
+    }
+
     /* send flash command "Page Read" */
-    status = semc_nand_issue_read_page(config, ipgCmdAddr);  
+    status = semc_nand_issue_read_page(config, ipgCmdAddr);
     if (status != kStatus_Success)
     {
         return status;
     }
-    
+
     // READ MODE command should be issued after read status/read status enhanced.
     status = semc_nand_issue_read_mode(config);
     if (status != kStatus_Success)
     {
         return status;
     }
-    
+
     // If >NAND_ECC_RESULT_BUF_SIZE bytes are to be read, we read them in NAND_ECC_RESULT_BUF_SIZE bytes, for several
     // times to finish
     count = (length + 2048 - 1) / 2048;
     length = (length - 1) % 2048 + 1; // From now on length is last round's read size
-    
+
     while (count)
-    {    
-        /* send flash command "Page Read" */                    
+    {
+        /* send flash command "Page Read" */
         if (config->memConfig.accessCommandType == kSemcAccessCommandType_AXI32CMD)
         {
             memoryAccessAddr = config->memConfig.nandMemConfig.axiMemBaseAddress;
@@ -2114,39 +2118,39 @@ status_t semc_nand_flash_read_page(semc_nand_config_t *config, uint32_t pageInde
         else
         {
             ipgCmdAddr = semc_ipg_command_convert_nand_address(&config->memConfig, ipgCmdAddr_org);
-            s_nandOperationInfo.rowAddressToGetSR = ipgCmdAddr;  
+            s_nandOperationInfo.rowAddressToGetSR = ipgCmdAddr;
             memoryAccessAddr = ipgCmdAddr;
-        }    
-               
+        }
+
         /* send IP command "NAND Buffer Read" */
         status = semc_nand_issue_buffer_read_cmd(0);
         if (status != kStatus_Success)
         {
             return status;
-        }     
-        
+        }
+
         /* configure NDBA register */
         semc_nand_configure_ndba_for_buffer_read();
-        
+
         size_t buf_remaining_length = (count == 1 ? length : 2048);
         while (buf_remaining_length)
-        {         
+        {
             if (config->memConfig.accessCommandType == kSemcAccessCommandType_IPBUSCMD)
-            {              
+            {
                 status = semc_ipg_memory_read_buffer(&config->memConfig, (uint8_t *)s_nandReadbackBlockBuffer,
                                                      sizeof(s_nandReadbackBlockBuffer));
                 if (status != kStatus_Success)
-                {                
+                {
                     return status;
                 }
             }
             else if (config->memConfig.accessCommandType == kSemcAccessCommandType_AXI32CMD)
-            {            
-                /* read address can't exceed page size */    
+            {
+                /* read address can't exceed page size */
                 status = semc_axi_memory_read(memoryAccessAddr, (uint8_t *)s_nandReadbackBlockBuffer,
                                               sizeof(s_nandReadbackBlockBuffer));
                 if (status != kStatus_Success)
-                {                 
+                {
                     return status;
                 }
             }
@@ -2162,7 +2166,7 @@ status_t semc_nand_flash_read_page(semc_nand_config_t *config, uint32_t pageInde
             else
             {
                 eccCheckedByte = buf_remaining_length;
-            }           
+            }
 
             memcpy(buffer, s_nandReadbackBlockBuffer, eccCheckedByte);
 
@@ -2174,10 +2178,10 @@ status_t semc_nand_flash_read_page(semc_nand_config_t *config, uint32_t pageInde
             buf_remaining_length -= eccCheckedByte;
             ipgCmdAddr += 512 + ecc_bytes;
             ipgCmdAddr_org += 512 + ecc_bytes;
-        }                      
+        }
         count--;
     }
-#else       
+#else
     status_t status = kStatus_Success;
     uint32_t ipgCmdAddr, memoryAccessAddr;
     uint32_t eccCheckedByte;
@@ -2297,9 +2301,9 @@ status_t semc_nand_flash_read_page(semc_nand_config_t *config, uint32_t pageInde
             break;
         }
         length -= eccCheckedByte;
-    }    
-#endif //  FSL_FEATURE_SEMC_HAS_NAND_HW_ECC   
-    
+    }
+#endif //  FSL_FEATURE_SEMC_HAS_NAND_HW_ECC
+
     return status;
 }
 
@@ -2352,7 +2356,7 @@ status_t semc_nand_flash_page_program(semc_nand_config_t *config, uint32_t pageI
         uint8_t *writeSrc;
         bool isAllBlankPayload = false;
 
-        assert(!(config->bytesInPageDataArea / sizeof(s_nandReadbackBlockBuffer)));
+        assert((config->bytesInPageDataArea / sizeof(s_nandReadbackBlockBuffer)));
         while (payloadedBytes < config->bytesInPageDataArea)
         {
             uint32_t writeBytes;
@@ -2393,7 +2397,7 @@ status_t semc_nand_flash_page_program(semc_nand_config_t *config, uint32_t pageI
                 /* configure NDBA register */
                 semc_nand_configure_ndba_for_buffer_write();
                 // Write cached data to NAND device
-                
+
                 if (config->memConfig.accessCommandType == kSemcAccessCommandType_AXI32CMD)
                 {
                     status = semc_axi_memory_write(memoryAccessAddr + payloadedBytes, writeSrc, writeBytes);
@@ -2411,10 +2415,10 @@ status_t semc_nand_flash_page_program(semc_nand_config_t *config, uint32_t pageI
                         return status;
                     }
                     status = semc_nand_issue_buffer_write_cmd(config->memConfig.nandMemConfig.ipgMemBaseAddress);
-                }      
+                }
             }
             else
-#endif // FSL_FEATURE_SEMC_HAS_NAND_HW_ECC              
+#endif // FSL_FEATURE_SEMC_HAS_NAND_HW_ECC
             {
                 // Write cached data to NAND device
                 if (config->memConfig.accessCommandType == kSemcAccessCommandType_AXI32CMD)
@@ -2449,7 +2453,7 @@ status_t semc_nand_flash_page_program(semc_nand_config_t *config, uint32_t pageI
         return status;
     }
 
-#if (defined(FSL_FEATURE_SEMC_HAS_NAND_HW_ECC) && (FSL_FEATURE_SEMC_HAS_NAND_HW_ECC > 0U))   
+#if (defined(FSL_FEATURE_SEMC_HAS_NAND_HW_ECC) && (FSL_FEATURE_SEMC_HAS_NAND_HW_ECC > 0U))
     // Re-cover port size
     // semc_set_macthed_ipg_command_data_size(config->memConfig.nandMemConfig.ioPortWidth);
     semc_ipg_command_set_data_size(config->memConfig.nandMemConfig.ioPortWidth/8);

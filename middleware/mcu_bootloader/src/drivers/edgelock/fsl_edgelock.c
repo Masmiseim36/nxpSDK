@@ -37,6 +37,12 @@
 #define EDGELOCK_CMD_HEADER_WRITE_FUSE(words)    \
     EDGELOCK_CMD_HEADER(EDGELOCK_CMD_WRITE_FUSE, \
                         sizeof(write_fuse_message_packet_t) / 4 - WRITE_FUSE_PAYLOAD_MAX_WORDS + (words))
+#define EDGELOCK_CMD_HEADER_START_RNG \
+    EDGELOCK_CMD_HEADER(EDGELOCK_CMD_START_RNG, sizeof(start_rng_message_packet_t) / 4)
+#define EDGELOCK_CMD_HEADER_GET_RNG \
+    EDGELOCK_CMD_HEADER(EDGELOCK_CMD_GET_RNG_STATE, sizeof(get_trng_state_message_packet_t) / 4)
+#define EDGELOCK_CMD_HEADER_LOAD_KEY_BLOB \
+    EDGELOCK_CMD_HEADER(EDGELOCK_CMD_LOAD_KEY_BLOB, sizeof(load_keyblob_response_packet_t) / 4)
 #define EDGELOCK_CMD_HEADER_GENERATE_KEY_BLOB \
     EDGELOCK_CMD_HEADER(EDGELOCK_CMD_GENERATE_KEY_BLOB, sizeof(generate_keyblob_message_packet_t) / 4)
 
@@ -153,6 +159,54 @@ typedef struct _write_fuse_response_packet_
     uint8_t reserved[2];   /* Reserved. */
 } write_fuse_response_packet_t;
 
+/*! @brief The response packet format of the generate keyblob command. */
+typedef struct _generate_keyblob_response_packet_
+{
+    response_packet_t rsp; /* Response packet. */
+} generate_keyblob_response_packet_t;
+
+/*! @brief The message packet format of the start RNG command. */
+typedef struct _start_rng_message_packet_
+{
+    message_packet_t msg; /* Message packet. */
+} start_rng_message_packet_t;
+
+/*! @brief The response packet format of the start RNG command. */
+typedef struct _start_rng_response_packet_
+{
+    response_packet_t rsp; /* Response packet. */
+} start_rng_response_packet_t;
+
+/*! @brief The message packet format of the get TRNG state command. */
+typedef struct _get_trng_state_message_packet_
+{
+    message_packet_t msg; /* Message packet. */
+} get_trng_state_message_packet_t;
+
+/*! @brief The response packet format of the get TRNG state command. */
+typedef struct _get_trng_state_response_packet_
+{
+    response_packet_t rsp; /* Response packet. */
+    uint8_t trngState;
+    uint8_t csalState;
+    uint8_t reserved[2];
+} get_trng_state_response_packet_t;
+
+/*! @brief The message packet format of the load keyblob command. */
+typedef struct _load_keyblob_message_packet_
+{
+    message_packet_t msg;   /* Message packet. */
+    uint32_t keyIdentifier; /* Key Identifier. */
+    uint32_t reserved;      /* In case of 64 bits address, this field contains the 4 MSB of the 64 bits load address. */
+    uint32_t loadAddress;   /* Address where the input data can be found. Must be 64 bits aligned. */
+} load_keyblob_message_packet_t;
+
+/*! @brief The response packet format of the load keyblob command. */
+typedef struct _load_keyblob_response_packet_
+{
+    response_packet_t rsp; /* Response packet. */
+} load_keyblob_response_packet_t;
+
 /*! @brief The message packet format of the generate keyblob command. */
 typedef struct _generate_keyblob_message_packet_
 {
@@ -166,12 +220,6 @@ typedef struct _generate_keyblob_message_packet_
     uint16_t reserved3;     /* Unused. */
     uint32_t xorCheck;      /* XOR of the words from msg to resrved3. */
 } generate_keyblob_message_packet_t;
-
-/*! @brief The response packet format of the generate keyblob command. */
-typedef struct _generate_keyblob_response_packet_
-{
-    response_packet_t rsp; /* Response packet. */
-} generate_keyblob_response_packet_t;
 
 /*******************************************************************************
  * Variables
@@ -648,6 +696,88 @@ status_t EDGELOCK_WriteFuse(
             }
         }
     }
+
+    return status;
+}
+
+/*!
+ * @brief Start TRNG.
+ *
+ * @param base Edgelock Message Unit base.
+ * @return 0 for success, otherwise return error code.
+ */
+status_t EDGELOCK_StartRNG(SxMU_Type *base)
+{
+    status_t status = kStatus_Fail;
+
+    /* Prepare the message packet. */
+    start_rng_message_packet_t cmdMsg = { 0 };
+    cmdMsg.msg.header.U = EDGELOCK_CMD_HEADER_START_RNG;
+
+    /* Receive the response packet. */
+    start_rng_response_packet_t respMsg = { 0 };
+
+    status = EDGELOCK_Command(base, (uint32_t *)&cmdMsg, sizeof(cmdMsg) / 4, (uint32_t *)&respMsg, sizeof(respMsg) / 4);
+
+    return status;
+}
+
+/*!
+ * @brief Return TRNG state.
+ *
+ * @param base Edgelock Message Unit base.
+ * @param trngState Return the TRNG state.
+ * @param csalState Return the CSAL state.
+ * @return 0 for success, otherwise return error code.
+ */
+status_t EDGELOCK_GetTRNGState(SxMU_Type *base, uint8_t *trngState, uint8_t *csalState)
+{
+    status_t status = kStatus_Fail;
+
+    /* Prepare the message packet. */
+    get_trng_state_message_packet_t cmdMsg = { 0 };
+    cmdMsg.msg.header.U = EDGELOCK_CMD_HEADER_GET_RNG;
+
+    /* Receive the response packet. */
+    get_trng_state_response_packet_t respMsg = { 0 };
+
+    status = EDGELOCK_Command(base, (uint32_t *)&cmdMsg, sizeof(cmdMsg) / 4, (uint32_t *)&respMsg, sizeof(respMsg) / 4);
+    if (status == kStatus_Success)
+    {
+        *trngState = respMsg.trngState;
+        *csalState = respMsg.csalState;
+    }
+
+    return status;
+}
+
+/*!
+ * @brief Load key blob.
+ *
+ * @param base Edgelock Message Unit base.
+ * @param keyIdentifier Identifier of the input key
+ * @param loadAddr Address where the input key data can be found.
+ * @return 0 for success, otherwise return error code.
+ */
+status_t EDGELOCK_LoadKeyblob(SxMU_Type *base, uint32_t keyIdentifier, uint32_t loadAddr)
+{
+    status_t status = kStatus_Fail;
+
+    if (loadAddr % KEY_BLOB_ALIGN_SIZE)
+    {
+        return kStatus_InvalidArgument;
+    }
+
+    /* Prepare the message packet. */
+    load_keyblob_message_packet_t cmdMsg = { 0 };
+    cmdMsg.msg.header.U = EDGELOCK_CMD_HEADER_LOAD_KEY_BLOB;
+    cmdMsg.keyIdentifier = keyIdentifier;
+    cmdMsg.loadAddress = loadAddr;
+
+    /* Receive the response packet. */
+    load_keyblob_response_packet_t respMsg = { 0 };
+
+    status = EDGELOCK_Command(base, (uint32_t *)&cmdMsg, sizeof(cmdMsg) / 4, (uint32_t *)&respMsg, sizeof(respMsg) / 4);
 
     return status;
 }

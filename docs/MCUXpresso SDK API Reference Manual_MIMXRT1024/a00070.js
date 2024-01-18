@@ -1,22 +1,22 @@
 var a00070 =
 [
-    [ "sgtl_audio_format_t", "a00070.html#a00496", [
-      [ "mclk_HZ", "a00070.html#ae0edadf6baf0a743e4765421ad2abc3f", null ],
-      [ "sampleRate", "a00070.html#a47b2d7178ab3a15a56b8972b2d2eac29", null ],
-      [ "bitWidth", "a00070.html#a78334148115e196b31db9b1a302a4941", null ],
-      [ "sclkEdge", "a00070.html#a9cdfd73fb1b74ee97d94e2e183af5a00", null ]
+    [ "_sgtl_audio_format", "a00070.html#a00490", [
+      [ "mclk_HZ", "a00070.html#a38a947cae212e2c07c91e17ba432bced", null ],
+      [ "sampleRate", "a00070.html#a0ac8e8cd01a893684b47e1434361d46d", null ],
+      [ "bitWidth", "a00070.html#adf36766a1bcbd3d5099ff71e0bb97334", null ],
+      [ "sclkEdge", "a00070.html#afa5919b175c7190ac1cb31951f295cf5", null ]
     ] ],
-    [ "sgtl_config_t", "a00070.html#a00497", [
-      [ "route", "a00070.html#a8c4ed2bb6162b218a0aa8077d9bab4aa", null ],
-      [ "bus", "a00070.html#a1991cd986722d22c8964f08bc9d8c21d", null ],
-      [ "master_slave", "a00070.html#a4daf6a63ca5b405aac9332ca477c3501", null ],
-      [ "format", "a00070.html#af41c4ad8e8dfb29b4fde75d76f9f43c8", null ],
-      [ "slaveAddress", "a00070.html#abdee01c708fa6a6beaf93e371347c590", null ],
-      [ "i2cConfig", "a00070.html#a0552d0239f157964cdc500d73350d11d", null ]
+    [ "_sgtl_config", "a00070.html#a00491", [
+      [ "route", "a00070.html#ae8e0a67de0bfb62cabceb62177a3a6c8", null ],
+      [ "bus", "a00070.html#ab65d798b15243d3ea37fbefee94ff170", null ],
+      [ "master_slave", "a00070.html#a4c46befc8581a0d5af0266950e2405a3", null ],
+      [ "format", "a00070.html#a960282a5a6515e911f2936b5eeed5b24", null ],
+      [ "slaveAddress", "a00070.html#a2608b29dc436a7a3acbd067d95d59a87", null ],
+      [ "i2cConfig", "a00070.html#a6f3c3705606cd36ed6122b5a0ce50128", null ]
     ] ],
-    [ "sgtl_handle_t", "a00070.html#a00498", [
-      [ "config", "a00070.html#a2187719e2579f70c815eff00bd8d7b98", null ],
-      [ "i2cHandle", "a00070.html#aee64ef7e3a76d06780a73c63d68d2a98", null ]
+    [ "_sgtl_handle", "a00070.html#a00492", [
+      [ "config", "a00070.html#aff102977588ebfd7bb704fa6e78cbf04", null ],
+      [ "i2cHandle", "a00070.html#aa947e0901c2f8abcc1389fd7756aafb8", null ]
     ] ],
     [ "FSL_SGTL5000_DRIVER_VERSION", "a00070.html#gacb25f9b960a10309cc4b9b2cb0f0c063", null ],
     [ "CHIP_ID", "a00070.html#gab0aa3e54cd2934b67b9882957456c391", null ],
@@ -24,31 +24,38 @@ var a00070 =
     [ "SGTL5000_I2C_ADDR", "a00070.html#ga58ceb20f920b2b006c74eeeae992830a", null ],
     [ "SGTL_I2C_HANDLER_SIZE", "a00070.html#ga5a006451f9e990a4d3255ed7265ff1ad", null ],
     [ "SGTL_I2C_BITRATE", "a00070.html#ga7bf82c8b0e6415457b6f42f50af4230d", null ],
-    [ "sgtl_module_t", "a00070.html#gaf78d5250d200a4cc76a60dcff249a4d3", [
-      [ "kSGTL_ModuleADC", "a00070.html#ggaf78d5250d200a4cc76a60dcff249a4d3aeff780e31f47de5bd4ae4f7c2247a943", null ],
-      [ "kSGTL_ModuleDAC", "a00070.html#ggaf78d5250d200a4cc76a60dcff249a4d3ac97955a1a57467c8a7a93629468c0ae5", null ],
-      [ "kSGTL_ModuleDAP", "a00070.html#ggaf78d5250d200a4cc76a60dcff249a4d3a6db304a2a1838b8733167b535efd1cc6", null ],
-      [ "kSGTL_ModuleHP", "a00070.html#ggaf78d5250d200a4cc76a60dcff249a4d3a7c3ca8ea568a0109f5858469734f1f22", null ],
-      [ "kSGTL_ModuleI2SIN", "a00070.html#ggaf78d5250d200a4cc76a60dcff249a4d3a5eec6607385362c2f1f67574f98bab7f", null ],
-      [ "kSGTL_ModuleI2SOUT", "a00070.html#ggaf78d5250d200a4cc76a60dcff249a4d3ad549fbd25f776da2e48029e7defb136d", null ],
-      [ "kSGTL_ModuleLineIn", "a00070.html#ggaf78d5250d200a4cc76a60dcff249a4d3a3cf24e3ca184744b13ce10adb648afcd", null ],
-      [ "kSGTL_ModuleLineOut", "a00070.html#ggaf78d5250d200a4cc76a60dcff249a4d3a04e0f93df81aacf8114308d95703248f", null ],
-      [ "kSGTL_ModuleMicin", "a00070.html#ggaf78d5250d200a4cc76a60dcff249a4d3a4d7e27445f7842c7d420a3621ac73e72", null ]
+    [ "sgtl_module_t", "a00070.html#ga8daa03b90ec34beec5c4a9bcc5b0cbd3", null ],
+    [ "sgtl_route_t", "a00070.html#ga7d97f5b5552db956cdeb7ad0ec70efeb", null ],
+    [ "sgtl_protocol_t", "a00070.html#gabb24e1c0a6f4f885b77508c575382082", null ],
+    [ "sgtl_sclk_edge_t", "a00070.html#gaa442de703d57f173c868a86709eca130", null ],
+    [ "sgtl_audio_format_t", "a00070.html#gac39b9431fec36a8a0d2b18f44213b5c1", null ],
+    [ "sgtl_config_t", "a00070.html#ga04f368cf5c75e66ff28894ec9194a2f8", null ],
+    [ "sgtl_handle_t", "a00070.html#ga9460fe6fb4321e52ff2069361a6f8a12", null ],
+    [ "_sgtl5000_module", "a00070.html#ga8f64b804a9c2ab9412f5a2aa348e0795", [
+      [ "kSGTL_ModuleADC", "a00070.html#gga8f64b804a9c2ab9412f5a2aa348e0795aeff780e31f47de5bd4ae4f7c2247a943", null ],
+      [ "kSGTL_ModuleDAC", "a00070.html#gga8f64b804a9c2ab9412f5a2aa348e0795ac97955a1a57467c8a7a93629468c0ae5", null ],
+      [ "kSGTL_ModuleDAP", "a00070.html#gga8f64b804a9c2ab9412f5a2aa348e0795a6db304a2a1838b8733167b535efd1cc6", null ],
+      [ "kSGTL_ModuleHP", "a00070.html#gga8f64b804a9c2ab9412f5a2aa348e0795a7c3ca8ea568a0109f5858469734f1f22", null ],
+      [ "kSGTL_ModuleI2SIN", "a00070.html#gga8f64b804a9c2ab9412f5a2aa348e0795a5eec6607385362c2f1f67574f98bab7f", null ],
+      [ "kSGTL_ModuleI2SOUT", "a00070.html#gga8f64b804a9c2ab9412f5a2aa348e0795ad549fbd25f776da2e48029e7defb136d", null ],
+      [ "kSGTL_ModuleLineIn", "a00070.html#gga8f64b804a9c2ab9412f5a2aa348e0795a3cf24e3ca184744b13ce10adb648afcd", null ],
+      [ "kSGTL_ModuleLineOut", "a00070.html#gga8f64b804a9c2ab9412f5a2aa348e0795a04e0f93df81aacf8114308d95703248f", null ],
+      [ "kSGTL_ModuleMicin", "a00070.html#gga8f64b804a9c2ab9412f5a2aa348e0795a4d7e27445f7842c7d420a3621ac73e72", null ]
     ] ],
-    [ "sgtl_route_t", "a00070.html#ga78ef5545b50946b6d168203283c20820", [
-      [ "kSGTL_RouteBypass", "a00070.html#gga78ef5545b50946b6d168203283c20820a1ea39c5bbafcc616613e8755b70573e9", null ],
-      [ "kSGTL_RoutePlayback", "a00070.html#gga78ef5545b50946b6d168203283c20820ad379b8e67ddbbb27bc44c6d6f3cf7c0e", null ],
-      [ "kSGTL_RoutePlaybackandRecord", "a00070.html#gga78ef5545b50946b6d168203283c20820ae11f7c67b7d1ab7e4dce3d927be7da00", null ],
-      [ "kSGTL_RoutePlaybackwithDAP", "a00070.html#gga78ef5545b50946b6d168203283c20820ae79c7286d52a67b618e4e23a1f1306b6", null ],
-      [ "kSGTL_RoutePlaybackwithDAPandRecord", "a00070.html#gga78ef5545b50946b6d168203283c20820a53052344996dc1f90cf6457e2b81eb18", null ],
-      [ "kSGTL_RouteRecord", "a00070.html#gga78ef5545b50946b6d168203283c20820a0c28a072be0500106b9b32a16f05f000", null ]
+    [ "_sgtl_route", "a00070.html#ga2f39070b1aca54ecf0d46af5cda78cc1", [
+      [ "kSGTL_RouteBypass", "a00070.html#gga2f39070b1aca54ecf0d46af5cda78cc1a1ea39c5bbafcc616613e8755b70573e9", null ],
+      [ "kSGTL_RoutePlayback", "a00070.html#gga2f39070b1aca54ecf0d46af5cda78cc1ad379b8e67ddbbb27bc44c6d6f3cf7c0e", null ],
+      [ "kSGTL_RoutePlaybackandRecord", "a00070.html#gga2f39070b1aca54ecf0d46af5cda78cc1ae11f7c67b7d1ab7e4dce3d927be7da00", null ],
+      [ "kSGTL_RoutePlaybackwithDAP", "a00070.html#gga2f39070b1aca54ecf0d46af5cda78cc1ae79c7286d52a67b618e4e23a1f1306b6", null ],
+      [ "kSGTL_RoutePlaybackwithDAPandRecord", "a00070.html#gga2f39070b1aca54ecf0d46af5cda78cc1a53052344996dc1f90cf6457e2b81eb18", null ],
+      [ "kSGTL_RouteRecord", "a00070.html#gga2f39070b1aca54ecf0d46af5cda78cc1a0c28a072be0500106b9b32a16f05f000", null ]
     ] ],
-    [ "sgtl_protocol_t", "a00070.html#ga9bd346f7776a687fe345e336127e5426", [
-      [ "kSGTL_BusI2S", "a00070.html#gga9bd346f7776a687fe345e336127e5426ab56aded98ae08bb3dd4c431e036eb9b7", null ],
-      [ "kSGTL_BusLeftJustified", "a00070.html#gga9bd346f7776a687fe345e336127e5426a99d80a1bbb2ca42f8d8b9ded7d0fe156", null ],
-      [ "kSGTL_BusRightJustified", "a00070.html#gga9bd346f7776a687fe345e336127e5426a742196d31e1ede4eb6d0b1bd6afcdc50", null ],
-      [ "kSGTL_BusPCMA", "a00070.html#gga9bd346f7776a687fe345e336127e5426aae65c2ae38164483661ce81683e2cf6d", null ],
-      [ "kSGTL_BusPCMB", "a00070.html#gga9bd346f7776a687fe345e336127e5426a165348d47026247f859a40813f449cfd", null ],
+    [ "_sgtl_protocol", "a00070.html#ga8edcd60c410ff680100e07e7badbe7b3", [
+      [ "kSGTL_BusI2S", "a00070.html#gga8edcd60c410ff680100e07e7badbe7b3ab56aded98ae08bb3dd4c431e036eb9b7", null ],
+      [ "kSGTL_BusLeftJustified", "a00070.html#gga8edcd60c410ff680100e07e7badbe7b3a99d80a1bbb2ca42f8d8b9ded7d0fe156", null ],
+      [ "kSGTL_BusRightJustified", "a00070.html#gga8edcd60c410ff680100e07e7badbe7b3a742196d31e1ede4eb6d0b1bd6afcdc50", null ],
+      [ "kSGTL_BusPCMA", "a00070.html#gga8edcd60c410ff680100e07e7badbe7b3aae65c2ae38164483661ce81683e2cf6d", null ],
+      [ "kSGTL_BusPCMB", "a00070.html#gga8edcd60c410ff680100e07e7badbe7b3a165348d47026247f859a40813f449cfd", null ],
       [ "kSGTL_HeadphoneLeft", "a00070.html#gga39b4e25c4e8f5fed29720be17a532fa8a4438d9d23b966a384697ac3959ec180c", null ],
       [ "kSGTL_HeadphoneRight", "a00070.html#gga39b4e25c4e8f5fed29720be17a532fa8a7c3a64195b071d4d17957f2de39a45a7", null ],
       [ "kSGTL_LineoutLeft", "a00070.html#gga39b4e25c4e8f5fed29720be17a532fa8aea79ecce1f81bf12000fcf64671502ea", null ],
@@ -58,9 +65,9 @@ var a00070 =
       [ "kSGTL_PlaySourceLineIn", "a00070.html#gga34df7cc7f69a8ec535eec8a524dcbaf9ad99308b50ee139be94b584a66d999caf", null ],
       [ "kSGTL_PlaySourceDAC", "a00070.html#gga34df7cc7f69a8ec535eec8a524dcbaf9a9c7fa540632ee8e4c733fb4ccebc8601", null ]
     ] ],
-    [ "sgtl_sclk_edge_t", "a00070.html#ga1d2c82787cda907a0ac8646e11171db8", [
-      [ "kSGTL_SclkValidEdgeRising", "a00070.html#gga1d2c82787cda907a0ac8646e11171db8aa89baee03025ca12e2fd8eb03909724c", null ],
-      [ "kSGTL_SclkValidEdgeFailling", "a00070.html#gga1d2c82787cda907a0ac8646e11171db8a0e8f446d380d7f3c859b68ffe5a64a08", null ]
+    [ "_sgtl_sclk_edge", "a00070.html#ga4afcde26974cb123a18b38138dffbb71", [
+      [ "kSGTL_SclkValidEdgeRising", "a00070.html#gga4afcde26974cb123a18b38138dffbb71aa89baee03025ca12e2fd8eb03909724c", null ],
+      [ "kSGTL_SclkValidEdgeFailling", "a00070.html#gga4afcde26974cb123a18b38138dffbb71a0e8f446d380d7f3c859b68ffe5a64a08", null ]
     ] ],
     [ "SGTL_Init", "a00070.html#ga5dd1b8225b23f6e47c4abed5bf74709f", null ],
     [ "SGTL_SetDataRoute", "a00070.html#ga1ef9c339bf1ac795d7e5f3c42cebafb7", null ],

@@ -403,6 +403,7 @@ U16 A71_GetHmacSha256(SST_Index_t index, U8 nBlock, const U8 *data, U16 dataLen,
         // goto LBL_LEAVE_A71_GetHmacSha256;
 
         // Send out first chunk (HMAC_SHA256_Init)
+        AllocateAPDUBuffer(pApdu);
         pApdu->p2    = P2_HMAC_INIT;
         SetApduHeader(pApdu, USE_STANDARD_APDU_LEN);
         toSend = maxChunk;
@@ -424,6 +425,7 @@ U16 A71_GetHmacSha256(SST_Index_t index, U8 nBlock, const U8 *data, U16 dataLen,
         while (remainingData > maxChunk)
         {
             // Send out 'middle' chunks (HMAC_SHA256_Update)
+            AllocateAPDUBuffer(pApdu);
             pApdu->p2    = P2_HMAC_UPDATE;
             SetApduHeader(pApdu, USE_STANDARD_APDU_LEN);
             toSend = maxChunk;
@@ -444,6 +446,7 @@ U16 A71_GetHmacSha256(SST_Index_t index, U8 nBlock, const U8 *data, U16 dataLen,
         }
 
         // Always close with HMAC_SHA256_Final
+        AllocateAPDUBuffer(pApdu);
         pApdu->p2    = P2_HMAC_FINAL;
         SetApduHeader(pApdu, USE_STANDARD_APDU_LEN);
         toSend = remainingData;

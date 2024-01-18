@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -101,6 +101,7 @@ $(document).ready(function(){initNavTree('a00008.html','');});
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">ADC: 12-bit Analog to Digital Converter Driver</div>  </div>
@@ -119,142 +120,197 @@ Polling Configuration</h2>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00277"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a00277">adc_config_t</a></td></tr>
-<tr class="memdesc:a00277"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converter configuration.  <a href="a00008.html#a00277">More...</a><br/></td></tr>
-<tr class="separator:a00277"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00282"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a00282">adc_offest_config_t</a></td></tr>
-<tr class="memdesc:a00282"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converter Offset configuration.  <a href="a00008.html#a00282">More...</a><br/></td></tr>
-<tr class="separator:a00282"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00281"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a00281">adc_hardware_compare_config_t</a></td></tr>
-<tr class="memdesc:a00281"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC hardware compare configuration.  <a href="a00008.html#a00281">More...</a><br/></td></tr>
-<tr class="separator:a00281"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00276"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a00276">adc_channel_config_t</a></td></tr>
-<tr class="memdesc:a00276"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC channel conversion configuration.  <a href="a00008.html#a00276">More...</a><br/></td></tr>
-<tr class="separator:a00276"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00251"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a00251">_adc_config</a></td></tr>
+<tr class="memdesc:a00251"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converter configuration.  <a href="a00008.html#a00251">More...</a><br/></td></tr>
+<tr class="separator:a00251"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00256"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a00256">_adc_offest_config</a></td></tr>
+<tr class="memdesc:a00256"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converter Offset configuration.  <a href="a00008.html#a00256">More...</a><br/></td></tr>
+<tr class="separator:a00256"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00255"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a00255">_adc_hardware_compare_config</a></td></tr>
+<tr class="memdesc:a00255"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC hardware compare configuration.  <a href="a00008.html#a00255">More...</a><br/></td></tr>
+<tr class="separator:a00255"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00250"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a00250">_adc_channel_config</a></td></tr>
+<tr class="memdesc:a00250"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC channel conversion configuration.  <a href="a00008.html#a00250">More...</a><br/></td></tr>
+<tr class="separator:a00250"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga5838d9fe654d6e1503be047d08ce5b32"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga5838d9fe654d6e1503be047d08ce5b32">FSL_ADC_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 4))</td></tr>
+<tr class="memitem:ga5838d9fe654d6e1503be047d08ce5b32"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga5838d9fe654d6e1503be047d08ce5b32">FSL_ADC_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00216.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 4))</td></tr>
 <tr class="memdesc:ga5838d9fe654d6e1503be047d08ce5b32"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC driver version.  <a href="#ga5838d9fe654d6e1503be047d08ce5b32">More...</a><br/></td></tr>
 <tr class="separator:ga5838d9fe654d6e1503be047d08ce5b32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga87a3dd408df1f041b022567425fd41f4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga87a3dd408df1f041b022567425fd41f4"></a>
+typedef enum <a class="el" href="a00008.html#ga417e499fb2f1ee7ba05088468b392ce1">_adc_status_flags</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga87a3dd408df1f041b022567425fd41f4">adc_status_flags_t</a></td></tr>
+<tr class="memdesc:ga87a3dd408df1f041b022567425fd41f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converter's status flags. <br/></td></tr>
+<tr class="separator:ga87a3dd408df1f041b022567425fd41f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga98640920f9f1871e82a0a47ca24a5b27"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga98640920f9f1871e82a0a47ca24a5b27"></a>
+typedef enum <br class="typebreak"/>
+<a class="el" href="a00008.html#ga9d92c65606e21c5473702a14b64f7006">_adc_reference_voltage_source</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga98640920f9f1871e82a0a47ca24a5b27">adc_reference_voltage_source_t</a></td></tr>
+<tr class="memdesc:ga98640920f9f1871e82a0a47ca24a5b27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reference voltage source. <br/></td></tr>
+<tr class="separator:ga98640920f9f1871e82a0a47ca24a5b27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae15bf2d124fbefa81b5b887d1893fc32"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae15bf2d124fbefa81b5b887d1893fc32"></a>
+typedef enum <br class="typebreak"/>
+<a class="el" href="a00008.html#ga58c3a80b3060e86d976c369739a8e8c4">_adc_sample_period_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gae15bf2d124fbefa81b5b887d1893fc32">adc_sample_period_mode_t</a></td></tr>
+<tr class="memdesc:gae15bf2d124fbefa81b5b887d1893fc32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sample time duration. <br/></td></tr>
+<tr class="separator:gae15bf2d124fbefa81b5b887d1893fc32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4eb7c8bad60feeb47a25d203c9b2d139"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4eb7c8bad60feeb47a25d203c9b2d139"></a>
+typedef enum <a class="el" href="a00008.html#ga644186ae0cec69a207a0651015f4ba1f">_adc_clock_source</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga4eb7c8bad60feeb47a25d203c9b2d139">adc_clock_source_t</a></td></tr>
+<tr class="memdesc:ga4eb7c8bad60feeb47a25d203c9b2d139"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clock source. <br/></td></tr>
+<tr class="separator:ga4eb7c8bad60feeb47a25d203c9b2d139"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga64f5fd39179e4a856f282ee2f6ecee50"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga64f5fd39179e4a856f282ee2f6ecee50"></a>
+typedef enum <a class="el" href="a00008.html#gabad054647861cfe96a54f54fca8cb633">_adc_clock_drvier</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga64f5fd39179e4a856f282ee2f6ecee50">adc_clock_driver_t</a></td></tr>
+<tr class="memdesc:ga64f5fd39179e4a856f282ee2f6ecee50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clock divider for the converter. <br/></td></tr>
+<tr class="separator:ga64f5fd39179e4a856f282ee2f6ecee50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaca20fd2bbb2c8aef264af7693ca1aebe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaca20fd2bbb2c8aef264af7693ca1aebe"></a>
+typedef enum <a class="el" href="a00008.html#gab5450a0e5be40ad0c7957701fa9f6a67">_adc_resolution</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gaca20fd2bbb2c8aef264af7693ca1aebe">adc_resolution_t</a></td></tr>
+<tr class="memdesc:gaca20fd2bbb2c8aef264af7693ca1aebe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converter's resolution. <br/></td></tr>
+<tr class="separator:gaca20fd2bbb2c8aef264af7693ca1aebe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2504ea16a8f269a4d600fb4e151df205"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2504ea16a8f269a4d600fb4e151df205"></a>
+typedef enum <br class="typebreak"/>
+<a class="el" href="a00008.html#gaa74d3752fc222e8f03bd5a003c15131f">_adc_hardware_compare_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga2504ea16a8f269a4d600fb4e151df205">adc_hardware_compare_mode_t</a></td></tr>
+<tr class="memdesc:ga2504ea16a8f269a4d600fb4e151df205"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converter hardware compare mode. <br/></td></tr>
+<tr class="separator:ga2504ea16a8f269a4d600fb4e151df205"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2be8650bc0400fbf9f5f119384eec6ca"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2be8650bc0400fbf9f5f119384eec6ca"></a>
+typedef enum <br class="typebreak"/>
+<a class="el" href="a00008.html#gac79221d8bb15730e5a98b71038c2ea3e">_adc_hardware_average_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga2be8650bc0400fbf9f5f119384eec6ca">adc_hardware_average_mode_t</a></td></tr>
+<tr class="memdesc:ga2be8650bc0400fbf9f5f119384eec6ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converter hardware average mode. <br/></td></tr>
+<tr class="separator:ga2be8650bc0400fbf9f5f119384eec6ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3b22457f328dd120d593051f40db8e1a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3b22457f328dd120d593051f40db8e1a"></a>
+typedef struct <a class="el" href="a00008.html#a00251">_adc_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga3b22457f328dd120d593051f40db8e1a">adc_config_t</a></td></tr>
+<tr class="memdesc:ga3b22457f328dd120d593051f40db8e1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converter configuration. <br/></td></tr>
+<tr class="separator:ga3b22457f328dd120d593051f40db8e1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa5c76e9fc810ee7e911035fa05535d46"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa5c76e9fc810ee7e911035fa05535d46"></a>
+typedef struct <a class="el" href="a00008.html#a00256">_adc_offest_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gaa5c76e9fc810ee7e911035fa05535d46">adc_offest_config_t</a></td></tr>
+<tr class="memdesc:gaa5c76e9fc810ee7e911035fa05535d46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converter Offset configuration. <br/></td></tr>
+<tr class="separator:gaa5c76e9fc810ee7e911035fa05535d46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3f9e9a76432ecff52dcd2e6fe770980e"><td class="memItemLeft" align="right" valign="top">typedef struct <br class="typebreak"/>
+<a class="el" href="a00008.html#a00255">_adc_hardware_compare_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga3f9e9a76432ecff52dcd2e6fe770980e">adc_hardware_compare_config_t</a></td></tr>
+<tr class="memdesc:ga3f9e9a76432ecff52dcd2e6fe770980e"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC hardware compare configuration.  <a href="#ga3f9e9a76432ecff52dcd2e6fe770980e">More...</a><br/></td></tr>
+<tr class="separator:ga3f9e9a76432ecff52dcd2e6fe770980e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1fdf452b9164a4ef1c9f417b1b8f03f0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1fdf452b9164a4ef1c9f417b1b8f03f0"></a>
+typedef struct <a class="el" href="a00008.html#a00250">_adc_channel_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga1fdf452b9164a4ef1c9f417b1b8f03f0">adc_channel_config_t</a></td></tr>
+<tr class="memdesc:ga1fdf452b9164a4ef1c9f417b1b8f03f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC channel conversion configuration. <br/></td></tr>
+<tr class="separator:ga1fdf452b9164a4ef1c9f417b1b8f03f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga9b9efd088db3a98e8512a555b68dacb6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga9b9efd088db3a98e8512a555b68dacb6">adc_status_flags_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00008.html#gga9b9efd088db3a98e8512a555b68dacb6a26a124489a3ad750ab3fe895c432256e">kADC_ConversionActiveFlag</a> = ADC_GS_ADACT_MASK, 
+<tr class="memitem:ga417e499fb2f1ee7ba05088468b392ce1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga417e499fb2f1ee7ba05088468b392ce1">_adc_status_flags</a> { <br/>
+&#160;&#160;<a class="el" href="a00008.html#gga417e499fb2f1ee7ba05088468b392ce1a26a124489a3ad750ab3fe895c432256e">kADC_ConversionActiveFlag</a> = ADC_GS_ADACT_MASK, 
 <br/>
-&#160;&#160;<a class="el" href="a00008.html#gga9b9efd088db3a98e8512a555b68dacb6aca473dd141f867ff6bd127fbd0dd4420">kADC_CalibrationFailedFlag</a> = ADC_GS_CALF_MASK, 
+&#160;&#160;<a class="el" href="a00008.html#gga417e499fb2f1ee7ba05088468b392ce1aca473dd141f867ff6bd127fbd0dd4420">kADC_CalibrationFailedFlag</a> = ADC_GS_CALF_MASK, 
 <br/>
-&#160;&#160;<a class="el" href="a00008.html#gga9b9efd088db3a98e8512a555b68dacb6ad409e989ca96b924e600f38d8a4f3cb6">kADC_AsynchronousWakeupInterruptFlag</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:ga9b9efd088db3a98e8512a555b68dacb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converter's status flags.  <a href="a00008.html#ga9b9efd088db3a98e8512a555b68dacb6">More...</a><br/></td></tr>
-<tr class="separator:ga9b9efd088db3a98e8512a555b68dacb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga80a9e50536500f09d71bbaf2669bb475"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga80a9e50536500f09d71bbaf2669bb475">adc_reference_voltage_source_t</a> { <a class="el" href="a00008.html#gga80a9e50536500f09d71bbaf2669bb475a5e9ee06d2d0e11637b20c53a282e420d">kADC_ReferenceVoltageSourceAlt0</a> = 0U
- }</td></tr>
-<tr class="memdesc:ga80a9e50536500f09d71bbaf2669bb475"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reference voltage source.  <a href="a00008.html#ga80a9e50536500f09d71bbaf2669bb475">More...</a><br/></td></tr>
-<tr class="separator:ga80a9e50536500f09d71bbaf2669bb475"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga110319c67e48f7baa38752980936043e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga110319c67e48f7baa38752980936043e">adc_sample_period_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00008.html#gga110319c67e48f7baa38752980936043ea9c687744893914fe17d59cfc9e403959">kADC_SamplePeriod2or12Clocks</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00008.html#gga110319c67e48f7baa38752980936043ea40767f8e49acb7e374abdd1d6776795e">kADC_SamplePeriod4or16Clocks</a> = 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00008.html#gga110319c67e48f7baa38752980936043eae0e0d856ff108dd866e735d7cf3d9d15">kADC_SamplePeriod6or20Clocks</a> = 2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00008.html#gga110319c67e48f7baa38752980936043ea2b479e745a372132d6b24e16cde1eb7c">kADC_SamplePeriod8or24Clocks</a> = 3U, 
-<br/>
-&#160;&#160;<a class="el" href="a00008.html#gga110319c67e48f7baa38752980936043ea5dbfde0ee4985a9b9ba63b7e749c093e">kADC_SamplePeriodLong12Clcoks</a> = kADC_SamplePeriod2or12Clocks, 
-<br/>
-&#160;&#160;<a class="el" href="a00008.html#gga110319c67e48f7baa38752980936043ea4e059ccfb09bc4fc8db266d88b1ed0c8">kADC_SamplePeriodLong16Clcoks</a> = kADC_SamplePeriod4or16Clocks, 
-<br/>
-&#160;&#160;<a class="el" href="a00008.html#gga110319c67e48f7baa38752980936043ea370fc35d725ecf897d0feba4eafcc7d3">kADC_SamplePeriodLong20Clcoks</a> = kADC_SamplePeriod6or20Clocks, 
-<br/>
-&#160;&#160;<a class="el" href="a00008.html#gga110319c67e48f7baa38752980936043eabdcc07378825dccb6049a3506cc978a5">kADC_SamplePeriodLong24Clcoks</a> = kADC_SamplePeriod8or24Clocks, 
-<br/>
-&#160;&#160;<a class="el" href="a00008.html#gga110319c67e48f7baa38752980936043ea7aa48ce81074eb4291e4c8c108b306c9">kADC_SamplePeriodShort2Clocks</a> = kADC_SamplePeriod2or12Clocks, 
-<br/>
-&#160;&#160;<a class="el" href="a00008.html#gga110319c67e48f7baa38752980936043ea32fa5b2c6b644d21e36ba89e2e8851b8">kADC_SamplePeriodShort4Clocks</a> = kADC_SamplePeriod4or16Clocks, 
-<br/>
-&#160;&#160;<a class="el" href="a00008.html#gga110319c67e48f7baa38752980936043ea65af03b9393e06810b9bd5984dda9629">kADC_SamplePeriodShort6Clocks</a> = kADC_SamplePeriod6or20Clocks, 
-<br/>
-&#160;&#160;<a class="el" href="a00008.html#gga110319c67e48f7baa38752980936043ea3f6bac06353d25e806f275fa2e509e52">kADC_SamplePeriodShort8Clocks</a> = kADC_SamplePeriod8or24Clocks
+&#160;&#160;<a class="el" href="a00008.html#gga417e499fb2f1ee7ba05088468b392ce1ad409e989ca96b924e600f38d8a4f3cb6">kADC_AsynchronousWakeupInterruptFlag</a>
 <br/>
  }</td></tr>
-<tr class="memdesc:ga110319c67e48f7baa38752980936043e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sample time duration.  <a href="a00008.html#ga110319c67e48f7baa38752980936043e">More...</a><br/></td></tr>
-<tr class="separator:ga110319c67e48f7baa38752980936043e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga47aed78c6efcf8af7af8950c5bfda044"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga47aed78c6efcf8af7af8950c5bfda044">adc_clock_source_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00008.html#gga47aed78c6efcf8af7af8950c5bfda044a576ebe98baa68fbb9cca4900f1bc100c">kADC_ClockSourceIPG</a> = 0U, 
+<tr class="memdesc:ga417e499fb2f1ee7ba05088468b392ce1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converter's status flags.  <a href="a00008.html#ga417e499fb2f1ee7ba05088468b392ce1">More...</a><br/></td></tr>
+<tr class="separator:ga417e499fb2f1ee7ba05088468b392ce1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9d92c65606e21c5473702a14b64f7006"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga9d92c65606e21c5473702a14b64f7006">_adc_reference_voltage_source</a> { <a class="el" href="a00008.html#gga9d92c65606e21c5473702a14b64f7006a5e9ee06d2d0e11637b20c53a282e420d">kADC_ReferenceVoltageSourceAlt0</a> = 0U
+ }</td></tr>
+<tr class="memdesc:ga9d92c65606e21c5473702a14b64f7006"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reference voltage source.  <a href="a00008.html#ga9d92c65606e21c5473702a14b64f7006">More...</a><br/></td></tr>
+<tr class="separator:ga9d92c65606e21c5473702a14b64f7006"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga58c3a80b3060e86d976c369739a8e8c4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga58c3a80b3060e86d976c369739a8e8c4">_adc_sample_period_mode</a> { <br/>
+&#160;&#160;<a class="el" href="a00008.html#gga58c3a80b3060e86d976c369739a8e8c4a9c687744893914fe17d59cfc9e403959">kADC_SamplePeriod2or12Clocks</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00008.html#gga47aed78c6efcf8af7af8950c5bfda044a4e052bb05025d8203c1dc67a612ec4b7">kADC_ClockSourceIPGDiv2</a> = 1U, 
+&#160;&#160;<a class="el" href="a00008.html#gga58c3a80b3060e86d976c369739a8e8c4a40767f8e49acb7e374abdd1d6776795e">kADC_SamplePeriod4or16Clocks</a> = 1U, 
 <br/>
-&#160;&#160;<a class="el" href="a00008.html#gga47aed78c6efcf8af7af8950c5bfda044a467486968f174736d2a62db0a67ffad3">kADC_ClockSourceALT</a> = 2U, 
+&#160;&#160;<a class="el" href="a00008.html#gga58c3a80b3060e86d976c369739a8e8c4ae0e0d856ff108dd866e735d7cf3d9d15">kADC_SamplePeriod6or20Clocks</a> = 2U, 
 <br/>
-&#160;&#160;<a class="el" href="a00008.html#gga47aed78c6efcf8af7af8950c5bfda044a75a9ae600c6368a2792a7fa11f1bcbf9">kADC_ClockSourceAD</a> = 3U
+&#160;&#160;<a class="el" href="a00008.html#gga58c3a80b3060e86d976c369739a8e8c4a2b479e745a372132d6b24e16cde1eb7c">kADC_SamplePeriod8or24Clocks</a> = 3U, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#gga58c3a80b3060e86d976c369739a8e8c4a5dbfde0ee4985a9b9ba63b7e749c093e">kADC_SamplePeriodLong12Clcoks</a> = kADC_SamplePeriod2or12Clocks, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#gga58c3a80b3060e86d976c369739a8e8c4a4e059ccfb09bc4fc8db266d88b1ed0c8">kADC_SamplePeriodLong16Clcoks</a> = kADC_SamplePeriod4or16Clocks, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#gga58c3a80b3060e86d976c369739a8e8c4a370fc35d725ecf897d0feba4eafcc7d3">kADC_SamplePeriodLong20Clcoks</a> = kADC_SamplePeriod6or20Clocks, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#gga58c3a80b3060e86d976c369739a8e8c4abdcc07378825dccb6049a3506cc978a5">kADC_SamplePeriodLong24Clcoks</a> = kADC_SamplePeriod8or24Clocks, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#gga58c3a80b3060e86d976c369739a8e8c4a7aa48ce81074eb4291e4c8c108b306c9">kADC_SamplePeriodShort2Clocks</a> = kADC_SamplePeriod2or12Clocks, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#gga58c3a80b3060e86d976c369739a8e8c4a32fa5b2c6b644d21e36ba89e2e8851b8">kADC_SamplePeriodShort4Clocks</a> = kADC_SamplePeriod4or16Clocks, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#gga58c3a80b3060e86d976c369739a8e8c4a65af03b9393e06810b9bd5984dda9629">kADC_SamplePeriodShort6Clocks</a> = kADC_SamplePeriod6or20Clocks, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#gga58c3a80b3060e86d976c369739a8e8c4a3f6bac06353d25e806f275fa2e509e52">kADC_SamplePeriodShort8Clocks</a> = kADC_SamplePeriod8or24Clocks
 <br/>
  }</td></tr>
-<tr class="memdesc:ga47aed78c6efcf8af7af8950c5bfda044"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clock source.  <a href="a00008.html#ga47aed78c6efcf8af7af8950c5bfda044">More...</a><br/></td></tr>
-<tr class="separator:ga47aed78c6efcf8af7af8950c5bfda044"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4a3e6521c65338f070fe6b90f2b07a2a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga4a3e6521c65338f070fe6b90f2b07a2a">adc_clock_driver_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00008.html#gga4a3e6521c65338f070fe6b90f2b07a2aa51648a44017cdc8158167d782c3278ac">kADC_ClockDriver1</a> = 0U, 
+<tr class="memdesc:ga58c3a80b3060e86d976c369739a8e8c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sample time duration.  <a href="a00008.html#ga58c3a80b3060e86d976c369739a8e8c4">More...</a><br/></td></tr>
+<tr class="separator:ga58c3a80b3060e86d976c369739a8e8c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga644186ae0cec69a207a0651015f4ba1f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga644186ae0cec69a207a0651015f4ba1f">_adc_clock_source</a> { <br/>
+&#160;&#160;<a class="el" href="a00008.html#gga644186ae0cec69a207a0651015f4ba1fa576ebe98baa68fbb9cca4900f1bc100c">kADC_ClockSourceIPG</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00008.html#gga4a3e6521c65338f070fe6b90f2b07a2aa1efe12ede1148ea29316e29e8fd590fb">kADC_ClockDriver2</a> = 1U, 
+&#160;&#160;<a class="el" href="a00008.html#gga644186ae0cec69a207a0651015f4ba1fa4e052bb05025d8203c1dc67a612ec4b7">kADC_ClockSourceIPGDiv2</a> = 1U, 
 <br/>
-&#160;&#160;<a class="el" href="a00008.html#gga4a3e6521c65338f070fe6b90f2b07a2aa87afba538dc7e965114c6fc1353090c3">kADC_ClockDriver4</a> = 2U, 
+&#160;&#160;<a class="el" href="a00008.html#gga644186ae0cec69a207a0651015f4ba1fa467486968f174736d2a62db0a67ffad3">kADC_ClockSourceALT</a> = 2U, 
 <br/>
-&#160;&#160;<a class="el" href="a00008.html#gga4a3e6521c65338f070fe6b90f2b07a2aa7e2a0f3c06e6b88c3ecd72f3dc8d41a6">kADC_ClockDriver8</a> = 3U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga4a3e6521c65338f070fe6b90f2b07a2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clock divider for the converter.  <a href="a00008.html#ga4a3e6521c65338f070fe6b90f2b07a2a">More...</a><br/></td></tr>
-<tr class="separator:ga4a3e6521c65338f070fe6b90f2b07a2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf88bfcbfc4a19c82f8bb423218d13cda"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gaf88bfcbfc4a19c82f8bb423218d13cda">adc_resolution_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00008.html#ggaf88bfcbfc4a19c82f8bb423218d13cdaabf3e2dd3e94a57b07c291dde055957e0">kADC_Resolution8Bit</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00008.html#ggaf88bfcbfc4a19c82f8bb423218d13cdaa862f1d412b57ff93e21ff371a57abd98">kADC_Resolution10Bit</a> = 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00008.html#ggaf88bfcbfc4a19c82f8bb423218d13cdaa8c879e001f4fc89b1d67b75fe7852202">kADC_Resolution12Bit</a> = 2U
+&#160;&#160;<a class="el" href="a00008.html#gga644186ae0cec69a207a0651015f4ba1fa75a9ae600c6368a2792a7fa11f1bcbf9">kADC_ClockSourceAD</a> = 3U
 <br/>
  }</td></tr>
-<tr class="memdesc:gaf88bfcbfc4a19c82f8bb423218d13cda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converter's resolution.  <a href="a00008.html#gaf88bfcbfc4a19c82f8bb423218d13cda">More...</a><br/></td></tr>
-<tr class="separator:gaf88bfcbfc4a19c82f8bb423218d13cda"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaad2e15aea85bfb064575c9424c8b7f7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gaaad2e15aea85bfb064575c9424c8b7f7">adc_hardware_compare_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00008.html#ggaaad2e15aea85bfb064575c9424c8b7f7a143f2e6b064ecbb16c5d1e7c4ce2463b">kADC_HardwareCompareMode0</a> = 0U, 
+<tr class="memdesc:ga644186ae0cec69a207a0651015f4ba1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clock source.  <a href="a00008.html#ga644186ae0cec69a207a0651015f4ba1f">More...</a><br/></td></tr>
+<tr class="separator:ga644186ae0cec69a207a0651015f4ba1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabad054647861cfe96a54f54fca8cb633"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gabad054647861cfe96a54f54fca8cb633">_adc_clock_drvier</a> { <br/>
+&#160;&#160;<a class="el" href="a00008.html#ggabad054647861cfe96a54f54fca8cb633a51648a44017cdc8158167d782c3278ac">kADC_ClockDriver1</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00008.html#ggaaad2e15aea85bfb064575c9424c8b7f7aa8721777f06cd345c7ec65f5e4e2a973">kADC_HardwareCompareMode1</a> = 1U, 
+&#160;&#160;<a class="el" href="a00008.html#ggabad054647861cfe96a54f54fca8cb633a1efe12ede1148ea29316e29e8fd590fb">kADC_ClockDriver2</a> = 1U, 
 <br/>
-&#160;&#160;<a class="el" href="a00008.html#ggaaad2e15aea85bfb064575c9424c8b7f7a611654b81d84d2d14e686524a2446f0c">kADC_HardwareCompareMode2</a> = 2U, 
+&#160;&#160;<a class="el" href="a00008.html#ggabad054647861cfe96a54f54fca8cb633a87afba538dc7e965114c6fc1353090c3">kADC_ClockDriver4</a> = 2U, 
 <br/>
-&#160;&#160;<a class="el" href="a00008.html#ggaaad2e15aea85bfb064575c9424c8b7f7aadd87d9d5dc67ef6baf4878dd57592cb">kADC_HardwareCompareMode3</a> = 3U
-<br/>
- }</td></tr>
-<tr class="memdesc:gaaad2e15aea85bfb064575c9424c8b7f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converter hardware compare mode.  <a href="a00008.html#gaaad2e15aea85bfb064575c9424c8b7f7">More...</a><br/></td></tr>
-<tr class="separator:gaaad2e15aea85bfb064575c9424c8b7f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5057b50038de3ec61aa23fdf6039edee"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga5057b50038de3ec61aa23fdf6039edee">adc_hardware_average_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00008.html#gga5057b50038de3ec61aa23fdf6039edeeaf39c8892d166cde6a202d3a5d5afb970">kADC_HardwareAverageCount4</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00008.html#gga5057b50038de3ec61aa23fdf6039edeea64e657f493e47f665b3e87b9b514afc8">kADC_HardwareAverageCount8</a> = 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00008.html#gga5057b50038de3ec61aa23fdf6039edeea7c42d79c1e0eed68dd40f030c6870639">kADC_HardwareAverageCount16</a> = 2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00008.html#gga5057b50038de3ec61aa23fdf6039edeea9ec04ff198a8a9c98a4451febeac9797">kADC_HardwareAverageCount32</a> = 3U, 
-<br/>
-&#160;&#160;<a class="el" href="a00008.html#gga5057b50038de3ec61aa23fdf6039edeea0411428810c0fedbd5c2753826c725d5">kADC_HardwareAverageDiasable</a> = 4U
+&#160;&#160;<a class="el" href="a00008.html#ggabad054647861cfe96a54f54fca8cb633a7e2a0f3c06e6b88c3ecd72f3dc8d41a6">kADC_ClockDriver8</a> = 3U
 <br/>
  }</td></tr>
-<tr class="memdesc:ga5057b50038de3ec61aa23fdf6039edee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converter hardware average mode.  <a href="a00008.html#ga5057b50038de3ec61aa23fdf6039edee">More...</a><br/></td></tr>
-<tr class="separator:ga5057b50038de3ec61aa23fdf6039edee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gabad054647861cfe96a54f54fca8cb633"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clock divider for the converter.  <a href="a00008.html#gabad054647861cfe96a54f54fca8cb633">More...</a><br/></td></tr>
+<tr class="separator:gabad054647861cfe96a54f54fca8cb633"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab5450a0e5be40ad0c7957701fa9f6a67"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gab5450a0e5be40ad0c7957701fa9f6a67">_adc_resolution</a> { <br/>
+&#160;&#160;<a class="el" href="a00008.html#ggab5450a0e5be40ad0c7957701fa9f6a67abf3e2dd3e94a57b07c291dde055957e0">kADC_Resolution8Bit</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#ggab5450a0e5be40ad0c7957701fa9f6a67a862f1d412b57ff93e21ff371a57abd98">kADC_Resolution10Bit</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#ggab5450a0e5be40ad0c7957701fa9f6a67a8c879e001f4fc89b1d67b75fe7852202">kADC_Resolution12Bit</a> = 2U
+<br/>
+ }</td></tr>
+<tr class="memdesc:gab5450a0e5be40ad0c7957701fa9f6a67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converter's resolution.  <a href="a00008.html#gab5450a0e5be40ad0c7957701fa9f6a67">More...</a><br/></td></tr>
+<tr class="separator:gab5450a0e5be40ad0c7957701fa9f6a67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa74d3752fc222e8f03bd5a003c15131f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gaa74d3752fc222e8f03bd5a003c15131f">_adc_hardware_compare_mode</a> { <br/>
+&#160;&#160;<a class="el" href="a00008.html#ggaa74d3752fc222e8f03bd5a003c15131fa143f2e6b064ecbb16c5d1e7c4ce2463b">kADC_HardwareCompareMode0</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#ggaa74d3752fc222e8f03bd5a003c15131faa8721777f06cd345c7ec65f5e4e2a973">kADC_HardwareCompareMode1</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#ggaa74d3752fc222e8f03bd5a003c15131fa611654b81d84d2d14e686524a2446f0c">kADC_HardwareCompareMode2</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#ggaa74d3752fc222e8f03bd5a003c15131faadd87d9d5dc67ef6baf4878dd57592cb">kADC_HardwareCompareMode3</a> = 3U
+<br/>
+ }</td></tr>
+<tr class="memdesc:gaa74d3752fc222e8f03bd5a003c15131f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converter hardware compare mode.  <a href="a00008.html#gaa74d3752fc222e8f03bd5a003c15131f">More...</a><br/></td></tr>
+<tr class="separator:gaa74d3752fc222e8f03bd5a003c15131f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac79221d8bb15730e5a98b71038c2ea3e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gac79221d8bb15730e5a98b71038c2ea3e">_adc_hardware_average_mode</a> { <br/>
+&#160;&#160;<a class="el" href="a00008.html#ggac79221d8bb15730e5a98b71038c2ea3eaf39c8892d166cde6a202d3a5d5afb970">kADC_HardwareAverageCount4</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#ggac79221d8bb15730e5a98b71038c2ea3ea64e657f493e47f665b3e87b9b514afc8">kADC_HardwareAverageCount8</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#ggac79221d8bb15730e5a98b71038c2ea3ea7c42d79c1e0eed68dd40f030c6870639">kADC_HardwareAverageCount16</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#ggac79221d8bb15730e5a98b71038c2ea3ea9ec04ff198a8a9c98a4451febeac9797">kADC_HardwareAverageCount32</a> = 3U, 
+<br/>
+&#160;&#160;<a class="el" href="a00008.html#ggac79221d8bb15730e5a98b71038c2ea3ea0411428810c0fedbd5c2753826c725d5">kADC_HardwareAverageDiasable</a> = 4U
+<br/>
+ }</td></tr>
+<tr class="memdesc:gac79221d8bb15730e5a98b71038c2ea3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converter hardware average mode.  <a href="a00008.html#gac79221d8bb15730e5a98b71038c2ea3e">More...</a><br/></td></tr>
+<tr class="separator:gac79221d8bb15730e5a98b71038c2ea3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Initialization</h2></td></tr>
-<tr class="memitem:gaa407371ebd58e5aa7f75d38bfdad6169"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gaa407371ebd58e5aa7f75d38bfdad6169">ADC_Init</a> (ADC_Type *base, const <a class="el" href="a00008.html#a00277">adc_config_t</a> *config)</td></tr>
+<tr class="memitem:gaa407371ebd58e5aa7f75d38bfdad6169"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gaa407371ebd58e5aa7f75d38bfdad6169">ADC_Init</a> (ADC_Type *base, const <a class="el" href="a00008.html#ga3b22457f328dd120d593051f40db8e1a">adc_config_t</a> *config)</td></tr>
 <tr class="memdesc:gaa407371ebd58e5aa7f75d38bfdad6169"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the ADC module.  <a href="#gaa407371ebd58e5aa7f75d38bfdad6169">More...</a><br/></td></tr>
 <tr class="separator:gaa407371ebd58e5aa7f75d38bfdad6169"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9e87d0842217dd30d2d9699df580e237"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga9e87d0842217dd30d2d9699df580e237">ADC_Deinit</a> (ADC_Type *base)</td></tr>
 <tr class="memdesc:ga9e87d0842217dd30d2d9699df580e237"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-initializes the ADC module.  <a href="#ga9e87d0842217dd30d2d9699df580e237">More...</a><br/></td></tr>
 <tr class="separator:ga9e87d0842217dd30d2d9699df580e237"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga69c1682f87ee05264946329a2532792e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga69c1682f87ee05264946329a2532792e">ADC_GetDefaultConfig</a> (<a class="el" href="a00008.html#a00277">adc_config_t</a> *config)</td></tr>
+<tr class="memitem:ga69c1682f87ee05264946329a2532792e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga69c1682f87ee05264946329a2532792e">ADC_GetDefaultConfig</a> (<a class="el" href="a00008.html#ga3b22457f328dd120d593051f40db8e1a">adc_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga69c1682f87ee05264946329a2532792e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an available pre-defined settings for the converter's configuration.  <a href="#ga69c1682f87ee05264946329a2532792e">More...</a><br/></td></tr>
 <tr class="separator:ga69c1682f87ee05264946329a2532792e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabdc0231135fe660b665f79c70ebe5574"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gabdc0231135fe660b665f79c70ebe5574">ADC_SetChannelConfig</a> (ADC_Type *base, uint32_t channelGroup, const <a class="el" href="a00008.html#a00276">adc_channel_config_t</a> *config)</td></tr>
+<tr class="memitem:gabdc0231135fe660b665f79c70ebe5574"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gabdc0231135fe660b665f79c70ebe5574">ADC_SetChannelConfig</a> (ADC_Type *base, uint32_t channelGroup, const <a class="el" href="a00008.html#ga1fdf452b9164a4ef1c9f417b1b8f03f0">adc_channel_config_t</a> *config)</td></tr>
 <tr class="memdesc:gabdc0231135fe660b665f79c70ebe5574"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the conversion channel.  <a href="#gabdc0231135fe660b665f79c70ebe5574">More...</a><br/></td></tr>
 <tr class="separator:gabdc0231135fe660b665f79c70ebe5574"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad7252ba884ef96ac034afc83ae4619cc"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gad7252ba884ef96ac034afc83ae4619cc">ADC_GetChannelConversionValue</a> (ADC_Type *base, uint32_t channelGroup)</td></tr>
@@ -263,10 +319,10 @@ Initialization</h2></td></tr>
 <tr class="memitem:ga2036da14750059b15c079e2c1d783c64"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga2036da14750059b15c079e2c1d783c64">ADC_GetChannelStatusFlags</a> (ADC_Type *base, uint32_t channelGroup)</td></tr>
 <tr class="memdesc:ga2036da14750059b15c079e2c1d783c64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the status flags of channel.  <a href="#ga2036da14750059b15c079e2c1d783c64">More...</a><br/></td></tr>
 <tr class="separator:ga2036da14750059b15c079e2c1d783c64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga53e020121680274054210c6e67d2b6e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga53e020121680274054210c6e67d2b6e4">ADC_DoAutoCalibration</a> (ADC_Type *base)</td></tr>
+<tr class="memitem:ga53e020121680274054210c6e67d2b6e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga53e020121680274054210c6e67d2b6e4">ADC_DoAutoCalibration</a> (ADC_Type *base)</td></tr>
 <tr class="memdesc:ga53e020121680274054210c6e67d2b6e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Automates the hardware calibration.  <a href="#ga53e020121680274054210c6e67d2b6e4">More...</a><br/></td></tr>
 <tr class="separator:ga53e020121680274054210c6e67d2b6e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga32bc964854dec8f304cf34e8df320c6a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga32bc964854dec8f304cf34e8df320c6a">ADC_SetOffsetConfig</a> (ADC_Type *base, const <a class="el" href="a00008.html#a00282">adc_offest_config_t</a> *config)</td></tr>
+<tr class="memitem:ga32bc964854dec8f304cf34e8df320c6a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga32bc964854dec8f304cf34e8df320c6a">ADC_SetOffsetConfig</a> (ADC_Type *base, const <a class="el" href="a00008.html#gaa5c76e9fc810ee7e911035fa05535d46">adc_offest_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga32bc964854dec8f304cf34e8df320c6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set user defined offset.  <a href="#ga32bc964854dec8f304cf34e8df320c6a">More...</a><br/></td></tr>
 <tr class="separator:ga32bc964854dec8f304cf34e8df320c6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga05884660d3a0fe8d5fb19dbed29c1954"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga05884660d3a0fe8d5fb19dbed29c1954">ADC_EnableDMA</a> (ADC_Type *base, bool enable)</td></tr>
@@ -275,10 +331,10 @@ Initialization</h2></td></tr>
 <tr class="memitem:ga61d74093ee3f9c660255ed87073ab6f0"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga61d74093ee3f9c660255ed87073ab6f0">ADC_EnableHardwareTrigger</a> (ADC_Type *base, bool enable)</td></tr>
 <tr class="memdesc:ga61d74093ee3f9c660255ed87073ab6f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the hardware trigger mode.  <a href="#ga61d74093ee3f9c660255ed87073ab6f0">More...</a><br/></td></tr>
 <tr class="separator:ga61d74093ee3f9c660255ed87073ab6f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf1edf14f1af191bf293a9341274e1cf6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gaf1edf14f1af191bf293a9341274e1cf6">ADC_SetHardwareCompareConfig</a> (ADC_Type *base, const <a class="el" href="a00008.html#a00281">adc_hardware_compare_config_t</a> *config)</td></tr>
+<tr class="memitem:gaf1edf14f1af191bf293a9341274e1cf6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#gaf1edf14f1af191bf293a9341274e1cf6">ADC_SetHardwareCompareConfig</a> (ADC_Type *base, const <a class="el" href="a00008.html#ga3f9e9a76432ecff52dcd2e6fe770980e">adc_hardware_compare_config_t</a> *config)</td></tr>
 <tr class="memdesc:gaf1edf14f1af191bf293a9341274e1cf6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the hardware compare mode.  <a href="#gaf1edf14f1af191bf293a9341274e1cf6">More...</a><br/></td></tr>
 <tr class="separator:gaf1edf14f1af191bf293a9341274e1cf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2d55fa95561b47bc57234a6145926224"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga2d55fa95561b47bc57234a6145926224">ADC_SetHardwareAverageConfig</a> (ADC_Type *base, <a class="el" href="a00008.html#ga5057b50038de3ec61aa23fdf6039edee">adc_hardware_average_mode_t</a> mode)</td></tr>
+<tr class="memitem:ga2d55fa95561b47bc57234a6145926224"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga2d55fa95561b47bc57234a6145926224">ADC_SetHardwareAverageConfig</a> (ADC_Type *base, <a class="el" href="a00008.html#ga2be8650bc0400fbf9f5f119384eec6ca">adc_hardware_average_mode_t</a> mode)</td></tr>
 <tr class="memdesc:ga2d55fa95561b47bc57234a6145926224"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the hardware average mode.  <a href="#ga2d55fa95561b47bc57234a6145926224">More...</a><br/></td></tr>
 <tr class="separator:ga2d55fa95561b47bc57234a6145926224"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga92ee1fdbb8cdadbdc1850e94afed432b"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ga92ee1fdbb8cdadbdc1850e94afed432b">ADC_GetStatusFlags</a> (ADC_Type *base)</td></tr>
@@ -289,178 +345,178 @@ Initialization</h2></td></tr>
 <tr class="separator:ga871b519e0f4f7966725201fc07614020"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00277" id="a00277"></a>
+<a name="a00251" id="a00251"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct adc_config_t</td>
+          <td class="memname">struct _adc_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a19d83f209fe0268bd19db07a40afc183"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a19d83f209fe0268bd19db07a40afc183">enableOverWrite</a></td></tr>
-<tr class="memdesc:a19d83f209fe0268bd19db07a40afc183"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the overwriting.  <a href="#a19d83f209fe0268bd19db07a40afc183">More...</a><br/></td></tr>
-<tr class="separator:a19d83f209fe0268bd19db07a40afc183"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2a0ab8cefc9823454fe3c2293d1c4add"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a2a0ab8cefc9823454fe3c2293d1c4add">enableContinuousConversion</a></td></tr>
-<tr class="memdesc:a2a0ab8cefc9823454fe3c2293d1c4add"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the continuous conversion mode.  <a href="#a2a0ab8cefc9823454fe3c2293d1c4add">More...</a><br/></td></tr>
-<tr class="separator:a2a0ab8cefc9823454fe3c2293d1c4add"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29f0906444baf75003692febf409bc07"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a29f0906444baf75003692febf409bc07">enableHighSpeed</a></td></tr>
-<tr class="memdesc:a29f0906444baf75003692febf409bc07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the high-speed mode.  <a href="#a29f0906444baf75003692febf409bc07">More...</a><br/></td></tr>
-<tr class="separator:a29f0906444baf75003692febf409bc07"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0b0c627142525a2b0306e462c863e1e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#af0b0c627142525a2b0306e462c863e1e">enableLowPower</a></td></tr>
-<tr class="memdesc:af0b0c627142525a2b0306e462c863e1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the low power mode.  <a href="#af0b0c627142525a2b0306e462c863e1e">More...</a><br/></td></tr>
-<tr class="separator:af0b0c627142525a2b0306e462c863e1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0333df72c9a193681417adeb6bb203a0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a0333df72c9a193681417adeb6bb203a0">enableLongSample</a></td></tr>
-<tr class="memdesc:a0333df72c9a193681417adeb6bb203a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the long sample mode.  <a href="#a0333df72c9a193681417adeb6bb203a0">More...</a><br/></td></tr>
-<tr class="separator:a0333df72c9a193681417adeb6bb203a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adbb2c387fadd9482e02b6c1db8698f41"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#adbb2c387fadd9482e02b6c1db8698f41">enableAsynchronousClockOutput</a></td></tr>
-<tr class="memdesc:adbb2c387fadd9482e02b6c1db8698f41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the asynchronous clock output.  <a href="#adbb2c387fadd9482e02b6c1db8698f41">More...</a><br/></td></tr>
-<tr class="separator:adbb2c387fadd9482e02b6c1db8698f41"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a796b7bfba0959eb808b843832dcf0279"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00008.html#ga80a9e50536500f09d71bbaf2669bb475">adc_reference_voltage_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a796b7bfba0959eb808b843832dcf0279">referenceVoltageSource</a></td></tr>
-<tr class="memdesc:a796b7bfba0959eb808b843832dcf0279"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select the reference voltage source.  <a href="#a796b7bfba0959eb808b843832dcf0279">More...</a><br/></td></tr>
-<tr class="separator:a796b7bfba0959eb808b843832dcf0279"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d941c8171a5e5039040474e5c114278"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00008.html#ga110319c67e48f7baa38752980936043e">adc_sample_period_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a5d941c8171a5e5039040474e5c114278">samplePeriodMode</a></td></tr>
-<tr class="memdesc:a5d941c8171a5e5039040474e5c114278"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select the sample period in long sample mode or short mode.  <a href="#a5d941c8171a5e5039040474e5c114278">More...</a><br/></td></tr>
-<tr class="separator:a5d941c8171a5e5039040474e5c114278"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5031662a5db79e7448b810c463062e1d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00008.html#ga47aed78c6efcf8af7af8950c5bfda044">adc_clock_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a5031662a5db79e7448b810c463062e1d">clockSource</a></td></tr>
-<tr class="memdesc:a5031662a5db79e7448b810c463062e1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select the input clock source to generate the internal clock ADCK.  <a href="#a5031662a5db79e7448b810c463062e1d">More...</a><br/></td></tr>
-<tr class="separator:a5031662a5db79e7448b810c463062e1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04a397df8ca708dcff3710d76ccecd61"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00008.html#ga4a3e6521c65338f070fe6b90f2b07a2a">adc_clock_driver_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a04a397df8ca708dcff3710d76ccecd61">clockDriver</a></td></tr>
-<tr class="memdesc:a04a397df8ca708dcff3710d76ccecd61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select the divide ratio used by the ADC to generate the internal clock ADCK.  <a href="#a04a397df8ca708dcff3710d76ccecd61">More...</a><br/></td></tr>
-<tr class="separator:a04a397df8ca708dcff3710d76ccecd61"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4d83267d7a76c64b2a209c4afc8a30cd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00008.html#gaf88bfcbfc4a19c82f8bb423218d13cda">adc_resolution_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a4d83267d7a76c64b2a209c4afc8a30cd">resolution</a></td></tr>
-<tr class="memdesc:a4d83267d7a76c64b2a209c4afc8a30cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select the ADC resolution mode.  <a href="#a4d83267d7a76c64b2a209c4afc8a30cd">More...</a><br/></td></tr>
-<tr class="separator:a4d83267d7a76c64b2a209c4afc8a30cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a159c0c853f1d1bb7539a5eb72b179f47"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a159c0c853f1d1bb7539a5eb72b179f47">enableOverWrite</a></td></tr>
+<tr class="memdesc:a159c0c853f1d1bb7539a5eb72b179f47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the overwriting.  <a href="#a159c0c853f1d1bb7539a5eb72b179f47">More...</a><br/></td></tr>
+<tr class="separator:a159c0c853f1d1bb7539a5eb72b179f47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae93c516bf8eb20f3710e39dce3f2027d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ae93c516bf8eb20f3710e39dce3f2027d">enableContinuousConversion</a></td></tr>
+<tr class="memdesc:ae93c516bf8eb20f3710e39dce3f2027d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the continuous conversion mode.  <a href="#ae93c516bf8eb20f3710e39dce3f2027d">More...</a><br/></td></tr>
+<tr class="separator:ae93c516bf8eb20f3710e39dce3f2027d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8e6cbef91050df4c229c4083f24213e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#ad8e6cbef91050df4c229c4083f24213e">enableHighSpeed</a></td></tr>
+<tr class="memdesc:ad8e6cbef91050df4c229c4083f24213e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the high-speed mode.  <a href="#ad8e6cbef91050df4c229c4083f24213e">More...</a><br/></td></tr>
+<tr class="separator:ad8e6cbef91050df4c229c4083f24213e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b8fd8102ae40a92ac7ab620d72b3b22"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a2b8fd8102ae40a92ac7ab620d72b3b22">enableLowPower</a></td></tr>
+<tr class="memdesc:a2b8fd8102ae40a92ac7ab620d72b3b22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the low power mode.  <a href="#a2b8fd8102ae40a92ac7ab620d72b3b22">More...</a><br/></td></tr>
+<tr class="separator:a2b8fd8102ae40a92ac7ab620d72b3b22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f3f87121f7348ec41b84043dd389179"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a5f3f87121f7348ec41b84043dd389179">enableLongSample</a></td></tr>
+<tr class="memdesc:a5f3f87121f7348ec41b84043dd389179"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the long sample mode.  <a href="#a5f3f87121f7348ec41b84043dd389179">More...</a><br/></td></tr>
+<tr class="separator:a5f3f87121f7348ec41b84043dd389179"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67896f3f3631e5638268a2acd4feeef3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a67896f3f3631e5638268a2acd4feeef3">enableAsynchronousClockOutput</a></td></tr>
+<tr class="memdesc:a67896f3f3631e5638268a2acd4feeef3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the asynchronous clock output.  <a href="#a67896f3f3631e5638268a2acd4feeef3">More...</a><br/></td></tr>
+<tr class="separator:a67896f3f3631e5638268a2acd4feeef3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7af3345851a773943370eb7cfed4c0cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00008.html#ga98640920f9f1871e82a0a47ca24a5b27">adc_reference_voltage_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a7af3345851a773943370eb7cfed4c0cc">referenceVoltageSource</a></td></tr>
+<tr class="memdesc:a7af3345851a773943370eb7cfed4c0cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select the reference voltage source.  <a href="#a7af3345851a773943370eb7cfed4c0cc">More...</a><br/></td></tr>
+<tr class="separator:a7af3345851a773943370eb7cfed4c0cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5225703f072f9d9d2f94fd48507ee936"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00008.html#gae15bf2d124fbefa81b5b887d1893fc32">adc_sample_period_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a5225703f072f9d9d2f94fd48507ee936">samplePeriodMode</a></td></tr>
+<tr class="memdesc:a5225703f072f9d9d2f94fd48507ee936"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select the sample period in long sample mode or short mode.  <a href="#a5225703f072f9d9d2f94fd48507ee936">More...</a><br/></td></tr>
+<tr class="separator:a5225703f072f9d9d2f94fd48507ee936"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1b5fad44167e34ad24c1a04df9e57c0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00008.html#ga4eb7c8bad60feeb47a25d203c9b2d139">adc_clock_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#af1b5fad44167e34ad24c1a04df9e57c0">clockSource</a></td></tr>
+<tr class="memdesc:af1b5fad44167e34ad24c1a04df9e57c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select the input clock source to generate the internal clock ADCK.  <a href="#af1b5fad44167e34ad24c1a04df9e57c0">More...</a><br/></td></tr>
+<tr class="separator:af1b5fad44167e34ad24c1a04df9e57c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70987169933b640d3dc6e6bf76271b71"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00008.html#ga64f5fd39179e4a856f282ee2f6ecee50">adc_clock_driver_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a70987169933b640d3dc6e6bf76271b71">clockDriver</a></td></tr>
+<tr class="memdesc:a70987169933b640d3dc6e6bf76271b71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select the divide ratio used by the ADC to generate the internal clock ADCK.  <a href="#a70987169933b640d3dc6e6bf76271b71">More...</a><br/></td></tr>
+<tr class="separator:a70987169933b640d3dc6e6bf76271b71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7aca7c04f0add259dece677f415bf53e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00008.html#gaca20fd2bbb2c8aef264af7693ca1aebe">adc_resolution_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a7aca7c04f0add259dece677f415bf53e">resolution</a></td></tr>
+<tr class="memdesc:a7aca7c04f0add259dece677f415bf53e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select the ADC resolution mode.  <a href="#a7aca7c04f0add259dece677f415bf53e">More...</a><br/></td></tr>
+<tr class="separator:a7aca7c04f0add259dece677f415bf53e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a19d83f209fe0268bd19db07a40afc183"></a>
+<a class="anchor" id="a159c0c853f1d1bb7539a5eb72b179f47"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool adc_config_t::enableOverWrite</td>
+          <td class="memname">bool _adc_config::enableOverWrite</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a2a0ab8cefc9823454fe3c2293d1c4add"></a>
+<a class="anchor" id="ae93c516bf8eb20f3710e39dce3f2027d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool adc_config_t::enableContinuousConversion</td>
+          <td class="memname">bool _adc_config::enableContinuousConversion</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a29f0906444baf75003692febf409bc07"></a>
+<a class="anchor" id="ad8e6cbef91050df4c229c4083f24213e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool adc_config_t::enableHighSpeed</td>
+          <td class="memname">bool _adc_config::enableHighSpeed</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="af0b0c627142525a2b0306e462c863e1e"></a>
+<a class="anchor" id="a2b8fd8102ae40a92ac7ab620d72b3b22"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool adc_config_t::enableLowPower</td>
+          <td class="memname">bool _adc_config::enableLowPower</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a0333df72c9a193681417adeb6bb203a0"></a>
+<a class="anchor" id="a5f3f87121f7348ec41b84043dd389179"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool adc_config_t::enableLongSample</td>
+          <td class="memname">bool _adc_config::enableLongSample</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="adbb2c387fadd9482e02b6c1db8698f41"></a>
+<a class="anchor" id="a67896f3f3631e5638268a2acd4feeef3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool adc_config_t::enableAsynchronousClockOutput</td>
+          <td class="memname">bool _adc_config::enableAsynchronousClockOutput</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a796b7bfba0959eb808b843832dcf0279"></a>
+<a class="anchor" id="a7af3345851a773943370eb7cfed4c0cc"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00008.html#ga80a9e50536500f09d71bbaf2669bb475">adc_reference_voltage_source_t</a> adc_config_t::referenceVoltageSource</td>
+          <td class="memname"><a class="el" href="a00008.html#ga98640920f9f1871e82a0a47ca24a5b27">adc_reference_voltage_source_t</a> _adc_config::referenceVoltageSource</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a5d941c8171a5e5039040474e5c114278"></a>
+<a class="anchor" id="a5225703f072f9d9d2f94fd48507ee936"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00008.html#ga110319c67e48f7baa38752980936043e">adc_sample_period_mode_t</a> adc_config_t::samplePeriodMode</td>
+          <td class="memname"><a class="el" href="a00008.html#gae15bf2d124fbefa81b5b887d1893fc32">adc_sample_period_mode_t</a> _adc_config::samplePeriodMode</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a5031662a5db79e7448b810c463062e1d"></a>
+<a class="anchor" id="af1b5fad44167e34ad24c1a04df9e57c0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00008.html#ga47aed78c6efcf8af7af8950c5bfda044">adc_clock_source_t</a> adc_config_t::clockSource</td>
+          <td class="memname"><a class="el" href="a00008.html#ga4eb7c8bad60feeb47a25d203c9b2d139">adc_clock_source_t</a> _adc_config::clockSource</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a04a397df8ca708dcff3710d76ccecd61"></a>
+<a class="anchor" id="a70987169933b640d3dc6e6bf76271b71"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00008.html#ga4a3e6521c65338f070fe6b90f2b07a2a">adc_clock_driver_t</a> adc_config_t::clockDriver</td>
+          <td class="memname"><a class="el" href="a00008.html#ga64f5fd39179e4a856f282ee2f6ecee50">adc_clock_driver_t</a> _adc_config::clockDriver</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a4d83267d7a76c64b2a209c4afc8a30cd"></a>
+<a class="anchor" id="a7aca7c04f0add259dece677f415bf53e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00008.html#gaf88bfcbfc4a19c82f8bb423218d13cda">adc_resolution_t</a> adc_config_t::resolution</td>
+          <td class="memname"><a class="el" href="a00008.html#gaca20fd2bbb2c8aef264af7693ca1aebe">adc_resolution_t</a> _adc_config::resolution</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -470,31 +526,31 @@ Initialization</h2></td></tr>
 
 </div>
 </div>
-<a name="a00282" id="a00282"></a>
+<a name="a00256" id="a00256"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct adc_offest_config_t</td>
+          <td class="memname">struct _adc_offest_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a61676f66f36c8cc1c5402b2ba7471e46"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a61676f66f36c8cc1c5402b2ba7471e46">enableSigned</a></td></tr>
-<tr class="memdesc:a61676f66f36c8cc1c5402b2ba7471e46"><td class="mdescLeft">&#160;</td><td class="mdescRight">if false,The offset value is added with the raw result.  <a href="#a61676f66f36c8cc1c5402b2ba7471e46">More...</a><br/></td></tr>
-<tr class="separator:a61676f66f36c8cc1c5402b2ba7471e46"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a79136d5e9ab922cd1a0d200812e6e832"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a79136d5e9ab922cd1a0d200812e6e832">offsetValue</a></td></tr>
-<tr class="memdesc:a79136d5e9ab922cd1a0d200812e6e832"><td class="mdescLeft">&#160;</td><td class="mdescRight">User configurable offset value(0-4095).  <a href="#a79136d5e9ab922cd1a0d200812e6e832">More...</a><br/></td></tr>
-<tr class="separator:a79136d5e9ab922cd1a0d200812e6e832"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50d994faabd5ff91d289dab40fea03a3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a50d994faabd5ff91d289dab40fea03a3">enableSigned</a></td></tr>
+<tr class="memdesc:a50d994faabd5ff91d289dab40fea03a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">if false,The offset value is added with the raw result.  <a href="#a50d994faabd5ff91d289dab40fea03a3">More...</a><br/></td></tr>
+<tr class="separator:a50d994faabd5ff91d289dab40fea03a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1190b3600ea7d96b6c4766b412296323"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a1190b3600ea7d96b6c4766b412296323">offsetValue</a></td></tr>
+<tr class="memdesc:a1190b3600ea7d96b6c4766b412296323"><td class="mdescLeft">&#160;</td><td class="mdescRight">User configurable offset value(0-4095).  <a href="#a1190b3600ea7d96b6c4766b412296323">More...</a><br/></td></tr>
+<tr class="separator:a1190b3600ea7d96b6c4766b412296323"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a61676f66f36c8cc1c5402b2ba7471e46"></a>
+<a class="anchor" id="a50d994faabd5ff91d289dab40fea03a3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool adc_offest_config_t::enableSigned</td>
+          <td class="memname">bool _adc_offest_config::enableSigned</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -502,12 +558,12 @@ Initialization</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a79136d5e9ab922cd1a0d200812e6e832"></a>
+<a class="anchor" id="a1190b3600ea7d96b6c4766b412296323"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t adc_offest_config_t::offsetValue</td>
+          <td class="memname">uint32_t _adc_offest_config::offsetValue</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -517,35 +573,35 @@ Initialization</h2></td></tr>
 
 </div>
 </div>
-<a name="a00281" id="a00281"></a>
+<a name="a00255" id="a00255"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct adc_hardware_compare_config_t</td>
+          <td class="memname">struct _adc_hardware_compare_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"><p>In kADC_HardwareCompareMode0, compare true if the result is less than the value1. In kADC_HardwareCompareMode1, compare true if the result is greater than or equal to value1. In kADC_HardwareCompareMode2, Value1 &lt;= Value2, compare true if the result is less than value1 Or the result is Greater than value2. Value1 &gt; Value2, compare true if the result is less than value1 And the result is Greater than value2. In kADC_HardwareCompareMode3, Value1 &lt;= Value2, compare true if the result is greater than or equal to value1 And the result is less than or equal to value2. Value1 &gt; Value2, compare true if the result is greater than or equal to value1 Or the result is less than or equal to value2. </p>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:af1db114f296c68ff883b773d45b1964a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00008.html#gaaad2e15aea85bfb064575c9424c8b7f7">adc_hardware_compare_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#af1db114f296c68ff883b773d45b1964a">hardwareCompareMode</a></td></tr>
-<tr class="memdesc:af1db114f296c68ff883b773d45b1964a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select the hardware compare mode.  <a href="#af1db114f296c68ff883b773d45b1964a">More...</a><br/></td></tr>
-<tr class="separator:af1db114f296c68ff883b773d45b1964a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a40873953dfaca82e7f8e0346a312e2e0"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a40873953dfaca82e7f8e0346a312e2e0">value1</a></td></tr>
-<tr class="memdesc:a40873953dfaca82e7f8e0346a312e2e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting value1(0-4095) for hardware compare mode.  <a href="#a40873953dfaca82e7f8e0346a312e2e0">More...</a><br/></td></tr>
-<tr class="separator:a40873953dfaca82e7f8e0346a312e2e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6bee6b6b6d9376acf6a05e0a3855a6c9"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a6bee6b6b6d9376acf6a05e0a3855a6c9">value2</a></td></tr>
-<tr class="memdesc:a6bee6b6b6d9376acf6a05e0a3855a6c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting value2(0-4095) for hardware compare mode.  <a href="#a6bee6b6b6d9376acf6a05e0a3855a6c9">More...</a><br/></td></tr>
-<tr class="separator:a6bee6b6b6d9376acf6a05e0a3855a6c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37ce59ff82eef4d02418739db16ec95f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00008.html#ga2504ea16a8f269a4d600fb4e151df205">adc_hardware_compare_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a37ce59ff82eef4d02418739db16ec95f">hardwareCompareMode</a></td></tr>
+<tr class="memdesc:a37ce59ff82eef4d02418739db16ec95f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select the hardware compare mode.  <a href="#a37ce59ff82eef4d02418739db16ec95f">More...</a><br/></td></tr>
+<tr class="separator:a37ce59ff82eef4d02418739db16ec95f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af43819fab6fc458219d97b101f997d7f"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#af43819fab6fc458219d97b101f997d7f">value1</a></td></tr>
+<tr class="memdesc:af43819fab6fc458219d97b101f997d7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting value1(0-4095) for hardware compare mode.  <a href="#af43819fab6fc458219d97b101f997d7f">More...</a><br/></td></tr>
+<tr class="separator:af43819fab6fc458219d97b101f997d7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb22aa8187675eb8f1694e6bd7f5a0f2"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#afb22aa8187675eb8f1694e6bd7f5a0f2">value2</a></td></tr>
+<tr class="memdesc:afb22aa8187675eb8f1694e6bd7f5a0f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting value2(0-4095) for hardware compare mode.  <a href="#afb22aa8187675eb8f1694e6bd7f5a0f2">More...</a><br/></td></tr>
+<tr class="separator:afb22aa8187675eb8f1694e6bd7f5a0f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="af1db114f296c68ff883b773d45b1964a"></a>
+<a class="anchor" id="a37ce59ff82eef4d02418739db16ec95f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00008.html#gaaad2e15aea85bfb064575c9424c8b7f7">adc_hardware_compare_mode_t</a> adc_hardware_compare_config_t::hardwareCompareMode</td>
+          <td class="memname"><a class="el" href="a00008.html#ga2504ea16a8f269a4d600fb4e151df205">adc_hardware_compare_mode_t</a> _adc_hardware_compare_config::hardwareCompareMode</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -553,24 +609,24 @@ Initialization</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a40873953dfaca82e7f8e0346a312e2e0"></a>
+<a class="anchor" id="af43819fab6fc458219d97b101f997d7f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t adc_hardware_compare_config_t::value1</td>
+          <td class="memname">uint16_t _adc_hardware_compare_config::value1</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a6bee6b6b6d9376acf6a05e0a3855a6c9"></a>
+<a class="anchor" id="afb22aa8187675eb8f1694e6bd7f5a0f2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t adc_hardware_compare_config_t::value2</td>
+          <td class="memname">uint16_t _adc_hardware_compare_config::value2</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -580,31 +636,31 @@ Initialization</h2></td></tr>
 
 </div>
 </div>
-<a name="a00276" id="a00276"></a>
+<a name="a00250" id="a00250"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct adc_channel_config_t</td>
+          <td class="memname">struct _adc_channel_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:aad852da01296532dca52642ccfda4cbb"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#aad852da01296532dca52642ccfda4cbb">channelNumber</a></td></tr>
-<tr class="memdesc:aad852da01296532dca52642ccfda4cbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting the conversion channel number.  <a href="#aad852da01296532dca52642ccfda4cbb">More...</a><br/></td></tr>
-<tr class="separator:aad852da01296532dca52642ccfda4cbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab4cddcc772816883795e9ac42c5701d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#aab4cddcc772816883795e9ac42c5701d">enableInterruptOnConversionCompleted</a></td></tr>
-<tr class="memdesc:aab4cddcc772816883795e9ac42c5701d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate an interrupt request once the conversion is completed.  <a href="#aab4cddcc772816883795e9ac42c5701d">More...</a><br/></td></tr>
-<tr class="separator:aab4cddcc772816883795e9ac42c5701d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c9d9a3c063b4b390ca2612b67debe26"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a2c9d9a3c063b4b390ca2612b67debe26">channelNumber</a></td></tr>
+<tr class="memdesc:a2c9d9a3c063b4b390ca2612b67debe26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setting the conversion channel number.  <a href="#a2c9d9a3c063b4b390ca2612b67debe26">More...</a><br/></td></tr>
+<tr class="separator:a2c9d9a3c063b4b390ca2612b67debe26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e686c086332edc219b962345bcbc40c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00008.html#a6e686c086332edc219b962345bcbc40c">enableInterruptOnConversionCompleted</a></td></tr>
+<tr class="memdesc:a6e686c086332edc219b962345bcbc40c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate an interrupt request once the conversion is completed.  <a href="#a6e686c086332edc219b962345bcbc40c">More...</a><br/></td></tr>
+<tr class="separator:a6e686c086332edc219b962345bcbc40c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="aad852da01296532dca52642ccfda4cbb"></a>
+<a class="anchor" id="a2c9d9a3c063b4b390ca2612b67debe26"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t adc_channel_config_t::channelNumber</td>
+          <td class="memname">uint32_t _adc_channel_config::channelNumber</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -612,12 +668,12 @@ Initialization</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aab4cddcc772816883795e9ac42c5701d"></a>
+<a class="anchor" id="a6e686c086332edc219b962345bcbc40c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool adc_channel_config_t::enableInterruptOnConversionCompleted</td>
+          <td class="memname">bool _adc_channel_config::enableInterruptOnConversionCompleted</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -633,7 +689,7 @@ Initialization</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_ADC_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 4))</td>
+          <td class="memname">#define FSL_ADC_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00216.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 4))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -641,193 +697,207 @@ Initialization</h2></td></tr>
 
 </div>
 </div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga9b9efd088db3a98e8512a555b68dacb6"></a>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga3f9e9a76432ecff52dcd2e6fe770980e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00008.html#ga9b9efd088db3a98e8512a555b68dacb6">adc_status_flags_t</a></td>
+          <td class="memname">typedef struct <a class="el" href="a00008.html#a00255">_adc_hardware_compare_config</a>  <a class="el" href="a00008.html#ga3f9e9a76432ecff52dcd2e6fe770980e">adc_hardware_compare_config_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>In kADC_HardwareCompareMode0, compare true if the result is less than the value1. In kADC_HardwareCompareMode1, compare true if the result is greater than or equal to value1. In kADC_HardwareCompareMode2, Value1 &lt;= Value2, compare true if the result is less than value1 Or the result is Greater than value2. Value1 &gt; Value2, compare true if the result is less than value1 And the result is Greater than value2. In kADC_HardwareCompareMode3, Value1 &lt;= Value2, compare true if the result is greater than or equal to value1 And the result is less than or equal to value2. Value1 &gt; Value2, compare true if the result is greater than or equal to value1 Or the result is less than or equal to value2. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="ga417e499fb2f1ee7ba05088468b392ce1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00008.html#ga417e499fb2f1ee7ba05088468b392ce1">_adc_status_flags</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga9b9efd088db3a98e8512a555b68dacb6a26a124489a3ad750ab3fe895c432256e"></a>kADC_ConversionActiveFlag</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga417e499fb2f1ee7ba05088468b392ce1a26a124489a3ad750ab3fe895c432256e"></a>kADC_ConversionActiveFlag</em>&nbsp;</td><td class="fielddoc">
 <p>Conversion is active,not support w1c. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9b9efd088db3a98e8512a555b68dacb6aca473dd141f867ff6bd127fbd0dd4420"></a>kADC_CalibrationFailedFlag</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga417e499fb2f1ee7ba05088468b392ce1aca473dd141f867ff6bd127fbd0dd4420"></a>kADC_CalibrationFailedFlag</em>&nbsp;</td><td class="fielddoc">
 <p>Calibration is failed,support w1c. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9b9efd088db3a98e8512a555b68dacb6ad409e989ca96b924e600f38d8a4f3cb6"></a>kADC_AsynchronousWakeupInterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga417e499fb2f1ee7ba05088468b392ce1ad409e989ca96b924e600f38d8a4f3cb6"></a>kADC_AsynchronousWakeupInterruptFlag</em>&nbsp;</td><td class="fielddoc">
 <p>Asynchronous wakeup interrupt occurred, support w1c. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga80a9e50536500f09d71bbaf2669bb475"></a>
+<a class="anchor" id="ga9d92c65606e21c5473702a14b64f7006"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00008.html#ga80a9e50536500f09d71bbaf2669bb475">adc_reference_voltage_source_t</a></td>
+          <td class="memname">enum <a class="el" href="a00008.html#ga9d92c65606e21c5473702a14b64f7006">_adc_reference_voltage_source</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga80a9e50536500f09d71bbaf2669bb475a5e9ee06d2d0e11637b20c53a282e420d"></a>kADC_ReferenceVoltageSourceAlt0</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga9d92c65606e21c5473702a14b64f7006a5e9ee06d2d0e11637b20c53a282e420d"></a>kADC_ReferenceVoltageSourceAlt0</em>&nbsp;</td><td class="fielddoc">
 <p>For external pins pair of VrefH and VrefL. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga110319c67e48f7baa38752980936043e"></a>
+<a class="anchor" id="ga58c3a80b3060e86d976c369739a8e8c4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00008.html#ga110319c67e48f7baa38752980936043e">adc_sample_period_mode_t</a></td>
+          <td class="memname">enum <a class="el" href="a00008.html#ga58c3a80b3060e86d976c369739a8e8c4">_adc_sample_period_mode</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga110319c67e48f7baa38752980936043ea9c687744893914fe17d59cfc9e403959"></a>kADC_SamplePeriod2or12Clocks</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga58c3a80b3060e86d976c369739a8e8c4a9c687744893914fe17d59cfc9e403959"></a>kADC_SamplePeriod2or12Clocks</em>&nbsp;</td><td class="fielddoc">
 <p>Long sample 12 clocks or short sample 2 clocks. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga110319c67e48f7baa38752980936043ea40767f8e49acb7e374abdd1d6776795e"></a>kADC_SamplePeriod4or16Clocks</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga58c3a80b3060e86d976c369739a8e8c4a40767f8e49acb7e374abdd1d6776795e"></a>kADC_SamplePeriod4or16Clocks</em>&nbsp;</td><td class="fielddoc">
 <p>Long sample 16 clocks or short sample 4 clocks. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga110319c67e48f7baa38752980936043eae0e0d856ff108dd866e735d7cf3d9d15"></a>kADC_SamplePeriod6or20Clocks</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga58c3a80b3060e86d976c369739a8e8c4ae0e0d856ff108dd866e735d7cf3d9d15"></a>kADC_SamplePeriod6or20Clocks</em>&nbsp;</td><td class="fielddoc">
 <p>Long sample 20 clocks or short sample 6 clocks. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga110319c67e48f7baa38752980936043ea2b479e745a372132d6b24e16cde1eb7c"></a>kADC_SamplePeriod8or24Clocks</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga58c3a80b3060e86d976c369739a8e8c4a2b479e745a372132d6b24e16cde1eb7c"></a>kADC_SamplePeriod8or24Clocks</em>&nbsp;</td><td class="fielddoc">
 <p>Long sample 24 clocks or short sample 8 clocks. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga110319c67e48f7baa38752980936043ea5dbfde0ee4985a9b9ba63b7e749c093e"></a>kADC_SamplePeriodLong12Clcoks</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga58c3a80b3060e86d976c369739a8e8c4a5dbfde0ee4985a9b9ba63b7e749c093e"></a>kADC_SamplePeriodLong12Clcoks</em>&nbsp;</td><td class="fielddoc">
 <p>Long sample 12 clocks. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga110319c67e48f7baa38752980936043ea4e059ccfb09bc4fc8db266d88b1ed0c8"></a>kADC_SamplePeriodLong16Clcoks</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga58c3a80b3060e86d976c369739a8e8c4a4e059ccfb09bc4fc8db266d88b1ed0c8"></a>kADC_SamplePeriodLong16Clcoks</em>&nbsp;</td><td class="fielddoc">
 <p>Long sample 16 clocks. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga110319c67e48f7baa38752980936043ea370fc35d725ecf897d0feba4eafcc7d3"></a>kADC_SamplePeriodLong20Clcoks</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga58c3a80b3060e86d976c369739a8e8c4a370fc35d725ecf897d0feba4eafcc7d3"></a>kADC_SamplePeriodLong20Clcoks</em>&nbsp;</td><td class="fielddoc">
 <p>Long sample 20 clocks. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga110319c67e48f7baa38752980936043eabdcc07378825dccb6049a3506cc978a5"></a>kADC_SamplePeriodLong24Clcoks</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga58c3a80b3060e86d976c369739a8e8c4abdcc07378825dccb6049a3506cc978a5"></a>kADC_SamplePeriodLong24Clcoks</em>&nbsp;</td><td class="fielddoc">
 <p>Long sample 24 clocks. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga110319c67e48f7baa38752980936043ea7aa48ce81074eb4291e4c8c108b306c9"></a>kADC_SamplePeriodShort2Clocks</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga58c3a80b3060e86d976c369739a8e8c4a7aa48ce81074eb4291e4c8c108b306c9"></a>kADC_SamplePeriodShort2Clocks</em>&nbsp;</td><td class="fielddoc">
 <p>Short sample 2 clocks. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga110319c67e48f7baa38752980936043ea32fa5b2c6b644d21e36ba89e2e8851b8"></a>kADC_SamplePeriodShort4Clocks</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga58c3a80b3060e86d976c369739a8e8c4a32fa5b2c6b644d21e36ba89e2e8851b8"></a>kADC_SamplePeriodShort4Clocks</em>&nbsp;</td><td class="fielddoc">
 <p>Short sample 4 clocks. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga110319c67e48f7baa38752980936043ea65af03b9393e06810b9bd5984dda9629"></a>kADC_SamplePeriodShort6Clocks</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga58c3a80b3060e86d976c369739a8e8c4a65af03b9393e06810b9bd5984dda9629"></a>kADC_SamplePeriodShort6Clocks</em>&nbsp;</td><td class="fielddoc">
 <p>Short sample 6 clocks. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga110319c67e48f7baa38752980936043ea3f6bac06353d25e806f275fa2e509e52"></a>kADC_SamplePeriodShort8Clocks</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga58c3a80b3060e86d976c369739a8e8c4a3f6bac06353d25e806f275fa2e509e52"></a>kADC_SamplePeriodShort8Clocks</em>&nbsp;</td><td class="fielddoc">
 <p>Short sample 8 clocks. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga47aed78c6efcf8af7af8950c5bfda044"></a>
+<a class="anchor" id="ga644186ae0cec69a207a0651015f4ba1f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00008.html#ga47aed78c6efcf8af7af8950c5bfda044">adc_clock_source_t</a></td>
+          <td class="memname">enum <a class="el" href="a00008.html#ga644186ae0cec69a207a0651015f4ba1f">_adc_clock_source</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga47aed78c6efcf8af7af8950c5bfda044a576ebe98baa68fbb9cca4900f1bc100c"></a>kADC_ClockSourceIPG</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga644186ae0cec69a207a0651015f4ba1fa576ebe98baa68fbb9cca4900f1bc100c"></a>kADC_ClockSourceIPG</em>&nbsp;</td><td class="fielddoc">
 <p>Select IPG clock to generate ADCK. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga47aed78c6efcf8af7af8950c5bfda044a4e052bb05025d8203c1dc67a612ec4b7"></a>kADC_ClockSourceIPGDiv2</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga644186ae0cec69a207a0651015f4ba1fa4e052bb05025d8203c1dc67a612ec4b7"></a>kADC_ClockSourceIPGDiv2</em>&nbsp;</td><td class="fielddoc">
 <p>Select IPG clock divided by 2 to generate ADCK. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga47aed78c6efcf8af7af8950c5bfda044a467486968f174736d2a62db0a67ffad3"></a>kADC_ClockSourceALT</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga644186ae0cec69a207a0651015f4ba1fa467486968f174736d2a62db0a67ffad3"></a>kADC_ClockSourceALT</em>&nbsp;</td><td class="fielddoc">
 <p>Select alternate clock to generate ADCK. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga47aed78c6efcf8af7af8950c5bfda044a75a9ae600c6368a2792a7fa11f1bcbf9"></a>kADC_ClockSourceAD</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga644186ae0cec69a207a0651015f4ba1fa75a9ae600c6368a2792a7fa11f1bcbf9"></a>kADC_ClockSourceAD</em>&nbsp;</td><td class="fielddoc">
 <p>Select Asynchronous clock to generate ADCK. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga4a3e6521c65338f070fe6b90f2b07a2a"></a>
+<a class="anchor" id="gabad054647861cfe96a54f54fca8cb633"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00008.html#ga4a3e6521c65338f070fe6b90f2b07a2a">adc_clock_driver_t</a></td>
+          <td class="memname">enum <a class="el" href="a00008.html#gabad054647861cfe96a54f54fca8cb633">_adc_clock_drvier</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga4a3e6521c65338f070fe6b90f2b07a2aa51648a44017cdc8158167d782c3278ac"></a>kADC_ClockDriver1</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggabad054647861cfe96a54f54fca8cb633a51648a44017cdc8158167d782c3278ac"></a>kADC_ClockDriver1</em>&nbsp;</td><td class="fielddoc">
 <p>For divider 1 from the input clock to the module. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga4a3e6521c65338f070fe6b90f2b07a2aa1efe12ede1148ea29316e29e8fd590fb"></a>kADC_ClockDriver2</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggabad054647861cfe96a54f54fca8cb633a1efe12ede1148ea29316e29e8fd590fb"></a>kADC_ClockDriver2</em>&nbsp;</td><td class="fielddoc">
 <p>For divider 2 from the input clock to the module. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga4a3e6521c65338f070fe6b90f2b07a2aa87afba538dc7e965114c6fc1353090c3"></a>kADC_ClockDriver4</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggabad054647861cfe96a54f54fca8cb633a87afba538dc7e965114c6fc1353090c3"></a>kADC_ClockDriver4</em>&nbsp;</td><td class="fielddoc">
 <p>For divider 4 from the input clock to the module. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga4a3e6521c65338f070fe6b90f2b07a2aa7e2a0f3c06e6b88c3ecd72f3dc8d41a6"></a>kADC_ClockDriver8</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggabad054647861cfe96a54f54fca8cb633a7e2a0f3c06e6b88c3ecd72f3dc8d41a6"></a>kADC_ClockDriver8</em>&nbsp;</td><td class="fielddoc">
 <p>For divider 8 from the input clock to the module. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gaf88bfcbfc4a19c82f8bb423218d13cda"></a>
+<a class="anchor" id="gab5450a0e5be40ad0c7957701fa9f6a67"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00008.html#gaf88bfcbfc4a19c82f8bb423218d13cda">adc_resolution_t</a></td>
+          <td class="memname">enum <a class="el" href="a00008.html#gab5450a0e5be40ad0c7957701fa9f6a67">_adc_resolution</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaf88bfcbfc4a19c82f8bb423218d13cdaabf3e2dd3e94a57b07c291dde055957e0"></a>kADC_Resolution8Bit</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab5450a0e5be40ad0c7957701fa9f6a67abf3e2dd3e94a57b07c291dde055957e0"></a>kADC_Resolution8Bit</em>&nbsp;</td><td class="fielddoc">
 <p>Single End 8-bit resolution. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf88bfcbfc4a19c82f8bb423218d13cdaa862f1d412b57ff93e21ff371a57abd98"></a>kADC_Resolution10Bit</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggab5450a0e5be40ad0c7957701fa9f6a67a862f1d412b57ff93e21ff371a57abd98"></a>kADC_Resolution10Bit</em>&nbsp;</td><td class="fielddoc">
 <p>Single End 10-bit resolution. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf88bfcbfc4a19c82f8bb423218d13cdaa8c879e001f4fc89b1d67b75fe7852202"></a>kADC_Resolution12Bit</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggab5450a0e5be40ad0c7957701fa9f6a67a8c879e001f4fc89b1d67b75fe7852202"></a>kADC_Resolution12Bit</em>&nbsp;</td><td class="fielddoc">
 <p>Single End 12-bit resolution. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gaaad2e15aea85bfb064575c9424c8b7f7"></a>
+<a class="anchor" id="gaa74d3752fc222e8f03bd5a003c15131f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00008.html#gaaad2e15aea85bfb064575c9424c8b7f7">adc_hardware_compare_mode_t</a></td>
+          <td class="memname">enum <a class="el" href="a00008.html#gaa74d3752fc222e8f03bd5a003c15131f">_adc_hardware_compare_mode</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaaad2e15aea85bfb064575c9424c8b7f7a143f2e6b064ecbb16c5d1e7c4ce2463b"></a>kADC_HardwareCompareMode0</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaa74d3752fc222e8f03bd5a003c15131fa143f2e6b064ecbb16c5d1e7c4ce2463b"></a>kADC_HardwareCompareMode0</em>&nbsp;</td><td class="fielddoc">
 <p>Compare true if the result is less than the value1. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaaad2e15aea85bfb064575c9424c8b7f7aa8721777f06cd345c7ec65f5e4e2a973"></a>kADC_HardwareCompareMode1</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa74d3752fc222e8f03bd5a003c15131faa8721777f06cd345c7ec65f5e4e2a973"></a>kADC_HardwareCompareMode1</em>&nbsp;</td><td class="fielddoc">
 <p>Compare true if the result is greater than or equal to value1. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaaad2e15aea85bfb064575c9424c8b7f7a611654b81d84d2d14e686524a2446f0c"></a>kADC_HardwareCompareMode2</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa74d3752fc222e8f03bd5a003c15131fa611654b81d84d2d14e686524a2446f0c"></a>kADC_HardwareCompareMode2</em>&nbsp;</td><td class="fielddoc">
 <p>Value1 &lt;= Value2, compare true if the result is less than value1 Or the result is Greater than value2. </p>
 <p>Value1 &gt; Value2, compare true if the result is less than value1 And the result is greater than value2 </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaaad2e15aea85bfb064575c9424c8b7f7aadd87d9d5dc67ef6baf4878dd57592cb"></a>kADC_HardwareCompareMode3</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa74d3752fc222e8f03bd5a003c15131faadd87d9d5dc67ef6baf4878dd57592cb"></a>kADC_HardwareCompareMode3</em>&nbsp;</td><td class="fielddoc">
 <p>Value1 &lt;= Value2, compare true if the result is greater than or equal to value1 And the result is less than or equal to value2. </p>
 <p>Value1 &gt; Value2, compare true if the result is greater than or equal to value1 Or the result is less than or equal to value2. </p>
 </td></tr>
@@ -835,29 +905,29 @@ Initialization</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga5057b50038de3ec61aa23fdf6039edee"></a>
+<a class="anchor" id="gac79221d8bb15730e5a98b71038c2ea3e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00008.html#ga5057b50038de3ec61aa23fdf6039edee">adc_hardware_average_mode_t</a></td>
+          <td class="memname">enum <a class="el" href="a00008.html#gac79221d8bb15730e5a98b71038c2ea3e">_adc_hardware_average_mode</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga5057b50038de3ec61aa23fdf6039edeeaf39c8892d166cde6a202d3a5d5afb970"></a>kADC_HardwareAverageCount4</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggac79221d8bb15730e5a98b71038c2ea3eaf39c8892d166cde6a202d3a5d5afb970"></a>kADC_HardwareAverageCount4</em>&nbsp;</td><td class="fielddoc">
 <p>For hardware average with 4 samples. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5057b50038de3ec61aa23fdf6039edeea64e657f493e47f665b3e87b9b514afc8"></a>kADC_HardwareAverageCount8</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggac79221d8bb15730e5a98b71038c2ea3ea64e657f493e47f665b3e87b9b514afc8"></a>kADC_HardwareAverageCount8</em>&nbsp;</td><td class="fielddoc">
 <p>For hardware average with 8 samples. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5057b50038de3ec61aa23fdf6039edeea7c42d79c1e0eed68dd40f030c6870639"></a>kADC_HardwareAverageCount16</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggac79221d8bb15730e5a98b71038c2ea3ea7c42d79c1e0eed68dd40f030c6870639"></a>kADC_HardwareAverageCount16</em>&nbsp;</td><td class="fielddoc">
 <p>For hardware average with 16 samples. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5057b50038de3ec61aa23fdf6039edeea9ec04ff198a8a9c98a4451febeac9797"></a>kADC_HardwareAverageCount32</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggac79221d8bb15730e5a98b71038c2ea3ea9ec04ff198a8a9c98a4451febeac9797"></a>kADC_HardwareAverageCount32</em>&nbsp;</td><td class="fielddoc">
 <p>For hardware average with 32 samples. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5057b50038de3ec61aa23fdf6039edeea0411428810c0fedbd5c2753826c725d5"></a>kADC_HardwareAverageDiasable</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggac79221d8bb15730e5a98b71038c2ea3ea0411428810c0fedbd5c2753826c725d5"></a>kADC_HardwareAverageDiasable</em>&nbsp;</td><td class="fielddoc">
 <p>Disable the hardware average function. </p>
 </td></tr>
 </table>
@@ -878,7 +948,7 @@ Initialization</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00008.html#a00277">adc_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00008.html#ga3b22457f328dd120d593051f40db8e1a">adc_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -927,7 +997,7 @@ Initialization</h2></td></tr>
         <tr>
           <td class="memname">void ADC_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00008.html#a00277">adc_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00008.html#ga3b22457f328dd120d593051f40db8e1a">adc_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
@@ -940,11 +1010,11 @@ Initialization</h2></td></tr>
 <div class="line">*  config-&gt;enableHighSpeed =               <span class="keyword">false</span>;</div>
 <div class="line">*  config-&gt;enableLowPower =                <span class="keyword">false</span>;</div>
 <div class="line">*  config-&gt;enableLongSample =              <span class="keyword">false</span>;</div>
-<div class="line">*  config-&gt;referenceVoltageSource =        <a class="code" href="a00008.html#gga80a9e50536500f09d71bbaf2669bb475a5e9ee06d2d0e11637b20c53a282e420d">kADC_ReferenceVoltageSourceAlt0</a>;</div>
-<div class="line">*  config-&gt;samplePeriodMode =              <a class="code" href="a00008.html#gga110319c67e48f7baa38752980936043ea9c687744893914fe17d59cfc9e403959">kADC_SamplePeriod2or12Clocks</a>;</div>
-<div class="line">*  config-&gt;clockSource =                   <a class="code" href="a00008.html#gga47aed78c6efcf8af7af8950c5bfda044a75a9ae600c6368a2792a7fa11f1bcbf9">kADC_ClockSourceAD</a>;</div>
-<div class="line">*  config-&gt;clockDriver =                   <a class="code" href="a00008.html#gga4a3e6521c65338f070fe6b90f2b07a2aa51648a44017cdc8158167d782c3278ac">kADC_ClockDriver1</a>;</div>
-<div class="line">*  config-&gt;resolution =                    <a class="code" href="a00008.html#ggaf88bfcbfc4a19c82f8bb423218d13cdaa8c879e001f4fc89b1d67b75fe7852202">kADC_Resolution12Bit</a>;</div>
+<div class="line">*  config-&gt;referenceVoltageSource =        <a class="code" href="a00008.html#gga9d92c65606e21c5473702a14b64f7006a5e9ee06d2d0e11637b20c53a282e420d">kADC_ReferenceVoltageSourceAlt0</a>;</div>
+<div class="line">*  config-&gt;samplePeriodMode =              <a class="code" href="a00008.html#gga58c3a80b3060e86d976c369739a8e8c4a9c687744893914fe17d59cfc9e403959">kADC_SamplePeriod2or12Clocks</a>;</div>
+<div class="line">*  config-&gt;clockSource =                   <a class="code" href="a00008.html#gga644186ae0cec69a207a0651015f4ba1fa75a9ae600c6368a2792a7fa11f1bcbf9">kADC_ClockSourceAD</a>;</div>
+<div class="line">*  config-&gt;clockDriver =                   <a class="code" href="a00008.html#ggabad054647861cfe96a54f54fca8cb633a51648a44017cdc8158167d782c3278ac">kADC_ClockDriver1</a>;</div>
+<div class="line">*  config-&gt;resolution =                    <a class="code" href="a00008.html#ggab5450a0e5be40ad0c7957701fa9f6a67a8c879e001f4fc89b1d67b75fe7852202">kADC_Resolution12Bit</a>;</div>
 <div class="line">* </div>
 </div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -974,7 +1044,7 @@ Initialization</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00008.html#a00276">adc_channel_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00008.html#ga1fdf452b9164a4ef1c9f417b1b8f03f0">adc_channel_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -1087,7 +1157,7 @@ Initialization</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ADC_DoAutoCalibration </td>
+          <td class="memname"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ADC_DoAutoCalibration </td>
           <td>(</td>
           <td class="paramtype">ADC_Type *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
@@ -1126,7 +1196,7 @@ Initialization</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00008.html#a00282">adc_offest_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00008.html#gaa5c76e9fc810ee7e911035fa05535d46">adc_offest_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -1241,7 +1311,7 @@ Initialization</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00008.html#a00281">adc_hardware_compare_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00008.html#ga3f9e9a76432ecff52dcd2e6fe770980e">adc_hardware_compare_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -1275,7 +1345,7 @@ Initialization</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00008.html#ga5057b50038de3ec61aa23fdf6039edee">adc_hardware_average_mode_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00008.html#ga2be8650bc0400fbf9f5f119384eec6ca">adc_hardware_average_mode_t</a>&#160;</td>
           <td class="paramname"><em>mode</em>&#160;</td>
         </tr>
         <tr>

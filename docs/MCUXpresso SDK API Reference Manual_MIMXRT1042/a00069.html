@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -615,7 +615,7 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga4c00c905a9849fed0957c80dee8fbf4c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga4c00c905a9849fed0957c80dee8fbf4c">FSL_SEMC_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 6, 0))</td></tr>
+<tr class="memitem:ga4c00c905a9849fed0957c80dee8fbf4c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga4c00c905a9849fed0957c80dee8fbf4c">FSL_SEMC_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 7, 0))</td></tr>
 <tr class="memdesc:ga4c00c905a9849fed0957c80dee8fbf4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">SEMC driver version.  <a href="#ga4c00c905a9849fed0957c80dee8fbf4c">More...</a><br/></td></tr>
 <tr class="separator:ga4c00c905a9849fed0957c80dee8fbf4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -773,6 +773,9 @@ SEMC Memory Access Operation</h2></td></tr>
 <tr class="memitem:aadd156b3af85bb6af2adae0576953f03"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#aadd156b3af85bb6af2adae0576953f03">refreshBurstLen</a></td></tr>
 <tr class="memdesc:aadd156b3af85bb6af2adae0576953f03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Refresh burst length.  <a href="#aadd156b3af85bb6af2adae0576953f03">More...</a><br/></td></tr>
 <tr class="separator:aadd156b3af85bb6af2adae0576953f03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a550bee43e688cb36696064bb0b4b37e3"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a550bee43e688cb36696064bb0b4b37e3">autofreshTimes</a></td></tr>
+<tr class="memdesc:a550bee43e688cb36696064bb0b4b37e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Auto Refresh cycles times.  <a href="#a550bee43e688cb36696064bb0b4b37e3">More...</a><br/></td></tr>
+<tr class="separator:a550bee43e688cb36696064bb0b4b37e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
 <a class="anchor" id="a2d5aca72eb96b8cc24ae1e311a3b8b04"></a>
@@ -1022,6 +1025,18 @@ SEMC Memory Access Operation</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">uint8_t semc_sdram_config_t::refreshBurstLen</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a550bee43e688cb36696064bb0b4b37e3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t semc_sdram_config_t::autofreshTimes</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -2865,7 +2880,7 @@ SEMC Memory Access Operation</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_SEMC_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 6, 0))</td>
+          <td class="memname">#define FSL_SEMC_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 7, 0))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -4104,7 +4119,7 @@ SEMC Memory Access Operation</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="a00303.html#_deprecated000025">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00069.html#ga5c32a3e9fa052480c7dff36f14be82dc">SEMC_ConfigureSRAMWithChipSelection</a>. </dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="a00303.html#_deprecated000015">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00069.html#ga5c32a3e9fa052480c7dff36f14be82dc">SEMC_ConfigureSRAMWithChipSelection</a>. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">base</td><td>SEMC peripheral base address. </td></tr>

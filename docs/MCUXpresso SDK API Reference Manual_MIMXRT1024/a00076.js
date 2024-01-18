@@ -1,16 +1,18 @@
 var a00076 =
 [
-    [ "tempmon_config_t", "a00076.html#a00508", [
-      [ "frequency", "a00076.html#a207108996ebfd8421548f96bd4d3afaf", null ],
-      [ "highAlarmTemp", "a00076.html#a7d970f8778383bb43e202e1cb3d45691", null ],
-      [ "panicAlarmTemp", "a00076.html#ad5fca8b29572f08204642e2ed8d9dbce", null ],
-      [ "lowAlarmTemp", "a00076.html#a129a45c78e03e2b25ba4c403636b6b01", null ]
+    [ "_tempmon_config", "a00076.html#a00503", [
+      [ "frequency", "a00076.html#a7abc547e53d2bf57d98a8c53aba24d73", null ],
+      [ "highAlarmTemp", "a00076.html#aef9a15b388394ba5b01c773a904e6161", null ],
+      [ "panicAlarmTemp", "a00076.html#a4ee843733473a886d67a422d4a155f64", null ],
+      [ "lowAlarmTemp", "a00076.html#a3b800f87335e6569c4122baecdae621d", null ]
     ] ],
     [ "FSL_TEMPMON_DRIVER_VERSION", "a00076.html#ga8c820cc4dbb86ea6a99e674e7f8ff1ba", null ],
-    [ "tempmon_alarm_mode", "a00076.html#ga2d8a033ed3d80771d8417dbf68bfd58b", [
-      [ "kTEMPMON_HighAlarmMode", "a00076.html#gga2d8a033ed3d80771d8417dbf68bfd58ba6c34f34b411e7f880a5782d0329f732f", null ],
-      [ "kTEMPMON_PanicAlarmMode", "a00076.html#gga2d8a033ed3d80771d8417dbf68bfd58ba3cafbb2449dbb58abb5ef078907ba6b0", null ],
-      [ "kTEMPMON_LowAlarmMode", "a00076.html#gga2d8a033ed3d80771d8417dbf68bfd58ba3b1e1531c3d0529cba956f38568140f5", null ]
+    [ "tempmon_config_t", "a00076.html#ga7d83f2e7eaf7b3833a9ce786a758b867", null ],
+    [ "tempmon_alarm_mode", "a00076.html#gae299ab75db04e087bad01ec6df1b82e6", null ],
+    [ "_tempmon_alarm_mode", "a00076.html#gaa902d39a9a0944943dfa1652a1c191da", [
+      [ "kTEMPMON_HighAlarmMode", "a00076.html#ggaa902d39a9a0944943dfa1652a1c191daa6c34f34b411e7f880a5782d0329f732f", null ],
+      [ "kTEMPMON_PanicAlarmMode", "a00076.html#ggaa902d39a9a0944943dfa1652a1c191daa3cafbb2449dbb58abb5ef078907ba6b0", null ],
+      [ "kTEMPMON_LowAlarmMode", "a00076.html#ggaa902d39a9a0944943dfa1652a1c191daa3b1e1531c3d0529cba956f38568140f5", null ]
     ] ],
     [ "TEMPMON_Init", "a00076.html#gad74d3cd12c87cd031afefa47a40c4ffa", null ],
     [ "TEMPMON_Deinit", "a00076.html#ga9300a134aeda04212a2e84d1ccdb3e4a", null ],

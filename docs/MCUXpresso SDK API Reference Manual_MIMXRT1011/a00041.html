@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -103,26 +103,45 @@ $(document).ready(function(){initNavTree('a00041.html','');});
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">LPI2C Slave Driver<div class="ingroups"><a class="el" href="a00220.html">LPI2C: Low Power Inter-Integrated Circuit Driver</a></div></div>  </div>
+<div class="title">LPI2C Slave Driver<div class="ingroups"><a class="el" href="a00222.html">LPI2C: Low Power Inter-Integrated Circuit Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00347"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a00347">lpi2c_slave_config_t</a></td></tr>
-<tr class="memdesc:a00347"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure with settings to initialize the LPI2C slave module.  <a href="a00041.html#a00347">More...</a><br/></td></tr>
-<tr class="separator:a00347"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00348"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a00348">lpi2c_slave_transfer_t</a></td></tr>
-<tr class="memdesc:a00348"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPI2C slave transfer structure.  <a href="a00041.html#a00348">More...</a><br/></td></tr>
-<tr class="separator:a00348"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00266"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a00266">lpi2c_slave_handle_t</a></td></tr>
-<tr class="memdesc:a00266"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPI2C slave handle structure.  <a href="a00041.html#a00266">More...</a><br/></td></tr>
-<tr class="separator:a00266"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00335"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a00335">_lpi2c_slave_config</a></td></tr>
+<tr class="memdesc:a00335"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure with settings to initialize the LPI2C slave module.  <a href="a00041.html#a00335">More...</a><br/></td></tr>
+<tr class="separator:a00335"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00337"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a00337">_lpi2c_slave_transfer</a></td></tr>
+<tr class="memdesc:a00337"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPI2C slave transfer structure.  <a href="a00041.html#a00337">More...</a><br/></td></tr>
+<tr class="separator:a00337"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00336"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a00336">_lpi2c_slave_handle</a></td></tr>
+<tr class="memdesc:a00336"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPI2C slave handle structure.  <a href="a00041.html#a00336">More...</a><br/></td></tr>
+<tr class="separator:a00336"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga2640285a708842a5e0e7c4c0090a2f58"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga2640285a708842a5e0e7c4c0090a2f58">lpi2c_slave_transfer_callback_t</a> )(LPI2C_Type *base, <a class="el" href="a00041.html#a00348">lpi2c_slave_transfer_t</a> *transfer, void *userData)</td></tr>
+<tr class="memitem:ga533530fcfba274fac752e66fd0a9b5db"><td class="memItemLeft" align="right" valign="top">typedef enum <br class="typebreak"/>
+<a class="el" href="a00041.html#ga131a9a0a073edf0d1cc38d0bb63f42ee">_lpi2c_slave_address_match</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga533530fcfba274fac752e66fd0a9b5db">lpi2c_slave_address_match_t</a></td></tr>
+<tr class="memdesc:ga533530fcfba274fac752e66fd0a9b5db"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPI2C slave address match options.  <a href="#ga533530fcfba274fac752e66fd0a9b5db">More...</a><br/></td></tr>
+<tr class="separator:ga533530fcfba274fac752e66fd0a9b5db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9e6fa1acd6800e0c0eaf99f68dbd4681"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00041.html#a00335">_lpi2c_slave_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga9e6fa1acd6800e0c0eaf99f68dbd4681">lpi2c_slave_config_t</a></td></tr>
+<tr class="memdesc:ga9e6fa1acd6800e0c0eaf99f68dbd4681"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure with settings to initialize the LPI2C slave module.  <a href="#ga9e6fa1acd6800e0c0eaf99f68dbd4681">More...</a><br/></td></tr>
+<tr class="separator:ga9e6fa1acd6800e0c0eaf99f68dbd4681"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaba49383928407761f900aa0c0dddbfe2"><td class="memItemLeft" align="right" valign="top">typedef enum <br class="typebreak"/>
+<a class="el" href="a00041.html#ga379060365b5d4d26dc5bdec675d7c029">_lpi2c_slave_transfer_event</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gaba49383928407761f900aa0c0dddbfe2">lpi2c_slave_transfer_event_t</a></td></tr>
+<tr class="memdesc:gaba49383928407761f900aa0c0dddbfe2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set of events sent to the callback for non blocking slave transfers.  <a href="#gaba49383928407761f900aa0c0dddbfe2">More...</a><br/></td></tr>
+<tr class="separator:gaba49383928407761f900aa0c0dddbfe2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad2491beed809164053a8b083f7e55a27"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad2491beed809164053a8b083f7e55a27"></a>
+typedef struct <br class="typebreak"/>
+<a class="el" href="a00041.html#a00337">_lpi2c_slave_transfer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gad2491beed809164053a8b083f7e55a27">lpi2c_slave_transfer_t</a></td></tr>
+<tr class="memdesc:gad2491beed809164053a8b083f7e55a27"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPI2C slave transfer structure. <br/></td></tr>
+<tr class="separator:gad2491beed809164053a8b083f7e55a27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga230e27460fd44e50f35c3c206eebfa68"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00041.html#a00336">_lpi2c_slave_handle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga230e27460fd44e50f35c3c206eebfa68">lpi2c_slave_handle_t</a></td></tr>
+<tr class="memdesc:ga230e27460fd44e50f35c3c206eebfa68"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPI2C slave handle structure.  <a href="#ga230e27460fd44e50f35c3c206eebfa68">More...</a><br/></td></tr>
+<tr class="separator:ga230e27460fd44e50f35c3c206eebfa68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2640285a708842a5e0e7c4c0090a2f58"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga2640285a708842a5e0e7c4c0090a2f58">lpi2c_slave_transfer_callback_t</a> )(LPI2C_Type *base, <a class="el" href="a00041.html#gad2491beed809164053a8b083f7e55a27">lpi2c_slave_transfer_t</a> *transfer, void *userData)</td></tr>
 <tr class="memdesc:ga2640285a708842a5e0e7c4c0090a2f58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slave event callback function pointer type.  <a href="#ga2640285a708842a5e0e7c4c0090a2f58">More...</a><br/></td></tr>
 <tr class="separator:ga2640285a708842a5e0e7c4c0090a2f58"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -164,41 +183,41 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:gabd50effc706692c03b42faa72c34269b"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPI2C slave peripheral flags.  <a href="a00041.html#gabd50effc706692c03b42faa72c34269b">More...</a><br/></td></tr>
 <tr class="separator:gabd50effc706692c03b42faa72c34269b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac3564395ccab19eb1ce6ab46b36bb5bb"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gac3564395ccab19eb1ce6ab46b36bb5bb">lpi2c_slave_address_match_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00041.html#ggac3564395ccab19eb1ce6ab46b36bb5bbaaa16a731881882d10f48ebde416f54c5">kLPI2C_MatchAddress0</a> = 0U, 
+<tr class="memitem:ga131a9a0a073edf0d1cc38d0bb63f42ee"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga131a9a0a073edf0d1cc38d0bb63f42ee">_lpi2c_slave_address_match</a> { <br/>
+&#160;&#160;<a class="el" href="a00041.html#gga131a9a0a073edf0d1cc38d0bb63f42eeaaa16a731881882d10f48ebde416f54c5">kLPI2C_MatchAddress0</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00041.html#ggac3564395ccab19eb1ce6ab46b36bb5bba2941f8a06a17205294e7d0fa5f305675">kLPI2C_MatchAddress0OrAddress1</a> = 2U, 
+&#160;&#160;<a class="el" href="a00041.html#gga131a9a0a073edf0d1cc38d0bb63f42eea2941f8a06a17205294e7d0fa5f305675">kLPI2C_MatchAddress0OrAddress1</a> = 2U, 
 <br/>
-&#160;&#160;<a class="el" href="a00041.html#ggac3564395ccab19eb1ce6ab46b36bb5bba59e460fdd7075191f69e047ef35557eb">kLPI2C_MatchAddress0ThroughAddress1</a> = 6U
-<br/>
- }</td></tr>
-<tr class="memdesc:gac3564395ccab19eb1ce6ab46b36bb5bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPI2C slave address match options.  <a href="a00041.html#gac3564395ccab19eb1ce6ab46b36bb5bb">More...</a><br/></td></tr>
-<tr class="separator:gac3564395ccab19eb1ce6ab46b36bb5bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0d99b4dba3841a4e02f7c431a59006c8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga0d99b4dba3841a4e02f7c431a59006c8">lpi2c_slave_transfer_event_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00041.html#gga0d99b4dba3841a4e02f7c431a59006c8a10fb8d9bb6ba9cd44fde85466e6eabef">kLPI2C_SlaveAddressMatchEvent</a> = 0x01U, 
-<br/>
-&#160;&#160;<a class="el" href="a00041.html#gga0d99b4dba3841a4e02f7c431a59006c8a976c8c9aa85026224a46cf5ec742eb49">kLPI2C_SlaveTransmitEvent</a> = 0x02U, 
-<br/>
-&#160;&#160;<a class="el" href="a00041.html#gga0d99b4dba3841a4e02f7c431a59006c8ac737ba9e4e62880a6e2d8aac98ae8f18">kLPI2C_SlaveReceiveEvent</a> = 0x04U, 
-<br/>
-&#160;&#160;<a class="el" href="a00041.html#gga0d99b4dba3841a4e02f7c431a59006c8a112af4cf8f8a374407d7c784f024b8e0">kLPI2C_SlaveTransmitAckEvent</a> = 0x08U, 
-<br/>
-&#160;&#160;<a class="el" href="a00041.html#gga0d99b4dba3841a4e02f7c431a59006c8ae0995aac6808b3726b7577c2d283e4c4">kLPI2C_SlaveRepeatedStartEvent</a> = 0x10U, 
-<br/>
-&#160;&#160;<a class="el" href="a00041.html#gga0d99b4dba3841a4e02f7c431a59006c8a06ef7422d9edf9b914864a2d689f042c">kLPI2C_SlaveCompletionEvent</a> = 0x20U, 
-<br/>
-&#160;&#160;<a class="el" href="a00041.html#gga0d99b4dba3841a4e02f7c431a59006c8aeed0927f4e909cb161b44434b6f01aec">kLPI2C_SlaveAllEvents</a>
+&#160;&#160;<a class="el" href="a00041.html#gga131a9a0a073edf0d1cc38d0bb63f42eea59e460fdd7075191f69e047ef35557eb">kLPI2C_MatchAddress0ThroughAddress1</a> = 6U
 <br/>
  }</td></tr>
-<tr class="memdesc:ga0d99b4dba3841a4e02f7c431a59006c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set of events sent to the callback for non blocking slave transfers.  <a href="a00041.html#ga0d99b4dba3841a4e02f7c431a59006c8">More...</a><br/></td></tr>
-<tr class="separator:ga0d99b4dba3841a4e02f7c431a59006c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga131a9a0a073edf0d1cc38d0bb63f42ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPI2C slave address match options.  <a href="a00041.html#ga131a9a0a073edf0d1cc38d0bb63f42ee">More...</a><br/></td></tr>
+<tr class="separator:ga131a9a0a073edf0d1cc38d0bb63f42ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga379060365b5d4d26dc5bdec675d7c029"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga379060365b5d4d26dc5bdec675d7c029">_lpi2c_slave_transfer_event</a> { <br/>
+&#160;&#160;<a class="el" href="a00041.html#gga379060365b5d4d26dc5bdec675d7c029a10fb8d9bb6ba9cd44fde85466e6eabef">kLPI2C_SlaveAddressMatchEvent</a> = 0x01U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga379060365b5d4d26dc5bdec675d7c029a976c8c9aa85026224a46cf5ec742eb49">kLPI2C_SlaveTransmitEvent</a> = 0x02U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga379060365b5d4d26dc5bdec675d7c029ac737ba9e4e62880a6e2d8aac98ae8f18">kLPI2C_SlaveReceiveEvent</a> = 0x04U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga379060365b5d4d26dc5bdec675d7c029a112af4cf8f8a374407d7c784f024b8e0">kLPI2C_SlaveTransmitAckEvent</a> = 0x08U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga379060365b5d4d26dc5bdec675d7c029ae0995aac6808b3726b7577c2d283e4c4">kLPI2C_SlaveRepeatedStartEvent</a> = 0x10U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga379060365b5d4d26dc5bdec675d7c029a06ef7422d9edf9b914864a2d689f042c">kLPI2C_SlaveCompletionEvent</a> = 0x20U, 
+<br/>
+&#160;&#160;<a class="el" href="a00041.html#gga379060365b5d4d26dc5bdec675d7c029aeed0927f4e909cb161b44434b6f01aec">kLPI2C_SlaveAllEvents</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga379060365b5d4d26dc5bdec675d7c029"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set of events sent to the callback for non blocking slave transfers.  <a href="a00041.html#ga379060365b5d4d26dc5bdec675d7c029">More...</a><br/></td></tr>
+<tr class="separator:ga379060365b5d4d26dc5bdec675d7c029"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Slave initialization and deinitialization</h2></td></tr>
-<tr class="memitem:gadf34085d4557ceb3081fff9fe0e3189a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gadf34085d4557ceb3081fff9fe0e3189a">LPI2C_SlaveGetDefaultConfig</a> (<a class="el" href="a00041.html#a00347">lpi2c_slave_config_t</a> *slaveConfig)</td></tr>
+<tr class="memitem:gadf34085d4557ceb3081fff9fe0e3189a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gadf34085d4557ceb3081fff9fe0e3189a">LPI2C_SlaveGetDefaultConfig</a> (<a class="el" href="a00041.html#ga9e6fa1acd6800e0c0eaf99f68dbd4681">lpi2c_slave_config_t</a> *slaveConfig)</td></tr>
 <tr class="memdesc:gadf34085d4557ceb3081fff9fe0e3189a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides a default configuration for the LPI2C slave peripheral.  <a href="#gadf34085d4557ceb3081fff9fe0e3189a">More...</a><br/></td></tr>
 <tr class="separator:gadf34085d4557ceb3081fff9fe0e3189a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae5cc8a03c784a99bb58b69852dfda5a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gae5cc8a03c784a99bb58b69852dfda5a5">LPI2C_SlaveInit</a> (LPI2C_Type *base, const <a class="el" href="a00041.html#a00347">lpi2c_slave_config_t</a> *slaveConfig, uint32_t sourceClock_Hz)</td></tr>
+<tr class="memitem:gae5cc8a03c784a99bb58b69852dfda5a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gae5cc8a03c784a99bb58b69852dfda5a5">LPI2C_SlaveInit</a> (LPI2C_Type *base, const <a class="el" href="a00041.html#ga9e6fa1acd6800e0c0eaf99f68dbd4681">lpi2c_slave_config_t</a> *slaveConfig, uint32_t sourceClock_Hz)</td></tr>
 <tr class="memdesc:gae5cc8a03c784a99bb58b69852dfda5a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the LPI2C slave peripheral.  <a href="#gae5cc8a03c784a99bb58b69852dfda5a5">More...</a><br/></td></tr>
 <tr class="separator:gae5cc8a03c784a99bb58b69852dfda5a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa1a5cfe78acec0e1f8dd4af63a0f87f8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gaa1a5cfe78acec0e1f8dd4af63a0f87f8">LPI2C_SlaveDeinit</a> (LPI2C_Type *base)</td></tr>
@@ -252,41 +271,41 @@ Slave bus operations</h2></td></tr>
 <tr class="memitem:ga8219a79b748dc59c982c7c3a8470c3a6"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga8219a79b748dc59c982c7c3a8470c3a6">LPI2C_SlaveGetReceivedAddress</a> (LPI2C_Type *base)</td></tr>
 <tr class="memdesc:ga8219a79b748dc59c982c7c3a8470c3a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the slave address sent by the I2C master.  <a href="#ga8219a79b748dc59c982c7c3a8470c3a6">More...</a><br/></td></tr>
 <tr class="separator:ga8219a79b748dc59c982c7c3a8470c3a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacb2d085904e83ee63ee84f7c8402024c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gacb2d085904e83ee63ee84f7c8402024c">LPI2C_SlaveSend</a> (LPI2C_Type *base, void *txBuff, size_t txSize, size_t *actualTxSize)</td></tr>
+<tr class="memitem:gacb2d085904e83ee63ee84f7c8402024c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gacb2d085904e83ee63ee84f7c8402024c">LPI2C_SlaveSend</a> (LPI2C_Type *base, void *txBuff, size_t txSize, size_t *actualTxSize)</td></tr>
 <tr class="memdesc:gacb2d085904e83ee63ee84f7c8402024c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a polling send transfer on the I2C bus.  <a href="#gacb2d085904e83ee63ee84f7c8402024c">More...</a><br/></td></tr>
 <tr class="separator:gacb2d085904e83ee63ee84f7c8402024c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga36dd1b211a7fe488bfc062a1d8e74fc8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga36dd1b211a7fe488bfc062a1d8e74fc8">LPI2C_SlaveReceive</a> (LPI2C_Type *base, void *rxBuff, size_t rxSize, size_t *actualRxSize)</td></tr>
+<tr class="memitem:ga36dd1b211a7fe488bfc062a1d8e74fc8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga36dd1b211a7fe488bfc062a1d8e74fc8">LPI2C_SlaveReceive</a> (LPI2C_Type *base, void *rxBuff, size_t rxSize, size_t *actualRxSize)</td></tr>
 <tr class="memdesc:ga36dd1b211a7fe488bfc062a1d8e74fc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a polling receive transfer on the I2C bus.  <a href="#ga36dd1b211a7fe488bfc062a1d8e74fc8">More...</a><br/></td></tr>
 <tr class="separator:ga36dd1b211a7fe488bfc062a1d8e74fc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Slave non-blocking</h2></td></tr>
-<tr class="memitem:ga6afdc286db9c700bc057038518a19285"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga6afdc286db9c700bc057038518a19285">LPI2C_SlaveTransferCreateHandle</a> (LPI2C_Type *base, lpi2c_slave_handle_t *handle, <a class="el" href="a00041.html#ga2640285a708842a5e0e7c4c0090a2f58">lpi2c_slave_transfer_callback_t</a> callback, void *userData)</td></tr>
+<tr class="memitem:ga6afdc286db9c700bc057038518a19285"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga6afdc286db9c700bc057038518a19285">LPI2C_SlaveTransferCreateHandle</a> (LPI2C_Type *base, <a class="el" href="a00041.html#ga230e27460fd44e50f35c3c206eebfa68">lpi2c_slave_handle_t</a> *handle, <a class="el" href="a00041.html#ga2640285a708842a5e0e7c4c0090a2f58">lpi2c_slave_transfer_callback_t</a> callback, void *userData)</td></tr>
 <tr class="memdesc:ga6afdc286db9c700bc057038518a19285"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new handle for the LPI2C slave non-blocking APIs.  <a href="#ga6afdc286db9c700bc057038518a19285">More...</a><br/></td></tr>
 <tr class="separator:ga6afdc286db9c700bc057038518a19285"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1ba7c9d0c254de8fe8c04091c007edff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga1ba7c9d0c254de8fe8c04091c007edff">LPI2C_SlaveTransferNonBlocking</a> (LPI2C_Type *base, lpi2c_slave_handle_t *handle, uint32_t eventMask)</td></tr>
+<tr class="memitem:ga1ba7c9d0c254de8fe8c04091c007edff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga1ba7c9d0c254de8fe8c04091c007edff">LPI2C_SlaveTransferNonBlocking</a> (LPI2C_Type *base, <a class="el" href="a00041.html#ga230e27460fd44e50f35c3c206eebfa68">lpi2c_slave_handle_t</a> *handle, uint32_t eventMask)</td></tr>
 <tr class="memdesc:ga1ba7c9d0c254de8fe8c04091c007edff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts accepting slave transfers.  <a href="#ga1ba7c9d0c254de8fe8c04091c007edff">More...</a><br/></td></tr>
 <tr class="separator:ga1ba7c9d0c254de8fe8c04091c007edff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga755b38638cbade1b05587146e9f7267d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga755b38638cbade1b05587146e9f7267d">LPI2C_SlaveTransferGetCount</a> (LPI2C_Type *base, lpi2c_slave_handle_t *handle, size_t *count)</td></tr>
+<tr class="memitem:ga755b38638cbade1b05587146e9f7267d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga755b38638cbade1b05587146e9f7267d">LPI2C_SlaveTransferGetCount</a> (LPI2C_Type *base, <a class="el" href="a00041.html#ga230e27460fd44e50f35c3c206eebfa68">lpi2c_slave_handle_t</a> *handle, size_t *count)</td></tr>
 <tr class="memdesc:ga755b38638cbade1b05587146e9f7267d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the slave transfer status during a non-blocking transfer.  <a href="#ga755b38638cbade1b05587146e9f7267d">More...</a><br/></td></tr>
 <tr class="separator:ga755b38638cbade1b05587146e9f7267d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7d46d488aa043ab93bfa1574277a3985"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga7d46d488aa043ab93bfa1574277a3985">LPI2C_SlaveTransferAbort</a> (LPI2C_Type *base, lpi2c_slave_handle_t *handle)</td></tr>
+<tr class="memitem:ga7d46d488aa043ab93bfa1574277a3985"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga7d46d488aa043ab93bfa1574277a3985">LPI2C_SlaveTransferAbort</a> (LPI2C_Type *base, <a class="el" href="a00041.html#ga230e27460fd44e50f35c3c206eebfa68">lpi2c_slave_handle_t</a> *handle)</td></tr>
 <tr class="memdesc:ga7d46d488aa043ab93bfa1574277a3985"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the slave non-blocking transfers.  <a href="#ga7d46d488aa043ab93bfa1574277a3985">More...</a><br/></td></tr>
 <tr class="separator:ga7d46d488aa043ab93bfa1574277a3985"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Slave IRQ handler</h2></td></tr>
-<tr class="memitem:ga712654857bc4490644b46220c0c460bf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga712654857bc4490644b46220c0c460bf">LPI2C_SlaveTransferHandleIRQ</a> (LPI2C_Type *base, lpi2c_slave_handle_t *handle)</td></tr>
+<tr class="memitem:ga712654857bc4490644b46220c0c460bf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga712654857bc4490644b46220c0c460bf">LPI2C_SlaveTransferHandleIRQ</a> (LPI2C_Type *base, <a class="el" href="a00041.html#ga230e27460fd44e50f35c3c206eebfa68">lpi2c_slave_handle_t</a> *handle)</td></tr>
 <tr class="memdesc:ga712654857bc4490644b46220c0c460bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reusable routine to handle slave interrupts.  <a href="#ga712654857bc4490644b46220c0c460bf">More...</a><br/></td></tr>
 <tr class="separator:ga712654857bc4490644b46220c0c460bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00347" id="a00347"></a>
+<a name="a00335" id="a00335"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct lpi2c_slave_config_t</td>
+          <td class="memname">struct _lpi2c_slave_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -294,149 +313,153 @@ Slave IRQ handler</h2></td></tr>
 <p>The configuration structure can be made constant so it resides in flash. </p>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:ad220cfa81b4117fd1d952b43ff0d5511"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ad220cfa81b4117fd1d952b43ff0d5511">enableSlave</a></td></tr>
-<tr class="memdesc:ad220cfa81b4117fd1d952b43ff0d5511"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable slave mode.  <a href="#ad220cfa81b4117fd1d952b43ff0d5511">More...</a><br/></td></tr>
-<tr class="separator:ad220cfa81b4117fd1d952b43ff0d5511"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16f171990f815872142d3fe73eb74ff4"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a16f171990f815872142d3fe73eb74ff4">address0</a></td></tr>
-<tr class="memdesc:a16f171990f815872142d3fe73eb74ff4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slave's 7-bit address.  <a href="#a16f171990f815872142d3fe73eb74ff4">More...</a><br/></td></tr>
-<tr class="separator:a16f171990f815872142d3fe73eb74ff4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb3035cd87a9746bdbe5c6618a492034"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#afb3035cd87a9746bdbe5c6618a492034">address1</a></td></tr>
-<tr class="memdesc:afb3035cd87a9746bdbe5c6618a492034"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alternate slave 7-bit address.  <a href="#afb3035cd87a9746bdbe5c6618a492034">More...</a><br/></td></tr>
-<tr class="separator:afb3035cd87a9746bdbe5c6618a492034"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1dc82ff6416b69128c0d6d78d533b093"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#gac3564395ccab19eb1ce6ab46b36bb5bb">lpi2c_slave_address_match_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a1dc82ff6416b69128c0d6d78d533b093">addressMatchMode</a></td></tr>
-<tr class="memdesc:a1dc82ff6416b69128c0d6d78d533b093"><td class="mdescLeft">&#160;</td><td class="mdescRight">Address matching options.  <a href="#a1dc82ff6416b69128c0d6d78d533b093">More...</a><br/></td></tr>
-<tr class="separator:a1dc82ff6416b69128c0d6d78d533b093"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4cbbafe55351cb52d25b3de1a71e2231"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a4cbbafe55351cb52d25b3de1a71e2231">filterDozeEnable</a></td></tr>
-<tr class="memdesc:a4cbbafe55351cb52d25b3de1a71e2231"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable digital glitch filter in doze mode.  <a href="#a4cbbafe55351cb52d25b3de1a71e2231">More...</a><br/></td></tr>
-<tr class="separator:a4cbbafe55351cb52d25b3de1a71e2231"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6fcca02d50a48b5a3a2923ea449316ce"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a6fcca02d50a48b5a3a2923ea449316ce">filterEnable</a></td></tr>
-<tr class="memdesc:a6fcca02d50a48b5a3a2923ea449316ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable digital glitch filter.  <a href="#a6fcca02d50a48b5a3a2923ea449316ce">More...</a><br/></td></tr>
-<tr class="separator:a6fcca02d50a48b5a3a2923ea449316ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a061ed35a72d6e8ffe9a02be00f633f87"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a061ed35a72d6e8ffe9a02be00f633f87">enableGeneralCall</a></td></tr>
-<tr class="memdesc:a061ed35a72d6e8ffe9a02be00f633f87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable general call address matching.  <a href="#a061ed35a72d6e8ffe9a02be00f633f87">More...</a><br/></td></tr>
-<tr class="separator:a061ed35a72d6e8ffe9a02be00f633f87"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae68493537f90f7bff4a421ff534fb7a1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ae68493537f90f7bff4a421ff534fb7a1">ignoreAck</a></td></tr>
-<tr class="memdesc:ae68493537f90f7bff4a421ff534fb7a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Continue transfers after a NACK is detected.  <a href="#ae68493537f90f7bff4a421ff534fb7a1">More...</a><br/></td></tr>
-<tr class="separator:ae68493537f90f7bff4a421ff534fb7a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac273a825233fe937aa16d98e38664812"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ac273a825233fe937aa16d98e38664812">enableReceivedAddressRead</a></td></tr>
-<tr class="memdesc:ac273a825233fe937aa16d98e38664812"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable reading the address received address as the first byte of data.  <a href="#ac273a825233fe937aa16d98e38664812">More...</a><br/></td></tr>
-<tr class="separator:ac273a825233fe937aa16d98e38664812"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c28ef56af23d2e059942e8d80e5cd15"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a7c28ef56af23d2e059942e8d80e5cd15">sdaGlitchFilterWidth_ns</a></td></tr>
-<tr class="memdesc:a7c28ef56af23d2e059942e8d80e5cd15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Width in nanoseconds of the digital filter on the SDA signal.  <a href="#a7c28ef56af23d2e059942e8d80e5cd15">More...</a><br/></td></tr>
-<tr class="separator:a7c28ef56af23d2e059942e8d80e5cd15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a793ea7dd26bfb1f68daae2523e70d5a5"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a793ea7dd26bfb1f68daae2523e70d5a5">sclGlitchFilterWidth_ns</a></td></tr>
-<tr class="memdesc:a793ea7dd26bfb1f68daae2523e70d5a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Width in nanoseconds of the digital filter on the SCL signal.  <a href="#a793ea7dd26bfb1f68daae2523e70d5a5">More...</a><br/></td></tr>
-<tr class="separator:a793ea7dd26bfb1f68daae2523e70d5a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a920288e7667b3b363f019384ebc58606"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a920288e7667b3b363f019384ebc58606">dataValidDelay_ns</a></td></tr>
-<tr class="memdesc:a920288e7667b3b363f019384ebc58606"><td class="mdescLeft">&#160;</td><td class="mdescRight">Width in nanoseconds of the data valid delay.  <a href="#a920288e7667b3b363f019384ebc58606">More...</a><br/></td></tr>
-<tr class="separator:a920288e7667b3b363f019384ebc58606"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e672f5446e7d86eb9d74bdc785df0fb"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a2e672f5446e7d86eb9d74bdc785df0fb">clockHoldTime_ns</a></td></tr>
-<tr class="memdesc:a2e672f5446e7d86eb9d74bdc785df0fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Width in nanoseconds of the clock hold time.  <a href="#a2e672f5446e7d86eb9d74bdc785df0fb">More...</a><br/></td></tr>
-<tr class="separator:a2e672f5446e7d86eb9d74bdc785df0fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2cd4a19f68523031122851dd0ab1386"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ab2cd4a19f68523031122851dd0ab1386">enableAck</a></td></tr>
-<tr class="memdesc:ab2cd4a19f68523031122851dd0ab1386"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables SCL clock stretching during slave-transmit address byte(s) and slave-receiver address and data byte(s) to allow software to write the Transmit ACK Register before the ACK or NACK is transmitted.  <a href="#ab2cd4a19f68523031122851dd0ab1386">More...</a><br/></td></tr>
-<tr class="separator:ab2cd4a19f68523031122851dd0ab1386"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad0fea92e29e7afff3d7072ab3c722bc8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ad0fea92e29e7afff3d7072ab3c722bc8">enableTx</a></td></tr>
-<tr class="memdesc:ad0fea92e29e7afff3d7072ab3c722bc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables SCL clock stretching when the transmit data flag is set during a slave-transmit transfer.  <a href="#ad0fea92e29e7afff3d7072ab3c722bc8">More...</a><br/></td></tr>
-<tr class="separator:ad0fea92e29e7afff3d7072ab3c722bc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff856d2084ff0ede49f0ff25e6cf5529"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#aff856d2084ff0ede49f0ff25e6cf5529">enableRx</a></td></tr>
-<tr class="memdesc:aff856d2084ff0ede49f0ff25e6cf5529"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables SCL clock stretching when receive data flag is set during a slave-receive transfer.  <a href="#aff856d2084ff0ede49f0ff25e6cf5529">More...</a><br/></td></tr>
-<tr class="separator:aff856d2084ff0ede49f0ff25e6cf5529"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ec794389bd9fb5e51c802bb0b9ee26b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a6ec794389bd9fb5e51c802bb0b9ee26b">enableAddress</a></td></tr>
-<tr class="memdesc:a6ec794389bd9fb5e51c802bb0b9ee26b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables SCL clock stretching when the address valid flag is asserted.  <a href="#a6ec794389bd9fb5e51c802bb0b9ee26b">More...</a><br/></td></tr>
-<tr class="separator:a6ec794389bd9fb5e51c802bb0b9ee26b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3fb0e92d308e71ea0a56c5692a9af6b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ac3fb0e92d308e71ea0a56c5692a9af6b">enableSlave</a></td></tr>
+<tr class="memdesc:ac3fb0e92d308e71ea0a56c5692a9af6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable slave mode.  <a href="#ac3fb0e92d308e71ea0a56c5692a9af6b">More...</a><br/></td></tr>
+<tr class="separator:ac3fb0e92d308e71ea0a56c5692a9af6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51592e118bf9f0e6d0bb38c68b4e8d35"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a51592e118bf9f0e6d0bb38c68b4e8d35">address0</a></td></tr>
+<tr class="memdesc:a51592e118bf9f0e6d0bb38c68b4e8d35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slave's 7-bit address.  <a href="#a51592e118bf9f0e6d0bb38c68b4e8d35">More...</a><br/></td></tr>
+<tr class="separator:a51592e118bf9f0e6d0bb38c68b4e8d35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c2f9dab27e5669a3279365328908239"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a1c2f9dab27e5669a3279365328908239">address1</a></td></tr>
+<tr class="memdesc:a1c2f9dab27e5669a3279365328908239"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alternate slave 7-bit address.  <a href="#a1c2f9dab27e5669a3279365328908239">More...</a><br/></td></tr>
+<tr class="separator:a1c2f9dab27e5669a3279365328908239"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fab947000c02fa50829c4763a70424c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#ga533530fcfba274fac752e66fd0a9b5db">lpi2c_slave_address_match_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a1fab947000c02fa50829c4763a70424c">addressMatchMode</a></td></tr>
+<tr class="memdesc:a1fab947000c02fa50829c4763a70424c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Address matching options.  <a href="#a1fab947000c02fa50829c4763a70424c">More...</a><br/></td></tr>
+<tr class="separator:a1fab947000c02fa50829c4763a70424c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabe0a1ce3a576d17f8692a447a5514d5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#aabe0a1ce3a576d17f8692a447a5514d5">filterDozeEnable</a></td></tr>
+<tr class="memdesc:aabe0a1ce3a576d17f8692a447a5514d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable digital glitch filter in doze mode.  <a href="#aabe0a1ce3a576d17f8692a447a5514d5">More...</a><br/></td></tr>
+<tr class="separator:aabe0a1ce3a576d17f8692a447a5514d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe6298a59eace868a90610dd9d59daf0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#abe6298a59eace868a90610dd9d59daf0">filterEnable</a></td></tr>
+<tr class="memdesc:abe6298a59eace868a90610dd9d59daf0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable digital glitch filter.  <a href="#abe6298a59eace868a90610dd9d59daf0">More...</a><br/></td></tr>
+<tr class="separator:abe6298a59eace868a90610dd9d59daf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61a863990318d9970dcb68ff91b1043a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a61a863990318d9970dcb68ff91b1043a">enableGeneralCall</a></td></tr>
+<tr class="memdesc:a61a863990318d9970dcb68ff91b1043a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable general call address matching.  <a href="#a61a863990318d9970dcb68ff91b1043a">More...</a><br/></td></tr>
+<tr class="separator:a61a863990318d9970dcb68ff91b1043a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add4a307b806524f24cc09895087950ff"><td class="memItemLeft" >struct {</td></tr>
+<tr class="memitem:a579a93153a1296420d1ec7e35748a6bb"><td class="memItemLeft" >&#160;&#160;&#160;bool&#160;&#160;&#160;<a class="el" href="a00041.html#a5ad031c7c309dd7f64877cb6eda6ffd9">enableAck</a></td></tr>
+<tr class="memdesc:a579a93153a1296420d1ec7e35748a6bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables SCL clock stretching during slave-transmit address byte(s) and slave-receiver address and data byte(s) to allow software to write the Transmit ACK Register before the ACK or NACK is transmitted.  <a href="#a579a93153a1296420d1ec7e35748a6bb">More...</a><br/></td></tr>
+<tr class="separator:a579a93153a1296420d1ec7e35748a6bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7d58f576bdc17d6eaf9888f557432ce"><td class="memItemLeft" >&#160;&#160;&#160;bool&#160;&#160;&#160;<a class="el" href="a00041.html#a508c0f13de580a4eb678dfc44f0acdb6">enableTx</a></td></tr>
+<tr class="memdesc:ad7d58f576bdc17d6eaf9888f557432ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables SCL clock stretching when the transmit data flag is set during a slave-transmit transfer.  <a href="#ad7d58f576bdc17d6eaf9888f557432ce">More...</a><br/></td></tr>
+<tr class="separator:ad7d58f576bdc17d6eaf9888f557432ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a906c7fd0df655ae486b1810321c5809d"><td class="memItemLeft" >&#160;&#160;&#160;bool&#160;&#160;&#160;<a class="el" href="a00041.html#a42825f3ec307a2418220c698c6654eb9">enableRx</a></td></tr>
+<tr class="memdesc:a906c7fd0df655ae486b1810321c5809d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables SCL clock stretching when receive data flag is set during a slave-receive transfer.  <a href="#a906c7fd0df655ae486b1810321c5809d">More...</a><br/></td></tr>
+<tr class="separator:a906c7fd0df655ae486b1810321c5809d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1dcd3313c380b2f8e17ef29405d33b1b"><td class="memItemLeft" >&#160;&#160;&#160;bool&#160;&#160;&#160;<a class="el" href="a00041.html#a78a4043f094c5af1fc5ae61119d3eea4">enableAddress</a></td></tr>
+<tr class="memdesc:a1dcd3313c380b2f8e17ef29405d33b1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables SCL clock stretching when the address valid flag is asserted.  <a href="#a1dcd3313c380b2f8e17ef29405d33b1b">More...</a><br/></td></tr>
+<tr class="separator:a1dcd3313c380b2f8e17ef29405d33b1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add4a307b806524f24cc09895087950ff"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#add4a307b806524f24cc09895087950ff">sclStall</a></td></tr>
+<tr class="memdesc:add4a307b806524f24cc09895087950ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">SCL stall enable options.  <a href="#add4a307b806524f24cc09895087950ff">More...</a><br/></td></tr>
+<tr class="separator:add4a307b806524f24cc09895087950ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae806a978018c1b86097649a6de4549bc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ae806a978018c1b86097649a6de4549bc">ignoreAck</a></td></tr>
+<tr class="memdesc:ae806a978018c1b86097649a6de4549bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Continue transfers after a NACK is detected.  <a href="#ae806a978018c1b86097649a6de4549bc">More...</a><br/></td></tr>
+<tr class="separator:ae806a978018c1b86097649a6de4549bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1357c28f4de02bbefc7bb1708f38fbc8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a1357c28f4de02bbefc7bb1708f38fbc8">enableReceivedAddressRead</a></td></tr>
+<tr class="memdesc:a1357c28f4de02bbefc7bb1708f38fbc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable reading the address received address as the first byte of data.  <a href="#a1357c28f4de02bbefc7bb1708f38fbc8">More...</a><br/></td></tr>
+<tr class="separator:a1357c28f4de02bbefc7bb1708f38fbc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6886a7d687afb0b485cb1b9b745a770"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ab6886a7d687afb0b485cb1b9b745a770">sdaGlitchFilterWidth_ns</a></td></tr>
+<tr class="memdesc:ab6886a7d687afb0b485cb1b9b745a770"><td class="mdescLeft">&#160;</td><td class="mdescRight">Width in nanoseconds of the digital filter on the SDA signal.  <a href="#ab6886a7d687afb0b485cb1b9b745a770">More...</a><br/></td></tr>
+<tr class="separator:ab6886a7d687afb0b485cb1b9b745a770"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a615aca6391ad513d120d21f1d283abfd"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a615aca6391ad513d120d21f1d283abfd">sclGlitchFilterWidth_ns</a></td></tr>
+<tr class="memdesc:a615aca6391ad513d120d21f1d283abfd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Width in nanoseconds of the digital filter on the SCL signal.  <a href="#a615aca6391ad513d120d21f1d283abfd">More...</a><br/></td></tr>
+<tr class="separator:a615aca6391ad513d120d21f1d283abfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80b3534a23c4f16f5359625e6f8da332"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a80b3534a23c4f16f5359625e6f8da332">dataValidDelay_ns</a></td></tr>
+<tr class="memdesc:a80b3534a23c4f16f5359625e6f8da332"><td class="mdescLeft">&#160;</td><td class="mdescRight">Width in nanoseconds of the data valid delay.  <a href="#a80b3534a23c4f16f5359625e6f8da332">More...</a><br/></td></tr>
+<tr class="separator:a80b3534a23c4f16f5359625e6f8da332"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee288c9f292ce2ff0908e556586465af"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#aee288c9f292ce2ff0908e556586465af">clockHoldTime_ns</a></td></tr>
+<tr class="memdesc:aee288c9f292ce2ff0908e556586465af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Width in nanoseconds of the clock hold time.  <a href="#aee288c9f292ce2ff0908e556586465af">More...</a><br/></td></tr>
+<tr class="separator:aee288c9f292ce2ff0908e556586465af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="ad220cfa81b4117fd1d952b43ff0d5511"></a>
+<a class="anchor" id="ac3fb0e92d308e71ea0a56c5692a9af6b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool lpi2c_slave_config_t::enableSlave</td>
+          <td class="memname">bool _lpi2c_slave_config::enableSlave</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a16f171990f815872142d3fe73eb74ff4"></a>
+<a class="anchor" id="a51592e118bf9f0e6d0bb38c68b4e8d35"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t lpi2c_slave_config_t::address0</td>
+          <td class="memname">uint8_t _lpi2c_slave_config::address0</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="afb3035cd87a9746bdbe5c6618a492034"></a>
+<a class="anchor" id="a1c2f9dab27e5669a3279365328908239"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t lpi2c_slave_config_t::address1</td>
+          <td class="memname">uint8_t _lpi2c_slave_config::address1</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a1dc82ff6416b69128c0d6d78d533b093"></a>
+<a class="anchor" id="a1fab947000c02fa50829c4763a70424c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00041.html#gac3564395ccab19eb1ce6ab46b36bb5bb">lpi2c_slave_address_match_t</a> lpi2c_slave_config_t::addressMatchMode</td>
+          <td class="memname"><a class="el" href="a00041.html#ga533530fcfba274fac752e66fd0a9b5db">lpi2c_slave_address_match_t</a> _lpi2c_slave_config::addressMatchMode</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a4cbbafe55351cb52d25b3de1a71e2231"></a>
+<a class="anchor" id="aabe0a1ce3a576d17f8692a447a5514d5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool lpi2c_slave_config_t::filterDozeEnable</td>
+          <td class="memname">bool _lpi2c_slave_config::filterDozeEnable</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a6fcca02d50a48b5a3a2923ea449316ce"></a>
+<a class="anchor" id="abe6298a59eace868a90610dd9d59daf0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool lpi2c_slave_config_t::filterEnable</td>
+          <td class="memname">bool _lpi2c_slave_config::filterEnable</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a061ed35a72d6e8ffe9a02be00f633f87"></a>
+<a class="anchor" id="a61a863990318d9970dcb68ff91b1043a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool lpi2c_slave_config_t::enableGeneralCall</td>
+          <td class="memname">bool _lpi2c_slave_config::enableGeneralCall</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ab2cd4a19f68523031122851dd0ab1386"></a>
+<a class="anchor" id="a5ad031c7c309dd7f64877cb6eda6ffd9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool lpi2c_slave_config_t::enableAck</td>
+          <td class="memname">bool _lpi2c_slave_config::enableAck</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -444,72 +467,84 @@ Slave IRQ handler</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ad0fea92e29e7afff3d7072ab3c722bc8"></a>
+<a class="anchor" id="a508c0f13de580a4eb678dfc44f0acdb6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool lpi2c_slave_config_t::enableTx</td>
+          <td class="memname">bool _lpi2c_slave_config::enableTx</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="aff856d2084ff0ede49f0ff25e6cf5529"></a>
+<a class="anchor" id="a42825f3ec307a2418220c698c6654eb9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool lpi2c_slave_config_t::enableRx</td>
+          <td class="memname">bool _lpi2c_slave_config::enableRx</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a6ec794389bd9fb5e51c802bb0b9ee26b"></a>
+<a class="anchor" id="a78a4043f094c5af1fc5ae61119d3eea4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool lpi2c_slave_config_t::enableAddress</td>
+          <td class="memname">bool _lpi2c_slave_config::enableAddress</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ae68493537f90f7bff4a421ff534fb7a1"></a>
+<a class="anchor" id="add4a307b806524f24cc09895087950ff"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool lpi2c_slave_config_t::ignoreAck</td>
+          <td class="memname">struct { ... }   _lpi2c_slave_config::sclStall</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ac273a825233fe937aa16d98e38664812"></a>
+<a class="anchor" id="ae806a978018c1b86097649a6de4549bc"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool lpi2c_slave_config_t::enableReceivedAddressRead</td>
+          <td class="memname">bool _lpi2c_slave_config::ignoreAck</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a7c28ef56af23d2e059942e8d80e5cd15"></a>
+<a class="anchor" id="a1357c28f4de02bbefc7bb1708f38fbc8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t lpi2c_slave_config_t::sdaGlitchFilterWidth_ns</td>
+          <td class="memname">bool _lpi2c_slave_config::enableReceivedAddressRead</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ab6886a7d687afb0b485cb1b9b745a770"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t _lpi2c_slave_config::sdaGlitchFilterWidth_ns</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -517,12 +552,12 @@ Slave IRQ handler</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a793ea7dd26bfb1f68daae2523e70d5a5"></a>
+<a class="anchor" id="a615aca6391ad513d120d21f1d283abfd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t lpi2c_slave_config_t::sclGlitchFilterWidth_ns</td>
+          <td class="memname">uint32_t _lpi2c_slave_config::sclGlitchFilterWidth_ns</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -530,24 +565,24 @@ Slave IRQ handler</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a920288e7667b3b363f019384ebc58606"></a>
+<a class="anchor" id="a80b3534a23c4f16f5359625e6f8da332"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t lpi2c_slave_config_t::dataValidDelay_ns</td>
+          <td class="memname">uint32_t _lpi2c_slave_config::dataValidDelay_ns</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a2e672f5446e7d86eb9d74bdc785df0fb"></a>
+<a class="anchor" id="aee288c9f292ce2ff0908e556586465af"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t lpi2c_slave_config_t::clockHoldTime_ns</td>
+          <td class="memname">uint32_t _lpi2c_slave_config::clockHoldTime_ns</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -557,82 +592,82 @@ Slave IRQ handler</h2></td></tr>
 
 </div>
 </div>
-<a name="a00348" id="a00348"></a>
+<a name="a00337" id="a00337"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct lpi2c_slave_transfer_t</td>
+          <td class="memname">struct _lpi2c_slave_transfer</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a19df3bc5c35ed8ae03a927dcc89daa48"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#ga0d99b4dba3841a4e02f7c431a59006c8">lpi2c_slave_transfer_event_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a19df3bc5c35ed8ae03a927dcc89daa48">event</a></td></tr>
-<tr class="memdesc:a19df3bc5c35ed8ae03a927dcc89daa48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reason the callback is being invoked.  <a href="#a19df3bc5c35ed8ae03a927dcc89daa48">More...</a><br/></td></tr>
-<tr class="separator:a19df3bc5c35ed8ae03a927dcc89daa48"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a336e15a483043ed7ace990517fff6686"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a336e15a483043ed7ace990517fff6686">receivedAddress</a></td></tr>
-<tr class="memdesc:a336e15a483043ed7ace990517fff6686"><td class="mdescLeft">&#160;</td><td class="mdescRight">Matching address send by master.  <a href="#a336e15a483043ed7ace990517fff6686">More...</a><br/></td></tr>
-<tr class="separator:a336e15a483043ed7ace990517fff6686"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54436075594000b4d56471b29dd6734f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a54436075594000b4d56471b29dd6734f"></a>
-uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a54436075594000b4d56471b29dd6734f">data</a></td></tr>
-<tr class="memdesc:a54436075594000b4d56471b29dd6734f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer buffer. <br/></td></tr>
-<tr class="separator:a54436075594000b4d56471b29dd6734f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afcd4de20f8efd725bd93d72180b32f2d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afcd4de20f8efd725bd93d72180b32f2d"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#afcd4de20f8efd725bd93d72180b32f2d">dataSize</a></td></tr>
-<tr class="memdesc:afcd4de20f8efd725bd93d72180b32f2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer size. <br/></td></tr>
-<tr class="separator:afcd4de20f8efd725bd93d72180b32f2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aafd14bc835c1c23de6bf06834d1a0b3c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#aafd14bc835c1c23de6bf06834d1a0b3c">completionStatus</a></td></tr>
-<tr class="memdesc:aafd14bc835c1c23de6bf06834d1a0b3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Success or error code describing how the transfer completed.  <a href="#aafd14bc835c1c23de6bf06834d1a0b3c">More...</a><br/></td></tr>
-<tr class="separator:aafd14bc835c1c23de6bf06834d1a0b3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67e03ab90367cb1d48d42b718e6438f5"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a67e03ab90367cb1d48d42b718e6438f5">transferredCount</a></td></tr>
-<tr class="memdesc:a67e03ab90367cb1d48d42b718e6438f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bytes actually transferred since start or last repeated start.  <a href="#a67e03ab90367cb1d48d42b718e6438f5">More...</a><br/></td></tr>
-<tr class="separator:a67e03ab90367cb1d48d42b718e6438f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6fd5fcb93c3592681fe6b4ef3a2db4b9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#gaba49383928407761f900aa0c0dddbfe2">lpi2c_slave_transfer_event_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a6fd5fcb93c3592681fe6b4ef3a2db4b9">event</a></td></tr>
+<tr class="memdesc:a6fd5fcb93c3592681fe6b4ef3a2db4b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reason the callback is being invoked.  <a href="#a6fd5fcb93c3592681fe6b4ef3a2db4b9">More...</a><br/></td></tr>
+<tr class="separator:a6fd5fcb93c3592681fe6b4ef3a2db4b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b845478ed4749c2e0dfe072c55adc22"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a3b845478ed4749c2e0dfe072c55adc22">receivedAddress</a></td></tr>
+<tr class="memdesc:a3b845478ed4749c2e0dfe072c55adc22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Matching address send by master.  <a href="#a3b845478ed4749c2e0dfe072c55adc22">More...</a><br/></td></tr>
+<tr class="separator:a3b845478ed4749c2e0dfe072c55adc22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3e135fc8156ca768309bfc89e6661ff"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae3e135fc8156ca768309bfc89e6661ff"></a>
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ae3e135fc8156ca768309bfc89e6661ff">data</a></td></tr>
+<tr class="memdesc:ae3e135fc8156ca768309bfc89e6661ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer buffer. <br/></td></tr>
+<tr class="separator:ae3e135fc8156ca768309bfc89e6661ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11dfb00aa164346d73bd5f4c7b4983a7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a11dfb00aa164346d73bd5f4c7b4983a7"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a11dfb00aa164346d73bd5f4c7b4983a7">dataSize</a></td></tr>
+<tr class="memdesc:a11dfb00aa164346d73bd5f4c7b4983a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer size. <br/></td></tr>
+<tr class="separator:a11dfb00aa164346d73bd5f4c7b4983a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af19f9378df0b63f18134eafd0e37c558"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#af19f9378df0b63f18134eafd0e37c558">completionStatus</a></td></tr>
+<tr class="memdesc:af19f9378df0b63f18134eafd0e37c558"><td class="mdescLeft">&#160;</td><td class="mdescRight">Success or error code describing how the transfer completed.  <a href="#af19f9378df0b63f18134eafd0e37c558">More...</a><br/></td></tr>
+<tr class="separator:af19f9378df0b63f18134eafd0e37c558"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6118eac86f25540117b453390d4e2a29"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a6118eac86f25540117b453390d4e2a29">transferredCount</a></td></tr>
+<tr class="memdesc:a6118eac86f25540117b453390d4e2a29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bytes actually transferred since start or last repeated start.  <a href="#a6118eac86f25540117b453390d4e2a29">More...</a><br/></td></tr>
+<tr class="separator:a6118eac86f25540117b453390d4e2a29"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a19df3bc5c35ed8ae03a927dcc89daa48"></a>
+<a class="anchor" id="a6fd5fcb93c3592681fe6b4ef3a2db4b9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00041.html#ga0d99b4dba3841a4e02f7c431a59006c8">lpi2c_slave_transfer_event_t</a> lpi2c_slave_transfer_t::event</td>
+          <td class="memname"><a class="el" href="a00041.html#gaba49383928407761f900aa0c0dddbfe2">lpi2c_slave_transfer_event_t</a> _lpi2c_slave_transfer::event</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a336e15a483043ed7ace990517fff6686"></a>
+<a class="anchor" id="a3b845478ed4749c2e0dfe072c55adc22"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t lpi2c_slave_transfer_t::receivedAddress</td>
+          <td class="memname">uint8_t _lpi2c_slave_transfer::receivedAddress</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="aafd14bc835c1c23de6bf06834d1a0b3c"></a>
+<a class="anchor" id="af19f9378df0b63f18134eafd0e37c558"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> lpi2c_slave_transfer_t::completionStatus</td>
+          <td class="memname"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> _lpi2c_slave_transfer::completionStatus</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Only applies for <a class="el" href="a00041.html#gga0d99b4dba3841a4e02f7c431a59006c8a06ef7422d9edf9b914864a2d689f042c" title="A stop was detected, completing the transfer. ">kLPI2C_SlaveCompletionEvent</a>. </p>
+<p>Only applies for <a class="el" href="a00041.html#gga379060365b5d4d26dc5bdec675d7c029a06ef7422d9edf9b914864a2d689f042c" title="A stop was detected, completing the transfer. ">kLPI2C_SlaveCompletionEvent</a>. </p>
 
 </div>
 </div>
-<a class="anchor" id="a67e03ab90367cb1d48d42b718e6438f5"></a>
+<a class="anchor" id="a6118eac86f25540117b453390d4e2a29"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">size_t lpi2c_slave_transfer_t::transferredCount</td>
+          <td class="memname">size_t _lpi2c_slave_transfer::transferredCount</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -642,7 +677,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 
 </div>
 </div>
-<a name="a00266" id="a00266"></a>
+<a name="a00336" id="a00336"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -654,107 +689,107 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="textblock"><dl class="section note"><dt>Note</dt><dd>The contents of this structure are private and subject to change. </dd></dl>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:aed2dec763e40c6caa129c082603852d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#a00348">lpi2c_slave_transfer_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#aed2dec763e40c6caa129c082603852d5">transfer</a></td></tr>
-<tr class="memdesc:aed2dec763e40c6caa129c082603852d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPI2C slave transfer copy.  <a href="#aed2dec763e40c6caa129c082603852d5">More...</a><br/></td></tr>
-<tr class="separator:aed2dec763e40c6caa129c082603852d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f0662c2c78df7b8e8b5ed4c1119823d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a8f0662c2c78df7b8e8b5ed4c1119823d">isBusy</a></td></tr>
-<tr class="memdesc:a8f0662c2c78df7b8e8b5ed4c1119823d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether transfer is busy.  <a href="#a8f0662c2c78df7b8e8b5ed4c1119823d">More...</a><br/></td></tr>
-<tr class="separator:a8f0662c2c78df7b8e8b5ed4c1119823d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0a187d43f251bc67fb9c34dedbf9253"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#af0a187d43f251bc67fb9c34dedbf9253">wasTransmit</a></td></tr>
-<tr class="memdesc:af0a187d43f251bc67fb9c34dedbf9253"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether the last transfer was a transmit.  <a href="#af0a187d43f251bc67fb9c34dedbf9253">More...</a><br/></td></tr>
-<tr class="separator:af0a187d43f251bc67fb9c34dedbf9253"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5bceee16dd6f07c8cb6918580e45e540"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a5bceee16dd6f07c8cb6918580e45e540">eventMask</a></td></tr>
-<tr class="memdesc:a5bceee16dd6f07c8cb6918580e45e540"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mask of enabled events.  <a href="#a5bceee16dd6f07c8cb6918580e45e540">More...</a><br/></td></tr>
-<tr class="separator:a5bceee16dd6f07c8cb6918580e45e540"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac9f4d0665e8ec4c56eb89e816c4b5324"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ac9f4d0665e8ec4c56eb89e816c4b5324">transferredCount</a></td></tr>
-<tr class="memdesc:ac9f4d0665e8ec4c56eb89e816c4b5324"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of bytes transferred.  <a href="#ac9f4d0665e8ec4c56eb89e816c4b5324">More...</a><br/></td></tr>
-<tr class="separator:ac9f4d0665e8ec4c56eb89e816c4b5324"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0e16ba71a57adfe84058af632a604e40"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#ga2640285a708842a5e0e7c4c0090a2f58">lpi2c_slave_transfer_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a0e16ba71a57adfe84058af632a604e40">callback</a></td></tr>
-<tr class="memdesc:a0e16ba71a57adfe84058af632a604e40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function called at transfer event.  <a href="#a0e16ba71a57adfe84058af632a604e40">More...</a><br/></td></tr>
-<tr class="separator:a0e16ba71a57adfe84058af632a604e40"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa394f46d8677c977aa39b64fb0c353ce"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#aa394f46d8677c977aa39b64fb0c353ce">userData</a></td></tr>
-<tr class="memdesc:aa394f46d8677c977aa39b64fb0c353ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback parameter passed to callback.  <a href="#aa394f46d8677c977aa39b64fb0c353ce">More...</a><br/></td></tr>
-<tr class="separator:aa394f46d8677c977aa39b64fb0c353ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5520be706e136169454d21def1e28614"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#gad2491beed809164053a8b083f7e55a27">lpi2c_slave_transfer_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a5520be706e136169454d21def1e28614">transfer</a></td></tr>
+<tr class="memdesc:a5520be706e136169454d21def1e28614"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPI2C slave transfer copy.  <a href="#a5520be706e136169454d21def1e28614">More...</a><br/></td></tr>
+<tr class="separator:a5520be706e136169454d21def1e28614"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b7952f6dfb5ad946c64aea5851549e2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a3b7952f6dfb5ad946c64aea5851549e2">isBusy</a></td></tr>
+<tr class="memdesc:a3b7952f6dfb5ad946c64aea5851549e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether transfer is busy.  <a href="#a3b7952f6dfb5ad946c64aea5851549e2">More...</a><br/></td></tr>
+<tr class="separator:a3b7952f6dfb5ad946c64aea5851549e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7695826229e33cce0433243315541ec2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a7695826229e33cce0433243315541ec2">wasTransmit</a></td></tr>
+<tr class="memdesc:a7695826229e33cce0433243315541ec2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether the last transfer was a transmit.  <a href="#a7695826229e33cce0433243315541ec2">More...</a><br/></td></tr>
+<tr class="separator:a7695826229e33cce0433243315541ec2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a9932a8f6d1fbcf92738417b5a6f808"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a3a9932a8f6d1fbcf92738417b5a6f808">eventMask</a></td></tr>
+<tr class="memdesc:a3a9932a8f6d1fbcf92738417b5a6f808"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mask of enabled events.  <a href="#a3a9932a8f6d1fbcf92738417b5a6f808">More...</a><br/></td></tr>
+<tr class="separator:a3a9932a8f6d1fbcf92738417b5a6f808"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a699547af37c4a6981b22a41d366707ca"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a699547af37c4a6981b22a41d366707ca">transferredCount</a></td></tr>
+<tr class="memdesc:a699547af37c4a6981b22a41d366707ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Count of bytes transferred.  <a href="#a699547af37c4a6981b22a41d366707ca">More...</a><br/></td></tr>
+<tr class="separator:a699547af37c4a6981b22a41d366707ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab19804183cca2a3e0d01faf9cda8c02"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00041.html#ga2640285a708842a5e0e7c4c0090a2f58">lpi2c_slave_transfer_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#aab19804183cca2a3e0d01faf9cda8c02">callback</a></td></tr>
+<tr class="memdesc:aab19804183cca2a3e0d01faf9cda8c02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function called at transfer event.  <a href="#aab19804183cca2a3e0d01faf9cda8c02">More...</a><br/></td></tr>
+<tr class="separator:aab19804183cca2a3e0d01faf9cda8c02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27164f1bf34c373449b8fc039aa60619"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a27164f1bf34c373449b8fc039aa60619">userData</a></td></tr>
+<tr class="memdesc:a27164f1bf34c373449b8fc039aa60619"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback parameter passed to callback.  <a href="#a27164f1bf34c373449b8fc039aa60619">More...</a><br/></td></tr>
+<tr class="separator:a27164f1bf34c373449b8fc039aa60619"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="aed2dec763e40c6caa129c082603852d5"></a>
+<a class="anchor" id="a5520be706e136169454d21def1e28614"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00041.html#a00348">lpi2c_slave_transfer_t</a> lpi2c_slave_handle_t::transfer</td>
+          <td class="memname"><a class="el" href="a00041.html#gad2491beed809164053a8b083f7e55a27">lpi2c_slave_transfer_t</a> _lpi2c_slave_handle::transfer</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a8f0662c2c78df7b8e8b5ed4c1119823d"></a>
+<a class="anchor" id="a3b7952f6dfb5ad946c64aea5851549e2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool lpi2c_slave_handle_t::isBusy</td>
+          <td class="memname">bool _lpi2c_slave_handle::isBusy</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="af0a187d43f251bc67fb9c34dedbf9253"></a>
+<a class="anchor" id="a7695826229e33cce0433243315541ec2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool lpi2c_slave_handle_t::wasTransmit</td>
+          <td class="memname">bool _lpi2c_slave_handle::wasTransmit</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a5bceee16dd6f07c8cb6918580e45e540"></a>
+<a class="anchor" id="a3a9932a8f6d1fbcf92738417b5a6f808"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t lpi2c_slave_handle_t::eventMask</td>
+          <td class="memname">uint32_t _lpi2c_slave_handle::eventMask</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ac9f4d0665e8ec4c56eb89e816c4b5324"></a>
+<a class="anchor" id="a699547af37c4a6981b22a41d366707ca"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t lpi2c_slave_handle_t::transferredCount</td>
+          <td class="memname">uint32_t _lpi2c_slave_handle::transferredCount</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a0e16ba71a57adfe84058af632a604e40"></a>
+<a class="anchor" id="aab19804183cca2a3e0d01faf9cda8c02"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00041.html#ga2640285a708842a5e0e7c4c0090a2f58">lpi2c_slave_transfer_callback_t</a> lpi2c_slave_handle_t::callback</td>
+          <td class="memname"><a class="el" href="a00041.html#ga2640285a708842a5e0e7c4c0090a2f58">lpi2c_slave_transfer_callback_t</a> _lpi2c_slave_handle::callback</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="aa394f46d8677c977aa39b64fb0c353ce"></a>
+<a class="anchor" id="a27164f1bf34c373449b8fc039aa60619"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void* lpi2c_slave_handle_t::userData</td>
+          <td class="memname">void* _lpi2c_slave_handle::userData</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -765,12 +800,64 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 </div>
 </div>
 <h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga533530fcfba274fac752e66fd0a9b5db"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00041.html#ga131a9a0a073edf0d1cc38d0bb63f42ee">_lpi2c_slave_address_match</a>  <a class="el" href="a00041.html#ga533530fcfba274fac752e66fd0a9b5db">lpi2c_slave_address_match_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga9e6fa1acd6800e0c0eaf99f68dbd4681"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00041.html#a00335">_lpi2c_slave_config</a>  <a class="el" href="a00041.html#ga9e6fa1acd6800e0c0eaf99f68dbd4681">lpi2c_slave_config_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This structure holds configuration settings for the LPI2C slave peripheral. To initialize this structure to reasonable defaults, call the <a class="el" href="a00041.html#gadf34085d4557ceb3081fff9fe0e3189a" title="Provides a default configuration for the LPI2C slave peripheral. ">LPI2C_SlaveGetDefaultConfig()</a> function and pass a pointer to your configuration structure instance.</p>
+<p>The configuration structure can be made constant so it resides in flash. </p>
+
+</div>
+</div>
+<a class="anchor" id="gaba49383928407761f900aa0c0dddbfe2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00041.html#ga379060365b5d4d26dc5bdec675d7c029">_lpi2c_slave_transfer_event</a>  <a class="el" href="a00041.html#gaba49383928407761f900aa0c0dddbfe2">lpi2c_slave_transfer_event_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>These event enumerations are used for two related purposes. First, a bit mask created by OR'ing together events is passed to <a class="el" href="a00041.html#ga1ba7c9d0c254de8fe8c04091c007edff" title="Starts accepting slave transfers. ">LPI2C_SlaveTransferNonBlocking()</a> in order to specify which events to enable. Then, when the slave callback is invoked, it is passed the current event through its <em>transfer</em> parameter.</p>
+<dl class="section note"><dt>Note</dt><dd>These enumerations are meant to be OR'd together to form a bit mask of events. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga230e27460fd44e50f35c3c206eebfa68"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00041.html#a00336">_lpi2c_slave_handle</a> <a class="el" href="a00041.html#ga230e27460fd44e50f35c3c206eebfa68">lpi2c_slave_handle_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="ga2640285a708842a5e0e7c4c0090a2f58"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* lpi2c_slave_transfer_callback_t)(LPI2C_Type *base, <a class="el" href="a00041.html#a00348">lpi2c_slave_transfer_t</a> *transfer, void *userData)</td>
+          <td class="memname">typedef void(* lpi2c_slave_transfer_callback_t)(LPI2C_Type *base, <a class="el" href="a00041.html#gad2491beed809164053a8b083f7e55a27">lpi2c_slave_transfer_t</a> *transfer, void *userData)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -858,60 +945,60 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 
 </div>
 </div>
-<a class="anchor" id="gac3564395ccab19eb1ce6ab46b36bb5bb"></a>
+<a class="anchor" id="ga131a9a0a073edf0d1cc38d0bb63f42ee"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00041.html#gac3564395ccab19eb1ce6ab46b36bb5bb">lpi2c_slave_address_match_t</a></td>
+          <td class="memname">enum <a class="el" href="a00041.html#ga131a9a0a073edf0d1cc38d0bb63f42ee">_lpi2c_slave_address_match</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggac3564395ccab19eb1ce6ab46b36bb5bbaaa16a731881882d10f48ebde416f54c5"></a>kLPI2C_MatchAddress0</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga131a9a0a073edf0d1cc38d0bb63f42eeaaa16a731881882d10f48ebde416f54c5"></a>kLPI2C_MatchAddress0</em>&nbsp;</td><td class="fielddoc">
 <p>Match only address 0. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggac3564395ccab19eb1ce6ab46b36bb5bba2941f8a06a17205294e7d0fa5f305675"></a>kLPI2C_MatchAddress0OrAddress1</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga131a9a0a073edf0d1cc38d0bb63f42eea2941f8a06a17205294e7d0fa5f305675"></a>kLPI2C_MatchAddress0OrAddress1</em>&nbsp;</td><td class="fielddoc">
 <p>Match either address 0 or address 1. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggac3564395ccab19eb1ce6ab46b36bb5bba59e460fdd7075191f69e047ef35557eb"></a>kLPI2C_MatchAddress0ThroughAddress1</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga131a9a0a073edf0d1cc38d0bb63f42eea59e460fdd7075191f69e047ef35557eb"></a>kLPI2C_MatchAddress0ThroughAddress1</em>&nbsp;</td><td class="fielddoc">
 <p>Match a range of slave addresses from address 0 through address 1. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga0d99b4dba3841a4e02f7c431a59006c8"></a>
+<a class="anchor" id="ga379060365b5d4d26dc5bdec675d7c029"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00041.html#ga0d99b4dba3841a4e02f7c431a59006c8">lpi2c_slave_transfer_event_t</a></td>
+          <td class="memname">enum <a class="el" href="a00041.html#ga379060365b5d4d26dc5bdec675d7c029">_lpi2c_slave_transfer_event</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>These event enumerations are used for two related purposes. First, a bit mask created by OR'ing together events is passed to <a class="el" href="a00041.html#ga1ba7c9d0c254de8fe8c04091c007edff" title="Starts accepting slave transfers. ">LPI2C_SlaveTransferNonBlocking()</a> in order to specify which events to enable. Then, when the slave callback is invoked, it is passed the current event through its <em>transfer</em> parameter.</p>
 <dl class="section note"><dt>Note</dt><dd>These enumerations are meant to be OR'd together to form a bit mask of events. </dd></dl>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga0d99b4dba3841a4e02f7c431a59006c8a10fb8d9bb6ba9cd44fde85466e6eabef"></a>kLPI2C_SlaveAddressMatchEvent</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga379060365b5d4d26dc5bdec675d7c029a10fb8d9bb6ba9cd44fde85466e6eabef"></a>kLPI2C_SlaveAddressMatchEvent</em>&nbsp;</td><td class="fielddoc">
 <p>Received the slave address after a start or repeated start. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0d99b4dba3841a4e02f7c431a59006c8a976c8c9aa85026224a46cf5ec742eb49"></a>kLPI2C_SlaveTransmitEvent</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga379060365b5d4d26dc5bdec675d7c029a976c8c9aa85026224a46cf5ec742eb49"></a>kLPI2C_SlaveTransmitEvent</em>&nbsp;</td><td class="fielddoc">
 <p>Callback is requested to provide data to transmit (slave-transmitter role). </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0d99b4dba3841a4e02f7c431a59006c8ac737ba9e4e62880a6e2d8aac98ae8f18"></a>kLPI2C_SlaveReceiveEvent</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga379060365b5d4d26dc5bdec675d7c029ac737ba9e4e62880a6e2d8aac98ae8f18"></a>kLPI2C_SlaveReceiveEvent</em>&nbsp;</td><td class="fielddoc">
 <p>Callback is requested to provide a buffer in which to place received data (slave-receiver role). </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0d99b4dba3841a4e02f7c431a59006c8a112af4cf8f8a374407d7c784f024b8e0"></a>kLPI2C_SlaveTransmitAckEvent</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga379060365b5d4d26dc5bdec675d7c029a112af4cf8f8a374407d7c784f024b8e0"></a>kLPI2C_SlaveTransmitAckEvent</em>&nbsp;</td><td class="fielddoc">
 <p>Callback needs to either transmit an ACK or NACK. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0d99b4dba3841a4e02f7c431a59006c8ae0995aac6808b3726b7577c2d283e4c4"></a>kLPI2C_SlaveRepeatedStartEvent</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga379060365b5d4d26dc5bdec675d7c029ae0995aac6808b3726b7577c2d283e4c4"></a>kLPI2C_SlaveRepeatedStartEvent</em>&nbsp;</td><td class="fielddoc">
 <p>A repeated start was detected. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0d99b4dba3841a4e02f7c431a59006c8a06ef7422d9edf9b914864a2d689f042c"></a>kLPI2C_SlaveCompletionEvent</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga379060365b5d4d26dc5bdec675d7c029a06ef7422d9edf9b914864a2d689f042c"></a>kLPI2C_SlaveCompletionEvent</em>&nbsp;</td><td class="fielddoc">
 <p>A stop was detected, completing the transfer. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0d99b4dba3841a4e02f7c431a59006c8aeed0927f4e909cb161b44434b6f01aec"></a>kLPI2C_SlaveAllEvents</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga379060365b5d4d26dc5bdec675d7c029aeed0927f4e909cb161b44434b6f01aec"></a>kLPI2C_SlaveAllEvents</em>&nbsp;</td><td class="fielddoc">
 <p>Bit mask of all available events. </p>
 </td></tr>
 </table>
@@ -926,7 +1013,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">void LPI2C_SlaveGetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00041.html#a00347">lpi2c_slave_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00041.html#ga9e6fa1acd6800e0c0eaf99f68dbd4681">lpi2c_slave_config_t</a> *&#160;</td>
           <td class="paramname"><em>slaveConfig</em></td><td>)</td>
           <td></td>
         </tr>
@@ -936,7 +1023,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="fragment"><div class="line">*  slaveConfig-&gt;enableSlave               = <span class="keyword">true</span>;</div>
 <div class="line">*  slaveConfig-&gt;address0                  = 0U;</div>
 <div class="line">*  slaveConfig-&gt;address1                  = 0U;</div>
-<div class="line">*  slaveConfig-&gt;addressMatchMode          = <a class="code" href="a00041.html#ggac3564395ccab19eb1ce6ab46b36bb5bbaaa16a731881882d10f48ebde416f54c5">kLPI2C_MatchAddress0</a>;</div>
+<div class="line">*  slaveConfig-&gt;addressMatchMode          = <a class="code" href="a00041.html#gga131a9a0a073edf0d1cc38d0bb63f42eeaaa16a731881882d10f48ebde416f54c5">kLPI2C_MatchAddress0</a>;</div>
 <div class="line">*  slaveConfig-&gt;filterDozeEnable          = <span class="keyword">true</span>;</div>
 <div class="line">*  slaveConfig-&gt;filterEnable              = <span class="keyword">true</span>;</div>
 <div class="line">*  slaveConfig-&gt;enableGeneralCall         = <span class="keyword">false</span>;</div>
@@ -954,7 +1041,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 </div><!-- fragment --><p>After calling this function, override any settings to customize the configuration, prior to initializing the master driver with <a class="el" href="a00041.html#gae5cc8a03c784a99bb58b69852dfda5a5" title="Initializes the LPI2C slave peripheral. ">LPI2C_SlaveInit()</a>. Be sure to override at least the <em>address0</em> member of the configuration structure with the desired slave address.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">slaveConfig</td><td>User provided configuration structure that is set to default values. Refer to <a class="el" href="a00041.html#a00347" title="Structure with settings to initialize the LPI2C slave module. ">lpi2c_slave_config_t</a>. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">slaveConfig</td><td>User provided configuration structure that is set to default values. Refer to <a class="el" href="a00041.html#ga9e6fa1acd6800e0c0eaf99f68dbd4681" title="Structure with settings to initialize the LPI2C slave module. ">lpi2c_slave_config_t</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -974,7 +1061,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00041.html#a00347">lpi2c_slave_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00041.html#ga9e6fa1acd6800e0c0eaf99f68dbd4681">lpi2c_slave_config_t</a> *&#160;</td>
           <td class="paramname"><em>slaveConfig</em>, </td>
         </tr>
         <tr>
@@ -1422,7 +1509,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Use this function to send an ACK or NAK when the <a class="el" href="a00041.html#ggabd50effc706692c03b42faa72c34269ba37386d33a28e37352a8e3151f027fdff" title="Transmit ACK flag. ">kLPI2C_SlaveTransmitAckFlag</a> is asserted. This only happens if you enable the sclStall.enableAck field of the <a class="el" href="a00041.html#a00347" title="Structure with settings to initialize the LPI2C slave module. ">lpi2c_slave_config_t</a> configuration structure used to initialize the slave peripheral.</p>
+<p>Use this function to send an ACK or NAK when the <a class="el" href="a00041.html#ggabd50effc706692c03b42faa72c34269ba37386d33a28e37352a8e3151f027fdff" title="Transmit ACK flag. ">kLPI2C_SlaveTransmitAckFlag</a> is asserted. This only happens if you enable the sclStall.enableAck field of the <a class="el" href="a00041.html#ga9e6fa1acd6800e0c0eaf99f68dbd4681" title="Structure with settings to initialize the LPI2C slave module. ">lpi2c_slave_config_t</a> configuration structure used to initialize the slave peripheral.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
@@ -1512,7 +1599,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPI2C_SlaveSend </td>
+          <td class="memname"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPI2C_SlaveSend </td>
           <td>(</td>
           <td class="paramtype">LPI2C_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1560,7 +1647,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPI2C_SlaveReceive </td>
+          <td class="memname"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPI2C_SlaveReceive </td>
           <td>(</td>
           <td class="paramtype">LPI2C_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1616,7 +1703,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpi2c_slave_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00041.html#ga230e27460fd44e50f35c3c206eebfa68">lpi2c_slave_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -1657,7 +1744,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPI2C_SlaveTransferNonBlocking </td>
+          <td class="memname"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPI2C_SlaveTransferNonBlocking </td>
           <td>(</td>
           <td class="paramtype">LPI2C_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1665,7 +1752,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpi2c_slave_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00041.html#ga230e27460fd44e50f35c3c206eebfa68">lpi2c_slave_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -1682,19 +1769,19 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
       </table>
 </div><div class="memdoc">
 <p>Call this API after calling I2C_SlaveInit() and <a class="el" href="a00041.html#ga6afdc286db9c700bc057038518a19285" title="Creates a new handle for the LPI2C slave non-blocking APIs. ">LPI2C_SlaveTransferCreateHandle()</a> to start processing transactions driven by an I2C master. The slave monitors the I2C bus and pass events to the callback that was passed into the call to <a class="el" href="a00041.html#ga6afdc286db9c700bc057038518a19285" title="Creates a new handle for the LPI2C slave non-blocking APIs. ">LPI2C_SlaveTransferCreateHandle()</a>. The callback is always invoked from the interrupt context.</p>
-<p>The set of events received by the callback is customizable. To do so, set the <em>eventMask</em> parameter to the OR'd combination of <a class="el" href="a00041.html#ga0d99b4dba3841a4e02f7c431a59006c8" title="Set of events sent to the callback for non blocking slave transfers. ">lpi2c_slave_transfer_event_t</a> enumerators for the events you wish to receive. The <a class="el" href="a00041.html#gga0d99b4dba3841a4e02f7c431a59006c8a976c8c9aa85026224a46cf5ec742eb49" title="Callback is requested to provide data to transmit (slave-transmitter role). ">kLPI2C_SlaveTransmitEvent</a> and <a class="el" href="a00041.html#gga0d99b4dba3841a4e02f7c431a59006c8ac737ba9e4e62880a6e2d8aac98ae8f18" title="Callback is requested to provide a buffer in which to place received data (slave-receiver role)...">kLPI2C_SlaveReceiveEvent</a> events are always enabled and do not need to be included in the mask. Alternatively, you can pass 0 to get a default set of only the transmit and receive events that are always enabled. In addition, the <a class="el" href="a00041.html#gga0d99b4dba3841a4e02f7c431a59006c8aeed0927f4e909cb161b44434b6f01aec" title="Bit mask of all available events. ">kLPI2C_SlaveAllEvents</a> constant is provided as a convenient way to enable all events.</p>
+<p>The set of events received by the callback is customizable. To do so, set the <em>eventMask</em> parameter to the OR'd combination of <a class="el" href="a00041.html#gaba49383928407761f900aa0c0dddbfe2" title="Set of events sent to the callback for non blocking slave transfers. ">lpi2c_slave_transfer_event_t</a> enumerators for the events you wish to receive. The <a class="el" href="a00041.html#gga379060365b5d4d26dc5bdec675d7c029a976c8c9aa85026224a46cf5ec742eb49" title="Callback is requested to provide data to transmit (slave-transmitter role). ">kLPI2C_SlaveTransmitEvent</a> and <a class="el" href="a00041.html#gga379060365b5d4d26dc5bdec675d7c029ac737ba9e4e62880a6e2d8aac98ae8f18" title="Callback is requested to provide a buffer in which to place received data (slave-receiver role)...">kLPI2C_SlaveReceiveEvent</a> events are always enabled and do not need to be included in the mask. Alternatively, you can pass 0 to get a default set of only the transmit and receive events that are always enabled. In addition, the <a class="el" href="a00041.html#gga379060365b5d4d26dc5bdec675d7c029aeed0927f4e909cb161b44434b6f01aec" title="Bit mask of all available events. ">kLPI2C_SlaveAllEvents</a> constant is provided as a convenient way to enable all events.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
     <tr><td class="paramname">handle</td><td>Pointer to lpi2c_slave_handle_t structure which stores the transfer state. </td></tr>
-    <tr><td class="paramname">eventMask</td><td>Bit mask formed by OR'ing together <a class="el" href="a00041.html#ga0d99b4dba3841a4e02f7c431a59006c8" title="Set of events sent to the callback for non blocking slave transfers. ">lpi2c_slave_transfer_event_t</a> enumerators to specify which events to send to the callback. Other accepted values are 0 to get a default set of only the transmit and receive events, and <a class="el" href="a00041.html#gga0d99b4dba3841a4e02f7c431a59006c8aeed0927f4e909cb161b44434b6f01aec" title="Bit mask of all available events. ">kLPI2C_SlaveAllEvents</a> to enable all events.</td></tr>
+    <tr><td class="paramname">eventMask</td><td>Bit mask formed by OR'ing together <a class="el" href="a00041.html#gaba49383928407761f900aa0c0dddbfe2" title="Set of events sent to the callback for non blocking slave transfers. ">lpi2c_slave_transfer_event_t</a> enumerators to specify which events to send to the callback. Other accepted values are 0 to get a default set of only the transmit and receive events, and <a class="el" href="a00041.html#gga379060365b5d4d26dc5bdec675d7c029aeed0927f4e909cb161b44434b6f01aec" title="Bit mask of all available events. ">kLPI2C_SlaveAllEvents</a> to enable all events.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">kStatus_Success</td><td>Slave transfers were successfully started. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00220.html#ggaae05225933a42f81e7c4a9fb286596f9af52a270e301641b8855edf3fcc843814" title="The master is already performing a transfer. ">kStatus_LPI2C_Busy</a></td><td>Slave transfers have already been started on this handle. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00222.html#ggaae05225933a42f81e7c4a9fb286596f9af52a270e301641b8855edf3fcc843814" title="The master is already performing a transfer. ">kStatus_LPI2C_Busy</a></td><td>Slave transfers have already been started on this handle. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1706,7 +1793,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPI2C_SlaveTransferGetCount </td>
+          <td class="memname"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPI2C_SlaveTransferGetCount </td>
           <td>(</td>
           <td class="paramtype">LPI2C_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1714,7 +1801,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpi2c_slave_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00041.html#ga230e27460fd44e50f35c3c206eebfa68">lpi2c_slave_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -1761,7 +1848,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpi2c_slave_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00041.html#ga230e27460fd44e50f35c3c206eebfa68">lpi2c_slave_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>&#160;</td>
         </tr>
         <tr>
@@ -1776,13 +1863,6 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
   <table class="params">
     <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
     <tr><td class="paramname">handle</td><td>Pointer to lpi2c_slave_handle_t structure which stores the transfer state. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
-    <tr><td class="paramname"><a class="el" href="a00220.html#ggaae05225933a42f81e7c4a9fb286596f9a6603ec1135f58532c9d4accc3661bc27" title="The slave driver is idle. ">kStatus_LPI2C_Idle</a></td><td></td></tr>
   </table>
   </dd>
 </dl>
@@ -1802,7 +1882,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpi2c_slave_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00041.html#ga230e27460fd44e50f35c3c206eebfa68">lpi2c_slave_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>&#160;</td>
         </tr>
         <tr>

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,6 +99,7 @@ $(document).ready(function(){initNavTree('a00292.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
@@ -109,6 +110,13 @@ $(document).ready(function(){initNavTree('a00292.html','');});
 <p>The MCUXpresso SDK provides a peripheral driver for the System Reset Controller (SRC) module.</p>
 <p>The System Reset Controller (SRC) controls the reset and boot operation of the SoC. It is responsible for the generation of all reset signals and boot decoding. The reset controller determines the source and the type of reset, such as POR, WARM, COLD, and performs the necessary reset qualification and stretching sequences. Based on the type of reset, the reset logic generates the reset sequence for the entire IC. </p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga8ab4968fbeb3aeff87002c5f04a79c12"><td class="memItemLeft" align="right" valign="top">typedef enum <br class="typebreak"/>
+<a class="el" href="a00292.html#ga9001fa7e0c13473ca9351c94866aab30">_src_warm_reset_bypass_count</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00292.html#ga8ab4968fbeb3aeff87002c5f04a79c12">src_warm_reset_bypass_count_t</a></td></tr>
+<tr class="memdesc:ga8ab4968fbeb3aeff87002c5f04a79c12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selection of WARM reset bypass count.  <a href="#ga8ab4968fbeb3aeff87002c5f04a79c12">More...</a><br/></td></tr>
+<tr class="separator:ga8ab4968fbeb3aeff87002c5f04a79c12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr class="memitem:gaf647f7dbfbed8b1612675ab132cfa244"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00292.html#gaf647f7dbfbed8b1612675ab132cfa244">_src_reset_status_flags</a> { <br/>
@@ -135,18 +143,18 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:gaf647f7dbfbed8b1612675ab132cfa244"><td class="mdescLeft">&#160;</td><td class="mdescRight">SRC reset status flags.  <a href="a00292.html#gaf647f7dbfbed8b1612675ab132cfa244">More...</a><br/></td></tr>
 <tr class="separator:gaf647f7dbfbed8b1612675ab132cfa244"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5b40161d6cf7c90a651afd9047b6bedd"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00292.html#ga5b40161d6cf7c90a651afd9047b6bedd">src_warm_reset_bypass_count_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00292.html#gga5b40161d6cf7c90a651afd9047b6beddae2e8afc71fab41ccbac78e6a8d69ff62">kSRC_WarmResetWaitAlways</a> = 0U, 
+<tr class="memitem:ga9001fa7e0c13473ca9351c94866aab30"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00292.html#ga9001fa7e0c13473ca9351c94866aab30">_src_warm_reset_bypass_count</a> { <br/>
+&#160;&#160;<a class="el" href="a00292.html#gga9001fa7e0c13473ca9351c94866aab30ae2e8afc71fab41ccbac78e6a8d69ff62">kSRC_WarmResetWaitAlways</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00292.html#gga5b40161d6cf7c90a651afd9047b6beddad20bc2e2d97c95046d65940f111e9584">kSRC_WarmResetWaitClk16</a> = 1U, 
+&#160;&#160;<a class="el" href="a00292.html#gga9001fa7e0c13473ca9351c94866aab30ad20bc2e2d97c95046d65940f111e9584">kSRC_WarmResetWaitClk16</a> = 1U, 
 <br/>
-&#160;&#160;<a class="el" href="a00292.html#gga5b40161d6cf7c90a651afd9047b6bedda8c3d2f6cd0c0f36da9a342e3c3eb77f8">kSRC_WarmResetWaitClk32</a> = 2U, 
+&#160;&#160;<a class="el" href="a00292.html#gga9001fa7e0c13473ca9351c94866aab30a8c3d2f6cd0c0f36da9a342e3c3eb77f8">kSRC_WarmResetWaitClk32</a> = 2U, 
 <br/>
-&#160;&#160;<a class="el" href="a00292.html#gga5b40161d6cf7c90a651afd9047b6bedda5bbedec3e30404b252af1b02af0042c0">kSRC_WarmResetWaitClk64</a> = 3U
+&#160;&#160;<a class="el" href="a00292.html#gga9001fa7e0c13473ca9351c94866aab30a5bbedec3e30404b252af1b02af0042c0">kSRC_WarmResetWaitClk64</a> = 3U
 <br/>
  }</td></tr>
-<tr class="memdesc:ga5b40161d6cf7c90a651afd9047b6bedd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selection of WARM reset bypass count.  <a href="a00292.html#ga5b40161d6cf7c90a651afd9047b6bedd">More...</a><br/></td></tr>
-<tr class="separator:ga5b40161d6cf7c90a651afd9047b6bedd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga9001fa7e0c13473ca9351c94866aab30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selection of WARM reset bypass count.  <a href="a00292.html#ga9001fa7e0c13473ca9351c94866aab30">More...</a><br/></td></tr>
+<tr class="separator:ga9001fa7e0c13473ca9351c94866aab30"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -203,6 +211,20 @@ Driver version</h2></td></tr>
 
 </div>
 </div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga8ab4968fbeb3aeff87002c5f04a79c12"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00292.html#ga9001fa7e0c13473ca9351c94866aab30">_src_warm_reset_bypass_count</a>  <a class="el" href="a00292.html#ga8ab4968fbeb3aeff87002c5f04a79c12">src_warm_reset_bypass_count_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This type defines the 32KHz clock cycles to count before bypassing the MMDC acknowledge for WARM reset. If the MMDC acknowledge is not asserted before this counter is elapsed, a COLD reset will be initiated. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a class="anchor" id="gaf647f7dbfbed8b1612675ab132cfa244"></a>
 <div class="memitem">
@@ -251,27 +273,27 @@ Driver version</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga5b40161d6cf7c90a651afd9047b6bedd"></a>
+<a class="anchor" id="ga9001fa7e0c13473ca9351c94866aab30"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00292.html#ga5b40161d6cf7c90a651afd9047b6bedd">src_warm_reset_bypass_count_t</a></td>
+          <td class="memname">enum <a class="el" href="a00292.html#ga9001fa7e0c13473ca9351c94866aab30">_src_warm_reset_bypass_count</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>This type defines the 32KHz clock cycles to count before bypassing the MMDC acknowledge for WARM reset. If the MMDC acknowledge is not asserted before this counter is elapsed, a COLD reset will be initiated. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga5b40161d6cf7c90a651afd9047b6beddae2e8afc71fab41ccbac78e6a8d69ff62"></a>kSRC_WarmResetWaitAlways</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga9001fa7e0c13473ca9351c94866aab30ae2e8afc71fab41ccbac78e6a8d69ff62"></a>kSRC_WarmResetWaitAlways</em>&nbsp;</td><td class="fielddoc">
 <p>System will wait until MMDC acknowledge is asserted. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5b40161d6cf7c90a651afd9047b6beddad20bc2e2d97c95046d65940f111e9584"></a>kSRC_WarmResetWaitClk16</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga9001fa7e0c13473ca9351c94866aab30ad20bc2e2d97c95046d65940f111e9584"></a>kSRC_WarmResetWaitClk16</em>&nbsp;</td><td class="fielddoc">
 <p>Wait 16 32KHz clock cycles before switching the reset. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5b40161d6cf7c90a651afd9047b6bedda8c3d2f6cd0c0f36da9a342e3c3eb77f8"></a>kSRC_WarmResetWaitClk32</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga9001fa7e0c13473ca9351c94866aab30a8c3d2f6cd0c0f36da9a342e3c3eb77f8"></a>kSRC_WarmResetWaitClk32</em>&nbsp;</td><td class="fielddoc">
 <p>Wait 32 32KHz clock cycles before switching the reset. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga5b40161d6cf7c90a651afd9047b6bedda5bbedec3e30404b252af1b02af0042c0"></a>kSRC_WarmResetWaitClk64</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga9001fa7e0c13473ca9351c94866aab30a5bbedec3e30404b252af1b02af0042c0"></a>kSRC_WarmResetWaitClk64</em>&nbsp;</td><td class="fielddoc">
 <p>Wait 64 32KHz clock cycles before switching the reset. </p>
 </td></tr>
 </table>

@@ -1,45 +1,51 @@
 var a00055 =
 [
-    [ "notifier_notification_block_t", "a00055.html#a00448", [
-      [ "targetConfig", "a00055.html#a2e0b1d4d7e3ebf8f454b55af953e3ffa", null ],
-      [ "policy", "a00055.html#a26aef2519eb2f9990e04f2ce961dfc9b", null ],
-      [ "notifyType", "a00055.html#a2ca3b1a52e315e072a8ab48fcc1dd62a", null ]
+    [ "_notifier_notification_block", "a00055.html#a00438", [
+      [ "targetConfig", "a00055.html#a018195ff797af865b0d49c0a40c5150a", null ],
+      [ "policy", "a00055.html#aba07cda193bd7b533b525d8272cceeb2", null ],
+      [ "notifyType", "a00055.html#adc67fe829150c3c2a679db904432d7ea", null ]
     ] ],
-    [ "notifier_callback_config_t", "a00055.html#a00446", [
-      [ "callback", "a00055.html#a116c9dd621ffc21178e769edbd9192e4", null ],
-      [ "callbackType", "a00055.html#ad9e6ec8e23a48ef8d97b2f6d16fb68ec", null ],
-      [ "callbackData", "a00055.html#a4e7db701bbf36647da1e6d0f0efe2ebf", null ]
+    [ "_notifier_callback_config", "a00055.html#a00436", [
+      [ "callback", "a00055.html#a85eb3076fe6c084c74669e67c62213a7", null ],
+      [ "callbackType", "a00055.html#a3a89d9f29db8d7cd160febde83d28059", null ],
+      [ "callbackData", "a00055.html#a3157da142ad8e9147093b734f7f9c1c8", null ]
     ] ],
-    [ "notifier_handle_t", "a00055.html#a00447", [
-      [ "configsTable", "a00055.html#a8fd95d668f17b8a7705e2a4ff49f2e16", null ],
-      [ "configsNumber", "a00055.html#a59bdd44c33254cfd4626f5906d3c0a7a", null ],
-      [ "callbacksTable", "a00055.html#a423480d080ea2580628222dc6c492735", null ],
-      [ "callbacksNumber", "a00055.html#acd4e9338f2cd47c46fc0c02886daafbb", null ],
-      [ "errorCallbackIndex", "a00055.html#a6a8447a4b6045219363883663f40d300", null ],
-      [ "currentConfigIndex", "a00055.html#aae9d6d2cc9c47485863c098c0284a021", null ],
-      [ "userFunction", "a00055.html#a4f6589fa386e93c40c52ed292da4f47f", null ],
-      [ "userData", "a00055.html#a5e90e1dafbe97f2ea5187530ee04af0a", null ]
+    [ "_notifier_handle", "a00055.html#a00437", [
+      [ "configsTable", "a00055.html#a3ecaf5ebe809ffe87e3fd765df0ce8f4", null ],
+      [ "configsNumber", "a00055.html#aa3922e6509dd3d21571e07367e2aa578", null ],
+      [ "callbacksTable", "a00055.html#abf74e82056bd7b4e19ac11ce554b0e6e", null ],
+      [ "callbacksNumber", "a00055.html#a3800d55438441a0091a84516381bba10", null ],
+      [ "errorCallbackIndex", "a00055.html#af91a8551d975e6a2354efc9c8ef3b585", null ],
+      [ "currentConfigIndex", "a00055.html#a482028570c5e46c6ed018885dc45204f", null ],
+      [ "userFunction", "a00055.html#a51562248abd92ea71aea469d7f2599b8", null ],
+      [ "userData", "a00055.html#a6ff25f57ffc4b15c365d03afe1d65ca5", null ]
     ] ],
+    [ "notifier_policy_t", "a00055.html#ga80f2ccc799b1cca21a091e2b28fbf36c", null ],
+    [ "notifier_notification_type_t", "a00055.html#gad7a79c7191c37e1cf4367bcda45b6943", null ],
+    [ "notifier_callback_type_t", "a00055.html#ga3fdecfea1f1a6b56c8d74c3608ee9657", null ],
     [ "notifier_user_config_t", "a00055.html#gad0b6e919f3ff69992b36a2734a650ec7", null ],
     [ "notifier_user_function_t", "a00055.html#gacb6a6d6f99e6ddfbb96dae53382949b2", null ],
+    [ "notifier_notification_block_t", "a00055.html#gac3dc913bdf7b5e3b40b347e0f748189a", null ],
     [ "notifier_callback_t", "a00055.html#gafd1d8cc01c496de8b4cd3990ff85415c", null ],
+    [ "notifier_callback_config_t", "a00055.html#ga1ed8b5576d410ff76c7707f7fc58435f", null ],
+    [ "notifier_handle_t", "a00055.html#ga5fb6d98190b8a419a8d4b4150b0eae2a", null ],
     [ "_notifier_status", "a00055.html#gacac871f1b98f53906b07b2663943c784", [
       [ "kStatus_NOTIFIER_ErrorNotificationBefore", "a00055.html#ggacac871f1b98f53906b07b2663943c784a23344b22d4d82fea2f17f4979d515c5c", null ],
       [ "kStatus_NOTIFIER_ErrorNotificationAfter", "a00055.html#ggacac871f1b98f53906b07b2663943c784a7b48bf0cf849b07c6131a0abb65d2d58", null ]
     ] ],
-    [ "notifier_policy_t", "a00055.html#ga62e961564dc31b8155d128a3f6566409", [
-      [ "kNOTIFIER_PolicyAgreement", "a00055.html#gga62e961564dc31b8155d128a3f6566409a4513243b3cacd0aec289531dfb53e964", null ],
-      [ "kNOTIFIER_PolicyForcible", "a00055.html#gga62e961564dc31b8155d128a3f6566409a97a2587e9e4c523dc028778ba1f72dc8", null ]
+    [ "_notifier_policy", "a00055.html#ga876c38aa0c3eb40cd6d9fa62106efd65", [
+      [ "kNOTIFIER_PolicyAgreement", "a00055.html#gga876c38aa0c3eb40cd6d9fa62106efd65a4513243b3cacd0aec289531dfb53e964", null ],
+      [ "kNOTIFIER_PolicyForcible", "a00055.html#gga876c38aa0c3eb40cd6d9fa62106efd65a97a2587e9e4c523dc028778ba1f72dc8", null ]
     ] ],
-    [ "notifier_notification_type_t", "a00055.html#ga5ee4314c2a52ee0af61985e7163a1be9", [
-      [ "kNOTIFIER_NotifyRecover", "a00055.html#gga5ee4314c2a52ee0af61985e7163a1be9a49e6ad28b9d351a051035c8065de5d94", null ],
-      [ "kNOTIFIER_NotifyBefore", "a00055.html#gga5ee4314c2a52ee0af61985e7163a1be9a91707ed2be51db6da2a9d6cc6eaee39c", null ],
-      [ "kNOTIFIER_NotifyAfter", "a00055.html#gga5ee4314c2a52ee0af61985e7163a1be9a6e89a377b2890077646fc6af6b5c2e00", null ]
+    [ "_notifier_notification_type", "a00055.html#gae4fbfb346e65c17b618dcedb491a864b", [
+      [ "kNOTIFIER_NotifyRecover", "a00055.html#ggae4fbfb346e65c17b618dcedb491a864ba49e6ad28b9d351a051035c8065de5d94", null ],
+      [ "kNOTIFIER_NotifyBefore", "a00055.html#ggae4fbfb346e65c17b618dcedb491a864ba91707ed2be51db6da2a9d6cc6eaee39c", null ],
+      [ "kNOTIFIER_NotifyAfter", "a00055.html#ggae4fbfb346e65c17b618dcedb491a864ba6e89a377b2890077646fc6af6b5c2e00", null ]
     ] ],
-    [ "notifier_callback_type_t", "a00055.html#gaad75237e3cea51f8315cf6577b35db91", [
-      [ "kNOTIFIER_CallbackBefore", "a00055.html#ggaad75237e3cea51f8315cf6577b35db91ab9c117f1eccd38f914d0e4d05015d6a1", null ],
-      [ "kNOTIFIER_CallbackAfter", "a00055.html#ggaad75237e3cea51f8315cf6577b35db91a8d5832eddd0d8cf976413aea02f3bfdc", null ],
-      [ "kNOTIFIER_CallbackBeforeAfter", "a00055.html#ggaad75237e3cea51f8315cf6577b35db91ada6451efe227571a1442e70ddf36e005", null ]
+    [ "_notifier_callback_type", "a00055.html#ga120d15994388722016ef487b8159f3df", [
+      [ "kNOTIFIER_CallbackBefore", "a00055.html#gga120d15994388722016ef487b8159f3dfab9c117f1eccd38f914d0e4d05015d6a1", null ],
+      [ "kNOTIFIER_CallbackAfter", "a00055.html#gga120d15994388722016ef487b8159f3dfa8d5832eddd0d8cf976413aea02f3bfdc", null ],
+      [ "kNOTIFIER_CallbackBeforeAfter", "a00055.html#gga120d15994388722016ef487b8159f3dfada6451efe227571a1442e70ddf36e005", null ]
     ] ],
     [ "NOTIFIER_CreateHandle", "a00055.html#gaa2dfe33b4724d9c1025acdde1b1b3c31", null ],
     [ "NOTIFIER_SwitchConfig", "a00055.html#ga9ca08c8f6fa9a7bafa9ecbe08603cd97", null ],

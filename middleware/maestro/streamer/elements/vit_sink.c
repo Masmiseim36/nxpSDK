@@ -1,10 +1,7 @@
 /*
  * Copyright 2018-2022 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /*!
@@ -352,7 +349,7 @@ static int32_t vitsink_set_property(StreamElement *element_ptr, uint16_t prop, u
 
     switch (prop)
     {
-        case PROP_VITSINK_PROC_FUNCPTR:
+        case PROP_VITSINK_FUNCPTR:
         {
             EXT_PROCESS_DESC_T *desc_ptr = (EXT_PROCESS_DESC_T *)val;
             ret                          = vit_register_ext_processing((ElementHandle)element_ptr, desc_ptr->init_func,
@@ -450,6 +447,7 @@ int32_t vitsink_init_element(StreamElement *element_ptr)
         pad->query_handler      = vitsink_sink_pad_query_handler;
         pad->process_precheck   = NULL;
         pad->process_handler    = NULL;
+        pad->scheduling         = SCHEDULING_PUSH;
     }
     /* Cant really call init here
      * this is called in pipeline construction

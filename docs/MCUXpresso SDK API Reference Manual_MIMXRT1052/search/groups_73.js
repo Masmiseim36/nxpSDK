@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['sai_3a_20serial_20audio_20interface',['SAI: Serial Audio Interface',['../a00288.html',1,'']]],
-  ['sai_20driver',['SAI Driver',['../a00063.html',1,'']]],
-  ['sai_20edma_20driver',['SAI EDMA Driver',['../a00064.html',1,'']]],
+  ['sai_3a_20serial_20audio_20interface',['SAI: Serial Audio Interface',['../a00289.html',1,'']]],
+  ['sai_20driver',['SAI Driver',['../a00064.html',1,'']]],
+  ['sai_20edma_20driver',['SAI EDMA Driver',['../a00086.html',1,'']]],
   ['sd_20card_20driver',['SD Card Driver',['../a00065.html',1,'']]],
   ['sdio_20card_20driver',['SDIO Card Driver',['../a00066.html',1,'']]],
   ['sdmmc_20common',['SDMMC Common',['../a00055.html',1,'']]],
@@ -17,11 +17,11 @@ var searchData=
   ['sgtl5000_20driver',['SGTL5000 Driver',['../a00073.html',1,'']]],
   ['sgtl5000_20adapter',['SGTL5000 Adapter',['../a00302.html',1,'']]],
   ['shell',['Shell',['../a00074.html',1,'']]],
-  ['snvs_3a_20secure_20non_2dvolatile_20storage',['SNVS: Secure Non-Volatile Storage',['../a00289.html',1,'']]],
+  ['snvs_3a_20secure_20non_2dvolatile_20storage',['SNVS: Secure Non-Volatile Storage',['../a00290.html',1,'']]],
   ['secure_20non_2dvolatile_20storage_20high_2dpower',['Secure Non-Volatile Storage High-Power',['../a00075.html',1,'']]],
   ['secure_20non_2dvolatile_20storage_20low_2dpower',['Secure Non-Volatile Storage Low-Power',['../a00076.html',1,'']]],
   ['spdif_3a_20sony_2fphilips_20digital_20interface',['SPDIF: Sony/Philips Digital Interface',['../a00077.html',1,'']]],
   ['spdif_20edma_20driver',['SPDIF eDMA Driver',['../a00078.html',1,'']]],
-  ['src_3a_20system_20reset_20controller_20driver',['SRC: System Reset Controller Driver',['../a00290.html',1,'']]],
+  ['src_3a_20system_20reset_20controller_20driver',['SRC: System Reset Controller Driver',['../a00291.html',1,'']]],
   ['swo',['SWO',['../a00296.html',1,'']]]
 ];

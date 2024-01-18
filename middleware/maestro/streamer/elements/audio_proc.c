@@ -1,10 +1,7 @@
 /*
  * Copyright 2018-2022 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /*!
@@ -299,7 +296,7 @@ static int32_t audio_proc_change_state(StreamElement *element_ptr, PipelineState
 
         case STATE_CHANGE_READY_TO_NULL:
             STREAMER_LOG_DEBUG(DBG_AUDIO_PROC, "[AUDIO_PROC]STATE_CHANGE_READY_TO_NULL\n");
-            if((audio_proc_ptr->initialized == true) && (audio_proc_ptr->deinit_func != NULL))
+            if ((audio_proc_ptr->initialized == true) && (audio_proc_ptr->deinit_func != NULL))
             {
                 audio_proc_ptr->deinit_func();
             }
@@ -491,36 +488,30 @@ static int32_t audio_proc_set_property(StreamElement *element_ptr, uint16_t prop
 
     switch (prop)
     {
-        case PROP_VOICESEEKER_PROC_FUNCPTR:
-        case PROP_EAP_PROC_FUNCPTR:
-        case PROP_SRC_PROC_FUNCPTR:
+        case PROP_VOICESEEKER_FUNCPTR:
+        case PROP_SRC_FUNCPTR:
+        case PROP_ASRC_FUNCPTR:
+        case PROP_VIT_PROC_FUNCPTR:
         {
             EXT_PROCESS_DESC_T *desc_ptr = (EXT_PROCESS_DESC_T *)val;
             ret = audio_proc_register_ext_processing((ElementHandle)element_ptr, desc_ptr->init_func,
                                                      desc_ptr->proc_func, desc_ptr->deinit_func, desc_ptr->arg_ptr);
         }
         break;
-        case PROP_VITSINK_PROC_FUNCPTR:
-        {
-            EXT_PROCESS_DESC_T *desc_ptr = (EXT_PROCESS_DESC_T *)val;
-            ret = audio_proc_register_ext_processing((ElementHandle)element_ptr, desc_ptr->init_func,
-                                                     desc_ptr->proc_func, desc_ptr->deinit_func, desc_ptr->arg_ptr);
-        }
-        break;
-        case PROP_VOICESEEKER_PROC_REFDATA_FUNCPTR:
+        case PROP_VOICESEEKER_REFDATA_FUNCPTR:
         {
             EXT_PROCESS_REFDAT_DESC_T *desc_ptr = (EXT_PROCESS_REFDAT_DESC_T *)val;
             ret = audio_proc_register_refdata_processing((ElementHandle)element_ptr, desc_ptr->set_num_buff_func,
                                                          desc_ptr->push_func, desc_ptr->set_debugging);
         }
         break;
-        case PROP_VOICESEEKER_PROC_REFDATA_NUM_BUFFERS:
+        case PROP_VOICESEEKER_REFDATA_NUM_BUFFERS:
             ret = audio_proc_refdata_set_num_buff((ElementHandle)element_ptr, val);
             break;
-        case PROP_VOICESEEKER_PROC_REFDATA_PUSH:
+        case PROP_VOICESEEKER_REFDATA_PUSH:
             ret = audio_proc_refdata_push((ElementHandle)element_ptr, (AudioRefData_t *)val);
             break;
-        case PROP_VOICESEEKER_PROC_SET_DEBUGGING:
+        case PROP_VOICESEEKER_SET_DEBUGGING:
             ret = audio_proc_set_debugging((ElementHandle)element_ptr, (bool)val);
             break;
         default:

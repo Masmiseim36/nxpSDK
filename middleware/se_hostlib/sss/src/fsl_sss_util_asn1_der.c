@@ -9,6 +9,7 @@
 #include <nxLog_sss.h>
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
 
 #if SSS_HAVE_APPLET_SE05X_IOT
 #include <fsl_sss_se05x_apis.h>
@@ -255,6 +256,9 @@ sss_status_t sss_util_asn1_rsa_parse_private(const uint8_t *key,
     if (ret != 0) {
         goto exit;
     }
+
+    ENSURE_OR_GO_EXIT(bufIndex < keylen);
+
     if (taglen != (keylen - bufIndex)) {
         LOG_E("Invlaid Key");
         goto exit;
@@ -271,7 +275,9 @@ sss_status_t sss_util_asn1_rsa_parse_private(const uint8_t *key,
         if (ret != 0) {
             goto exit;
         }
+        ENSURE_OR_GO_EXIT(bufIndex < keylen);
         if (tag == ASN_TAG_SEQUENCE && pBuf[bufIndex] != ASN_TAG_INT) {
+            ENSURE_OR_GO_EXIT(UINT_MAX - bufIndex >= taglen);
             bufIndex += taglen;
         }
         ENSURE_OR_GO_EXIT(bufIndex < keylen);
@@ -314,6 +320,7 @@ sss_status_t sss_util_asn1_rsa_parse_private(const uint8_t *key,
         }
     }
     else {
+        ENSURE_OR_GO_EXIT((UINT_MAX - bufIndex) >= taglen);
         bufIndex += taglen;
     }
 
@@ -337,6 +344,7 @@ sss_status_t sss_util_asn1_rsa_parse_private(const uint8_t *key,
         }
     }
     else {
+        ENSURE_OR_GO_EXIT((UINT_MAX - bufIndex) >= taglen);
         bufIndex += taglen;
     }
 
@@ -372,6 +380,7 @@ sss_status_t sss_util_asn1_rsa_parse_private(const uint8_t *key,
         }
     }
     else {
+        ENSURE_OR_GO_EXIT((UINT_MAX - bufIndex) >= taglen);
         bufIndex += taglen;
     }
 
@@ -381,6 +390,7 @@ sss_status_t sss_util_asn1_rsa_parse_private(const uint8_t *key,
         goto exit;
     }
     if (prime1len != NULL) {
+        ENSURE_OR_GO_EXIT(bufIndex < keylen);
         if (pBuf[bufIndex] == 0x00) {
             if (taglen) {
                 *prime1len = taglen - 1; /*Exclude Starting Null*/
@@ -406,6 +416,7 @@ sss_status_t sss_util_asn1_rsa_parse_private(const uint8_t *key,
         }
     }
     else {
+        ENSURE_OR_GO_EXIT((UINT_MAX - bufIndex) >= taglen);
         bufIndex += taglen;
     }
 
@@ -445,6 +456,7 @@ sss_status_t sss_util_asn1_rsa_parse_private(const uint8_t *key,
         }
     }
     else {
+        ENSURE_OR_GO_EXIT((UINT_MAX - bufIndex) >= taglen);
         bufIndex += taglen;
     }
 
@@ -480,6 +492,7 @@ sss_status_t sss_util_asn1_rsa_parse_private(const uint8_t *key,
         }
     }
     else {
+        ENSURE_OR_GO_EXIT((UINT_MAX - bufIndex) >= taglen);
         bufIndex += taglen;
     }
 
@@ -519,6 +532,7 @@ sss_status_t sss_util_asn1_rsa_parse_private(const uint8_t *key,
         }
     }
     else {
+        ENSURE_OR_GO_EXIT((UINT_MAX - bufIndex) >= taglen);
         bufIndex += taglen;
     }
 
@@ -554,6 +568,7 @@ sss_status_t sss_util_asn1_rsa_parse_private(const uint8_t *key,
         }
     }
     else {
+        ENSURE_OR_GO_EXIT((UINT_MAX - bufIndex) >= taglen);
         bufIndex += taglen;
     }
 
@@ -622,7 +637,7 @@ sss_status_t sss_util_asn1_rsa_parse_private_allow_invalid_key(const uint8_t *ke
     while (tag != ASN_TAG_INT) {
         ret = asn_1_parse_tlv(pBuf, &taglen, &bufIndex); /* Private Key Head*/
         ENSURE_OR_GO_EXIT(0 == ret);
-
+        ENSURE_OR_GO_EXIT(bufIndex < keylen);
         if (tag == ASN_TAG_SEQUENCE && pBuf[bufIndex] != ASN_TAG_INT) {
             bufIndex += taglen;
         }
@@ -755,9 +770,9 @@ sss_status_t sss_util_asn1_rsa_parse_private_allow_invalid_key(const uint8_t *ke
         }
     }
     else {
+        ENSURE_OR_GO_EXIT((UINT_MAX - bufIndex) >= taglen);
         bufIndex += taglen;
     }
-
     /* Get Second prime (q)*/
     ret = asn_1_parse_tlv(pBuf, &taglen, &bufIndex);
     ENSURE_OR_GO_EXIT(0 == ret);
@@ -899,6 +914,7 @@ sss_status_t sss_util_asn1_rsa_parse_private_allow_invalid_key(const uint8_t *ke
         }
     }
     else {
+        ENSURE_OR_GO_EXIT((UINT_MAX - bufIndex) >= taglen);
         bufIndex += taglen;
     }
 
@@ -933,6 +949,7 @@ sss_status_t sss_util_asn1_rsa_parse_public_nomalloc(
     if (ret != 0) {
         goto exit;
     }
+    ENSURE_OR_GO_EXIT((UINT_MAX - bufIndex) >= taglen);
     bufIndex += taglen;
 
     /* Bit-String + NULL Byte */
@@ -940,6 +957,7 @@ sss_status_t sss_util_asn1_rsa_parse_public_nomalloc(
     if (ret != 0) {
         goto exit;
     }
+    ENSURE_OR_GO_EXIT((UINT_MAX - 1) >= bufIndex);
     bufIndex++;
 
     ret = asn_1_parse_tlv(pBuf, &taglen, &bufIndex); /* Sequence of interger*/
@@ -955,6 +973,7 @@ sss_status_t sss_util_asn1_rsa_parse_public_nomalloc(
     if (pBuf[bufIndex] == 0x00) {
         if (taglen) {
             temp_modlen = taglen - 1; /*Exclude Starting Null*/
+            ENSURE_OR_GO_EXIT((UINT_MAX - 1) >= bufIndex);
             bufIndex++;
         }
         else {
@@ -992,6 +1011,7 @@ sss_status_t sss_util_asn1_rsa_parse_public_nomalloc(
     if (*pubExplen > 0) {
         ENSURE_OR_GO_EXIT(bufIndex < keylen);
         memcpy(pubExp, pBuf + bufIndex, *pubExplen);
+        ENSURE_OR_GO_EXIT((UINT_MAX - bufIndex) >= *pubExplen);
         bufIndex += *pubExplen;
         status = kStatus_SSS_Success;
     }
@@ -1025,6 +1045,7 @@ sss_status_t sss_util_asn1_rsa_parse_public_nomalloc_complete_modulus(
     if (ret != 0) {
         goto exit;
     }
+    ENSURE_OR_GO_EXIT((UINT_MAX - bufIndex) >= taglen);
     bufIndex += taglen;
 
     /* Bit-String + NULL Byte */
@@ -1055,6 +1076,7 @@ sss_status_t sss_util_asn1_rsa_parse_public_nomalloc_complete_modulus(
     if ((*modlen) > 0) {
         ENSURE_OR_GO_EXIT(bufIndex < keylen);
         memcpy(modulus, pBuf + bufIndex, *modlen);
+        ENSURE_OR_GO_EXIT((UINT_MAX - bufIndex) >= *modlen);
         bufIndex += *modlen;
     }
     else {
@@ -1073,6 +1095,7 @@ sss_status_t sss_util_asn1_rsa_parse_public_nomalloc_complete_modulus(
     if (*pubExplen > 0) {
         ENSURE_OR_GO_EXIT(bufIndex < keylen);
         memcpy(pubExp, pBuf + bufIndex, *pubExplen);
+        ENSURE_OR_GO_EXIT((UINT_MAX - bufIndex) >= *pubExplen);
         bufIndex += *pubExplen;
         status = kStatus_SSS_Success;
     }
@@ -1100,6 +1123,7 @@ sss_status_t sss_util_asn1_rsa_parse_public(
     if (ret != 0) {
         goto exit;
     }
+    ENSURE_OR_GO_EXIT((UINT_MAX - bufIndex) >= taglen);
     bufIndex += taglen;
 
     /* Bit-String + NULL Byte */
@@ -1107,6 +1131,8 @@ sss_status_t sss_util_asn1_rsa_parse_public(
     if (ret != 0) {
         goto exit;
     }
+
+    ENSURE_OR_GO_EXIT((UINT_MAX - 1) >= bufIndex);
     bufIndex++;
 
     ret = asn_1_parse_tlv(pBuf, &taglen, &bufIndex); /* Sequence of interger*/
@@ -1122,6 +1148,7 @@ sss_status_t sss_util_asn1_rsa_parse_public(
     if (pBuf[bufIndex] == 0x00) {
         if (taglen) {
             *modlen = taglen - 1; /*Exclude Starting Null*/
+            ENSURE_OR_GO_EXIT((UINT_MAX - 1) >= bufIndex);
             bufIndex++;
         }
         else {
@@ -1135,6 +1162,7 @@ sss_status_t sss_util_asn1_rsa_parse_public(
     if ((*modulus != NULL) && ((*modlen) > 0)) {
         ENSURE_OR_GO_EXIT(bufIndex < keylen);
         memcpy(*modulus, pBuf + bufIndex, *modlen);
+        ENSURE_OR_GO_EXIT((UINT_MAX - bufIndex) >= *modlen);
         bufIndex += *modlen;
     }
     else {
@@ -1153,6 +1181,7 @@ sss_status_t sss_util_asn1_rsa_parse_public(
     if (*pubExplen > 0) {
         ENSURE_OR_GO_EXIT(bufIndex < keylen);
         memcpy(*pubExp, pBuf + bufIndex, *pubExplen);
+        ENSURE_OR_GO_EXIT((UINT_MAX - bufIndex) >= *pubExplen);
         bufIndex += *pubExplen;
         status = kStatus_SSS_Success;
     }
@@ -1164,14 +1193,18 @@ sss_status_t sss_util_asn1_rsa_get_public(
     uint8_t *key, size_t *keylen, uint8_t *modulus, size_t modlen, uint8_t *pubExp, size_t pubExplen)
 {
     sss_status_t status = kStatus_SSS_Fail;
-    size_t pbkeylen     = modlen + pubExplen + sizeof(grsa1kPubHeader) + 3 + 3;
+    size_t pbkeylen     = 0;
     size_t index        = 0;
     size_t intModLEn    = modlen + 1; // RSA Key has null byte before moduls start
 
+    ENSURE_OR_GO_EXIT(
+        (modlen + pubExplen + sizeof(grsa1kPubHeader) + 3U + 3U) < (size_t)(1UL << ((sizeof(size_t) * 4) - 1)));
     ENSURE_OR_GO_EXIT(key != NULL);
     ENSURE_OR_GO_EXIT(keylen != NULL);
     ENSURE_OR_GO_EXIT(modulus != NULL);
     ENSURE_OR_GO_EXIT(pubExp != NULL);
+
+    pbkeylen = modlen + pubExplen + sizeof(grsa1kPubHeader) + 3U + 3U;
 
     if (*keylen < pbkeylen) {
         LOG_E("Buffer not sufficient");
@@ -1180,48 +1213,63 @@ sss_status_t sss_util_asn1_rsa_get_public(
 
     /* Copy the Public Header According to key bit len*/
     if (modlen == 0x40) {
+        ENSURE_OR_GO_EXIT(sizeof(grsa512PubHeader) <= *keylen);
         memcpy(key, grsa512PubHeader, sizeof(grsa512PubHeader));
         index += sizeof(grsa512PubHeader);
     }
     else if (modlen == 0x80) {
+        ENSURE_OR_GO_EXIT(sizeof(grsa1kPubHeader) <= *keylen);
         memcpy(key, grsa1kPubHeader, sizeof(grsa1kPubHeader));
         index += sizeof(grsa1kPubHeader);
     }
     else if (modlen == 0x90) {
+        ENSURE_OR_GO_EXIT(sizeof(grsa1152PubHeader) <= *keylen);
         memcpy(key, grsa1152PubHeader, sizeof(grsa1152PubHeader));
         index += sizeof(grsa1152PubHeader);
     }
     else if (modlen == 0x100) {
+        ENSURE_OR_GO_EXIT(sizeof(grsa2kPubHeader) <= *keylen);
         memcpy(key, grsa2kPubHeader, sizeof(grsa2kPubHeader));
         index += sizeof(grsa2kPubHeader);
     }
     else if (modlen == 0x180) {
+        ENSURE_OR_GO_EXIT(sizeof(grsa3kPubHeader) <= *keylen);
         memcpy(key, grsa3kPubHeader, sizeof(grsa3kPubHeader));
         index += sizeof(grsa3kPubHeader);
     }
     else if (modlen == 0x200) {
+        ENSURE_OR_GO_EXIT(sizeof(grsa4kPubHeader) <= *keylen);
         memcpy(key, grsa4kPubHeader, sizeof(grsa4kPubHeader));
         index += sizeof(grsa4kPubHeader);
     }
+    if (intModLEn < modlen) {
+        goto exit;
+    }
 
     if (intModLEn < 0x7f) {
+        ENSURE_OR_GO_EXIT(index + 1 <= *keylen);
         key[index++] = (uint8_t)intModLEn;
     }
     else if (intModLEn < 0xFF) {
+        ENSURE_OR_GO_EXIT(index + 2 <= *keylen);
         key[index++] = 0x81;
         key[index++] = (uint8_t)intModLEn;
     }
     else {
+        ENSURE_OR_GO_EXIT(index + 3 <= *keylen);
+        ENSURE_OR_GO_EXIT((intModLEn >> 8) <= UINT8_MAX);
         key[index++] = 0x82;
         key[index++] = (uint8_t)(intModLEn >> 8);
         key[index++] = (uint8_t)intModLEn & 0xFF;
     }
 
+    ENSURE_OR_GO_EXIT(index + 1 + modlen <= *keylen);
     key[index++] = 0x00; // Null byte
     memcpy(key + index, modulus, modlen);
     index += modlen;
 
     /*Copy the public Exponent*/
+    ENSURE_OR_GO_EXIT(index + 1 + 1 + pubExplen <= *keylen);
     key[index++] = 0x02;                    // tag
     key[index++] = (uint8_t)pubExplen;      // length
     memcpy(key + index, pubExp, pubExplen); // value
@@ -1352,9 +1400,9 @@ int asn_1_parse_tlv(uint8_t *pbuf, size_t *taglen, size_t *bufindex)
     size_t Len;
     uint8_t *buf = pbuf + *bufindex;
     int tag;
-    tag     = *buf++; /*Exclude The Tag*/
-    Len     = *buf++;
     int ret = 0;
+    tag     = (int)*buf++; /*Exclude The Tag*/
+    Len     = *buf++;
     if (check_tag(tag)) {
         ret = 1;
         goto exit;
@@ -1422,6 +1470,7 @@ sss_status_t sss_util_asn1_get_oid_from_header(uint8_t *input, size_t inLen, uin
             ENSURE_OR_GO_EXIT(i < inLen);
             taglen = input[i++];
             if (taglen == 0x81) {
+                ENSURE_OR_GO_EXIT(i < inLen);
                 taglen = input[i];
                 i      = i + 1;
             }
@@ -1448,17 +1497,19 @@ sss_status_t sss_util_asn1_get_oid_from_header(uint8_t *input, size_t inLen, uin
                 output[outBufindex++] = input[i] / 40;
                 output[outBufindex++] = input[i++] % 40;
                 taglen--;
-
                 while (taglen--) {
                     uint32_t cnt  = 0;
                     uint32_t temp = 0;
                     do {
                         ENSURE_OR_GO_EXIT(i < inLen);
+                        ENSURE_OR_GO_EXIT(cnt < inLen);
                         temp = temp << (7 * cnt);
                         temp = temp | (input[i] & 0x7F);
                         cnt++;
                     } while (input[i++] > 0x7F);
-
+                    if (taglen < (cnt - 1)) {
+                        goto exit;
+                    }
                     taglen = taglen - (cnt - 1);
                     ENSURE_OR_GO_EXIT(outBufindex < (*outLen));
                     output[outBufindex++] = temp;
@@ -1519,6 +1570,7 @@ sss_status_t sss_util_pkcs8_asn1_get_ec_public_key_index(
     size_t taglen       = 0;
     sss_status_t status = kStatus_SSS_Fail;
     uint8_t value_index = 0;
+    int tag             = 0;
 
     ENSURE_OR_GO_EXIT(input != NULL);
     ENSURE_OR_GO_EXIT(outkeyIndex != NULL);
@@ -1526,13 +1578,13 @@ sss_status_t sss_util_pkcs8_asn1_get_ec_public_key_index(
 
     for (;;) {
         ENSURE_OR_GO_EXIT(i < inLen);
-        int tag = input[i++];
+        tag = input[i++];
         if (IS_VALID_TAG(tag)) {
             ENSURE_OR_GO_EXIT(i < inLen);
             taglen = input[i++];
             if (taglen == 0x81) {
                 ENSURE_OR_GO_EXIT(i < inLen);
-                taglen = input[i];
+                taglen = (size_t)input[i];
                 i      = i + 1;
             }
             else if (taglen == 0x82) {
@@ -1548,18 +1600,21 @@ sss_status_t sss_util_pkcs8_asn1_get_ec_public_key_index(
             value_index = (uint8_t)i;
 
             if (tag == ASN_TAG_SEQUENCE) {
+                ENSURE_OR_GO_EXIT((UINT_MAX - i) >= taglen);
                 if (i + taglen != inLen) {
                     i = i + taglen;
                 }
-
+                ENSURE_OR_GO_EXIT((UINT_MAX - i) >= taglen);
+                ENSURE_OR_GO_EXIT(i + taglen > i || i + taglen > taglen);
                 continue;
             }
 
             if (tag == ASN_TAG_BITSTRING) {
-                *outkeyIndex  = value_index;
+                *outkeyIndex  = (uint16_t)value_index;
                 *publicKeyLen = taglen;
                 ENSURE_OR_GO_EXIT(value_index < inLen);
                 if (input[value_index] == 0x00 || input[value_index] == 0x01) {
+                    ENSURE_OR_GO_EXIT((UINT16_MAX - 1) >= (*outkeyIndex));
                     *outkeyIndex  = *outkeyIndex + 1;
                     *publicKeyLen = *publicKeyLen - 1;
                 }
@@ -1572,6 +1627,7 @@ sss_status_t sss_util_pkcs8_asn1_get_ec_public_key_index(
     }
 
     ENSURE_OR_GO_EXIT((*outkeyIndex) < inLen);
+    ENSURE_OR_GO_EXIT((UINT_MAX - (*outkeyIndex)) >= (*publicKeyLen));
     ENSURE_OR_GO_EXIT(((*outkeyIndex) + (*publicKeyLen)) <= inLen);
     status = kStatus_SSS_Success;
 exit:
@@ -1588,6 +1644,7 @@ sss_status_t sss_util_pkcs8_asn1_get_ec_pair_key_index(const uint8_t *input,
     size_t i            = 0;
     size_t taglen       = 0;
     sss_status_t status = kStatus_SSS_Fail;
+    int tag             = 0;
     //uint8_t octate_string_start = 0;
 
     ENSURE_OR_GO_EXIT(input != NULL);
@@ -1598,7 +1655,7 @@ sss_status_t sss_util_pkcs8_asn1_get_ec_pair_key_index(const uint8_t *input,
 
     for (;;) {
         ENSURE_OR_GO_EXIT(i < inLen);
-        int tag = input[i++];
+        tag = input[i++];
         if (IS_VALID_TAG(tag)) {
             ENSURE_OR_GO_EXIT(i < inLen);
             taglen = input[i++];
@@ -1618,6 +1675,7 @@ sss_status_t sss_util_pkcs8_asn1_get_ec_pair_key_index(const uint8_t *input,
             }
 
             if (tag == ASN_TAG_OCTETSTRING) {
+                ENSURE_OR_GO_EXIT((UINT_MAX - i) >= taglen);
                 if (i + taglen == inLen) {
                     continue;
                 }
@@ -1632,12 +1690,13 @@ sss_status_t sss_util_pkcs8_asn1_get_ec_pair_key_index(const uint8_t *input,
                 *publicKeyLen = taglen;
                 ENSURE_OR_GO_EXIT(i < inLen);
                 if (input[i] == 0x00 || input[i] == 0x01) {
+                    ENSURE_OR_GO_EXIT((UINT16_MAX - 1) >= (*pubkeyIndex));
                     *pubkeyIndex  = *pubkeyIndex + 1;
                     *publicKeyLen = *publicKeyLen - 1;
                 }
                 break;
             }
-
+            ENSURE_OR_GO_EXIT((UINT_MAX - i) >= taglen);
             if (i + taglen == inLen) {
                 continue;
             }
@@ -1651,8 +1710,10 @@ sss_status_t sss_util_pkcs8_asn1_get_ec_pair_key_index(const uint8_t *input,
     }
 
     ENSURE_OR_GO_EXIT((*pubkeyIndex) < inLen);
+    ENSURE_OR_GO_EXIT((UINT_MAX - (*pubkeyIndex)) >= (*publicKeyLen));
     ENSURE_OR_GO_EXIT(((*pubkeyIndex) + (*publicKeyLen)) <= inLen);
     ENSURE_OR_GO_EXIT((*prvkeyIndex) < inLen);
+    ENSURE_OR_GO_EXIT((UINT_MAX - (*prvkeyIndex)) >= (*privateKeyLen));
     ENSURE_OR_GO_EXIT(((*prvkeyIndex) + (*privateKeyLen)) <= inLen);
     status = kStatus_SSS_Success;
 exit:
@@ -1669,6 +1730,7 @@ sss_status_t sss_util_rfc8410_asn1_get_ec_pair_key_index(const uint8_t *input,
     size_t i            = 0;
     size_t taglen       = 0;
     sss_status_t status = kStatus_SSS_Fail;
+    int tag             = 0;
     //uint8_t octate_string_start = 0;
 
     ENSURE_OR_GO_EXIT(input != NULL);
@@ -1679,7 +1741,7 @@ sss_status_t sss_util_rfc8410_asn1_get_ec_pair_key_index(const uint8_t *input,
 
     for (;;) {
         ENSURE_OR_GO_EXIT(i < inLen);
-        int tag = input[i++];
+        tag = input[i++];
         if (IS_VALID_RFC8410_TAG(tag)) {
             ENSURE_OR_GO_EXIT(i < inLen);
             taglen = input[i++];
@@ -1702,6 +1764,7 @@ sss_status_t sss_util_rfc8410_asn1_get_ec_pair_key_index(const uint8_t *input,
                 // With RFC8410, the private key is an Octet String packed inside an Octet String
                 // Following code will only work for Lengths upto 127 byte
                 ENSURE_OR_GO_EXIT(taglen >= 2);
+                ENSURE_OR_GO_EXIT(i < inLen);
                 ENSURE_OR_GO_EXIT(ASN_TAG_OCTETSTRING == input[i]);
                 ENSURE_OR_GO_EXIT(taglen - 2 == (size_t)(input[i + 1]));
                 i += 2;
@@ -1715,12 +1778,13 @@ sss_status_t sss_util_rfc8410_asn1_get_ec_pair_key_index(const uint8_t *input,
                 *publicKeyLen = taglen;
                 ENSURE_OR_GO_EXIT(i < inLen);
                 if (input[i] == 0x00 || input[i] == 0x01) {
+                    ENSURE_OR_GO_EXIT((UINT16_MAX - 1) >= (*pubkeyIndex));
                     *pubkeyIndex  = *pubkeyIndex + 1;
                     *publicKeyLen = *publicKeyLen - 1;
                 }
                 break;
             }
-
+            ENSURE_OR_GO_EXIT((UINT_MAX - i) >= taglen);
             if (i + taglen == inLen) {
                 continue;
             }
@@ -1734,9 +1798,10 @@ sss_status_t sss_util_rfc8410_asn1_get_ec_pair_key_index(const uint8_t *input,
     }
 
     ENSURE_OR_GO_EXIT((*pubkeyIndex) < inLen);
-    ENSURE_OR_GO_EXIT(((*pubkeyIndex) + (*publicKeyLen)) <= inLen);
     ENSURE_OR_GO_EXIT((*prvkeyIndex) < inLen);
     ENSURE_OR_GO_EXIT(((*prvkeyIndex) + (*privateKeyLen)) <= inLen);
+    ENSURE_OR_GO_EXIT((UINT_MAX - (*pubkeyIndex)) >= (*publicKeyLen));
+    ENSURE_OR_GO_EXIT(((*pubkeyIndex) + (*publicKeyLen)) <= inLen);
     status = kStatus_SSS_Success;
 exit:
     return status;
@@ -1745,7 +1810,7 @@ exit:
 sss_status_t sss_util_openssl_read_pkcs12(
     const char *pkcs12_cert, const char *password, uint8_t *private_key, uint8_t *cert)
 {
-    sss_status_t retval = kStatus_SSS_Success;
+    sss_status_t retval = kStatus_SSS_Fail;
 
 #if SSS_HAVE_HOSTCRYPTO_OPENSSL
     int status = 0;
@@ -1764,12 +1829,10 @@ sss_status_t sss_util_openssl_read_pkcs12(
 
     // Open PKCS12 certificate file
     pkcs12_cert_file = fopen(pkcs12_cert, "rb");
-    if (pkcs12_cert_file == NULL) {
-        retval = kStatus_SSS_Fail;
-        goto exit;
-    }
+    ENSURE_OR_GO_EXIT(pkcs12_cert_file != NULL);
+
     p12_cert = d2i_PKCS12_fp(pkcs12_cert_file, NULL);
-    fclose(pkcs12_cert_file);
+    ENSURE_OR_GO_EXIT((fclose(pkcs12_cert_file)) == 0);
 
     // Parse PKCS12 key and certificates to seperate pem and certificates
     status = PKCS12_parse(p12_cert, password, &p_key, &x509_cert, &additional_certs);
@@ -1786,6 +1849,7 @@ sss_status_t sss_util_openssl_read_pkcs12(
     // Dump certificate to buffer
     PEM_write_bio_X509(cert_bio, x509_cert);
     BIO_read(cert_bio, cert, 20000);
+    retval = kStatus_SSS_Success;
 #else
     AX_UNUSED_ARG(pkcs12_cert);
     AX_UNUSED_ARG(password);
@@ -1805,7 +1869,7 @@ sss_status_t sss_util_openssl_write_pkcs12(const char *pkcs12_cert,
     const char *cert,
     long cert_length)
 {
-    sss_status_t retval = kStatus_SSS_Success;
+    sss_status_t retval = kStatus_SSS_Fail;
 
 #if SSS_HAVE_HOSTCRYPTO_OPENSSL
     FILE *pkcs12_file;
@@ -1821,19 +1885,15 @@ sss_status_t sss_util_openssl_write_pkcs12(const char *pkcs12_cert,
     ENSURE_OR_GO_EXIT(cert != NULL);
 
     // Parse Private key
+    ENSURE_OR_GO_EXIT(ref_key_length <= INT_MAX);
     BIO_write(pem_key_bio, ref_key, ref_key_length);
     PEM_read_bio_PrivateKey(pem_key_bio, &p_key, NULL, NULL);
-    if (p_key == NULL) {
-        retval = kStatus_SSS_Fail;
-        goto exit;
-    }
+    ENSURE_OR_GO_EXIT(p_key != NULL);
 
+    ENSURE_OR_GO_EXIT(cert_length <= INT_MAX);
     BIO_write(pem_cert_bio, cert, cert_length);
     PEM_read_bio_X509(pem_cert_bio, &x509_cert, NULL, NULL);
-    if (x509_cert == NULL) {
-        retval = kStatus_SSS_Fail;
-        goto exit;
-    }
+    ENSURE_OR_GO_EXIT(x509_cert != NULL);
 
     // Generate PKCS12 key and certificate
 #if (OPENSSL_VERSION_NUMBER < 0x10100000L)
@@ -1862,8 +1922,11 @@ sss_status_t sss_util_openssl_write_pkcs12(const char *pkcs12_cert,
     }
 
     if (pkcs12_file != NULL) {
-        fclose(pkcs12_file);
+        if (fclose(pkcs12_file) != 0) {
+            LOG_E("fclose error");
+        }
     }
+    retval = kStatus_SSS_Success;
 #else
     AX_UNUSED_ARG(pkcs12_cert);
     AX_UNUSED_ARG(password);

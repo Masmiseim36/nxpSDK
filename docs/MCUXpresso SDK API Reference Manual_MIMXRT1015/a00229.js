@@ -1,8 +1,12 @@
 var a00229 =
 [
-    [ "FSL_GPC_DRIVER_VERSION", "a00229.html#ga91a1b6b08dc09200c3b0ee314b362b74", null ],
-    [ "GPC_EnableIRQ", "a00229.html#ga7c73d81bfb34ebb7ca40a5ad2a63ad7e", null ],
-    [ "GPC_DisableIRQ", "a00229.html#gacfd07601d1a0e90e3b80fffe14830010", null ],
-    [ "GPC_GetIRQStatusFlag", "a00229.html#ga1118000efd3c822329c63a7155bbe12e", null ],
-    [ "GPC_RequestMEGAPowerOn", "a00229.html#gaac50bee55eb34b329680e6fd0d2a9582", null ]
+    [ "FSL_DMAMUX_DRIVER_VERSION", "a00229.html#ga52b927e4f978ddf42faf0acf6de3df57", null ],
+    [ "DMAMUX_Init", "a00229.html#ga850545ac61a004df8ca312db2ca9db73", null ],
+    [ "DMAMUX_Deinit", "a00229.html#gab663257d094b9b7b6fa1b894fbf8000b", null ],
+    [ "DMAMUX_EnableChannel", "a00229.html#gaecac68802d961c31a06389caa97387f5", null ],
+    [ "DMAMUX_DisableChannel", "a00229.html#ga4d68cf7796e4a6a9cd0c4289712ca120", null ],
+    [ "DMAMUX_SetSource", "a00229.html#gab4cfa329d636dc52dffb7fedef84367e", null ],
+    [ "DMAMUX_EnablePeriodTrigger", "a00229.html#ga9b873510e45bcc998b5cede12ed359d0", null ],
+    [ "DMAMUX_DisablePeriodTrigger", "a00229.html#ga7a632ca1a6bd05a936a4f4ba1295e158", null ],
+    [ "DMAMUX_EnableAlwaysOn", "a00229.html#ga70912895b0619dcfb911663501cb03f5", null ]
 ];

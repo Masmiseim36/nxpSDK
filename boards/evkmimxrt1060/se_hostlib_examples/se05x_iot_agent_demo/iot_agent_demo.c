@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020, 2021, 2022 NXP
+ * Copyright 2018-2023 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -7,29 +7,58 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <inttypes.h>
+
 #if !(defined(__ICCARM__) || defined(__CC_ARM) || defined(__ARMCC_VERSION))
 #include <sys/stat.h>
 #include <unistd.h>
 #endif
 
+#include <iot_agent_demo_config.h>
 #include <nxp_iot_agent.h>
 #include <nxp_iot_agent_keystore_sss_se05x.h>
+#include <nxp_iot_agent_keystore_psa.h>
 #include <nxp_iot_agent_datastore_fs.h>
 #include <nxp_iot_agent_datastore_plain.h>
 #include <nxp_iot_agent_utils.h>
 #include <nxp_iot_agent_session.h>
 #include <nxp_iot_agent_macros.h>
 #include <nxp_iot_agent_time.h>
-#include <se05x_APDU.h>
 
-#if IOT_AGENT_CLAIMCODE_INJECT_ENABLE
-#include <iot_agent_claimcode_inject.h>
-#define IOT_AGENT_CLAIMCODE_STRING      	    "insert_claimcode_from_e2logo"
+#if NXP_IOT_AGENT_HAVE_SSS
+#include <se05x_APDU.h>
 #endif
 
+#if IOT_AGENT_CLAIMCODE_INJECT_ENABLE
+
+#if NXP_IOT_AGENT_HAVE_SSS
+#include <iot_agent_claimcode_inject.h>
+
+#elif SSS_HAVE_MBEDTLS_ALT_PSA
+#if NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM
+#include <iot_agent_claimcode_import.h>
+#else
+
+#include <iot_agent_claimcode_encrypt.h>
+const uint8_t iot_agent_claimcode_el2go_pub_key[1 + NXP_IOT_AGENT_CLAIMCODE_KEY_AGREEMENT_PUBLIC_KEY_SIZE] = {
+    0x04,
+    NXP_IOT_AGENT_CLAIMCODE_KEY_AGREEMENT_PUBLIC_KEY
+};
+const size_t iot_agent_claimcode_el2go_pub_key_size = sizeof(iot_agent_claimcode_el2go_pub_key);
+#endif // NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM
+#endif // SSS_HAVE_MBEDTLS_ALT_PSA
+#endif // IOT_AGENT_CLAIMCODE_INJECT_ENABLE
+
 #if SSS_HAVE_HOSTCRYPTO_MBEDTLS
-#include <fsl_sss_mbedtls_apis.h>
 #include <mbedtls/version.h>
+#endif
+
+#if NXP_IOT_AGENT_HAVE_SSS
+#include <fsl_sss_mbedtls_apis.h>
+#endif
+
+#if NXP_IOT_AGENT_HAVE_PSA && USE_RTOS == 1
+#include <psa/crypto.h>
+#include <iot_agent_psa_sign_test.h>
 #endif
 
 #if SSS_HAVE_HOSTCRYPTO_OPENSSL
@@ -43,7 +72,7 @@
 #include <sm_types.h>
 #endif
 
-#if SSS_HAVE_APPLET_SE05X_IOT
+#if NXP_IOT_AGENT_HAVE_SSS
 #include <fsl_sss_se05x_apis.h>
 #endif
 
@@ -58,18 +87,17 @@
 
 #include <iot_agent_mqtt_freertos.h>
 
+#if NXP_IOT_AGENT_HAVE_SSS
 static ex_sss_cloud_ctx_t gex_sss_demo_tls_ctx;
 ex_sss_cloud_ctx_t *pex_sss_demo_tls_ctx = &gex_sss_demo_tls_ctx;
+#endif
 
 #endif
 
-#include <iot_agent_config.h>
+#include <iot_agent_demo_config.h>
 
 #define EX_SSS_BOOT_RTOS_STACK_SIZE (1024*8)
 #define MAX_UID_DECIMAL_STRING_SIZE 44U
-
-static ex_sss_boot_ctx_t gex_sss_demo_boot_ctx;
-ex_sss_boot_ctx_t *pex_sss_demo_boot_ctx = &gex_sss_demo_boot_ctx;
 
 const char * gszEdgeLock2GoDatastoreFilename = "edgelock2go_datastore.bin";
 const char * gszDatastoreFilename = "datastore.bin";
@@ -77,6 +105,7 @@ const uint32_t gKeystoreId = 0x0000BEEFU;
 
 const char * gszKeystoreFilename = "keystore.bin";
 
+#if NXP_IOT_AGENT_HAVE_SSS
 const char* update_status_report_description(nxp_iot_UpdateStatusReport_UpdateStatus status);
 const char* claim_status_description(nxp_iot_AgentClaimStatus_ClaimStatus status);
 const char* rtp_status_description(nxp_iot_AgentRtpStatus_RtpStatus status);
@@ -84,6 +113,7 @@ const char* csp_status_description(nxp_iot_AgentCspStatus_CspStatus status);
 void print_status_report(const nxp_iot_UpdateStatusReport* status_report);
 void iot_agent_print_uid_integer(char* hexString, size_t len);
 iot_agent_status_t iot_agent_print_uid (sss_se05x_session_t* pSession);
+#endif
 
 #if	((AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1) || (SSS_HAVE_HOSTCRYPTO_OPENSSL)) && (IOT_AGENT_COS_OVER_RTP_ENABLE == 1)
 
@@ -94,7 +124,13 @@ const PB_BYTES_ARRAY_T(AZURE_ROOT_SERVER_CERT_SIZE) azure_root_server_cert =
 { AZURE_ROOT_SERVER_CERT_SIZE, AZURE_ROOT_SERVER_CERT };
 #endif
 
-iot_agent_status_t agent_start(int argc, const char *argv[], ex_sss_boot_ctx_t *pCtx);
+#if NXP_IOT_AGENT_HAVE_SSS
+static ex_sss_boot_ctx_t gex_sss_demo_boot_ctx;
+ex_sss_boot_ctx_t* pex_sss_demo_boot_ctx = &gex_sss_demo_boot_ctx;
+iot_agent_status_t agent_start(int argc, const char* argv[], ex_sss_boot_ctx_t* pCtx);
+#else
+iot_agent_status_t agent_start(int argc, const char* argv[]);
+#endif
 
 #if AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1
 
@@ -130,7 +166,12 @@ void agent_start_task(void *args)
         iot_agent_session_led_start();
 
         cli_arguments_t* a = args;
-        agent_status = agent_start(a->c, a->v, &gex_sss_demo_boot_ctx);
+
+#if NXP_IOT_AGENT_HAVE_SSS
+		agent_status = agent_start(a->c, a->v, &gex_sss_demo_boot_ctx);
+#else
+		agent_status = agent_start(a->c, a->v);
+#endif
 
         if (agent_status == IOT_AGENT_SUCCESS)
         {
@@ -175,9 +216,69 @@ int main(int argc, const char *argv[])
 
     return 1;
 #else
-    return agent_start(argc, argv, &gex_sss_demo_boot_ctx);
+#if NXP_IOT_AGENT_HAVE_SSS
+	return agent_start(argc, argv, &gex_sss_demo_boot_ctx);
+#else
+	return agent_start(argc, argv);
+#endif
 #endif
 }
+
+#if NXP_IOT_AGENT_HAVE_PSA_IMPL_SMW
+#include <errno.h>
+#include <smw_osal.h>
+
+static const struct se_info se_iot_info = { 0x454C324F, 0x494F5441,
+                                            1000 }; // EL2GO, IOT
+#define IOT_SMW_KEY_DB "/var/tmp/key_db_smw_el2go_iot.dat"
+
+#define IOT_SMW_CONFIG_FILE "/usr/share/smw/tests/config/psa_config.txt"
+
+iot_agent_status_t initialize_psa_ext_lib(void)
+{
+    int res;
+
+    /* Configure the ELE Subsystem */
+    res = smw_osal_set_subsystem_info("ELE", (struct se_info *)&se_iot_info,
+                                      sizeof(se_iot_info));
+    if (res != SMW_STATUS_OK) {
+			IOT_AGENT_ERROR("SMW ELE initialization failed %d", res);
+			return IOT_AGENT_FAILURE;
+    }
+
+    /* Open/Create the SMW key database */
+    res = smw_osal_open_key_db(IOT_SMW_KEY_DB, strlen(IOT_SMW_KEY_DB) + 1);
+    if (res != SMW_STATUS_OK)
+			IOT_AGENT_ERROR("SMW Open/Create Key database failed %d", res);
+
+    /* Setup the SMW configuration library file */
+    if (!getenv("SMW_CONFIG_FILE")) {
+      if (setenv("SMW_CONFIG_FILE", IOT_SMW_CONFIG_FILE, 1)) {
+				if (__errno_location()) {
+					IOT_AGENT_ERROR("Set environment error %s", strerror(errno));
+	    	} else {
+					IOT_AGENT_ERROR("Set environment error");
+				}
+				return IOT_AGENT_FAILURE;
+			}
+    }
+
+    res = smw_osal_lib_init();
+    if (res != SMW_STATUS_OK) {
+        IOT_AGENT_ERROR("SMW library initialization failed %d", res);
+    } else {
+        res = IOT_AGENT_SUCCESS;
+    }
+
+    return IOT_AGENT_SUCCESS;
+}
+
+#else
+iot_agent_status_t initialize_psa_ext_lib(void)
+{
+    return IOT_AGENT_SUCCESS;
+}
+#endif
 
 const char* update_status_report_description(nxp_iot_UpdateStatusReport_UpdateStatus status) {
 	switch (status) {
@@ -311,7 +412,7 @@ void print_status_report(const nxp_iot_UpdateStatusReport* status_report) {
 	}
 }
 
-
+#if NXP_IOT_AGENT_HAVE_SSS
 void iot_agent_print_uid_integer(char* hexString, size_t len) {
 
 	char decimalString[MAX_UID_DECIMAL_STRING_SIZE + 1];
@@ -392,6 +493,7 @@ iot_agent_status_t iot_agent_print_uid (sss_se05x_session_t* pSession) {
 exit:
 	return agent_status;
 }
+#endif
 
 
 #if	((AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1) || (SSS_HAVE_HOSTCRYPTO_OPENSSL)) && (IOT_AGENT_COS_OVER_RTP_ENABLE == 1)
@@ -562,7 +664,11 @@ exit:
 // doc: configure service descriptor - end
 #endif
 
+#if NXP_IOT_AGENT_HAVE_SSS
 iot_agent_status_t agent_start(int argc, const char *argv[], ex_sss_boot_ctx_t *pCtx)
+#else
+iot_agent_status_t agent_start(int argc, const char* argv[])
+#endif
 {
 #if IOT_AGENT_TIME_MEASUREMENT_ENABLE
     axTimeMeasurement_t iot_agent_demo_time = {0};
@@ -574,7 +680,7 @@ iot_agent_status_t agent_start(int argc, const char *argv[], ex_sss_boot_ctx_t *
 	// The datastore holding data to connect to EdgeLock 2GO cloud service.
 	// This right now is left empty. This implies that the agent will fall
 	// back to the configuration defined at compile time
-	// in nxp_iot_agent_config.h.
+	// in nxp_iot_agent_demo_config.h.
 	iot_agent_datastore_t edgelock2go_datastore = { 0 };
 
 	// The datastore that is to be filled with service descriptors
@@ -595,9 +701,11 @@ iot_agent_status_t agent_start(int argc, const char *argv[], ex_sss_boot_ctx_t *
 
     IOT_AGENT_INFO("Start");
 
-    // Initialize and open a session to the secure element.
+#if NXP_IOT_AGENT_HAVE_SSS
+	// Initialize and open a session to the secure element.
 	agent_status = iot_agent_session_init(argc, argv, pCtx);
     AGENT_SUCCESS_OR_EXIT();
+#endif
 
 #if defined(WINAPI_FAMILY) && (WINAPI_FAMILY == WINAPI_FAMILY_APP)
     _putenv("OPENSSL_CONF=openssl_conf_v102.cnf");
@@ -609,8 +717,19 @@ iot_agent_status_t agent_start(int argc, const char *argv[], ex_sss_boot_ctx_t *
     axTimeMeasurement_t iot_agent_claimcode_inject_time = { 0 };
     initMeasurement(&iot_agent_claimcode_inject_time);
 #endif
-    agent_status = iot_agent_claimcode_inject(pCtx, IOT_AGENT_CLAIMCODE_STRING, strlen(IOT_AGENT_CLAIMCODE_STRING));
-    AGENT_SUCCESS_OR_EXIT_MSG("Injecting claimcode failed");
+#if NXP_IOT_AGENT_HAVE_SSS
+	agent_status = iot_agent_claimcode_inject(pCtx, IOT_AGENT_CLAIMCODE_STRING, strlen(IOT_AGENT_CLAIMCODE_STRING));
+	AGENT_SUCCESS_OR_EXIT_MSG("Injecting claimcode failed");
+#elif NXP_IOT_AGENT_HAVE_PSA
+#if NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM
+    agent_status = iot_agent_claimcode_import();
+	AGENT_SUCCESS_OR_EXIT_MSG("iot_agent_claimcode_import failed: 0x%08x", agent_status);
+#else
+    agent_status = iot_agent_claimcode_encrypt_and_import(IOT_AGENT_CLAIMCODE_STRING,
+            iot_agent_claimcode_el2go_pub_key, iot_agent_claimcode_el2go_pub_key_size);
+	AGENT_SUCCESS_OR_EXIT_MSG("iot_agent_claimcode_encrypt failed: 0x%08x", agent_status);
+#endif // NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM
+#endif
 #if IOT_AGENT_TIME_MEASUREMENT_ENABLE
     concludeMeasurement(&iot_agent_claimcode_inject_time);
     iot_agent_time.claimcode_inject_time = getMeasurement(&iot_agent_claimcode_inject_time);
@@ -621,17 +740,34 @@ iot_agent_status_t agent_start(int argc, const char *argv[], ex_sss_boot_ctx_t *
     agent_status = iot_agent_init(&iot_agent_context);
     AGENT_SUCCESS_OR_EXIT();
 
+		agent_status = initialize_psa_ext_lib();
+    AGENT_SUCCESS_OR_EXIT();
+
+#if NXP_IOT_AGENT_HAVE_SSS
 	// print the uid of the device
 	agent_status = iot_agent_print_uid((sss_se05x_session_t*)&pCtx->session);
 	AGENT_SUCCESS_OR_EXIT();
+#endif
 
     /************* Register keystore*************/
 
+#if NXP_IOT_AGENT_HAVE_SSS
 	agent_status = iot_agent_keystore_sss_se05x_init(&keystore, EDGELOCK2GO_KEYSTORE_ID, pCtx, true);
 	AGENT_SUCCESS_OR_EXIT();
 
 	agent_status = iot_agent_register_keystore(&iot_agent_context, &keystore);
     AGENT_SUCCESS_OR_EXIT();
+#endif
+
+#if NXP_IOT_AGENT_HAVE_PSA
+
+    agent_status = iot_agent_keystore_psa_init(&keystore, EDGELOCK2GO_KEYSTORE_ID);
+	AGENT_SUCCESS_OR_EXIT();
+
+
+	agent_status = iot_agent_register_keystore(&iot_agent_context, &keystore);
+    AGENT_SUCCESS_OR_EXIT();
+#endif
 
     /************* Register datastore*************/
 
@@ -653,10 +789,10 @@ iot_agent_status_t agent_start(int argc, const char *argv[], ex_sss_boot_ctx_t *
 
 	// If the contents of the datastore for the connectin to the EdgeLock 2O datastore
 	// are not valid (e.g. on the first boot), fill the datastore with contents
-	// from the settings contained in nxp_iot_agent_config.h
+	// from the settings contained in nxp_iot_agent_demo_config.h
 	if (!iot_agent_service_is_configuration_data_valid(&edgelock2go_datastore)) {
 		iot_agent_utils_write_edgelock2go_datastore(&keystore, &edgelock2go_datastore,
-			EDGELOCK2GO_HOSTNAME, EDGELOCK2GO_PORT, iot_agent_trusted_root_ca_certificates);
+			EDGELOCK2GO_HOSTNAME, EDGELOCK2GO_PORT, iot_agent_trusted_root_ca_certificates, NULL);
 	}
 
 	// For connecting to the EdgeLock 2GO cloud service, we also need to register the
@@ -716,11 +852,13 @@ iot_agent_status_t agent_start(int argc, const char *argv[], ex_sss_boot_ctx_t *
     memset(&iot_agent_time, 0, sizeof(iot_agent_time));
 #endif
 
+#if NXP_IOT_AGENT_HAVE_SSS
     // doc: trigger MQTT connection - start
 #if (AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1) || (SSS_HAVE_HOSTCRYPTO_OPENSSL)
     agent_status = iot_agent_verify_mqtt_connection(&iot_agent_context);
     AGENT_SUCCESS_OR_EXIT();
 #endif
+#endif //NXP_IOT_AGENT_HAVE_SSS
 	// doc: trigger MQTT connection - end
     // doc: trigger MQTT connection RTP - start
 #if	((AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1) || (SSS_HAVE_HOSTCRYPTO_OPENSSL)) && (IOT_AGENT_COS_OVER_RTP_ENABLE == 1)
@@ -744,6 +882,15 @@ iot_agent_status_t agent_start(int argc, const char *argv[], ex_sss_boot_ctx_t *
 #endif
 	// doc: trigger MQTT connection RTP - end
 
+#if NXP_IOT_AGENT_HAVE_PSA && (AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1) && (IOT_AGENT_NONSE_TESTS_ENABLE == 1)
+        IOT_AGENT_INFO("Verification of the psa imported object in progress...\r\n");
+        agent_status = iot_agent_verify_psa_import(); // use provisioned psa key for sign operation
+        AGENT_SUCCESS_OR_EXIT_MSG("iot_agent_verify_psa_import_by_using_blob failed: 0x%08x", agent_status);
+        IOT_AGENT_INFO("Verification of the psa imported object succesfull, keyId %2x", IMPORT_OBJ_ID);
+
+        agent_status = iot_agent_verify_psa_export();
+        AGENT_SUCCESS_OR_EXIT_MSG("iot_agent_verify_psa_export failed: 0x%08x", agent_status);
+#endif // NXP_IOT_AGENT_HAVE_PSA && (AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1)
 exit:
 #if	((AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1) || (SSS_HAVE_HOSTCRYPTO_OPENSSL)) && (IOT_AGENT_COS_OVER_RTP_ENABLE == 1)
 	iot_agent_free_mqtt_service_descriptor(&aws_service_descriptor);

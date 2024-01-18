@@ -1,10 +1,7 @@
 /*
  * Copyright 2018-2022 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include <string.h>
@@ -14,6 +11,7 @@
 
 #include "audio_cfg.h"
 #include "maestro_logging.h"
+#include "fsl_debug_console.h"
 #include "error.h"
 
 #define COMMON_ENTER LOG_ENTER(LOGMDL_COMMON)
@@ -21,9 +19,6 @@
 
 #ifdef CASCFG_PLATFORM_FREERTOS
 #include "FreeRTOSConfig.h"
-#ifdef DbgConsole_Printf
-#define printf DbgConsole_Printf
-#endif
 #endif
 
 /* Maximum string sizes */
@@ -184,7 +179,7 @@ void print_message(char *message)
     /* print to console */
     if (ActiveOutput & LOGPUT_CONSOLE)
     {
-        printf(logoutput);
+        PRINTF(logoutput);
     }
 #endif
 }
@@ -489,14 +484,14 @@ char *error_name(const uint32_t error_id)
 void get_debug_state()
 {
 #ifdef LOG_ENABLED
-    printf("\n");
-    printf("Active output bit field: 0x%x\r\n", ActiveOutput);
-    printf("Active module bit field: 0x%lx\r\n", ActiveModules);
-    printf("Active level bit field: 0x%x\r\n", ActiveLevel);
-    printf("Level always displayed bit field: 0x%x\r\n", LOGLVL_DEFAULT);
-    printf("\n");
+    PRINTF("\n");
+    PRINTF("Active output bit field: 0x%x\r\n", ActiveOutput);
+    PRINTF("Active module bit field: 0x%lx\r\n", ActiveModules);
+    PRINTF("Active level bit field: 0x%x\r\n", ActiveLevel);
+    PRINTF("Level always displayed bit field: 0x%x\r\n", LOGLVL_DEFAULT);
+    PRINTF("\n");
 #else
-    printf("\nLogging not enabled\n\n");
+    PRINTF("\nLogging not enabled\n\n");
 #endif
 }
 

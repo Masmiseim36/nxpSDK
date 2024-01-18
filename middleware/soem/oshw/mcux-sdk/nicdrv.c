@@ -19,7 +19,6 @@
 
 #include "osal.h"
 #include "oshw.h"
-#include "enet/enet.h"
 #include "soem_port.h"
 
 #ifndef MAX
@@ -79,19 +78,17 @@ int ecx_setupnic(ecx_portt *port, const char *ifname, int secondary)
 
    for (i = 0; i < SOEM_IF_PORT_MAXNUM; i++) {
       if (!strncmp(soem_ports[i].ifname, ifname, SOEM_IF_NAME_MAXLEN)) {
-          if (!strncmp(soem_ports[i].dev_name, "enet", SOEM_DEV_NAME_MAXLEN)) {
-              port->port_pri = soem_ports[i].port_pri;
-              port->port_init = enet_init;
-              port->port_send = enet_send;
-              port->port_recv = enet_recv;
-              port->port_link_status = enet_link_status;
-              port->port_close = enet_close;
-          }
+          port->port_pri = soem_ports[i].port_pri;
+          port->port_init = soem_ports[i].port_init;
+          port->port_send = soem_ports[i].port_send;
+          port->port_recv = soem_ports[i].port_recv;
+          port->port_link_status = soem_ports[i].port_link_status;
+          port->port_close = soem_ports[i].port_close;
       }
    }
 
    if (!port->port_pri) {
-      EC_PRINT("The ifname or dev_name is not found\n");
+      EC_PRINT("The ifname or dev_name is not found\r\n");
       return 0;
    }
 

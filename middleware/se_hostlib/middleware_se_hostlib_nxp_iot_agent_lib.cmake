@@ -13,6 +13,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/nxp_iot_agent/src/nxp_iot_agent_datastore_fs.c
   ${CMAKE_CURRENT_LIST_DIR}/nxp_iot_agent/src/nxp_iot_agent_datastore_plain.c
   ${CMAKE_CURRENT_LIST_DIR}/nxp_iot_agent/src/nxp_iot_agent_keystore.c
+  ${CMAKE_CURRENT_LIST_DIR}/nxp_iot_agent/src/nxp_iot_agent_keystore_psa.c
   ${CMAKE_CURRENT_LIST_DIR}/nxp_iot_agent/src/nxp_iot_agent_keystore_sss_se05x.c
   ${CMAKE_CURRENT_LIST_DIR}/nxp_iot_agent/src/nxp_iot_agent_service.c
   ${CMAKE_CURRENT_LIST_DIR}/nxp_iot_agent/src/nxp_iot_agent_session.c
@@ -24,6 +25,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/nxp_iot_agent/src/protobuf/Datastore.pb.c
   ${CMAKE_CURRENT_LIST_DIR}/nxp_iot_agent/src/protobuf/Dispatcher.pb.c
   ${CMAKE_CURRENT_LIST_DIR}/nxp_iot_agent/src/protobuf/Hostcmd.pb.c
+  ${CMAKE_CURRENT_LIST_DIR}/nxp_iot_agent/src/protobuf/PSA.pb.c
   ${CMAKE_CURRENT_LIST_DIR}/nxp_iot_agent/src/protobuf/RPC.pb.c
   ${CMAKE_CURRENT_LIST_DIR}/nxp_iot_agent/src/protobuf/ServiceDescriptor.pb.c
   ${CMAKE_CURRENT_LIST_DIR}/nxp_iot_agent/src/protobuf/Types.pb.c

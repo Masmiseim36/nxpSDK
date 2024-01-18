@@ -253,6 +253,7 @@ var searchData=
   ['flexio_5fuart_5fenableinterrupts',['FLEXIO_UART_EnableInterrupts',['../a00039.html#ga7f48f0a283e6458db7ff72c433e8a325',1,'fsl_flexio_uart.h']]],
   ['flexio_5fuart_5fenablerxdma',['FLEXIO_UART_EnableRxDMA',['../a00039.html#ga0d005d0a785cdc80bdc77a0232533706',1,'fsl_flexio_uart.h']]],
   ['flexio_5fuart_5fenabletxdma',['FLEXIO_UART_EnableTxDMA',['../a00039.html#gaa23cdab45bc3ed89eb9ac2998f7f339b',1,'fsl_flexio_uart.h']]],
+  ['flexio_5fuart_5fflushshifters',['FLEXIO_UART_FlushShifters',['../a00039.html#ga4825d566bedb5d350a95f08fe926085b',1,'fsl_flexio_uart.h']]],
   ['flexio_5fuart_5fgetdefaultconfig',['FLEXIO_UART_GetDefaultConfig',['../a00039.html#gab705f673f07da7b1b385be7edfd2385e',1,'fsl_flexio_uart.h']]],
   ['flexio_5fuart_5fgetrxdataregisteraddress',['FLEXIO_UART_GetRxDataRegisterAddress',['../a00039.html#gaa2b438423a09911bdc122109f2d11ced',1,'fsl_flexio_uart.h']]],
   ['flexio_5fuart_5fgetstatusflags',['FLEXIO_UART_GetStatusFlags',['../a00039.html#gaefea3702f5a53a82246aaba191605716',1,'fsl_flexio_uart.h']]],

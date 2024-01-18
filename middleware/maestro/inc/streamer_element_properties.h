@@ -1,10 +1,7 @@
 /*
  * Copyright 2018-2023 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef __STREAMER_ELEMENT_PROPERTIES_H__
@@ -36,10 +33,8 @@ typedef struct
  */
 typedef struct
 {
-    int preset_num;     /*!< @brief Preset number */
-    int num_channels;   /*!< @brief Number of channels*/
-    int sample_rate;    /*!< @brief Sample rate*/
-    uint8_t xo_enabled; /*!< @brief Crossover enabled*/
+    int num_channels; /*!< @brief Number of channels*/
+    int sample_rate;  /*!< @brief Sample rate*/
 } ext_proc_args;
 
 /**
@@ -74,18 +69,19 @@ typedef struct
 #define PROP_FILESRC_SET_NUM_CHANNELS 0x105
 #define PROP_FILESRC_SET_BIT_WIDTH    0x106
 
-/* AUDIO SOURCE */
-#define PROP_AUDIOSRC_MASK                0x200
-#define PROP_AUDIOSRC_SET_DEVICE_TYPE     0x200
-#define PROP_AUDIOSRC_SET_CHUNK_SIZE      0x201
-#define PROP_AUDIOSRC_SET_SAMPLE_RATE     0x202
-#define PROP_AUDIOSRC_GET_CHUNK_SIZE      0x203
-#define PROP_AUDIOSRC_SET_DEVICE_NAME     0x204
-#define PROP_AUDIOSRC_SET_CONTINUOUS_READ 0x205
-#define PROP_AUDIOSRC_SET_DUMMY_TX_ENABLE 0x206
-#define PROP_AUDIOSRC_SET_NUM_CHANNELS    0x207
-#define PROP_AUDIOSRC_SET_BITS_PER_SAMPLE 0x208
-#define PROP_AUDIOSRC_SET_FRAME_MS        0x209
+/* MICROPHONE */
+#define PROP_MICROPHONE_MASK                0x200
+#define PROP_MICROPHONE_SET_DEVICE_TYPE     0x200
+#define PROP_MICROPHONE_SET_CHUNK_SIZE      0x201
+#define PROP_MICROPHONE_SET_SAMPLE_RATE     0x202
+#define PROP_MICROPHONE_GET_CHUNK_SIZE      0x203
+#define PROP_MICROPHONE_SET_DEVICE_NAME     0x204
+#define PROP_MICROPHONE_SET_CONTINUOUS_READ 0x205
+#define PROP_MICROPHONE_SET_DUMMY_TX_ENABLE 0x206
+#define PROP_MICROPHONE_SET_NUM_CHANNELS    0x207
+#define PROP_MICROPHONE_SET_BITS_PER_SAMPLE 0x208
+#define PROP_MICROPHONE_SET_FRAME_MS        0x209
+#define PROP_MICROPHONE_SET_APP_FUNCTIONS   0x20A
 
 /* MEMORY SOURCE */
 #define PROP_MEMSRC_MASK             0x300
@@ -102,14 +98,15 @@ typedef struct
 #define PROP_DECODER_DECODER_TYPE 0x400
 #define PROP_DECODER_PARSE_TAG    0x401
 
-/* AUDIO SINK */
-#define PROP_AUDIOSINK_MASK                      0x700
-#define PROP_AUDIOSINK_DEVICE_DRIVER_TYPE        0x700
-#define PROP_AUDIOSINK_TIME_UPDATE_MS            0x701
-#define PROP_AUDIOSINK_DEVICE_DRIVER_STRING_NAME 0x702
-#define PROP_AUDIOSINK_BUFFER_USE_CHUNK_SIZE     0x703
-#define PROP_AUDIOSINK_SET_VOLUME                0x704
-#define PROP_AUDIOSINK_SET_REFDATA_ELEMENT       0x705
+/* SPEAKER */
+#define PROP_SPEAKER_MASK                      0x700
+#define PROP_SPEAKER_DEVICE_DRIVER_TYPE        0x700
+#define PROP_SPEAKER_TIME_UPDATE_MS            0x701
+#define PROP_SPEAKER_DEVICE_DRIVER_STRING_NAME 0x702
+#define PROP_SPEAKER_BUFFER_USE_CHUNK_SIZE     0x703
+#define PROP_SPEAKER_SET_VOLUME                0x704
+#define PROP_SPEAKER_SET_REFDATA_ELEMENT       0x705
+#define PROP_SPEAKER_SET_APP_FUNCTIONS         0x706
 
 /* FILE SINK */
 #define PROP_FILESINK_MASK           0x800
@@ -126,8 +123,8 @@ typedef struct
 #define PROP_NETBUFSRC_SET_CALLBACK 0xa00
 
 /* VIT SINK */
-#define PROP_VITSINK_PROC_MASK    0xb00
-#define PROP_VITSINK_PROC_FUNCPTR 0xb00
+#define PROP_VITSINK_MASK    0xb00
+#define PROP_VITSINK_FUNCPTR 0xb00
 
 /* ENCODER */
 #define PROP_ENCODER_MASK          0xc00
@@ -136,21 +133,49 @@ typedef struct
 #define PROP_ENCODER_CONFIG        0xc02
 #define PROP_ENCODER_BITSTREAMINFO 0xc03
 
-/* EAP_PROC */
-#define PROP_EAP_PROC_MASK    0xd00
-#define PROP_EAP_PROC_FUNCPTR 0xd00
+/* VOICESEEKER */
+#define PROP_VOICESEEKER_MASK                0xd00
+#define PROP_VOICESEEKER_FUNCPTR             0xd00
+#define PROP_VOICESEEKER_REFDATA_FUNCPTR     0xd01
+#define PROP_VOICESEEKER_REFDATA_NUM_BUFFERS 0xd02
+#define PROP_VOICESEEKER_REFDATA_PUSH        0xd03
+#define PROP_VOICESEEKER_SET_DEBUGGING       0xd04
 
-/* VOICESEEKER_PROC */
-#define PROP_VOICESEEKER_PROC_MASK                0xe00
-#define PROP_VOICESEEKER_PROC_FUNCPTR             0xe00
-#define PROP_VOICESEEKER_PROC_REFDATA_FUNCPTR     0xe01
-#define PROP_VOICESEEKER_PROC_REFDATA_NUM_BUFFERS 0xe02
-#define PROP_VOICESEEKER_PROC_REFDATA_PUSH        0xe03
-#define PROP_VOICESEEKER_PROC_SET_DEBUGGING       0xe04
+/* SRC */
+#define PROP_SRC_MASK    0xe00
+#define PROP_SRC_FUNCPTR 0xe00
 
-/* SRC_PROC */
-#define PROP_SRC_PROC_MASK    0xf00
-#define PROP_SRC_PROC_FUNCPTR 0xf00
+/* USB_SRC */
+#define PROP_USB_SRC_MASK                0xf00
+#define PROP_USB_SRC_SET_DEVICE_TYPE     0xf00
+#define PROP_USB_SRC_SET_CHUNK_SIZE      0xf01
+#define PROP_USB_SRC_SET_SAMPLE_RATE     0xf02
+#define PROP_USB_SRC_GET_CHUNK_SIZE      0xf03
+#define PROP_USB_SRC_SET_DEVICE_NAME     0xf04
+#define PROP_USB_SRC_SET_CONTINUOUS_READ 0xf05
+#define PROP_USB_SRC_SET_DUMMY_TX_ENABLE 0xf06
+#define PROP_USB_SRC_SET_NUM_CHANNELS    0xf07
+#define PROP_USB_SRC_SET_BITS_PER_SAMPLE 0xf08
+#define PROP_USB_SRC_SET_FRAME_MS        0xf09
+#define PROP_USB_SRC_SET_APP_FUNCTIONS   0xf0A
+
+/* USB_SINK */
+#define PROP_USB_SINK_MASK                      0x1000
+#define PROP_USB_SINK_DEVICE_DRIVER_TYPE        0x1000
+#define PROP_USB_SINK_TIME_UPDATE_MS            0x1001
+#define PROP_USB_SINK_DEVICE_DRIVER_STRING_NAME 0x1002
+#define PROP_USB_SINK_BUFFER_USE_CHUNK_SIZE     0x1003
+#define PROP_USB_SINK_SET_VOLUME                0x1004
+#define PROP_USB_SINK_SET_REFDATA_ELEMENT       0x1005
+#define PROP_USB_SINK_SET_APP_FUNCTIONS         0x1006
+
+/* ASRC */
+#define PROP_ASRC_MASK    0x1100
+#define PROP_ASRC_FUNCPTR 0x1100
+
+/* VIT_PROC */
+#define PROP_VIT_PROC_MASK    0x1200
+#define PROP_VIT_PROC_FUNCPTR 0x1200
 
 /*! Structure for setting memory source buffer*/
 typedef struct
@@ -194,5 +219,28 @@ typedef struct
     uint8_t *buffer; /*!< @brief pointers to reference data */
     uint16_t size;   /*!< @brief size of reference data */
 } AudioRefData_t;
+
+/*!
+ * @brief Audio sink application functions
+ * @details Those functionalities are defined in the application and are used to control audio sink devices.
+ */
+typedef struct
+{
+    int (*open_func)(uint32_t num_buffers);            /*!< @brief open */
+    void (*close_func)(void);                          /*!< @brief close */
+    void (*start_func)(void);                          /*!< @brief start */
+    int (*process_func)(uint8_t *data, uint32_t size); /*!< @brief write / read function */
+    int (*set_param_func)(uint32_t sample_rate,
+                          uint32_t bit_width,
+                          uint8_t num_channels,
+                          bool transfer,
+                          bool dummy_tx,
+                          int volume); /*!< @brief set parammeters */
+    void (*get_param_func)(uint32_t *sample_rate,
+                           uint32_t *bit_width,
+                           uint8_t *num_channels); /*!< @brief get parammeters */
+    int (*mute_func)(bool mute);                   /*!< @brief mute / unmute */
+    int (*volume_func)(int volume);                /*!< @brief set volume */
+} EXT_AUDIOELEMENT_DESC_T;
 
 #endif

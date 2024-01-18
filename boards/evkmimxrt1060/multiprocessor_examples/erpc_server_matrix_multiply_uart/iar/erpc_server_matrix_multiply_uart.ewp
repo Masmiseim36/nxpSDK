@@ -345,8 +345,6 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../erpc_common</state>
-          <state>$PROJ_DIR$/../../erpc_common/erpc_matrix_multiply/service</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/cmsis_drivers</state>
@@ -356,6 +354,8 @@
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup</state>
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/transports</state>
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/port</state>
+          <state>$PROJ_DIR$/../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common</state>
+          <state>$PROJ_DIR$/../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
@@ -1440,8 +1440,6 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../erpc_common</state>
-          <state>$PROJ_DIR$/../../erpc_common/erpc_matrix_multiply/service</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/cmsis_drivers</state>
@@ -1451,6 +1449,8 @@
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup</state>
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/transports</state>
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/port</state>
+          <state>$PROJ_DIR$/../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common</state>
+          <state>$PROJ_DIR$/../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
@@ -2535,8 +2535,6 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../erpc_common</state>
-          <state>$PROJ_DIR$/../../erpc_common/erpc_matrix_multiply/service</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/cmsis_drivers</state>
@@ -2546,6 +2544,8 @@
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup</state>
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/transports</state>
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/port</state>
+          <state>$PROJ_DIR$/../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common</state>
+          <state>$PROJ_DIR$/../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
@@ -3628,8 +3628,6 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../erpc_common</state>
-          <state>$PROJ_DIR$/../../erpc_common/erpc_matrix_multiply/service</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/cmsis_drivers</state>
@@ -3639,6 +3637,8 @@
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup</state>
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/transports</state>
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/port</state>
+          <state>$PROJ_DIR$/../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common</state>
+          <state>$PROJ_DIR$/../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
@@ -4723,8 +4723,6 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../erpc_common</state>
-          <state>$PROJ_DIR$/../../erpc_common/erpc_matrix_multiply/service</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/cmsis_drivers</state>
@@ -4734,6 +4732,8 @@
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup</state>
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/transports</state>
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/port</state>
+          <state>$PROJ_DIR$/../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common</state>
+          <state>$PROJ_DIR$/../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
@@ -5818,8 +5818,6 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../erpc_common</state>
-          <state>$PROJ_DIR$/../../erpc_common/erpc_matrix_multiply/service</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/cmsis_drivers</state>
@@ -5829,6 +5827,8 @@
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup</state>
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/transports</state>
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/port</state>
+          <state>$PROJ_DIR$/../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common</state>
+          <state>$PROJ_DIR$/../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
@@ -6570,155 +6570,17 @@
   <group>
     <name>source</name>
     <file>
-      <name>$PROJ_DIR$/../../erpc_common/erpc_error_handler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../erpc_common/erpc_error_handler.cpp</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../main_server.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../erpc_config.h</name>
     </file>
-  </group>
-  <group>
-    <name>erpc</name>
-    <group>
-      <name>service</name>
-      <file>
-        <name>$PROJ_DIR$/../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply.erpc</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_server.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_server.cpp</name>
-      </file>
-    </group>
-    <group>
-      <name>infra</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.hpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.cpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.hpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.cpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.hpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.cpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_version.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_codec.hpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.hpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport.hpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.hpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.hpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_common.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_manually_constructed.hpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.hpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.cpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.cpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.cpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.cpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_client_server_common.hpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_pre_post_action.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_pre_post_action.cpp</name>
-      </file>
-    </group>
-    <group>
-      <name>setup</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_server_setup.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_server_setup.cpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_setup_uart_cmsis.cpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_setup_mbf_dynamic.cpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_transport_setup.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_mbf_setup.h</name>
-      </file>
-    </group>
-    <group>
-      <name>transports</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.hpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.cpp</name>
-      </file>
-    </group>
-    <group>
-      <name>port</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/port/erpc_port.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/port/erpc_port_stdlib.cpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/port/erpc_config_internal.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/port/erpc_setup_extensions.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/port/erpc_endianness_agnostic_example.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/port/erpc_endianness_undefined.h</name>
-      </file>
-    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_error_handler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_error_handler.cpp</name>
+    </file>
   </group>
   <group>
     <name>board</name>
@@ -6753,7 +6615,7 @@
   <group>
     <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
   <group>
@@ -6833,6 +6695,168 @@
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.c</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</name>
+    </file>
+  </group>
+  <group>
+    <name>erpc</name>
+    <group>
+      <name>infra</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.hpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.cpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.hpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.cpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.hpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.cpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_version.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_codec.hpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.hpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport.hpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.hpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.hpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_common.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_manually_constructed.hpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.hpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.cpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.cpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.cpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.cpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_client_server_common.hpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_pre_post_action.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_pre_post_action.cpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_utils.hpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_utils.cpp</name>
+      </file>
+    </group>
+    <group>
+      <name>setup</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_server_setup.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_server_setup.cpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_setup_uart_cmsis.cpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_setup_mbf_dynamic.cpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_transport_setup.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_mbf_setup.h</name>
+      </file>
+    </group>
+    <group>
+      <name>transports</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.hpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.cpp</name>
+      </file>
+    </group>
+    <group>
+      <name>port</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/port/erpc_port.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/port/erpc_port_stdlib.cpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/port/erpc_config_internal.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/port/erpc_setup_extensions.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/port/erpc_endianness_agnostic_example.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/port/erpc_endianness_undefined.h</name>
+      </file>
+    </group>
+    <group>
+      <name>service</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply.erpc</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_common.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_common.hpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_server.hpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_server.cpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_interface.hpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply_interface.cpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/c_erpc_matrix_multiply_server.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/example/multiprocessor_examples/erpc_common/erpc_matrix_multiply/service/c_erpc_matrix_multiply_server.cpp</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>device</name>

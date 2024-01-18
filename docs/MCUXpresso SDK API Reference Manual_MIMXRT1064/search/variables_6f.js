@@ -1,12 +1,12 @@
 var searchData=
 [
-  ['ocr',['ocr',['../a00057.html#a0b3899f0be098f696fd5bc212d4b597e',1,'mmc_card_t::ocr()'],['../a00067.html#a4dfdb06355545a94755d7b7b8b8bb708',1,'sd_card_t::ocr()'],['../a00068.html#a493c409455409991a2af4ae08e31b386',1,'_sdio_card::ocr()']]],
-  ['ocrambanknum',['ocramBankNum',['../a00041.html#a17779c83dfb613e244bccc31c32ae863',1,'flexram_allocate_ram_t']]],
-  ['offsetvalue',['offsetValue',['../a00008.html#a79136d5e9ab922cd1a0d200812e6e832',1,'adc_offest_config_t']]],
-  ['operation',['operation',['../a00044.html#a96151c62f0647e5a512c8877d71283c2',1,'flexspi_xfer_t']]],
-  ['operationvoltage',['operationVoltage',['../a00067.html#aef60a9196a9789f243660bb76f3a0ef2',1,'sd_card_t::operationVoltage()'],['../a00068.html#a7aecd4677ec222958c8daad36033933d',1,'_sdio_card::operationVoltage()']]],
-  ['option_5fsize',['option_size',['../a00044.html#a5ee4e7e41e6a028515df711ee7c146ce',1,'serial_nor_config_option_t']]],
-  ['outputclock_5fhz',['outputClock_HZ',['../a00018.html#aa437baa5261123cd810488ac65e201dd',1,'da7212_pll_config_t::outputClock_HZ()'],['../a00086.html#ab58ab790fa57e24806ef762dc9cbbbae',1,'wm8904_fll_config_t::outputClock_HZ()']]],
-  ['outputlogic',['outputLogic',['../a00045.html#a9d37ffd9a2943f10a91095759bd52da5',1,'gpio_pin_config_t']]],
-  ['overcurrentthreshold',['OverCurrentThreshold',['../a00019.html#a2cbfaed67e0e2e90e77fce311a24e8c4',1,'dcdc_detection_config_t']]]
+  ['ocr',['ocr',['../a00057.html#ae64eb8c922a66132a3fe3fee85c02272',1,'_mmc_card::ocr()'],['../a00066.html#ae541aa02691ef02e47e06dc45355315d',1,'_sd_card::ocr()'],['../a00067.html#a9c71a024c630845443b6a5e41ec35930',1,'_sdio_card::ocr()']]],
+  ['ocrambanknum',['ocramBankNum',['../a00041.html#a95e8a79967ab8b942dfa6d88deb5879e',1,'_flexram_allocate_ram']]],
+  ['offsetvalue',['offsetValue',['../a00008.html#a1190b3600ea7d96b6c4766b412296323',1,'_adc_offest_config']]],
+  ['operation',['operation',['../a00044.html#a82e1054070d4a7af58af802443d5b9b4',1,'_flexspi_xfer']]],
+  ['operationvoltage',['operationVoltage',['../a00066.html#a61ac121789078102cbcf9918ca209964',1,'_sd_card::operationVoltage()'],['../a00067.html#a336e9f61ba8e793290efced614caf5e2',1,'_sdio_card::operationVoltage()']]],
+  ['option_5fsize',['option_size',['../a00044.html#a6bf9b452320f3c187a528d1944e3b305',1,'_serial_nor_config_option']]],
+  ['outputclock_5fhz',['outputClock_HZ',['../a00018.html#aace0329aae7fe715ca9396ce4203efd6',1,'_da7212_pll_config::outputClock_HZ()'],['../a00085.html#a9ac3339d53ed40e1b38289b38da0ad5b',1,'_wm8904_fll_config::outputClock_HZ()']]],
+  ['outputlogic',['outputLogic',['../a00045.html#a70ede6dc868ff6dd15987ba62c5d574b',1,'_gpio_pin_config']]],
+  ['overcurrentthreshold',['OverCurrentThreshold',['../a00019.html#ab04d84d3dca10b925fb29dbcfd369416',1,'_dcdc_detection_config']]]
 ];

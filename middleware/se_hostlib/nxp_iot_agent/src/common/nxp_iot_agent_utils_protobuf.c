@@ -1,10 +1,11 @@
 /*
- * Copyright 2018, 2019, 2020, 2021 NXP
+ * Copyright 2018-2022 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
  */
 
+#include <nxp_iot_agent_macros.h>
 #include <nxp_iot_agent_utils_protobuf.h>
 #include <nxp_iot_agent_utils.h>
 
@@ -81,7 +82,7 @@ bool verify_return_value(uint16_t rv, expectation_t *expect)
     while((void *)ptr < (void *)(expect->buf + expect->offset)) {
         expect_value = *ptr;
         if (rv == expect_value) {
-            LOG_D("Return value is expected");
+            IOT_AGENT_DEBUG("Return value is expected");
             return true;
         }
         ptr++;

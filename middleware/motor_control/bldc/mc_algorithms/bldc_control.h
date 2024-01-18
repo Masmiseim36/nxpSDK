@@ -10,9 +10,7 @@
 #define _BLDC_CONTROL_H_
 
 #include "gflib.h"
-#include "gmclib.h"
 #include "gdflib.h"
-#include "amclib.h"
 
 /*******************************************************************************
  * Definitions
@@ -79,6 +77,7 @@ extern "C" {
  *
  * @return None
  */
+RAM_FUNC_LIB
 void MCS_BLDCAlignment(mcs_bldc_ctrl_t *psCtrlBLDC);
 
 /*!
@@ -90,6 +89,7 @@ void MCS_BLDCAlignment(mcs_bldc_ctrl_t *psCtrlBLDC);
  *
  * @return None
  */
+RAM_FUNC_LIB
 void MCS_BLDCCommutation(mcs_bldc_ctrl_t *psCtrlBLDC);
 
 /*!
@@ -101,6 +101,7 @@ void MCS_BLDCCommutation(mcs_bldc_ctrl_t *psCtrlBLDC);
  *
  * @return None
  */
+RAM_FUNC_LIB
 void MCS_BLDCControl(mcs_bldc_ctrl_t *psCtrlBLDC);
 
 #ifdef __cplusplus

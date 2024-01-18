@@ -43,7 +43,7 @@ void MCDRV_QdEncGet(mcdrv_qd_enc_t *this)
    this->f16RevCounter = (frac16_t)(this->pui32QdBase->REV);
 
    /* calculating position for position control */
-   this->a32PosMeReal = (acc32_t)((uint16_t)(this->f16PosMe) + (65536U * this->f16RevCounter));
+   this->a32PosMeReal = (acc32_t)( ( ( ((int32_t)(this->f16RevCounter)) << 15) + (((uint16_t)(this->f16PosMe)) >> 1) ) ); 
 
    /* pass estimator speed values lower than minimal encoder speed */
    if ((MLIB_Abs_FLT(this->fltSpdMeEst) < (this->fltSpdEncMin)))

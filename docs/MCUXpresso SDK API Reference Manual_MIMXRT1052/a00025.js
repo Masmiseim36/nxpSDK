@@ -1,114 +1,121 @@
 var a00025 =
 [
-    [ "ENET CMSIS Driver", "a00274.html", null ],
-    [ "enet_rx_bd_struct_t", "a00025.html#a00398", [
-      [ "length", "a00025.html#a8f1b6c5523159bc56b37bfd98b378ab6", null ],
-      [ "control", "a00025.html#a01a2213b5bf50b154c4ca4866c6379ea", null ],
-      [ "buffer", "a00025.html#a9d4d7327dabb5920456e3f874bf0f030", null ]
+    [ "ENET CMSIS Driver", "a00276.html", null ],
+    [ "_enet_rx_bd_struct", "a00025.html#a00368", [
+      [ "length", "a00025.html#a1bdeb9d446a703945b0164475d8ded39", null ],
+      [ "control", "a00025.html#a40dfa3e5f33cee586e5cfebcc5ad9675", null ],
+      [ "buffer", "a00025.html#ae11868d83472780b5c4d424c8801a961", null ]
     ] ],
-    [ "enet_tx_bd_struct_t", "a00025.html#a00402", [
-      [ "length", "a00025.html#a7f6f448911920d9e7d9ac98f83472e1e", null ],
-      [ "control", "a00025.html#a26f3d526bcef8f3c3cd2a0e40760e449", null ],
-      [ "buffer", "a00025.html#af9a742c246de1cb1634b1361202916d7", null ]
+    [ "_enet_tx_bd_struct", "a00025.html#a00372", [
+      [ "length", "a00025.html#a95c960e64d90855184b328030e00201e", null ],
+      [ "control", "a00025.html#a7a32d79ee067b83157ff956a1771988d", null ],
+      [ "buffer", "a00025.html#a508280f9341d179ac17b9a7fb1c4b537", null ]
     ] ],
-    [ "enet_data_error_stats_t", "a00025.html#a00395", [
-      [ "statsRxLenGreaterErr", "a00025.html#a49a9b5fd12c01f4e3fdf8fb3f4e1cbcf", null ],
-      [ "statsRxAlignErr", "a00025.html#a7aa8325ffacae6ae6ceea48178683da4", null ],
-      [ "statsRxFcsErr", "a00025.html#a961dfc75989fe1d056ee40670b01ee8c", null ],
-      [ "statsRxOverRunErr", "a00025.html#a4a75e297619c93fe9d0450ccb6f29c82", null ],
-      [ "statsRxTruncateErr", "a00025.html#a09504e8c4095afe2540e064d9fec42b0", null ]
+    [ "_enet_data_error_stats", "a00025.html#a00364", [
+      [ "statsRxLenGreaterErr", "a00025.html#a2462d53f0755f85c5946de77e7916309", null ],
+      [ "statsRxAlignErr", "a00025.html#a56f8448c2c83c314a59f6ea6bd0e7c93", null ],
+      [ "statsRxFcsErr", "a00025.html#a66e65ddd70fe284a17769366b9dd25b9", null ],
+      [ "statsRxOverRunErr", "a00025.html#ab8513afbfb4065cb50bfd80a5b9d149b", null ],
+      [ "statsRxTruncateErr", "a00025.html#afbc5421f1a18b141cf84be8a42feaacd", null ]
     ] ],
-    [ "enet_rx_frame_error_t", "a00025.html#a00399", [
-      [ "statsRxTruncateErr", "a00025.html#a2173d8ae40d913e0e16a8232427865d1", null ],
-      [ "statsRxOverRunErr", "a00025.html#ac0ff79b67b123b113ca2a602a1cae328", null ],
-      [ "statsRxFcsErr", "a00025.html#acf21e2101caf4fa4ffecfbc255afb78b", null ],
-      [ "statsRxAlignErr", "a00025.html#ac197396dbd9f2c1989a14ce5448b5cfb", null ],
-      [ "statsRxLenGreaterErr", "a00025.html#adc562d84745ee79c08eea7892244f32f", null ]
+    [ "_enet_rx_frame_error", "a00025.html#a00369", [
+      [ "statsRxTruncateErr", "a00025.html#a86ecd91f97954e91201a549ae8ece2fb", null ],
+      [ "statsRxOverRunErr", "a00025.html#a992cd58cc7a67d2705605337cad7229c", null ],
+      [ "statsRxFcsErr", "a00025.html#af757ae8fce2b365407990711683f5330", null ],
+      [ "statsRxAlignErr", "a00025.html#af2e225ef4f880027105c37ac89be6563", null ],
+      [ "statsRxLenGreaterErr", "a00025.html#ab52789f1247cad233d2bfc18437d835c", null ]
     ] ],
-    [ "enet_transfer_stats_t", "a00025.html#a00400", [
-      [ "statsRxFrameCount", "a00025.html#a7d171e82c47d9323523f87a33fae63fa", null ],
-      [ "statsRxFrameOk", "a00025.html#a2384746839de44160bf4b88f1b214543", null ],
-      [ "statsRxCrcErr", "a00025.html#a6e8f9cb625256fc9f8bc7010f8867e1c", null ],
-      [ "statsRxAlignErr", "a00025.html#a3b26ef20688fb8b71d6f6ccccf0bf440", null ],
-      [ "statsRxDropInvalidSFD", "a00025.html#aa932930f3082f0edd2be8b3954572daa", null ],
-      [ "statsRxFifoOverflowErr", "a00025.html#a33b3e659f16fcd512f894402d151c042", null ],
-      [ "statsTxFrameCount", "a00025.html#aed22235b0048c306be5a6488fc71ed2c", null ],
-      [ "statsTxFrameOk", "a00025.html#ab39acd314e024d149d54cb5d2f953161", null ],
-      [ "statsTxCrcAlignErr", "a00025.html#ac1f0d3b6d43db27aba5b9466b49b47d2", null ],
-      [ "statsTxFifoUnderRunErr", "a00025.html#af46df42a08b486f3e8739413b4310c2e", null ]
+    [ "_enet_transfer_stats", "a00025.html#a00370", [
+      [ "statsRxFrameCount", "a00025.html#a4a6e137376c96a9cc041eecbd0d82a61", null ],
+      [ "statsRxFrameOk", "a00025.html#aea9ca7e1a4957162dc8d26cf3cf7473b", null ],
+      [ "statsRxCrcErr", "a00025.html#a5b6b5a7ab0626617ca4c77f999f06f97", null ],
+      [ "statsRxAlignErr", "a00025.html#a2d3110b9982871a13c66938ebf5bd357", null ],
+      [ "statsRxDropInvalidSFD", "a00025.html#aba9abc58bd10888f0df747295cc25818", null ],
+      [ "statsRxFifoOverflowErr", "a00025.html#a7a67391de996fb08cf266d2e1fae8a05", null ],
+      [ "statsTxFrameCount", "a00025.html#a5dc508f7877788009c0761c007588889", null ],
+      [ "statsTxFrameOk", "a00025.html#a2ac0b2a2f0d6b83750ce089288920f2c", null ],
+      [ "statsTxCrcAlignErr", "a00025.html#a214b5238649f7bcf16abef40451cba95", null ],
+      [ "statsTxFifoUnderRunErr", "a00025.html#a08fe42e3aa2a059b3fa1e9d1ddf39f85", null ]
     ] ],
-    [ "enet_frame_info_t", "a00025.html#a00396", [
-      [ "context", "a00025.html#ad3987e22d881f422f1d8bcb861eb02a9", null ]
+    [ "enet_frame_info", "a00025.html#a00561", [
+      [ "context", "a00025.html#a73696aea43786959d68fb77c2098756b", null ]
     ] ],
-    [ "enet_tx_dirty_ring_t", "a00025.html#a00403", [
-      [ "txDirtyBase", "a00025.html#a7af88381e15c470471345f93e6b95efb", null ],
-      [ "txGenIdx", "a00025.html#a433b260bfe4ae02b7046455dcc78df0d", null ],
-      [ "txConsumIdx", "a00025.html#abca8f4711537a4e4bec412628b571690", null ],
-      [ "txRingLen", "a00025.html#ae445fdbfa651b36e253b53cbcfcb7960", null ],
-      [ "isFull", "a00025.html#a04b76eb9bd582eed4c15f4913c04e025", null ]
+    [ "_enet_tx_dirty_ring", "a00025.html#a00373", [
+      [ "txDirtyBase", "a00025.html#a63ca317e4deb712b951af002fcdcf8bb", null ],
+      [ "txGenIdx", "a00025.html#a2b1b6921b65932db53996322d45d8856", null ],
+      [ "txConsumIdx", "a00025.html#a2742d7e74518af600c03130e00198985", null ],
+      [ "txRingLen", "a00025.html#a0d4510b8fd83ba4a9133c11597bfd5a7", null ],
+      [ "isFull", "a00025.html#a3404f120a333ae089dded6887fec4a6f", null ]
     ] ],
-    [ "enet_buffer_config_t", "a00025.html#a00393", [
-      [ "rxBdNumber", "a00025.html#a65e1faa923f03d01a64c133a3830bc7f", null ],
-      [ "txBdNumber", "a00025.html#a4f2cfe59fad3a3ea6274ef33edc66676", null ],
-      [ "rxBuffSizeAlign", "a00025.html#a8d0b8944b8d70e3c624718e553789136", null ],
-      [ "txBuffSizeAlign", "a00025.html#a1523cf4ee9537fb4fc12dc210680f1b1", null ],
-      [ "rxBdStartAddrAlign", "a00025.html#ae90713ccb39a0bb92275a458f03c5dce", null ],
-      [ "txBdStartAddrAlign", "a00025.html#a9fc178ed9e15d39b55c62d3ad26e05db", null ],
-      [ "rxBufferAlign", "a00025.html#a0917bce7024fa1d557f742e731849768", null ],
-      [ "txBufferAlign", "a00025.html#a70bca73b0157bb5a6985f2c9ecdc4ac8", null ],
-      [ "rxMaintainEnable", "a00025.html#a652bd28b0952d037e56876a2246e72b9", null ],
-      [ "txMaintainEnable", "a00025.html#aff5a3ae2854130484aa7e180c45df529", null ],
-      [ "txFrameInfo", "a00025.html#aaeebb32b259a0fbbfa6b000b3a143035", null ]
+    [ "_enet_buffer_config", "a00025.html#a00362", [
+      [ "rxBdNumber", "a00025.html#afd4ec78b752451f858d0d1f8d76d0cb0", null ],
+      [ "txBdNumber", "a00025.html#a9507bcbf2be2c3add3b5934c7366b1af", null ],
+      [ "rxBuffSizeAlign", "a00025.html#a92bb34ec07f23c220a8a0596f1580f89", null ],
+      [ "txBuffSizeAlign", "a00025.html#a83f75ae43b12a750e86e1b684c112aee", null ],
+      [ "rxBdStartAddrAlign", "a00025.html#ab4c6e09e2d0eb3f33f56066d825436e2", null ],
+      [ "txBdStartAddrAlign", "a00025.html#a39c55f00cf53d22b04fb9935593f14bb", null ],
+      [ "rxBufferAlign", "a00025.html#a6d0c0f35c7d328118b5bcd2b33217ff7", null ],
+      [ "txBufferAlign", "a00025.html#a446f3dea2e8f25db821b083b1367c128", null ],
+      [ "rxMaintainEnable", "a00025.html#a27e8664935ba8aed5d7d8f0cfc6f1510", null ],
+      [ "txMaintainEnable", "a00025.html#aa5465d7745f551c0983fa5d900cf3f32", null ],
+      [ "txFrameInfo", "a00025.html#a753750b5184e6c8bc33c6bdfe85e7e95", null ]
     ] ],
-    [ "enet_config_t", "a00025.html#a00394", [
-      [ "macSpecialConfig", "a00025.html#ae18a59c71607550da3eb35ac6a64ac11", null ],
-      [ "interrupt", "a00025.html#ad6126ff38c3d09e8f4b305cc0a45befd", null ],
-      [ "rxMaxFrameLen", "a00025.html#a8096267beadb3701fb82163d1e9aa6dd", null ],
-      [ "miiMode", "a00025.html#af5d9f50ec02037d29f6ed4202ffdbc1f", null ],
-      [ "miiSpeed", "a00025.html#a073bdafc878d858c56533323322be6a9", null ],
-      [ "miiDuplex", "a00025.html#a0704352d744c4da14bf1e836e95ff072", null ],
-      [ "rxAccelerConfig", "a00025.html#a7458a889dfeb4ccd0b62767486e61bbb", null ],
-      [ "txAccelerConfig", "a00025.html#a033caacd25725e29eb07aa98936e6814", null ],
-      [ "pauseDuration", "a00025.html#a4ad647d398242d29ca34f03903e119a7", null ],
-      [ "rxFifoEmptyThreshold", "a00025.html#a1a0b1d0e07cc8817dc37f0af8cce10f6", null ],
-      [ "rxFifoFullThreshold", "a00025.html#af15c6f6b67b8bbdebda299b2137e3c48", null ],
-      [ "txFifoWatermark", "a00025.html#a30ec04b6b5c7018f5fa75723778c7bca", null ],
-      [ "ringNum", "a00025.html#a4e45bda961b3da271d4fb482bc375e12", null ],
-      [ "rxBuffAlloc", "a00025.html#a3bd1c1b2e4c30562c144a687d1d53ffa", null ],
-      [ "rxBuffFree", "a00025.html#aa82a70ca2bd6f7a185c860d51eb56bcf", null ],
-      [ "callback", "a00025.html#ac8ed5a6af987dea53b3a192fa09a2052", null ],
-      [ "userData", "a00025.html#a9da9750eda15683bec50577ed5992ec7", null ]
+    [ "_enet_intcoalesce_config", "a00025.html#a00366", [
+      [ "txCoalesceFrameCount", "a00025.html#a53d97f78a7f4da383b75d81a19b06acb", null ],
+      [ "txCoalesceTimeCount", "a00025.html#a5d1e35c783ac3cb3a39b621fbc1bdbeb", null ],
+      [ "rxCoalesceFrameCount", "a00025.html#a9733e4372175f0fa431d1ce44a679837", null ],
+      [ "rxCoalesceTimeCount", "a00025.html#a71e02cec8122194de5608950576417af", null ]
     ] ],
-    [ "enet_tx_bd_ring_t", "a00025.html#a00401", [
-      [ "txBdBase", "a00025.html#ac8ea415a5a4e475fc8186a64fe5c7f42", null ],
-      [ "txGenIdx", "a00025.html#a02d0c1d6dbec35379899b6d7fded3967", null ],
-      [ "txConsumIdx", "a00025.html#acb25ecf9088ef35f7806a0af21ad9893", null ],
-      [ "txDescUsed", "a00025.html#a190b8b21e481538bab2eb3800aaf84f0", null ],
-      [ "txRingLen", "a00025.html#ae5a88ae171688c9e8cc729e59b9424e7", null ]
+    [ "_enet_config", "a00025.html#a00363", [
+      [ "macSpecialConfig", "a00025.html#ae906d4d3725b8d2610e9d2733c2b628a", null ],
+      [ "interrupt", "a00025.html#a47e4c11f65d86d2cf1fa2bc185368fd6", null ],
+      [ "rxMaxFrameLen", "a00025.html#a93b03d4b49039e870e53cedc718e7db6", null ],
+      [ "miiMode", "a00025.html#a7a7a5ea59974179db9926aa6d87c7553", null ],
+      [ "miiSpeed", "a00025.html#ae059a9c8226e55807b537a20a4a645ed", null ],
+      [ "miiDuplex", "a00025.html#a34251f2c12d4fe304bfa722601b4bcf1", null ],
+      [ "rxAccelerConfig", "a00025.html#a7275a2f08dcb4ac864f89e3dd372401c", null ],
+      [ "txAccelerConfig", "a00025.html#a68f4b8c513b3539b04a684b95bbb26a6", null ],
+      [ "pauseDuration", "a00025.html#a5938fb459905027856aec807047bfc29", null ],
+      [ "rxFifoEmptyThreshold", "a00025.html#af353eaee5ef380415109ebc7936cf895", null ],
+      [ "rxFifoStatEmptyThreshold", "a00025.html#a1e9c364deb2283e5ec5bcfa93c207ca7", null ],
+      [ "rxFifoFullThreshold", "a00025.html#a7148bb825f865c1330cc0c8e1dbd8291", null ],
+      [ "txFifoWatermark", "a00025.html#a7731fa816cd93e7a9243d4824333f53e", null ],
+      [ "intCoalesceCfg", "a00025.html#a57e66579cab3a0ecfd8a449a3b8be678", null ],
+      [ "ringNum", "a00025.html#a24033a0058497a90f61e724eecf32508", null ],
+      [ "rxBuffAlloc", "a00025.html#ad197effcc042ac712f676f13e52b442a", null ],
+      [ "rxBuffFree", "a00025.html#a06dbc00f36e96b3ced6b4161d8cc9be7", null ],
+      [ "callback", "a00025.html#a74964d8d0d4b669111a933b38053aca8", null ],
+      [ "userData", "a00025.html#a5b07acb93d7e935a1ff8bf48ddb31274", null ]
     ] ],
-    [ "enet_rx_bd_ring_t", "a00025.html#a00397", [
-      [ "rxBdBase", "a00025.html#a9b645c4be993309d06f1ffed6c951c45", null ],
-      [ "rxGenIdx", "a00025.html#a3358045d4fa5d0656a5972dc6aea7b03", null ],
-      [ "rxRingLen", "a00025.html#a8cc38f123dc2aca3c0728d37e8c1c7f5", null ]
+    [ "_enet_tx_bd_ring", "a00025.html#a00371", [
+      [ "txBdBase", "a00025.html#af25391565c31dc97ff33fe12992f593a", null ],
+      [ "txGenIdx", "a00025.html#af6a1dedf406573ed24aa3a1931692960", null ],
+      [ "txConsumIdx", "a00025.html#aeb181b9747e34c3214fc678ac2a64aed", null ],
+      [ "txDescUsed", "a00025.html#a62ddfddb2e3a37e72bcc17e283dda655", null ],
+      [ "txRingLen", "a00025.html#aafbd9907aa2b36d5b70057f646d3a439", null ]
     ] ],
-    [ "enet_handle_t", "a00025.html#a00313", [
-      [ "rxBdRing", "a00025.html#ae902f3f66d8970f7e0e401c93a810732", null ],
-      [ "txBdRing", "a00025.html#a5213f4eb065024353d45992c4f9d6644", null ],
-      [ "rxBuffSizeAlign", "a00025.html#a7b098c577f9a8c2702c3d27b3d48e5b6", null ],
-      [ "txBuffSizeAlign", "a00025.html#a22354125866a1d17a62681722af66df2", null ],
-      [ "rxMaintainEnable", "a00025.html#aa2ee8b12d860432b23eba5ac3eebc792", null ],
-      [ "txMaintainEnable", "a00025.html#acbe9f80852a1c0a05c87e6c57182a296", null ],
-      [ "ringNum", "a00025.html#a2f88d8370908963027e3a505926e5baf", null ],
-      [ "callback", "a00025.html#ab6f1673b4b3b633bd4e6b0fa8732ea58", null ],
-      [ "userData", "a00025.html#a0fca53e60f7e5646f409633651d8e249", null ],
-      [ "txDirtyRing", "a00025.html#ab6a254e4c93ec94fbb21210b28cefab9", null ],
-      [ "txReclaimEnable", "a00025.html#a71960adcc67a46e8734ae8bb90aa9c11", null ],
-      [ "rxBuffAlloc", "a00025.html#a80a6e3b96c72049973879a6399258dd2", null ],
-      [ "rxBuffFree", "a00025.html#a3c3e00ccb8261746f179f6f36eff8628", null ],
-      [ "multicastCount", "a00025.html#ab86e18f20c8151d1f2b30fa9807e976b", null ]
+    [ "_enet_rx_bd_ring", "a00025.html#a00367", [
+      [ "rxBdBase", "a00025.html#a989a4c43c214670757d13ec9ca7de15f", null ],
+      [ "rxGenIdx", "a00025.html#afa25f145f0339c474b128b1be8d0f9da", null ],
+      [ "rxRingLen", "a00025.html#a4b815ad4b128a671ea35fbb08d684088", null ]
+    ] ],
+    [ "_enet_handle", "a00025.html#a00365", [
+      [ "rxBdRing", "a00025.html#a47ee57a054af9ec4ab00348238cc93e8", null ],
+      [ "txBdRing", "a00025.html#a098628020046e333699692f812fb3e67", null ],
+      [ "rxBuffSizeAlign", "a00025.html#adb3b9cad0fb75f06062b93bcef5a7c97", null ],
+      [ "txBuffSizeAlign", "a00025.html#a23d58236e20ba305a4692b73e4eb7b59", null ],
+      [ "rxMaintainEnable", "a00025.html#a6e682fb52798ac223807bae6bc7a9d94", null ],
+      [ "txMaintainEnable", "a00025.html#a12eb80e1504436617622dd89f9111373", null ],
+      [ "ringNum", "a00025.html#a9c28df39ee2aa20660dbd31ba9f28f9b", null ],
+      [ "callback", "a00025.html#a06dd8c5096eb50a98f4aeeac9eacfdce", null ],
+      [ "userData", "a00025.html#ac4499c5a470ac4b1ce86ceff33f30e08", null ],
+      [ "txDirtyRing", "a00025.html#a20b2a3579ec5fb5f9436bfd6c1dd632d", null ],
+      [ "txReclaimEnable", "a00025.html#aaba3c2c30b2df95ca04a4d8f63c8b7fa", null ],
+      [ "rxBuffAlloc", "a00025.html#af2dead63a6bd503f691e6ad0d17340b5", null ],
+      [ "rxBuffFree", "a00025.html#a6ad4d2ffcf48e1d1e811f858c821ca71", null ],
+      [ "multicastCount", "a00025.html#ade124f9aa22128d3b209abc8b09d48ae", null ]
     ] ],
     [ "FSL_ENET_DRIVER_VERSION", "a00025.html#ga869f211125798c5e1f17464dee22704e", null ],
-    [ "FSL_FEATURE_ENET_QUEUE", "a00025.html#gad81cb6ef0036660d2507f548f357e0af", null ],
     [ "ENET_BUFFDESCRIPTOR_RX_EMPTY_MASK", "a00025.html#ga4ecdb738a6f27b81eb9ad44d24d2f1db", null ],
     [ "ENET_BUFFDESCRIPTOR_RX_SOFTOWNER1_MASK", "a00025.html#gac3815af5aedc53cf345ae5186f711d6d", null ],
     [ "ENET_BUFFDESCRIPTOR_RX_WRAP_MASK", "a00025.html#ga37f7e7094697aa06285df27da4e3791f", null ],
@@ -139,9 +146,32 @@ var a00025 =
     [ "ENET_RX_INTERRUPT", "a00025.html#ga884cb09f25caa75519ab5514393cc118", null ],
     [ "ENET_TS_INTERRUPT", "a00025.html#ga1542982978e8f2293acbbf1a989d7fdb", null ],
     [ "ENET_ERR_INTERRUPT", "a00025.html#gaf207b6aa1230056b8daeca5ccb0fe8fd", null ],
+    [ "enet_mii_mode_t", "a00025.html#ga285ce45cec89dda602433db19dc66e8f", null ],
+    [ "enet_mii_speed_t", "a00025.html#gaba02d036bbe1463f21d421eed4358bb2", null ],
+    [ "enet_mii_duplex_t", "a00025.html#ga75c2799d0b0a4d091a6dbc4d67d8b55f", null ],
+    [ "enet_mii_write_t", "a00025.html#gad2c3fc6bdee746926b3f15647aac3732", null ],
+    [ "enet_mii_read_t", "a00025.html#ga6df5ee84f48d543040cf6ea26e38b381", null ],
+    [ "enet_mii_extend_opcode", "a00025.html#ga3a446532a9ecb437fe83b9f0a09bd0f0", null ],
+    [ "enet_special_control_flag_t", "a00025.html#ga24d10299b5cfafed5b144a580ff2d04d", null ],
+    [ "enet_interrupt_enable_t", "a00025.html#gae7828a7d773e0ba7e983e5e25ac9b158", null ],
+    [ "enet_event_t", "a00025.html#ga34965e8ead244ab448331cad0143fac8", null ],
+    [ "enet_tx_accelerator_t", "a00025.html#gaf5aa65d266d764102d87169dc6c2ffb1", null ],
+    [ "enet_rx_accelerator_t", "a00025.html#ga50488827792ead298806385419a28dc7", null ],
+    [ "enet_rx_bd_struct_t", "a00025.html#ga9258599b7afe3c54351a7f090ecbefcc", null ],
+    [ "enet_tx_bd_struct_t", "a00025.html#ga293febf3ea614a2ec94be3e658ce3779", null ],
+    [ "enet_data_error_stats_t", "a00025.html#gabf72758c18e329d7db133eec827b1dc8", null ],
+    [ "enet_rx_frame_error_t", "a00025.html#ga0fa8da1b6e38ffd891d85dd33baa8846", null ],
+    [ "enet_transfer_stats_t", "a00025.html#ga04a3b3a37e6e9f99085044258f573ef7", null ],
+    [ "enet_frame_info_t", "a00025.html#ga5f838acb97e5410075da57edfd9ec7bd", null ],
+    [ "enet_tx_dirty_ring_t", "a00025.html#ga8dce49c9cde107482c55000ba03e7b4d", null ],
     [ "enet_rx_alloc_callback_t", "a00025.html#ga1bbb35b6284c30aa9e0f8b72e2b99b19", null ],
     [ "enet_rx_free_callback_t", "a00025.html#gabc91b20606887f2430289a58f03ca815", null ],
+    [ "enet_buffer_config_t", "a00025.html#ga0f56ea6c3ea9998923071f301a08396e", null ],
+    [ "enet_intcoalesce_config_t", "a00025.html#ga4ce13dc17143bfef7ced8b60f8d91a9c", null ],
     [ "enet_callback_t", "a00025.html#gaae4a0ac6b9fefb310037eb1d21cfae3a", null ],
+    [ "enet_config_t", "a00025.html#gae75b54ce31b5961f84a14f884fd03415", null ],
+    [ "enet_tx_bd_ring_t", "a00025.html#gaa9c8d539a880b65a4ac4043d02d37e63", null ],
+    [ "enet_rx_bd_ring_t", "a00025.html#ga728bd3d27b4a50f102c0e1f1524f4a01", null ],
     [ "enet_isr_t", "a00025.html#gad2a1cb1c771a59d8818aa2dfdaf6007f", [
       [ "kStatus_ENET_InitMemoryFail", "a00025.html#gga05589fbab0657f08285ebdfe93f5ec9ea7aea34b36e0d0922379df4f2e950e246", null ],
       [ "kStatus_ENET_RxFrameError", "a00025.html#gga05589fbab0657f08285ebdfe93f5ec9eaef1f945a6dc8fcf6267d57aac2a19f99", null ],
@@ -152,75 +182,80 @@ var a00025 =
       [ "kStatus_ENET_TxFrameBusy", "a00025.html#gga05589fbab0657f08285ebdfe93f5ec9ead15b9b2af39f28f90889bb19f568e844", null ],
       [ "kStatus_ENET_TxFrameFail", "a00025.html#gga05589fbab0657f08285ebdfe93f5ec9ea34b4c8ff24db933516a0cf13fc8174ad", null ]
     ] ],
-    [ "enet_mii_mode_t", "a00025.html#ga4ae0699c0a7f9706deffbaf201025669", [
-      [ "kENET_MiiMode", "a00025.html#gga4ae0699c0a7f9706deffbaf201025669a8625ad828cb3aae19fa0c2e6934e9368", null ],
-      [ "kENET_RmiiMode", "a00025.html#gga4ae0699c0a7f9706deffbaf201025669ae44236ebbdfcc0ae1e3520edd3d2d602", null ]
+    [ "_enet_mii_mode", "a00025.html#ga2ac7a6450188255daf6c0698d6241cbe", [
+      [ "kENET_MiiMode", "a00025.html#gga2ac7a6450188255daf6c0698d6241cbea8625ad828cb3aae19fa0c2e6934e9368", null ],
+      [ "kENET_RmiiMode", "a00025.html#gga2ac7a6450188255daf6c0698d6241cbeae44236ebbdfcc0ae1e3520edd3d2d602", null ]
     ] ],
-    [ "enet_mii_speed_t", "a00025.html#ga8bbf729066c3400712a19ed1d9179e4c", [
-      [ "kENET_MiiSpeed10M", "a00025.html#gga8bbf729066c3400712a19ed1d9179e4ca6e8f095a5a1944d54425565b5beb835c", null ],
-      [ "kENET_MiiSpeed100M", "a00025.html#gga8bbf729066c3400712a19ed1d9179e4ca267390f53c987b908852257bf5407e8e", null ]
+    [ "_enet_mii_speed", "a00025.html#ga1b4b5924eca34762bd5ec1ee783aa417", [
+      [ "kENET_MiiSpeed10M", "a00025.html#gga1b4b5924eca34762bd5ec1ee783aa417a6e8f095a5a1944d54425565b5beb835c", null ],
+      [ "kENET_MiiSpeed100M", "a00025.html#gga1b4b5924eca34762bd5ec1ee783aa417a267390f53c987b908852257bf5407e8e", null ]
     ] ],
-    [ "enet_mii_duplex_t", "a00025.html#ga0784f279168ea4e3fc2fc07018dcb9bf", [
-      [ "kENET_MiiHalfDuplex", "a00025.html#gga0784f279168ea4e3fc2fc07018dcb9bfad3b58af3cb1b983f8e3cd45b585c91b9", null ],
-      [ "kENET_MiiFullDuplex", "a00025.html#gga0784f279168ea4e3fc2fc07018dcb9bfa0d2ad2c3708231614c716bc921503d6c", null ]
+    [ "_enet_mii_duplex", "a00025.html#gad9098c2e8e4fc29f2d2a032b4fc4ae57", [
+      [ "kENET_MiiHalfDuplex", "a00025.html#ggad9098c2e8e4fc29f2d2a032b4fc4ae57ad3b58af3cb1b983f8e3cd45b585c91b9", null ],
+      [ "kENET_MiiFullDuplex", "a00025.html#ggad9098c2e8e4fc29f2d2a032b4fc4ae57a0d2ad2c3708231614c716bc921503d6c", null ]
     ] ],
-    [ "enet_mii_write_t", "a00025.html#ga0efd18bb4f4b754039fc30c440e38b02", [
-      [ "kENET_MiiWriteNoCompliant", "a00025.html#gga0efd18bb4f4b754039fc30c440e38b02afa74c106f9ed2436e47a5c3f54382b71", null ],
-      [ "kENET_MiiWriteValidFrame", "a00025.html#gga0efd18bb4f4b754039fc30c440e38b02a1611c88e328da10f5c43bd138eca6794", null ]
+    [ "_enet_mii_write", "a00025.html#gabf72ec5512ee82526a79d09bb2868bde", [
+      [ "kENET_MiiWriteNoCompliant", "a00025.html#ggabf72ec5512ee82526a79d09bb2868bdeafa74c106f9ed2436e47a5c3f54382b71", null ],
+      [ "kENET_MiiWriteValidFrame", "a00025.html#ggabf72ec5512ee82526a79d09bb2868bdea1611c88e328da10f5c43bd138eca6794", null ]
     ] ],
-    [ "enet_mii_read_t", "a00025.html#ga9c0264e7da8e7d0a3ead667d3a7b1a89", [
-      [ "kENET_MiiReadValidFrame", "a00025.html#gga9c0264e7da8e7d0a3ead667d3a7b1a89a25d7fb88a8252dc7250617be5ea78f91", null ],
-      [ "kENET_MiiReadNoCompliant", "a00025.html#gga9c0264e7da8e7d0a3ead667d3a7b1a89a3a3402b126399caf1ad17a2981f69a14", null ]
+    [ "_enet_mii_read", "a00025.html#ga649bd890441475f51dcba653e48bf2e2", [
+      [ "kENET_MiiReadValidFrame", "a00025.html#gga649bd890441475f51dcba653e48bf2e2a25d7fb88a8252dc7250617be5ea78f91", null ],
+      [ "kENET_MiiReadNoCompliant", "a00025.html#gga649bd890441475f51dcba653e48bf2e2a3a3402b126399caf1ad17a2981f69a14", null ]
     ] ],
-    [ "enet_special_control_flag_t", "a00025.html#ga3dd434e4f34bd4c640cefd471763e834", [
-      [ "kENET_ControlFlowControlEnable", "a00025.html#gga3dd434e4f34bd4c640cefd471763e834a2274920ae245b67edc1538ecc662e2e7", null ],
-      [ "kENET_ControlRxPayloadCheckEnable", "a00025.html#gga3dd434e4f34bd4c640cefd471763e834a9493b832848510c47488327ef49e4d09", null ],
-      [ "kENET_ControlRxPadRemoveEnable", "a00025.html#gga3dd434e4f34bd4c640cefd471763e834aa29ba1cc644bf602ffc8ef9e1ae02892", null ],
-      [ "kENET_ControlRxBroadCastRejectEnable", "a00025.html#gga3dd434e4f34bd4c640cefd471763e834ade873dafe5c7263f8cc62b0ca92aada3", null ],
-      [ "kENET_ControlMacAddrInsert", "a00025.html#gga3dd434e4f34bd4c640cefd471763e834ac806eb5baebf350b694cca943bc812c7", null ],
-      [ "kENET_ControlStoreAndFwdDisable", "a00025.html#gga3dd434e4f34bd4c640cefd471763e834abb1b113283cf4f67722599cc58803643", null ],
-      [ "kENET_ControlSMIPreambleDisable", "a00025.html#gga3dd434e4f34bd4c640cefd471763e834a8eb7a5389fe9cf0a867066be878efcf1", null ],
-      [ "kENET_ControlPromiscuousEnable", "a00025.html#gga3dd434e4f34bd4c640cefd471763e834a51af87f0cfef162bc4c48fd0884c0cab", null ],
-      [ "kENET_ControlMIILoopEnable", "a00025.html#gga3dd434e4f34bd4c640cefd471763e834a8cfbb36dc3a0bebf378ed53d527e93af", null ],
-      [ "kENET_ControlVLANTagEnable", "a00025.html#gga3dd434e4f34bd4c640cefd471763e834a3553f9aa0fdc655ffff8e0f46f6cb4b7", null ]
+    [ "_enet_mii_extend_opcode", "a00025.html#ga99428602d18594a9582cae8e9d255815", [
+      [ "kENET_MiiAddrWrite_C45", "a00025.html#gga99428602d18594a9582cae8e9d255815aa031e39c75c2ab6c27c06f447338446b", null ],
+      [ "kENET_MiiWriteFrame_C45", "a00025.html#gga99428602d18594a9582cae8e9d255815abc5c4c556438c39c9d2578254431512b", null ],
+      [ "kENET_MiiReadFrame_C45", "a00025.html#gga99428602d18594a9582cae8e9d255815a06eec19796c92e001ad6cc728fc3139d", null ]
     ] ],
-    [ "enet_interrupt_enable_t", "a00025.html#gafb9d440ac05cadfab906714b2db65027", [
-      [ "kENET_BabrInterrupt", "a00025.html#ggafb9d440ac05cadfab906714b2db65027a2723f07cc888d945f74650566d79e82e", null ],
-      [ "kENET_BabtInterrupt", "a00025.html#ggafb9d440ac05cadfab906714b2db65027a103227b91492fa90cf41212e63b1e7ae", null ],
-      [ "kENET_GraceStopInterrupt", "a00025.html#ggafb9d440ac05cadfab906714b2db65027a1a3e80425de2ce87abc060cef41d1f9e", null ],
-      [ "kENET_TxFrameInterrupt", "a00025.html#ggafb9d440ac05cadfab906714b2db65027a7b2529920e9b97d937aa6b420bf1d51f", null ],
-      [ "kENET_TxBufferInterrupt", "a00025.html#ggafb9d440ac05cadfab906714b2db65027ab48679949090d31d9245d28f4b8ac31e", null ],
-      [ "kENET_RxFrameInterrupt", "a00025.html#ggafb9d440ac05cadfab906714b2db65027a35d716ce614f33b7afbcf168922f1e70", null ],
-      [ "kENET_RxBufferInterrupt", "a00025.html#ggafb9d440ac05cadfab906714b2db65027af4e8f4292fde8f09ade517e91ac8baa7", null ],
-      [ "kENET_MiiInterrupt", "a00025.html#ggafb9d440ac05cadfab906714b2db65027af14e66a1e3dd261481ae560fb2794340", null ],
-      [ "kENET_EBusERInterrupt", "a00025.html#ggafb9d440ac05cadfab906714b2db65027ace73af088e05b63d6f8d6aeda6a9908e", null ],
-      [ "kENET_LateCollisionInterrupt", "a00025.html#ggafb9d440ac05cadfab906714b2db65027a1495716c4d2b819469d0243c3768eac1", null ],
-      [ "kENET_RetryLimitInterrupt", "a00025.html#ggafb9d440ac05cadfab906714b2db65027a39343a8e490ffbc2146a517b8c4a82b2", null ],
-      [ "kENET_UnderrunInterrupt", "a00025.html#ggafb9d440ac05cadfab906714b2db65027a1fa3a1323a0da32594d84172db1e95ed", null ],
-      [ "kENET_PayloadRxInterrupt", "a00025.html#ggafb9d440ac05cadfab906714b2db65027aefe7250848088c6a514d609ff1bd6b2c", null ],
-      [ "kENET_WakeupInterrupt", "a00025.html#ggafb9d440ac05cadfab906714b2db65027a25974ac3cc05e3d928eab800a0f09c27", null ],
-      [ "kENET_TsAvailInterrupt", "a00025.html#ggafb9d440ac05cadfab906714b2db65027a9bd0bb3fb86f1c342bbcc3f2407e3e06", null ],
-      [ "kENET_TsTimerInterrupt", "a00025.html#ggafb9d440ac05cadfab906714b2db65027a7bdae7cedb0c8ca1087feb1511b1bb1c", null ]
+    [ "_enet_special_control_flag", "a00025.html#ga177421d03c9c60fbc8ac403f6fb511e7", [
+      [ "kENET_ControlFlowControlEnable", "a00025.html#gga177421d03c9c60fbc8ac403f6fb511e7a2274920ae245b67edc1538ecc662e2e7", null ],
+      [ "kENET_ControlRxPayloadCheckEnable", "a00025.html#gga177421d03c9c60fbc8ac403f6fb511e7a9493b832848510c47488327ef49e4d09", null ],
+      [ "kENET_ControlRxPadRemoveEnable", "a00025.html#gga177421d03c9c60fbc8ac403f6fb511e7aa29ba1cc644bf602ffc8ef9e1ae02892", null ],
+      [ "kENET_ControlRxBroadCastRejectEnable", "a00025.html#gga177421d03c9c60fbc8ac403f6fb511e7ade873dafe5c7263f8cc62b0ca92aada3", null ],
+      [ "kENET_ControlMacAddrInsert", "a00025.html#gga177421d03c9c60fbc8ac403f6fb511e7ac806eb5baebf350b694cca943bc812c7", null ],
+      [ "kENET_ControlStoreAndFwdDisable", "a00025.html#gga177421d03c9c60fbc8ac403f6fb511e7abb1b113283cf4f67722599cc58803643", null ],
+      [ "kENET_ControlSMIPreambleDisable", "a00025.html#gga177421d03c9c60fbc8ac403f6fb511e7a8eb7a5389fe9cf0a867066be878efcf1", null ],
+      [ "kENET_ControlPromiscuousEnable", "a00025.html#gga177421d03c9c60fbc8ac403f6fb511e7a51af87f0cfef162bc4c48fd0884c0cab", null ],
+      [ "kENET_ControlMIILoopEnable", "a00025.html#gga177421d03c9c60fbc8ac403f6fb511e7a8cfbb36dc3a0bebf378ed53d527e93af", null ],
+      [ "kENET_ControlVLANTagEnable", "a00025.html#gga177421d03c9c60fbc8ac403f6fb511e7a3553f9aa0fdc655ffff8e0f46f6cb4b7", null ]
     ] ],
-    [ "enet_event_t", "a00025.html#gab6a6012153064f5996a44ecb79559fbe", [
-      [ "kENET_RxEvent", "a00025.html#ggab6a6012153064f5996a44ecb79559fbea0ef30a1e4757622d27d6ca879f300cb6", null ],
-      [ "kENET_TxEvent", "a00025.html#ggab6a6012153064f5996a44ecb79559fbeaae83f9ee29da3fe085f4d1e24983bef7", null ],
-      [ "kENET_ErrEvent", "a00025.html#ggab6a6012153064f5996a44ecb79559fbea1b4966d24ea40b037e7f0e1022441ea7", null ],
-      [ "kENET_WakeUpEvent", "a00025.html#ggab6a6012153064f5996a44ecb79559fbea6e0c81e642fcb382d2f38ad32a32ec07", null ],
-      [ "kENET_TimeStampEvent", "a00025.html#ggab6a6012153064f5996a44ecb79559fbea2d4e884e83838e4bd8985b0c846e2844", null ],
-      [ "kENET_TimeStampAvailEvent", "a00025.html#ggab6a6012153064f5996a44ecb79559fbea5f3aa0c8f959a838732c6a38965a1e2a", null ]
+    [ "_enet_interrupt_enable", "a00025.html#ga4e2e582474d9c2e86ea6edf16ef70c97", [
+      [ "kENET_BabrInterrupt", "a00025.html#gga4e2e582474d9c2e86ea6edf16ef70c97a2723f07cc888d945f74650566d79e82e", null ],
+      [ "kENET_BabtInterrupt", "a00025.html#gga4e2e582474d9c2e86ea6edf16ef70c97a103227b91492fa90cf41212e63b1e7ae", null ],
+      [ "kENET_GraceStopInterrupt", "a00025.html#gga4e2e582474d9c2e86ea6edf16ef70c97a1a3e80425de2ce87abc060cef41d1f9e", null ],
+      [ "kENET_TxFrameInterrupt", "a00025.html#gga4e2e582474d9c2e86ea6edf16ef70c97a7b2529920e9b97d937aa6b420bf1d51f", null ],
+      [ "kENET_TxBufferInterrupt", "a00025.html#gga4e2e582474d9c2e86ea6edf16ef70c97ab48679949090d31d9245d28f4b8ac31e", null ],
+      [ "kENET_RxFrameInterrupt", "a00025.html#gga4e2e582474d9c2e86ea6edf16ef70c97a35d716ce614f33b7afbcf168922f1e70", null ],
+      [ "kENET_RxBufferInterrupt", "a00025.html#gga4e2e582474d9c2e86ea6edf16ef70c97af4e8f4292fde8f09ade517e91ac8baa7", null ],
+      [ "kENET_MiiInterrupt", "a00025.html#gga4e2e582474d9c2e86ea6edf16ef70c97af14e66a1e3dd261481ae560fb2794340", null ],
+      [ "kENET_EBusERInterrupt", "a00025.html#gga4e2e582474d9c2e86ea6edf16ef70c97ace73af088e05b63d6f8d6aeda6a9908e", null ],
+      [ "kENET_LateCollisionInterrupt", "a00025.html#gga4e2e582474d9c2e86ea6edf16ef70c97a1495716c4d2b819469d0243c3768eac1", null ],
+      [ "kENET_RetryLimitInterrupt", "a00025.html#gga4e2e582474d9c2e86ea6edf16ef70c97a39343a8e490ffbc2146a517b8c4a82b2", null ],
+      [ "kENET_UnderrunInterrupt", "a00025.html#gga4e2e582474d9c2e86ea6edf16ef70c97a1fa3a1323a0da32594d84172db1e95ed", null ],
+      [ "kENET_PayloadRxInterrupt", "a00025.html#gga4e2e582474d9c2e86ea6edf16ef70c97aefe7250848088c6a514d609ff1bd6b2c", null ],
+      [ "kENET_WakeupInterrupt", "a00025.html#gga4e2e582474d9c2e86ea6edf16ef70c97a25974ac3cc05e3d928eab800a0f09c27", null ],
+      [ "kENET_TsAvailInterrupt", "a00025.html#gga4e2e582474d9c2e86ea6edf16ef70c97a9bd0bb3fb86f1c342bbcc3f2407e3e06", null ],
+      [ "kENET_TsTimerInterrupt", "a00025.html#gga4e2e582474d9c2e86ea6edf16ef70c97a7bdae7cedb0c8ca1087feb1511b1bb1c", null ]
     ] ],
-    [ "enet_tx_accelerator_t", "a00025.html#ga5ab4bff47ce41714000c94e1f5a8a6a8", [
-      [ "kENET_TxAccelIsShift16Enabled", "a00025.html#gga5ab4bff47ce41714000c94e1f5a8a6a8a7db407a277c41ca9d215412e2ef05476", null ],
-      [ "kENET_TxAccelIpCheckEnabled", "a00025.html#gga5ab4bff47ce41714000c94e1f5a8a6a8ad2f2ea0738c6b7fcaee5e02f8f1a8645", null ],
-      [ "kENET_TxAccelProtoCheckEnabled", "a00025.html#gga5ab4bff47ce41714000c94e1f5a8a6a8aa85f2b263781a1c43c304c3f380556ae", null ]
+    [ "_enet_event", "a00025.html#ga2d46efb8a1e501381f46532670e2059a", [
+      [ "kENET_RxEvent", "a00025.html#gga2d46efb8a1e501381f46532670e2059aa0ef30a1e4757622d27d6ca879f300cb6", null ],
+      [ "kENET_TxEvent", "a00025.html#gga2d46efb8a1e501381f46532670e2059aaae83f9ee29da3fe085f4d1e24983bef7", null ],
+      [ "kENET_ErrEvent", "a00025.html#gga2d46efb8a1e501381f46532670e2059aa1b4966d24ea40b037e7f0e1022441ea7", null ],
+      [ "kENET_WakeUpEvent", "a00025.html#gga2d46efb8a1e501381f46532670e2059aa6e0c81e642fcb382d2f38ad32a32ec07", null ],
+      [ "kENET_TimeStampEvent", "a00025.html#gga2d46efb8a1e501381f46532670e2059aa2d4e884e83838e4bd8985b0c846e2844", null ],
+      [ "kENET_TimeStampAvailEvent", "a00025.html#gga2d46efb8a1e501381f46532670e2059aa5f3aa0c8f959a838732c6a38965a1e2a", null ]
     ] ],
-    [ "enet_rx_accelerator_t", "a00025.html#gaaa83596ca3d01b86f8da9e7e2c90cced", [
-      [ "kENET_RxAccelPadRemoveEnabled", "a00025.html#ggaaa83596ca3d01b86f8da9e7e2c90cceda55ba5425899621f83b28c0c8e61b9060", null ],
-      [ "kENET_RxAccelIpCheckEnabled", "a00025.html#ggaaa83596ca3d01b86f8da9e7e2c90cceda517175d18302c670ad3b0999a9a1c9b1", null ],
-      [ "kENET_RxAccelProtoCheckEnabled", "a00025.html#ggaaa83596ca3d01b86f8da9e7e2c90cceda122f314d9f24c28b18ce350398fcce98", null ],
-      [ "kENET_RxAccelMacCheckEnabled", "a00025.html#ggaaa83596ca3d01b86f8da9e7e2c90cceda3082dc2e884e8b71a82f857c9f24890d", null ],
-      [ "kENET_RxAccelisShift16Enabled", "a00025.html#ggaaa83596ca3d01b86f8da9e7e2c90cceda659e8b06edb4f6944c9969dd56649b89", null ]
+    [ "_enet_tx_accelerator", "a00025.html#ga896bd2a909106726c99ad5ec21d3e7b5", [
+      [ "kENET_TxAccelIsShift16Enabled", "a00025.html#gga896bd2a909106726c99ad5ec21d3e7b5a7db407a277c41ca9d215412e2ef05476", null ],
+      [ "kENET_TxAccelIpCheckEnabled", "a00025.html#gga896bd2a909106726c99ad5ec21d3e7b5ad2f2ea0738c6b7fcaee5e02f8f1a8645", null ],
+      [ "kENET_TxAccelProtoCheckEnabled", "a00025.html#gga896bd2a909106726c99ad5ec21d3e7b5aa85f2b263781a1c43c304c3f380556ae", null ]
+    ] ],
+    [ "_enet_rx_accelerator", "a00025.html#gad573870ee83c0916b907ee9a3bc7f48e", [
+      [ "kENET_RxAccelPadRemoveEnabled", "a00025.html#ggad573870ee83c0916b907ee9a3bc7f48ea55ba5425899621f83b28c0c8e61b9060", null ],
+      [ "kENET_RxAccelIpCheckEnabled", "a00025.html#ggad573870ee83c0916b907ee9a3bc7f48ea517175d18302c670ad3b0999a9a1c9b1", null ],
+      [ "kENET_RxAccelProtoCheckEnabled", "a00025.html#ggad573870ee83c0916b907ee9a3bc7f48ea122f314d9f24c28b18ce350398fcce98", null ],
+      [ "kENET_RxAccelMacCheckEnabled", "a00025.html#ggad573870ee83c0916b907ee9a3bc7f48ea3082dc2e884e8b71a82f857c9f24890d", null ],
+      [ "kENET_RxAccelisShift16Enabled", "a00025.html#ggad573870ee83c0916b907ee9a3bc7f48ea659e8b06edb4f6944c9969dd56649b89", null ]
     ] ],
     [ "ENET_GetInstance", "a00025.html#ga50f498499f0ae949895298dee8ce3683", null ],
     [ "ENET_GetDefaultConfig", "a00025.html#gaf0992a0c9c3a27b2a40226ac38a26d1e", null ],
@@ -237,6 +272,11 @@ var a00025 =
     [ "ENET_StartSMIRead", "a00025.html#ga447a3f073b07936eff311f58024a8469", null ],
     [ "ENET_MDIOWrite", "a00025.html#gadaaa62f2a826957ac10a75e4c2a5b739", null ],
     [ "ENET_MDIORead", "a00025.html#ga892febd8596edf39f3301551df9dcc2c", null ],
+    [ "ENET_StartExtC45SMIWriteReg", "a00025.html#ga3be81738069472cacdf23d4d4630c68c", null ],
+    [ "ENET_StartExtC45SMIWriteData", "a00025.html#gacc36d236821701ab448245009796c4b6", null ],
+    [ "ENET_StartExtC45SMIReadData", "a00025.html#gab9b5e10d43bf267bc32cc3019ac52338", null ],
+    [ "ENET_MDIOC45Write", "a00025.html#ga610d4b0c009d03f06e208431ff1b9f33", null ],
+    [ "ENET_MDIOC45Read", "a00025.html#ga4a900675299361505ed7992137ff9061", null ],
     [ "ENET_SetMacAddr", "a00025.html#ga924622a35ef81eaf69d4a4fd9302a7be", null ],
     [ "ENET_GetMacAddr", "a00025.html#ga89e5a62af8d1ebf7359faa1fc13b56bc", null ],
     [ "ENET_AddMulticastGroup", "a00025.html#ga5b9495b14a42f5b1ee24dcc5a6a9f227", null ],

@@ -3,7 +3,7 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-if(CONFIG_USE_component_mflash_rt1060)
+if(CONFIG_USE_component_mflash_rt1060 OR CONFIG_USE_component_mflash_evkcmimxrt1060)
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/mflash_file.c

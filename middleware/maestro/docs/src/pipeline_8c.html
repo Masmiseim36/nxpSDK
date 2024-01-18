@@ -28,7 +28,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Maestro Audio Framework
-   &#160;<span id="projectnumber">v 1.6</span>
+   &#160;<span id="projectnumber">v 1.7</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -109,9 +109,9 @@ Functions</h2></td></tr>
 <tr class="memitem:adf4ed09dbaaba9865e76fef7ac474ee2"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pipeline_8c.html#adf4ed09dbaaba9865e76fef7ac474ee2">pipeline_path_blocked</a> (StreamElement *element)</td></tr>
 <tr class="memdesc:adf4ed09dbaaba9865e76fef7ac474ee2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pipeline Path Blocked?  <a href="pipeline_8c.html#adf4ed09dbaaba9865e76fef7ac474ee2">More...</a><br /></td></tr>
 <tr class="separator:adf4ed09dbaaba9865e76fef7ac474ee2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a826f42bc49d505e38ec0effde8b51a53"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pipeline_8c.html#a826f42bc49d505e38ec0effde8b51a53">create_pipeline</a> (<a class="el" href="streamer__api_8h.html#a91bb040bd7266f74d2b757bb58ad5ac4">PipelineHandle</a> *handle, unsigned int index, <a class="el" href="streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652">StreamPipelineType</a> type, osa_msgq_handle_t *app_mq)</td></tr>
-<tr class="memdesc:a826f42bc49d505e38ec0effde8b51a53"><td class="mdescLeft">&#160;</td><td class="mdescRight">create_pipeline  <a href="pipeline_8c.html#a826f42bc49d505e38ec0effde8b51a53">More...</a><br /></td></tr>
-<tr class="separator:a826f42bc49d505e38ec0effde8b51a53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae595bafc8ba38042cd2934e5c284c841"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pipeline_8c.html#ae595bafc8ba38042cd2934e5c284c841">create_pipeline</a> (<a class="el" href="streamer__api_8h.html#a91bb040bd7266f74d2b757bb58ad5ac4">PipelineHandle</a> *handle, unsigned int index, osa_msgq_handle_t *app_mq)</td></tr>
+<tr class="memdesc:ae595bafc8ba38042cd2934e5c284c841"><td class="mdescLeft">&#160;</td><td class="mdescRight">create_pipeline  <a href="pipeline_8c.html#ae595bafc8ba38042cd2934e5c284c841">More...</a><br /></td></tr>
+<tr class="separator:ae595bafc8ba38042cd2934e5c284c841"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a5a385a732f83a8fb7388137d064e01"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pipeline_8c.html#a7a5a385a732f83a8fb7388137d064e01">destroy_pipeline</a> (<a class="el" href="streamer__api_8h.html#a91bb040bd7266f74d2b757bb58ad5ac4">PipelineHandle</a> handle)</td></tr>
 <tr class="memdesc:a7a5a385a732f83a8fb7388137d064e01"><td class="mdescLeft">&#160;</td><td class="mdescRight">destroy_pipeline  <a href="pipeline_8c.html#a7a5a385a732f83a8fb7388137d064e01">More...</a><br /></td></tr>
 <tr class="separator:a7a5a385a732f83a8fb7388137d064e01"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -154,6 +154,9 @@ Functions</h2></td></tr>
 <tr class="memitem:af371874c6036707e54fa6383a7e2f61b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pipeline_8c.html#af371874c6036707e54fa6383a7e2f61b">clear_pipeline_trackinfo</a> (<a class="el" href="streamer__api_8h.html#a91bb040bd7266f74d2b757bb58ad5ac4">PipelineHandle</a> handle)</td></tr>
 <tr class="memdesc:af371874c6036707e54fa6383a7e2f61b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the pipeline track info cache.  <a href="pipeline_8c.html#af371874c6036707e54fa6383a7e2f61b">More...</a><br /></td></tr>
 <tr class="separator:af371874c6036707e54fa6383a7e2f61b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af69f0380c59f5c3af1a8fb5947263a2d"><td class="memItemLeft" align="right" valign="top"><a id="af69f0380c59f5c3af1a8fb5947263a2d"></a>
+int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>is_element_in_pipeline</b> (<a class="el" href="structPipelineElements.html">PipelineElements</a> pipe_elems, <a class="el" href="streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958">ElementIndex</a> id)</td></tr>
+<tr class="separator:af69f0380c59f5c3af1a8fb5947263a2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a86b7792eacba431d5dce5fbdd126c9ac"></a>
@@ -249,8 +252,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a826f42bc49d505e38ec0effde8b51a53"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a826f42bc49d505e38ec0effde8b51a53">&#9670;&nbsp;</a></span>create_pipeline()</h2>
+<a id="ae595bafc8ba38042cd2934e5c284c841"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae595bafc8ba38042cd2934e5c284c841">&#9670;&nbsp;</a></span>create_pipeline()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -270,12 +273,6 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652">StreamPipelineType</a>&#160;</td>
-          <td class="paramname"><em>type</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">osa_msgq_handle_t *&#160;</td>
           <td class="paramname"><em>app_mq</em>&#160;</td>
         </tr>
@@ -291,7 +288,6 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>Pointer to pipeline </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">index</td><td>Index of pipeline within streamer task </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>Pipeline type </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">app_mq</td><td>Application message queue</td></tr>
   </table>
   </dd>

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -100,6 +100,7 @@ $(document).ready(function(){initNavTree('a00059.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
@@ -128,9 +129,15 @@ OCOTP example</h1>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00470"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a00470">ocotp_timing_t</a></td></tr>
-<tr class="memdesc:a00470"><td class="mdescLeft">&#160;</td><td class="mdescRight">OCOTP timing structure.  <a href="a00059.html#a00470">More...</a><br/></td></tr>
-<tr class="separator:a00470"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00462"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a00462">_ocotp_timing</a></td></tr>
+<tr class="memdesc:a00462"><td class="mdescLeft">&#160;</td><td class="mdescRight">OCOTP timing structure.  <a href="a00059.html#a00462">More...</a><br/></td></tr>
+<tr class="separator:a00462"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga8f3dfc0636f2758f21ed76d4e7196c4f"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00059.html#a00462">_ocotp_timing</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ga8f3dfc0636f2758f21ed76d4e7196c4f">ocotp_timing_t</a></td></tr>
+<tr class="memdesc:ga8f3dfc0636f2758f21ed76d4e7196c4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">OCOTP timing structure.  <a href="#ga8f3dfc0636f2758f21ed76d4e7196c4f">More...</a><br/></td></tr>
+<tr class="separator:ga8f3dfc0636f2758f21ed76d4e7196c4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -192,12 +199,12 @@ Driver version</h2></td></tr>
 <tr class="separator:ga211ad512cb6afc3a8649a61c4f887dd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00470" id="a00470"></a>
+<a name="a00462" id="a00462"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct ocotp_timing_t</td>
+          <td class="memname">struct _ocotp_timing</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -205,62 +212,62 @@ Driver version</h2></td></tr>
 <p>Tsp_rd=(WAIT+1)/ipg_clk_freq should be &gt;= 150ns; Tsp_pgm=(RELAX+1)/ipg_clk_freq should be &gt;= 100ns; Trd = ((STROBE_READ+1)- 2*(RELAX_READ+1)) /ipg_clk_freq, The Trd is required to be larger than 40 ns. Tpgm = ((STROBE_PROG+1)- 2*(RELAX_PROG+1)) /ipg_clk_freq; The Tpgm should be configured within the range of 9000 ns &lt; Tpgm &lt; 11000 ns; </p>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:acd8c4f8763dcb388f62bfa50d6e97a64"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#acd8c4f8763dcb388f62bfa50d6e97a64">wait</a></td></tr>
-<tr class="memdesc:acd8c4f8763dcb388f62bfa50d6e97a64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait time value to fill in the TIMING register.  <a href="#acd8c4f8763dcb388f62bfa50d6e97a64">More...</a><br/></td></tr>
-<tr class="separator:acd8c4f8763dcb388f62bfa50d6e97a64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9fea8ef8e47c7341a275e2dae68efa0e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a9fea8ef8e47c7341a275e2dae68efa0e">relax</a></td></tr>
-<tr class="memdesc:a9fea8ef8e47c7341a275e2dae68efa0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Relax time value to fill in the TIMING register.  <a href="#a9fea8ef8e47c7341a275e2dae68efa0e">More...</a><br/></td></tr>
-<tr class="separator:a9fea8ef8e47c7341a275e2dae68efa0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e99b30121ba46182baae7906e68ca21"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a8e99b30121ba46182baae7906e68ca21">strobe_prog</a></td></tr>
-<tr class="memdesc:a8e99b30121ba46182baae7906e68ca21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Storbe program time value to fill in the TIMING register.  <a href="#a8e99b30121ba46182baae7906e68ca21">More...</a><br/></td></tr>
-<tr class="separator:a8e99b30121ba46182baae7906e68ca21"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abef3ec7b5191795eba9de0374b4e15cc"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#abef3ec7b5191795eba9de0374b4e15cc">strobe_read</a></td></tr>
-<tr class="memdesc:abef3ec7b5191795eba9de0374b4e15cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Storbe read time value to fill in the TIMING register.  <a href="#abef3ec7b5191795eba9de0374b4e15cc">More...</a><br/></td></tr>
-<tr class="separator:abef3ec7b5191795eba9de0374b4e15cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a209b71517255bb7c7de795f2aa940d74"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a209b71517255bb7c7de795f2aa940d74">wait</a></td></tr>
+<tr class="memdesc:a209b71517255bb7c7de795f2aa940d74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait time value to fill in the TIMING register.  <a href="#a209b71517255bb7c7de795f2aa940d74">More...</a><br/></td></tr>
+<tr class="separator:a209b71517255bb7c7de795f2aa940d74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe864c7e56ce16eea8845349a8246a73"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#afe864c7e56ce16eea8845349a8246a73">relax</a></td></tr>
+<tr class="memdesc:afe864c7e56ce16eea8845349a8246a73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Relax time value to fill in the TIMING register.  <a href="#afe864c7e56ce16eea8845349a8246a73">More...</a><br/></td></tr>
+<tr class="separator:afe864c7e56ce16eea8845349a8246a73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6dc87b120b1b5ef51f7aa07b9d21f37b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#a6dc87b120b1b5ef51f7aa07b9d21f37b">strobe_prog</a></td></tr>
+<tr class="memdesc:a6dc87b120b1b5ef51f7aa07b9d21f37b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Storbe program time value to fill in the TIMING register.  <a href="#a6dc87b120b1b5ef51f7aa07b9d21f37b">More...</a><br/></td></tr>
+<tr class="separator:a6dc87b120b1b5ef51f7aa07b9d21f37b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebc7d26f1553dd924b5868a66ec8e417"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#aebc7d26f1553dd924b5868a66ec8e417">strobe_read</a></td></tr>
+<tr class="memdesc:aebc7d26f1553dd924b5868a66ec8e417"><td class="mdescLeft">&#160;</td><td class="mdescRight">Storbe read time value to fill in the TIMING register.  <a href="#aebc7d26f1553dd924b5868a66ec8e417">More...</a><br/></td></tr>
+<tr class="separator:aebc7d26f1553dd924b5868a66ec8e417"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="acd8c4f8763dcb388f62bfa50d6e97a64"></a>
+<a class="anchor" id="a209b71517255bb7c7de795f2aa940d74"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ocotp_timing_t::wait</td>
+          <td class="memname">uint32_t _ocotp_timing::wait</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a9fea8ef8e47c7341a275e2dae68efa0e"></a>
+<a class="anchor" id="afe864c7e56ce16eea8845349a8246a73"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ocotp_timing_t::relax</td>
+          <td class="memname">uint32_t _ocotp_timing::relax</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a8e99b30121ba46182baae7906e68ca21"></a>
+<a class="anchor" id="a6dc87b120b1b5ef51f7aa07b9d21f37b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ocotp_timing_t::strobe_prog</td>
+          <td class="memname">uint32_t _ocotp_timing::strobe_prog</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="abef3ec7b5191795eba9de0374b4e15cc"></a>
+<a class="anchor" id="aebc7d26f1553dd924b5868a66ec8e417"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ocotp_timing_t::strobe_read</td>
+          <td class="memname">uint32_t _ocotp_timing::strobe_read</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -280,6 +287,21 @@ Driver version</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga8f3dfc0636f2758f21ed76d4e7196c4f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00059.html#a00462">_ocotp_timing</a>  <a class="el" href="a00059.html#ga8f3dfc0636f2758f21ed76d4e7196c4f">ocotp_timing_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Note that, these value are used for calcalating the read/write timings. And the values should statisfy below rules:</p>
+<p>Tsp_rd=(WAIT+1)/ipg_clk_freq should be &gt;= 150ns; Tsp_pgm=(RELAX+1)/ipg_clk_freq should be &gt;= 100ns; Trd = ((STROBE_READ+1)- 2*(RELAX_READ+1)) /ipg_clk_freq, The Trd is required to be larger than 40 ns. Tpgm = ((STROBE_PROG+1)- 2*(RELAX_PROG+1)) /ipg_clk_freq; The Tpgm should be configured within the range of 9000 ns &lt; Tpgm &lt; 11000 ns; </p>
 
 </div>
 </div>

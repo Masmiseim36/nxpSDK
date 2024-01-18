@@ -35,6 +35,7 @@ var searchData=
   ['attr',['ATTR',['../a00021.html#a4ac302b14c968761b4bd8bc4e620d9f6',1,'edma_tcd_t']]],
   ['attribute',['attribute',['../a00081.html#a3c14a6798aa0951a5fd9d20799b97710',1,'usdhc_adma2_descriptor_t']]],
   ['ausize',['auSize',['../a00054.html#a535a43e71acdebb2115411cc8f388043',1,'sd_status_t']]],
+  ['autofreshtimes',['autofreshTimes',['../a00069.html#a550bee43e688cb36696064bb0b4b37e3',1,'semc_sdram_config_t']]],
   ['awrseqindex',['AWRSeqIndex',['../a00041.html#a2902cf884ec786ae844bb70081c4c66a',1,'flexspi_device_config_t']]],
   ['awrseqnumber',['AWRSeqNumber',['../a00041.html#a6b9beed37b207c23d3f94621a14ae851',1,'flexspi_device_config_t']]],
   ['axiaddress',['axiAddress',['../a00069.html#a7021d8697aaffcf93a31ffc779128f42',1,'semc_nand_config_t']]],

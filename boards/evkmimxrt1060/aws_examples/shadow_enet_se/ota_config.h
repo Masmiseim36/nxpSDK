@@ -53,7 +53,12 @@
 #define LIBRARY_LOG_LEVEL LOG_INFO
 #endif
 
+
 #include "logging.h"
+
+#define APP_VERSION_MAJOR                      0
+#define APP_VERSION_MINOR                      9
+#define APP_VERSION_BUILD                      3
 
 /**
  * @brief The number of words allocated to the stack for the OTA agent.
@@ -75,7 +80,7 @@
 /**
  * @brief Milliseconds to wait for the self test phase to succeed before we force reset.
  */
-#define otaconfigSELF_TEST_RESPONSE_WAIT_MS 16000U
+#define otaconfigSELF_TEST_RESPONSE_WAIT_MS 60000U
 
 /**
  * @brief Milliseconds to wait before requesting data blocks from the OTA service if nothing is happening.

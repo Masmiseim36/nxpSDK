@@ -14,7 +14,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-/* Copyright 2021,2023 NXP
+/* Copyright 2021 NXP
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -413,7 +413,6 @@
 
 #endif //  SSS_HAVE_MBEDTLS_ALT
 
-#if SSS_HAVE_MBEDTLS_ALT
 #if defined(CPU_MIMXRT1176DVMAA_cm7)
 
 #if defined(MBEDTLS_ECP_DP_CURVE25519_ENABLED)
@@ -421,17 +420,12 @@
 #endif // MBEDTLS_ECP_DP_CURVE25519_ENABLED
 #endif //  defined(CPU_MIMXRT1176DVMAA_cm7)
 
-#endif //  SSS_HAVE_MBEDTLS_ALT
-
-#if SSS_HAVE_MBEDTLS_ALT
 #if defined(CPU_MIMXRT1176DVMAA_cm7)
 
 #if defined(MBEDTLS_ECP_DP_CURVE448_ENABLED)
     #undef MBEDTLS_ECP_DP_CURVE448_ENABLED
 #endif // MBEDTLS_ECP_DP_CURVE448_ENABLED
 #endif //  defined(CPU_MIMXRT1176DVMAA_cm7)
-
-#endif //  SSS_HAVE_MBEDTLS_ALT
 
 #if SSS_HAVE_MBEDTLS_ALT
 #if (SSS_HAVE_MBEDTLS_ALT_A71CH || SSS_HAVE_APPLET_A71CH)
@@ -562,13 +556,6 @@
 #endif //  (SSS_HAVE_MBEDTLS_ALT_A71CH || SSS_HAVE_APPLET_A71CH)
 
 #endif //  SSS_HAVE_MBEDTLS_ALT
-
-#if defined(configFRTOS_MEMORY_SCHEME) && (configFRTOS_MEMORY_SCHEME == 4)
-
-#if defined(MBEDTLS_FREESCALE_FREERTOS_CALLOC_ALT)
-    #undef MBEDTLS_FREESCALE_FREERTOS_CALLOC_ALT
-#endif // MBEDTLS_FREESCALE_FREERTOS_CALLOC_ALT
-#endif //  defined(configFRTOS_MEMORY_SCHEME) && (configFRTOS_MEMORY_SCHEME == 4)
 
 #include <fsl_sss_types.h>
 

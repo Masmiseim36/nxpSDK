@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['ramfunction_5fsection_5fcode',['RAMFUNCTION_SECTION_CODE',['../a00266.html#ga0cc30b1528f944524f009ada9c85e897',1,'fsl_common_arm.h']]],
   ['rdpinindex',['RDPinIndex',['../a00034.html#a73b8476bbca6a7c72d02f07a6c717a72',1,'FLEXIO_MCULCD_Type']]],
   ['rdyactivepolarity',['rdyactivePolarity',['../a00069.html#a0facee44eadc70940a85e4489f8d7f98',1,'semc_nand_config_t::rdyactivePolarity()'],['../a00069.html#af086c1180b6b9b1028407bd7f6d652e8',1,'semc_nor_config_t::rdyactivePolarity()']]],
   ['read_5fmmc_5ftransfer_5fspeed_5ffrequency_5funit',['READ_MMC_TRANSFER_SPEED_FREQUENCY_UNIT',['../a00054.html#ga6ace326c14fb558be1e04e3389daf944',1,'fsl_sdmmc_spec.h']]],

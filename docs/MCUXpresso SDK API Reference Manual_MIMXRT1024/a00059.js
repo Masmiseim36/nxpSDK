@@ -1,64 +1,138 @@
 var a00059 =
 [
-    [ "rtwdog_work_mode_t", "a00059.html#a00453", [
-      [ "enableWait", "a00059.html#ab54bf4ab423e60be41368acdb2602439", null ],
-      [ "enableStop", "a00059.html#ae8caa5a6c04d0f3dcafba6ac6adb9905", null ],
-      [ "enableDebug", "a00059.html#ab26c42c1815cfdc9b8b5f759db9be94d", null ]
+    [ "_qtmr_config", "a00059.html#a00445", [
+      [ "primarySource", "a00059.html#a8b5e6734afe622b0b6d615e11713727e", null ],
+      [ "secondarySource", "a00059.html#a9a88fcdbf8b6bc148dda9d39c875816e", null ],
+      [ "enableMasterMode", "a00059.html#a1e5c968de0f19338cff26b5e709bbe89", null ],
+      [ "enableExternalForce", "a00059.html#ae7f7809dce8f13e991db067d186aa58e", null ],
+      [ "faultFilterCount", "a00059.html#aa767f2eba6a9fe9e0050f573abaac867", null ],
+      [ "faultFilterPeriod", "a00059.html#a74fb769e26254cc0607048ffe9cd44e9", null ],
+      [ "debugMode", "a00059.html#aa9919266389d30cc15fc20f169465ec6", null ]
     ] ],
-    [ "rtwdog_config_t", "a00059.html#a00452", [
-      [ "enableRtwdog", "a00059.html#a4d385e66b0c28b471ad83fe2e6fc6a1b", null ],
-      [ "clockSource", "a00059.html#aff561a937f074058a0565d2ffded113b", null ],
-      [ "prescaler", "a00059.html#adf6d7a1cdf7d57cc6f2893d3eef8f0e2", null ],
-      [ "workMode", "a00059.html#af6a2f68b62b07a7021f877944a685c44", null ],
-      [ "testMode", "a00059.html#a82219c16b8f8486929b76b2378ea61aa", null ],
-      [ "enableUpdate", "a00059.html#a99c63818532637f61d00993753da6511", null ],
-      [ "enableInterrupt", "a00059.html#af397bc8e047c5572cfe977a1a094b04d", null ],
-      [ "enableWindowMode", "a00059.html#a005c4d1da33cdaa57cc868658969b963", null ],
-      [ "windowValue", "a00059.html#a9869a43ba272014de8f4b2f91ec45e10", null ],
-      [ "timeoutValue", "a00059.html#ab4192d93defc5943013d8376f708325d", null ]
+    [ "FSL_QTMR_DRIVER_VERSION", "a00059.html#gaa3cc9c79870a53a1419015cd9b03f4a3", null ],
+    [ "qtmr_primary_count_source_t", "a00059.html#ga4ea0a9cd8018f8b196ad804a9ff61a1d", null ],
+    [ "qtmr_input_source_t", "a00059.html#ga29a19b9c732d02b9796b19f1641ba56d", null ],
+    [ "qtmr_counting_mode_t", "a00059.html#ga0a1bd60ca351335e5a8af99101339249", null ],
+    [ "qtmr_pwm_out_state_t", "a00059.html#ga15dbb44d023aee7525014e32c392922f", null ],
+    [ "qtmr_output_mode_t", "a00059.html#ga1568fc144aebb5bf37e592a4a6e4255a", null ],
+    [ "qtmr_input_capture_edge_t", "a00059.html#gaeb2189cc6676aa1378284a31db029320", null ],
+    [ "qtmr_preload_control_t", "a00059.html#gad4646e705b1b6c464efcb77cf2606e1d", null ],
+    [ "qtmr_debug_action_t", "a00059.html#ga03a31312296c3fbecc4385b1e7015c3d", null ],
+    [ "qtmr_interrupt_enable_t", "a00059.html#gaee1dc71bd7c5508840a81a232e90815c", null ],
+    [ "qtmr_status_flags_t", "a00059.html#ga49b9b59613b425acee4f72354fada89c", null ],
+    [ "qtmr_channel_selection_t", "a00059.html#ga0d1e97f6d2595ce1be1f4db4c763f8b9", null ],
+    [ "qtmr_dma_enable_t", "a00059.html#gaa733a25624223009d265d8d68051896e", null ],
+    [ "qtmr_config_t", "a00059.html#gae84e67660d634d68cefbe78429ead82f", null ],
+    [ "_qtmr_primary_count_source", "a00059.html#gab3bfd4981be352afb53eba7403b283bc", [
+      [ "kQTMR_ClockCounter0InputPin", "a00059.html#ggab3bfd4981be352afb53eba7403b283bca82276acc1d08d80b29fa586ae3fe603d", null ],
+      [ "kQTMR_ClockCounter1InputPin", "a00059.html#ggab3bfd4981be352afb53eba7403b283bca3ac60049c157df8139a7e926db1b923a", null ],
+      [ "kQTMR_ClockCounter2InputPin", "a00059.html#ggab3bfd4981be352afb53eba7403b283bcad0e59d8a4117a8850db9c0a8723cfc98", null ],
+      [ "kQTMR_ClockCounter3InputPin", "a00059.html#ggab3bfd4981be352afb53eba7403b283bcae80200a156049ee287f0d997c59ef226", null ],
+      [ "kQTMR_ClockCounter0Output", "a00059.html#ggab3bfd4981be352afb53eba7403b283bca9240e72f468d64e2cdbe7fc2b9f0b67b", null ],
+      [ "kQTMR_ClockCounter1Output", "a00059.html#ggab3bfd4981be352afb53eba7403b283bca072bed168beaf44bc8c7acca57984c56", null ],
+      [ "kQTMR_ClockCounter2Output", "a00059.html#ggab3bfd4981be352afb53eba7403b283bca51ba38ae41469d5ed53b4803f174bf42", null ],
+      [ "kQTMR_ClockCounter3Output", "a00059.html#ggab3bfd4981be352afb53eba7403b283bca70478379b0f446293d8b7df484de649c", null ],
+      [ "kQTMR_ClockDivide_1", "a00059.html#ggab3bfd4981be352afb53eba7403b283bca4c71c77d70c5a24b4e8f1ef386229558", null ],
+      [ "kQTMR_ClockDivide_2", "a00059.html#ggab3bfd4981be352afb53eba7403b283bcaa1804764d102bbd2ccfeff8000eda66e", null ],
+      [ "kQTMR_ClockDivide_4", "a00059.html#ggab3bfd4981be352afb53eba7403b283bca1b95af06de1beefbc39e2d6566d39438", null ],
+      [ "kQTMR_ClockDivide_8", "a00059.html#ggab3bfd4981be352afb53eba7403b283bca33a7f169f5152d281f1f4d60439e3b1d", null ],
+      [ "kQTMR_ClockDivide_16", "a00059.html#ggab3bfd4981be352afb53eba7403b283bca0f286e5b68c7521941cf0e2909c5bc51", null ],
+      [ "kQTMR_ClockDivide_32", "a00059.html#ggab3bfd4981be352afb53eba7403b283bcaa4601397fa55cb677c65b64ebc7ca869", null ],
+      [ "kQTMR_ClockDivide_64", "a00059.html#ggab3bfd4981be352afb53eba7403b283bca831d3c0a294d561aafffd9730d728f60", null ],
+      [ "kQTMR_ClockDivide_128", "a00059.html#ggab3bfd4981be352afb53eba7403b283bcad70531180a310b63317cb4c426ddefdd", null ]
     ] ],
-    [ "WDOG_FIRST_WORD_OF_UNLOCK", "a00059.html#ga8825b35bd62726165737f5dc0f5f61e4", null ],
-    [ "WDOG_SECOND_WORD_OF_UNLOCK", "a00059.html#gae2018a4151df654f86822786500cf2d3", null ],
-    [ "WDOG_FIRST_WORD_OF_REFRESH", "a00059.html#ga10f1df824e5965d6413b2e892fd04659", null ],
-    [ "WDOG_SECOND_WORD_OF_REFRESH", "a00059.html#ga2a375c7e4d71e7f52e899bce0a9106ee", null ],
-    [ "FSL_RTWDOG_DRIVER_VERSION", "a00059.html#ga036d8fa82f101485bb1bef62fbe0efec", null ],
-    [ "rtwdog_clock_source_t", "a00059.html#ga106ba79a9a7b0863ca8555c5d8ad9b3b", [
-      [ "kRTWDOG_ClockSource0", "a00059.html#gga106ba79a9a7b0863ca8555c5d8ad9b3ba89fe3caec9c47ea18afbea78fa7b75db", null ],
-      [ "kRTWDOG_ClockSource1", "a00059.html#gga106ba79a9a7b0863ca8555c5d8ad9b3ba0490435c4f8e6b5f2bfb4d4959ee6ce5", null ],
-      [ "kRTWDOG_ClockSource2", "a00059.html#gga106ba79a9a7b0863ca8555c5d8ad9b3ba596c695b96b5287f927f74d78577fe84", null ],
-      [ "kRTWDOG_ClockSource3", "a00059.html#gga106ba79a9a7b0863ca8555c5d8ad9b3bad51ba4630b31474e7d497d1defc3075a", null ]
+    [ "_qtmr_input_source", "a00059.html#ga937afaf81c45faac7536d280660fbdfc", [
+      [ "kQTMR_Counter0InputPin", "a00059.html#gga937afaf81c45faac7536d280660fbdfca91da9d3d2dec949d2fbc696683a2bf48", null ],
+      [ "kQTMR_Counter1InputPin", "a00059.html#gga937afaf81c45faac7536d280660fbdfca5cfa9210c1c07adfb38c8e93433f9be4", null ],
+      [ "kQTMR_Counter2InputPin", "a00059.html#gga937afaf81c45faac7536d280660fbdfca9b0145605c71dbb24adcf87924f9a563", null ],
+      [ "kQTMR_Counter3InputPin", "a00059.html#gga937afaf81c45faac7536d280660fbdfca24c791aa35fb4cf2fb2d623b309d20ab", null ]
     ] ],
-    [ "rtwdog_clock_prescaler_t", "a00059.html#ga2a46bb420b0a97fc9d440ee7ef329ffa", [
-      [ "kRTWDOG_ClockPrescalerDivide1", "a00059.html#gga2a46bb420b0a97fc9d440ee7ef329ffaaffcd087724256907ae1e47f896461e78", null ],
-      [ "kRTWDOG_ClockPrescalerDivide256", "a00059.html#gga2a46bb420b0a97fc9d440ee7ef329ffaa1b8252427d181ff4de3e4ea7eb1aac52", null ]
+    [ "_qtmr_counting_mode", "a00059.html#ga39db6ba37356b9e81a0a77c28a982765", [
+      [ "kQTMR_NoOperation", "a00059.html#gga39db6ba37356b9e81a0a77c28a982765ac48116c1f656ee1cabe104f9c2c49843", null ],
+      [ "kQTMR_PriSrcRiseEdge", "a00059.html#gga39db6ba37356b9e81a0a77c28a982765acdbf5f143450aa0a9f3f0ab23baddc6b", null ],
+      [ "kQTMR_PriSrcRiseAndFallEdge", "a00059.html#gga39db6ba37356b9e81a0a77c28a982765a44b92eb2c4c5227890f8f39a041301d3", null ],
+      [ "kQTMR_PriSrcRiseEdgeSecInpHigh", "a00059.html#gga39db6ba37356b9e81a0a77c28a982765a3ef3ad7ac6a8200fa20df9978bb2ae8d", null ],
+      [ "kQTMR_QuadCountMode", "a00059.html#gga39db6ba37356b9e81a0a77c28a982765ad3e02baca02a32350ca9da6ac7ceb5d8", null ],
+      [ "kQTMR_PriSrcRiseEdgeSecDir", "a00059.html#gga39db6ba37356b9e81a0a77c28a982765aa514bc2e0906a7cbab11373f3dea5e82", null ],
+      [ "kQTMR_SecSrcTrigPriCnt", "a00059.html#gga39db6ba37356b9e81a0a77c28a982765abaec5373ab714b0b58ce2e56f79bbf8a", null ],
+      [ "kQTMR_CascadeCount", "a00059.html#gga39db6ba37356b9e81a0a77c28a982765aac99a0f3873161f9cf61f724f2a8570b", null ]
     ] ],
-    [ "rtwdog_test_mode_t", "a00059.html#gae84238ba96d9319d820c3319c5f7e526", [
-      [ "kRTWDOG_TestModeDisabled", "a00059.html#ggae84238ba96d9319d820c3319c5f7e526a62fe6bb45f28e5b1275bfa1aad708124", null ],
-      [ "kRTWDOG_UserModeEnabled", "a00059.html#ggae84238ba96d9319d820c3319c5f7e526ae12fd7134b26ac7e621f2117f3312598", null ],
-      [ "kRTWDOG_LowByteTest", "a00059.html#ggae84238ba96d9319d820c3319c5f7e526ab885cb05aaad282ee54fe47b8ad270cc", null ],
-      [ "kRTWDOG_HighByteTest", "a00059.html#ggae84238ba96d9319d820c3319c5f7e526aaf013b692ea93f0de8a9c47a814ac09d", null ]
+    [ "_qtmr_pwm_out_state", "a00059.html#ga80b46a49c1eafaa150ad3dcc1a184223", [
+      [ "kQTMR_PwmLow", "a00059.html#gga80b46a49c1eafaa150ad3dcc1a184223ac1f1720b29f57f6bdf0364709f96a6c2", null ],
+      [ "kQTMR_PwmHigh", "a00059.html#gga80b46a49c1eafaa150ad3dcc1a184223a74ea9af3309cfad4a8dc7bb86d334677", null ]
     ] ],
-    [ "_rtwdog_interrupt_enable_t", "a00059.html#ga4225d9230a4625186e9b65be501bbc24", [
-      [ "kRTWDOG_InterruptEnable", "a00059.html#gga4225d9230a4625186e9b65be501bbc24a885f5134f82a48fe257077a88410679a", null ]
+    [ "_qtmr_output_mode", "a00059.html#gad68440a901fdac28c5e1521a5e6653b4", [
+      [ "kQTMR_AssertWhenCountActive", "a00059.html#ggad68440a901fdac28c5e1521a5e6653b4a3a0003a83a00acc39a519d540c562472", null ],
+      [ "kQTMR_ClearOnCompare", "a00059.html#ggad68440a901fdac28c5e1521a5e6653b4a0716e351e1601a6f246f253543e3f03c", null ],
+      [ "kQTMR_SetOnCompare", "a00059.html#ggad68440a901fdac28c5e1521a5e6653b4a9d03a8a577e26d75ee7fe69315faf1f9", null ],
+      [ "kQTMR_ToggleOnCompare", "a00059.html#ggad68440a901fdac28c5e1521a5e6653b4ae637b16574eb8e2a91a873f871eb0a0a", null ],
+      [ "kQTMR_ToggleOnAltCompareReg", "a00059.html#ggad68440a901fdac28c5e1521a5e6653b4af61b88d5df6ecf7a701d1381ea81e5be", null ],
+      [ "kQTMR_SetOnCompareClearOnSecSrcInp", "a00059.html#ggad68440a901fdac28c5e1521a5e6653b4a4e2267dadc673ed9f31574be79999a0a", null ],
+      [ "kQTMR_SetOnCompareClearOnCountRoll", "a00059.html#ggad68440a901fdac28c5e1521a5e6653b4a3f3c1f9871e91f82842b1cae3bd0ea74", null ],
+      [ "kQTMR_EnableGateClock", "a00059.html#ggad68440a901fdac28c5e1521a5e6653b4ae2d75e2129f79fe404497e7910cde617", null ]
     ] ],
-    [ "_rtwdog_status_flags_t", "a00059.html#gab1ef76bc31ec6ca52a50e1aba88a08d8", [
-      [ "kRTWDOG_RunningFlag", "a00059.html#ggab1ef76bc31ec6ca52a50e1aba88a08d8a25e8b493ad61765b2c76486f0fcf3b38", null ],
-      [ "kRTWDOG_InterruptFlag", "a00059.html#ggab1ef76bc31ec6ca52a50e1aba88a08d8a4f384efd078cea907eb1387a22ce24e3", null ]
+    [ "_qtmr_input_capture_edge", "a00059.html#ga857879871ef5138a23b04b9c060b0040", [
+      [ "kQTMR_NoCapture", "a00059.html#gga857879871ef5138a23b04b9c060b0040a07866622cc0be666818813ab0dc2be5e", null ],
+      [ "kQTMR_RisingEdge", "a00059.html#gga857879871ef5138a23b04b9c060b0040a81a4074fdc9fd23cdc31fce8a567d3f4", null ],
+      [ "kQTMR_FallingEdge", "a00059.html#gga857879871ef5138a23b04b9c060b0040a9025803f5cbc483bbdd89f0846db2337", null ],
+      [ "kQTMR_RisingAndFallingEdge", "a00059.html#gga857879871ef5138a23b04b9c060b0040a593937a67ae2969cdfe81595b2177322", null ]
     ] ],
-    [ "RTWDOG_GetDefaultConfig", "a00059.html#ga9b0f93e60a4ad521b60ea546e2b7cde5", null ],
-    [ "RTWDOG_Init", "a00059.html#gaf45b60f55a83c5f3632b4136a3ad2b52", null ],
-    [ "RTWDOG_Deinit", "a00059.html#ga470b1d21c8013531100e7c3c605046a7", null ],
-    [ "RTWDOG_Enable", "a00059.html#gab07abcef0c2d984783ab36df5b08ffa4", null ],
-    [ "RTWDOG_Disable", "a00059.html#ga7526eb9df0830431e942fcbca32ca6cd", null ],
-    [ "RTWDOG_EnableInterrupts", "a00059.html#ga69c0e214f7424205a23a902b688cb00d", null ],
-    [ "RTWDOG_DisableInterrupts", "a00059.html#ga58a299966ea5b0d72eab1e3a95916459", null ],
-    [ "RTWDOG_GetStatusFlags", "a00059.html#gabcee9521ed7f9e2106cbc8844c915910", null ],
-    [ "RTWDOG_EnableWindowMode", "a00059.html#ga6467fc58dc00affb0daf4df8c2edec9d", null ],
-    [ "RTWDOG_CountToMesec", "a00059.html#gafc86c177da23e2aea8980c9722f2d2af", null ],
-    [ "RTWDOG_ClearStatusFlags", "a00059.html#ga49c1f47ae1f5eacc9d33035a96919bd6", null ],
-    [ "RTWDOG_SetTimeoutValue", "a00059.html#ga1ef5c238172a1384ca3add569094505d", null ],
-    [ "RTWDOG_SetWindowValue", "a00059.html#ga8c32aa54a50e5ef0fc68945cb74549ad", null ],
-    [ "RTWDOG_Unlock", "a00059.html#gacac03752d33b0b906a9bc09c7b83d1d1", null ],
-    [ "RTWDOG_Refresh", "a00059.html#ga0d8b4744fc5ad161c8e5fbc47255328e", null ],
-    [ "RTWDOG_GetCounterValue", "a00059.html#ga8c3760e127cbcf22983a65d13c8a4bcd", null ]
+    [ "_qtmr_preload_control", "a00059.html#ga5dd25a95c7a1bdf0e36a01ebc0587c4e", [
+      [ "kQTMR_NoPreload", "a00059.html#gga5dd25a95c7a1bdf0e36a01ebc0587c4eab3811976a0c8cd3db181c6c4ebca3069", null ],
+      [ "kQTMR_LoadOnComp1", "a00059.html#gga5dd25a95c7a1bdf0e36a01ebc0587c4eae32eaef33171ecb9d78f14a615dec69d", null ],
+      [ "kQTMR_LoadOnComp2", "a00059.html#gga5dd25a95c7a1bdf0e36a01ebc0587c4eadb0a17be2615493630d0417d46a53a0e", null ]
+    ] ],
+    [ "_qtmr_debug_action", "a00059.html#ga532f4a66c418536b2686e4a2d1e67a6a", [
+      [ "kQTMR_RunNormalInDebug", "a00059.html#gga532f4a66c418536b2686e4a2d1e67a6aae5ba29aa5fdf66f740155d11670573ad", null ],
+      [ "kQTMR_HaltCounter", "a00059.html#gga532f4a66c418536b2686e4a2d1e67a6aadfeee3fa9d7c79e56a089d4e5f12754b", null ],
+      [ "kQTMR_ForceOutToZero", "a00059.html#gga532f4a66c418536b2686e4a2d1e67a6aaf322d8a7ffa91765fde1077777e3c845", null ],
+      [ "kQTMR_HaltCountForceOutZero", "a00059.html#gga532f4a66c418536b2686e4a2d1e67a6aa582ee8204977e8792431b0a8e1df4bbf", null ]
+    ] ],
+    [ "_qtmr_interrupt_enable", "a00059.html#gaec176a0736feee83cd0a5ba639ecf49e", [
+      [ "kQTMR_CompareInterruptEnable", "a00059.html#ggaec176a0736feee83cd0a5ba639ecf49ead62e3868b70dfceab5f0efe7508ad549", null ],
+      [ "kQTMR_Compare1InterruptEnable", "a00059.html#ggaec176a0736feee83cd0a5ba639ecf49ea60998249ab3a57bedcafe6423fc33cc5", null ],
+      [ "kQTMR_Compare2InterruptEnable", "a00059.html#ggaec176a0736feee83cd0a5ba639ecf49ea9d2f4a4ad09245fea4bd6449b74365b9", null ],
+      [ "kQTMR_OverflowInterruptEnable", "a00059.html#ggaec176a0736feee83cd0a5ba639ecf49ead4a0db29d76733779c01466d76c15749", null ],
+      [ "kQTMR_EdgeInterruptEnable", "a00059.html#ggaec176a0736feee83cd0a5ba639ecf49ea8267b0a66e5a77686cb760376c7f8885", null ]
+    ] ],
+    [ "_qtmr_status_flags", "a00059.html#gafd14e0162c8813ed61f926cfb64a2738", [
+      [ "kQTMR_CompareFlag", "a00059.html#ggafd14e0162c8813ed61f926cfb64a2738a409aa72557c34591ad293136dc57bbd8", null ],
+      [ "kQTMR_Compare1Flag", "a00059.html#ggafd14e0162c8813ed61f926cfb64a2738a6a6cc5fb43d34289b2a0ffe0f7e29c6b", null ],
+      [ "kQTMR_Compare2Flag", "a00059.html#ggafd14e0162c8813ed61f926cfb64a2738a9891c08b2e3124af1e79180ee1d052f7", null ],
+      [ "kQTMR_OverflowFlag", "a00059.html#ggafd14e0162c8813ed61f926cfb64a2738ac3330de0db5003ed7fe15a5f72f6fe73", null ],
+      [ "kQTMR_EdgeFlag", "a00059.html#ggafd14e0162c8813ed61f926cfb64a2738af4e7b95463c8e1d2f568c7062314be71", null ]
+    ] ],
+    [ "_qtmr_channel_selection", "a00059.html#ga5b6e8eef3ce5c6ea523c4c608340bf58", [
+      [ "kQTMR_Channel_0", "a00059.html#gga5b6e8eef3ce5c6ea523c4c608340bf58aa45014ee1078e4a1471e6a637c9b3fca", null ],
+      [ "kQTMR_Channel_1", "a00059.html#gga5b6e8eef3ce5c6ea523c4c608340bf58ae9ad347957a75c32c4ee19666b511247", null ],
+      [ "kQTMR_Channel_2", "a00059.html#gga5b6e8eef3ce5c6ea523c4c608340bf58a74987baa3ad6b998e75cd16c1df69c26", null ],
+      [ "kQTMR_Channel_3", "a00059.html#gga5b6e8eef3ce5c6ea523c4c608340bf58a82e08b122bf226f69d3c1c9cafc9931f", null ]
+    ] ],
+    [ "_qtmr_dma_enable", "a00059.html#gadcb7a886a15b92ad93076228968549fe", [
+      [ "kQTMR_InputEdgeFlagDmaEnable", "a00059.html#ggadcb7a886a15b92ad93076228968549fea73d036ed01f812c118bc50b27f36cdc7", null ],
+      [ "kQTMR_ComparatorPreload1DmaEnable", "a00059.html#ggadcb7a886a15b92ad93076228968549feaaef33e58d8247771b5e594c14ca5b571", null ],
+      [ "kQTMR_ComparatorPreload2DmaEnable", "a00059.html#ggadcb7a886a15b92ad93076228968549feaf414da5b48883e81009734f59b546624", null ]
+    ] ],
+    [ "QTMR_Init", "a00059.html#gab784ac72bb2bf452ffca29053b05fa7c", null ],
+    [ "QTMR_Deinit", "a00059.html#gaa15a9d1613394d4715f3fc600626e3cc", null ],
+    [ "QTMR_GetDefaultConfig", "a00059.html#ga6f70f9eb710dde4743e8e9346dc41c65", null ],
+    [ "QTMR_SetupPwm", "a00059.html#ga364220c9fcdf15f102e60c7c76041c06", null ],
+    [ "QTMR_SetupInputCapture", "a00059.html#gaab1b216e8bae644b8027cf8eaa4e2964", null ],
+    [ "QTMR_EnableInterrupts", "a00059.html#ga4756ec6b825cde8eecd0287591885985", null ],
+    [ "QTMR_DisableInterrupts", "a00059.html#ga7245d99b70c9df88a8ee0756913ac179", null ],
+    [ "QTMR_GetEnabledInterrupts", "a00059.html#gafe580603d4441b8a2101ca86485c517c", null ],
+    [ "QTMR_GetStatus", "a00059.html#ga89d05673c74e2f8ccc6c5cbecdab962c", null ],
+    [ "QTMR_ClearStatusFlags", "a00059.html#gac453dce78b2f4079aacbb02d857273ae", null ],
+    [ "QTMR_SetTimerPeriod", "a00059.html#ga1d1fe996963cd527aabb034888e994b4", null ],
+    [ "QTMR_SetCompareValue", "a00059.html#ga9764da43797074b65a4689a6df999cba", null ],
+    [ "QTMR_SetLoadValue", "a00059.html#ga3db9e42ab0f483438a720139353937f7", null ],
+    [ "QTMR_GetCurrentTimerCount", "a00059.html#ga1691975f2406bcaf64a24a065dd2c679", null ],
+    [ "QTMR_StartTimer", "a00059.html#ga14d9ab0215127155e559a9f98f4fc7f4", null ],
+    [ "QTMR_StopTimer", "a00059.html#gad1a85cff4fe7e16d497b59d9fea2ad58", null ],
+    [ "QTMR_EnableDma", "a00059.html#ga73b23acbae47d427ea8513cfb239e32d", null ],
+    [ "QTMR_DisableDma", "a00059.html#ga0645602d837cd4e7ad7e8d80dbf3ffae", null ],
+    [ "QTMR_SetPwmOutputToIdle", "a00059.html#ga6829a4d084cf7275d610c31928443867", null ],
+    [ "QTMR_GetPwmOutputStatus", "a00059.html#ga30e6d57c776b790a42dffc32f1807344", null ],
+    [ "QTMR_GetPwmChannelStatus", "a00059.html#gafa79fe21d65270ec7bae480289e9f0d3", null ],
+    [ "QTMR_SetPwmClockMode", "a00059.html#ga2e6a1a6d8fd0593fae5eb49e79b6b038", null ]
 ];

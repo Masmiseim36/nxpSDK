@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -315,6 +315,22 @@ Slave IRQ handler</h2></td></tr>
 <tr class="memitem:a061ed35a72d6e8ffe9a02be00f633f87"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a061ed35a72d6e8ffe9a02be00f633f87">enableGeneralCall</a></td></tr>
 <tr class="memdesc:a061ed35a72d6e8ffe9a02be00f633f87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable general call address matching.  <a href="#a061ed35a72d6e8ffe9a02be00f633f87">More...</a><br/></td></tr>
 <tr class="separator:a061ed35a72d6e8ffe9a02be00f633f87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38bb14645d844ee60d310a48be08be24"><td class="memItemLeft" >struct {</td></tr>
+<tr class="memitem:ab945359f4117581c86b0aca7d47e35b6"><td class="memItemLeft" >&#160;&#160;&#160;bool&#160;&#160;&#160;<a class="el" href="a00048.html#ab2cd4a19f68523031122851dd0ab1386">enableAck</a></td></tr>
+<tr class="memdesc:ab945359f4117581c86b0aca7d47e35b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables SCL clock stretching during slave-transmit address byte(s) and slave-receiver address and data byte(s) to allow software to write the Transmit ACK Register before the ACK or NACK is transmitted.  <a href="#ab945359f4117581c86b0aca7d47e35b6">More...</a><br/></td></tr>
+<tr class="separator:ab945359f4117581c86b0aca7d47e35b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1a58c039bbbfe2ad49bcf9ce7b3349e"><td class="memItemLeft" >&#160;&#160;&#160;bool&#160;&#160;&#160;<a class="el" href="a00048.html#ad0fea92e29e7afff3d7072ab3c722bc8">enableTx</a></td></tr>
+<tr class="memdesc:af1a58c039bbbfe2ad49bcf9ce7b3349e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables SCL clock stretching when the transmit data flag is set during a slave-transmit transfer.  <a href="#af1a58c039bbbfe2ad49bcf9ce7b3349e">More...</a><br/></td></tr>
+<tr class="separator:af1a58c039bbbfe2ad49bcf9ce7b3349e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7aaa5286baf8424bd393276000b53ad9"><td class="memItemLeft" >&#160;&#160;&#160;bool&#160;&#160;&#160;<a class="el" href="a00048.html#aff856d2084ff0ede49f0ff25e6cf5529">enableRx</a></td></tr>
+<tr class="memdesc:a7aaa5286baf8424bd393276000b53ad9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables SCL clock stretching when receive data flag is set during a slave-receive transfer.  <a href="#a7aaa5286baf8424bd393276000b53ad9">More...</a><br/></td></tr>
+<tr class="separator:a7aaa5286baf8424bd393276000b53ad9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17bcee6c44e291174013b665cca9e4d5"><td class="memItemLeft" >&#160;&#160;&#160;bool&#160;&#160;&#160;<a class="el" href="a00048.html#a6ec794389bd9fb5e51c802bb0b9ee26b">enableAddress</a></td></tr>
+<tr class="memdesc:a17bcee6c44e291174013b665cca9e4d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables SCL clock stretching when the address valid flag is asserted.  <a href="#a17bcee6c44e291174013b665cca9e4d5">More...</a><br/></td></tr>
+<tr class="separator:a17bcee6c44e291174013b665cca9e4d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38bb14645d844ee60d310a48be08be24"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a38bb14645d844ee60d310a48be08be24">sclStall</a></td></tr>
+<tr class="memdesc:a38bb14645d844ee60d310a48be08be24"><td class="mdescLeft">&#160;</td><td class="mdescRight">SCL stall enable options.  <a href="#a38bb14645d844ee60d310a48be08be24">More...</a><br/></td></tr>
+<tr class="separator:a38bb14645d844ee60d310a48be08be24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae68493537f90f7bff4a421ff534fb7a1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ae68493537f90f7bff4a421ff534fb7a1">ignoreAck</a></td></tr>
 <tr class="memdesc:ae68493537f90f7bff4a421ff534fb7a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Continue transfers after a NACK is detected.  <a href="#ae68493537f90f7bff4a421ff534fb7a1">More...</a><br/></td></tr>
 <tr class="separator:ae68493537f90f7bff4a421ff534fb7a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -333,18 +349,6 @@ Slave IRQ handler</h2></td></tr>
 <tr class="memitem:a2e672f5446e7d86eb9d74bdc785df0fb"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a2e672f5446e7d86eb9d74bdc785df0fb">clockHoldTime_ns</a></td></tr>
 <tr class="memdesc:a2e672f5446e7d86eb9d74bdc785df0fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Width in nanoseconds of the clock hold time.  <a href="#a2e672f5446e7d86eb9d74bdc785df0fb">More...</a><br/></td></tr>
 <tr class="separator:a2e672f5446e7d86eb9d74bdc785df0fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2cd4a19f68523031122851dd0ab1386"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ab2cd4a19f68523031122851dd0ab1386">enableAck</a></td></tr>
-<tr class="memdesc:ab2cd4a19f68523031122851dd0ab1386"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables SCL clock stretching during slave-transmit address byte(s) and slave-receiver address and data byte(s) to allow software to write the Transmit ACK Register before the ACK or NACK is transmitted.  <a href="#ab2cd4a19f68523031122851dd0ab1386">More...</a><br/></td></tr>
-<tr class="separator:ab2cd4a19f68523031122851dd0ab1386"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad0fea92e29e7afff3d7072ab3c722bc8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ad0fea92e29e7afff3d7072ab3c722bc8">enableTx</a></td></tr>
-<tr class="memdesc:ad0fea92e29e7afff3d7072ab3c722bc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables SCL clock stretching when the transmit data flag is set during a slave-transmit transfer.  <a href="#ad0fea92e29e7afff3d7072ab3c722bc8">More...</a><br/></td></tr>
-<tr class="separator:ad0fea92e29e7afff3d7072ab3c722bc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff856d2084ff0ede49f0ff25e6cf5529"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#aff856d2084ff0ede49f0ff25e6cf5529">enableRx</a></td></tr>
-<tr class="memdesc:aff856d2084ff0ede49f0ff25e6cf5529"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables SCL clock stretching when receive data flag is set during a slave-receive transfer.  <a href="#aff856d2084ff0ede49f0ff25e6cf5529">More...</a><br/></td></tr>
-<tr class="separator:aff856d2084ff0ede49f0ff25e6cf5529"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ec794389bd9fb5e51c802bb0b9ee26b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a6ec794389bd9fb5e51c802bb0b9ee26b">enableAddress</a></td></tr>
-<tr class="memdesc:a6ec794389bd9fb5e51c802bb0b9ee26b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables SCL clock stretching when the address valid flag is asserted.  <a href="#a6ec794389bd9fb5e51c802bb0b9ee26b">More...</a><br/></td></tr>
-<tr class="separator:a6ec794389bd9fb5e51c802bb0b9ee26b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
 <a class="anchor" id="ad220cfa81b4117fd1d952b43ff0d5511"></a>
@@ -474,6 +478,18 @@ Slave IRQ handler</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">bool lpi2c_slave_config_t::enableAddress</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a38bb14645d844ee60d310a48be08be24"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct { ... }   lpi2c_slave_config_t::sclStall</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -651,7 +667,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><dl class="section note"><dt>Note</dt><dd>The contents of this structure are private and subject to change. </dd></dl>
+<div class="textblock"><dl class="section note"><dt>Note</dt><dd>The contents of this structure are private and subject to change.</dd></dl>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
 <tr class="memitem:aed2dec763e40c6caa129c082603852d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00048.html#a00443">lpi2c_slave_transfer_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#aed2dec763e40c6caa129c082603852d5">transfer</a></td></tr>
@@ -1776,13 +1792,6 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
   <table class="params">
     <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
     <tr><td class="paramname">handle</td><td>Pointer to lpi2c_slave_handle_t structure which stores the transfer state. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
-    <tr><td class="paramname"><a class="el" href="a00274.html#ggaa156d1cebb38c8a65846c4d9c006012aa6603ec1135f58532c9d4accc3661bc27" title="The slave driver is idle. ">kStatus_LPI2C_Idle</a></td><td></td></tr>
   </table>
   </dd>
 </dl>

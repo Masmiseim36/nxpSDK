@@ -3,7 +3,7 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-if(CONFIG_USE_middleware_maestro_framework_doc)
+if(CONFIG_USE_middleware_maestro_framework_doc AND CONFIG_USE_component_osa_free_rtos AND CONFIG_USE_middleware_fatfs AND CONFIG_USE_middleware_maestro_framework_template)
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/streamer/core/pad.c
@@ -28,15 +28,6 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/streamer/elements/mem_src.c
   ${CMAKE_CURRENT_LIST_DIR}/streamer/elements/netbuf_src.c
   ${CMAKE_CURRENT_LIST_DIR}/streamer/parsers/cci/cci_codec_type_conversion.c
-  ${CMAKE_CURRENT_LIST_DIR}/streamer/pipelines/streamer_audiosrc.c
-  ${CMAKE_CURRENT_LIST_DIR}/streamer/pipelines/streamer_fs.c
-  ${CMAKE_CURRENT_LIST_DIR}/streamer/pipelines/streamer_mic2file.c
-  ${CMAKE_CURRENT_LIST_DIR}/streamer/pipelines/streamer_opusmem2mem.c
-  ${CMAKE_CURRENT_LIST_DIR}/streamer/pipelines/streamer_pcm_speaker.c
-  ${CMAKE_CURRENT_LIST_DIR}/streamer/pipelines/streamer_pcm_speaker_mem.c
-  ${CMAKE_CURRENT_LIST_DIR}/streamer/pipelines/streamer_testeapfile2file.c
-  ${CMAKE_CURRENT_LIST_DIR}/streamer/pipelines/streamer_vit.c
-  ${CMAKE_CURRENT_LIST_DIR}/streamer/pipelines/streamer_vit_filesink.c
   ${CMAKE_CURRENT_LIST_DIR}/streamer/elements/encoder.c
   ${CMAKE_CURRENT_LIST_DIR}/streamer/encoders/opus/opusenc_cei.c
   ${CMAKE_CURRENT_LIST_DIR}/streamer/cci/metadata/src/mp3/mp3_extractmetadata.c
@@ -63,7 +54,6 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
   ${CMAKE_CURRENT_LIST_DIR}/streamer/elements
   ${CMAKE_CURRENT_LIST_DIR}/streamer/encoders/opus
   ${CMAKE_CURRENT_LIST_DIR}/streamer/encoders/cei
-  ${CMAKE_CURRENT_LIST_DIR}/streamer/pipelines
 )
 
 if(CONFIG_USE_COMPONENT_CONFIGURATION)
@@ -74,21 +64,6 @@ if(CONFIG_USE_COMPONENT_CONFIGURATION)
     -DFSL_OS_SELECTED=SDK_OS_FREERTOS
     -DFSL_OSA_TASK_ENABLE=1
   )
-
-  if(CONFIG_TOOLCHAIN STREQUAL iar)
-    target_compile_options(${MCUX_SDK_PROJECT_NAME} PUBLIC
-      --vla
-      --align_sp_on_irq
-      --macro_positions_in_diagnostics
-      --header_context
-      --no_unroll
-      --no_inline
-      --no_tbaa
-      --no_unaligned_access
-      --dlib_config full
-      --diag_suppress Pa050,Pa082,Pe186,Pe815
-    )
-  endif()
 
 endif()
 

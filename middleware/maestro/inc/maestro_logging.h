@@ -1,10 +1,7 @@
 /*
  * Copyright 2018-2022 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef __MAESTRO_LOGGING_H_
@@ -23,18 +20,18 @@
  * @name The level of the error will be defined as:
  */
 #define LOGLVL_CATASTROPHIC 0x01 /*!< @brief  Serious error. System cannot recover. */
-#define LOGLVL_ERROR                                                              \
-    0x02                    /*!< @brief  An error has occurred. The system should \
-                                  be able to continue but an individual           \
-                                  module may not be able to. */
-#define LOGLVL_WARNING 0x04 /*!< @brief  A warning about a potential problem. */
-#define LOGLVL_INFO                                                            \
-    0x08                  /*!< @brief  Information that could be useful to the \
-                                user. */
-#define LOGLVL_DEBUG 0x10 /*!< @brief  For developers for debugging */
-#define LOGLVL_FUNCTION_INFO                             \
-    0x20 /*!< @brief  For developers debugging. Function \
-                Enter/Exit info. */
+#define LOGLVL_ERROR                                                                   \
+    0x02                         /*!< @brief  An error has occurred. The system should \
+                                       be able to continue but an individual           \
+                                       module may not be able to. */
+#define LOGLVL_WARNING 0x04      /*!< @brief  A warning about a potential problem. */
+#define LOGLVL_INFO                                                                   \
+    0x08                         /*!< @brief  Information that could be useful to the \
+                                       user. */
+#define LOGLVL_DEBUG 0x10        /*!< @brief  For developers for debugging */
+#define LOGLVL_FUNCTION_INFO                                                     \
+    0x20                         /*!< @brief  For developers debugging. Function \
+                                        Enter/Exit info. */
 /*! @} */
 
 /*! @{
@@ -80,7 +77,7 @@
 
 #define LOGMDL_MAX_ERRORS 17 /*!< @brief Maximum number of modules supported. */
 
-#define LOG_NAME_LENGTH 19 /*!< @brief Maximum string length for module name. */
+#define LOG_NAME_LENGTH 19   /*!< @brief Maximum string length for module name. */
 
 /*
  * Configuration settings

@@ -1,16 +1,18 @@
 var searchData=
 [
-  ['lastscktopcsdelayinnanosec',['lastSckToPcsDelayInNanoSec',['../a00045.html#a351819436a1a3ac8703d68929dd37bcf',1,'lpspi_master_config_t']]],
-  ['leftdata',['leftData',['../a00065.html#aa90fd5f547b7e42f7b978e33b4f45fe4',1,'spdif_edma_transfer_t']]],
-  ['leftinputsource',['leftInputSource',['../a00069.html#a775a0be4401bb4e3bfabc2cf30bc62c6',1,'wm8960_config_t']]],
-  ['lefttcd',['leftTcd',['../a00065.html#a493e0c269cf6231f9054d97f2ff964a1',1,'_spdif_edma_handle']]],
-  ['length',['length',['../a00057.html#a5eb02d4cb2745ea57f5f78e764f80893',1,'serial_manager_callback_message_t']]],
-  ['level',['level',['../a00052.html#a1cc3927fcf1fd1adaeac49139919ed4f',1,'pwm_signal_param_t']]],
-  ['link',['link',['../a00061.html#a8178558fd61934e49498c79f2e47792e',1,'shell_command_t']]],
-  ['lookuptable',['lookupTable',['../a00038.html#a541c201b1802555f4fffa7582f011133',1,'flexspi_mem_config_t']]],
-  ['loopdivider',['loopDivider',['../a00012.html#a18f99eca238751761ebbd094c26e33e2',1,'clock_usb_pll_config_t::loopDivider()'],['../a00012.html#a4b584decba8d5d0e787de0b1768ff4d4',1,'clock_sys_pll_config_t::loopDivider()'],['../a00012.html#ab37939b338dbfc0aca4d070ecf273e9f',1,'clock_audio_pll_config_t::loopDivider()'],['../a00012.html#a4f529b1d0c06b877559d9b0b96d98043',1,'clock_enet_pll_config_t::loopDivider()']]],
-  ['lowalarmtemp',['lowAlarmTemp',['../a00066.html#a129a45c78e03e2b25ba4c403636b6b01',1,'tempmon_config_t']]],
-  ['lpspisoftwaretcd',['lpspiSoftwareTCD',['../a00046.html#a1610cd02da7febac3e0cb624bd5f54af',1,'_lpspi_master_edma_handle::lpspiSoftwareTCD()'],['../a00046.html#a1aa47d8c4f4d937202d9e5407500d918',1,'_lpspi_slave_edma_handle::lpspiSoftwareTCD()']]],
-  ['lutcustomseq',['lutCustomSeq',['../a00038.html#a37f516a14df0cb7a31e66e261da310f3',1,'flexspi_mem_config_t']]],
-  ['lutcustomseqenable',['lutCustomSeqEnable',['../a00038.html#ad63b36bf42c5699533e4ca61c6359eba',1,'flexspi_mem_config_t']]]
+  ['lastscktopcsdelayinnanosec',['lastSckToPcsDelayInNanoSec',['../a00045.html#abcd52e97b8e950f8f451f89c3423949e',1,'_lpspi_master_config']]],
+  ['leftdata',['leftData',['../a00065.html#a73cf51a860d8b2a0802021e2d2b00dc0',1,'_spdif_edma_transfer']]],
+  ['leftinputsource',['leftInputSource',['../a00070.html#ad19b3b32dfa610eb689406c8567526ee',1,'wm8960_config']]],
+  ['lefttcd',['leftTcd',['../a00065.html#a8bcc7f9aac0741bbaa7bad15364b6966',1,'_spdif_edma_handle']]],
+  ['length',['length',['../a00057.html#a18eb3f893e218b84d4d8d0a16627421b',1,'_serial_manager_callback_message']]],
+  ['level',['level',['../a00053.html#a44995982957ed3062dc5e0d9190060a6',1,'_pwm_signal_param']]],
+  ['link',['link',['../a00061.html#ab656143c38d8fc0338aa2e58e76d73a2',1,'_shell_command']]],
+  ['lock',['lock',['../a00067.html#a29129f1a5b47676d2b1386004161d2bb',1,'_trng_user_config']]],
+  ['longrunmaxlimit',['longRunMaxLimit',['../a00067.html#ae0c1a71abdd377256338df5b3c941c75',1,'_trng_user_config']]],
+  ['lookuptable',['lookupTable',['../a00038.html#a58e812dd079c63ba07f63867d72db736',1,'_flexspi_mem_config']]],
+  ['loopdivider',['loopDivider',['../a00012.html#a9d82f9d38216691211a87b46a66151fd',1,'_clock_usb_pll_config::loopDivider()'],['../a00012.html#a168c3d5e597b98b6175b47707179784c',1,'_clock_sys_pll_config::loopDivider()'],['../a00012.html#ac5ec9fa5af5f95c54ade27f230dc8913',1,'_clock_audio_pll_config::loopDivider()'],['../a00012.html#a061fafd79bc081b4e421dad7c65ec43d',1,'_clock_enet_pll_config::loopDivider()']]],
+  ['lowalarmtemp',['lowAlarmTemp',['../a00066.html#a3b800f87335e6569c4122baecdae621d',1,'_tempmon_config']]],
+  ['lpspisoftwaretcd',['lpspiSoftwareTCD',['../a00046.html#a02c5f5413fb96f62919456e66f5056ff',1,'_lpspi_master_edma_handle::lpspiSoftwareTCD()'],['../a00046.html#a3c1424903ecaad4939aa568c694a83c7',1,'_lpspi_slave_edma_handle::lpspiSoftwareTCD()']]],
+  ['lutcustomseq',['lutCustomSeq',['../a00038.html#abe46b0b2e6624c65d7bc94cf567eefab',1,'_flexspi_mem_config']]],
+  ['lutcustomseqenable',['lutCustomSeqEnable',['../a00038.html#a67c8b457bfea892b4a691785cc268600',1,'_flexspi_mem_config']]]
 ];

@@ -1,33 +1,24 @@
 var a00080 =
 [
-    [ "spdif_edma_transfer_t", "a00080.html#a00541", [
-      [ "leftData", "a00080.html#aa90fd5f547b7e42f7b978e33b4f45fe4", null ],
-      [ "rightData", "a00080.html#ae12876ab6641bb3dacad39a873b0c9b7", null ],
-      [ "dataSize", "a00080.html#acdffc956f6414bb01b68cd78c660c2fd", null ]
+    [ "_tempmon_config", "a00080.html#a00536", [
+      [ "frequency", "a00080.html#a7abc547e53d2bf57d98a8c53aba24d73", null ],
+      [ "highAlarmTemp", "a00080.html#aef9a15b388394ba5b01c773a904e6161", null ],
+      [ "panicAlarmTemp", "a00080.html#a4ee843733473a886d67a422d4a155f64", null ],
+      [ "lowAlarmTemp", "a00080.html#a3b800f87335e6569c4122baecdae621d", null ]
     ] ],
-    [ "spdif_edma_handle_t", "a00080.html#a00341", [
-      [ "dmaLeftHandle", "a00080.html#abaebb5b00fd7e2733feb64e2ff36e2c2", null ],
-      [ "dmaRightHandle", "a00080.html#a7df62c301a4541752492b4dd164647e5", null ],
-      [ "nbytes", "a00080.html#a64d0df1456c3e227075740856ef9792f", null ],
-      [ "count", "a00080.html#aedfc50de1e80ffc1273b396f81f5cf1d", null ],
-      [ "state", "a00080.html#ad700ba370c26b2036b787957a1087a0b", null ],
-      [ "callback", "a00080.html#abbcd30fd76c97a3670339683f8266a7c", null ],
-      [ "userData", "a00080.html#a758b44ed074c2b55ccff4bdb529ef4fd", null ],
-      [ "leftTcd", "a00080.html#a493e0c269cf6231f9054d97f2ff964a1", null ],
-      [ "rightTcd", "a00080.html#a3ea754fe27bc481382b2af29b50d3dd7", null ],
-      [ "spdifQueue", "a00080.html#aa396de6181b67e4dd2320b3779d07371", null ],
-      [ "transferSize", "a00080.html#a2a45d44b5687f7c3c9c8e7e53ebfb2b1", null ],
-      [ "queueUser", "a00080.html#a31a9b6442126197212d54afe343e1448", null ],
-      [ "queueDriver", "a00080.html#a5655c70181b1e6e307e5f399cf53721b", null ]
+    [ "FSL_TEMPMON_DRIVER_VERSION", "a00080.html#ga8c820cc4dbb86ea6a99e674e7f8ff1ba", null ],
+    [ "tempmon_config_t", "a00080.html#ga7d83f2e7eaf7b3833a9ce786a758b867", null ],
+    [ "tempmon_alarm_mode", "a00080.html#gae299ab75db04e087bad01ec6df1b82e6", null ],
+    [ "_tempmon_alarm_mode", "a00080.html#gaa902d39a9a0944943dfa1652a1c191da", [
+      [ "kTEMPMON_HighAlarmMode", "a00080.html#ggaa902d39a9a0944943dfa1652a1c191daa6c34f34b411e7f880a5782d0329f732f", null ],
+      [ "kTEMPMON_PanicAlarmMode", "a00080.html#ggaa902d39a9a0944943dfa1652a1c191daa3cafbb2449dbb58abb5ef078907ba6b0", null ],
+      [ "kTEMPMON_LowAlarmMode", "a00080.html#ggaa902d39a9a0944943dfa1652a1c191daa3b1e1531c3d0529cba956f38568140f5", null ]
     ] ],
-    [ "FSL_SPDIF_EDMA_DRIVER_VERSION", "a00080.html#ga0d52f502d4b64dc5587a12289e6738e4", null ],
-    [ "spdif_edma_callback_t", "a00080.html#ga301f2d0b9a199636f3c105f26ebe0f57", null ],
-    [ "SPDIF_TransferTxCreateHandleEDMA", "a00080.html#ga9b81a6190c5cc57120dae24864d17b78", null ],
-    [ "SPDIF_TransferRxCreateHandleEDMA", "a00080.html#ga997c6e8067aabb31c06d62dda8e18201", null ],
-    [ "SPDIF_TransferSendEDMA", "a00080.html#ga8f6d1ca1ea0d14799cc268bc0d403b52", null ],
-    [ "SPDIF_TransferReceiveEDMA", "a00080.html#ga6a9055e2562ac1a740005a235add28d2", null ],
-    [ "SPDIF_TransferAbortSendEDMA", "a00080.html#ga427c4b16d4f1fdea087e2ee2bb515565", null ],
-    [ "SPDIF_TransferAbortReceiveEDMA", "a00080.html#ga258da7096dcb32609e5bf8a6ca862ff7", null ],
-    [ "SPDIF_TransferGetSendCountEDMA", "a00080.html#gac8a656d32c96ce22f86298daf8702449", null ],
-    [ "SPDIF_TransferGetReceiveCountEDMA", "a00080.html#ga2372914f14224175a5d10130ce56b779", null ]
+    [ "TEMPMON_Init", "a00080.html#gad74d3cd12c87cd031afefa47a40c4ffa", null ],
+    [ "TEMPMON_Deinit", "a00080.html#ga9300a134aeda04212a2e84d1ccdb3e4a", null ],
+    [ "TEMPMON_GetDefaultConfig", "a00080.html#gad39681b64944bdc56124fc4dcd66a81e", null ],
+    [ "TEMPMON_StartMeasure", "a00080.html#gab591e289ffce94b52811b716f9e00fbb", null ],
+    [ "TEMPMON_StopMeasure", "a00080.html#ga430b69c227f54ee17e8c1f4db14fdf35", null ],
+    [ "TEMPMON_GetCurrentTemperature", "a00080.html#gafd97504a28d73d0ffbd8cd4c8f0810b8", null ],
+    [ "TEMPMON_SetTempAlarm", "a00080.html#gab78940fbc3cc7a3b8e3562a5981803ca", null ]
 ];

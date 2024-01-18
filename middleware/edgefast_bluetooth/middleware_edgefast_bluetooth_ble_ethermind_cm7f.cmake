@@ -8,6 +8,8 @@ if(CONFIG_USE_middleware_edgefast_bluetooth_pal AND CONFIG_USE_middleware_edgefa
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/source/impl/ethermind/host/bt_pal_att.c
   ${CMAKE_CURRENT_LIST_DIR}/source/impl/ethermind/host/bt_pal_conn.c
+  ${CMAKE_CURRENT_LIST_DIR}/source/impl/ethermind/host/bt_pal_data.c
+  ${CMAKE_CURRENT_LIST_DIR}/source/impl/ethermind/host/bt_pal_ead.c
   ${CMAKE_CURRENT_LIST_DIR}/source/impl/ethermind/host/bt_pal_crypto.c
   ${CMAKE_CURRENT_LIST_DIR}/source/impl/ethermind/host/bt_pal_gatt.c
   ${CMAKE_CURRENT_LIST_DIR}/source/impl/ethermind/host/bt_pal_hci_core.c
@@ -32,7 +34,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-  ${CMAKE_CURRENT_LIST_DIR}/source
+  ${CMAKE_CURRENT_LIST_DIR}/source/impl/ethermind/host
   ${CMAKE_CURRENT_LIST_DIR}/include
 )
 

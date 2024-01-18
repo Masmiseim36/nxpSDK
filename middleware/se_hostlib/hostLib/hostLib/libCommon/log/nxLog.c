@@ -151,7 +151,7 @@ static void nLog_ReleaseLock()
 #endif
 }
 
-uint8_t nLog_Init()
+uint8_t nLog_Init(void)
 {
 #if USE_LOCK
 #if defined(USE_RTOS) && (USE_RTOS == 1)
@@ -171,7 +171,7 @@ uint8_t nLog_Init()
     return 0;
 }
 
-void nLog_DeInit()
+void nLog_DeInit(void)
 {
 #if USE_LOCK
 #if defined(USE_RTOS) && (USE_RTOS == 1)
@@ -180,7 +180,9 @@ void nLog_DeInit()
         gLogginglock = NULL;
     }
 #elif (__GNUC__ && !AX_EMBEDDED)
-    pthread_mutex_destroy(&gLogginglock);
+    if (pthread_mutex_destroy(&gLogginglock) != 0) {
+        return;
+    }
 #endif
     lockInitialised = false;
 #endif
@@ -189,9 +191,19 @@ void nLog_DeInit()
 /* Used for scenarios other than LPC55S_NS */
 void nLog(const char *comp, int level, const char *format, ...)
 {
+    if (level > (int)(sizeof(szLevel) / sizeof(char*))) {
+        return;
+    }
     nLog_AcquireLock();
     setColor(level);
-    PRINTF("%-6s:%s:", comp, szLevel[level-1]);
+    if (level >= 1) {
+        PRINTF("%-6s:%s:", comp, szLevel[level-1]);
+    }
+    else {
+        reSetColor();
+        nLog_ReleaseLock();
+        return;
+    }
     if (format == NULL) {
         /* Nothing */
 #ifdef SMCOM_JRCP_V2
@@ -209,7 +221,12 @@ void nLog(const char *comp, int level, const char *format, ...)
         size_t size_buff = sizeof(buffer) / sizeof(buffer[0]) - 1;
         va_list vArgs;
         va_start(vArgs, format);
-        vsnprintf(buffer, size_buff, format, vArgs);
+        if ((vsnprintf(buffer, size_buff, format, vArgs)) < 0) {
+            PRINTF("vsnprintf Error");
+            reSetColor();
+            nLog_ReleaseLock();
+            return;
+        }
         va_end(vArgs);
         PRINTF("%s", buffer);
 #ifdef SMCOM_JRCP_V2
@@ -224,9 +241,24 @@ void nLog(const char *comp, int level, const char *format, ...)
 void nLog_au8(const char *comp, int level, const char *message, const unsigned char *array, size_t array_len)
 {
     size_t i;
+    if (level > (int)(sizeof(szLevel) / sizeof(char*))) {
+        return;
+    }
     nLog_AcquireLock();
     setColor(level);
-    PRINTF("%-6s:%s:%s (Len=%" PRId32 ")", comp, szLevel[level-1], message, (int32_t)array_len);
+    if (level >= 1) {
+        if (array_len > INT32_MAX) {
+            reSetColor();
+            nLog_ReleaseLock();
+            return;
+        }
+        PRINTF("%-6s:%s:%s (Len=%" PRId32 ")", comp, szLevel[level-1], message, (int32_t)array_len);
+    }
+    else {
+        reSetColor();
+        nLog_ReleaseLock();
+        return;
+    }
     for (i = 0; i < array_len; i++) {
         if (0 == (i % 16)) {
             PRINTF(szEOL);

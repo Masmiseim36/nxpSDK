@@ -16,6 +16,7 @@ var searchData=
   ['pchelpstring',['pcHelpString',['../a00074.html#af6bfe76160c7aeeb3c32cc2fe117541b',1,'shell_command_t']]],
   ['pclkpinidx',['pclkPinIdx',['../a00028.html#a392cffe8bdb5aa02a9336246a8f8edad',1,'FLEXIO_CAMERA_Type']]],
   ['pcsactivehighorlow',['pcsActiveHighOrLow',['../a00049.html#a7da7b2e2a9a0e959b0f4c5f7b1618c48',1,'lpspi_master_config_t::pcsActiveHighOrLow()'],['../a00049.html#a13cba6329bfbee143681307b77b1a858',1,'lpspi_slave_config_t::pcsActiveHighOrLow()']]],
+  ['pcsfunc',['pcsFunc',['../a00049.html#ae365b8da86e65c9eb5fe909d734b5e1d',1,'lpspi_master_config_t']]],
   ['pcstosckdelayinnanosec',['pcsToSckDelayInNanoSec',['../a00049.html#a672a67f6598757ad94adbfdbdec8cf02',1,'lpspi_master_config_t']]],
   ['peakcurrentthreshold',['PeakCurrentThreshold',['../a00018.html#a918a386c698955495c5ae942f8c9d728',1,'dcdc_detection_config_t']]],
   ['performancemove',['performanceMove',['../a00054.html#a4bcaafc4d974daee81a706892cede655',1,'sd_status_t']]],

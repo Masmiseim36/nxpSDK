@@ -239,7 +239,6 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>FSL_RTOS_BM</state>
           <state>SDK_OS_BAREMETAL</state>
-          <state>CPU_MIMXRT1062DVL6A</state>
           <state>MCUXPRESSO_SDK</state>
           <state>DISABLEFLOAT16</state>
         </option>
@@ -281,7 +280,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pe167</state>
+          <state>Pe167,Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -318,11 +317,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -1340,7 +1339,6 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>FSL_RTOS_BM</state>
           <state>SDK_OS_BAREMETAL</state>
-          <state>CPU_MIMXRT1062DVL6A</state>
           <state>MCUXPRESSO_SDK</state>
           <state>DISABLEFLOAT16</state>
         </option>
@@ -1382,7 +1380,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pe167</state>
+          <state>Pe167,Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1419,11 +1417,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -2231,12 +2229,6 @@
     </file>
   </group>
   <group>
-    <name>doc</name>
-    <file>
-      <name>$PROJ_DIR$/../doc/readme.txt</name>
-    </file>
-  </group>
-  <group>
     <name>board</name>
     <file>
       <name>$PROJ_DIR$/../pin_mux.c</name>
@@ -2300,6 +2292,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</name>
     </file>
   </group>
   <group>
@@ -2735,6 +2730,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/mpu_armv7.h</name>
+    </file>
+  </group>
+  <group>
+    <name>doc</name>
+    <file>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
 </project>

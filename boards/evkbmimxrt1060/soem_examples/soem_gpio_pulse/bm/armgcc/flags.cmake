@@ -53,6 +53,7 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DFSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE \
+    -DCPU_MIMXRT1062DVL6B_cm7 \
     -DMCUXPRESSO_SDK \
     -DSDK_OS_BAREMETAL \
     -g \
@@ -79,6 +80,7 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DFSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE \
+    -DCPU_MIMXRT1062DVL6B_cm7 \
     -DMCUXPRESSO_SDK \
     -DSDK_OS_BAREMETAL \
     -Os \
@@ -106,6 +108,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DFSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE \
+    -DCPU_MIMXRT1062DVL6B_cm7 \
     -DMCUXPRESSO_SDK \
     -DSDK_OS_BAREMETAL \
     -g \
@@ -134,6 +137,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DFSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE \
+    -DCPU_MIMXRT1062DVL6B_cm7 \
     -DMCUXPRESSO_SDK \
     -DSDK_OS_BAREMETAL \
     -Os \
@@ -275,7 +279,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG " \
     --defsym=__heap_size__=0x10000 \
     ${FPU} \
     ${SPECS} \
-    -T${ProjDirPath}/MIMXRT1062xxxxx_ram.ld -static \
+    -T\"${ProjDirPath}/MIMXRT1062xxxxx_ram.ld\" -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     ${CMAKE_EXE_LINKER_FLAGS_RELEASE} \
@@ -305,7 +309,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     --defsym=__heap_size__=0x10000 \
     ${FPU} \
     ${SPECS} \
-    -T${ProjDirPath}/MIMXRT1062xxxxx_ram.ld -static \
+    -T\"${ProjDirPath}/MIMXRT1062xxxxx_ram.ld\" -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} \
@@ -336,7 +340,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     --defsym=__heap_size__=0x10000 \
     ${FPU} \
     ${SPECS} \
-    -T${ProjDirPath}/MIMXRT1062xxxxx_flexspi_nor.ld -static \
+    -T\"${ProjDirPath}/MIMXRT1062xxxxx_flexspi_nor.ld\" -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} \
@@ -366,5 +370,5 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     --defsym=__heap_size__=0x10000 \
     ${FPU} \
     ${SPECS} \
-    -T${ProjDirPath}/MIMXRT1062xxxxx_flexspi_nor.ld -static \
+    -T\"${ProjDirPath}/MIMXRT1062xxxxx_flexspi_nor.ld\" -static \
 ")

@@ -1,10 +1,8 @@
 /*
  * Copyright 2022 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include <FreeRTOS.h>
@@ -34,7 +32,7 @@ void vApplicationMallocFailedHook()
  *  create, lock, unlock and remove
  */
 
-#define HAL_MAX_MUTEX_TIME_MS (MAX_MUTEX_TIME_MS / portTICK_PERIOD_MS)
+#define HAL_MAX_MUTEX_TIME_MS (HAL_MUTEX_TIMEOUT_MS / portTICK_PERIOD_MS)
 
 int hal_mutex_create (hal_mutex_t *mutex)
 {
@@ -106,4 +104,25 @@ int hal_mutex_unlock (hal_mutex_t mutex)
     } while (false);
 
     return ret;
+}
+
+uint32_t hal_get_exec_time()
+{
+    TaskStatus_t taskStatus[HAL_MAX_TASKS] = {0};
+    configRUN_TIME_COUNTER_TYPE runtime;
+    TaskHandle_t cur_task = xTaskGetCurrentTaskHandle();
+    uint32_t runtime_ms, tasks_time = 0;
+
+    uxTaskGetSystemState(taskStatus, HAL_MAX_TASKS, &runtime);
+    for(int i= 0; i < HAL_MAX_TASKS; i++)
+    {
+        if (taskStatus[i].xHandle == NULL) break;
+        if (taskStatus[i].xHandle == cur_task) continue;
+        /* accumulate task exec time in ms to avoid overflow */
+        tasks_time += taskStatus[i].ulRunTimeCounter * HAL_EXEC_TIMER_US / 1000;
+    }
+    /* convert to ms */
+    runtime_ms = runtime * HAL_EXEC_TIMER_US / 1000;
+
+    return runtime_ms - tasks_time;
 }

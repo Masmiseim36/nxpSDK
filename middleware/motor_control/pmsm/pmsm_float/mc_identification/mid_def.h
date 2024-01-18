@@ -10,13 +10,7 @@
 
 #include "m1_pmsm_appconfig.h"
 #include "mc_periph_init.h"
-
-#ifdef PMSM_SNSLESS_ENC
-#include "sm_common_enc.h"
-#else
-#include "sm_common.h"
-#endif
-
+#include "pmsm_control.h"
 
 /* RTCESL fix libraries. */
 #include "mlib.h"
@@ -48,6 +42,19 @@
 #define MID_FAULT_MECH_TIMEOUT      (2U)
 
 #define MID_WARN_KE_OUT_OF_RANGE    (1U)
+
+/* Sets the fault bit defined by faultid in the faults variable */
+#define MID_FAULT_SET(faults, faultid) ((faults) |= ((middef_fault_t)1 << (faultid)))
+
+/* Clears all fault bits in the faults variable */
+#define MID_FAULT_CLEAR_ALL(faults) ((faults) = 0U)
+
+/* Check if a fault bit is set in the faults variable, 0 = no fault */
+#define MID_FAULT_ANY(faults) ((faults) > 0U)
+
+#define MID_FAULT_I_DCBUS_OVER 0  /* OverCurrent fault flag */
+#define MID_FAULT_U_DCBUS_UNDER 1 /* Undervoltage fault flag */
+#define MID_FAULT_U_DCBUS_OVER 2  /* Overvoltage fault flag */
 
 /* Frequency ramp time [s]. */
 #define MID_SPEED_RAMP_TIME         (1.0F)
@@ -176,6 +183,22 @@ typedef enum _mid_sm_app_state_t{
 /* Pointer to function with a pointer to state machine control structure. */
 typedef void (*mid_pfcn_void_pms)(void);
 
+/* Device fault typedef. */
+typedef uint16_t middef_fault_t;
+
+/* Device fault thresholds. */
+typedef struct _middef_fault_thresholds_t
+{
+    float_t fltUDcBusOver;      /* DC bus over voltage level */
+    float_t fltUDcBusUnder;     /* DC bus under voltage level */
+    float_t fltUDcBusTrip;      /* DC bus voltage level to start braking */
+    float_t fltSpeedOver;       /* Over speed level */
+    float_t fltSpeedMin;        /* Minimum speed level */
+    float_t fltSpeedNom;        /* Nominal speed */
+    float_t fltUqBemf;          /* Blocked rotor U level */
+    uint16_t ui16BlockedPerNum; /* Number of period to set blocked rotor fault */
+} middef_fault_thresholds_t;
+
 /* MID Alignment structure. */
 typedef struct _mid_align_t
 {
@@ -268,7 +291,7 @@ typedef struct _mid_get_mech_t
     uint32_t            ui32TimeSettleMax;      /* Deceleration measurement time limit. */
     uint16_t            ui16MeasNr;             /* Measurement number (there are several tries and the results are averaged). */
     bool_t              bActive;                /* Indicates whether Mech parameters are being measured (true) or not (false). */
-    
+
     enum
     {
         kMID_MechInit       = 0U,
@@ -379,9 +402,9 @@ typedef struct _mid_struct_t
 typedef struct _mid_pmsm_t
 {
   mcs_pmsm_foc_t sFocPMSM;                       /* Field Oriented Control structure */
-  mcdef_fault_t sFaultIdCaptured;                /* Captured faults (must be cleared manually) */
-  mcdef_fault_t sFaultIdPending;                 /* Fault pending structure */
-  mcdef_fault_thresholds_t sFaultThresholds;     /* Fault thresholds */
+  middef_fault_t sFaultIdCaptured;                /* Captured faults (must be cleared manually) */
+  middef_fault_t sFaultIdPending;                 /* Fault pending structure */
+  middef_fault_thresholds_t sFaultThresholds;     /* Fault thresholds */
   bool_t bFaultClearMan;                         /* Manual fault clear detection */
   uint16_t ui16CounterState;                     /* Main state counter */
   uint16_t ui16TimeCalibration;                  /* Calibration time count number */

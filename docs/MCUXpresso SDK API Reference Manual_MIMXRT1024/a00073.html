@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -101,10 +101,11 @@ $(document).ready(function(){initNavTree('a00073.html','');});
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Secure Non-Volatile Storage Low-Power<div class="ingroups"><a class="el" href="a00276.html">SNVS: Secure Non-Volatile Storage</a></div></div>  </div>
+<div class="title">Secure Non-Volatile Storage Low-Power<div class="ingroups"><a class="el" href="a00277.html">SNVS: Secure Non-Volatile Storage</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
@@ -115,15 +116,15 @@ The SNVS_LP is a data storage subsystem. Its purpose is to store and protect sys
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00502"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a00502">snvs_lp_passive_tamper_t</a></td></tr>
-<tr class="memdesc:a00502"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure is used to configure SNVS LP passive tamper pins.  <a href="a00073.html#a00502">More...</a><br/></td></tr>
-<tr class="separator:a00502"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00504"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a00504">snvs_lp_srtc_datetime_t</a></td></tr>
-<tr class="memdesc:a00504"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure is used to hold the date and time.  <a href="a00073.html#a00504">More...</a><br/></td></tr>
-<tr class="separator:a00504"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00503"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a00503">snvs_lp_srtc_config_t</a></td></tr>
-<tr class="memdesc:a00503"><td class="mdescLeft">&#160;</td><td class="mdescRight">SNVS_LP config structure.  <a href="a00073.html#a00503">More...</a><br/></td></tr>
-<tr class="separator:a00503"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00533"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a00533">snvs_lp_passive_tamper_t</a></td></tr>
+<tr class="memdesc:a00533"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure is used to configure SNVS LP passive tamper pins.  <a href="a00073.html#a00533">More...</a><br/></td></tr>
+<tr class="separator:a00533"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00497"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a00497">_snvs_lp_srtc_datetime</a></td></tr>
+<tr class="memdesc:a00497"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure is used to hold the date and time.  <a href="a00073.html#a00497">More...</a><br/></td></tr>
+<tr class="separator:a00497"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00496"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a00496">_snvs_lp_srtc_config</a></td></tr>
+<tr class="memdesc:a00496"><td class="mdescLeft">&#160;</td><td class="mdescRight">SNVS_LP config structure.  <a href="a00073.html#a00496">More...</a><br/></td></tr>
+<tr class="separator:a00496"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
@@ -136,58 +137,99 @@ Macros</h2></td></tr>
 <tr class="memdesc:ga5e9e92e31bccf270bf2355cc6e80041a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define of SNVS_LP Max possible tamper. <br/></td></tr>
 <tr class="separator:ga5e9e92e31bccf270bf2355cc6e80041a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gab8967b7a4456c552611e0edf7d34d415"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab8967b7a4456c552611e0edf7d34d415"></a>
+typedef enum <br class="typebreak"/>
+<a class="el" href="a00073.html#ga61a2fa625f189176887c0e2c5599f7a9">_snvs_lp_srtc_interrupts</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#gab8967b7a4456c552611e0edf7d34d415">snvs_lp_srtc_interrupts_t</a></td></tr>
+<tr class="memdesc:gab8967b7a4456c552611e0edf7d34d415"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of SNVS_LP interrupts. <br/></td></tr>
+<tr class="separator:gab8967b7a4456c552611e0edf7d34d415"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9df665fe30a7e1539e377737d4a1fc17"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9df665fe30a7e1539e377737d4a1fc17"></a>
+typedef enum <br class="typebreak"/>
+<a class="el" href="a00073.html#ga916850c76c720136cb01bb78748668f9">_snvs_lp_srtc_status_flags</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#ga9df665fe30a7e1539e377737d4a1fc17">snvs_lp_srtc_status_flags_t</a></td></tr>
+<tr class="memdesc:ga9df665fe30a7e1539e377737d4a1fc17"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of SNVS_LP flags. <br/></td></tr>
+<tr class="separator:ga9df665fe30a7e1539e377737d4a1fc17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga41d150e14d51be8185c113e07448417a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga41d150e14d51be8185c113e07448417a"></a>
+typedef enum <br class="typebreak"/>
+<a class="el" href="a00073.html#ga0d17d6018d5b7b7d414ff8dc23e8c9d1">_snvs_lp_external_tamper_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#ga41d150e14d51be8185c113e07448417a">snvs_lp_external_tamper_status_t</a></td></tr>
+<tr class="memdesc:ga41d150e14d51be8185c113e07448417a"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of SNVS_LP external tampers status. <br/></td></tr>
+<tr class="separator:ga41d150e14d51be8185c113e07448417a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3100942b6c4282ee1bcdd8f8d65674b2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3100942b6c4282ee1bcdd8f8d65674b2"></a>
+typedef enum <br class="typebreak"/>
+<a class="el" href="a00073.html#gaec37f58b6c24c6d5fe063d6ca2c1bf48">_snvs_lp_external_tamper_polarity</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#ga3100942b6c4282ee1bcdd8f8d65674b2">snvs_lp_external_tamper_polarity_t</a></td></tr>
+<tr class="memdesc:ga3100942b6c4282ee1bcdd8f8d65674b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">SNVS_LP external tamper polarity. <br/></td></tr>
+<tr class="separator:ga3100942b6c4282ee1bcdd8f8d65674b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga46beaa7394dcd4757b041a1f97cafff2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga46beaa7394dcd4757b041a1f97cafff2"></a>
+typedef struct <br class="typebreak"/>
+<a class="el" href="a00073.html#a00497">_snvs_lp_srtc_datetime</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#ga46beaa7394dcd4757b041a1f97cafff2">snvs_lp_srtc_datetime_t</a></td></tr>
+<tr class="memdesc:ga46beaa7394dcd4757b041a1f97cafff2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure is used to hold the date and time. <br/></td></tr>
+<tr class="separator:ga46beaa7394dcd4757b041a1f97cafff2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga78ed2e37fbc66a685735ea07fd9bf590"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00073.html#a00496">_snvs_lp_srtc_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#ga78ed2e37fbc66a685735ea07fd9bf590">snvs_lp_srtc_config_t</a></td></tr>
+<tr class="memdesc:ga78ed2e37fbc66a685735ea07fd9bf590"><td class="mdescLeft">&#160;</td><td class="mdescRight">SNVS_LP config structure.  <a href="#ga78ed2e37fbc66a685735ea07fd9bf590">More...</a><br/></td></tr>
+<tr class="separator:ga78ed2e37fbc66a685735ea07fd9bf590"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae6f3db189ae1d7787019f6eff071c490"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae6f3db189ae1d7787019f6eff071c490"></a>
+typedef enum <br class="typebreak"/>
+<a class="el" href="a00073.html#ga80fe38c413bd604ea925db77ee7ed120">_snvs_lp_zmk_program_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#gae6f3db189ae1d7787019f6eff071c490">snvs_lp_zmk_program_mode_t</a></td></tr>
+<tr class="memdesc:gae6f3db189ae1d7787019f6eff071c490"><td class="mdescLeft">&#160;</td><td class="mdescRight">SNVS_LP Zeroizable Master Key programming mode. <br/></td></tr>
+<tr class="separator:gae6f3db189ae1d7787019f6eff071c490"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6bdafb99edfbde0131657fd9c37802d4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6bdafb99edfbde0131657fd9c37802d4"></a>
+typedef enum <br class="typebreak"/>
+<a class="el" href="a00073.html#ga7a4b522f95983f9f85f356dab2cc44ea">_snvs_lp_master_key_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#ga6bdafb99edfbde0131657fd9c37802d4">snvs_lp_master_key_mode_t</a></td></tr>
+<tr class="memdesc:ga6bdafb99edfbde0131657fd9c37802d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">SNVS_LP Master Key mode. <br/></td></tr>
+<tr class="separator:ga6bdafb99edfbde0131657fd9c37802d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga806041c275061b615faf70ee97505a00"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#ga806041c275061b615faf70ee97505a00">snvs_lp_srtc_interrupts_t</a> { <a class="el" href="a00073.html#gga806041c275061b615faf70ee97505a00ac53121f2a9d870cf7f21411edeb92515">kSNVS_SRTC_AlarmInterrupt</a> = SNVS_LPCR_LPTA_EN_MASK
+<tr class="memitem:ga61a2fa625f189176887c0e2c5599f7a9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#ga61a2fa625f189176887c0e2c5599f7a9">_snvs_lp_srtc_interrupts</a> { <a class="el" href="a00073.html#gga61a2fa625f189176887c0e2c5599f7a9ac53121f2a9d870cf7f21411edeb92515">kSNVS_SRTC_AlarmInterrupt</a> = SNVS_LPCR_LPTA_EN_MASK
  }</td></tr>
-<tr class="memdesc:ga806041c275061b615faf70ee97505a00"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of SNVS_LP interrupts.  <a href="a00073.html#ga806041c275061b615faf70ee97505a00">More...</a><br/></td></tr>
-<tr class="separator:ga806041c275061b615faf70ee97505a00"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadcecf6b4fd6c8c56133821ebbd2df9de"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#gadcecf6b4fd6c8c56133821ebbd2df9de">snvs_lp_srtc_status_flags_t</a> { <a class="el" href="a00073.html#ggadcecf6b4fd6c8c56133821ebbd2df9dea359a970814078eb2dfc6c6eb5a30e0c1">kSNVS_SRTC_AlarmInterruptFlag</a> = SNVS_LPSR_LPTA_MASK
+<tr class="memdesc:ga61a2fa625f189176887c0e2c5599f7a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of SNVS_LP interrupts.  <a href="a00073.html#ga61a2fa625f189176887c0e2c5599f7a9">More...</a><br/></td></tr>
+<tr class="separator:ga61a2fa625f189176887c0e2c5599f7a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga916850c76c720136cb01bb78748668f9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#ga916850c76c720136cb01bb78748668f9">_snvs_lp_srtc_status_flags</a> { <a class="el" href="a00073.html#gga916850c76c720136cb01bb78748668f9a359a970814078eb2dfc6c6eb5a30e0c1">kSNVS_SRTC_AlarmInterruptFlag</a> = SNVS_LPSR_LPTA_MASK
  }</td></tr>
-<tr class="memdesc:gadcecf6b4fd6c8c56133821ebbd2df9de"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of SNVS_LP flags.  <a href="a00073.html#gadcecf6b4fd6c8c56133821ebbd2df9de">More...</a><br/></td></tr>
-<tr class="separator:gadcecf6b4fd6c8c56133821ebbd2df9de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga123f0196672467755ef8b828db230b24"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#ga123f0196672467755ef8b828db230b24">snvs_lp_external_tamper_status_t</a> </td></tr>
-<tr class="memdesc:ga123f0196672467755ef8b828db230b24"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of SNVS_LP external tampers status. <br/></td></tr>
-<tr class="separator:ga123f0196672467755ef8b828db230b24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae5f4aea285aec7abf629056ef0eb3163"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#gae5f4aea285aec7abf629056ef0eb3163">snvs_lp_external_tamper_polarity_t</a> </td></tr>
-<tr class="memdesc:gae5f4aea285aec7abf629056ef0eb3163"><td class="mdescLeft">&#160;</td><td class="mdescRight">SNVS_LP external tamper polarity. <br/></td></tr>
-<tr class="separator:gae5f4aea285aec7abf629056ef0eb3163"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae44e3f9132afa438f0bfd6233928355f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#gae44e3f9132afa438f0bfd6233928355f">snvs_lp_zmk_program_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00073.html#ggae44e3f9132afa438f0bfd6233928355fa6674756b9a54eb86739d3ac01c932614">kSNVS_ZMKSoftwareProgram</a>, 
+<tr class="memdesc:ga916850c76c720136cb01bb78748668f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of SNVS_LP flags.  <a href="a00073.html#ga916850c76c720136cb01bb78748668f9">More...</a><br/></td></tr>
+<tr class="separator:ga916850c76c720136cb01bb78748668f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0d17d6018d5b7b7d414ff8dc23e8c9d1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#ga0d17d6018d5b7b7d414ff8dc23e8c9d1">_snvs_lp_external_tamper_status</a> </td></tr>
+<tr class="memdesc:ga0d17d6018d5b7b7d414ff8dc23e8c9d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of SNVS_LP external tampers status. <br/></td></tr>
+<tr class="separator:ga0d17d6018d5b7b7d414ff8dc23e8c9d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaec37f58b6c24c6d5fe063d6ca2c1bf48"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#gaec37f58b6c24c6d5fe063d6ca2c1bf48">_snvs_lp_external_tamper_polarity</a> </td></tr>
+<tr class="memdesc:gaec37f58b6c24c6d5fe063d6ca2c1bf48"><td class="mdescLeft">&#160;</td><td class="mdescRight">SNVS_LP external tamper polarity. <br/></td></tr>
+<tr class="separator:gaec37f58b6c24c6d5fe063d6ca2c1bf48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga80fe38c413bd604ea925db77ee7ed120"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#ga80fe38c413bd604ea925db77ee7ed120">_snvs_lp_zmk_program_mode</a> { <br/>
+&#160;&#160;<a class="el" href="a00073.html#gga80fe38c413bd604ea925db77ee7ed120a6674756b9a54eb86739d3ac01c932614">kSNVS_ZMKSoftwareProgram</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00073.html#ggae44e3f9132afa438f0bfd6233928355fabd57ccc7494ed942d56a3da20fa6d67f">kSNVS_ZMKHardwareProgram</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:gae44e3f9132afa438f0bfd6233928355f"><td class="mdescLeft">&#160;</td><td class="mdescRight">SNVS_LP Zeroizable Master Key programming mode.  <a href="a00073.html#gae44e3f9132afa438f0bfd6233928355f">More...</a><br/></td></tr>
-<tr class="separator:gae44e3f9132afa438f0bfd6233928355f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga10b65b574393c82d6b6f3e5033c55d7b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#ga10b65b574393c82d6b6f3e5033c55d7b">snvs_lp_master_key_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00073.html#gga10b65b574393c82d6b6f3e5033c55d7ba1dfa052b45b35c4415d36012034ede62">kSNVS_OTPMK</a> = 0, 
-<br/>
-&#160;&#160;<a class="el" href="a00073.html#gga10b65b574393c82d6b6f3e5033c55d7ba1e0c158e459a18e359ae55f8bcb195fe">kSNVS_ZMK</a> = 2, 
-<br/>
-&#160;&#160;<a class="el" href="a00073.html#gga10b65b574393c82d6b6f3e5033c55d7babb401e0ff02f30ef48013d0eca7ae47e">kSNVS_CMK</a> = 3
+&#160;&#160;<a class="el" href="a00073.html#gga80fe38c413bd604ea925db77ee7ed120abd57ccc7494ed942d56a3da20fa6d67f">kSNVS_ZMKHardwareProgram</a>
 <br/>
  }</td></tr>
-<tr class="memdesc:ga10b65b574393c82d6b6f3e5033c55d7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">SNVS_LP Master Key mode.  <a href="a00073.html#ga10b65b574393c82d6b6f3e5033c55d7b">More...</a><br/></td></tr>
-<tr class="separator:ga10b65b574393c82d6b6f3e5033c55d7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga80fe38c413bd604ea925db77ee7ed120"><td class="mdescLeft">&#160;</td><td class="mdescRight">SNVS_LP Zeroizable Master Key programming mode.  <a href="a00073.html#ga80fe38c413bd604ea925db77ee7ed120">More...</a><br/></td></tr>
+<tr class="separator:ga80fe38c413bd604ea925db77ee7ed120"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7a4b522f95983f9f85f356dab2cc44ea"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#ga7a4b522f95983f9f85f356dab2cc44ea">_snvs_lp_master_key_mode</a> { <br/>
+&#160;&#160;<a class="el" href="a00073.html#gga7a4b522f95983f9f85f356dab2cc44eaa1dfa052b45b35c4415d36012034ede62">kSNVS_OTPMK</a> = 0, 
+<br/>
+&#160;&#160;<a class="el" href="a00073.html#gga7a4b522f95983f9f85f356dab2cc44eaa1e0c158e459a18e359ae55f8bcb195fe">kSNVS_ZMK</a> = 2, 
+<br/>
+&#160;&#160;<a class="el" href="a00073.html#gga7a4b522f95983f9f85f356dab2cc44eaabb401e0ff02f30ef48013d0eca7ae47e">kSNVS_CMK</a> = 3
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga7a4b522f95983f9f85f356dab2cc44ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">SNVS_LP Master Key mode.  <a href="a00073.html#ga7a4b522f95983f9f85f356dab2cc44ea">More...</a><br/></td></tr>
+<tr class="separator:ga7a4b522f95983f9f85f356dab2cc44ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gad2bc4630c869c62dcaee50c1bcd0897e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#gad2bc4630c869c62dcaee50c1bcd0897e">SNVS_LP_SRTC_Init</a> (SNVS_Type *base, const <a class="el" href="a00073.html#a00503">snvs_lp_srtc_config_t</a> *config)</td></tr>
+<tr class="memitem:gad2bc4630c869c62dcaee50c1bcd0897e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#gad2bc4630c869c62dcaee50c1bcd0897e">SNVS_LP_SRTC_Init</a> (SNVS_Type *base, const <a class="el" href="a00073.html#ga78ed2e37fbc66a685735ea07fd9bf590">snvs_lp_srtc_config_t</a> *config)</td></tr>
 <tr class="memdesc:gad2bc4630c869c62dcaee50c1bcd0897e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ungates the SNVS clock and configures the peripheral for basic operation.  <a href="#gad2bc4630c869c62dcaee50c1bcd0897e">More...</a><br/></td></tr>
 <tr class="separator:gad2bc4630c869c62dcaee50c1bcd0897e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5d3d092911324c7436c84516a3cc53ab"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#ga5d3d092911324c7436c84516a3cc53ab">SNVS_LP_SRTC_Deinit</a> (SNVS_Type *base)</td></tr>
 <tr class="memdesc:ga5d3d092911324c7436c84516a3cc53ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the SRTC timer.  <a href="#ga5d3d092911324c7436c84516a3cc53ab">More...</a><br/></td></tr>
 <tr class="separator:ga5d3d092911324c7436c84516a3cc53ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab52bbf92230eca2bcfc590ad5733d6aa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#gab52bbf92230eca2bcfc590ad5733d6aa">SNVS_LP_SRTC_GetDefaultConfig</a> (<a class="el" href="a00073.html#a00503">snvs_lp_srtc_config_t</a> *config)</td></tr>
+<tr class="memitem:gab52bbf92230eca2bcfc590ad5733d6aa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#gab52bbf92230eca2bcfc590ad5733d6aa">SNVS_LP_SRTC_GetDefaultConfig</a> (<a class="el" href="a00073.html#ga78ed2e37fbc66a685735ea07fd9bf590">snvs_lp_srtc_config_t</a> *config)</td></tr>
 <tr class="memdesc:gab52bbf92230eca2bcfc590ad5733d6aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills in the SNVS_LP config struct with the default settings.  <a href="#gab52bbf92230eca2bcfc590ad5733d6aa">More...</a><br/></td></tr>
 <tr class="separator:gab52bbf92230eca2bcfc590ad5733d6aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
 <tr class="memitem:gac5e0fc5d0c368b596733f3d40b212366"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac5e0fc5d0c368b596733f3d40b212366"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#gac5e0fc5d0c368b596733f3d40b212366">FSL_SNVS_LP_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00257.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 4, 5))</td></tr>
-<tr class="memdesc:gac5e0fc5d0c368b596733f3d40b212366"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version 2.4.5. <br/></td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#gac5e0fc5d0c368b596733f3d40b212366">FSL_SNVS_LP_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00259.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 4, 6))</td></tr>
+<tr class="memdesc:gac5e0fc5d0c368b596733f3d40b212366"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version 2.4.6. <br/></td></tr>
 <tr class="separator:gac5e0fc5d0c368b596733f3d40b212366"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
@@ -201,16 +243,16 @@ Initialization and deinitialization</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Secure RTC (SRTC) current Time &amp; Alarm</h2></td></tr>
-<tr class="memitem:ga3c35b4b1671c53939c335097411b6e7d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#ga3c35b4b1671c53939c335097411b6e7d">SNVS_LP_SRTC_SetDatetime</a> (SNVS_Type *base, const <a class="el" href="a00073.html#a00504">snvs_lp_srtc_datetime_t</a> *datetime)</td></tr>
+<tr class="memitem:ga3c35b4b1671c53939c335097411b6e7d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00259.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#ga3c35b4b1671c53939c335097411b6e7d">SNVS_LP_SRTC_SetDatetime</a> (SNVS_Type *base, const <a class="el" href="a00073.html#ga46beaa7394dcd4757b041a1f97cafff2">snvs_lp_srtc_datetime_t</a> *datetime)</td></tr>
 <tr class="memdesc:ga3c35b4b1671c53939c335097411b6e7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the SNVS SRTC date and time according to the given time structure.  <a href="#ga3c35b4b1671c53939c335097411b6e7d">More...</a><br/></td></tr>
 <tr class="separator:ga3c35b4b1671c53939c335097411b6e7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf65b902de3d06aa9940686ae86b7f8fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#gaf65b902de3d06aa9940686ae86b7f8fd">SNVS_LP_SRTC_GetDatetime</a> (SNVS_Type *base, <a class="el" href="a00073.html#a00504">snvs_lp_srtc_datetime_t</a> *datetime)</td></tr>
+<tr class="memitem:gaf65b902de3d06aa9940686ae86b7f8fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#gaf65b902de3d06aa9940686ae86b7f8fd">SNVS_LP_SRTC_GetDatetime</a> (SNVS_Type *base, <a class="el" href="a00073.html#ga46beaa7394dcd4757b041a1f97cafff2">snvs_lp_srtc_datetime_t</a> *datetime)</td></tr>
 <tr class="memdesc:gaf65b902de3d06aa9940686ae86b7f8fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the SNVS SRTC time and stores it in the given time structure.  <a href="#gaf65b902de3d06aa9940686ae86b7f8fd">More...</a><br/></td></tr>
 <tr class="separator:gaf65b902de3d06aa9940686ae86b7f8fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadb419ef8b369945b4858abcb76e36462"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#gadb419ef8b369945b4858abcb76e36462">SNVS_LP_SRTC_SetAlarm</a> (SNVS_Type *base, const <a class="el" href="a00073.html#a00504">snvs_lp_srtc_datetime_t</a> *alarmTime)</td></tr>
+<tr class="memitem:gadb419ef8b369945b4858abcb76e36462"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00259.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#gadb419ef8b369945b4858abcb76e36462">SNVS_LP_SRTC_SetAlarm</a> (SNVS_Type *base, const <a class="el" href="a00073.html#ga46beaa7394dcd4757b041a1f97cafff2">snvs_lp_srtc_datetime_t</a> *alarmTime)</td></tr>
 <tr class="memdesc:gadb419ef8b369945b4858abcb76e36462"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the SNVS SRTC alarm time.  <a href="#gadb419ef8b369945b4858abcb76e36462">More...</a><br/></td></tr>
 <tr class="separator:gadb419ef8b369945b4858abcb76e36462"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab9120c6c286567d4144763b875725ac3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#gab9120c6c286567d4144763b875725ac3">SNVS_LP_SRTC_GetAlarm</a> (SNVS_Type *base, <a class="el" href="a00073.html#a00504">snvs_lp_srtc_datetime_t</a> *datetime)</td></tr>
+<tr class="memitem:gab9120c6c286567d4144763b875725ac3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#gab9120c6c286567d4144763b875725ac3">SNVS_LP_SRTC_GetAlarm</a> (SNVS_Type *base, <a class="el" href="a00073.html#ga46beaa7394dcd4757b041a1f97cafff2">snvs_lp_srtc_datetime_t</a> *datetime)</td></tr>
 <tr class="memdesc:gab9120c6c286567d4144763b875725ac3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the SNVS SRTC alarm time.  <a href="#gab9120c6c286567d4144763b875725ac3">More...</a><br/></td></tr>
 <tr class="separator:gab9120c6c286567d4144763b875725ac3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -246,7 +288,7 @@ Timer Start and Stop</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 External tampering</h2></td></tr>
-<tr class="memitem:ga5b3b4bc95b7ad64a7c37d75f94f57a05"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#ga5b3b4bc95b7ad64a7c37d75f94f57a05">SNVS_LP_PassiveTamperPin_GetDefaultConfig</a> (<a class="el" href="a00073.html#a00502">snvs_lp_passive_tamper_t</a> *config)</td></tr>
+<tr class="memitem:ga5b3b4bc95b7ad64a7c37d75f94f57a05"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#ga5b3b4bc95b7ad64a7c37d75f94f57a05">SNVS_LP_PassiveTamperPin_GetDefaultConfig</a> (<a class="el" href="a00073.html#a00533">snvs_lp_passive_tamper_t</a> *config)</td></tr>
 <tr class="memdesc:ga5b3b4bc95b7ad64a7c37d75f94f57a05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills in the SNVS tamper pin config struct with the default settings.  <a href="#ga5b3b4bc95b7ad64a7c37d75f94f57a05">More...</a><br/></td></tr>
 <tr class="separator:ga5b3b4bc95b7ad64a7c37d75f94f57a05"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -273,18 +315,18 @@ Zeroizable Master Key (ZMK)</h2></td></tr>
 <tr class="memitem:ga84aa6371b64d17ad9dd059a32cfcf0ba"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#ga84aa6371b64d17ad9dd059a32cfcf0ba">SNVS_LP_GetZeroizableMasterKeyValid</a> (SNVS_Type *base)</td></tr>
 <tr class="memdesc:ga84aa6371b64d17ad9dd059a32cfcf0ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Zeroizable Master Key valid status.  <a href="#ga84aa6371b64d17ad9dd059a32cfcf0ba">More...</a><br/></td></tr>
 <tr class="separator:ga84aa6371b64d17ad9dd059a32cfcf0ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa4468c4f948d4529d21d2717f9af21fb"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#gaa4468c4f948d4529d21d2717f9af21fb">SNVS_LP_SetZeroizableMasterKeyProgramMode</a> (SNVS_Type *base, <a class="el" href="a00073.html#gae44e3f9132afa438f0bfd6233928355f">snvs_lp_zmk_program_mode_t</a> mode)</td></tr>
+<tr class="memitem:gaa4468c4f948d4529d21d2717f9af21fb"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#gaa4468c4f948d4529d21d2717f9af21fb">SNVS_LP_SetZeroizableMasterKeyProgramMode</a> (SNVS_Type *base, <a class="el" href="a00073.html#gae6f3db189ae1d7787019f6eff071c490">snvs_lp_zmk_program_mode_t</a> mode)</td></tr>
 <tr class="memdesc:gaa4468c4f948d4529d21d2717f9af21fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Zeroizable Master Key programming mode.  <a href="#gaa4468c4f948d4529d21d2717f9af21fb">More...</a><br/></td></tr>
 <tr class="separator:gaa4468c4f948d4529d21d2717f9af21fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9f0c2c01a10193906563254794af6f2b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#ga9f0c2c01a10193906563254794af6f2b">SNVS_LP_EnableZeroizableMasterKeyECC</a> (SNVS_Type *base, bool enable)</td></tr>
 <tr class="memdesc:ga9f0c2c01a10193906563254794af6f2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable Zeroizable Master Key ECC.  <a href="#ga9f0c2c01a10193906563254794af6f2b">More...</a><br/></td></tr>
 <tr class="separator:ga9f0c2c01a10193906563254794af6f2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf546c45ff65189f400d757cf5f35223f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#gaf546c45ff65189f400d757cf5f35223f">SNVS_LP_SetMasterKeyMode</a> (SNVS_Type *base, <a class="el" href="a00073.html#ga10b65b574393c82d6b6f3e5033c55d7b">snvs_lp_master_key_mode_t</a> mode)</td></tr>
+<tr class="memitem:gaf546c45ff65189f400d757cf5f35223f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#gaf546c45ff65189f400d757cf5f35223f">SNVS_LP_SetMasterKeyMode</a> (SNVS_Type *base, <a class="el" href="a00073.html#ga6bdafb99edfbde0131657fd9c37802d4">snvs_lp_master_key_mode_t</a> mode)</td></tr>
 <tr class="memdesc:gaf546c45ff65189f400d757cf5f35223f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set SNVS Master Key mode.  <a href="#gaf546c45ff65189f400d757cf5f35223f">More...</a><br/></td></tr>
 <tr class="separator:gaf546c45ff65189f400d757cf5f35223f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00502" id="a00502"></a>
+<a name="a00533" id="a00533"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -296,103 +338,103 @@ Zeroizable Master Key (ZMK)</h2></td></tr>
 <div class="textblock"></div>
 </div>
 </div>
-<a name="a00504" id="a00504"></a>
+<a name="a00497" id="a00497"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct snvs_lp_srtc_datetime_t</td>
+          <td class="memname">struct _snvs_lp_srtc_datetime</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a03a4361ff2481ab7ed890c60f3ac68b7"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a03a4361ff2481ab7ed890c60f3ac68b7">year</a></td></tr>
-<tr class="memdesc:a03a4361ff2481ab7ed890c60f3ac68b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Range from 1970 to 2099.  <a href="#a03a4361ff2481ab7ed890c60f3ac68b7">More...</a><br/></td></tr>
-<tr class="separator:a03a4361ff2481ab7ed890c60f3ac68b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afeeab32d19b15b5dd7ebbcd3c1322e28"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#afeeab32d19b15b5dd7ebbcd3c1322e28">month</a></td></tr>
-<tr class="memdesc:afeeab32d19b15b5dd7ebbcd3c1322e28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Range from 1 to 12.  <a href="#afeeab32d19b15b5dd7ebbcd3c1322e28">More...</a><br/></td></tr>
-<tr class="separator:afeeab32d19b15b5dd7ebbcd3c1322e28"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8325ab17dc714294c88414f24d03320d"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a8325ab17dc714294c88414f24d03320d">day</a></td></tr>
-<tr class="memdesc:a8325ab17dc714294c88414f24d03320d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Range from 1 to 31 (depending on month).  <a href="#a8325ab17dc714294c88414f24d03320d">More...</a><br/></td></tr>
-<tr class="separator:a8325ab17dc714294c88414f24d03320d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a70a512ba988adb1fb1e4e62ba11f29"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a4a70a512ba988adb1fb1e4e62ba11f29">hour</a></td></tr>
-<tr class="memdesc:a4a70a512ba988adb1fb1e4e62ba11f29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Range from 0 to 23.  <a href="#a4a70a512ba988adb1fb1e4e62ba11f29">More...</a><br/></td></tr>
-<tr class="separator:a4a70a512ba988adb1fb1e4e62ba11f29"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a266253051fa3ee775a27bffb92d9be5b"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a266253051fa3ee775a27bffb92d9be5b">minute</a></td></tr>
-<tr class="memdesc:a266253051fa3ee775a27bffb92d9be5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Range from 0 to 59.  <a href="#a266253051fa3ee775a27bffb92d9be5b">More...</a><br/></td></tr>
-<tr class="separator:a266253051fa3ee775a27bffb92d9be5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a24f3ad7303d4b70ca927c385490a3448"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a24f3ad7303d4b70ca927c385490a3448">second</a></td></tr>
-<tr class="memdesc:a24f3ad7303d4b70ca927c385490a3448"><td class="mdescLeft">&#160;</td><td class="mdescRight">Range from 0 to 59.  <a href="#a24f3ad7303d4b70ca927c385490a3448">More...</a><br/></td></tr>
-<tr class="separator:a24f3ad7303d4b70ca927c385490a3448"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a534c68a43fa65862d6527463773357"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a1a534c68a43fa65862d6527463773357">year</a></td></tr>
+<tr class="memdesc:a1a534c68a43fa65862d6527463773357"><td class="mdescLeft">&#160;</td><td class="mdescRight">Range from 1970 to 2099.  <a href="#a1a534c68a43fa65862d6527463773357">More...</a><br/></td></tr>
+<tr class="separator:a1a534c68a43fa65862d6527463773357"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07098941a41390afdb23798eba4f8d59"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a07098941a41390afdb23798eba4f8d59">month</a></td></tr>
+<tr class="memdesc:a07098941a41390afdb23798eba4f8d59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Range from 1 to 12.  <a href="#a07098941a41390afdb23798eba4f8d59">More...</a><br/></td></tr>
+<tr class="separator:a07098941a41390afdb23798eba4f8d59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1575714bab8ad31901f2f89c0c555c33"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a1575714bab8ad31901f2f89c0c555c33">day</a></td></tr>
+<tr class="memdesc:a1575714bab8ad31901f2f89c0c555c33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Range from 1 to 31 (depending on month).  <a href="#a1575714bab8ad31901f2f89c0c555c33">More...</a><br/></td></tr>
+<tr class="separator:a1575714bab8ad31901f2f89c0c555c33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a647588c72e388e217fec4a88742d3c61"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a647588c72e388e217fec4a88742d3c61">hour</a></td></tr>
+<tr class="memdesc:a647588c72e388e217fec4a88742d3c61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Range from 0 to 23.  <a href="#a647588c72e388e217fec4a88742d3c61">More...</a><br/></td></tr>
+<tr class="separator:a647588c72e388e217fec4a88742d3c61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19c3e5aafd0c10ad6d4dcd8d03b680c1"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a19c3e5aafd0c10ad6d4dcd8d03b680c1">minute</a></td></tr>
+<tr class="memdesc:a19c3e5aafd0c10ad6d4dcd8d03b680c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Range from 0 to 59.  <a href="#a19c3e5aafd0c10ad6d4dcd8d03b680c1">More...</a><br/></td></tr>
+<tr class="separator:a19c3e5aafd0c10ad6d4dcd8d03b680c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41078d73bf34d8377557bd9c5aa96754"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a41078d73bf34d8377557bd9c5aa96754">second</a></td></tr>
+<tr class="memdesc:a41078d73bf34d8377557bd9c5aa96754"><td class="mdescLeft">&#160;</td><td class="mdescRight">Range from 0 to 59.  <a href="#a41078d73bf34d8377557bd9c5aa96754">More...</a><br/></td></tr>
+<tr class="separator:a41078d73bf34d8377557bd9c5aa96754"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a03a4361ff2481ab7ed890c60f3ac68b7"></a>
+<a class="anchor" id="a1a534c68a43fa65862d6527463773357"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t snvs_lp_srtc_datetime_t::year</td>
+          <td class="memname">uint16_t _snvs_lp_srtc_datetime::year</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="afeeab32d19b15b5dd7ebbcd3c1322e28"></a>
+<a class="anchor" id="a07098941a41390afdb23798eba4f8d59"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t snvs_lp_srtc_datetime_t::month</td>
+          <td class="memname">uint8_t _snvs_lp_srtc_datetime::month</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a8325ab17dc714294c88414f24d03320d"></a>
+<a class="anchor" id="a1575714bab8ad31901f2f89c0c555c33"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t snvs_lp_srtc_datetime_t::day</td>
+          <td class="memname">uint8_t _snvs_lp_srtc_datetime::day</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a4a70a512ba988adb1fb1e4e62ba11f29"></a>
+<a class="anchor" id="a647588c72e388e217fec4a88742d3c61"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t snvs_lp_srtc_datetime_t::hour</td>
+          <td class="memname">uint8_t _snvs_lp_srtc_datetime::hour</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a266253051fa3ee775a27bffb92d9be5b"></a>
+<a class="anchor" id="a19c3e5aafd0c10ad6d4dcd8d03b680c1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t snvs_lp_srtc_datetime_t::minute</td>
+          <td class="memname">uint8_t _snvs_lp_srtc_datetime::minute</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a24f3ad7303d4b70ca927c385490a3448"></a>
+<a class="anchor" id="a41078d73bf34d8377557bd9c5aa96754"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t snvs_lp_srtc_datetime_t::second</td>
+          <td class="memname">uint8_t _snvs_lp_srtc_datetime::second</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -402,12 +444,12 @@ Zeroizable Master Key (ZMK)</h2></td></tr>
 
 </div>
 </div>
-<a name="a00503" id="a00503"></a>
+<a name="a00496" id="a00496"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct snvs_lp_srtc_config_t</td>
+          <td class="memname">struct _snvs_lp_srtc_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -415,90 +457,105 @@ Zeroizable Master Key (ZMK)</h2></td></tr>
 <p>The config struct can be made const so it resides in flash </p>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a876e4c24fd02f7b939354f625e81b0a3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a876e4c24fd02f7b939354f625e81b0a3"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a876e4c24fd02f7b939354f625e81b0a3">srtcCalEnable</a></td></tr>
-<tr class="memdesc:a876e4c24fd02f7b939354f625e81b0a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">true: SRTC calibration mechanism is enabled; false: No calibration is used <br/></td></tr>
-<tr class="separator:a876e4c24fd02f7b939354f625e81b0a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86c9d09f47c6c6fa4dd60c24088f2d4f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a86c9d09f47c6c6fa4dd60c24088f2d4f"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a86c9d09f47c6c6fa4dd60c24088f2d4f">srtcCalValue</a></td></tr>
-<tr class="memdesc:a86c9d09f47c6c6fa4dd60c24088f2d4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines signed calibration value for SRTC; This is a 5-bit 2's complement value, range from -16 to +15. <br/></td></tr>
-<tr class="separator:a86c9d09f47c6c6fa4dd60c24088f2d4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a960d1c6452caf1c0f8666d8ebd822d05"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a960d1c6452caf1c0f8666d8ebd822d05"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#a960d1c6452caf1c0f8666d8ebd822d05">srtcCalEnable</a></td></tr>
+<tr class="memdesc:a960d1c6452caf1c0f8666d8ebd822d05"><td class="mdescLeft">&#160;</td><td class="mdescRight">true: SRTC calibration mechanism is enabled; false: No calibration is used <br/></td></tr>
+<tr class="separator:a960d1c6452caf1c0f8666d8ebd822d05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc182446d4f4e3bf6bf0c29e87978809"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acc182446d4f4e3bf6bf0c29e87978809"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html#acc182446d4f4e3bf6bf0c29e87978809">srtcCalValue</a></td></tr>
+<tr class="memdesc:acc182446d4f4e3bf6bf0c29e87978809"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines signed calibration value for SRTC; This is a 5-bit 2's complement value, range from -16 to +15. <br/></td></tr>
+<tr class="separator:acc182446d4f4e3bf6bf0c29e87978809"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
 </div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga806041c275061b615faf70ee97505a00"></a>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga78ed2e37fbc66a685735ea07fd9bf590"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00073.html#ga806041c275061b615faf70ee97505a00">snvs_lp_srtc_interrupts_t</a></td>
+          <td class="memname">typedef struct <a class="el" href="a00073.html#a00496">_snvs_lp_srtc_config</a>  <a class="el" href="a00073.html#ga78ed2e37fbc66a685735ea07fd9bf590">snvs_lp_srtc_config_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This structure holds the configuration settings for the SNVS_LP peripheral. To initialize this structure to reasonable defaults, call the SNVS_LP_GetDefaultConfig() function and pass a pointer to your config structure instance.</p>
+<p>The config struct can be made const so it resides in flash </p>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="ga61a2fa625f189176887c0e2c5599f7a9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00073.html#ga61a2fa625f189176887c0e2c5599f7a9">_snvs_lp_srtc_interrupts</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga806041c275061b615faf70ee97505a00ac53121f2a9d870cf7f21411edeb92515"></a>kSNVS_SRTC_AlarmInterrupt</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga61a2fa625f189176887c0e2c5599f7a9ac53121f2a9d870cf7f21411edeb92515"></a>kSNVS_SRTC_AlarmInterrupt</em>&nbsp;</td><td class="fielddoc">
 <p>SRTC time alarm. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gadcecf6b4fd6c8c56133821ebbd2df9de"></a>
+<a class="anchor" id="ga916850c76c720136cb01bb78748668f9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00073.html#gadcecf6b4fd6c8c56133821ebbd2df9de">snvs_lp_srtc_status_flags_t</a></td>
+          <td class="memname">enum <a class="el" href="a00073.html#ga916850c76c720136cb01bb78748668f9">_snvs_lp_srtc_status_flags</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggadcecf6b4fd6c8c56133821ebbd2df9dea359a970814078eb2dfc6c6eb5a30e0c1"></a>kSNVS_SRTC_AlarmInterruptFlag</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga916850c76c720136cb01bb78748668f9a359a970814078eb2dfc6c6eb5a30e0c1"></a>kSNVS_SRTC_AlarmInterruptFlag</em>&nbsp;</td><td class="fielddoc">
 <p>SRTC time alarm flag. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gae44e3f9132afa438f0bfd6233928355f"></a>
+<a class="anchor" id="ga80fe38c413bd604ea925db77ee7ed120"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00073.html#gae44e3f9132afa438f0bfd6233928355f">snvs_lp_zmk_program_mode_t</a></td>
+          <td class="memname">enum <a class="el" href="a00073.html#ga80fe38c413bd604ea925db77ee7ed120">_snvs_lp_zmk_program_mode</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggae44e3f9132afa438f0bfd6233928355fa6674756b9a54eb86739d3ac01c932614"></a>kSNVS_ZMKSoftwareProgram</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga80fe38c413bd604ea925db77ee7ed120a6674756b9a54eb86739d3ac01c932614"></a>kSNVS_ZMKSoftwareProgram</em>&nbsp;</td><td class="fielddoc">
 <p>Software programming mode. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae44e3f9132afa438f0bfd6233928355fabd57ccc7494ed942d56a3da20fa6d67f"></a>kSNVS_ZMKHardwareProgram</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga80fe38c413bd604ea925db77ee7ed120abd57ccc7494ed942d56a3da20fa6d67f"></a>kSNVS_ZMKHardwareProgram</em>&nbsp;</td><td class="fielddoc">
 <p>Hardware programming mode. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga10b65b574393c82d6b6f3e5033c55d7b"></a>
+<a class="anchor" id="ga7a4b522f95983f9f85f356dab2cc44ea"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00073.html#ga10b65b574393c82d6b6f3e5033c55d7b">snvs_lp_master_key_mode_t</a></td>
+          <td class="memname">enum <a class="el" href="a00073.html#ga7a4b522f95983f9f85f356dab2cc44ea">_snvs_lp_master_key_mode</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga10b65b574393c82d6b6f3e5033c55d7ba1dfa052b45b35c4415d36012034ede62"></a>kSNVS_OTPMK</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga7a4b522f95983f9f85f356dab2cc44eaa1dfa052b45b35c4415d36012034ede62"></a>kSNVS_OTPMK</em>&nbsp;</td><td class="fielddoc">
 <p>One Time Programmable Master Key. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga10b65b574393c82d6b6f3e5033c55d7ba1e0c158e459a18e359ae55f8bcb195fe"></a>kSNVS_ZMK</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga7a4b522f95983f9f85f356dab2cc44eaa1e0c158e459a18e359ae55f8bcb195fe"></a>kSNVS_ZMK</em>&nbsp;</td><td class="fielddoc">
 <p>Zeroizable Master Key. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga10b65b574393c82d6b6f3e5033c55d7babb401e0ff02f30ef48013d0eca7ae47e"></a>kSNVS_CMK</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga7a4b522f95983f9f85f356dab2cc44eaabb401e0ff02f30ef48013d0eca7ae47e"></a>kSNVS_CMK</em>&nbsp;</td><td class="fielddoc">
 <p>Combined Master Key, it is XOR of OPTMK and ZMK. </p>
 </td></tr>
 </table>
@@ -564,7 +621,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00073.html#a00503">snvs_lp_srtc_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00073.html#ga78ed2e37fbc66a685735ea07fd9bf590">snvs_lp_srtc_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -614,7 +671,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="memname">void SNVS_LP_SRTC_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00073.html#a00503">snvs_lp_srtc_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00073.html#ga78ed2e37fbc66a685735ea07fd9bf590">snvs_lp_srtc_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
@@ -638,7 +695,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SNVS_LP_SRTC_SetDatetime </td>
+          <td class="memname"><a class="el" href="a00259.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SNVS_LP_SRTC_SetDatetime </td>
           <td>(</td>
           <td class="paramtype">SNVS_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -646,7 +703,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00073.html#a00504">snvs_lp_srtc_datetime_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00073.html#ga46beaa7394dcd4757b041a1f97cafff2">snvs_lp_srtc_datetime_t</a> *&#160;</td>
           <td class="paramname"><em>datetime</em>&#160;</td>
         </tr>
         <tr>
@@ -680,7 +737,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00073.html#a00504">snvs_lp_srtc_datetime_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00073.html#ga46beaa7394dcd4757b041a1f97cafff2">snvs_lp_srtc_datetime_t</a> *&#160;</td>
           <td class="paramname"><em>datetime</em>&#160;</td>
         </tr>
         <tr>
@@ -705,7 +762,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00257.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SNVS_LP_SRTC_SetAlarm </td>
+          <td class="memname"><a class="el" href="a00259.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SNVS_LP_SRTC_SetAlarm </td>
           <td>(</td>
           <td class="paramtype">SNVS_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -713,7 +770,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00073.html#a00504">snvs_lp_srtc_datetime_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00073.html#ga46beaa7394dcd4757b041a1f97cafff2">snvs_lp_srtc_datetime_t</a> *&#160;</td>
           <td class="paramname"><em>alarmTime</em>&#160;</td>
         </tr>
         <tr>
@@ -748,7 +805,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00073.html#a00504">snvs_lp_srtc_datetime_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00073.html#ga46beaa7394dcd4757b041a1f97cafff2">snvs_lp_srtc_datetime_t</a> *&#160;</td>
           <td class="paramname"><em>datetime</em>&#160;</td>
         </tr>
         <tr>
@@ -1004,7 +1061,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="memname">void SNVS_LP_PassiveTamperPin_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00073.html#a00502">snvs_lp_passive_tamper_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00073.html#a00533">snvs_lp_passive_tamper_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1238,7 +1295,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00073.html#gae44e3f9132afa438f0bfd6233928355f">snvs_lp_zmk_program_mode_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00073.html#gae6f3db189ae1d7787019f6eff071c490">snvs_lp_zmk_program_mode_t</a>&#160;</td>
           <td class="paramname"><em>mode</em>&#160;</td>
         </tr>
         <tr>
@@ -1320,7 +1377,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00073.html#ga10b65b574393c82d6b6f3e5033c55d7b">snvs_lp_master_key_mode_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00073.html#ga6bdafb99edfbde0131657fd9c37802d4">snvs_lp_master_key_mode_t</a>&#160;</td>
           <td class="paramname"><em>mode</em>&#160;</td>
         </tr>
         <tr>
@@ -1342,7 +1399,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>When <a class="el" href="a00073.html#gga10b65b574393c82d6b6f3e5033c55d7ba1e0c158e459a18e359ae55f8bcb195fe">kSNVS_ZMK</a> or <a class="el" href="a00073.html#gga10b65b574393c82d6b6f3e5033c55d7babb401e0ff02f30ef48013d0eca7ae47e">kSNVS_CMK</a> used, the SNVS_HP must be configured to enable the master key selection. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>When <a class="el" href="a00073.html#gga7a4b522f95983f9f85f356dab2cc44eaa1e0c158e459a18e359ae55f8bcb195fe">kSNVS_ZMK</a> or <a class="el" href="a00073.html#gga7a4b522f95983f9f85f356dab2cc44eaabb401e0ff02f30ef48013d0eca7ae47e">kSNVS_CMK</a> used, the SNVS_HP must be configured to enable the master key selection. </dd></dl>
 
 </div>
 </div>

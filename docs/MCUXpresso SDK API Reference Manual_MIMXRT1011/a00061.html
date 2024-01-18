@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -130,15 +130,15 @@ Modules</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00389"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a00389">spdif_config_t</a></td></tr>
-<tr class="memdesc:a00389"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF user configuration structure.  <a href="a00061.html#a00389">More...</a><br/></td></tr>
+<tr class="memitem:a00385"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a00385">_spdif_config</a></td></tr>
+<tr class="memdesc:a00385"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF user configuration structure.  <a href="a00061.html#a00385">More...</a><br/></td></tr>
+<tr class="separator:a00385"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00389"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a00389">_spdif_transfer</a></td></tr>
+<tr class="memdesc:a00389"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF transfer structure.  <a href="a00061.html#a00389">More...</a><br/></td></tr>
 <tr class="separator:a00389"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00391"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a00391">spdif_transfer_t</a></td></tr>
-<tr class="memdesc:a00391"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF transfer structure.  <a href="a00061.html#a00391">More...</a><br/></td></tr>
-<tr class="separator:a00391"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00275"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a00275">spdif_handle_t</a></td></tr>
-<tr class="memdesc:a00275"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF handle structure.  <a href="a00061.html#a00275">More...</a><br/></td></tr>
-<tr class="separator:a00275"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00388"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a00388">_spdif_handle</a></td></tr>
+<tr class="memdesc:a00388"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF handle structure.  <a href="a00061.html#a00388">More...</a><br/></td></tr>
+<tr class="separator:a00388"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
@@ -148,8 +148,40 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
+<tr class="memitem:ga320a1ffa3db7e37a913734da0a4b543a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga320a1ffa3db7e37a913734da0a4b543a"></a>
+typedef enum <a class="el" href="a00061.html#gaf027e919562bb13e676d936e5fe9f102">_spdif_rxfull_select</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ga320a1ffa3db7e37a913734da0a4b543a">spdif_rxfull_select_t</a></td></tr>
+<tr class="memdesc:ga320a1ffa3db7e37a913734da0a4b543a"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF Rx FIFO full falg select, it decides when assert the rx full flag. <br/></td></tr>
+<tr class="separator:ga320a1ffa3db7e37a913734da0a4b543a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad5e952acb85913061d39f05cb69bcf77"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad5e952acb85913061d39f05cb69bcf77"></a>
+typedef enum <a class="el" href="a00061.html#ga9a8390010ef72478e96c1dddd694af4a">_spdif_txempty_select</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#gad5e952acb85913061d39f05cb69bcf77">spdif_txempty_select_t</a></td></tr>
+<tr class="memdesc:gad5e952acb85913061d39f05cb69bcf77"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF tx FIFO EMPTY falg select, it decides when assert the tx empty flag. <br/></td></tr>
+<tr class="separator:gad5e952acb85913061d39f05cb69bcf77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad86c23303f42359f3de0f5da856fb962"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad86c23303f42359f3de0f5da856fb962"></a>
+typedef enum <a class="el" href="a00061.html#ga8e291cb75c4b998ed720a09df3bdd293">_spdif_uchannel_source</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#gad86c23303f42359f3de0f5da856fb962">spdif_uchannel_source_t</a></td></tr>
+<tr class="memdesc:gad86c23303f42359f3de0f5da856fb962"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF U channel source. <br/></td></tr>
+<tr class="separator:gad86c23303f42359f3de0f5da856fb962"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga962e90838e3ed4e55c4b541344221eb2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga962e90838e3ed4e55c4b541344221eb2"></a>
+typedef enum <a class="el" href="a00061.html#ga647e0927c74f8e7d9c8017cd9caffacf">_spdif_gain_select</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ga962e90838e3ed4e55c4b541344221eb2">spdif_gain_select_t</a></td></tr>
+<tr class="memdesc:ga962e90838e3ed4e55c4b541344221eb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF clock gain. <br/></td></tr>
+<tr class="separator:ga962e90838e3ed4e55c4b541344221eb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad790d7edfb44e6a208654ff59bddfd80"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad790d7edfb44e6a208654ff59bddfd80"></a>
+typedef enum <a class="el" href="a00061.html#gad738631e5a1776692ef90fa6e8034ba3">_spdif_tx_source</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#gad790d7edfb44e6a208654ff59bddfd80">spdif_tx_source_t</a></td></tr>
+<tr class="memdesc:gad790d7edfb44e6a208654ff59bddfd80"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF tx data source. <br/></td></tr>
+<tr class="separator:gad790d7edfb44e6a208654ff59bddfd80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac1f3df5dcf4d4d971698c59a95f21bbf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac1f3df5dcf4d4d971698c59a95f21bbf"></a>
+typedef enum <a class="el" href="a00061.html#ga1d5ee2686337a0582f65b0d551088b32">_spdif_validity_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#gac1f3df5dcf4d4d971698c59a95f21bbf">spdif_validity_config_t</a></td></tr>
+<tr class="memdesc:gac1f3df5dcf4d4d971698c59a95f21bbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF tx data source. <br/></td></tr>
+<tr class="separator:gac1f3df5dcf4d4d971698c59a95f21bbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga42bdaae7a8b6823fab001c8282269fd4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga42bdaae7a8b6823fab001c8282269fd4"></a>
+typedef struct <a class="el" href="a00061.html#a00385">_spdif_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ga42bdaae7a8b6823fab001c8282269fd4">spdif_config_t</a></td></tr>
+<tr class="memdesc:ga42bdaae7a8b6823fab001c8282269fd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF user configuration structure. <br/></td></tr>
+<tr class="separator:ga42bdaae7a8b6823fab001c8282269fd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga28534824bc9ce4a5a406e928bcbdd7d1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga28534824bc9ce4a5a406e928bcbdd7d1"></a>
+typedef struct <a class="el" href="a00061.html#a00389">_spdif_transfer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ga28534824bc9ce4a5a406e928bcbdd7d1">spdif_transfer_t</a></td></tr>
+<tr class="memdesc:ga28534824bc9ce4a5a406e928bcbdd7d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF transfer structure. <br/></td></tr>
+<tr class="separator:ga28534824bc9ce4a5a406e928bcbdd7d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8749a36136a9b55600479d61b55596ec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8749a36136a9b55600479d61b55596ec"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ga8749a36136a9b55600479d61b55596ec">spdif_transfer_callback_t</a> )(SPDIF_Type *base, spdif_handle_t *handle, <a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ga8749a36136a9b55600479d61b55596ec">spdif_transfer_callback_t</a> )(SPDIF_Type *base, <a class="el" href="a00061.html#a00388">spdif_handle_t</a> *handle, <a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
 <tr class="memdesc:ga8749a36136a9b55600479d61b55596ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF transfer callback prototype. <br/></td></tr>
 <tr class="separator:ga8749a36136a9b55600479d61b55596ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -193,74 +225,74 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:ga77867ab4129f63159b37bca3b652a798"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF return status.  <a href="a00061.html#ga77867ab4129f63159b37bca3b652a798">More...</a><br/></td></tr>
 <tr class="separator:ga77867ab4129f63159b37bca3b652a798"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga85d08a5eba9eaf262597f4f3dfad19a0"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ga85d08a5eba9eaf262597f4f3dfad19a0">spdif_rxfull_select_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00061.html#gga85d08a5eba9eaf262597f4f3dfad19a0ad6a45c3b1bb3397ce7dd2e5c9af8c1c9">kSPDIF_RxFull1Sample</a> = 0x0u, 
+<tr class="memitem:gaf027e919562bb13e676d936e5fe9f102"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#gaf027e919562bb13e676d936e5fe9f102">_spdif_rxfull_select</a> { <br/>
+&#160;&#160;<a class="el" href="a00061.html#ggaf027e919562bb13e676d936e5fe9f102ad6a45c3b1bb3397ce7dd2e5c9af8c1c9">kSPDIF_RxFull1Sample</a> = 0x0u, 
 <br/>
-&#160;&#160;<a class="el" href="a00061.html#gga85d08a5eba9eaf262597f4f3dfad19a0a84f7309ca36974eefa1a2d970eba7995">kSPDIF_RxFull4Samples</a>, 
+&#160;&#160;<a class="el" href="a00061.html#ggaf027e919562bb13e676d936e5fe9f102a84f7309ca36974eefa1a2d970eba7995">kSPDIF_RxFull4Samples</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00061.html#gga85d08a5eba9eaf262597f4f3dfad19a0a71af34697ac17ca08eb26d7c4d6dd27f">kSPDIF_RxFull8Samples</a>, 
+&#160;&#160;<a class="el" href="a00061.html#ggaf027e919562bb13e676d936e5fe9f102a71af34697ac17ca08eb26d7c4d6dd27f">kSPDIF_RxFull8Samples</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00061.html#gga85d08a5eba9eaf262597f4f3dfad19a0ab585922a28236a3e9b8cffbdd3793cee">kSPDIF_RxFull16Samples</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:ga85d08a5eba9eaf262597f4f3dfad19a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF Rx FIFO full falg select, it decides when assert the rx full flag.  <a href="a00061.html#ga85d08a5eba9eaf262597f4f3dfad19a0">More...</a><br/></td></tr>
-<tr class="separator:ga85d08a5eba9eaf262597f4f3dfad19a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad58b90afceef70798b8be683f3017c71"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#gad58b90afceef70798b8be683f3017c71">spdif_txempty_select_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00061.html#ggad58b90afceef70798b8be683f3017c71a835efeacfa1b7bc07a723c3683407b4e">kSPDIF_TxEmpty0Sample</a> = 0x0u, 
-<br/>
-&#160;&#160;<a class="el" href="a00061.html#ggad58b90afceef70798b8be683f3017c71a38d0ed7a9ff015721f0edcd71d696e18">kSPDIF_TxEmpty4Samples</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00061.html#ggad58b90afceef70798b8be683f3017c71afbd58fcc26965a9b45865764d775284f">kSPDIF_TxEmpty8Samples</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00061.html#ggad58b90afceef70798b8be683f3017c71a9c74437e11128b87fbd5bb644c4790e4">kSPDIF_TxEmpty12Samples</a>
+&#160;&#160;<a class="el" href="a00061.html#ggaf027e919562bb13e676d936e5fe9f102ab585922a28236a3e9b8cffbdd3793cee">kSPDIF_RxFull16Samples</a>
 <br/>
  }</td></tr>
-<tr class="memdesc:gad58b90afceef70798b8be683f3017c71"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF tx FIFO EMPTY falg select, it decides when assert the tx empty flag.  <a href="a00061.html#gad58b90afceef70798b8be683f3017c71">More...</a><br/></td></tr>
-<tr class="separator:gad58b90afceef70798b8be683f3017c71"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga01edc35977dbab89a7201285c61c4a3e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ga01edc35977dbab89a7201285c61c4a3e">spdif_uchannel_source_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00061.html#gga01edc35977dbab89a7201285c61c4a3eaf159efd3316b59e34b7288448c4b8c4f">kSPDIF_NoUChannel</a> = 0x0U, 
+<tr class="memdesc:gaf027e919562bb13e676d936e5fe9f102"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF Rx FIFO full falg select, it decides when assert the rx full flag.  <a href="a00061.html#gaf027e919562bb13e676d936e5fe9f102">More...</a><br/></td></tr>
+<tr class="separator:gaf027e919562bb13e676d936e5fe9f102"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9a8390010ef72478e96c1dddd694af4a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ga9a8390010ef72478e96c1dddd694af4a">_spdif_txempty_select</a> { <br/>
+&#160;&#160;<a class="el" href="a00061.html#gga9a8390010ef72478e96c1dddd694af4aa835efeacfa1b7bc07a723c3683407b4e">kSPDIF_TxEmpty0Sample</a> = 0x0u, 
 <br/>
-&#160;&#160;<a class="el" href="a00061.html#gga01edc35977dbab89a7201285c61c4a3eaec4bf6dbe6a1346b33c59c392ea1fbe6">kSPDIF_UChannelFromRx</a> = 0x1U, 
+&#160;&#160;<a class="el" href="a00061.html#gga9a8390010ef72478e96c1dddd694af4aa38d0ed7a9ff015721f0edcd71d696e18">kSPDIF_TxEmpty4Samples</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00061.html#gga01edc35977dbab89a7201285c61c4a3ea65a3b2cbcb558fdc5870f009d9d6bd80">kSPDIF_UChannelFromTx</a> = 0x3U
+&#160;&#160;<a class="el" href="a00061.html#gga9a8390010ef72478e96c1dddd694af4aafbd58fcc26965a9b45865764d775284f">kSPDIF_TxEmpty8Samples</a>, 
 <br/>
- }</td></tr>
-<tr class="memdesc:ga01edc35977dbab89a7201285c61c4a3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF U channel source.  <a href="a00061.html#ga01edc35977dbab89a7201285c61c4a3e">More...</a><br/></td></tr>
-<tr class="separator:ga01edc35977dbab89a7201285c61c4a3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab5381bc40ad0b86e9453495598911e2c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#gab5381bc40ad0b86e9453495598911e2c">spdif_gain_select_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00061.html#ggab5381bc40ad0b86e9453495598911e2cac438b3169eb2675d11540a839e99f502">kSPDIF_GAIN_24</a> = 0x0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00061.html#ggab5381bc40ad0b86e9453495598911e2caa776465b4de5bf2fa610f1c2366c063f">kSPDIF_GAIN_16</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00061.html#ggab5381bc40ad0b86e9453495598911e2cad54dc0e7908199d3fe24ef53d608b544">kSPDIF_GAIN_12</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00061.html#ggab5381bc40ad0b86e9453495598911e2caafee91827c9ea238ad6d6478718e98a0">kSPDIF_GAIN_8</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00061.html#ggab5381bc40ad0b86e9453495598911e2ca16500e129c2451b60faf4a3f4464df43">kSPDIF_GAIN_6</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00061.html#ggab5381bc40ad0b86e9453495598911e2ca84750080b7f27da810fe19abe64f776f">kSPDIF_GAIN_4</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00061.html#ggab5381bc40ad0b86e9453495598911e2ca1008286af785dcb2dde9131765217980">kSPDIF_GAIN_3</a>
+&#160;&#160;<a class="el" href="a00061.html#gga9a8390010ef72478e96c1dddd694af4aa9c74437e11128b87fbd5bb644c4790e4">kSPDIF_TxEmpty12Samples</a>
 <br/>
  }</td></tr>
-<tr class="memdesc:gab5381bc40ad0b86e9453495598911e2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF clock gain.  <a href="a00061.html#gab5381bc40ad0b86e9453495598911e2c">More...</a><br/></td></tr>
-<tr class="separator:gab5381bc40ad0b86e9453495598911e2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2847432f45adbafdb2f9f7e5c25d9b2e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ga2847432f45adbafdb2f9f7e5c25d9b2e">spdif_tx_source_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00061.html#gga2847432f45adbafdb2f9f7e5c25d9b2eaffd9df4017e5af840e5c34c050791f02">kSPDIF_txFromReceiver</a> = 0x1U, 
+<tr class="memdesc:ga9a8390010ef72478e96c1dddd694af4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF tx FIFO EMPTY falg select, it decides when assert the tx empty flag.  <a href="a00061.html#ga9a8390010ef72478e96c1dddd694af4a">More...</a><br/></td></tr>
+<tr class="separator:ga9a8390010ef72478e96c1dddd694af4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8e291cb75c4b998ed720a09df3bdd293"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ga8e291cb75c4b998ed720a09df3bdd293">_spdif_uchannel_source</a> { <br/>
+&#160;&#160;<a class="el" href="a00061.html#gga8e291cb75c4b998ed720a09df3bdd293af159efd3316b59e34b7288448c4b8c4f">kSPDIF_NoUChannel</a> = 0x0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00061.html#gga2847432f45adbafdb2f9f7e5c25d9b2ea1e6073994dc81cb60c229a8ce166222f">kSPDIF_txNormal</a> = 0x5U
+&#160;&#160;<a class="el" href="a00061.html#gga8e291cb75c4b998ed720a09df3bdd293aec4bf6dbe6a1346b33c59c392ea1fbe6">kSPDIF_UChannelFromRx</a> = 0x1U, 
 <br/>
- }</td></tr>
-<tr class="memdesc:ga2847432f45adbafdb2f9f7e5c25d9b2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF tx data source.  <a href="a00061.html#ga2847432f45adbafdb2f9f7e5c25d9b2e">More...</a><br/></td></tr>
-<tr class="separator:ga2847432f45adbafdb2f9f7e5c25d9b2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad5615c4913a612ee1dc67e357e905f2c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#gad5615c4913a612ee1dc67e357e905f2c">spdif_validity_config_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00061.html#ggad5615c4913a612ee1dc67e357e905f2ca9cf3c378520222b1ffe3e584cae0ac67">kSPDIF_validityFlagAlwaysSet</a> = 0x0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00061.html#ggad5615c4913a612ee1dc67e357e905f2ca96145e43a2a36d2c7dcd6ce5242743b1">kSPDIF_validityFlagAlwaysClear</a>
+&#160;&#160;<a class="el" href="a00061.html#gga8e291cb75c4b998ed720a09df3bdd293a65a3b2cbcb558fdc5870f009d9d6bd80">kSPDIF_UChannelFromTx</a> = 0x3U
 <br/>
  }</td></tr>
-<tr class="memdesc:gad5615c4913a612ee1dc67e357e905f2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF tx data source.  <a href="a00061.html#gad5615c4913a612ee1dc67e357e905f2c">More...</a><br/></td></tr>
-<tr class="separator:gad5615c4913a612ee1dc67e357e905f2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga8e291cb75c4b998ed720a09df3bdd293"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF U channel source.  <a href="a00061.html#ga8e291cb75c4b998ed720a09df3bdd293">More...</a><br/></td></tr>
+<tr class="separator:ga8e291cb75c4b998ed720a09df3bdd293"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga647e0927c74f8e7d9c8017cd9caffacf"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ga647e0927c74f8e7d9c8017cd9caffacf">_spdif_gain_select</a> { <br/>
+&#160;&#160;<a class="el" href="a00061.html#gga647e0927c74f8e7d9c8017cd9caffacfac438b3169eb2675d11540a839e99f502">kSPDIF_GAIN_24</a> = 0x0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00061.html#gga647e0927c74f8e7d9c8017cd9caffacfaa776465b4de5bf2fa610f1c2366c063f">kSPDIF_GAIN_16</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00061.html#gga647e0927c74f8e7d9c8017cd9caffacfad54dc0e7908199d3fe24ef53d608b544">kSPDIF_GAIN_12</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00061.html#gga647e0927c74f8e7d9c8017cd9caffacfaafee91827c9ea238ad6d6478718e98a0">kSPDIF_GAIN_8</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00061.html#gga647e0927c74f8e7d9c8017cd9caffacfa16500e129c2451b60faf4a3f4464df43">kSPDIF_GAIN_6</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00061.html#gga647e0927c74f8e7d9c8017cd9caffacfa84750080b7f27da810fe19abe64f776f">kSPDIF_GAIN_4</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00061.html#gga647e0927c74f8e7d9c8017cd9caffacfa1008286af785dcb2dde9131765217980">kSPDIF_GAIN_3</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga647e0927c74f8e7d9c8017cd9caffacf"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF clock gain.  <a href="a00061.html#ga647e0927c74f8e7d9c8017cd9caffacf">More...</a><br/></td></tr>
+<tr class="separator:ga647e0927c74f8e7d9c8017cd9caffacf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad738631e5a1776692ef90fa6e8034ba3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#gad738631e5a1776692ef90fa6e8034ba3">_spdif_tx_source</a> { <br/>
+&#160;&#160;<a class="el" href="a00061.html#ggad738631e5a1776692ef90fa6e8034ba3affd9df4017e5af840e5c34c050791f02">kSPDIF_txFromReceiver</a> = 0x1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00061.html#ggad738631e5a1776692ef90fa6e8034ba3a1e6073994dc81cb60c229a8ce166222f">kSPDIF_txNormal</a> = 0x5U
+<br/>
+ }</td></tr>
+<tr class="memdesc:gad738631e5a1776692ef90fa6e8034ba3"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF tx data source.  <a href="a00061.html#gad738631e5a1776692ef90fa6e8034ba3">More...</a><br/></td></tr>
+<tr class="separator:gad738631e5a1776692ef90fa6e8034ba3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1d5ee2686337a0582f65b0d551088b32"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ga1d5ee2686337a0582f65b0d551088b32">_spdif_validity_config</a> { <br/>
+&#160;&#160;<a class="el" href="a00061.html#gga1d5ee2686337a0582f65b0d551088b32a9cf3c378520222b1ffe3e584cae0ac67">kSPDIF_validityFlagAlwaysSet</a> = 0x0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00061.html#gga1d5ee2686337a0582f65b0d551088b32a96145e43a2a36d2c7dcd6ce5242743b1">kSPDIF_validityFlagAlwaysClear</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga1d5ee2686337a0582f65b0d551088b32"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF tx data source.  <a href="a00061.html#ga1d5ee2686337a0582f65b0d551088b32">More...</a><br/></td></tr>
+<tr class="separator:ga1d5ee2686337a0582f65b0d551088b32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga16685eea158879e41b101ca3634de462"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
 &#160;&#160;<a class="el" href="a00061.html#gga16685eea158879e41b101ca3634de462ab8774a200c36eccf9d7b439ba21d1ac8">kSPDIF_RxDPLLLocked</a> = SPDIF_SIE_LOCK_MASK, 
 <br/>
@@ -315,16 +347,16 @@ Enumerations</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
 <tr class="memitem:ga036bac4f2d40e143c5528a10038767c1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga036bac4f2d40e143c5528a10038767c1"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ga036bac4f2d40e143c5528a10038767c1">FSL_SPDIF_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 6))</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ga036bac4f2d40e143c5528a10038767c1">FSL_SPDIF_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00216.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 6))</td></tr>
 <tr class="memdesc:ga036bac4f2d40e143c5528a10038767c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version 2.0.6. <br/></td></tr>
 <tr class="separator:ga036bac4f2d40e143c5528a10038767c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Initialization and deinitialization</h2></td></tr>
-<tr class="memitem:ga6b4e9ed2c903d62af53a8d3887126413"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ga6b4e9ed2c903d62af53a8d3887126413">SPDIF_Init</a> (SPDIF_Type *base, const <a class="el" href="a00061.html#a00389">spdif_config_t</a> *config)</td></tr>
+<tr class="memitem:ga6b4e9ed2c903d62af53a8d3887126413"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ga6b4e9ed2c903d62af53a8d3887126413">SPDIF_Init</a> (SPDIF_Type *base, const <a class="el" href="a00061.html#ga42bdaae7a8b6823fab001c8282269fd4">spdif_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga6b4e9ed2c903d62af53a8d3887126413"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the SPDIF peripheral.  <a href="#ga6b4e9ed2c903d62af53a8d3887126413">More...</a><br/></td></tr>
 <tr class="separator:ga6b4e9ed2c903d62af53a8d3887126413"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga11b262ea3923fd80f78b959d9718e00b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ga11b262ea3923fd80f78b959d9718e00b">SPDIF_GetDefaultConfig</a> (<a class="el" href="a00061.html#a00389">spdif_config_t</a> *config)</td></tr>
+<tr class="memitem:ga11b262ea3923fd80f78b959d9718e00b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ga11b262ea3923fd80f78b959d9718e00b">SPDIF_GetDefaultConfig</a> (<a class="el" href="a00061.html#ga42bdaae7a8b6823fab001c8282269fd4">spdif_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga11b262ea3923fd80f78b959d9718e00b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the SPDIF configuration structure to default values.  <a href="#ga11b262ea3923fd80f78b959d9718e00b">More...</a><br/></td></tr>
 <tr class="separator:ga11b262ea3923fd80f78b959d9718e00b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2631baffebf03ec2a587580112dd56f3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ga2631baffebf03ec2a587580112dd56f3">SPDIF_Deinit</a> (SPDIF_Type *base)</td></tr>
@@ -429,96 +461,150 @@ Bus Operations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Transactional</h2></td></tr>
-<tr class="memitem:ga2e4eb257e2da537eb2d47a31ea47fbb6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ga2e4eb257e2da537eb2d47a31ea47fbb6">SPDIF_TransferTxCreateHandle</a> (SPDIF_Type *base, spdif_handle_t *handle, <a class="el" href="a00061.html#ga8749a36136a9b55600479d61b55596ec">spdif_transfer_callback_t</a> callback, void *userData)</td></tr>
+<tr class="memitem:ga2e4eb257e2da537eb2d47a31ea47fbb6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ga2e4eb257e2da537eb2d47a31ea47fbb6">SPDIF_TransferTxCreateHandle</a> (SPDIF_Type *base, <a class="el" href="a00061.html#a00388">spdif_handle_t</a> *handle, <a class="el" href="a00061.html#ga8749a36136a9b55600479d61b55596ec">spdif_transfer_callback_t</a> callback, void *userData)</td></tr>
 <tr class="memdesc:ga2e4eb257e2da537eb2d47a31ea47fbb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the SPDIF Tx handle.  <a href="#ga2e4eb257e2da537eb2d47a31ea47fbb6">More...</a><br/></td></tr>
 <tr class="separator:ga2e4eb257e2da537eb2d47a31ea47fbb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac44c0edc9e22798fb840f38f1c3749ba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#gac44c0edc9e22798fb840f38f1c3749ba">SPDIF_TransferRxCreateHandle</a> (SPDIF_Type *base, spdif_handle_t *handle, <a class="el" href="a00061.html#ga8749a36136a9b55600479d61b55596ec">spdif_transfer_callback_t</a> callback, void *userData)</td></tr>
+<tr class="memitem:gac44c0edc9e22798fb840f38f1c3749ba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#gac44c0edc9e22798fb840f38f1c3749ba">SPDIF_TransferRxCreateHandle</a> (SPDIF_Type *base, <a class="el" href="a00061.html#a00388">spdif_handle_t</a> *handle, <a class="el" href="a00061.html#ga8749a36136a9b55600479d61b55596ec">spdif_transfer_callback_t</a> callback, void *userData)</td></tr>
 <tr class="memdesc:gac44c0edc9e22798fb840f38f1c3749ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the SPDIF Rx handle.  <a href="#gac44c0edc9e22798fb840f38f1c3749ba">More...</a><br/></td></tr>
 <tr class="separator:gac44c0edc9e22798fb840f38f1c3749ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga155e14a0591e50af578cb8309171c112"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ga155e14a0591e50af578cb8309171c112">SPDIF_TransferSendNonBlocking</a> (SPDIF_Type *base, spdif_handle_t *handle, <a class="el" href="a00061.html#a00391">spdif_transfer_t</a> *xfer)</td></tr>
+<tr class="memitem:ga155e14a0591e50af578cb8309171c112"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ga155e14a0591e50af578cb8309171c112">SPDIF_TransferSendNonBlocking</a> (SPDIF_Type *base, <a class="el" href="a00061.html#a00388">spdif_handle_t</a> *handle, <a class="el" href="a00061.html#ga28534824bc9ce4a5a406e928bcbdd7d1">spdif_transfer_t</a> *xfer)</td></tr>
 <tr class="memdesc:ga155e14a0591e50af578cb8309171c112"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs an interrupt non-blocking send transfer on SPDIF.  <a href="#ga155e14a0591e50af578cb8309171c112">More...</a><br/></td></tr>
 <tr class="separator:ga155e14a0591e50af578cb8309171c112"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga04fe7c5e2cf560687b07f5de908da255"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ga04fe7c5e2cf560687b07f5de908da255">SPDIF_TransferReceiveNonBlocking</a> (SPDIF_Type *base, spdif_handle_t *handle, <a class="el" href="a00061.html#a00391">spdif_transfer_t</a> *xfer)</td></tr>
+<tr class="memitem:ga04fe7c5e2cf560687b07f5de908da255"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ga04fe7c5e2cf560687b07f5de908da255">SPDIF_TransferReceiveNonBlocking</a> (SPDIF_Type *base, <a class="el" href="a00061.html#a00388">spdif_handle_t</a> *handle, <a class="el" href="a00061.html#ga28534824bc9ce4a5a406e928bcbdd7d1">spdif_transfer_t</a> *xfer)</td></tr>
 <tr class="memdesc:ga04fe7c5e2cf560687b07f5de908da255"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs an interrupt non-blocking receive transfer on SPDIF.  <a href="#ga04fe7c5e2cf560687b07f5de908da255">More...</a><br/></td></tr>
 <tr class="separator:ga04fe7c5e2cf560687b07f5de908da255"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga56e6fe5a91de5d1f38896128c4958a94"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ga56e6fe5a91de5d1f38896128c4958a94">SPDIF_TransferGetSendCount</a> (SPDIF_Type *base, spdif_handle_t *handle, size_t *count)</td></tr>
+<tr class="memitem:ga56e6fe5a91de5d1f38896128c4958a94"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ga56e6fe5a91de5d1f38896128c4958a94">SPDIF_TransferGetSendCount</a> (SPDIF_Type *base, <a class="el" href="a00061.html#a00388">spdif_handle_t</a> *handle, size_t *count)</td></tr>
 <tr class="memdesc:ga56e6fe5a91de5d1f38896128c4958a94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a set byte count.  <a href="#ga56e6fe5a91de5d1f38896128c4958a94">More...</a><br/></td></tr>
 <tr class="separator:ga56e6fe5a91de5d1f38896128c4958a94"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaad53ad9d352550e8fa84a3200ee977c9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#gaad53ad9d352550e8fa84a3200ee977c9">SPDIF_TransferGetReceiveCount</a> (SPDIF_Type *base, spdif_handle_t *handle, size_t *count)</td></tr>
+<tr class="memitem:gaad53ad9d352550e8fa84a3200ee977c9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#gaad53ad9d352550e8fa84a3200ee977c9">SPDIF_TransferGetReceiveCount</a> (SPDIF_Type *base, <a class="el" href="a00061.html#a00388">spdif_handle_t</a> *handle, size_t *count)</td></tr>
 <tr class="memdesc:gaad53ad9d352550e8fa84a3200ee977c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a received byte count.  <a href="#gaad53ad9d352550e8fa84a3200ee977c9">More...</a><br/></td></tr>
 <tr class="separator:gaad53ad9d352550e8fa84a3200ee977c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga004b052fdaa3fd78dd7bafc721b28f0c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ga004b052fdaa3fd78dd7bafc721b28f0c">SPDIF_TransferAbortSend</a> (SPDIF_Type *base, spdif_handle_t *handle)</td></tr>
+<tr class="memitem:ga004b052fdaa3fd78dd7bafc721b28f0c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ga004b052fdaa3fd78dd7bafc721b28f0c">SPDIF_TransferAbortSend</a> (SPDIF_Type *base, <a class="el" href="a00061.html#a00388">spdif_handle_t</a> *handle)</td></tr>
 <tr class="memdesc:ga004b052fdaa3fd78dd7bafc721b28f0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the current send.  <a href="#ga004b052fdaa3fd78dd7bafc721b28f0c">More...</a><br/></td></tr>
 <tr class="separator:ga004b052fdaa3fd78dd7bafc721b28f0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5dd15b214687cf6a120142b0152ac18c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ga5dd15b214687cf6a120142b0152ac18c">SPDIF_TransferAbortReceive</a> (SPDIF_Type *base, spdif_handle_t *handle)</td></tr>
+<tr class="memitem:ga5dd15b214687cf6a120142b0152ac18c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ga5dd15b214687cf6a120142b0152ac18c">SPDIF_TransferAbortReceive</a> (SPDIF_Type *base, <a class="el" href="a00061.html#a00388">spdif_handle_t</a> *handle)</td></tr>
 <tr class="memdesc:ga5dd15b214687cf6a120142b0152ac18c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the current IRQ receive.  <a href="#ga5dd15b214687cf6a120142b0152ac18c">More...</a><br/></td></tr>
 <tr class="separator:ga5dd15b214687cf6a120142b0152ac18c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga14adaa4280f963a9e6c0b6d760173182"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ga14adaa4280f963a9e6c0b6d760173182">SPDIF_TransferTxHandleIRQ</a> (SPDIF_Type *base, spdif_handle_t *handle)</td></tr>
+<tr class="memitem:ga14adaa4280f963a9e6c0b6d760173182"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ga14adaa4280f963a9e6c0b6d760173182">SPDIF_TransferTxHandleIRQ</a> (SPDIF_Type *base, <a class="el" href="a00061.html#a00388">spdif_handle_t</a> *handle)</td></tr>
 <tr class="memdesc:ga14adaa4280f963a9e6c0b6d760173182"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tx interrupt handler.  <a href="#ga14adaa4280f963a9e6c0b6d760173182">More...</a><br/></td></tr>
 <tr class="separator:ga14adaa4280f963a9e6c0b6d760173182"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa1ab4a1d05d2e708ab9896f0131506b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#gaa1ab4a1d05d2e708ab9896f0131506b4">SPDIF_TransferRxHandleIRQ</a> (SPDIF_Type *base, spdif_handle_t *handle)</td></tr>
+<tr class="memitem:gaa1ab4a1d05d2e708ab9896f0131506b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#gaa1ab4a1d05d2e708ab9896f0131506b4">SPDIF_TransferRxHandleIRQ</a> (SPDIF_Type *base, <a class="el" href="a00061.html#a00388">spdif_handle_t</a> *handle)</td></tr>
 <tr class="memdesc:gaa1ab4a1d05d2e708ab9896f0131506b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tx interrupt handler.  <a href="#gaa1ab4a1d05d2e708ab9896f0131506b4">More...</a><br/></td></tr>
 <tr class="separator:gaa1ab4a1d05d2e708ab9896f0131506b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
+<a name="a00385" id="a00385"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct _spdif_config</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:aa4517cb68d744372f2ce87a7b9e488e3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa4517cb68d744372f2ce87a7b9e488e3"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#aa4517cb68d744372f2ce87a7b9e488e3">isTxAutoSync</a></td></tr>
+<tr class="memdesc:aa4517cb68d744372f2ce87a7b9e488e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">If auto sync mechanism open. <br/></td></tr>
+<tr class="separator:aa4517cb68d744372f2ce87a7b9e488e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a844a072728febf66bd575d1cdc40508f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a844a072728febf66bd575d1cdc40508f"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a844a072728febf66bd575d1cdc40508f">isRxAutoSync</a></td></tr>
+<tr class="memdesc:a844a072728febf66bd575d1cdc40508f"><td class="mdescLeft">&#160;</td><td class="mdescRight">If auto sync mechanism open. <br/></td></tr>
+<tr class="separator:a844a072728febf66bd575d1cdc40508f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a317fb7ffb1c8ada5b9fe222e141c26e6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a317fb7ffb1c8ada5b9fe222e141c26e6"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a317fb7ffb1c8ada5b9fe222e141c26e6">DPLLClkSource</a></td></tr>
+<tr class="memdesc:a317fb7ffb1c8ada5b9fe222e141c26e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF DPLL clock source, range from 0~15, meaning is chip-specific. <br/></td></tr>
+<tr class="separator:a317fb7ffb1c8ada5b9fe222e141c26e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27d7c8aae18da6430ca575d6e55fc725"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a27d7c8aae18da6430ca575d6e55fc725"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a27d7c8aae18da6430ca575d6e55fc725">txClkSource</a></td></tr>
+<tr class="memdesc:a27d7c8aae18da6430ca575d6e55fc725"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF tx clock source, range from 0~7, meaning is chip-specific. <br/></td></tr>
+<tr class="separator:a27d7c8aae18da6430ca575d6e55fc725"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab277efcc9f50ddc45f85b368d355f83"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aab277efcc9f50ddc45f85b368d355f83"></a>
+<a class="el" href="a00061.html#ga320a1ffa3db7e37a913734da0a4b543a">spdif_rxfull_select_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#aab277efcc9f50ddc45f85b368d355f83">rxFullSelect</a></td></tr>
+<tr class="memdesc:aab277efcc9f50ddc45f85b368d355f83"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF rx buffer full select. <br/></td></tr>
+<tr class="separator:aab277efcc9f50ddc45f85b368d355f83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e712702364cc4c68382475b6463b40e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9e712702364cc4c68382475b6463b40e"></a>
+<a class="el" href="a00061.html#gad5e952acb85913061d39f05cb69bcf77">spdif_txempty_select_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a9e712702364cc4c68382475b6463b40e">txFullSelect</a></td></tr>
+<tr class="memdesc:a9e712702364cc4c68382475b6463b40e"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF tx buffer empty select. <br/></td></tr>
+<tr class="separator:a9e712702364cc4c68382475b6463b40e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca785604664026f05093edd6eca97948"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aca785604664026f05093edd6eca97948"></a>
+<a class="el" href="a00061.html#gad86c23303f42359f3de0f5da856fb962">spdif_uchannel_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#aca785604664026f05093edd6eca97948">uChannelSrc</a></td></tr>
+<tr class="memdesc:aca785604664026f05093edd6eca97948"><td class="mdescLeft">&#160;</td><td class="mdescRight">U channel source. <br/></td></tr>
+<tr class="separator:aca785604664026f05093edd6eca97948"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a949e8755e255e2f9e93603e13b939cb4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a949e8755e255e2f9e93603e13b939cb4"></a>
+<a class="el" href="a00061.html#gad790d7edfb44e6a208654ff59bddfd80">spdif_tx_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a949e8755e255e2f9e93603e13b939cb4">txSource</a></td></tr>
+<tr class="memdesc:a949e8755e255e2f9e93603e13b939cb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF tx data source. <br/></td></tr>
+<tr class="separator:a949e8755e255e2f9e93603e13b939cb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a83edf589636900df9dc414f5c0641d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9a83edf589636900df9dc414f5c0641d"></a>
+<a class="el" href="a00061.html#gac1f3df5dcf4d4d971698c59a95f21bbf">spdif_validity_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a9a83edf589636900df9dc414f5c0641d">validityConfig</a></td></tr>
+<tr class="memdesc:a9a83edf589636900df9dc414f5c0641d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Validity flag config. <br/></td></tr>
+<tr class="separator:a9a83edf589636900df9dc414f5c0641d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a1e182777e71240d7f049c77cb51cf2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00061.html#ga962e90838e3ed4e55c4b541344221eb2">spdif_gain_select_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a3a1e182777e71240d7f049c77cb51cf2">gain</a></td></tr>
+<tr class="memdesc:a3a1e182777e71240d7f049c77cb51cf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rx receive clock measure gain parameter.  <a href="#a3a1e182777e71240d7f049c77cb51cf2">More...</a><br/></td></tr>
+<tr class="separator:a3a1e182777e71240d7f049c77cb51cf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="a3a1e182777e71240d7f049c77cb51cf2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00061.html#ga962e90838e3ed4e55c4b541344221eb2">spdif_gain_select_t</a> _spdif_config::gain</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+
+</div>
+</div>
 <a name="a00389" id="a00389"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct spdif_config_t</td>
+          <td class="memname">struct _spdif_transfer</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:aa62aab66a7b03f444074a6abab83294c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa62aab66a7b03f444074a6abab83294c"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#aa62aab66a7b03f444074a6abab83294c">isTxAutoSync</a></td></tr>
-<tr class="memdesc:aa62aab66a7b03f444074a6abab83294c"><td class="mdescLeft">&#160;</td><td class="mdescRight">If auto sync mechanism open. <br/></td></tr>
-<tr class="separator:aa62aab66a7b03f444074a6abab83294c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e7a4d603d3fdbca6d204c21a9729384"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8e7a4d603d3fdbca6d204c21a9729384"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a8e7a4d603d3fdbca6d204c21a9729384">isRxAutoSync</a></td></tr>
-<tr class="memdesc:a8e7a4d603d3fdbca6d204c21a9729384"><td class="mdescLeft">&#160;</td><td class="mdescRight">If auto sync mechanism open. <br/></td></tr>
-<tr class="separator:a8e7a4d603d3fdbca6d204c21a9729384"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a51dfc55f76c63adbb2956c9be1802fab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a51dfc55f76c63adbb2956c9be1802fab"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a51dfc55f76c63adbb2956c9be1802fab">DPLLClkSource</a></td></tr>
-<tr class="memdesc:a51dfc55f76c63adbb2956c9be1802fab"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF DPLL clock source, range from 0~15, meaning is chip-specific. <br/></td></tr>
-<tr class="separator:a51dfc55f76c63adbb2956c9be1802fab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae2efeac0c0a15d308758688656f21e7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aae2efeac0c0a15d308758688656f21e7"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#aae2efeac0c0a15d308758688656f21e7">txClkSource</a></td></tr>
-<tr class="memdesc:aae2efeac0c0a15d308758688656f21e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF tx clock source, range from 0~7, meaning is chip-specific. <br/></td></tr>
-<tr class="separator:aae2efeac0c0a15d308758688656f21e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abad0c032f98e052695e55ba8f8dc51dd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abad0c032f98e052695e55ba8f8dc51dd"></a>
-<a class="el" href="a00061.html#ga85d08a5eba9eaf262597f4f3dfad19a0">spdif_rxfull_select_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#abad0c032f98e052695e55ba8f8dc51dd">rxFullSelect</a></td></tr>
-<tr class="memdesc:abad0c032f98e052695e55ba8f8dc51dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF rx buffer full select. <br/></td></tr>
-<tr class="separator:abad0c032f98e052695e55ba8f8dc51dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a19570d0d87d133c863cea6eb7a374bad"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a19570d0d87d133c863cea6eb7a374bad"></a>
-<a class="el" href="a00061.html#gad58b90afceef70798b8be683f3017c71">spdif_txempty_select_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a19570d0d87d133c863cea6eb7a374bad">txFullSelect</a></td></tr>
-<tr class="memdesc:a19570d0d87d133c863cea6eb7a374bad"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF tx buffer empty select. <br/></td></tr>
-<tr class="separator:a19570d0d87d133c863cea6eb7a374bad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a55644590c92b55f32cccc120df5a91ba"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a55644590c92b55f32cccc120df5a91ba"></a>
-<a class="el" href="a00061.html#ga01edc35977dbab89a7201285c61c4a3e">spdif_uchannel_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a55644590c92b55f32cccc120df5a91ba">uChannelSrc</a></td></tr>
-<tr class="memdesc:a55644590c92b55f32cccc120df5a91ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">U channel source. <br/></td></tr>
-<tr class="separator:a55644590c92b55f32cccc120df5a91ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:add620ef347dc5fc0b5fc4626a6d0816f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="add620ef347dc5fc0b5fc4626a6d0816f"></a>
-<a class="el" href="a00061.html#ga2847432f45adbafdb2f9f7e5c25d9b2e">spdif_tx_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#add620ef347dc5fc0b5fc4626a6d0816f">txSource</a></td></tr>
-<tr class="memdesc:add620ef347dc5fc0b5fc4626a6d0816f"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF tx data source. <br/></td></tr>
-<tr class="separator:add620ef347dc5fc0b5fc4626a6d0816f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a662ae617d9706faedff59b4e7ebfc563"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a662ae617d9706faedff59b4e7ebfc563"></a>
-<a class="el" href="a00061.html#gad5615c4913a612ee1dc67e357e905f2c">spdif_validity_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a662ae617d9706faedff59b4e7ebfc563">validityConfig</a></td></tr>
-<tr class="memdesc:a662ae617d9706faedff59b4e7ebfc563"><td class="mdescLeft">&#160;</td><td class="mdescRight">Validity flag config. <br/></td></tr>
-<tr class="separator:a662ae617d9706faedff59b4e7ebfc563"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af2eeb1f3e4a229d81b00a2e293bd5b8f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00061.html#gab5381bc40ad0b86e9453495598911e2c">spdif_gain_select_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#af2eeb1f3e4a229d81b00a2e293bd5b8f">gain</a></td></tr>
-<tr class="memdesc:af2eeb1f3e4a229d81b00a2e293bd5b8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rx receive clock measure gain parameter.  <a href="#af2eeb1f3e4a229d81b00a2e293bd5b8f">More...</a><br/></td></tr>
-<tr class="separator:af2eeb1f3e4a229d81b00a2e293bd5b8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abcf8d94d75e7f058279e233dc2503939"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#abcf8d94d75e7f058279e233dc2503939">data</a></td></tr>
+<tr class="memdesc:abcf8d94d75e7f058279e233dc2503939"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data start address to transfer.  <a href="#abcf8d94d75e7f058279e233dc2503939">More...</a><br/></td></tr>
+<tr class="separator:abcf8d94d75e7f058279e233dc2503939"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1b12b4293ba55b403ee57e5c8dfd736"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa1b12b4293ba55b403ee57e5c8dfd736"></a>
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#aa1b12b4293ba55b403ee57e5c8dfd736">qdata</a></td></tr>
+<tr class="memdesc:aa1b12b4293ba55b403ee57e5c8dfd736"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data buffer for Q channel. <br/></td></tr>
+<tr class="separator:aa1b12b4293ba55b403ee57e5c8dfd736"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97fadb7029753c1a233c78402b862c07"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a97fadb7029753c1a233c78402b862c07"></a>
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a97fadb7029753c1a233c78402b862c07">udata</a></td></tr>
+<tr class="memdesc:a97fadb7029753c1a233c78402b862c07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data buffer for C channel. <br/></td></tr>
+<tr class="separator:a97fadb7029753c1a233c78402b862c07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a7daba96589ecab4566b880160d80d1"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a7a7daba96589ecab4566b880160d80d1">dataSize</a></td></tr>
+<tr class="memdesc:a7a7daba96589ecab4566b880160d80d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer size.  <a href="#a7a7daba96589ecab4566b880160d80d1">More...</a><br/></td></tr>
+<tr class="separator:a7a7daba96589ecab4566b880160d80d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="af2eeb1f3e4a229d81b00a2e293bd5b8f"></a>
+<a class="anchor" id="abcf8d94d75e7f058279e233dc2503939"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00061.html#gab5381bc40ad0b86e9453495598911e2c">spdif_gain_select_t</a> spdif_config_t::gain</td>
+          <td class="memname">uint8_t* _spdif_transfer::data</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a7a7daba96589ecab4566b880160d80d1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t _spdif_transfer::dataSize</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -528,61 +614,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 
 </div>
 </div>
-<a name="a00391" id="a00391"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct spdif_transfer_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:aafa6dcdb00a7953d3368916ec776f3f2"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#aafa6dcdb00a7953d3368916ec776f3f2">data</a></td></tr>
-<tr class="memdesc:aafa6dcdb00a7953d3368916ec776f3f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data start address to transfer.  <a href="#aafa6dcdb00a7953d3368916ec776f3f2">More...</a><br/></td></tr>
-<tr class="separator:aafa6dcdb00a7953d3368916ec776f3f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f670504281a0bf4ee74d831d965b1c2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3f670504281a0bf4ee74d831d965b1c2"></a>
-uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a3f670504281a0bf4ee74d831d965b1c2">qdata</a></td></tr>
-<tr class="memdesc:a3f670504281a0bf4ee74d831d965b1c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data buffer for Q channel. <br/></td></tr>
-<tr class="separator:a3f670504281a0bf4ee74d831d965b1c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a547ec34f70b0c0b803a212301b0e9bbc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a547ec34f70b0c0b803a212301b0e9bbc"></a>
-uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a547ec34f70b0c0b803a212301b0e9bbc">udata</a></td></tr>
-<tr class="memdesc:a547ec34f70b0c0b803a212301b0e9bbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data buffer for C channel. <br/></td></tr>
-<tr class="separator:a547ec34f70b0c0b803a212301b0e9bbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae44eb4e4b3141f9478e4b35a9bae8af3"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ae44eb4e4b3141f9478e4b35a9bae8af3">dataSize</a></td></tr>
-<tr class="memdesc:ae44eb4e4b3141f9478e4b35a9bae8af3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer size.  <a href="#ae44eb4e4b3141f9478e4b35a9bae8af3">More...</a><br/></td></tr>
-<tr class="separator:ae44eb4e4b3141f9478e4b35a9bae8af3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="aafa6dcdb00a7953d3368916ec776f3f2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t* spdif_transfer_t::data</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ae44eb4e4b3141f9478e4b35a9bae8af3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_t spdif_transfer_t::dataSize</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-
-</div>
-</div>
-<a name="a00275" id="a00275"></a>
+<a name="a00388" id="a00388"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -593,38 +625,38 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a530888b8eb6d5b6383ac803ef5687cac"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a530888b8eb6d5b6383ac803ef5687cac"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a530888b8eb6d5b6383ac803ef5687cac">state</a></td></tr>
-<tr class="memdesc:a530888b8eb6d5b6383ac803ef5687cac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer status. <br/></td></tr>
-<tr class="separator:a530888b8eb6d5b6383ac803ef5687cac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae6a348888f71f09a0a2167064b627fef"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae6a348888f71f09a0a2167064b627fef"></a>
-<a class="el" href="a00061.html#ga8749a36136a9b55600479d61b55596ec">spdif_transfer_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ae6a348888f71f09a0a2167064b627fef">callback</a></td></tr>
-<tr class="memdesc:ae6a348888f71f09a0a2167064b627fef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function called at transfer event. <br/></td></tr>
-<tr class="separator:ae6a348888f71f09a0a2167064b627fef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a453888e826bebbf6d3cefbc1d5c37aa2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a453888e826bebbf6d3cefbc1d5c37aa2"></a>
-void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a453888e826bebbf6d3cefbc1d5c37aa2">userData</a></td></tr>
-<tr class="memdesc:a453888e826bebbf6d3cefbc1d5c37aa2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback parameter passed to callback function. <br/></td></tr>
-<tr class="separator:a453888e826bebbf6d3cefbc1d5c37aa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acfad92f425b01b23f503cc6f6cbf0199"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acfad92f425b01b23f503cc6f6cbf0199"></a>
-<a class="el" href="a00061.html#a00391">spdif_transfer_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#acfad92f425b01b23f503cc6f6cbf0199">spdifQueue</a> [<a class="el" href="a00061.html#ga3e78a3155b1291a9fa00d0461d6e490c">SPDIF_XFER_QUEUE_SIZE</a>]</td></tr>
-<tr class="memdesc:acfad92f425b01b23f503cc6f6cbf0199"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer queue storing queued transfer. <br/></td></tr>
-<tr class="separator:acfad92f425b01b23f503cc6f6cbf0199"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ba10e18fe4300506084981f16ba7376"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7ba10e18fe4300506084981f16ba7376"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a7ba10e18fe4300506084981f16ba7376">transferSize</a> [<a class="el" href="a00061.html#ga3e78a3155b1291a9fa00d0461d6e490c">SPDIF_XFER_QUEUE_SIZE</a>]</td></tr>
-<tr class="memdesc:a7ba10e18fe4300506084981f16ba7376"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data bytes need to transfer. <br/></td></tr>
-<tr class="separator:a7ba10e18fe4300506084981f16ba7376"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f24af404b79c5b742fc54aa78c4dc06"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8f24af404b79c5b742fc54aa78c4dc06"></a>
-volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a8f24af404b79c5b742fc54aa78c4dc06">queueUser</a></td></tr>
-<tr class="memdesc:a8f24af404b79c5b742fc54aa78c4dc06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index for user to queue transfer. <br/></td></tr>
-<tr class="separator:a8f24af404b79c5b742fc54aa78c4dc06"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3925e65ffb3d41a9c637001844f6560"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac3925e65ffb3d41a9c637001844f6560"></a>
-volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ac3925e65ffb3d41a9c637001844f6560">queueDriver</a></td></tr>
-<tr class="memdesc:ac3925e65ffb3d41a9c637001844f6560"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index for driver to get the transfer data and size. <br/></td></tr>
-<tr class="separator:ac3925e65ffb3d41a9c637001844f6560"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a286a39db68bb63e8d64844dc94cb6b7a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a286a39db68bb63e8d64844dc94cb6b7a"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a286a39db68bb63e8d64844dc94cb6b7a">watermark</a></td></tr>
-<tr class="memdesc:a286a39db68bb63e8d64844dc94cb6b7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Watermark value. <br/></td></tr>
-<tr class="separator:a286a39db68bb63e8d64844dc94cb6b7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a469195fd1f8b0f1680cce1646df7cf9d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a469195fd1f8b0f1680cce1646df7cf9d"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a469195fd1f8b0f1680cce1646df7cf9d">state</a></td></tr>
+<tr class="memdesc:a469195fd1f8b0f1680cce1646df7cf9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer status. <br/></td></tr>
+<tr class="separator:a469195fd1f8b0f1680cce1646df7cf9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89241af3b25fc4576db13a20bce66a1f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a89241af3b25fc4576db13a20bce66a1f"></a>
+<a class="el" href="a00061.html#ga8749a36136a9b55600479d61b55596ec">spdif_transfer_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a89241af3b25fc4576db13a20bce66a1f">callback</a></td></tr>
+<tr class="memdesc:a89241af3b25fc4576db13a20bce66a1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function called at transfer event. <br/></td></tr>
+<tr class="separator:a89241af3b25fc4576db13a20bce66a1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d1e4bb795cb18be133473bdd42981f4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8d1e4bb795cb18be133473bdd42981f4"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a8d1e4bb795cb18be133473bdd42981f4">userData</a></td></tr>
+<tr class="memdesc:a8d1e4bb795cb18be133473bdd42981f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback parameter passed to callback function. <br/></td></tr>
+<tr class="separator:a8d1e4bb795cb18be133473bdd42981f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3654232d539ca7669796633e16cf600"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad3654232d539ca7669796633e16cf600"></a>
+<a class="el" href="a00061.html#ga28534824bc9ce4a5a406e928bcbdd7d1">spdif_transfer_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ad3654232d539ca7669796633e16cf600">spdifQueue</a> [<a class="el" href="a00061.html#ga3e78a3155b1291a9fa00d0461d6e490c">SPDIF_XFER_QUEUE_SIZE</a>]</td></tr>
+<tr class="memdesc:ad3654232d539ca7669796633e16cf600"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer queue storing queued transfer. <br/></td></tr>
+<tr class="separator:ad3654232d539ca7669796633e16cf600"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37c9c8e6a31eeb43437cedbbb05ef1b9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a37c9c8e6a31eeb43437cedbbb05ef1b9"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a37c9c8e6a31eeb43437cedbbb05ef1b9">transferSize</a> [<a class="el" href="a00061.html#ga3e78a3155b1291a9fa00d0461d6e490c">SPDIF_XFER_QUEUE_SIZE</a>]</td></tr>
+<tr class="memdesc:a37c9c8e6a31eeb43437cedbbb05ef1b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data bytes need to transfer. <br/></td></tr>
+<tr class="separator:a37c9c8e6a31eeb43437cedbbb05ef1b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4bbb6f77648bf22c5e897550ec08c1ee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4bbb6f77648bf22c5e897550ec08c1ee"></a>
+volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a4bbb6f77648bf22c5e897550ec08c1ee">queueUser</a></td></tr>
+<tr class="memdesc:a4bbb6f77648bf22c5e897550ec08c1ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index for user to queue transfer. <br/></td></tr>
+<tr class="separator:a4bbb6f77648bf22c5e897550ec08c1ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8fbcfb70e31ce4b427cf8989555c86a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac8fbcfb70e31ce4b427cf8989555c86a"></a>
+volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#ac8fbcfb70e31ce4b427cf8989555c86a">queueDriver</a></td></tr>
+<tr class="memdesc:ac8fbcfb70e31ce4b427cf8989555c86a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index for driver to get the transfer data and size. <br/></td></tr>
+<tr class="separator:ac8fbcfb70e31ce4b427cf8989555c86a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1edd8fe8442511be2f678b56fb87bc13"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1edd8fe8442511be2f678b56fb87bc13"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00061.html#a1edd8fe8442511be2f678b56fb87bc13">watermark</a></td></tr>
+<tr class="memdesc:a1edd8fe8442511be2f678b56fb87bc13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Watermark value. <br/></td></tr>
+<tr class="separator:a1edd8fe8442511be2f678b56fb87bc13"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
@@ -708,150 +740,150 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 
 </div>
 </div>
-<a class="anchor" id="ga85d08a5eba9eaf262597f4f3dfad19a0"></a>
+<a class="anchor" id="gaf027e919562bb13e676d936e5fe9f102"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00061.html#ga85d08a5eba9eaf262597f4f3dfad19a0">spdif_rxfull_select_t</a></td>
+          <td class="memname">enum <a class="el" href="a00061.html#gaf027e919562bb13e676d936e5fe9f102">_spdif_rxfull_select</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga85d08a5eba9eaf262597f4f3dfad19a0ad6a45c3b1bb3397ce7dd2e5c9af8c1c9"></a>kSPDIF_RxFull1Sample</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaf027e919562bb13e676d936e5fe9f102ad6a45c3b1bb3397ce7dd2e5c9af8c1c9"></a>kSPDIF_RxFull1Sample</em>&nbsp;</td><td class="fielddoc">
 <p>Rx full at least 1 sample in left and right FIFO. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga85d08a5eba9eaf262597f4f3dfad19a0a84f7309ca36974eefa1a2d970eba7995"></a>kSPDIF_RxFull4Samples</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf027e919562bb13e676d936e5fe9f102a84f7309ca36974eefa1a2d970eba7995"></a>kSPDIF_RxFull4Samples</em>&nbsp;</td><td class="fielddoc">
 <p>Rx full at least 4 sample in left and right FIFO. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga85d08a5eba9eaf262597f4f3dfad19a0a71af34697ac17ca08eb26d7c4d6dd27f"></a>kSPDIF_RxFull8Samples</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf027e919562bb13e676d936e5fe9f102a71af34697ac17ca08eb26d7c4d6dd27f"></a>kSPDIF_RxFull8Samples</em>&nbsp;</td><td class="fielddoc">
 <p>Rx full at least 8 sample in left and right FIFO. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga85d08a5eba9eaf262597f4f3dfad19a0ab585922a28236a3e9b8cffbdd3793cee"></a>kSPDIF_RxFull16Samples</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf027e919562bb13e676d936e5fe9f102ab585922a28236a3e9b8cffbdd3793cee"></a>kSPDIF_RxFull16Samples</em>&nbsp;</td><td class="fielddoc">
 <p>Rx full at least 16 sample in left and right FIFO. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gad58b90afceef70798b8be683f3017c71"></a>
+<a class="anchor" id="ga9a8390010ef72478e96c1dddd694af4a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00061.html#gad58b90afceef70798b8be683f3017c71">spdif_txempty_select_t</a></td>
+          <td class="memname">enum <a class="el" href="a00061.html#ga9a8390010ef72478e96c1dddd694af4a">_spdif_txempty_select</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggad58b90afceef70798b8be683f3017c71a835efeacfa1b7bc07a723c3683407b4e"></a>kSPDIF_TxEmpty0Sample</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga9a8390010ef72478e96c1dddd694af4aa835efeacfa1b7bc07a723c3683407b4e"></a>kSPDIF_TxEmpty0Sample</em>&nbsp;</td><td class="fielddoc">
 <p>Tx empty at most 0 sample in left and right FIFO. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad58b90afceef70798b8be683f3017c71a38d0ed7a9ff015721f0edcd71d696e18"></a>kSPDIF_TxEmpty4Samples</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga9a8390010ef72478e96c1dddd694af4aa38d0ed7a9ff015721f0edcd71d696e18"></a>kSPDIF_TxEmpty4Samples</em>&nbsp;</td><td class="fielddoc">
 <p>Tx empty at most 4 sample in left and right FIFO. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad58b90afceef70798b8be683f3017c71afbd58fcc26965a9b45865764d775284f"></a>kSPDIF_TxEmpty8Samples</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga9a8390010ef72478e96c1dddd694af4aafbd58fcc26965a9b45865764d775284f"></a>kSPDIF_TxEmpty8Samples</em>&nbsp;</td><td class="fielddoc">
 <p>Tx empty at most 8 sample in left and right FIFO. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad58b90afceef70798b8be683f3017c71a9c74437e11128b87fbd5bb644c4790e4"></a>kSPDIF_TxEmpty12Samples</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga9a8390010ef72478e96c1dddd694af4aa9c74437e11128b87fbd5bb644c4790e4"></a>kSPDIF_TxEmpty12Samples</em>&nbsp;</td><td class="fielddoc">
 <p>Tx empty at most 12 sample in left and right FIFO. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga01edc35977dbab89a7201285c61c4a3e"></a>
+<a class="anchor" id="ga8e291cb75c4b998ed720a09df3bdd293"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00061.html#ga01edc35977dbab89a7201285c61c4a3e">spdif_uchannel_source_t</a></td>
+          <td class="memname">enum <a class="el" href="a00061.html#ga8e291cb75c4b998ed720a09df3bdd293">_spdif_uchannel_source</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga01edc35977dbab89a7201285c61c4a3eaf159efd3316b59e34b7288448c4b8c4f"></a>kSPDIF_NoUChannel</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga8e291cb75c4b998ed720a09df3bdd293af159efd3316b59e34b7288448c4b8c4f"></a>kSPDIF_NoUChannel</em>&nbsp;</td><td class="fielddoc">
 <p>No embedded U channel. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga01edc35977dbab89a7201285c61c4a3eaec4bf6dbe6a1346b33c59c392ea1fbe6"></a>kSPDIF_UChannelFromRx</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga8e291cb75c4b998ed720a09df3bdd293aec4bf6dbe6a1346b33c59c392ea1fbe6"></a>kSPDIF_UChannelFromRx</em>&nbsp;</td><td class="fielddoc">
 <p>U channel from receiver, it is CD mode. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga01edc35977dbab89a7201285c61c4a3ea65a3b2cbcb558fdc5870f009d9d6bd80"></a>kSPDIF_UChannelFromTx</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga8e291cb75c4b998ed720a09df3bdd293a65a3b2cbcb558fdc5870f009d9d6bd80"></a>kSPDIF_UChannelFromTx</em>&nbsp;</td><td class="fielddoc">
 <p>U channel from on chip tx. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gab5381bc40ad0b86e9453495598911e2c"></a>
+<a class="anchor" id="ga647e0927c74f8e7d9c8017cd9caffacf"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00061.html#gab5381bc40ad0b86e9453495598911e2c">spdif_gain_select_t</a></td>
+          <td class="memname">enum <a class="el" href="a00061.html#ga647e0927c74f8e7d9c8017cd9caffacf">_spdif_gain_select</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab5381bc40ad0b86e9453495598911e2cac438b3169eb2675d11540a839e99f502"></a>kSPDIF_GAIN_24</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga647e0927c74f8e7d9c8017cd9caffacfac438b3169eb2675d11540a839e99f502"></a>kSPDIF_GAIN_24</em>&nbsp;</td><td class="fielddoc">
 <p>Gain select is 24. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab5381bc40ad0b86e9453495598911e2caa776465b4de5bf2fa610f1c2366c063f"></a>kSPDIF_GAIN_16</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga647e0927c74f8e7d9c8017cd9caffacfaa776465b4de5bf2fa610f1c2366c063f"></a>kSPDIF_GAIN_16</em>&nbsp;</td><td class="fielddoc">
 <p>Gain select is 16. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab5381bc40ad0b86e9453495598911e2cad54dc0e7908199d3fe24ef53d608b544"></a>kSPDIF_GAIN_12</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga647e0927c74f8e7d9c8017cd9caffacfad54dc0e7908199d3fe24ef53d608b544"></a>kSPDIF_GAIN_12</em>&nbsp;</td><td class="fielddoc">
 <p>Gain select is 12. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab5381bc40ad0b86e9453495598911e2caafee91827c9ea238ad6d6478718e98a0"></a>kSPDIF_GAIN_8</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga647e0927c74f8e7d9c8017cd9caffacfaafee91827c9ea238ad6d6478718e98a0"></a>kSPDIF_GAIN_8</em>&nbsp;</td><td class="fielddoc">
 <p>Gain select is 8. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab5381bc40ad0b86e9453495598911e2ca16500e129c2451b60faf4a3f4464df43"></a>kSPDIF_GAIN_6</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga647e0927c74f8e7d9c8017cd9caffacfa16500e129c2451b60faf4a3f4464df43"></a>kSPDIF_GAIN_6</em>&nbsp;</td><td class="fielddoc">
 <p>Gain select is 6. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab5381bc40ad0b86e9453495598911e2ca84750080b7f27da810fe19abe64f776f"></a>kSPDIF_GAIN_4</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga647e0927c74f8e7d9c8017cd9caffacfa84750080b7f27da810fe19abe64f776f"></a>kSPDIF_GAIN_4</em>&nbsp;</td><td class="fielddoc">
 <p>Gain select is 4. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab5381bc40ad0b86e9453495598911e2ca1008286af785dcb2dde9131765217980"></a>kSPDIF_GAIN_3</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga647e0927c74f8e7d9c8017cd9caffacfa1008286af785dcb2dde9131765217980"></a>kSPDIF_GAIN_3</em>&nbsp;</td><td class="fielddoc">
 <p>Gain select is 3. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga2847432f45adbafdb2f9f7e5c25d9b2e"></a>
+<a class="anchor" id="gad738631e5a1776692ef90fa6e8034ba3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00061.html#ga2847432f45adbafdb2f9f7e5c25d9b2e">spdif_tx_source_t</a></td>
+          <td class="memname">enum <a class="el" href="a00061.html#gad738631e5a1776692ef90fa6e8034ba3">_spdif_tx_source</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga2847432f45adbafdb2f9f7e5c25d9b2eaffd9df4017e5af840e5c34c050791f02"></a>kSPDIF_txFromReceiver</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggad738631e5a1776692ef90fa6e8034ba3affd9df4017e5af840e5c34c050791f02"></a>kSPDIF_txFromReceiver</em>&nbsp;</td><td class="fielddoc">
 <p>Tx data directly through SPDIF receiver. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga2847432f45adbafdb2f9f7e5c25d9b2ea1e6073994dc81cb60c229a8ce166222f"></a>kSPDIF_txNormal</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="ggad738631e5a1776692ef90fa6e8034ba3a1e6073994dc81cb60c229a8ce166222f"></a>kSPDIF_txNormal</em>&nbsp;</td><td class="fielddoc">
 <p>Normal operation, data from processor. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gad5615c4913a612ee1dc67e357e905f2c"></a>
+<a class="anchor" id="ga1d5ee2686337a0582f65b0d551088b32"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00061.html#gad5615c4913a612ee1dc67e357e905f2c">spdif_validity_config_t</a></td>
+          <td class="memname">enum <a class="el" href="a00061.html#ga1d5ee2686337a0582f65b0d551088b32">_spdif_validity_config</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggad5615c4913a612ee1dc67e357e905f2ca9cf3c378520222b1ffe3e584cae0ac67"></a>kSPDIF_validityFlagAlwaysSet</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga1d5ee2686337a0582f65b0d551088b32a9cf3c378520222b1ffe3e584cae0ac67"></a>kSPDIF_validityFlagAlwaysSet</em>&nbsp;</td><td class="fielddoc">
 <p>Outgoing validity flags always set. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad5615c4913a612ee1dc67e357e905f2ca96145e43a2a36d2c7dcd6ce5242743b1"></a>kSPDIF_validityFlagAlwaysClear</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga1d5ee2686337a0582f65b0d551088b32a96145e43a2a36d2c7dcd6ce5242743b1"></a>kSPDIF_validityFlagAlwaysClear</em>&nbsp;</td><td class="fielddoc">
 <p>Outgoing validity flags always clear. </p>
 </td></tr>
 </table>
@@ -963,7 +995,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00061.html#a00389">spdif_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00061.html#ga42bdaae7a8b6823fab001c8282269fd4">spdif_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -992,14 +1024,14 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname">void SPDIF_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00061.html#a00389">spdif_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00061.html#ga42bdaae7a8b6823fab001c8282269fd4">spdif_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>This API initializes the configuration structure for use in SPDIF_Init. The initialized structure can remain unchanged in SPDIF_Init, or it can be modified before calling SPDIF_Init. This is an example. </p>
-<div class="fragment"><div class="line"><a class="code" href="a00061.html#a00389">spdif_config_t</a> config;</div>
+<div class="fragment"><div class="line"><a class="code" href="a00061.html#a00385">spdif_config_t</a> config;</div>
 <div class="line"><a class="code" href="a00061.html#ga11b262ea3923fd80f78b959d9718e00b">SPDIF_GetDefaultConfig</a>(&amp;config);</div>
 </div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -2065,7 +2097,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">spdif_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00061.html#a00388">spdif_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -2113,7 +2145,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">spdif_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00061.html#a00388">spdif_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -2153,7 +2185,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SPDIF_TransferSendNonBlocking </td>
+          <td class="memname"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SPDIF_TransferSendNonBlocking </td>
           <td>(</td>
           <td class="paramtype">SPDIF_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -2161,13 +2193,13 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">spdif_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00061.html#a00388">spdif_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00061.html#a00391">spdif_transfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00061.html#ga28534824bc9ce4a5a406e928bcbdd7d1">spdif_transfer_t</a> *&#160;</td>
           <td class="paramname"><em>xfer</em>&#160;</td>
         </tr>
         <tr>
@@ -2182,7 +2214,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
   <table class="params">
     <tr><td class="paramname">base</td><td>SPDIF base pointer. </td></tr>
     <tr><td class="paramname">handle</td><td>Pointer to the spdif_handle_t structure which stores the transfer state. </td></tr>
-    <tr><td class="paramname">xfer</td><td>Pointer to the <a class="el" href="a00061.html#a00391" title="SPDIF transfer structure. ">spdif_transfer_t</a> structure. </td></tr>
+    <tr><td class="paramname">xfer</td><td>Pointer to the spdif_transfer_t structure. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2202,7 +2234,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SPDIF_TransferReceiveNonBlocking </td>
+          <td class="memname"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SPDIF_TransferReceiveNonBlocking </td>
           <td>(</td>
           <td class="paramtype">SPDIF_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -2210,13 +2242,13 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">spdif_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00061.html#a00388">spdif_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00061.html#a00391">spdif_transfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00061.html#ga28534824bc9ce4a5a406e928bcbdd7d1">spdif_transfer_t</a> *&#160;</td>
           <td class="paramname"><em>xfer</em>&#160;</td>
         </tr>
         <tr>
@@ -2231,7 +2263,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
   <table class="params">
     <tr><td class="paramname">base</td><td>SPDIF base pointer </td></tr>
     <tr><td class="paramname">handle</td><td>Pointer to the spdif_handle_t structure which stores the transfer state. </td></tr>
-    <tr><td class="paramname">xfer</td><td>Pointer to the <a class="el" href="a00061.html#a00391" title="SPDIF transfer structure. ">spdif_transfer_t</a> structure. </td></tr>
+    <tr><td class="paramname">xfer</td><td>Pointer to the spdif_transfer_t structure. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2251,7 +2283,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SPDIF_TransferGetSendCount </td>
+          <td class="memname"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SPDIF_TransferGetSendCount </td>
           <td>(</td>
           <td class="paramtype">SPDIF_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -2259,7 +2291,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">spdif_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00061.html#a00388">spdif_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -2298,7 +2330,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SPDIF_TransferGetReceiveCount </td>
+          <td class="memname"><a class="el" href="a00216.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SPDIF_TransferGetReceiveCount </td>
           <td>(</td>
           <td class="paramtype">SPDIF_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -2306,7 +2338,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">spdif_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00061.html#a00388">spdif_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -2353,7 +2385,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">spdif_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00061.html#a00388">spdif_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>&#160;</td>
         </tr>
         <tr>
@@ -2387,7 +2419,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">spdif_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00061.html#a00388">spdif_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>&#160;</td>
         </tr>
         <tr>
@@ -2421,7 +2453,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">spdif_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00061.html#a00388">spdif_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>&#160;</td>
         </tr>
         <tr>
@@ -2454,7 +2486,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">spdif_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00061.html#a00388">spdif_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>&#160;</td>
         </tr>
         <tr>

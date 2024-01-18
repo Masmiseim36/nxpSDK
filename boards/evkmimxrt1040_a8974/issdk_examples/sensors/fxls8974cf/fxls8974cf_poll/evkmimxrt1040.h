@@ -14,7 +14,7 @@
 #define EVKBIMX1050_H_
 
 #include "pin_mux.h"
-//#include "fsl_msmc.h"
+// #include "fsl_msmc.h"
 #include "RTE_Device.h"
 #include "gpio_driver.h"
 #include "MIMXRT1042.h"

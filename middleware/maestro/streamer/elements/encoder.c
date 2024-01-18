@@ -1,10 +1,7 @@
 /*
  * Copyright 2018-2022 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /*!
@@ -34,11 +31,11 @@ int32_t encoder_init_element(StreamElement *element)
 
     encElm->bitstream_info_specified = false;
     encElm->bitstream_info           = (CeiBitstreamInfo){.sample_rate  = 0,
-                                                .num_channels = 0,
-                                                .endian       = AF_LITTLE_ENDIAN,
-                                                .sign         = true,
-                                                .sample_size  = 0,
-                                                .interleaved  = true};
+                                                          .num_channels = 0,
+                                                          .endian       = AF_LITTLE_ENDIAN,
+                                                          .sign         = true,
+                                                          .sample_size  = 0,
+                                                          .interleaved  = true};
 
     encElm->initialized = false;
     encElm->eos_done    = false;

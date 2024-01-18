@@ -1,24 +1,25 @@
 var a00040 =
 [
-    [ "flexspi_edma_handle_t", "a00040.html#a00311", [
-      [ "txDmaHandle", "a00040.html#a3d0d98f2c483c09c5332d82d4811e1e5", null ],
-      [ "rxDmaHandle", "a00040.html#a2ea3c9da9a52a5a86aea6bfdf597464c", null ],
-      [ "transferSize", "a00040.html#a735f036ea3a12686df32463d71d135db", null ],
-      [ "nsize", "a00040.html#a59a42210dd29144ff40f14dc2f8c3a45", null ],
-      [ "nbytes", "a00040.html#aac19ce5f377eaa98f681f52522fe38ea", null ],
-      [ "count", "a00040.html#a320bc95b94f27763636e906dfa8fd482", null ],
-      [ "state", "a00040.html#a53cdf0a6ba8c3b69128d11fb31c6d064", null ],
-      [ "completionCallback", "a00040.html#a5169aca6ccaf34647525e4c6c6161580", null ],
-      [ "userData", "a00040.html#a5de6ceb6916611757b5fea0dcb1b2bc0", null ]
+    [ "_flexspi_edma_handle", "a00040.html#a00398", [
+      [ "txDmaHandle", "a00040.html#aa157232407e2e5d35064b480d593a1fa", null ],
+      [ "rxDmaHandle", "a00040.html#ad7d9a5bb7f65d1d47101ac7603203cd9", null ],
+      [ "transferSize", "a00040.html#a4c54ee8d2b7efbe1af0b9f247d8f7ef9", null ],
+      [ "nsize", "a00040.html#a6c271ce07f7ddca22daf39770d654573", null ],
+      [ "nbytes", "a00040.html#ad51f282e886b30cfb36e6d560aa29ace", null ],
+      [ "count", "a00040.html#af70f35feb4399fe9091bef5de1c6e259", null ],
+      [ "state", "a00040.html#a3cc8fcef8caee1ccfee0bb87bce02b27", null ],
+      [ "completionCallback", "a00040.html#a94dd0934f086d7ecd380164eef418cf2", null ],
+      [ "userData", "a00040.html#a6cb8afe7f2b148ea0a67b5773abefa6c", null ]
     ] ],
     [ "FSL_FLEXSPI_EDMA_DRIVER_VERSION", "a00040.html#gaa636d92d25b3e2c9055df861b900886f", null ],
     [ "flexspi_edma_callback_t", "a00040.html#ga18c417694a255c05206b53e1d882d9c3", null ],
-    [ "flexspi_edma_transfer_nsize_t", "a00040.html#gad06198fd35b6b1f821b671f6d836c3d4", [
-      [ "kFLEXPSI_EDMAnSize1Bytes", "a00040.html#ggad06198fd35b6b1f821b671f6d836c3d4aac495b3503a41ac7ed4de613633acd6e", null ],
-      [ "kFLEXPSI_EDMAnSize2Bytes", "a00040.html#ggad06198fd35b6b1f821b671f6d836c3d4a8f37b34be5953a3ca359ec23140c63d3", null ],
-      [ "kFLEXPSI_EDMAnSize4Bytes", "a00040.html#ggad06198fd35b6b1f821b671f6d836c3d4aa682f158980e25274dd2588392c6e94d", null ],
-      [ "kFLEXPSI_EDMAnSize8Bytes", "a00040.html#ggad06198fd35b6b1f821b671f6d836c3d4add962c3ad735e00107a4df51ded158ec", null ],
-      [ "kFLEXPSI_EDMAnSize32Bytes", "a00040.html#ggad06198fd35b6b1f821b671f6d836c3d4aedff211dd9ab9868632e0c3a8fe231fa", null ]
+    [ "flexspi_edma_transfer_nsize_t", "a00040.html#gab11e2fa9c8b7f2848c560c1f111cd8d7", null ],
+    [ "_flexspi_edma_ntransfer_size", "a00040.html#ga2e104747927a91bbd354cc3da7fd8016", [
+      [ "kFLEXPSI_EDMAnSize1Bytes", "a00040.html#gga2e104747927a91bbd354cc3da7fd8016aac495b3503a41ac7ed4de613633acd6e", null ],
+      [ "kFLEXPSI_EDMAnSize2Bytes", "a00040.html#gga2e104747927a91bbd354cc3da7fd8016a8f37b34be5953a3ca359ec23140c63d3", null ],
+      [ "kFLEXPSI_EDMAnSize4Bytes", "a00040.html#gga2e104747927a91bbd354cc3da7fd8016aa682f158980e25274dd2588392c6e94d", null ],
+      [ "kFLEXPSI_EDMAnSize8Bytes", "a00040.html#gga2e104747927a91bbd354cc3da7fd8016add962c3ad735e00107a4df51ded158ec", null ],
+      [ "kFLEXPSI_EDMAnSize32Bytes", "a00040.html#gga2e104747927a91bbd354cc3da7fd8016aedff211dd9ab9868632e0c3a8fe231fa", null ]
     ] ],
     [ "FLEXSPI_TransferCreateHandleEDMA", "a00040.html#ga73da3b504891554a3f5306c61d544035", null ],
     [ "FLEXSPI_TransferUpdateSizeEDMA", "a00040.html#gab00370842d3c81263d34b672f0b2105b", null ],

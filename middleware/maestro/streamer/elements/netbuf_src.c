@@ -1,10 +1,7 @@
 /*
  * Copyright 2018-2022 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /*!
@@ -61,6 +58,7 @@ int32_t netbufsrc_init(StreamElement *element)
         pad->pull_handler     = netbufsrc_pull;
         pad->process_handler  = NULL;
         pad->process_precheck = NULL;
+        pad->scheduling       = SCHEDULING_PULL;
     }
 
     STREAMER_FUNC_EXIT(DBG_NETBUFSRC);

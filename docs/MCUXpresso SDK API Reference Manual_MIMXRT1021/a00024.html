@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -100,6 +100,7 @@ $(document).ready(function(){initNavTree('a00024.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">EWM: External Watchdog Monitor Driver</div>  </div>
@@ -113,12 +114,33 @@ Typical use case</h1>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00386"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a00386">ewm_config_t</a></td></tr>
-<tr class="memdesc:a00386"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describes EWM clock source.  <a href="a00024.html#a00386">More...</a><br/></td></tr>
-<tr class="separator:a00386"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00354"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a00354">_ewm_config</a></td></tr>
+<tr class="memdesc:a00354"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data structure for EWM configuration.  <a href="a00024.html#a00354">More...</a><br/></td></tr>
+<tr class="separator:a00354"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gae00e062b2bb5111afe589858657db5c4"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00024.html#ga658124565e189a5a884a591828b81c66">_ewm_lpo_clock_source</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gae00e062b2bb5111afe589858657db5c4">ewm_lpo_clock_source_t</a></td></tr>
+<tr class="memdesc:gae00e062b2bb5111afe589858657db5c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describes EWM clock source.  <a href="#gae00e062b2bb5111afe589858657db5c4">More...</a><br/></td></tr>
+<tr class="separator:gae00e062b2bb5111afe589858657db5c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga729f4f8aeb5909642d0f0eaecfac593b"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00024.html#a00354">_ewm_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga729f4f8aeb5909642d0f0eaecfac593b">ewm_config_t</a></td></tr>
+<tr class="memdesc:ga729f4f8aeb5909642d0f0eaecfac593b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data structure for EWM configuration.  <a href="#ga729f4f8aeb5909642d0f0eaecfac593b">More...</a><br/></td></tr>
+<tr class="separator:ga729f4f8aeb5909642d0f0eaecfac593b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
+<tr class="memitem:ga658124565e189a5a884a591828b81c66"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga658124565e189a5a884a591828b81c66">_ewm_lpo_clock_source</a> { <br/>
+&#160;&#160;<a class="el" href="a00024.html#gga658124565e189a5a884a591828b81c66aa0c2a939796ded985e86292f3ab48880">kEWM_LpoClockSource0</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00024.html#gga658124565e189a5a884a591828b81c66a87adc9960b9c0ed4d5200c9ebabb87a4">kEWM_LpoClockSource1</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00024.html#gga658124565e189a5a884a591828b81c66a13a8f71a88d5209ecb27f01e8f859d6f">kEWM_LpoClockSource2</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00024.html#gga658124565e189a5a884a591828b81c66a04d8b0bead7ea64e37b8c5cbafaaad8b">kEWM_LpoClockSource3</a> = 3U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga658124565e189a5a884a591828b81c66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describes EWM clock source.  <a href="a00024.html#ga658124565e189a5a884a591828b81c66">More...</a><br/></td></tr>
+<tr class="separator:ga658124565e189a5a884a591828b81c66"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf1f0321cab3227a897b2e2475ceaec5f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gaf1f0321cab3227a897b2e2475ceaec5f">_ewm_interrupt_enable_t</a> { <a class="el" href="a00024.html#ggaf1f0321cab3227a897b2e2475ceaec5fa5bd5d6fb4ae17d0173bda608f54fa0e7">kEWM_InterruptEnable</a> = EWM_CTRL_INTEN_MASK
  }</td></tr>
 <tr class="memdesc:gaf1f0321cab3227a897b2e2475ceaec5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">EWM interrupt configuration structure with default settings all disabled.  <a href="a00024.html#gaf1f0321cab3227a897b2e2475ceaec5f">More...</a><br/></td></tr>
@@ -130,19 +152,19 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga13413f9927ed720755dc3e98f77ecba2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga13413f9927ed720755dc3e98f77ecba2">FSL_EWM_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00258.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 3))</td></tr>
+<tr class="memitem:ga13413f9927ed720755dc3e98f77ecba2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga13413f9927ed720755dc3e98f77ecba2">FSL_EWM_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00260.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 3))</td></tr>
 <tr class="memdesc:ga13413f9927ed720755dc3e98f77ecba2"><td class="mdescLeft">&#160;</td><td class="mdescRight">EWM driver version 2.0.3.  <a href="#ga13413f9927ed720755dc3e98f77ecba2">More...</a><br/></td></tr>
 <tr class="separator:ga13413f9927ed720755dc3e98f77ecba2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 EWM initialization and de-initialization</h2></td></tr>
-<tr class="memitem:gafe731b0ab2d0c9f566784a1d6ee722cc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gafe731b0ab2d0c9f566784a1d6ee722cc">EWM_Init</a> (EWM_Type *base, const <a class="el" href="a00024.html#a00386">ewm_config_t</a> *config)</td></tr>
+<tr class="memitem:gafe731b0ab2d0c9f566784a1d6ee722cc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gafe731b0ab2d0c9f566784a1d6ee722cc">EWM_Init</a> (EWM_Type *base, const <a class="el" href="a00024.html#ga729f4f8aeb5909642d0f0eaecfac593b">ewm_config_t</a> *config)</td></tr>
 <tr class="memdesc:gafe731b0ab2d0c9f566784a1d6ee722cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the EWM peripheral.  <a href="#gafe731b0ab2d0c9f566784a1d6ee722cc">More...</a><br/></td></tr>
 <tr class="separator:gafe731b0ab2d0c9f566784a1d6ee722cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4e3101bd8ccb2c11b563819e21058b28"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga4e3101bd8ccb2c11b563819e21058b28">EWM_Deinit</a> (EWM_Type *base)</td></tr>
 <tr class="memdesc:ga4e3101bd8ccb2c11b563819e21058b28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the EWM peripheral.  <a href="#ga4e3101bd8ccb2c11b563819e21058b28">More...</a><br/></td></tr>
 <tr class="separator:ga4e3101bd8ccb2c11b563819e21058b28"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac87adab8a628260058e8bee7b849ec67"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gac87adab8a628260058e8bee7b849ec67">EWM_GetDefaultConfig</a> (<a class="el" href="a00024.html#a00386">ewm_config_t</a> *config)</td></tr>
+<tr class="memitem:gac87adab8a628260058e8bee7b849ec67"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gac87adab8a628260058e8bee7b849ec67">EWM_GetDefaultConfig</a> (<a class="el" href="a00024.html#ga729f4f8aeb5909642d0f0eaecfac593b">ewm_config_t</a> *config)</td></tr>
 <tr class="memdesc:gac87adab8a628260058e8bee7b849ec67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the EWM configuration structure.  <a href="#gac87adab8a628260058e8bee7b849ec67">More...</a><br/></td></tr>
 <tr class="separator:gac87adab8a628260058e8bee7b849ec67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -162,43 +184,50 @@ EWM functional Operation</h2></td></tr>
 <tr class="separator:gaf12c54c9b4bab2c1fa19eb1e81e501a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00386" id="a00386"></a>
+<a name="a00354" id="a00354"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct ewm_config_t</td>
+          <td class="memname">struct _ewm_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>Data structure for EWM configuration.</p>
-<p>This structure is used to configure the EWM. </p>
+<div class="textblock"><p>This structure is used to configure the EWM. </p>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a9fc625647ba94efff761a19ea25dedae"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9fc625647ba94efff761a19ea25dedae"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a9fc625647ba94efff761a19ea25dedae">enableEwm</a></td></tr>
-<tr class="memdesc:a9fc625647ba94efff761a19ea25dedae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable EWM module. <br/></td></tr>
-<tr class="separator:a9fc625647ba94efff761a19ea25dedae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a48b7c11c26b8b3a1843bd78e9bd3124c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a48b7c11c26b8b3a1843bd78e9bd3124c"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a48b7c11c26b8b3a1843bd78e9bd3124c">enableEwmInput</a></td></tr>
-<tr class="memdesc:a48b7c11c26b8b3a1843bd78e9bd3124c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable EWM_in input. <br/></td></tr>
-<tr class="separator:a48b7c11c26b8b3a1843bd78e9bd3124c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a824557f8134c17a6cfea99f510704127"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a824557f8134c17a6cfea99f510704127"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a824557f8134c17a6cfea99f510704127">setInputAssertLogic</a></td></tr>
-<tr class="memdesc:a824557f8134c17a6cfea99f510704127"><td class="mdescLeft">&#160;</td><td class="mdescRight">EWM_in signal assertion state. <br/></td></tr>
-<tr class="separator:a824557f8134c17a6cfea99f510704127"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a59ced8270a61599dc2087649a0881403"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a59ced8270a61599dc2087649a0881403"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a59ced8270a61599dc2087649a0881403">enableInterrupt</a></td></tr>
-<tr class="memdesc:a59ced8270a61599dc2087649a0881403"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable EWM interrupt. <br/></td></tr>
-<tr class="separator:a59ced8270a61599dc2087649a0881403"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab0c9acea46f2d29c2a64b024dcbff24e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab0c9acea46f2d29c2a64b024dcbff24e"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ab0c9acea46f2d29c2a64b024dcbff24e">compareLowValue</a></td></tr>
-<tr class="memdesc:ab0c9acea46f2d29c2a64b024dcbff24e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare low-register value. <br/></td></tr>
-<tr class="separator:ab0c9acea46f2d29c2a64b024dcbff24e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aecf428ef0d0ada1bb492fea9e8edbfc4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aecf428ef0d0ada1bb492fea9e8edbfc4"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#aecf428ef0d0ada1bb492fea9e8edbfc4">compareHighValue</a></td></tr>
-<tr class="memdesc:aecf428ef0d0ada1bb492fea9e8edbfc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare high-register value. <br/></td></tr>
-<tr class="separator:aecf428ef0d0ada1bb492fea9e8edbfc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a721b39a7125a002d309ed2730923ddf4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a721b39a7125a002d309ed2730923ddf4"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a721b39a7125a002d309ed2730923ddf4">enableEwm</a></td></tr>
+<tr class="memdesc:a721b39a7125a002d309ed2730923ddf4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable EWM module. <br/></td></tr>
+<tr class="separator:a721b39a7125a002d309ed2730923ddf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca72969e7d8f49e636e0d93736a7c99e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aca72969e7d8f49e636e0d93736a7c99e"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#aca72969e7d8f49e636e0d93736a7c99e">enableEwmInput</a></td></tr>
+<tr class="memdesc:aca72969e7d8f49e636e0d93736a7c99e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable EWM_in input. <br/></td></tr>
+<tr class="separator:aca72969e7d8f49e636e0d93736a7c99e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9ce6fe81b13f2119fecce81d1062acb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac9ce6fe81b13f2119fecce81d1062acb"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ac9ce6fe81b13f2119fecce81d1062acb">setInputAssertLogic</a></td></tr>
+<tr class="memdesc:ac9ce6fe81b13f2119fecce81d1062acb"><td class="mdescLeft">&#160;</td><td class="mdescRight">EWM_in signal assertion state. <br/></td></tr>
+<tr class="separator:ac9ce6fe81b13f2119fecce81d1062acb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9feb1567912e3a5d9743b108476c532d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9feb1567912e3a5d9743b108476c532d"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a9feb1567912e3a5d9743b108476c532d">enableInterrupt</a></td></tr>
+<tr class="memdesc:a9feb1567912e3a5d9743b108476c532d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable EWM interrupt. <br/></td></tr>
+<tr class="separator:a9feb1567912e3a5d9743b108476c532d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1476ef53b6b1d18af407deeeac615c9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab1476ef53b6b1d18af407deeeac615c9"></a>
+<a class="el" href="a00024.html#gae00e062b2bb5111afe589858657db5c4">ewm_lpo_clock_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ab1476ef53b6b1d18af407deeeac615c9">clockSource</a></td></tr>
+<tr class="memdesc:ab1476ef53b6b1d18af407deeeac615c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clock source select. <br/></td></tr>
+<tr class="separator:ab1476ef53b6b1d18af407deeeac615c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a981bdcc31c825ad9d845c7b76068d0ff"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a981bdcc31c825ad9d845c7b76068d0ff"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a981bdcc31c825ad9d845c7b76068d0ff">prescaler</a></td></tr>
+<tr class="memdesc:a981bdcc31c825ad9d845c7b76068d0ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clock prescaler value. <br/></td></tr>
+<tr class="separator:a981bdcc31c825ad9d845c7b76068d0ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8038c11c3fddfd2f4ea4c6f7b39b8011"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8038c11c3fddfd2f4ea4c6f7b39b8011"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a8038c11c3fddfd2f4ea4c6f7b39b8011">compareLowValue</a></td></tr>
+<tr class="memdesc:a8038c11c3fddfd2f4ea4c6f7b39b8011"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare low-register value. <br/></td></tr>
+<tr class="separator:a8038c11c3fddfd2f4ea4c6f7b39b8011"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae304c8c887c67f28a9e72e182d28962c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae304c8c887c67f28a9e72e182d28962c"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ae304c8c887c67f28a9e72e182d28962c">compareHighValue</a></td></tr>
+<tr class="memdesc:ae304c8c887c67f28a9e72e182d28962c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare high-register value. <br/></td></tr>
+<tr class="separator:ae304c8c887c67f28a9e72e182d28962c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
@@ -209,14 +238,66 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_EWM_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00258.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 3))</td>
+          <td class="memname">#define FSL_EWM_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00260.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 3))</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="gae00e062b2bb5111afe589858657db5c4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00024.html#ga658124565e189a5a884a591828b81c66">_ewm_lpo_clock_source</a>  <a class="el" href="a00024.html#gae00e062b2bb5111afe589858657db5c4">ewm_lpo_clock_source_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga729f4f8aeb5909642d0f0eaecfac593b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00024.html#a00354">_ewm_config</a>  <a class="el" href="a00024.html#ga729f4f8aeb5909642d0f0eaecfac593b">ewm_config_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This structure is used to configure the EWM. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="ga658124565e189a5a884a591828b81c66"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00024.html#ga658124565e189a5a884a591828b81c66">_ewm_lpo_clock_source</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga658124565e189a5a884a591828b81c66aa0c2a939796ded985e86292f3ab48880"></a>kEWM_LpoClockSource0</em>&nbsp;</td><td class="fielddoc">
+<p>EWM clock sourced from lpo_clk[0]. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga658124565e189a5a884a591828b81c66a87adc9960b9c0ed4d5200c9ebabb87a4"></a>kEWM_LpoClockSource1</em>&nbsp;</td><td class="fielddoc">
+<p>EWM clock sourced from lpo_clk[1]. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga658124565e189a5a884a591828b81c66a13a8f71a88d5209ecb27f01e8f859d6f"></a>kEWM_LpoClockSource2</em>&nbsp;</td><td class="fielddoc">
+<p>EWM clock sourced from lpo_clk[2]. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga658124565e189a5a884a591828b81c66a04d8b0bead7ea64e37b8c5cbafaaad8b"></a>kEWM_LpoClockSource3</em>&nbsp;</td><td class="fielddoc">
+<p>EWM clock sourced from lpo_clk[3]. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <a class="anchor" id="gaf1f0321cab3227a897b2e2475ceaec5f"></a>
 <div class="memitem">
 <div class="memproto">
@@ -267,7 +348,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00024.html#a00386">ewm_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00024.html#ga729f4f8aeb5909642d0f0eaecfac593b">ewm_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -279,9 +360,9 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 </div><div class="memdoc">
 <p>This function is used to initialize the EWM. After calling, the EWM runs immediately according to the configuration. Note that, except for the interrupt enable control bit, other control bits and registers are write once after a CPU reset. Modifying them more than once generates a bus transfer error.</p>
 <p>This is an example. </p>
-<div class="fragment"><div class="line">*   <a class="code" href="a00024.html#a00386">ewm_config_t</a> config;</div>
+<div class="fragment"><div class="line">*   <a class="code" href="a00024.html#a00354">ewm_config_t</a> config;</div>
 <div class="line">*   <a class="code" href="a00024.html#gac87adab8a628260058e8bee7b849ec67">EWM_GetDefaultConfig</a>(&amp;config);</div>
-<div class="line">*   config.<a class="code" href="a00024.html#aecf428ef0d0ada1bb492fea9e8edbfc4">compareHighValue</a> = 0xAAU;</div>
+<div class="line">*   config.<a class="code" href="a00024.html#ae304c8c887c67f28a9e72e182d28962c">compareHighValue</a> = 0xAAU;</div>
 <div class="line">*   <a class="code" href="a00024.html#gafe731b0ab2d0c9f566784a1d6ee722cc">EWM_Init</a>(ewm_base,&amp;config);</div>
 <div class="line">* </div>
 </div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
@@ -324,7 +405,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname">void EWM_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00024.html#a00386">ewm_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00024.html#ga729f4f8aeb5909642d0f0eaecfac593b">ewm_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
@@ -335,7 +416,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="line">*   ewmConfig-&gt;enableEwmInput = <span class="keyword">false</span>;</div>
 <div class="line">*   ewmConfig-&gt;setInputAssertLogic = <span class="keyword">false</span>;</div>
 <div class="line">*   ewmConfig-&gt;enableInterrupt = <span class="keyword">false</span>;</div>
-<div class="line">*   ewmConfig-&gt;ewm_lpo_clock_source_t = kEWM_LpoClockSource0;</div>
+<div class="line">*   ewmConfig-&gt;ewm_lpo_clock_source_t = <a class="code" href="a00024.html#gga658124565e189a5a884a591828b81c66aa0c2a939796ded985e86292f3ab48880">kEWM_LpoClockSource0</a>;</div>
 <div class="line">*   ewmConfig-&gt;prescaler = 0;</div>
 <div class="line">*   ewmConfig-&gt;compareLowValue = 0;</div>
 <div class="line">*   ewmConfig-&gt;compareHighValue = 0xFEU;</div>
@@ -346,7 +427,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
   </table>
   </dd>
 </dl>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00024.html#a00386" title="Describes EWM clock source. ">ewm_config_t</a> </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00024.html#ga729f4f8aeb5909642d0f0eaecfac593b" title="Data structure for EWM configuration. ">ewm_config_t</a> </dd></dl>
 
 </div>
 </div>

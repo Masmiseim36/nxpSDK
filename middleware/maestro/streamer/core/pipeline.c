@@ -1,10 +1,7 @@
 /*
  * Copyright 2018-2022 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /*!
@@ -86,7 +83,7 @@ static int pipeline_path_blocked(StreamElement *element);
  * GLOBAL FUNCTIONS
  */
 
-int32_t create_pipeline(PipelineHandle *handle, unsigned int index, StreamPipelineType type, osa_msgq_handle_t *app_mq)
+int32_t create_pipeline(PipelineHandle *handle, unsigned int index, osa_msgq_handle_t *app_mq)
 {
     Pipeline *pipeline = NULL;
     int32_t ret        = STREAM_OK;
@@ -122,7 +119,6 @@ int32_t create_pipeline(PipelineHandle *handle, unsigned int index, StreamPipeli
         ELEMENT_STATE(head) = STATE_NULL;
     }
 
-    pipeline->type = type;
     /* return pipeline handle */
     *handle = (PipelineHandle)pipeline;
 
@@ -638,7 +634,6 @@ int32_t send_msg_pipeline(Pipeline *pipeline, StreamMessage *msg)
 
     streamer_msg.pipeline_index = pipeline->index;
     streamer_msg.state          = pipeline->state;
-    streamer_msg.pipeline_type  = pipeline->type;
     switch (msg->message)
     {
         case MSG_EOS:
@@ -987,5 +982,15 @@ void clear_pipeline_trackinfo(PipelineHandle handle)
     memset((void *)&pipeline->track_info, 0, sizeof(TrackInfo));
 
     STREAMER_FUNC_EXIT(DBG_CORE);
+}
+
+int32_t is_element_in_pipeline(PipelineElements pipe_elems, ElementIndex id)
+{
+    for (int i = 0; i < pipe_elems.num_elements; i++)
+    {
+        if (id == pipe_elems.element_ids[i])
+            return 1;
+    }
+    return 0;
 }
 /*----------------------------------------------------------------------------*/

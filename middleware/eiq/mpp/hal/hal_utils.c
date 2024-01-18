@@ -1,10 +1,8 @@
 /*
  * Copyright 2020-2023 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifdef __cplusplus
@@ -100,10 +98,6 @@ int setup_graphic_dev(hal_graphics_setup_t gfx_setup[], int graphic_nb,
         /* pick prefered first graphics device of the list */
         found = 1;
         i = 0;
-    }
-    else if ((name == NULL) || (!strcmp(name, HAL_GFX_DEV_CPU_NAME))) {
-        /* pick CPU graphics */
-        return HAL_GfxDev_CPU_Register(dev);
     }
     else {
         for (i = 0; i < graphic_nb; i++)
@@ -219,6 +213,18 @@ uint32_t calc_checksum(int size_b, void *pbuf)
         pw++;
     }
     return (x | (y << 16));
+}
+
+
+/* Swap MSB and LSB bytes */
+void swap_2_bytes(uint8_t *data, int size)
+{
+    uint8_t tmp = 0;
+    for (int i=0 ; i < size; i=(i+2)) {
+        tmp = data[i];
+        data[i] = data[i+1];
+        data[i+1] = tmp;
+    }
 }
 
 #ifdef __cplusplus

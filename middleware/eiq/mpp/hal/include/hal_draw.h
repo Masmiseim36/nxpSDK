@@ -40,7 +40,7 @@ extern "C" {
  * @param color RGB565 encoded value
  * @param lcd_w lcd width
  */
-void hal_draw_pixel(uint16_t *pDst, uint32_t x, uint32_t y, uint16_t color, uint32_t lcd_w);
+void hal_draw_pixel565(uint16_t *pDst, uint32_t x, uint32_t y, uint16_t color, uint32_t lcd_w);
 
 /*!
  * @brief Draws text stored in label pointer to LCD buffer.
@@ -58,7 +58,7 @@ void hal_draw_pixel(uint16_t *pDst, uint32_t x, uint32_t y, uint16_t color, uint
  * @return The return number of written chars to the buffer
 
  */
-void hal_draw_text(uint16_t *lcd_buf, uint16_t fcolor, uint16_t bcolor, uint32_t width,
+void hal_draw_text565(uint16_t *lcd_buf, uint16_t fcolor, uint16_t bcolor, uint32_t width,
                    int x, int y, const char *label);
 
 /*!
@@ -77,7 +77,7 @@ void hal_draw_text(uint16_t *lcd_buf, uint16_t fcolor, uint16_t bcolor, uint32_t
  * @return N/A
 
  */
-void hal_draw_rect(uint16_t *lcd_buf, uint32_t x, uint32_t y, uint32_t xsize, uint32_t ysize,
+void hal_draw_rect565(uint16_t *lcd_buf, uint32_t x, uint32_t y, uint32_t xsize, uint32_t ysize,
                   uint32_t r, uint32_t g, uint32_t b, uint32_t width);
 
 /** @} */

@@ -37,12 +37,12 @@ POSSIBILITY OF SUCH DAMAGE.
 
 /* High-pass filter with cutoff frequency adaptation based on pitch lag statistics */
 void silk_HP_variable_cutoff(
-    silk_encoder_state_Fxx          state_Fxx[]                         /* I/O  Encoder states                              */
+    silk_encoder_state_Fxx          *state_Fxx                         /* I/O  Encoder states                              */
 )
 {
    opus_int   quality_Q15;
    opus_int32 pitch_freq_Hz_Q16, pitch_freq_log_Q7, delta_freq_Q7;
-   silk_encoder_state *psEncC1 = &state_Fxx[ 0 ].sCmn;
+   silk_encoder_state *psEncC1 = &(state_Fxx->sCmn);
 
    /* Adaptive cutoff frequency: estimate low end of pitch frequency range */
    if( psEncC1->prevSignalType == TYPE_VOICED ) {

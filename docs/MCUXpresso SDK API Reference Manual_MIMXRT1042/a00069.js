@@ -21,7 +21,8 @@ var a00069 =
       [ "tIdleTimeout_Ns", "a00069.html#a3aee78fbfe593dc04381a9cc60dab764", null ],
       [ "refreshPeriod_nsPerRow", "a00069.html#a3ef4d79f6c348c2e6ded9dae37dad9e2", null ],
       [ "refreshUrgThreshold", "a00069.html#ad2620016a22a74f7a078c99a4ac87206", null ],
-      [ "refreshBurstLen", "a00069.html#aadd156b3af85bb6af2adae0576953f03", null ]
+      [ "refreshBurstLen", "a00069.html#aadd156b3af85bb6af2adae0576953f03", null ],
+      [ "autofreshTimes", "a00069.html#a550bee43e688cb36696064bb0b4b37e3", null ]
     ] ],
     [ "semc_nand_timing_config_t", "a00069.html#a00508", [
       [ "tCeSetup_Ns", "a00069.html#a43488e8f58378eb3df070f959f99e6f9", null ],

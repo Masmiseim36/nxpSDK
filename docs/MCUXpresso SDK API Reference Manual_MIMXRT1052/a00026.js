@@ -1,15 +1,24 @@
 var a00026 =
 [
-    [ "ewm_config_t", "a00026.html#a00404", [
-      [ "enableEwm", "a00026.html#a9fc625647ba94efff761a19ea25dedae", null ],
-      [ "enableEwmInput", "a00026.html#a48b7c11c26b8b3a1843bd78e9bd3124c", null ],
-      [ "setInputAssertLogic", "a00026.html#a824557f8134c17a6cfea99f510704127", null ],
-      [ "enableInterrupt", "a00026.html#a59ced8270a61599dc2087649a0881403", null ],
-      [ "prescaler", "a00026.html#afbe56a3eb88277a9f4ab7f79173718a0", null ],
-      [ "compareLowValue", "a00026.html#ab0c9acea46f2d29c2a64b024dcbff24e", null ],
-      [ "compareHighValue", "a00026.html#aecf428ef0d0ada1bb492fea9e8edbfc4", null ]
+    [ "_ewm_config", "a00026.html#a00374", [
+      [ "enableEwm", "a00026.html#a721b39a7125a002d309ed2730923ddf4", null ],
+      [ "enableEwmInput", "a00026.html#aca72969e7d8f49e636e0d93736a7c99e", null ],
+      [ "setInputAssertLogic", "a00026.html#ac9ce6fe81b13f2119fecce81d1062acb", null ],
+      [ "enableInterrupt", "a00026.html#a9feb1567912e3a5d9743b108476c532d", null ],
+      [ "clockSource", "a00026.html#ab1476ef53b6b1d18af407deeeac615c9", null ],
+      [ "prescaler", "a00026.html#a981bdcc31c825ad9d845c7b76068d0ff", null ],
+      [ "compareLowValue", "a00026.html#a8038c11c3fddfd2f4ea4c6f7b39b8011", null ],
+      [ "compareHighValue", "a00026.html#ae304c8c887c67f28a9e72e182d28962c", null ]
     ] ],
     [ "FSL_EWM_DRIVER_VERSION", "a00026.html#ga13413f9927ed720755dc3e98f77ecba2", null ],
+    [ "ewm_lpo_clock_source_t", "a00026.html#gae00e062b2bb5111afe589858657db5c4", null ],
+    [ "ewm_config_t", "a00026.html#ga729f4f8aeb5909642d0f0eaecfac593b", null ],
+    [ "_ewm_lpo_clock_source", "a00026.html#ga658124565e189a5a884a591828b81c66", [
+      [ "kEWM_LpoClockSource0", "a00026.html#gga658124565e189a5a884a591828b81c66aa0c2a939796ded985e86292f3ab48880", null ],
+      [ "kEWM_LpoClockSource1", "a00026.html#gga658124565e189a5a884a591828b81c66a87adc9960b9c0ed4d5200c9ebabb87a4", null ],
+      [ "kEWM_LpoClockSource2", "a00026.html#gga658124565e189a5a884a591828b81c66a13a8f71a88d5209ecb27f01e8f859d6f", null ],
+      [ "kEWM_LpoClockSource3", "a00026.html#gga658124565e189a5a884a591828b81c66a04d8b0bead7ea64e37b8c5cbafaaad8b", null ]
+    ] ],
     [ "_ewm_interrupt_enable_t", "a00026.html#gaf1f0321cab3227a897b2e2475ceaec5f", [
       [ "kEWM_InterruptEnable", "a00026.html#ggaf1f0321cab3227a897b2e2475ceaec5fa5bd5d6fb4ae17d0173bda608f54fa0e7", null ]
     ] ],

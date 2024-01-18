@@ -1,68 +1,81 @@
 var a00041 =
 [
     [ "FLEXSPI eDMA Driver", "a00042.html", "a00042" ],
-    [ "flexspi_config_t", "a00041.html#a00436", [
-      [ "rxSampleClock", "a00041.html#a9a6d5f8a07fb46097107c9eb286b274f", null ],
-      [ "enableSckFreeRunning", "a00041.html#aff3b7741db982d0de6b123e449173fea", null ],
-      [ "enableCombination", "a00041.html#ac9919bbdaeaf47d77de8503dc794562f", null ],
-      [ "enableDoze", "a00041.html#a874d2c8764b144c7cb1e490721b92c79", null ],
-      [ "enableHalfSpeedAccess", "a00041.html#a8970f0b6e4456a5aef0b5062b5081653", null ],
-      [ "enableSckBDiffOpt", "a00041.html#adb81f059fd762c30013c130f4672a89e", null ],
-      [ "enableSameConfigForAll", "a00041.html#a6b92b43578a6461b8a2790bdb3f6ef6d", null ],
-      [ "seqTimeoutCycle", "a00041.html#ac441de6664a70ba5569701f7a627a071", null ],
-      [ "ipGrantTimeoutCycle", "a00041.html#af4432f3255d836eae19a72b45dc1b012", null ],
-      [ "txWatermark", "a00041.html#a4969ebe59f35ccb2921f06ff96089fd8", null ],
-      [ "rxWatermark", "a00041.html#ac7785802f92e16462a68c6356ca33c90", null ],
-      [ "enableAHBWriteIpTxFifo", "a00041.html#a9a18e13964c232842cf6ae96edf28ea1", null ],
-      [ "enableAHBWriteIpRxFifo", "a00041.html#aa5c34f776b52effb6911953cbaf0de2e", null ],
-      [ "ahbGrantTimeoutCycle", "a00041.html#ab4f4961d0cb1356098f4ec8391abb94d", null ],
-      [ "ahbBusTimeoutCycle", "a00041.html#ae33367c97edea46d2a7c5e13fe667907", null ],
-      [ "resumeWaitCycle", "a00041.html#a24f916c7678066c312431c726a4b5816", null ],
-      [ "buffer", "a00041.html#a3762c6e88eb7f6124ba28bcbafbb3f0a", null ],
-      [ "enableClearAHBBufferOpt", "a00041.html#a469a7ac283caeb330b2fe4737741d1f1", null ],
-      [ "enableReadAddressOpt", "a00041.html#a52e4621d2ad8fef342bba460e433ecec", null ],
-      [ "enableAHBPrefetch", "a00041.html#ad8233ff382b0d721fa7a0b96ce478ad8", null ],
-      [ "enableAHBBufferable", "a00041.html#aa85616f967cd9582bf3212e25d8aaee9", null ],
-      [ "enableAHBCachable", "a00041.html#a201560e33a07598c65cb1ccb7d510446", null ]
+    [ "_flexspi_config", "a00041.html#a00417", [
+      [ "rxSampleClock", "a00041.html#ab93a70b962e412c67056c594ccb253d9", null ],
+      [ "enableSckFreeRunning", "a00041.html#aac53cf0a47755797a0b181da0d03e5fa", null ],
+      [ "enableCombination", "a00041.html#ad9814ec66e0f5bb472d1a90af02c260e", null ],
+      [ "enableDoze", "a00041.html#a2384344decb673f8f71ef6336fd9883e", null ],
+      [ "enableHalfSpeedAccess", "a00041.html#a5fa118eacd8b42ec7aff675794785e89", null ],
+      [ "enableSckBDiffOpt", "a00041.html#a3a0fb2ab371617aa9416c2598f9c65a5", null ],
+      [ "enableSameConfigForAll", "a00041.html#af4c3027e50ab69d35a015142ade5bb62", null ],
+      [ "seqTimeoutCycle", "a00041.html#a17f7b7f6a97f7d4d57ca0d77f847fa92", null ],
+      [ "ipGrantTimeoutCycle", "a00041.html#a7a4d7cc1fd63f9b896e62d32c3a0e95f", null ],
+      [ "txWatermark", "a00041.html#a11e4f7ca7d4499444f65eac2c71ed64e", null ],
+      [ "rxWatermark", "a00041.html#ae7bb87d255b05de7c01ed2e566804d1f", null ],
+      [ "enableAHBWriteIpTxFifo", "a00041.html#a7ab1cdc43e0c5d16bc1f90ebf42eb561", null ],
+      [ "enableAHBWriteIpRxFifo", "a00041.html#a5193389b6976a31c46bea2b832ec39ce", null ],
+      [ "ahbGrantTimeoutCycle", "a00041.html#a2cccd728bae354ccd480ef77f4280359", null ],
+      [ "ahbBusTimeoutCycle", "a00041.html#a39c02110e809a7b015ced656e03c4dff", null ],
+      [ "resumeWaitCycle", "a00041.html#a836228398df7b82861a91a260d483f0d", null ],
+      [ "buffer", "a00041.html#a8625ab1e9a4297feb560daaa3f02a32c", null ],
+      [ "enableClearAHBBufferOpt", "a00041.html#a3ffaa97a04b06e8a08314f37fd417325", null ],
+      [ "enableReadAddressOpt", "a00041.html#adc36f77c336243b7f1f5108c44286e18", null ],
+      [ "enableAHBPrefetch", "a00041.html#a4a8c83704bfa2fba9fd27afae755cdc0", null ],
+      [ "enableAHBBufferable", "a00041.html#aa8e89cd73c3dc0c25818760e65f71330", null ],
+      [ "enableAHBCachable", "a00041.html#a3b5f6efffb62ad1a2e9f5d98dc76ba36", null ]
     ] ],
-    [ "flexspi_device_config_t", "a00041.html#a00437", [
-      [ "flexspiRootClk", "a00041.html#a809837315f7851315f2eb83bfee03b9d", null ],
-      [ "isSck2Enabled", "a00041.html#a4dc1ab693f5c62858f216eeafc8dcdaa", null ],
-      [ "flashSize", "a00041.html#a341c39425de7eb023afb4245b8953377", null ],
-      [ "CSIntervalUnit", "a00041.html#a0ba4f8679ec1ea8cde256ca5094c3a93", null ],
-      [ "CSInterval", "a00041.html#af9965ff1bce10b973025a54f15c1ab4f", null ],
-      [ "CSHoldTime", "a00041.html#ac4c58d5a47f7ddb3b698953bcb5e7255", null ],
-      [ "CSSetupTime", "a00041.html#a2c7d1e71edd03848d3296f21846f0012", null ],
-      [ "dataValidTime", "a00041.html#a0b4d870b95326740e1360e4bdd7decce", null ],
-      [ "columnspace", "a00041.html#ad96a836bc4821b39e1dd577d2cb1890d", null ],
-      [ "enableWordAddress", "a00041.html#a8c16a3ff44a3b77a078698e454e56f73", null ],
-      [ "AWRSeqIndex", "a00041.html#a2902cf884ec786ae844bb70081c4c66a", null ],
-      [ "AWRSeqNumber", "a00041.html#a6b9beed37b207c23d3f94621a14ae851", null ],
-      [ "ARDSeqIndex", "a00041.html#a8b9e4624335d717f06d892f3b9b0dd59", null ],
-      [ "ARDSeqNumber", "a00041.html#a2eda9dcea9c95e6ea8af30c8877ccc3f", null ],
-      [ "AHBWriteWaitUnit", "a00041.html#a90b3175a91354f25e6632a323564e495", null ],
-      [ "AHBWriteWaitInterval", "a00041.html#ac257c0df9ebe1e95af1b2eccd9bac6da", null ],
-      [ "enableWriteMask", "a00041.html#a537cacf6f847b62d33ef849149984ee3", null ]
+    [ "_flexspi_device_config", "a00041.html#a00418", [
+      [ "flexspiRootClk", "a00041.html#ada4f7b68383877a039072875d711e173", null ],
+      [ "isSck2Enabled", "a00041.html#ab5474dc0d9a00d6b19ce9851ad416fa8", null ],
+      [ "flashSize", "a00041.html#abdcc90de5832fc28832998cfbf3b3ef2", null ],
+      [ "CSIntervalUnit", "a00041.html#a3e71bbfad34914a224031e89811bb783", null ],
+      [ "CSInterval", "a00041.html#a7f157821ed42772a1dd6c8c9bbb925cc", null ],
+      [ "CSHoldTime", "a00041.html#a1203ad535737994961586b135bdbee1a", null ],
+      [ "CSSetupTime", "a00041.html#aadfd5e7c79fff9992e0dda042d36d386", null ],
+      [ "dataValidTime", "a00041.html#aba530a1c1c51cb20303e220134ed028e", null ],
+      [ "columnspace", "a00041.html#ac703544139e34bac880be595c00fc4db", null ],
+      [ "enableWordAddress", "a00041.html#a45d3f74fd6385a95e0e0c325e34e031e", null ],
+      [ "AWRSeqIndex", "a00041.html#abf2836aed1741618811d342ec4f6d99f", null ],
+      [ "AWRSeqNumber", "a00041.html#a10902fe0bd2317bb4b826e27fd2ccc49", null ],
+      [ "ARDSeqIndex", "a00041.html#ae503cc358a0c30a57a513c92406243c4", null ],
+      [ "ARDSeqNumber", "a00041.html#a3ac64ae8cb747c012256240aa0157831", null ],
+      [ "AHBWriteWaitUnit", "a00041.html#a4aaa4c06e67c1a1742e8e5959568da26", null ],
+      [ "AHBWriteWaitInterval", "a00041.html#a20412b4047bf71cfcb4af1f8c105412c", null ],
+      [ "enableWriteMask", "a00041.html#a8befdeb701b4cc314ca2674b1ed92d4d", null ]
     ] ],
-    [ "flexspi_transfer_t", "a00041.html#a00441", [
-      [ "deviceAddress", "a00041.html#ad60ddfe61616ffc2b1c289b398249687", null ],
-      [ "port", "a00041.html#a494f8e3695226d89469edfacf040c779", null ],
-      [ "cmdType", "a00041.html#a2d9a15603f7c60495351d6e784efa21f", null ],
-      [ "seqIndex", "a00041.html#a20386fec82b36c85cbf8d25aa7981f49", null ],
-      [ "SeqNumber", "a00041.html#a237b92ed61e60a2dc290e193793bc9e9", null ],
-      [ "data", "a00041.html#a9f868d6eaf921590653512ce58480f6b", null ],
-      [ "dataSize", "a00041.html#a80b74d7879a7359ad5f79980ca5f3e53", null ]
+    [ "_flexspi_transfer", "a00041.html#a00424", [
+      [ "deviceAddress", "a00041.html#a20a77fdf5a7f94011ba836f4988cd97a", null ],
+      [ "port", "a00041.html#a395cf7bdd479592e3f9cf0836caf2d82", null ],
+      [ "cmdType", "a00041.html#a157c99b27542cb81982f1f628e693922", null ],
+      [ "seqIndex", "a00041.html#a965d34b3b91cd7ae90759aa32d1d62e3", null ],
+      [ "SeqNumber", "a00041.html#a1dc0778a2a2c42e0ae6ef613153e3d00", null ],
+      [ "data", "a00041.html#a2bebccd3d5a95128f4f845c247cd11ba", null ],
+      [ "dataSize", "a00041.html#a01c6167563be949085220af5a0c9f4f2", null ]
     ] ],
-    [ "flexspi_handle_t", "a00041.html#a00326", [
-      [ "state", "a00041.html#a933e9a2e61686adbe8e85cc6e996c707", null ],
-      [ "data", "a00041.html#a295ef5147af8f1d4079af11f0c649060", null ],
-      [ "dataSize", "a00041.html#af398d4e2e49ebb106f29a2afe50e0f97", null ],
-      [ "transferTotalSize", "a00041.html#a545846b125a3a78dc0328b3a446a132e", null ],
-      [ "completionCallback", "a00041.html#a3fb995fc8cad27df08d2581224ee3e46", null ],
-      [ "userData", "a00041.html#a39db7f929a1fc22a199ccaf739fa6f6c", null ]
+    [ "_flexspi_handle", "a00041.html#a00420", [
+      [ "state", "a00041.html#a6380ef8079e8f6d2948e5140c6757fe9", null ],
+      [ "data", "a00041.html#ac9c3641aac74166d2de5ce2ff57df325", null ],
+      [ "dataSize", "a00041.html#a2fa8ac09be115299cd7684237965415c", null ],
+      [ "transferTotalSize", "a00041.html#affcdd0d6741ed619b36d8458f69ed0c2", null ],
+      [ "completionCallback", "a00041.html#a09c793ac81caf04da9d0baac92db69a6", null ],
+      [ "userData", "a00041.html#a63366ce5038e0bd081c0d4a052dfc02e", null ]
     ] ],
     [ "FSL_FLEXSPI_DRIVER_VERSION", "a00041.html#gaccd01fe073049ed2082d17703c25ee3e", null ],
     [ "FLEXSPI_LUT_SEQ", "a00041.html#ga179bcd92daf142c311948082c06c848a", null ],
+    [ "flexspi_pad_t", "a00041.html#gad17db5037cc0e96547dceb5141f9748c", null ],
+    [ "flexspi_flags_t", "a00041.html#ga9a1ca84036889749c48552282a53184c", null ],
+    [ "flexspi_read_sample_clock_t", "a00041.html#ga3925749f15492f4ee50dc375b889a398", null ],
+    [ "flexspi_cs_interval_cycle_unit_t", "a00041.html#gaac9a0472f45df2317e4e62acbd920da1", null ],
+    [ "flexspi_ahb_write_wait_unit_t", "a00041.html#ga5dc9e254b63fae4c739b39b092e65bb9", null ],
+    [ "flexspi_ip_error_code_t", "a00041.html#ga0fac520bfee4292d93c17a3227fb38d5", null ],
+    [ "flexspi_ahb_error_code_t", "a00041.html#ga849aacfbb909a2b403d39ca1b23f7f85", null ],
+    [ "flexspi_port_t", "a00041.html#ga848f4d71e4802faf8a5d543545ee5110", null ],
+    [ "flexspi_arb_command_source_t", "a00041.html#ga00a721e456c8a4334ba7fee0a0c2a3b8", null ],
+    [ "flexspi_command_type_t", "a00041.html#ga0cb96e814ec50238c684fdf431c3efa5", null ],
+    [ "flexspi_config_t", "a00041.html#gaf39e19e99ab773e4f0cac969eecce062", null ],
+    [ "flexspi_device_config_t", "a00041.html#ga5a70bb5d4f28a1763a0224bb8298d4d7", null ],
+    [ "flexspi_transfer_t", "a00041.html#gae98634a0e73294cf48b94cab5d07b196", null ],
     [ "flexspi_transfer_callback_t", "a00041.html#ga40558fffabe6bc75ad0d978ac56726a7", [
       [ "kStatus_FLEXSPI_Busy", "a00041.html#gga1fb9092bcdeada2d206bdc74afbbe122a21bccbd47a8f5f8690d0825b6cb41761", null ],
       [ "kStatus_FLEXSPI_SequenceExecutionTimeout", "a00041.html#gga1fb9092bcdeada2d206bdc74afbbe122af247efbe53e40fe0001914530d483bdf", null ],
@@ -97,75 +110,74 @@ var a00041 =
       [ "kFLEXSPI_Command_DUMMY_RWDS_DDR", "a00041.html#gga84627a72058502328269676b81780f89a0b4f03d35c08558f4094f7e1ba13a22e", null ],
       [ "kFLEXSPI_Command_JUMP_ON_CS", "a00041.html#gga84627a72058502328269676b81780f89ac3abaaee8f2a43ab63315ce05ba485b0", null ]
     ] ],
-    [ "flexspi_pad_t", "a00041.html#gac53270703e6ff35007bdd30e9921e187", [
-      [ "kFLEXSPI_1PAD", "a00041.html#ggac53270703e6ff35007bdd30e9921e187aabb7baedf9c64ad0a382587105cbf3b4", null ],
-      [ "kFLEXSPI_2PAD", "a00041.html#ggac53270703e6ff35007bdd30e9921e187a95d1a2d72fa9c8ca2a221cc3c4f431be", null ],
-      [ "kFLEXSPI_4PAD", "a00041.html#ggac53270703e6ff35007bdd30e9921e187abfb84ebae8934b725e4164d1b643931c", null ],
-      [ "kFLEXSPI_8PAD", "a00041.html#ggac53270703e6ff35007bdd30e9921e187ab67dd50438697de88314abe08598bfd6", null ]
+    [ "_flexspi_pad", "a00041.html#ga0479e0532b00f2c6eccc5a21d1b9ff15", [
+      [ "kFLEXSPI_1PAD", "a00041.html#gga0479e0532b00f2c6eccc5a21d1b9ff15aabb7baedf9c64ad0a382587105cbf3b4", null ],
+      [ "kFLEXSPI_2PAD", "a00041.html#gga0479e0532b00f2c6eccc5a21d1b9ff15a95d1a2d72fa9c8ca2a221cc3c4f431be", null ],
+      [ "kFLEXSPI_4PAD", "a00041.html#gga0479e0532b00f2c6eccc5a21d1b9ff15abfb84ebae8934b725e4164d1b643931c", null ],
+      [ "kFLEXSPI_8PAD", "a00041.html#gga0479e0532b00f2c6eccc5a21d1b9ff15ab67dd50438697de88314abe08598bfd6", null ]
     ] ],
-    [ "flexspi_flags_t", "a00041.html#gaf305b6202c5df2ce9ffc2bc86a02d31c", [
-      [ "kFLEXSPI_SequenceExecutionTimeoutFlag", "a00041.html#ggaf305b6202c5df2ce9ffc2bc86a02d31ca926d49476fe684b0c912bf39124761b6", null ],
-      [ "kFLEXSPI_AhbBusTimeoutFlag", "a00041.html#ggaf305b6202c5df2ce9ffc2bc86a02d31caaff7260c000311495dbae646cf7cf977", null ],
-      [ "kFLEXSPI_SckStoppedBecauseTxEmptyFlag", "a00041.html#ggaf305b6202c5df2ce9ffc2bc86a02d31cab8e2204cbed4f7b443052aeab6c9495b", null ],
-      [ "kFLEXSPI_SckStoppedBecauseRxFullFlag", "a00041.html#ggaf305b6202c5df2ce9ffc2bc86a02d31ca8f0e6574ce2eda2a9080b457dcc17369", null ],
-      [ "kFLEXSPI_DataLearningFailedFlag", "a00041.html#ggaf305b6202c5df2ce9ffc2bc86a02d31ca1f166067d97bf3063fe8e721934d2a3b", null ],
-      [ "kFLEXSPI_IpTxFifoWatermarkEmptyFlag", "a00041.html#ggaf305b6202c5df2ce9ffc2bc86a02d31caf6fff015f6467f94244ccfce73ed45ea", null ],
-      [ "kFLEXSPI_IpRxFifoWatermarkAvailableFlag", "a00041.html#ggaf305b6202c5df2ce9ffc2bc86a02d31ca467607530d9f93e3b4dd24ed30b1daf9", null ],
-      [ "kFLEXSPI_AhbCommandSequenceErrorFlag", "a00041.html#ggaf305b6202c5df2ce9ffc2bc86a02d31caeade1012fb934333db2a0058c366f731", null ],
-      [ "kFLEXSPI_IpCommandSequenceErrorFlag", "a00041.html#ggaf305b6202c5df2ce9ffc2bc86a02d31ca37ceccdbb6bc3d936662788eb3cdba07", null ],
-      [ "kFLEXSPI_AhbCommandGrantTimeoutFlag", "a00041.html#ggaf305b6202c5df2ce9ffc2bc86a02d31cade934b2883d46cae2b46f620fcd993cc", null ],
-      [ "kFLEXSPI_IpCommandGrantTimeoutFlag", "a00041.html#ggaf305b6202c5df2ce9ffc2bc86a02d31caadd6f24bbc89ba4be6200111fb20982b", null ],
-      [ "kFLEXSPI_IpCommandExecutionDoneFlag", "a00041.html#ggaf305b6202c5df2ce9ffc2bc86a02d31ca25be525051c616ada040c8ed6d69ef17", null ],
-      [ "kFLEXSPI_AllInterruptFlags", "a00041.html#ggaf305b6202c5df2ce9ffc2bc86a02d31ca0b68913b136867c72818d8f434652111", null ]
+    [ "_flexspi_flags", "a00041.html#gaceee051e8ee5d664778db2882bafac7a", [
+      [ "kFLEXSPI_SequenceExecutionTimeoutFlag", "a00041.html#ggaceee051e8ee5d664778db2882bafac7aa926d49476fe684b0c912bf39124761b6", null ],
+      [ "kFLEXSPI_AhbBusTimeoutFlag", "a00041.html#ggaceee051e8ee5d664778db2882bafac7aaaff7260c000311495dbae646cf7cf977", null ],
+      [ "kFLEXSPI_SckStoppedBecauseTxEmptyFlag", "a00041.html#ggaceee051e8ee5d664778db2882bafac7aab8e2204cbed4f7b443052aeab6c9495b", null ],
+      [ "kFLEXSPI_SckStoppedBecauseRxFullFlag", "a00041.html#ggaceee051e8ee5d664778db2882bafac7aa8f0e6574ce2eda2a9080b457dcc17369", null ],
+      [ "kFLEXSPI_IpTxFifoWatermarkEmptyFlag", "a00041.html#ggaceee051e8ee5d664778db2882bafac7aaf6fff015f6467f94244ccfce73ed45ea", null ],
+      [ "kFLEXSPI_IpRxFifoWatermarkAvailableFlag", "a00041.html#ggaceee051e8ee5d664778db2882bafac7aa467607530d9f93e3b4dd24ed30b1daf9", null ],
+      [ "kFLEXSPI_AhbCommandSequenceErrorFlag", "a00041.html#ggaceee051e8ee5d664778db2882bafac7aaeade1012fb934333db2a0058c366f731", null ],
+      [ "kFLEXSPI_IpCommandSequenceErrorFlag", "a00041.html#ggaceee051e8ee5d664778db2882bafac7aa37ceccdbb6bc3d936662788eb3cdba07", null ],
+      [ "kFLEXSPI_AhbCommandGrantTimeoutFlag", "a00041.html#ggaceee051e8ee5d664778db2882bafac7aade934b2883d46cae2b46f620fcd993cc", null ],
+      [ "kFLEXSPI_IpCommandGrantTimeoutFlag", "a00041.html#ggaceee051e8ee5d664778db2882bafac7aaadd6f24bbc89ba4be6200111fb20982b", null ],
+      [ "kFLEXSPI_IpCommandExecutionDoneFlag", "a00041.html#ggaceee051e8ee5d664778db2882bafac7aa25be525051c616ada040c8ed6d69ef17", null ],
+      [ "kFLEXSPI_AllInterruptFlags", "a00041.html#ggaceee051e8ee5d664778db2882bafac7aa0b68913b136867c72818d8f434652111", null ]
     ] ],
-    [ "flexspi_read_sample_clock_t", "a00041.html#gae77f49e32c3eaf497e9a28369bbf8053", [
-      [ "kFLEXSPI_ReadSampleClkLoopbackInternally", "a00041.html#ggae77f49e32c3eaf497e9a28369bbf8053af6182ef9c776fa291cbbd34a727d4a9d", null ],
-      [ "kFLEXSPI_ReadSampleClkLoopbackFromDqsPad", "a00041.html#ggae77f49e32c3eaf497e9a28369bbf8053a86986f70a9cd9123dc708a4cd9439f14", null ],
-      [ "kFLEXSPI_ReadSampleClkLoopbackFromSckPad", "a00041.html#ggae77f49e32c3eaf497e9a28369bbf8053aa10f2854d50ae1cf60da887cb5ee8721", null ],
-      [ "kFLEXSPI_ReadSampleClkExternalInputFromDqsPad", "a00041.html#ggae77f49e32c3eaf497e9a28369bbf8053a37b19889732ad1d8d5336452577a6fe5", null ]
+    [ "_flexspi_read_sample_clock", "a00041.html#gaa1b233948fb7d42aeb4c006cf5f35478", [
+      [ "kFLEXSPI_ReadSampleClkLoopbackInternally", "a00041.html#ggaa1b233948fb7d42aeb4c006cf5f35478af6182ef9c776fa291cbbd34a727d4a9d", null ],
+      [ "kFLEXSPI_ReadSampleClkLoopbackFromDqsPad", "a00041.html#ggaa1b233948fb7d42aeb4c006cf5f35478a86986f70a9cd9123dc708a4cd9439f14", null ],
+      [ "kFLEXSPI_ReadSampleClkLoopbackFromSckPad", "a00041.html#ggaa1b233948fb7d42aeb4c006cf5f35478aa10f2854d50ae1cf60da887cb5ee8721", null ],
+      [ "kFLEXSPI_ReadSampleClkExternalInputFromDqsPad", "a00041.html#ggaa1b233948fb7d42aeb4c006cf5f35478a37b19889732ad1d8d5336452577a6fe5", null ]
     ] ],
-    [ "flexspi_cs_interval_cycle_unit_t", "a00041.html#ga446516de2be1ce209435bd6743164557", [
-      [ "kFLEXSPI_CsIntervalUnit1SckCycle", "a00041.html#gga446516de2be1ce209435bd6743164557a0c13470fc2dd7cdae32d89629f476bc2", null ],
-      [ "kFLEXSPI_CsIntervalUnit256SckCycle", "a00041.html#gga446516de2be1ce209435bd6743164557a39cdab3817b97ee2783ceb0a48784c44", null ]
+    [ "_flexspi_cs_interval_cycle_unit", "a00041.html#ga44d2809471f9ad01d3e18b5993e3fe41", [
+      [ "kFLEXSPI_CsIntervalUnit1SckCycle", "a00041.html#gga44d2809471f9ad01d3e18b5993e3fe41a0c13470fc2dd7cdae32d89629f476bc2", null ],
+      [ "kFLEXSPI_CsIntervalUnit256SckCycle", "a00041.html#gga44d2809471f9ad01d3e18b5993e3fe41a39cdab3817b97ee2783ceb0a48784c44", null ]
     ] ],
-    [ "flexspi_ahb_write_wait_unit_t", "a00041.html#ga3c773143ad080de42e5e18928fb26f71", [
-      [ "kFLEXSPI_AhbWriteWaitUnit2AhbCycle", "a00041.html#gga3c773143ad080de42e5e18928fb26f71a77bd176c235c440474130c9333acfe36", null ],
-      [ "kFLEXSPI_AhbWriteWaitUnit8AhbCycle", "a00041.html#gga3c773143ad080de42e5e18928fb26f71a507634102520b1f1b227b4baaabdd562", null ],
-      [ "kFLEXSPI_AhbWriteWaitUnit32AhbCycle", "a00041.html#gga3c773143ad080de42e5e18928fb26f71a4b54ae64ef18997af8bc7ed0d41c7ef5", null ],
-      [ "kFLEXSPI_AhbWriteWaitUnit128AhbCycle", "a00041.html#gga3c773143ad080de42e5e18928fb26f71aec6164016a913fdb5fc174c39af1296c", null ],
-      [ "kFLEXSPI_AhbWriteWaitUnit512AhbCycle", "a00041.html#gga3c773143ad080de42e5e18928fb26f71ad97d3600a3f5df7e13fe0a3343f0ddfc", null ],
-      [ "kFLEXSPI_AhbWriteWaitUnit2048AhbCycle", "a00041.html#gga3c773143ad080de42e5e18928fb26f71aa424000e33c88b2e93529d1503f40d86", null ],
-      [ "kFLEXSPI_AhbWriteWaitUnit8192AhbCycle", "a00041.html#gga3c773143ad080de42e5e18928fb26f71ab49ac5e2a68f75adcb96d39359e21a0b", null ],
-      [ "kFLEXSPI_AhbWriteWaitUnit32768AhbCycle", "a00041.html#gga3c773143ad080de42e5e18928fb26f71af64e1be9ff0301d3f418ed783c045c1e", null ]
+    [ "_flexspi_ahb_write_wait_unit", "a00041.html#ga12b02d7ab910585e0f489956e7919568", [
+      [ "kFLEXSPI_AhbWriteWaitUnit2AhbCycle", "a00041.html#gga12b02d7ab910585e0f489956e7919568a77bd176c235c440474130c9333acfe36", null ],
+      [ "kFLEXSPI_AhbWriteWaitUnit8AhbCycle", "a00041.html#gga12b02d7ab910585e0f489956e7919568a507634102520b1f1b227b4baaabdd562", null ],
+      [ "kFLEXSPI_AhbWriteWaitUnit32AhbCycle", "a00041.html#gga12b02d7ab910585e0f489956e7919568a4b54ae64ef18997af8bc7ed0d41c7ef5", null ],
+      [ "kFLEXSPI_AhbWriteWaitUnit128AhbCycle", "a00041.html#gga12b02d7ab910585e0f489956e7919568aec6164016a913fdb5fc174c39af1296c", null ],
+      [ "kFLEXSPI_AhbWriteWaitUnit512AhbCycle", "a00041.html#gga12b02d7ab910585e0f489956e7919568ad97d3600a3f5df7e13fe0a3343f0ddfc", null ],
+      [ "kFLEXSPI_AhbWriteWaitUnit2048AhbCycle", "a00041.html#gga12b02d7ab910585e0f489956e7919568aa424000e33c88b2e93529d1503f40d86", null ],
+      [ "kFLEXSPI_AhbWriteWaitUnit8192AhbCycle", "a00041.html#gga12b02d7ab910585e0f489956e7919568ab49ac5e2a68f75adcb96d39359e21a0b", null ],
+      [ "kFLEXSPI_AhbWriteWaitUnit32768AhbCycle", "a00041.html#gga12b02d7ab910585e0f489956e7919568af64e1be9ff0301d3f418ed783c045c1e", null ]
     ] ],
-    [ "flexspi_ip_error_code_t", "a00041.html#gaa59b8ddbe616c8ba0019f768ace1527f", [
-      [ "kFLEXSPI_IpCmdErrorNoError", "a00041.html#ggaa59b8ddbe616c8ba0019f768ace1527fa5a9ef1b8776c5e91f94045d0c488cc92", null ],
-      [ "kFLEXSPI_IpCmdErrorJumpOnCsInIpCmd", "a00041.html#ggaa59b8ddbe616c8ba0019f768ace1527fa09b36a52a3719012b6262d0df758c26c", null ],
-      [ "kFLEXSPI_IpCmdErrorUnknownOpCode", "a00041.html#ggaa59b8ddbe616c8ba0019f768ace1527fa2566abfe918545548cdc391ecad3562d", null ],
-      [ "kFLEXSPI_IpCmdErrorSdrDummyInDdrSequence", "a00041.html#ggaa59b8ddbe616c8ba0019f768ace1527fa3a45578abf83e3679f13f7a47692b0b2", null ],
-      [ "kFLEXSPI_IpCmdErrorDdrDummyInSdrSequence", "a00041.html#ggaa59b8ddbe616c8ba0019f768ace1527fa2b93718689f2d9dd58d124fd25ff2f85", null ],
-      [ "kFLEXSPI_IpCmdErrorInvalidAddress", "a00041.html#ggaa59b8ddbe616c8ba0019f768ace1527fa5a974de28e0771b0e93ecd12df485a62", null ],
-      [ "kFLEXSPI_IpCmdErrorSequenceExecutionTimeout", "a00041.html#ggaa59b8ddbe616c8ba0019f768ace1527fad2b76bec366730732a07c2c7a9e5aeec", null ],
-      [ "kFLEXSPI_IpCmdErrorFlashBoundaryAcrosss", "a00041.html#ggaa59b8ddbe616c8ba0019f768ace1527fa2f318a896dfe31a4b8b507daf339c16d", null ]
+    [ "_flexspi_ip_error_code", "a00041.html#gaaef904b8ea28d97d26179d0d0a34fbc1", [
+      [ "kFLEXSPI_IpCmdErrorNoError", "a00041.html#ggaaef904b8ea28d97d26179d0d0a34fbc1a5a9ef1b8776c5e91f94045d0c488cc92", null ],
+      [ "kFLEXSPI_IpCmdErrorJumpOnCsInIpCmd", "a00041.html#ggaaef904b8ea28d97d26179d0d0a34fbc1a09b36a52a3719012b6262d0df758c26c", null ],
+      [ "kFLEXSPI_IpCmdErrorUnknownOpCode", "a00041.html#ggaaef904b8ea28d97d26179d0d0a34fbc1a2566abfe918545548cdc391ecad3562d", null ],
+      [ "kFLEXSPI_IpCmdErrorSdrDummyInDdrSequence", "a00041.html#ggaaef904b8ea28d97d26179d0d0a34fbc1a3a45578abf83e3679f13f7a47692b0b2", null ],
+      [ "kFLEXSPI_IpCmdErrorDdrDummyInSdrSequence", "a00041.html#ggaaef904b8ea28d97d26179d0d0a34fbc1a2b93718689f2d9dd58d124fd25ff2f85", null ],
+      [ "kFLEXSPI_IpCmdErrorInvalidAddress", "a00041.html#ggaaef904b8ea28d97d26179d0d0a34fbc1a5a974de28e0771b0e93ecd12df485a62", null ],
+      [ "kFLEXSPI_IpCmdErrorSequenceExecutionTimeout", "a00041.html#ggaaef904b8ea28d97d26179d0d0a34fbc1ad2b76bec366730732a07c2c7a9e5aeec", null ],
+      [ "kFLEXSPI_IpCmdErrorFlashBoundaryAcrosss", "a00041.html#ggaaef904b8ea28d97d26179d0d0a34fbc1a2f318a896dfe31a4b8b507daf339c16d", null ]
     ] ],
-    [ "flexspi_ahb_error_code_t", "a00041.html#gac8c57dd8e797af1040fd9fcc21b10917", [
-      [ "kFLEXSPI_AhbCmdErrorNoError", "a00041.html#ggac8c57dd8e797af1040fd9fcc21b10917a3b055af2f8c32b1c20c781f9be9406e2", null ],
-      [ "kFLEXSPI_AhbCmdErrorJumpOnCsInWriteCmd", "a00041.html#ggac8c57dd8e797af1040fd9fcc21b10917aa1a1fb4ea86b9f3d159cf4af471fff6a", null ],
-      [ "kFLEXSPI_AhbCmdErrorUnknownOpCode", "a00041.html#ggac8c57dd8e797af1040fd9fcc21b10917a028741e0f08e9f253b43a5ff5db23a3f", null ],
-      [ "kFLEXSPI_AhbCmdErrorSdrDummyInDdrSequence", "a00041.html#ggac8c57dd8e797af1040fd9fcc21b10917a4ae2658aaf3b9e392409233fb4e103e6", null ],
-      [ "kFLEXSPI_AhbCmdErrorDdrDummyInSdrSequence", "a00041.html#ggac8c57dd8e797af1040fd9fcc21b10917a33e985c357a9fd0161b79b04ce94deb9", null ],
-      [ "kFLEXSPI_AhbCmdSequenceExecutionTimeout", "a00041.html#ggac8c57dd8e797af1040fd9fcc21b10917a66bb317d820fe1aa2f180ab88f680d31", null ]
+    [ "_flexspi_ahb_error_code", "a00041.html#gaff421223c501f1b18042d548736bd89e", [
+      [ "kFLEXSPI_AhbCmdErrorNoError", "a00041.html#ggaff421223c501f1b18042d548736bd89ea3b055af2f8c32b1c20c781f9be9406e2", null ],
+      [ "kFLEXSPI_AhbCmdErrorJumpOnCsInWriteCmd", "a00041.html#ggaff421223c501f1b18042d548736bd89eaa1a1fb4ea86b9f3d159cf4af471fff6a", null ],
+      [ "kFLEXSPI_AhbCmdErrorUnknownOpCode", "a00041.html#ggaff421223c501f1b18042d548736bd89ea028741e0f08e9f253b43a5ff5db23a3f", null ],
+      [ "kFLEXSPI_AhbCmdErrorSdrDummyInDdrSequence", "a00041.html#ggaff421223c501f1b18042d548736bd89ea4ae2658aaf3b9e392409233fb4e103e6", null ],
+      [ "kFLEXSPI_AhbCmdErrorDdrDummyInSdrSequence", "a00041.html#ggaff421223c501f1b18042d548736bd89ea33e985c357a9fd0161b79b04ce94deb9", null ],
+      [ "kFLEXSPI_AhbCmdSequenceExecutionTimeout", "a00041.html#ggaff421223c501f1b18042d548736bd89ea66bb317d820fe1aa2f180ab88f680d31", null ]
     ] ],
-    [ "flexspi_port_t", "a00041.html#gac505db1d39e88405032305cfe57c8d56", [
-      [ "kFLEXSPI_PortA1", "a00041.html#ggac505db1d39e88405032305cfe57c8d56a280a07425f3d2e4b876b51c6216da136", null ],
-      [ "kFLEXSPI_PortA2", "a00041.html#ggac505db1d39e88405032305cfe57c8d56a9766a70521fd112539bb3ec1b934521f", null ],
-      [ "kFLEXSPI_PortB1", "a00041.html#ggac505db1d39e88405032305cfe57c8d56a8150e6d14305f5cf93bdab0bc0309413", null ],
-      [ "kFLEXSPI_PortB2", "a00041.html#ggac505db1d39e88405032305cfe57c8d56a4112f4afdbf272c68d4adfd7a608c561", null ]
+    [ "_flexspi_port", "a00041.html#gabb9bc1dd69b486ce1d71749d0546d60f", [
+      [ "kFLEXSPI_PortA1", "a00041.html#ggabb9bc1dd69b486ce1d71749d0546d60fa280a07425f3d2e4b876b51c6216da136", null ],
+      [ "kFLEXSPI_PortA2", "a00041.html#ggabb9bc1dd69b486ce1d71749d0546d60fa9766a70521fd112539bb3ec1b934521f", null ],
+      [ "kFLEXSPI_PortB1", "a00041.html#ggabb9bc1dd69b486ce1d71749d0546d60fa8150e6d14305f5cf93bdab0bc0309413", null ],
+      [ "kFLEXSPI_PortB2", "a00041.html#ggabb9bc1dd69b486ce1d71749d0546d60fa4112f4afdbf272c68d4adfd7a608c561", null ]
     ] ],
-    [ "flexspi_arb_command_source_t", "a00041.html#ga884bdaa9f8e8c1f5bd80b483c5097489", null ],
-    [ "flexspi_command_type_t", "a00041.html#ga97ab40a33a8a6db9d0482c28db0b05f9", [
-      [ "kFLEXSPI_Command", "a00041.html#gga97ab40a33a8a6db9d0482c28db0b05f9a434864ad0a1db118a09007d87d2f303d", null ],
-      [ "kFLEXSPI_Config", "a00041.html#gga97ab40a33a8a6db9d0482c28db0b05f9a30c6392c74b9546179fe975bdbe7d77e", null ]
+    [ "_flexspi_arb_command_source", "a00041.html#ga4014b5aa72e6b4b7d258f377b3793b1a", null ],
+    [ "_flexspi_command_type", "a00041.html#ga048bc2776406a4a3d3b4213de9e759c2", [
+      [ "kFLEXSPI_Command", "a00041.html#gga048bc2776406a4a3d3b4213de9e759c2a434864ad0a1db118a09007d87d2f303d", null ],
+      [ "kFLEXSPI_Config", "a00041.html#gga048bc2776406a4a3d3b4213de9e759c2a30c6392c74b9546179fe975bdbe7d77e", null ]
     ] ],
     [ "FLEXSPI_GetInstance", "a00041.html#ga91bdb9ace32497122bb682c4d6e19eeb", null ],
     [ "FLEXSPI_CheckAndClearError", "a00041.html#ga32000baf3445d1b43444fd0dc0dbb643", null ],
@@ -186,7 +198,6 @@ var a00041 =
     [ "FLEXSPI_GetFifoCounts", "a00041.html#ga10b56b803c3aeb60ff94e2385230799e", null ],
     [ "FLEXSPI_GetInterruptStatusFlags", "a00041.html#ga522bf36c8d24a9e50756fbe2c92982fc", null ],
     [ "FLEXSPI_ClearInterruptStatusFlags", "a00041.html#ga3a374e8190cb2a45fa1eea1ffa31b912", null ],
-    [ "FLEXSPI_GetDataLearningPhase", "a00041.html#gafaeaaa4cd03e24157a63fe83ffd62e17", null ],
     [ "FLEXSPI_GetArbitratorCommandSource", "a00041.html#gabfa17750808e32b1bd7504abd27f0165", null ],
     [ "FLEXSPI_GetIPCommandErrorCode", "a00041.html#gad88eb12348e8f55a70373b400d1de4fc", null ],
     [ "FLEXSPI_GetAHBCommandErrorCode", "a00041.html#ga33ef8b44ab234ba4c66dda29d3dad20c", null ],

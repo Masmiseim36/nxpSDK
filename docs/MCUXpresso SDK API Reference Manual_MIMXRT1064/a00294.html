@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -118,14 +118,14 @@ Function groups</h1>
 Initialization</h2>
 <p>To initialize the debug console, call the <span style="color:red"><a class="el" href="a00294.html#ga12e50ee0450679fd8ca950a89338d366" title="Initializes the peripheral used for debug messages. ">DbgConsole_Init()</a></span> function with these parameters. This function automatically enables the module and the clock.</p>
 <div class="fragment"><div class="line"></div>
-<div class="line"><a class="code" href="a00273.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> <a class="code" href="a00294.html#ga12e50ee0450679fd8ca950a89338d366">DbgConsole_Init</a>(uint8_t instance, uint32_t baudRate, <a class="code" href="a00072.html#ga103db7d7f3fc8234978efadef0fdaf80">serial_port_type_t</a> device, uint32_t clkSrcFreq);</div>
+<div class="line"><a class="code" href="a00273.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> <a class="code" href="a00294.html#ga12e50ee0450679fd8ca950a89338d366">DbgConsole_Init</a>(uint8_t instance, uint32_t baudRate, <a class="code" href="a00071.html#gaa7dc5f93aacda72d14bb0fa66b0401f3">serial_port_type_t</a> device, uint32_t clkSrcFreq);</div>
 </div><!-- fragment --><p>Select the supported debug console hardware device type, such as</p>
-<div class="fragment"><div class="line"><span class="keyword">typedef</span> <span class="keyword">enum</span> _serial_port_type</div>
+<div class="fragment"><div class="line"><span class="keyword">typedef</span> <span class="keyword">enum</span> <a class="code" href="a00071.html#ga37012d03963b0a7aac96cda088362180">_serial_port_type</a></div>
 <div class="line">{</div>
-<div class="line">    <a class="code" href="a00072.html#gga103db7d7f3fc8234978efadef0fdaf80a5b4d039d8c91cb19fca7c5dc196f8d77">kSerialPort_Uart</a> = 1U,                </div>
-<div class="line">    <a class="code" href="a00072.html#gga103db7d7f3fc8234978efadef0fdaf80a3785825f30826c61a4ef13bf983381c2">kSerialPort_UsbCdc</a>,                   </div>
-<div class="line">    <a class="code" href="a00072.html#gga103db7d7f3fc8234978efadef0fdaf80af6a37935b2767a9ae22825f0bc49ef77">kSerialPort_Swo</a>,                      </div>
-<div class="line">} <a class="code" href="a00072.html#ga103db7d7f3fc8234978efadef0fdaf80">serial_port_type_t</a>;</div>
+<div class="line">    <a class="code" href="a00071.html#gga37012d03963b0a7aac96cda088362180a5b4d039d8c91cb19fca7c5dc196f8d77">kSerialPort_Uart</a> = 1U,                </div>
+<div class="line">    <a class="code" href="a00071.html#gga37012d03963b0a7aac96cda088362180a3785825f30826c61a4ef13bf983381c2">kSerialPort_UsbCdc</a>,                   </div>
+<div class="line">    <a class="code" href="a00071.html#gga37012d03963b0a7aac96cda088362180af6a37935b2767a9ae22825f0bc49ef77">kSerialPort_Swo</a>,                      </div>
+<div class="line">} <a class="code" href="a00071.html#gaa7dc5f93aacda72d14bb0fa66b0401f3">serial_port_type_t</a>;</div>
 </div><!-- fragment --><p>After the initialization is successful, stdout and stdin are connected to the selected peripheral.</p>
 <p>This example shows how to call the <a class="el" href="a00294.html#ga12e50ee0450679fd8ca950a89338d366" title="Initializes the peripheral used for debug messages. ">DbgConsole_Init()</a> given the user configuration structure.</p>
 <div class="fragment"><div class="line"><a class="code" href="a00294.html#ga12e50ee0450679fd8ca950a89338d366">DbgConsole_Init</a>(BOARD_DEBUG_UART_INSTANCE, BOARD_DEBUG_UART_BAUDRATE, BOARD_DEBUG_UART_TYPE,</div>
@@ -356,13 +356,13 @@ Macros</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:gaad3c4240a1364156a239471ccdb9aa0b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaad3c4240a1364156a239471ccdb9aa0b"></a>
-<a class="el" href="a00072.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00294.html#gaad3c4240a1364156a239471ccdb9aa0b">g_serialHandle</a></td></tr>
+<a class="el" href="a00071.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00294.html#gaad3c4240a1364156a239471ccdb9aa0b">g_serialHandle</a></td></tr>
 <tr class="memdesc:gaad3c4240a1364156a239471ccdb9aa0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial manager handle <br/></td></tr>
 <tr class="separator:gaad3c4240a1364156a239471ccdb9aa0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Initialization</h2></td></tr>
-<tr class="memitem:ga12e50ee0450679fd8ca950a89338d366"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00273.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00294.html#ga12e50ee0450679fd8ca950a89338d366">DbgConsole_Init</a> (uint8_t instance, uint32_t baudRate, <a class="el" href="a00072.html#ga103db7d7f3fc8234978efadef0fdaf80">serial_port_type_t</a> device, uint32_t clkSrcFreq)</td></tr>
+<tr class="memitem:ga12e50ee0450679fd8ca950a89338d366"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00273.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00294.html#ga12e50ee0450679fd8ca950a89338d366">DbgConsole_Init</a> (uint8_t instance, uint32_t baudRate, <a class="el" href="a00071.html#gaa7dc5f93aacda72d14bb0fa66b0401f3">serial_port_type_t</a> device, uint32_t clkSrcFreq)</td></tr>
 <tr class="memdesc:ga12e50ee0450679fd8ca950a89338d366"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the peripheral used for debug messages.  <a href="#ga12e50ee0450679fd8ca950a89338d366">More...</a><br/></td></tr>
 <tr class="separator:ga12e50ee0450679fd8ca950a89338d366"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad80e7aa70bbb3fce1a9168621372833e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00273.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00294.html#gad80e7aa70bbb3fce1a9168621372833e">DbgConsole_Deinit</a> (void)</td></tr>
@@ -486,7 +486,7 @@ Initialization</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00072.html#ga103db7d7f3fc8234978efadef0fdaf80">serial_port_type_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00071.html#gaa7dc5f93aacda72d14bb0fa66b0401f3">serial_port_type_t</a>&#160;</td>
           <td class="paramname"><em>device</em>, </td>
         </tr>
         <tr>

@@ -28,7 +28,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Maestro Audio Framework
-   &#160;<span id="projectnumber">v 1.6</span>
+   &#160;<span id="projectnumber">v 1.7</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -116,9 +116,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a2330327d6a002085d9bb31cac2929372"><td class="memItemLeft" align="right" valign="top">static int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="streamer_8c.html#a2330327d6a002085d9bb31cac2929372">streamer_handle_msg</a> (<a class="el" href="structSTREAMER__T.html">STREAMER_T</a> *streamer, <a class="el" href="structSTREAMER__MSG__T.html">STREAMER_MSG_T</a> *msg, bool block)</td></tr>
 <tr class="memdesc:a2330327d6a002085d9bb31cac2929372"><td class="mdescLeft">&#160;</td><td class="mdescRight">Streamer handle message.  <a href="streamer_8c.html#a2330327d6a002085d9bb31cac2929372">More...</a><br /></td></tr>
 <tr class="separator:a2330327d6a002085d9bb31cac2929372"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a156ccb8aa582b294d35020e7c441f256"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="streamer_8c.html#a156ccb8aa582b294d35020e7c441f256">streamer_create_pipeline</a> (<a class="el" href="structSTREAMER__T.html">STREAMER_T</a> *streamer, int32_t pipeline_id, <a class="el" href="streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652">StreamPipelineType</a> pipeline_type, const char *in_dev_name, const char *out_dev_name, bool block)</td></tr>
-<tr class="memdesc:a156ccb8aa582b294d35020e7c441f256"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a pipeline that will handle the different connected elements.  <a href="streamer_8c.html#a156ccb8aa582b294d35020e7c441f256">More...</a><br /></td></tr>
-<tr class="separator:a156ccb8aa582b294d35020e7c441f256"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47df6189721825d9fa1484c54f75132f"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="streamer_8c.html#a47df6189721825d9fa1484c54f75132f">streamer_create_pipeline</a> (<a class="el" href="structSTREAMER__T.html">STREAMER_T</a> *streamer, int32_t pipeline_id, const char *in_dev_name, const char *out_dev_name, <a class="el" href="structPipelineElements.html">PipelineElements</a> elements, bool block)</td></tr>
+<tr class="memdesc:a47df6189721825d9fa1484c54f75132f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a pipeline that will handle the different connected elements.  <a href="streamer_8c.html#a47df6189721825d9fa1484c54f75132f">More...</a><br /></td></tr>
+<tr class="separator:a47df6189721825d9fa1484c54f75132f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa9fd155271d1be13af4f4863426e9644"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="streamer_8c.html#aa9fd155271d1be13af4f4863426e9644">streamer_destroy_pipeline</a> (<a class="el" href="structSTREAMER__T.html">STREAMER_T</a> *streamer, int32_t pipeline_id, bool block)</td></tr>
 <tr class="memdesc:aa9fd155271d1be13af4f4863426e9644"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy a pipeline.  <a href="streamer_8c.html#aa9fd155271d1be13af4f4863426e9644">More...</a><br /></td></tr>
 <tr class="separator:aa9fd155271d1be13af4f4863426e9644"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -158,6 +158,9 @@ Variables</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="streamer_8c.html#ac5563268d422f34f512a00ac49efee23">MAX_MSG_RECV_PER_CYCLE</a>&#160;&#160;&#160;(5)</td></tr>
 <tr class="memdesc:ac5563268d422f34f512a00ac49efee23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum messages received per streamer task cycle. <br /></td></tr>
 <tr class="separator:ac5563268d422f34f512a00ac49efee23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebd4370454e20c690fc838d4f93cd2a0"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structElementTypeLookup.html">ElementTypeLookup</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="streamer_8c.html#aebd4370454e20c690fc838d4f93cd2a0">type_lookup_table</a> []</td></tr>
+<tr class="memdesc:aebd4370454e20c690fc838d4f93cd2a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element type lookup table for getting element type from element index.  <a href="streamer_8c.html#aebd4370454e20c690fc838d4f93cd2a0">More...</a><br /></td></tr>
+<tr class="separator:aebd4370454e20c690fc838d4f93cd2a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4a79e8c3a703b70253d05d663e3bcb45"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structSTREAMER__MSG__HANDLER__T.html">STREAMER_MSG_HANDLER_T</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="streamer_8c.html#a4a79e8c3a703b70253d05d663e3bcb45">msg_handler_table</a> []</td></tr>
 <tr class="separator:a4a79e8c3a703b70253d05d663e3bcb45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a45ad4b1ebff944384a1607c206ba991c"><td class="memItemLeft" align="right" valign="top"><a id="a45ad4b1ebff944384a1607c206ba991c"></a>
@@ -437,8 +440,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a156ccb8aa582b294d35020e7c441f256"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a156ccb8aa582b294d35020e7c441f256">&#9670;&nbsp;</a></span>streamer_create_pipeline()</h2>
+<a id="a47df6189721825d9fa1484c54f75132f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47df6189721825d9fa1484c54f75132f">&#9670;&nbsp;</a></span>streamer_create_pipeline()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -458,12 +461,6 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652">StreamPipelineType</a>&#160;</td>
-          <td class="paramname"><em>pipeline_type</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>in_dev_name</em>, </td>
         </tr>
@@ -472,6 +469,12 @@ Variables</h2></td></tr>
           <td></td>
           <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>out_dev_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structPipelineElements.html">PipelineElements</a>&#160;</td>
+          <td class="paramname"><em>elements</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -490,7 +493,6 @@ Variables</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">streamer</td><td>streamer object </td></tr>
     <tr><td class="paramname">pipeline_id</td><td>unique pipeline ID </td></tr>
-    <tr><td class="paramname">pipeline_type</td><td>type of the pipeline </td></tr>
     <tr><td class="paramname">in_dev_name</td><td>input device name </td></tr>
     <tr><td class="paramname">out_dev_name</td><td>output device name </td></tr>
     <tr><td class="paramname">block</td><td>blocking / non-blocking creation of pipeline called directly </td></tr>
@@ -1016,6 +1018,45 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
+<a id="aebd4370454e20c690fc838d4f93cd2a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aebd4370454e20c690fc838d4f93cd2a0">&#9670;&nbsp;</a></span>type_lookup_table</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structElementTypeLookup.html">ElementTypeLookup</a> type_lookup_table[]</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">    {<a class="code" href="streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996daf144a06894e1d230b528574d8e3706fd">TYPE_ELEMENT_FILE_SRC</a>, ELEMENT_FILE_SRC_INDEX},     {<a class="code" href="streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996da5aef126a9c7b988c6933dda6744ac461">TYPE_ELEMENT_MEM_SRC</a>, ELEMENT_MEM_SRC_INDEX},</div>
+<div class="line">    {<a class="code" href="streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996da53992618100fe2aee45d81d1a9f3830d">TYPE_ELEMENT_NETBUF_SRC</a>, ELEMENT_NETBUF_SRC_INDEX}, {<a class="code" href="streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996da6782032386473e5cf1b2d0736be0b1b5">TYPE_ELEMENT_AUDIO_SRC</a>, ELEMENT_MICROPHONE_INDEX},</div>
+<div class="line">    {<a class="code" href="streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996dab6b1c1da223342164506f3501e978d54">TYPE_ELEMENT_FILE_SINK</a>, ELEMENT_FILE_SINK_INDEX},   {<a class="code" href="streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996da5d4fe0f9953a87959aab1094e6711c56">TYPE_ELEMENT_MEM_SINK</a>, ELEMENT_MEM_SINK_INDEX},</div>
+<div class="line">    {<a class="code" href="streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996da291eb382314566b4aab19cd040e02513">TYPE_ELEMENT_AUDIO_SINK</a>, ELEMENT_SPEAKER_INDEX},    {<a class="code" href="streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996dafec1ea0e119a9861bc1f8ad738faeed8">TYPE_ELEMENT_DECODER</a>, ELEMENT_DECODER_INDEX},</div>
+<div class="line">    {TYPE_ELEMENT_ENCODER, ELEMENT_ENCODER_INDEX},       {TYPE_ELEMENT_VIT_SINK, ELEMENT_VIT_INDEX},</div>
+<div class="line">    {TYPE_ELEMENT_AUDIO_PROC, ELEMENT_VIT_PROC_INDEX},   {TYPE_ELEMENT_AUDIO_PROC, ELEMENT_VOICESEEKER_INDEX},</div>
+<div class="line">    {TYPE_ELEMENT_AUDIO_PROC, ELEMENT_SRC_INDEX},        {<a class="code" href="streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996da6782032386473e5cf1b2d0736be0b1b5">TYPE_ELEMENT_AUDIO_SRC</a>, ELEMENT_USB_SRC_INDEX},</div>
+<div class="line">    {<a class="code" href="streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996da291eb382314566b4aab19cd040e02513">TYPE_ELEMENT_AUDIO_SINK</a>, ELEMENT_USB_SINK_INDEX},   {TYPE_ELEMENT_AUDIO_PROC, ELEMENT_ASRC_INDEX}}</div>
+<div class="ttc" id="astreamer__api_8h_html_ac57c7c1cd9830a62d5e1f5c4b996996da291eb382314566b4aab19cd040e02513"><div class="ttname"><a href="streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996da291eb382314566b4aab19cd040e02513">TYPE_ELEMENT_AUDIO_SINK</a></div><div class="ttdeci">@ TYPE_ELEMENT_AUDIO_SINK</div><div class="ttdoc">Audio sink element.</div><div class="ttdef"><b>Definition:</b> streamer_api.h:290</div></div>
+<div class="ttc" id="astreamer__api_8h_html_ac57c7c1cd9830a62d5e1f5c4b996996da53992618100fe2aee45d81d1a9f3830d"><div class="ttname"><a href="streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996da53992618100fe2aee45d81d1a9f3830d">TYPE_ELEMENT_NETBUF_SRC</a></div><div class="ttdeci">@ TYPE_ELEMENT_NETBUF_SRC</div><div class="ttdoc">Network buffer source element. Requires CCI usage.</div><div class="ttdef"><b>Definition:</b> streamer_api.h:281</div></div>
+<div class="ttc" id="astreamer__api_8h_html_ac57c7c1cd9830a62d5e1f5c4b996996da5aef126a9c7b988c6933dda6744ac461"><div class="ttname"><a href="streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996da5aef126a9c7b988c6933dda6744ac461">TYPE_ELEMENT_MEM_SRC</a></div><div class="ttdeci">@ TYPE_ELEMENT_MEM_SRC</div><div class="ttdoc">Memory source element.</div><div class="ttdef"><b>Definition:</b> streamer_api.h:279</div></div>
+<div class="ttc" id="astreamer__api_8h_html_ac57c7c1cd9830a62d5e1f5c4b996996da5d4fe0f9953a87959aab1094e6711c56"><div class="ttname"><a href="streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996da5d4fe0f9953a87959aab1094e6711c56">TYPE_ELEMENT_MEM_SINK</a></div><div class="ttdeci">@ TYPE_ELEMENT_MEM_SINK</div><div class="ttdoc">Memory sink element.</div><div class="ttdef"><b>Definition:</b> streamer_api.h:288</div></div>
+<div class="ttc" id="astreamer__api_8h_html_ac57c7c1cd9830a62d5e1f5c4b996996da6782032386473e5cf1b2d0736be0b1b5"><div class="ttname"><a href="streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996da6782032386473e5cf1b2d0736be0b1b5">TYPE_ELEMENT_AUDIO_SRC</a></div><div class="ttdeci">@ TYPE_ELEMENT_AUDIO_SRC</div><div class="ttdoc">Audio source element.</div><div class="ttdef"><b>Definition:</b> streamer_api.h:283</div></div>
+<div class="ttc" id="astreamer__api_8h_html_ac57c7c1cd9830a62d5e1f5c4b996996dab6b1c1da223342164506f3501e978d54"><div class="ttname"><a href="streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996dab6b1c1da223342164506f3501e978d54">TYPE_ELEMENT_FILE_SINK</a></div><div class="ttdeci">@ TYPE_ELEMENT_FILE_SINK</div><div class="ttdoc">File sink element.</div><div class="ttdef"><b>Definition:</b> streamer_api.h:286</div></div>
+<div class="ttc" id="astreamer__api_8h_html_ac57c7c1cd9830a62d5e1f5c4b996996daf144a06894e1d230b528574d8e3706fd"><div class="ttname"><a href="streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996daf144a06894e1d230b528574d8e3706fd">TYPE_ELEMENT_FILE_SRC</a></div><div class="ttdeci">@ TYPE_ELEMENT_FILE_SRC</div><div class="ttdoc">File source element.</div><div class="ttdef"><b>Definition:</b> streamer_api.h:277</div></div>
+<div class="ttc" id="astreamer__api_8h_html_ac57c7c1cd9830a62d5e1f5c4b996996dafec1ea0e119a9861bc1f8ad738faeed8"><div class="ttname"><a href="streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996dafec1ea0e119a9861bc1f8ad738faeed8">TYPE_ELEMENT_DECODER</a></div><div class="ttdeci">@ TYPE_ELEMENT_DECODER</div><div class="ttdoc">Decoder element.</div><div class="ttdef"><b>Definition:</b> streamer_api.h:293</div></div>
+</div><!-- fragment -->
+</div>
+</div>
 <a id="a4a79e8c3a703b70253d05d663e3bcb45"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4a79e8c3a703b70253d05d663e3bcb45">&#9670;&nbsp;</a></span>msg_handler_table</h2>
 
@@ -1027,36 +1068,27 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {{<a class="code" href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aad081d9946e0fcdaeac89ee39eecf2eca">STREAM_MSG_CREATE_PIPELINE</a>, <a class="code" href="streamer_8h.html#afe86f0acde5e2d306ed6880311eb6fc8">streamer_msg_create_pipeline</a>},</div>
-<div class="line">                                                    {<a class="code" href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aa26474b23b2d29291300209d1ec0631bb">STREAM_MSG_DESTROY_PIPELINE</a>, <a class="code" href="streamer_8h.html#ae533051aa830ffd50830e752db70061e">streamer_msg_destroy_pipeline</a>},</div>
-<div class="line">                                                    {<a class="code" href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aaa69d2aa10ba145ccb20766450b74c30f">STREAM_MSG_SET_FILE</a>, <a class="code" href="streamer_8h.html#ac3940fa4f31e3b720926d0a2b40a90c2">streamer_msg_set_file</a>},</div>
-<div class="line">                                                    {<a class="code" href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aa21c5350fe7b30475b68ee288b4610f8d">STREAM_MSG_SET_STATE</a>, <a class="code" href="streamer_8h.html#a4840580cc16264fbfd158a947091b261">streamer_msg_set_state</a>},</div>
-<div class="line">                                                    {<a class="code" href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aa03de4e2df5beb97a49a34aa54018a9e4">STREAM_MSG_GET_STATE</a>, <a class="code" href="streamer_8h.html#acc63c8c97c2e5d254ca254b6d7dacc5c">streamer_msg_get_state</a>},</div>
-<div class="line">                                                    {<a class="code" href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aa1caba028c3621746dca87bc7e11e0ca1">STREAM_MSG_QUERY_PIPELINE</a>, <a class="code" href="streamer_8h.html#ac6bbf7370c277ae3e860bc6660de2228">streamer_msg_send_query</a>},</div>
-<div class="line">                                                    {<a class="code" href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aa4e063405bec016e4de0f9dbd45a9eca8">STREAM_MSG_SET_PROPERTY</a>, <a class="code" href="streamer_8h.html#a1b4fae1852ff4aab9c6e8365bd822f3a">streamer_msg_set_property</a>},</div>
-<div class="line">                                                    {<a class="code" href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aa350bd61f1dc88359049992ecba922754">STREAM_MSG_GET_PROPERTY</a>, <a class="code" href="streamer_8h.html#afb781ad861501a21649367e70d714aad">streamer_msg_get_property</a>},</div>
-<div class="line">                                                    {<a class="code" href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aa09d386b345e6eb9c4804ff78f38b17ba">STREAM_MSG_SEEK_PIPELINE</a>, <a class="code" href="streamer_8h.html#a164bcaf52240cea1483b942aaecd8fad">streamer_msg_seek_pipeline</a>},</div>
-<div class="line">                                                    {<a class="code" href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aa68aa1a998d7cd7b1e1e68759c010f214">STREAM_MSG_SET_REPEAT</a>, <a class="code" href="streamer_8h.html#a2b4cf9a934daa134582f844b236269cd">streamer_msg_set_repeat</a>}}</div>
-<div class="ttc" id="astreamer_8h_html_a164bcaf52240cea1483b942aaecd8fad"><div class="ttname"><a href="streamer_8h.html#a164bcaf52240cea1483b942aaecd8fad">streamer_msg_seek_pipeline</a></div><div class="ttdeci">int streamer_msg_seek_pipeline(STREAMER_T *streamer, void *data)</div><div class="ttdoc">Streamer Seek Pipeline.</div><div class="ttdef"><b>Definition:</b> streamer_msg.c:442</div></div>
-<div class="ttc" id="astreamer_8h_html_a1b4fae1852ff4aab9c6e8365bd822f3a"><div class="ttname"><a href="streamer_8h.html#a1b4fae1852ff4aab9c6e8365bd822f3a">streamer_msg_set_property</a></div><div class="ttdeci">int streamer_msg_set_property(STREAMER_T *streamer, void *data)</div><div class="ttdoc">Streamer Set Property.</div><div class="ttdef"><b>Definition:</b> streamer_msg.c:514</div></div>
-<div class="ttc" id="astreamer_8h_html_a2b4cf9a934daa134582f844b236269cd"><div class="ttname"><a href="streamer_8h.html#a2b4cf9a934daa134582f844b236269cd">streamer_msg_set_repeat</a></div><div class="ttdeci">int streamer_msg_set_repeat(STREAMER_T *streamer, void *msg_data)</div><div class="ttdoc">Streamer Set Pipeline State.</div><div class="ttdef"><b>Definition:</b> streamer_msg.c:750</div></div>
-<div class="ttc" id="astreamer_8h_html_a4840580cc16264fbfd158a947091b261"><div class="ttname"><a href="streamer_8h.html#a4840580cc16264fbfd158a947091b261">streamer_msg_set_state</a></div><div class="ttdeci">int streamer_msg_set_state(STREAMER_T *streamer, void *data)</div><div class="ttdoc">Streamer Set Pipeline State.</div><div class="ttdef"><b>Definition:</b> streamer_msg.c:314</div></div>
-<div class="ttc" id="astreamer_8h_html_ac3940fa4f31e3b720926d0a2b40a90c2"><div class="ttname"><a href="streamer_8h.html#ac3940fa4f31e3b720926d0a2b40a90c2">streamer_msg_set_file</a></div><div class="ttdeci">int streamer_msg_set_file(STREAMER_T *streamer, void *data)</div><div class="ttdoc">Streamer message set file.</div><div class="ttdef"><b>Definition:</b> streamer_msg.c:603</div></div>
-<div class="ttc" id="astreamer_8h_html_ac6bbf7370c277ae3e860bc6660de2228"><div class="ttname"><a href="streamer_8h.html#ac6bbf7370c277ae3e860bc6660de2228">streamer_msg_send_query</a></div><div class="ttdeci">int streamer_msg_send_query(STREAMER_T *streamer, void *data)</div><div class="ttdoc">Streamer Send Query.</div><div class="ttdef"><b>Definition:</b> streamer_msg.c:399</div></div>
-<div class="ttc" id="astreamer_8h_html_acc63c8c97c2e5d254ca254b6d7dacc5c"><div class="ttname"><a href="streamer_8h.html#acc63c8c97c2e5d254ca254b6d7dacc5c">streamer_msg_get_state</a></div><div class="ttdeci">int streamer_msg_get_state(STREAMER_T *streamer, void *data)</div><div class="ttdoc">Streamer Get State.</div><div class="ttdef"><b>Definition:</b> streamer_msg.c:354</div></div>
-<div class="ttc" id="astreamer_8h_html_ae533051aa830ffd50830e752db70061e"><div class="ttname"><a href="streamer_8h.html#ae533051aa830ffd50830e752db70061e">streamer_msg_destroy_pipeline</a></div><div class="ttdeci">int streamer_msg_destroy_pipeline(STREAMER_T *streamer, void *data)</div><div class="ttdoc">Streamer Destroy Pipeline.</div><div class="ttdef"><b>Definition:</b> streamer_msg.c:189</div></div>
-<div class="ttc" id="astreamer_8h_html_afb781ad861501a21649367e70d714aad"><div class="ttname"><a href="streamer_8h.html#afb781ad861501a21649367e70d714aad">streamer_msg_get_property</a></div><div class="ttdeci">int streamer_msg_get_property(STREAMER_T *streamer, void *data)</div><div class="ttdoc">Streamer Get Property.</div><div class="ttdef"><b>Definition:</b> streamer_msg.c:561</div></div>
-<div class="ttc" id="astreamer_8h_html_afe86f0acde5e2d306ed6880311eb6fc8"><div class="ttname"><a href="streamer_8h.html#afe86f0acde5e2d306ed6880311eb6fc8">streamer_msg_create_pipeline</a></div><div class="ttdeci">int streamer_msg_create_pipeline(STREAMER_T *streamer, void *data)</div><div class="ttdoc">Streamer Create Pipeline.</div><div class="ttdef"><b>Definition:</b> streamer_msg.c:97</div></div>
-<div class="ttc" id="astreamer__api_8h_html_a7420bd1fd03172c467cc24548e61978aa03de4e2df5beb97a49a34aa54018a9e4"><div class="ttname"><a href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aa03de4e2df5beb97a49a34aa54018a9e4">STREAM_MSG_GET_STATE</a></div><div class="ttdeci">@ STREAM_MSG_GET_STATE</div><div class="ttdoc">a Get Pipeline State</div><div class="ttdef"><b>Definition:</b> streamer_api.h:175</div></div>
-<div class="ttc" id="astreamer__api_8h_html_a7420bd1fd03172c467cc24548e61978aa09d386b345e6eb9c4804ff78f38b17ba"><div class="ttname"><a href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aa09d386b345e6eb9c4804ff78f38b17ba">STREAM_MSG_SEEK_PIPELINE</a></div><div class="ttdeci">@ STREAM_MSG_SEEK_PIPELINE</div><div class="ttdoc">f Seek the pipeline to a time</div><div class="ttdef"><b>Definition:</b> streamer_api.h:183</div></div>
-<div class="ttc" id="astreamer__api_8h_html_a7420bd1fd03172c467cc24548e61978aa1caba028c3621746dca87bc7e11e0ca1"><div class="ttname"><a href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aa1caba028c3621746dca87bc7e11e0ca1">STREAM_MSG_QUERY_PIPELINE</a></div><div class="ttdeci">@ STREAM_MSG_QUERY_PIPELINE</div><div class="ttdoc">10 Query the pipeline</div><div class="ttdef"><b>Definition:</b> streamer_api.h:184</div></div>
-<div class="ttc" id="astreamer__api_8h_html_a7420bd1fd03172c467cc24548e61978aa21c5350fe7b30475b68ee288b4610f8d"><div class="ttname"><a href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aa21c5350fe7b30475b68ee288b4610f8d">STREAM_MSG_SET_STATE</a></div><div class="ttdeci">@ STREAM_MSG_SET_STATE</div><div class="ttdoc">9 Set Pipeline State</div><div class="ttdef"><b>Definition:</b> streamer_api.h:174</div></div>
-<div class="ttc" id="astreamer__api_8h_html_a7420bd1fd03172c467cc24548e61978aa26474b23b2d29291300209d1ec0631bb"><div class="ttname"><a href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aa26474b23b2d29291300209d1ec0631bb">STREAM_MSG_DESTROY_PIPELINE</a></div><div class="ttdeci">@ STREAM_MSG_DESTROY_PIPELINE</div><div class="ttdoc">2 Destroy Pipeline</div><div class="ttdef"><b>Definition:</b> streamer_api.h:167</div></div>
-<div class="ttc" id="astreamer__api_8h_html_a7420bd1fd03172c467cc24548e61978aa350bd61f1dc88359049992ecba922754"><div class="ttname"><a href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aa350bd61f1dc88359049992ecba922754">STREAM_MSG_GET_PROPERTY</a></div><div class="ttdeci">@ STREAM_MSG_GET_PROPERTY</div><div class="ttdoc">d Get an Element specific property value</div><div class="ttdef"><b>Definition:</b> streamer_api.h:180</div></div>
-<div class="ttc" id="astreamer__api_8h_html_a7420bd1fd03172c467cc24548e61978aa4e063405bec016e4de0f9dbd45a9eca8"><div class="ttname"><a href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aa4e063405bec016e4de0f9dbd45a9eca8">STREAM_MSG_SET_PROPERTY</a></div><div class="ttdeci">@ STREAM_MSG_SET_PROPERTY</div><div class="ttdoc">c Set an Element specific property value</div><div class="ttdef"><b>Definition:</b> streamer_api.h:178</div></div>
-<div class="ttc" id="astreamer__api_8h_html_a7420bd1fd03172c467cc24548e61978aa68aa1a998d7cd7b1e1e68759c010f214"><div class="ttname"><a href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aa68aa1a998d7cd7b1e1e68759c010f214">STREAM_MSG_SET_REPEAT</a></div><div class="ttdeci">@ STREAM_MSG_SET_REPEAT</div><div class="ttdoc">11 Set repeat mode of pipeline</div><div class="ttdef"><b>Definition:</b> streamer_api.h:185</div></div>
-<div class="ttc" id="astreamer__api_8h_html_a7420bd1fd03172c467cc24548e61978aaa69d2aa10ba145ccb20766450b74c30f"><div class="ttname"><a href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aaa69d2aa10ba145ccb20766450b74c30f">STREAM_MSG_SET_FILE</a></div><div class="ttdeci">@ STREAM_MSG_SET_FILE</div><div class="ttdoc">b Set the file path and reconfigure the pipeline</div><div class="ttdef"><b>Definition:</b> streamer_api.h:176</div></div>
-<div class="ttc" id="astreamer__api_8h_html_a7420bd1fd03172c467cc24548e61978aad081d9946e0fcdaeac89ee39eecf2eca"><div class="ttname"><a href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aad081d9946e0fcdaeac89ee39eecf2eca">STREAM_MSG_CREATE_PIPELINE</a></div><div class="ttdeci">@ STREAM_MSG_CREATE_PIPELINE</div><div class="ttdoc">1 Create Pipeline</div><div class="ttdef"><b>Definition:</b> streamer_api.h:166</div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">    {<a class="code" href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aaa69d2aa10ba145ccb20766450b74c30f">STREAM_MSG_SET_FILE</a>, <a class="code" href="streamer_8h.html#ac3940fa4f31e3b720926d0a2b40a90c2">streamer_msg_set_file</a>},           {<a class="code" href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aa21c5350fe7b30475b68ee288b4610f8d">STREAM_MSG_SET_STATE</a>, <a class="code" href="streamer_8h.html#a4840580cc16264fbfd158a947091b261">streamer_msg_set_state</a>},</div>
+<div class="line">    {<a class="code" href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aa03de4e2df5beb97a49a34aa54018a9e4">STREAM_MSG_GET_STATE</a>, <a class="code" href="streamer_8h.html#acc63c8c97c2e5d254ca254b6d7dacc5c">streamer_msg_get_state</a>},         {<a class="code" href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aa1caba028c3621746dca87bc7e11e0ca1">STREAM_MSG_QUERY_PIPELINE</a>, <a class="code" href="streamer_8h.html#ac6bbf7370c277ae3e860bc6660de2228">streamer_msg_send_query</a>},</div>
+<div class="line">    {<a class="code" href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aa4e063405bec016e4de0f9dbd45a9eca8">STREAM_MSG_SET_PROPERTY</a>, <a class="code" href="streamer_8h.html#a1b4fae1852ff4aab9c6e8365bd822f3a">streamer_msg_set_property</a>},   {<a class="code" href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aa350bd61f1dc88359049992ecba922754">STREAM_MSG_GET_PROPERTY</a>, <a class="code" href="streamer_8h.html#afb781ad861501a21649367e70d714aad">streamer_msg_get_property</a>},</div>
+<div class="line">    {<a class="code" href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aa09d386b345e6eb9c4804ff78f38b17ba">STREAM_MSG_SEEK_PIPELINE</a>, <a class="code" href="streamer_8h.html#a164bcaf52240cea1483b942aaecd8fad">streamer_msg_seek_pipeline</a>}, {<a class="code" href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aa68aa1a998d7cd7b1e1e68759c010f214">STREAM_MSG_SET_REPEAT</a>, <a class="code" href="streamer_8h.html#a2b4cf9a934daa134582f844b236269cd">streamer_msg_set_repeat</a>}}</div>
+<div class="ttc" id="astreamer_8h_html_a164bcaf52240cea1483b942aaecd8fad"><div class="ttname"><a href="streamer_8h.html#a164bcaf52240cea1483b942aaecd8fad">streamer_msg_seek_pipeline</a></div><div class="ttdeci">int streamer_msg_seek_pipeline(STREAMER_T *streamer, void *data)</div><div class="ttdoc">Streamer Seek Pipeline.</div><div class="ttdef"><b>Definition:</b> streamer_msg.c:257</div></div>
+<div class="ttc" id="astreamer_8h_html_a1b4fae1852ff4aab9c6e8365bd822f3a"><div class="ttname"><a href="streamer_8h.html#a1b4fae1852ff4aab9c6e8365bd822f3a">streamer_msg_set_property</a></div><div class="ttdeci">int streamer_msg_set_property(STREAMER_T *streamer, void *data)</div><div class="ttdoc">Streamer Set Property.</div><div class="ttdef"><b>Definition:</b> streamer_msg.c:329</div></div>
+<div class="ttc" id="astreamer_8h_html_a2b4cf9a934daa134582f844b236269cd"><div class="ttname"><a href="streamer_8h.html#a2b4cf9a934daa134582f844b236269cd">streamer_msg_set_repeat</a></div><div class="ttdeci">int streamer_msg_set_repeat(STREAMER_T *streamer, void *msg_data)</div><div class="ttdoc">Streamer Set Pipeline State.</div><div class="ttdef"><b>Definition:</b> streamer_msg.c:565</div></div>
+<div class="ttc" id="astreamer_8h_html_a4840580cc16264fbfd158a947091b261"><div class="ttname"><a href="streamer_8h.html#a4840580cc16264fbfd158a947091b261">streamer_msg_set_state</a></div><div class="ttdeci">int streamer_msg_set_state(STREAMER_T *streamer, void *data)</div><div class="ttdoc">Streamer Set Pipeline State.</div><div class="ttdef"><b>Definition:</b> streamer_msg.c:129</div></div>
+<div class="ttc" id="astreamer_8h_html_ac3940fa4f31e3b720926d0a2b40a90c2"><div class="ttname"><a href="streamer_8h.html#ac3940fa4f31e3b720926d0a2b40a90c2">streamer_msg_set_file</a></div><div class="ttdeci">int streamer_msg_set_file(STREAMER_T *streamer, void *data)</div><div class="ttdoc">Streamer message set file.</div><div class="ttdef"><b>Definition:</b> streamer_msg.c:418</div></div>
+<div class="ttc" id="astreamer_8h_html_ac6bbf7370c277ae3e860bc6660de2228"><div class="ttname"><a href="streamer_8h.html#ac6bbf7370c277ae3e860bc6660de2228">streamer_msg_send_query</a></div><div class="ttdeci">int streamer_msg_send_query(STREAMER_T *streamer, void *data)</div><div class="ttdoc">Streamer Send Query.</div><div class="ttdef"><b>Definition:</b> streamer_msg.c:214</div></div>
+<div class="ttc" id="astreamer_8h_html_acc63c8c97c2e5d254ca254b6d7dacc5c"><div class="ttname"><a href="streamer_8h.html#acc63c8c97c2e5d254ca254b6d7dacc5c">streamer_msg_get_state</a></div><div class="ttdeci">int streamer_msg_get_state(STREAMER_T *streamer, void *data)</div><div class="ttdoc">Streamer Get State.</div><div class="ttdef"><b>Definition:</b> streamer_msg.c:169</div></div>
+<div class="ttc" id="astreamer_8h_html_afb781ad861501a21649367e70d714aad"><div class="ttname"><a href="streamer_8h.html#afb781ad861501a21649367e70d714aad">streamer_msg_get_property</a></div><div class="ttdeci">int streamer_msg_get_property(STREAMER_T *streamer, void *data)</div><div class="ttdoc">Streamer Get Property.</div><div class="ttdef"><b>Definition:</b> streamer_msg.c:376</div></div>
+<div class="ttc" id="astreamer__api_8h_html_a7420bd1fd03172c467cc24548e61978aa03de4e2df5beb97a49a34aa54018a9e4"><div class="ttname"><a href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aa03de4e2df5beb97a49a34aa54018a9e4">STREAM_MSG_GET_STATE</a></div><div class="ttdeci">@ STREAM_MSG_GET_STATE</div><div class="ttdoc">a Get Pipeline State</div><div class="ttdef"><b>Definition:</b> streamer_api.h:196</div></div>
+<div class="ttc" id="astreamer__api_8h_html_a7420bd1fd03172c467cc24548e61978aa09d386b345e6eb9c4804ff78f38b17ba"><div class="ttname"><a href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aa09d386b345e6eb9c4804ff78f38b17ba">STREAM_MSG_SEEK_PIPELINE</a></div><div class="ttdeci">@ STREAM_MSG_SEEK_PIPELINE</div><div class="ttdoc">f Seek the pipeline to a time</div><div class="ttdef"><b>Definition:</b> streamer_api.h:204</div></div>
+<div class="ttc" id="astreamer__api_8h_html_a7420bd1fd03172c467cc24548e61978aa1caba028c3621746dca87bc7e11e0ca1"><div class="ttname"><a href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aa1caba028c3621746dca87bc7e11e0ca1">STREAM_MSG_QUERY_PIPELINE</a></div><div class="ttdeci">@ STREAM_MSG_QUERY_PIPELINE</div><div class="ttdoc">10 Query the pipeline</div><div class="ttdef"><b>Definition:</b> streamer_api.h:205</div></div>
+<div class="ttc" id="astreamer__api_8h_html_a7420bd1fd03172c467cc24548e61978aa21c5350fe7b30475b68ee288b4610f8d"><div class="ttname"><a href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aa21c5350fe7b30475b68ee288b4610f8d">STREAM_MSG_SET_STATE</a></div><div class="ttdeci">@ STREAM_MSG_SET_STATE</div><div class="ttdoc">9 Set Pipeline State</div><div class="ttdef"><b>Definition:</b> streamer_api.h:195</div></div>
+<div class="ttc" id="astreamer__api_8h_html_a7420bd1fd03172c467cc24548e61978aa350bd61f1dc88359049992ecba922754"><div class="ttname"><a href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aa350bd61f1dc88359049992ecba922754">STREAM_MSG_GET_PROPERTY</a></div><div class="ttdeci">@ STREAM_MSG_GET_PROPERTY</div><div class="ttdoc">d Get an Element specific property value</div><div class="ttdef"><b>Definition:</b> streamer_api.h:201</div></div>
+<div class="ttc" id="astreamer__api_8h_html_a7420bd1fd03172c467cc24548e61978aa4e063405bec016e4de0f9dbd45a9eca8"><div class="ttname"><a href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aa4e063405bec016e4de0f9dbd45a9eca8">STREAM_MSG_SET_PROPERTY</a></div><div class="ttdeci">@ STREAM_MSG_SET_PROPERTY</div><div class="ttdoc">c Set an Element specific property value</div><div class="ttdef"><b>Definition:</b> streamer_api.h:199</div></div>
+<div class="ttc" id="astreamer__api_8h_html_a7420bd1fd03172c467cc24548e61978aa68aa1a998d7cd7b1e1e68759c010f214"><div class="ttname"><a href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aa68aa1a998d7cd7b1e1e68759c010f214">STREAM_MSG_SET_REPEAT</a></div><div class="ttdeci">@ STREAM_MSG_SET_REPEAT</div><div class="ttdoc">11 Set repeat mode of pipeline</div><div class="ttdef"><b>Definition:</b> streamer_api.h:206</div></div>
+<div class="ttc" id="astreamer__api_8h_html_a7420bd1fd03172c467cc24548e61978aaa69d2aa10ba145ccb20766450b74c30f"><div class="ttname"><a href="streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aaa69d2aa10ba145ccb20766450b74c30f">STREAM_MSG_SET_FILE</a></div><div class="ttdeci">@ STREAM_MSG_SET_FILE</div><div class="ttdoc">b Set the file path and reconfigure the pipeline</div><div class="ttdef"><b>Definition:</b> streamer_api.h:197</div></div>
 </div><!-- fragment --><p>Streamer Message Handler Table Specifies the function to handle incoming message requests within the streamer task. </p>
 
 </div>

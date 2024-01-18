@@ -6,5 +6,5 @@ var structSTREAMER__T =
     [ "mq_out", "structSTREAMER__T.html#ad42d3077c11ce2b8b5b0307276065cbc", null ],
     [ "streamer_mq", "structSTREAMER__T.html#a7d6ac9cc873233ec33406b69919f193b", null ],
     [ "is_active", "structSTREAMER__T.html#ac7df54421861313e0c6cb18fad1cb729", null ],
-    [ "pipeline_type", "structSTREAMER__T.html#a4bec40a73884060e3a6ddb853f988dbf", null ]
+    [ "elements", "structSTREAMER__T.html#aa7cf3770510ea87abaaf60cb8c39c7ce", null ]
 ];

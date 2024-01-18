@@ -330,7 +330,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1064DVL6A, MBEDTLS_CONFIG_FILE='\"mbedtls_config.h\"', MCUXPRESSO_SDK, MFLASH_FILE_BASEADDR=3670016, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../include;../include/mcuboot_config;../include/sysflash;../flashapi;../keys;../../../../../devices/MIMXRT1064/drivers;../../../../../middleware/mbedtls/port/ksdk;../../../../../components/flash/mflash/mimxrt1064;../../../../../middleware/mcuboot_opensource/boot/bootutil/src;../../../../../middleware/mcuboot_opensource/boot/bootutil/include;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../devices/MIMXRT1064;../../../../../devices/MIMXRT1064/utilities/str;../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../../../components/flash/mflash;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../include;../include/mcuboot_config;../include/sysflash;../keys;../flash;../../../../../devices/MIMXRT1064/drivers;../../../../../middleware/mbedtls/port/ksdk;../../../../../components/flash/mflash/mimxrt1064;../../../../../middleware/mcuboot_opensource/boot/bootutil/src;../../../../../middleware/mcuboot_opensource/boot/bootutil/include;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../devices/MIMXRT1064;../../../../../devices/MIMXRT1064/utilities/str;../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1064/utilities;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../../../components/flash/mflash;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -483,12 +483,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>flashapi</GroupName>
+          <GroupName>flash</GroupName>
           <Files>
             <File>
               <FileName>flash_api.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../flashapi/flash_api.c</FilePath>
+              <FilePath>../flash/flash_api.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -556,9 +556,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -860,6 +860,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/ramload.h</FilePath>
             </File>
+            <File>
+              <FileName>mcuboot_status.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/mcuboot_status.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -919,6 +924,11 @@
               <FileName>bootutil_misc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mcuboot_opensource/boot/bootutil/src/bootutil_misc.c</FilePath>
+            </File>
+            <File>
+              <FileName>bootutil_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcuboot_opensource/boot/bootutil/src/bootutil_misc.h</FilePath>
             </File>
             <File>
               <FileName>bootutil_public.c</FileName>
@@ -2164,6 +2174,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1064/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/utilities/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2616,7 +2631,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>7</Optim>
+            <Optim>6</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -2641,7 +2656,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1064DVL6A, MBEDTLS_CONFIG_FILE='\"mbedtls_config.h\"', MCUXPRESSO_SDK, MFLASH_FILE_BASEADDR=3670016, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../include;../include/mcuboot_config;../include/sysflash;../flashapi;../keys;../../../../../devices/MIMXRT1064/drivers;../../../../../middleware/mbedtls/port/ksdk;../../../../../components/flash/mflash/mimxrt1064;../../../../../middleware/mcuboot_opensource/boot/bootutil/src;../../../../../middleware/mcuboot_opensource/boot/bootutil/include;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../devices/MIMXRT1064;../../../../../devices/MIMXRT1064/utilities/str;../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../../../components/flash/mflash;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../include;../include/mcuboot_config;../include/sysflash;../keys;../flash;../../../../../devices/MIMXRT1064/drivers;../../../../../middleware/mbedtls/port/ksdk;../../../../../components/flash/mflash/mimxrt1064;../../../../../middleware/mcuboot_opensource/boot/bootutil/src;../../../../../middleware/mcuboot_opensource/boot/bootutil/include;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../devices/MIMXRT1064;../../../../../devices/MIMXRT1064/utilities/str;../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1064/utilities;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../../../components/flash/mflash;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2794,12 +2809,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>flashapi</GroupName>
+          <GroupName>flash</GroupName>
           <Files>
             <File>
               <FileName>flash_api.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../flashapi/flash_api.c</FilePath>
+              <FilePath>../flash/flash_api.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2867,9 +2882,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -3171,6 +3186,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/ramload.h</FilePath>
             </File>
+            <File>
+              <FileName>mcuboot_status.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcuboot_opensource/boot/bootutil/include/bootutil/mcuboot_status.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3230,6 +3250,11 @@
               <FileName>bootutil_misc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mcuboot_opensource/boot/bootutil/src/bootutil_misc.c</FilePath>
+            </File>
+            <File>
+              <FileName>bootutil_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcuboot_opensource/boot/bootutil/src/bootutil_misc.h</FilePath>
             </File>
             <File>
               <FileName>bootutil_public.c</FileName>
@@ -4475,6 +4500,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1064/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/utilities/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>

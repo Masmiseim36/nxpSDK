@@ -329,7 +329,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT1062DVL6B, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, CPU_MIMXRT1062DVL6B, CPU_MIMXRT1062DVL6B_cm7, MCUXPRESSO_SDK</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../../devices/MIMXRT1062/drivers;../../../../../../../devices/MIMXRT1062/cmsis_drivers;../../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1062;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1062/xip;../../../../../xip;../../../../../../../CMSIS/Driver/Include;../../../../../../../devices/MIMXRT1062/template;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
@@ -436,9 +436,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -579,6 +579,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1060,7 +1065,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1062DVL6B, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1062DVL6B, CPU_MIMXRT1062DVL6B_cm7, MCUXPRESSO_SDK</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../../devices/MIMXRT1062/drivers;../../../../../../../devices/MIMXRT1062/cmsis_drivers;../../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1062;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1062/xip;../../../../../xip;../../../../../../../CMSIS/Driver/Include;../../../../../../../devices/MIMXRT1062/template;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
@@ -1167,9 +1172,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -1310,6 +1315,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1791,7 +1801,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1062DVL6B, MCUXPRESSO_SDK</Define>
+              <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1062DVL6B, CPU_MIMXRT1062DVL6B_cm7, MCUXPRESSO_SDK</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../../devices/MIMXRT1062/drivers;../../../../../../../devices/MIMXRT1062/cmsis_drivers;../../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1062;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1062/xip;../../../../../xip;../../../../../../../CMSIS/Driver/Include;../../../../../../../devices/MIMXRT1062/template;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
@@ -1898,9 +1908,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -2041,6 +2051,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2522,7 +2537,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT1062DVL6B, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, CPU_MIMXRT1062DVL6B, CPU_MIMXRT1062DVL6B_cm7, MCUXPRESSO_SDK</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../../devices/MIMXRT1062/drivers;../../../../../../../devices/MIMXRT1062/cmsis_drivers;../../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1062;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1062/xip;../../../../../xip;../../../../../../../CMSIS/Driver/Include;../../../../../../../devices/MIMXRT1062/template;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
@@ -2629,9 +2644,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -2772,6 +2787,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3253,7 +3273,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1062DVL6B, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1062DVL6B, CPU_MIMXRT1062DVL6B_cm7, MCUXPRESSO_SDK</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../../devices/MIMXRT1062/drivers;../../../../../../../devices/MIMXRT1062/cmsis_drivers;../../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1062;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1062/xip;../../../../../xip;../../../../../../../CMSIS/Driver/Include;../../../../../../../devices/MIMXRT1062/template;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
@@ -3360,9 +3380,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -3503,6 +3523,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3984,7 +4009,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1062DVL6B, MCUXPRESSO_SDK</Define>
+              <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1062DVL6B, CPU_MIMXRT1062DVL6B_cm7, MCUXPRESSO_SDK</Define>
               <Undefine/>
               <IncludePath>..;../../../../../../../devices/MIMXRT1062/drivers;../../../../../../../devices/MIMXRT1062/cmsis_drivers;../../../../../../../devices/MIMXRT1062/utilities/str;../../../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1062;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1062/xip;../../../../../xip;../../../../../../../CMSIS/Driver/Include;../../../../../../../devices/MIMXRT1062/template;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
@@ -4091,9 +4116,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -4234,6 +4259,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
           </Files>
         </Group>

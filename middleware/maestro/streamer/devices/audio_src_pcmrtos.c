@@ -1,10 +1,7 @@
 /*
  * Copyright 2018-2021 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /*!
@@ -46,9 +43,17 @@ AudioSrcStreamErrorType audiosrc_pcmrtos_init_params(ElementAudioSrc *audio_src_
         return AUDIOSRC_FAILED;
     }
 
-    ret = streamer_pcm_setparams(dev_info->pcm_handle, audio_src_element->sample_rate,
-                                 audio_src_element->pkt_hdr.bits_per_sample, audio_src_element->pkt_hdr.num_channels,
-                                 false, audio_src_element->dummy_tx, 0);
+    /* Check if necessary functions exists */
+    if ((audio_src_element->appFunctions.set_param_func == NULL) ||
+        (audio_src_element->appFunctions.get_param_func == NULL) ||
+        (audio_src_element->appFunctions.process_func == NULL))
+    {
+        return AUDIOSRC_FAILED;
+    }
+
+    ret = audio_src_element->appFunctions.set_param_func(
+        audio_src_element->sample_rate, audio_src_element->pkt_hdr.bits_per_sample,
+        audio_src_element->pkt_hdr.num_channels, false, audio_src_element->dummy_tx, 0);
     if (ret != 0)
     {
         STREAMER_LOG_ERR(DBG_AUDIO_SRC, ERRCODE_NOT_SUPPORTED, "[Audio SRC] failed to set device params\n");
@@ -56,7 +61,7 @@ AudioSrcStreamErrorType audiosrc_pcmrtos_init_params(ElementAudioSrc *audio_src_
         return AUDIOSRC_FAILED;
     }
 
-    streamer_pcm_getparams(dev_info->pcm_handle, &dev_sample_rate, &dev_bit_width, &dev_num_channels);
+    audio_src_element->appFunctions.get_param_func(&dev_sample_rate, &dev_bit_width, &dev_num_channels);
 
     if (dev_bit_width != audio_src_element->pkt_hdr.bits_per_sample ||
         dev_num_channels != audio_src_element->pkt_hdr.num_channels)
@@ -96,7 +101,6 @@ AudioSrcStreamErrorType audio_src_pcmrtos_init_device(ElementAudioSrc *audio_src
     memset(dev_info, 0, sizeof(PCMRtosDeviceInfo));
 
     dev_info->device_state    = AUDIO_SRC_DEVICE_STATE_OPENED;
-    dev_info->pcm_handle      = NULL;
     dev_info->continuous_read = true;
 
     audio_src_element->device_info = dev_info;
@@ -171,13 +175,14 @@ AudioSrcStreamErrorType audio_src_pcmrtos_start_device(ElementAudioSrc *audio_sr
         return AUDIOSRC_ERROR_INVALID_ARGS;
     }
 
-    dev_info->pcm_handle = streamer_pcm_rx_open(AUDIO_SRC_BUFFER_NUM);
-
-    if (!dev_info->pcm_handle)
+    if (audio_src_element->appFunctions.open_func != NULL)
     {
-        STREAMER_LOG_DEBUG(DBG_AUDIO_SRC, "Open file handler failed\n");
-        STREAMER_FUNC_EXIT(DBG_AUDIO_SRC);
-        return AUDIOSRC_FAILED;
+        if (audio_src_element->appFunctions.open_func(AUDIO_SRC_BUFFER_NUM) != 0)
+        {
+            STREAMER_LOG_DEBUG(DBG_AUDIO_SRC, "Open file handler failed\n");
+            STREAMER_FUNC_EXIT(DBG_AUDIO_SRC);
+            return AUDIOSRC_FAILED;
+        }
     }
 
     audio_src_element->chunk_size = audio_src_element->pkt_hdr.sample_rate *
@@ -199,7 +204,10 @@ AudioSrcStreamErrorType audio_src_pcmrtos_start_device(ElementAudioSrc *audio_sr
         }
     }
 
-    streamer_pcm_start(dev_info->pcm_handle);
+    if (audio_src_element->appFunctions.start_func != NULL)
+    {
+        audio_src_element->appFunctions.start_func();
+    }
 
     STREAMER_FUNC_EXIT(DBG_AUDIO_SRC);
 
@@ -226,9 +234,14 @@ AudioSrcStreamErrorType audio_src_pcmrtos_stop_device(ElementAudioSrc *audio_src
         return AUDIOSRC_ERROR_INVALID_ARGS;
     }
 
-    streamer_pcm_mute(dev_info->pcm_handle, true);
-
-    streamer_pcm_rx_close(dev_info->pcm_handle);
+    if (audio_src_element->appFunctions.mute_func != NULL)
+    {
+        audio_src_element->appFunctions.mute_func(true);
+    }
+    if (audio_src_element->appFunctions.close_func != NULL)
+    {
+        audio_src_element->appFunctions.close_func();
+    }
 
     for (int i = 0; i < AUDIO_SRC_BUFFER_NUM; i++)
     {
@@ -239,7 +252,6 @@ AudioSrcStreamErrorType audio_src_pcmrtos_stop_device(ElementAudioSrc *audio_src
         }
     }
 
-    dev_info->pcm_handle       = NULL;
     dev_info->init_params_done = false;
 
     STREAMER_FUNC_EXIT(DBG_AUDIO_SRC);
@@ -275,13 +287,6 @@ AudioSrcStreamErrorType audio_src_pcmrtos_read_device(ElementAudioSrc *audio_src
         return AUDIOSRC_ERROR_INVALID_ARGS;
     }
 
-    if (!dev_info->pcm_handle)
-    {
-        STREAMER_LOG_ERR(DBG_AUDIO_SRC, ERRCODE_BUSY, "[Audio SRC] open file handler failed\n");
-        STREAMER_FUNC_EXIT(DBG_AUDIO_SRC);
-        return AUDIOSRC_FAILED;
-    }
-
     if (!dev_info->init_params_done)
     {
         STREAMER_LOG_DEBUG(DBG_AUDIO_SRC, "[Audio SRC] Init params\n");
@@ -308,8 +313,8 @@ AudioSrcStreamErrorType audio_src_pcmrtos_read_device(ElementAudioSrc *audio_src
     dev_info->buff_size[next_index] = pkt_hdr->chunk_size;
 
     memcpy(buffer_ptr, pkt_hdr, sizeof(AudioPacketHeader));
-    ret = streamer_pcm_read(dev_info->pcm_handle, (uint8_t *)(buffer_ptr + sizeof(AudioPacketHeader)),
-                            dev_info->buff_size[next_index]);
+    ret = audio_src_element->appFunctions.process_func((uint8_t *)(buffer_ptr + sizeof(AudioPacketHeader)),
+                                                       dev_info->buff_size[next_index]);
 
     dev_info->buffer_queue.buffer_idx[dev_info->buffer_queue.write_idx] = next_index;
     dev_info->buffer_queue.write_idx = (dev_info->buffer_queue.write_idx + 1) % dev_info->buffer_queue.size;

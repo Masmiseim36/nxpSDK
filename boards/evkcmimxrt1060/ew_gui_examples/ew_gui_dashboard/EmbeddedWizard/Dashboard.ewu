@@ -1,0 +1,4250 @@
+$version 10.00
+
+// Screens
+note group Note2
+{
+  attr Bounds = <0,10,500,140>;
+}
+
+// Widgets
+note group Note1
+{
+  attr Bounds = <0,150,500,399>;
+}
+
+// Resources
+note group Note3
+{
+  attr Bounds = <510,10,1330,400>;
+}
+
+// Color class which stores the used colors into properties.
+$rect <10,630,210,670>
+$output false
+class ColorsClass
+{
+  $rect <10,40,210,80>
+  property color Background = #000000FF;
+
+  $rect <10,80,210,120>
+  property color Text = #FFFFFFFF;
+
+  $rect <10,120,210,160>
+  property color TextLedsOff = #5454547E;
+
+  $rect <240,80,440,120>
+  property color GaugeGlowV1 = #01b8f6FF;
+
+  $rect <240,40,440,80>
+  property color BatteryGaugeSelectionV1 = #00dce3FF;
+
+  $rect <10,200,210,240>
+  property color LedsOnOrange = #FFB53EFF;
+
+  $rect <470,80,670,120>
+  property color VertBarSelectedGlowV2 = #00ffa9FF;
+
+  $rect <470,40,670,80>
+  property color GaugeSelectionV2 = #4eb599FF;
+
+  $rect <10,160,210,200>
+  property color BatteryFrame = #505050FF;
+
+  $rect <10,240,210,280>
+  property color LedsOnGreen = #10995EFF;
+
+  // Common
+  note group Note
+  {
+    attr Bounds = <0,0,220,410>;
+  }
+
+  // Variant 1
+  note group Note1
+  {
+    attr Bounds = <230,0,450,410>;
+  }
+
+  // Variant 2
+  note group Note2
+  {
+    attr Bounds = <460,0,680,410>;
+  }
+
+  $rect <240,120,440,160>
+  property color GaugeCircle0 = #01b8f6FF;
+
+  $rect <240,160,440,200>
+  property color GaugeCircle2 = #0b78adFF;
+
+  $rect <240,200,440,240>
+  property color GaugeCircle3 = #00f6ffFF;
+
+  $rect <240,240,440,280>
+  property color GaugeCircle4 = #12143dFF;
+
+  $rect <240,280,440,320>
+  property color GaugeCircle5 = #00BBFFFF;
+
+  $rect <470,120,670,160>
+  property color VertBarUnselectedV2 = #4d4d4dFF;
+
+  $rect <470,160,670,200>
+  property color VertBarRecoveryV2 = #4C3DFDFF;
+}
+
+$rect <210,630,410,670>
+$output false
+autoobject Dashboard::ColorsClass Colors;
+
+$rect <210,50,410,90>
+$output false
+class DashboardV1 : Core::Group
+{
+  $rect <0,300,200,340>
+  inherited property Bounds = <0,0,480,272>;
+
+  $rect <400,430,600,470>
+  inherited method UpdateViewState()
+  {
+    super( aState );
+
+    // Increase opacity of gauge labels
+    SpeedGauge.OpacityLabels = (uint8)Dashboard::Animation.linearValueProgress( 0, 255, 0.4, 0.7, CurrentProgress );
+
+    // Increase opacity of gauge and battery
+    SpeedGauge.OpacityGauge = (uint8)Dashboard::Animation.linearValueProgress( 0, 255, 0.5, 0.9, CurrentProgress );
+    Battery.Opacity = Dashboard::Animation.linearValueProgress( 0, 255, 0.2, 0.8, CurrentProgress );
+
+    // Animate left path
+    var int32 maxNoOfSubPaths = leftPath.GetMaxNoOfSubPaths();
+    leftGrowingPath.SetMaxNoOfSubPaths( maxNoOfSubPaths );
+    animateSubPath( leftPath, 2, leftGrowingPath, true, 0.15, 0.9 );
+    animateSubPath( leftPath, 1, leftGrowingPath, true, 0.85, 0.9 );
+    animateSubPath( leftPath, 0, leftGrowingPath, true, 0.85, 0.9 );
+    LeftStrokePath.Path = leftGrowingPath;
+
+    // Animate right path
+    maxNoOfSubPaths = rightPath.GetMaxNoOfSubPaths();
+    rightGrowingPath.SetMaxNoOfSubPaths( maxNoOfSubPaths );
+    animateSubPath( rightPath, 2, rightGrowingPath, false, 0.15, 0.9 );
+    animateSubPath( rightPath, 1, rightGrowingPath, false, 0.85, 0.9 );
+    animateSubPath( rightPath, 0, rightGrowingPath, false, 0.85, 0.9 );
+    RightStrokePath.Path = rightGrowingPath;
+
+    // Increase opacity of glows
+    LeftBottomGlow.Opacity = Dashboard::Animation.linearValueProgress( 0, 255, 0.85, 1.0, CurrentProgress );
+    LeftMiddleGlow.Opacity = LeftBottomGlow.Opacity;
+    LeftTopGlow.Opacity = LeftBottomGlow.Opacity;
+    RightBottomGlow.Opacity = LeftBottomGlow.Opacity;
+    RightMiddleGlow.Opacity = LeftBottomGlow.Opacity;
+    RightTopGlow.Opacity = LeftBottomGlow.Opacity;
+  }
+
+  $rect <0,340,200,380>
+  inherited method Init()
+  {
+    $if $composer
+    CurrentProgress = 1.0;
+    $endif
+
+
+    signal createPath;
+  }
+
+  $rect <201,390,401,430>
+  onset Outlet
+  {
+    // Check if the new outlet differs from the currently used outlet
+    if ( pure Outlet == value )
+      return;
+
+    // Detach from the previous outlet
+    if ( pure Outlet != null )
+      detachobserver onOutlet, pure Outlet;
+
+    // Store the new outlet ...
+    pure Outlet = value;
+
+    // ... and attach to the new one
+    if ( value != null )
+      attachobserver onOutlet, value;
+
+    // Finally, retrieve the current state of the property associated via 'Outlet'.
+    if ( value != null )
+      postsignal onOutlet;
+  }
+
+  // The property 'Outlet' can refer to any other 'int32' property the widget should \
+  // remain synchronized with. When the referred property is modified, the widget \
+  // is automatically notified to remain in sync with the property.
+  // This approach follows the Controller-View programming paradigm. Here the widget \
+  // represents the 'View' and the property referred via 'Outlet' can be seen as \
+  // a part of the 'Controller'.
+  $rect <1,390,201,430>
+  property ^float Outlet = null;
+
+  // This slot method will receive a signal, if the value of the property assigned \
+  // to @Outlet has been changed by another widget or by the application logic. In \
+  // response to this notification, the widget will update itself.
+  $rect <401,390,601,430>
+  slot onOutlet
+  {
+    // Read the current value of the associated property and update accordingly
+    // the state of the widget.
+    if ( Outlet != null )
+      CurrentProgress = Outlet^;
+  }
+
+  $rect <0,431,200,471>
+  property float CurrentProgress = 0.0;
+
+  $rect <200,431,400,471>
+  onset CurrentProgress
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure CurrentProgress == value )
+      return;
+
+    // Remember the property's new value.
+    pure CurrentProgress = value;
+
+    InvalidateViewState();
+  }
+
+  $rect <710,190,910,230>
+  object Graphics::Path leftGrowingPath;
+
+  $rect <510,230,710,270>
+  object Graphics::Path rightPath;
+
+  $rect <710,230,910,270>
+  object Graphics::Path rightGrowingPath;
+
+  $rect <510,190,710,230>
+  object Graphics::Path leftPath;
+
+  $rect <510,150,710,190>
+  slot createPath
+  {
+    // Setup left line path
+    var string svg = "M 92.610001,42.450001 70.207501,47.6225 47.805001,52.795 25.4025,57.9675 3,63.139999 M 83.620003,0.25 H 62.715002 41.810002 20.905001 0 m 232.97788,-136.54119 c -6.2431,-0.00018 -12.40659,0.47754 -18.44845,1.40452 -6.04186,0.92698 -11.96208,2.3032 -17.71864,4.10001 -5.75656,1.79682 -11.34946,4.01422 -16.73666,6.62354 -5.3872,2.60933 -10.56871,5.61058 -15.50249,8.9751 -4.93378,3.36452 -9.61985,7.0923 -14.01615,11.15469 -4.39631,4.062386 -8.50287,8.459377 -12.27764,13.162311 -3.77478,4.702933 -7.21777,9.711809 -10.28695,14.997967 -3.06919,5.286157 -5.76456,10.849596 -8.04409,16.661655 -2.27953,5.812059 -4.08508,11.724493 -5.42798,17.68771 -1.3429,5.963215 -2.22316,11.977215 -2.65211,17.992405 -0.42895,6.01519 -0.40659,12.03157 0.0557,17.9995504 0.46233,5.96798001 1.36462,11.88755 2.69555,17.7091396 1.33093,5.82158 3.09049,11.54517 5.26735,17.12117 2.17685,5.57601 4.771,11.00443 7.77111,16.23567 3.0001,5.23124 6.40617,10.2653 10.20685,15.05259 3.80068,4.78729 7.99598,9.32781 12.57456,13.57197 l -18.85249,11.305 -18.8525,11.305 -18.852503,11.305002 -18.8525,11.305";
+    leftPath.CreateFromSVGString( svg, 1.0, 1.0, 10.0, 153.0, 0.0 );
+
+    // Setup right line path
+    svg = "m 89.720001,63.139999 -22.4025,-5.1725 L 44.915001,52.795 22.5125,47.6225 -3.11,41.450001 M 91.339996,0.25 H 70.434997 49.529998 28.624999 7.7199998 m 9.7574992,119.29846 -18.8650001,-11.305 -18.8649999,-11.304995 -18.865,-11.305 -18.865,-11.305 c 6.203443,-5.73496 11.73703,-12.05289 16.547507,-18.83188 4.810473,-6.77898 8.897843,-14.01903 12.208853,-21.59823 3.311,-7.57921 5.84564,-15.49757 7.55067,-23.63318 1.70502,-8.1356201 2.58043,-16.4884901 2.57297,-24.93671 0.002,-8.38377 -0.84559,-16.56925 -2.46158,-24.475018 -1.616,-7.90577 -4.00032,-15.531831 -7.07157,-22.796756 -3.07124,-7.264925 -6.82942,-14.168714 -11.19311,-20.629944 -4.363689,-6.461229 -9.3329,-12.479898 -14.826226,-17.974577 -5.493327,-5.49469 -11.510768,-10.46539 -17.970919,-14.83067 -6.460151,-4.36529 -13.363012,-8.12517 -20.627178,-11.19821 -7.264166,-3.07304 -14.889636,-5.45925 -22.795006,-7.07719 -7.90537,-1.61795 -16.09064,-2.46764 -24.47441,-2.46764";
+    rightPath.CreateFromSVGString( svg, 1.0, 1.0, 140.0, 153.0, 0.0 );
+  }
+
+  // Line path
+  note group Note
+  {
+    attr Bounds = <500,110,920,280>;
+  }
+
+  // This is the first variant of the dashboard.
+  note legend Note1
+  {
+    attr Bounds = <500,0,920,100>;
+  }
+
+  // Used to animate a specific sub path of the svg path.
+  $rect <399,470,599,510>
+  method void animateSubPath( arg Graphics::Path aPath, arg int32 aPathNo, arg Graphics::Path aGrowingPath, arg bool aReverse, arg float aStartValue, arg float aEndValue )
+  {
+    var int32 noOfEdges = aPath.GetNoOfEdges( aPathNo );
+    var int32 progress = 0;
+    aGrowingPath.InitSubPath( aPathNo, noOfEdges );
+    if ( aReverse )
+    {
+      progress = Dashboard::Animation.linearValueProgress( 0, noOfEdges, aStartValue, aEndValue, CurrentProgress );
+      aGrowingPath.AddCopy( aPathNo, aPath, aPathNo, 0, progress );
+    }
+    else
+    {
+      progress = noOfEdges - Dashboard::Animation.linearValueProgress( 0, noOfEdges, aStartValue, aEndValue, CurrentProgress );
+      aGrowingPath.AddCopy( aPathNo, aPath, aPathNo, progress, noOfEdges - progress );
+    }
+  }
+
+  $rect <20,20,160,60>
+  object Views::StrokePath LeftStrokePath
+  {
+    preset Bounds = <0,0,240,272>;
+    preset Color = Dashboard::Colors.BatteryGaugeSelectionV1;
+    preset MiterLimit = 10.0;
+    preset JoinPoints = Graphics::PathJoin.Miter;
+    preset StartCap = Graphics::PathCap.Round;
+    preset Width = 2.0;
+    preset Path = leftPath;
+  }
+
+  $rect <20,20,160,60>
+  object Views::StrokePath RightStrokePath
+  {
+    preset Bounds = <240,0,480,272>;
+    preset Color = Dashboard::Colors.BatteryGaugeSelectionV1;
+    preset MiterLimit = 10.0;
+    preset JoinPoints = Graphics::PathJoin.Miter;
+    preset StartCap = Graphics::PathCap.Round;
+    preset Width = 2.0;
+    preset Path = rightPath;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image RightBottomGlow
+  {
+    preset Bounds = <357,228,453,301>;
+    preset Color = Dashboard::Colors.GaugeGlowV1;
+    preset Bitmap = Dashboard::RightBottomGlowV1;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image LeftBottomGlow
+  {
+    preset Bounds = <28,228,123,301>;
+    preset Color = Dashboard::Colors.GaugeGlowV1;
+    preset Bitmap = Dashboard::LeftBottomGlowV1;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image LeftTopGlow
+  {
+    preset Bounds = <0,112,101,153>;
+    preset Color = Dashboard::Colors.GaugeGlowV1;
+    preset Bitmap = Dashboard::TopGlowV1;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image RightTopGlow
+  {
+    preset Bounds = <379,112,480,153>;
+    preset Color = Dashboard::Colors.GaugeGlowV1;
+    preset Bitmap = Dashboard::TopGlowV1;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image LeftMiddleGlow
+  {
+    preset Bounds = <1,164,103,218>;
+    preset Color = Dashboard::Colors.GaugeGlowV1;
+    preset Bitmap = Dashboard::LeftMiddleGlowV1;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image RightMiddleGlow
+  {
+    preset Bounds = <378,164,480,218>;
+    preset Color = Dashboard::Colors.GaugeGlowV1;
+    preset Bitmap = Dashboard::RightMiddleGlowV1;
+  }
+
+  $rect <20,20,160,60>
+  object Dashboard::Gauge SpeedGauge
+  {
+    preset Bounds = <89,0,392,272>;
+    preset Outlet = ^Dashboard::Device.Speed;
+  }
+
+  $rect <20,20,160,60>
+  object Dashboard::Battery Battery
+  {
+    preset Bounds = <222,232,259,245>;
+    preset Outlet = ^Dashboard::Device.Battery;
+  }
+}
+
+$rect <520,51,720,91>
+$output false
+resource Resources::Bitmap StartEngine
+{
+  attr bitmapfile FileName = .\Res\StartEngine.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Native;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <10,50,210,90>
+$output false
+class StartScreen : Core::Group
+{
+  $rect <0,300,200,340>
+  inherited property Bounds = <0,0,480,272>;
+
+  $rect <0,340,200,380>
+  inherited method Init()
+  {
+    attachobserver onAutoDemoModeChanged, ^Dashboard::Device.AutoDemoMode;
+    postsignal onAutoDemoModeChanged;
+
+    $if $composer
+    StartEngineGloom.Opacity = 255;
+    $endif
+  }
+
+  $rect <218,360,418,400>
+  slot onStart
+  {
+    // Initialize the device properties
+    Dashboard::Device.Speed = 0;
+    Dashboard::Device.Energy = 0;
+    Dashboard::Device.Battery = 67;
+    Dashboard::Device.ODO = 267;
+    Dashboard::Device.Led0 = false;
+    Dashboard::Device.Led1 = false;
+    Dashboard::Device.Led2 = false;
+    Dashboard::Device.Led3 = false;
+    Dashboard::Device.Led4 = false;
+    Dashboard::Device.Led5 = false;
+
+    signal glowEffect.StartEffect;
+  }
+
+  $rect <218,400,418,440>
+  object Effects::Int32Effect glowEffect
+  {
+    preset OnFinished = onGlowEffectFinished;
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = 750;
+    preset Outlet = ^StartEngineGloom.Opacity;
+  }
+
+  $rect <218,440,418,480>
+  slot onGlowEffectFinished
+  {
+    // Leave this dialog and show another one
+    if ( IsDialog( false ))
+      Owner.SwitchToDialog( new Dashboard::Dashboard, Dashboard::FadeInOutBottom, null, null, null, null, null, null, null, null, false );
+  }
+
+  // Show glow / Screen change
+  note group Note
+  {
+    attr Bounds = <209,300,429,491>;
+  }
+
+  // This is the start screen.
+  //
+  // You can activate the 'Start Engine' button to start a transition to the dashboard \
+  // screen.
+  note legend Note1
+  {
+    attr Bounds = <670,300,1059,409>;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image StartEngineGloom
+  {
+    preset Bounds = Bounds;
+    preset Bitmap = Dashboard::StartEngineGloom;
+    preset Opacity = 0;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::PushButton StartEngineButton
+  {
+    preset Bounds = <147,43,334,230>;
+    preset OnActivate = onStart;
+    preset IconFrameActive = 1;
+    preset IconFrameFocused = 0;
+    preset IconFrameDisabled = 0;
+    preset IconFrameDefault = 0;
+    preset Icon = Dashboard::StartEngineStates;
+    preset Label = "Caption";
+    preset Appearance = Dashboard::StartEngineButtonConfig;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image Image
+  {
+    preset Bounds = <0,230,160,270>;
+    preset Bitmap = Dashboard::Logo;
+  }
+
+  $rect <450,360,650,400>
+  slot onAutoDemoModeChanged
+  {
+    // Start the auto demo mode timer on enabled auto demo mode
+    if ( Dashboard::Device.AutoDemoMode )
+      signal onStart;
+  }
+
+  // Auto demo mode
+  note group Note2
+  {
+    attr Bounds = <440,300,660,490>;
+  }
+}
+
+$rect <30,269,230,309>
+$output false
+class GaugeDisplay : Core::Group
+{
+  $rect <0,89,200,129>
+  inherited property Bounds = <0,0,70,70>;
+
+  $rect <0,140,200,180>
+  property ^int32 Outlet = null;
+
+  $rect <200,140,400,180>
+  onset Outlet
+  {
+    // Check if the new outlet differs from the currently used outlet
+    if ( pure Outlet == value )
+      return;
+
+    // Detach from the previous outlet
+    if ( pure Outlet != null )
+      detachobserver onOutlet, pure Outlet;
+
+    // Store the new outlet ...
+    pure Outlet = value;
+
+    // ... and attach to the new one
+    if ( value != null )
+      attachobserver onOutlet, value;
+
+    // Finally, retrieve the current state of the property associated via 'Outlet'.
+    if ( value != null )
+      postsignal onOutlet;
+  }
+
+  $rect <400,140,600,180>
+  slot onOutlet
+  {
+    if ( Outlet != null )
+      ValueText.String = Outlet^;
+  }
+
+  $rect <0,180,200,220>
+  property string Unit = "kmh";
+
+  $rect <200,180,400,220>
+  onset Unit
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Unit == value )
+      return;
+
+    // Remember the property's new value.
+    pure Unit = value;
+
+    UnitText.String = value;
+  }
+
+  $rect <0,270,200,310>
+  property string Desc = "ODO:";
+
+  $rect <200,270,400,310>
+  onset Desc
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Desc == value )
+      return;
+
+    // Remember the property's new value.
+    pure Desc = value;
+
+    postsignal onOutletDesc;
+  }
+
+  $rect <0,230,200,270>
+  property ^int32 OutletDesc = null;
+
+  $rect <200,230,400,270>
+  onset OutletDesc
+  {
+    // Check if the new outlet differs from the currently used outlet
+    if ( pure OutletDesc == value )
+      return;
+
+    // Detach from the previous outlet
+    if ( pure OutletDesc != null )
+      detachobserver onOutletDesc, pure OutletDesc;
+
+    // Store the new outlet ...
+    pure OutletDesc = value;
+
+    // ... and attach to the new one
+    if ( value != null )
+      attachobserver onOutletDesc, value;
+
+    // Finally, retrieve the current state of the property associated via 'Outlet'.
+    if ( value != null )
+      postsignal onOutletDesc;
+  }
+
+  $rect <409,270,609,310>
+  slot onOutletDesc
+  {
+    // Set the new value at the description text
+    if ( OutletDesc != null )
+    {
+      DescText.String = Desc;
+      DescValue.String = string(OutletDesc^) + " " +DescUnit;
+    }
+  }
+
+  $rect <0,310,200,350>
+  property string DescUnit = "m";
+
+  $rect <200,310,400,350>
+  onset DescUnit
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure DescUnit == value )
+      return;
+
+    // Remember the property's new value.
+    pure DescUnit = value;
+
+    postsignal onOutletDesc;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text DescValue
+  {
+    preset Bounds = <22,53,60,68>;
+    preset Alignment = Views::TextAlignment[AlignHorzRight, AlignVertCenter];
+    preset String = "430 " + DescUnit;
+    preset Font = Dashboard::FontL;
+    preset Color = Dashboard::Colors.Text;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text DescText
+  {
+    preset Bounds = <13,53,39,68>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = Desc;
+    preset Font = Dashboard::FontL;
+    preset Color = Dashboard::Colors.Text;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image LineImage
+  {
+    preset Bounds = <0,50,70,53>;
+    preset Bitmap = Dashboard::HorizontalLine;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text UnitText
+  {
+    preset Bounds = <0,28,70,44>;
+    preset String = "kmh";
+    preset Font = Dashboard::FontXL;
+    preset Color = Dashboard::Colors.Text;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text ValueText
+  {
+    preset Bounds = <0,0,70,30>;
+    preset String = "15";
+    preset Font = Dashboard::FontXXL;
+    preset Color = Dashboard::Colors.Text;
+  }
+}
+
+$rect <520,130,720,170>
+$output false
+resource Resources::Bitmap StartEngineGloom
+{
+  attr bitmapfile FileName = .\Res\StartEngineGloom.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Native;
+  attr bitmapmode Mode = Default;
+}
+
+// Device class
+note group Note4
+{
+  attr Bounds = <460,409,880,510>;
+}
+
+$rect <469,449,669,489>
+$output false
+class DeviceClass
+{
+  $rect <210,40,410,80>
+  property int32 Speed = 0;
+
+  $rect <410,40,610,80>
+  onset Speed
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Speed == value )
+      return;
+
+    // Remember the property's new value.
+    pure Speed = value;
+
+    notifyobservers ^Speed;
+  }
+
+  $rect <210,130,410,170>
+  property int32 Energy = 0;
+
+  $rect <410,130,610,170>
+  onset Energy
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Energy == value )
+      return;
+
+    // Remember the property's new value.
+    pure Energy = value;
+
+    notifyobservers ^Energy;
+  }
+
+  $rect <210,80,410,120>
+  property int32 ODO = 267;
+
+  $rect <410,80,610,120>
+  onset ODO
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure ODO == value )
+      return;
+
+    // Remember the property's new value.
+    pure ODO = value;
+
+    notifyobservers ^ODO;
+  }
+
+  $rect <210,210,410,250>
+  property int32 Battery = 67;
+
+  $rect <410,210,610,250>
+  onset Battery
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Battery == value )
+      return;
+
+    // Remember the property's new value.
+    pure Battery = value;
+
+    notifyobservers ^Battery;
+  }
+
+  $rect <210,260,410,300>
+  property bool Led0 = false;
+
+  $rect <410,260,610,300>
+  onset Led0
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Led0 == value )
+      return;
+
+    // Remember the property's new value.
+    pure Led0 = value;
+
+    notifyobservers ^Led0;
+  }
+
+  $rect <210,300,410,340>
+  property bool Led1 = false;
+
+  $rect <410,300,610,340>
+  onset Led1
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Led1 == value )
+      return;
+
+    // Remember the property's new value.
+    pure Led1 = value;
+
+    notifyobservers ^Led1;
+  }
+
+  $rect <210,340,410,380>
+  property bool Led2 = false;
+
+  $rect <410,340,610,380>
+  onset Led2
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Led2 == value )
+      return;
+
+    // Remember the property's new value.
+    pure Led2 = value;
+
+    notifyobservers ^Led2;
+  }
+
+  $rect <210,380,410,420>
+  property bool Led3 = false;
+
+  $rect <410,380,610,420>
+  onset Led3
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Led3 == value )
+      return;
+
+    // Remember the property's new value.
+    pure Led3 = value;
+
+    notifyobservers ^Led3;
+  }
+
+  $rect <210,420,410,460>
+  property bool Led4 = false;
+
+  $rect <410,420,610,460>
+  onset Led4
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Led4 == value )
+      return;
+
+    // Remember the property's new value.
+    pure Led4 = value;
+
+    notifyobservers ^Led4;
+  }
+
+  $rect <210,460,410,500>
+  property bool Led5 = false;
+
+  $rect <410,460,610,500>
+  onset Led5
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Led5 == value )
+      return;
+
+    // Remember the property's new value.
+    pure Led5 = value;
+
+    notifyobservers ^Led5;
+  }
+
+  $rect <210,510,410,550>
+  property bool DemoMode = false;
+
+  $rect <410,510,610,550>
+  onset DemoMode
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure DemoMode == value )
+      return;
+
+    // Remember the property's new value.
+    pure DemoMode = value;
+
+    notifyobservers ^DemoMode;
+  }
+
+  // Device interface properties
+  note group Note
+  {
+    attr Bounds = <0,0,620,600>;
+  }
+
+  $rect <210,550,410,590>
+  property bool AutoDemoMode = false;
+
+  $rect <410,550,610,590>
+  onset AutoDemoMode
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure AutoDemoMode == value )
+      return;
+
+    // Remember the property's new value.
+    pure AutoDemoMode = value;
+
+    notifyobservers ^AutoDemoMode;
+  }
+
+  $rect <210,170,410,210>
+  property int32 Recuperation = 0;
+
+  $rect <410,170,610,210>
+  onset Recuperation
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Recuperation == value )
+      return;
+
+    // Remember the property's new value.
+    pure Recuperation = value;
+
+    notifyobservers ^Recuperation;
+  }
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about an alternation of its setting or state value.
+  $rect <10,40,210,80>
+  $output true
+  method void UpdateSpeed( arg int32 aNewValue )
+  {
+    // Only if the reported value does differ from the one stored currently in the property.
+    if ( aNewValue != pure Speed )
+    {
+      // Remember the new value in the internal memory of the property.
+      pure Speed = aNewValue;
+
+      // Notify all associated property observers.
+      notifyobservers ^Speed;
+    }
+  }
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about an alternation of its setting or state value.
+  $rect <10,80,210,120>
+  $output true
+  method void UpdateODO( arg int32 aNewValue )
+  {
+    // Only if the reported value does differ from the one stored currently in the property.
+    if ( aNewValue != pure ODO )
+    {
+      // Remember the new value in the internal memory of the property.
+      pure ODO = aNewValue;
+
+      // Notify all associated property observers.
+      notifyobservers ^ODO;
+    }
+  }
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about an alternation of its setting or state value.
+  $rect <10,130,210,170>
+  $output true
+  method void UpdateEnergy( arg int32 aNewValue )
+  {
+    // Only if the reported value does differ from the one stored currently in the property.
+    if ( aNewValue != pure Energy )
+    {
+      // Remember the new value in the internal memory of the property.
+      pure Energy = aNewValue;
+
+      // Notify all associated property observers.
+      notifyobservers ^Energy;
+    }
+  }
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about an alternation of its setting or state value.
+  $rect <10,210,210,250>
+  $output true
+  method void UpdateBattery( arg int32 aNewValue )
+  {
+    // Only if the reported value does differ from the one stored currently in the property.
+    if ( aNewValue != pure Battery )
+    {
+      // Remember the new value in the internal memory of the property.
+      pure Battery = aNewValue;
+
+      // Notify all associated property observers.
+      notifyobservers ^Battery;
+    }
+  }
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about an alternation of its setting or state value.
+  $rect <10,260,210,300>
+  $output true
+  method void UpdateLed0( arg bool aNewValue )
+  {
+    // Only if the reported value does differ from the one stored currently in the property.
+    if ( aNewValue != pure Led0 )
+    {
+      // Remember the new value in the internal memory of the property.
+      pure Led0 = aNewValue;
+
+      // Notify all associated property observers.
+      notifyobservers ^Led0;
+    }
+  }
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about an alternation of its setting or state value.
+  $rect <10,300,210,340>
+  $output true
+  method void UpdateLed1( arg bool aNewValue )
+  {
+    // Only if the reported value does differ from the one stored currently in the property.
+    if ( aNewValue != pure Led1 )
+    {
+      // Remember the new value in the internal memory of the property.
+      pure Led1 = aNewValue;
+
+      // Notify all associated property observers.
+      notifyobservers ^Led1;
+    }
+  }
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about an alternation of its setting or state value.
+  $rect <10,340,210,380>
+  $output true
+  method void UpdateLed2( arg bool aNewValue )
+  {
+    // Only if the reported value does differ from the one stored currently in the property.
+    if ( aNewValue != pure Led2 )
+    {
+      // Remember the new value in the internal memory of the property.
+      pure Led2 = aNewValue;
+
+      // Notify all associated property observers.
+      notifyobservers ^Led2;
+    }
+  }
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about an alternation of its setting or state value.
+  $rect <10,380,210,420>
+  $output true
+  method void UpdateLed3( arg bool aNewValue )
+  {
+    // Only if the reported value does differ from the one stored currently in the property.
+    if ( aNewValue != pure Led3 )
+    {
+      // Remember the new value in the internal memory of the property.
+      pure Led3 = aNewValue;
+
+      // Notify all associated property observers.
+      notifyobservers ^Led3;
+    }
+  }
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about an alternation of its setting or state value.
+  $rect <10,420,210,460>
+  $output true
+  method void UpdateLed4( arg bool aNewValue )
+  {
+    // Only if the reported value does differ from the one stored currently in the property.
+    if ( aNewValue != pure Led4 )
+    {
+      // Remember the new value in the internal memory of the property.
+      pure Led4 = aNewValue;
+
+      // Notify all associated property observers.
+      notifyobservers ^Led4;
+    }
+  }
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about an alternation of its setting or state value.
+  $rect <10,460,210,500>
+  $output true
+  method void UpdateLed5( arg bool aNewValue )
+  {
+    // Only if the reported value does differ from the one stored currently in the property.
+    if ( aNewValue != pure Led5 )
+    {
+      // Remember the new value in the internal memory of the property.
+      pure Led5 = aNewValue;
+
+      // Notify all associated property observers.
+      notifyobservers ^Led5;
+    }
+  }
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about an alternation of its setting or state value.
+  $rect <10,510,210,550>
+  $output true
+  method void UpdateDemoMode( arg bool aNewValue )
+  {
+    // Only if the reported value does differ from the one stored currently in the property.
+    if ( aNewValue != pure DemoMode )
+    {
+      // Remember the new value in the internal memory of the property.
+      pure DemoMode = aNewValue;
+
+      // Notify all associated property observers.
+      notifyobservers ^DemoMode;
+    }
+  }
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about an alternation of its setting or state value.
+  $rect <10,550,210,590>
+  $output true
+  method void UpdateAutoDemoMode( arg bool aNewValue )
+  {
+    // Only if the reported value does differ from the one stored currently in the property.
+    if ( aNewValue != pure AutoDemoMode )
+    {
+      // Remember the new value in the internal memory of the property.
+      pure AutoDemoMode = aNewValue;
+
+      // Notify all associated property observers.
+      notifyobservers ^AutoDemoMode;
+    }
+  }
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about an alternation of its setting or state value.
+  $rect <10,170,210,210>
+  $output true
+  method void UpdateRecuperation( arg int32 aNewValue )
+  {
+    // Only if the reported value does differ from the one stored currently in the property.
+    if ( aNewValue != pure Recuperation )
+    {
+      // Remember the new value in the internal memory of the property.
+      pure Recuperation = aNewValue;
+
+      // Notify all associated property observers.
+      notifyobservers ^Recuperation;
+    }
+  }
+}
+
+$rect <669,449,869,489>
+$output false
+autoobject Dashboard::DeviceClass Device;
+
+$rect <520,260,720,300>
+$output false
+resource Resources::Bitmap Icons
+{
+  attr bitmapfile FileName = .\Res\Icons.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize = <32,20>;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <210,90,410,130>
+$output false
+class DashboardV2 : Core::Group
+{
+  $rect <0,300,200,340>
+  inherited property Bounds = <0,0,480,272>;
+
+  $rect <400,430,600,470>
+  inherited method UpdateViewState()
+  {
+    super( aState );
+
+    // Move the left and right glows with the vertical bars
+    LeftGlow.Bounds.origin = Dashboard::Animation.linearPointProgess( <-123,0>, <0,0>, 0.3, 0.7, CurrentProgress );
+    RightGlow.Bounds.origin = Dashboard::Animation.linearPointProgess( <480,0>, <357,0>, 0.3, 0.7, CurrentProgress );
+
+    // Increase the opacity of the side glows, icons and vertical bars
+    LeftGlow.Opacity = Dashboard::Animation.linearValueProgress( 0, 80, 0.0, 0.4, CurrentProgress );
+    RightGlow.Opacity = LeftGlow.Opacity;
+    PWR.Opacity = Dashboard::Animation.linearValueProgress( 0, 255, 0.9, 1.0, CurrentProgress );
+    KW.Opacity = PWR.Opacity;
+    LeftValueBarBottom.Opacity = Dashboard::Animation.linearValueProgress( 0, 255, 0.5, 0.8, CurrentProgress );
+    LeftValueBarTop.Opacity = LeftValueBarBottom.Opacity;
+    RightValueBar.Opacity = LeftValueBarBottom.Opacity;
+    MAX.Opacity = LeftValueBarBottom.Opacity;
+    CHG.Opacity = LeftValueBarBottom.Opacity;
+
+    // Fade out the center glow when changing to the first variant
+    if ( CurrentProgress <= 0.7 )
+      CenterGlow.Opacity = (uint8)Dashboard::Animation.linearValueProgress( 0, centerGlowOpacity, 0.5, 0.7, CurrentProgress );
+
+    // Animate left path
+    var int32 i;
+    var int32 noOfEdges;
+    var int32 progress;
+    var int32 maxNoOfSubPaths = leftPath.GetMaxNoOfSubPaths();
+    leftGrowingPath.SetMaxNoOfSubPaths( maxNoOfSubPaths );
+    for ( i = 0; i < maxNoOfSubPaths; i=i+1 )
+    {
+      noOfEdges = leftPath.GetNoOfEdges( i );
+      progress = noOfEdges - Dashboard::Animation.linearValueProgress( 0, noOfEdges, 0.85, 1.0, CurrentProgress );
+      leftGrowingPath.InitSubPath( i, noOfEdges );
+      leftGrowingPath.AddCopy( i, leftPath, i, progress, noOfEdges - progress );
+    }
+    LeftStrokePath.Path = leftGrowingPath;
+
+    // Animate right path
+    maxNoOfSubPaths = rightPath.GetMaxNoOfSubPaths();
+    rightGrowingPath.SetMaxNoOfSubPaths( maxNoOfSubPaths );
+    for ( i = 0; i < maxNoOfSubPaths; i=i+1 )
+    {
+      noOfEdges = rightPath.GetNoOfEdges( i );
+      progress = Dashboard::Animation.linearValueProgress( 0, noOfEdges, 0.85, 1.0, CurrentProgress );
+      rightGrowingPath.InitSubPath( i, noOfEdges );
+      rightGrowingPath.AddCopy( i, rightPath, i, 0, progress );
+    }
+    RightStrokePath.Path = rightGrowingPath;
+  }
+
+  $rect <0,340,200,380>
+  inherited method Init()
+  {
+    $if $composer
+    CurrentProgress = 1.0;
+    $endif
+
+    signal createPath;
+
+    attachobserver onSpeedChanged, ^Dashboard::Device.Speed;
+    postsignal onSpeedChanged;
+  }
+
+  $rect <510,150,710,190>
+  slot createPath
+  {
+    // Setup left line path
+    var string svg = "M 54.41,197.5 H 66.484999 78.559998 M 112.11,224.92999 c 0,4.07863 -1.65319,7.77113 -4.32604,10.44397 -2.67284,2.67284 -6.36534,4.32603 -10.443964,4.32603 -4.078623,0 -7.771123,-1.65319 -10.443967,-4.32603 -2.672844,-2.67284 -4.326033,-6.36534 -4.326033,-10.44397 0,-4.07863 1.653189,-7.77112 4.326033,-10.44397 2.672844,-2.67284 6.365344,-4.32603 10.443967,-4.32603 4.078624,0 7.771124,1.65319 10.443964,4.32603 2.67285,2.67285 4.32604,6.36534 4.32604,10.44397 z M 96.95,239.7 v 13.67 H 87.5025 78.055 68.6075 59.16 l 5.543125,-15.80437 5.543125,-15.80438 5.543125,-15.80438 5.543125,-15.80437 5.543125,-15.80438 5.543125,-15.80437 5.543125,-15.80437 5.543125,-15.80438 5.54313,-15.80437 5.54312,-15.80438 5.54313,-15.804375 L 125.6775,63.7175 131.22062,47.913125 136.76375,32.10875 142.30688,16.304375 147.85,0.5 h 12.07 12.07 12.07 12.07 M 118.45,82.68 H 106.79 95.13 L 91.3025,93.4125 87.475,104.145 83.6475,114.8775 79.82,125.61 74.20375,141.49875 68.5875,157.3875 62.97125,173.27625 57.355,189.165 51.73875,205.05375 46.1225,220.9425 40.50625,236.83125 34.89,252.72 H 20.605 6.32 l -5.86,13.02";
+    leftPath.CreateFromSVGString( svg, 1.0, 1.0, 44.0, 6.0, 0.0 );
+
+    // Setup right line path
+    svg = "m 251.65001,224.92999 c 0,4.07863 -1.65319,7.77113 -4.32604,10.44397 -2.67284,2.67285 -6.36535,4.32603 -10.44397,4.32603 -4.07862,0 -7.77112,-1.65319 -10.44397,-4.32603 -2.67284,-2.67285 -4.32603,-6.36534 -4.32603,-10.44397 0,-4.07863 1.65319,-7.77113 4.32603,-10.44397 2.67284,-2.67284 6.36534,-4.32603 10.44397,-4.32603 4.07863,0 7.77113,1.65319 10.44397,4.32603 2.67285,2.67284 4.32604,6.36534 4.32604,10.44397 z M 215.35,82.68 h 11.66 11.66 l 3.825,10.7325 3.825,10.7325 3.825,10.7325 3.825,10.7325 5.61625,15.88875 5.61625,15.88875 5.61625,15.88875 5.61625,15.88875 5.61625,15.88875 5.61625,15.88875 5.61625,15.88875 L 298.9,252.72 h 14.29 14.29 l 5.86,13.02 M 137.67,0.5 h 12.07 12.07 12.07 12.07 l 5.5425,15.804375 5.5425,15.804375 5.5425,15.804375 5.5425,15.804375 5.5425,15.804375 5.5425,15.804375 5.5425,15.80438 5.5425,15.80437 5.5425,15.80437 5.5425,15.80438 5.5425,15.80437 5.5425,15.80438 5.5425,15.80437 5.5425,15.80438 5.5425,15.80437 5.5425,15.80438 h -9.445 -9.445 -9.445 -9.445 V 239.7";
+    rightPath.CreateFromSVGString( svg, 1.0, 1.0, -138.0, 6.0, 0.0 );
+  }
+
+  $rect <201,390,401,430>
+  onset Outlet
+  {
+    // Check if the new outlet differs from the currently used outlet
+    if ( pure Outlet == value )
+      return;
+
+    // Detach from the previous outlet
+    if ( pure Outlet != null )
+      detachobserver onOutlet, pure Outlet;
+
+    // Store the new outlet ...
+    pure Outlet = value;
+
+    // ... and attach to the new one
+    if ( value != null )
+      attachobserver onOutlet, value;
+
+    // Finally, retrieve the current state of the property associated via 'Outlet'.
+    if ( value != null )
+      postsignal onOutlet;
+  }
+
+  // The property 'Outlet' can refer to any other 'int32' property the widget should \
+  // remain synchronized with. When the referred property is modified, the widget \
+  // is automatically notified to remain in sync with the property.
+  // This approach follows the Controller-View programming paradigm. Here the widget \
+  // represents the 'View' and the property referred via 'Outlet' can be seen as \
+  // a part of the 'Controller'.
+  $rect <1,390,201,430>
+  property ^float Outlet = null;
+
+  // This slot method will receive a signal, if the value of the property assigned \
+  // to @Outlet has been changed by another widget or by the application logic. In \
+  // response to this notification, the widget will update itself.
+  $rect <401,390,601,430>
+  slot onOutlet
+  {
+    // Read the current value of the associated property and update accordingly
+    // the state of the widget.
+    if ( Outlet != null )
+      CurrentProgress = Outlet^;
+  }
+
+  $rect <0,431,200,471>
+  property float CurrentProgress = 0.0;
+
+  $rect <200,431,400,471>
+  onset CurrentProgress
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure CurrentProgress == value )
+      return;
+
+    // Remember the property's new value.
+    pure CurrentProgress = value;
+
+    InvalidateViewState();
+  }
+
+  $rect <510,230,710,270>
+  object Graphics::Path rightPath;
+
+  $rect <510,190,710,230>
+  object Graphics::Path leftPath;
+
+  $rect <710,190,910,230>
+  object Graphics::Path leftGrowingPath;
+
+  $rect <710,230,910,270>
+  object Graphics::Path rightGrowingPath;
+
+  // Line path
+  note group Note
+  {
+    attr Bounds = <500,110,920,280>;
+  }
+
+  // This is the second variant of the dashboard.
+  note legend Note1
+  {
+    attr Bounds = <500,0,920,100>;
+  }
+
+  $rect <200,340,400,380>
+  slot onSpeedChanged
+  {
+    // Only show and change the opacity of the center glow based on the speed at the second variant
+    if ( CurrentProgress > 0.7 )
+    {
+      CenterGlow.Opacity = Dashboard::Animation.linearValueProgress( 100, 255, 0.0, 100.0, Dashboard::Device.Speed );
+      centerGlowOpacity = CenterGlow.Opacity;
+    }
+  }
+
+  $rect <200,300,400,340>
+  var int32 centerGlowOpacity = 0;
+
+  $rect <20,20,160,60>
+  object Views::StrokePath RightStrokePath
+  {
+    preset Bounds = <240,0,480,272>;
+    preset Color = Dashboard::Colors.GaugeSelectionV2;
+    preset MiterLimit = 10.0;
+    preset JoinPoints = Graphics::PathJoin.Miter;
+    preset StartCap = Graphics::PathCap.Round;
+    preset Width = 2.0;
+    preset Path = rightPath;
+  }
+
+  $rect <20,20,160,60>
+  object Views::StrokePath LeftStrokePath
+  {
+    preset Bounds = <0,0,240,272>;
+    preset Color = Dashboard::Colors.GaugeSelectionV2;
+    preset MiterLimit = 10.0;
+    preset JoinPoints = Graphics::PathJoin.Miter;
+    preset StartCap = Graphics::PathCap.Round;
+    preset Width = 2.0;
+    preset Path = leftPath;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image RightGlow
+  {
+    preset Bounds = <357,0,480,231>;
+    preset Color = Dashboard::Colors.VertBarSelectedGlowV2;
+    preset Bitmap = Dashboard::RightGlowV2;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image CenterGlow
+  {
+    preset Bounds = <119,20,359,232>;
+    preset Color = Dashboard::Colors.VertBarSelectedGlowV2;
+    preset Bitmap = Dashboard::CenterGlowV2;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image LeftGlow
+  {
+    preset Bounds = <0,0,123,231>;
+    preset Color = Dashboard::Colors.VertBarSelectedGlowV2;
+    preset Bitmap = Dashboard::LeftGlowV2;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image PWR
+  {
+    preset Bounds = <130,223,151,239>;
+    preset Bitmap = Dashboard::PWRIcon;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image KW
+  {
+    preset Bounds = <328,224,349,239>;
+    preset Bitmap = Dashboard::KWIcon;
+  }
+
+  $rect <20,20,160,60>
+  object Dashboard::RightValueBar RightValueBar
+  {
+    preset Bounds = <325,100,397,262>;
+    preset Outlet = ^Dashboard::Device.Speed;
+  }
+
+  $rect <20,20,160,60>
+  object Dashboard::LeftTopBar LeftValueBarTop
+  {
+    preset Bounds = <104,100,155,200>;
+    preset Outlet = ^Dashboard::Device.Energy;
+  }
+
+  $rect <20,20,160,60>
+  object Dashboard::LeftBottomBar LeftValueBarBottom
+  {
+    preset Bounds = <81,207,121,262>;
+    preset Outlet = ^Dashboard::Device.Recuperation;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text MAX
+  {
+    preset Bounds = <320,90,340,100>;
+    preset String = "MAX";
+    preset Font = Dashboard::FontS;
+    preset Color = Dashboard::Colors.Text;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text CHG
+  {
+    preset Bounds = <138,90,158,100>;
+    preset String = "CHG";
+    preset Font = Dashboard::FontS;
+    preset Color = Dashboard::Colors.Text;
+  }
+}
+
+// This class implements a simple 'value bar' instrument intended to display a vertical \
+// bar. The height of the bar corresponds to the value specified in the property \
+// @CurrentValue, which lies in range determined by the properties @MinValue and \
+// @MaxValue.
+// Alternatively the property @Outlet can refer to any other 'int32' property the \
+// widget should remain synchronized with. When the referred property is modified \
+// by another one, the widget is automatically notified to remain in sync with the \
+// property.
+// This approach follows the Controller-View programming paradigm. Here the 'value \
+// bar' widget represents the 'View' and the property referred via 'Outlet' can be \
+// seen as a part of the 'Controller'.
+$rect <240,230,440,270>
+$output false
+class RightValueBar : Templates::VerticalValueBar
+{
+  $rect <101,-9,301,31>
+  inherited property Bounds = <0,0,72,162>;
+
+  $rect <341,249,541,289>
+  inherited method UpdateViewState()
+  {
+    // Always invoke the inherited method.
+    super( aState );
+
+    // Get the min/max positions for the upper edge of the value bar.
+    var int32 minPos = Bounds.h;
+    var int32 maxPos = 0;
+    var int32 newPos = minPos;
+    var int32 brickHeightWithSpace = 9;
+
+    // Convert the widget's current value to a pixel position within the
+    // allowed range.
+    if ( MaxValue != MinValue )
+      newPos = ((( CurrentValue - MinValue ) * ( maxPos - minPos )) /
+                 ( MaxValue - MinValue )) + minPos;
+
+    // Position the top and bottom brick images
+    TopBricks.Bounds.y2 = newPos - (newPos % brickHeightWithSpace);
+    BottomBricks.Bounds.y1 = TopBricks.Bounds.y2;
+  }
+
+  // State management
+  note group Note2
+  {
+    attr Bounds = <331,209,551,299>;
+  }
+
+  // Controller events
+  note group Note1
+  {
+    attr Bounds = <101,209,321,299>;
+  }
+
+  // This slot method will receive a signal, if the value of the property assigned \
+  // to @Outlet has been changed by another widget or by the application logic. In \
+  // response to this notification, the widget will update itself.
+  $rect <111,249,311,289>
+  slot onOutlet
+  {
+    // Read the current value of the associated property and update accordingly
+    // the state of the widget.
+    if ( Outlet != null )
+      CurrentValue = Outlet^;
+  }
+
+  $rect <301,160,501,200>
+  onset Outlet
+  {
+    // Check if the new outlet differs from the currently used outlet
+    if ( pure Outlet == value )
+      return;
+
+    // Detach from the previous outlet
+    if ( pure Outlet != null )
+      detachobserver onOutlet, pure Outlet;
+
+    // Store the new outlet ...
+    pure Outlet = value;
+
+    // ... and attach to the new one
+    if ( value != null )
+      attachobserver onOutlet, value;
+
+    // Finally, retrieve the current state of the property associated via 'Outlet'.
+    if ( value != null )
+      postsignal onOutlet;
+  }
+
+  $rect <301,80,501,120>
+  onset MaxValue
+  {
+    // Check if the given value differs from the current value
+    if ( pure MaxValue == value )
+      return;
+
+    // Store the new value ...
+    pure MaxValue = value;
+
+    // ... and finally, force an update
+    InvalidateViewState();
+  }
+
+  $rect <301,41,501,81>
+  onset MinValue
+  {
+    // Check if the given value differs from the current value
+    if ( pure MinValue == value )
+      return;
+
+    // Store the new value ...
+    pure MinValue = value;
+
+    // ... and finally, force an update
+    InvalidateViewState();
+  }
+
+  $rect <501,120,701,160>
+  onget CurrentValue
+  {
+    // Get the internally stored value of the property 'CurrentValue'.
+    var int32 value = pure CurrentValue;
+
+    // When reading the property 'CurrentValue' limit the result to the
+    // range specified by the properties 'MinValue' and 'MaxValue'.
+    // Note, the range can be 'inverted'.
+    if ( MinValue > MaxValue )
+    {
+      if ( value < MaxValue ) value = MaxValue;
+      if ( value > MinValue ) value = MinValue;
+    }
+    else
+    {
+      if ( value < MinValue ) value = MinValue;
+      if ( value > MaxValue ) value = MaxValue;
+    }
+
+    return value;
+  }
+
+  $rect <301,120,501,160>
+  onset CurrentValue
+  {
+    // Check if the given value differs from the current value.
+    if ( pure CurrentValue == value )
+      return;
+
+    // Store the new value ...
+    pure CurrentValue = value;
+
+    // ... and finally, force an update.
+    InvalidateViewState();
+  }
+
+  // The property 'Outlet' can refer to any other 'int32' property the widget should \
+  // remain synchronized with. When the referred property is modified, the widget \
+  // is automatically notified to remain in sync with the property.
+  // This approach follows the Controller-View programming paradigm. Here the widget \
+  // represents the 'View' and the property referred via 'Outlet' can be seen as \
+  // a part of the 'Controller'.
+  $rect <101,160,301,200>
+  property ^int32 Outlet = null;
+
+  // The property 'MaxValue' defines the widget's possible value at the upper end \
+  // of the bar movement range.
+  $rect <101,80,301,120>
+  property int32 MaxValue = 100;
+
+  // The property 'MinValue' defines the widget's possible value at the lower end \
+  // of the bar movement range.
+  $rect <101,40,301,80>
+  property int32 MinValue = 0;
+
+  // The property 'CurrentValue' stores the momentary value of the widget. The value \
+  // is limited automatically to the range between @MinValue and @MaxValue.
+  $rect <101,120,301,160>
+  property int32 CurrentValue = 20;
+
+  // This is the vertical value bar which is used at the second dashboard variant.
+  //
+  // By changing the 'RightWing' property you can determine the appearance of this \
+  // component as right or left oriented vertical bar.
+  note legend Note4
+  {
+    attr Bounds = <100,309,590,429>;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image BottomBricks
+  {
+    preset Bounds = <0,91,72,160>;
+    preset Color = Dashboard::Colors.VertBarSelectedGlowV2;
+    preset Alignment = Views::ImageAlignment[AlignHorzRight, AlignVertBottom];
+    preset Bitmap = Dashboard::RightBricksV2;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image TopBricks
+  {
+    preset Bounds = <0,1,72,91>;
+    preset Color = Dashboard::Colors.VertBarUnselectedV2;
+    preset Alignment = Views::ImageAlignment[AlignHorzLeft, AlignVertTop];
+    preset Bitmap = Dashboard::RightBricksV2;
+  }
+}
+
+$rect <920,50,1120,90>
+$output false
+resource Resources::Bitmap LeftGlowV2
+{
+  attr bitmapfile FileName = .\Res\LeftGlowV2.png;
+  attr bitmapdithering Dithering = ErrorDiffusion;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Native;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <920,90,1120,130>
+$output false
+resource Resources::Bitmap RightGlowV2
+{
+  attr bitmapfile FileName = .\Res\RightGlowV2.png;
+  attr bitmapdithering Dithering = ErrorDiffusion;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Native;
+  attr bitmapmode Mode = Default;
+}
+
+// This class implements a simple 'value bar' instrument intended to display a horizontal \
+// bar. The width of the bar corresponds to the value specified in the property @CurrentValue, \
+// which lies in range determined by the properties @MinValue and @MaxValue.
+// Alternatively the property @Outlet can refer to any other 'int32' property the \
+// widget should remain synchronized with. When the referred property is modified \
+// by another one, the widget is automatically notified to remain in sync with the \
+// property.
+// This approach follows the Controller-View programming paradigm. Here the 'value \
+// bar' widget represents the 'View' and the property referred via 'Outlet' can be \
+// seen as a part of the 'Controller'.
+$rect <240,188,440,228>
+$output false
+$multilingual true
+class Battery : Templates::HorizontalValueBar
+{
+  $rect <0,50,200,90>
+  inherited property Bounds = <0,0,37,13>;
+
+  $rect <450,40,650,80>
+  inherited method UpdateViewState()
+  {
+    // Always invoke the inherited method.
+    super( aState );
+
+    // Color the energy cells
+    if ( CurrentValue >= 20 )
+      Energy1.Color = Dashboard::Colors.BatteryGaugeSelectionV1;
+    else
+      Energy1.Color = Dashboard::Colors.BatteryFrame;
+
+    if ( CurrentValue >= 40 )
+      Energy2.Color = Dashboard::Colors.BatteryGaugeSelectionV1;
+    else
+      Energy2.Color = Dashboard::Colors.BatteryFrame;
+
+    if ( CurrentValue >= 60 )
+      Energy3.Color = Dashboard::Colors.BatteryGaugeSelectionV1;
+    else
+      Energy3.Color = Dashboard::Colors.BatteryFrame;
+
+    if ( CurrentValue >= 80 )
+      Energy4.Color = Dashboard::Colors.BatteryGaugeSelectionV1;
+    else
+      Energy4.Color = Dashboard::Colors.BatteryFrame;
+
+    if ( CurrentValue >= 100 )
+      Energy5.Color = Dashboard::Colors.BatteryGaugeSelectionV1;
+    else
+      Energy5.Color = Dashboard::Colors.BatteryFrame;
+  }
+
+  // State management
+  note group Note2
+  {
+    attr Bounds = <440,0,660,90>;
+  }
+
+  // Controller events
+  note group Note1
+  {
+    attr Bounds = <210,0,430,90>;
+  }
+
+  // This slot method will receive a signal, if the value of the property assigned \
+  // to @Outlet has been changed by another widget or by the application logic. In \
+  // response to this notification, the widget will update itself.
+  $rect <220,40,420,80>
+  slot onOutlet
+  {
+    // Read the current value of the associated property and update accordingly
+    // the state of the widget.
+    if ( Outlet != null )
+      CurrentValue = Outlet^;
+  }
+
+  $rect <200,230,400,270>
+  onset Outlet
+  {
+    // Check if the new outlet differs from the currently used outlet
+    if ( pure Outlet == value )
+      return;
+
+    // Detach from the previous outlet
+    if ( pure Outlet != null )
+      detachobserver onOutlet, pure Outlet;
+
+    // Store the new outlet ...
+    pure Outlet = value;
+
+    // ... and attach to the new one
+    if ( value != null )
+      attachobserver onOutlet, value;
+
+    // Finally, retrieve the current state of the property associated via 'Outlet'.
+    if ( value != null )
+      postsignal onOutlet;
+  }
+
+  $rect <200,180,400,220>
+  onset MaxValue
+  {
+    // Check if the given value differs from the current value
+    if ( pure MaxValue == value )
+      return;
+
+    // Store the new value ...
+    pure MaxValue = value;
+
+    // ... and finally, force an update
+    InvalidateViewState();
+  }
+
+  $rect <200,140,400,180>
+  onset MinValue
+  {
+    // Check if the given value differs from the current value
+    if ( pure MinValue == value )
+      return;
+
+    // Store the new value ...
+    pure MinValue = value;
+
+    // ... and finally, force an update
+    InvalidateViewState();
+  }
+
+  $rect <400,100,600,140>
+  onget CurrentValue
+  {
+    // Get the internally stored value of the property 'CurrentValue'.
+    var int32 value = pure CurrentValue;
+
+    // When reading the property 'CurrentValue' limit the result to the
+    // range specified by the properties 'MinValue' and 'MaxValue'.
+    // Note, the range can be 'inverted'.
+    if ( MinValue > MaxValue )
+    {
+      if ( value < MaxValue ) value = MaxValue;
+      if ( value > MinValue ) value = MinValue;
+    }
+    else
+    {
+      if ( value < MinValue ) value = MinValue;
+      if ( value > MaxValue ) value = MaxValue;
+    }
+
+    return value;
+  }
+
+  $rect <200,100,400,140>
+  onset CurrentValue
+  {
+    // Check if the given value differs from the current value.
+    if ( pure CurrentValue == value )
+      return;
+
+    // Store the new value ...
+    pure CurrentValue = value;
+
+    // ... and finally, force an update.
+    InvalidateViewState();
+  }
+
+  // The property 'Outlet' can refer to any other 'int32' property the widget should \
+  // remain synchronized with. When the referred property is modified, the widget \
+  // is automatically notified to remain in sync with the property.
+  // This approach follows the Controller-View programming paradigm. Here the widget \
+  // represents the 'View' and the property referred via 'Outlet' can be seen as \
+  // a part of the 'Controller'.
+  $rect <0,230,200,270>
+  property ^int32 Outlet = null;
+
+  // The property 'MaxValue' defines the widget's possible value at the right end \
+  // of the bar movement range.
+  $rect <0,180,200,220>
+  property int32 MaxValue = 100;
+
+  // The property 'MinValue' defines the widget's possible value at the left end \
+  // of the bar movement range.
+  $rect <0,140,200,180>
+  property int32 MinValue = 0;
+
+  // The property 'CurrentValue' stores the momentary value of the widget. The value \
+  // is limited automatically to the range between @MinValue and @MaxValue.
+  $rect <0,100,200,140>
+  property int32 CurrentValue = 100;
+
+  $rect <20,20,160,60>
+  object Views::Image Image
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = Bounds;
+    preset Color = Dashboard::Colors.BatteryFrame;
+    preset Alignment = Views::ImageAlignment[AlignHorzCenter, AlignVertCenter, StretchToFill];
+    preset Bitmap = Dashboard::BatteryFrame;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Energy1
+  {
+    preset Bounds = <3,2,8,11>;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Energy2
+  {
+    preset Bounds = <9,2,14,11>;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Energy3
+  {
+    preset Bounds = <15,2,20,11>;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Energy4
+  {
+    preset Bounds = <21,2,26,11>;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Energy5
+  {
+    preset Bounds = <27,2,32,11>;
+  }
+}
+
+$rect <520,299,720,339>
+$output false
+resource Resources::Bitmap BatteryFrame
+{
+  attr bitmapfile FileName = .\Res\Battery.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <720,299,920,339>
+$output false
+resource Resources::Bitmap GaugeNeedle
+{
+  attr bitmapfile FileName = .\Res\GaugeNeedle.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Native;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <9,188,209,228>
+$output false
+class Gauge : Core::Group
+{
+  $rect <329,0,529,40>
+  inherited property Bounds = <0,0,303,272>;
+
+  $rect <529,50,729,90>
+  onset Outlet
+  {
+    // Check if the new outlet differs from the currently used outlet
+    if ( pure Outlet == value )
+      return;
+
+    // Store the new outlet ...
+    pure Outlet = value;
+
+    // Set the outlet at the gauge indicator and label
+    GaugeLabels.Outlet = value;
+    GaugeIndicator.Outlet = value;
+  }
+
+  // The property 'Outlet' can refer to any other 'int32' property the widget should \
+  // remain synchronized with. When the referred property is modified, the widget \
+  // is automatically notified to remain in sync with the property.
+  // This approach follows the Controller-View programming paradigm. Here the widget \
+  // represents the 'View' and the property referred via 'Outlet' can be seen as \
+  // a part of the 'Controller'.
+  $rect <329,50,529,90>
+  property ^int32 Outlet = null;
+
+  $rect <339,140,539,180>
+  property uint8 OpacityLabels;
+
+  $rect <539,140,739,180>
+  onset OpacityLabels
+  {
+    // Remember the property's new value.
+    pure OpacityLabels = value;
+
+    // Set the opacity of the gauge labels
+    GaugeLabels.Opacity = value;
+  }
+
+  $rect <339,180,539,220>
+  property uint8 OpacityGauge;
+
+  $rect <539,180,739,220>
+  onset OpacityGauge
+  {
+    // Remember the property's new value.
+    pure OpacityGauge = value;
+
+    // Set the opacity of all elements despite the gauge labels
+    GaugeIndicator.Opacity = value;
+    Circle0.Opacity = value;
+    Circle2.Opacity = value;
+    Circle3.Opacity = value;
+    Circle4.Opacity = value;
+    Circle5.Opacity = value;
+  }
+
+  // Opacity
+  note group Note
+  {
+    attr Bounds = <329,100,749,240>;
+  }
+
+  // This is the gauge used at the first variant.
+  //
+  // It consists of a black background, six alpha8 circle bitmaps, the gauge labels \
+  // and the gauge indicator.
+  note legend Note1
+  {
+    attr Bounds = <329,250,749,390>;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image Circle5
+  {
+    preset Bounds = <-1,0,302,245>;
+    preset Color = Dashboard::Colors.GaugeCircle5;
+    preset Bitmap = Dashboard::Circle5;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image Circle4
+  {
+    preset Bounds = <80,62,222,204>;
+    preset Color = Dashboard::Colors.GaugeCircle4;
+    preset Bitmap = Dashboard::Circle4;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image Circle3
+  {
+    preset Bounds = <77,61,225,209>;
+    preset Color = Dashboard::Colors.GaugeCircle3;
+    preset Bitmap = Dashboard::Circle3;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image Circle2
+  {
+    preset Bounds = <64,48,238,222>;
+    preset Color = Dashboard::Colors.GaugeCircle2;
+    preset Bitmap = Dashboard::Circle2;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image Circle0
+  {
+    preset Bounds = <79,63,223,207>;
+    preset Color = Dashboard::Colors.GaugeCircle0;
+    preset Bitmap = Dashboard::Circle0;
+  }
+
+  $rect <20,20,160,60>
+  object Dashboard::GaugeLabels GaugeLabels
+  {
+    preset Bounds = <29,15,274,260>;
+  }
+
+  $rect <20,20,160,60>
+  object Dashboard::GaugeIndicator GaugeIndicator
+  {
+    preset Bounds = <80,64,222,206>;
+    preset CurrentValue = 1;
+  }
+
+  $reorder OnGetEmbedded 1
+  $reorder OnSetEmbedded 1
+  $reorder OnGetAlphaBlended 1
+  $reorder OnSetAlphaBlended 1
+  $reorder OnGetVisible 1
+  $reorder OnSetVisible 1
+  $reorder FindActiveDialogByClass 1
+  $reorder FindDialogByClass 1
+  $reorder FindCurrentDialog 1
+  $reorder IsCurrentDialog 1
+  $reorder IsActiveDialog 1
+  $reorder IsDialog 1
+  $reorder GetIndexOfDialog 1
+  $reorder GetDialogAtIndex 1
+  $reorder CountDialogs 1
+  $reorder SwitchToDialog 1
+  $reorder DismissDialog 1
+  $reorder PresentDialog 1
+  $reorder ObtainFocus 1
+  $reorder HasViewState 1
+  $reorder LocalPosition 1
+  $reorder GlobalPosition 1
+  $reorder DispatchEvent 1
+  $reorder BroadcastEventAtPosition 1
+  $reorder BroadcastEvent 1
+  $reorder UpdateLayout 1
+  $reorder UpdateViewState 1
+  $reorder InvalidateViewState 1
+  $reorder GetIndexOfView 1
+  $reorder GetViewAtIndex 1
+  $reorder CountViews 1
+  $reorder FindViewInDirection 1
+  $reorder FindViewWithinArea 1
+  $reorder FindViewAtPosition 1
+  $reorder FindPrevView 1
+  $reorder FindNextView 1
+  $reorder FindSiblingView 1
+  $reorder GetContentArea 1
+  $reorder FadeGroup 1
+  $reorder RestackBehind 1
+  $reorder RestackBack 1
+  $reorder RestackTop 1
+  $reorder Restack 1
+  $reorder Remove 1
+  $reorder AddBehind 1
+  $reorder Add 1
+  $reorder Focus 1
+  $reorder Buffered 1
+  $reorder Embedded 3
+  $reorder AlphaBlended 3
+  $reorder Visible 3
+  $reorder OnSetOutlet 3
+  $reorder Outlet 3
+  $reorder Enabled 1
+  $reorder Opacity 1
+}
+
+$rect <1120,50,1320,90>
+$output false
+resource Resources::Bitmap Circle0
+{
+  attr bitmapfile FileName = .\Res\Gauge\Circle0.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <1120,90,1320,130>
+$output false
+resource Resources::Bitmap Circle2
+{
+  attr bitmapfile FileName = .\Res\Gauge\Circle2.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <1120,130,1320,170>
+$output false
+resource Resources::Bitmap Circle3
+{
+  attr bitmapfile FileName = .\Res\Gauge\Circle3.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <1120,170,1320,210>
+$output false
+resource Resources::Bitmap Circle4
+{
+  attr bitmapfile FileName = .\Res\Gauge\Circle4.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <1120,210,1320,250>
+$output false
+resource Resources::Bitmap Circle5
+{
+  attr bitmapfile FileName = .\Res\Gauge\Circle5.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <10,90,210,130>
+$output false
+class Dashboard : Core::Group
+{
+  $rect <0,300,200,340>
+  inherited property Bounds = <0,0,480,272>;
+
+  $rect <419,709,619,749>
+  inherited method UpdateViewState()
+  {
+    super( aState );
+
+    // Do not move the leds at the shutdown sequence but instead fade them out.
+    if ( shutdown )
+    {
+      // Ensure that the leds are faded out at V1 and V2
+      var float offset = (1.0 - progress);
+      if ( DashboardV1.Visible )
+        offset = progress;
+
+      // Reduce opacity of left leds
+      LedButton2.Opacity = Dashboard::Animation.linearValueProgress( 0, 255, 0.7, 1.0, offset );
+      LedButton1.Opacity = LedButton2.Opacity;
+      LedButton.Opacity = LedButton2.Opacity;
+
+      // Reduce opacity of left leds
+      LedButton5.Opacity = LedButton2.Opacity;
+      LedButton4.Opacity = LedButton2.Opacity;
+      LedButton3.Opacity = LedButton2.Opacity;
+
+      // Reduce opacity of reach label
+      RangeDisplay.Opacity = LedButton2.Opacity;
+    }
+    else
+    {
+      // Move left leds
+      LedButton2.Bounds.origin = Dashboard::Animation.linearPointProgess( <24,215>, <54,228>, 0.4, 0.6, progress );
+      LedButton1.Bounds.origin = Dashboard::Animation.linearPointProgess( <47,165>, <31,167>, 0.4, 0.6, progress );
+      LedButton.Bounds.origin = Dashboard::Animation.linearPointProgess( <66,115>, <28,111>, 0.4, 0.6, progress );
+
+      // Move right leds
+      LedButton5.Bounds.origin = Dashboard::Animation.linearPointProgess( <418,214>, <384,228>, 0.4, 0.6, progress );
+      LedButton4.Bounds.origin = Dashboard::Animation.linearPointProgess( <395,165>, <407,167>, 0.4, 0.6, progress );
+      LedButton3.Bounds.origin = Dashboard::Animation.linearPointProgess( <373,113>, <410,111>, 0.4, 0.6, progress );
+
+      // Only blend in the range display on start up. The range display stays while switching between the two variants
+      if ( !DashboardV2.Visible )
+        RangeDisplay.Opacity = Dashboard::Animation.linearValueProgress( 0, 255, 0.2, 0.5, progress );
+    }
+  }
+
+  $rect <1,340,201,380>
+  inherited method Init()
+  {
+    attachobserver onAutoDemoModeChanged, ^Dashboard::Device.AutoDemoMode;
+    postsignal onAutoDemoModeChanged;
+
+    // Show the second variant only after the user has started
+    // a transition
+    DashboardV1.Visible = true;
+    DashboardV2.Visible = false;
+
+    $if !$composer
+      // Disable the touchhandlers while the startup sequence
+      TransitionButton.Enabled = false;
+      ShutdownButton.Enabled = false;
+      shutdown = false;
+
+      TransitionButton.Visible = false;
+      ShutdownButton.Visible = false;
+
+      UI.Visible = false;
+      Mode.Visible = false;
+
+      SpeedDisplay.Opacity = 0;
+      SpeedWarpGroup.Opacity = 0;
+
+      RangeDisplay.Opacity = 0;
+
+      LedButton.Opacity = 0;
+      LedButton1.Opacity = 0;
+      LedButton2.Opacity = 0;
+      LedButton3.Opacity = 0;
+      LedButton4.Opacity = 0;
+      LedButton5.Opacity = 0;
+    $endif
+
+    // Set the gauge display to buffered before scaling
+    SpeedDisplay.Buffered = true;
+
+    // Delay the effects starts till the dashboard was initial drawn
+    idlesignal gaugeDisplayEffect.StartEffect;
+    idlesignal v1Effect.StartEffect;
+  }
+
+  $rect <250,450,450,490>
+  object Effects::FloatEffect v1Effect
+  {
+    preset OnFinished = onV1Effect;
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = 3000;
+    preset Outlet = ^progress;
+  }
+
+  $rect <250,490,450,530>
+  slot onV1Effect
+  {
+    // Show second variant
+    DashboardV2.Visible = true;
+
+    // Show all icons and indicators
+    TransitionButton.Visible = true;
+    ShutdownButton.Visible = true;
+
+    UI.Visible = true;
+    Mode.Visible = true;
+
+    LedButton.Opacity = 255;
+    LedButton1.Opacity = 255;
+    LedButton2.Opacity = 255;
+    LedButton3.Opacity = 255;
+    LedButton4.Opacity = 255;
+    LedButton5.Opacity = 255;
+
+    signal ledOnEffect.StartEffect;
+  }
+
+  $rect <19,490,219,530>
+  slot onGaugeDisplayEffect
+  {
+    // Increase opacity of gauge displays
+    SpeedWarpGroup.Opacity = (uint8)gaugeDisplayEffect.Value;
+
+    // Start scaling of the gauges once the opacity is >= 150.0
+    var float startOpacity = 5.0;
+    var float scale = (startOpacity / 255.0);
+    if ( gaugeDisplayEffect.Value >= startOpacity )
+      scale = (float)gaugeDisplayEffect.Value / 255.0;
+
+    // Scale gauge displays
+    SpeedWarpGroup.RotateAndScale( SpeedDisplay.Bounds.center, 0.0, scale, scale );
+  }
+
+  // Gauge display
+  note group Note2
+  {
+    attr Bounds = <10,390,230,580>;
+  }
+
+  $rect <21,530,221,570>
+  slot onGaugeDisplayFinished
+  {
+    // Show the gauge display
+    SpeedDisplay.Opacity = 255;
+
+    // Because on buffered == false they are not displayed at the warp groups anymore
+    SpeedDisplay.Buffered = false;
+
+  }
+
+  $rect <479,449,679,489>
+  object Effects::Int32Effect ledOnEffect
+  {
+    preset OnFinished = onLedOnEffectFinished;
+    preset OnAnimate = onLedOnEffect;
+    preset Timing = Effects::Timing.Linear;
+    preset NoOfCycles = 1;
+    preset CycleDuration = 1500;
+    preset Value2 = 3;
+  }
+
+  $rect <479,489,679,529>
+  slot onLedOnEffect
+  {
+    // Enable the leds from bottom to top
+    Dashboard::Device.Led2 = (ledOnEffect.Value > 0);
+    Dashboard::Device.Led5 = (ledOnEffect.Value > 0);
+
+    Dashboard::Device.Led1 = (ledOnEffect.Value > 1);
+    Dashboard::Device.Led4 = (ledOnEffect.Value > 1);
+
+    Dashboard::Device.Led0 = (ledOnEffect.Value > 2);
+    Dashboard::Device.Led3 = (ledOnEffect.Value > 2);
+  }
+
+  // Functional safety led on check
+  note group Note3
+  {
+    attr Bounds = <470,390,690,580>;
+  }
+
+  $rect <481,529,681,569>
+  slot onLedOnEffectFinished
+  {
+    signal gaugeCheckEffect.StartEffect;
+  }
+
+  // V1 blending
+  note group Note4
+  {
+    attr Bounds = <241,390,459,580>;
+  }
+
+  $rect <19,618,219,658>
+  slot onStartTransition
+  {
+    // Swap effect direction
+    transitionEffect.Value1 = progress;
+    transitionEffect.Value2 = 1.0 - transitionEffect.Value2;
+
+    // Start the variant transition
+    signal transitionEffect.StartEffect;
+  }
+
+  $rect <19,658,219,698>
+  object Effects::FloatEffect transitionEffect
+  {
+    preset Timing = Effects::Timing.EaseIn_EaseOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = 3000;
+    preset Outlet = ^progress;
+  }
+
+  // Variant transition
+  note group Note5
+  {
+    attr Bounds = <10,589,639,798>;
+  }
+
+  $rect <940,529,1140,569>
+  slot onLedOffFinished
+  {
+    // Let the user do variant transitions
+    TransitionButton.Enabled = true;
+    ShutdownButton.Enabled = true;
+
+    // Let the user toggle the leds
+    LedButton.Enabled = true;
+    LedButton1.Enabled = true;
+    LedButton2.Enabled = true;
+    LedButton3.Enabled = true;
+    LedButton4.Enabled = true;
+    LedButton5.Enabled = true;
+
+    // Start demo mode
+    Dashboard::Device.DemoMode = true;
+  }
+
+  $rect <21,710,221,750>
+  property float progress = 0.0;
+
+  $rect <221,709,421,749>
+  onset progress
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure progress == value )
+      return;
+
+    // Remember the property's new value.
+    pure progress = value;
+
+    progressReverse = (1.0 - value);
+
+    InvalidateViewState();
+
+    notifyobservers ^progress;
+  }
+
+  $rect <21,749,221,789>
+  property float progressReverse = 100.0;
+
+  $rect <219,749,419,789>
+  onset progressReverse
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure progressReverse == value )
+      return;
+
+    // Remember the property's new value.
+    pure progressReverse = value;
+
+    notifyobservers ^progressReverse;
+  }
+
+  $rect <19,847,219,887>
+  slot onShutdown
+  {
+    // Disable transition touchhandler
+    TransitionButton.Enabled = false;
+
+    // Store that shutdown was initiated
+    shutdown = true;
+
+    // Stop the demo mode
+    Dashboard::Device.DemoMode = false;
+
+    // Swap shutdown effect direction
+    shutdownVariantEffect.Value1 = progress;
+    shutdownVariantEffect.Value2 = 1.0 - transitionEffect.Value2;
+
+    // Hide the current not visible variant
+    DashboardV1.Visible = ( progress == 1.0 );
+    DashboardV2.Visible = !DashboardV1.Visible;
+
+    // Hide all icons and indicators
+    TransitionButton.Visible = false;
+    ShutdownButton.Visible = false;
+
+    UI.Visible = false;
+    Mode.Visible = false;
+
+    //RangeDisplay.Opacity = 0;
+
+    // Set the gauge display to buffered before scaling
+    SpeedDisplay.Buffered = true;
+
+    // Hide the gauge display
+    SpeedDisplay.Opacity = 0;
+
+    // Start the shutdown variant transition
+    signal shutdownVariantEffect.StartEffect;
+    signal shutdownGaugeDisplayEffect.StartEffect;
+  }
+
+  $rect <220,849,420,889>
+  object Effects::FloatEffect shutdownVariantEffect
+  {
+    preset Timing = Effects::Timing.EaseIn_FastOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = 3000;
+    preset Outlet = ^progress;
+  }
+
+  $rect <19,887,219,927>
+  var bool shutdown = false;
+
+  // Shutdown transition
+  note group Note7
+  {
+    attr Bounds = <10,809,640,980>;
+  }
+
+  $rect <19,449,219,489>
+  object Effects::FloatEffect gaugeDisplayEffect
+  {
+    preset OnFinished = onGaugeDisplayFinished;
+    preset OnAnimate = onGaugeDisplayEffect;
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = 750;
+    preset Value2 = 255.0;
+    preset Value1 = 0.0;
+  }
+
+  $rect <420,890,620,930>
+  slot onShutdownGaugeDisplayEffect
+  {
+    // Decrease opacity of gauge display
+    SpeedWarpGroup.Opacity = (uint8)shutdownGaugeDisplayEffect.Value;
+
+    // Start shrinking of the gauges and end when opacity is < 150.0
+    var float endOpacity = 5.0;
+    var float scale = (endOpacity / 255.0);
+    if ( shutdownGaugeDisplayEffect.Value >= endOpacity )
+      scale = (float)shutdownGaugeDisplayEffect.Value / 255.0;
+
+    // Shrink gauge display
+    SpeedWarpGroup.RotateAndScale( SpeedDisplay.Bounds.center, 0.0, scale, scale );
+  }
+
+  $rect <422,930,622,970>
+  slot onShutdownGaugeDisplayFinished
+  {
+    // Leave this dialog and show another one
+    if ( IsDialog( false ))
+      Owner.SwitchToDialog( new Dashboard::StartScreen, Dashboard::FadeInOutCentered, Effects::FadeInOutCentered, null, null, Effects::FadeInOutCentered, null, null, null, null, false );
+  }
+
+  $rect <420,849,620,889>
+  object Effects::FloatEffect shutdownGaugeDisplayEffect
+  {
+    preset OnFinished = onShutdownGaugeDisplayFinished;
+    preset OnAnimate = onShutdownGaugeDisplayEffect;
+    preset Timing = Effects::Timing.EaseIn_FastOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = 750;
+    preset InitialDelay = 2250;
+    preset Value2 = 0.0;
+    preset Value1 = 255.0;
+  }
+
+  $rect <710,449,910,489>
+  object Effects::Int32Effect gaugeCheckEffect
+  {
+    preset OnFinished = onGaugeCheckEffectFinished;
+    preset OnAnimate = onGaugeCheckEffect;
+    preset Symmetric = true;
+    preset Timing = Effects::Timing.EaseIn_EaseOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = 1500;
+    preset Value2 = 100;
+  }
+
+  $rect <710,489,910,529>
+  slot onGaugeCheckEffect
+  {
+    // Drive speed and energy value from zero to 100
+    Dashboard::Device.Speed = gaugeCheckEffect.Value;
+    Dashboard::Device.Energy = gaugeCheckEffect.Value;
+  }
+
+  // Functional safety gauge check
+  note group Note6
+  {
+    attr Bounds = <699,389,919,580>;
+  }
+
+  $rect <712,529,912,569>
+  slot onGaugeCheckEffectFinished
+  {
+    // Start the led off effect
+    signal ledOffEffect.StartEffect;
+  }
+
+  $rect <939,448,1139,488>
+  object Effects::Int32Effect ledOffEffect
+  {
+    preset OnFinished = onLedOffFinished;
+    preset OnAnimate = onLedOffEffect;
+    preset Timing = Effects::Timing.Linear;
+    preset NoOfCycles = 1;
+    preset CycleDuration = 1500;
+    preset Value2 = 0;
+    preset Value1 = 3;
+  }
+
+  $rect <939,488,1139,528>
+  slot onLedOffEffect
+  {
+    // Disable the leds from top to bottom
+    Dashboard::Device.Led2 = (ledOffEffect.Value > 0);
+    Dashboard::Device.Led5 = (ledOffEffect.Value > 0);
+
+    Dashboard::Device.Led1 = (ledOffEffect.Value > 1);
+    Dashboard::Device.Led4 = (ledOffEffect.Value > 1);
+
+    Dashboard::Device.Led0 = (ledOffEffect.Value > 2);
+    Dashboard::Device.Led3 = (ledOffEffect.Value > 2);
+  }
+
+  // Functional safety led off check
+  note group Note8
+  {
+    attr Bounds = <930,389,1150,579>;
+  }
+
+  // This is the dashboard screen.
+  //
+  // Once the user has switch to this screen multiple effects come into play to do \
+  // the following actions:
+  // 1. Show and zoom the speed and energy gauge displays
+  // 2. Show the leds and the outer texts while the first dashboard variant is animated \
+  // displayed
+  // 3. Functional safety check of leds and gauges
+  //
+  // You can start a variant transition by touching the left upper corner.
+  // By touching the right upper corner the current visible variant disappears and \
+  // it is returned to the start screen.
+  note legend Note9
+  {
+    attr Bounds = <649,589,1181,909>;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Background
+  {
+    preset Bounds = Bounds;
+    preset Color = Dashboard::Colors.Background;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text UI
+  {
+    preset Bounds = <28,46,48,61>;
+    preset String = "UI";
+    preset Font = Dashboard::FontLightS;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text Mode
+  {
+    preset Bounds = <425,47,463,62>;
+    preset String = "Mode";
+    preset Font = Dashboard::FontLightS;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::PushButton ShutdownButton
+  {
+    preset Bounds = <409,3,479,53>;
+    preset OnActivate = onShutdown;
+    preset Icon = Dashboard::OffIcon;
+    preset Label = "";
+    preset Appearance = Dashboard::DashboardButtonConfig;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::PushButton TransitionButton
+  {
+    preset Bounds = <5,5,73,55>;
+    preset OnActivate = onStartTransition;
+    preset Icon = Dashboard::SwitchIcon;
+    preset Label = "";
+    preset Appearance = Dashboard::DashboardButtonConfig;
+  }
+
+  $rect <20,20,160,60>
+  object Dashboard::DashboardV2 DashboardV2
+  {
+    preset Bounds = Bounds;
+    preset Outlet = ^progressReverse;
+  }
+
+  $rect <20,20,160,60>
+  object Dashboard::DashboardV1 DashboardV1
+  {
+    preset Bounds = Bounds;
+    preset Outlet = ^progress;
+  }
+
+  $rect <20,20,160,60>
+  object Dashboard::GaugeDisplay SpeedDisplay
+  {
+    preset Bounds = <205,102,275,172>;
+    preset Outlet = ^Dashboard::Device.Speed;
+    preset OutletDesc = ^Dashboard::Device.ODO;
+  }
+
+  $rect <20,20,160,60>
+  object Views::WarpGroup SpeedWarpGroup
+  {
+    preset Point4 = <204,172>;
+    preset Point3 = <274,172>;
+    preset Point2 = <274,102>;
+    preset Point1 = <204,102>;
+    preset SourceAnchor = SpeedDisplay.Bounds.orect.center;
+    preset Group = SpeedDisplay;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::ToggleButton LedButton
+  {
+    preset Bounds = <28,111,70,153>;
+    preset Enabled = false;
+    preset Outlet = ^Dashboard::Device.Led0;
+    preset IconOnFrame = 6;
+    preset IconOffFrame = 7;
+    preset Icon = Dashboard::Icons;
+    preset Label = "";
+    preset Appearance = Dashboard::LedButtonOrangeConfig;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::ToggleButton LedButton1
+  {
+    preset Bounds = <47,165,89,207>;
+    preset Enabled = false;
+    preset Outlet = ^Dashboard::Device.Led1;
+    preset IconFrame = 0;
+    preset Icon = Dashboard::Icons;
+    preset Label = "";
+    preset Appearance = Dashboard::LedButtonOrangeConfig;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::ToggleButton LedButton2
+  {
+    preset Bounds = <54,228,96,270>;
+    preset Enabled = false;
+    preset Outlet = ^Dashboard::Device.Led2;
+    preset IconOffFrame = 2;
+    preset IconFrame = 2;
+    preset Icon = Dashboard::Icons;
+    preset Label = "";
+    preset Appearance = Dashboard::LedButtonOrangeConfig;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::ToggleButton LedButton3
+  {
+    preset Bounds = <373,113,415,155>;
+    preset Enabled = false;
+    preset Outlet = ^Dashboard::Device.Led3;
+    preset IconOnFrame = 4;
+    preset IconOffFrame = 5;
+    preset Icon = Dashboard::Icons;
+    preset Label = "";
+    preset Appearance = Dashboard::LedButtonOrangeConfig;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::ToggleButton LedButton4
+  {
+    preset Bounds = <395,165,437,207>;
+    preset Enabled = false;
+    preset Outlet = ^Dashboard::Device.Led4;
+    preset IconFrame = 1;
+    preset Icon = Dashboard::Icons;
+    preset Label = "";
+    preset Appearance = Dashboard::LedButtonOrangeConfig;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::ToggleButton LedButton5
+  {
+    preset Bounds = <418,214,460,256>;
+    preset Enabled = false;
+    preset Outlet = ^Dashboard::Device.Led5;
+    preset IconOffFrame = 3;
+    preset IconFrame = 3;
+    preset Icon = Dashboard::Icons;
+    preset Label = "";
+    preset Appearance = Dashboard::LedButtonOrangeConfig;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::ValueDisplay RangeDisplay
+  {
+    preset Bounds = <186,244,320,264>;
+    preset Outlet = ^Dashboard::Device.Battery;
+    preset Unit = "km reach";
+    preset NoOfDigits = 1;
+    preset CurrentFactor = 4.0;
+    preset Appearance = Dashboard::RangeConfig;
+  }
+
+  $rect <1170,490,1370,530>
+  object Core::Timer autoDemoModeTimer
+  {
+    preset OnTrigger = onStartTransition;
+    preset Period = 20000;
+  }
+
+  $rect <1170,450,1370,490>
+  slot onAutoDemoModeChanged
+  {
+    // Start the auto demo mode timer on enabled auto demo mode
+    if ( Dashboard::Device.AutoDemoMode )
+      signal autoDemoModeTimer.StartTimer;
+    else
+      signal autoDemoModeTimer.StopTimer;
+  }
+
+  // Auto demo mode
+  note group Note
+  {
+    attr Bounds = <1160,390,1380,580>;
+  }
+}
+
+// Helper class which provides functions to simplifies time independent animations.
+$rect <10,670,210,710>
+$output false
+class AnimationClass
+{
+  $rect <0,0,200,40>
+  method int32 linearValueProgress( arg int32 aValue1, arg int32 aValue2, arg float aStart, arg float aEnd, arg float aProgress )
+  {
+    var int32 opacity;
+
+    if ( (aProgress >= aStart) && (aProgress <= aEnd) )
+    {
+      opacity = (int32)(aValue1 + (int32)(((aProgress - aStart) * (float)(aValue2 - aValue1)) * (1.0 / (aEnd - aStart))));
+    }
+    else if ( aProgress < aStart )
+    {
+      opacity = aValue1;
+    }
+    else // aProgress > aEnd
+    {
+      opacity = aValue2;
+    }
+
+    return opacity;
+  }
+
+  $rect <0,40,200,80>
+  method point linearPointProgess( arg point aValue1, arg point aValue2, arg float aStart, arg float aEnd, arg float aProgress )
+  {
+    var int32 x = linearValueProgress( aValue1.x, aValue2.x, aStart, aEnd, aProgress );
+    var int32 y = linearValueProgress( aValue1.y, aValue2.y, aStart, aEnd, aProgress );
+
+    return point( x, y );
+  }
+
+  $rect <0,80,200,120>
+  method color linearColorProgess( arg color aValue1, arg color aValue2, arg float aStart, arg float aEnd, arg float aProgress )
+  {
+    var uint8 r = (uint8)linearValueProgress( aValue1.red, aValue2.red, aStart, aEnd, aProgress );
+    var uint8 g = (uint8)linearValueProgress( aValue1.green, aValue2.green, aStart, aEnd, aProgress );
+    var uint8 b = (uint8)linearValueProgress( aValue1.blue, aValue2.blue, aStart, aEnd, aProgress );
+
+    // Set alpha channel to full opacity
+    return color( r, g, b, 0xFF );
+  }
+}
+
+$rect <210,670,410,710>
+$output false
+autoobject Dashboard::AnimationClass Animation;
+
+$rect <10,448,210,488>
+$output false
+autoobject WidgetSet::ToggleButtonConfig LedButtonOrangeConfig
+{
+  preset IconOnTintActive = Dashboard::Colors.LedsOnOrange;
+  preset IconOnTintFocused = Dashboard::Colors.LedsOnOrange;
+  preset IconOnTintDisabled = Dashboard::Colors.LedsOnOrange;
+  preset IconOnTintDefault = Dashboard::Colors.LedsOnOrange;
+  preset IconOffTintActive = Dashboard::Colors.TextLedsOff;
+  preset IconOffTintFocused = Dashboard::Colors.TextLedsOff;
+  preset IconOffTintDisabled = Dashboard::Colors.TextLedsOff;
+  preset IconOffTintDefault = Dashboard::Colors.TextLedsOff;
+}
+
+// Config
+note group Note6
+{
+  attr Bounds = <0,408,450,580>;
+}
+
+$rect <220,487,420,527>
+$output false
+autoobject WidgetSet::ValueDisplayConfig RangeConfig
+{
+  preset ValueMarginRight = 3;
+  preset ValueColorNegative = Dashboard::Colors.Text;
+  preset ValueColorPositive = Dashboard::Colors.Text;
+  preset ValueAlignment = Views::TextAlignment[AlignHorzRight, AlignVertCenter];
+  preset ValueFont = Dashboard::FontLightS;
+  preset UnitColorNegative = Dashboard::Colors.Text;
+  preset UnitColorPositive = Dashboard::Colors.Text;
+  preset UnitFont = Dashboard::FontLightS;
+  preset FormatDecimalSign = "";
+  preset Layout = WidgetSet::ValueDisplayLayout.AlignValueLeftToUnit;
+}
+
+$rect <29,228,229,268>
+$output false
+class GaugeLabels : Core::Group
+{
+  $rect <270,40,470,80>
+  inherited property Bounds = <0,0,245,245>;
+
+  $rect <270,0,470,40>
+  inherited method Init()
+  {
+    signal setup;
+    postsignal refresh;
+  }
+
+  $rect <480,249,680,289>
+  slot refresh
+  {
+    // Calculate the angle between each text label
+    var float deltaAngle = ( endAngle - startAngle ) / float( labels.size - 1 );
+
+    // Adjust and position each text label
+    var int32 i = 0;
+    while ( i < labels.size )
+    {
+      adjustLabel( i, startAngle + float(i) * deltaAngle, radius, (i + 1) * increment );
+      i = i + 1;
+    }
+  }
+
+  $rect <480,289,680,329>
+  method void adjustLabel( arg int32 aIndex, arg float aAngle, arg int32 aDistance, arg int32 aNumber )
+  {
+    var int32 offset = 0;
+
+    // Calculate the label center
+    var point labelCenter = point( labels[ aIndex ].Bounds.w / 2, labels[ aIndex ].Bounds.h / 2 );
+
+    // Set the number as label text
+    labels[ aIndex ].String = string( aNumber );
+
+    if ( aAngle > 360.0 )
+      aAngle = aAngle - 360.0;
+
+    // Add less distance for number with three or more digits
+    if ( aNumber / 100 >= 1 )
+      offset = -2;
+
+    // Calculate the position of the label
+    labels[ aIndex ].Bounds.origin = Bounds.orect.center - labelCenter
+      + point( int32( float( aDistance + offset ) * math_cos( aAngle - 90.0 ) ), int32( float( aDistance + offset ) * math_sin( aAngle - 90.0 ) ) );
+  }
+
+  // The difference between the values of consecutive labels.
+  $rect <280,289,480,329>
+  var int32 increment = 10;
+
+  $rect <280,329,480,369>
+  var int32 radius = 106;
+
+  // The array containing the dynamically created text view for the label text elements.
+  $rect <280,369,480,409>
+  array Views::Text labels[ 13 ];
+
+  $rect <270,120,470,160>
+  property int32 CurrentValue = 10;
+
+  $rect <470,120,670,160>
+  onset CurrentValue
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure CurrentValue == value )
+      return;
+
+    // Remember the property's new value.
+    pure CurrentValue = value;
+
+    // Calculate the nearest label to the CurrentValue
+    var int32 index = (int32)math_round((float)CurrentValue / (float)increment) - 1;
+
+    // Check on valid index and if not already selected
+    if ( (index < labels.size) && (index != selected) )
+    {
+      // Unselect all labels
+      var int32 i;
+      for ( i = 0; i < labels.size; i = i + 1 )
+        labels[i].Color = Dashboard::Colors.Text;
+
+      // Color the selected label dependend of the rotation direction
+      if ( index >= 0 )
+        labels[ index ].Color = Dashboard::Colors.BatteryGaugeSelectionV1;
+
+      // Store the current selection index
+      selected = index;
+    }
+  }
+
+  $rect <470,80,670,120>
+  onset Outlet
+  {
+    // Check if the new outlet differs from the currently used outlet
+    if ( pure Outlet == value )
+      return;
+
+    // Detach from the previous outlet
+    if ( pure Outlet != null )
+      detachobserver onOutlet, pure Outlet;
+
+    // Store the new outlet ...
+    pure Outlet = value;
+
+    // ... and attach to the new one
+    if ( value != null )
+      attachobserver onOutlet, value;
+
+    // Finally, retrieve the current state of the property associated via 'Outlet'.
+    if ( value != null )
+      postsignal onOutlet;
+  }
+
+  // The property 'Outlet' can refer to any other 'int32' property the widget should \
+  // remain synchronized with. When the referred property is modified, the widget \
+  // is automatically notified to remain in sync with the property.
+  // This approach follows the Controller-View programming paradigm. Here the widget \
+  // represents the 'View' and the property referred via 'Outlet' can be seen as \
+  // a part of the 'Controller'.
+  $rect <270,80,470,120>
+  property ^int32 Outlet = null;
+
+  // This slot method will receive a signal, if the value of the property assigned \
+  // to @Outlet has been changed by another widget or by the application logic. In \
+  // response to this notification, the widget will update itself.
+  $rect <670,80,870,120>
+  slot onOutlet
+  {
+    // Read the current value of the associated property and update accordingly
+    // the state of the widget.
+    if ( Outlet != null )
+      CurrentValue = Outlet^;
+  }
+
+  $rect <280,409,480,449>
+  var int32 selected;
+
+  $rect <280,209,480,249>
+  property float startAngle = 230.0;
+
+  $rect <280,249,480,289>
+  property float endAngle = 490.0;
+
+  // Label and line adjustment
+  note group Note
+  {
+    attr Bounds = <270,170,700,460>;
+  }
+
+  $rect <480,209,680,249>
+  slot setup
+  {
+    var int32 i = 0;
+    while ( i < labels.size )
+    {
+      var Views::Text txt = new Views::Text;
+
+      // Autosize the text view to allow center positioning through the view bounds
+      txt.AutoSize = true;
+      labels[i] = txt;
+      txt.Font = Dashboard::FontLightM;
+
+      // If the view was not already added add it
+      if ( labels[i].Owner == null )
+        Add( labels[i], 0 );
+
+      i = i + 1;
+    }
+  }
+
+  // This is the gauge labels component which is used at Dashboard::Gauge.
+  //
+  // The text views and the lines are dynamically adjusted.
+  note legend Note1
+  {
+    attr Bounds = <-10,270,260,450>;
+  }
+}
+
+// The class 'PieChart' implements a GUI component for displaying a complete pie \
+// chart diagram. The data for the single pie segments is defined within a @RecordList.
+$rect <30,309,230,349>
+$output false
+class GaugeIndicator : Core::Group
+{
+  $rect <-10,200,190,240>
+  inherited method Init()
+  {
+    // Update the needle position
+    drawNeedle();
+
+    $if $composer
+    CurrentValue = 100;
+    $endif
+  }
+
+  $rect <-10,250,190,290>
+  inherited method Draw()
+  {
+    var float startAngle;
+    var float deltaAngle;
+
+    // Determine starting angle and delta (clockwise)
+    if ( StartAngle < EndAngle )
+    {
+      startAngle = pure StartAngle;
+      deltaAngle = newRotationAngle - startAngle;
+    }
+    // counterclockwise
+    else
+    {
+      startAngle = newRotationAngle;
+      deltaAngle = pure StartAngle - newRotationAngle;
+    }
+
+    // Determine center coordinates
+    var int32 dx = ( pure Bounds.x2 + pure Bounds.x1 ) / 2 + aOffset.x;
+    var int32 dy = ( pure Bounds.y2 + pure Bounds.y1 ) / 2 + aOffset.y;
+
+    drawPie( aCanvas, aClip, dx, dy, startAngle, deltaAngle, pure Scaling, pure Displacement, Dashboard::Colors.GaugeGlowV1, aOpacity, aBlend );
+
+    // Draw embedded components, like background rectangle
+    super( aCanvas, aClip, aOffset, aOpacity, aBlend );
+
+  }
+
+  $rect <-10,160,190,200>
+  inherited property Bounds = <0,0,142,142>;
+
+  // The property 'StartAngle' contains the starting angle of the gauge indicator.
+  $rect <200,0,400,40>
+  property float StartAngle = 205.0;
+
+  $rect <400,0,600,40>
+  onset StartAngle
+  {
+    // Check for any changes...
+    if ( value == pure StartAngle )
+      return;
+
+    // Store the new angle value...
+    pure StartAngle = value;
+
+    // ...and force an update of the component
+    InvalidateArea( Bounds.orect );
+
+  }
+
+  // The property 'SegmentImage' contains the bitmap resource, that is used to create \
+  // the segment. The image has to contain the top left quarter of a circular object.
+  $rect <200,180,400,220>
+  property Resources::Bitmap SegmentImage = Dashboard::GaugeGlowSegment;
+
+  $rect <400,180,600,220>
+  onset SegmentImage
+  {
+    // Check for any changes...
+    if ( value == pure SegmentImage )
+      return;
+
+    // Store the image...
+    pure SegmentImage = value;
+
+    // ...and force an update of the component
+    InvalidateArea( Bounds.orect );
+
+  }
+
+  $rect <400,220,600,260>
+  var Graphics::Canvas tempImage = null;
+
+  // The property 'Scaling' contains the scaling factor between 0.01 and 1.1.
+  $rect <200,90,400,130>
+  property float Scaling = 1.0;
+
+  $rect <400,90,600,130>
+  onset Scaling
+  {
+    // Check limits
+    if ( value < 0.01 )
+      value = 0.01;
+    if ( value > 1.1 )
+      value = 1.1;
+
+    // Check for any changes...
+    if ( value == pure Scaling )
+      return;
+
+    // Store the new value...
+    pure Scaling = value;
+
+    // ...and force an update of the component
+    InvalidateArea( Bounds.orect );
+
+  }
+
+  $rect <-10,290,190,330>
+  method void drawPie( arg Graphics::Canvas aCanvas, arg rect aClip, arg int32 aX, arg int32 aY, arg float aStartAngle, arg float aDeltaAngle, arg float aScaling, arg float aDisplacement, arg color aColor, arg int32 aOpacity, arg bool aBlend )
+  {
+    var float sinA;
+    var float cosA;
+    var float p1x;
+    var float p1y;
+    var float p2x;
+    var float p2y;
+    var float p3x;
+    var float p3y;
+    var float p4x;
+    var float p4y;
+    var rect clip;
+
+    var color c = aColor;
+
+    /* calculate resulting opacity value from given opacity and the components opacity value */
+    var int32 opacity = ((( aOpacity + 1 ) * pure Opacity ) >> 8 ) + 1;
+
+    /* alpha blending of the chart depends on the blending mode of its owners */
+    aBlend = aBlend && viewState.contains( Core::ViewState[ AlphaBlended ]);
+
+    /* modulate the color values by the calculated opacity */
+    if ( opacity < 256 )
+      c.alpha = uint8(( c.alpha * opacity ) >> 8 );
+
+    /* valid segment image is necessary to draw the segment */
+    if ( SegmentImage == null )
+      return;
+
+    var int32 w = SegmentImage.FrameSize.x;
+    var int32 h = SegmentImage.FrameSize.y;
+
+    var float quadAngle = 0.0;
+
+    /* detect full 360° segment */
+    if ( aDeltaAngle >= 360.0 )
+    {
+      aStartAngle = 0.0;
+      aDeltaAngle = 360.0;
+    }
+
+    /* if pie segment should be displaced from the center, calculate the direction and resulting offset */
+    if ( aDisplacement > 0.0 )
+    {
+      var float displaceAngle = aStartAngle + aDeltaAngle / 2.0;
+
+      /* pre-calculate the sin/cos values for the displacement angle */
+      sinA = math_sin( displaceAngle );
+      cosA = math_cos( displaceAngle );
+
+      /* shift the center point with given displacement  */
+      aX = aX + (int32)( aDisplacement * sinA );
+      aY = aY - (int32)( aDisplacement * cosA );
+    }
+
+    /* limit starting angle to 0°...90° and determine quadrant angle */
+    while ( aStartAngle >= 90.0 )
+    {
+      aStartAngle = aStartAngle - 90.0;
+      quadAngle = quadAngle + 90.0;
+    }
+
+    /* create temporary canvas if necessary */
+    if (( tempImage == null ) || ( tempImage.FrameSize != SegmentImage.FrameSize ))
+    {
+      tempImage = new Graphics::Canvas;
+      tempImage.FrameSize = SegmentImage.FrameSize;
+
+    }
+
+    /*
+       ---
+       For drawing a pie segment, two different scenarios are possible:
+       1. the complete pie segment is within one quadrant - in this case
+          an intermediate (temporary) canvas has to be used.
+       2. the pie segment crosses one or more quadrant borders - in this
+          case, the following parts have to be drawn:
+          - starting segment (from start angle to quadrant border)
+          - 0...4 complete quadrants
+          - final segment (from quadrant border to stop angle)
+       ---
+       For rotating the four points of a segment, the rotation formula is:
+         x' = x cosA - y sinA;
+         y' = y cosA + x sinA;
+       ---
+    */
+
+    /* scenario 1: start and stop angle are within the same quadrant */
+    if (( aStartAngle > 0.0 ) && ( aStartAngle + aDeltaAngle < 90.0 ))
+    {
+      /* pre-calculate the sin/cos values for the delta angle */
+      sinA = math_sin( aDeltaAngle );
+      cosA = math_cos( aDeltaAngle );
+
+      /* perform the rotation of the four points p1...p4 */
+      p1x = (float)-w * cosA + (float)h * sinA;
+      p1y = (float)-h * cosA - (float)w * sinA;
+      p2x = (float)h * sinA;
+      p2y = (float)-h * cosA;
+      p3x = 0.0;
+      p3y = 0.0;
+      p4x = (float)-w * cosA;
+      p4y = (float)-w * sinA;
+
+      /* clear tempImage */
+      tempImage.FillRectangle( rect( 0, 0, w, h ), rect( 0, 0, tempImage.FrameSize.x, tempImage.FrameSize.y ),
+        #00000000, #00000000, #00000000, #00000000, false );
+
+      /* rotate pie segment image into tempImage */
+      tempImage.WarpBitmap( rect( 0, 0, w, h ), SegmentImage, 0,
+        p1x, p1y + (float)h, 1.0,
+        p2x, p2y + (float)h, 1.0,
+        p3x, p3y + (float)h, 1.0,
+        p4x, p4y + (float)h, 1.0,
+        rect( 0, 0, w, h ), c, c, c, c, true, true );
+
+      /* pre-calculate the sin/cos values for the delta angle */
+      sinA = math_sin( aStartAngle + quadAngle ) * aScaling;
+      cosA = math_cos( aStartAngle + quadAngle ) * aScaling;
+
+      /* perform the rotation of the four points p1...p4 */
+      p1x = (float)h * sinA;
+      p1y = (float)-h * cosA;
+      p2x = (float)w * cosA + (float)h * sinA;
+      p2y = (float)-h * cosA + (float)w * sinA;
+      p3x = (float)w * cosA;
+      p3y = (float)w * sinA;
+      p4x = 0.0;
+      p4y = 0.0;
+
+      /* rotate content from tempImage into destination canvas */
+      aCanvas.WarpBitmap( aClip, tempImage, 0,
+        p1x + (float)aX, p1y + (float)aY, 1.0,
+        p2x + (float)aX, p2y + (float)aY, 1.0,
+        p3x + (float)aX, p3y + (float)aY, 1.0,
+        p4x + (float)aX, p4y + (float)aY, 1.0,
+        rect( 0, 0, w, h ), #FFFFFFFF, #FFFFFFFF, #FFFFFFFF, #FFFFFFFF, aBlend, true );
+    }
+
+
+    /* scenario 2: start and stop angle are within different quadrants */
+    else
+    {
+      /* step 1: drawing pie segment from start angle to quadrant border */
+      if ( aStartAngle > 0.0 )
+      {
+        /* pre-calculate the sin/cos values for the delta angle */
+        sinA = math_sin( 90.0 + quadAngle + aStartAngle ) * aScaling;
+        cosA = math_cos( 90.0 + quadAngle + aStartAngle ) * aScaling;
+
+        /* perform the rotation of the four points p1...p4 */
+        p1x = (float)-w * cosA + (float)h * sinA;
+        p1y = (float)-h * cosA - (float)w * sinA;
+        p2x = (float)h * sinA;
+        p2y = (float)-h * cosA;
+        p3x = 0.0;
+        p3y = 0.0;
+        p4x = (float)-w * cosA;
+        p4y = (float)-w * sinA;
+
+        /* ensure proper clipping at counter clockwise rotation */
+        if ( quadAngle >= 360.0 )
+          quadAngle = quadAngle - 360.0;
+
+        /* ensure proper clipping into current quadrant */
+        if ( quadAngle == 0.0 )
+          clip = rect( aX, -10000, 10000, aY );
+        else if ( quadAngle == 90.0 )
+          clip = rect( aX, aY, 10000, 10000 );
+        else if ( quadAngle == 180.0 )
+          clip = rect( -10000, aY, aX, 10000 );
+        else
+          clip = rect( -10000, -10000, aX, aY );
+
+        /* rotate pie segment image into destination canvas */
+        aCanvas.WarpBitmap( aClip & clip, SegmentImage, 0,
+          p1x + (float)aX, p1y + (float)aY, 1.0,
+          p2x + (float)aX, p2y + (float)aY, 1.0,
+          p3x + (float)aX, p3y + (float)aY, 1.0,
+          p4x + (float)aX, p4y + (float)aY, 1.0,
+          rect( 0, 0, w, h ), c, c, c, c, aBlend, true );
+
+        /* calculate angles for next quadrant */
+        quadAngle = quadAngle + 90.0;
+        if ( quadAngle >= 360.0 )
+          quadAngle = quadAngle - 360.0;
+        aDeltaAngle = aDeltaAngle - ( 90.0 - aStartAngle );
+      }
+
+      /* step 2: drawing full quadrants */
+      while( aDeltaAngle >= 90.0 )
+      {
+        /* pre-calculate the sin/cos values for the quadrant angle */
+        sinA = math_sin( 90.0 + quadAngle ) * aScaling;
+        cosA = math_cos( 90.0 + quadAngle ) * aScaling;
+
+        /* perform the rotation of the four points p1...p4 */
+        p1x = (float)-w * cosA + (float)h * sinA;
+        p1y = (float)-h * cosA - (float)w * sinA;
+        p2x = (float)h * sinA;
+        p2y = (float)-h * cosA;
+        p3x = 0.0;
+        p3y = 0.0;
+        p4x = (float)-w * cosA;
+        p4y = (float)-w * sinA;
+
+        /* ensure proper clipping at counter clockwise rotation */
+        if ( quadAngle >= 360.0 )
+          quadAngle = quadAngle - 360.0;
+
+        /* ensure proper clipping into current quadrant */
+        if ( quadAngle == 0.0 )
+          clip = rect( aX, -10000, 10000, aY );
+        else if ( quadAngle == 90.0 )
+          clip = rect( aX, aY, 10000, 10000 );
+        else if ( quadAngle == 180.0 )
+          clip = rect( -10000, aY, aX, 10000 );
+        else
+          clip = rect( -10000, -10000, aX, aY );
+
+        /* rotate pie segment image into destination canvas */
+        aCanvas.WarpBitmap( aClip & clip, SegmentImage, 0,
+          p1x + (float)aX, p1y + (float)aY, 1.0,
+          p2x + (float)aX, p2y + (float)aY, 1.0,
+          p3x + (float)aX, p3y + (float)aY, 1.0,
+          p4x + (float)aX, p4y + (float)aY, 1.0,
+          rect( 0, 0, w, h ), c, c, c, c, aBlend, true );
+
+        /* calculate angles for next quadrant */
+        quadAngle = quadAngle + 90.0;
+        if ( quadAngle >= 360.0 )
+          quadAngle = quadAngle - 360.0;
+        aDeltaAngle = aDeltaAngle - 90.0;
+      }
+
+      /* step 3: drawing pie segment from quadrant border to stop angle */
+
+      /* pre-calculate the sin/cos values for the delta angle */
+      sinA = math_sin( aDeltaAngle + quadAngle ) * aScaling;
+      cosA = math_cos( aDeltaAngle + quadAngle ) * aScaling;
+
+      /* perform the rotation of the four points p1...p4 */
+      p1x = (float)-w * cosA + (float)h * sinA;
+      p1y = (float)-h * cosA - (float)w * sinA;
+      p2x = (float)h * sinA;
+      p2y = (float)-h * cosA;
+      p3x = 0.0;
+      p3y = 0.0;
+      p4x = (float)-w * cosA;
+      p4y = (float)-w * sinA;
+
+      /* ensure proper clipping into current quadrant */
+      if ( quadAngle == 0.0 )
+        clip = rect( aX, -10000, 10000, aY );
+      else if ( quadAngle == 90.0 )
+        clip = rect( aX, aY, 10000, 10000 );
+      else if ( quadAngle == 180.0 )
+        clip = rect( -10000, aY, aX, 10000 );
+      else
+        clip = rect( -10000, -10000, aX, aY );
+
+       /* rotate pie segment image into destination canvas */
+      aCanvas.WarpBitmap( aClip & clip, SegmentImage, 0,
+        p1x + (float)aX, p1y + (float)aY, 1.0,
+        p2x + (float)aX, p2y + (float)aY, 1.0,
+        p3x + (float)aX, p3y + (float)aY, 1.0,
+        p4x + (float)aX, p4y + (float)aY, 1.0,
+        rect( 0, 0, w, h ), c, c, c, c, aBlend, true );
+    }
+
+
+  }
+
+  // The property 'Displacement' contains the displacement of each segments from \
+  // the center point of the pie chart. The direction of the displacement is given \
+  // by the vector from center point of the pie chart to the centroid of the segment.
+  $rect <200,130,400,170>
+  property float Displacement = 0.0;
+
+  $rect <400,130,600,170>
+  onset Displacement
+  {
+    // Check limits
+    if ( value < 0.0 )
+      value = 0.0;
+
+    // Check for any changes...
+    if ( value == pure Displacement )
+      return;
+
+    // Store the new value...
+    pure Displacement = value;
+
+    // ...and force an update of the component
+    InvalidateArea( Bounds.orect );
+
+  }
+
+  $rect <400,310,600,350>
+  onset Outlet
+  {
+    // Check if the new outlet differs from the currently used outlet
+    if ( pure Outlet == value )
+      return;
+
+    // Detach from the previous outlet
+    if ( pure Outlet != null )
+      detachobserver onOutlet, pure Outlet;
+
+    // Store the new outlet ...
+    pure Outlet = value;
+
+    // ... and attach to the new one
+    if ( value != null )
+      attachobserver onOutlet, value;
+
+    // Finally, retrieve the current state of the property associated via 'Outlet'.
+    if ( value != null )
+      postsignal onOutlet;
+  }
+
+  // The property 'Outlet' can refer to any other 'int32' property the widget should \
+  // remain synchronized with. When the referred property is modified, the widget \
+  // is automatically notified to remain in sync with the property.
+  // This approach follows the Controller-View programming paradigm. Here the widget \
+  // represents the 'View' and the property referred via 'Outlet' can be seen as \
+  // a part of the 'Controller'.
+  $rect <200,310,400,350>
+  property ^int32 Outlet = null;
+
+  // This slot method will receive a signal, if the value of the property assigned \
+  // to @Outlet has been changed by another widget or by the application logic. In \
+  // response to this notification, the widget will update itself.
+  $rect <600,310,800,350>
+  slot onOutlet
+  {
+    // Read the current value of the associated property and update accordingly
+    // the state of the widget.
+    if ( Outlet != null )
+      CurrentValue = Outlet^;
+  }
+
+  $rect <400,430,600,470>
+  onset MaxValue
+  {
+    // Check if the given value differs from the current value
+    if ( pure MaxValue == value )
+      return;
+
+    // Store the new value ...
+    pure MaxValue = value;
+
+    // ...and force an update of the component
+    InvalidateArea( Bounds.orect );
+  }
+
+  $rect <400,390,600,430>
+  onset MinValue
+  {
+    // Check if the given value differs from the current value
+    if ( pure MinValue == value )
+      return;
+
+    // Store the new value ...
+    pure MinValue = value;
+
+    // ...and force an update of the component
+    InvalidateArea( Bounds.orect );
+  }
+
+  $rect <400,350,600,390>
+  onset CurrentValue
+  {
+    // Check if the given value differs from the current value.
+    if ( pure CurrentValue == value )
+      return;
+
+    // Store the new value ...
+    pure CurrentValue = value;
+
+    // Update the needle position
+    drawNeedle();
+
+    // ...and force an update of the component
+    InvalidateArea( Bounds.orect );
+  }
+
+  // The property 'MaxValue' defines the possible @CurrentValue at the upper end \
+  // of the gauge indicator scale.
+  $rect <200,430,400,470>
+  property int32 MaxValue = 130;
+
+  // The property 'MinValue' defines the possible @CurrentValue at the lower end \
+  // of the gauge indicator scale.
+  $rect <200,390,400,430>
+  property int32 MinValue = 0;
+
+  // The property 'CurrentValue' stores the momentary value of the gauge indicator. \
+  // The value is limited automatically to the range between @MinValue and @MaxValue.
+  $rect <200,350,400,390>
+  property int32 CurrentValue = 1;
+
+  // The property 'EndAngle' contains the end angle of the gauge indicator.
+  $rect <200,40,400,80>
+  property float EndAngle = 490.0;
+
+  $rect <400,40,600,80>
+  onset EndAngle
+  {
+    // Check for any changes...
+    if ( value == pure EndAngle )
+      return;
+
+    // Store the new angle value...
+    pure EndAngle = value;
+
+    // ...and force an update of the component
+    InvalidateArea( Bounds.orect );
+
+  }
+
+  $rect <400,260,600,300>
+  var float newRotationAngle;
+
+  $rect <-10,330,190,370>
+  method void drawNeedle()
+  {
+    var point dstPos = point( Bounds.w / 2, Bounds.h / 2 );
+
+    // Convert the gauge's current value to a rotation angle within the scale
+    // range specified by StartAngle .. EndAngle.
+    if ( MaxValue != MinValue )
+      newRotationAngle = ( float( CurrentValue - MinValue ) * ( EndAngle - StartAngle )) /
+                           float( MaxValue - MinValue ) + StartAngle;
+
+    // Let the needle appear at the calculated position with the calculated
+    // rotation angle.
+    Needle.RotateAndScale( dstPos, 360.0 - newRotationAngle, 1.0, 1.0 );
+  }
+
+  $rect <20,20,160,60>
+  object Views::WarpImage Needle
+  {
+    preset Point4 = <144,289>;
+    preset Point3 = <157,289>;
+    preset Point2 = <157,231>;
+    preset Point1 = <144,231>;
+    preset SourceAnchor = <2,72>;
+    preset Color = #FF0000FF;
+    preset Bitmap = Dashboard::GaugeNeedle;
+  }
+
+  // This is the gauge indicator component which is used at Dashboard::Gauge.
+  //
+  // This component is based on the Charts::PieChart.
+  note legend Note1
+  {
+    attr Bounds = <0,480,410,600>;
+  }
+}
+
+$rect <720,260,920,300>
+$output false
+resource Resources::Bitmap GaugeGlowSegment
+{
+  attr bitmapfile FileName = .\Res\GaugeGlowSegment.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <10,489,210,529>
+$output false
+autoobject WidgetSet::ToggleButtonConfig LedButtonGreenConfig
+{
+  preset IconOnTintActive = Dashboard::Colors.LedsOnGreen;
+  preset IconOnTintFocused = Dashboard::Colors.LedsOnGreen;
+  preset IconOnTintDisabled = Dashboard::Colors.LedsOnGreen;
+  preset IconOnTintDefault = Dashboard::Colors.LedsOnGreen;
+  preset IconOffTintActive = Dashboard::Colors.TextLedsOff;
+  preset IconOffTintFocused = Dashboard::Colors.TextLedsOff;
+  preset IconOffTintDisabled = Dashboard::Colors.TextLedsOff;
+  preset IconOffTintDefault = Dashboard::Colors.TextLedsOff;
+}
+
+// Helper
+note group Note
+{
+  attr Bounds = <0,590,450,760>;
+}
+
+$rect <10,530,210,570>
+$output false
+autoobject WidgetSet::PushButtonConfig StartEngineButtonConfig
+{
+  preset FaceActive = Dashboard::StartEngine;
+  preset FaceFocused = Dashboard::StartEngine;
+  preset FaceDisabled = Dashboard::StartEngine;
+  preset FaceDefault = Dashboard::StartEngine;
+}
+
+$rect <520,90,720,130>
+$output false
+resource Resources::Bitmap StartEngineStates
+{
+  attr bitmapfile FileName = .\Res\StartEngineStates.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize = <103,103>;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Native;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <520,220,720,260>
+$output false
+resource Resources::Bitmap SwitchIcon
+{
+  attr bitmapfile FileName = .\Res\SwitchIcon.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Native;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <520,180,720,220>
+$output false
+resource Resources::Bitmap OffIcon
+{
+  attr bitmapfile FileName = .\Res\OffIcon.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Native;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <220,528,420,568>
+$output false
+autoobject WidgetSet::PushButtonConfig DashboardButtonConfig
+{
+  preset IconTintActive = Dashboard::Colors.TextLedsOff;
+  preset IconTintDisabled = Dashboard::Colors.TextLedsOff;
+  preset IconTintDefault = Dashboard::Colors.Text;
+}
+
+$rect <470,560,670,600>
+$output false
+class DemoMode
+{
+  // The method Init() is invoked automatically after the component has been created. \
+  // This method can be overridden and filled with logic containing additional initialization \
+  // statements.
+  $rect <0,0,200,40>
+  method void Init()
+  {
+    attachobserver onDemoModeChanged, ^Dashboard::Device.DemoMode;
+    postsignal onDemoModeChanged;
+  }
+
+  // Demo Mode
+  note group Note
+  {
+    attr Bounds = <0,50,620,380>;
+  }
+
+  $rect <10,130,210,170>
+  object Effects::Int32Effect DemoModeTimer
+  {
+    preset OnFinished = onDemoModeCycleFinished;
+    preset NoOfCycles = 1;
+  }
+
+  $rect <210,130,410,170>
+  slot onDemoModeCycleFinished
+  {
+    if ( DemoStep == 0 )
+    {
+      DemoModeTimer.CycleDuration = 2200;
+
+      StartEffect( SpeedEffect, 0, 100, Effects::Timing.Exp_Out, 100, 2000 );
+      StartEffect( PowerEffect, 0, 78, Effects::Timing.Exp_Out, 100, 1500 );
+      StartEffect( RecuperationEffect, 60, 0, Effects::Timing.Exp_Out, 0, 100 );
+      StartEffect( BatteryEffect, 67, 65, Effects::Timing.Exp_Out, 100, 2200 );
+      StartEffect( ODOEffect, 567, 569, Effects::Timing.Exp_Out, 100, 2200 );
+    }
+    else if ( DemoStep == 1 )
+    {
+      DemoModeTimer.CycleDuration = 2200;
+
+      StartEffect( SpeedEffect, 100, 77, Effects::Timing.Exp_Out, 0, 2200 );
+      StartEffect( PowerEffect, 78, 18, Effects::Timing.Exp_Out, 0, 1900 );
+      StartEffect( BatteryEffect, 65, 65, Effects::Timing.Exp_Out, 0, 2200 );
+      StartEffect( ODOEffect, 569, 570, Effects::Timing.Exp_Out, 0, 2200 );
+    }
+    else if ( DemoStep == 2 )
+    {
+      DemoModeTimer.CycleDuration = 1100;
+
+      StartEffect( SpeedEffect, 77, 37, Effects::Timing.Exp_Out, 0, 1100 );
+      StartEffect( PowerEffect, 18, 0, Effects::Timing.Exp_Out, 0, 400 );
+      StartEffect( RecuperationEffect, 0, 40, Effects::Timing.Exp_Out, 400, 300 );
+      StartEffect( BatteryEffect, 65, 65, Effects::Timing.Exp_Out, 0, 1100 );
+      StartEffect( ODOEffect, 270, 270, Effects::Timing.Exp_Out, 0, 1100 );
+    }
+    else if ( DemoStep == 3 )
+    {
+      DemoModeTimer.CycleDuration = 2000;
+
+      StartEffect( SpeedEffect, 37, 55, Effects::Timing.Exp_Out, 0, 1700 );
+      StartEffect( PowerEffect, 0, 15, Effects::Timing.Exp_Out, 300, 1500 );
+      StartEffect( RecuperationEffect, 40, 0, Effects::Timing.Exp_Out, 0, 300 );
+      StartEffect( BatteryEffect, 65, 64, Effects::Timing.Exp_Out, 0, 1700 );
+      StartEffect( ODOEffect, 270, 271, Effects::Timing.Exp_Out, 0, 1700 );
+    }
+    else if ( DemoStep == 4 )
+    {
+      DemoModeTimer.CycleDuration = 2600;
+
+      StartEffect( SpeedEffect, 55, 100, Effects::Timing.Exp_Out, 0, 2600 );
+      StartEffect( PowerEffect, 15, 67, Effects::Timing.Exp_Out, 0, 1800 );
+      StartEffect( BatteryEffect, 64, 62, Effects::Timing.Exp_Out, 0, 2600 );
+      StartEffect( ODOEffect, 271, 271, Effects::Timing.Exp_Out, 0, 2600 );
+    }
+    else if ( DemoStep == 5 )
+    {
+      DemoModeTimer.CycleDuration = 4500;
+
+      StartEffect( SpeedEffect, 100, 0, Effects::Timing.Exp_Out, 0, 3500 );
+      StartEffect( PowerEffect, 67, 0, Effects::Timing.Exp_Out, 0, 1300 );
+      StartEffect( RecuperationEffect, 0, 60, Effects::Timing.Exp_Out, 1300, 300 );
+      StartEffect( BatteryEffect, 62, 62, Effects::Timing.Exp_Out, 0, 2600 );
+      StartEffect( ODOEffect, 271, 272, Effects::Timing.Exp_Out, 0, 2600 );
+    }
+
+    DemoStep = ( DemoStep + 1 ) % 6;
+    Dashboard::Device.ODO = 0;
+
+    postsignal DemoModeTimer.StartEffect;
+  }
+
+  $rect <10,90,210,130>
+  var int32 DemoStep = 0;
+
+  $rect <10,170,210,210>
+  object Effects::Int32Effect SpeedEffect
+  {
+    preset NoOfCycles = 1;
+    preset Outlet = ^Dashboard::Device.Speed;
+  }
+
+  $rect <10,250,210,290>
+  object Effects::Int32Effect PowerEffect
+  {
+    preset NoOfCycles = 1;
+    preset Outlet = ^Dashboard::Device.Energy;
+  }
+
+  $rect <10,290,210,330>
+  object Effects::Int32Effect BatteryEffect
+  {
+    preset NoOfCycles = 1;
+    preset Outlet = ^Dashboard::Device.Battery;
+  }
+
+  $rect <410,90,610,130>
+  method void StartEffect( arg Effects::Int32Effect aEffect, arg int32 aValue1, arg int32 aValue2, arg Effects::Timing aTiming, arg int32 aInitialDelay, arg int32 aCycleDuration )
+  {
+    aEffect.Value1 = aValue1;
+    aEffect.Value2 = aValue2;
+    aEffect.Timing = aTiming;
+    aEffect.CycleDuration = aCycleDuration;
+    aEffect.InitialDelay = aInitialDelay;
+    signal aEffect.StartEffect;
+  }
+
+  $rect <10,330,210,370>
+  object Effects::Int32Effect ODOEffect
+  {
+    preset NoOfCycles = 1;
+    preset Outlet = ^Dashboard::Device.ODO;
+  }
+
+  $rect <210,90,410,130>
+  slot onDemoModeChanged
+  {
+    if ( Dashboard::Device.DemoMode )
+      signal DemoModeTimer.StartEffect;
+    else
+      signal DemoModeTimer.StopEffect;
+  }
+
+  $rect <10,210,210,250>
+  object Effects::Int32Effect RecuperationEffect
+  {
+    preset NoOfCycles = 1;
+    preset Outlet = ^Dashboard::Device.Recuperation;
+  }
+}
+
+// DemoMode & AutoDemoMode
+note group Note5
+{
+  attr Bounds = <460,520,880,610>;
+}
+
+$rect <470,660,730,700>
+$output false
+autoobject Effects::FadeInOutTransition FadeInOutBottom
+{
+  preset Alignment = Effects::DialogAlignment[AlignHorzCenter, AlignVertBottom];
+}
+
+// Transitions
+note group Note7
+{
+  attr Bounds = <460,620,880,760>;
+}
+
+$rect <470,700,730,740>
+$output false
+autoobject Effects::FadeInOutTransition FadeInOutCentered
+{
+  preset Alignment = Effects::DialogAlignment[AlignHorzCenter, AlignVertCenter];
+}
+
+$rect <720,50,920,90>
+$output false
+resource Resources::Bitmap LeftBottomGlowV1
+{
+  attr bitmapfile FileName = .\Res\LeftBottomGlowV1.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <720,90,920,130>
+$output false
+resource Resources::Bitmap RightBottomGlowV1
+{
+  attr bitmapfile FileName = .\Res\RightBottomGlowV1.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <720,130,920,170>
+$output false
+resource Resources::Bitmap LeftMiddleGlowV1
+{
+  attr bitmapfile FileName = .\Res\LeftMiddleGlowV1.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <720,170,920,210>
+$output false
+resource Resources::Bitmap RightMiddleGlowV1
+{
+  attr bitmapfile FileName = .\Res\RightMiddleGlowV1.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <720,210,920,250>
+$output false
+resource Resources::Bitmap TopGlowV1
+{
+  attr bitmapfile FileName = .\Res\TopGlowV1.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <920,130,1120,170>
+$output false
+resource Resources::Bitmap CenterGlowV2
+{
+  attr bitmapfile FileName = .\Res\CenterGlowV2.png;
+  attr bitmapdithering Dithering = ErrorDiffusion;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Native;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <920,170,1120,210>
+$output false
+resource Resources::Bitmap KWIcon
+{
+  attr bitmapfile FileName = .\Res\KWIcon.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Native;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <920,210,1120,250>
+$output false
+resource Resources::Bitmap PWRIcon
+{
+  attr bitmapfile FileName = .\Res\PWRIcon.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Native;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <920,260,1120,300>
+$output false
+resource Resources::Bitmap LeftBricksV2
+{
+  attr bitmapfile FileName = .\Res\LeftBricksV2.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <920,300,1120,340>
+$output false
+resource Resources::Bitmap RightBricksV2
+{
+  attr bitmapfile FileName = .\Res\RightBricksV2.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <260,270,460,310>
+$output false
+class LeftTopBar : Dashboard::RightValueBar
+{
+  $rect <0,120,200,160>
+  inherited property Bounds = <0,0,51,100>;
+
+  $rect <20,20,160,60>
+  inherited object BottomBricks
+  {
+    preset Bounds = <0,70,51,98>;
+    preset Alignment = Views::ImageAlignment[AlignHorzLeft, AlignVertBottom];
+    preset Bitmap = Dashboard::LeftBricksV2;
+  }
+
+  $rect <20,20,160,60>
+  inherited object TopBricks
+  {
+    preset Bounds = <0,1,51,91>;
+    preset Alignment = Views::ImageAlignment[AlignHorzRight, AlignVertTop];
+    preset Bitmap = Dashboard::LeftBricksV2;
+  }
+}
+
+$rect <290,310,490,350>
+$output false
+class LeftBottomBar : Dashboard::LeftTopBar
+{
+  $rect <0,70,200,110>
+  inherited property Bounds = <0,0,40,55>;
+
+  $rect <0,160,200,200>
+  inherited method UpdateViewState()
+  {
+    // Always invoke the inherited method.
+    super( aState );
+
+    // Get the min/max positions for the upper edge of the value bar.
+    var int32 minPos = 0;
+    var int32 maxPos = Bounds.h;
+    var int32 newPos = minPos;
+    var int32 brickHeightWithSpace = 9;
+
+    // Convert the widget's current value to a pixel position within the
+    // allowed range.
+    if ( MaxValue != MinValue )
+      newPos = ((( CurrentValue - MinValue ) * ( maxPos - minPos )) /
+                 ( MaxValue - MinValue )) + minPos;
+
+    // Position the top and bottom brick images
+    TopBricks.Bounds.y2 = newPos - (newPos % brickHeightWithSpace);
+    BottomBricks.Bounds.y1 = TopBricks.Bounds.y2;
+  }
+
+  $rect <20,20,160,60>
+  inherited object BottomBricks
+  {
+    preset Bounds = <1,34,40,53>;
+    preset Color = Dashboard::Colors.VertBarUnselectedV2;
+  }
+
+  $rect <20,20,160,60>
+  inherited object TopBricks
+  {
+    preset Bounds = <0,1,36,36>;
+    preset Color = Dashboard::Colors.VertBarRecoveryV2;
+  }
+
+  // State management
+  note group Note2
+  {
+    attr Bounds = <-10,120,210,210>;
+  }
+}
+
+$rect <1120,260,1320,300>
+$output false
+resource Resources::Bitmap Logo
+{
+  attr bitmapfile FileName = .\Res\Logo.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Native;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <1120,300,1320,340>
+$output false
+resource Resources::Bitmap HorizontalLine
+{
+  attr bitmapfile FileName = .\Res\HorizontalLine.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapmode Mode = Default;
+}
+
+// Font resource used per default by 'Text' and 'Attributed Text' views to ensure \
+// that new views don't remain empty on the screen.
+$rect <900,530,1100,570>
+$output false
+resource Resources::Font FontL
+{
+  attr fontname FontName = Roboto;
+  attr fontheight Height = 11;
+  attr fontquality Quality = High;
+  attr fontranges Ranges = 0x20-0x7F;
+  attr fontaspectratio AspectRatio = 0.9;
+  attr fontbold Bold = true;
+  attr fontitalic Italic = false;
+  attr fontkerning Kerning = false;
+  attr fontheightmode HeightMode = Compatible;
+  attr fontrowdistance RowDistance;
+}
+
+// Font resource used per default by 'Text' and 'Attributed Text' views to ensure \
+// that new views don't remain empty on the screen.
+$rect <900,570,1100,610>
+$output false
+resource Resources::Font FontXXL
+{
+  attr fontname FontName = Roboto;
+  attr fontheight Height = 42;
+  attr fontquality Quality = High;
+  attr fontranges Ranges = 0x20-0x7F;
+  attr fontaspectratio AspectRatio = 1.0;
+  attr fontbold Bold = true;
+  attr fontitalic Italic = false;
+  attr fontkerning Kerning = true;
+  attr fontheightmode HeightMode = Compatible;
+  attr fontrowdistance RowDistance;
+}
+
+// Font resource used per default by 'Text' and 'Attributed Text' views to ensure \
+// that new views don't remain empty on the screen.
+$rect <900,490,1100,530>
+$output false
+resource Resources::Font FontXL
+{
+  attr fontname FontName = Exo 2;
+  attr fontheight Height = 28;
+  attr fontquality Quality = High;
+  attr fontranges Ranges = 0x20-0x7F;
+  attr fontaspectratio AspectRatio = 1.0;
+  attr fontbold Bold = true;
+  attr fontitalic Italic = false;
+  attr fontkerning Kerning = true;
+  attr fontheightmode HeightMode = Compatible;
+  attr fontrowdistance RowDistance;
+}
+
+// Font resource used per default by 'Text' and 'Attributed Text' views to ensure \
+// that new views don't remain empty on the screen.
+$rect <900,650,1100,690>
+$output false
+resource Resources::Font FontLightM
+{
+  attr fontname FontName = Exo 2;
+  attr fontheight Height = 24;
+  attr fontquality Quality = High;
+  attr fontranges Ranges = 0x20-0x7F;
+  attr fontaspectratio AspectRatio = 1.0;
+  attr fontbold Bold = false;
+  attr fontitalic Italic = false;
+  attr fontkerning Kerning = true;
+  attr fontheightmode HeightMode = Compatible;
+  attr fontrowdistance RowDistance;
+}
+
+// Fonts
+note group Note8
+{
+  attr Bounds = <890,410,1110,760>;
+}
+
+// Font resource used per default by 'Text' and 'Attributed Text' views to ensure \
+// that new views don't remain empty on the screen.
+$rect <900,450,1100,490>
+$output false
+resource Resources::Font FontS
+{
+  attr fontname FontName = Exo 2;
+  attr fontheight Height = 12;
+  attr fontquality Quality = High;
+  attr fontranges Ranges = 0x20-0x7F;
+  attr fontaspectratio AspectRatio = 0.86;
+  attr fontbold Bold = true;
+  attr fontitalic Italic = false;
+  attr fontkerning Kerning = true;
+  attr fontheightmode HeightMode = Compatible;
+  attr fontrowdistance RowDistance;
+}
+
+// Font resource used per default by 'Text' and 'Attributed Text' views to ensure \
+// that new views don't remain empty on the screen.
+$rect <900,610,1100,650>
+$output false
+resource Resources::Font FontLightS
+{
+  attr fontname FontName = Exo 2;
+  attr fontheight Height = 18;
+  attr fontquality Quality = High;
+  attr fontranges Ranges = 0x20-0x7F;
+  attr fontaspectratio AspectRatio = 1.0;
+  attr fontbold Bold = false;
+  attr fontitalic Italic = false;
+  attr fontkerning Kerning = true;
+  attr fontheightmode HeightMode = Compatible;
+  attr fontrowdistance RowDistance;
+}

@@ -15,15 +15,13 @@
 **     Compiler:            Keil ARM C/C++ Compiler
 **     Reference manual:    IMXRT1060RM Rev.3, 07/2021 | IMXRT106XSRM Rev.0
 **     Version:             rev. 0.2, 2022-03-25
-**     Build:               b221009
+**     Build:               b230508
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2022 NXP
-**     All rights reserved.
-**
+**     Copyright 2016-2023 NXP
 **     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
@@ -48,7 +46,11 @@
 #define m_interrupts_size              0x00000400
 
 #define m_text_start                   0x60002400
+#if (defined(__use_flash16MB__))
+#define m_text_size                    0x00FFDC00
+#else
 #define m_text_size                    0x007FDC00
+#endif
 
 #define m_qacode_start                 0x00000000
 #define m_qacode_size                  0x00020000

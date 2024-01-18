@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -121,42 +121,12 @@ Macros</h2></td></tr>
 <tr class="memitem:ga812138aa3315b0c6953c1a26130bcc37"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00273.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(major, minor, bugfix)&#160;&#160;&#160;(((major)*65536L) + ((minor)*256L) + (bugfix))</td></tr>
 <tr class="memdesc:ga812138aa3315b0c6953c1a26130bcc37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the version number for drivers.  <a href="#ga812138aa3315b0c6953c1a26130bcc37">More...</a><br/></td></tr>
 <tr class="separator:ga812138aa3315b0c6953c1a26130bcc37"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa7fc9e15d36453236a580b3c8116ee85"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00273.html#gaa7fc9e15d36453236a580b3c8116ee85">DEBUG_CONSOLE_DEVICE_TYPE_NONE</a>&#160;&#160;&#160;0U</td></tr>
-<tr class="memdesc:gaa7fc9e15d36453236a580b3c8116ee85"><td class="mdescLeft">&#160;</td><td class="mdescRight">No debug console.  <a href="#gaa7fc9e15d36453236a580b3c8116ee85">More...</a><br/></td></tr>
-<tr class="separator:gaa7fc9e15d36453236a580b3c8116ee85"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga59764d32e5394455906edbf03cff0b9f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00273.html#ga59764d32e5394455906edbf03cff0b9f">DEBUG_CONSOLE_DEVICE_TYPE_UART</a>&#160;&#160;&#160;1U</td></tr>
-<tr class="memdesc:ga59764d32e5394455906edbf03cff0b9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug console based on UART.  <a href="#ga59764d32e5394455906edbf03cff0b9f">More...</a><br/></td></tr>
-<tr class="separator:ga59764d32e5394455906edbf03cff0b9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1a04b7330b5196f73ed4ffe7fa2bae6c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00273.html#ga1a04b7330b5196f73ed4ffe7fa2bae6c">DEBUG_CONSOLE_DEVICE_TYPE_LPUART</a>&#160;&#160;&#160;2U</td></tr>
-<tr class="memdesc:ga1a04b7330b5196f73ed4ffe7fa2bae6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug console based on LPUART.  <a href="#ga1a04b7330b5196f73ed4ffe7fa2bae6c">More...</a><br/></td></tr>
-<tr class="separator:ga1a04b7330b5196f73ed4ffe7fa2bae6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6b4add5f2d938a89da56f58ac0b4e89b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00273.html#ga6b4add5f2d938a89da56f58ac0b4e89b">DEBUG_CONSOLE_DEVICE_TYPE_LPSCI</a>&#160;&#160;&#160;3U</td></tr>
-<tr class="memdesc:ga6b4add5f2d938a89da56f58ac0b4e89b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug console based on LPSCI.  <a href="#ga6b4add5f2d938a89da56f58ac0b4e89b">More...</a><br/></td></tr>
-<tr class="separator:ga6b4add5f2d938a89da56f58ac0b4e89b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga262e149f9ce1ef4cf2e539e9494d3cca"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00273.html#ga262e149f9ce1ef4cf2e539e9494d3cca">DEBUG_CONSOLE_DEVICE_TYPE_USBCDC</a>&#160;&#160;&#160;4U</td></tr>
-<tr class="memdesc:ga262e149f9ce1ef4cf2e539e9494d3cca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug console based on USBCDC.  <a href="#ga262e149f9ce1ef4cf2e539e9494d3cca">More...</a><br/></td></tr>
-<tr class="separator:ga262e149f9ce1ef4cf2e539e9494d3cca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad4f7f7e51a84c34f06bbbb34973ae97a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00273.html#gad4f7f7e51a84c34f06bbbb34973ae97a">DEBUG_CONSOLE_DEVICE_TYPE_FLEXCOMM</a>&#160;&#160;&#160;5U</td></tr>
-<tr class="memdesc:gad4f7f7e51a84c34f06bbbb34973ae97a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug console based on FLEXCOMM.  <a href="#gad4f7f7e51a84c34f06bbbb34973ae97a">More...</a><br/></td></tr>
-<tr class="separator:gad4f7f7e51a84c34f06bbbb34973ae97a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga75a9e86134df04f6a8b66025d11e25c2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00273.html#ga75a9e86134df04f6a8b66025d11e25c2">DEBUG_CONSOLE_DEVICE_TYPE_IUART</a>&#160;&#160;&#160;6U</td></tr>
-<tr class="memdesc:ga75a9e86134df04f6a8b66025d11e25c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug console based on i.MX UART.  <a href="#ga75a9e86134df04f6a8b66025d11e25c2">More...</a><br/></td></tr>
-<tr class="separator:ga75a9e86134df04f6a8b66025d11e25c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2c85202f838f94e51a0bb7b33856c78d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00273.html#ga2c85202f838f94e51a0bb7b33856c78d">DEBUG_CONSOLE_DEVICE_TYPE_VUSART</a>&#160;&#160;&#160;7U</td></tr>
-<tr class="memdesc:ga2c85202f838f94e51a0bb7b33856c78d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug console based on LPC_VUSART.  <a href="#ga2c85202f838f94e51a0bb7b33856c78d">More...</a><br/></td></tr>
-<tr class="separator:ga2c85202f838f94e51a0bb7b33856c78d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5a951951cdb6063d949523052aa5b5e4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00273.html#ga5a951951cdb6063d949523052aa5b5e4">DEBUG_CONSOLE_DEVICE_TYPE_MINI_USART</a>&#160;&#160;&#160;8U</td></tr>
-<tr class="memdesc:ga5a951951cdb6063d949523052aa5b5e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug console based on LPC_USART.  <a href="#ga5a951951cdb6063d949523052aa5b5e4">More...</a><br/></td></tr>
-<tr class="separator:ga5a951951cdb6063d949523052aa5b5e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9d142691c3a4d810f8bdabc41e89dfd7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00273.html#ga9d142691c3a4d810f8bdabc41e89dfd7">DEBUG_CONSOLE_DEVICE_TYPE_SWO</a>&#160;&#160;&#160;9U</td></tr>
-<tr class="memdesc:ga9d142691c3a4d810f8bdabc41e89dfd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug console based on SWO.  <a href="#ga9d142691c3a4d810f8bdabc41e89dfd7">More...</a><br/></td></tr>
-<tr class="separator:ga9d142691c3a4d810f8bdabc41e89dfd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga74389c7c04a9f53548d05287c7c665cd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00273.html#ga74389c7c04a9f53548d05287c7c665cd">DEBUG_CONSOLE_DEVICE_TYPE_QSCI</a>&#160;&#160;&#160;10U</td></tr>
-<tr class="memdesc:ga74389c7c04a9f53548d05287c7c665cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug console based on QSCI.  <a href="#ga74389c7c04a9f53548d05287c7c665cd">More...</a><br/></td></tr>
-<tr class="separator:ga74389c7c04a9f53548d05287c7c665cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6242a25f9d996f0cc4f4cdb911218b75"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00273.html#ga6242a25f9d996f0cc4f4cdb911218b75">ARRAY_SIZE</a>(x)&#160;&#160;&#160;(sizeof(x) / sizeof((x)[0]))</td></tr>
 <tr class="memdesc:ga6242a25f9d996f0cc4f4cdb911218b75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the number of elements in an array.  <a href="#ga6242a25f9d996f0cc4f4cdb911218b75">More...</a><br/></td></tr>
 <tr class="separator:ga6242a25f9d996f0cc4f4cdb911218b75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0b47cb52d1ceba88ee3e6cd19820ecfc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00273.html#ga0b47cb52d1ceba88ee3e6cd19820ecfc">SUPPRESS_FALL_THROUGH_WARNING</a>()</td></tr>
+<tr class="memdesc:ga0b47cb52d1ceba88ee3e6cd19820ecfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">For switch case code block, if case section ends without "break;" statement, there wil be fallthrough warning with compiler flag -Wextra or -Wimplicit-fallthrough=n when using armgcc.  <a href="#ga0b47cb52d1ceba88ee3e6cd19820ecfc">More...</a><br/></td></tr>
+<tr class="separator:ga0b47cb52d1ceba88ee3e6cd19820ecfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -387,7 +357,7 @@ Enumerations</h2></td></tr>
 <br/>
 &#160;&#160;<a class="el" href="a00273.html#gga7ff0b98bb1341c07acefb1473b6eda29a025ed41827a0bd0b7bf60b853a921c7d">kStatusGroup_QSCI</a> = 156, 
 <br/>
-&#160;&#160;<a class="el" href="a00273.html#gga7ff0b98bb1341c07acefb1473b6eda29ae67462f0d7dbac886d8a1272a29b846c">kStatusGroup_SNT</a> = 157, 
+&#160;&#160;<a class="el" href="a00273.html#gga7ff0b98bb1341c07acefb1473b6eda29ae9d67092ecc6b4f406fc0fb862174476">kStatusGroup_ELEMU</a> = 157, 
 <br/>
 &#160;&#160;<a class="el" href="a00273.html#gga7ff0b98bb1341c07acefb1473b6eda29a7712fcacc6d5e9698366daafc59ea644">kStatusGroup_QUEUEDSPI</a> = 158, 
 <br/>
@@ -405,7 +375,9 @@ Enumerations</h2></td></tr>
 <br/>
 &#160;&#160;<a class="el" href="a00273.html#gga7ff0b98bb1341c07acefb1473b6eda29af5e618b56733c41397941d8dec581030">kStatusGroup_BMA</a> = 165, 
 <br/>
-&#160;&#160;<a class="el" href="a00273.html#gga7ff0b98bb1341c07acefb1473b6eda29a2e0ac8d81af0520d13c650cd3a3bcdde">kStatusGroup_NETC</a> = 166
+&#160;&#160;<a class="el" href="a00273.html#gga7ff0b98bb1341c07acefb1473b6eda29a2e0ac8d81af0520d13c650cd3a3bcdde">kStatusGroup_NETC</a> = 166, 
+<br/>
+&#160;&#160;<a class="el" href="a00273.html#gga7ff0b98bb1341c07acefb1473b6eda29a446c74416be882daecb3038dbe42e9de">kStatusGroup_ELE</a> = 167
 <br/>
  }</td></tr>
 <tr class="memdesc:ga7ff0b98bb1341c07acefb1473b6eda29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Status group numbers.  <a href="a00273.html#ga7ff0b98bb1341c07acefb1473b6eda29">More...</a><br/></td></tr>
@@ -452,28 +424,58 @@ Driver version</h2></td></tr>
 <tr class="separator:gac6e3c4c6fa592fc0da7fab541e7019f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Debug console type definition.</h2></td></tr>
+<tr class="memitem:gaa7fc9e15d36453236a580b3c8116ee85"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00273.html#gaa7fc9e15d36453236a580b3c8116ee85">DEBUG_CONSOLE_DEVICE_TYPE_NONE</a>&#160;&#160;&#160;0U</td></tr>
+<tr class="memdesc:gaa7fc9e15d36453236a580b3c8116ee85"><td class="mdescLeft">&#160;</td><td class="mdescRight">No debug console.  <a href="#gaa7fc9e15d36453236a580b3c8116ee85">More...</a><br/></td></tr>
+<tr class="separator:gaa7fc9e15d36453236a580b3c8116ee85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga59764d32e5394455906edbf03cff0b9f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00273.html#ga59764d32e5394455906edbf03cff0b9f">DEBUG_CONSOLE_DEVICE_TYPE_UART</a>&#160;&#160;&#160;1U</td></tr>
+<tr class="memdesc:ga59764d32e5394455906edbf03cff0b9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug console based on UART.  <a href="#ga59764d32e5394455906edbf03cff0b9f">More...</a><br/></td></tr>
+<tr class="separator:ga59764d32e5394455906edbf03cff0b9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1a04b7330b5196f73ed4ffe7fa2bae6c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00273.html#ga1a04b7330b5196f73ed4ffe7fa2bae6c">DEBUG_CONSOLE_DEVICE_TYPE_LPUART</a>&#160;&#160;&#160;2U</td></tr>
+<tr class="memdesc:ga1a04b7330b5196f73ed4ffe7fa2bae6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug console based on LPUART.  <a href="#ga1a04b7330b5196f73ed4ffe7fa2bae6c">More...</a><br/></td></tr>
+<tr class="separator:ga1a04b7330b5196f73ed4ffe7fa2bae6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6b4add5f2d938a89da56f58ac0b4e89b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00273.html#ga6b4add5f2d938a89da56f58ac0b4e89b">DEBUG_CONSOLE_DEVICE_TYPE_LPSCI</a>&#160;&#160;&#160;3U</td></tr>
+<tr class="memdesc:ga6b4add5f2d938a89da56f58ac0b4e89b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug console based on LPSCI.  <a href="#ga6b4add5f2d938a89da56f58ac0b4e89b">More...</a><br/></td></tr>
+<tr class="separator:ga6b4add5f2d938a89da56f58ac0b4e89b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga262e149f9ce1ef4cf2e539e9494d3cca"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00273.html#ga262e149f9ce1ef4cf2e539e9494d3cca">DEBUG_CONSOLE_DEVICE_TYPE_USBCDC</a>&#160;&#160;&#160;4U</td></tr>
+<tr class="memdesc:ga262e149f9ce1ef4cf2e539e9494d3cca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug console based on USBCDC.  <a href="#ga262e149f9ce1ef4cf2e539e9494d3cca">More...</a><br/></td></tr>
+<tr class="separator:ga262e149f9ce1ef4cf2e539e9494d3cca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad4f7f7e51a84c34f06bbbb34973ae97a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00273.html#gad4f7f7e51a84c34f06bbbb34973ae97a">DEBUG_CONSOLE_DEVICE_TYPE_FLEXCOMM</a>&#160;&#160;&#160;5U</td></tr>
+<tr class="memdesc:gad4f7f7e51a84c34f06bbbb34973ae97a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug console based on FLEXCOMM.  <a href="#gad4f7f7e51a84c34f06bbbb34973ae97a">More...</a><br/></td></tr>
+<tr class="separator:gad4f7f7e51a84c34f06bbbb34973ae97a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga75a9e86134df04f6a8b66025d11e25c2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00273.html#ga75a9e86134df04f6a8b66025d11e25c2">DEBUG_CONSOLE_DEVICE_TYPE_IUART</a>&#160;&#160;&#160;6U</td></tr>
+<tr class="memdesc:ga75a9e86134df04f6a8b66025d11e25c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug console based on i.MX UART.  <a href="#ga75a9e86134df04f6a8b66025d11e25c2">More...</a><br/></td></tr>
+<tr class="separator:ga75a9e86134df04f6a8b66025d11e25c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2c85202f838f94e51a0bb7b33856c78d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00273.html#ga2c85202f838f94e51a0bb7b33856c78d">DEBUG_CONSOLE_DEVICE_TYPE_VUSART</a>&#160;&#160;&#160;7U</td></tr>
+<tr class="memdesc:ga2c85202f838f94e51a0bb7b33856c78d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug console based on LPC_VUSART.  <a href="#ga2c85202f838f94e51a0bb7b33856c78d">More...</a><br/></td></tr>
+<tr class="separator:ga2c85202f838f94e51a0bb7b33856c78d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5a951951cdb6063d949523052aa5b5e4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00273.html#ga5a951951cdb6063d949523052aa5b5e4">DEBUG_CONSOLE_DEVICE_TYPE_MINI_USART</a>&#160;&#160;&#160;8U</td></tr>
+<tr class="memdesc:ga5a951951cdb6063d949523052aa5b5e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug console based on LPC_USART.  <a href="#ga5a951951cdb6063d949523052aa5b5e4">More...</a><br/></td></tr>
+<tr class="separator:ga5a951951cdb6063d949523052aa5b5e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9d142691c3a4d810f8bdabc41e89dfd7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00273.html#ga9d142691c3a4d810f8bdabc41e89dfd7">DEBUG_CONSOLE_DEVICE_TYPE_SWO</a>&#160;&#160;&#160;9U</td></tr>
+<tr class="memdesc:ga9d142691c3a4d810f8bdabc41e89dfd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug console based on SWO.  <a href="#ga9d142691c3a4d810f8bdabc41e89dfd7">More...</a><br/></td></tr>
+<tr class="separator:ga9d142691c3a4d810f8bdabc41e89dfd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga74389c7c04a9f53548d05287c7c665cd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00273.html#ga74389c7c04a9f53548d05287c7c665cd">DEBUG_CONSOLE_DEVICE_TYPE_QSCI</a>&#160;&#160;&#160;10U</td></tr>
+<tr class="memdesc:ga74389c7c04a9f53548d05287c7c665cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug console based on QSCI.  <a href="#ga74389c7c04a9f53548d05287c7c665cd">More...</a><br/></td></tr>
+<tr class="separator:ga74389c7c04a9f53548d05287c7c665cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Min/max macros</h2></td></tr>
-<tr class="memitem:ga3acffbd305ee72dcd4593c0d8af64a4f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3acffbd305ee72dcd4593c0d8af64a4f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>MIN</b>(a, b)&#160;&#160;&#160;(((a) &lt; (b)) ? (a) : (b))</td></tr>
+<tr class="memitem:ga3acffbd305ee72dcd4593c0d8af64a4f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00273.html#ga3acffbd305ee72dcd4593c0d8af64a4f">MIN</a>(a, b)&#160;&#160;&#160;(((a) &lt; (b)) ? (a) : (b))</td></tr>
+<tr class="memdesc:ga3acffbd305ee72dcd4593c0d8af64a4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the minimum of <em>a</em> and <em>b</em>.  <a href="#ga3acffbd305ee72dcd4593c0d8af64a4f">More...</a><br/></td></tr>
 <tr class="separator:ga3acffbd305ee72dcd4593c0d8af64a4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafa99ec4acc4ecb2dc3c2d05da15d0e3f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafa99ec4acc4ecb2dc3c2d05da15d0e3f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>MAX</b>(a, b)&#160;&#160;&#160;(((a) &gt; (b)) ? (a) : (b))</td></tr>
+<tr class="memitem:gafa99ec4acc4ecb2dc3c2d05da15d0e3f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00273.html#gafa99ec4acc4ecb2dc3c2d05da15d0e3f">MAX</a>(a, b)&#160;&#160;&#160;(((a) &gt; (b)) ? (a) : (b))</td></tr>
+<tr class="memdesc:gafa99ec4acc4ecb2dc3c2d05da15d0e3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the maximum of <em>a</em> and <em>b</em>.  <a href="#gafa99ec4acc4ecb2dc3c2d05da15d0e3f">More...</a><br/></td></tr>
 <tr class="separator:gafa99ec4acc4ecb2dc3c2d05da15d0e3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 UINT16_MAX/UINT32_MAX value</h2></td></tr>
-<tr class="memitem:ga3ea490c9b3617d4479bd80ef93cd5602"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3ea490c9b3617d4479bd80ef93cd5602"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>UINT16_MAX</b>&#160;&#160;&#160;((uint16_t)-1)</td></tr>
+<tr class="memitem:ga3ea490c9b3617d4479bd80ef93cd5602"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00273.html#ga3ea490c9b3617d4479bd80ef93cd5602">UINT16_MAX</a>&#160;&#160;&#160;((uint16_t)-1)</td></tr>
+<tr class="memdesc:ga3ea490c9b3617d4479bd80ef93cd5602"><td class="mdescLeft">&#160;</td><td class="mdescRight">Max value of uint16_t type.  <a href="#ga3ea490c9b3617d4479bd80ef93cd5602">More...</a><br/></td></tr>
 <tr class="separator:ga3ea490c9b3617d4479bd80ef93cd5602"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab5eb23180f7cc12b7d6c04a8ec067fdd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab5eb23180f7cc12b7d6c04a8ec067fdd"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>UINT32_MAX</b>&#160;&#160;&#160;((uint32_t)-1)</td></tr>
+<tr class="memitem:gab5eb23180f7cc12b7d6c04a8ec067fdd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00273.html#gab5eb23180f7cc12b7d6c04a8ec067fdd">UINT32_MAX</a>&#160;&#160;&#160;((uint32_t)-1)</td></tr>
+<tr class="memdesc:gab5eb23180f7cc12b7d6c04a8ec067fdd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Max value of uint32_t type.  <a href="#gab5eb23180f7cc12b7d6c04a8ec067fdd">More...</a><br/></td></tr>
 <tr class="separator:gab5eb23180f7cc12b7d6c04a8ec067fdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Suppress fallthrough warning macro</h2></td></tr>
-<tr class="memitem:ga0b47cb52d1ceba88ee3e6cd19820ecfc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0b47cb52d1ceba88ee3e6cd19820ecfc"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>SUPPRESS_FALL_THROUGH_WARNING</b>()</td></tr>
-<tr class="separator:ga0b47cb52d1ceba88ee3e6cd19820ecfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="ga9a10f3f762d9eb7c5db73535db6a9d78"></a>
@@ -692,6 +694,58 @@ Suppress fallthrough warning macro</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ga3acffbd305ee72dcd4593c0d8af64a4f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MIN</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">a, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">b&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;(((a) &lt; (b)) ? (a) : (b))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gafa99ec4acc4ecb2dc3c2d05da15d0e3f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MAX</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">a, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">b&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;(((a) &gt; (b)) ? (a) : (b))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="ga6242a25f9d996f0cc4f4cdb911218b75"></a>
 <div class="memitem">
 <div class="memproto">
@@ -705,6 +759,46 @@ Suppress fallthrough warning macro</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga3ea490c9b3617d4479bd80ef93cd5602"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define UINT16_MAX&#160;&#160;&#160;((uint16_t)-1)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gab5eb23180f7cc12b7d6c04a8ec067fdd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define UINT32_MAX&#160;&#160;&#160;((uint32_t)-1)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga0b47cb52d1ceba88ee3e6cd19820ecfc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SUPPRESS_FALL_THROUGH_WARNING</td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>To suppress this warning, "SUPPRESS_FALL_THROUGH_WARNING();" need to be added at the end of each case section which misses "break;"statement. </p>
 
 </div>
 </div>
@@ -1062,8 +1156,8 @@ Suppress fallthrough warning macro</h2></td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga7ff0b98bb1341c07acefb1473b6eda29a025ed41827a0bd0b7bf60b853a921c7d"></a>kStatusGroup_QSCI</em>&nbsp;</td><td class="fielddoc">
 <p>Group number for QSCI status codes. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7ff0b98bb1341c07acefb1473b6eda29ae67462f0d7dbac886d8a1272a29b846c"></a>kStatusGroup_SNT</em>&nbsp;</td><td class="fielddoc">
-<p>Group number for SNT status codes. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7ff0b98bb1341c07acefb1473b6eda29ae9d67092ecc6b4f406fc0fb862174476"></a>kStatusGroup_ELEMU</em>&nbsp;</td><td class="fielddoc">
+<p>Group number for ELEMU status codes. </p>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga7ff0b98bb1341c07acefb1473b6eda29a7712fcacc6d5e9698366daafc59ea644"></a>kStatusGroup_QUEUEDSPI</em>&nbsp;</td><td class="fielddoc">
 <p>Group number for QSPI status codes. </p>
@@ -1091,6 +1185,9 @@ Suppress fallthrough warning macro</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga7ff0b98bb1341c07acefb1473b6eda29a2e0ac8d81af0520d13c650cd3a3bcdde"></a>kStatusGroup_NETC</em>&nbsp;</td><td class="fielddoc">
 <p>Group number for NETC status codes. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7ff0b98bb1341c07acefb1473b6eda29a446c74416be882daecb3038dbe42e9de"></a>kStatusGroup_ELE</em>&nbsp;</td><td class="fielddoc">
+<p>Group number for ELE status codes. </p>
 </td></tr>
 </table>
 

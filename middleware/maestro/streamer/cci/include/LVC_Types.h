@@ -66,44 +66,44 @@ extern "C" {
 /*                                                                                      */
 /****************************************************************************************/
 
-#define LVM_NULL (void *)0 ///< NULL pointer
+#define LVM_NULL (void *)0           ///< NULL pointer
 
-#define LVM_TRUE  1 ///< Boolean True
-#define LVM_FALSE 0 ///< Boolean False
+#define LVM_TRUE  1                  ///< Boolean True
+#define LVM_FALSE 0                  ///< Boolean False
 
-#define LVM_MAXINT_8   127         ///< Maximum positive integer size
-#define LVM_MAXINT_16  32767       ///< Maximum signed int 16 bits number
-#define LVM_MAXUINT_16 65535U      ///< Maximum un-signed int 16 bits number
-#define LVM_MAXINT_32  2147483647  ///< Maximum signed int 32 bits number
-#define LVM_MAXUINT_32 4294967295U ///< Maximum un-signed int 32 bits number
-#define LVM_MININT_32  0x80000000U ///< Minimum signed int 32 bit number in 2's complement form
+#define LVM_MAXINT_8   127           ///< Maximum positive integer size
+#define LVM_MAXINT_16  32767         ///< Maximum signed int 16 bits number
+#define LVM_MAXUINT_16 65535U        ///< Maximum un-signed int 16 bits number
+#define LVM_MAXINT_32  2147483647    ///< Maximum signed int 32 bits number
+#define LVM_MAXUINT_32 4294967295U   ///< Maximum un-signed int 32 bits number
+#define LVM_MININT_32  0x80000000U   ///< Minimum signed int 32 bit number in 2's complement form
 
 #define LVM_MAXENUM       2147483647 ///< Maximum value for enumerator
 #define LVM_MODULEID_MASK 0xFF00     ///< Mask to extract the calling module ID from callbackId
 #define LVM_EVENTID_MASK  0x00FF     ///< Mask to extract the callback event from callbackId
 
 /* Memory table*/
-#define LVM_MEMREGION_PERSISTENT_SLOW_DATA 0 ///< Offset to the instance memory region
-#define LVM_MEMREGION_PERSISTENT_FAST_DATA 1 ///< Offset to the persistent data memory region
-#define LVM_MEMREGION_PERSISTENT_FAST_COEF 2 ///< Offset to the persistent coefficient memory region
-#define LVM_MEMREGION_TEMPORARY_FAST       3 ///< Offset to temporary memory region
+#define LVM_MEMREGION_PERSISTENT_SLOW_DATA 0    ///< Offset to the instance memory region
+#define LVM_MEMREGION_PERSISTENT_FAST_DATA 1    ///< Offset to the persistent data memory region
+#define LVM_MEMREGION_PERSISTENT_FAST_COEF 2    ///< Offset to the persistent coefficient memory region
+#define LVM_MEMREGION_TEMPORARY_FAST       3    ///< Offset to temporary memory region
 
-#define LVM_NR_MEMORY_REGIONS 4 ///< Number of memory regions
+#define LVM_NR_MEMORY_REGIONS 4                 ///< Number of memory regions
 
 #define LVM_MODE_LVWIREFORMAT_LENGTH        (4) ///< Number of bytes to encode @ref LVM_Mode_en in LVWireFormat
 #define LVM_CONFIG_LVWIREFORMAT_LENGTH      (4) ///< Number of bytes to encode @ref LVM_Config_en in LVWireFormat
 #define LVM_FS_LVWIREFORMAT_LENGTH          (4) ///< Number of bytes to encode @ref LVM_Fs_en sample Rate in LVWireFormat
 #define LVM_CHANNELTYPE_LVWIREFORMAT_LENGTH (4) ///< Number of bytes to encode @ref LVM_ChannelType_en in LVWireFormat
 
-#define LVM_CHAR_LVWIREFORMAT_LENGTH  (1) ///< Number of bytes to encode ASCII character in LVWireFormat
-#define LVM_INT8_LVWIREFORMAT_LENGTH  (1) ///< Number of bytes to encode Signed 8-bit word in LVWireFormat
-#define LVM_UINT8_LVWIREFORMAT_LENGTH (1) ///< Number of bytes to encode Unsigned 8-bit word in LVWireFormat
+#define LVM_CHAR_LVWIREFORMAT_LENGTH  (1)       ///< Number of bytes to encode ASCII character in LVWireFormat
+#define LVM_INT8_LVWIREFORMAT_LENGTH  (1)       ///< Number of bytes to encode Signed 8-bit word in LVWireFormat
+#define LVM_UINT8_LVWIREFORMAT_LENGTH (1)       ///< Number of bytes to encode Unsigned 8-bit word in LVWireFormat
 
-#define LVM_INT16_LVWIREFORMAT_LENGTH  (2) ///< Number of bytes to encode Signed 16-bit word in LVWireFormat
-#define LVM_UINT16_LVWIREFORMAT_LENGTH (2) ///< Number of bytes to encode Unsigned 16-bit word in LVWireFormat
+#define LVM_INT16_LVWIREFORMAT_LENGTH  (2)      ///< Number of bytes to encode Signed 16-bit word in LVWireFormat
+#define LVM_UINT16_LVWIREFORMAT_LENGTH (2)      ///< Number of bytes to encode Unsigned 16-bit word in LVWireFormat
 
-#define LVM_INT32_LVWIREFORMAT_LENGTH  (4) ///< Number of bytes to encode Signed 32-bit word in LVWireFormat
-#define LVM_UINT32_LVWIREFORMAT_LENGTH (4) ///< Number of bytes to encode Unsigned 32-bit word in LVWireFormat
+#define LVM_INT32_LVWIREFORMAT_LENGTH  (4)      ///< Number of bytes to encode Signed 32-bit word in LVWireFormat
+#define LVM_UINT32_LVWIREFORMAT_LENGTH (4)      ///< Number of bytes to encode Unsigned 32-bit word in LVWireFormat
 
 /****************************************************************************************/
 /*                                                                                      */
@@ -111,10 +111,10 @@ extern "C" {
 /*                                                                                      */
 /****************************************************************************************/
 
-typedef char LVM_CHAR; ///< ASCII character
+typedef char LVM_CHAR;             ///< ASCII character
 
-typedef char LVM_INT8;           ///< Signed 8-bit word
-typedef unsigned char LVM_UINT8; ///< Unsigned 8-bit word
+typedef char LVM_INT8;             ///< Signed 8-bit word
+typedef unsigned char LVM_UINT8;   ///< Unsigned 8-bit word
 
 typedef short LVM_INT16;           ///< Signed 16-bit word
 typedef unsigned short LVM_UINT16; ///< Unsigned 16-bit word
@@ -137,7 +137,7 @@ typedef unsigned long LVM_UINT32; ///< Unsigned 32-bit word
                                   // Type macros
 #define LVM_PRINTF_FORMAT_SPECIFIER_INT32  "li"
 #define LVM_PRINTF_FORMAT_SPECIFIER_UINT32 "lu"
-#endif // (defined __LP64__) && __LP64__
+#endif                     // (defined __LP64__) && __LP64__
 
 typedef float LVM_FLOAT;   ///< Single Precision floating point type
 typedef double LVM_DOUBLE; ///< Double Precision floating point type
@@ -397,11 +397,11 @@ typedef struct
     LVM_INT16 ShortTermAverage; ///< Beats per minute in Q9.6 format
     LVM_INT16 ShortTermMaximum; ///< Beats per minute in Q9.6 format
 
-    LVM_INT16 Confidence;      ///< Beat confidence level: 0 = no confidence, 32767 = maximum confidence
-    LVM_INT16 Strength;        ///< Beat strength level:   0 = no beat, 32767 = maximum strength beat
-    LVM_INT16 LongTermMinimum; ///< Beats per minute in Q9.6 format
-    LVM_INT16 LongTermAverage; ///< Beats per minute in Q9.6 format
-    LVM_INT16 LongTermMaximum; ///< Beats per minute in Q9.6 format
+    LVM_INT16 Confidence;       ///< Beat confidence level: 0 = no confidence, 32767 = maximum confidence
+    LVM_INT16 Strength;         ///< Beat strength level:   0 = no beat, 32767 = maximum strength beat
+    LVM_INT16 LongTermMinimum;  ///< Beats per minute in Q9.6 format
+    LVM_INT16 LongTermAverage;  ///< Beats per minute in Q9.6 format
+    LVM_INT16 LongTermMaximum;  ///< Beats per minute in Q9.6 format
 
 } LVM_BPMModuleStats_st;
 

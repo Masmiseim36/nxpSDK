@@ -1,5 +1,5 @@
 /*
- * Copyright 2018, 2019, 2020, 2021 NXP
+ * Copyright 2018-2022 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -16,17 +16,23 @@
 #include "ex_sss_main_inc_ksdk.h"
 #endif
 
-#include <fsl_sss_api.h>
+// The TFM implementation comes with the NXP SDK which includes the app.h
+#if NXP_IOT_AGENT_HAVE_PSA_IMPL_TFM
+#include "app.h"
+#endif
 
 #include <nxp_iot_agent.h>
 #include <nxp_iot_agent_service.h>
 #include <nxp_iot_agent_macros.h>
 
+#if NXP_IOT_AGENT_HAVE_SSS
+#include <fsl_sss_api.h>
+#include "ex_sss_ports.h"
 iot_agent_status_t iot_agent_session_connect(ex_sss_boot_ctx_t *pCtx)
 {
 	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
 	sss_status_t sss_status;
-	const char *portName;
+	char *portName;
 
     sss_status = ex_sss_boot_connectstring(0, NULL, &portName);
 	SSS_SUCCESS_OR_EXIT_MSG("ex_sss_boot_connectstring returned with 0x%04x", sss_status);
@@ -38,25 +44,42 @@ iot_agent_status_t iot_agent_session_connect(ex_sss_boot_ctx_t *pCtx)
 	SSS_SUCCESS_OR_EXIT_MSG("ex_sss_key_store_and_object_init returned with 0x%04x", sss_status);
 
 exit:
+#if defined(_MSC_VER)
+    if (portName) {
+        char* dummy_portName = NULL;
+        size_t dummy_sz = 0;
+        _dupenv_s(&dummy_portName, &dummy_sz, EX_SSS_BOOT_SSS_PORT);
+        if (NULL != dummy_portName) {
+            free(dummy_portName);
+            free(portName);
+        }
+    }
+#endif // _MSC_VER
+
 	return agent_status;
 }
 
 void iot_agent_session_disconnect(ex_sss_boot_ctx_t *pCtx) {
     ex_sss_session_close(pCtx);
 }
-
+#endif //NXP_IOT_AGENT_HAVE_SSS
 
 #if AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1
 void iot_agent_session_bm(void)
 {
-#ifdef HAVE_KSDK
+	// Initialization of the specific board
+#if NXP_IOT_AGENT_HAVE_SSS
+  	// In case the SSS library exist, initialization is happening there
 	ex_sss_main_ksdk_bm();
-#endif
+#else
+	BOARD_InitHardware();
+	// otherwise use the SDK functions to initialize it
+#endif //NXP_IOT_AGENT_HAVE_SSS
 }
 
 void iot_agent_session_boot_rtos_task(void)
 {
-#ifdef HAVE_KSDK
+#if NXP_IOT_AGENT_HAVE_SSS
     ex_sss_main_ksdk_boot_rtos_task();
 #endif
 }
@@ -65,14 +88,14 @@ void iot_agent_session_led_success(void)
 {
 #ifdef FRDM_K64F
     ex_sss_main_ksdk_success();
-#endif
+#endif //FRDM_K64F
 }
 
 void iot_agent_session_led_failure(void)
 {
 #ifdef FRDM_K64F
     ex_sss_main_ksdk_failure();
-#endif
+#endif //FRDM_K64F
 }
 
 void iot_agent_session_led_start(void)
@@ -81,14 +104,15 @@ void iot_agent_session_led_start(void)
     LED_BLUE_ON();
     LED_RED_OFF();
     LED_GREEN_OFF();
-#endif
+#endif //FRDM_K64F
 }
-#endif
+#endif //AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1
 
+#if NXP_IOT_AGENT_HAVE_SSS
 iot_agent_status_t iot_agent_session_init(int argc, const char *argv[], ex_sss_boot_ctx_t *pCtx)
 {
     sss_status_t sss_status;
-    const char *portName;
+    char *portName;
     iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
 
     memset(pCtx, 0, sizeof(ex_sss_boot_ctx_t));
@@ -115,5 +139,18 @@ iot_agent_status_t iot_agent_session_init(int argc, const char *argv[], ex_sss_b
     agent_status = IOT_AGENT_SUCCESS;
 
 exit:
+#if defined(_MSC_VER)
+    if (portName) {
+        char* dummy_portName = NULL;
+        size_t dummy_sz = 0;
+        _dupenv_s(&dummy_portName, &dummy_sz, EX_SSS_BOOT_SSS_PORT);
+        if (NULL != dummy_portName) {
+            free(dummy_portName);
+            free(portName);
+        }
+    }
+#endif // _MSC_VER
     return agent_status;
 }
+
+#endif //NXP_IOT_AGENT_HAVE_SSS

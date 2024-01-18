@@ -8,6 +8,7 @@
 /* ************************************************************************** */
 
 #include "sss_pkcs11_pal.h"
+#include <limits.h>
 
 /* ************************************************************************** */
 /* Public Functions                                                           */
@@ -72,573 +73,12 @@ CK_RV SetASNTLV(uint8_t tag, uint8_t *component, const size_t componentLen, uint
     return CKR_OK;
 }
 
-/** @brief Create Raw Private Key.
- * This function generates a raw private key.
- *
- * @param pxTemplate - Pointer to a search template that specifies the attribute values to match.
- * @param ulCount - Number of attributes in the search template.
- * @param key_buffer - Buffer containing the key data.
- * @param keyLen - size of the key_buffer in bytes.
- * 
- * @returns Status of the operation
- * @retval #CKR_OK The operation has completed successfully.
- * @retval #CKR_FUNCTION_FAILED The requested function could not be performed.
- * @retval #CKR_ARGUMENTS_BAD The arguments supplied to the function are not appropriate.
- */
-CK_RV CreateRawPrivateKey(CK_ATTRIBUTE_PTR pxTemplate, CK_ULONG ulCount, uint8_t *key_buffer, size_t *keyLen)
-{
-    CK_RV xResult = CKR_FUNCTION_FAILED;
-    CK_ULONG keyTypeIndex;
-    CK_KEY_TYPE key_type = CKK_RSA;
-
-    xResult = GetAttributeParameterIndex(pxTemplate, ulCount, CKA_KEY_TYPE, &keyTypeIndex);
-    if (xResult != CKR_OK) {
-        goto exit;
-    }
-
-    memcpy(&key_type, pxTemplate[keyTypeIndex].pValue, pxTemplate[keyTypeIndex].ulValueLen);
-    if (key_type == CKK_RSA) {
-        CK_ULONG componentIndex;
-        if (GetAttributeParameterIndex(pxTemplate, ulCount, CKA_MODULUS, &componentIndex) ||
-            GetAttributeParameterIndex(pxTemplate, ulCount, CKA_PUBLIC_EXPONENT, &componentIndex) ||
-            GetAttributeParameterIndex(pxTemplate, ulCount, CKA_PRIVATE_EXPONENT, &componentIndex) ||
-            GetAttributeParameterIndex(pxTemplate, ulCount, CKA_PRIME_1, &componentIndex) ||
-            GetAttributeParameterIndex(pxTemplate, ulCount, CKA_PRIME_2, &componentIndex) ||
-            GetAttributeParameterIndex(pxTemplate, ulCount, CKA_EXPONENT_1, &componentIndex) ||
-            GetAttributeParameterIndex(pxTemplate, ulCount, CKA_EXPONENT_2, &componentIndex) ||
-            GetAttributeParameterIndex(pxTemplate, ulCount, CKA_COEFFICIENT, &componentIndex)) {
-            xResult = CKR_ARGUMENTS_BAD;
-            goto exit;
-        }
-        /**
-            N = CKA_MODULUS             |   Nlen = Length of CKA_MODULUS
-            P = CKA_PRIME_1             |   Plen = Length of CKA_PRIME_1
-            Q = CKA_PRIME_2             |   Qlen = Length of CKA_PRIME_2
-            D = CKA_PRIVATE_EXPONENT    |   Dlen = Length of CKA_PRIVATE_EXPONENT
-            E = CKA_PUBLIC_EXPONENT     |   Elen = Length of CKA_PUBLIC_EXPONENT
-        */
-        size_t bufferSize_copy = *keyLen;
-        size_t componentLen    = 0;
-        uint8_t tag            = ASN_TAG_INT;
-        uint8_t key[4096]      = {0};
-
-        xResult      = GetAttributeParameterIndex(pxTemplate, ulCount, CKA_COEFFICIENT, &componentIndex);
-        componentLen = (size_t)pxTemplate[componentIndex].ulValueLen;
-        xResult      = SetASNTLV(tag, (uint8_t *)pxTemplate[componentIndex].pValue, componentLen, key, keyLen);
-        if (xResult != CKR_OK) {
-            goto exit;
-        }
-
-        xResult      = GetAttributeParameterIndex(pxTemplate, ulCount, CKA_EXPONENT_2, &componentIndex);
-        componentLen = (size_t)pxTemplate[componentIndex].ulValueLen;
-        xResult      = SetASNTLV(tag, (uint8_t *)pxTemplate[componentIndex].pValue, componentLen, key, keyLen);
-        if (xResult != CKR_OK) {
-            goto exit;
-        }
-
-        xResult      = GetAttributeParameterIndex(pxTemplate, ulCount, CKA_EXPONENT_1, &componentIndex);
-        componentLen = (size_t)pxTemplate[componentIndex].ulValueLen;
-        xResult      = SetASNTLV(tag, (uint8_t *)pxTemplate[componentIndex].pValue, componentLen, key, keyLen);
-        if (xResult != CKR_OK) {
-            goto exit;
-        }
-
-        xResult      = GetAttributeParameterIndex(pxTemplate, ulCount, CKA_PRIME_2, &componentIndex);
-        componentLen = (size_t)pxTemplate[componentIndex].ulValueLen;
-        xResult      = SetASNTLV(tag, (uint8_t *)pxTemplate[componentIndex].pValue, componentLen, key, keyLen);
-        if (xResult != CKR_OK) {
-            goto exit;
-        }
-
-        xResult      = GetAttributeParameterIndex(pxTemplate, ulCount, CKA_PRIME_1, &componentIndex);
-        componentLen = (size_t)pxTemplate[componentIndex].ulValueLen;
-        xResult      = SetASNTLV(tag, (uint8_t *)pxTemplate[componentIndex].pValue, componentLen, key, keyLen);
-        if (xResult != CKR_OK) {
-            goto exit;
-        }
-
-        xResult      = GetAttributeParameterIndex(pxTemplate, ulCount, CKA_PRIVATE_EXPONENT, &componentIndex);
-        componentLen = (size_t)pxTemplate[componentIndex].ulValueLen;
-        xResult      = SetASNTLV(tag, (uint8_t *)pxTemplate[componentIndex].pValue, componentLen, key, keyLen);
-        if (xResult != CKR_OK) {
-            goto exit;
-        }
-
-        xResult      = GetAttributeParameterIndex(pxTemplate, ulCount, CKA_PUBLIC_EXPONENT, &componentIndex);
-        componentLen = (size_t)pxTemplate[componentIndex].ulValueLen;
-        xResult      = SetASNTLV(tag, (uint8_t *)pxTemplate[componentIndex].pValue, componentLen, key, keyLen);
-        if (xResult != CKR_OK) {
-            goto exit;
-        }
-
-        xResult      = GetAttributeParameterIndex(pxTemplate, ulCount, CKA_MODULUS, &componentIndex);
-        componentLen = (size_t)pxTemplate[componentIndex].ulValueLen;
-        xResult      = SetASNTLV(tag, (uint8_t *)pxTemplate[componentIndex].pValue, componentLen, key, keyLen);
-        if (xResult != CKR_OK) {
-            goto exit;
-        }
-
-        uint8_t int_val = 0x00;
-        xResult         = SetASNTLV(tag, &int_val, 1, key, keyLen);
-        if (xResult != CKR_OK) {
-            goto exit;
-        }
-
-        size_t totalLen = bufferSize_copy - *keyLen;
-
-        if (totalLen <= 127) {
-            if (*keyLen < 1) {
-                xResult = CKR_FUNCTION_FAILED;
-                goto exit;
-            }
-            *keyLen = *keyLen - 1;
-
-            key[*keyLen] = totalLen;
-        }
-        else if (totalLen <= 255) {
-            if (*keyLen < 2) {
-                xResult = CKR_FUNCTION_FAILED;
-                goto exit;
-            }
-            *keyLen = *keyLen - 2;
-
-            key[*keyLen]     = 0x81;
-            key[*keyLen + 1] = totalLen;
-        }
-        else {
-            if (*keyLen < 3) {
-                xResult = CKR_FUNCTION_FAILED;
-                goto exit;
-            }
-            *keyLen = *keyLen - 3;
-
-            key[*keyLen]     = 0x82;
-            key[*keyLen + 1] = (totalLen & 0x00FF00) >> 8;
-            key[*keyLen + 2] = (totalLen & 0x00FF);
-        }
-        if (*keyLen < 1) {
-            xResult = CKR_ARGUMENTS_BAD;
-            goto exit;
-        }
-        *keyLen = *keyLen - 1;
-
-        key[*keyLen] = ASN_TAG_SEQUENCE;
-
-        totalLen = bufferSize_copy - *keyLen;
-        memcpy(&key_buffer[0], &key[*keyLen], totalLen);
-        *keyLen = totalLen;
-    }
-    else if (key_type == CKK_EC) {
-        CK_ULONG parameterIndex;
-        if (GetAttributeParameterIndex(pxTemplate, ulCount, CKA_EC_PARAMS, &parameterIndex) ||
-            GetAttributeParameterIndex(pxTemplate, ulCount, CKA_VALUE, &parameterIndex)) {
-            xResult = CKR_ARGUMENTS_BAD;
-            goto exit;
-        }
-
-        uint8_t key[1024]      = {0};
-        size_t bufferSize_copy = *keyLen;
-        size_t parameterLen    = 0;
-        uint8_t tag            = ASN_TAG_CRL_EXTENSIONS;
-
-        xResult      = GetAttributeParameterIndex(pxTemplate, ulCount, CKA_EC_PARAMS, &parameterIndex);
-        parameterLen = (size_t)pxTemplate[parameterIndex].ulValueLen;
-        xResult      = SetASNTLV(tag, (uint8_t *)pxTemplate[parameterIndex].pValue, parameterLen, key, keyLen);
-        if (xResult != CKR_OK) {
-            goto exit;
-        }
-
-        xResult      = GetAttributeParameterIndex(pxTemplate, ulCount, CKA_VALUE, &parameterIndex);
-        parameterLen = (size_t)pxTemplate[parameterIndex].ulValueLen;
-        tag          = ASN_TAG_OCTETSTRING;
-        xResult      = SetASNTLV(tag, (uint8_t *)pxTemplate[parameterIndex].pValue, parameterLen, key, keyLen);
-        if (xResult != CKR_OK) {
-            goto exit;
-        }
-
-        tag             = ASN_TAG_INT;
-        uint8_t int_val = 0x01;
-        xResult         = SetASNTLV(tag, &int_val, 1, key, keyLen);
-        if (xResult != CKR_OK) {
-            goto exit;
-        }
-
-        size_t totalLen = bufferSize_copy - *keyLen;
-
-        if (totalLen <= 127) {
-            if (*keyLen < 1) {
-                return CKR_ARGUMENTS_BAD;
-            }
-            *keyLen = *keyLen - 1;
-
-            key[*keyLen] = totalLen;
-        }
-        else if (totalLen <= 255) {
-            if (*keyLen < 2) {
-                return CKR_ARGUMENTS_BAD;
-            }
-            *keyLen          = *keyLen - 2;
-            key[*keyLen]     = 0x81;
-            key[*keyLen + 1] = totalLen;
-        }
-        else {
-            if (*keyLen < 3) {
-                return CKR_ARGUMENTS_BAD;
-            }
-            *keyLen = *keyLen - 3;
-
-            key[*keyLen]     = 0x82;
-            key[*keyLen + 1] = (totalLen & 0x00FF00) >> 8;
-            key[*keyLen + 2] = (totalLen & 0x00FF);
-        }
-
-        if (*keyLen < 1) {
-            return CKR_ARGUMENTS_BAD;
-        }
-        *keyLen = *keyLen - 1;
-
-        key[*keyLen] = ASN_TAG_SEQUENCE;
-
-        totalLen = bufferSize_copy - *keyLen;
-
-        uint8_t temp[1024] = {0};
-        size_t tLen        = sizeof(temp);
-        int ret            = 0;
-        mbedtls_pk_context pk;
-        mbedtls_pk_init(&pk);
-        ret = mbedtls_pk_parse_key(&pk, &key[*keyLen], totalLen, NULL, 0);
-        if (ret != 0) {
-            xResult = CKR_ARGUMENTS_BAD;
-            mbedtls_pk_free(&pk);
-            goto exit;
-        }
-        ret = mbedtls_pk_write_key_der(&pk, temp, tLen);
-        if (ret < 0) {
-            xResult = CKR_FUNCTION_FAILED;
-            mbedtls_pk_free(&pk);
-            goto exit;
-        }
-
-        mbedtls_pk_free(&pk);
-
-        memcpy(&key_buffer[0], &temp[tLen - ret], ret);
-        *keyLen = ret;
-    }
-    else {
-        xResult = CKR_ARGUMENTS_BAD;
-    }
-
-exit:
-    return xResult;
-}
-
-mbedtls_ecp_group_id EcParametersToGrpId(uint8_t *ecparameters, size_t len)
-{
-    mbedtls_ecp_group ecp_group;
-    mbedtls_ecp_group_init(&ecp_group);
-    mbedtls_asn1_buf params;
-    unsigned char *ptr = &ecparameters[0];
-    if ((pk_get_ecparams(&ptr, ptr + len, &params)) != 0 || (pk_use_ecparams(&params, &ecp_group)) != 0) {
-        LOG_E("FAILURE");
-        return MBEDTLS_ECP_DP_NONE;
-    }
-    LOG_I("mbedtls_mpi_read_binary successfull");
-    return ecp_group.id;
-}
-
-/** @brief Create Raw Public Key.
- * This function generates a raw public key.
- *
- * @param pxTemplate - Pointer to a search template that specifies the attribute values to match.
- * @param ulCount - Number of attributes in the search template.
- * @param key_buffer - Buffer containing the key data.
- * @param keyLen - size of the key_buffer in bytes.
- * 
- * @returns Status of the operation
- * @retval #CKR_OK The operation has completed successfully.
- * @retval #CKR_FUNCTION_FAILED The requested function could not be performed.
- * @retval #CKR_ARGUMENTS_BAD The arguments supplied to the function are not appropriate.
- */
-CK_RV CreateRawPublicKey(CK_ATTRIBUTE_PTR pxTemplate, CK_ULONG ulCount, uint8_t *key_buffer, size_t *keyLen)
-{
-    CK_RV xResult = CKR_FUNCTION_FAILED;
-    CK_ULONG keyTypeIndex;
-    CK_KEY_TYPE key_type = CKK_RSA;
-    CK_ULONG parameterIndex;
-
-    xResult = GetAttributeParameterIndex(pxTemplate, ulCount, CKA_KEY_TYPE, &keyTypeIndex);
-    if (xResult != CKR_OK) {
-        goto exit;
-    }
-
-    memcpy(&key_type, pxTemplate[keyTypeIndex].pValue, pxTemplate[keyTypeIndex].ulValueLen);
-    if (key_type == CKK_RSA) {
-        uint8_t publicExponent[] = {0x01, 0x00, 0x01};
-        if (GetAttributeParameterIndex(pxTemplate, ulCount, CKA_PUBLIC_EXPONENT, &parameterIndex) == 0) {
-            if ((pxTemplate[parameterIndex].ulValueLen == 1) ||
-                (memcmp((void *)publicExponent, pxTemplate[parameterIndex].pValue, sizeof(publicExponent)))) {
-                LOG_E("Public Exponent not supported");
-                xResult = CKR_ARGUMENTS_BAD;
-                goto exit;
-            }
-        }
-        if (GetAttributeParameterIndex(pxTemplate, ulCount, CKA_MODULUS, &parameterIndex)) {
-            xResult = CKR_ARGUMENTS_BAD;
-            goto exit;
-        }
-        uint8_t key[2048]      = {0};
-        uint8_t modulus[520]   = {0};
-        uint8_t *pInputModulus = (uint8_t *)pxTemplate[parameterIndex].pValue;
-        size_t modulusLen      = (size_t)pxTemplate[parameterIndex].ulValueLen;
-        size_t bufferSize_copy = *keyLen;
-        uint8_t tag            = ASN_TAG_INT;
-        if (pInputModulus[0] != 0x00) {
-            memcpy(&modulus[1], pInputModulus, modulusLen);
-            modulusLen++;
-        }
-        else {
-            memcpy(modulus, pInputModulus, modulusLen);
-        }
-        xResult = SetASNTLV(tag, publicExponent, sizeof(publicExponent), key, keyLen);
-        ENSURE_OR_GO_EXIT(xResult == CKR_OK);
-        xResult = SetASNTLV(tag, modulus, modulusLen, key, keyLen);
-        ENSURE_OR_GO_EXIT(xResult == CKR_OK);
-
-        size_t totalLen = bufferSize_copy - *keyLen;
-
-        if (totalLen <= 127) {
-            if (*keyLen < 1) {
-                xResult = CKR_FUNCTION_FAILED;
-                goto exit;
-            }
-            *keyLen = *keyLen - 1;
-
-            key[*keyLen] = totalLen;
-        }
-        else if (totalLen <= 255) {
-            if (*keyLen < 2) {
-                xResult = CKR_FUNCTION_FAILED;
-                goto exit;
-            }
-            *keyLen = *keyLen - 2;
-
-            key[*keyLen]     = 0x81;
-            key[*keyLen + 1] = totalLen;
-        }
-        else {
-            if (*keyLen < 3) {
-                xResult = CKR_FUNCTION_FAILED;
-                goto exit;
-            }
-            *keyLen = *keyLen - 3;
-
-            key[*keyLen]     = 0x82;
-            key[*keyLen + 1] = (totalLen & 0x00FF00) >> 8;
-            key[*keyLen + 2] = (totalLen & 0x00FF);
-        }
-
-        if (*keyLen < 1) {
-            return CKR_ARGUMENTS_BAD;
-        }
-        *keyLen = *keyLen - 1;
-
-        key[*keyLen] = ASN_TAG_SEQUENCE;
-
-        totalLen = bufferSize_copy - *keyLen;
-
-        mbedtls_pk_context pk;
-        mbedtls_pk_init(&pk);
-        int ret = mbedtls_pk_parse_public_key(&pk, &key[*keyLen], totalLen);
-        if (ret != 0) {
-            LOG_E("mbedtls_pk_parse_public_key failed");
-            xResult = CKR_FUNCTION_FAILED;
-            goto exit;
-        }
-        ret = mbedtls_pk_write_pubkey_der(&pk, key, sizeof(key));
-        if (ret < 0) {
-            xResult = CKR_FUNCTION_FAILED;
-        }
-        else {
-            memcpy(key_buffer, &key[sizeof(key) - ret], ret);
-            *keyLen = ret;
-        }
-        mbedtls_pk_free(&pk);
-    }
-    else if (key_type == CKK_EC) {
-        if (GetAttributeParameterIndex(pxTemplate, ulCount, CKA_EC_PARAMS, &parameterIndex) ||
-            GetAttributeParameterIndex(pxTemplate, ulCount, CKA_EC_POINT, &parameterIndex)) {
-            xResult = CKR_ARGUMENTS_BAD;
-            goto exit;
-        }
-
-        uint8_t key[2048]      = {0};
-        size_t bufferSize_copy = *keyLen;
-        size_t parameterLen    = 0;
-        uint8_t tag            = ASN_TAG_BITSTRING;
-
-        xResult      = GetAttributeParameterIndex(pxTemplate, ulCount, CKA_EC_POINT, &parameterIndex);
-        parameterLen = (size_t)pxTemplate[parameterIndex].ulValueLen;
-
-        /**
-            CKA_EC_POINT passed is DER encoded under Octet String tag. Decode the tag, length
-            and parse the value.
-        */
-
-        uint8_t ecPointInput[150] = {0};
-        size_t ecPointInput_size  = sizeof(ecPointInput);
-        if (ecPointInput_size < (size_t)pxTemplate[parameterIndex].ulValueLen) {
-            xResult = CKR_ARGUMENTS_BAD;
-            goto exit;
-        }
-        memcpy(&ecPointInput[0],
-            (uint8_t *)pxTemplate[parameterIndex].pValue,
-            (size_t)pxTemplate[parameterIndex].ulValueLen);
-        int i = 0;
-        if (ecPointInput[i++] != ASN_TAG_OCTETSTRING) {
-            xResult = CKR_ARGUMENTS_BAD;
-            goto exit;
-        }
-
-        size_t len = ecPointInput[i++];
-
-        if ((len & 0x80) == 0x80) {
-            if ((len & 0x7F) == 0x01) {
-                len = ecPointInput[i++];
-            }
-            else if ((len & 0x7F) == 0x02) {
-                len = (ecPointInput[i] << 8) | (ecPointInput[i + 1]);
-                i   = i + 2;
-            }
-            else {
-                xResult = CKR_FUNCTION_FAILED;
-                goto exit;
-            }
-        }
-
-        uint8_t ecPoint[150] = {0};
-        // size_t ecPoint_size = sizeof(ecPoint);
-        if (len > sizeof(ecPoint) - 1) {
-            xResult = CKR_ARGUMENTS_BAD;
-            goto exit;
-        }
-        if (len > sizeof(ecPointInput) - i) {
-            xResult = CKR_ARGUMENTS_BAD;
-            goto exit;
-        }
-        memcpy(&ecPoint[1], &ecPointInput[i], len);
-
-        // xResult = SetASNTLV(tag, (uint8_t*) pxTemplate[parameterIndex].pValue, parameterLen, key, keyLen);
-        xResult = SetASNTLV(tag, &ecPoint[0], len + 1, key, keyLen);
-        if (xResult != CKR_OK) {
-            goto exit;
-        }
-
-        uint8_t ecPubParams[50] = {0};
-        size_t ecPubParams_size = sizeof(ecPubParams);
-
-        tag          = ASN_TAG_OBJ_IDF;
-        xResult      = GetAttributeParameterIndex(pxTemplate, ulCount, CKA_EC_PARAMS, &parameterIndex);
-        parameterLen = (size_t)pxTemplate[parameterIndex].ulValueLen;
-
-        if (ecPubParams_size < parameterLen) {
-            mbedtls_ecp_group_id grp_id =
-                EcParametersToGrpId((uint8_t *)pxTemplate[parameterIndex].pValue, parameterLen);
-            /* TODO: Add conditions for other grp_id */
-            if (grp_id == MBEDTLS_ECP_DP_SECP521R1) {
-                uint8_t oid[] = {MBEDTLS_OID_EC_GRP_SECP521R1};
-                size_t oidLen = sizeof(oid) - 1;
-                // ecPubParams_size = ecPubParams_size - oidLen - 1;
-                // memcpy(&ecPubParams[ecPubParams_size], oid, oidLen);
-                xResult = SetASNTLV(tag, &oid[0], oidLen, ecPubParams, &ecPubParams_size);
-                if (xResult != CKR_OK) {
-                    goto exit;
-                }
-            }
-            else {
-                LOG_W("Parsing ECParameters supported only for SECP521R1");
-                xResult = CKR_FUNCTION_FAILED;
-                goto exit;
-            }
-        }
-        else {
-            ecPubParams_size = ecPubParams_size - parameterLen;
-            memcpy(&ecPubParams[ecPubParams_size], (uint8_t *)pxTemplate[parameterIndex].pValue, parameterLen);
-        }
-        // // xResult = SetASNTLV(tag, (uint8_t*) pxTemplate[parameterIndex].pValue, parameterLen, ecPubParams,
-        // &ecPubParams_size); if(xResult != CKR_OK) {
-        //     goto exit;
-        // }
-
-        uint8_t id_ecPublicKey[] = ID_ECPUBLICKEY;
-        xResult = SetASNTLV(tag, &id_ecPublicKey[0], sizeof(id_ecPublicKey), ecPubParams, &ecPubParams_size);
-        if (xResult != CKR_OK) {
-            goto exit;
-        }
-
-        tag     = ASN_TAG_SEQUENCE;
-        xResult = SetASNTLV(tag, &ecPubParams[ecPubParams_size], sizeof(ecPubParams) - ecPubParams_size, key, keyLen);
-        if (xResult != CKR_OK) {
-            goto exit;
-        }
-
-        size_t totalLen = bufferSize_copy - *keyLen;
-
-        if (totalLen <= 127) {
-            if (*keyLen < 1) {
-                xResult = CKR_FUNCTION_FAILED;
-                goto exit;
-            }
-            *keyLen = *keyLen - 1;
-
-            key[*keyLen] = totalLen;
-        }
-        else if (totalLen <= 255) {
-            if (*keyLen < 2) {
-                xResult = CKR_FUNCTION_FAILED;
-                goto exit;
-            }
-            *keyLen = *keyLen - 2;
-
-            key[*keyLen]     = 0x81;
-            key[*keyLen + 1] = totalLen;
-        }
-        else {
-            if (*keyLen < 3) {
-                xResult = CKR_FUNCTION_FAILED;
-                goto exit;
-            }
-            *keyLen = *keyLen - 3;
-
-            key[*keyLen]     = 0x82;
-            key[*keyLen + 1] = (totalLen & 0x00FF00) >> 8;
-            key[*keyLen + 2] = (totalLen & 0x00FF);
-        }
-
-        if (*keyLen < 1) {
-            return CKR_ARGUMENTS_BAD;
-        }
-        *keyLen = *keyLen - 1;
-
-        key[*keyLen] = ASN_TAG_SEQUENCE;
-
-        totalLen = bufferSize_copy - *keyLen;
-        memcpy(&key_buffer[0], &key[*keyLen], totalLen);
-        *keyLen = totalLen;
-    }
-    else {
-        xResult = CKR_ARGUMENTS_BAD;
-    }
-
-exit:
-    return xResult;
-}
-
 /** @brief Ec Signature To RandS.
  * This function generates RandS from signature.
  *
  * @param signature - Buffer containing the signature to read and verify.
  * @param sigLen - Size of signature in bytes.
- * 
+ *
  * @returns Status of the operation
  * @retval #CKR_OK The operation has completed successfully.
  * @retval #CKR_FUNCTION_FAILED The requested function could not be performed.
@@ -702,7 +142,7 @@ exit:
  * @param rands_len - Length in bytes of generated rands.
  * @param output - Output buffer containing the signature data.
  * @param outputLen - Size of the output in bytes.
- * 
+ *
  * @returns Status of the operation
  * @retval #CKR_OK The operation has completed successfully.
  * @retval #CKR_FUNCTION_FAILED The requested function could not be performed.
@@ -725,6 +165,11 @@ CK_RV EcRandSToSignature(uint8_t *rands, const size_t rands_len, uint8_t *output
 
     xResult = SetASNTLV(tag, &rands[0], componentLen, signature, &signatureLen);
     if (xResult != CKR_OK) {
+        goto exit;
+    }
+
+    if (signatureLen > sizeof(signature)) {
+        xResult = CKR_FUNCTION_FAILED;
         goto exit;
     }
 
@@ -782,7 +227,7 @@ exit:
  *
  * @param input - Pointer to a location where rands recieved.
  * @param dataLen - Length in bytes of generated rands.
- * 
+ *
  * @returns Status of the operation
  * @retval #CKR_OK The operation has completed successfully.
  * @retval #CKR_FUNCTION_FAILED The requested function could not be performed.
@@ -793,7 +238,7 @@ CK_RV EcPublickeyGetEcParams(uint8_t *input, size_t *inputLen)
     CK_RV xResult      = CKR_FUNCTION_FAILED;
     size_t index       = 0;
     uint8_t data[1024] = {0};
-    int len            = 0;
+    size_t len         = 0;
     uint8_t tag        = 0;
     if (sizeof(data) < *inputLen) {
         xResult = CKR_FUNCTION_FAILED;
@@ -811,10 +256,10 @@ CK_RV EcPublickeyGetEcParams(uint8_t *input, size_t *inputLen)
 
     if ((len & 0x80) == 0x80) {
         if ((len & 0x7F) == 0x01) {
-            // len = data[index++];
+            len = data[index++];
         }
         else if ((len & 0x7F) == 0x02) {
-            // len   = (data[index] << 8) | data[index + 1];
+            len   = (data[index] << 8) | data[index + 1];
             index = index + 2;
         }
     }
@@ -833,10 +278,10 @@ CK_RV EcPublickeyGetEcParams(uint8_t *input, size_t *inputLen)
 
     if ((len & 0x80) == 0x80) {
         if ((len & 0x7F) == 0x01) {
-            // len = data[index++];
+            len = data[index++];
         }
         else if ((len & 0x7F) == 0x02) {
-            // len   = (data[index] << 8) | data[index + 1];
+            len   = (data[index] << 8) | data[index + 1];
             index = index + 2;
         }
     }
@@ -880,7 +325,7 @@ CK_RV EcPublickeyGetEcParams(uint8_t *input, size_t *inputLen)
         goto exit;
     }
 
-    if (index >= sizeof(data) - 1){
+    if (index >= (sizeof(data) - 1)){
         xResult = CKR_FUNCTION_FAILED;
         goto exit;
     }
@@ -889,24 +334,22 @@ CK_RV EcPublickeyGetEcParams(uint8_t *input, size_t *inputLen)
 
     if ((len & 0x80) == 0x80) {
         if ((len & 0x7F) == 0x01) {
-            if (index >= sizeof(data) - 2){
-                xResult = CKR_FUNCTION_FAILED;
-                goto exit;
-            }
+            ENSURE_OR_GO_EXIT((index + 2) <= sizeof(data) - 1);
             len = data[index + 2];
+            ENSURE_OR_GO_EXIT((UINT_MAX - 1) >= len);
             len++;
         }
         else if ((len & 0x7F) == 0x02) {
-            if (index >= sizeof(data) - 3){
-                xResult = CKR_FUNCTION_FAILED;
-                goto exit;
-            }
+            ENSURE_OR_GO_EXIT((index + 3) <= sizeof(data) - 1);
             len = (data[index + 2] << 8) | data[index + 3];
+            ENSURE_OR_GO_EXIT((UINT_MAX - 2) >= len);
             len = len + 2;
         }
     }
 
+    ENSURE_OR_GO_EXIT((UINT_MAX - 2) >= len);
     len = len + 2;
+    ENSURE_OR_GO_EXIT((UINT_MAX - index) >= (size_t)len);
 
     if ((index + len) > *inputLen) {
         xResult = CKR_FUNCTION_FAILED;
@@ -956,11 +399,13 @@ CK_RV AsymmetricEncrypt(P11SessionPtr_t pxSessionObj,
     sss_status_t status = kStatus_SSS_Fail;
     uint8_t data[2048]  = {0};
     size_t dataLen      = sizeof(data);
-    // sss_algorithm_t digest_algorithm = kAlgorithm_None;
     sss_asymmetric_t asymmCtx;
     sss_object_t sss_object = {0};
 
     if (pxSessionObj->xOperationInProgress == CKM_RSA_PKCS) {
+        if ((SIZE_MAX - ulDataLen) < 11) {
+            return kStatus_SSS_Fail;
+        }
         xResult = (2048 >= (ulDataLen + 11)) ? CKR_OK : CKR_MECHANISM_INVALID;
         if (xResult != CKR_OK) {
             pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
@@ -981,6 +426,10 @@ CK_RV AsymmetricEncrypt(P11SessionPtr_t pxSessionObj,
             UNLOCK_MUTEX_FOR_RTOS_RET(CKR_DEVICE_ERROR)
         }
 
+        if ((pxSessionObj->xOperationKeyHandle) > UINT32_MAX) {
+            pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
+            UNLOCK_MUTEX_FOR_RTOS_RET(CKR_DEVICE_ERROR)
+        }
         status = sss_key_object_get_handle(&sss_object, pxSessionObj->xOperationKeyHandle);
         if (status != kStatus_SSS_Success) {
             pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
@@ -1055,7 +504,6 @@ CK_RV AsymmetricDecrypt(P11SessionPtr_t pxSessionObj,
     sss_status_t status = kStatus_SSS_Fail;
     uint8_t data[2048]  = {0};
     size_t dataLen      = sizeof(data);
-    // sss_algorithm_t digest_algorithm = kAlgorithm_None;
     sss_asymmetric_t asymmCtx;
     sss_object_t sss_object = {0};
 
@@ -1072,6 +520,10 @@ CK_RV AsymmetricDecrypt(P11SessionPtr_t pxSessionObj,
             UNLOCK_MUTEX_FOR_RTOS_RET(CKR_DEVICE_ERROR)
         }
 
+        if ((pxSessionObj->xOperationKeyHandle) > UINT32_MAX) {
+            pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
+            UNLOCK_MUTEX_FOR_RTOS_RET(CKR_DEVICE_ERROR)
+        }
         status = sss_key_object_get_handle(&sss_object, pxSessionObj->xOperationKeyHandle);
         if (status != kStatus_SSS_Success) {
             pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;

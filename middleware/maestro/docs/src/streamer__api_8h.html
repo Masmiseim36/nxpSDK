@@ -28,7 +28,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Maestro Audio Framework
-   &#160;<span id="projectnumber">v 1.6</span>
+   &#160;<span id="projectnumber">v 1.7</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -104,6 +104,9 @@ $(document).ready(function(){initNavTree('streamer__api_8h.html',''); initResiza
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structElementTypeLookup.html">ElementTypeLookup</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element type and property.  <a href="structElementTypeLookup.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structAlbumArt.html">AlbumArt</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Album Art Object.  <a href="structAlbumArt.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -124,6 +127,8 @@ Data Structures</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSTREAMER__MSG__T.html">STREAMER_MSG_T</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Streamer Message Type.  <a href="structSTREAMER__MSG__T.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPipelineElements.html">PipelineElements</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSTREAMER__CREATE__PARAM.html">STREAMER_CREATE_PARAM</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Streamer Arguments.  <a href="structSTREAMER__CREATE__PARAM.html#details">More...</a><br /></td></tr>
@@ -226,6 +231,20 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="streamer__api_8h.html#aac2af8c2f02fef9106796da3a3209028">TRACK_YEAR_LEN</a>&#160;&#160;&#160;5</td></tr>
 <tr class="memdesc:aac2af8c2f02fef9106796da3a3209028"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum track year length. <br /></td></tr>
 <tr class="separator:aac2af8c2f02fef9106796da3a3209028"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7140d943b6f40ad3c4bdab5a2073c2f6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="streamer__api_8h.html#a7140d943b6f40ad3c4bdab5a2073c2f6">RAW_DATA</a>&#160;&#160;&#160;0</td></tr>
+<tr class="memdesc:a7140d943b6f40ad3c4bdab5a2073c2f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Raw data.  <a href="streamer__api_8h.html#a7140d943b6f40ad3c4bdab5a2073c2f6">More...</a><br /></td></tr>
+<tr class="separator:a7140d943b6f40ad3c4bdab5a2073c2f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac139bede02cf10a641fa8a11fcb5b120"><td class="memItemLeft" align="right" valign="top"><a id="ac139bede02cf10a641fa8a11fcb5b120"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="streamer__api_8h.html#ac139bede02cf10a641fa8a11fcb5b120">AUDIO_DATA</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memdesc:ac139bede02cf10a641fa8a11fcb5b120"><td class="mdescLeft">&#160;</td><td class="mdescRight">Audio data. <br /></td></tr>
+<tr class="separator:ac139bede02cf10a641fa8a11fcb5b120"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1278a7aaec2e1e1f63039077ed883562"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="streamer__api_8h.html#a1278a7aaec2e1e1f63039077ed883562">CHECK_RET</a>(condition,  function)</td></tr>
+<tr class="memdesc:a1278a7aaec2e1e1f63039077ed883562"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro for checking return value of a function.  <a href="streamer__api_8h.html#a1278a7aaec2e1e1f63039077ed883562">More...</a><br /></td></tr>
+<tr class="separator:a1278a7aaec2e1e1f63039077ed883562"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3703cd8bb0754a9473b39b8e23dec25"><td class="memItemLeft" align="right" valign="top"><a id="ab3703cd8bb0754a9473b39b8e23dec25"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="streamer__api_8h.html#ab3703cd8bb0754a9473b39b8e23dec25">PIPELINE_SIZE</a>(pipeline)&#160;&#160;&#160;(sizeof(pipeline) / sizeof(<a class="el" href="streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958">ElementIndex</a>))</td></tr>
+<tr class="memdesc:ab3703cd8bb0754a9473b39b8e23dec25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pipeline size - number of elements in the pipeline. <br /></td></tr>
+<tr class="separator:ab3703cd8bb0754a9473b39b8e23dec25"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a05026958fbb45aebc34352c8f667ee5b"><td class="memItemLeft" align="right" valign="top"><a id="a05026958fbb45aebc34352c8f667ee5b"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="streamer__api_8h.html#a05026958fbb45aebc34352c8f667ee5b">STREAMER_MSG_SIZE</a>&#160;&#160;&#160;(sizeof(<a class="el" href="structSTREAMER__MSG__T.html">STREAMER_MSG_T</a>))</td></tr>
 <tr class="memdesc:a05026958fbb45aebc34352c8f667ee5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of streamer message structure. <br /></td></tr>
@@ -342,52 +361,20 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:aed3a377d6591a396708fdc3e3cc0b1e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">PipelineState.  <a href="streamer__api_8h.html#aed3a377d6591a396708fdc3e3cc0b1e1">More...</a><br /></td></tr>
 <tr class="separator:aed3a377d6591a396708fdc3e3cc0b1e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad269d79ba74b567a67e0fac722252652"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652">StreamPipelineType</a> { <br />
-&#160;&#160;<a class="el" href="streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652a72adfc64c8640cbdd7a99424c2fdd5a3">STREAM_PIPELINE_FILESYSTEM</a> = 0
-, <br />
-&#160;&#160;<a class="el" href="streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652acc938003ee94f0a27587310879764c93">STREAM_PIPELINE_MEM</a>
-, <br />
-&#160;&#160;<a class="el" href="streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652aad10826276aa260f3203de65efc4ff1c">STREAM_PIPELINE_NETBUF</a>
-, <br />
-&#160;&#160;<a class="el" href="streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652a925d2315d8138872c2c2cf9939a397d7">STREAM_PIPELINE_PCM</a>
-, <br />
-&#160;&#160;<b>STREAM_PIPELINE_OPUS_MEM2MEM</b>
-, <br />
-&#160;&#160;<b>STREAM_PIPELINE_MIC2FILE</b>
-, <br />
-&#160;&#160;<b>STREAM_PIPELINE_VIT</b>
-, <br />
-&#160;&#160;<b>STREAM_PIPELINE_PCM_AUDIO</b>
-, <br />
-&#160;&#160;<b>STREAM_PIPELINE_PCM_AUDIO_MEM</b>
-, <br />
-&#160;&#160;<b>STREAM_PIPELINE_PCM_AUDIO_PROC_AUDIO</b>
-, <br />
-&#160;&#160;<b>STREAM_PIPELINE_PCM_EAP_PROC_AUDIO</b>
-, <br />
-&#160;&#160;<b>STREAM_PIPELINE_TEST_AUDIO_PROCFILE2FILE</b>
-, <br />
-&#160;&#160;<b>STREAM_PIPELINE_VIT_FILESINK</b>
-, <br />
-&#160;&#160;<b>STREAM_PIPELINE_MAX</b>
-<br />
- }</td></tr>
-<tr class="memdesc:ad269d79ba74b567a67e0fac722252652"><td class="mdescLeft">&#160;</td><td class="mdescRight">StreamPipelineType.  <a href="streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652">More...</a><br /></td></tr>
-<tr class="separator:ad269d79ba74b567a67e0fac722252652"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1abb7fc632ea61f43d927e80d7a39958"><td class="memItemLeft" align="right" valign="top"><a id="a1abb7fc632ea61f43d927e80d7a39958"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958">ElementIndex</a> { <br />
-&#160;&#160;<b>ELEMENT_FILE_SRC_INDEX</b>
+&#160;&#160;<b>ELEMENT_FILE_SRC_INDEX</b> = 0
 , <br />
 &#160;&#160;<b>ELEMENT_MEM_SRC_INDEX</b>
 , <br />
 &#160;&#160;<b>ELEMENT_NETBUF_SRC_INDEX</b>
 , <br />
-&#160;&#160;<b>ELEMENT_AUDIO_SRC_INDEX</b>
+&#160;&#160;<b>ELEMENT_MICROPHONE_INDEX</b>
 , <br />
 &#160;&#160;<b>ELEMENT_FILE_SINK_INDEX</b>
 , <br />
 &#160;&#160;<b>ELEMENT_MEM_SINK_INDEX</b>
 , <br />
-&#160;&#160;<b>ELEMENT_AUDIO_SINK_INDEX</b>
+&#160;&#160;<b>ELEMENT_SPEAKER_INDEX</b>
 , <br />
 &#160;&#160;<b>ELEMENT_DECODER_INDEX</b>
 , <br />
@@ -395,11 +382,17 @@ Enumerations</h2></td></tr>
 , <br />
 &#160;&#160;<b>ELEMENT_VIT_INDEX</b>
 , <br />
-&#160;&#160;<b>ELEMENT_EAP_PROC_INDEX</b>
+&#160;&#160;<b>ELEMENT_VIT_PROC_INDEX</b>
 , <br />
-&#160;&#160;<b>ELEMENT_VOICESEEKER_PROC_INDEX</b>
+&#160;&#160;<b>ELEMENT_VOICESEEKER_INDEX</b>
 , <br />
-&#160;&#160;<b>ELEMENT_SRC_PROC_INDEX</b>
+&#160;&#160;<b>ELEMENT_SRC_INDEX</b>
+, <br />
+&#160;&#160;<b>ELEMENT_USB_SRC_INDEX</b>
+, <br />
+&#160;&#160;<b>ELEMENT_USB_SINK_INDEX</b>
+, <br />
+&#160;&#160;<b>ELEMENT_ASRC_INDEX</b>
 , <br />
 &#160;&#160;<b>ELEMENT_LAST_INDEX</b>
 <br />
@@ -607,9 +600,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ad3e4e6e9194c94d603c7118a159ad1a6"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="streamer__api_8h.html#ad3e4e6e9194c94d603c7118a159ad1a6">streamer_destroy</a> (<a class="el" href="structSTREAMER__T.html">STREAMER_T</a> *streamer)</td></tr>
 <tr class="memdesc:ad3e4e6e9194c94d603c7118a159ad1a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy a streamer object.  <a href="streamer__api_8h.html#ad3e4e6e9194c94d603c7118a159ad1a6">More...</a><br /></td></tr>
 <tr class="separator:ad3e4e6e9194c94d603c7118a159ad1a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a156ccb8aa582b294d35020e7c441f256"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="streamer__api_8h.html#a156ccb8aa582b294d35020e7c441f256">streamer_create_pipeline</a> (<a class="el" href="structSTREAMER__T.html">STREAMER_T</a> *streamer, int32_t pipeline_id, <a class="el" href="streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652">StreamPipelineType</a> pipeline_type, const char *in_dev_name, const char *out_dev_name, bool block)</td></tr>
-<tr class="memdesc:a156ccb8aa582b294d35020e7c441f256"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a pipeline that will handle the different connected elements.  <a href="streamer__api_8h.html#a156ccb8aa582b294d35020e7c441f256">More...</a><br /></td></tr>
-<tr class="separator:a156ccb8aa582b294d35020e7c441f256"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47df6189721825d9fa1484c54f75132f"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="streamer__api_8h.html#a47df6189721825d9fa1484c54f75132f">streamer_create_pipeline</a> (<a class="el" href="structSTREAMER__T.html">STREAMER_T</a> *streamer, int32_t pipeline_id, const char *in_dev_name, const char *out_dev_name, <a class="el" href="structPipelineElements.html">PipelineElements</a> elements, bool block)</td></tr>
+<tr class="memdesc:a47df6189721825d9fa1484c54f75132f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a pipeline that will handle the different connected elements.  <a href="streamer__api_8h.html#a47df6189721825d9fa1484c54f75132f">More...</a><br /></td></tr>
+<tr class="separator:a47df6189721825d9fa1484c54f75132f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa9fd155271d1be13af4f4863426e9644"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="streamer__api_8h.html#aa9fd155271d1be13af4f4863426e9644">streamer_destroy_pipeline</a> (<a class="el" href="structSTREAMER__T.html">STREAMER_T</a> *streamer, int32_t pipeline_id, bool block)</td></tr>
 <tr class="memdesc:aa9fd155271d1be13af4f4863426e9644"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy a pipeline.  <a href="streamer__api_8h.html#aa9fd155271d1be13af4f4863426e9644">More...</a><br /></td></tr>
 <tr class="separator:aa9fd155271d1be13af4f4863426e9644"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -640,7 +633,66 @@ Functions</h2></td></tr>
 <tr class="memitem:a7f33f78b4303617006927d7578be435e"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="streamer__api_8h.html#a7f33f78b4303617006927d7578be435e">streamer_set_repeat</a> (<a class="el" href="structSTREAMER__T.html">STREAMER_T</a> *streamer, int32_t pipeline_id, bool repeat_on, bool block)</td></tr>
 <tr class="memdesc:a7f33f78b4303617006927d7578be435e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set pipeline to repeat.  <a href="streamer__api_8h.html#a7f33f78b4303617006927d7578be435e">More...</a><br /></td></tr>
 <tr class="separator:a7f33f78b4303617006927d7578be435e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af69f0380c59f5c3af1a8fb5947263a2d"><td class="memItemLeft" align="right" valign="top"><a id="af69f0380c59f5c3af1a8fb5947263a2d"></a>
+int32_t&#160;</td><td class="memItemRight" valign="bottom"><b>is_element_in_pipeline</b> (<a class="el" href="structPipelineElements.html">PipelineElements</a> pipe_elems, <a class="el" href="streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958">ElementIndex</a> id)</td></tr>
+<tr class="separator:af69f0380c59f5c3af1a8fb5947263a2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a7140d943b6f40ad3c4bdab5a2073c2f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7140d943b6f40ad3c4bdab5a2073c2f6">&#9670;&nbsp;</a></span>RAW_DATA</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define RAW_DATA&#160;&#160;&#160;0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Data Packets </p>
+
+</div>
+</div>
+<a id="a1278a7aaec2e1e1f63039077ed883562"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1278a7aaec2e1e1f63039077ed883562">&#9670;&nbsp;</a></span>CHECK_RET</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CHECK_RET</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">condition, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">function&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">    ({                                                                                                 \</div>
+<div class="line">        int __ret;                                                                                     \</div>
+<div class="line">                                                                                                       \</div>
+<div class="line">        if ((__ret = (<span class="keywordtype">int</span>)(condition)) != 0)                                                           \</div>
+<div class="line">        {                                                                                              \</div>
+<div class="line">            STREAMER_LOG_ERR(<a class="code" href="streamer_8h.html#a9fcf5466d3bed4524c1fbd347389a9c8">DBG_CORE</a>, <a class="code" href="error_8h.html#ad5f9bc0a6f343a8cf343550d4043767a">ERRCODE_INTERNAL</a>, <span class="stringliteral">&quot;function(%s) failed:%d\n&quot;</span>, <span class="keyword">function</span>, __ret); \</div>
+<div class="line">            return __ret;                                                                              \</div>
+<div class="line">        }                                                                                              \</div>
+<div class="line">        __ret;                                                                                         \</div>
+<div class="line">    })</div>
+<div class="ttc" id="aerror_8h_html_ad5f9bc0a6f343a8cf343550d4043767a"><div class="ttname"><a href="error_8h.html#ad5f9bc0a6f343a8cf343550d4043767a">ERRCODE_INTERNAL</a></div><div class="ttdeci">#define ERRCODE_INTERNAL</div><div class="ttdoc">Error code internal.</div><div class="ttdef"><b>Definition:</b> error.h:48</div></div>
+<div class="ttc" id="astreamer_8h_html_a9fcf5466d3bed4524c1fbd347389a9c8"><div class="ttname"><a href="streamer_8h.html#a9fcf5466d3bed4524c1fbd347389a9c8">DBG_CORE</a></div><div class="ttdeci">#define DBG_CORE</div><div class="ttdoc">Flag enable core debug messages.</div><div class="ttdef"><b>Definition:</b> streamer.h:33</div></div>
+</div><!-- fragment -->
+</div>
+</div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="a74945267775b0a00cf3a7b9d1ab93896"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a74945267775b0a00cf3a7b9d1ab93896">&#9670;&nbsp;</a></span>StreamReturnType</h2>
@@ -772,31 +824,6 @@ Functions</h2></td></tr>
 <tr><td class="fieldname"><a id="aed3a377d6591a396708fdc3e3cc0b1e1a6291ce9aab12208cc66968c97a1ce7dd"></a>STATE_PAUSED&#160;</td><td class="fielddoc"><p>The element should be ready to accept and process data. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="aed3a377d6591a396708fdc3e3cc0b1e1af8f1d4013be7a14c51495005d39e7c0e"></a>STATE_PLAYING&#160;</td><td class="fielddoc"><p>The same as PAUSED except for live sources and sinks. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a id="ad269d79ba74b567a67e0fac722252652"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad269d79ba74b567a67e0fac722252652">&#9670;&nbsp;</a></span>StreamPipelineType</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652">StreamPipelineType</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The type of pipeline in streamer. These may not all be supported. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ad269d79ba74b567a67e0fac722252652a72adfc64c8640cbdd7a99424c2fdd5a3"></a>STREAM_PIPELINE_FILESYSTEM&#160;</td><td class="fielddoc"><p>Pipeline with file source, decoder and audio sink. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ad269d79ba74b567a67e0fac722252652acc938003ee94f0a27587310879764c93"></a>STREAM_PIPELINE_MEM&#160;</td><td class="fielddoc"><p>Pipeline with memory buffer source, decoder and audio sink. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ad269d79ba74b567a67e0fac722252652aad10826276aa260f3203de65efc4ff1c"></a>STREAM_PIPELINE_NETBUF&#160;</td><td class="fielddoc"><p>Pipeline with network buffer source, decoder and audio sink. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ad269d79ba74b567a67e0fac722252652a925d2315d8138872c2c2cf9939a397d7"></a>STREAM_PIPELINE_PCM&#160;</td><td class="fielddoc"><p>Pipeline with audio (PCM) source and audio sink. </p>
 </td></tr>
 </table>
 
@@ -1127,8 +1154,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a156ccb8aa582b294d35020e7c441f256"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a156ccb8aa582b294d35020e7c441f256">&#9670;&nbsp;</a></span>streamer_create_pipeline()</h2>
+<a id="a47df6189721825d9fa1484c54f75132f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47df6189721825d9fa1484c54f75132f">&#9670;&nbsp;</a></span>streamer_create_pipeline()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1148,12 +1175,6 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652">StreamPipelineType</a>&#160;</td>
-          <td class="paramname"><em>pipeline_type</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>in_dev_name</em>, </td>
         </tr>
@@ -1162,6 +1183,12 @@ Functions</h2></td></tr>
           <td></td>
           <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>out_dev_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structPipelineElements.html">PipelineElements</a>&#160;</td>
+          <td class="paramname"><em>elements</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1180,7 +1207,6 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">streamer</td><td>streamer object </td></tr>
     <tr><td class="paramname">pipeline_id</td><td>unique pipeline ID </td></tr>
-    <tr><td class="paramname">pipeline_type</td><td>type of the pipeline </td></tr>
     <tr><td class="paramname">in_dev_name</td><td>input device name </td></tr>
     <tr><td class="paramname">out_dev_name</td><td>output device name </td></tr>
     <tr><td class="paramname">block</td><td>blocking / non-blocking creation of pipeline called directly </td></tr>

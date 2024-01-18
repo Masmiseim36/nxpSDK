@@ -1,6 +1,6 @@
 var a00022 =
 [
-    [ "flexio_camera_edma_handle_t", "a00022.html#a00251", [
+    [ "_flexio_camera_edma_handle", "a00022.html#a00289", [
       [ "kCODEC_WM8904", "a00247.html#gga7cc2e4244ca368f68e5746185eda6c4aacb2ee31cd4ee06712e3cf445e12cb389", null ],
       [ "kCODEC_WM8960", "a00247.html#gga7cc2e4244ca368f68e5746185eda6c4aaa15237d33f0b971a6596458ef7aa8d99", null ],
       [ "kCODEC_WM8524", "a00247.html#gga7cc2e4244ca368f68e5746185eda6c4aa57b2941cff245c37272e1ea4598c3ab0", null ],
@@ -13,14 +13,17 @@ var a00022 =
       [ "kCODEC_TFA9XXX", "a00247.html#gga7cc2e4244ca368f68e5746185eda6c4aa448b697ab0cc0c28740e77484faad04f", null ],
       [ "kCODEC_TFA9896", "a00247.html#gga7cc2e4244ca368f68e5746185eda6c4aa899f42fede26bf5fd37ea863fb4e5624", null ],
       [ "kCODEC_WM8962", "a00247.html#gga7cc2e4244ca368f68e5746185eda6c4aa018d6b6d07eab64fe414983199950dc8", null ],
-      [ "callback", "a00022.html#aa6a47749cad9e09b544d2a4038b6e420", null ],
-      [ "userData", "a00022.html#ad1efb23fc99dcbde281ccca7fcbe5d1f", null ],
-      [ "rxSize", "a00022.html#a9560b4e1d59b1cce760c8a49616ee5a4", null ],
-      [ "rxEdmaHandle", "a00022.html#a9cc34504566bb70be81ce06129c45988", null ],
-      [ "nbytes", "a00022.html#a12a81c4048e7c1cc3d82b9030631a049", null ],
-      [ "rxState", "a00022.html#a4e5b67ad139f90a05551fe80506c8df9", null ]
+      [ "kCODEC_PCM512X", "a00247.html#gga7cc2e4244ca368f68e5746185eda6c4aa317f6511304608e3a32df3bf009f4181", null ],
+      [ "kCODEC_PCM186X", "a00247.html#gga7cc2e4244ca368f68e5746185eda6c4aaa765592ccbbe2fb41ab0df45bc6ab9ed", null ],
+      [ "callback", "a00022.html#a84f7c9c43050bfdbddd870fec5d5e5c0", null ],
+      [ "userData", "a00022.html#a89f9d809ee822b651deb2db2df1344fa", null ],
+      [ "rxSize", "a00022.html#a7222f238b52f4bf7230616b8c5158a65", null ],
+      [ "rxEdmaHandle", "a00022.html#aa7e4007809195607deb3e6754186fc32", null ],
+      [ "nbytes", "a00022.html#a310ccb52e90227a84cbb06104dde79d5", null ],
+      [ "rxState", "a00022.html#ad669ec4bf3022d35787b390d518f0d10", null ]
     ] ],
     [ "FSL_FLEXIO_CAMERA_EDMA_DRIVER_VERSION", "a00022.html#ga52394c208ce319682c96e0f1516e57fb", null ],
+    [ "flexio_camera_edma_handle_t", "a00022.html#ga4a99ca6dc45194b18fcc8439baa48bac", null ],
     [ "flexio_camera_edma_transfer_callback_t", "a00022.html#gabb60fe8b364fd7236b89905639ea4b0c", null ],
     [ "FLEXIO_CAMERA_TransferCreateHandleEDMA", "a00022.html#gafcfbdd57ed04df3dc16ef839c1b94b36", null ],
     [ "FLEXIO_CAMERA_TransferReceiveEDMA", "a00022.html#ga0d33545dd2a68785b201ab14903cd93f", null ],

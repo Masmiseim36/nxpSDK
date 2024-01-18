@@ -89,5 +89,5 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     -Map=output.map \
     ${FPU} \
     ${SPECS} \
-    -T${ProjDirPath}/MIMXRT1015_ram_flashloader.ld -static \
+    -T\"${ProjDirPath}/MIMXRT1015_ram_flashloader.ld\" -static \
 ")

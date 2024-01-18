@@ -1,10 +1,7 @@
 /*
  * Copyright 2018-2023 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef STREAMER_H
@@ -128,15 +125,6 @@
 /** @brief File raw write */
 #define FILE_RAW_WRITE 1
 
-/**
- * Data Packets
- */
-
-/** @brief Raw data */
-#define RAW_DATA 0
-/** @brief Audio data */
-#define AUDIO_DATA 1
-
 /*! Default output device */
 #define STREAMER_DEFAULT_OUT_DEVICE AUDIO_SINK_DEVICE_TYPE_PCMRTOS
 
@@ -151,6 +139,7 @@
 /*! Automatically report duration */
 #define STREAMER_DEFAULT_UPDATE_DURATION (1000)
 
+#define STREAMER_VERSION "1.7"
 /*
  * STRUCTURES AND OTHER TYPEDEFS
  */
@@ -325,8 +314,6 @@ int streamer_msg_handler(STREAMER_T *streamer, STREAMER_MSG_T *msg);
 int streamer_process_pipelines(STREAMER_T *streamer);
 
 /* Message Handlers */
-int streamer_msg_create_pipeline(STREAMER_T *streamer, void *data);
-int streamer_msg_destroy_pipeline(STREAMER_T *streamer, void *data);
 int streamer_msg_get_track_info(STREAMER_T *streamer, void *msg_data);
 int streamer_msg_set_state(STREAMER_T *streamer, void *data);
 int streamer_msg_get_state(STREAMER_T *streamer, void *data);

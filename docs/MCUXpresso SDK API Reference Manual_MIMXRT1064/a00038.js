@@ -1,16 +1,17 @@
 var a00038 =
 [
-    [ "flexio_spi_master_edma_handle_t", "a00038.html#a00323", [
-      [ "transferSize", "a00038.html#ae807113949bc9e00ce15af0dab3e9b89", null ],
-      [ "nbytes", "a00038.html#a32e1ff6188daf9c28eea501cf7585761", null ],
-      [ "txInProgress", "a00038.html#af497e9228ec009ef999a3d1cb77d175d", null ],
-      [ "rxInProgress", "a00038.html#aa8bfa7c132f8415458603e2f55525597", null ],
-      [ "txHandle", "a00038.html#a539d1f291e21f3de7a9b573fec434e3c", null ],
-      [ "rxHandle", "a00038.html#a60662f5dc343b61782c0a4284ec6cab0", null ],
-      [ "callback", "a00038.html#a5a692a33dc01fe79b4ae30b19510f834", null ],
-      [ "userData", "a00038.html#ac23b20ba23a813e03d5c52586c06daaa", null ]
+    [ "_flexio_spi_master_edma_handle", "a00038.html#a00408", [
+      [ "transferSize", "a00038.html#a7b8e9764d5251b6802223f1a06825880", null ],
+      [ "nbytes", "a00038.html#a0031d44f585927e4e39c6dd41104472d", null ],
+      [ "txInProgress", "a00038.html#a0d382a3798829e3cb4325ec08e6206e2", null ],
+      [ "rxInProgress", "a00038.html#a3d79cb8988bae9468c0b0bf0f2378e48", null ],
+      [ "txHandle", "a00038.html#a5499d0e48b713a2ca96bacb693db731e", null ],
+      [ "rxHandle", "a00038.html#aec5c2c30925ed5b91ffe395c97d40c06", null ],
+      [ "callback", "a00038.html#a21e39a081474ede1a531eec700bde453", null ],
+      [ "userData", "a00038.html#a1f10f1ca25a1f26dcbed7b9527a1ee3c", null ]
     ] ],
     [ "FSL_FLEXIO_SPI_EDMA_DRIVER_VERSION", "a00038.html#ga698892336c77f5773cfab44e64077495", null ],
+    [ "flexio_spi_master_edma_handle_t", "a00038.html#gab52f1e76d4a6fa0b24e3c044c697bdb2", null ],
     [ "flexio_spi_slave_edma_handle_t", "a00038.html#gaab3d72fce6c5312795c6a24252d42089", null ],
     [ "flexio_spi_master_edma_transfer_callback_t", "a00038.html#ga7f1f81bab39b9c570d45316f74fa597c", null ],
     [ "flexio_spi_slave_edma_transfer_callback_t", "a00038.html#gaa0c3259164f82ccaaec19cc4231535eb", null ],

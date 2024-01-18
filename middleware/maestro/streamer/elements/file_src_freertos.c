@@ -1,10 +1,7 @@
 /*
  * Copyright 2018-2022 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /*!
@@ -32,6 +29,30 @@ static uint8_t filesrc_src_activate(StreamPad *pad, uint8_t active);
 static FlowReturn filesrc_pull(StreamPad *pad, StreamBuffer *buffer, uint32_t size, uint32_t offset);
 static int32_t filesrc_get_property(StreamElement *element_ptr, uint16_t prop, uint64_t *val_ptr);
 static int32_t filesrc_set_property(StreamElement *element_ptr, uint16_t prop, uintptr_t val);
+
+/*!
+ * This table is used by File source to select the appropriate decoder
+ * and parser based on the extension of the file.  This is needed to properly
+ * configure the pipeline when switching between different audio file types.
+ */
+static StreamerFileSrcConfig file_src_cfg_lookup_table[] = {
+#ifdef MP3_DEC
+    {"mp3", DECODER_TYPE_MP3, PARSER_TYPE_BY_PASS},
+#endif
+#ifdef WAV_DEC
+    {"wav", DECODER_TYPE_WAV, PARSER_TYPE_BY_PASS},
+#endif
+#ifdef OGG_OPUS_DEC
+    {"opus", DECODER_TYPE_OGG_OPUS, PARSER_TYPE_BY_PASS},
+    {"ogg", DECODER_TYPE_OGG_OPUS, PARSER_TYPE_BY_PASS},
+#endif
+#if defined(AAC_DEC) && !defined(__ICCARM__)
+    {"aac", DECODER_TYPE_AAC, PARSER_TYPE_BY_PASS},
+#endif
+#ifdef FLAC_DEC
+    {"flac", DECODER_TYPE_FLAC, PARSER_TYPE_BY_PASS},
+#endif
+    {"", LAST_DECODER_TYPE, LAST_PARSER_TYPE}};
 
 int32_t filesrc_init(StreamElement *element)
 {
@@ -436,8 +457,7 @@ int32_t filesrc_src_pad_process(StreamPad *pad)
         }
         else if (ret != FLOW_ERROR)
         {
-            /* Update audio packet header values as values may have been changed in the AUDIO_PROC element as part of a
-             * crossover preset */
+            /* Update audio packet header values as values may have been changed in the AUDIO_PROC element. */
             if (filesrc->file_type == AUDIO_DATA)
             {
                 AudioPacketHeader *pkt_hdr = NULL;
@@ -1149,4 +1169,55 @@ static int32_t filesrc_set_property(StreamElement *element_ptr, uint16_t prop, u
 
     STREAMER_FUNC_EXIT(DBG_FILESRC);
     return ret;
+}
+
+int32_t file_src_get_decoder_type(char *filename, StreamerFileSrcConfig *config)
+{
+    char *ext = NULL;
+    int i     = 0;
+    int size  = sizeof(file_src_cfg_lookup_table) / sizeof(StreamerFileSrcConfig);
+
+    STREAMER_FUNC_ENTER(DBG_CORE);
+
+    if ((config == NULL) || (filename == NULL))
+    {
+        STREAMER_FUNC_EXIT(DBG_CORE);
+        return STREAM_ERR_GENERAL;
+    }
+
+    ext = strrchr(filename, '.');
+    if (!ext)
+    {
+        STREAMER_FUNC_EXIT(DBG_CORE);
+        return STREAM_ERR_GENERAL; /* Make sure file contains an extension */
+    }
+    ext++;
+
+    for (i = 0; i < size; i++)
+    {
+        if (strcasecmp(ext, file_src_cfg_lookup_table[i].extension) == 0)
+        {
+            break;
+        }
+    }
+
+    /* Extension unknown - failed to find corresponding config type */
+    if (i >= size)
+    {
+        STREAMER_FUNC_EXIT(DBG_CORE);
+        return STREAM_ERR_GENERAL;
+    }
+
+    if (DECODER_TYPE_UNKNOWN == file_src_cfg_lookup_table[i].decoder_type)
+    {
+        STREAMER_FUNC_EXIT(DBG_CORE);
+        return STREAM_ERR_GENERAL;
+    }
+
+    /* set the decoder and parser type in return structure */
+    config->decoder_type = file_src_cfg_lookup_table[i].decoder_type;
+    config->parser_type  = file_src_cfg_lookup_table[i].parser_type;
+
+    STREAMER_FUNC_EXIT(DBG_CORE);
+    return STREAM_OK;
 }

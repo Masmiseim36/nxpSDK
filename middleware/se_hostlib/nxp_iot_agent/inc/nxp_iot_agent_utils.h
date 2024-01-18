@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020, 2021 NXP
+ * Copyright 2018-2022 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -12,9 +12,14 @@
 
 #include <nxp_iot_agent.h>
 #include <nxp_iot_agent_common.h>
+
+#if NXP_IOT_AGENT_HAVE_SSS
 #include <fsl_sss_api.h>
-#include <nxLog_App.h>
-#include <ex_sss_boot.h>
+#endif
+
+#if NXP_IOT_AGENT_HAVE_PSA
+#include "psa_crypto_its.h"
+#endif
 
 #if SSS_HAVE_HOSTCRYPTO_OPENSSL
 #include <openssl/ossl_typ.h>
@@ -109,19 +114,18 @@ iot_agent_status_t iot_agent_utils_write_key_ref_pem(sss_key_store_t *keyStore,
 	sss_object_t *keyObject, const uint32_t keyid, const char* filename);
 
 /*! @brief Create a PEM file containing a certificate.
-*
-* @param[in] keyStore Key store context
-* @param[in] keyObject Reference to a keyObject and it's properties. This must contain a valid key handle!
-* @param[in] certid Certificate id
-* @param[in] filename Name of the PEM file to be created
+ *
+ * @param[in] keyStore Key store context
+ * @param[in] certid Certificate id
+ * @param[in] filename Name of the PEM file to be created
 
-* @retval IOT_AGENT_SUCCESS upon success
-* @retval IOT_AGENT_ERROR_CRYPTO_ENGINE_FAILED upon crypto operation failure
-* @retval IOT_AGENT_ERROR_FILE_SYSTEM upon failure while creating or writing certificate file
-* @retval IOT_AGENT_FAILURE upon failure
-*/
-iot_agent_status_t iot_agent_utils_write_certificate_pem_from_keystore(sss_key_store_t *keyStore,
-	sss_object_t *keyObject, const uint32_t certid, const char* filename);
+ * @retval IOT_AGENT_SUCCESS upon success
+ * @retval IOT_AGENT_ERROR_CRYPTO_ENGINE_FAILED upon crypto operation failure
+ * @retval IOT_AGENT_ERROR_FILE_SYSTEM upon failure while creating or writing certificate file
+ * @retval IOT_AGENT_FAILURE upon failure
+ */
+iot_agent_status_t iot_agent_utils_write_certificate_pem_from_keystore(iot_agent_keystore_t *keyStore,
+	const uint32_t certid, const char* filename);
 
 
 /*! @brief Create a PEM file containing a certificate chain.
@@ -179,6 +183,20 @@ iot_agent_status_t iot_agent_utils_write_key_ref_pem_cos_over_rtp(const iot_agen
 	const nxp_iot_ServiceDescriptor* service_descriptor, const char* filename);
 iot_agent_status_t iot_agent_utils_convert_service2key_id(uint64_t service_id, uint32_t *key_id);
 iot_agent_status_t iot_agent_utils_der_to_pem_bio(BIO *bio_in, BIO* bio_out);
+
+
+/** @brief Maps a given service id to the range of keys that are managed by the EdgeLock 2GO cloud
+ * service.
+ *
+ * @param[in] service_id  Service ID @param[out] key_id  Key ID
+ *
+ * @retval IOT_AGENT_SUCCESS upon success
+ * @retval IOT_AGENT_FAILURE upon failure
+ */
+
+iot_agent_status_t iot_agent_get_first_found_object(iot_agent_keystore_t* keystore,
+	uint32_t* object_ids, size_t num_objects, uint32_t* object_id);
+
 #endif
 
 /*! @brief Gets the common name from the client certificte.
@@ -194,6 +212,13 @@ iot_agent_status_t iot_agent_utils_der_to_pem_bio(BIO *bio_in, BIO* bio_out);
 iot_agent_status_t iot_agent_utils_get_certificate_common_name(iot_agent_context_t* ctx,
 	const nxp_iot_ServiceDescriptor* service_descriptor, char* common_name, size_t max_size);
 
+
+/*! @brief Read a certificate from a keystore.
+ */
+iot_agent_status_t iot_agent_utils_get_certificate_from_keystore(iot_agent_keystore_t* keyStore,
+	uint32_t certificate_id, uint8_t* cert, size_t* cert_len);
+
+
 /** @brief Checks whether a keystore contains the object with the defined key to use for
  * authenticating at the EdgeLock 2GO cloud service.
  *
@@ -203,7 +228,7 @@ iot_agent_status_t iot_agent_utils_get_certificate_common_name(iot_agent_context
  * When neither is found or in case of other issues with the keystore, the function does
  * not return IOT_AGENT_SUCCESS.
  */
-iot_agent_status_t iot_agent_utils_get_edgelock2go_key_id(sss_key_store_t *keystore, uint32_t* object_id);
+iot_agent_status_t iot_agent_utils_get_edgelock2go_key_id(iot_agent_keystore_t* keystore, uint32_t* object_id);
 
 
 /** @brief Checks whether a keystore contains the object with the defined certificate to
@@ -215,18 +240,30 @@ iot_agent_status_t iot_agent_utils_get_edgelock2go_key_id(sss_key_store_t *keyst
  * When neither is found or in case of other issues with the keystore, the function does
  * not return IOT_AGENT_SUCCESS.
  */
-iot_agent_status_t iot_agent_utils_get_edgelock2go_certificate_id(sss_key_store_t *keystore, uint32_t* object_id);
+iot_agent_status_t iot_agent_utils_get_edgelock2go_certificate_id(iot_agent_keystore_t* keystore, uint32_t* object_id);
 
+#if SSS_HAVE_HOSTCRYPTO_MBEDTLS
+iot_agent_status_t iot_agent_utils_create_self_signed_edgelock2go_certificate(
+        iot_agent_keystore_t* keystore, uint8_t* certificate_buffer, 
+        size_t* certificate_buffer_size);
+#endif
 
 /** @brief Assemble a service descriptor for the connection to EdgeLock 2GO cloud service
-* and write it to a datastore.
-*
-* It is assumed that credentials (either ECC or RSA) for client certificate
-* authentication are stored in \p keystore.
-*/
+ * and write it to a datastore.
+ *
+ * It is assumed that keys (either ECC or RSA) for authentication are stored 
+ * in \p keystore.
+ * 
+ * If \p client_certificate is NULL, it is assumed that the client certificate is stored 
+ * in \p keystore as well - in this case the resulting datastore contents will contain a reference 
+ * to the certificate. 
+ * 
+ * If \p client_certificate is not NULL, it shall point to a client certificate, which will be copied 
+ * into the service descriptor.
+ */
 iot_agent_status_t iot_agent_utils_write_edgelock2go_datastore(iot_agent_keystore_t *keystore,
 	iot_agent_datastore_t* datastore, const char* hostname, uint32_t port,
-	const pb_bytes_array_t* trusted_root_ca_certificates);
+	const pb_bytes_array_t* trusted_root_ca_certificates, const pb_bytes_array_t* client_certificate);
 
 
 /** @brief Assemble a service descriptor for the connection to EdgeLock 2GO cloud service
@@ -263,17 +300,27 @@ iot_agent_status_t iot_agent_utils_write_edgelock2go_datastore_from_env(iot_agen
 
 iot_agent_status_t iot_agent_keystore_file_existence(const char *filename, bool forceCreation);
 
-/** @brief Maps a given service id to the range of keys that are managed by the EdgeLock 2GO cloud
- * service.
- *
- * @param[in] service_id  Service ID @param[out] key_id  Key ID
+/** @brief Retrieve the UID of a device.
  *
  * @retval IOT_AGENT_SUCCESS upon success
  * @retval IOT_AGENT_FAILURE upon failure
  */
+iot_agent_status_t iot_agent_utils_get_device_id(uint8_t* buffer, size_t* len);
 
-iot_agent_status_t iot_agent_get_first_found_object(sss_key_store_t *keystore,
-    uint32_t* object_ids, size_t num_objects, uint32_t* object_id);
+/** @brief Updates the length in order to remove padded data.
+ *
+ * \p padded data
+ * \p padded data size
+ */
+iot_agent_status_t nxp_iot_agent_unpad_iso7816d4(uint8_t *data, size_t *data_size);
+
+/** @brief Append padding bytes to a given message.
+ *
+ * Padding is done in-place, meaning the data buffer has to be big enough to hold also the padding
+ * bytes.
+ */
+iot_agent_status_t iot_agent_pad_iso7816d4(uint8_t *data, size_t data_size, 
+        size_t unpadded_length, size_t blocksize, size_t* padded_length);
 
 #ifdef __cplusplus
 } // extern "C"

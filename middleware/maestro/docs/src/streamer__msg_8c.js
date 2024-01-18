@@ -2,8 +2,6 @@ var streamer__msg_8c =
 [
     [ "ElementPropertyLookup", "structElementPropertyLookup.html", "structElementPropertyLookup" ],
     [ "ELEMENT_NOT_USED", "streamer__msg_8c.html#a351c29e3b300c4a71f41cbd326b107df", null ],
-    [ "streamer_msg_create_pipeline", "streamer__msg_8c.html#a85e5d0899a655c86168c1b3d4a91b23d", null ],
-    [ "streamer_msg_destroy_pipeline", "streamer__msg_8c.html#a6ee012d80704673ed3f57243eaa762bb", null ],
     [ "streamer_msg_get_track_info", "streamer__msg_8c.html#a0417dc49395ed33d643bde9fc52107c3", null ],
     [ "streamer_msg_set_state", "streamer__msg_8c.html#a5c027808c7746f3f3016801c1c68b860", null ],
     [ "streamer_msg_get_state", "streamer__msg_8c.html#ab5a2867d7105e10e231f0be743c897f8", null ],

@@ -13,6 +13,8 @@ var a00068 =
       [ "kCODEC_TFA9XXX", "a00302.html#gga52864abcf6ebd8d120995b36fe6ce06ea448b697ab0cc0c28740e77484faad04f", null ],
       [ "kCODEC_TFA9896", "a00302.html#gga52864abcf6ebd8d120995b36fe6ce06ea899f42fede26bf5fd37ea863fb4e5624", null ],
       [ "kCODEC_WM8962", "a00302.html#gga52864abcf6ebd8d120995b36fe6ce06ea018d6b6d07eab64fe414983199950dc8", null ],
+      [ "kCODEC_PCM512X", "a00302.html#gga52864abcf6ebd8d120995b36fe6ce06ea317f6511304608e3a32df3bf009f4181", null ],
+      [ "kCODEC_PCM186X", "a00302.html#gga52864abcf6ebd8d120995b36fe6ce06eaa765592ccbbe2fb41ab0df45bc6ab9ed", null ],
       [ "hostController", "a00068.html#a71c2bc521cd1b46bb9702a438694fd0f", null ],
       [ "dmaDesBuffer", "a00068.html#afdbf757e35a244a36abd144ef6a221c7", null ],
       [ "dmaDesBufferWordsNum", "a00068.html#a4b1c5755001081eb0846e05bc7ae220d", null ],

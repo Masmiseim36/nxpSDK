@@ -1,20 +1,24 @@
 var a00060 =
 [
-    [ "pit_config_t", "a00060.html#a00471", [
-      [ "enableRunInDebug", "a00060.html#ade3a74504e1c6ecf10eb1f30fe5c0921", null ]
+    [ "_pit_config", "a00060.html#a00463", [
+      [ "enableRunInDebug", "a00060.html#abb3a16f49f2b78289794faacfb1f3a80", null ]
     ] ],
     [ "FSL_PIT_DRIVER_VERSION", "a00060.html#ga55a6c6a9b7ee34302c636f9496d0ea2f", null ],
-    [ "pit_chnl_t", "a00060.html#ga7628036278f539e87bd3f76795917737", [
-      [ "kPIT_Chnl_0", "a00060.html#gga7628036278f539e87bd3f76795917737a771abd65f098ad80d8f693e0b97a7e76", null ],
-      [ "kPIT_Chnl_1", "a00060.html#gga7628036278f539e87bd3f76795917737ac7733ad1c04ea00e2f7890a3c737cb7b", null ],
-      [ "kPIT_Chnl_2", "a00060.html#gga7628036278f539e87bd3f76795917737ad12ab59290845fcaebd2d9f01ae2f561", null ],
-      [ "kPIT_Chnl_3", "a00060.html#gga7628036278f539e87bd3f76795917737a4666db554c10bce47cfa628e8bb4ab93", null ]
+    [ "pit_chnl_t", "a00060.html#gadda15e462fb93f2eea6237cab74dc7ca", null ],
+    [ "pit_interrupt_enable_t", "a00060.html#gae6b70a879fb84816fb40294c9e42846d", null ],
+    [ "pit_status_flags_t", "a00060.html#ga8f00d842bb7b1921ac26313e13dc75ba", null ],
+    [ "pit_config_t", "a00060.html#ga767a81b02a29e189c563188dd467a67b", null ],
+    [ "_pit_chnl", "a00060.html#ga128823c7ae3f2a6e19376b663ea56abd", [
+      [ "kPIT_Chnl_0", "a00060.html#gga128823c7ae3f2a6e19376b663ea56abda771abd65f098ad80d8f693e0b97a7e76", null ],
+      [ "kPIT_Chnl_1", "a00060.html#gga128823c7ae3f2a6e19376b663ea56abdac7733ad1c04ea00e2f7890a3c737cb7b", null ],
+      [ "kPIT_Chnl_2", "a00060.html#gga128823c7ae3f2a6e19376b663ea56abdad12ab59290845fcaebd2d9f01ae2f561", null ],
+      [ "kPIT_Chnl_3", "a00060.html#gga128823c7ae3f2a6e19376b663ea56abda4666db554c10bce47cfa628e8bb4ab93", null ]
     ] ],
-    [ "pit_interrupt_enable_t", "a00060.html#gaa7063bba27d49c1195a3369b88a85bcd", [
-      [ "kPIT_TimerInterruptEnable", "a00060.html#ggaa7063bba27d49c1195a3369b88a85bcda98c517b7246326afb50c93fe515916e0", null ]
+    [ "_pit_interrupt_enable", "a00060.html#ga3c078eb2e2c77f02f1d386ec64660674", [
+      [ "kPIT_TimerInterruptEnable", "a00060.html#gga3c078eb2e2c77f02f1d386ec64660674a98c517b7246326afb50c93fe515916e0", null ]
     ] ],
-    [ "pit_status_flags_t", "a00060.html#ga83e319df67d942ffb2988f55803eebbb", [
-      [ "kPIT_TimerFlag", "a00060.html#gga83e319df67d942ffb2988f55803eebbba6792e6d30409cb5054b3f12c4e735cc0", null ]
+    [ "_pit_status_flags", "a00060.html#ga8bd83b1eb625d5f5e9b69d1c78b5ce63", [
+      [ "kPIT_TimerFlag", "a00060.html#gga8bd83b1eb625d5f5e9b69d1c78b5ce63a6792e6d30409cb5054b3f12c4e735cc0", null ]
     ] ],
     [ "PIT_Init", "a00060.html#ga51eb6396276b3f1ec564bd1879c97c06", null ],
     [ "PIT_Deinit", "a00060.html#ga1f9b6d5e9e463844f85e31102458c1fc", null ],

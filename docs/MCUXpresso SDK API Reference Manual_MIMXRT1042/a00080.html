@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -702,36 +702,8 @@ Driver version</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function initializes the configuration structure to default values. The default values are as follows. </p>
-<div class="fragment"><div class="line">*     userConfig-&gt;lock = 0;</div>
-<div class="line">*     userConfig-&gt;clockMode = <a class="code" href="a00080.html#gga20c19c3f8b8f14572d91b034cd8f8387a10eb7dda9879280deaab08f87158ebbc">kTRNG_ClockModeRingOscillator</a>;</div>
-<div class="line">*     userConfig-&gt;ringOscDiv = <a class="code" href="a00080.html#ggaaa7094b265c437185a9ba211962ae925a557465d3f4d88b544fcf818085032b51">kTRNG_RingOscDiv0</a>;  Or  to other kTRNG_RingOscDiv[2|8] depending on the platform.</div>
-<div class="line">*     userConfig-&gt;sampleMode = <a class="code" href="a00080.html#gga6743806ab1ae5e2511aed3f8a30814c8a2411d65d49169b9244b0c975442ff898">kTRNG_SampleModeRaw</a>;</div>
-<div class="line">*     userConfig-&gt;entropyDelay = 3200;</div>
-<div class="line">*     userConfig-&gt;sampleSize = 2500;</div>
-<div class="line">*     userConfig-&gt;sparseBitLimit = 63;</div>
-<div class="line">*     userConfig-&gt;retryCount = 1;</div>
-<div class="line">*     userConfig-&gt;longRunMaxLimit = 32;</div>
-<div class="line">*     userConfig-&gt;monobitLimit.maximum = 317;</div>
-<div class="line">*     userConfig-&gt;monobitLimit.minimum = 195;</div>
-<div class="line">*     userConfig-&gt;runBit1Limit.maximum = 107;</div>
-<div class="line">*     userConfig-&gt;runBit1Limit.minimum = 27;</div>
-<div class="line">*     userConfig-&gt;runBit2Limit.maximum = 62;</div>
-<div class="line">*     userConfig-&gt;runBit2Limit.minimum = 7;</div>
-<div class="line">*     userConfig-&gt;runBit3Limit.maximum = 39;</div>
-<div class="line">*     userConfig-&gt;runBit3Limit.minimum = 0;</div>
-<div class="line">*     userConfig-&gt;runBit4Limit.maximum = 26;</div>
-<div class="line">*     userConfig-&gt;runBit4Limit.minimum = 0;</div>
-<div class="line">*     userConfig-&gt;runBit5Limit.maximum = 18;</div>
-<div class="line">*     userConfig-&gt;runBit5Limit.minimum = 0;</div>
-<div class="line">*     userConfig-&gt;runBit6PlusLimit.maximum = 17;</div>
-<div class="line">*     userConfig-&gt;runBit6PlusLimit.minimum = 0;</div>
-<div class="line">*     userConfig-&gt;pokerLimit.maximum = 1600;</div>
-<div class="line">*     userConfig-&gt;pokerLimit.minimum = 1030;</div>
-<div class="line">*     userConfig-&gt;frequencyCountLimit.maximum = 30000;</div>
-<div class="line">*     userConfig-&gt;frequencyCountLimit.minimum = 1600;</div>
-<div class="line">* </div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+<p>This function initializes the configuration structure to default values. The default values are platform dependent.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">userConfig</td><td>User configuration structure. </td></tr>
   </table>

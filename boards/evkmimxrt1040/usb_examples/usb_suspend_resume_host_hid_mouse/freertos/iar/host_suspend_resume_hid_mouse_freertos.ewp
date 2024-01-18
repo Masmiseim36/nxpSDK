@@ -372,6 +372,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
@@ -1475,6 +1476,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
@@ -2580,6 +2582,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
@@ -3683,6 +3686,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
@@ -4786,6 +4790,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
@@ -5891,6 +5896,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/xip</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
@@ -7044,6 +7050,9 @@
     <name>utilities</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/fsl_assert.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1042/utilities/str/fsl_str.c</name>

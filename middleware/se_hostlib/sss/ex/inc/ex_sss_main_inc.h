@@ -54,6 +54,7 @@
 #ifdef HAVE_KSDK
 #include "ex_sss_main_inc_ksdk.h"
 #endif
+#include "ex_sss_ports.h"
 
 #if defined(__linux__) && defined(T1oI2C)
 #if SSS_HAVE_APPLET_SE05X_IOT
@@ -61,6 +62,7 @@
 #endif
 #endif
 #include <string.h> /* memset */
+#include <limits.h>
 
 #include "PlugAndTrust_Pkg_Ver.h"
 #include "string.h" /* memset */
@@ -72,7 +74,7 @@
 #endif /* INC_FREERTOS_H */
 #include "task.h"
 #if !SSS_HAVE_APPLET_SE051_UWB
-#include "iot_logging_task.h"
+//#include "iot_logging_task.h"
 #ifndef LOGGING_TASK_PRIORITY
 #define LOGGING_TASK_PRIORITY (tskIDLE_PRIORITY + 1)
 #endif // LOGGING_TASK_PRIORITY
@@ -136,7 +138,7 @@ int main(int argc, const char *argv[])
 {
     int ret;
     sss_status_t status = kStatus_SSS_Fail;
-    const char *portName;
+    char *portName;
 
 #if EX_SSS_BOOT_EXPOSE_ARGC_ARGV
     gex_sss_argc = argc;
@@ -203,6 +205,10 @@ int main(int argc, const char *argv[])
         memset(PCONTEXT, 0, sizeof(*PCONTEXT));
 #if EX_SSS_BOOT_EXPOSE_ARGC_ARGV
         /* so that tool can fetchup last value */
+        if ((INT_MAX - 1) < gex_sss_argc) {
+            status = kStatus_SSS_Fail;
+            goto cleanup;
+        }
         gex_sss_argc++;
 #endif // EX_SSS_BOOT_EXPOSE_ARGC_ARGV
         goto before_ex_sss_entry;
@@ -301,6 +307,18 @@ cleanup:
         ex_sss_main_ksdk_failure();
 #endif
     }
+#if defined(_MSC_VER)
+    if (portName) {
+        char *dummy_portName = NULL;
+        size_t dummy_sz      = 0;
+        _dupenv_s(&dummy_portName, &dummy_sz, EX_SSS_BOOT_SSS_PORT);
+        if (NULL != dummy_portName) {
+            free(dummy_portName);
+            free(portName);
+        }
+    }
+#endif // _MSC_VER
+
     return ret;
 }
 
@@ -353,7 +371,7 @@ static void sss_ex_rtos_task(void *ctx)
 #if SSS_HAVE_APPLET_SE051_UWB
     /* Not available in UWB Branch for time being */
 #else
-    xLoggingTaskInitialize(LOGGING_TASK_STACK_SIZE, LOGGING_TASK_PRIORITY, LOGGING_QUEUE_LENGTH);
+    //xLoggingTaskInitialize(LOGGING_TASK_STACK_SIZE, LOGGING_TASK_PRIORITY, LOGGING_QUEUE_LENGTH);
 #endif
 
     status = ex_sss_entry((PCONTEXT));

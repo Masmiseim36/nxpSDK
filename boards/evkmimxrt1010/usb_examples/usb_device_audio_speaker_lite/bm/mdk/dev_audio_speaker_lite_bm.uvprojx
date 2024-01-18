@@ -333,7 +333,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DATA_SECTION_IS_CACHEABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1011DAE5A, HAL_AUDIO_ISR_PRIORITY=0, USB_STACK_BM, USING_SAI, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../middleware/usb/example/boards/evkmimxrt1010/usb_device_audio_speaker_lite/bm;../../../../../../components/audio;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../devices/MIMXRT1011/drivers;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../components/codec/wm8960;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1011/utilities/str;../../../../../../devices/MIMXRT1011/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT1011;../../../../xip;../../../../../../devices/MIMXRT1011/xip;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../middleware/usb/example/boards/evkmimxrt1010/usb_device_audio_speaker_lite/bm;../../../../../../components/audio;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../devices/MIMXRT1011/drivers;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../components/codec/wm8960;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1011/utilities/debug_console_lite;../../../../../../devices/MIMXRT1011/utilities/str;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT1011;../../../../xip;../../../../../../devices/MIMXRT1011/xip;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -721,6 +721,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1011/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1011/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>
@@ -1291,7 +1296,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DATA_SECTION_IS_CACHEABLE=0, NDEBUG, _DEBUG=0, CPU_MIMXRT1011DAE5A, HAL_AUDIO_ISR_PRIORITY=0, USB_STACK_BM, USING_SAI, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../middleware/usb/example/boards/evkmimxrt1010/usb_device_audio_speaker_lite/bm;../../../../../../components/audio;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../devices/MIMXRT1011/drivers;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../components/codec/wm8960;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1011/utilities/str;../../../../../../devices/MIMXRT1011/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT1011;../../../../xip;../../../../../../devices/MIMXRT1011/xip;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../middleware/usb/example/boards/evkmimxrt1010/usb_device_audio_speaker_lite/bm;../../../../../../components/audio;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../devices/MIMXRT1011/drivers;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../components/codec/wm8960;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1011/utilities/debug_console_lite;../../../../../../devices/MIMXRT1011/utilities/str;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT1011;../../../../xip;../../../../../../devices/MIMXRT1011/xip;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1679,6 +1684,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1011/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1011/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>
@@ -2249,7 +2259,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DATA_SECTION_IS_CACHEABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1011DAE5A, HAL_AUDIO_ISR_PRIORITY=0, USB_STACK_BM, USING_SAI, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, SDK_OS_BAREMETAL</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../middleware/usb/example/boards/evkmimxrt1010/usb_device_audio_speaker_lite/bm;../../../../../../components/audio;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../devices/MIMXRT1011/drivers;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../components/codec/wm8960;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1011/utilities/str;../../../../../../devices/MIMXRT1011/utilities/debug_console_lite;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT1011;../../../../xip;../../../../../../devices/MIMXRT1011/xip;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../middleware/usb/example/boards/evkmimxrt1010/usb_device_audio_speaker_lite/bm;../../../../../../components/audio;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../devices/MIMXRT1011/drivers;../../../../../../components/codec/port/wm8960;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../components/codec/wm8960;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1011/utilities/debug_console_lite;../../../../../../devices/MIMXRT1011/utilities/str;../../../../../../components/lists;../../../../../../components/uart;../../../../../../devices/MIMXRT1011;../../../../xip;../../../../../../devices/MIMXRT1011/xip;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2637,6 +2647,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1011/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1011/utilities/debug_console_lite/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>

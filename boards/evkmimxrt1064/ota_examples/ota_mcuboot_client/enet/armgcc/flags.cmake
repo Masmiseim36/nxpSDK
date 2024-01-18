@@ -47,6 +47,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DMCUXPRESSO_SDK \
     -DMFLASH_FILE_BASEADDR=3670016 \
     -DLWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1 \
+    -DCHECKSUM_GEN_ICMP6=1 \
+    -DCHECKSUM_CHECK_ICMP6=1 \
     -DLWIP_TIMEVAL_PRIVATE=0 \
     -DDEBUG_CONSOLE_RX_ENABLE=0 \
     -DSERIAL_PORT_TYPE_UART=1 \
@@ -65,6 +67,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -fomit-frame-pointer \
+    -Wno-unused-function \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -87,6 +91,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DMCUXPRESSO_SDK \
     -DMFLASH_FILE_BASEADDR=3670016 \
     -DLWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1 \
+    -DCHECKSUM_GEN_ICMP6=1 \
+    -DCHECKSUM_CHECK_ICMP6=1 \
     -DLWIP_TIMEVAL_PRIVATE=0 \
     -DDEBUG_CONSOLE_RX_ENABLE=0 \
     -DSERIAL_PORT_TYPE_UART=1 \
@@ -104,6 +110,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -fomit-frame-pointer \
+    -Wno-unused-function \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -183,7 +191,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     --defsym=__heap_size__=0x200 \
     ${FPU} \
     ${SPECS} \
-    -T${ProjDirPath}/MIMXRT1064xxxxx_flexspi_nor.ld -static \
+    -T\"${ProjDirPath}/MIMXRT1064xxxxx_flexspi_nor.ld\" -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} \
@@ -213,5 +221,5 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     --defsym=__heap_size__=0x200 \
     ${FPU} \
     ${SPECS} \
-    -T${ProjDirPath}/MIMXRT1064xxxxx_flexspi_nor.ld -static \
+    -T\"${ProjDirPath}/MIMXRT1064xxxxx_flexspi_nor.ld\" -static \
 ")

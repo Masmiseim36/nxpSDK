@@ -5,7 +5,7 @@ var a00294 =
     [ "NIC_GetReadQos", "a00294.html#ga0ab445ba69ac216a97c3649e19bd1dc8", null ],
     [ "NIC_SetWriteQos", "a00294.html#ga0899facc3a4b42423c7f54335dc1ddd9", null ],
     [ "NIC_GetWriteQos", "a00294.html#gae3711bb8b2bdc616a97c6f40b9b00522", null ],
-    [ "NIC_SetFnModAhb", "a00294.html#ga2571cac46d3b32db7b7be75c5e6c5066", null ],
+    [ "NIC_SetFnModAhb", "a00294.html#gaf67ce11353236560a5f47624f06e4e09", null ],
     [ "NIC_GetFnModAhb", "a00294.html#gad83c6bf7cdc92e7da4b4c51d9830c232", null ],
     [ "NIC_SetWrTideMark", "a00294.html#gadf9f03ac2e3e2096cb9a9212d2d5c6ab", null ],
     [ "NIC_GetWrTideMark", "a00294.html#ga87a14de83848f64b4e1cd02b94cdf2c8", null ],

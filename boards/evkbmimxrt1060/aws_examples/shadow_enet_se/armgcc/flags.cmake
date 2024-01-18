@@ -42,8 +42,11 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DPKCS11_SESSION_OPEN \
     -DDEBUG_CONSOLE_ENABLE_ECHO \
     -DDEBUG_CONSOLE_RECEIVE_BUFFER_LEN=2048 \
+    -DCPU_MIMXRT1062DVL6B_cm7 \
     -DMCUXPRESSO_SDK \
     -DLWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1 \
+    -DCHECKSUM_GEN_ICMP6=1 \
+    -DCHECKSUM_CHECK_ICMP6=1 \
     -DLWIP_TIMEVAL_PRIVATE=0 \
     -DMFLASH_FILE_BASEADDR=7340032 \
     -DSDK_OS_FREE_RTOS \
@@ -56,7 +59,10 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DNO_SECURE_CHANNEL_SUPPORT \
     -DMBEDTLS \
     -DmqttconfigENABLE_METRICS=0 \
+    -DSE_CLOUD_MCU_SDK \
     -DSCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC \
+    -DMBEDTLS_THREADING_ALT \
+    -DMBEDTLS_THREADING_C \
     -g \
     -O0 \
     -mcpu=cortex-m7 \
@@ -71,6 +77,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -fomit-frame-pointer \
+    -Wno-unused-function \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -88,8 +96,11 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DPKCS11_SESSION_OPEN \
     -DDEBUG_CONSOLE_ENABLE_ECHO \
     -DDEBUG_CONSOLE_RECEIVE_BUFFER_LEN=2048 \
+    -DCPU_MIMXRT1062DVL6B_cm7 \
     -DMCUXPRESSO_SDK \
     -DLWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1 \
+    -DCHECKSUM_GEN_ICMP6=1 \
+    -DCHECKSUM_CHECK_ICMP6=1 \
     -DLWIP_TIMEVAL_PRIVATE=0 \
     -DMFLASH_FILE_BASEADDR=7340032 \
     -DSDK_OS_FREE_RTOS \
@@ -102,7 +113,10 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DNO_SECURE_CHANNEL_SUPPORT \
     -DMBEDTLS \
     -DmqttconfigENABLE_METRICS=0 \
+    -DSE_CLOUD_MCU_SDK \
     -DSCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC \
+    -DMBEDTLS_THREADING_ALT \
+    -DMBEDTLS_THREADING_C \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \
@@ -116,6 +130,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -fno-builtin \
     -mapcs \
     -std=gnu99 \
+    -fomit-frame-pointer \
+    -Wno-unused-function \
     ${FPU} \
     ${DEBUG_CONSOLE_CONFIG} \
 ")
@@ -199,7 +215,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     --defsym=__heap_size__=0x200 \
     ${FPU} \
     ${SPECS} \
-    -T${ProjDirPath}/linker/MIMXRT1062xxxxx_flexspi_nor.ld -static \
+    -T\"${ProjDirPath}/linker/MIMXRT1062xxxxx_flexspi_nor.ld\" -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} \
@@ -229,5 +245,5 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     --defsym=__heap_size__=0x200 \
     ${FPU} \
     ${SPECS} \
-    -T${ProjDirPath}/linker/MIMXRT1062xxxxx_flexspi_nor.ld -static \
+    -T\"${ProjDirPath}/linker/MIMXRT1062xxxxx_flexspi_nor.ld\" -static \
 ")

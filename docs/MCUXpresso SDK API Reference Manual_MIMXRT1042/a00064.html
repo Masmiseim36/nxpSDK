@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -100,7 +100,8 @@ $(document).ready(function(){initNavTree('a00064.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">SAI EDMA Driver<div class="ingroups"><a class="el" href="a00283.html">SAI: Serial Audio Interface</a></div></div>  </div>
 </div><!--header-->
@@ -120,11 +121,22 @@ typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <tr class="memdesc:gaeb6ca21880d8cd8f5f954d38bfa73d63"><td class="mdescLeft">&#160;</td><td class="mdescRight">SAI eDMA transfer callback function for finish and error. <br/></td></tr>
 <tr class="separator:gaeb6ca21880d8cd8f5f954d38bfa73d63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga2aa82efb6aae4e8fedd69020bc3904ea"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga2aa82efb6aae4e8fedd69020bc3904ea">sai_edma_interleave_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00064.html#gga2aa82efb6aae4e8fedd69020bc3904eaad6dca42e6eb6f605c9628cc2a5eabfd5">kSAI_EDMAInterleavePerChannelSample</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00064.html#gga2aa82efb6aae4e8fedd69020bc3904eaabe869d52b4b9f0883e963214b470d28e">kSAI_EDMAInterleavePerChannelBlock</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga2aa82efb6aae4e8fedd69020bc3904ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">sai interleave type  <a href="a00064.html#ga2aa82efb6aae4e8fedd69020bc3904ea">More...</a><br/></td></tr>
+<tr class="separator:ga2aa82efb6aae4e8fedd69020bc3904ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
 <tr class="memitem:gadec154552382f7b68bce82ce829f3911"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gadec154552382f7b68bce82ce829f3911"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gadec154552382f7b68bce82ce829f3911">FSL_SAI_EDMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 5, 1))</td></tr>
-<tr class="memdesc:gadec154552382f7b68bce82ce829f3911"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version 2.5.1. <br/></td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gadec154552382f7b68bce82ce829f3911">FSL_SAI_EDMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 7, 0))</td></tr>
+<tr class="memdesc:gadec154552382f7b68bce82ce829f3911"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version 2.7.0. <br/></td></tr>
 <tr class="separator:gadec154552382f7b68bce82ce829f3911"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
@@ -135,12 +147,9 @@ eDMA Transactional</h2></td></tr>
 <tr class="memitem:ga44a719a507630fdcc25ba93690098a89"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga44a719a507630fdcc25ba93690098a89">SAI_TransferRxCreateHandleEDMA</a> (I2S_Type *base, sai_edma_handle_t *handle, <a class="el" href="a00064.html#gaeb6ca21880d8cd8f5f954d38bfa73d63">sai_edma_callback_t</a> callback, void *userData, <a class="el" href="a00021.html#a00376">edma_handle_t</a> *rxDmaHandle)</td></tr>
 <tr class="memdesc:ga44a719a507630fdcc25ba93690098a89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the SAI Rx eDMA handle.  <a href="#ga44a719a507630fdcc25ba93690098a89">More...</a><br/></td></tr>
 <tr class="separator:ga44a719a507630fdcc25ba93690098a89"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga78b693c7c4667056f74c4763f47c6e14"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga78b693c7c4667056f74c4763f47c6e14">SAI_TransferTxSetFormatEDMA</a> (I2S_Type *base, sai_edma_handle_t *handle, <a class="el" href="a00063.html#a00486">sai_transfer_format_t</a> *format, uint32_t mclkSourceClockHz, uint32_t bclkSourceClockHz)</td></tr>
-<tr class="memdesc:ga78b693c7c4667056f74c4763f47c6e14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the SAI Tx audio format.  <a href="#ga78b693c7c4667056f74c4763f47c6e14">More...</a><br/></td></tr>
-<tr class="separator:ga78b693c7c4667056f74c4763f47c6e14"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga69b84d866cc9c5736780276c668df495"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga69b84d866cc9c5736780276c668df495">SAI_TransferRxSetFormatEDMA</a> (I2S_Type *base, sai_edma_handle_t *handle, <a class="el" href="a00063.html#a00486">sai_transfer_format_t</a> *format, uint32_t mclkSourceClockHz, uint32_t bclkSourceClockHz)</td></tr>
-<tr class="memdesc:ga69b84d866cc9c5736780276c668df495"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the SAI Rx audio format.  <a href="#ga69b84d866cc9c5736780276c668df495">More...</a><br/></td></tr>
-<tr class="separator:ga69b84d866cc9c5736780276c668df495"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gada84bfce187319b89b6e89c802164478"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#gada84bfce187319b89b6e89c802164478">SAI_TransferSetInterleaveType</a> (sai_edma_handle_t *handle, <a class="el" href="a00064.html#ga2aa82efb6aae4e8fedd69020bc3904ea">sai_edma_interleave_t</a> interleaveType)</td></tr>
+<tr class="memdesc:gada84bfce187319b89b6e89c802164478"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the SAI interleave type.  <a href="#gada84bfce187319b89b6e89c802164478">More...</a><br/></td></tr>
+<tr class="separator:gada84bfce187319b89b6e89c802164478"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5295038a021787aef619bdd9f96981da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ga5295038a021787aef619bdd9f96981da">SAI_TransferTxSetConfigEDMA</a> (I2S_Type *base, sai_edma_handle_t *handle, <a class="el" href="a00063.html#a00485">sai_transceiver_t</a> *saiConfig)</td></tr>
 <tr class="memdesc:ga5295038a021787aef619bdd9f96981da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the SAI Tx.  <a href="#ga5295038a021787aef619bdd9f96981da">More...</a><br/></td></tr>
 <tr class="separator:ga5295038a021787aef619bdd9f96981da"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -242,6 +251,10 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a28d0ac4b3b16fd68dfbb8ecf303397a3">transferSize</a> [<a class="el" href="a00063.html#ga580bf35fe1f08d7bb054bee399f8b085">SAI_XFER_QUEUE_SIZE</a>]</td></tr>
 <tr class="memdesc:a28d0ac4b3b16fd68dfbb8ecf303397a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data bytes need to transfer. <br/></td></tr>
 <tr class="separator:a28d0ac4b3b16fd68dfbb8ecf303397a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5beeed26d28272073b5e5bede080c6e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae5beeed26d28272073b5e5bede080c6e"></a>
+<a class="el" href="a00064.html#ga2aa82efb6aae4e8fedd69020bc3904ea">sai_edma_interleave_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#ae5beeed26d28272073b5e5bede080c6e">interleaveType</a></td></tr>
+<tr class="memdesc:ae5beeed26d28272073b5e5bede080c6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer interleave type. <br/></td></tr>
+<tr class="separator:ae5beeed26d28272073b5e5bede080c6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a13a45007eebf06db42ed42bb83ee3dbd"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00064.html#a13a45007eebf06db42ed42bb83ee3dbd">queueUser</a></td></tr>
 <tr class="memdesc:a13a45007eebf06db42ed42bb83ee3dbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index for user to queue transfer.  <a href="#a13a45007eebf06db42ed42bb83ee3dbd">More...</a><br/></td></tr>
 <tr class="separator:a13a45007eebf06db42ed42bb83ee3dbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -302,6 +315,31 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 
 </div>
 </div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="ga2aa82efb6aae4e8fedd69020bc3904ea"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00064.html#ga2aa82efb6aae4e8fedd69020bc3904ea">sai_edma_interleave_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga2aa82efb6aae4e8fedd69020bc3904eaad6dca42e6eb6f605c9628cc2a5eabfd5"></a>kSAI_EDMAInterleavePerChannelSample</em>&nbsp;</td><td class="fielddoc">
+<h2>SAI data interleave per channel sample </h2>
+<p>|LEFT CHANNEL | RIGHT CHANNEL | LEFT CHANNEL | RIGHT CHANNEL | LEFT CHANNEL | RIGHT CHANNEL | .... </p>
+<h2>| </h2>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga2aa82efb6aae4e8fedd69020bc3904eaabe869d52b4b9f0883e963214b470d28e"></a>kSAI_EDMAInterleavePerChannelBlock</em>&nbsp;</td><td class="fielddoc">
+<h2>SAI data interleave per channel block </h2>
+<p>|LEFT CHANNEL | LEFT CHANNEL | LEFT CHANNEL | ... </p>
+<h2>| RIGHT CHANNEL | RIGHT CHANNEL | RIGHT CHANNEL | ...| </h2>
+</td></tr>
+</table>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="ga84f148e1d3fe186ce6604d637f89c2c1"></a>
 <div class="memitem">
@@ -349,7 +387,6 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
   <table class="params">
     <tr><td class="paramname">base</td><td>SAI base pointer. </td></tr>
     <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
-    <tr><td class="paramname">base</td><td>SAI peripheral base address. </td></tr>
     <tr><td class="paramname">callback</td><td>Pointer to user callback function. </td></tr>
     <tr><td class="paramname">userData</td><td>User parameter passed to the callback function. </td></tr>
     <tr><td class="paramname">txDmaHandle</td><td>eDMA handle pointer, this handle shall be static allocated by users. </td></tr>
@@ -405,7 +442,6 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
   <table class="params">
     <tr><td class="paramname">base</td><td>SAI base pointer. </td></tr>
     <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
-    <tr><td class="paramname">base</td><td>SAI peripheral base address. </td></tr>
     <tr><td class="paramname">callback</td><td>Pointer to user callback function. </td></tr>
     <tr><td class="paramname">userData</td><td>User parameter passed to the callback function. </td></tr>
     <tr><td class="paramname">rxDmaHandle</td><td>eDMA handle pointer, this handle shall be static allocated by users. </td></tr>
@@ -415,39 +451,21 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 
 </div>
 </div>
-<a class="anchor" id="ga78b693c7c4667056f74c4763f47c6e14"></a>
+<a class="anchor" id="gada84bfce187319b89b6e89c802164478"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void SAI_TransferTxSetFormatEDMA </td>
+          <td class="memname">void SAI_TransferSetInterleaveType </td>
           <td>(</td>
-          <td class="paramtype">I2S_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">sai_edma_handle_t *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00063.html#a00486">sai_transfer_format_t</a> *&#160;</td>
-          <td class="paramname"><em>format</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mclkSourceClockHz</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>bclkSourceClockHz</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00064.html#ga2aa82efb6aae4e8fedd69020bc3904ea">sai_edma_interleave_t</a>&#160;</td>
+          <td class="paramname"><em>interleaveType</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -456,85 +474,11 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="a00303.html#_deprecated000023">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00064.html#ga5295038a021787aef619bdd9f96981da">SAI_TransferTxSetConfigEDMA</a></dd></dl>
-<p>The audio format can be changed at run-time. This function configures the sample rate and audio data format to be transferred. This function also sets the eDMA parameter according to formatting requirements.</p>
+<p>This function initializes the SAI DMA handle member interleaveType, it shall be called only when application would like to use type kSAI_EDMAInterleavePerChannelBlock, since the default interleaveType is kSAI_EDMAInterleavePerChannelSample always</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>SAI base pointer. </td></tr>
     <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
-    <tr><td class="paramname">format</td><td>Pointer to SAI audio data format structure. </td></tr>
-    <tr><td class="paramname">mclkSourceClockHz</td><td>SAI master clock source frequency in Hz. </td></tr>
-    <tr><td class="paramname">bclkSourceClockHz</td><td>SAI bit clock source frequency in Hz. If bit clock source is master clock, this value should equals to masterClockHz in format. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td>Audio format set successfully. </td></tr>
-    <tr><td class="paramname">kStatus_InvalidArgument</td><td>The input argument is invalid. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga69b84d866cc9c5736780276c668df495"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SAI_TransferRxSetFormatEDMA </td>
-          <td>(</td>
-          <td class="paramtype">I2S_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">sai_edma_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00063.html#a00486">sai_transfer_format_t</a> *&#160;</td>
-          <td class="paramname"><em>format</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mclkSourceClockHz</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>bclkSourceClockHz</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="a00303.html#_deprecated000024">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00064.html#gaed5d72de0d0aa0ac71de3222924e4aa7">SAI_TransferRxSetConfigEDMA</a></dd></dl>
-<p>The audio format can be changed at run-time. This function configures the sample rate and audio data format to be transferred. This function also sets the eDMA parameter according to formatting requirements.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SAI base pointer. </td></tr>
-    <tr><td class="paramname">handle</td><td>SAI eDMA handle pointer. </td></tr>
-    <tr><td class="paramname">format</td><td>Pointer to SAI audio data format structure. </td></tr>
-    <tr><td class="paramname">mclkSourceClockHz</td><td>SAI master clock source frequency in Hz. </td></tr>
-    <tr><td class="paramname">bclkSourceClockHz</td><td>SAI bit clock source frequency in Hz. If a bit clock source is the master clock, this value should equal to masterClockHz in format. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td>Audio format set successfully. </td></tr>
-    <tr><td class="paramname">kStatus_InvalidArgument</td><td>The input argument is invalid. </td></tr>
+    <tr><td class="paramname">interleaveType</td><td>Multi channel interleave type. </td></tr>
   </table>
   </dd>
 </dl>

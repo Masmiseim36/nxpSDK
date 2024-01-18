@@ -1,10 +1,7 @@
 /*
  * Copyright 2018-2022 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /*!
@@ -264,7 +261,7 @@ static FlowReturn memsrc_read(ElementMemSrc *memsrc, int32_t offset, int32_t len
 
     STREAMER_FUNC_ENTER(DBG_MEMSRC);
 
-    STREAMER_LOG_DEBUG(DBG_FILESRC, "[MemSRC]pos: %d\n", memsrc->read_position);
+    STREAMER_LOG_DEBUG(DBG_MEMSRC, "[MemSRC]pos: %d\n", memsrc->read_position);
 
     /* if the required offset is not same as the last read offset */
     if (memsrc->read_position != offset)
@@ -451,8 +448,7 @@ int32_t memsrc_src_pad_process(StreamPad *pad)
             return STREAM_ERR_GENERAL;
         }
 
-        /* Update audio packet header values as values may have been changed in the AUDIO_PROC element as part of a
-         * crossover preset */
+        /* Update audio packet header values as values may have been changed in the AUDIO_PROC element. */
         if (memsrc->mem_type == AUDIO_DATA)
         {
             AudioPacketHeader *pkt_hdr = NULL;
@@ -554,37 +550,24 @@ static uint8_t memsrc_handle_src_event(StreamPad *pad, StreamEvent *event)
 
         case EVENT_SEEK:
             /* memory source needs seek event in bytes format and the stream
-             * should still be actibe
+             * should still be active
              */
 
             STREAMER_LOG_DEBUG(DBG_MEMSRC, "[MemSRC]seek from %d to %d\n", memsrc->read_position, offset);
-            /* First check if it is byte seekable */
-            if (offset != 0)
+            /* If the offset specified is more than the size of the file
+             * then restrict the offset to the file size. When file src
+             * thread will start giving data agin it will generate an EOS.
+             */
+            if (offset > memsrc->size && memsrc->size > 0)
             {
-                if (DATA_FORMAT_BYTES == format)
-                {
-                    /* If the offset specified is more than the size of the file
-                     * then restrict the offset to the file size. When file src
-                     * thread will start giving data agin it will generate an EOS.
-                     */
-                    if (offset > memsrc->size && memsrc->size > 0)
-                    {
-                        STREAMER_LOG_WARN(DBG_MEMSRC, ERRCODE_INTERNAL,
-                                          "[MemSRC]Offset more than the memsrc size: "
-                                          "offset=%d size=%d\n",
-                                          offset, memsrc->size);
-                        offset = memsrc->size;
+                STREAMER_LOG_WARN(DBG_MEMSRC, ERRCODE_INTERNAL,
+                                  "[MemSRC]Offset more than the memsrc size: "
+                                  "offset=%d size=%d\n",
+                                  offset, memsrc->size);
+                offset = memsrc->size;
 
-                        /* Return false as this offset position is not possible. */
-                        ret = false;
-                    }
-                }
-                else
-                {
-                    /* Seek not supported, return with an error */
-                    ret = false;
-                    break;
-                }
+                /* Return false as this offset position is not possible. */
+                ret = false;
             }
 
             event_create_flush_start(&flush_event);
@@ -597,7 +580,7 @@ static uint8_t memsrc_handle_src_event(StreamPad *pad, StreamEvent *event)
 
             /* If this data is a new segment sent after a seek, then send a new
              * segement event to the src pad. */
-            event_create_new_segment(&new_segment, DATA_FORMAT_BYTES, offset);
+            event_create_new_segment(&new_segment, format, offset);
 
             /* Push the new segment event to the pad. This is in sync with
              * the data flow as we have the stream lock right now.
@@ -779,6 +762,8 @@ static uint8_t memsrc_src_activate_push(StreamPad *pad, uint8_t active)
         if (memsrc->size == 0)
         {
             ret = false;
+            STREAMER_FUNC_EXIT(DBG_MEMSRC);
+            return ret;
         }
 
         /* start the task to start streaming/pushing data */
@@ -788,7 +773,6 @@ static uint8_t memsrc_src_activate_push(StreamPad *pad, uint8_t active)
     else
     {
         /* reset */
-        memsrc->size          = 0;
         memsrc->end_of_stream = false;
         memsrc->read_position = 0;
 
@@ -851,6 +835,7 @@ static uint8_t memsrc_src_activate_pull(StreamPad *pad, uint8_t active)
         if (memsrc->size == 0)
         {
             ret = false;
+            goto no_location;
         }
         ret = true;
     }
@@ -860,7 +845,6 @@ static uint8_t memsrc_src_activate_pull(StreamPad *pad, uint8_t active)
         STREAMER_LOG_DEBUG(DBG_MEMSRC, "[MemSRC]Deactivate pull mode: %s\n", "memsrc");
 
         /* reset */
-        memsrc->size          = 0;
         memsrc->end_of_stream = false;
         memsrc->read_position = 0;
 

@@ -28,7 +28,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Maestro Audio Framework
-   &#160;<span id="projectnumber">v 1.6</span>
+   &#160;<span id="projectnumber">v 1.7</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -111,7 +111,7 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pipeline_8h.html#a810fd1f1ff25d8e95ce7e52766bffbdf">PIPELINE_STATE_MASK</a>&#160;&#160;&#160;(0x3)</td></tr>
 <tr class="memdesc:a810fd1f1ff25d8e95ce7e52766bffbdf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pipeline state mask. <br /></td></tr>
 <tr class="separator:a810fd1f1ff25d8e95ce7e52766bffbdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa104a6e7941e64bd434873f3dc72e35e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pipeline_8h.html#aa104a6e7941e64bd434873f3dc72e35e">MAX_ELEMENT_LEVEL</a>&#160;&#160;&#160;(5)</td></tr>
+<tr class="memitem:aa104a6e7941e64bd434873f3dc72e35e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pipeline_8h.html#aa104a6e7941e64bd434873f3dc72e35e">MAX_ELEMENT_LEVEL</a>&#160;&#160;&#160;(10)</td></tr>
 <tr class="separator:aa104a6e7941e64bd434873f3dc72e35e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae05b81f1979d3cac8949e4b181b5c7e9"><td class="memItemLeft" align="right" valign="top"><a id="ae05b81f1979d3cac8949e4b181b5c7e9"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pipeline_8h.html#ae05b81f1979d3cac8949e4b181b5c7e9">PIPELINE_STATE</a>(pPipe)&#160;&#160;&#160;((pPipe)-&gt;state)</td></tr>
@@ -151,9 +151,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a2efa41bf33e7ff61aca9572eb0fdb904"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pipeline_8h.html#a2efa41bf33e7ff61aca9572eb0fdb904">process_pipeline</a> (<a class="el" href="streamer__api_8h.html#a91bb040bd7266f74d2b757bb58ad5ac4">PipelineHandle</a> handle)</td></tr>
 <tr class="memdesc:a2efa41bf33e7ff61aca9572eb0fdb904"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process Pipeline.  <a href="pipeline_8h.html#a2efa41bf33e7ff61aca9572eb0fdb904">More...</a><br /></td></tr>
 <tr class="separator:a2efa41bf33e7ff61aca9572eb0fdb904"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a826f42bc49d505e38ec0effde8b51a53"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pipeline_8h.html#a826f42bc49d505e38ec0effde8b51a53">create_pipeline</a> (<a class="el" href="streamer__api_8h.html#a91bb040bd7266f74d2b757bb58ad5ac4">PipelineHandle</a> *handle, unsigned int index, <a class="el" href="streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652">StreamPipelineType</a> type, osa_msgq_handle_t *app_mq)</td></tr>
-<tr class="memdesc:a826f42bc49d505e38ec0effde8b51a53"><td class="mdescLeft">&#160;</td><td class="mdescRight">create_pipeline  <a href="pipeline_8h.html#a826f42bc49d505e38ec0effde8b51a53">More...</a><br /></td></tr>
-<tr class="separator:a826f42bc49d505e38ec0effde8b51a53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae595bafc8ba38042cd2934e5c284c841"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pipeline_8h.html#ae595bafc8ba38042cd2934e5c284c841">create_pipeline</a> (<a class="el" href="streamer__api_8h.html#a91bb040bd7266f74d2b757bb58ad5ac4">PipelineHandle</a> *handle, unsigned int index, osa_msgq_handle_t *app_mq)</td></tr>
+<tr class="memdesc:ae595bafc8ba38042cd2934e5c284c841"><td class="mdescLeft">&#160;</td><td class="mdescRight">create_pipeline  <a href="pipeline_8h.html#ae595bafc8ba38042cd2934e5c284c841">More...</a><br /></td></tr>
+<tr class="separator:ae595bafc8ba38042cd2934e5c284c841"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a5a385a732f83a8fb7388137d064e01"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="pipeline_8h.html#a7a5a385a732f83a8fb7388137d064e01">destroy_pipeline</a> (<a class="el" href="streamer__api_8h.html#a91bb040bd7266f74d2b757bb58ad5ac4">PipelineHandle</a> handle)</td></tr>
 <tr class="memdesc:a7a5a385a732f83a8fb7388137d064e01"><td class="mdescLeft">&#160;</td><td class="mdescRight">destroy_pipeline  <a href="pipeline_8h.html#a7a5a385a732f83a8fb7388137d064e01">More...</a><br /></td></tr>
 <tr class="separator:a7a5a385a732f83a8fb7388137d064e01"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -202,7 +202,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define MAX_ELEMENT_LEVEL&#160;&#160;&#160;(5)</td>
+          <td class="memname">#define MAX_ELEMENT_LEVEL&#160;&#160;&#160;(10)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -360,8 +360,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a826f42bc49d505e38ec0effde8b51a53"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a826f42bc49d505e38ec0effde8b51a53">&#9670;&nbsp;</a></span>create_pipeline()</h2>
+<a id="ae595bafc8ba38042cd2934e5c284c841"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae595bafc8ba38042cd2934e5c284c841">&#9670;&nbsp;</a></span>create_pipeline()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -381,12 +381,6 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652">StreamPipelineType</a>&#160;</td>
-          <td class="paramname"><em>type</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">osa_msgq_handle_t *&#160;</td>
           <td class="paramname"><em>app_mq</em>&#160;</td>
         </tr>
@@ -402,7 +396,6 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>Pointer to pipeline </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">index</td><td>Index of pipeline within streamer task </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>Pipeline type </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">app_mq</td><td>Application message queue</td></tr>
   </table>
   </dd>

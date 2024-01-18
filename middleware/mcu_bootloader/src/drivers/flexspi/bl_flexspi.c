@@ -434,8 +434,8 @@ static FLEXSPI_Type *flexspi_get_module_base(uint32_t instance)
 
 void flexspi_clear_error_status(FLEXSPI_Type *base)
 {
-    base->INTR |= FLEXSPI_INTR_AHBCMDERR_MASK | FLEXSPI_INTR_IPCMDERR_MASK | FLEXSPI_INTR_AHBCMDGE_MASK |
-                  FLEXSPI_INTR_IPCMDGE_MASK;
+    base->INTR = FLEXSPI_INTR_AHBCMDERR_MASK | FLEXSPI_INTR_IPCMDERR_MASK | FLEXSPI_INTR_AHBCMDGE_MASK |
+                 FLEXSPI_INTR_IPCMDGE_MASK;
 }
 
 status_t flexspi_config_flash_control_registers(uint32_t instance, flexspi_mem_config_t *config)
@@ -1061,7 +1061,7 @@ status_t flexspi_command_xfer(uint32_t instance, flexspi_xfer_t *xfer)
                         }
                         xferRemainingSize -= burst_rx_size;
                         // Pop up data to RXFIFO for next read.
-                        base->INTR |= FLEXSPI_INTR_IPRXWA_MASK;
+                        base->INTR = FLEXSPI_INTR_IPRXWA_MASK;
                     }
                 }
                 else if ((8 * ((base->IPRXFSTS & FLEXSPI_IPRXFSTS_FILL_MASK) >> FLEXSPI_IPRXFSTS_FILL_SHIFT)) >=
@@ -1149,7 +1149,7 @@ status_t flexspi_command_xfer(uint32_t instance, flexspi_xfer_t *xfer)
                         is_transfer_started = true;
                     }
 
-                    base->INTR |= FLEXSPI_INTR_IPTXWE_MASK;
+                    base->INTR = FLEXSPI_INTR_IPTXWE_MASK;
                 }
 
                 // Ensure no error occurs during write

@@ -13,7 +13,8 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/sss/plugin/pkcs11/sss_pkcs11_pal_object.c
   ${CMAKE_CURRENT_LIST_DIR}/sss/plugin/pkcs11/sss_pkcs11_pal_asymm.c
   ${CMAKE_CURRENT_LIST_DIR}/sss/plugin/pkcs11/sss_pkcs11_pal_symm.c
-  ${CMAKE_CURRENT_LIST_DIR}/sss/plugin/pkcs11/pkcs11_mbedtls_utils.c
+  ${CMAKE_CURRENT_LIST_DIR}/sss/plugin/pkcs11/sss_pkcs11_utils.c
+  ${CMAKE_CURRENT_LIST_DIR}/sss/plugin/pkcs11/base64_decode.c
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
@@ -31,6 +32,7 @@ if(CONFIG_USE_COMPONENT_CONFIGURATION)
     -DSDK_OS_FREE_RTOS
     -DUSE_RTOS
     -DmqttconfigENABLE_METRICS=0
+    -DSE_CLOUD_MCU_SDK
   )
 
 endif()

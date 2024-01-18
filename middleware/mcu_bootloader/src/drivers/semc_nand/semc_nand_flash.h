@@ -9,9 +9,9 @@
 #ifndef __SEMC_NAND_FLASH_H__
 #define __SEMC_NAND_FLASH_H__
 
-#include "fsl_common.h"
-#include "bootloader_common.h"
 #include "bl_semc.h"
+#include "bootloader_common.h"
+#include "fsl_common.h"
 #include "nand_ecc.h"
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -113,9 +113,9 @@ enum _semc_nand_ecc_check_option
 //! @brief SEMC Parallel NAND Flash ecc check type
 enum _semc_nand_ecc_check_type
 {
-    kSemcNandEccCheckType_DeviceECC = 0U,   
+    kSemcNandEccCheckType_DeviceECC = 0U,
     kSemcNandEccCheckType_SoftwareECC = 1U,
-    kSemcNandEccCheckType_SemcBchECC = 2U, 
+    kSemcNandEccCheckType_SemcBchECC = 2U,
 };
 
 /* Fuse: ECC mode */
@@ -250,45 +250,88 @@ typedef struct _parallel_nand_config_option
             uint32_t pcsSelection : 3; //!< PCS selection
             uint32_t reserved2 : 1;
 
-            uint32_t eccType : 1;   //!< ECC type, 0 - SW, 1 - HW
+            uint32_t eccType : 1;   //!< ECC type, 0 - NAND Device ECC, 1 - SW ECC
             uint32_t eccStatus : 1; //!< ECC status (device)
             uint32_t reserved3 : 6;
 
-            uint32_t reserved4 : 4;
-            uint32_t tag : 4; //!< Tag
+            uint32_t extOptionSize : 4; //!< Extended option size, in terms of uint32_t, size = extOptionSize * 4
+            uint32_t tag : 4;           //!< Tag, Must be 0xD
         } B;
         uint32_t U;
     } option;
 } parallel_nand_config_option_t;
+
+typedef struct _parallel_nand_config_option_extended
+{
+    union
+    {
+        struct
+        {
+            uint32_t accessCommandType : 1; //!< 0 - IPG, 1 - AXI
+            uint32_t statusCommandType : 1; //!< 0 - Common (0x70), 1 - Enhanced (0x78)
+            uint32_t rdyPolarity : 1;       //!< 0 - Low, 1 - High
+            uint32_t readyCheckOption : 1;  //!< 0 - SR, 1 - R/B#
+
+            uint32_t rowColAddrMode : 3; //!< 0 - 5Bytes_CA2RA3, 1 - 5Bytes_CA2RA3_plus,
+                                         //! 2 - 4Bytes_CA2RA2, 3 - 3Bytes_CA2RA1
+                                         //! 4 - 4Bytes_CA1RA3, 5 - 4Bytes_CA1RA3_plus,
+                                         //! 6 - 3Bytes_CA1RA2, 7 - 2Bytes_CA1RA1
+            uint32_t reserved0 : 1;
+
+            uint32_t columnAddressWidth : 3; //!< 0 - 12 bits, 1 - 9 bits, 2 - 10 bits, 3 - 11 bits
+                                             //!  4 - 13 bits, 5 - 14 bits, 6 - 15 bits, 7 - 16 bits
+            uint32_t reserved1 : 1;
+
+            uint32_t pagesInBlock : 4; //!< 0 - 128, 1 - 8, 2 - 16, 3 - 32 , 4 - 64, 5 - 256,
+                                       //!  6 - 512, 7 - 1024
+
+            uint32_t semcBchSectorSize : 4;   //!< 0000 - 512, 0001 - 1024, 0010 - 2048
+            uint32_t semcBchSectorNumber : 4; //!< 0000 - 4, 0001 - 2, 0010 - 1
+
+            uint32_t semcBchEccMode : 2; //!< 00 - NO, 01 - BCH4, 02 - BCH8
+            uint32_t eccType : 2;        //!< 0 - NAND Device ECC, 1 - SW ECC, 2 - SEMC BCH ECC
+
+            uint32_t reserved3 : 4;
+        } B;
+        uint32_t U;
+    } option0;
+} parallel_nand_config_option_extended_t;
 
 ////////////////////////////////////////////////////////////////////////////////
 // API
 ////////////////////////////////////////////////////////////////////////////////
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-//!@brief Initialize Parallel NAND devices via SEMC
-status_t semc_nand_flash_init(semc_nand_config_t *config);
+    //!@brief Initialize Parallel NAND devices via SEMC
+    status_t semc_nand_flash_init(semc_nand_config_t *config);
 
-//!@brief Read page data from Parallel NAND via SEMC
-status_t semc_nand_flash_read_page(semc_nand_config_t *config, uint32_t pageIndex, uint8_t *buffer, uint32_t length);
+    //!@brief Read page data from Parallel NAND via SEMC
+    status_t semc_nand_flash_read_page(semc_nand_config_t *config,
+                                       uint32_t pageIndex,
+                                       uint8_t *buffer,
+                                       uint32_t length);
 
-//!@brief Program page data to Parallel NAND via SEMC
-status_t semc_nand_flash_page_program(semc_nand_config_t *config, uint32_t pageIndex, uint8_t *src, uint32_t length);
+    //!@brief Program page data to Parallel NAND via SEMC
+    status_t semc_nand_flash_page_program(semc_nand_config_t *config,
+                                          uint32_t pageIndex,
+                                          uint8_t *src,
+                                          uint32_t length);
 
-//!@brief Erase blocks of the Parallel NAND devices
-status_t semc_nand_flash_erase_block(semc_nand_config_t *config, uint32_t blockIndex);
+    //!@brief Erase blocks of the Parallel NAND devices
+    status_t semc_nand_flash_erase_block(semc_nand_config_t *config, uint32_t blockIndex);
 
-//!@brief Verify erase on Parallel NAND device
-status_t semc_nand_flash_verify_erase(semc_nand_config_t *config, uint32_t pageIndex, uint32_t pageCount);
+    //!@brief Verify erase on Parallel NAND device
+    status_t semc_nand_flash_verify_erase(semc_nand_config_t *config, uint32_t pageIndex, uint32_t pageCount);
 
-//!@brief Verify program on Parallel NAND device
-status_t semc_nand_flash_verify_page_program(semc_nand_config_t *config,
-                                             uint32_t pageIndex,
-                                             const uint8_t *src,
-                                             uint32_t lengthInBytes);
+    //!@brief Verify program on Parallel NAND device
+    status_t semc_nand_flash_verify_page_program(semc_nand_config_t *config,
+                                                 uint32_t pageIndex,
+                                                 const uint8_t *src,
+                                                 uint32_t lengthInBytes);
 
 #ifdef __cplusplus
 }

@@ -1,10 +1,7 @@
 /*
  * Copyright 2018-2022 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef AUDIO_PROC_H
@@ -78,15 +75,15 @@ struct _ElementAudioProc
     PadSink sink_pad[MAX_NUM_PADS];             /*!< @brief Sink pads */
     struct _StreamElement *sibling;             /*!< @brief Sibling pointer */
 
-    char *location;         /*!< @brief location path */
-    uint32_t size;          /*!< @brief memory buffer size */
-    uint32_t current_index; /*!< @brief internal used for memory buffer */
+    char *location;                             /*!< @brief location path */
+    uint32_t size;                              /*!< @brief memory buffer size */
+    uint32_t current_index;                     /*!< @brief internal used for memory buffer */
 
-    AudioProcInitFunc init_func;     /*!< @brief AUDIO_PROC init function pointer */
-    AudioProcPostProcFunc proc_func; /*!< @brief AUDIO_PROC process function pointer */
-    AudioProcDeinitFunc deinit_func; /*!< @brief AUDIO_PROC deinit function pointer */
-    void *arg_ptr;                   /*!< @brief AUDIO_PROC arguments pointer */
-    bool initialized;                /*!< @brief AUDIO_PROC initialized flag */
+    AudioProcInitFunc init_func;                /*!< @brief AUDIO_PROC init function pointer */
+    AudioProcPostProcFunc proc_func;            /*!< @brief AUDIO_PROC process function pointer */
+    AudioProcDeinitFunc deinit_func;            /*!< @brief AUDIO_PROC deinit function pointer */
+    void *arg_ptr;                              /*!< @brief AUDIO_PROC arguments pointer */
+    bool initialized;                           /*!< @brief AUDIO_PROC initialized flag */
 
     /* VoiceSeeker functions */
     AudioProcRefDataSetNumBuffFunc

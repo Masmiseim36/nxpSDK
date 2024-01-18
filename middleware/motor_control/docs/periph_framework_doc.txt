@@ -1,0 +1,46 @@
+Overview - pmsm_periph_framework example
+========================================
+This example demonstrates pins and peripherals setting, which can be used as a template for motor control application.
+Note, that motor spinning is not available by default in this example - example does not contain state machines and motor control algorithms.
+
+Hardware requirements
+=====================
+- Micro USB cable
+- LPCXpresso55S36-EVK board
+- Personal Computer
+- FRDM-MC-LVPMSM board (optional)
+
+Toolchain supported
+===================
+- IAR embedded Workbench  9.40.1
+- Keil MDK  5.38
+- MCUXpresso IDE 11.8.0
+
+Prepare the example
+===================
+1. Connect a micro USB cable between the PC host and the CMSIS DAP USB port (J1) on the board.
+2. Download the program to the target board.
+3. Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
+4. Open pmsm_periph_framework.pmxm file. Navigate to 'Project -> Options -> MAP files' and search for the generated symbol file.
+5. Click 'Start communication'. Observe and edit available variables in the 'Variable Watch'.
+
+Initialized peripherals
+=======================
+- CTimer - used to generate the slow-loop interrupt
+- eFlexPWM - used for 6-channel PWM generation
+- ADC - used for phase currents and DC-bus voltage measurement
+- HSCMP - used for DC-bus over-current detection
+- INPUTMUX - used for signal routing
+- Flexcomm - used for serial communication with the FreeMASTER tool
+
+Functionality
+=============
+- Enable/disable PWM outputs
+- Update PWM registers value
+- Measure phase currents and DC-bus voltage
+- DC-bus over-current fault detection
+- Monitor and visualization data using FreeMASTER tool (use pmsm_periph_framework.pmxm file)
+
+More information
+================
+- Application web page: https://www.nxp.com/sdkmotorcontrol.

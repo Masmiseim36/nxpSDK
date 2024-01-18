@@ -34,5 +34,6 @@ var struct__ElementAudioSink =
     [ "device_started", "struct__ElementAudioSink.html#a771e4a493bf9a4b9c306674669d32ea3", null ],
     [ "codec_num_channels", "struct__ElementAudioSink.html#a5ef4ecda74f7a6f7add0945f5176277f", null ],
     [ "codec_bits_per_sample", "struct__ElementAudioSink.html#a79e15cb48512b60cd55c182e2d9c0ee6", null ],
-    [ "refData_element", "struct__ElementAudioSink.html#a65825325d90249bc6aeeac729f317dfe", null ]
+    [ "refData_element", "struct__ElementAudioSink.html#a65825325d90249bc6aeeac729f317dfe", null ],
+    [ "appFunctions", "struct__ElementAudioSink.html#a6f9bfd94213887efa1403bd555f4803e", null ]
 ];

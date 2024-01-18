@@ -57,11 +57,6 @@ status_t MODEL_Init(const void *model_data, int model_size)
 
     // Pull in only the operation implementations we need.
     // This relies on a complete list of all the ops needed by this graph.
-    // An easier approach is to just use the AllOpsResolver, but this will
-    // incur some penalty in code space for op implementations that are not
-    // needed by this graph.
-    //
-    // tflite::AllOpsResolver resolver;
     // NOLINTNEXTLINE(runtime-global-variables)
     tflite::MicroOpResolver &micro_op_resolver = MODEL_GetOpsResolver();
 

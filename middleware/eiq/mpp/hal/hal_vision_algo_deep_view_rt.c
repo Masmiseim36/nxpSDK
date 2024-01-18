@@ -1,12 +1,8 @@
 /*
  * Copyright 2022 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in
- * accordance with the license terms that accompany it. By expressly accepting
- * such terms or by downloading, installing, activating and/or otherwise using
- * the software, you are agreeing that you have read, and that you agree to
- * comply with and are bound by, such license terms. If you do not agree to be
- * bound by the applicable license terms, then you may not retain, install,
- * activate or otherwise use the software.
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /*
@@ -154,7 +150,7 @@ static hal_valgo_status_t hal_vision_algo_dvrt_run(const vision_algo_dev_t *dev,
             return kStatus_HAL_ValgoError;
     }
 
-    int startTime = TICK_TO_MS(GET_TICK());
+    int startTime = hal_get_exec_time();
 
     // perform the inference
     NNError nn_run_err = nn_context_run(deep_view_rt_model_param->model_context);
@@ -165,7 +161,7 @@ static hal_valgo_status_t hal_vision_algo_dvrt_run(const vision_algo_dev_t *dev,
             return kStatus_HAL_ValgoError;
     }
 
-    deep_view_rt_model_param->out_param.inference_time_ms = TICK_TO_MS(GET_TICK()) - startTime;
+    deep_view_rt_model_param->out_param.inference_time_ms = hal_get_exec_time() - startTime;
 
     deep_view_rt_model_param->out_cb(
             NULL, /* TODO pass mpp_t object here? */
@@ -195,6 +191,7 @@ static hal_valgo_status_t hal_vision_algo_dev_dvrt_get_buf_desc(const vision_alg
     deep_view_rt_model_param = (deep_view_rt_model_param_t *)dev->priv_data;
 
     in_buf->alignment = 0;
+    in_buf->nb_lines = deep_view_rt_model_param->input_dims.data[1]; /* number of lines required is the input height */
     in_buf->cacheable = true;
     in_buf->stride = deep_view_rt_model_param->input_dims.data[2] * deep_view_rt_model_param->input_dims.data[3]; /* width * channels */
 

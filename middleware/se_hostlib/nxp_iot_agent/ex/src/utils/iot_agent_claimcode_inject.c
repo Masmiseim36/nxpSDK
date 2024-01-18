@@ -1,10 +1,14 @@
-/* Copyright 2020, 2021 NXP
+/* Copyright 2020-2022 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  */
 
+
 #include <iot_agent_claimcode_inject.h>
 #include <nxp_iot_agent_macros.h>
+
+#if NXP_IOT_AGENT_HAVE_SSS
+
 #include <se05x_APDU.h>
 
 static uint8_t CheckIfKeyIdExists(sss_object_t* obj, uint32_t keyId, pSe05xSession_t session_ctx)
@@ -144,3 +148,4 @@ exit:
     return agent_status;
 }
 
+#endif // NXP_IOT_AGENT_HAVE_SSS

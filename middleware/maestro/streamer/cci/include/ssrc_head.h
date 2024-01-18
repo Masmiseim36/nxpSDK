@@ -94,7 +94,7 @@ extern "C" {
 #define SSRC_INSTANCE_SIZE 664 /* Size of struct for DOUBLE_PRECISION with padding */
 #endif                         // DOUBLE_PRECISION
 
-#else // __DEMO_MODE
+#else                          // __DEMO_MODE
 
 #ifndef DOUBLE_PRECISION
 #define SSRC_INSTANCE_SIZE 560 /* Size of struct with one 16bit word padding */
@@ -102,7 +102,7 @@ extern "C" {
 #define SSRC_INSTANCE_SIZE 652 /* Size of struct for DOUBLE_PRECISION with padding */
 #endif                         // DOUBLE_PRECISION
 
-#endif // __DEMO_MODE
+#endif                         // __DEMO_MODE
 #define SSRC_INSTANCE_ALIGNMENT 4
 #define SSRC_SCRATCH_ALIGNMENT  4
 

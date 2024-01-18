@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -102,50 +102,50 @@ $(document).ready(function(){initNavTree('a00053.html','');});
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">LPUART eDMA Driver<div class="ingroups"><a class="el" href="a00289.html">LPUART:  Low Power Universal Asynchronous Receiver/Transmitter Driver</a></div></div>  </div>
+<div class="title">LPUART eDMA Driver<div class="ingroups"><a class="el" href="a00291.html">LPUART:  Low Power Universal Asynchronous Receiver/Transmitter Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00341"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a00341">lpuart_edma_handle_t</a></td></tr>
-<tr class="memdesc:a00341"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART eDMA handle.  <a href="a00053.html#a00341">More...</a><br/></td></tr>
-<tr class="separator:a00341"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00448"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a00448">_lpuart_edma_handle</a></td></tr>
+<tr class="memdesc:a00448"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART eDMA handle.  <a href="a00053.html#a00448">More...</a><br/></td></tr>
+<tr class="separator:a00448"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:gaed2bf1ac041ea4526ccf5ab0eba4da73"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#gaed2bf1ac041ea4526ccf5ab0eba4da73">lpuart_edma_transfer_callback_t</a> )(LPUART_Type *base, lpuart_edma_handle_t *handle, <a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
+<tr class="memitem:gaed2bf1ac041ea4526ccf5ab0eba4da73"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#gaed2bf1ac041ea4526ccf5ab0eba4da73">lpuart_edma_transfer_callback_t</a> )(LPUART_Type *base, <a class="el" href="a00053.html#a00448">lpuart_edma_handle_t</a> *handle, <a class="el" href="a00277.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
 <tr class="memdesc:gaed2bf1ac041ea4526ccf5ab0eba4da73"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART transfer callback function.  <a href="#gaed2bf1ac041ea4526ccf5ab0eba4da73">More...</a><br/></td></tr>
 <tr class="separator:gaed2bf1ac041ea4526ccf5ab0eba4da73"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga9bfcb92913944fb359c4544b4cdee5d3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga9bfcb92913944fb359c4544b4cdee5d3">FSL_LPUART_EDMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00275.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 6, 0))</td></tr>
+<tr class="memitem:ga9bfcb92913944fb359c4544b4cdee5d3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga9bfcb92913944fb359c4544b4cdee5d3">FSL_LPUART_EDMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00277.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 6, 0))</td></tr>
 <tr class="memdesc:ga9bfcb92913944fb359c4544b4cdee5d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART EDMA driver version.  <a href="#ga9bfcb92913944fb359c4544b4cdee5d3">More...</a><br/></td></tr>
 <tr class="separator:ga9bfcb92913944fb359c4544b4cdee5d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 eDMA transactional</h2></td></tr>
-<tr class="memitem:ga4891d980e0e489932e8d3b5c52588c2e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga4891d980e0e489932e8d3b5c52588c2e">LPUART_TransferCreateHandleEDMA</a> (LPUART_Type *base, lpuart_edma_handle_t *handle, <a class="el" href="a00053.html#gaed2bf1ac041ea4526ccf5ab0eba4da73">lpuart_edma_transfer_callback_t</a> callback, void *userData, <a class="el" href="a00022.html#a00389">edma_handle_t</a> *txEdmaHandle, <a class="el" href="a00022.html#a00389">edma_handle_t</a> *rxEdmaHandle)</td></tr>
+<tr class="memitem:ga4891d980e0e489932e8d3b5c52588c2e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga4891d980e0e489932e8d3b5c52588c2e">LPUART_TransferCreateHandleEDMA</a> (LPUART_Type *base, <a class="el" href="a00053.html#a00448">lpuart_edma_handle_t</a> *handle, <a class="el" href="a00053.html#gaed2bf1ac041ea4526ccf5ab0eba4da73">lpuart_edma_transfer_callback_t</a> callback, void *userData, <a class="el" href="a00022.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *txEdmaHandle, <a class="el" href="a00022.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *rxEdmaHandle)</td></tr>
 <tr class="memdesc:ga4891d980e0e489932e8d3b5c52588c2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the LPUART handle which is used in transactional functions.  <a href="#ga4891d980e0e489932e8d3b5c52588c2e">More...</a><br/></td></tr>
 <tr class="separator:ga4891d980e0e489932e8d3b5c52588c2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga24c9dff9f142243ed5ffb3112a356386"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga24c9dff9f142243ed5ffb3112a356386">LPUART_SendEDMA</a> (LPUART_Type *base, lpuart_edma_handle_t *handle, <a class="el" href="a00052.html#a00457">lpuart_transfer_t</a> *xfer)</td></tr>
+<tr class="memitem:ga24c9dff9f142243ed5ffb3112a356386"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00277.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga24c9dff9f142243ed5ffb3112a356386">LPUART_SendEDMA</a> (LPUART_Type *base, <a class="el" href="a00053.html#a00448">lpuart_edma_handle_t</a> *handle, <a class="el" href="a00052.html#ga1d4707ebc5d49dd655eedb7e5acd27fd">lpuart_transfer_t</a> *xfer)</td></tr>
 <tr class="memdesc:ga24c9dff9f142243ed5ffb3112a356386"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends data using eDMA.  <a href="#ga24c9dff9f142243ed5ffb3112a356386">More...</a><br/></td></tr>
 <tr class="separator:ga24c9dff9f142243ed5ffb3112a356386"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga57b356ccc56276a557b3ddf53f6a7c0f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga57b356ccc56276a557b3ddf53f6a7c0f">LPUART_ReceiveEDMA</a> (LPUART_Type *base, lpuart_edma_handle_t *handle, <a class="el" href="a00052.html#a00457">lpuart_transfer_t</a> *xfer)</td></tr>
+<tr class="memitem:ga57b356ccc56276a557b3ddf53f6a7c0f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00277.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga57b356ccc56276a557b3ddf53f6a7c0f">LPUART_ReceiveEDMA</a> (LPUART_Type *base, <a class="el" href="a00053.html#a00448">lpuart_edma_handle_t</a> *handle, <a class="el" href="a00052.html#ga1d4707ebc5d49dd655eedb7e5acd27fd">lpuart_transfer_t</a> *xfer)</td></tr>
 <tr class="memdesc:ga57b356ccc56276a557b3ddf53f6a7c0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives data using eDMA.  <a href="#ga57b356ccc56276a557b3ddf53f6a7c0f">More...</a><br/></td></tr>
 <tr class="separator:ga57b356ccc56276a557b3ddf53f6a7c0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga48033a0651d1e68133bbb73ded3d9309"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga48033a0651d1e68133bbb73ded3d9309">LPUART_TransferAbortSendEDMA</a> (LPUART_Type *base, lpuart_edma_handle_t *handle)</td></tr>
+<tr class="memitem:ga48033a0651d1e68133bbb73ded3d9309"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga48033a0651d1e68133bbb73ded3d9309">LPUART_TransferAbortSendEDMA</a> (LPUART_Type *base, <a class="el" href="a00053.html#a00448">lpuart_edma_handle_t</a> *handle)</td></tr>
 <tr class="memdesc:ga48033a0651d1e68133bbb73ded3d9309"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the sent data using eDMA.  <a href="#ga48033a0651d1e68133bbb73ded3d9309">More...</a><br/></td></tr>
 <tr class="separator:ga48033a0651d1e68133bbb73ded3d9309"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf4160e8481b5d0861fa2f4ea14ccc13e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#gaf4160e8481b5d0861fa2f4ea14ccc13e">LPUART_TransferAbortReceiveEDMA</a> (LPUART_Type *base, lpuart_edma_handle_t *handle)</td></tr>
+<tr class="memitem:gaf4160e8481b5d0861fa2f4ea14ccc13e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#gaf4160e8481b5d0861fa2f4ea14ccc13e">LPUART_TransferAbortReceiveEDMA</a> (LPUART_Type *base, <a class="el" href="a00053.html#a00448">lpuart_edma_handle_t</a> *handle)</td></tr>
 <tr class="memdesc:gaf4160e8481b5d0861fa2f4ea14ccc13e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the received data using eDMA.  <a href="#gaf4160e8481b5d0861fa2f4ea14ccc13e">More...</a><br/></td></tr>
 <tr class="separator:gaf4160e8481b5d0861fa2f4ea14ccc13e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0369d8b3a9238d88f2ef527b2cdbf152"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga0369d8b3a9238d88f2ef527b2cdbf152">LPUART_TransferGetSendCountEDMA</a> (LPUART_Type *base, lpuart_edma_handle_t *handle, uint32_t *count)</td></tr>
+<tr class="memitem:ga0369d8b3a9238d88f2ef527b2cdbf152"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00277.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga0369d8b3a9238d88f2ef527b2cdbf152">LPUART_TransferGetSendCountEDMA</a> (LPUART_Type *base, <a class="el" href="a00053.html#a00448">lpuart_edma_handle_t</a> *handle, uint32_t *count)</td></tr>
 <tr class="memdesc:ga0369d8b3a9238d88f2ef527b2cdbf152"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of bytes written to the LPUART TX register.  <a href="#ga0369d8b3a9238d88f2ef527b2cdbf152">More...</a><br/></td></tr>
 <tr class="separator:ga0369d8b3a9238d88f2ef527b2cdbf152"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga433b9163c0d46f0e8b65b5ded880a1f8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga433b9163c0d46f0e8b65b5ded880a1f8">LPUART_TransferGetReceiveCountEDMA</a> (LPUART_Type *base, lpuart_edma_handle_t *handle, uint32_t *count)</td></tr>
+<tr class="memitem:ga433b9163c0d46f0e8b65b5ded880a1f8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00277.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga433b9163c0d46f0e8b65b5ded880a1f8">LPUART_TransferGetReceiveCountEDMA</a> (LPUART_Type *base, <a class="el" href="a00053.html#a00448">lpuart_edma_handle_t</a> *handle, uint32_t *count)</td></tr>
 <tr class="memdesc:ga433b9163c0d46f0e8b65b5ded880a1f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of received bytes.  <a href="#ga433b9163c0d46f0e8b65b5ded880a1f8">More...</a><br/></td></tr>
 <tr class="separator:ga433b9163c0d46f0e8b65b5ded880a1f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga898e2e544106c928c6930605ff59fc43"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga898e2e544106c928c6930605ff59fc43">LPUART_TransferEdmaHandleIRQ</a> (LPUART_Type *base, void *lpuartEdmaHandle)</td></tr>
@@ -153,7 +153,7 @@ eDMA transactional</h2></td></tr>
 <tr class="separator:ga898e2e544106c928c6930605ff59fc43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00341" id="a00341"></a>
+<a name="a00448" id="a00448"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -164,126 +164,126 @@ eDMA transactional</h2></td></tr>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a90af06bca6fa1c835176bb2f7baae37c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00053.html#gaed2bf1ac041ea4526ccf5ab0eba4da73">lpuart_edma_transfer_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a90af06bca6fa1c835176bb2f7baae37c">callback</a></td></tr>
-<tr class="memdesc:a90af06bca6fa1c835176bb2f7baae37c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function.  <a href="#a90af06bca6fa1c835176bb2f7baae37c">More...</a><br/></td></tr>
-<tr class="separator:a90af06bca6fa1c835176bb2f7baae37c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac699f5a5123647eefb2aebb1b1a35c4a"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ac699f5a5123647eefb2aebb1b1a35c4a">userData</a></td></tr>
-<tr class="memdesc:ac699f5a5123647eefb2aebb1b1a35c4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART callback function parameter.  <a href="#ac699f5a5123647eefb2aebb1b1a35c4a">More...</a><br/></td></tr>
-<tr class="separator:ac699f5a5123647eefb2aebb1b1a35c4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6cbb7a1abb602e48f3dcf355ad94ff14"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a6cbb7a1abb602e48f3dcf355ad94ff14">rxDataSizeAll</a></td></tr>
-<tr class="memdesc:a6cbb7a1abb602e48f3dcf355ad94ff14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the data to receive.  <a href="#a6cbb7a1abb602e48f3dcf355ad94ff14">More...</a><br/></td></tr>
-<tr class="separator:a6cbb7a1abb602e48f3dcf355ad94ff14"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d4461a68ee1f14850ac4d341afb8080"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a1d4461a68ee1f14850ac4d341afb8080">txDataSizeAll</a></td></tr>
-<tr class="memdesc:a1d4461a68ee1f14850ac4d341afb8080"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the data to send out.  <a href="#a1d4461a68ee1f14850ac4d341afb8080">More...</a><br/></td></tr>
-<tr class="separator:a1d4461a68ee1f14850ac4d341afb8080"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1748fd406d158b129b40430218be3372"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00022.html#a00389">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a1748fd406d158b129b40430218be3372">txEdmaHandle</a></td></tr>
-<tr class="memdesc:a1748fd406d158b129b40430218be3372"><td class="mdescLeft">&#160;</td><td class="mdescRight">The eDMA TX channel used.  <a href="#a1748fd406d158b129b40430218be3372">More...</a><br/></td></tr>
-<tr class="separator:a1748fd406d158b129b40430218be3372"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa365980412bd8d507718e3bdb6991983"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00022.html#a00389">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#aa365980412bd8d507718e3bdb6991983">rxEdmaHandle</a></td></tr>
-<tr class="memdesc:aa365980412bd8d507718e3bdb6991983"><td class="mdescLeft">&#160;</td><td class="mdescRight">The eDMA RX channel used.  <a href="#aa365980412bd8d507718e3bdb6991983">More...</a><br/></td></tr>
-<tr class="separator:aa365980412bd8d507718e3bdb6991983"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ffb3be259d932a6a9f7e86aed4cc790"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a7ffb3be259d932a6a9f7e86aed4cc790">nbytes</a></td></tr>
-<tr class="memdesc:a7ffb3be259d932a6a9f7e86aed4cc790"><td class="mdescLeft">&#160;</td><td class="mdescRight">eDMA minor byte transfer count initially configured.  <a href="#a7ffb3be259d932a6a9f7e86aed4cc790">More...</a><br/></td></tr>
-<tr class="separator:a7ffb3be259d932a6a9f7e86aed4cc790"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a17fd779099d5f3707693ac7c1212dc8a"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a17fd779099d5f3707693ac7c1212dc8a">txState</a></td></tr>
-<tr class="memdesc:a17fd779099d5f3707693ac7c1212dc8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX transfer state.  <a href="#a17fd779099d5f3707693ac7c1212dc8a">More...</a><br/></td></tr>
-<tr class="separator:a17fd779099d5f3707693ac7c1212dc8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2a62eb17faa4b16b47cb7ca6992c9980"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2a62eb17faa4b16b47cb7ca6992c9980"></a>
-volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a2a62eb17faa4b16b47cb7ca6992c9980">rxState</a></td></tr>
-<tr class="memdesc:a2a62eb17faa4b16b47cb7ca6992c9980"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX transfer state. <br/></td></tr>
-<tr class="separator:a2a62eb17faa4b16b47cb7ca6992c9980"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a265b1cbd7ed0c77b69061e1f1bd3f510"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00053.html#gaed2bf1ac041ea4526ccf5ab0eba4da73">lpuart_edma_transfer_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a265b1cbd7ed0c77b69061e1f1bd3f510">callback</a></td></tr>
+<tr class="memdesc:a265b1cbd7ed0c77b69061e1f1bd3f510"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function.  <a href="#a265b1cbd7ed0c77b69061e1f1bd3f510">More...</a><br/></td></tr>
+<tr class="separator:a265b1cbd7ed0c77b69061e1f1bd3f510"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a187949f527e4f0cf3d01fd303179bbd4"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a187949f527e4f0cf3d01fd303179bbd4">userData</a></td></tr>
+<tr class="memdesc:a187949f527e4f0cf3d01fd303179bbd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART callback function parameter.  <a href="#a187949f527e4f0cf3d01fd303179bbd4">More...</a><br/></td></tr>
+<tr class="separator:a187949f527e4f0cf3d01fd303179bbd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4bf4bac1ca23b855cdf622eefb985e83"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a4bf4bac1ca23b855cdf622eefb985e83">rxDataSizeAll</a></td></tr>
+<tr class="memdesc:a4bf4bac1ca23b855cdf622eefb985e83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the data to receive.  <a href="#a4bf4bac1ca23b855cdf622eefb985e83">More...</a><br/></td></tr>
+<tr class="separator:a4bf4bac1ca23b855cdf622eefb985e83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19d5baf779d4bf44d755fc51ad1eab45"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a19d5baf779d4bf44d755fc51ad1eab45">txDataSizeAll</a></td></tr>
+<tr class="memdesc:a19d5baf779d4bf44d755fc51ad1eab45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the data to send out.  <a href="#a19d5baf779d4bf44d755fc51ad1eab45">More...</a><br/></td></tr>
+<tr class="separator:a19d5baf779d4bf44d755fc51ad1eab45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76902815f37ba3b8054399f4599627ca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00022.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a76902815f37ba3b8054399f4599627ca">txEdmaHandle</a></td></tr>
+<tr class="memdesc:a76902815f37ba3b8054399f4599627ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">The eDMA TX channel used.  <a href="#a76902815f37ba3b8054399f4599627ca">More...</a><br/></td></tr>
+<tr class="separator:a76902815f37ba3b8054399f4599627ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73e048fbe31a9bc446ca834433161a22"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00022.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a73e048fbe31a9bc446ca834433161a22">rxEdmaHandle</a></td></tr>
+<tr class="memdesc:a73e048fbe31a9bc446ca834433161a22"><td class="mdescLeft">&#160;</td><td class="mdescRight">The eDMA RX channel used.  <a href="#a73e048fbe31a9bc446ca834433161a22">More...</a><br/></td></tr>
+<tr class="separator:a73e048fbe31a9bc446ca834433161a22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03dc8e0516d31d6e8c51e8e9304861cf"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a03dc8e0516d31d6e8c51e8e9304861cf">nbytes</a></td></tr>
+<tr class="memdesc:a03dc8e0516d31d6e8c51e8e9304861cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">eDMA minor byte transfer count initially configured.  <a href="#a03dc8e0516d31d6e8c51e8e9304861cf">More...</a><br/></td></tr>
+<tr class="separator:a03dc8e0516d31d6e8c51e8e9304861cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8921d228d567642a1c84e33b81df6b65"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a8921d228d567642a1c84e33b81df6b65">txState</a></td></tr>
+<tr class="memdesc:a8921d228d567642a1c84e33b81df6b65"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX transfer state.  <a href="#a8921d228d567642a1c84e33b81df6b65">More...</a><br/></td></tr>
+<tr class="separator:a8921d228d567642a1c84e33b81df6b65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f42343dc7cb9f0cd6b8cd7ab163ac60"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6f42343dc7cb9f0cd6b8cd7ab163ac60"></a>
+volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#a6f42343dc7cb9f0cd6b8cd7ab163ac60">rxState</a></td></tr>
+<tr class="memdesc:a6f42343dc7cb9f0cd6b8cd7ab163ac60"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX transfer state. <br/></td></tr>
+<tr class="separator:a6f42343dc7cb9f0cd6b8cd7ab163ac60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a90af06bca6fa1c835176bb2f7baae37c"></a>
+<a class="anchor" id="a265b1cbd7ed0c77b69061e1f1bd3f510"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00053.html#gaed2bf1ac041ea4526ccf5ab0eba4da73">lpuart_edma_transfer_callback_t</a> lpuart_edma_handle_t::callback</td>
+          <td class="memname"><a class="el" href="a00053.html#gaed2bf1ac041ea4526ccf5ab0eba4da73">lpuart_edma_transfer_callback_t</a> _lpuart_edma_handle::callback</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ac699f5a5123647eefb2aebb1b1a35c4a"></a>
+<a class="anchor" id="a187949f527e4f0cf3d01fd303179bbd4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void* lpuart_edma_handle_t::userData</td>
+          <td class="memname">void* _lpuart_edma_handle::userData</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a6cbb7a1abb602e48f3dcf355ad94ff14"></a>
+<a class="anchor" id="a4bf4bac1ca23b855cdf622eefb985e83"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">size_t lpuart_edma_handle_t::rxDataSizeAll</td>
+          <td class="memname">size_t _lpuart_edma_handle::rxDataSizeAll</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a1d4461a68ee1f14850ac4d341afb8080"></a>
+<a class="anchor" id="a19d5baf779d4bf44d755fc51ad1eab45"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">size_t lpuart_edma_handle_t::txDataSizeAll</td>
+          <td class="memname">size_t _lpuart_edma_handle::txDataSizeAll</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a1748fd406d158b129b40430218be3372"></a>
+<a class="anchor" id="a76902815f37ba3b8054399f4599627ca"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00022.html#a00389">edma_handle_t</a>* lpuart_edma_handle_t::txEdmaHandle</td>
+          <td class="memname"><a class="el" href="a00022.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a>* _lpuart_edma_handle::txEdmaHandle</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="aa365980412bd8d507718e3bdb6991983"></a>
+<a class="anchor" id="a73e048fbe31a9bc446ca834433161a22"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00022.html#a00389">edma_handle_t</a>* lpuart_edma_handle_t::rxEdmaHandle</td>
+          <td class="memname"><a class="el" href="a00022.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a>* _lpuart_edma_handle::rxEdmaHandle</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a7ffb3be259d932a6a9f7e86aed4cc790"></a>
+<a class="anchor" id="a03dc8e0516d31d6e8c51e8e9304861cf"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t lpuart_edma_handle_t::nbytes</td>
+          <td class="memname">uint8_t _lpuart_edma_handle::nbytes</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a17fd779099d5f3707693ac7c1212dc8a"></a>
+<a class="anchor" id="a8921d228d567642a1c84e33b81df6b65"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile uint8_t lpuart_edma_handle_t::txState</td>
+          <td class="memname">volatile uint8_t _lpuart_edma_handle::txState</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -299,7 +299,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_LPUART_EDMA_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00275.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 6, 0))</td>
+          <td class="memname">#define FSL_LPUART_EDMA_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00277.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 6, 0))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -312,7 +312,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* lpuart_edma_transfer_callback_t)(LPUART_Type *base, lpuart_edma_handle_t *handle, <a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
+          <td class="memname">typedef void(* lpuart_edma_transfer_callback_t)(LPUART_Type *base, <a class="el" href="a00053.html#a00448">lpuart_edma_handle_t</a> *handle, <a class="el" href="a00277.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -333,7 +333,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpuart_edma_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00053.html#a00448">lpuart_edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -351,13 +351,13 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00022.html#a00389">edma_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00022.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>txEdmaHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00022.html#a00389">edma_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00022.html#ga00acb9562f35755920b20fde1bc9973e">edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>rxEdmaHandle</em>&#160;</td>
         </tr>
         <tr>
@@ -387,7 +387,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPUART_SendEDMA </td>
+          <td class="memname"><a class="el" href="a00277.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPUART_SendEDMA </td>
           <td>(</td>
           <td class="paramtype">LPUART_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -395,13 +395,13 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpuart_edma_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00053.html#a00448">lpuart_edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00052.html#a00457">lpuart_transfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00052.html#ga1d4707ebc5d49dd655eedb7e5acd27fd">lpuart_transfer_t</a> *&#160;</td>
           <td class="paramname"><em>xfer</em>&#160;</td>
         </tr>
         <tr>
@@ -416,7 +416,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
   <table class="params">
     <tr><td class="paramname">base</td><td>LPUART peripheral base address. </td></tr>
     <tr><td class="paramname">handle</td><td>LPUART handle pointer. </td></tr>
-    <tr><td class="paramname">xfer</td><td>LPUART eDMA transfer structure. See <a class="el" href="a00052.html#a00457" title="LPUART transfer structure. ">lpuart_transfer_t</a>. </td></tr>
+    <tr><td class="paramname">xfer</td><td>LPUART eDMA transfer structure. See <a class="el" href="a00052.html#ga1d4707ebc5d49dd655eedb7e5acd27fd" title="LPUART transfer structure. ">lpuart_transfer_t</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -436,7 +436,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPUART_ReceiveEDMA </td>
+          <td class="memname"><a class="el" href="a00277.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPUART_ReceiveEDMA </td>
           <td>(</td>
           <td class="paramtype">LPUART_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -444,13 +444,13 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpuart_edma_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00053.html#a00448">lpuart_edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00052.html#a00457">lpuart_transfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00052.html#ga1d4707ebc5d49dd655eedb7e5acd27fd">lpuart_transfer_t</a> *&#160;</td>
           <td class="paramname"><em>xfer</em>&#160;</td>
         </tr>
         <tr>
@@ -465,7 +465,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
   <table class="params">
     <tr><td class="paramname">base</td><td>LPUART peripheral base address. </td></tr>
     <tr><td class="paramname">handle</td><td>Pointer to lpuart_edma_handle_t structure. </td></tr>
-    <tr><td class="paramname">xfer</td><td>LPUART eDMA transfer structure, see <a class="el" href="a00052.html#a00457" title="LPUART transfer structure. ">lpuart_transfer_t</a>. </td></tr>
+    <tr><td class="paramname">xfer</td><td>LPUART eDMA transfer structure, see <a class="el" href="a00052.html#ga1d4707ebc5d49dd655eedb7e5acd27fd" title="LPUART transfer structure. ">lpuart_transfer_t</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -493,7 +493,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpuart_edma_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00053.html#a00448">lpuart_edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>&#160;</td>
         </tr>
         <tr>
@@ -527,7 +527,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpuart_edma_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00053.html#a00448">lpuart_edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>&#160;</td>
         </tr>
         <tr>
@@ -553,7 +553,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPUART_TransferGetSendCountEDMA </td>
+          <td class="memname"><a class="el" href="a00277.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPUART_TransferGetSendCountEDMA </td>
           <td>(</td>
           <td class="paramtype">LPUART_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -561,7 +561,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpuart_edma_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00053.html#a00448">lpuart_edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -602,7 +602,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00275.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPUART_TransferGetReceiveCountEDMA </td>
+          <td class="memname"><a class="el" href="a00277.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPUART_TransferGetReceiveCountEDMA </td>
           <td>(</td>
           <td class="paramtype">LPUART_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -610,7 +610,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">lpuart_edma_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00053.html#a00448">lpuart_edma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>

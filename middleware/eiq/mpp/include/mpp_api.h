@@ -129,22 +129,6 @@ int mpp_element_add(mpp_t mpp, mpp_element_id_t id, mpp_element_params_t *params
 int mpp_split(mpp_t mpp, unsigned int num, mpp_params_t *params, mpp_t *out_list);
 
 /**
- * Branching through an element
- *
- * @warning NOT TESTED!
- *
- * @param [in] mpp input pipeline
- * @param [in] id element id
- * @param [in] params element parameters
- * @param [out] out_list output pipelines
- * @param [in] num number of output pipelines
- * @return \ref return_codes
- */
-int mpp_element_split(mpp_t mpp,
-		              mpp_element_id_t id, mpp_element_params_t *params,
-					  mpp_t *out_list, unsigned int num);
-
-/**
  * Join multiple pipelines through an element.
  *
  * The element becomes a source for output pipeline.

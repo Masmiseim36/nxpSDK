@@ -1,10 +1,7 @@
 /*
  * Copyright 2018-2022 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef PIPELINE_H
@@ -32,7 +29,7 @@
  * Specifies the maximum # of elements that can be present in a single pipeline
  * path.
  */
-#define MAX_ELEMENT_LEVEL (5)
+#define MAX_ELEMENT_LEVEL (10)
 
 /**
  * @brief Get pipeline state
@@ -108,8 +105,7 @@ struct _Pipeline
     /*!< @brief Application Message Queue */
     StreamElement level_head[MAX_ELEMENT_LEVEL];
     /*!< @brief Element Head Array */
-    StreamPipelineType type; /*!< @brief the pipeline type */
-    bool repeat;             /*!< @brief should pipeline play current stream repeatedly */
+    bool repeat;          /*!< @brief should pipeline play current stream repeatedly */
 
     TrackInfo track_info; /*!< @brief Track info cached */
 };
@@ -144,7 +140,6 @@ int32_t process_pipeline(PipelineHandle handle);
  *
  * @param [in] handle:  Pointer to pipeline
  * @param [in] index:   Index of pipeline within streamer task
- * @param [in] type:    Pipeline type
  * @param [in] app_mq:  Application message queue
  *
  * @returns Error Status
@@ -153,7 +148,7 @@ int32_t process_pipeline(PipelineHandle handle);
  * @retval STREAM_ERR_INVALID_ARGS  Invalid pipeline handle
  * @retval STREAM_ERR_NO_MEM        Unable to allocate memory
  */
-int32_t create_pipeline(PipelineHandle *handle, unsigned int index, StreamPipelineType type, osa_msgq_handle_t *app_mq);
+int32_t create_pipeline(PipelineHandle *handle, unsigned int index, osa_msgq_handle_t *app_mq);
 
 /*!
  * @brief destroy_pipeline

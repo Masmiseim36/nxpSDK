@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020, 2021, 2022 NXP
+ * Copyright 2018-2023 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -7,10 +7,12 @@
 
 
 #include <string.h>
+
 #if !(defined(__ICCARM__) || defined(__CC_ARM) || defined(__ARMCC_VERSION))
 #include <unistd.h>
 #endif
 
+#include <nxp_iot_agent_macros.h>
 #include <nxp_iot_agent.h>
 #include <nxp_iot_agent_dispatcher.h>
 
@@ -34,20 +36,24 @@
 #endif
 
 #if SSS_HAVE_HOSTCRYPTO_MBEDTLS
-#include <network_mbedtls.h>
+#include "network_mbedtls.h"
+#include "mbedtls/pk.h"
 #endif
 
+#if NXP_IOT_AGENT_HAVE_SSS
 #if SSS_HAVE_MBEDTLS_ALT_SSS
 #include "sss_mbedtls.h"
 #endif
+#include "fsl_sss_api.h"
+#endif
 
-#include <fsl_sss_api.h>
 #include <nxp_iot_agent_utils.h>
 #include <nxp_iot_agent_session.h>
 #include <nxp_iot_agent_macros.h>
 #include <nxp_iot_agent_datastore.h>
 #include <nxp_iot_agent_endpoint.h>
 #include <nxp_iot_agent_time.h>
+#include <nxp_iot_agent_keystore_sss_se05x.h>
 
 #define IOT_AGENT_VERSION_MAJOR (1U)
 #define IOT_AGENT_VERSION_MINOR (0U)
@@ -170,23 +176,29 @@ iot_agent_status_t iot_agent_update_device_configuration_from_service_descriptor
     initMeasurement(&iot_agent_prepare_tls_time);
 #endif
 	iot_agent_status_t agent_status = IOT_AGENT_SUCCESS;
-	sss_status_t sss_status;
 	int network_status = 0;
 	uint32_t edgelock2go_keystore_id = 0U;
+
+#if NXP_IOT_AGENT_HAVE_SSS
+	sss_status_t sss_status;
 	sss_object_t private_key = { 0 };
-	sss_object_t client_certificate = { 0 };
-	size_t cert_size_bits = 0U;
+	sss_key_store_t* sss_context = NULL;
+#endif
 
 	iot_agent_dispatcher_context_t dispatcher_context = { 0 };
-
 	iot_agent_keystore_t* keystore = NULL;
-	sss_key_store_t *sss_context = NULL;
 
 	pb_istream_t input;
 	pb_ostream_t output;
 
-	uint8_t buffer[NXP_IOT_AGENT_EDGELOCK2GO_CLIENT_CERTIFICATE_BUFFER_SIZE];
-	size_t buffer_size = sizeof(buffer);
+#if NXP_IOT_AGENT_HAVE_SSS
+    uint8_t buffer[NXP_IOT_AGENT_EDGELOCK2GO_CLIENT_CERTIFICATE_BUFFER_SIZE];
+    size_t buffer_size = sizeof(buffer);
+#endif
+
+
+	uint8_t* client_certificate_buffer = NULL;
+	size_t client_certificate_size = 0;
 
 #if SSS_HAVE_HOSTCRYPTO_OPENSSL
 	BIO *bio_in = NULL;
@@ -194,6 +206,9 @@ iot_agent_status_t iot_agent_update_device_configuration_from_service_descriptor
 	uint32_t private_key_object_id = 0U;
 
 	openssl_network_config_t openssl_network_config = { 0 };
+#elif SSS_HAVE_HOSTCRYPTO_MBEDTLS
+
+	mbedtls_network_config_t network_config = { 0 };
 #endif
 
 	ASSERT_OR_EXIT_MSG(service_descriptor->hostname != NULL, "service_descriptor does not contain a hostname.");
@@ -205,14 +220,36 @@ iot_agent_status_t iot_agent_update_device_configuration_from_service_descriptor
 	ASSERT_OR_EXIT_MSG(service_descriptor->client_key_sss_ref.has_endpoint_id, "client_key_sss_ref does not contain an endpoint_id.");
 	ASSERT_OR_EXIT_MSG(service_descriptor->client_key_sss_ref.has_object_id, "client_key_sss_ref does not contain an object_id.");
 
-	// For the client certificate, we for now always expect to have it as a reference.
-	ASSERT_OR_EXIT_MSG(service_descriptor->has_client_certificate_sss_ref, "service_descriptor does not contain a client_certificate_sss_ref.");
-	ASSERT_OR_EXIT_MSG(service_descriptor->client_certificate_sss_ref.has_type, "client_certificate_sss_ref does not contain a type.");
-	ASSERT_OR_EXIT_MSG(service_descriptor->client_certificate_sss_ref.has_endpoint_id, "client_certificate_sss_ref does not contain an endpoint_id.");
-	ASSERT_OR_EXIT_MSG(service_descriptor->client_certificate_sss_ref.has_object_id, "client_certificate_sss_ref does not contain an object_id.");
+	edgelock2go_keystore_id = service_descriptor->client_key_sss_ref.endpoint_id;
+	agent_status = iot_agent_get_keystore_by_id(agent_context, edgelock2go_keystore_id, &keystore);
+	AGENT_SUCCESS_OR_EXIT_MSG("Unable to get keystore for connection to EdgeLock 2GO.");
+
+	if (0) {}
+#if NXP_IOT_AGENT_HAVE_SSS
+	else if (keystore->type == IOT_AGENT_KS_SSS_SE05X) {
+		// This a secure element keystore, it is expected that the client certificate was provisioned together with the client 
+		// key to the keystore.
+		ASSERT_OR_EXIT_MSG(service_descriptor->has_client_certificate_sss_ref, "service_descriptor does not contain a client_certificate_sss_ref.");
+		ASSERT_OR_EXIT_MSG(service_descriptor->client_certificate_sss_ref.has_type, "client_certificate_sss_ref does not contain a type.");
+		ASSERT_OR_EXIT_MSG(service_descriptor->client_certificate_sss_ref.has_endpoint_id, "client_certificate_sss_ref does not contain an endpoint_id.");
+		ASSERT_OR_EXIT_MSG(service_descriptor->client_certificate_sss_ref.has_object_id, "client_certificate_sss_ref does not contain an object_id.");
+		               
+		agent_status = iot_agent_keystore_sss_se05x_get_sss_key_store(keystore->context, &sss_context);
+		AGENT_SUCCESS_OR_EXIT_MSG("iot_agent_keystore_sss_se05x_get_sss_key_store failed: 0x%08x", agent_status);
+	}
+#endif
+#if NXP_IOT_AGENT_HAVE_PSA
+	else if (keystore->type == IOT_AGENT_KS_PSA) {
+		// The keystore is abstracetd by a PSA interface. The key is in the keystore, the certificate is not.
+		ASSERT_OR_EXIT_MSG(service_descriptor->client_certificate != NULL, "service_descriptor does not contain a client certificate");
+	}
+#endif
+	else {
+		ASSERT_OR_EXIT_MSG(false, "Unsuported keystore type: %d", keystore->type);
+	}
 
 #if NXP_IOT_AGENT_VERIFY_EDGELOCK_2GO_SERVER_CERTIFICATE
-	// For the trusted root certificates, we for now always expect to have its cintents as bytes.
+	// For the trusted root certificates, we for now always expect to have its contents as bytes.
 	ASSERT_OR_EXIT_MSG(service_descriptor->server_certificate != NULL, "service_descriptor does not contain a server certificate");
 #endif
 #if AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1
@@ -221,33 +258,32 @@ iot_agent_status_t iot_agent_update_device_configuration_from_service_descriptor
 	IOT_AGENT_INFO("Updating device configuration from [%s]:[%d].", service_descriptor->hostname, service_descriptor->port);
 #endif
 
-	edgelock2go_keystore_id = service_descriptor->client_key_sss_ref.endpoint_id;
-	agent_status = iot_agent_get_keystore_by_id(agent_context, edgelock2go_keystore_id, &keystore);
-	AGENT_SUCCESS_OR_EXIT_MSG("Unable to get keystore for connection to EdgeLock 2GO.");
+	if (0) {}
+#if NXP_IOT_AGENT_HAVE_SSS
+	else if (keystore->type == IOT_AGENT_KS_SSS_SE05X) {
+		agent_status = iot_agent_keystore_open_session(keystore);
+		AGENT_SUCCESS_OR_EXIT_MSG("iot_agent_keystore_open_session failed: 0x%08x", agent_status)
 
-	sss_context = keystore->sss_context;
+		sss_status = sss_key_object_init(&private_key, sss_context);
+		SSS_SUCCESS_OR_EXIT_MSG("sss_key_object_init failed: 0x%08x.", sss_status);
 
-	agent_status = iot_agent_keystore_open_session(keystore);
-	AGENT_SUCCESS_OR_EXIT_MSG("iot_agent_keystore_open_session failed: 0x%08x", agent_status)
+		sss_status = sss_key_object_get_handle(&private_key, service_descriptor->client_key_sss_ref.object_id);
+		SSS_SUCCESS_OR_EXIT_MSG("sss_key_object_get_handle failed: 0x%08x.", sss_status);
 
-	sss_status = sss_key_object_init(&private_key, sss_context);
-	SSS_SUCCESS_OR_EXIT_MSG("sss_key_object_init failed: 0x%08x.", sss_status);
-
-	sss_status = sss_key_object_get_handle(&private_key, service_descriptor->client_key_sss_ref.object_id);
-	SSS_SUCCESS_OR_EXIT_MSG("sss_key_object_get_handle failed: 0x%08x.", sss_status);
-
-	// The API needs to be passed a "size in bits" pointer. Does
-	// not make any sense for certificates, but not all keystore types accept NULL,
-	sss_status = sss_key_object_init(&client_certificate, sss_context);
-	SSS_SUCCESS_OR_EXIT_MSG("sss_key_object_init failed: 0x%08x.", sss_status);
-
-	sss_status = sss_key_object_get_handle(&client_certificate, service_descriptor->client_certificate_sss_ref.object_id);
-	SSS_SUCCESS_OR_EXIT_MSG("sss_key_object_get_handle failed: 0x%08x.", sss_status);
-
-	// Independent from the crypto library, we need to read the certificate
-	// from the secure object, all crypto libraries expect to have it available as bytes:
-	sss_status = sss_key_store_get_key(sss_context, &client_certificate, buffer, &buffer_size, &cert_size_bits);
-	SSS_SUCCESS_OR_EXIT_MSG("sss_key_store_get_key failed: 0x%04x.", sss_status);
+		// Independent from the crypto library, we need to read the certificate
+		// from the secure object, all crypto libraries expect to have it available as bytes:
+		iot_agent_utils_get_certificate_from_keystore(keystore, service_descriptor->client_certificate_sss_ref.object_id,
+			buffer, &buffer_size);
+		client_certificate_buffer = &buffer[0];
+		client_certificate_size = buffer_size;
+	}
+#endif
+#if NXP_IOT_AGENT_HAVE_PSA
+	else if (keystore->type == IOT_AGENT_KS_PSA) {
+		client_certificate_buffer = service_descriptor->client_certificate->bytes;
+		client_certificate_size = service_descriptor->client_certificate->size;
+	}
+#endif
 
 	dispatcher_context.network_context = network_new();
 	ASSERT_OR_EXIT_MSG(dispatcher_context.network_context != NULL, "network context is NULL");
@@ -270,7 +306,7 @@ iot_agent_status_t iot_agent_update_device_configuration_from_service_descriptor
 	openssl_network_config.private_key = EVP_PKEY_new();
 	openssl_network_config.ca_chain = X509_STORE_new();
 
-	bio_in = BIO_new_mem_buf(buffer, (int)buffer_size);
+	bio_in = BIO_new_mem_buf(client_certificate_buffer, (int)client_certificate_size);
 	OPENSSL_ASSERT_OR_EXIT(bio_in != NULL, "BIO_new_mem_buf");
 	openssl_network_config.certificate = d2i_X509_bio(bio_in, NULL);
 
@@ -313,12 +349,11 @@ iot_agent_status_t iot_agent_update_device_configuration_from_service_descriptor
 
 #elif SSS_HAVE_HOSTCRYPTO_MBEDTLS
 
-	mbedtls_network_config_t network_config = { 0 };
 	network_config.hostname = service_descriptor->hostname;
 	network_config.port = service_descriptor->port;
 
 	mbedtls_x509_crt_init(&network_config.clicert);
-	network_status = mbedtls_x509_crt_parse_der(&network_config.clicert, buffer, buffer_size);
+	network_status = mbedtls_x509_crt_parse_der(&network_config.clicert, client_certificate_buffer, client_certificate_size);
 	ASSERT_OR_EXIT_MSG(network_status == 0, "mbedtls_x509_crt_parse_der of client cert failed with 0x%08x", network_status);
 
 #if NXP_IOT_AGENT_VERIFY_EDGELOCK_2GO_SERVER_CERTIFICATE
@@ -343,8 +378,21 @@ iot_agent_status_t iot_agent_update_device_configuration_from_service_descriptor
 	network_status = network_configure(dispatcher_context.network_context, &network_config);
 	ASSERT_OR_EXIT_MSG(network_status == 0, "network_configure failed with 0x%08x", network_status);
 
-#if SSS_HAVE_MBEDTLS_ALT_SSS // This avoids a compilation error for combination !SSS_HAVE_MBEDTLS_ALT_SSS
-	sss_mbedtls_associate_keypair(&((mbedtls_network_context_t*)dispatcher_context.network_context)->pkey, &private_key);
+	if (0) {}
+#if NXP_IOT_AGENT_HAVE_SSS
+	else if (keystore->type == IOT_AGENT_KS_SSS_SE05X) {
+		network_status = sss_mbedtls_associate_keypair(&((mbedtls_network_context_t*)dispatcher_context.network_context)->pkey, &private_key);
+		ASSERT_OR_EXIT_MSG(network_status == 0, "sss_mbedtls_associate_keypair failed with 0x%08x", network_status);
+	}
+#endif
+#if NXP_IOT_AGENT_HAVE_PSA
+	else if(keystore->type == IOT_AGENT_KS_PSA) {
+		service_descriptor->client_key_sss_ref.object_id = EDGELOCK2GO_KEYID_ECC;
+
+		network_status = mbedtls_pk_setup_opaque(&((mbedtls_network_context_t*)dispatcher_context.network_context)->pkey,
+			service_descriptor->client_key_sss_ref.object_id);
+		ASSERT_OR_EXIT_MSG(network_status == 0, "mbedtls_pk_setup_opaque failed with 0x%08x", network_status);
+	}
 #endif
 
 #else
@@ -401,8 +449,16 @@ iot_agent_status_t iot_agent_update_device_configuration_from_service_descriptor
 	agent_status = iot_agent_keystore_open_session(keystore);
 	AGENT_SUCCESS_OR_EXIT_MSG("iot_agent_keystore_open_session failed with 0x%08x", agent_status);
 
-	sss_status = sss_key_store_load(keystore->sss_context);
-	ASSERT_OR_EXIT_MSG(sss_status == kStatus_SSS_Success, "sss_key_store_load failed with 0x%08x", sss_status);
+#if NXP_IOT_AGENT_HAVE_SSS
+	if (keystore->type == IOT_AGENT_KS_SSS_SE05X) {
+		sss_key_store_t* sss_key_store = NULL;
+		agent_status = iot_agent_keystore_sss_se05x_get_sss_key_store(keystore->context, &sss_key_store);
+		AGENT_SUCCESS_OR_EXIT_MSG("iot_agent_keystore_sss_se05x_get_sss_key_store failed: 0x%08x", agent_status);
+
+		sss_status = sss_key_store_load(sss_key_store);
+		ASSERT_OR_EXIT_MSG(sss_status == kStatus_SSS_Success, "sss_key_store_load failed with 0x%08x", sss_status);
+	}
+#endif
 
 exit:
 
@@ -538,22 +594,19 @@ iot_agent_status_t iot_agent_update_device_configuration(iot_agent_context_t *ag
 	}
 	else {
 		iot_agent_keystore_t* keystore = NULL;
-		sss_key_store_t* sss_context = NULL;
 		uint32_t client_key_object_id = 0U;
 		uint32_t client_cert_object_id = 0U;
 
 		agent_status = iot_agent_get_keystore_by_id(agent_context, EDGELOCK2GO_KEYSTORE_ID, &keystore);
 		AGENT_SUCCESS_OR_EXIT_MSG("Unable to get keystore for connection to EdgeLock 2GO.");
 
-		sss_context = keystore->sss_context;
-
 		agent_status = iot_agent_keystore_open_session(keystore);
 		AGENT_SUCCESS_OR_EXIT_MSG("Failed to re-connect to Secure Element.")
 
-		agent_status = iot_agent_utils_get_edgelock2go_key_id(sss_context, &client_key_object_id);
+			agent_status = iot_agent_utils_get_edgelock2go_key_id(keystore, &client_key_object_id);
 		AGENT_SUCCESS_OR_EXIT_MSG("iot_agent_utils_get_edgelock2go_key_id failed: 0x%08x", agent_status);
 
-		agent_status = iot_agent_utils_get_edgelock2go_certificate_id(sss_context, &client_key_object_id);
+		agent_status = iot_agent_utils_get_edgelock2go_certificate_id(keystore, &client_key_object_id);
 		AGENT_SUCCESS_OR_EXIT_MSG("iot_agent_utils_get_edgelock2go_certificate_id failed: 0x%08x", agent_status);
 
 		// There is no valid datastore, we fall back to compile-time constants for the
@@ -928,7 +981,7 @@ iot_agent_status_t iot_agent_init_dispatcher(
 
 	if (agent_context->edgelock2go_datastore != NULL)
 	{
-		dispatcher_context->endpoints[num_endpoints].type = agent_context->edgelock2go_datastore->type;
+		dispatcher_context->endpoints[num_endpoints].type = (nxp_iot_EndpointType)agent_context->edgelock2go_datastore->type;
 		dispatcher_context->endpoints[num_endpoints].id = agent_context->edgelock2go_datastore->identifier;
 		dispatcher_context->endpoints[num_endpoints].endpoint_interface = agent_context->edgelock2go_datastore->iface.endpoint_interface;
 		dispatcher_context->endpoints[num_endpoints].endpoint_context = agent_context->edgelock2go_datastore->context;
@@ -937,7 +990,7 @@ iot_agent_status_t iot_agent_init_dispatcher(
 
     for (size_t i = 0U; i < agent_context->numDatastores; i++)
     {
-        dispatcher_context->endpoints[num_endpoints].type = agent_context->datastores[i]->type;
+        dispatcher_context->endpoints[num_endpoints].type = (nxp_iot_EndpointType)agent_context->datastores[i]->type;
         dispatcher_context->endpoints[num_endpoints].id = agent_context->datastores[i]->identifier;
         dispatcher_context->endpoints[num_endpoints].endpoint_interface = agent_context->datastores[i]->iface.endpoint_interface;
         dispatcher_context->endpoints[num_endpoints].endpoint_context = agent_context->datastores[i]->context;
@@ -946,7 +999,7 @@ iot_agent_status_t iot_agent_init_dispatcher(
 
     for (size_t i = 0U; i < agent_context->numKeystores; i++)
     {
-        dispatcher_context->endpoints[num_endpoints].type = agent_context->keystores[i]->type;
+        dispatcher_context->endpoints[num_endpoints].type = (nxp_iot_EndpointType)agent_context->keystores[i]->type;
         dispatcher_context->endpoints[num_endpoints].id = agent_context->keystores[i]->identifier;
         dispatcher_context->endpoints[num_endpoints].endpoint_interface = agent_context->keystores[i]->iface.endpoint_interface;
         dispatcher_context->endpoints[num_endpoints].endpoint_context = agent_context->keystores[i]->context;

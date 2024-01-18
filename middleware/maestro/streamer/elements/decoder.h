@@ -1,10 +1,7 @@
 /*
  * Copyright 2018-2022 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef DECODER_H
@@ -84,20 +81,20 @@ struct _ElementDecoder
     PadSink sink_pad[MAX_NUM_PADS];             /*!< @brief Sink pads */
     struct _StreamElement *sibling;             /*!< @brief Sibling pointer */
 
-    uint8_t decoder_type;       /*!< @brief Decoder type */
-    uint32_t chunk_size;        /*!< @brief Chunk size */
-    uint32_t sample_rate;       /*!< @brief Sample rate */
-    uint32_t current_bit_rate;  /*!< @brief Current bit rate */
-    uint32_t average_bit_rate;  /*!< @brief Average bit rate */
-    uint32_t num_channels;      /*!< @brief Number of channels */
-    uint32_t duration;          /*!< @brief Duration */
-    uint8_t endian;             /*!< @brief Endiannes */
-    uint8_t output_signed;      /*!< @brief Output signed */
-    uint32_t output_wordlength; /*!< @brief Output word length */
-    uint8_t mute_frames;        /*!< @brief Mute frames */
-    uint8_t output_interleaved; /*!< @brief Output interleaved */
-    uint8_t parse_tag;          /*!< @brief Parse tag */
-    uint32_t file_size;         /*!< @brief File size */
+    uint8_t decoder_type;                       /*!< @brief Decoder type */
+    uint32_t chunk_size;                        /*!< @brief Chunk size */
+    uint32_t sample_rate;                       /*!< @brief Sample rate */
+    uint32_t current_bit_rate;                  /*!< @brief Current bit rate */
+    uint32_t average_bit_rate;                  /*!< @brief Average bit rate */
+    uint32_t num_channels;                      /*!< @brief Number of channels */
+    uint32_t duration;                          /*!< @brief Duration */
+    uint8_t endian;                             /*!< @brief Endiannes */
+    uint8_t output_signed;                      /*!< @brief Output signed */
+    uint32_t output_wordlength;                 /*!< @brief Output word length */
+    uint8_t mute_frames;                        /*!< @brief Mute frames */
+    uint8_t output_interleaved;                 /*!< @brief Output interleaved */
+    uint8_t parse_tag;                          /*!< @brief Parse tag */
+    uint32_t file_size;                         /*!< @brief File size */
 
     /* decoder type specific */
     /* change this to decoder specific events */

@@ -356,9 +356,9 @@
           <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/soem/soem</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/enet</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/soem/soem</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/osal</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
@@ -366,6 +366,7 @@
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../components/phy</state>
@@ -1454,9 +1455,9 @@
           <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/soem/soem</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/enet</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/soem/soem</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/osal</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
@@ -1464,6 +1465,7 @@
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../components/phy</state>
@@ -2555,9 +2557,9 @@
           <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/soem/soem</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/enet</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/soem/soem</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/osal</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
@@ -2565,6 +2567,7 @@
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../components/phy</state>
@@ -3653,9 +3656,9 @@
           <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/soem/soem</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/enet</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/soem/soem</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/osal</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
@@ -3663,6 +3666,7 @@
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../components/phy</state>
@@ -4749,9 +4753,9 @@
           <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/soem/soem</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/enet</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/soem/soem</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/osal</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
@@ -4759,6 +4763,7 @@
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../components/phy</state>
@@ -5847,9 +5852,9 @@
           <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/soem/soem</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/enet</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/soem/soem</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/osal</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
@@ -5857,6 +5862,7 @@
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../components/phy</state>
@@ -6948,9 +6954,9 @@
           <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/soem/soem</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/enet</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/soem/soem</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/osal</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
@@ -6958,6 +6964,7 @@
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../components/phy</state>
@@ -8046,9 +8053,9 @@
           <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM4F</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/soem/soem</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/enet</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/soem/soem</state>
           <state>$PROJ_DIR$/../../../../../../middleware/soem/osal</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str</state>
@@ -8056,6 +8063,7 @@
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../components/phy</state>
@@ -8826,7 +8834,7 @@
   <group>
     <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
   <group>
@@ -9048,106 +9056,106 @@
   <group>
     <name>soem</name>
     <group>
-      <name>soem</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercateoe.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercatconfig.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercatdc.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercatprint.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercatconfig.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercatsoe.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercatcoe.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercatbase.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercateoe.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercat.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercatsoe.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercatconfiglist.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercatcoe.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercatprint.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercatfoe.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercattype.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercatmain.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercatmain.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercatdc.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercatfoe.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercatbase.c</name>
-      </file>
-    </group>
-    <group>
       <name>oshw</name>
       <group>
         <name>mcux-sdk</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/oshw.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/soem_port.h</name>
+          <name>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/nicdrv.c</name>
         </file>
         <group>
           <name>enet</name>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/enet/enet.h</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/enet/soem_enet.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/enet/enet.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/enet/soem_enet.h</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/enet/enet.h</name>
           </file>
         </group>
         <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/nicdrv.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/oshw.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/oshw.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/soem_port.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/nicdrv.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/nicdrv.c</name>
+          <name>$PROJ_DIR$/../../../../../../middleware/soem/oshw/mcux-sdk/soem_port.h</name>
         </file>
       </group>
+    </group>
+    <group>
+      <name>soem</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercat.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercatbase.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercatbase.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercatcoe.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercatcoe.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercatconfig.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercatconfig.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercatconfiglist.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercatdc.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercatdc.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercateoe.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercateoe.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercatfoe.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercatfoe.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercatmain.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercatmain.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercatprint.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercatprint.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercatsoe.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercatsoe.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/soem/soem/ethercattype.h</name>
+      </file>
     </group>
     <group>
       <name>osal</name>
@@ -9202,6 +9210,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/fsl_assert.h</name>
     </file>
   </group>
   <group>

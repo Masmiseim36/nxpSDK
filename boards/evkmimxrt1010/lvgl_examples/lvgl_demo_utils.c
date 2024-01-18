@@ -46,6 +46,29 @@ uint32_t DEMO_GetUsTimer(void)
 #endif
 }
 
+/* Get time elapsed in us. */
+uint32_t DEMO_GetUsElapsed(uint32_t start)
+{
+    uint32_t stop    = DEMO_GetUsTimer();
+    uint32_t elapsed = 0;
+
+    /*If there is no overflow, simply count the delta time*/
+    if (stop >= start)
+    {
+        elapsed = stop - start;
+    }
+    else
+    {
+        /*
+         * We assume the overflow will not happen more than once as the
+         * idle task switch out shall happen in 4.3sec (in case of 1GHz CPU).
+         */
+        uint64_t overflow = ((uint64_t)UINT32_MAX + 1) * 1000000U / DEMO_GetCpuClockFreq();
+        elapsed           = overflow + stop - start;
+    }
+    return elapsed;
+}
+
 uint32_t DEMO_GetCpuClockFreq(void)
 {
     return s_cpuClockFreqHz;

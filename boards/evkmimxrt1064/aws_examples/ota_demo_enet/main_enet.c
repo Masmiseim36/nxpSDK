@@ -32,7 +32,15 @@
 #include "pin_mux.h"
 #include "board.h"
 
+#if defined(MBEDTLS_MCUX_ELE_S400_API)
+#include "ele_mbedtls.h"
+#elif defined(MBEDTLS_MCUX_ELS_PKC_API)
+#include "platform_hw_ip.h"
+#include "els_pkc_mbedtls.h"
+#else
 #include "ksdk_mbedtls.h"
+#endif
+
 #include "mflash_file.h"
 #include "kvstore.h"
 
@@ -139,8 +147,6 @@ status_t MDIO_Read(uint8_t phyAddr, uint8_t regAddr, uint16_t *pData)
  */
 int main(void)
 {
-    gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
-
     BOARD_ConfigMPU();
     BOARD_InitBootPins();
     BOARD_InitBootClocks();
@@ -149,13 +155,8 @@ int main(void)
 
     IOMUXC_EnableMode(IOMUXC_GPR, kIOMUXC_GPR_ENET1TxClkOutputDir, true);
 
-    GPIO_PinInit(GPIO1, 9, &gpio_config);
-    GPIO_PinInit(GPIO1, 10, &gpio_config);
-    /* Pull up the ENET_INT before RESET. */
-    GPIO_WritePinOutput(GPIO1, 10, 1);
-    GPIO_WritePinOutput(GPIO1, 9, 0);
-    SDK_DelayAtLeastUs(10000, CLOCK_GetFreq(kCLOCK_CpuClk));
-    GPIO_WritePinOutput(GPIO1, 9, 1);
+    /* Hardware reset PHY. */
+    BOARD_ENET_PHY_RESET;
 
     MDIO_Init();
     g_phy_resource.read  = MDIO_Read;
@@ -377,12 +378,13 @@ int init_network(void)
         .phyOps      = EXAMPLE_PHY_OPS,
         .phyResource = EXAMPLE_PHY_RESOURCE,
         .srcClockHz  = EXAMPLE_CLOCK_FREQ,
+#ifdef configMAC_ADDR
+        .macAddress = configMAC_ADDR
+#endif
     };
 
     /* Set MAC address. */
-#ifdef configMAC_ADDR
-    enet_config.macAddress = configMAC_ADDR,
-#else
+#ifndef configMAC_ADDR
     (void)SILICONID_ConvertToMacAddr(&enet_config.macAddress);
 #endif
 

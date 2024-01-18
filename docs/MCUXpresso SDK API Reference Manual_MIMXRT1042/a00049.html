@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -168,6 +168,14 @@ Macros</h2></td></tr>
 <tr class="memitem:ga00b2709c8cb35f28de79e13a46f625ef"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga00b2709c8cb35f28de79e13a46f625ef">LPSPI_MASTER_PCS_MASK</a>&#160;&#160;&#160;(0xF0U)</td></tr>
 <tr class="memdesc:ga00b2709c8cb35f28de79e13a46f625ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI master PCS shift macro , internal used.  <a href="#ga00b2709c8cb35f28de79e13a46f625ef">More...</a><br/></td></tr>
 <tr class="separator:ga00b2709c8cb35f28de79e13a46f625ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5949fed47396cb00822ab0fbd4f57f36"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5949fed47396cb00822ab0fbd4f57f36"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga5949fed47396cb00822ab0fbd4f57f36">LPSPI_MASTER_WIDTH_SHIFT</a>&#160;&#160;&#160;(16U)</td></tr>
+<tr class="memdesc:ga5949fed47396cb00822ab0fbd4f57f36"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI master width shift macro, internal used. <br/></td></tr>
+<tr class="separator:ga5949fed47396cb00822ab0fbd4f57f36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6bf82e075782b63115017ca65232366c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6bf82e075782b63115017ca65232366c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga6bf82e075782b63115017ca65232366c">LPSPI_MASTER_WIDTH_MASK</a>&#160;&#160;&#160;(0x30000U)</td></tr>
+<tr class="memdesc:ga6bf82e075782b63115017ca65232366c"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI master width shift mask, internal used. <br/></td></tr>
+<tr class="separator:ga6bf82e075782b63115017ca65232366c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab14deb887bd54221e34f013a2e7afcf7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#gab14deb887bd54221e34f013a2e7afcf7">LPSPI_SLAVE_PCS_SHIFT</a>&#160;&#160;&#160;(4U)</td></tr>
 <tr class="memdesc:gab14deb887bd54221e34f013a2e7afcf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI slave PCS shift macro , internal used.  <a href="#gab14deb887bd54221e34f013a2e7afcf7">More...</a><br/></td></tr>
 <tr class="separator:gab14deb887bd54221e34f013a2e7afcf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -366,6 +374,14 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:ga134cbe42b20647e752e66aaeabbc10d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI data output configuration.  <a href="a00049.html#ga134cbe42b20647e752e66aaeabbc10d4">More...</a><br/></td></tr>
 <tr class="separator:ga134cbe42b20647e752e66aaeabbc10d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2d1f723773c106d6dcf40a714f29a43d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga2d1f723773c106d6dcf40a714f29a43d">lpspi_pcs_function_config_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00049.html#gga2d1f723773c106d6dcf40a714f29a43da8ad031df810adf64ba4c40e72a77c26e">kLPSPI_PcsAsCs</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00049.html#gga2d1f723773c106d6dcf40a714f29a43dae822c1f6a84ed7f036994e173ba6f35d">kLPSPI_PcsAsData</a> = 1U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga2d1f723773c106d6dcf40a714f29a43d"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI cs function configuration.  <a href="a00049.html#ga2d1f723773c106d6dcf40a714f29a43d">More...</a><br/></td></tr>
+<tr class="separator:ga2d1f723773c106d6dcf40a714f29a43d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa5d9038e390c8a7610dc72375da252a7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#gaa5d9038e390c8a7610dc72375da252a7">lpspi_transfer_width_t</a> { <br/>
 &#160;&#160;<a class="el" href="a00049.html#ggaa5d9038e390c8a7610dc72375da252a7a56986005418db6d0910782c58ed92dc0">kLPSPI_SingleBitXfer</a> = 0U, 
 <br/>
@@ -394,6 +410,12 @@ Enumerations</h2></td></tr>
 &#160;&#160;<a class="el" href="a00049.html#gga8c2566783079ecdbb478f06658375005abd22976ae5150a0f57f27f439d25e6d0">kLPSPI_MasterPcs2</a> = 2U &lt;&lt; LPSPI_MASTER_PCS_SHIFT, 
 <br/>
 &#160;&#160;<a class="el" href="a00049.html#gga8c2566783079ecdbb478f06658375005a38ce619f68339f607e63affd7ce012a5">kLPSPI_MasterPcs3</a> = 3U &lt;&lt; LPSPI_MASTER_PCS_SHIFT, 
+<br/>
+&#160;&#160;<a class="el" href="a00049.html#gga8c2566783079ecdbb478f06658375005aff8514d8d46a4610015f98df7247b6b4">kLPSPI_MasterWidth1</a> = 0U &lt;&lt; LPSPI_MASTER_WIDTH_SHIFT, 
+<br/>
+&#160;&#160;<a class="el" href="a00049.html#gga8c2566783079ecdbb478f06658375005a168579d6bb4cb836885cb1058c653a17">kLPSPI_MasterWidth2</a> = 1U &lt;&lt; LPSPI_MASTER_WIDTH_SHIFT, 
+<br/>
+&#160;&#160;<a class="el" href="a00049.html#gga8c2566783079ecdbb478f06658375005a8063ab42ea8fd08e0d6f33071028165c">kLPSPI_MasterWidth4</a> = 2U &lt;&lt; LPSPI_MASTER_WIDTH_SHIFT, 
 <br/>
 &#160;&#160;<a class="el" href="a00049.html#gga8c2566783079ecdbb478f06658375005a81e8942cb9a3dc01b6900fa0fc44a807">kLPSPI_MasterPcsContinuous</a> = 1U &lt;&lt; 20, 
 <br/>
@@ -435,7 +457,7 @@ Variables</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:gad5ff034e3f900bf381ebfe245b10070b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#gad5ff034e3f900bf381ebfe245b10070b">FSL_LPSPI_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 4, 5))</td></tr>
+<tr class="memitem:gad5ff034e3f900bf381ebfe245b10070b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#gad5ff034e3f900bf381ebfe245b10070b">FSL_LPSPI_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 6, 6))</td></tr>
 <tr class="memdesc:gad5ff034e3f900bf381ebfe245b10070b"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI driver version.  <a href="#gad5ff034e3f900bf381ebfe245b10070b">More...</a><br/></td></tr>
 <tr class="separator:gad5ff034e3f900bf381ebfe245b10070b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -594,6 +616,9 @@ Transactional</h2></td></tr>
 <tr class="memitem:gab03f7964e02570aec3ca7c990200c7ed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#gab03f7964e02570aec3ca7c990200c7ed">LPSPI_SlaveTransferHandleIRQ</a> (LPSPI_Type *base, lpspi_slave_handle_t *handle)</td></tr>
 <tr class="memdesc:gab03f7964e02570aec3ca7c990200c7ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPSPI Slave IRQ handler function.  <a href="#gab03f7964e02570aec3ca7c990200c7ed">More...</a><br/></td></tr>
 <tr class="separator:gab03f7964e02570aec3ca7c990200c7ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gade281936673c58a0e2fde843dacac814"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#gade281936673c58a0e2fde843dacac814">LPSPI_WaitTxFifoEmpty</a> (LPSPI_Type *base)</td></tr>
+<tr class="memdesc:gade281936673c58a0e2fde843dacac814"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for tx FIFO to be empty.  <a href="#gade281936673c58a0e2fde843dacac814">More...</a><br/></td></tr>
+<tr class="separator:gade281936673c58a0e2fde843dacac814"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="a00444" id="a00444"></a>
@@ -642,6 +667,9 @@ Transactional</h2></td></tr>
 <tr class="memitem:a52fed669c402348f070df8322e4bc8b1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00049.html#gae5ea17a161935f47c786934c524bb2af">lpspi_pin_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#a52fed669c402348f070df8322e4bc8b1">pinCfg</a></td></tr>
 <tr class="memdesc:a52fed669c402348f070df8322e4bc8b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures which pins are used for input and output data during single bit transfers.  <a href="#a52fed669c402348f070df8322e4bc8b1">More...</a><br/></td></tr>
 <tr class="separator:a52fed669c402348f070df8322e4bc8b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae365b8da86e65c9eb5fe909d734b5e1d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00049.html#ga2d1f723773c106d6dcf40a714f29a43d">lpspi_pcs_function_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ae365b8da86e65c9eb5fe909d734b5e1d">pcsFunc</a></td></tr>
+<tr class="memdesc:ae365b8da86e65c9eb5fe909d734b5e1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures cs pins function.  <a href="#ae365b8da86e65c9eb5fe909d734b5e1d">More...</a><br/></td></tr>
+<tr class="separator:ae365b8da86e65c9eb5fe909d734b5e1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc0422bcb70e685bb66f3a216aa66088"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00049.html#ga134cbe42b20647e752e66aaeabbc10d4">lpspi_data_out_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#acc0422bcb70e685bb66f3a216aa66088">dataOutConfig</a></td></tr>
 <tr class="memdesc:acc0422bcb70e685bb66f3a216aa66088"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures if the output data is tristated between accesses (LPSPI_PCS is negated).  <a href="#acc0422bcb70e685bb66f3a216aa66088">More...</a><br/></td></tr>
 <tr class="separator:acc0422bcb70e685bb66f3a216aa66088"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -767,6 +795,18 @@ Transactional</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="a00049.html#gae5ea17a161935f47c786934c524bb2af">lpspi_pin_config_t</a> lpspi_master_config_t::pinCfg</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ae365b8da86e65c9eb5fe909d734b5e1d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00049.html#ga2d1f723773c106d6dcf40a714f29a43d">lpspi_pcs_function_config_t</a> lpspi_master_config_t::pcsFunc</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1539,7 +1579,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_LPSPI_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 4, 5))</td>
+          <td class="memname">#define FSL_LPSPI_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 6, 6))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -2057,6 +2097,26 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 </div>
 </div>
+<a class="anchor" id="ga2d1f723773c106d6dcf40a714f29a43d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00049.html#ga2d1f723773c106d6dcf40a714f29a43d">lpspi_pcs_function_config_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga2d1f723773c106d6dcf40a714f29a43da8ad031df810adf64ba4c40e72a77c26e"></a>kLPSPI_PcsAsCs</em>&nbsp;</td><td class="fielddoc">
+<p>PCS pin select as cs function. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga2d1f723773c106d6dcf40a714f29a43dae822c1f6a84ed7f036994e173ba6f35d"></a>kLPSPI_PcsAsData</em>&nbsp;</td><td class="fielddoc">
+<p>PCS pin select as date function. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <a class="anchor" id="gaa5d9038e390c8a7610dc72375da252a7"></a>
 <div class="memitem">
 <div class="memproto">
@@ -2124,6 +2184,15 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga8c2566783079ecdbb478f06658375005a38ce619f68339f607e63affd7ce012a5"></a>kLPSPI_MasterPcs3</em>&nbsp;</td><td class="fielddoc">
 <p>LPSPI master transfer use PCS3 signal. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga8c2566783079ecdbb478f06658375005aff8514d8d46a4610015f98df7247b6b4"></a>kLPSPI_MasterWidth1</em>&nbsp;</td><td class="fielddoc">
+<p>LPSPI master transfer 1bit. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga8c2566783079ecdbb478f06658375005a168579d6bb4cb836885cb1058c653a17"></a>kLPSPI_MasterWidth2</em>&nbsp;</td><td class="fielddoc">
+<p>LPSPI master transfer 2bit. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga8c2566783079ecdbb478f06658375005a8063ab42ea8fd08e0d6f33071028165c"></a>kLPSPI_MasterWidth4</em>&nbsp;</td><td class="fielddoc">
+<p>LPSPI master transfer 4bit. </p>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga8c2566783079ecdbb478f06658375005a81e8942cb9a3dc01b6900fa0fc44a807"></a>kLPSPI_MasterPcsContinuous</em>&nbsp;</td><td class="fielddoc">
 <p>Is PCS signal continuous. </p>
@@ -3945,6 +4014,30 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="gade281936673c58a0e2fde843dacac814"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool LPSPI_WaitTxFifoEmpty </td>
+          <td>(</td>
+          <td class="paramtype">LPSPI_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function wait the tx fifo empty</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>LPSPI peripheral address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true for the tx FIFO is ready, false is not. </dd></dl>
 
 </div>
 </div>

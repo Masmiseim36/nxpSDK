@@ -415,7 +415,7 @@ RAM_FUNC_LIB
 static void MID_StateFault(void)
 {
     /* After manual clear fault go to STOP state */
-    if (!FAULT_ANY(g_sMidDrive.sFaultIdCaptured))
+    if (!MID_FAULT_ANY(g_sMidDrive.sFaultIdCaptured))
     {
       //MID_TransFault2Stop();
       MID_TransAll2Stop();
@@ -888,8 +888,8 @@ void MID_Init_AR(void)
     g_sMidDrive.ui16TimeCalibration        = M1_CALIB_DURATION;             /* Multiply due to absence slow loop in MID */
     
     /* fault set to init states */
-    FAULT_CLEAR_ALL(g_sMidDrive.sFaultIdCaptured);
-    FAULT_CLEAR_ALL(g_sMidDrive.sFaultIdPending);
+    MID_FAULT_CLEAR_ALL(g_sMidDrive.sFaultIdCaptured);
+    MID_FAULT_CLEAR_ALL(g_sMidDrive.sFaultIdPending);
 
     /* fault thresholds */
     g_sMidDrive.sFaultThresholds.fltUDcBusOver     = M1_U_DCB_OVERVOLTAGE;
@@ -1282,7 +1282,7 @@ void MID_Process_BL(mid_app_cmd_t *pMidCmd)
         /* Check whether the measurement start was requested. */
         if(kMID_Cmd_Run == *pMidCmd)
         {
-             if (!FAULT_ANY(g_sMidDrive.sFaultIdCaptured))
+             if (!MID_FAULT_ANY(g_sMidDrive.sFaultIdCaptured))
              {
                ui16MeasConfigResult = MID_CFG_SUCCESSFUL;
                 /* Update motor parameters in the MID. All valid
@@ -1427,27 +1427,27 @@ static void MID_FaultDetection(void)
 {
     /* Clearing actual faults before detecting them again  */
     /* Clear all pending faults */
-    FAULT_CLEAR_ALL(g_sMidDrive.sFaultIdPending);
+    MID_FAULT_CLEAR_ALL(g_sMidDrive.sFaultIdPending);
 
     /* Clear fault captured manually if required. */
     if (g_sMidDrive.bFaultClearMan)
     {
         /* Clear fault captured */
-        FAULT_CLEAR_ALL(g_sMidDrive.sFaultIdCaptured);
+        MID_FAULT_CLEAR_ALL(g_sMidDrive.sFaultIdCaptured);
         g_sMidDrive.bFaultClearMan = FALSE;
     }
 
     /* Fault:   DC-bus over-current */
     if (M1_MCDRV_PWM3PH_FLT_GET(&g_sM1Pwm3ph))
-        FAULT_SET(g_sMidDrive.sFaultIdPending, FAULT_I_DCBUS_OVER);
+        MID_FAULT_SET(g_sMidDrive.sFaultIdPending, MID_FAULT_I_DCBUS_OVER);
 
     /* Fault:   DC-bus over-voltage */
     if (g_sMidDrive.sFocPMSM.fltUDcBusFilt > g_sMidDrive.sFaultThresholds.fltUDcBusOver)
-        FAULT_SET(g_sMidDrive.sFaultIdPending, FAULT_U_DCBUS_OVER);
+        MID_FAULT_SET(g_sMidDrive.sFaultIdPending, MID_FAULT_U_DCBUS_OVER);
 
     /* Fault:   DC-bus under-voltage */
     if (g_sMidDrive.sFocPMSM.fltUDcBusFilt < g_sMidDrive.sFaultThresholds.fltUDcBusUnder)
-        FAULT_SET(g_sMidDrive.sFaultIdPending, FAULT_U_DCBUS_UNDER);
+        MID_FAULT_SET(g_sMidDrive.sFaultIdPending, MID_FAULT_U_DCBUS_UNDER);
 
     /* Pass fault to Fault ID Captured */
     g_sMidDrive.sFaultIdCaptured |= g_sMidDrive.sFaultIdPending;

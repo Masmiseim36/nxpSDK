@@ -367,6 +367,7 @@
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
@@ -1469,6 +1470,7 @@
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
@@ -2571,6 +2573,7 @@
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
@@ -3672,6 +3675,7 @@
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
@@ -4774,6 +4778,7 @@
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
@@ -5876,6 +5881,7 @@
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
@@ -6656,7 +6662,7 @@
   <group>
     <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
   <group>
@@ -6825,19 +6831,7 @@
       <group>
         <name>api</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/api/sockets.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/api/netifapi.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/api/netdb.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/api/netbuf.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/api/tcpip.c</name>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/api/api_lib.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/api/api_msg.c</name>
@@ -6849,130 +6843,142 @@
           <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/api/if_api.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/api/api_lib.c</name>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/api/netbuf.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/api/netdb.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/api/netifapi.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/api/sockets.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/api/tcpip.c</name>
         </file>
       </group>
       <group>
         <name>core</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/memp.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/def.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ip.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/pbuf.c</name>
-        </file>
-        <file>
           <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/altcp.c</name>
         </file>
-        <group>
-          <name>ipv6</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/ethip6.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/dhcp6.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/ip6_addr.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/nd6.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/mld6.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/icmp6.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/ip6_frag.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/ip6.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/inet6.c</name>
-          </file>
-        </group>
         <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/tcp_out.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/raw.c</name>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/altcp_alloc.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/altcp_tcp.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/sys.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/init.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/inet_chksum.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/timeouts.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/tcp_in.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/netif.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/mem.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/udp.c</name>
-        </file>
-        <group>
-          <name>ipv4</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/dhcp.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/ip4.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/autoip.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/icmp.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/acd.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/etharp.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/ip4_addr.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/igmp.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/ip4_frag.c</name>
-          </file>
-        </group>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/tcp.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/stats.c</name>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/def.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/dns.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/altcp_alloc.c</name>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/inet_chksum.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/init.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ip.c</name>
+        </file>
+        <group>
+          <name>ipv4</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/acd.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/autoip.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/dhcp.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/etharp.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/icmp.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/igmp.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/ip4.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/ip4_addr.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv4/ip4_frag.c</name>
+          </file>
+        </group>
+        <group>
+          <name>ipv6</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/dhcp6.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/ethip6.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/icmp6.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/inet6.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/ip6.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/ip6_addr.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/ip6_frag.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/mld6.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/ipv6/nd6.c</name>
+          </file>
+        </group>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/mem.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/memp.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/netif.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/pbuf.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/raw.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/stats.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/sys.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/tcp.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/tcp_in.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/tcp_out.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/timeouts.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/core/udp.c</name>
         </file>
       </group>
       <group>
@@ -6980,13 +6986,19 @@
         <group>
           <name>compat</name>
           <group>
-            <name>stdc</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/compat/stdc/errno.h</name>
-            </file>
-          </group>
-          <group>
             <name>posix</name>
+            <group>
+              <name>arpa</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/compat/posix/arpa/inet.h</name>
+              </file>
+            </group>
+            <group>
+              <name>net</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/compat/posix/net/if.h</name>
+              </file>
+            </group>
             <file>
               <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/compat/posix/netdb.h</name>
             </file>
@@ -6996,18 +7008,12 @@
                 <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/compat/posix/sys/socket.h</name>
               </file>
             </group>
-            <group>
-              <name>net</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/compat/posix/net/if.h</name>
-              </file>
-            </group>
-            <group>
-              <name>arpa</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/compat/posix/arpa/inet.h</name>
-              </file>
-            </group>
+          </group>
+          <group>
+            <name>stdc</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/compat/stdc/errno.h</name>
+            </file>
           </group>
         </group>
         <group>
@@ -7177,6 +7183,9 @@
               <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/priv/altcp_priv.h</name>
             </file>
             <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/priv/api_msg.h</name>
+            </file>
+            <file>
               <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/priv/mem_priv.h</name>
             </file>
             <file>
@@ -7186,16 +7195,7 @@
               <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/priv/memp_std.h</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/priv/api_msg.h</name>
-            </file>
-            <file>
               <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/priv/nd6_priv.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/priv/tcpip_priv.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/priv/tcp_priv.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/priv/raw_priv.h</name>
@@ -7203,65 +7203,71 @@
             <file>
               <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/priv/sockets_priv.h</name>
             </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/priv/tcp_priv.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/priv/tcpip_priv.h</name>
+            </file>
           </group>
           <group>
             <name>prot</name>
             <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/ip6.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/udp.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/mld6.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/ip4.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/icmp.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/igmp.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/dhcp.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/tcp.h</name>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/acd.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/autoip.h</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/iana.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/ieee.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/dns.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/icmp6.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/ethernet.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/nd6.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/ip.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/acd.h</name>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/dhcp.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/dhcp6.h</name>
             </file>
             <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/dns.h</name>
+            </file>
+            <file>
               <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/etharp.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/ethernet.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/iana.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/icmp.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/icmp6.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/ieee.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/igmp.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/ip.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/ip4.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/ip6.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/mld6.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/nd6.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/tcp.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/lwip/prot/udp.h</name>
             </file>
           </group>
         </group>
@@ -7271,127 +7277,127 @@
             <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/bridgeif.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/zepif.h</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/bridgeif_opts.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/lowpan6.h</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/etharp.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ethernet.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ieee802154.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ethernet.h</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/lowpan6.h</name>
           </file>
-          <group>
-            <name>ppp</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/ipv6cp.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/pppapi.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/magic.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/ppp.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/upap.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/mppe.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/pppol2tp.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/pppoe.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/ipcp.h</name>
-            </file>
-            <group>
-              <name>polarssl</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/sha1.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/des.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/md5.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/md4.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/arc4.h</name>
-              </file>
-            </group>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/pppdebug.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/eap.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/pppos.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/ppp_opts.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/pppcrypt.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/vj.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/chap-new.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/eui64.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/chap_ms.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/ccp.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/ecp.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/lcp.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/fsm.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/ppp_impl.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/chap-md5.h</name>
-            </file>
-          </group>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/lowpan6_ble.h</name>
+          </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/lowpan6_common.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/lowpan6_opts.h</name>
           </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/bridgeif_opts.h</name>
-          </file>
+          <group>
+            <name>ppp</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/ccp.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/chap-md5.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/chap-new.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/chap_ms.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/eap.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/ecp.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/eui64.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/fsm.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/ipcp.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/ipv6cp.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/lcp.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/magic.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/mppe.h</name>
+            </file>
+            <group>
+              <name>polarssl</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/arc4.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/des.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/md4.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/md5.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/polarssl/sha1.h</name>
+              </file>
+            </group>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/ppp.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/ppp_impl.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/ppp_opts.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/pppapi.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/pppcrypt.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/pppdebug.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/pppoe.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/pppol2tp.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/pppos.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/upap.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/ppp/vj.h</name>
+            </file>
+          </group>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/slipif.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/lowpan6_ble.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/etharp.h</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/src/include/netif/zepif.h</name>
           </file>
         </group>
       </group>
@@ -7508,10 +7514,10 @@
         <group>
           <name>ping</name>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/contrib/apps/ping/ping.h</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/contrib/apps/ping/ping.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/lwip/contrib/apps/ping/ping.c</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/lwip/contrib/apps/ping/ping.h</name>
           </file>
         </group>
       </group>
@@ -7674,6 +7680,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/fsl_assert.h</name>
     </file>
   </group>
   <group>

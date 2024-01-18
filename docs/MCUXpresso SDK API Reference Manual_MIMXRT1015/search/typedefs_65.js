@@ -1,4 +1,27 @@
 var searchData=
 [
-  ['edma_5fcallback',['edma_callback',['../a00020.html#ga9ee3a34d12fbb39bc972f62ba6357022',1,'fsl_edma.h']]]
+  ['edma_5fbandwidth_5ft',['edma_bandwidth_t',['../a00020.html#gad89636a4c3415f4135e6bba5a2c9ef05',1,'fsl_edma.h']]],
+  ['edma_5fcallback',['edma_callback',['../a00020.html#ga9ee3a34d12fbb39bc972f62ba6357022',1,'fsl_edma.h']]],
+  ['edma_5fchannel_5flink_5ftype_5ft',['edma_channel_link_type_t',['../a00020.html#ga50827ea4b70cafb243ce0d3c7bc3b22e',1,'fsl_edma.h']]],
+  ['edma_5fchannel_5fpreemption_5fconfig_5ft',['edma_channel_Preemption_config_t',['../a00020.html#gab24fe9738be9cca448dec8bb98dfdd83',1,'fsl_edma.h']]],
+  ['edma_5fconfig_5ft',['edma_config_t',['../a00020.html#gaf1d2168d9617f37e639bc4d7c516ad09',1,'fsl_edma.h']]],
+  ['edma_5fhandle_5ft',['edma_handle_t',['../a00020.html#ga00acb9562f35755920b20fde1bc9973e',1,'fsl_edma.h']]],
+  ['edma_5finterrupt_5fenable_5ft',['edma_interrupt_enable_t',['../a00020.html#ga48adc39f62293fe6079c4d3d6c46478f',1,'fsl_edma.h']]],
+  ['edma_5fminor_5foffset_5fconfig_5ft',['edma_minor_offset_config_t',['../a00020.html#gad566af76d80682c94afb6c305eae9e0a',1,'fsl_edma.h']]],
+  ['edma_5fmodulo_5ft',['edma_modulo_t',['../a00020.html#ga567f4aba444f1fb55ac796ea3c12b1f6',1,'fsl_edma.h']]],
+  ['edma_5ftcd_5ft',['edma_tcd_t',['../a00020.html#gacff054f9816fb678fc49f5e66a4d7649',1,'fsl_edma.h']]],
+  ['edma_5ftransfer_5fconfig_5ft',['edma_transfer_config_t',['../a00020.html#gaaf79d8c43b2777cfae8cfa4f2c6ed80f',1,'fsl_edma.h']]],
+  ['edma_5ftransfer_5fsize_5ft',['edma_transfer_size_t',['../a00020.html#ga3cd26ca8831986959f668621f2e52d32',1,'fsl_edma.h']]],
+  ['edma_5ftransfer_5ftype_5ft',['edma_transfer_type_t',['../a00020.html#gaa83dd6eee540d7e11857adad93262ea2',1,'fsl_edma.h']]],
+  ['enc_5fconfig_5ft',['enc_config_t',['../a00021.html#gaef1fed8a3da13886d58499365e1b6047',1,'fsl_enc.h']]],
+  ['enc_5fdecoder_5fwork_5fmode_5ft',['enc_decoder_work_mode_t',['../a00021.html#gab0beff48cfdfaf49f5f3a6e9133e81a5',1,'fsl_enc.h']]],
+  ['enc_5ffilter_5fprescaler_5ft',['enc_filter_prescaler_t',['../a00021.html#ga53613ca5e454bf757af087a1b6015f88',1,'fsl_enc.h']]],
+  ['enc_5fhome_5ftrigger_5fmode_5ft',['enc_home_trigger_mode_t',['../a00021.html#ga88e8835d32fcf55bb143a1fe619bfd53',1,'fsl_enc.h']]],
+  ['enc_5findex_5ftrigger_5fmode_5ft',['enc_index_trigger_mode_t',['../a00021.html#ga2c9746fc8a7bcad2cfaa2d3f3f035c90',1,'fsl_enc.h']]],
+  ['enc_5fposition_5fmatch_5fmode_5ft',['enc_position_match_mode_t',['../a00021.html#gaaee9062a7faa53f64b0f96009613bc2f',1,'fsl_enc.h']]],
+  ['enc_5frevolution_5fcount_5fcondition_5ft',['enc_revolution_count_condition_t',['../a00021.html#ga5f5c9d7aa77ae4e798079e7670f73801',1,'fsl_enc.h']]],
+  ['enc_5fself_5ftest_5fconfig_5ft',['enc_self_test_config_t',['../a00021.html#ga89f150375e09c8bc136d2498339fa0c3',1,'fsl_enc.h']]],
+  ['enc_5fself_5ftest_5fdirection_5ft',['enc_self_test_direction_t',['../a00021.html#gadac7b390ef77fd7af12c271abd2a6ebc',1,'fsl_enc.h']]],
+  ['ewm_5fconfig_5ft',['ewm_config_t',['../a00022.html#ga729f4f8aeb5909642d0f0eaecfac593b',1,'fsl_ewm.h']]],
+  ['ewm_5flpo_5fclock_5fsource_5ft',['ewm_lpo_clock_source_t',['../a00022.html#gae00e062b2bb5111afe589858657db5c4',1,'fsl_ewm.h']]]
 ];

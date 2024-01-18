@@ -81,7 +81,11 @@ initialize by copy {
   object nor_flash_ops.o,
   object fsl_flexspi.o,
   object fsl_clock.o,
-  section .textrw
+  section .textrw,
+  readonly object ABImemcpy.o,
+  readonly object ABImemset.o,
+  readonly object ABImemcpy48.o,
+  readonly object ABImemset48.o,
 };
 do not initialize  { section .noinit };
 

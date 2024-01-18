@@ -733,7 +733,7 @@ usb_status_t USB_HostCdcRndisEvent(usb_device_handle deviceHandle,
     usb_host_configuration_t *configuration;
     uint8_t interface_index;
     usb_host_interface_t *hostInterface;
-    uint32_t info_value;
+    uint32_t info_value = 0U;
     struct netif *netif;
     status = kStatus_USB_Success;
 

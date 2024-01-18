@@ -1,5 +1,5 @@
 /* 
- * Copyright 2018, 2019, 2020, 2021 NXP
+ * Copyright 2018-2021 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  * 
@@ -24,6 +24,14 @@ extern "C" {
 
 #if defined ( _WIN32 )
 #define __func__ __FUNCTION__
+#endif
+
+#if defined(SDK_OS_FREE_RTOS)
+#include "fsl_debug_console.h"
+#if defined(printf)
+#undef printf
+#endif
+#define printf PRINTF
 #endif
 
 /**

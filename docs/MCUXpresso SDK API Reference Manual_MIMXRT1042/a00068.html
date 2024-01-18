@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -110,9 +110,9 @@ $(document).ready(function(){initNavTree('a00068.html','');});
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
 <p>The USDHC host adapter driver provide adapter for blocking/non_blocking mode.</p>
 <h1>Cache maintain capability</h1>
-<p>To maintain data integrity during DMA operations on the platform that has cache, host driver provide a cache maintain functionality by set: host.enableCacheControl = kSDMMCHOST_CacheControlRWBuffer This is used for only when the low level driver cache maintain functionality is disabled. It is suggest that the address of buffer used for read/write is align with cache line size. </p>
+<p>To maintain data integrity during DMA operations on the platform that has cache, host driver provide a cache maintain functionality by set: host.enableCacheControl = kSDMMCHOST_CacheControlRWBuffer This is used for only when the low level driver cache maintain functionality is disabled. It is suggest that the address of buffer used for read/write is align with cache line size.</p>
 <h1>Cache line alignment maintain capability</h1>
-<p>when application submit a transfer request that the data buffer address is not align with cache line size, the potential data loss may happen during driver maintain the data cache, to aovid such issue happens, sdmmc usdhc host driver provides support on convert the unalign data transfer into align data transfer, if application would like to use the feature, please enable this functionality by define below macro firstly, #define SDMMCHOST_ENABLE_CACHE_LINE_ALIGN_TRANSFER 1 And then call SDMMCHOST_InstallCacheAlignBuffer to install a cache line size align buffer, please note the installed buffer size must not small than 2 * cache line size. Please note that this functionality is support by the non blocking adapter only. </p>
+<p>when application submit a transfer request that the data buffer address is not align with cache line size, the potential data loss may happen during driver maintain the data cache, to aovid such issue happens, sdmmc usdhc host driver provides support on convert the unalign data transfer into align data transfer, if application would like to use the feature, please enable this functionality by define below macro firstly, <code>#define SDMMCHOST_ENABLE_CACHE_LINE_ALIGN_TRANSFER 1</code> And then call SDMMCHOST_InstallCacheAlignBuffer to install a cache line size align buffer, please note the installed buffer size must not small than 2 * cache line size. Please note that this functionality is support by the non blocking adapter only. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>

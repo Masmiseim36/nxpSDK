@@ -1,6 +1,5 @@
 var structPCMRtosDeviceInfo =
 [
-    [ "pcm_handle", "structPCMRtosDeviceInfo.html#ae71184ea832f978de8accc3bf6c53066", null ],
     [ "unaligned_buf", "structPCMRtosDeviceInfo.html#a1a4f8e2cc25843865fb8d2561c8b712f", null ],
     [ "audbuf", "structPCMRtosDeviceInfo.html#a9a3de2cd8b5e724e110950d592a6184f", null ],
     [ "buff_size", "structPCMRtosDeviceInfo.html#a8b7bb0e45b40b643498e26f239f49c13", null ],

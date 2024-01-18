@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -101,7 +101,9 @@ $(document).ready(function(){initNavTree('a00274.html','');});
   <div class="summary">
 <a href="#groups">Modules</a> &#124;
 <a href="#define-members">Macros</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">LPI2C: Low Power Inter-Integrated Circuit Driver</div>  </div>
 </div><!--header-->
@@ -154,9 +156,30 @@ Enumerations</h2></td></tr>
 <tr class="memdesc:gaa156d1cebb38c8a65846c4d9c006012a"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPI2C status return codes.  <a href="a00274.html#gaa156d1cebb38c8a65846c4d9c006012a">More...</a><br/></td></tr>
 <tr class="separator:gaa156d1cebb38c8a65846c4d9c006012a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gac812c014c01cdc505af7a4df761e8b4c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00274.html#gac812c014c01cdc505af7a4df761e8b4c">LPI2C_GetInstance</a> (LPI2C_Type *base)</td></tr>
+<tr class="memdesc:gac812c014c01cdc505af7a4df761e8b4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an instance number given a base address.  <a href="#gac812c014c01cdc505af7a4df761e8b4c">More...</a><br/></td></tr>
+<tr class="separator:gac812c014c01cdc505af7a4df761e8b4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ga88b6c302a3fb2094ba8a3085cd0c2b16"><td class="memItemLeft" align="right" valign="top">IRQn_Type const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00274.html#ga88b6c302a3fb2094ba8a3085cd0c2b16">kLpi2cIrqs</a> []</td></tr>
+<tr class="memdesc:ga88b6c302a3fb2094ba8a3085cd0c2b16"><td class="mdescLeft">&#160;</td><td class="mdescRight"><pre class="fragment">Array to map LPI2C instance number to IRQ number, used internally for LPI2C master interrupt and EDMA transactional
+</pre><p> APIs.  <a href="#ga88b6c302a3fb2094ba8a3085cd0c2b16">More...</a><br/></td></tr>
+<tr class="separator:ga88b6c302a3fb2094ba8a3085cd0c2b16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga604dde7d01cad3e127825095c47eb9fe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00046.html#gafec474a625b178e148fcc930f230be75">lpi2c_master_isr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00274.html#ga604dde7d01cad3e127825095c47eb9fe">s_lpi2cMasterIsr</a></td></tr>
+<tr class="memdesc:ga604dde7d01cad3e127825095c47eb9fe"><td class="mdescLeft">&#160;</td><td class="mdescRight"><pre class="fragment">Pointer to master IRQ handler for each instance, used internally for LPI2C master interrupt and EDMA transactional
+</pre><p> APIs.  <a href="#ga604dde7d01cad3e127825095c47eb9fe">More...</a><br/></td></tr>
+<tr class="separator:ga604dde7d01cad3e127825095c47eb9fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga42462dd67e8affc0459e72a15714a164"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00274.html#ga42462dd67e8affc0459e72a15714a164">s_lpi2cMasterHandle</a> []</td></tr>
+<tr class="memdesc:ga42462dd67e8affc0459e72a15714a164"><td class="mdescLeft">&#160;</td><td class="mdescRight"><pre class="fragment">Pointers to master handles for each instance, used internally for LPI2C master interrupt and EDMA transactional
+</pre><p> APIs.  <a href="#ga42462dd67e8affc0459e72a15714a164">More...</a><br/></td></tr>
+<tr class="separator:ga42462dd67e8affc0459e72a15714a164"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:gad5469acd31ed336234c60b02cf7c424a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00274.html#gad5469acd31ed336234c60b02cf7c424a">FSL_LPI2C_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 5, 0))</td></tr>
+<tr class="memitem:gad5469acd31ed336234c60b02cf7c424a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00274.html#gad5469acd31ed336234c60b02cf7c424a">FSL_LPI2C_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 5, 2))</td></tr>
 <tr class="memdesc:gad5469acd31ed336234c60b02cf7c424a"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPI2C driver version.  <a href="#gad5469acd31ed336234c60b02cf7c424a">More...</a><br/></td></tr>
 <tr class="separator:gad5469acd31ed336234c60b02cf7c424a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -166,7 +189,7 @@ Driver version</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_LPI2C_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 5, 0))</td>
+          <td class="memname">#define FSL_LPI2C_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 5, 2))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -227,6 +250,68 @@ Driver version</h2></td></tr>
 <p>Timeout polling status flags. </p>
 </td></tr>
 </table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="gac812c014c01cdc505af7a4df761e8b4c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t LPI2C_GetInstance </td>
+          <td>(</td>
+          <td class="paramtype">LPI2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>If an invalid base address is passed, debug builds will assert. Release builds will just return instance number 0.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>LPI2C instance number starting from 0. </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a class="anchor" id="ga88b6c302a3fb2094ba8a3085cd0c2b16"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">IRQn_Type const kLpi2cIrqs[]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga604dde7d01cad3e127825095c47eb9fe"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00046.html#gafec474a625b178e148fcc930f230be75">lpi2c_master_isr_t</a> s_lpi2cMasterIsr</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga42462dd67e8affc0459e72a15714a164"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* s_lpi2cMasterHandle[]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>

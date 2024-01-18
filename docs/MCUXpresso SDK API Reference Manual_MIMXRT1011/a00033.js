@@ -1,31 +1,36 @@
 var a00033 =
 [
-    [ "flexram_allocate_ram_t", "a00033.html#a00338", [
-      [ "ocramBankNum", "a00033.html#a17779c83dfb613e244bccc31c32ae863", null ],
-      [ "dtcmBankNum", "a00033.html#a6769304f2706b8fd224eab022e0df796", null ],
-      [ "itcmBankNum", "a00033.html#af762fe7d566b49854d78d4c8552f2731", null ]
+    [ "_flexram_allocate_ram", "a00033.html#a00321", [
+      [ "ocramBankNum", "a00033.html#a95e8a79967ab8b942dfa6d88deb5879e", null ],
+      [ "dtcmBankNum", "a00033.html#af9d605ea93f398bc467b405fc4f944bc", null ],
+      [ "itcmBankNum", "a00033.html#a6fdd9fadb00e2f1157442f5e45d40600", null ]
     ] ],
     [ "FSL_SOC_FLEXRAM_ALLOCATE_DRIVER_VERSION", "a00033.html#ga4561984f15fcef3a097ba33d71acf5e9", null ],
     [ "FSL_FLEXRAM_DRIVER_VERSION", "a00033.html#gae7b4a4bc48727db1cdc7851d2eb33d25", null ],
-    [ "FLEXRAM_ECC_ERROR_DETAILED_INFO", "a00033.html#ga753afc4abc676bea1fd173785f3e4df1", [
+    [ "FLEXRAM_ECC_ERROR_DETAILED_INFO", "a00033.html#ga753afc4abc676bea1fd173785f3e4df1", null ],
+    [ "flexram_bank_allocate_src_t", "a00033.html#ga0427e5f102bdb842dc95d749df61256f", null ],
+    [ "flexram_allocate_ram_t", "a00033.html#ga04ccf121d1e7d3fb05a16f79772647c9", null ],
+    [ "flexram_tcm_access_mode_t", "a00033.html#gacf98580ecc385abee71025b897d9237a", [
       [ "kFLEXRAM_BankNotUsed", "a00033.html#gga06fc87d81c62e9abb8790b6e5713c55ba736602dad3ebd082683d56c05f7c2a04", null ],
       [ "kFLEXRAM_BankOCRAM", "a00033.html#gga06fc87d81c62e9abb8790b6e5713c55badacf03668fc22b4a3bda6ffdd3dec990", null ],
       [ "kFLEXRAM_BankDTCM", "a00033.html#gga06fc87d81c62e9abb8790b6e5713c55ba593cecebdd0de3c1960d870d1bb39ab5", null ],
       [ "kFLEXRAM_BankITCM", "a00033.html#gga06fc87d81c62e9abb8790b6e5713c55ba4b174c659081a77a423ec7319b42f4a7", null ]
     ] ],
-    [ "flexram_bank_allocate_src_t", "a00033.html#ga882cacc7b5dfc870baf31f9b21ec5998", [
-      [ "kFLEXRAM_BankAllocateThroughHardwareFuse", "a00033.html#gga882cacc7b5dfc870baf31f9b21ec5998a522d75460a5a7ae2bc73ac8f59642273", null ],
-      [ "kFLEXRAM_BankAllocateThroughBankCfg", "a00033.html#gga882cacc7b5dfc870baf31f9b21ec5998aca1fd86799787be468d48b8e78773c1a", null ],
+    [ "_flexram_bank_allocate_src", "a00033.html#ga993fd7fb2ff39a1ce947106ab5fe6691", [
+      [ "kFLEXRAM_BankAllocateThroughHardwareFuse", "a00033.html#gga993fd7fb2ff39a1ce947106ab5fe6691a522d75460a5a7ae2bc73ac8f59642273", null ],
+      [ "kFLEXRAM_BankAllocateThroughBankCfg", "a00033.html#gga993fd7fb2ff39a1ce947106ab5fe6691aca1fd86799787be468d48b8e78773c1a", null ],
       [ "kFLEXRAM_Read", "a00033.html#ggaba01db17f4a2bfbc3db60dc172972a25af3fc6642323a8ada0f6777d7f4a6376e", null ],
       [ "kFLEXRAM_Write", "a00033.html#ggaba01db17f4a2bfbc3db60dc172972a25a385ea6c35cc58d010f554655fd135a2a", null ],
       [ "kFLEXRAM_OCRAMAccessError", "a00033.html#ggaaf105ae5beaca1dee30ae54530691fceaba5c335068cfa8f481899ecef329e079", null ],
       [ "kFLEXRAM_DTCMAccessError", "a00033.html#ggaaf105ae5beaca1dee30ae54530691fceaf37a97aa3a38990b880d359dae93a8fa", null ],
       [ "kFLEXRAM_ITCMAccessError", "a00033.html#ggaaf105ae5beaca1dee30ae54530691fcea676a0b6358eb31b6623c4499556af51d", null ],
-      [ "kFLEXRAM_InterruptStatusAll", "a00033.html#ggaaf105ae5beaca1dee30ae54530691fceaa952a181d9000982402d3001c9a3814b", null ]
+      [ "kFLEXRAM_OCRAMMagicAddrMatch", "a00033.html#ggaaf105ae5beaca1dee30ae54530691fcea41dde883ee513ce10d8bed5ed0f16982", null ],
+      [ "kFLEXRAM_DTCMMagicAddrMatch", "a00033.html#ggaaf105ae5beaca1dee30ae54530691fceada226ff87e9b357a280e56d19a6f501c", null ],
+      [ "kFLEXRAM_ITCMMagicAddrMatch", "a00033.html#ggaaf105ae5beaca1dee30ae54530691fcea88a2153fbd7377198e7b579562c97884", null ]
     ] ],
-    [ "flexram_tcm_access_mode_t", "a00033.html#gaa473aadf12ac43c4288d5a8f951721a7", [
-      [ "kFLEXRAM_TCMAccessFastMode", "a00033.html#ggaa473aadf12ac43c4288d5a8f951721a7aeb666596959484912795bdc1fe726323", null ],
-      [ "kFLEXRAM_TCMAccessWaitMode", "a00033.html#ggaa473aadf12ac43c4288d5a8f951721a7a63968562cafe4ff27e832f66cc44b011", null ],
+    [ "_flexram_tcm_access_mode", "a00033.html#ga5dda3fa4f3a030a591527fd0d1882b0c", [
+      [ "kFLEXRAM_TCMAccessFastMode", "a00033.html#gga5dda3fa4f3a030a591527fd0d1882b0caeb666596959484912795bdc1fe726323", null ],
+      [ "kFLEXRAM_TCMAccessWaitMode", "a00033.html#gga5dda3fa4f3a030a591527fd0d1882b0ca63968562cafe4ff27e832f66cc44b011", null ],
       [ "kFLEXRAM_TCMSize32KB", "a00033.html#gga80155586fa275b28773c9b203f52cabaa74b5c142ac9edb5583e8889b9af4a6c0", null ],
       [ "kFLEXRAM_TCMSize64KB", "a00033.html#gga80155586fa275b28773c9b203f52cabaa47c4472f61015f0328f058f0a5202da1", null ],
       [ "kFLEXRAM_TCMSize128KB", "a00033.html#gga80155586fa275b28773c9b203f52cabaab431382e96926968904f185135c85783", null ],
@@ -44,5 +49,8 @@ var a00033 =
     [ "FLEXRAM_DisableInterruptSignal", "a00033.html#ga557f1b09ff66836a1b884818a5d7ea33", null ],
     [ "FLEXRAM_SetTCMReadAccessMode", "a00033.html#ga955668a7e7f3642c356afec976af4760", null ],
     [ "FLEXRAM_SetTCMWriteAccessMode", "a00033.html#ga315d028e5ef0e55ae3ba711b5d45978d", null ],
-    [ "FLEXRAM_EnableForceRamClockOn", "a00033.html#gad2de915fd7534b8355f320aef9b8571b", null ]
+    [ "FLEXRAM_EnableForceRamClockOn", "a00033.html#gad2de915fd7534b8355f320aef9b8571b", null ],
+    [ "FLEXRAM_SetOCRAMMagicAddr", "a00033.html#ga3c9bc9db8a1f869b1e196da5edcc7e95", null ],
+    [ "FLEXRAM_SetDTCMMagicAddr", "a00033.html#ga8fc940b643b1eca5d9195ed9b983e2a1", null ],
+    [ "FLEXRAM_SetITCMMagicAddr", "a00033.html#ga1b23ea7ca4265f7e30670889b621d6bf", null ]
 ];

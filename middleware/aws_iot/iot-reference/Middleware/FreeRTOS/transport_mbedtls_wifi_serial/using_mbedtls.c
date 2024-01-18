@@ -172,14 +172,14 @@ static CK_RV initializeClientKeys(SSLContext_t *pxCtx, const char *pcLabelName);
  *
  * @return Zero on success.
  */
-static int32_t privateKeySigningCallback(void *pvContext,
-                                         mbedtls_md_type_t xMdAlg,
-                                         const unsigned char *pucHash,
-                                         size_t xHashLen,
-                                         unsigned char *pucSig,
-                                         size_t *pxSigLen,
-                                         int32_t (*piRng)(void *, unsigned char *, size_t),
-                                         void *pvRng);
+static int privateKeySigningCallback(void *pvContext,
+                                     mbedtls_md_type_t xMdAlg,
+                                     const unsigned char *pucHash,
+                                     size_t xHashLen,
+                                     unsigned char *pucSig,
+                                     size_t *pxSigLen,
+                                     int (*piRng)(void *, unsigned char *, size_t),
+                                     void *pvRng);
 
 /**
  * @brief Setup TLS by initializing contexts and setting configurations.
@@ -457,17 +457,17 @@ static CK_RV initializeClientKeys(SSLContext_t *pxCtx, const char *pcLabelName)
 
 /*-----------------------------------------------------------*/
 
-static int32_t privateKeySigningCallback(void *pvContext,
-                                         mbedtls_md_type_t xMdAlg,
-                                         const unsigned char *pucHash,
-                                         size_t xHashLen,
-                                         unsigned char *pucSig,
-                                         size_t *pxSigLen,
-                                         int32_t (*piRng)(void *, unsigned char *, size_t),
-                                         void *pvRng)
+static int privateKeySigningCallback(void *pvContext,
+                                     mbedtls_md_type_t xMdAlg,
+                                     const unsigned char *pucHash,
+                                     size_t xHashLen,
+                                     unsigned char *pucSig,
+                                     size_t *pxSigLen,
+                                     int (*piRng)(void *, unsigned char *, size_t),
+                                     void *pvRng)
 {
     CK_RV xResult              = CKR_OK;
-    int32_t lFinalResult       = 0;
+    int lFinalResult           = 0;
     SSLContext_t *pxTLSContext = (SSLContext_t *)pvContext;
     CK_MECHANISM xMech         = {0};
     CK_BYTE xToBeSigned[256];
@@ -862,7 +862,6 @@ TlsTransportStatus_t TLS_FreeRTOS_Connect(NetworkContext_t *pNetworkContext,
                                           uint32_t sendTimeoutMs)
 {
     TlsTransportStatus_t returnStatus = TLS_TRANSPORT_SUCCESS;
-    int opt;
 
     if ((pNetworkContext == NULL) || (pHostName == NULL) || (pNetworkCredentials == NULL))
     {

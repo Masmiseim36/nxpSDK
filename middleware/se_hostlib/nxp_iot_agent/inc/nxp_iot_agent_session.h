@@ -1,5 +1,5 @@
 /* 
- * Copyright 2018, 2019, 2020, 2021 NXP
+ * Copyright 2018-2023 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  * 
@@ -13,10 +13,14 @@
 #include <nxp_iot_agent_common.h>
 #include <nxp_iot_agent_utils.h>
 
+#if NXP_IOT_AGENT_HAVE_SSS
+
 #include <fsl_sss_api.h>
 #include <nxLog_App.h>
 #include <ex_sss_boot.h>
-#include <sm_types.h> // For AX_EMBEDDED
+#include <sm_types.h>
+
+#endif
 
 #ifdef __cplusplus
 extern "C" {
@@ -46,16 +50,17 @@ void iot_agent_session_led_start(void);
 
 #endif
 
+#if NXP_IOT_AGENT_HAVE_SSS
 /**
-* Create an open a session with secure element
-*
-* @param[in] argc  arguments from command-line if any
-* @param[in] argv  arguments from command-line if any
-* @param[in] pCtx  pointer to session context
+ * Create an open a session with secure element
+ *
+ * @param[in] argc  arguments from command-line if any
+ * @param[in] argv  arguments from command-line if any
+ * @param[in] pCtx  pointer to session context
 
-* @retval IOT_AGENT_SUCCESS upon success
-* @retval IOT_AGENT_FAILURE upon failure
-*/
+ * @retval IOT_AGENT_SUCCESS upon success
+ * @retval IOT_AGENT_FAILURE upon failure
+ */
 iot_agent_status_t iot_agent_session_init(int argc, const char *argv[], ex_sss_boot_ctx_t *pCtx);
 
 /**
@@ -81,5 +86,7 @@ void iot_agent_session_disconnect(ex_sss_boot_ctx_t * pSeBootCtx);
   /*!
   *@}
   */ /* end of edgelock2go_agent_session */
+
+#endif // NXP_IOT_AGENT_HAVE_SSS
 
 #endif // #ifndef _NXP_IOT_AGENT_SESSION_H_

@@ -244,7 +244,6 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>FSL_RTOS_BM</state>
           <state>SDK_OS_BAREMETAL</state>
-          <state>CPU_MIMXRT1062DVL6A</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
@@ -288,7 +287,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pe167</state>
+          <state>Pe167,Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -325,11 +324,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -376,6 +375,7 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../components/video/camera/device</state>
           <state>$PROJ_DIR$/../../../../../components/video/camera</state>
@@ -1367,7 +1367,6 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>FSL_RTOS_BM</state>
           <state>SDK_OS_BAREMETAL</state>
-          <state>CPU_MIMXRT1062DVL6A</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
@@ -1411,7 +1410,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pe167</state>
+          <state>Pe167,Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1448,11 +1447,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -1499,6 +1498,7 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../components/video/camera/device</state>
           <state>$PROJ_DIR$/../../../../../components/video/camera</state>
@@ -2335,15 +2335,6 @@
     </file>
   </group>
   <group>
-    <name>doc</name>
-    <file>
-      <name>$PROJ_DIR$/../doc/readme.txt</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../doc/board.readme</name>
-    </file>
-  </group>
-  <group>
     <name>scripts</name>
     <file>
       <name>$PROJ_DIR$/../scripts/glow_process_image.py</name>
@@ -2377,6 +2368,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/fsl_assert.h</name>
     </file>
   </group>
   <group>
@@ -2911,6 +2905,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/mpu_armv7.h</name>
+    </file>
+  </group>
+  <group>
+    <name>doc</name>
+    <file>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
 </project>

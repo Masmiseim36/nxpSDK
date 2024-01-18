@@ -5,6 +5,6 @@ var a00249 =
     [ "CS42888 Driver", "a00015.html", "a00015" ],
     [ "DA7212 Driver", "a00016.html", "a00016" ],
     [ "SGTL5000 Driver", "a00060.html", "a00060" ],
-    [ "WM8904 Driver", "a00068.html", "a00068" ],
-    [ "WM8960 Driver", "a00069.html", "a00069" ]
+    [ "WM8904 Driver", "a00069.html", "a00069" ],
+    [ "WM8960 Driver", "a00070.html", "a00070" ]
 ];

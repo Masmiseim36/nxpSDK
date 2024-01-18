@@ -1,5 +1,5 @@
 /*
- * Copyright 2018, 2019, 2020, 2021 NXP
+ * Copyright 2018-2022 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -12,7 +12,7 @@
 #include <nxp_iot_agent_common.h>
 #include <nxp_iot_agent_keystore.h>
 
-#if SSS_HAVE_APPLET_SE05X_IOT
+#if NXP_IOT_AGENT_HAVE_SSS
 
 #include <fsl_sss_se05x_apis.h>
 #include <ex_sss_boot.h>
@@ -30,6 +30,7 @@
 typedef struct iot_agent_keystore_sss_se05x_context_t
 {
 	ex_sss_boot_ctx_t* boot_context;
+	sss_key_store_t* sss_context;
 	bool session_open;
 } iot_agent_keystore_sss_se05x_context_t;
 
@@ -76,6 +77,8 @@ bool iot_agent_keystore_sss_se05x_get_endpoint_info(
 bool iot_agent_keystore_sss_se05x_handle_request(pb_istream_t *istream,
 	pb_ostream_t *ostream, const pb_field_t* message_type, void *context);
 
+iot_agent_status_t iot_agent_keystore_sss_se05x_get_sss_key_store(iot_agent_keystore_sss_se05x_context_t* context,
+	sss_key_store_t** sss_key_store);
 
 extern const iot_agent_keystore_interface_t iot_agent_keystore_sss_se05x_interface;
 
@@ -83,6 +86,6 @@ extern const iot_agent_keystore_interface_t iot_agent_keystore_sss_se05x_interfa
 *@}
 */ /* end of edgelock2go_agent_keystore_se05x */
 
-#endif // #if SSS_HAVE_APPLET_SE05X_IOT
+#endif // #if NXP_IOT_AGENT_HAVE_SSS
 
 #endif // _NXP_IOT_AGENT_KEYSTORE_SSS_SE05X_H_

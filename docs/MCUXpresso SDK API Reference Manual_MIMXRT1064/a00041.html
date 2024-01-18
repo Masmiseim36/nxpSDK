@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -101,6 +101,7 @@ $(document).ready(function(){initNavTree('a00041.html','');});
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
@@ -115,15 +116,32 @@ $(document).ready(function(){initNavTree('a00041.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00439"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a00439">flexram_allocate_ram_t</a></td></tr>
-<tr class="memdesc:a00439"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM allocate ocram, itcm, dtcm size.  <a href="a00041.html#a00439">More...</a><br/></td></tr>
-<tr class="separator:a00439"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00419"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a00419">_flexram_allocate_ram</a></td></tr>
+<tr class="memdesc:a00419"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM allocate ocram, itcm, dtcm size.  <a href="a00041.html#a00419">More...</a><br/></td></tr>
+<tr class="separator:a00419"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ga753afc4abc676bea1fd173785f3e4df1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga753afc4abc676bea1fd173785f3e4df1">FLEXRAM_ECC_ERROR_DETAILED_INFO</a>&#160;&#160;&#160;0U /* Define to zero means get raw ECC error information, which needs parse it by user. */</td></tr>
 <tr class="memdesc:ga753afc4abc676bea1fd173785f3e4df1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get ECC error detailed information.  <a href="#ga753afc4abc676bea1fd173785f3e4df1">More...</a><br/></td></tr>
 <tr class="separator:ga753afc4abc676bea1fd173785f3e4df1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga0427e5f102bdb842dc95d749df61256f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0427e5f102bdb842dc95d749df61256f"></a>
+typedef enum <br class="typebreak"/>
+<a class="el" href="a00041.html#ga993fd7fb2ff39a1ce947106ab5fe6691">_flexram_bank_allocate_src</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga0427e5f102bdb842dc95d749df61256f">flexram_bank_allocate_src_t</a></td></tr>
+<tr class="memdesc:ga0427e5f102bdb842dc95d749df61256f"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM bank allocate source. <br/></td></tr>
+<tr class="separator:ga0427e5f102bdb842dc95d749df61256f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga04ccf121d1e7d3fb05a16f79772647c9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga04ccf121d1e7d3fb05a16f79772647c9"></a>
+typedef struct <br class="typebreak"/>
+<a class="el" href="a00041.html#a00419">_flexram_allocate_ram</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga04ccf121d1e7d3fb05a16f79772647c9">flexram_allocate_ram_t</a></td></tr>
+<tr class="memdesc:ga04ccf121d1e7d3fb05a16f79772647c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM allocate ocram, itcm, dtcm size. <br/></td></tr>
+<tr class="separator:ga04ccf121d1e7d3fb05a16f79772647c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacf98580ecc385abee71025b897d9237a"><td class="memItemLeft" align="right" valign="top">typedef enum <br class="typebreak"/>
+<a class="el" href="a00041.html#ga5dda3fa4f3a030a591527fd0d1882b0c">_flexram_tcm_access_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gacf98580ecc385abee71025b897d9237a">flexram_tcm_access_mode_t</a></td></tr>
+<tr class="memdesc:gacf98580ecc385abee71025b897d9237a"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM TCM access mode.  <a href="#gacf98580ecc385abee71025b897d9237a">More...</a><br/></td></tr>
+<tr class="separator:gacf98580ecc385abee71025b897d9237a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -139,14 +157,14 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:ga385c44f6fb256e5716a2302a5b940388"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM bank type.  <a href="a00041.html#ga385c44f6fb256e5716a2302a5b940388">More...</a><br/></td></tr>
 <tr class="separator:ga385c44f6fb256e5716a2302a5b940388"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga882cacc7b5dfc870baf31f9b21ec5998"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga882cacc7b5dfc870baf31f9b21ec5998">flexram_bank_allocate_src_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00041.html#gga882cacc7b5dfc870baf31f9b21ec5998a522d75460a5a7ae2bc73ac8f59642273">kFLEXRAM_BankAllocateThroughHardwareFuse</a> = 0U, 
+<tr class="memitem:ga993fd7fb2ff39a1ce947106ab5fe6691"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga993fd7fb2ff39a1ce947106ab5fe6691">_flexram_bank_allocate_src</a> { <br/>
+&#160;&#160;<a class="el" href="a00041.html#gga993fd7fb2ff39a1ce947106ab5fe6691a522d75460a5a7ae2bc73ac8f59642273">kFLEXRAM_BankAllocateThroughHardwareFuse</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00041.html#gga882cacc7b5dfc870baf31f9b21ec5998aca1fd86799787be468d48b8e78773c1a">kFLEXRAM_BankAllocateThroughBankCfg</a> = 1U
+&#160;&#160;<a class="el" href="a00041.html#gga993fd7fb2ff39a1ce947106ab5fe6691aca1fd86799787be468d48b8e78773c1a">kFLEXRAM_BankAllocateThroughBankCfg</a> = 1U
 <br/>
  }</td></tr>
-<tr class="memdesc:ga882cacc7b5dfc870baf31f9b21ec5998"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM bank allocate source.  <a href="a00041.html#ga882cacc7b5dfc870baf31f9b21ec5998">More...</a><br/></td></tr>
-<tr class="separator:ga882cacc7b5dfc870baf31f9b21ec5998"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga993fd7fb2ff39a1ce947106ab5fe6691"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM bank allocate source.  <a href="a00041.html#ga993fd7fb2ff39a1ce947106ab5fe6691">More...</a><br/></td></tr>
+<tr class="separator:ga993fd7fb2ff39a1ce947106ab5fe6691"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1be3860693af99a6c1da72580097294c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
 &#160;&#160;<a class="el" href="a00041.html#gga1be3860693af99a6c1da72580097294caf3fc6642323a8ada0f6777d7f4a6376e">kFLEXRAM_Read</a> = 0U, 
 <br/>
@@ -167,14 +185,14 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:gac9420823bfeba78fce625fc105e3b01d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interrupt status flag mask.  <a href="a00041.html#gac9420823bfeba78fce625fc105e3b01d">More...</a><br/></td></tr>
 <tr class="separator:gac9420823bfeba78fce625fc105e3b01d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa473aadf12ac43c4288d5a8f951721a7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gaa473aadf12ac43c4288d5a8f951721a7">flexram_tcm_access_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00041.html#ggaa473aadf12ac43c4288d5a8f951721a7aeb666596959484912795bdc1fe726323">kFLEXRAM_TCMAccessFastMode</a> = 0U, 
+<tr class="memitem:ga5dda3fa4f3a030a591527fd0d1882b0c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga5dda3fa4f3a030a591527fd0d1882b0c">_flexram_tcm_access_mode</a> { <br/>
+&#160;&#160;<a class="el" href="a00041.html#gga5dda3fa4f3a030a591527fd0d1882b0caeb666596959484912795bdc1fe726323">kFLEXRAM_TCMAccessFastMode</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00041.html#ggaa473aadf12ac43c4288d5a8f951721a7a63968562cafe4ff27e832f66cc44b011">kFLEXRAM_TCMAccessWaitMode</a> = 1U
+&#160;&#160;<a class="el" href="a00041.html#gga5dda3fa4f3a030a591527fd0d1882b0ca63968562cafe4ff27e832f66cc44b011">kFLEXRAM_TCMAccessWaitMode</a> = 1U
 <br/>
  }</td></tr>
-<tr class="memdesc:gaa473aadf12ac43c4288d5a8f951721a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM TCM access mode.  <a href="a00041.html#gaa473aadf12ac43c4288d5a8f951721a7">More...</a><br/></td></tr>
-<tr class="separator:gaa473aadf12ac43c4288d5a8f951721a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga5dda3fa4f3a030a591527fd0d1882b0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM TCM access mode.  <a href="a00041.html#ga5dda3fa4f3a030a591527fd0d1882b0c">More...</a><br/></td></tr>
+<tr class="separator:ga5dda3fa4f3a030a591527fd0d1882b0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafa9be5679ab03d785820f2474c5ccc6e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
 &#160;&#160;<a class="el" href="a00041.html#ggafa9be5679ab03d785820f2474c5ccc6ea74b5c142ac9edb5583e8889b9af4a6c0">kFLEXRAM_TCMSize32KB</a> = 32 * 1024U, 
 <br/>
@@ -192,16 +210,16 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga02e69a5b687dbed00f380845e5425252"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00273.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga02e69a5b687dbed00f380845e5425252">FLEXRAM_AllocateRam</a> (<a class="el" href="a00041.html#a00439">flexram_allocate_ram_t</a> *config)</td></tr>
+<tr class="memitem:ga02e69a5b687dbed00f380845e5425252"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00273.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga02e69a5b687dbed00f380845e5425252">FLEXRAM_AllocateRam</a> (<a class="el" href="a00041.html#ga04ccf121d1e7d3fb05a16f79772647c9">flexram_allocate_ram_t</a> *config)</td></tr>
 <tr class="memdesc:ga02e69a5b687dbed00f380845e5425252"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM allocate on-chip ram for OCRAM,ITCM,DTCM This function is independent of FLEXRAM_Init, it can be called directly if ram re-allocate is needed.  <a href="#ga02e69a5b687dbed00f380845e5425252">More...</a><br/></td></tr>
 <tr class="separator:ga02e69a5b687dbed00f380845e5425252"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga22757fc87c34fc72ac1dce1803149884"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga22757fc87c34fc72ac1dce1803149884">FLEXRAM_SetAllocateRamSrc</a> (<a class="el" href="a00041.html#ga882cacc7b5dfc870baf31f9b21ec5998">flexram_bank_allocate_src_t</a> src)</td></tr>
+<tr class="memitem:ga22757fc87c34fc72ac1dce1803149884"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga22757fc87c34fc72ac1dce1803149884">FLEXRAM_SetAllocateRamSrc</a> (<a class="el" href="a00041.html#ga0427e5f102bdb842dc95d749df61256f">flexram_bank_allocate_src_t</a> src)</td></tr>
 <tr class="memdesc:ga22757fc87c34fc72ac1dce1803149884"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM set allocate on-chip ram source.  <a href="#ga22757fc87c34fc72ac1dce1803149884">More...</a><br/></td></tr>
 <tr class="separator:ga22757fc87c34fc72ac1dce1803149884"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga955668a7e7f3642c356afec976af4760"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga955668a7e7f3642c356afec976af4760">FLEXRAM_SetTCMReadAccessMode</a> (FLEXRAM_Type *base, <a class="el" href="a00041.html#gaa473aadf12ac43c4288d5a8f951721a7">flexram_tcm_access_mode_t</a> mode)</td></tr>
+<tr class="memitem:ga955668a7e7f3642c356afec976af4760"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga955668a7e7f3642c356afec976af4760">FLEXRAM_SetTCMReadAccessMode</a> (FLEXRAM_Type *base, <a class="el" href="a00041.html#gacf98580ecc385abee71025b897d9237a">flexram_tcm_access_mode_t</a> mode)</td></tr>
 <tr class="memdesc:ga955668a7e7f3642c356afec976af4760"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM module sets TCM read access mode.  <a href="#ga955668a7e7f3642c356afec976af4760">More...</a><br/></td></tr>
 <tr class="separator:ga955668a7e7f3642c356afec976af4760"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga315d028e5ef0e55ae3ba711b5d45978d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga315d028e5ef0e55ae3ba711b5d45978d">FLEXRAM_SetTCMWriteAccessMode</a> (FLEXRAM_Type *base, <a class="el" href="a00041.html#gaa473aadf12ac43c4288d5a8f951721a7">flexram_tcm_access_mode_t</a> mode)</td></tr>
+<tr class="memitem:ga315d028e5ef0e55ae3ba711b5d45978d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga315d028e5ef0e55ae3ba711b5d45978d">FLEXRAM_SetTCMWriteAccessMode</a> (FLEXRAM_Type *base, <a class="el" href="a00041.html#gacf98580ecc385abee71025b897d9237a">flexram_tcm_access_mode_t</a> mode)</td></tr>
 <tr class="memdesc:ga315d028e5ef0e55ae3ba711b5d45978d"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXRAM module set TCM write access mode.  <a href="#ga315d028e5ef0e55ae3ba711b5d45978d">More...</a><br/></td></tr>
 <tr class="separator:ga315d028e5ef0e55ae3ba711b5d45978d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad2de915fd7534b8355f320aef9b8571b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gad2de915fd7534b8355f320aef9b8571b">FLEXRAM_EnableForceRamClockOn</a> (FLEXRAM_Type *base, bool enable)</td></tr>
@@ -255,29 +273,29 @@ Interrupts</h2></td></tr>
 <tr class="separator:ga557f1b09ff66836a1b884818a5d7ea33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00439" id="a00439"></a>
+<a name="a00419" id="a00419"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct flexram_allocate_ram_t</td>
+          <td class="memname">struct _flexram_allocate_ram</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a17779c83dfb613e244bccc31c32ae863"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a17779c83dfb613e244bccc31c32ae863"></a>
-const uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a17779c83dfb613e244bccc31c32ae863">ocramBankNum</a></td></tr>
-<tr class="memdesc:a17779c83dfb613e244bccc31c32ae863"><td class="mdescLeft">&#160;</td><td class="mdescRight">ocram banknumber which the SOC support <br/></td></tr>
-<tr class="separator:a17779c83dfb613e244bccc31c32ae863"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6769304f2706b8fd224eab022e0df796"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6769304f2706b8fd224eab022e0df796"></a>
-const uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a6769304f2706b8fd224eab022e0df796">dtcmBankNum</a></td></tr>
-<tr class="memdesc:a6769304f2706b8fd224eab022e0df796"><td class="mdescLeft">&#160;</td><td class="mdescRight">dtcm bank number to allocate, the number should be power of 2 <br/></td></tr>
-<tr class="separator:a6769304f2706b8fd224eab022e0df796"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af762fe7d566b49854d78d4c8552f2731"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af762fe7d566b49854d78d4c8552f2731"></a>
-const uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#af762fe7d566b49854d78d4c8552f2731">itcmBankNum</a></td></tr>
-<tr class="memdesc:af762fe7d566b49854d78d4c8552f2731"><td class="mdescLeft">&#160;</td><td class="mdescRight">itcm bank number to allocate, the number should be power of 2 <br/></td></tr>
-<tr class="separator:af762fe7d566b49854d78d4c8552f2731"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95e8a79967ab8b942dfa6d88deb5879e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a95e8a79967ab8b942dfa6d88deb5879e"></a>
+const uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a95e8a79967ab8b942dfa6d88deb5879e">ocramBankNum</a></td></tr>
+<tr class="memdesc:a95e8a79967ab8b942dfa6d88deb5879e"><td class="mdescLeft">&#160;</td><td class="mdescRight">ocram banknumber which the SOC support <br/></td></tr>
+<tr class="separator:a95e8a79967ab8b942dfa6d88deb5879e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9d605ea93f398bc467b405fc4f944bc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af9d605ea93f398bc467b405fc4f944bc"></a>
+const uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#af9d605ea93f398bc467b405fc4f944bc">dtcmBankNum</a></td></tr>
+<tr class="memdesc:af9d605ea93f398bc467b405fc4f944bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">dtcm bank number to allocate, the number should be power of 2 <br/></td></tr>
+<tr class="separator:af9d605ea93f398bc467b405fc4f944bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6fdd9fadb00e2f1157442f5e45d40600"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6fdd9fadb00e2f1157442f5e45d40600"></a>
+const uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#a6fdd9fadb00e2f1157442f5e45d40600">itcmBankNum</a></td></tr>
+<tr class="memdesc:a6fdd9fadb00e2f1157442f5e45d40600"><td class="mdescLeft">&#160;</td><td class="mdescRight">itcm bank number to allocate, the number should be power of 2 <br/></td></tr>
+<tr class="separator:a6fdd9fadb00e2f1157442f5e45d40600"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 
 </div>
@@ -319,6 +337,20 @@ const uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="gacf98580ecc385abee71025b897d9237a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00041.html#ga5dda3fa4f3a030a591527fd0d1882b0c">_flexram_tcm_access_mode</a>  <a class="el" href="a00041.html#gacf98580ecc385abee71025b897d9237a">flexram_tcm_access_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Fast access mode expected to be finished in 1-cycle; Wait access mode expected to be finished in 2-cycle. Wait access mode is a feature of the flexram and it should be used when the CPU clock is too fast to finish TCM access in 1-cycle. Normally, fast mode is the default mode, the efficiency of the TCM access will better. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a class="anchor" id="ga385c44f6fb256e5716a2302a5b940388"></a>
 <div class="memitem">
@@ -346,20 +378,20 @@ const uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
-<a class="anchor" id="ga882cacc7b5dfc870baf31f9b21ec5998"></a>
+<a class="anchor" id="ga993fd7fb2ff39a1ce947106ab5fe6691"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00041.html#ga882cacc7b5dfc870baf31f9b21ec5998">flexram_bank_allocate_src_t</a></td>
+          <td class="memname">enum <a class="el" href="a00041.html#ga993fd7fb2ff39a1ce947106ab5fe6691">_flexram_bank_allocate_src</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga882cacc7b5dfc870baf31f9b21ec5998a522d75460a5a7ae2bc73ac8f59642273"></a>kFLEXRAM_BankAllocateThroughHardwareFuse</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga993fd7fb2ff39a1ce947106ab5fe6691a522d75460a5a7ae2bc73ac8f59642273"></a>kFLEXRAM_BankAllocateThroughHardwareFuse</em>&nbsp;</td><td class="fielddoc">
 <p>allocate ram through hardware fuse value </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga882cacc7b5dfc870baf31f9b21ec5998aca1fd86799787be468d48b8e78773c1a"></a>kFLEXRAM_BankAllocateThroughBankCfg</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga993fd7fb2ff39a1ce947106ab5fe6691aca1fd86799787be468d48b8e78773c1a"></a>kFLEXRAM_BankAllocateThroughBankCfg</em>&nbsp;</td><td class="fielddoc">
 <p>allocate ram through FLEXRAM_BANK_CFG </p>
 </td></tr>
 </table>
@@ -412,21 +444,21 @@ const uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 
 </div>
 </div>
-<a class="anchor" id="gaa473aadf12ac43c4288d5a8f951721a7"></a>
+<a class="anchor" id="ga5dda3fa4f3a030a591527fd0d1882b0c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00041.html#gaa473aadf12ac43c4288d5a8f951721a7">flexram_tcm_access_mode_t</a></td>
+          <td class="memname">enum <a class="el" href="a00041.html#ga5dda3fa4f3a030a591527fd0d1882b0c">_flexram_tcm_access_mode</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Fast access mode expected to be finished in 1-cycle; Wait access mode expected to be finished in 2-cycle. Wait access mode is a feature of the flexram and it should be used when the CPU clock is too fast to finish TCM access in 1-cycle. Normally, fast mode is the default mode, the efficiency of the TCM access will better. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaa473aadf12ac43c4288d5a8f951721a7aeb666596959484912795bdc1fe726323"></a>kFLEXRAM_TCMAccessFastMode</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga5dda3fa4f3a030a591527fd0d1882b0caeb666596959484912795bdc1fe726323"></a>kFLEXRAM_TCMAccessFastMode</em>&nbsp;</td><td class="fielddoc">
 <p>fast access mode </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa473aadf12ac43c4288d5a8f951721a7a63968562cafe4ff27e832f66cc44b011"></a>kFLEXRAM_TCMAccessWaitMode</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga5dda3fa4f3a030a591527fd0d1882b0ca63968562cafe4ff27e832f66cc44b011"></a>kFLEXRAM_TCMAccessWaitMode</em>&nbsp;</td><td class="fielddoc">
 <p>wait access mode </p>
 </td></tr>
 </table>
@@ -470,7 +502,7 @@ const uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         <tr>
           <td class="memname"><a class="el" href="a00273.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXRAM_AllocateRam </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00041.html#a00439">flexram_allocate_ram_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00041.html#ga04ccf121d1e7d3fb05a16f79772647c9">flexram_allocate_ram_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
@@ -501,7 +533,7 @@ const uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         <tr>
           <td class="memname">static void FLEXRAM_SetAllocateRamSrc </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00041.html#ga882cacc7b5dfc870baf31f9b21ec5998">flexram_bank_allocate_src_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00041.html#ga0427e5f102bdb842dc95d749df61256f">flexram_bank_allocate_src_t</a>&#160;</td>
           <td class="paramname"><em>src</em></td><td>)</td>
           <td></td>
         </tr>
@@ -794,7 +826,7 @@ const uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00041.html#gaa473aadf12ac43c4288d5a8f951721a7">flexram_tcm_access_mode_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00041.html#gacf98580ecc385abee71025b897d9237a">flexram_tcm_access_mode_t</a>&#160;</td>
           <td class="paramname"><em>mode</em>&#160;</td>
         </tr>
         <tr>
@@ -835,7 +867,7 @@ const uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00041.html#gaa473aadf12ac43c4288d5a8f951721a7">flexram_tcm_access_mode_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00041.html#gacf98580ecc385abee71025b897d9237a">flexram_tcm_access_mode_t</a>&#160;</td>
           <td class="paramname"><em>mode</em>&#160;</td>
         </tr>
         <tr>

@@ -50,6 +50,9 @@ enum _edgelock_status_
 #define EDGELOCK_CMD_RETURN_LIFECYCLE_UPDATE (0xA0U)
 #define EDGELOCK_CMD_GET_FW_STATUS (0xC5U)
 #define EDGELOCK_CMD_WRITE_FUSE (0xD6U)
+#define EDGELOCK_CMD_START_RNG (0xA3U)
+#define EDGELOCK_CMD_GET_RNG_STATE (0xA4U)
+#define EDGELOCK_CMD_LOAD_KEY_BLOB (0xA7U)
 #define EDGELOCK_CMD_GENERATE_KEY_BLOB (0xAFU)
 
 /*! @brief Version of the EDGELOCK message&response packet. */
@@ -71,6 +74,23 @@ enum _edgelock_status_
 /*! @brief Write fuse command maxium payload words. */
 #define WRITE_FUSE_PAYLOAD_MAX_WORDS (8)
 
+/*! @brief The TRNG state: TRNG is in program mode. */
+#define TRNG_STATE_UNINITIALIZED (0x1U)
+/*! @brief The TRNG state: TRNG is still generating entropy. */
+#define TRNG_STATE_INITIALIZING (0x2U)
+/*! @brief The TRNG state: TRNG entropy is valid and ready to be read. */
+#define TRNG_STATE_COMPLETED (0x3U)
+/*! @brief The TRNG state: TRNG encounter an error while generating entropy.. */
+#define TRNG_STATE_ERROR (0x4U)
+/*! @brief The CSAL state: Crypto Lib random context initialization is not done yet  .*/
+#define CSAL_STATE_UNINITIALIZED (0x0U)
+/*! @brief The CSAL state: Crypto Lib random context initialization is on-going.*/
+#define CSAL_STATE_INITIALIZING (0x1U)
+/*! @brief The CSAL state: Crypto Lib random context initialization succeed.*/
+#define CSAL_STATE_COMPLETED (0x2U)
+/*! @brief The CSAL state: Crypto Lib random context initialization failed.*/
+#define CSAL_STATE_ERROR (0x3U)
+
 /*! @brief The key blob block tag: input data is a private key. */
 #define KEY_BLOB_TAG_PRIVATEKEY (0x81U)
 /*! @brief The key blob block algorithm: AES CBC is used as KeyBlob encryption algorithm. */
@@ -79,10 +99,14 @@ enum _edgelock_status_
 #define KEY_BLOB_ALGORITHM_AESCTR (0x04U)
 /*! @brief The key blob block algorithm: SM4 CBC is used as KeyBlob encryption algorithm. */
 #define KEY_BLOB_ALGORITHM_SM4CBC (0x2BU)
+/*! @brief The key blob block algorithm: AES XTS is used as KeyBlob encryption algorithm. */
+#define KEY_BLOB_ALGORITHM_AESXTS (0x37U)
 /*! @brief The key blob block flags: DEK keyblob. */
 #define KEY_BLOB_FLAGS_DEK (0x1U)
 /*! @brief The key blob block flags: OTFAD keyblob. */
 #define KEY_BLOB_FLAGS_OTFAD (0x2U)
+/*! @brief The key blob block flags: IEE keyblob. */
+#define KEY_BLOB_FLAGS_IEE (0x3U)
 /*! @brief Definition of the key blob address alignment size. */
 #define KEY_BLOB_ALIGN_SIZE (0x8U) /* 64 bits aligned. */
 
@@ -317,15 +341,43 @@ extern "C"
     status_t EDGELOCK_ReadFuse(SxMU_Type *base, uint8_t fuseId, uint32_t *pFuseValue, uint32_t fuseWords);
 
     /*!
-    * @brief Generate key blob.
-    *
-    * @param base Edgelock Message Unit base.
-    * @param keyIdentifier Identifier of the input key
-    * @param loadAddr Address where the input key data can be found.
-    * @param exportAddr Address where the key blob can be stored.
-    * @param exportSize available key blob data in bytes.
-    * @return 0 for success, otherwise return error code.
-    */
+     * @brief Start TRNG.
+     *
+     * @param base Edgelock Message Unit base.
+     * @return 0 for success, otherwise return error code.
+     */
+    status_t EDGELOCK_StartRNG(SxMU_Type *base);
+
+    /*!
+     * @brief Return TRNG state.
+     *
+     * @param base Edgelock Message Unit base.
+     * @param trngState Return the TRNG state.
+     * @param csalState Return the CSAL state.
+     * @return 0 for success, otherwise return error code.
+     */
+    status_t EDGELOCK_GetTRNGState(SxMU_Type *base, uint8_t *trngState, uint8_t *csalState);
+
+    /*!
+     * @brief Load key blob.
+     *
+     * @param base Edgelock Message Unit base.
+     * @param keyIdentifier Identifier of the input key
+     * @param loadAddr Address where the input key data can be found.
+     * @return 0 for success, otherwise return error code.
+     */
+    status_t EDGELOCK_LoadKeyblob(SxMU_Type *base, uint32_t keyIdentifier, uint32_t loadAddr);
+
+    /*!
+     * @brief Generate key blob.
+     *
+     * @param base Edgelock Message Unit base.
+     * @param keyIdentifier Identifier of the input key
+     * @param loadAddr Address where the input key data can be found.
+     * @param exportAddr Address where the key blob can be stored.
+     * @param exportSize available key blob data in bytes.
+     * @return 0 for success, otherwise return error code.
+     */
     status_t EDGELOCK_GenerateKeyblob(
         SxMU_Type *base, uint32_t keyIdentifier, uint32_t loadAddr, uint32_t exportAddr, uint32_t exportSize);
 

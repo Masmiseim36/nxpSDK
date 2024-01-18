@@ -227,6 +227,7 @@
           <state>DEBUG</state>
           <state>CPU_MIMXRT1062DVL6B</state>
           <state>APP_LCDIF_DATA_BUS=kELCDIF_DataBus16Bit</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
@@ -1311,6 +1312,7 @@
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1062DVL6B</state>
           <state>APP_LCDIF_DATA_BUS=kELCDIF_DataBus16Bit</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
@@ -2392,6 +2394,7 @@
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1062DVL6B</state>
           <state>APP_LCDIF_DATA_BUS=kELCDIF_DataBus16Bit</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
@@ -3476,6 +3479,7 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1062DVL6B</state>
           <state>APP_LCDIF_DATA_BUS=kELCDIF_DataBus16Bit</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
@@ -4367,7 +4371,7 @@
   <group>
     <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
   <group>
@@ -4386,6 +4390,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.h</name>
     </file>
   </group>
   <group>

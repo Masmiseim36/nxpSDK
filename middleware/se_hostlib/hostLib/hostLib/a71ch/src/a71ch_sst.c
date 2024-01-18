@@ -967,8 +967,6 @@ U16 A71_SetGpData(U16 dataOffset, const U8 *data, U16 dataLen)
     pApdu->cla   = A71CH_CLA;
     pApdu->ins   = A71CH_INS_SET_GP_DATA;
 
-    AllocateAPDUBuffer(pApdu);
-
     while (sentLength < dataLen)
     {
         if ((dataLen-sentLength) > maxChunkSize)
@@ -980,6 +978,7 @@ U16 A71_SetGpData(U16 dataOffset, const U8 *data, U16 dataLen)
             chunkSize = (dataLen-sentLength);
         }
 
+        AllocateAPDUBuffer(pApdu);
         pApdu->p1 = (U8)(gpdataOffset >> 8);
         pApdu->p2 = (U8)gpdataOffset;
         SetApduHeader(pApdu, USE_STANDARD_APDU_LEN);
@@ -1103,8 +1102,6 @@ U16 A71_GetGpData(U16 dataOffset, U8 *data, U16 dataLen)
     pApdu->cla   = A71CH_CLA;
     pApdu->ins   = A71CH_INS_GET_GP_DATA;
 
-    AllocateAPDUBuffer(pApdu);
-
     while (bytesToRead > 0)
     {
         if (bytesToRead > maxChunkSize)
@@ -1115,6 +1112,8 @@ U16 A71_GetGpData(U16 dataOffset, U8 *data, U16 dataLen)
         {
             toRead = bytesToRead;
         }
+
+        AllocateAPDUBuffer(pApdu);
 
         pApdu->p1 = gpdataOffset >> 8;
         pApdu->p2 = gpdataOffset & 0xff;

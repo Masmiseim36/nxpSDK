@@ -1,6 +1,7 @@
 var a00292 =
 [
     [ "FSL_SRC_DRIVER_VERSION", "a00292.html#gab27a1d7efba9d270e93527f1d2c54605", null ],
+    [ "src_warm_reset_bypass_count_t", "a00292.html#ga8ab4968fbeb3aeff87002c5f04a79c12", null ],
     [ "_src_reset_status_flags", "a00292.html#gaf647f7dbfbed8b1612675ab132cfa244", [
       [ "kSRC_TemperatureSensorResetFlag", "a00292.html#ggaf647f7dbfbed8b1612675ab132cfa244a35d666ccd943a593bc1af289e6233adb", null ],
       [ "kSRC_Wdog3ResetFlag", "a00292.html#ggaf647f7dbfbed8b1612675ab132cfa244a0cfd86a5b8b7110fac02e1304d33d218", null ],
@@ -13,11 +14,11 @@ var a00292 =
       [ "kSRC_LockupSysResetFlag", "a00292.html#ggaf647f7dbfbed8b1612675ab132cfa244a5e025d23a354a68ed8eb72f03208fff2", null ],
       [ "kSRC_IppResetPinFlag", "a00292.html#ggaf647f7dbfbed8b1612675ab132cfa244af7eba139e63dffc69983a262551a8856", null ]
     ] ],
-    [ "src_warm_reset_bypass_count_t", "a00292.html#ga5b40161d6cf7c90a651afd9047b6bedd", [
-      [ "kSRC_WarmResetWaitAlways", "a00292.html#gga5b40161d6cf7c90a651afd9047b6beddae2e8afc71fab41ccbac78e6a8d69ff62", null ],
-      [ "kSRC_WarmResetWaitClk16", "a00292.html#gga5b40161d6cf7c90a651afd9047b6beddad20bc2e2d97c95046d65940f111e9584", null ],
-      [ "kSRC_WarmResetWaitClk32", "a00292.html#gga5b40161d6cf7c90a651afd9047b6bedda8c3d2f6cd0c0f36da9a342e3c3eb77f8", null ],
-      [ "kSRC_WarmResetWaitClk64", "a00292.html#gga5b40161d6cf7c90a651afd9047b6bedda5bbedec3e30404b252af1b02af0042c0", null ]
+    [ "_src_warm_reset_bypass_count", "a00292.html#ga9001fa7e0c13473ca9351c94866aab30", [
+      [ "kSRC_WarmResetWaitAlways", "a00292.html#gga9001fa7e0c13473ca9351c94866aab30ae2e8afc71fab41ccbac78e6a8d69ff62", null ],
+      [ "kSRC_WarmResetWaitClk16", "a00292.html#gga9001fa7e0c13473ca9351c94866aab30ad20bc2e2d97c95046d65940f111e9584", null ],
+      [ "kSRC_WarmResetWaitClk32", "a00292.html#gga9001fa7e0c13473ca9351c94866aab30a8c3d2f6cd0c0f36da9a342e3c3eb77f8", null ],
+      [ "kSRC_WarmResetWaitClk64", "a00292.html#gga9001fa7e0c13473ca9351c94866aab30a5bbedec3e30404b252af1b02af0042c0", null ]
     ] ],
     [ "SRC_EnableWDOG3Reset", "a00292.html#ga1acc402410430b368530084805b022ac", null ],
     [ "SRC_EnableCoreDebugResetAfterPowerGate", "a00292.html#gaa00efe244ad4bf9f2b2fbf434adba463", null ],

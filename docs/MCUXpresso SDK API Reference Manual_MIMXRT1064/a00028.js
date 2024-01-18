@@ -1,11 +1,11 @@
 var a00028 =
 [
-    [ "flexcan_edma_handle_t", "a00028.html#a00315", [
-      [ "callback", "a00028.html#a63bbb14985ea667bb86d933782244ebe", null ],
-      [ "userData", "a00028.html#a8408c788bc9497c7a74811940a28bce7", null ],
-      [ "rxFifoEdmaHandle", "a00028.html#a923894ca8505812ac61ad5632677a7d2", null ],
-      [ "rxFifoState", "a00028.html#af08257e6fde0f8f49d152ab07264dfd3", null ],
-      [ "frameNum", "a00028.html#a846a4f4d7f079f5e9ef36b2ba77afa4d", null ]
+    [ "_flexcan_edma_handle", "a00028.html#a00377", [
+      [ "callback", "a00028.html#a0e8e7142015536ff18ad06688f002d64", null ],
+      [ "userData", "a00028.html#a587f24303a8a25d7aac112ae26f0547d", null ],
+      [ "rxFifoEdmaHandle", "a00028.html#a803731f35525011f6163e39192ff13bb", null ],
+      [ "rxFifoState", "a00028.html#aa35c4d0abd825c5ded31ff775e2505d8", null ],
+      [ "frameNum", "a00028.html#a80f2be44169aef18137197ceb678786d", null ]
     ] ],
     [ "FSL_FLEXCAN_EDMA_DRIVER_VERSION", "a00028.html#ga3a725e7f5fd30ef8458220269fbea29f", null ],
     [ "flexcan_edma_transfer_callback_t", "a00028.html#ga200b7c77f4d5b5495193e58772e12c68", null ],

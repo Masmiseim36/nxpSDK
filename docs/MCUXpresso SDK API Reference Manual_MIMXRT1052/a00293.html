@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -118,14 +118,14 @@ Function groups</h1>
 Initialization</h2>
 <p>To initialize the debug console, call the <span style="color:red"><a class="el" href="a00293.html#ga12e50ee0450679fd8ca950a89338d366" title="Initializes the peripheral used for debug messages. ">DbgConsole_Init()</a></span> function with these parameters. This function automatically enables the module and the clock.</p>
 <div class="fragment"><div class="line"></div>
-<div class="line"><a class="code" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> <a class="code" href="a00293.html#ga12e50ee0450679fd8ca950a89338d366">DbgConsole_Init</a>(uint8_t instance, uint32_t baudRate, <a class="code" href="a00070.html#ga103db7d7f3fc8234978efadef0fdaf80">serial_port_type_t</a> device, uint32_t clkSrcFreq);</div>
+<div class="line"><a class="code" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> <a class="code" href="a00293.html#ga12e50ee0450679fd8ca950a89338d366">DbgConsole_Init</a>(uint8_t instance, uint32_t baudRate, <a class="code" href="a00070.html#gaa7dc5f93aacda72d14bb0fa66b0401f3">serial_port_type_t</a> device, uint32_t clkSrcFreq);</div>
 </div><!-- fragment --><p>Select the supported debug console hardware device type, such as</p>
-<div class="fragment"><div class="line"><span class="keyword">typedef</span> <span class="keyword">enum</span> _serial_port_type</div>
+<div class="fragment"><div class="line"><span class="keyword">typedef</span> <span class="keyword">enum</span> <a class="code" href="a00070.html#ga37012d03963b0a7aac96cda088362180">_serial_port_type</a></div>
 <div class="line">{</div>
-<div class="line">    <a class="code" href="a00070.html#gga103db7d7f3fc8234978efadef0fdaf80a5b4d039d8c91cb19fca7c5dc196f8d77">kSerialPort_Uart</a> = 1U,                </div>
-<div class="line">    <a class="code" href="a00070.html#gga103db7d7f3fc8234978efadef0fdaf80a3785825f30826c61a4ef13bf983381c2">kSerialPort_UsbCdc</a>,                   </div>
-<div class="line">    <a class="code" href="a00070.html#gga103db7d7f3fc8234978efadef0fdaf80af6a37935b2767a9ae22825f0bc49ef77">kSerialPort_Swo</a>,                      </div>
-<div class="line">} <a class="code" href="a00070.html#ga103db7d7f3fc8234978efadef0fdaf80">serial_port_type_t</a>;</div>
+<div class="line">    <a class="code" href="a00070.html#gga37012d03963b0a7aac96cda088362180a5b4d039d8c91cb19fca7c5dc196f8d77">kSerialPort_Uart</a> = 1U,                </div>
+<div class="line">    <a class="code" href="a00070.html#gga37012d03963b0a7aac96cda088362180a3785825f30826c61a4ef13bf983381c2">kSerialPort_UsbCdc</a>,                   </div>
+<div class="line">    <a class="code" href="a00070.html#gga37012d03963b0a7aac96cda088362180af6a37935b2767a9ae22825f0bc49ef77">kSerialPort_Swo</a>,                      </div>
+<div class="line">} <a class="code" href="a00070.html#gaa7dc5f93aacda72d14bb0fa66b0401f3">serial_port_type_t</a>;</div>
 </div><!-- fragment --><p>After the initialization is successful, stdout and stdin are connected to the selected peripheral.</p>
 <p>This example shows how to call the <a class="el" href="a00293.html#ga12e50ee0450679fd8ca950a89338d366" title="Initializes the peripheral used for debug messages. ">DbgConsole_Init()</a> given the user configuration structure.</p>
 <div class="fragment"><div class="line"><a class="code" href="a00293.html#ga12e50ee0450679fd8ca950a89338d366">DbgConsole_Init</a>(BOARD_DEBUG_UART_INSTANCE, BOARD_DEBUG_UART_BAUDRATE, BOARD_DEBUG_UART_TYPE,</div>
@@ -362,16 +362,16 @@ Variables</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Initialization</h2></td></tr>
-<tr class="memitem:ga12e50ee0450679fd8ca950a89338d366"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00293.html#ga12e50ee0450679fd8ca950a89338d366">DbgConsole_Init</a> (uint8_t instance, uint32_t baudRate, <a class="el" href="a00070.html#ga103db7d7f3fc8234978efadef0fdaf80">serial_port_type_t</a> device, uint32_t clkSrcFreq)</td></tr>
+<tr class="memitem:ga12e50ee0450679fd8ca950a89338d366"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00293.html#ga12e50ee0450679fd8ca950a89338d366">DbgConsole_Init</a> (uint8_t instance, uint32_t baudRate, <a class="el" href="a00070.html#gaa7dc5f93aacda72d14bb0fa66b0401f3">serial_port_type_t</a> device, uint32_t clkSrcFreq)</td></tr>
 <tr class="memdesc:ga12e50ee0450679fd8ca950a89338d366"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the peripheral used for debug messages.  <a href="#ga12e50ee0450679fd8ca950a89338d366">More...</a><br/></td></tr>
 <tr class="separator:ga12e50ee0450679fd8ca950a89338d366"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad80e7aa70bbb3fce1a9168621372833e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00293.html#gad80e7aa70bbb3fce1a9168621372833e">DbgConsole_Deinit</a> (void)</td></tr>
+<tr class="memitem:gad80e7aa70bbb3fce1a9168621372833e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00293.html#gad80e7aa70bbb3fce1a9168621372833e">DbgConsole_Deinit</a> (void)</td></tr>
 <tr class="memdesc:gad80e7aa70bbb3fce1a9168621372833e"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-initializes the peripheral used for debug messages.  <a href="#gad80e7aa70bbb3fce1a9168621372833e">More...</a><br/></td></tr>
 <tr class="separator:gad80e7aa70bbb3fce1a9168621372833e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9ce272e795c2b235265d3dfb50669bee"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00293.html#ga9ce272e795c2b235265d3dfb50669bee">DbgConsole_EnterLowpower</a> (void)</td></tr>
+<tr class="memitem:ga9ce272e795c2b235265d3dfb50669bee"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00293.html#ga9ce272e795c2b235265d3dfb50669bee">DbgConsole_EnterLowpower</a> (void)</td></tr>
 <tr class="memdesc:ga9ce272e795c2b235265d3dfb50669bee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepares to enter low power consumption.  <a href="#ga9ce272e795c2b235265d3dfb50669bee">More...</a><br/></td></tr>
 <tr class="separator:ga9ce272e795c2b235265d3dfb50669bee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga21831f5ee970f3a1f13ff375405f3592"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00293.html#ga21831f5ee970f3a1f13ff375405f3592">DbgConsole_ExitLowpower</a> (void)</td></tr>
+<tr class="memitem:ga21831f5ee970f3a1f13ff375405f3592"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00293.html#ga21831f5ee970f3a1f13ff375405f3592">DbgConsole_ExitLowpower</a> (void)</td></tr>
 <tr class="memdesc:ga21831f5ee970f3a1f13ff375405f3592"><td class="mdescLeft">&#160;</td><td class="mdescRight">Restores from low power consumption.  <a href="#ga21831f5ee970f3a1f13ff375405f3592">More...</a><br/></td></tr>
 <tr class="separator:ga21831f5ee970f3a1f13ff375405f3592"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7f9e0678f4c708ed5640b0823c07dc35"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00293.html#ga7f9e0678f4c708ed5640b0823c07dc35">DbgConsole_Printf</a> (const char *fmt_s,...)</td></tr>
@@ -395,10 +395,10 @@ Initialization</h2></td></tr>
 <tr class="memitem:gaed722925a966ae462d5d44cd33f836c3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00293.html#gaed722925a966ae462d5d44cd33f836c3">DbgConsole_BlockingVprintf</a> (const char *fmt_s, va_list formatStringArg)</td></tr>
 <tr class="memdesc:gaed722925a966ae462d5d44cd33f836c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes formatted output to the standard output stream with the blocking mode.  <a href="#gaed722925a966ae462d5d44cd33f836c3">More...</a><br/></td></tr>
 <tr class="separator:gaed722925a966ae462d5d44cd33f836c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3194467c3dae6c5015b8b29c3cc1db1e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00293.html#ga3194467c3dae6c5015b8b29c3cc1db1e">DbgConsole_Flush</a> (void)</td></tr>
+<tr class="memitem:ga3194467c3dae6c5015b8b29c3cc1db1e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00293.html#ga3194467c3dae6c5015b8b29c3cc1db1e">DbgConsole_Flush</a> (void)</td></tr>
 <tr class="memdesc:ga3194467c3dae6c5015b8b29c3cc1db1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug console flush.  <a href="#ga3194467c3dae6c5015b8b29c3cc1db1e">More...</a><br/></td></tr>
 <tr class="separator:ga3194467c3dae6c5015b8b29c3cc1db1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga867a9778cd1401d3336ae5599851c1fd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00293.html#ga867a9778cd1401d3336ae5599851c1fd">DbgConsole_TryGetchar</a> (char *ch)</td></tr>
+<tr class="memitem:ga867a9778cd1401d3336ae5599851c1fd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00293.html#ga867a9778cd1401d3336ae5599851c1fd">DbgConsole_TryGetchar</a> (char *ch)</td></tr>
 <tr class="memdesc:ga867a9778cd1401d3336ae5599851c1fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug console try to get char This function provides a API which will not block current task, if character is available return it, otherwise return fail.  <a href="#ga867a9778cd1401d3336ae5599851c1fd">More...</a><br/></td></tr>
 <tr class="separator:ga867a9778cd1401d3336ae5599851c1fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -472,7 +472,7 @@ Initialization</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DbgConsole_Init </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DbgConsole_Init </td>
           <td>(</td>
           <td class="paramtype">uint8_t&#160;</td>
           <td class="paramname"><em>instance</em>, </td>
@@ -486,7 +486,7 @@ Initialization</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00070.html#ga103db7d7f3fc8234978efadef0fdaf80">serial_port_type_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00070.html#gaa7dc5f93aacda72d14bb0fa66b0401f3">serial_port_type_t</a>&#160;</td>
           <td class="paramname"><em>device</em>, </td>
         </tr>
         <tr>
@@ -531,7 +531,7 @@ Initialization</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DbgConsole_Deinit </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DbgConsole_Deinit </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -549,7 +549,7 @@ Initialization</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DbgConsole_EnterLowpower </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DbgConsole_EnterLowpower </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -567,7 +567,7 @@ Initialization</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DbgConsole_ExitLowpower </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DbgConsole_ExitLowpower </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -801,7 +801,7 @@ Initialization</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DbgConsole_Flush </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DbgConsole_Flush </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -819,7 +819,7 @@ Initialization</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DbgConsole_TryGetchar </td>
+          <td class="memname"><a class="el" href="a00272.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DbgConsole_TryGetchar </td>
           <td>(</td>
           <td class="paramtype">char *&#160;</td>
           <td class="paramname"><em>ch</em></td><td>)</td>

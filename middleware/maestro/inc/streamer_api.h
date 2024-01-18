@@ -1,10 +1,7 @@
 /*
  * Copyright 2018-2023 NXP.
- * This software is owned or controlled by NXP and may only be used strictly in accordance with the
- * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
- * activating and/or otherwise using the software, you are agreeing that you have read, and that you
- * agree to comply with and are bound by, such license terms. If you do not agree to be bound by the
- * applicable license terms, then you may not retain, install, activate or otherwise use the software.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef STREAMER_API_H
@@ -114,11 +111,35 @@
  */
 #define WAIT_STREAMER_MSG_RESPONSE_TIME_OUT 8000 /* 8s */
 
-#define TRACK_TITLE_LEN  64 /*!< @brief Maximum track title length */
-#define TRACK_ARTIST_LEN 64 /*!< @brief Maximum track artist length */
-#define TRACK_ALBUM_LEN  64 /*!< @brief Maximum track album length */
-#define TRACK_GENRE_LEN  34 /*!< @brief Maximum track genre length */
-#define TRACK_YEAR_LEN   5  /*!< @brief Maximum track year length */
+#define TRACK_TITLE_LEN  64                      /*!< @brief Maximum track title length */
+#define TRACK_ARTIST_LEN 64                      /*!< @brief Maximum track artist length */
+#define TRACK_ALBUM_LEN  64                      /*!< @brief Maximum track album length */
+#define TRACK_GENRE_LEN  34                      /*!< @brief Maximum track genre length */
+#define TRACK_YEAR_LEN   5                       /*!< @brief Maximum track year length */
+
+/**
+ * Data Packets
+ */
+
+/** @brief Raw data */
+#define RAW_DATA 0
+/** @brief Audio data */
+#define AUDIO_DATA 1
+
+/**
+ * @brief Macro for checking return value of a function
+ */
+#define CHECK_RET(condition, function)                                                                 \
+    ({                                                                                                 \
+        int __ret;                                                                                     \
+                                                                                                       \
+        if ((__ret = (int)(condition)) != 0)                                                           \
+        {                                                                                              \
+            STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "function(%s) failed:%d\n", function, __ret); \
+            return __ret;                                                                              \
+        }                                                                                              \
+        __ret;                                                                                         \
+    })
 
 /*!
  * StreamReturnType
@@ -215,49 +236,35 @@ typedef enum
                               sinks. */
 } PipelineState;
 
-/*!
- * @brief StreamPipelineType
- * @details The type of pipeline in streamer. These may not all be supported.
- */
-typedef enum
-{
-    STREAM_PIPELINE_FILESYSTEM = 0, /*!< @brief Pipeline with file source, decoder and audio sink */
-    STREAM_PIPELINE_MEM,            /*!< @brief Pipeline with memory buffer source, decoder and audio sink */
-    STREAM_PIPELINE_NETBUF,         /*!< @brief Pipeline with network buffer source, decoder and audio sink */
-    STREAM_PIPELINE_PCM,            /*!< @brief Pipeline with audio (PCM) source and audio sink */
-    STREAM_PIPELINE_OPUS_MEM2MEM,
-    STREAM_PIPELINE_MIC2FILE,
-    STREAM_PIPELINE_VIT,
-    STREAM_PIPELINE_PCM_AUDIO,
-    STREAM_PIPELINE_PCM_AUDIO_MEM,
-    STREAM_PIPELINE_PCM_AUDIO_PROC_AUDIO,
-    STREAM_PIPELINE_PCM_EAP_PROC_AUDIO,
-    STREAM_PIPELINE_TEST_AUDIO_PROCFILE2FILE,
-    STREAM_PIPELINE_VIT_FILESINK,
-    STREAM_PIPELINE_MAX
-} StreamPipelineType;
-
 /**
  * @brief Element index for the lookup table
  *
  */
 typedef enum
 {
-    ELEMENT_FILE_SRC_INDEX,
+    ELEMENT_FILE_SRC_INDEX = 0,
     ELEMENT_MEM_SRC_INDEX,
     ELEMENT_NETBUF_SRC_INDEX,
-    ELEMENT_AUDIO_SRC_INDEX,
+    ELEMENT_MICROPHONE_INDEX,
     ELEMENT_FILE_SINK_INDEX,
     ELEMENT_MEM_SINK_INDEX,
-    ELEMENT_AUDIO_SINK_INDEX,
+    ELEMENT_SPEAKER_INDEX,
     ELEMENT_DECODER_INDEX,
     ELEMENT_ENCODER_INDEX,
     ELEMENT_VIT_INDEX,
-    ELEMENT_EAP_PROC_INDEX,
-    ELEMENT_VOICESEEKER_PROC_INDEX,
-    ELEMENT_SRC_PROC_INDEX,
+    ELEMENT_VIT_PROC_INDEX,
+    ELEMENT_VOICESEEKER_INDEX,
+    ELEMENT_SRC_INDEX,
+    ELEMENT_USB_SRC_INDEX,
+    ELEMENT_USB_SINK_INDEX,
+    ELEMENT_ASRC_INDEX,
     ELEMENT_LAST_INDEX
 } ElementIndex;
+
+/**
+ * @brief Pipeline size - number of elements in the pipeline
+ */
+#define PIPELINE_SIZE(pipeline) (sizeof(pipeline) / sizeof(ElementIndex))
 
 /*!
  * @brief   StreamElementType
@@ -293,6 +300,18 @@ typedef enum
 
     TYPE_ELEMENT_LAST = 11
 } StreamElementType;
+
+/**
+ * @brief Element type and property
+ *
+ */
+typedef struct
+{
+    /** @brief Element type */
+    uint16_t type;
+    /** @brief Element index */
+    uint16_t element_index;
+} ElementTypeLookup;
 
 /*!
  * @brief DecoderType
@@ -367,7 +386,7 @@ typedef enum
     INFO_META_INFO_UPDATE,   /*!< @brief metadata info updated */
     INFO_ERROR,              /*!< @brief error */
 
-    INFO_LAST /*!< @brief Placeholder always at the end */
+    INFO_LAST                /*!< @brief Placeholder always at the end */
 } StreamInfoType;
 
 /*!
@@ -560,7 +579,6 @@ typedef struct
                                        relative with STREAMER_MSG_ID */
     int errorcode;                       /*!< @brief Error Code */
     int8_t pipeline_index;               /*!< @brief Pipeline Index */
-    StreamPipelineType pipeline_type;    /*!< @brief Pipeline Type */
     ELEMENT_PROPERTY_T element_property; /*!< @brief Property Structure */
     PipelineState state;                 /*!< @brief Pipeline State */
     StreamInfoType query_type;           /*!< @brief Query Type */
@@ -583,6 +601,12 @@ typedef struct
  */
 #define STREAMER_MSG_SIZE (sizeof(STREAMER_MSG_T))
 
+typedef struct
+{
+    ElementIndex *element_ids;
+    int num_elements;
+} PipelineElements;
+
 /*!
  * @brief Streamer Arguments
  * @details Structure for passing input arguments to the streamer task.
@@ -595,10 +619,10 @@ typedef struct
     char out_mq_name[STREAMER_MQ_NAME_LENGTH]; /*!< @brief msg queue to which streamer sends messages */
     uint32_t stack_size;                       /*!< @brief Stack size of streamer task */
     uint32_t interval;                         /*!< @brief task interval of streamer task */
-    StreamPipelineType pipeline_type;          /*!< @brief streamer pipeline type */
     const char *in_dev_name;                   /*!< @brief input device name */
     const char *out_dev_name;                  /*!< @brief output device name */
     char *task_name;                           /*!< @brief task name */
+    PipelineElements elements;
 } STREAMER_CREATE_PARAM;
 
 /**
@@ -640,8 +664,8 @@ typedef struct
     /*!< @brief Pointer to Message Queue for sending message out */
     osa_msgq_handle_t streamer_mq;
     /*!< @brief Pointer to message queue for receive message */
-    bool is_active;                                  /*!< @brief is tasking running or terminated */
-    StreamPipelineType pipeline_type[MAX_PIPELINES]; /*!< @brief streamer pipeline type */
+    bool is_active;                            /*!< @brief is tasking running or terminated */
+    PipelineElements *elements[MAX_PIPELINES]; /*!< @brief user defined elements*/
 } STREAMER_T;
 
 /*
@@ -675,7 +699,6 @@ int32_t streamer_destroy(STREAMER_T *streamer);
  *
  * @param streamer streamer object
  * @param pipeline_id unique pipeline ID
- * @param pipeline_type type of the pipeline
  * @param in_dev_name input device name
  * @param out_dev_name output device name
  * @param block blocking / non-blocking creation of pipeline
@@ -684,9 +707,9 @@ int32_t streamer_destroy(STREAMER_T *streamer);
  */
 int32_t streamer_create_pipeline(STREAMER_T *streamer,
                                  int32_t pipeline_id,
-                                 StreamPipelineType pipeline_type,
                                  const char *in_dev_name,
                                  const char *out_dev_name,
+                                 PipelineElements elements,
                                  bool block);
 
 /**
@@ -801,6 +824,8 @@ int32_t streamer_set_file(STREAMER_T *streamer, int32_t pipeline_id, char *path,
  * @return int32_t error code
  */
 int32_t streamer_set_repeat(STREAMER_T *streamer, int32_t pipeline_id, bool repeat_on, bool block);
+
+int32_t is_element_in_pipeline(PipelineElements pipe_elems, ElementIndex id);
 
 #endif /* STREAMER_API_H */
 /* end of file */

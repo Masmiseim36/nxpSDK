@@ -1,15 +1,15 @@
 var a00053 =
 [
-    [ "lpuart_edma_handle_t", "a00053.html#a00341", [
-      [ "callback", "a00053.html#a90af06bca6fa1c835176bb2f7baae37c", null ],
-      [ "userData", "a00053.html#ac699f5a5123647eefb2aebb1b1a35c4a", null ],
-      [ "rxDataSizeAll", "a00053.html#a6cbb7a1abb602e48f3dcf355ad94ff14", null ],
-      [ "txDataSizeAll", "a00053.html#a1d4461a68ee1f14850ac4d341afb8080", null ],
-      [ "txEdmaHandle", "a00053.html#a1748fd406d158b129b40430218be3372", null ],
-      [ "rxEdmaHandle", "a00053.html#aa365980412bd8d507718e3bdb6991983", null ],
-      [ "nbytes", "a00053.html#a7ffb3be259d932a6a9f7e86aed4cc790", null ],
-      [ "txState", "a00053.html#a17fd779099d5f3707693ac7c1212dc8a", null ],
-      [ "rxState", "a00053.html#a2a62eb17faa4b16b47cb7ca6992c9980", null ]
+    [ "_lpuart_edma_handle", "a00053.html#a00448", [
+      [ "callback", "a00053.html#a265b1cbd7ed0c77b69061e1f1bd3f510", null ],
+      [ "userData", "a00053.html#a187949f527e4f0cf3d01fd303179bbd4", null ],
+      [ "rxDataSizeAll", "a00053.html#a4bf4bac1ca23b855cdf622eefb985e83", null ],
+      [ "txDataSizeAll", "a00053.html#a19d5baf779d4bf44d755fc51ad1eab45", null ],
+      [ "txEdmaHandle", "a00053.html#a76902815f37ba3b8054399f4599627ca", null ],
+      [ "rxEdmaHandle", "a00053.html#a73e048fbe31a9bc446ca834433161a22", null ],
+      [ "nbytes", "a00053.html#a03dc8e0516d31d6e8c51e8e9304861cf", null ],
+      [ "txState", "a00053.html#a8921d228d567642a1c84e33b81df6b65", null ],
+      [ "rxState", "a00053.html#a6f42343dc7cb9f0cd6b8cd7ab163ac60", null ]
     ] ],
     [ "FSL_LPUART_EDMA_DRIVER_VERSION", "a00053.html#ga9bfcb92913944fb359c4544b4cdee5d3", null ],
     [ "lpuart_edma_transfer_callback_t", "a00053.html#gaed2bf1ac041ea4526ccf5ab0eba4da73", null ],

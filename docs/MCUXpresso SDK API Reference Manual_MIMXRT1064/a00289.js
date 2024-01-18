@@ -1,6 +1,10 @@
 var a00289 =
 [
-    [ "FSL_PMU_DRIVER_VERSION", "a00289.html#ga0dc3464cb828e0c8195cf6f4fd9fc9a8", [
+    [ "FSL_PMU_DRIVER_VERSION", "a00289.html#ga0dc3464cb828e0c8195cf6f4fd9fc9a8", null ],
+    [ "pmu_1p1_weak_reference_source_t", "a00289.html#gac79c9571d0cb06152ee392397db13a2c", null ],
+    [ "pmu_3p0_vbus_voltage_source_t", "a00289.html#ga291b21d9f6cacd46dc26ae53db762627", null ],
+    [ "pmu_core_reg_voltage_ramp_rate_t", "a00289.html#ga267502cff989a844b6290ab0f20689d2", null ],
+    [ "pmu_power_bandgap_t", "a00289.html#ga095c7f91d0c7fe3a2a51ab782bd0c144", [
       [ "kPMU_1P1RegulatorOutputOK", "a00289.html#gga109bfaad92bd6d348dab484aec11edbba394fea19008801a519d8739020709a19", null ],
       [ "kPMU_1P1BrownoutOnOutput", "a00289.html#gga109bfaad92bd6d348dab484aec11edbbac52322dd21cce9696c3dd7291f01808e", null ],
       [ "kPMU_3P0RegulatorOutputOK", "a00289.html#gga109bfaad92bd6d348dab484aec11edbba5d2df2491523287e130b1e36ff457d42", null ],
@@ -8,23 +12,23 @@ var a00289 =
       [ "kPMU_2P5RegulatorOutputOK", "a00289.html#gga109bfaad92bd6d348dab484aec11edbba536d44e80cffab2c47b9144628dac099", null ],
       [ "kPMU_2P5BrownoutOnOutput", "a00289.html#gga109bfaad92bd6d348dab484aec11edbba74380ff6243784a0a997d9d69420b351", null ]
     ] ],
-    [ "pmu_1p1_weak_reference_source_t", "a00289.html#ga6b47a2e7d1775049cdcfb744b37ecadb", [
-      [ "kPMU_1P1WeakReferenceSourceAlt0", "a00289.html#gga6b47a2e7d1775049cdcfb744b37ecadba66d71c9d447ecdb90b6b2b1bd025168e", null ],
-      [ "kPMU_1P1WeakReferenceSourceAlt1", "a00289.html#gga6b47a2e7d1775049cdcfb744b37ecadbace5078924f5b087c2791e3fc6ba958e4", null ]
+    [ "_pmu_1p1_weak_reference_source", "a00289.html#ga2c956f69c55d850d66407f0a4ee20e27", [
+      [ "kPMU_1P1WeakReferenceSourceAlt0", "a00289.html#gga2c956f69c55d850d66407f0a4ee20e27a66d71c9d447ecdb90b6b2b1bd025168e", null ],
+      [ "kPMU_1P1WeakReferenceSourceAlt1", "a00289.html#gga2c956f69c55d850d66407f0a4ee20e27ace5078924f5b087c2791e3fc6ba958e4", null ]
     ] ],
-    [ "pmu_3p0_vbus_voltage_source_t", "a00289.html#gaf7f949a78166a27563c8a0f2ebc0af31", [
-      [ "kPMU_3P0VBusVoltageSourceAlt0", "a00289.html#ggaf7f949a78166a27563c8a0f2ebc0af31a825e44d25be34386eadd03f99b66f857", null ],
-      [ "kPMU_3P0VBusVoltageSourceAlt1", "a00289.html#ggaf7f949a78166a27563c8a0f2ebc0af31aefdca33e631b3b7b3b9b6a412254b2f7", null ]
+    [ "_pmu_3p0_vbus_voltage_source", "a00289.html#ga1d45d6657b1af8265e1a35a915c20a1f", [
+      [ "kPMU_3P0VBusVoltageSourceAlt0", "a00289.html#gga1d45d6657b1af8265e1a35a915c20a1fa825e44d25be34386eadd03f99b66f857", null ],
+      [ "kPMU_3P0VBusVoltageSourceAlt1", "a00289.html#gga1d45d6657b1af8265e1a35a915c20a1faefdca33e631b3b7b3b9b6a412254b2f7", null ]
     ] ],
-    [ "pmu_core_reg_voltage_ramp_rate_t", "a00289.html#ga4a1cbd5cfe295ba24ff9d6460c3f660e", [
-      [ "kPMU_CoreRegVoltageRampRateFast", "a00289.html#gga4a1cbd5cfe295ba24ff9d6460c3f660eacf2fdfb31db3e83e3306c3d98ffbe9f9", null ],
-      [ "kPMU_CoreRegVoltageRampRateMediumFast", "a00289.html#gga4a1cbd5cfe295ba24ff9d6460c3f660eadab48795d60139c6009a5de52277aa7f", null ],
-      [ "kPMU_CoreRegVoltageRampRateMediumSlow", "a00289.html#gga4a1cbd5cfe295ba24ff9d6460c3f660ea2afb37a84985c3eeb1146aaee869f891", null ],
-      [ "kPMU_CoreRegVoltageRampRateSlow", "a00289.html#gga4a1cbd5cfe295ba24ff9d6460c3f660ea8744a5ed680a59150feca86ba0357d12", null ]
+    [ "_pmu_core_reg_voltage_ramp_rate", "a00289.html#ga3d98e6d6c9f9355e8580ab06b9b4355d", [
+      [ "kPMU_CoreRegVoltageRampRateFast", "a00289.html#gga3d98e6d6c9f9355e8580ab06b9b4355dacf2fdfb31db3e83e3306c3d98ffbe9f9", null ],
+      [ "kPMU_CoreRegVoltageRampRateMediumFast", "a00289.html#gga3d98e6d6c9f9355e8580ab06b9b4355dadab48795d60139c6009a5de52277aa7f", null ],
+      [ "kPMU_CoreRegVoltageRampRateMediumSlow", "a00289.html#gga3d98e6d6c9f9355e8580ab06b9b4355da2afb37a84985c3eeb1146aaee869f891", null ],
+      [ "kPMU_CoreRegVoltageRampRateSlow", "a00289.html#gga3d98e6d6c9f9355e8580ab06b9b4355da8744a5ed680a59150feca86ba0357d12", null ]
     ] ],
-    [ "pmu_power_bandgap_t", "a00289.html#ga8178a1394f1448946497f11062aac986", [
-      [ "kPMU_NormalPowerBandgap", "a00289.html#gga8178a1394f1448946497f11062aac986a47cf46f2e5470bebdd7babc9b4d3cd20", null ],
-      [ "kPMU_LowPowerBandgap", "a00289.html#gga8178a1394f1448946497f11062aac986a8f4daf5e5847e848d7feb71b99685763", null ]
+    [ "_pmu_power_bandgap", "a00289.html#gab59ff9490241915d2415be3a13348987", [
+      [ "kPMU_NormalPowerBandgap", "a00289.html#ggab59ff9490241915d2415be3a13348987a47cf46f2e5470bebdd7babc9b4d3cd20", null ],
+      [ "kPMU_LowPowerBandgap", "a00289.html#ggab59ff9490241915d2415be3a13348987a8f4daf5e5847e848d7feb71b99685763", null ]
     ] ],
     [ "PMU_GetStatusFlags", "a00289.html#gaf5cfe704de9542b230132e63f735f191", null ],
     [ "PMU_1P1SetWeakReferenceSource", "a00289.html#gac2f5999f1ad10dcddb29788b4033bb34", null ],

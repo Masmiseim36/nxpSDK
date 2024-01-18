@@ -24,5 +24,6 @@ var struct__ElementAudioSrc =
     [ "continuous_read", "struct__ElementAudioSrc.html#a9c60119579c3c8aca7a434e64c77f5ff", null ],
     [ "dummy_tx", "struct__ElementAudioSrc.html#ac0a36900a9fa22ffd4918971337e4867", null ],
     [ "frame_ms", "struct__ElementAudioSrc.html#a732a0a4e14239445fe379514e0b90192", null ],
-    [ "first_run", "struct__ElementAudioSrc.html#af645179167e85e75b56ee7099376780a", null ]
+    [ "first_run", "struct__ElementAudioSrc.html#af645179167e85e75b56ee7099376780a", null ],
+    [ "appFunctions", "struct__ElementAudioSrc.html#ad6fd7cd2d8e4288200b54cb498cd9f65", null ]
 ];

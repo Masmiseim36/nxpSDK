@@ -1,5 +1,27 @@
 var searchData=
 [
-  ['usdhc_5fadma1_5fdescriptor_5ft',['usdhc_adma1_descriptor_t',['../a00077.html#gaeaf8981c77f59c815328efb192f39bae',1,'fsl_usdhc.h']]],
-  ['usdhc_5ftransfer_5ffunction_5ft',['usdhc_transfer_function_t',['../a00077.html#gae5d7e4ca4e99c90277352ad3ab9d8b6e',1,'fsl_usdhc.h']]]
+  ['usdhc_5fadma1_5fdescriptor_5ft',['usdhc_adma1_descriptor_t',['../a00078.html#gaeaf8981c77f59c815328efb192f39bae',1,'fsl_usdhc.h']]],
+  ['usdhc_5fadma2_5fdescriptor_5ft',['usdhc_adma2_descriptor_t',['../a00078.html#ga535e29adaba545782708401a595bd45e',1,'fsl_usdhc.h']]],
+  ['usdhc_5fadma_5fconfig_5ft',['usdhc_adma_config_t',['../a00078.html#ga875c8c26d36cf283fa5a82762a8f5b37',1,'fsl_usdhc.h']]],
+  ['usdhc_5fboot_5fconfig_5ft',['usdhc_boot_config_t',['../a00078.html#ga8d530edea32e305c7d6b3b8fe51c8e7e',1,'fsl_usdhc.h']]],
+  ['usdhc_5fboot_5fmode_5ft',['usdhc_boot_mode_t',['../a00078.html#ga50bdde98e4b32082fc19eaeb3767d1fc',1,'fsl_usdhc.h']]],
+  ['usdhc_5fburst_5flen_5ft',['usdhc_burst_len_t',['../a00078.html#ga902afa3880a7aa2f487ecf2215c6402f',1,'fsl_usdhc.h']]],
+  ['usdhc_5fcapability_5ft',['usdhc_capability_t',['../a00078.html#gacc1650ece59b23fb23b928aef023ac02',1,'fsl_usdhc.h']]],
+  ['usdhc_5fcard_5fcommand_5ftype_5ft',['usdhc_card_command_type_t',['../a00078.html#gad091b49433c9aa6928a1e1fe8d95086f',1,'fsl_usdhc.h']]],
+  ['usdhc_5fcard_5fresponse_5ftype_5ft',['usdhc_card_response_type_t',['../a00078.html#ga88c37ad8200cab5f6235e8f012d5bff7',1,'fsl_usdhc.h']]],
+  ['usdhc_5fcommand_5ft',['usdhc_command_t',['../a00078.html#ga15baf2d0a9a650db585623d32280dd40',1,'fsl_usdhc.h']]],
+  ['usdhc_5fconfig_5ft',['usdhc_config_t',['../a00078.html#gae636689d6c6fc621d1264777175e9dbb',1,'fsl_usdhc.h']]],
+  ['usdhc_5fdata_5fbus_5fwidth_5ft',['usdhc_data_bus_width_t',['../a00078.html#gac3c133c9ca7c044a14e1da903248c1e7',1,'fsl_usdhc.h']]],
+  ['usdhc_5fdata_5ft',['usdhc_data_t',['../a00078.html#ga1620b869f89e0cd50a511d2e44f7178d',1,'fsl_usdhc.h']]],
+  ['usdhc_5fdma_5fmode_5ft',['usdhc_dma_mode_t',['../a00078.html#ga4151ae624575f41bab0cb6662731150f',1,'fsl_usdhc.h']]],
+  ['usdhc_5fendian_5fmode_5ft',['usdhc_endian_mode_t',['../a00078.html#ga7ccc78fbbf44bac597aa5d361116a6fb',1,'fsl_usdhc.h']]],
+  ['usdhc_5fhandle_5ft',['usdhc_handle_t',['../a00078.html#gaab782b80a4d401f314a7eb13c65ffd4e',1,'fsl_usdhc.h']]],
+  ['usdhc_5fhost_5ft',['usdhc_host_t',['../a00078.html#gaa8513207d28237cf3f64825d67b15c64',1,'fsl_usdhc.h']]],
+  ['usdhc_5fscatter_5fgather_5fdata_5flist_5ft',['usdhc_scatter_gather_data_list_t',['../a00078.html#ga30b5d158905d0c0ec929d42fadcdb20f',1,'fsl_usdhc.h']]],
+  ['usdhc_5fscatter_5fgather_5fdata_5ft',['usdhc_scatter_gather_data_t',['../a00078.html#ga0628b4fa2c1b372b88bb9a9e937fb085',1,'fsl_usdhc.h']]],
+  ['usdhc_5fscatter_5fgather_5ftransfer_5ft',['usdhc_scatter_gather_transfer_t',['../a00078.html#ga3e23807d87de1a4cceed0174b851fcec',1,'fsl_usdhc.h']]],
+  ['usdhc_5ftransfer_5fcallback_5ft',['usdhc_transfer_callback_t',['../a00078.html#gad8d1439fe726fa8ba3afdf774c3fc2e4',1,'fsl_usdhc.h']]],
+  ['usdhc_5ftransfer_5fdirection_5ft',['usdhc_transfer_direction_t',['../a00078.html#gaca922dbc34af87cc33d642c0b72001d2',1,'fsl_usdhc.h']]],
+  ['usdhc_5ftransfer_5ffunction_5ft',['usdhc_transfer_function_t',['../a00078.html#gae5d7e4ca4e99c90277352ad3ab9d8b6e',1,'fsl_usdhc.h']]],
+  ['usdhc_5ftransfer_5ft',['usdhc_transfer_t',['../a00078.html#ga1f4def6a4bacac5d31ee1081c26e44f0',1,'fsl_usdhc.h']]]
 ];

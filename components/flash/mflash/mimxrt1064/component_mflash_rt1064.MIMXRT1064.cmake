@@ -3,7 +3,7 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-if(CONFIG_USE_component_mflash_common AND (CONFIG_DEVICE_ID STREQUAL MIMXRT1064xxxxA) AND CONFIG_USE_driver_flexspi AND CONFIG_USE_driver_cache_armv7_m7)
+if(CONFIG_USE_component_mflash_common AND (CONFIG_DEVICE_ID STREQUAL MIMXRT1064xxxxA OR CONFIG_DEVICE_ID STREQUAL MIMXRT1064xxxxB) AND CONFIG_USE_driver_flexspi AND CONFIG_USE_driver_cache_armv7_m7)
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/mflash_drv.c

@@ -53,12 +53,12 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-TLSDataParams tlsDataParams;
+static TLSDataParams tlsDataParams;
 
 /* Buffer size is given by defined block size and some space
  * for HTTP headers
  */
-unsigned char https_buf[OTA_HTTP_BLOCK_SIZE + 512];
+static unsigned char https_buf[OTA_HTTP_BLOCK_SIZE + 512];
 
 /*******************************************************************************
  * Code
@@ -71,7 +71,7 @@ static int lwipSend(void *fd, unsigned char const *buf, size_t len)
 }
 
 /* Send function used by mbedtls ssl */
-static int lwipRecv(void *fd, unsigned char const *buf, size_t len)
+static int lwipRecv(void *fd, unsigned char *buf, size_t len)
 {
     return lwip_recv((*(int *)fd), (void *)buf, len, 0);
 }
@@ -305,9 +305,9 @@ int https_client_tls_init(const char *host, const char *service)
 }
 
 /* Release TLS */
-void https_client_tls_release()
+void https_client_tls_release(void)
 {
-    close(tlsDataParams.fd);
+    lwip_close(tlsDataParams.fd);
     mbedtls_x509_crt_free(&(tlsDataParams.clicert));
     mbedtls_x509_crt_free(&(tlsDataParams.cacert));
     mbedtls_pk_free(&(tlsDataParams.pkey));
@@ -320,7 +320,7 @@ void https_client_tls_release()
 /*
  * host - used in HTTP header in Host field
  * fPath - path to requested file
- * dstAddr - flash address where file will be downloaded
+ * dstAddrPhy - physical flash address where file will be downloaded
  * dstSize - available size for file download
  * fSize - actual file size downloaded
  */

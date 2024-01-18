@@ -1,6 +1,7 @@
 var a00270 =
 [
-    [ "XBARB_Init", "a00270.html#gaef36940e839f28936f9415c3cb6d703f", null ],
-    [ "XBARB_Deinit", "a00270.html#gad5775a6073d472b2749cc202116d1809", null ],
-    [ "XBARB_SetSignalsConnection", "a00270.html#ga64a72733261fc11d061c0d7f0abe0771", null ]
+    [ "LPSPI CMSIS Driver", "a00272.html", null ],
+    [ "LPSPI FreeRTOS Driver", "a00271.html", "a00271" ],
+    [ "LPSPI Peripheral driver", "a00048.html", "a00048" ],
+    [ "LPSPI eDMA Driver", "a00049.html", "a00049" ]
 ];

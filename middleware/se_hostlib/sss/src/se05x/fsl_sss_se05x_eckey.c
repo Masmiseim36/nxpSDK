@@ -97,9 +97,18 @@ sss_status_t nxECKey_AuthenticateChannel(
     */
     hostEckaPub[offset++] = GPCS_KEY_TYPE_ECC_NIST256; //Tag EC public key
     hostEckaPub[offset++] = 0x41;                      // public key len
+    if (hostEckaPubLen < ASN_ECC_NIST_256_HEADER_LEN) {
+        status = kStatus_SSS_Fail;
+        goto exit;
+    }
     memcpy(
         hostEckaPub + offset, hostPubkey + ASN_ECC_NIST_256_HEADER_LEN, hostEckaPubLen - ASN_ECC_NIST_256_HEADER_LEN);
+    if ((UINT_MAX - offset) < (hostEckaPubLen - ASN_ECC_NIST_256_HEADER_LEN)) {
+        goto exit;
+    }
     offset += hostEckaPubLen - ASN_ECC_NIST_256_HEADER_LEN;
+
+    ENSURE_OR_GO_EXIT(offset + 3 <= hostEckaPubLen);
     hostEckaPub[offset++] = KEY_PARAMETER_REFERENCE_TAG;
     hostEckaPub[offset++] = KEY_PARAMETER_REFERENCE_VALUE_LEN;
     hostEckaPub[offset++] = KEY_PARAMETER_REFERENCE_VALUE;
@@ -232,14 +241,27 @@ static sss_status_t nxECKey_calculate_master_secret(
 
     if (pAuthFScp->pDyn_ctx->authType == kSSS_AuthType_INT_ECKey_Counter) {
         const uint8_t kdf_counter[] = {0x00, 0x00, 0x00, 0x01};
+        ENSURE_OR_GO_CLEANUP(sizeof(kdf_counter) <= sizeof(derivationInput) - derivationInputLen);
         memcpy(&derivationInput[derivationInputLen], kdf_counter, sizeof(kdf_counter));
         derivationInputLen += sizeof(kdf_counter);
     }
+
+    ENSURE_OR_GO_CLEANUP(sharedSecretLen <= sizeof(derivationInput) - derivationInputLen);
     memcpy(&derivationInput[derivationInputLen], sharedSecret, sharedSecretLen);
+
+    if ((UINT_MAX - derivationInputLen) < sharedSecretLen) {
+        goto cleanup;
+    }
     derivationInputLen += sharedSecretLen;
+    ENSURE_OR_GO_CLEANUP(rndLen <= (sizeof(derivationInput) - derivationInputLen));
     memcpy(&derivationInput[derivationInputLen], rnd, rndLen);
+
+    if ((UINT_MAX - derivationInputLen) < rndLen) {
+        goto cleanup;
+    }
     derivationInputLen += rndLen;
 
+    ENSURE_OR_GO_CLEANUP(derivationInputLen <= (sizeof(derivationInput) - 4))
     derivationInput[derivationInputLen++] = SCP_CONFIG;
     derivationInput[derivationInputLen++] = SECURITY_LEVEL;
     derivationInput[derivationInputLen++] = GPCS_KEY_TYPE_AES;
@@ -274,6 +296,9 @@ static void set_secp256r1nist_header(uint8_t *pbKey, size_t *pbKeyByteLen)
         temp[26 + i] = pbKey[i];
     }
 
+    if ((UINT_MAX - (*pbKeyByteLen)) < 26) {
+        return;
+    }
     *pbKeyByteLen = *pbKeyByteLen + 26;
     memcpy(pbKey, temp, *pbKeyByteLen);
 }
@@ -332,6 +357,7 @@ sss_status_t nxECKey_InternalAuthenticate(pSe05xSession_t se05xSession,
     ENSURE_OR_GO_CLEANUP(tlvRet == 0);
 
     /*Put the ephemral host ECKA pub key */
+    ENSURE_OR_GO_CLEANUP(hostEckaPubKeyLen <= UINT8_MAX);
     *pCmdbuf++ = tagEpkSeEcka[0]; //Tag is 2 byte */
     cmdbufLen++;
     *pCmdbuf++ = tagEpkSeEcka[1];
@@ -339,6 +365,9 @@ sss_status_t nxECKey_InternalAuthenticate(pSe05xSession_t se05xSession,
     *pCmdbuf++ = (uint8_t)hostEckaPubKeyLen;
     cmdbufLen++;
     memcpy(pCmdbuf, hostEckaPubKey, hostEckaPubKeyLen);
+    if ((UINT_MAX - cmdbufLen) < hostEckaPubKeyLen) {
+        goto cleanup;
+    }
     cmdbufLen += hostEckaPubKeyLen;
 
     /* Get the sha256 hash of Control_refernce_template + host ECKA Pub key */
@@ -360,7 +389,11 @@ sss_status_t nxECKey_InternalAuthenticate(pSe05xSession_t se05xSession,
     ENSURE_OR_GO_CLEANUP(status == kStatus_SSS_Success);
     sss_host_asymmetric_context_free(&asym);
 
-    /* Put the Control refernce template Value signiture*/
+    /* Put the Control refernce template Value signature*/
+    if (cmdbufLen > sizeof(cmdbuf) - 3 - sig_host5F37Len) {
+        status = kStatus_SSS_Fail;
+        goto cleanup;
+    }
     pCmdbuf    = &cmdbuf[cmdbufLen];
     *pCmdbuf++ = tagSigSeEcka[0];
     cmdbufLen++;
@@ -369,6 +402,10 @@ sss_status_t nxECKey_InternalAuthenticate(pSe05xSession_t se05xSession,
     *pCmdbuf++ = (uint8_t)sig_host5F37Len;
     cmdbufLen++;
     memcpy(pCmdbuf, sig_host5F37, sig_host5F37Len);
+    if ((UINT_MAX - cmdbufLen) < sig_host5F37Len) {
+        status = kStatus_SSS_Fail;
+        goto cleanup;
+    }
     cmdbufLen += sig_host5F37Len;
     status    = kStatus_SSS_Fail;
     retStatus = DoAPDUTxRx_s_Case4(se05xSession, &hdr, cmdbuf, cmdbufLen, rspbuf, &rspbufLen);
@@ -390,14 +427,22 @@ cleanup:
 
 int get_u8buf_2bTag(uint8_t *buf, size_t *pBufIndex, const size_t bufLen, uint16_t tag, uint8_t *rsp, size_t *pRspLen)
 {
-    int retVal    = 1;
-    uint8_t *pBuf = buf + (*pBufIndex);
-    uint16_t got_tag;
-    got_tag = ((*pBuf++) << 8) & 0xFFFF;
-    got_tag |= ((*pBuf++)) & 0xFFFF;
+    int retVal       = 1;
+    uint8_t *pBuf    = buf + (*pBufIndex);
+    uint16_t got_tag = 0;
     size_t extendedLen;
     size_t rspLen;
-    //size_t len;
+
+    if (bufLen < 3) {
+        goto cleanup;
+    }
+    if ((*pBufIndex) > bufLen - 3 /* 2 byte Tag + len */) {
+        goto cleanup;
+    }
+
+    got_tag = ((*pBuf++) << 8) & 0xFFFF;
+    got_tag |= ((*pBuf++)) & 0xFFFF;
+
     if (got_tag != tag) {
         goto cleanup;
     }
@@ -408,10 +453,16 @@ int get_u8buf_2bTag(uint8_t *buf, size_t *pBufIndex, const size_t bufLen, uint16
         *pBufIndex += (2 + 1);
     }
     else if (rspLen == 0x81) {
+        if ((*pBufIndex) > bufLen - 1 /* Ext len */) {
+            goto cleanup;
+        }
         extendedLen = *pBuf++;
         *pBufIndex += (2 + 1 + 1);
     }
     else if (rspLen == 0x82) {
+        if ((*pBufIndex) > bufLen - 2 /* Ext len */) {
+            goto cleanup;
+        }
         extendedLen = *pBuf++;
         extendedLen = (extendedLen << 8) | *pBuf++;
         *pBufIndex += (2 + 1 + 2);
@@ -423,7 +474,7 @@ int get_u8buf_2bTag(uint8_t *buf, size_t *pBufIndex, const size_t bufLen, uint16
     if (extendedLen > *pRspLen) {
         goto cleanup;
     }
-    if (extendedLen > bufLen) {
+    if (extendedLen > (bufLen - *pBufIndex)) {
         goto cleanup;
     }
 
@@ -440,9 +491,9 @@ cleanup:
 sss_status_t nxECKey_Calculate_Shared_secret(
     SE05x_AuthCtx_ECKey_t *pAuthFScp, uint8_t *sharedSecret, size_t *sharedSecretLen)
 {
-    sss_status_t status = kStatus_SSS_Fail;
-    sss_derive_key_t dervCtx;
-    sss_object_t shsSecret = {0};
+    sss_status_t status      = kStatus_SSS_Fail;
+    sss_derive_key_t dervCtx = {0};
+    sss_object_t shsSecret   = {0};
 
     NXECKey03_StaticCtx_t *pStatic_ctx = pAuthFScp->pStatic_ctx;
     size_t sharedSecBitLen             = 0;

@@ -228,6 +228,7 @@
           <state>PRINTF_FLOAT_ENABLE=1</state>
           <state>FREESCALE_KSDK_BM</state>
           <state>MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h"</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
@@ -269,7 +270,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state>Pa082,Pa050,Pa167,Pe177,Pe191,Pe546</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -306,11 +307,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa167,Pe177,Pe191,Pe546</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -361,6 +362,7 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
@@ -1319,6 +1321,7 @@
           <state>PRINTF_FLOAT_ENABLE=1</state>
           <state>FREESCALE_KSDK_BM</state>
           <state>MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h"</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
@@ -1360,7 +1363,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state>Pa082,Pa050,Pa167,Pe177,Pe191,Pe546</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1397,11 +1400,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa167,Pe177,Pe191,Pe546</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -1452,6 +1455,7 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
@@ -2410,6 +2414,7 @@
           <state>PRINTF_FLOAT_ENABLE=1</state>
           <state>FREESCALE_KSDK_BM</state>
           <state>MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h"</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
@@ -2451,7 +2456,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state>Pa082,Pa050,Pa167,Pe177,Pe191,Pe546</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -2488,11 +2493,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa167,Pe177,Pe191,Pe546</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -2543,6 +2548,7 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
@@ -3499,6 +3505,7 @@
           <state>PRINTF_FLOAT_ENABLE=1</state>
           <state>FREESCALE_KSDK_BM</state>
           <state>MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h"</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
@@ -3540,7 +3547,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state>Pa082,Pa050,Pa167,Pe177,Pe191,Pe546</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -3577,11 +3584,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa167,Pe177,Pe191,Pe546</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -3632,6 +3639,7 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
@@ -4590,6 +4598,7 @@
           <state>PRINTF_FLOAT_ENABLE=1</state>
           <state>FREESCALE_KSDK_BM</state>
           <state>MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h"</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
@@ -4631,7 +4640,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state>Pa082,Pa050,Pa167,Pe177,Pe191,Pe546</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -4668,11 +4677,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa167,Pe177,Pe191,Pe546</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -4723,6 +4732,7 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
@@ -5681,6 +5691,7 @@
           <state>PRINTF_FLOAT_ENABLE=1</state>
           <state>FREESCALE_KSDK_BM</state>
           <state>MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h"</state>
+          <state>CPU_MIMXRT1062DVL6B_cm7</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
@@ -5722,7 +5733,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state>Pa082,Pa050,Pa167,Pe177,Pe191,Pe546</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -5759,11 +5770,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa167,Pe177,Pe191,Pe546</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -5814,6 +5825,7 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
@@ -6579,7 +6591,7 @@
   <group>
     <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
   <group>
@@ -7390,6 +7402,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/fsl_assert.h</name>
     </file>
   </group>
   <group>

@@ -9,6 +9,8 @@
 #ifndef SHA512_H
 #define SHA512_H
 
+#include <utils/common.h>
+
 #define SHA512_MAC_LEN 64
 
 int hmac_sha512_vector(const u8 *key, size_t key_len, size_t num_elem, const u8 *addr[], const size_t *len, u8 *mac);

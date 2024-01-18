@@ -48,11 +48,11 @@ typedef struct xf_proxy_message
 
     /* ...physical address of message buffer */
     UWORD32                 address;
-    
+
     /* ...error response*/
     WORD32                 error;
 
-}   __attribute__((__packed__)) xf_proxy_message_t;
+}   __attribute__((__packed__, __aligned__(sizeof(xf_msg_id_dtype)))) xf_proxy_message_t;
 
 /*******************************************************************************
  * Ring buffer support

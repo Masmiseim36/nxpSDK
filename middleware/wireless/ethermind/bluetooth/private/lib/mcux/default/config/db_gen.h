@@ -3,7 +3,7 @@
  *  \file db_gen.h
  *
  *  [DBG Version: 1.1.1] This is a generated file.
- *  Created On : Mon Jul 11 20:17:33 2022
+ *  Created On : Tue Nov 22 12:45:02 2022
  */
 
 /*
@@ -22,14 +22,14 @@
 
 /* --------------------------------------- Global Definitions/Constants */
 /* Number of UUIDs present in the SDDB */
-#define DB_MAX_UUIDS                      65
+#define DB_MAX_UUIDS                      66
 
 /* Number of SDP Records in the SDDB */
-#define DB_MAX_RECORDS                    64
+#define DB_MAX_RECORDS                    65
 
 #ifdef BT_EIR
 /* Number of Service Class UUIDs */
-#define SERVICE_CLASS_UUID_INDICES_MAX    46
+#define SERVICE_CLASS_UUID_INDICES_MAX    47
 #endif /* BT_EIR */
 #endif /* SDP_DYNAMIC_DB */
 
@@ -77,6 +77,8 @@
 #define DB_RECORD_HPS  20
 
 #define DB_RECORD_CTS  21
+
+#define DB_RECORD_BQB_PTS_TEST_SDDB  22
 
 #endif /* _H_DB_GEN_ */
 

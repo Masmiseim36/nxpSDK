@@ -12,6 +12,7 @@
  *  All rights reserved.
  */
 
+#if defined(LC3_DSP) && (LC3_DSP == 1)
 #ifndef _H_LC3_LIMITS_
 #define _H_LC3_LIMITS_
 
@@ -31,3 +32,4 @@
 
 
 #endif /* _H_LC3_LIMITS_ */
+#endif /*defined(LC3_DSP) && (LC3_DSP == 1)*/

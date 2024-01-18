@@ -45,8 +45,9 @@
 //typedef _platform_lock_t          xf_ipc_lock_t;
 
 /*******************************************************************************
-                           macros 
+                           macros
  ******************************************************************************/
+#if XF_CFG_CORES_NUM>1
 #ifndef CACHE_FIX
 #define CACHE_FIX   1
 #endif
@@ -64,8 +65,6 @@
 
 #define XF_IPC_INVALIDATE(buf, length) \
         ({ if ((length)) { xthal_dcache_region_invalidate((buf), (length)); barrier(); } buf; })
-
-#if XF_CFG_CORES_NUM>1
 
 //TODO xf_ipc_handle_t g_ipc_handle[XF_CFG_CORES_NUM] = {NULL};
 xf_ipc_handle xf_g_ipc_handle;
@@ -220,7 +219,7 @@ int xf_ipc_open2(unsigned int core, xf_ipc_config_t *pcfg)
 
     /* ...initialize the shared memory structure between cores. This is done once at the master and later accessed by all cores */
     aligned_offset = XF_MM(sizeof(xf_ipc_struct_t));
- 
+
     /* ... update shmem pointer and size for next use */
  	pcfg->phandle += aligned_offset;
  	pcfg->handle_size -= aligned_offset;
@@ -272,10 +271,10 @@ int xf_ipc_open2(unsigned int core, xf_ipc_config_t *pcfg)
     {
         /* ...initialize shared memory heap */
         XF_CHK_API(xf_ipc_mm_init(&(XF_SHMEM_IPC_HANDLE(core)->xf_dsp_shmem_pool), pcfg->phandle, pcfg->handle_size));
-        
+
         /* ...worker core communication message pool */
         /* ...For now used only for core-deinit from master to worker DSPs */
-        if (xf_msg_pool_init(&XF_CORE_DATA(core)->dsp_dsp_shmem_pool, XF_CFG_CORES_NUM-1, core, 1))
+        if (xf_msg_pool_init(&XF_CORE_DATA(core)->dsp_dsp_shmem_pool, XF_CFG_CORES_NUM-1, core, 1, XAF_MEM_ID_COMP))
         {
             return XAF_INVALIDPTR_ERR;
         }

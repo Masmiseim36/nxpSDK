@@ -81,7 +81,7 @@ static inline void xf_msg_proxy_put(xf_message_t *m)
     UWORD32  src = XF_MSG_SRC_CORE(m->id);
     if (dst != src) {
         xf_ipi_assert(dst);
-    } else 
+    } else
 #endif
     {
         /* ...assert event on Master core */
@@ -173,7 +173,7 @@ static UWORD32 xf_shmem_process_input(UWORD32 core)
             (XF_OPCODE_CDATA(m->opcode) ? XF_PROXY_INVALIDATE(m->buffer, m->length) : 0);
         }
 #endif //XF_REMOTE_IPC_NON_COHERENT
-        
+
         /* ...and schedule message execution on proper core */
         xf_msg_submit(m);
     }
@@ -282,20 +282,27 @@ int xf_shmem_init(UWORD32 core)
 {
     xf_core_rw_data_t  *rw = XF_CORE_RW_DATA(core);
     xf_core_ro_data_t  *ro = XF_CORE_RO_DATA(core);
+    UWORD32 i;
 
     /* ...initialize local/remote message queues */
     xf_sync_queue_init(&rw->remote);
 
     /* ...initialize global message list */
-    XF_CHK_API(xf_msg_pool_init(&ro->pool, XF_CFG_MESSAGE_POOL_SIZE, core, 1 /* shared */));
+    XF_CHK_API(xf_msg_pool_init(&ro->pool, XF_CFG_MESSAGE_POOL_SIZE, core, 1 /* shared */, XAF_MEM_ID_COMP));
 
     /* ...flush memory content as needed */
-#if XF_REMOTE_IPC_NON_COHERENT    
+#if XF_REMOTE_IPC_NON_COHERENT
     XF_PROXY_FLUSH(rw, sizeof(*rw));
-#endif    
+#endif
 
     /* ...system-specific initialization of IPC layer */
     XF_CHK_API(xf_ipc_init(core));
+
+    for(i = XAF_MEM_ID_DEV+1 ; i <= XAF_MEM_ID_DEV_MAX; i++)
+    {
+        XF_CHK_API(xf_mm_init(&(XF_CORE_DATA(core)->shared_pool[i]), xf_g_dsp->xf_ap_shmem_buffer[i], xf_g_dsp->xf_ap_shmem_buffer_size[i]));
+        TRACE(INFO, _b("DSP frmwk memory pool type:%d size:%d [%p] initialized"), i, xf_g_dsp->xf_ap_shmem_buffer_size[i], xf_g_dsp->xf_ap_shmem_buffer[i]);
+    }
 
     TRACE(INIT, _b("SHMEM-%u subsystem initialized"), core);
 
@@ -306,12 +313,19 @@ int xf_shmem_init(UWORD32 core)
 int xf_shmem_deinit(UWORD32 core)
 {
     xf_core_rw_data_t  *rw = XF_CORE_RW_DATA(core);
+    UWORD32 i;
 
     /* ...initialize local/remote message queues */
     xf_sync_queue_deinit(&rw->remote);
 
    /* ...system-specific deinitialization of IPC layer */
     XF_CHK_API(xf_ipc_deinit(core));
+
+    /* ...deinitialize per-core memory loop */
+    for(i = XAF_MEM_ID_DEV+1; i <= XAF_MEM_ID_DEV_MAX; i++)
+    {
+        XF_CHK_API(xf_mm_deinit(&(XF_CORE_DATA(core)->shared_pool[i])));
+    }//for(;i;)
 
     TRACE(INIT, _b("SHMEM-%u subsystem deinitialized"), core);
 

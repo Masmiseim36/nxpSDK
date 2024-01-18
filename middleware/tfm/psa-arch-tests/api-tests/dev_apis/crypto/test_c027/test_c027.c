@@ -1,5 +1,5 @@
 /** @file
- * Copyright (c) 2019-2021, Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2019-2023, Arm Limited or its affiliates. All rights reserved.
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -31,7 +31,7 @@ extern  uint32_t g_test_count;
 int32_t psa_mac_update_test(caller_security_t caller __UNUSED)
 {
 #if (defined(ARCH_TEST_HMAC) && (defined(ARCH_TEST_SHA256) || defined(ARCH_TEST_SHA512)) || \
-(defined(ARCH_TEST_AES_128) && defined(ARCH_TEST_CMAC))) //NXP
+(defined(ARCH_TEST_AES_128) && defined(ARCH_TEST_CMAC)))
     int32_t               num_checks = sizeof(check1)/sizeof(check1[0]);
     int32_t               i, status;
     psa_mac_operation_t   operation = PSA_MAC_OPERATION_INIT;
@@ -130,8 +130,8 @@ int32_t psa_mac_update_test(caller_security_t caller __UNUSED)
     }
 
     return VAL_STATUS_SUCCESS;
-#else //NXP
+#else
     val->print(PRINT_TEST, "No test available for the selected crypto configuration\n", 0);
     return RESULT_SKIP(VAL_STATUS_NO_TESTS);
-#endif //NXP
+#endif
 }

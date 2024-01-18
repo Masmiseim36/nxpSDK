@@ -267,6 +267,10 @@
 #define GATT_BAAS_SERVICE                                            0x1851U
 /** BCAS (Broadcast Audio Announcement) Service */
 #define GATT_BCAS_SERVICE                                            0x1852U
+/** HAS (Hearing Access) Service */
+#define GATT_HAS_SERVICE                                             0x1854U
+/** TMAS (Telephony and Media) Service */
+#define GATT_TMAS_SERVICE                                            0x1855U
 /** \} */
 
 /**
@@ -1425,6 +1429,34 @@
 #define GATT_BASS_BCAST_AUDIO_SCAN_CP_CHARACTERISTIC                 0x2BC7U
 /** Broadcast Receive State */
 #define GATT_BASS_BCAST_RECEIVE_STATE_CHARACTERISTIC                 0x2BC8U
+
+/** \} */
+
+/**
+ * \name Hearing Access Service Characteristics Defines
+ * \{
+ * \brief This section describes the various Hearing Access Service
+ * Characteristics 16-bit UUIDs as defined in the Bluetooth Assigned Numbers.
+ */
+
+/** Hearing Aid Features */
+#define GATT_HAS_HA_FEATURES_CHARACTERISTIC                          0x2BDAU
+/** Hearing Aid Preset Control Point */
+#define GATT_HAS_HA_PRESET_CP_CHARACTERISTIC                         0x2BDBU
+/** Active Preset Index */
+#define GATT_HAS_ACTIVE_PRESET_INDEX_CHARACTERISTIC                  0x2BDCU
+
+/** \} */
+
+/**
+ * \name Telephony and Media Service Characteristics Defines
+ * \{
+ * \brief This section describes the various Telephony and Media Service
+ * Characteristics 16-bit UUIDs as defined in the Bluetooth Assigned Numbers.
+ */
+
+/** Role */
+#define GATT_TMAS_ROLE_CHARACTERISTIC                                0x2B51U
 
 /** \} */
 

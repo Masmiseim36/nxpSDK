@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../../bin/generator/sdk_generator/data/sdk_data_schema/v3/software_set_and_project_schema.json
 
 __variable__:
-  mbedtls_version: 2.28.3
+  mbedtls_version: 2.28.5
 middleware.mbedtls.template:
   section-type: component
   contents:
@@ -45,12 +45,70 @@ middleware.mbedtls.port.ele_s400:
     - source: port/ele_s400/aes_alt.c
     - source: port/ele_s400/ccm_alt.h
     - source: port/ele_s400/ccm_alt.c
+    - source: port/ele_s400/gcm_alt.h
+    - source: port/ele_s400/gcm_alt.c
     - source: port/ele_s400/rsa_alt.h
     - source: port/ele_s400/rsa_alt.c
     - source: port/ele_s400/threading_alt.h
+    - source: port/ele_s400/sha256_alt.c
+    - source: port/ele_s400/sha256_alt.h
+    - source: port/ele_s400/sha512_alt.c
+    - source: port/ele_s400/sha512_alt.h
+    - source: port/ele_s400/hmac_alt.c
     configuration:
       cc-define:
         MBEDTLS_MCUX_ELE_S400_API: 
+        MBEDTLS_CONFIG_FILE: '"ele_s400_mbedtls_config.h"'
+  belong_to: set.middleware.mbedtls
+  section_info:
+    description: mbedTLS port library for ELE S40x
+    type: middleware
+    version: "${mbedtls_version}"
+    user_visible: always
+    full_name: MbedTLS MCUX SDK port layer via ELE S400
+    taxonomy:
+      csub: ele_s400
+      belong_to: mbedtls
+    display_name: mbedtls_ele_s400
+  dependency:
+    allOf:
+    - driver.s3mu
+    - component.ele_crypto
+middleware.mbedtls.port.ele_s400_ecc_opaque:
+  section-type: component
+  contents:
+    repo_base_path: middleware/mbedtls
+    project_base_path: mbedtls
+    cc-include:
+    - repo_relative_path: port/ele_s400
+    - repo_relative_path: port/ele_s400/ecc_opaque
+    files:
+    - source: port/ele_s400/ele_fw.h
+    - source: port/ele_s400/ele_entropy.c
+    - source: port/ele_s400/aes_alt.h
+    - source: port/ele_s400/aes_alt.c
+    - source: port/ele_s400/ccm_alt.h
+    - source: port/ele_s400/ccm_alt.c
+    - source: port/ele_s400/gcm_alt.h
+    - source: port/ele_s400/gcm_alt.c
+    - source: port/ele_s400/rsa_alt.h
+    - source: port/ele_s400/rsa_alt.c
+    - source: port/ele_s400/threading_alt.h
+    - source: port/ele_s400/sha256_alt.c
+    - source: port/ele_s400/sha256_alt.h
+    - source: port/ele_s400/sha512_alt.c
+    - source: port/ele_s400/sha512_alt.h
+    - source: port/ele_s400/hmac_alt.c
+    - source: port/ele_s400/ecc_opaque/ele_ecc_opaque_mbedtls_config.h
+    - source: port/ele_s400/ecc_opaque/ele_mbedtls.c
+    - source: port/ele_s400/ecc_opaque/ele_mbedtls.h
+    - source: port/ele_s400/ecc_opaque/ecdsa_alt.h
+    - source: port/ele_s400/ecc_opaque/ecdsa_alt.c
+    - source: port/ele_s400/ecc_opaque/pk_alt.c
+    configuration:
+      cc-define:
+        MBEDTLS_MCUX_ELE_S400_API: 
+        MBEDTLS_CONFIG_FILE: '"ele_ecc_opaque_mbedtls_config.h"'
   belong_to: set.middleware.mbedtls
   section_info:
     description: mbedTLS port library for ELE S40x
@@ -112,7 +170,8 @@ middleware.mbedtls.port.els_pkc:
     - source: port/pkc/threading_alt.h
     configuration:
       cc-define:
-        MBEDTLS_MCUX_ELS_PKC_API: 
+        MBEDTLS_MCUX_ELS_PKC_API:
+        MBEDTLS_MCUX_USE_PKC:
         MBEDTLS_CONFIG_FILE: '"els_pkc_mbedtls_config.h"'
   belong_to: set.middleware.mbedtls
   section_info:
@@ -130,6 +189,11 @@ middleware.mbedtls.port.els_pkc:
     - device:
       - RW610
       - RW612
+      - LPC55S36
+      - MCXN546
+      - MCXN547
+      - MCXN946
+      - MCXN947
     - middleware.mbedtls.port.els
     - component.els_pkc
     - middleware.mbedtls.els_pkc.config
@@ -162,7 +226,8 @@ middleware.mbedtls.port.els:
     - source: port/els/els_mbedtls.h
     configuration:
       cc-define:
-        MBEDTLS_MCUX_ELS_API: 
+        MBEDTLS_MCUX_ELS_API:
+        MBEDTLS_MCUX_USE_ELS:
         MCUXCL_FEATURE_CSSL_MEMORY_C_FALLBACK: 
         MBEDTLS_CONFIG_FILE: '"els_mbedtls_config.h"'
   belong_to: set.middleware.mbedtls
@@ -178,91 +243,8 @@ middleware.mbedtls.port.els:
     display_name: mbedtls_els
   dependency:
     allOf:
-    - component.els
+    - component.els_pkc.els
     - middleware.mbedtls
-middleware.mbedtls.port.css_pkc:
-  section-type: component
-  contents:
-    repo_base_path: middleware/mbedtls
-    project_base_path: mbedtls
-    cc-include:
-    - repo_relative_path: port/pkc
-    files:
-    - source: port/pkc/css_pkc_mbedtls_config.h
-    - source: port/pkc/ecc_alt.c
-    - source: port/pkc/ecc_alt.h
-    - source: port/pkc/ecdh_alt.c
-    - source: port/pkc/ecdsa_alt.c
-    - source: port/pkc/rsa_alt.c
-    - source: port/pkc/rsa_alt.h
-    - source: port/pkc/css_pkc_mbedtls.c
-    - source: port/pkc/css_pkc_mbedtls.h
-    configuration:
-      cc-define:
-        MBEDTLS_MCUX_CSS_PKC_API: 
-  belong_to: set.middleware.mbedtls
-  section_info:
-    description: mbedTLS port library for PKC
-    type: middleware
-    version: 2.26.0
-    user_visible: always
-    full_name: MbedTLS MCUX SDK port layer via PKC
-    taxonomy:
-      csub: css_pkc
-      belong_to: mbedtls
-    display_name: mbedtls_pkc
-  dependency:
-    allOf:
-    - device:
-      - LPC55S36
-    - middleware.mbedtls.port.css
-    - component.pkc
-middleware.mbedtls.port.css:
-  section-type: component
-  contents:
-    repo_base_path: middleware/mbedtls
-    project_base_path: mbedtls
-    cc-include:
-    - repo_relative_path: port/css
-    files:
-    - source: port/css/aes_alt.c
-    - source: port/css/aes_alt.h
-    - source: port/css/cbc_mac_alt.c
-    - source: port/css/cbc_mac_alt.h
-    - source: port/css/cmac_alt.h
-    - source: port/css/cmac_alt.c
-    - source: port/css/css_mbedtls_config.h
-    - source: port/css/ctr_drbg_alt.c
-    - source: port/css/ctr_drbg_alt.h
-    - source: port/css/gcm_alt.c
-    - source: port/css/gcm_alt.h
-    - source: port/css/platform_hw_ip.h
-    - source: port/css/sha256_alt.c
-    - source: port/css/sha256_alt.h
-    - source: port/css/sha512_alt.c
-    - source: port/css/sha512_alt.h
-    - source: port/css/entropy_poll_alt.c
-    - source: port/css/css_mbedtls.c
-    - source: port/css/css_mbedtls.h
-    configuration:
-      cc-define:
-        MBEDTLS_MCUX_CSS_API: 
-  belong_to: set.middleware.mbedtls
-  section_info:
-    description: mbedTLS port library for CSS
-    type: middleware
-    version: 2.26.0
-    user_visible: always
-    full_name: MbedTLS MCUX SDK port layer via CSS
-    taxonomy:
-      csub: css
-      belong_to: mbedtls
-    display_name: mbedtls_css
-  dependency:
-    allOf:
-    - device:
-      - LPC55S36
-    - component.css
 middleware.mbedtls.port.sssapi:
   section-type: component
   contents:
@@ -292,7 +274,7 @@ middleware.mbedtls.port.sssapi:
     configuration:
       cc-define:
         MBEDTLS_NXP_SSSAPI: 
-        MBEDTLS_NXP_SENTINEL200: 
+        MBEDTLS_NXP_ELE200: 
         MBEDTLS_CONFIG_FILE: '"sssapi_mbedtls_config.h"'
   belong_to: set.middleware.mbedtls
   section_info:
@@ -308,7 +290,7 @@ middleware.mbedtls.port.sssapi:
   dependency:
     allOf:
     - middleware.mbedtls
-    - middleware.secure-subsystem.snt.port_kw45_k4w1
+    - middleware.secure-subsystem.elemu.port_kw45_k4w1
     - device:
       - K32W1480
       - KW45B41Z52
@@ -513,6 +495,10 @@ middleware.mbedtls:
         iar:
           cx-flags:
           - "--diag_suppress Pa167,Pe177,Pe191,Pe546"
+        armgcc:
+          cc-flags:
+          - "-fomit-frame-pointer"
+          - "-Wno-unused-function"
     repo_base_path: middleware/mbedtls
     project_base_path: mbedtls
     cc-include:
@@ -753,8 +739,8 @@ middleware.mbedtls:
       - middleware.mbedtls.port.ksdk
       - middleware.mbedtls.port.sssapi
       - middleware.mbedtls.port.ele_s400
+      - middleware.mbedtls.port.ele_s400_ecc_opaque
       - middleware.mbedtls.port.els_pkc
-      - middleware.mbedtls.port.css_pkc
 middleware.mbedtls.default_heap_stack:
   section-type: project_segment
   belong_to: set.board.${board}
@@ -784,9 +770,6 @@ middleware.mbedtls.default_heap_stack:
         armgcc:
           config:
             __common__:
-              cc-flags:
-              - "-fomit-frame-pointer"
-              - "-Wno-unused-function"
               ad-flags:
               - "-Xlinker --defsym=__stack_size__=0x2000"
               - "-Xlinker --defsym=__heap_size__=0x8000"
@@ -1000,7 +983,6 @@ set.middleware.mbedtls:
       - LPC54S018
       - LPC54S018M
     - set.middleware.mmcau
-    - set.component.css_pkc
     - set.component.ele_crypto
     - set.component.els_pkc
     - set.component.els_pkc_rw61x

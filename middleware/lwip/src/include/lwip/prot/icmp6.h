@@ -5,6 +5,7 @@
 
 /*
  * Copyright (c) 2001-2004 Swedish Institute of Computer Science.
+ * Copyright 2023 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -80,6 +81,8 @@ enum icmp6_type {
   ICMP6_TYPE_NA = 136,
   /** Redirect */
   ICMP6_TYPE_RD = 137,
+  /** Multicast listener v2 report */
+  ICMP6_TYPE_ML2R = 143,
   /** Multicast router advertisement */
   ICMP6_TYPE_MRA = 151,
   /** Multicast router solicitation */

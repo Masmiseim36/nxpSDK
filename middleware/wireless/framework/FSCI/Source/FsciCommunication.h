@@ -24,8 +24,10 @@
 
 #include "fsl_os_abstraction.h"
 
+#if defined gFsciRxAck_c && (gFsciRxAck_c != 0)
 #ifndef gFsciRxAckTimeoutUseTmr_c
 #define gFsciRxAckTimeoutUseTmr_c (USE_RTOS)
+#endif
 #endif
 
 #ifndef mFsciRxTimeoutUsePolling_c
@@ -51,12 +53,12 @@ typedef struct fsciComm_tag
     clientPacketHdr_t pktHeader;
     uint16_t          bytesReceived;
 #if gFsciHostSupport_c
-    osaMutexId_t syncHostMutexId;
+    OSA_MUTEX_HANDLE_DEFINE(syncHostMutexId);
 #endif
 #if gFsciRxAck_c
-    osaMutexId_t syncTxRxAckMutexId;
+    OSA_MUTEX_HANDLE_DEFINE(syncTxRxAckMutexId);
 #if gFsciRxAckTimeoutUseTmr_c
-    tmrTimerID_t ackWaitTmr;
+    TIMER_MANAGER_HANDLE_DEFINE(ackWaitTmr);
 #endif
     uint8_t         txRetryCnt;
     volatile bool_t ackReceived;

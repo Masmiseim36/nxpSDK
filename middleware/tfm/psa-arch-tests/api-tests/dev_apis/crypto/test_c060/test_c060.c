@@ -1,5 +1,5 @@
 /** @file
- * Copyright (c) 2019-2021, Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2019-2023, Arm Limited or its affiliates. All rights reserved.
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -112,15 +112,15 @@ int32_t psa_aead_abort_test(caller_security_t caller __UNUSED)
     }
 
     return VAL_STATUS_SUCCESS;
-#else //NXP
+#else
     val->print(PRINT_TEST, "No test available for the selected crypto configuration\n", 0);
     return RESULT_SKIP(VAL_STATUS_NO_TESTS);
-#endif //NXP
+#endif
 }
 
 int32_t psa_aead_abort_init_test(caller_security_t caller __UNUSED)
 {
-#if (defined(ARCH_TEST_AES_128) && (defined(ARCH_TEST_CCM) || defined(ARCH_TEST_GCM) || defined(ARCH_TEST_CHACHA20_POLY1305))) 
+#if (defined(ARCH_TEST_AES_128) && (defined(ARCH_TEST_CCM) || defined(ARCH_TEST_GCM) || defined(ARCH_TEST_CHACHA20_POLY1305)))
     int32_t               i, status;
     psa_aead_operation_t  operation[] = {PSA_AEAD_OPERATION_INIT, psa_aead_operation_init(), {0} };
     int32_t               operation_count = sizeof(operation)/sizeof(operation[0]);
@@ -141,10 +141,10 @@ int32_t psa_aead_abort_init_test(caller_security_t caller __UNUSED)
     }
 
     return VAL_STATUS_SUCCESS;
-#else //NXP
+#else
     val->print(PRINT_TEST, "No test available for the selected crypto configuration\n", 0);
     return RESULT_SKIP(VAL_STATUS_NO_TESTS);
-#endif //NXP
+#endif
 }
 
 

@@ -45,8 +45,8 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
-"${SdkRootDirPath}/middleware/eiq/tensorflow-lite/examples/xaf/message.h"
-"${SdkRootDirPath}/middleware/eiq/tensorflow-lite/examples/xaf/rpmsg_config.h"
+"${ProjDirPath}/../source/message.h"
+"${ProjDirPath}/../source/rpmsg_config.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
@@ -59,7 +59,7 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${SdkRootDirPath}/boards/evkmimxrt595/eiq_examples/tflm_xaf_dsp/dsp/binary/dsp_data_release.bin"
 "${ProjDirPath}/../pmic_support.c"
 "${ProjDirPath}/../pmic_support.h"
-"${SdkRootDirPath}/middleware/eiq/tensorflow-lite/examples/xaf/evkmimxrt595_fusionf1/dsp_config.h"
+"${ProjDirPath}/../source/dsp_config.h"
 "${ProjDirPath}/../main.c"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
@@ -69,9 +69,8 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${SdkRootDirPath}/boards/evkmimxrt595/eiq_examples/tflm_xaf_dsp/dsp/binary
-    ${SdkRootDirPath}/middleware/eiq/tensorflow-lite/examples/xaf
+    ${ProjDirPath}/../source
     ${ProjDirPath}/..
-    ${SdkRootDirPath}/middleware/eiq/tensorflow-lite/examples/xaf/evkmimxrt595_fusionf1
 )
 
 

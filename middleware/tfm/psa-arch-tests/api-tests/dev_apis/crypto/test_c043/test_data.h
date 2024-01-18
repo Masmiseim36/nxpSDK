@@ -1,5 +1,5 @@
 /** @file
- * Copyright (c) 2019-2022, Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2019-2023, Arm Limited or its affiliates. All rights reserved.
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -188,11 +188,9 @@ static const test_data check1[] = {
 #endif
 };
 
-#ifdef ARCH_TEST_ECDH //NXP
-#ifdef ARCH_TEST_ECC_CURVE_SECP256R1 //NXP
-static const test_data check2[] = {
 #ifdef ARCH_TEST_ECDH
 #ifdef ARCH_TEST_ECC_CURVE_SECP256R1
+static const test_data check2[] = {
 {"Test psa_raw_key_agreement - Negative case\n",
  PSA_KEY_TYPE_ECC_KEY_PAIR(PSA_ECC_FAMILY_SECP_R1),
 {0xc8, 0x8f, 0x01, 0xf5, 0x10, 0xd9, 0xac, 0x3f, 0x70, 0xa2, 0x92, 0xda, 0xa2,
@@ -208,8 +206,6 @@ static const test_data check2[] = {
  0x25, 0x65, 0x20, 0x2f, 0xef, 0x8e, 0x9e, 0xce, 0x7d, 0xce, 0x03, 0x81, 0x24,
  0x64, 0xd0, 0x4b, 0x94, 0x42, 0xde}, 32, 32, PSA_SUCCESS
 },
-#endif
-#endif
 };
-#endif //NXP
-#endif //NXP
+#endif
+#endif

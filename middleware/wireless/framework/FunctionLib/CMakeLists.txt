@@ -4,6 +4,11 @@ set(SOURCES
 
 add_library(connfwk-FunctionLib ${SOURCES})
 
+target_include_directories(connfwk-FunctionLib
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
 # Get common configs from the connfwk-config interface
 target_link_libraries(connfwk-FunctionLib PRIVATE connfwk-config)
 

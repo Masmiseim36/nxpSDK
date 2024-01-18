@@ -8,7 +8,9 @@
 
 #include "includes.h"
 
-#include "common.h"
+#ifdef CONFIG_EAP_GTC
+
+#include "utils/common.h"
 #include "eap_i.h"
 
 struct eap_gtc_data
@@ -138,3 +140,5 @@ int eap_peer_gtc_register(void)
 
     return eap_peer_method_register(eap);
 }
+
+#endif /* CONFIG_EAP_GTC */

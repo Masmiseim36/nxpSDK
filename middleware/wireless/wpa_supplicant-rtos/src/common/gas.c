@@ -10,7 +10,7 @@
 #include "includes.h"
 
 #ifdef CONFIG_GAS
-#include "common.h"
+#include "utils/common.h"
 #include "ieee802_11_defs.h"
 #include "gas.h"
 

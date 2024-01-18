@@ -9,7 +9,7 @@
 #ifndef P2P_I_H
 #define P2P_I_H
 
-#include "utils/wlist.h"
+#include "utils/dl_list.h"
 #include "p2p.h"
 
 #define P2P_GO_NEG_CNF_MAX_RETRY_COUNT 1

@@ -1,5 +1,5 @@
 /*! *********************************************************************************
- * Copyright 2022 NXP
+ * Copyright 2022-2023 NXP
  * All rights reserved.
  *
  * \file
@@ -28,8 +28,10 @@
 #include "SecLib.h"
 #include "RNG_Interface.h"
 #include "fsl_debug_console.h"
-#include "CryptoLibSW.h"
+
 #include "SecLib_ecp256.h"
+#include "CryptoLibSW.h"
+
 #include "fwk_config.h"
 
 /*! *********************************************************************************
@@ -37,27 +39,22 @@
 * Private macros
 *************************************************************************************
 ********************************************************************************** */
-
-#if USE_RTOS && 1 // Currently only tested with Mutex enabled in SecLib()
+#if (defined(USE_RTOS) && (USE_RTOS > 0))
+/* On ELE Sentinel, the mutex is mandatory */
 #define gSecLibUseMutex_c TRUE
 #else
 #define gSecLibUseMutex_c FALSE
 #endif
 
-#if gSecLibUseMutex_c
-#define SECLIB_MUTEX_LOCK()   OSA_MutexLock((osa_mutex_handle_t)mSecLibMutexId, osaWaitForever_c)
-#define SECLIB_MUTEX_UNLOCK() OSA_MutexUnlock((osa_mutex_handle_t)mSecLibMutexId)
-#else
-#define SECLIB_MUTEX_LOCK()
-#define SECLIB_MUTEX_UNLOCK()
-#endif /* gSecLibUseMutex_c */
+extern osa_status_t SecLibMutexCreate(void);
+extern osa_status_t SecLibMutexLock(void);
+extern osa_status_t SecLibMutexUnlock(void);
+
+#define SECLIB_MUTEX_LOCK()   (void)SecLibMutexLock()
+#define SECLIB_MUTEX_UNLOCK() (void)SecLibMutexUnlock()
 
 #define KEY_ID_BLE0                        0x426c6530
 #define ELE_S200_KEY_STORE_USER_ID_GENERIC 0
-
-#ifndef gSecLibSssConstraint_c
-#define gSecLibSssConstraint_c 0
-#endif
 
 #ifndef gSecLibAllowLtkFromBlob_c
 #define gSecLibAllowLtkFromBlob_c 0
@@ -68,15 +65,26 @@
     SSS_KEYPROP_OPERATION_AES | SSS_KEYPROP_OPERATION_MAC | SSS_KEYPROP_OPERATION_AEAD | SSS_KEYPROP_OPERATION_ASYM | \
         SSS_KEYPROP_OPERATION_KDF
 
+/*
+ * __DSP_PRESENT is defined in the device specific file, however avoid use of __DSP_PRESENT to avoid
+ * a dependency with SDK.
+ * It is likely to be present on all Core M33, Core M7 and Core M4 devices.
+ * Nonetheless RW61x was designed without ARM DSP extension, in which case avoid defining
+ * gSecLibUseDspExtension_d.
+ * __DSP_EXT__ must be defined in the build system (CFLAGS containing -D__DSP_EXT__=1 for instance)
+ * gSecLibUseDspExtension_d follows __DSP_PRESENT unless overidden to 0
+ */
+
+#ifndef gSecLibUseDspExtension_d
+#define gSecLibUseDspExtension_d 0
+#endif
+
 /*! *********************************************************************************
 *************************************************************************************
 * Private type definitions
 *************************************************************************************
 ********************************************************************************** */
-#if gSecLibUseMutex_c
-/*! Mutex used to protect the AES Context when an RTOS is used. */
-OSA_MUTEX_HANDLE_DEFINE(mSecLibMutexId);
-#endif /* gSecLibUseMutex_c */
+
 typedef uint32_t sss_sscp_internal_keyID_t;
 typedef uint32_t sss_sscp_keyObjFree_options_t;
 
@@ -85,14 +93,18 @@ typedef uint32_t sss_sscp_keyObjFree_options_t;
 * Private memory declarations
 *************************************************************************************
 ************************************************************************************/
+#if gSecLibUseMutex_c
+/*! Mutex used to protect the AES Context when an RTOS is used. */
+static OSA_MUTEX_HANDLE_DEFINE(mSecLibMutexId);
+#endif /* gSecLibUseMutex_c */
 
 static sss_ecp256_context_t  g_ECP_KeyPair;
 static sss_ecp256_context_t *pECPKeyPair = ((void *)0);
 
-/*!
- * @brief pointer to Callback function structure used to allow / disallow lowpower during SecLib activity
- */
-static const Seclib_LowpowerCriticalCBs_t *pfSecLibLowpowerCriticalCallbacks = ((void *)0);
+static size_t  ecdhKeyPairBlobSize = (3 * ECP256_COORDINATE_LEN) + BLOB_DATA_OVERLAY_BYTE_LEN;
+static uint8_t ecdhKeyPairBlob[(3 * ECP256_COORDINATE_LEN) + BLOB_DATA_OVERLAY_BYTE_LEN];
+
+static bool_t IsSecLibEcdhContextInit = false;
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -112,16 +124,11 @@ secLibCallback_t pfSecLibMultCallback = ((void *)0);
 *************************************************************************************
 ********************************************************************************** */
 
-static void ecp_coordinate_copy_and_change_endiannes(ec_p256_coordinate *dest, const uint8_t *src);
-static void ecp_p256_copy_and_change_endiannes(ecp256Point_t *XY, const uint8_t *src);
-
-#if defined(gSecLibSssUseEncryptedKeys_d) && (gSecLibSssUseEncryptedKeys_d == 1)
-static sss_status_t ELKE_BLE_SM_F5_DeriveKeys(sss_sscp_object_t *pPubDhKey,
-                                              const uint8_t *    pDerivationDataMacKey,
-                                              const uint8_t *    pDerivationDataLTK,
-                                              uint8_t *          pMacKey,
-                                              uint8_t *          pLTKBlob);
-#endif /* gSecLibSssUseEncryptedKeys_d */
+static sss_status_t ELKE_BLE_SM_F5_DeriveKeysSecure(sss_sscp_object_t *pPubDhKey,
+                                                    const uint8_t *    pDerivationDataMacKey,
+                                                    const uint8_t *    pDerivationDataLTK,
+                                                    uint8_t *          pMacKey,
+                                                    uint8_t *          pLTKBlob);
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -129,61 +136,81 @@ static sss_status_t ELKE_BLE_SM_F5_DeriveKeys(sss_sscp_object_t *pPubDhKey,
 *************************************************************************************
 ********************************************************************************** */
 
-static void ecp_coordinate_copy_and_change_endiannes(ec_p256_coordinate *dest, const uint8_t *src)
+#if gSecLibUseDspExtension_d
+static bool ECP256_LePointValid(const ecp256Point_t *P)
 {
-    FLib_MemCpyReverseOrder(dest->raw_8bit, src, ECP256_COORDINATE_LEN);
+    ecp256Point_t tmp;
+    ECP256_PointCopy_and_change_endianness(tmp.raw, P->raw);
+    return ECP256_PointValid(&tmp);
 }
+#else
 
-static void ecp_p256_copy_and_change_endiannes(ecp256Point_t *XY, const uint8_t *src)
-{
-    ecp_coordinate_copy_and_change_endiannes(&XY->coord.X, &src[0]);
-    ecp_coordinate_copy_and_change_endiannes(&XY->coord.Y, &src[ECP256_COORDINATE_LEN]);
-}
+extern bool_t EcP256_IsPointOnCurve(const uint32_t *X, const uint32_t *Y);
 
-static int32_t SecLib_SetLpConstraint(int32_t power_mode)
+static bool ECP256_LePointValid(const ecp256Point_t *P)
 {
-    int32_t status = 1;
-    if ((pfSecLibLowpowerCriticalCallbacks != NULL) &&
-        (pfSecLibLowpowerCriticalCallbacks->SeclibEnterLowpowerCriticalFunc != NULL))
-    {
-        status = pfSecLibLowpowerCriticalCallbacks->SeclibEnterLowpowerCriticalFunc(power_mode);
-    }
-    return status;
+    return EcP256_IsPointOnCurve((const uint32_t *)&P->components_32bit.x[0],
+                                 (const uint32_t *)&P->components_32bit.y[0]);
 }
-static int32_t SecLib_ReleaseLpConstraint(int32_t power_mode)
-{
-    int32_t status = 1;
-    if ((pfSecLibLowpowerCriticalCallbacks != NULL) &&
-        (pfSecLibLowpowerCriticalCallbacks->SeclibExitLowpowerCriticalFunc != NULL))
-    {
-        status = pfSecLibLowpowerCriticalCallbacks->SeclibExitLowpowerCriticalFunc(power_mode);
-    }
-    return status;
-}
+#endif
 
 /*! *********************************************************************************
 *************************************************************************************
 * Public functions
 *************************************************************************************
 ********************************************************************************** */
+osa_status_t SecLibMutexCreate(void)
+{
+    osa_status_t st = KOSA_StatusSuccess;
+#if gSecLibUseMutex_c
+    static bool seclib_mutex_created = false;
+
+    if (!seclib_mutex_created)
+    {
+        /*! Initialize the SecLib Mutex here. If not already done by RNG module */
+        st = OSA_MutexCreate((osa_mutex_handle_t)mSecLibMutexId);
+
+        if (KOSA_StatusSuccess != st)
+        {
+            assert(0);
+        }
+        else
+        {
+            seclib_mutex_created = true;
+        }
+    }
+#endif
+    return st;
+}
+osa_status_t SecLibMutexLock(void)
+{
+#if gSecLibUseMutex_c
+    return OSA_MutexLock((osa_mutex_handle_t)mSecLibMutexId, osaWaitForever_c);
+#else
+    return KOSA_StatusSuccess;
+#endif
+}
+
+osa_status_t SecLibMutexUnlock(void)
+{
+#if gSecLibUseMutex_c
+    return OSA_MutexUnlock((osa_mutex_handle_t)mSecLibMutexId);
+#else
+    return KOSA_StatusSuccess;
+#endif
+}
 
 /*! *********************************************************************************
  * \brief  This function performs initialization of the cryptographic HW acceleration.
  *
  ********************************************************************************** */
+
 void SecLib_Init(void)
 {
     /* Initialize cryptographic hardware.*/
     PLATFORM_InitCrypto();
 
-#if gSecLibUseMutex_c
-    /*! Initialize the SecLib Mutex here. */
-    if (KOSA_StatusSuccess != OSA_MutexCreate((osa_mutex_handle_t)mSecLibMutexId))
-    {
-        assert(0);
-        return;
-    }
-#endif
+    (void)SecLibMutexCreate();
 }
 
 /*! *********************************************************************************
@@ -192,7 +219,8 @@ void SecLib_Init(void)
  ********************************************************************************** */
 void SecLib_ReInit(void)
 {
-    /* Initialize cryptographic hardware.*/
+    IsSecLibEcdhContextInit = false;
+    CRYPTO_ELEMU_reset();
     (void)CRYPTO_ReinitHardware();
 }
 
@@ -204,18 +232,6 @@ void SecLib_ReInit(void)
 void SecLib_DeInit(void)
 {
     CRYPTO_DeinitHardware();
-}
-
-/*! *********************************************************************************
- * \brief  This function performs initialization of the callbacks structure used to
- *       disable lowpower when Seclib is active.
- *
- * \param[in]  pfCallback Pointer to the function used to handle multiplication.
- *
- ********************************************************************************** */
-void SecLib_SetLowpowerCriticalCb(const Seclib_LowpowerCriticalCBs_t *pfCallback)
-{
-    pfSecLibLowpowerCriticalCallbacks = pfCallback;
 }
 
 /*! *********************************************************************************
@@ -244,10 +260,10 @@ void SecLib_SetExternalMultiplicationCb(secLibCallback_t pfCallback)
  ********************************************************************************** */
 void AES_128_Encrypt(const uint8_t *pInput, const uint8_t *pKey, uint8_t *pOutput)
 {
-    SECLIB_MUTEX_LOCK();
-
     status_t      ret;
     aes_context_t ctx;
+
+    SECLIB_MUTEX_LOCK();
 
     ret = SSS_aes_operation(&ctx, pInput, 16, NULL, pKey, AES_128_KEY_BITS, pOutput, true, kAlgorithm_SSS_AES_ECB);
     if (ret != kStatus_Success)
@@ -272,9 +288,9 @@ void AES_128_Encrypt(const uint8_t *pInput, const uint8_t *pKey, uint8_t *pOutpu
  ********************************************************************************** */
 void AES_128_Decrypt(const uint8_t *pInput, const uint8_t *pKey, uint8_t *pOutput)
 {
-    status_t ret;
-
+    status_t      ret;
     aes_context_t ctx;
+
     SECLIB_MUTEX_LOCK();
 
     ret = SSS_aes_operation(&ctx, pInput, 16, NULL, pKey, AES_128_KEY_BITS, pOutput, false, kAlgorithm_SSS_AES_ECB);
@@ -397,7 +413,7 @@ uint32_t AES_128_CBC_Encrypt_And_Pad(
 
     SECLIB_MUTEX_LOCK();
 
-    ret = SSS_aes_operation(&ctx, pInput, inputLen, pInitVector, pKey, AES_128_KEY_BITS, pOutput, true,
+    ret = SSS_aes_operation(&ctx, pInput, newLen, pInitVector, pKey, AES_128_KEY_BITS, pOutput, true,
                             kAlgorithm_SSS_AES_CBC);
     if (ret != kStatus_Success)
     {
@@ -708,7 +724,8 @@ void AES_128_CMAC_LsbFirstInput(const uint8_t *pInput, uint32_t inputLen, const 
  * \param[out]  pOutput Pointer to the location to store the 16-byte pseudo random variable.
  *
  ********************************************************************************** */
-void AES_CMAC_PRF_128(uint8_t *pInput, uint32_t inputLen, uint8_t *pVarKey, uint32_t varKeyLen, uint8_t *pOutput)
+void AES_CMAC_PRF_128(
+    const uint8_t *pInput, uint32_t inputLen, const uint8_t *pVarKey, uint32_t varKeyLen, uint8_t *pOutput)
 {
     int result;
     SECLIB_MUTEX_LOCK();
@@ -736,15 +753,15 @@ void AES_CMAC_PRF_128(uint8_t *pInput, uint32_t inputLen, uint8_t *pVarKey, uint
  * \param[out]  pTag Pointer to the location to store the 128-bit tag.
  *
  ********************************************************************************** */
-secResultType_t AES_128_EAX_Encrypt(uint8_t *pInput,
-                                    uint32_t inputLen,
-                                    uint8_t *pNonce,
-                                    uint32_t nonceLen,
-                                    uint8_t *pHeader,
-                                    uint8_t  headerLen,
-                                    uint8_t *pKey,
-                                    uint8_t *pOutput,
-                                    uint8_t *pTag)
+secResultType_t AES_128_EAX_Encrypt(const uint8_t *pInput,
+                                    uint32_t       inputLen,
+                                    const uint8_t *pNonce,
+                                    uint32_t       nonceLen,
+                                    const uint8_t *pHeader,
+                                    uint8_t        headerLen,
+                                    const uint8_t *pKey,
+                                    uint8_t *      pOutput,
+                                    uint8_t *      pTag)
 {
     uint8_t *       buf;
     uint32_t        buf_len;
@@ -823,15 +840,15 @@ secResultType_t AES_128_EAX_Encrypt(uint8_t *pInput,
  * \param[out]  pTag Pointer to the location to store the 128-bit tag.
  *
  ********************************************************************************** */
-secResultType_t AES_128_EAX_Decrypt(uint8_t *pInput,
-                                    uint32_t inputLen,
-                                    uint8_t *pNonce,
-                                    uint32_t nonceLen,
-                                    uint8_t *pHeader,
-                                    uint8_t  headerLen,
-                                    uint8_t *pKey,
-                                    uint8_t *pOutput,
-                                    uint8_t *pTag)
+secResultType_t AES_128_EAX_Decrypt(const uint8_t *pInput,
+                                    uint32_t       inputLen,
+                                    const uint8_t *pNonce,
+                                    uint32_t       nonceLen,
+                                    const uint8_t *pHeader,
+                                    uint8_t        headerLen,
+                                    const uint8_t *pKey,
+                                    uint8_t *      pOutput,
+                                    uint8_t *      pTag)
 {
     uint8_t *       buf;
     uint32_t        buf_len;
@@ -1239,32 +1256,31 @@ void HMAC_SHA256(const uint8_t *pKey, uint32_t keyLen, const uint8_t *pData, uin
  ************************************************************************************/
 secResultType_t ECDH_P256_GenerateKeys(ecdhPublicKey_t *pOutPublicKey, ecdhPrivateKey_t *pOutPrivateKey)
 {
-    secResultType_t ret;
+    secResultType_t ret = gSecSuccess_c;
 
     uint8_t *wrk_buf = NULL;
-    SECLIB_MUTEX_LOCK();
 
+    SECLIB_MUTEX_LOCK();
     do
     {
+        size_t wrk_buf_sz;
         if (pECPKeyPair != NULL)
         {
+            /* Once the key oject gets destroyed context is not ready anymore */
+            IsSecLibEcdhContextInit = false;
             /* need to release previous allocated key */
             (void)SSS_KEY_OBJ_FREE(&pECPKeyPair->OwnKey);
             FLib_MemSet(pECPKeyPair, 0, sizeof(sss_ecp256_context_t));
             pECPKeyPair = NULL;
         }
-        size_t wrk_buf_sz = sizeof(ecdhPublicKey_t); /* 2 * ECP256_COORDINATE_LEN */
 
-        wrk_buf = MEM_BufferAlloc(wrk_buf_sz);
+        wrk_buf_sz = sizeof(ecdhPublicKey_t); /* 2 * ECP256_COORDINATE_LEN */
+        wrk_buf    = MEM_BufferAlloc(wrk_buf_sz);
         if (wrk_buf == NULL)
         {
             RAISE_ERROR(ret, gSecAllocError_c);
         }
         g_ECP_KeyPair.keyId = KEY_ID_BLE0;
-
-        /* When you go in power down, you lose SSS context, using a deep sleep constraint insure us to keep the context
-         * beetween two call of the SSS API */
-        (void)SecLib_SetLpConstraint(gSecLibSssConstraint_c);
 
         if (sss_ecdh_make_public_ecp256_key(&g_ECP_KeyPair, wrk_buf, wrk_buf_sz) != kStatus_Success)
         {
@@ -1272,15 +1288,22 @@ secResultType_t ECDH_P256_GenerateKeys(ecdhPublicKey_t *pOutPublicKey, ecdhPriva
         }
         pECPKeyPair = &g_ECP_KeyPair;
 
+        if (sss_sscp_key_store_export_key(&g_keyStore, &pECPKeyPair->OwnKey, ecdhKeyPairBlob, &ecdhKeyPairBlobSize,
+                                          kSSS_blobType_ELKE_blob) != kStatus_SSS_Success)
+        {
+            RAISE_ERROR(ret, gSecError_c);
+        }
+
+        IsSecLibEcdhContextInit = true;
+
         /* pubKey returned by SSS in Big-Endian format: return it as Low Endian */
-        ecp_p256_copy_and_change_endiannes(pOutPublicKey, (const uint8_t *)&pECPKeyPair->OwnPublicKey[0]);
+        ECP256_PointCopy_and_change_endianness(pOutPublicKey->raw, &wrk_buf[0]);
         /* From S200 A1 on, the private key is not passed in plain text so the pOutPrivateKey remains uninitialized */
         FLib_MemCpy(pOutPrivateKey->raw_8bit, &pECPKeyPair->PrivateKey, sizeof(ecdhPrivateKey_t));
-        /* Need to retrieve key blob here and store it in retention or NVM for future use */
-        /* TODO */
-        ret = gSecSuccess_c;
+
     } while (false);
     SECLIB_MUTEX_UNLOCK();
+
     (void)MEM_BufferFree(wrk_buf);
 
     return ret;
@@ -1327,11 +1350,26 @@ secResultType_t ECDH_P256_ComputeDhKey(const ecdhPrivateKey_t *pInPrivateKey,
             ret = gSecError_c;
             break;
         }
-        if (!EcP256_IsPointOnCurve((const uint32_t *)&pInPeerPublicKey->raw_32bit[0],
-                                   (const uint32_t *)&pInPeerPublicKey->raw_32bit[8]))
+        if (!ECP256_LePointValid(pInPeerPublicKey))
         {
             ret = gSecInvalidPublicKey_c;
             break;
+        }
+
+        if (IsSecLibEcdhContextInit == false)
+        {
+            if ((sss_ecdh_init_key(pECPKeyPair)) != kStatus_Success)
+            {
+                break;
+            }
+
+            if (kStatus_SSS_Success != sss_sscp_key_store_import_key(&g_keyStore, &pECPKeyPair->OwnKey, ecdhKeyPairBlob,
+                                                                     ecdhKeyPairBlobSize, 3U * ECP256_COORDINATE_BITLEN,
+                                                                     kSSS_blobType_ELKE_blob))
+            {
+                break;
+            }
+            IsSecLibEcdhContextInit = true;
         }
         size_t wrk_buf_sz = 3u * ECP256_COORDINATE_LEN;
         wrk_buf           = MEM_BufferAlloc(wrk_buf_sz);
@@ -1342,7 +1380,7 @@ secResultType_t ECDH_P256_ComputeDhKey(const ecdhPrivateKey_t *pInPrivateKey,
         ecdh_ctx.ecdh_key_pair = pECPKeyPair;
         ecdhPoint_t EcdhPubKey;
 
-        ecp_p256_copy_and_change_endiannes(&EcdhPubKey, (const uint8_t *)&pInPeerPublicKey->raw[0]);
+        ECP256_PointCopy_and_change_endianness(&EcdhPubKey.raw[0], (const uint8_t *)&pInPeerPublicKey->raw[0]);
 
         FLib_MemCpy(&ecdh_ctx.Qp, &EcdhPubKey, sizeof(ecdhPoint_t));
 
@@ -1350,14 +1388,10 @@ secResultType_t ECDH_P256_ComputeDhKey(const ecdhPrivateKey_t *pInPrivateKey,
         {
             RAISE_ERROR(ret, gSecError_c);
         }
-        ecp_p256_copy_and_change_endiannes(pOutDhKey, wrk_buf);
+        ECP256_PointCopy_and_change_endianness(pOutDhKey->raw, wrk_buf);
 
         (void)MEM_BufferFree(wrk_buf);
     } while (false);
-
-    /* When you go in power down, you lose SSS context, using a deep sleep constraint insure us to keep the context
-     * between two call of the SSS API */
-    (void)SecLib_ReleaseLpConstraint(gSecLibSssConstraint_c);
 
     SECLIB_MUTEX_UNLOCK();
 
@@ -1393,15 +1427,16 @@ secResultType_t ECDH_P256_ComputeDhKeySeg(computeDhKeyParam_t *pDhKeyData)
  * \return gSecSuccess_c or error
  *
  ************************************************************************************/
-void ECDH_P256_FreeDhKeyData(computeDhKeyParam_t *pDhKeyData)
+void ECDH_P256_FreeDhKeyDataSecure(computeDhKeyParam_t *pDhKeyData)
 {
-#if gSecLibSssUseEncryptedKeys_d
-    sss_sscp_key_object_free((sss_sscp_object_t *)&pDhKeyData->outPoint, kSSS_keyObjFree_KeysStoreNoDefragment);
-#endif /* gSecLibSssUseEncryptedKeys_d */
+    /* turn into void* first to avoid MISRA 11.3 */
+    void *pKeyData = &pDhKeyData->outPoint;
+    (void)sss_sscp_key_object_free((sss_sscp_object_t *)pKeyData, kSSS_keyObjFree_KeysStoreNoDefragment);
 }
 
 /************************************************************************************
- * \brief Function used to create the mac key and LTK using Bluetooth F5 algorithm
+ * \brief Function used to create the mac key and LTK using Bluetooth F5 algorithm.
+ *        Kigher security version all keys remain on security bus.
  *
  * \param  [out] pMacKey 128 bit MacKey output location (pointer)
  * \param  [out] pLtk    128 bit LTK output location (pointer)
@@ -1412,10 +1447,92 @@ void ECDH_P256_FreeDhKeyData(computeDhKeyParam_t *pDhKeyData)
  * \param  [in] pA1      48 bit A1 (pointer) (A)
  * \param  [in] a2at     8 bit A2 address type, 0 = Public, 1 = Random
  * \param  [in] pA2      48 bit A2 (pointer) (B)
- * \param  [in] bSecure  use available extra security bus
  *
  * \retval gSecSuccess_c operation succeeded
  * \retval gSecError_c operation failed
+ *
+ ************************************************************************************/
+secResultType_t SecLib_GenerateBluetoothF5KeysSecure(uint8_t *      pMacKey,
+                                                     uint8_t *      pLtk,
+                                                     const uint8_t *pW,
+                                                     const uint8_t *pN1,
+                                                     const uint8_t *pN2,
+                                                     const uint8_t  a1at,
+                                                     const uint8_t *pA1,
+                                                     const uint8_t  a2at,
+                                                     const uint8_t *pA2)
+{
+    secResultType_t result     = gSecError_c;
+    const uint8_t   f5KeyId[4] = {0x62, 0x74, 0x6c, 0x65}; /*!< Big Endian, "btle" */
+    uint8_t         f5CmacBuffer[1 + 4 + 16 + 16 + 7 + 7 +
+                         2]; /* Counter[1] || keyId[4] || N1[16] || N2[16] || A1[7] || A2[7] || Length[2] = 53 */
+
+    uint8_t f5CmacBuffer_Counter1[1 + 4 + 16 + 16 + 7 + 7 + 2]; /* Counter[1] || keyId[4] || N1[16] || N2[16] ||
+                                                                       A1[7] || A2[7] || Length[2] = 53 */
+    sss_status_t status = kStatus_SSS_Fail;
+    union
+    {
+        sss_sscp_object_t *pSSSObject;
+        const uint8_t *    pW;
+    } tempF5;
+
+    /*! Check for NULL output pointers and return with proper status if this is the case. */
+    do
+    {
+        if ((NULL == pMacKey) || (NULL == pLtk) || (NULL == pN1) || (NULL == pN2) || (NULL == pA1) || (NULL == pA2))
+        {
+#if defined(gSmDebugEnabled_d) && (gSmDebugEnabled_d == 1U)
+            SmDebug_Log(gSmDebugFileSmCrypto_c, __LINE__, smDebugLogTypeError_c, 0);
+#endif /* gSmDebugEnabled_d */
+            RAISE_ERROR(result, gSecError_c);
+        }
+        /*! Build the most significant part of the f5 input data to compute the MacKey */
+        f5CmacBuffer[0] = 0; /* Counter = 0 */
+        FLib_MemCpy(&f5CmacBuffer[1], (const uint8_t *)f5KeyId, 4);
+        FLib_MemCpyReverseOrder(&f5CmacBuffer[5], (const uint8_t *)pN1, 16);
+        FLib_MemCpyReverseOrder(&f5CmacBuffer[21], (const uint8_t *)pN2, 16);
+        f5CmacBuffer[37] = 0x01U & a1at;
+        FLib_MemCpyReverseOrder(&f5CmacBuffer[38], (const uint8_t *)pA1, 6);
+        f5CmacBuffer[44] = 0x01U & a2at;
+        FLib_MemCpyReverseOrder(&f5CmacBuffer[45], (const uint8_t *)pA2, 6);
+        f5CmacBuffer[51] = 0x01; /* Length msB big endian = 0x01, Length = 256 */
+        f5CmacBuffer[52] = 0x00; /* Length lsB big endian = 0x00, Length = 256 */
+
+        /*! Build the least significant part of the f5 input data to compute the LTK.
+         *  It is identical to the most significant part with the exception of the counter. */
+        FLib_MemCpy(f5CmacBuffer_Counter1, f5CmacBuffer, 53u);
+        f5CmacBuffer_Counter1[0] = 1; /* Counter = 1 */
+
+        tempF5.pW = pW;
+
+        status = ELKE_BLE_SM_F5_DeriveKeysSecure(tempF5.pSSSObject, f5CmacBuffer, f5CmacBuffer_Counter1, pMacKey, pLtk);
+        if (status != kStatus_SSS_Success)
+        {
+            RAISE_ERROR(result, gSecError_c);
+        }
+        result = gSecSuccess_c;
+    } while (false);
+
+    return result;
+}
+
+/************************************************************************************
+ * \brief Function used to create the mac key and LTK using Bluetooth F5 algorithm.
+ *        Less secure version not using secure bus.
+ *
+ * \param  [out] pMacKey 128 bit MacKey output location (pointer)
+ * \param  [out] pLtk    128 bit LTK output location (pointer)
+ * \param  [in] pW       256 bit W (pointer) (DHKey)
+ * \param  [in] pN1      128 bit N1 (pointer) (Na)
+ * \param  [in] pN2      128 bit N2 (pointer) (Nb)
+ * \param  [in] a1at     8 bit A1 address type, 0 = Public, 1 = Random
+ * \param  [in] pA1      48 bit A1 (pointer) (A)
+ * \param  [in] a2at     8 bit A2 address type, 0 = Public, 1 = Random
+ * \param  [in] pA2      48 bit A2 (pointer) (B)
+ *
+ * \retval gSecSuccess_c operation succeeded
+ * \retval gSecError_c operation failed
+ *
  ************************************************************************************/
 secResultType_t SecLib_GenerateBluetoothF5Keys(uint8_t *      pMacKey,
                                                uint8_t *      pLtk,
@@ -1425,132 +1542,88 @@ secResultType_t SecLib_GenerateBluetoothF5Keys(uint8_t *      pMacKey,
                                                const uint8_t  a1at,
                                                const uint8_t *pA1,
                                                const uint8_t  a2at,
-                                               const uint8_t *pA2,
-                                               const bool_t   bSecure)
+                                               const uint8_t *pA2)
 {
     secResultType_t result     = gSecError_c;
     const uint8_t   f5KeyId[4] = {0x62, 0x74, 0x6c, 0x65}; /*!< Big Endian, "btle" */
-    uint8_t         f5CmacBuffer[1 + 4 + 16 + 16 + 7 + 7 +
-                         2]; /* Counter[1] || keyId[4] || N1[16] || N2[16] || A1[7] || A2[7] || Length[2] = 53 */
+    uint8_t         f5CmacBuffer[1 + 4 + 16 + 16 + 7 + 7 + 2];
+    /* Counter[1] || keyId[4] || N1[16] || N2[16] || A1[7] || A2[7] || Length[2] = 53 */
 
-    if (bSecure == TRUE)
+    uint8_t       f5T[16]    = {0};
+    const uint8_t f5Salt[16] = {0x6C, 0x88, 0x83, 0x91, 0xAA, 0xF5, 0xA5, 0x38,
+                                0x60, 0x37, 0x0B, 0xDB, 0x5A, 0x60, 0x83, 0xBE}; /*!< Big endian */
+
+    do
     {
-#if defined(gSecLibSssUseEncryptedKeys_d) && (gSecLibSssUseEncryptedKeys_d == 1)
-        uint8_t f5CmacBuffer_Counter1[1 + 4 + 16 + 16 + 7 + 7 + 2]; /* Counter[1] || keyId[4] || N1[16] || N2[16] ||
-                                                                       A1[7] || A2[7] || Length[2] = 53 */
-        sss_status_t status = kStatus_SSS_Fail;
-        union
-        {
-            sss_sscp_object_t *pSSSObject;
-            const uint8_t *    pW;
-        } tempF5;
-
-        /*! Check for NULL output pointers and return with proper status if this is the case. */
-        if ((NULL == pMacKey) || (NULL == pLtk))
-        {
-        }
-        else
-        {
-            /*! Build the most significant part of the f5 input data to compute the MacKey */
-            f5CmacBuffer[0] = 0; /* Counter = 0 */
-            FLib_MemCpy(&f5CmacBuffer[1], (const uint8_t *)f5KeyId, 4);
-            FLib_MemCpyReverseOrder(&f5CmacBuffer[5], (const uint8_t *)pN1, 16);
-            FLib_MemCpyReverseOrder(&f5CmacBuffer[21], (const uint8_t *)pN2, 16);
-            f5CmacBuffer[37] = 0x01U & a1at;
-            FLib_MemCpyReverseOrder(&f5CmacBuffer[38], (const uint8_t *)pA1, 6);
-            f5CmacBuffer[44] = 0x01U & a2at;
-            FLib_MemCpyReverseOrder(&f5CmacBuffer[45], (const uint8_t *)pA2, 6);
-            f5CmacBuffer[51] = 0x01; /* Length msB big endian = 0x01, Length = 256 */
-            f5CmacBuffer[52] = 0x00; /* Length lsB big endian = 0x00, Length = 256 */
-
-            /*! Build the least significant part of the f5 input data to compute the LTK.
-             *  It is identical to the most significant part with the exception of the counter. */
-            FLib_MemCpy(f5CmacBuffer_Counter1, f5CmacBuffer, 53u);
-            f5CmacBuffer_Counter1[0] = 1; /* Counter = 1 */
-
-            tempF5.pW = pW;
-            status = ELKE_BLE_SM_F5_DeriveKeys(tempF5.pSSSObject, f5CmacBuffer, f5CmacBuffer_Counter1, pMacKey, pLtk);
-            if (status == kStatus_SSS_Success)
-            {
-                result = gSecSuccess_c;
-            }
-        }
-#endif /* gSecLibSssUseEncryptedKeys_d */
-    }
-    else
-    {
-        uint8_t       f5T[16]    = {0};
-        const uint8_t f5Salt[16] = {0x6C, 0x88, 0x83, 0x91, 0xAA, 0xF5, 0xA5, 0x38,
-                                    0x60, 0x37, 0x0B, 0xDB, 0x5A, 0x60, 0x83, 0xBE}; /*!< Big endian */
-
         uint8_t tempOut[16];
 
         /*! Check for NULL output pointers and return with proper status if this is the case. */
-        if ((NULL == pMacKey) || (NULL == pLtk))
+        if ((NULL == pMacKey) || (NULL == pLtk) || (NULL == pN1) || (NULL == pN2) || (NULL == pA1) || (NULL == pA2))
         {
 #if defined(gSmDebugEnabled_d) && (gSmDebugEnabled_d == 1U)
             SmDebug_Log(gSmDebugFileSmCrypto_c, __LINE__, smDebugLogTypeError_c, 0);
 #endif /* gSmDebugEnabled_d */
+            RAISE_ERROR(result, gSecError_c);
         }
-        else
-        {
-            /*! Compute the f5 function key T using the predefined salt as key for AES-128-CAMC */
-            AES_128_CMAC_LsbFirstInput((const uint8_t *)pW, 32, (const uint8_t *)f5Salt, f5T);
 
-            /*! Build the most significant part of the f5 input data to compute the MacKey */
-            f5CmacBuffer[0] = 0; /* Counter = 0 */
-            FLib_MemCpy(&f5CmacBuffer[1], (const uint8_t *)f5KeyId, 4);
-            FLib_MemCpyReverseOrder(&f5CmacBuffer[5], (const uint8_t *)pN1, 16);
-            FLib_MemCpyReverseOrder(&f5CmacBuffer[21], (const uint8_t *)pN2, 16);
-            f5CmacBuffer[37] = 0x01U & a1at;
-            FLib_MemCpyReverseOrder(&f5CmacBuffer[38], (const uint8_t *)pA1, 6);
-            f5CmacBuffer[44] = 0x01U & a2at;
-            FLib_MemCpyReverseOrder(&f5CmacBuffer[45], (const uint8_t *)pA2, 6);
-            f5CmacBuffer[51] = 0x01; /* Length msB big endian = 0x01, Length = 256 */
-            f5CmacBuffer[52] = 0x00; /* Length lsB big endian = 0x00, Length = 256 */
+        /*! Compute the f5 function key T using the predefined salt as key for AES-128-CAMC */
+        AES_128_CMAC_LsbFirstInput((const uint8_t *)pW, 32, (const uint8_t *)f5Salt, f5T);
 
-            /*! Compute the MacKey into the temporary buffer. */
-            AES_128_CMAC(f5CmacBuffer, sizeof(f5CmacBuffer), f5T, tempOut);
+        /*! Build the most significant part of the f5 input data to compute the MacKey */
+        f5CmacBuffer[0] = 0; /* Counter = 0 */
+        FLib_MemCpy(&f5CmacBuffer[1], (const uint8_t *)f5KeyId, 4);
+        FLib_MemCpyReverseOrder(&f5CmacBuffer[5], (const uint8_t *)pN1, 16);
+        FLib_MemCpyReverseOrder(&f5CmacBuffer[21], (const uint8_t *)pN2, 16);
+        f5CmacBuffer[37] = 0x01U & a1at;
+        FLib_MemCpyReverseOrder(&f5CmacBuffer[38], (const uint8_t *)pA1, 6);
+        f5CmacBuffer[44] = 0x01U & a2at;
+        FLib_MemCpyReverseOrder(&f5CmacBuffer[45], (const uint8_t *)pA2, 6);
+        f5CmacBuffer[51] = 0x01; /* Length msB big endian = 0x01, Length = 256 */
+        f5CmacBuffer[52] = 0x00; /* Length lsB big endian = 0x00, Length = 256 */
 
-            /*! Copy the MacKey to the output location
-             *  in reverse order. The CMAC result is generated MSB first. */
-            FLib_MemCpyReverseOrder(pMacKey, (const uint8_t *)tempOut, 16);
+        /*! Compute the MacKey into the temporary buffer. */
+        AES_128_CMAC(f5CmacBuffer, sizeof(f5CmacBuffer), f5T, tempOut);
 
-            /*! Build the least significant part of the f5 input data to compute the MacKey.
-             *  It is identical to the most significant part with the exception of the counter. */
-            f5CmacBuffer[0] = 1; /* Counter = 1 */
+        /*! Copy the MacKey to the output location
+         *  in reverse order. The CMAC result is generated MSB first. */
+        FLib_MemCpyReverseOrder(pMacKey, (const uint8_t *)tempOut, 16);
 
-            /*! Compute the LTK into the temporary buffer. */
-            AES_128_CMAC(f5CmacBuffer, sizeof(f5CmacBuffer), f5T, tempOut);
+        /*! Build the least significant part of the f5 input data to compute the MacKey.
+         *  It is identical to the most significant part with the exception of the counter. */
+        f5CmacBuffer[0] = 1; /* Counter = 1 */
 
-            /*! Copy the LTK to the output location
-             *  in reverse order. The CMAC result is generated MSB first. */
-            FLib_MemCpyReverseOrder(pLtk, (const uint8_t *)tempOut, 16);
+        /*! Compute the LTK into the temporary buffer. */
+        AES_128_CMAC(f5CmacBuffer, sizeof(f5CmacBuffer), f5T, tempOut);
 
-            result = gSecSuccess_c;
-        }
-    }
+        /*! Copy the LTK to the output location
+         *  in reverse order. The CMAC result is generated MSB first. */
+        FLib_MemCpyReverseOrder(pLtk, (const uint8_t *)tempOut, 16);
+
+        result = gSecSuccess_c;
+
+    } while (false);
 
     return result;
 }
 
 /************************************************************************************
- * \brief Function used to derive the Bluetooth SKD used in LL encryption
+ * \brief Function used to derive the Bluetooth SKD used in LL encryption.
+ *        Only to be called for applications activating encrypted key blobs.
  *
  * \param  [in] pInSKD   pointer to the received SKD (16-byte array)
  * \param  [in] pLtkBlob pointer to the blob (40-byte array)
+ * \param  [in] bOpenKey  if TRUE sends derived key to NBU
  * \param  [out] pOutSKD pointer to the resulted SKD (16-byte array)
  *
  * \retval gSecSuccess_c operation succeeded
  * \retval gSecError_c operation failed
  ************************************************************************************/
-secResultType_t SecLib_DeriveBluetoothSKD(const uint8_t *pInSKD,
-                                          const uint8_t *pLtkBlob,
-                                          bool_t         bOpenKey,
-                                          uint8_t *      pOutSKD)
+secResultType_t SecLib_DeriveBluetoothSKDSecure(const uint8_t *pInSKD,
+                                                const uint8_t *pLtkBlob,
+                                                bool_t         bOpenKey,
+                                                uint8_t *      pOutSKD)
 {
-    secResultType_t result = gSecError_c;
-#if gSecLibSssUseEncryptedKeys_d
+    secResultType_t       result     = gSecError_c;
     size_t                eskByteLen = 16U;
     size_t                keyBitLen  = 128U;
     sss_sscp_object_t     keyObjLTK;
@@ -1622,13 +1695,15 @@ secResultType_t SecLib_DeriveBluetoothSKD(const uint8_t *pInSKD,
 
         if (bOpenKey == TRUE)
         {
+            sss_status_t ret;
             /* Generate random NBU_DKEY_SK and send it to NBU */
             PLATFORM_RemoteActiveReq();
-            if (sss_sscp_key_store_open_internal_key(&g_keyStore, kSSS_internalKey_NBU_DKEY_SK) != kStatus_SSS_Success)
+            ret = sss_sscp_key_store_open_internal_key(&g_keyStore, kSSS_internalKey_NBU_DKEY_SK);
+            PLATFORM_RemoteActiveRel();
+            if (kStatus_SSS_Success != ret)
             {
                 break;
             }
-            PLATFORM_RemoteActiveRel();
         }
 
         if (sss_sscp_key_store_export_key(&g_keyStore, &keyObjSK, pOutSKD, &eskByteLen, kSSS_blobType_NBU_ESK_blob) !=
@@ -1643,19 +1718,18 @@ secResultType_t SecLib_DeriveBluetoothSKD(const uint8_t *pInSKD,
     /* de-allocate derive context and keys in S200 */
     if (bDeriveKeyContextInitialized == true)
     {
-        sss_sscp_derive_key_context_free(&ctxDeriveKey);
+        (void)sss_sscp_derive_key_context_free(&ctxDeriveKey);
     }
     if (bLTKObjectInitialized == true)
     {
-        sss_sscp_key_object_free(&keyObjLTK, kSSS_keyObjFree_KeysStoreNoDefragment);
+        (void)sss_sscp_key_object_free(&keyObjLTK, kSSS_keyObjFree_KeysStoreNoDefragment);
     }
     if (bSKObjectInitialized == true)
     {
-        sss_sscp_key_object_free(&keyObjSK, kSSS_keyObjFree_KeysStoreNoDefragment);
+        (void)sss_sscp_key_object_free(&keyObjSK, kSSS_keyObjFree_KeysStoreNoDefragment);
     }
 
     SECLIB_MUTEX_UNLOCK();
-#endif /* gSecLibSssUseEncryptedKeys_d */
     return result;
 }
 
@@ -1672,10 +1746,9 @@ secResultType_t SecLib_DeriveBluetoothSKD(const uint8_t *pInSKD,
  * \return gSecSuccess_c or error
  *
  ************************************************************************************/
-secResultType_t SecLib_ObfuscateKey(const uint8_t *pKey, uint8_t *pBlob, const uint8_t blobType)
+secResultType_t SecLib_ObfuscateKeySecure(const uint8_t *pKey, uint8_t *pBlob, const uint8_t blobType)
 {
-    secResultType_t result = gSecError_c;
-#if defined(gSecLibSssUseEncryptedKeys_d) && (gSecLibSssUseEncryptedKeys_d == 1U)
+    secResultType_t   result = gSecError_c;
     size_t            blobByteLen;
     sss_sscp_object_t keyObj;
     bool_t            keyInit = false;
@@ -1725,7 +1798,6 @@ secResultType_t SecLib_ObfuscateKey(const uint8_t *pKey, uint8_t *pBlob, const u
         (void)sss_sscp_key_object_free(&keyObj, kSSS_keyObjFree_KeysStoreNoDefragment);
     }
     SECLIB_MUTEX_UNLOCK();
-#endif /* gSecLibSssUseEncryptedKeys_d */
     return result;
 }
 
@@ -1739,10 +1811,9 @@ secResultType_t SecLib_ObfuscateKey(const uint8_t *pKey, uint8_t *pBlob, const u
  * \return gSecSuccess_c or error
  *
  ************************************************************************************/
-secResultType_t SecLib_DeobfuscateKey(const uint8_t *pBlob, uint8_t *pKey)
+secResultType_t SecLib_DeobfuscateKeySecure(const uint8_t *pBlob, uint8_t *pKey)
 {
-    secResultType_t result = gSecError_c;
-#if defined(gSecLibSssUseEncryptedKeys_d) && (gSecLibSssUseEncryptedKeys_d == 1U)
+    secResultType_t   result    = gSecError_c;
     size_t            keyBitLen = 128U, keyByteLen = 16U;
     sss_sscp_object_t keyObj;
     bool_t            keyInit = false;
@@ -1789,132 +1860,161 @@ secResultType_t SecLib_DeobfuscateKey(const uint8_t *pBlob, uint8_t *pKey)
         (void)sss_sscp_key_object_free(&keyObj, kSSS_keyObjFree_KeysStoreNoDefragment);
     }
     SECLIB_MUTEX_UNLOCK();
-#endif /* gSecLibSssUseEncryptedKeys_d */
+    return result;
+}
+
+/*! *********************************************************************************
+ * \brief  This function implements the SMP ah cryptographic toolbox function which
+           calculates the hash part of a Resolvable Private Address.
+ *         The key is kept in plaintext.
+ *
+ * \param[out]  pHash  Pointer where the 24 bit hash of a Resolvable Private Address value
+ *                     will be written.
+ *
+ * \param[in]  pKey  Pointer to the 128 bit key.
+ *
+ * \param[in]  pR   Pointer to the 24 bit random value (Prand) of a Resolvable private Address.
+ *                  The most significant bits of this field must be 0b01 for Resolvable Private
+ *                  Addresses.
+ *
+ * \retval  gSecSuccess_c  All operations were successful.
+ * \retval  gSecError_c The call failed.
+ *
+ ********************************************************************************** */
+secResultType_t SecLib_VerifyBluetoothAh(uint8_t *pHash, const uint8_t *pKey, const uint8_t *pR)
+{
+    secResultType_t result           = gSecError_c;
+    uint8_t         tempAddrPart[16] = {0};
+    uint8_t         tempOutHash[16];
+    uint8_t         tempKey[16];
+    do
+    {
+        /*! Check for NULL output pointers and return with proper status if this is the case. */
+        if ((NULL == pHash) || (NULL == pKey) || (NULL == pR))
+        {
+            break;
+        }
+        /* Initialize the r' value in the temporary location. 3 bytes of ramdom value.
+         *  Initialize it reversed for AES.
+         */
+        for (int i = 0; i < 3; i++)
+        {
+            tempAddrPart[15 - i] = pR[i];
+        }
+        /* Regular operation with plaintext key */
+        /*! Reverse the Key and place it in a temporary location. */
+        FLib_MemCpyReverseOrder(tempKey, (const uint8_t *)pKey, 16);
+
+        /*! Compute the hash. */
+        AES_128_Encrypt(tempAddrPart, tempKey, tempOutHash);
+
+        /*! Copy the relevant bytes to the output. */
+        pHash[0] = tempOutHash[15];
+        pHash[1] = tempOutHash[14];
+        pHash[2] = tempOutHash[13];
+
+        result = gSecSuccess_c;
+
+    } while (false);
+
     return result;
 }
 
 /*! *********************************************************************************
  * \brief  This function implements the SMP ah cryptographic toolbox function which calculates the
  *         hash part of a Resolvable Private Address.
+ *         The key is kept in a secure blob. It is never exposed on non secure bus.
  *
  * \param[out]  pHash  Pointer where the 24 bit hash value will be written.
+ *                     24 bit hash field of a Resolvable Private Address (output)
  *
  * \param[in]  pKey  Pointer to the 128 bit key.
  *
- * \param[in]  pR   Pointer to the 24 bit random value (Prand).
+ * \param[in]  pR   Pointer to the 24 bit random value (Prand). 24 bit random part of a Resolvable private Address.
  *                  The most significant bits of this field must be 0b01 for Resolvable Private Addresses.
- *
- * \param[in]  bIsKeyObfuscated   Specify if pKey is in plaintext or obfuscated.
  *
  * \retval  gSecSuccess_c  All operations were successful.
  * \retval  gSecError_c The call failed.
  *
  ********************************************************************************** */
-secResultType_t SecLib_VerifyBluetoothAh(
-    uint8_t *      pHash, /*!< 24 bit hash field of a Resolvable Private Address (output) */
-    const uint8_t *pKey,  /*!< 128 bit key (pointer) */
-    const uint8_t *pR,    /*!< 24 bit random part of a Resolvable private Address */
-    const bool_t   bIsKeyObfuscated)
+secResultType_t SecLib_VerifyBluetoothAhSecure(uint8_t *pHash, const uint8_t *pKey, const uint8_t *pR)
 {
-    const uint8_t temp[16] = {
-        0x00, 0x00, 0x00, 0x00, 0x00,  0x00,  0x00, 0x00, 0x00,
-        0x00, 0x00, 0x00, 0x00, pR[2], pR[1], pR[0]}; /*!< Initialize the r' value in the temporary location.
-                                                       *   Initialize it reversed for AES. */
-    uint8_t         tempOutHash[16];
-    uint8_t         tempKey[16];
-    secResultType_t result = gSecSuccess_c;
+    secResultType_t result = gSecError_c;
 
-    /*! Check for NULL output pointers and return with proper status if this is the case. */
-    if (NULL == pHash)
+    sss_sscp_object_t    keyObj;
+    sss_sscp_symmetric_t context;
+    bool_t               keyInit          = false;
+    bool_t               contextInit      = false;
+    uint8_t              tempAddrPart[16] = {0};
+    uint8_t              tempFullHash[16] = {0};
+    SECLIB_MUTEX_LOCK();
+    do
     {
-        result = gSecError_c;
-    }
-    else
+        /*! Check for NULL output pointers and return with proper status if this is the case. */
+        if ((NULL == pHash) || (NULL == pR) || (NULL == pKey))
+        {
+            break;
+        }
+        if ((CRYPTO_InitHardware()) != kStatus_Success)
+        {
+            break;
+        }
+
+        if (sss_sscp_key_object_init(&keyObj, &g_keyStore) != kStatus_SSS_Success)
+        {
+            break;
+        }
+        keyInit = true;
+
+        if (sss_sscp_key_object_allocate_handle(&keyObj, 0, kSSS_KeyPart_Default, kSSS_CipherType_NONE, 16u,
+                                                SSS_KEYPROP_OPERATION_AES) != kStatus_SSS_Success)
+        {
+            break;
+        }
+
+        if (sss_sscp_key_store_import_key(&g_keyStore, &keyObj, pKey, 40U, 8U * 40U, kSSS_blobType_ELKE_blob) !=
+            kStatus_SSS_Success)
+        {
+            break;
+        }
+
+        if (sss_sscp_symmetric_context_init(&context, g_keyStore.session, &keyObj, kAlgorithm_SSS_AES_ECB,
+                                            kMode_SSS_Encrypt) != kStatus_SSS_Success)
+        {
+            break;
+        }
+        contextInit = true;
+
+        /* Initialize the r' value in the temporary location. 3 bytes of ramdom value.
+         *  Initialize it reversed for AES.
+         */
+        for (int i = 0; i < 3; i++)
+        {
+            tempAddrPart[15 - i] = pR[i];
+        }
+
+        if (sss_sscp_cipher_one_go(&context, NULL, 0, tempAddrPart, tempFullHash, 16U) != kStatus_SSS_Success)
+        {
+            break;
+        }
+
+        pHash[0] = tempFullHash[15];
+        pHash[1] = tempFullHash[14];
+        pHash[2] = tempFullHash[13];
+
+        result = gSecSuccess_c;
+
+    } while (false);
+
+    if (keyInit == true)
     {
-        /* Regular operation with plaintext key */
-        if (bIsKeyObfuscated == false)
-        {
-            /*! Reverse the Key and place it in a temporary location. */
-            FLib_MemCpyReverseOrder(tempKey, (const uint8_t *)pKey, 16);
-
-            /*! Compute the hash. */
-            AES_128_Encrypt(temp, tempKey, tempOutHash);
-
-            /*! Copy the relevant bytes to the output. */
-            pHash[0] = tempOutHash[15];
-            pHash[1] = tempOutHash[14];
-            pHash[2] = tempOutHash[13];
-        }
-#if defined(gSecLibSssUseEncryptedKeys_d) && (gSecLibSssUseEncryptedKeys_d == 1)
-        /* Operation with blob */
-        else
-        {
-            sss_sscp_object_t    keyObj;
-            sss_sscp_symmetric_t context;
-            bool_t               keyInit = false, contextInit = false;
-            result                   = gSecError_c;
-            uint8_t tempAddrPart[16] = {0};
-            uint8_t tempFullHash[16] = {0};
-            SECLIB_MUTEX_LOCK();
-            do
-            {
-                if ((CRYPTO_InitHardware()) != kStatus_Success)
-                {
-                    break;
-                }
-
-                if (sss_sscp_key_object_init(&keyObj, &g_keyStore) != kStatus_SSS_Success)
-                {
-                    break;
-                }
-                keyInit = true;
-
-                if (sss_sscp_key_object_allocate_handle(&keyObj, 0, kSSS_KeyPart_Default, kSSS_CipherType_NONE, 16u,
-                                                        SSS_KEYPROP_OPERATION_AES) != kStatus_SSS_Success)
-                {
-                    break;
-                }
-
-                if (sss_sscp_key_store_import_key(&g_keyStore, &keyObj, pKey, 40U, 8U * 40U, kSSS_blobType_ELKE_blob) !=
-                    kStatus_SSS_Success)
-                {
-                    break;
-                }
-
-                if (sss_sscp_symmetric_context_init(&context, g_keyStore.session, &keyObj, kAlgorithm_SSS_AES_ECB,
-                                                    kMode_SSS_Encrypt) != kStatus_SSS_Success)
-                {
-                    break;
-                }
-                contextInit = true;
-
-                tempAddrPart[13] = pR[2];
-                tempAddrPart[14] = pR[1];
-                tempAddrPart[15] = pR[0];
-
-                if (sss_sscp_cipher_one_go(&context, NULL, 0, tempAddrPart, tempFullHash, 16U) != kStatus_SSS_Success)
-                {
-                    break;
-                }
-
-                pHash[0] = tempFullHash[15];
-                pHash[1] = tempFullHash[14];
-                pHash[2] = tempFullHash[13];
-
-                result = gSecSuccess_c;
-            } while (false);
-            if (keyInit == true)
-            {
-                (void)sss_sscp_key_object_free(&keyObj, kSSS_keyObjFree_KeysStoreNoDefragment);
-            }
-            if (contextInit == true)
-            {
-                (void)sss_sscp_symmetric_context_free(&context);
-            }
-            SECLIB_MUTEX_UNLOCK();
-        }
-#endif /* gSecLibSssUseEncryptedKeys_d */
+        (void)sss_sscp_key_object_free(&keyObj, kSSS_keyObjFree_KeysStoreNoDefragment);
     }
+    if (contextInit == true)
+    {
+        (void)sss_sscp_symmetric_context_free(&context);
+    }
+    SECLIB_MUTEX_UNLOCK();
     return result;
 }
 
@@ -1933,10 +2033,10 @@ void dump_octet_string(const char *str, const unsigned char *data, size_t len)
 }
 #endif
 
-#if defined(gSecLibSssUseEncryptedKeys_d) && (gSecLibSssUseEncryptedKeys_d == 1)
 /************************************************************************************
  * \private
  * \brief Function used to create the mac key and LTK using Bluetooth F5 algorithm
+ *        Only ever called in the secure (Key blobs) variant of the F5,
  *
  * \param  [in] pDhKey                   pointer to DH Key object
  * \param  [in] pDerivationDataMacKey    derivation data for MacKey
@@ -1946,11 +2046,11 @@ void dump_octet_string(const char *str, const unsigned char *data, size_t len)
  *
  * \return sss_status_t
  ************************************************************************************/
-static sss_status_t ELKE_BLE_SM_F5_DeriveKeys(sss_sscp_object_t *pPubDhKey,
-                                              const uint8_t *    pDerivationDataMacKey,
-                                              const uint8_t *    pDerivationDataLTK,
-                                              uint8_t *          pMacKey,
-                                              uint8_t *          pLTKBlob)
+static sss_status_t ELKE_BLE_SM_F5_DeriveKeysSecure(sss_sscp_object_t *pPubDhKey,
+                                                    const uint8_t *    pDerivationDataMacKey,
+                                                    const uint8_t *    pDerivationDataLTK,
+                                                    uint8_t *          pMacKey,
+                                                    uint8_t *          pLTKBlob)
 {
     sss_sscp_object_t     keyObj__MacKey;
     sss_sscp_object_t     keyObj__LTK;
@@ -2075,14 +2175,12 @@ static sss_status_t ELKE_BLE_SM_F5_DeriveKeys(sss_sscp_object_t *pPubDhKey,
  * \param[in] blobOutput true - blob, false - plain text output.
  *
  * \param[out] pOut   the address of the buffer to store the key.
+ *                    Storage for sss_sscp_object_t key reference
  *
  * \return gSecSuccess_c or error
  *
  ************************************************************************************/
-secResultType_t SecLib_GenerateSymmetricKey(const uint32_t keySize,
-                                            const bool_t   blobOutput, /* 1 - blob, 0 - plaintext */
-                                            void *         pOut        /* Storage for sss_sscp_object_t key reference */
-)
+secResultType_t SecLib_GenerateSymmetricKey(const uint32_t keySize, const bool_t blobOutput, void *pOut)
 {
     secResultType_t   result     = gSecError_c;
     bool_t            keyObjFree = false;
@@ -2155,10 +2253,10 @@ secResultType_t SecLib_GenerateSymmetricKey(const uint32_t keySize,
  * \return gSecSuccess_c or error
  *
  ************************************************************************************/
-secResultType_t SecLib_GenerateBluetoothEIRKBlob(const void * pIRK,
-                                                 const bool_t blobInput,
-                                                 const bool_t generateDKeyIRK,
-                                                 uint8_t *    pOutEIRKblob)
+secResultType_t SecLib_GenerateBluetoothEIRKBlobSecure(const void * pIRK,
+                                                       const bool_t blobInput,
+                                                       const bool_t generateDKeyIRK,
+                                                       uint8_t *    pOutEIRKblob)
 {
     secResultType_t   result     = gSecError_c;
     bool_t            keyObjFree = false;
@@ -2204,13 +2302,15 @@ secResultType_t SecLib_GenerateBluetoothEIRKBlob(const void * pIRK,
 
         if (generateDKeyIRK == true)
         {
+            sss_status_t ret;
             /* Generate random NBU_DKEY_IRK and send it to NBU */
             PLATFORM_RemoteActiveReq();
-            if (kStatus_SSS_Success != sss_sscp_key_store_open_internal_key(&g_keyStore, kSSS_internalKey_NBU_DKEY_IRK))
+            ret = sss_sscp_key_store_open_internal_key(&g_keyStore, kSSS_internalKey_NBU_DKEY_IRK);
+            PLATFORM_RemoteActiveRel();
+            if (kStatus_SSS_Success != ret)
             {
                 break;
             }
-            PLATFORM_RemoteActiveRel();
         }
 
         size_t eirkBlobByteLen = gSecLibEirkBlobSize_c;
@@ -2237,7 +2337,6 @@ secResultType_t SecLib_GenerateBluetoothEIRKBlob(const void * pIRK,
     SECLIB_MUTEX_UNLOCK();
     return result;
 }
-#endif /* gSecLibSssUseEncryptedKeys_d */
 
 /************************************************************************************
  * \brief Computes the Edgelock to Edgelock key for an ECDH P256 key pair.
@@ -2248,11 +2347,10 @@ secResultType_t SecLib_GenerateBluetoothEIRKBlob(const void * pIRK,
  * \return gSecSuccess_c or error
  *
  ************************************************************************************/
-secResultType_t ECDH_P256_ComputeA2BKey(const ecdhPublicKey_t *pInPeerPublicKey, ecdhDhKey_t *pOutE2EKey)
+secResultType_t ECDH_P256_ComputeA2BKeySecure(const ecdhPublicKey_t *pInPeerPublicKey, ecdhDhKey_t *pOutE2EKey)
 {
-    secResultType_t ret = gSecError_c;
-#if defined(gSecLibSssUseEncryptedKeys_d) && (gSecLibSssUseEncryptedKeys_d == 1U)
-    uint8_t *wrk_buf = NULL;
+    secResultType_t ret     = gSecError_c;
+    uint8_t *       wrk_buf = NULL;
     SECLIB_MUTEX_LOCK();
     sss_ecdh_context_t ecdh_ctx = {0};
     do
@@ -2270,7 +2368,7 @@ secResultType_t ECDH_P256_ComputeA2BKey(const ecdhPublicKey_t *pInPeerPublicKey,
             RAISE_ERROR(ret, gSecAllocError_c);
         }
         ecdh_ctx.ecdh_key_pair = pECPKeyPair;
-        ecp_p256_copy_and_change_endiannes((ecdhPoint_t *)&ecdh_ctx.Qp, (const uint8_t *)&pInPeerPublicKey->raw[0]);
+        ECP256_PointCopy_and_change_endianness((uint8_t *)&ecdh_ctx.Qp, (const uint8_t *)&pInPeerPublicKey->raw[0]);
         ecdh_ctx.keepSharedSecret = true;
 
         if (sss_ecdh_calc_EL2EL_key(&ecdh_ctx, wrk_buf, wrk_buf_sz) != kStatus_Success)
@@ -2284,7 +2382,6 @@ secResultType_t ECDH_P256_ComputeA2BKey(const ecdhPublicKey_t *pInPeerPublicKey,
 
     } while (false);
     SECLIB_MUTEX_UNLOCK();
-#endif /* defined(gSecLibSssUseEncryptedKeys_d) && (gSecLibSssUseEncryptedKeys_d == 1U) */
     return ret;
 }
 
@@ -2296,19 +2393,20 @@ secResultType_t ECDH_P256_ComputeA2BKey(const ecdhPublicKey_t *pInPeerPublicKey,
  * \return gSecSuccess_c or error
  *
  ************************************************************************************/
-secResultType_t ECDH_P256_FreeE2EKeyData(ecdhDhKey_t *pE2EKeyData)
+secResultType_t ECDH_P256_FreeE2EKeyDataSecure(ecdhDhKey_t *pE2EKeyData)
 {
     secResultType_t result = gSecError_c;
-#if defined(gSecLibSssUseEncryptedKeys_d) && (gSecLibSssUseEncryptedKeys_d == 1U)
-    sscp_status_t status = kStatus_SSCP_Fail;
+    sscp_status_t   status = kStatus_SSCP_Fail;
 
-    status = sss_sscp_key_object_free((sss_sscp_object_t *)pE2EKeyData, kSSS_keyObjFree_KeysStoreNoDefragment);
+    /* turn into void* first to avoid MISRA 11.3 */
+    void *pKeyData = pE2EKeyData;
+
+    status = sss_sscp_key_object_free((sss_sscp_object_t *)pKeyData, kSSS_keyObjFree_KeysStoreNoDefragment);
 
     if (kStatus_SSS_Success == status)
     {
         result = gSecSuccess_c;
     }
-#endif /* defined(gSecLibSssUseEncryptedKeys_d) && (gSecLibSssUseEncryptedKeys_d == 1U) */
     return result;
 }
 
@@ -2322,10 +2420,9 @@ secResultType_t ECDH_P256_FreeE2EKeyData(ecdhDhKey_t *pE2EKeyData)
  * \return gSecSuccess_c or error
  *
  ************************************************************************************/
-secResultType_t SecLib_ExportA2BBlob(const void *pKey, const secInputKeyType_t keyType, uint8_t *pOutKey)
+secResultType_t SecLib_ExportA2BBlobSecure(const void *pKey, const secInputKeyType_t keyType, uint8_t *pOutKey)
 {
-    secResultType_t result = gSecError_c;
-#if defined(gSecLibSssUseEncryptedKeys_d) && (gSecLibSssUseEncryptedKeys_d == 1U)
+    secResultType_t   result     = gSecError_c;
     bool_t            keyObjFree = false;
     sss_sscp_object_t keyObj;
 
@@ -2413,7 +2510,6 @@ secResultType_t SecLib_ExportA2BBlob(const void *pKey, const secInputKeyType_t k
     {
         (void)sss_sscp_key_object_free(&keyObj, kSSS_keyObjFree_KeysStoreNoDefragment);
     }
-#endif /* defined(gSecLibSssUseEncryptedKeys_d) && (gSecLibSssUseEncryptedKeys_d == 1U) */
     return result;
 }
 
@@ -2427,10 +2523,9 @@ secResultType_t SecLib_ExportA2BBlob(const void *pKey, const secInputKeyType_t k
  * \return gSecSuccess_c or error
  *
  ************************************************************************************/
-secResultType_t SecLib_ImportA2BBlob(const uint8_t *pKey, const secInputKeyType_t keyType, uint8_t *pOutKey)
+secResultType_t SecLib_ImportA2BBlobSecure(const uint8_t *pKey, const secInputKeyType_t keyType, uint8_t *pOutKey)
 {
-    secResultType_t result = gSecError_c;
-#if defined(gSecLibSssUseEncryptedKeys_d) && (gSecLibSssUseEncryptedKeys_d == 1U)
+    secResultType_t   result    = gSecError_c;
     size_t            keyBitLen = 128U, keyByteLen = 16U;
     sss_sscp_object_t keyObj;
     bool_t            keyInit = false;
@@ -2534,6 +2629,5 @@ secResultType_t SecLib_ImportA2BBlob(const uint8_t *pKey, const secInputKeyType_
     {
         (void)sss_sscp_key_object_free(&keyObj, kSSS_keyObjFree_KeysStoreNoDefragment);
     }
-#endif /* defined(gSecLibSssUseEncryptedKeys_d) && (gSecLibSssUseEncryptedKeys_d == 1U) */
     return result;
 }

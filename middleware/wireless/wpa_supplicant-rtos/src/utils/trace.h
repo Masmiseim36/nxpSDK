@@ -14,7 +14,7 @@
 #ifdef WPA_TRACE
 #include <execinfo.h>
 
-#include "list.h"
+#include "dl_list.h"
 
 #define WPA_TRACE_INFO           \
     void *btrace[WPA_TRACE_LEN]; \

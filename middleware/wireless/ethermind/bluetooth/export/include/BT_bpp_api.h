@@ -1614,7 +1614,7 @@ API_RESULT BT_bpp_printer_shutdown(void);
 /**
  *  \brief To start an instance of BPP Printer Service with specified feature as
  *         given by the bpp_service_type parameter on a given channel specified
- *         by ‘bpp_channel_type’.
+ *         by 'bpp_channel_type'.
  *
  *  \par Description:
  *       This API starts a BPP Printer instance for a specified feature.
@@ -1697,7 +1697,7 @@ API_RESULT BT_bpp_printer_stop
            );
 /**
  *  \brief To establish the BPP session connection between Printer and Sender on
- *         a given channel specified by ‘bpp_channel_type’ parameter.
+ *         a given channel specified by 'bpp_channel_type' parameter.
  *
  *  \par Description:
  *       This API establishes the BPP transport & profile level connection with
@@ -1865,7 +1865,7 @@ API_RESULT bpp_printer_get_operation
 
 /**
  *  \brief To send response to the latest request received over
- *         ‘bpp_channel_type’ channel from the BPP Sender.
+ *         'bpp_channel_type' channel from the BPP Sender.
  *
  *  \par Description:
  *       This API is used to send the response to the requests made by

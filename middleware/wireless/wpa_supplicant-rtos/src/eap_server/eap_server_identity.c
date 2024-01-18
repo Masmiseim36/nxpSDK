@@ -8,7 +8,7 @@
 
 #include "includes.h"
 
-#include "common.h"
+#include "utils/common.h"
 #include "eap_i.h"
 
 struct eap_identity_data

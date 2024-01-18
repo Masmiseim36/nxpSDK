@@ -1148,6 +1148,11 @@ int os_rwlock_create_with_cb(os_rw_lock_t *plock, const char *mutex_name, const 
     {
         return -WM_FAIL;
     }
+    ret     = os_mutex_create(&(plock->write_mutex), mutex_name, OS_MUTEX_INHERIT);
+    if (ret == -WM_FAIL)
+    {
+        return -WM_FAIL;
+    }
     ret = os_semaphore_create(&(plock->rw_lock), lock_name);
     if (ret == -WM_FAIL)
     {
@@ -1235,6 +1240,8 @@ void os_rwlock_delete(os_rw_lock_t *lock)
         (void)os_semaphore_delete(&(lock->rw_lock));
     if (lock->reader_mutex)
         (void)os_mutex_delete(&(lock->reader_mutex));
+    if (lock->write_mutex)
+        os_mutex_delete(&(lock->write_mutex));
     lock->reader_count = 0;
 }
 
@@ -1373,6 +1380,8 @@ void os_dump_mem_stats(void)
 
     vPortGetHeapStats(&HS);
 
+    os_exit_critical_section(sta);
+
     (void)PRINTF("\n\r");
     (void)PRINTF("Heap size ---------------------- : %d\n\r", HS.xAvailableHeapSpaceInBytes);
     (void)PRINTF("Largest Free Block size -------- : %d\n\r", HS.xSizeOfLargestFreeBlockInBytes);
@@ -1381,8 +1390,6 @@ void os_dump_mem_stats(void)
     (void)PRINTF("Total successful allocations --- : %d\n\r", HS.xNumberOfSuccessfulAllocations);
     (void)PRINTF("Total successful frees --------- : %d\n\r", HS.xNumberOfSuccessfulFrees);
     (void)PRINTF("Min Free since system boot ----- : %d\n\r", HS.xMinimumEverFreeBytesRemaining);
-
-    os_exit_critical_section(sta);
 }
 #endif
 
@@ -1397,3 +1404,4 @@ void os_enable_all_interrupts(void)
 {
     taskENABLE_INTERRUPTS();
 }
+

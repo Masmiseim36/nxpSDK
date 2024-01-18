@@ -272,7 +272,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state>Pa082,Pa050,Pa089,Go029,Pe188,Pe111,Pe236,Pe546</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -309,11 +309,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa089,Go029,Pe188,Pe111,Pe236,Pe546</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -376,7 +376,6 @@
           <state>$PROJ_DIR$/../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos</state>
           <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/widgets</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/widgets/assets</state>
           <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl</state>
           <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lvgl</state>
@@ -1382,7 +1381,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state>Pa082,Pa050,Pa089,Go029,Pe188,Pe111,Pe236,Pe546</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1419,11 +1418,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa089,Go029,Pe188,Pe111,Pe236,Pe546</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -1486,7 +1485,6 @@
           <state>$PROJ_DIR$/../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos</state>
           <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/widgets</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/widgets/assets</state>
           <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl</state>
           <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lvgl</state>
@@ -2491,7 +2489,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state>Pa082,Pa050,Pa089,Go029,Pe188,Pe111,Pe236,Pe546</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -2528,11 +2526,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa089,Go029,Pe188,Pe111,Pe236,Pe546</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -2595,7 +2593,6 @@
           <state>$PROJ_DIR$/../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos</state>
           <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/widgets</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/widgets/assets</state>
           <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl</state>
           <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lvgl</state>
@@ -3601,7 +3598,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state>Pa082,Pa050,Pa089,Go029,Pe188,Pe111,Pe236,Pe546</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -3638,11 +3635,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa089,Go029,Pe188,Pe111,Pe236,Pe546</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -3705,7 +3702,6 @@
           <state>$PROJ_DIR$/../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos</state>
           <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/widgets</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/widgets/assets</state>
           <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl</state>
           <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lvgl</state>
@@ -4489,7 +4485,7 @@
   <group>
     <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
   <group>
@@ -4624,6 +4620,18 @@
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_smartdma_prv.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_smartdma_rt500.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_smartdma_rt500.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_smartdma_mcxn.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_smartdma_mcxn.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_soc_mipi_dsi.h</name>
     </file>
     <file>
@@ -4751,6 +4759,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console_lite/fsl_assert.h</name>
     </file>
   </group>
   <group>
@@ -5143,6 +5154,18 @@
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/stm32_dma2d/lv_gpu_stm32_dma2d.h</name>
+            </file>
+          </group>
+          <group>
+            <name>renesas</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/renesas/lv_gpu_d2_ra6m3.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/renesas/lv_gpu_d2_ra6m3.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/renesas/lv_gpu_d2_draw_label.c</name>
             </file>
           </group>
           <group>

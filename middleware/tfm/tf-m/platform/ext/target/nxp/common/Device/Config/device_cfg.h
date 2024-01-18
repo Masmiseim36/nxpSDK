@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2017-2019 Arm Limited. All rights reserved.
- * Copyright 2019-2021 NXP. All rights reserved.
+ * Copyright 2019-2023 NXP. All rights reserved.
  *
  * Licensed under the Apache License Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,17 +28,7 @@
  * This is a default device configuration file with all peripherals enabled.
  */
 
-/* ARM SCC */
-//TBD
-
-/* ARM Memory Protection Controller (MPC)*/
-//TBD
-
-/* ARM Peripheral Protection Controllers (PPC) */
-//TBD
-
-/*ARM UART Controller */
-//TBD
+#define DEFAULT_UART_CONTROL 0
 
 /* Default UART baud rate */
 #define DEFAULT_UART_BAUDRATE 115200

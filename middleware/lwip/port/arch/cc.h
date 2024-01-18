@@ -33,7 +33,7 @@
 
 /*
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018, 2020-2022 NXP
+ * Copyright 2016-2018, 2020-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -116,21 +116,16 @@ typedef u32_t mem_ptr_t;
 
 #include "cmsis_compiler.h"
 
-#ifdef LWIP_DEBUG
 #ifndef LWIP_PLATFORM_DIAG
 #include "fsl_debug_console.h"
 
 // non-fatal, print a message.
 #define LWIP_PLATFORM_DIAG(x) \
-  do                          \
-  {                           \
-    PRINTF x;                 \
-    PRINTF("\r\n");           \
-  } while (0)
+    do                        \
+    {                         \
+        PRINTF x;             \
+    } while (0)
 #endif /* LWIP_PLATFORM_DIAG */
-#else
-#define LWIP_PLATFORM_DIAG(x)
-#endif
 
 #include "sys_arch.h"
 

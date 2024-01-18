@@ -367,6 +367,14 @@ ip6_forward(struct pbuf *p, struct ip6_hdr *iphdr, struct netif *inp)
 {
   struct netif *netif;
 
+#ifdef LWIP_HOOK_IP6_CANFORWARD
+  int ret = LWIP_HOOK_IP6_CANFORWARD(ip6_current_src_addr(), ip6_current_dest_addr(), p, inp);
+  if (ret == 0) { 
+    /* Packet consumed or not suitable for forwarding */
+    return;
+  }
+#endif /* LWIP_HOOK_IP6_CANFORWARD */
+
   /* do not forward link-local or loopback addresses */
   if (ip6_addr_islinklocal(ip6_current_dest_addr()) ||
       ip6_addr_isloopback(ip6_current_dest_addr())) {
@@ -684,11 +692,17 @@ netif_found:
     /* packet not for us, route or discard */
     LWIP_DEBUGF(IP6_DEBUG | LWIP_DBG_TRACE, ("ip6_input: packet not for us.\n"));
 #if LWIP_IPV6_FORWARD
-    /* non-multicast packet? */
+
+    /* try to forward IP packet on (other) interfaces */
+#ifndef LWIP_HOOK_IP6_CANFORWARD
+    /* Don't forward multicast traffic unless the IPv6 forwarding hook is defined. */
     if (!ip6_addr_ismulticast(ip6_current_dest_addr())) {
-      /* try to forward IP packet on (other) interfaces */
       ip6_forward(p, ip6hdr, inp);
     }
+#else /* LWIP_HOOK_IP6_CANFORWARD */
+    ip6_forward(p, ip6hdr, inp);
+#endif /* LWIP_HOOK_IP6_CANFORWARD */
+    
 #endif /* LWIP_IPV6_FORWARD */
     pbuf_free(p);
     goto ip6_input_cleanup;

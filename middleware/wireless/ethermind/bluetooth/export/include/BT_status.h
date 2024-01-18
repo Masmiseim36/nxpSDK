@@ -116,13 +116,13 @@
  * Constant Definitions for Stack Activity Bit Definitions
  */
 /*@{*/
-#define STATUS_BIT_ATT_BUSY                     8U
-#define STATUS_BIT_SMP_BUSY                     9U
-#define STATUS_BIT_L2CAP_BUSY                   10U
-#define STATUS_BIT_HCI_BUSY                     11U
+#define STATUS_BIT_ATT_BUSY                     12U
+#define STATUS_BIT_SMP_BUSY                     13U
+#define STATUS_BIT_L2CAP_BUSY                   14U
+#define STATUS_BIT_HCI_BUSY                     15U
 /*@}*/
 /** Count of maximum defined bit in Status Flag */
-#define STATUS_NUM_DEFINED_BITS                 12U
+#define STATUS_NUM_DEFINED_BITS                 16U
 
 /** Set/Reset Status Flag Bits */
 /**

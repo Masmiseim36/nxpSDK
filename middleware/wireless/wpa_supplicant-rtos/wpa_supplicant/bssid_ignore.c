@@ -8,7 +8,7 @@
 
 #include "includes.h"
 
-#include "common.h"
+#include "utils/common.h"
 #include "wpa_supplicant_i.h"
 #include "bssid_ignore.h"
 

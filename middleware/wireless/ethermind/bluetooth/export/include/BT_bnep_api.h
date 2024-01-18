@@ -214,23 +214,6 @@ typedef API_RESULT (* BNEP_EVENT_IND_CB)
                        UINT16     event_data_len  /* Event Data Length */
                    );
 
-/**
- * BNEP Data Read Indication Callback.
- *
- * BNEP calls the registered callback to inform data received from peer to the application.
- *
- * \param [in] bd_addr     Peer BD_ADDR.
- * \param [in] header      Ethernet Header (14 Octets).
- * \param [in] payload     Ethernet Payload.
- * \param [in] payload_len Ethernet Payload Length.
- */
-typedef API_RESULT (* BNEP_DATA_IND_CB)
-                   (
-                       UCHAR *    bd_addr,         /* Remote BD_ADDR */
-                       UCHAR *    eth_header,      /* Ethernet Header (14 Octets) */
-                       UCHAR *    eth_payload,     /* Ethernet Payload */
-                       UINT16     eth_payload_len  /* Ethernet Payload Length */
-                   );
 /** \} */
 
 /**
@@ -242,16 +225,6 @@ typedef API_RESULT (* BNEP_DATA_IND_CB)
  * \{
  * Describes Structures defined by the module.
  */
-/** BNEP Callbacks for Registration */
-typedef struct
-{
-    /** BNEP Event Indication/Confirmation Callback */
-    BNEP_EVENT_IND_CB    bnep_event_ind;
-
-    /** BNEP Data Received Indication */
-    BNEP_DATA_IND_CB     bnep_read_ind;
-
-} BNEP_CALLBACKS;
 
 /** BNEP Filter - Network Type */
 typedef struct
@@ -323,6 +296,60 @@ typedef struct
 
 } BNEP_EXT_HEADER;
 /** \} */
+
+#ifndef BNEP_DONT_IND_UNKNOWN_EXT_HDR
+/**
+ * BNEP Data Read Indication Callback.
+ *
+ * BNEP calls the registered callback to inform data received from peer to the application.
+ *
+ * \param [in] bd_addr     Peer BD_ADDR.
+ * \param [in] header      Ethernet Header (14 Octets).
+ * \param [in] ext_header  Extension Header.
+ * \param [in] ext_header_len Extension Header Length.
+ * \param [in] payload     Ethernet Payload.
+ * \param [in] payload_len Ethernet Payload Length.
+ */
+typedef API_RESULT (* BNEP_DATA_IND_CB)
+                   (
+                       UCHAR *    bd_addr,         /* Remote BD_ADDR */
+                       UCHAR *    eth_header,      /* Ethernet Header (14 Octets) */
+                       BNEP_EXT_HEADER *  ext_header,  /* Extension Header */
+                       UINT16     ext_header_len, /* Extension Header Count */
+                       UCHAR *    eth_payload,     /* Ethernet Payload */
+                       UINT16     eth_payload_len  /* Ethernet Payload Length */
+                   );
+#else
+/**
+ * BNEP Data Read Indication Callback.
+ *
+ * BNEP calls the registered callback to inform data received from peer to the application.
+ *
+ * \param [in] bd_addr     Peer BD_ADDR.
+ * \param [in] header      Ethernet Header (14 Octets).
+ * \param [in] payload     Ethernet Payload.
+ * \param [in] payload_len Ethernet Payload Length.
+ */
+typedef API_RESULT (* BNEP_DATA_IND_CB)
+                   (
+                       UCHAR *    bd_addr,         /* Remote BD_ADDR */
+                       UCHAR *    eth_header,      /* Ethernet Header (14 Octets) */
+                       UCHAR *    eth_payload,     /* Ethernet Payload */
+                       UINT16     eth_payload_len  /* Ethernet Payload Length */
+                   );
+#endif /* BNEP_DONT_IND_UNKNOWN_EXT_HDR */
+
+/** BNEP Callbacks for Registration */
+typedef struct
+{
+    /** BNEP Event Indication/Confirmation Callback */
+    BNEP_EVENT_IND_CB    bnep_event_ind;
+
+    /** BNEP Data Received Indication */
+    BNEP_DATA_IND_CB     bnep_read_ind;
+
+} BNEP_CALLBACKS;
+
 /** \} */
 
 /* --------------------------------------------- Unions */
@@ -727,7 +754,7 @@ API_RESULT BT_bnep_set_policy
  *
  *  \param [in] state
  *         BT_TRUE  :  Enable compression
- *         BT_FALSE :  Disable compression 
+ *         BT_FALSE :  Disable compression
  *
  *  \return None
  */

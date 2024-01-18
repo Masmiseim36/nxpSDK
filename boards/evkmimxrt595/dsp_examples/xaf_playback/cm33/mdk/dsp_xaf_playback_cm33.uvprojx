@@ -78,7 +78,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>fromelf.exe --output "$L@L.bin" --bincombined "#L"</UserProg1Name>
+            <UserProg1Name>fromelf.exe --output "$Lsdk20-app.bin" --bincombined "#L"</UserProg1Name>
             <UserProg2Name/>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, XA_MP3_DECODER=1, XA_AAC_DECODER=1, XA_OPUS_ENCODER=1, XA_OPUS_DECODER=1, XA_SBC_ENCODER=1, XA_SBC_DECODER=1, XA_VORBIS_DECODER=1, XA_PCM_GAIN=1, XA_SRC_PP_FX=1, XA_CLIENT_PROXY=1, XA_RENDERER=1, DSP_IMAGE_COPY_TO_RAM=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, DEBUG_CONSOLE_RX_ENABLE=0, SD_ENABLED, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS</Define>
+              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, XA_MP3_DECODER=1, XA_AAC_DECODER=1, XA_OPUS_ENCODER=1, XA_OPUS_DECODER=1, XA_SBC_ENCODER=1, XA_SBC_DECODER=1, XA_VORBIS_DECODER=1, XA_PCM_GAIN=1, XA_SRC_PP_FX=1, XA_RENDERER=1, DSP_IMAGE_COPY_TO_RAM=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, SDK_I3C_BASED_COMPONENT_USED=1, DEBUG_CONSOLE_RX_ENABLE=0, SD_ENABLED, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../devices/MIMXRT595S/drivers;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt500_m33;../../../../../../components/pca9420;../../../../../../components/codec/wm8904;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../components/gpio;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../devices/MIMXRT595S/utilities;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../middleware/fatfs/source;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../flash_config;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../devices/MIMXRT595S/drivers;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt500_m33;../../../../../../components/pca9420;../../../../../../components/codec/wm8904;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../components/gpio;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../devices/MIMXRT595S/utilities/shell;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../middleware/fatfs/source;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../devices/MIMXRT595S/utilities;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../flash_config;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -463,96 +463,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>resources</GroupName>
-          <Files>
-            <File>
-              <FileName>hihat_dec_out.pcm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../hihat_dec_out.pcm.h</FilePath>
-            </File>
-            <File>
-              <FileName>hihat.mp3.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../hihat.mp3.h</FilePath>
-            </File>
-            <File>
-              <FileName>hihat_48k.mp3.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../hihat_48k.mp3.h</FilePath>
-            </File>
-            <File>
-              <FileName>hihat.ogg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../hihat.ogg.h</FilePath>
-            </File>
-            <File>
-              <FileName>hihat_trim.pcm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../hihat_trim.pcm.h</FilePath>
-            </File>
-            <File>
-              <FileName>hihat_trim.sbc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../hihat_trim.sbc.h</FilePath>
-            </File>
-            <File>
-              <FileName>hihat_vorbis_dec_out_trim.pcm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../hihat_vorbis_dec_out_trim.pcm.h</FilePath>
-            </File>
-            <File>
-              <FileName>hihat_vor.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../hihat_vor.h</FilePath>
-            </File>
-            <File>
-              <FileName>hihat_pcm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../hihat_pcm.h</FilePath>
-            </File>
-            <File>
-              <FileName>sbc_test_02_trim.sbc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../sbc_test_02_trim.sbc.h</FilePath>
-            </File>
-            <File>
-              <FileName>sbc_test_02_trim.out.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../sbc_test_02_trim.out.h</FilePath>
-            </File>
-            <File>
-              <FileName>testvector04-48000-2ch_trim.out.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../testvector04-48000-2ch_trim.out.h</FilePath>
-            </File>
-            <File>
-              <FileName>testvector04.bit.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../testvector04.bit.h</FilePath>
-            </File>
-            <File>
-              <FileName>testvector11-16000-1ch_trim.out.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../testvector11-16000-1ch_trim.out.h</FilePath>
-            </File>
-            <File>
-              <FileName>testvector11-16kHz-1ch-20kbps_trim.bit.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../testvector11-16kHz-1ch-20kbps_trim.bit.h</FilePath>
-            </File>
-            <File>
-              <FileName>aac.adts.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../aac.adts.h</FilePath>
-            </File>
-            <File>
-              <FileName>aac.ref.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../aac.ref.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>board</GroupName>
           <Files>
             <File>
@@ -618,6 +528,76 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>resources</GroupName>
+          <Files>
+            <File>
+              <FileName>aac.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../aac.h</FilePath>
+            </File>
+            <File>
+              <FileName>hihat_dec_out.pcm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../hihat_dec_out.pcm.h</FilePath>
+            </File>
+            <File>
+              <FileName>hihat_trim.pcm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../hihat_trim.pcm.h</FilePath>
+            </File>
+            <File>
+              <FileName>hihat_trim.sbc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../hihat_trim.sbc.h</FilePath>
+            </File>
+            <File>
+              <FileName>hihat_vor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../hihat_vor.h</FilePath>
+            </File>
+            <File>
+              <FileName>mp3.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mp3.h</FilePath>
+            </File>
+            <File>
+              <FileName>oggvorbis.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../oggvorbis.h</FilePath>
+            </File>
+            <File>
+              <FileName>opus.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../opus.h</FilePath>
+            </File>
+            <File>
+              <FileName>rawvorbis.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../rawvorbis.h</FilePath>
+            </File>
+            <File>
+              <FileName>sbc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../sbc.h</FilePath>
+            </File>
+            <File>
+              <FileName>testvector04.bit.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../testvector04.bit.h</FilePath>
+            </File>
+            <File>
+              <FileName>testvector11-16000-1ch_trim.out.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../testvector11-16000-1ch_trim.out.h</FilePath>
+            </File>
+            <File>
+              <FileName>testvector11-16kHz-1ch-20kbps_trim.bit.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../testvector11-16kHz-1ch-20kbps_trim.bit.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>dsp_binary</GroupName>
           <Files>
             <File>
@@ -656,9 +636,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -1128,12 +1108,12 @@
             <File>
               <FileName>fsl_shell.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_shell.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/shell/fsl_shell.c</FilePath>
             </File>
             <File>
               <FileName>fsl_shell.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_shell.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/shell/fsl_shell.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>
@@ -1164,6 +1144,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>
@@ -1749,7 +1734,7 @@
           <AfterMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>fromelf.exe --output "$L@L.bin" --bincombined "#L"</UserProg1Name>
+            <UserProg1Name>fromelf.exe --output "$Lsdk20-app.bin" --bincombined "#L"</UserProg1Name>
             <UserProg2Name/>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -2003,9 +1988,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, XA_MP3_DECODER=1, XA_AAC_DECODER=1, XA_OPUS_ENCODER=1, XA_OPUS_DECODER=1, XA_SBC_ENCODER=1, XA_SBC_DECODER=1, XA_VORBIS_DECODER=1, XA_PCM_GAIN=1, XA_SRC_PP_FX=1, XA_CLIENT_PROXY=1, XA_RENDERER=1, DSP_IMAGE_COPY_TO_RAM=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, DEBUG_CONSOLE_RX_ENABLE=0, SD_ENABLED, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS</Define>
+              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, XA_MP3_DECODER=1, XA_AAC_DECODER=1, XA_OPUS_ENCODER=1, XA_OPUS_DECODER=1, XA_SBC_ENCODER=1, XA_SBC_DECODER=1, XA_VORBIS_DECODER=1, XA_PCM_GAIN=1, XA_SRC_PP_FX=1, XA_RENDERER=1, DSP_IMAGE_COPY_TO_RAM=1, MCUXPRESSO_SDK, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, SDK_I3C_BASED_COMPONENT_USED=1, DEBUG_CONSOLE_RX_ENABLE=0, SD_ENABLED, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../devices/MIMXRT595S/drivers;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt500_m33;../../../../../../components/pca9420;../../../../../../components/codec/wm8904;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../components/gpio;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../devices/MIMXRT595S/utilities;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../middleware/fatfs/source;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../flash_config;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../devices/MIMXRT595S/drivers;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt500_m33;../../../../../../components/pca9420;../../../../../../components/codec/wm8904;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec;../../../../../../components/i2c;../../../../../../components/codec/i2c;../../../../../../components/gpio;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../devices/MIMXRT595S/utilities/shell;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../middleware/fatfs/source;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../devices/MIMXRT595S/utilities;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../flash_config;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2134,96 +2119,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>resources</GroupName>
-          <Files>
-            <File>
-              <FileName>hihat_dec_out.pcm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../hihat_dec_out.pcm.h</FilePath>
-            </File>
-            <File>
-              <FileName>hihat.mp3.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../hihat.mp3.h</FilePath>
-            </File>
-            <File>
-              <FileName>hihat_48k.mp3.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../hihat_48k.mp3.h</FilePath>
-            </File>
-            <File>
-              <FileName>hihat.ogg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../hihat.ogg.h</FilePath>
-            </File>
-            <File>
-              <FileName>hihat_trim.pcm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../hihat_trim.pcm.h</FilePath>
-            </File>
-            <File>
-              <FileName>hihat_trim.sbc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../hihat_trim.sbc.h</FilePath>
-            </File>
-            <File>
-              <FileName>hihat_vorbis_dec_out_trim.pcm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../hihat_vorbis_dec_out_trim.pcm.h</FilePath>
-            </File>
-            <File>
-              <FileName>hihat_vor.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../hihat_vor.h</FilePath>
-            </File>
-            <File>
-              <FileName>hihat_pcm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../hihat_pcm.h</FilePath>
-            </File>
-            <File>
-              <FileName>sbc_test_02_trim.sbc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../sbc_test_02_trim.sbc.h</FilePath>
-            </File>
-            <File>
-              <FileName>sbc_test_02_trim.out.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../sbc_test_02_trim.out.h</FilePath>
-            </File>
-            <File>
-              <FileName>testvector04-48000-2ch_trim.out.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../testvector04-48000-2ch_trim.out.h</FilePath>
-            </File>
-            <File>
-              <FileName>testvector04.bit.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../testvector04.bit.h</FilePath>
-            </File>
-            <File>
-              <FileName>testvector11-16000-1ch_trim.out.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../testvector11-16000-1ch_trim.out.h</FilePath>
-            </File>
-            <File>
-              <FileName>testvector11-16kHz-1ch-20kbps_trim.bit.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../testvector11-16kHz-1ch-20kbps_trim.bit.h</FilePath>
-            </File>
-            <File>
-              <FileName>aac.adts.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../aac.adts.h</FilePath>
-            </File>
-            <File>
-              <FileName>aac.ref.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../aac.ref.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>board</GroupName>
           <Files>
             <File>
@@ -2289,6 +2184,76 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>resources</GroupName>
+          <Files>
+            <File>
+              <FileName>aac.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../aac.h</FilePath>
+            </File>
+            <File>
+              <FileName>hihat_dec_out.pcm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../hihat_dec_out.pcm.h</FilePath>
+            </File>
+            <File>
+              <FileName>hihat_trim.pcm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../hihat_trim.pcm.h</FilePath>
+            </File>
+            <File>
+              <FileName>hihat_trim.sbc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../hihat_trim.sbc.h</FilePath>
+            </File>
+            <File>
+              <FileName>hihat_vor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../hihat_vor.h</FilePath>
+            </File>
+            <File>
+              <FileName>mp3.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mp3.h</FilePath>
+            </File>
+            <File>
+              <FileName>oggvorbis.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../oggvorbis.h</FilePath>
+            </File>
+            <File>
+              <FileName>opus.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../opus.h</FilePath>
+            </File>
+            <File>
+              <FileName>rawvorbis.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../rawvorbis.h</FilePath>
+            </File>
+            <File>
+              <FileName>sbc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../sbc.h</FilePath>
+            </File>
+            <File>
+              <FileName>testvector04.bit.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../testvector04.bit.h</FilePath>
+            </File>
+            <File>
+              <FileName>testvector11-16000-1ch_trim.out.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../testvector11-16000-1ch_trim.out.h</FilePath>
+            </File>
+            <File>
+              <FileName>testvector11-16kHz-1ch-20kbps_trim.bit.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../testvector11-16kHz-1ch-20kbps_trim.bit.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>dsp_binary</GroupName>
           <Files>
             <File>
@@ -2327,9 +2292,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>readme.txt</FileName>
+              <FileName>readme.md</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
+              <FilePath>../readme.md</FilePath>
             </File>
           </Files>
         </Group>
@@ -2799,12 +2764,12 @@
             <File>
               <FileName>fsl_shell.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_shell.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/shell/fsl_shell.c</FilePath>
             </File>
             <File>
               <FileName>fsl_shell.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_shell.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/shell/fsl_shell.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>
@@ -2835,6 +2800,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>

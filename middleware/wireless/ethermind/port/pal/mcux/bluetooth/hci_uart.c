@@ -15,6 +15,10 @@
 #include "BT_hci_api.h"
 #include "hci_transport.h"
 
+#ifdef BT_ANALYZER
+#include "BT_analyzer.h"
+#endif /* BT_ANALYZER */
+
 /* IMX RT1060 SDK Includes */
 #include "fsl_common.h"
 #include "fsl_debug_console.h"
@@ -26,6 +30,9 @@
 #include "fsl_adapter_uart.h"
 
 #include "controller_hci_uart.h"
+#ifdef LE_AUDIO_ENABLE_APP_SPECIFIC_CODE
+#include "leaudio_pl.h"
+#endif /*LE_AUDIO_ENABLE_APP_SPECIFIC_CODE*/
 
 #ifdef BT_UART
 
@@ -107,11 +114,11 @@ DECL_STATIC UART_HANDLE_DEFINE(hci_uart_handle);
 UART_DMA_HANDLE_DEFINE(hci_uart_DmaHandle);
 #endif
 /* HCI UART RX Meta Data */
-hci_uart_meta_data hci_uart_rx;
+volatile hci_uart_meta_data hci_uart_rx;
 
 AT_NONCACHEABLE_SECTION_ALIGN(static UCHAR  hci_uart_rx_data_buff[HCI_RX_QUEUE_SIZE], 4);
-UCHAR  hci_uart_rx_state;
-UINT16 hci_uart_rx_bytes;
+volatile UCHAR  hci_uart_rx_state;
+volatile UINT16 hci_uart_rx_bytes;
 UCHAR  hci_uart_instance;
 
 static UCHAR assert;
@@ -138,7 +145,7 @@ void hci_uart_init (void)
     hci_uart_task_attr.thread_name       = (DECL_CONST CHAR  *)"EtherMind UART Task";
     hci_uart_task_attr.thread_stack_size = BT_TASK_STACK_DEPTH;
     /* Setting the Priority 1 Higher than the Default EtherMind Tasks */
-    hci_uart_task_attr.thread_priority   = (BT_TASK_PRIORITY);
+    hci_uart_task_attr.thread_priority   = (BT_TASK_PRIORITY + 2U);
 
     /* Create a thread to receive data From Serial PORT and BUFFER it */
     if (0U != BT_thread_create(&tid, &hci_uart_task_attr, hci_uart_read_task, NULL))
@@ -559,11 +566,11 @@ void hci_uart_bt_init(void)
 
 #if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
     status = HAL_UartDMATransferReceive
-          (
+    		(
               (hal_uart_handle_t)hci_uart_handle,
               hci_uart_rx.data,
               hci_uart_rx.dataSize, true
-          );
+    	    );
 #else
     status = HAL_UartReceiveNonBlocking
           (
@@ -644,6 +651,7 @@ void hci_uart_bt_shutdown (void)
 #else
     status = HAL_UartAbortReceive((hal_uart_handle_t)hci_uart_handle);
 #endif
+
 #if defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U)
     if (status != kStatus_HAL_UartDmaSuccess)
 #else
@@ -665,6 +673,7 @@ void hci_uart_bt_shutdown (void)
 #else
     status = HAL_UartAbortSend((hal_uart_handle_t)hci_uart_handle);
 #endif
+
 #if defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U)
     if (status != kStatus_HAL_UartDmaSuccess)
 #else
@@ -879,6 +888,13 @@ API_RESULT hci_uart_send_data
             total_len = (UINT32)length + 1U;
         }
 
+#ifdef LE_AUDIO_ENABLE_APP_SPECIFIC_CODE
+        if (HCI_ISO_DATA_PACKET == type)
+        {
+        	le_audio_pl_iso_tx_delay ();
+        }
+#endif /*LE_AUDIO_ENABLE_APP_SPECIFIC_CODE*/
+
         if (HCI_UART_WR_BUF_SIZE < total_len)
         {
             HCI_UART_ERR(
@@ -916,8 +932,8 @@ API_RESULT hci_uart_send_data
     /* Write HCI Packet */
     hci_uart_write_data (hci_uart_wr_buf[odd], total_len);
 
-    /* Transmitted packet logging in btsnoop format */
-    BT_snoop_write_packet(hci_uart_wr_buf[odd][0U], 0U, (&hci_uart_wr_buf[odd][1U]), (total_len - 1U));
+    /* Transmitted packet logging in btanalyzer format */
+    BT_analyzer_write_packet(hci_uart_wr_buf[odd][0U], 0U, (&hci_uart_wr_buf[odd][1U]), (total_len - 1U));
 #else
     if (0U != acl_data_pkt)
     {
@@ -949,8 +965,8 @@ API_RESULT hci_uart_send_data
     if (BT_SNOOP_PKTLEN_LIMIT > total_len)
     {
 #endif /* BT_SNOOP_WRITE_TRUNCATE */
-    /* Transmitted packet logging in btsnoop format */
-    BT_snoop_write_packet(hci_uart_wr_buf[0U], 0U, (&hci_uart_wr_buf[1U]), (total_len - 1U));
+    /* Transmitted packet logging in btanalyzer format */
+    BT_analyzer_write_packet(hci_uart_wr_buf[0U], 0U, (&hci_uart_wr_buf[1U]), (total_len - 1U));
 #ifdef BT_SNOOP_WRITE_TRUNCATE
     }
 #endif /* BT_SNOOP_WRITE_TRUNCATE */
@@ -1072,5 +1088,4 @@ API_RESULT hci_transport_write_data (UCHAR type, UCHAR * buf, UINT16 length, UCH
 }
 
 #endif /* BT_UART */
-
 

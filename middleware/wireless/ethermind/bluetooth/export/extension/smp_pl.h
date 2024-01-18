@@ -45,16 +45,16 @@
  */
 
 /**
- * To indicate platform supports only a mechanism to display/conway 6 didgit
+ * To indicate platform supports only a mechanism to display/convey 6 digit
  * number to user.
  */
 #define SMP_IO_CAPABILITY_DISPLAY_ONLY             0x00
 
 /**
- * To indiate platform supports at least two buttons that are mapped easily to
+ * To indicate platform supports at least two buttons that are mapped easily to
  * 'yes' and 'no' or the device has a mechanism whereby the user can indicate
- * either 'yes' or 'no' and a mechanism through which 6 didgit numeric value
- * can be displayed/cowayed to the user.
+ * either 'yes' or 'no' and a mechanism through which 6 digit numeric value
+ * can be displayed/conveyed to the user.
  */
 #define SMP_IO_CAPABILITY_DISPLAY_YESNO            0x01
 
@@ -91,7 +91,7 @@
 #ifdef SMP_HAVE_OOB_SUPPORT
 /**
  * OOB Blob Data size - should be configured for
- * the specific platform or usecase
+ * the specific platform or use-case
  */
 #define SMP_OOB_BLOB_DATA_SIZE                     50
 
@@ -119,6 +119,7 @@
 
 /* State Handling Macros */
 #define SMP_LESC_OOB_SET_STATE(x, s)          (x)->state = (s)
+#define SMP_LESC_OOB_GET_STATE(x)             (x)->state
 
 #endif /* SMP_LESC */
 #endif /* SMP_HAVE_OOB_SUPPORT */
@@ -219,7 +220,7 @@ typedef struct _SMP_DEVICE_PL
 
     /*
      * OOB Blob Data - to be taken care by platform specific implementation.
-     * In the default implementaiton, this is only can be stored and retrived.
+     * In the default implementation, this is can only be stored and retrieved.
      */
     UCHAR blob[SMP_OOB_BLOB_DATA_SIZE];
 
@@ -247,7 +248,7 @@ typedef struct _SMP_OOB_DATA
 } SMP_OOB_DATA;
 
 #ifdef SMP_LESC
-/** SMP LESC specific OOB related data struct */
+/** SMP LESC specific OOB related data structure */
 typedef struct _SMP_LESC_OOB_DATA_PL
 {
     UCHAR state;
@@ -278,7 +279,7 @@ typedef struct _SMP_IOCAPS
     /** OOB Availability */
     UCHAR oob;
 
-    /** Max Keysize exchanged */
+    /** Max Key-size exchanged */
     UCHAR ekey_size;
 
 } SMP_IOCAPS;
@@ -308,7 +309,7 @@ typedef ssp_dhkey_t SMP_PL_ECDH_DHKEY;
 #endif /* SMP_LESC */
 
 #ifdef SMP_LESC_CROSS_TXP_KEY_GEN
-/** SMP LESC specific Cross Transport Key derivation related data struct */
+/** SMP LESC specific Cross Transport Key derivation related data structure */
 typedef struct _SMP_LESC_LK_LTK_GEN_PL
 {
     UCHAR state;
@@ -385,19 +386,19 @@ void smp_init_pl (void);
 API_RESULT smp_purge_device_list_pl(UCHAR *free_index);
 
 /**
- * \brief To update the platform specific device attrbute.
+ * \brief To update the platform specific device attribute.
  *
  * \par Description:
- *      This is internal platform API to update/delte platform specific device.
+ *      This is internal platform API to update/delete platform specific device.
  *      This API is called whenever there connection/reconnection or
  *      pairing/authentication or disconnection.
  *
- * \param [in] operation  The operation to be perfomred on the device.
+ * \param [in] operation  The operation to be performed on the device.
  *        - \ref SMP_DEVICE_ATTR_PL_DELETE To deleted platform specific
  *               device attribute.
  *        - \ref SMP_DEVICE_ATTR_PL_CONNECTION_COMPLETE To indicate connection
  *               is been establish to remote device and needs update platform
- *               specifci attribute.
+ *               specific attribute.
  *        - \ref SMP_DEVICE_ATTR_PL_AUTHENTICATION_COMPLETE To indicate
  *
  * \param [in] di  The remote device database index.
@@ -473,9 +474,9 @@ API_RESULT smp_get_oob_tk_pl
            );
 
 #ifdef SMP_LESC
-void smp_get_local_oob_public_key_pl( /* OUT */ UCHAR * l_pub_key);
-void smp_get_lesc_oob_l_cnf_val_pl( /* OUT */ UCHAR * l_cnf_val);
-void smp_get_lesc_oob_l_rand_pl( /* OUT */ UCHAR * l_rand);
+API_RESULT smp_get_local_oob_public_key_pl( /* OUT */ UCHAR * l_pub_key);
+API_RESULT smp_get_lesc_oob_l_cnf_val_pl( /* OUT */ UCHAR * l_cnf_val);
+API_RESULT smp_get_lesc_oob_l_rand_pl( /* OUT */ UCHAR * l_rand);
 API_RESULT smp_get_lesc_oob_pl
            (
                /* IN */  SMP_BD_HANDLE * di,
@@ -544,7 +545,7 @@ void smp_encryption_complete_pl (UCHAR * data_param, UINT16 datalen);
 #endif /* SMP_PL_ENABLE_KEY_GENERATION */
 
 #if (defined SMP_LESC) && (defined SMP_HAVE_OOB_SUPPORT)
-void smp_lesc_oob_handle_cmd_complete(UCHAR * data, UINT16 datalen);
+void smp_lesc_oob_handle_cmd_complete(UCHAR state, UCHAR * data, UINT16 datalen);
 void smp_lesc_oob_cnf_val_gen_complete(void);
 #endif /* (defined SMP_LESC) && (defined SMP_HAVE_OOB_SUPPORT) */
 
@@ -567,7 +568,7 @@ void smp_lesc_lk_ltk_complete (void);
  * \par Description:
  *      This function adds the given device to the platform database
  *
- * \param [in] bd_addr  Peer bluetooth device address
+ * \param [in] bd_addr  Peer Bluetooth device address
  *
  * \return API_SUCCESS or Error Code stating the failure reason
  */
@@ -579,7 +580,7 @@ API_RESULT BT_smp_add_device_pl (/* IN */ BT_DEVICE_ADDR * bd_addr);
  * \par Description:
  *      This function removes the given device from the platform database
  *
- * \param [in] bd_addr  Peer bluetooth device address
+ * \param [in] bd_addr  Peer Bluetooth device address
  *
  * \return API_SUCCESS or Error Code stating the failure reason
  */

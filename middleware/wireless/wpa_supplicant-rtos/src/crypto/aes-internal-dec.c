@@ -16,7 +16,7 @@
 
 #include "includes.h"
 
-#include "common.h"
+#include "utils/common.h"
 #include "crypto.h"
 #include "aes_i.h"
 

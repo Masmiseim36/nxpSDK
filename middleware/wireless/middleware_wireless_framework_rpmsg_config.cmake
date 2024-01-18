@@ -4,6 +4,6 @@ include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
-  ${CMAKE_CURRENT_LIST_DIR}/framework/platform/MIMXRT1062/configs
+  ${CMAKE_CURRENT_LIST_DIR}/framework/platform/rt1060/configs
 )
 

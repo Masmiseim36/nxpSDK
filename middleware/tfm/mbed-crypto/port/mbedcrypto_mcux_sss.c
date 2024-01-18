@@ -103,7 +103,7 @@ int mbedtls_sha512_starts(mbedtls_sha512_context *ctx, int is384)
      return ret;
 }
 
-int mbedtls_internal_sha512_process(mbedtls_sha512_context *ctx, const unsigned char data[64])
+int mbedtls_internal_sha512_process(mbedtls_sha512_context *ctx, const unsigned char data[128])
 {
     int ret;
     
@@ -153,7 +153,7 @@ int mbedtls_sha512_update(mbedtls_sha512_context *ctx, const unsigned char *inpu
 /*
  * SHA-512 final digest
  */
-int mbedtls_sha512_finish(mbedtls_sha512_context *ctx, unsigned char output[20])
+int mbedtls_sha512_finish(mbedtls_sha512_context *ctx, unsigned char *output)
 {
     int ret;
     size_t len = ctx->ctx.digestFullLen;
@@ -319,7 +319,7 @@ int mbedtls_sha256_update(mbedtls_sha256_context *ctx, const unsigned char *inpu
 /*
  * SHA-256 final digest
  */
-int mbedtls_sha256_finish( mbedtls_sha256_context *ctx, unsigned char *output )
+int mbedtls_sha256_finish(mbedtls_sha256_context *ctx, unsigned char *output)
 {
     int ret;
     size_t len = ctx->ctx.digestFullLen;

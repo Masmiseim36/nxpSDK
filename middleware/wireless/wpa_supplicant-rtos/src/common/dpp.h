@@ -12,7 +12,7 @@
 #define DPP_H
 
 #ifdef CONFIG_DPP
-#include "utils/wlist.h"
+#include "utils/dl_list.h"
 #include "common/wpa_common.h"
 #include "crypto/sha256.h"
 #include "crypto/crypto.h"

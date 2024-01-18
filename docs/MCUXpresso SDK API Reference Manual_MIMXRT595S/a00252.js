@@ -1,9 +1,7 @@
 var a00252 =
 [
-    [ "FlexIO Driver", "a00022.html", "a00022" ],
-    [ "FlexIO I2C Master Driver", "a00023.html", "a00023" ],
-    [ "FlexIO I2S Driver", "a00024.html", "a00024" ],
-    [ "FlexIO MCU Interface LCD Driver", "a00025.html", "a00025" ],
-    [ "FlexIO SPI Driver", "a00028.html", "a00028" ],
-    [ "FlexIO UART Driver", "a00029.html", "a00029" ]
+    [ "USART CMSIS Driver", "a00253.html", null ],
+    [ "USART DMA Driver", "a00071.html", "a00071" ],
+    [ "USART Driver", "a00070.html", "a00070" ],
+    [ "USART FreeRTOS Driver", "a00072.html", "a00072" ]
 ];

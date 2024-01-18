@@ -10,7 +10,7 @@
 #define HOSTAPD_CONFIG_H
 
 #include "common/defs.h"
-#include "utils/wlist.h"
+#include "utils/dl_list.h"
 #include "utils/ip_addr.h"
 #include "common/wpa_common.h"
 #include "common/ieee802_11_defs.h"

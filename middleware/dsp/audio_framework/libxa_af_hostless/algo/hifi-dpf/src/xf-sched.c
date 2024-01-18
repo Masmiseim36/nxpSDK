@@ -67,7 +67,7 @@ void xf_sched_put(xf_sched_t *sched, xf_task_t *t, UWORD64 dts)
     ts = xf_sched_timestamp(sched) + dts;
     /* ...set scheduling timestamp */
     xf_task_timestamp_set(t, ts);
-    
+
     /* ...find a place in the tree where the message should be inserted */
     for (p_idx = rb_root(tree); p_idx != rb_null(tree); p_idx = t_idx)
     {
@@ -96,20 +96,20 @@ void xf_sched_put(xf_sched_t *sched, xf_task_t *t, UWORD64 dts)
 
                 goto insert;
             }
-        }        
+        }
     }
 
 insert_head:
     /* ...adjust scheduler head element */
     rb_set_cache(tree, node);
 
-insert:    
+insert:
     /* ...insert item and rebalance the tree */
     rb_insert(tree, node, p_idx);
 
     /* ...head cannot be NULL */
     BUG(rb_cache(tree) == rb_null(tree), _x("Invalid scheduler state"));
-    
+
     TRACE(DEBUG, _b("in:  %016llx:[%p] (ts:%016llx)"), ts, node, xf_sched_timestamp(sched));
     xf_flx_unlock(&sched->lock);
 }
@@ -129,7 +129,7 @@ xf_task_t * xf_sched_get(xf_sched_t *sched)
 
         /* ...get task timestamp */
         ts = xf_task_timestamp((xf_task_t *)n_idx);
-        
+
         /* ...advance scheduler timestamp */
         xf_sched_timestamp_set(sched, ts);
 

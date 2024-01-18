@@ -14,8 +14,19 @@ endif()
 
 add_library(connfwk-RNG ${SOURCES})
 
+target_include_directories(connfwk-RNG
+    PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
 # Get common configs from the connfwk-config interface
-target_link_libraries(connfwk-RNG PRIVATE connfwk-config)
+target_link_libraries(connfwk-RNG
+    PRIVATE
+        connfwk-config
+        connfwk-FunctionLib
+        connfwk-SecLib
+        ${CONNFWK_MCUX_SDK_LIB}
+)
 
 # If the selected build type is for coverage, we build the same lib but with coverage instrumentation
 if(${CMAKE_BUILD_TYPE} MATCHES "Coverage")

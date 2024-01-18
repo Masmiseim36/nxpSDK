@@ -71,7 +71,7 @@ extern clk_t renderer_cycles;
 #define HW_FIFO_LENGTH                  8192
 
 /* maximum allowed framesize in bytes per channel. This is the default framesize */
-#define MAX_FRAME_SIZE_IN_BYTES_DEFAULT    ( HW_FIFO_LENGTH / 4 )      
+#define MAX_FRAME_SIZE_IN_BYTES_DEFAULT    ( HW_FIFO_LENGTH / 4 )
 
 /* minimum allowed framesize in bytes per channel */
 #define MIN_FRAME_SIZE_IN_BYTES    ( 128 )
@@ -83,8 +83,8 @@ extern clk_t renderer_cycles;
         {\
             /* ...write to optional output buffer */\
             memcpy(d->output, d->pfifo_r, payload);\
-            d->bytes_produced = payload;\
         }\
+        d->bytes_produced = payload;\
         /* ...write to output file and increment read pointer */\
         fwrite((char *)d->pfifo_r, 1, payload, d->fw); d->pfifo_r += payload;\
         if((UWORD32)d->pfifo_r >= (UWORD32)&g_fifo_renderer[2*payload])\
@@ -133,7 +133,7 @@ typedef struct XARenderer
     /***************************************************************************
      * Run-time data
      **************************************************************************/
-    
+
     /* ...size of PCM sample in bytes  */
     UWORD32                     sample_size;
 
@@ -142,13 +142,13 @@ typedef struct XARenderer
 
     /* ...sample width */
     UWORD32                     pcm_width;
-    
+
     /* ...framesize in bytes per channel */
-    UWORD32                     frame_size_bytes;     
+    UWORD32                     frame_size_bytes;
 
     /* ...current sampling rate */
     UWORD32                     rate;
-    
+
     /* ...flag for detecting underrun..made to non zero over submit */
     UWORD32              submit_flag;
 
@@ -270,7 +270,7 @@ static inline UWORD32 xa_fw_renderer_submit(XARenderer *d, void *b, UWORD32 byte
     payload = d->frame_size_bytes*d->channels;
     avail   = d->fifo_avail;
     k       = 0;
-    zfill   = 0;    
+    zfill   = 0;
 
     /* ...reset optional output-bytes produced */
     d->bytes_produced = 0;
@@ -322,12 +322,12 @@ static inline UWORD32 xa_fw_renderer_submit(XARenderer *d, void *b, UWORD32 byte
         /* ...declare exec done on input over and if no more valid data is available */
         d->exec_done = (d->input_over && (bytes_write == 0));
 
-        if(d->exec_done) 
+        if(d->exec_done)
         {
             /* ... stop interrupts as soon as exec is done */
             __xf_timer_stop(&rend_timer);
             d->state ^= XA_RENDERER_FLAG_RUNNING | XA_RENDERER_FLAG_IDLE;
-        
+
             TRACE(OUTPUT, _b("exec done, timer stopped"));
         }
     }
@@ -370,12 +370,12 @@ static XA_ERRORCODE xa_fw_renderer_init (XARenderer *d)
    /* ...initialize FIFO params, zero fill FIFO and init pointers to start of FIFO */
    d->pfifo_w = d->pfifo_r = (void *)g_fifo_renderer;
    memset(d->pfifo_w, 0, d->fifo_avail);
-   
+
    /*initialises the timer ;timer0 is used as system timer*/
    __xf_timer_init(&rend_timer, xa_fw_handler, d, 1);
 
+/* ...enabled at init for internal testing. Plugin can provide feature to enabled this through set-config. */
 #ifdef XA_INPORT_BYPASS_TEST
-    /* ...enabled at init for testing. To be enabled by set-config to the plugin. */
     d->inport_bypass = 1;
 #endif
 
@@ -395,14 +395,14 @@ static XA_ERRORCODE xa_renderer_init(XARenderer *d, WORD32 i_idx, pVOID pv_value
     {
         /* ...pre-configuration initialization; reset internal data */
         memset(d, 0, sizeof(*d));
-        /* ...set default renderer parameters - 16-bit little-endian stereo @ 48KHz */        
+        /* ...set default renderer parameters - 16-bit little-endian stereo @ 48KHz */
         d->channels = 2;
         d->pcm_width = 16;
         d->rate = 48000;
-        d->sample_size = ( d->pcm_width >> 3 ); /* convert bits to bytes */ 
-        d->frame_size_bytes = MAX_FRAME_SIZE_IN_BYTES_DEFAULT; 
-        d->frame_size = MAX_FRAME_SIZE_IN_BYTES_DEFAULT/d->sample_size; 
-        
+        d->sample_size = ( d->pcm_width >> 3 ); /* convert bits to bytes */
+        d->frame_size_bytes = MAX_FRAME_SIZE_IN_BYTES_DEFAULT;
+        d->frame_size = MAX_FRAME_SIZE_IN_BYTES_DEFAULT/d->sample_size;
+
         /* ...and mark renderer has been created */
         d->state = XA_RENDERER_FLAG_PREINIT_DONE;
         return XA_NO_ERROR;
@@ -469,7 +469,7 @@ static inline XA_ERRORCODE xa_hw_renderer_control(XARenderer *d, UWORD32 state)
 
             /* ...change state to Running */
             d->state ^= (XA_RENDERER_FLAG_IDLE | XA_RENDERER_FLAG_RUNNING);
-            
+
             TRACE(INIT, _b("FIFO/timer started, state:IDLE to RUNNING, fifo_avail:%d"), d->fifo_avail);
         }
         else
@@ -529,7 +529,7 @@ static XA_ERRORCODE xa_renderer_set_config_param(XARenderer *d, WORD32 i_idx, pV
         XF_CHK_ERR(i_value == 16, XA_RENDERER_CONFIG_NONFATAL_RANGE);
         /* ...apply setting */
         d->pcm_width = i_value;
-        d->sample_size = ( d->pcm_width >> 3 ); /* convert bits to bytes */ 
+        d->sample_size = ( d->pcm_width >> 3 ); /* convert bits to bytes */
 
         /* ...update internal variable frame_size_bytes */
         d->frame_size_bytes = d->frame_size * d->sample_size;
@@ -551,7 +551,7 @@ static XA_ERRORCODE xa_renderer_set_config_param(XARenderer *d, WORD32 i_idx, pV
         XF_CHK_ERR((d->state & XA_RENDERER_FLAG_POSTINIT_DONE) == 0, XA_RENDERER_CONFIG_FATAL_STATE);
         /* ...get requested sampling rate */
         i_value = (UWORD32) *(WORD32 *)pv_value;
-        
+
         /* ...allow 16 , 44.1 or 48KHz only  */
         XF_CHK_ERR(i_value == 16000 || i_value == 44100 || i_value == 48000, XA_RENDERER_CONFIG_NONFATAL_RANGE);
         /* ...apply setting */
@@ -564,12 +564,12 @@ static XA_ERRORCODE xa_renderer_set_config_param(XARenderer *d, WORD32 i_idx, pV
 
         /* ...check it is valid framesize or not */
         XF_CHK_ERR( ( ( *(WORD32 *)pv_value >= MIN_FRAME_SIZE_IN_BYTES) && ( *(WORD32 *)pv_value <= MAX_FRAME_SIZE_IN_BYTES_DEFAULT ) ), XA_RENDERER_CONFIG_NONFATAL_RANGE);
-        
+
         /* ...check frame_size_bytes is multiple of 4 or not */
-        XF_CHK_ERR( ( (*(WORD32 *)pv_value & 0x3) == 0 ), XA_RENDERER_CONFIG_NONFATAL_RANGE);    
-        
+        XF_CHK_ERR( ( (*(WORD32 *)pv_value & 0x3) == 0 ), XA_RENDERER_CONFIG_NONFATAL_RANGE);
+
         /* ...get requested frame size */
-        d->frame_size_bytes = (UWORD32) *(WORD32 *)pv_value;        
+        d->frame_size_bytes = (UWORD32) *(WORD32 *)pv_value;
 
         return XA_NO_ERROR;
 
@@ -595,21 +595,21 @@ static XA_ERRORCODE xa_renderer_set_config_param(XARenderer *d, WORD32 i_idx, pV
 
             /* ...command is valid only in configuration state */
             XF_CHK_ERR((d->state & XA_RENDERER_FLAG_POSTINIT_DONE) == 0, XA_RENDERER_CONFIG_FATAL_STATE);
-            
+
             /* ...check it is valid framesize or not */
             XF_CHK_ERR( ( ( frame_size_bytes >= MIN_FRAME_SIZE_IN_BYTES) && ( frame_size_bytes <= MAX_FRAME_SIZE_IN_BYTES_DEFAULT ) ), XA_RENDERER_CONFIG_NONFATAL_RANGE);
-            
+
             /* ...check frame_size_bytes is multiple of 4 or not */
-            XF_CHK_ERR( ( (frame_size_bytes & 0x3) == 0 ), XA_RENDERER_CONFIG_NONFATAL_RANGE);    
-            
+            XF_CHK_ERR( ( (frame_size_bytes & 0x3) == 0 ), XA_RENDERER_CONFIG_NONFATAL_RANGE);
+
             /* ...get requested frame size */
             d->frame_size  = (UWORD32) *(WORD32 *)pv_value;
 
             /* ...update internal variable frame_size_bytes */
             d->frame_size_bytes = d->frame_size * d->sample_size;
-            
+
             TRACE(INIT, _b("frame_size:%d"), d->frame_size);
-            
+
             return XA_NO_ERROR;
         }
     default:
@@ -722,7 +722,7 @@ static XA_ERRORCODE xa_renderer_execute(XARenderer *d, WORD32 i_idx, pVOID pv_va
 
     case XA_CMD_TYPE_DONE_QUERY:
         XF_CHK_ERR(pv_value, XA_API_FATAL_INVALID_CMD_TYPE);
-        
+
         *(UWORD32 *)pv_value = d->exec_done;
 
         return XA_NO_ERROR;
@@ -765,12 +765,12 @@ static XA_ERRORCODE xa_renderer_get_output_bytes(XARenderer *d, WORD32 i_idx, pV
 
     /* ...track index must be valid */
     XF_CHK_ERR(i_idx == 1, XA_API_FATAL_INVALID_CMD_TYPE);
-    
+
     //XF_CHK_ERR(d->state & XA_RENDERER_FLAG_RUNNING, XA_API_FATAL_INVALID_CMD_TYPE);
     XF_CHK_ERR(d->state & XA_RENDERER_FLAG_POSTINIT_DONE, XA_API_FATAL_INVALID_CMD_TYPE);
-    
+
     /* ...output buffer must exist */
-    XF_CHK_ERR(d->output, XA_RENDERER_EXEC_NONFATAL_OUTPUT);
+    //XF_CHK_ERR(d->output, XA_RENDERER_EXEC_NONFATAL_OUTPUT);
 
     /* ...return number of produced bytes */
     *(WORD32 *)pv_value = d->bytes_produced;
@@ -1021,7 +1021,7 @@ XA_ERRORCODE xa_renderer(xa_codec_handle_t p_xa_module_obj, WORD32 i_cmd, WORD32
          comp_start = clk_read_start(CLK_SELN_THREAD);
      }
 #endif
-  
+
     Rend_ret = xa_renderer_api[i_cmd](renderer, i_idx, pv_value);
 #ifdef XAF_PROFILE
     if(XA_API_CMD_INIT != i_cmd)

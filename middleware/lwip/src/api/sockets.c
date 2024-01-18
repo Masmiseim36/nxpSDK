@@ -743,7 +743,7 @@ lwip_accept(int s, struct sockaddr *addr, socklen_t *addrlen)
     ip_addr_debug_print_val(SOCKETS_DEBUG, naddr);
     LWIP_DEBUGF(SOCKETS_DEBUG, (" port=%"U16_F"\n", port));
   } else {
-    LWIP_DEBUGF(SOCKETS_DEBUG, ("lwip_accept(%d) returning new sock=%d", s, newsock));
+    LWIP_DEBUGF(SOCKETS_DEBUG, ("lwip_accept(%d) returning new sock=%d\n", s, newsock));
   }
 
   set_errno(0);
@@ -1012,7 +1012,7 @@ lwip_recv_tcp(struct lwip_sock *sock, void *mem, size_t len, int flags)
     } else {
       copylen = (u16_t)recv_left;
     }
-    if (recvd + copylen < recvd) {
+    if (recvd > SSIZE_MAX - copylen) {
       /* overflow */
       copylen = (u16_t)(SSIZE_MAX - recvd);
     }

@@ -1046,7 +1046,7 @@ static status_t MMC_SendExtendedCsd(mmc_card_t *card, uint8_t *targetAddr, uint3
                                             kSDMMC_DataPacketFormatLSBFirst);
         if (targetAddr != NULL)
         {
-            *targetAddr = (uint8_t)alignBuffer[byteIndex];
+            *targetAddr = ((uint8_t *)alignBuffer)[byteIndex];
         }
         else
         {

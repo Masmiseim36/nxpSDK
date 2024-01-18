@@ -3,7 +3,7 @@
  * Copyright 2016 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 /*   This file contains implementation of WebSocket protocol.*/
@@ -99,9 +99,10 @@ uint32_t ws_init(HTTPSRV_SESSION_STRUCT *session, WS_CONTEXT_STRUCT **context_ou
 #if LWIP_SO_RCVTIMEO
     {
         struct timeval timeval_option;
-        timeval_option.tv_sec = WSCFG_PING_PERIOD; /* seconds */
-        timeval_option.tv_usec = 0;                /* and microseconds */
-        (void)lwip_setsockopt(session->sock, SOL_SOCKET, SO_RCVTIMEO, (const void *)&timeval_option, sizeof(timeval_option));
+        timeval_option.tv_sec  = WSCFG_PING_PERIOD; /* seconds */
+        timeval_option.tv_usec = 0;                 /* and microseconds */
+        (void)lwip_setsockopt(session->sock, SOL_SOCKET, SO_RCVTIMEO, (const void *)&timeval_option,
+                              sizeof(timeval_option));
     }
 #endif
 
@@ -118,22 +119,22 @@ uint32_t ws_init(HTTPSRV_SESSION_STRUCT *session, WS_CONTEXT_STRUCT **context_ou
 
     /* Set handle so it is available for callbacks */
     context->u_context.handle = (uint32_t)context;
-    context->state = WS_STATE_OPEN;
+    context->state            = WS_STATE_OPEN;
 
     /* Init UTF-8 buffer. */
     memset((void *)context->utf8.data, UTF8_TAIL_MIN, sizeof(context->utf8.data));
 
     /* Setup buffers - re-use HTTP session buffer; split it in half */
-    context->tx_buffer.data = (uint8_t *)session->buffer.data;
-    context->tx_buffer.size = HTTPSRV_SES_BUF_SIZE_PRV / 2;
+    context->tx_buffer.data   = (uint8_t *)session->buffer.data;
+    context->tx_buffer.size   = HTTPSRV_SES_BUF_SIZE_PRV / 2;
     context->tx_buffer.offset = 0;
 
-    context->hdr_buffer.data = context->tx_buffer.data + context->tx_buffer.size;
-    context->hdr_buffer.size = WS_MAX_CLIENT_HEADER_LENGTH;
+    context->hdr_buffer.data   = context->tx_buffer.data + context->tx_buffer.size;
+    context->hdr_buffer.size   = WS_MAX_CLIENT_HEADER_LENGTH;
     context->hdr_buffer.offset = 0;
 
-    context->rx_buffer.data = context->hdr_buffer.data + context->hdr_buffer.size;
-    context->rx_buffer.size = HTTPSRV_SES_BUF_SIZE_PRV / 2 - WS_MAX_CLIENT_HEADER_LENGTH;
+    context->rx_buffer.data   = context->hdr_buffer.data + context->hdr_buffer.size;
+    context->rx_buffer.size   = HTTPSRV_SES_BUF_SIZE_PRV / 2 - WS_MAX_CLIENT_HEADER_LENGTH;
     context->rx_buffer.offset = 0;
 
     context->ctrl_buffer.data = (uint8_t *)httpsrv_mem_alloc(WS_CONTROL_FRAME_LENGTH_MAX);
@@ -141,7 +142,7 @@ uint32_t ws_init(HTTPSRV_SESSION_STRUCT *session, WS_CONTEXT_STRUCT **context_ou
     {
         return (WS_ERR_FAIL);
     }
-    context->ctrl_buffer.size = WS_CONTROL_FRAME_LENGTH_MAX;
+    context->ctrl_buffer.size   = WS_CONTROL_FRAME_LENGTH_MAX;
     context->ctrl_buffer.offset = 0;
 
     context->actual_buffer = &context->hdr_buffer;
@@ -154,7 +155,7 @@ uint32_t ws_init(HTTPSRV_SESSION_STRUCT *session, WS_CONTEXT_STRUCT **context_ou
     }
 
     /* Call user connect callback and set session state */
-    if(plugin->on_connect)
+    if (plugin->on_connect)
     {
         plugin->on_connect(plugin->cookie, context->u_context);
     }
@@ -171,8 +172,8 @@ static uint32_t ws_process(WS_CONTEXT_STRUCT *context)
     uint32_t retval;
     uint32_t api_status;
 
-    retval = WS_ERR_PASS;
-    buffer = context->actual_buffer;
+    retval    = WS_ERR_PASS;
+    buffer    = context->actual_buffer;
     rec_frame = &context->frame;
 
     api_status = ws_process_api_calls(context);
@@ -223,15 +224,15 @@ static uint32_t ws_recv(WS_CONTEXT_STRUCT *context)
     uint32_t received_size;
     uint32_t req_length;
 
-    buffer = context->actual_buffer;
+    buffer                 = context->actual_buffer;
     context->rec_data_size = 0;
 
     if (buffer == &context->hdr_buffer)
     {
-        req_length = WS_MIN_CLIENT_HEADER_LENGTH;
-        context->hdr_buffer.offset = 0;
+        req_length                  = WS_MIN_CLIENT_HEADER_LENGTH;
+        context->hdr_buffer.offset  = 0;
         context->ctrl_buffer.offset = 0;
-        context->mask_offset = 0;
+        context->mask_offset        = 0;
     }
     else
     {
@@ -275,15 +276,15 @@ static uint32_t ws_recv(WS_CONTEXT_STRUCT *context)
                 }
                 if (frame->opcode & WS_OPCODE_CONTROL_MASK)
                 {
-                    buffer = &context->ctrl_buffer;
+                    buffer     = &context->ctrl_buffer;
                     req_length = frame->length;
                 }
                 else
                 {
-                    buffer = &context->rx_buffer;
+                    buffer     = &context->rx_buffer;
                     req_length = WS_MIN(frame->length, buffer->size);
                 }
-                frame->data = buffer->data;
+                frame->data             = buffer->data;
                 context->remaining_data = frame->length;
             }
             continue;
@@ -311,7 +312,8 @@ static uint32_t ws_recv_fail(WS_CONTEXT_STRUCT *context)
     plugin = context->session->plugin;
 
     /* If receive timed out and ping was not send, send it */
-    if (((lwip_getsockopt(context->session->sock, SOL_SOCKET, SO_ERROR, &optval, &optlen) == 0) && (optval == EWOULDBLOCK)) &&
+    if (((lwip_getsockopt(context->session->sock, SOL_SOCKET, SO_ERROR, &optval, &optlen) == 0) &&
+         (optval == EWOULDBLOCK)) &&
         (context->state != WS_STATE_WAIT_PONG))
     {
         ws_send_control_frame(context, (uint8_t *)WS_PING_STRING, strlen(WS_PING_STRING), WS_OPCODE_PING);
@@ -326,9 +328,9 @@ static uint32_t ws_recv_fail(WS_CONTEXT_STRUCT *context)
     {
         WS_USER_CONTEXT_STRUCT *user_context;
 
-        user_context = &context->u_context;
+        user_context        = &context->u_context;
         user_context->error = WS_ERR_SOCKET;
-        if(plugin->on_error)
+        if (plugin->on_error)
         {
             plugin->on_error(plugin->cookie, *user_context);
         }
@@ -348,9 +350,9 @@ static uint32_t ws_validate_data(WS_CONTEXT_STRUCT *context)
     uint32_t result;
 
     user_context = &context->u_context;
-    buffer = context->actual_buffer;
-    frame = &context->frame;
-    result = WS_ERR_PASS;
+    buffer       = context->actual_buffer;
+    frame        = &context->frame;
+    result       = WS_ERR_PASS;
 
     if (((frame->opcode == WS_OPCODE_TEXT) ||
          ((frame->opcode == WS_OPCODE_CONTINUATION) && (user_context->data.type == WS_DATA_TEXT))))
@@ -358,7 +360,7 @@ static uint32_t ws_validate_data(WS_CONTEXT_STRUCT *context)
         uint8_t *data;
         uint32_t length;
 
-        data = buffer->data + (buffer->offset - context->rec_data_size);
+        data   = buffer->data + (buffer->offset - context->rec_data_size);
         length = WS_MIN(context->rec_data_size, frame->length);
         result = ws_check_utf8(context, data, length);
     }
@@ -388,7 +390,7 @@ static uint32_t ws_process_api_calls(WS_CONTEXT_STRUCT *context)
         FD_SET(context->session->sock, &readset);
         FD_SET(context->session->sock, &exceptset);
 
-        timeout.tv_sec = 0;
+        timeout.tv_sec  = 0;
         timeout.tv_usec = 1;
 
         /* Wait for any activity on socket - received data or exception. */
@@ -445,7 +447,7 @@ static uint32_t ws_process_api_calls(WS_CONTEXT_STRUCT *context)
                             break;
                         case WS_COMMAND_CLOSE:
                             /* Send close frame, set correct state. */
-                            retval = WS_ERR_SERVER;
+                            retval       = WS_ERR_SERVER;
                             close_reason = PP_NTOHS(WS_CLOSE_GOING_AWAY);
                             if (ws_send_control_frame(context, (uint8_t *)&close_reason, sizeof(close_reason),
                                                       WS_OPCODE_CLOSE) == -1)
@@ -500,19 +502,19 @@ static int32_t ws_process_frame(WS_CONTEXT_STRUCT *context)
     WS_USER_CONTEXT_STRUCT *user_context;
     int retval;
 
-    retval = HTTPSRV_ERR;
+    retval       = HTTPSRV_ERR;
     user_context = &context->u_context;
-    frame = &context->frame;
+    frame        = &context->frame;
 
     switch (frame->opcode)
     {
         case WS_OPCODE_TEXT:
             user_context->data.type = WS_DATA_TEXT;
-            retval = ws_data_frame(context);
+            retval                  = ws_data_frame(context);
             break;
         case WS_OPCODE_BINARY:
             user_context->data.type = WS_DATA_BINARY;
-            retval = ws_data_frame(context);
+            retval                  = ws_data_frame(context);
             break;
         case WS_OPCODE_CONTINUATION:
             retval = ws_data_frame(context);
@@ -546,7 +548,7 @@ static uint32_t ws_check_utf8(WS_CONTEXT_STRUCT *context, uint8_t *data, uint32_
     uint32_t missing_now;
     uint32_t missing_prev;
 
-    missing_now = 0;
+    missing_now  = 0;
     missing_prev = context->utf8.missing;
 
     if (length == 0)
@@ -588,7 +590,7 @@ static uint32_t ws_check_utf8(WS_CONTEXT_STRUCT *context, uint8_t *data, uint32_
         length -= size;
         memset((void *)context->utf8.data, UTF8_TAIL_MIN, sizeof(context->utf8.data));
         context->utf8.missing = 0;
-        context->utf8.index = 0;
+        context->utf8.index   = 0;
     }
 
     if (!utf8_is_valid(data, length, &bad, &missing_now))
@@ -603,7 +605,7 @@ static uint32_t ws_check_utf8(WS_CONTEXT_STRUCT *context, uint8_t *data, uint32_
         size = WS_MIN(sizeof(context->utf8.data) - missing_now, length);
         memcpy(context->utf8.data, bad, size);
         context->utf8.missing = missing_now;
-        context->utf8.index = size;
+        context->utf8.index   = size;
     }
     return (WS_ERR_PASS);
 }
@@ -672,12 +674,12 @@ static uint32_t ws_close_frame(WS_CONTEXT_STRUCT *context)
     uint32_t retval;
 
     retval = HTTPSRV_OK;
-    frame = &context->frame;
+    frame  = &context->frame;
     /* We initiated close and we are waiting for close from client */
     if (context->state == WS_STATE_CLOSING)
     {
         context->state = WS_STATE_CLOSED;
-        retval = (uint32_t)WS_DO_DEINIT;
+        retval         = (uint32_t)WS_DO_DEINIT;
     }
     /* Client initiated close, so we reply with close frame + proper code */
     else if (context->remaining_data == 0)
@@ -709,7 +711,7 @@ static uint32_t ws_close_frame(WS_CONTEXT_STRUCT *context)
         }
         ws_send_control_frame(context, (uint8_t *)&close_reason, sizeof(close_reason), WS_OPCODE_CLOSE);
         context->state = WS_STATE_CLOSED;
-        retval = (uint32_t)WS_DO_DEINIT;
+        retval         = (uint32_t)WS_DO_DEINIT;
     }
     return (retval);
 }
@@ -724,7 +726,7 @@ static int ws_ping_frame(WS_CONTEXT_STRUCT *context)
 
     frame = &context->frame;
 
-    retval = ws_send_control_frame(context, frame->data, frame->length, WS_OPCODE_PONG);
+    retval                 = ws_send_control_frame(context, frame->data, frame->length, WS_OPCODE_PONG);
     context->actual_buffer = &context->hdr_buffer;
     return (retval);
 }
@@ -758,10 +760,10 @@ static int32_t ws_data_frame(WS_CONTEXT_STRUCT *context)
     const WS_PLUGIN_STRUCT *plugin;
     int32_t retval = HTTPSRV_OK;
 
-    plugin = context->session->plugin;
+    plugin       = context->session->plugin;
     user_context = &context->u_context;
-    buffer = context->actual_buffer;
-    frame = &context->frame;
+    buffer       = context->actual_buffer;
+    frame        = &context->frame;
 
     /* Store length of received data in user context. */
     user_context->data.length += WS_MIN(frame->length, context->rec_data_size);
@@ -773,7 +775,7 @@ static int32_t ws_data_frame(WS_CONTEXT_STRUCT *context)
      */
     if ((buffer->size - buffer->offset) == 0)
     {
-        if(plugin->on_message)
+        if (plugin->on_message)
         {
             retval = plugin->on_message(plugin->cookie, *user_context);
         }
@@ -781,8 +783,8 @@ static int32_t ws_data_frame(WS_CONTEXT_STRUCT *context)
         {
             retval = 0;
         }
-        user_context->fin_flag = 0;
-        user_context->data.length = 0;
+        user_context->fin_flag      = 0;
+        user_context->data.length   = 0;
         user_context->data.data_ptr = NULL;
         context->remaining_data -= user_context->data.length;
         context->actual_buffer->offset = 0;
@@ -792,8 +794,8 @@ static int32_t ws_data_frame(WS_CONTEXT_STRUCT *context)
         if (frame->fin == true)
         {
             user_context->fin_flag = 1;
-            context->rx_state = WS_RX_START;
-            if(plugin->on_message)
+            context->rx_state      = WS_RX_START;
+            if (plugin->on_message)
             {
                 retval = plugin->on_message(plugin->cookie, *user_context);
             }
@@ -801,9 +803,9 @@ static int32_t ws_data_frame(WS_CONTEXT_STRUCT *context)
             {
                 retval = 0;
             }
-            user_context->fin_flag = 0;
-            user_context->data.length = 0;
-            user_context->data.data_ptr = NULL;
+            user_context->fin_flag         = 0;
+            user_context->data.length      = 0;
+            user_context->data.data_ptr    = NULL;
             context->actual_buffer->offset = 0;
         }
         context->actual_buffer = &context->hdr_buffer;
@@ -829,7 +831,7 @@ static void ws_deinit(WS_CONTEXT_STRUCT *context)
     plugin = context->session->plugin;
 
     /* Call user disconnect callback */
-    if(plugin->on_disconnect)
+    if (plugin->on_disconnect)
     {
         plugin->on_disconnect(plugin->cookie, context->u_context);
     }
@@ -840,7 +842,7 @@ static void ws_deinit(WS_CONTEXT_STRUCT *context)
         /* Delete and drain the api_queue. */
         while (sys_mbox_tryfetch(&context->api_queue, &message) != SYS_MBOX_EMPTY)
         {
-            if(message)
+            if (message)
             {
                 httpsrv_mem_free(message);
             }
@@ -910,9 +912,9 @@ static uint32_t ws_read_frame_header(uint8_t *data, WS_FRAME_STRUCT *dst, uint32
         return (req_length - length);
     }
 
-    dst->fin = WS_GET_FIN(src);
+    dst->fin      = WS_GET_FIN(src);
     dst->reserved = WS_GET_RSV(src);
-    dst->opcode = WS_GET_OPCODE(src);
+    dst->opcode   = WS_GET_OPCODE(src);
     src++;
     dst->masked = WS_GET_MASK_FLAG(src);
     dst->length = WS_GET_LENGTH(src);
@@ -970,13 +972,13 @@ static void ws_write_frame(uint8_t *dst, WS_FRAME_STRUCT *src)
     }
     else if ((src->length > WS_LENGTH_NON_EXT) & (src->length < UINT16MAX))
     {
-        *dst++ = WS_LENGTH_EXT16;
+        *dst++             = WS_LENGTH_EXT16;
         *((uint16_t *)dst) = htons(src->length & 0xFFFF);
         dst += sizeof(uint16_t);
     }
     else if (src->length >= UINT16MAX)
     {
-        *dst++ = WS_LENGTH_EXT64;
+        *dst++             = WS_LENGTH_EXT64;
         *((uint64_t *)dst) = htonl(src->length);
         dst += sizeof(uint64_t);
     }
@@ -1050,7 +1052,7 @@ static void ws_bad_frame(WS_CONTEXT_STRUCT *context, WS_ERROR_CODE frame_status)
     WS_USER_CONTEXT_STRUCT *user_context;
     const WS_PLUGIN_STRUCT *plugin;
 
-    plugin = context->session->plugin;
+    plugin       = context->session->plugin;
     user_context = &context->u_context;
 
     /* Send close with protocol error. */
@@ -1072,11 +1074,11 @@ static void ws_bad_frame(WS_CONTEXT_STRUCT *context, WS_ERROR_CODE frame_status)
     context->state = WS_STATE_CLOSING;
 
     /* Call user callback */
-    user_context->error = WS_ERR_BAD_FRAME;
-    user_context->data.type = WS_DATA_INVALID;
+    user_context->error         = WS_ERR_BAD_FRAME;
+    user_context->data.type     = WS_DATA_INVALID;
     user_context->data.data_ptr = NULL;
-    user_context->data.length = 0;
-    if(plugin->on_error)
+    user_context->data.length   = 0;
+    if (plugin->on_error)
     {
         plugin->on_error(plugin->cookie, *user_context);
     }
@@ -1129,23 +1131,23 @@ static int ws_send_frame(WS_CONTEXT_STRUCT *context, WS_FRAME_STRUCT *frame)
     bool user_fin;
     const WS_PLUGIN_STRUCT *plugin;
 
-    plugin = context->session->plugin;
-    buffer = &context->tx_buffer;
+    plugin      = context->session->plugin;
+    buffer      = &context->tx_buffer;
     data_length = frame->length;
-    user_fin = frame->fin;
+    user_fin    = frame->fin;
 
     do
     {
         /* First case: We have all data from user and it fits in buffer. */
         if (((data_length + ws_get_header_size(frame)) < buffer->size) && user_fin)
         {
-            frame->fin = true;
+            frame->fin    = true;
             frame->length = data_length;
         }
         /* Second case: We have data from user, but it does not fit in buffer. */
         else if (((data_length + ws_get_header_size(frame)) > buffer->size) && user_fin)
         {
-            frame->fin = false;
+            frame->fin    = false;
             frame->length = buffer->size;
         }
         /*
@@ -1155,7 +1157,7 @@ static int ws_send_frame(WS_CONTEXT_STRUCT *context, WS_FRAME_STRUCT *frame)
          */
         else
         {
-            frame->fin = false;
+            frame->fin    = false;
             frame->length = data_length;
         }
         if (frame->fin == true)
@@ -1184,13 +1186,13 @@ static int ws_send_frame(WS_CONTEXT_STRUCT *context, WS_FRAME_STRUCT *frame)
     {
         WS_USER_CONTEXT_STRUCT *user_context;
 
-        user_context = &context->u_context;
-        user_context->error = WS_ERR_SOCKET;
+        user_context                = &context->u_context;
+        user_context->error         = WS_ERR_SOCKET;
         user_context->data.data_ptr = frame->data;
-        user_context->data.type = WS_DATA_INVALID;
-        user_context->data.length = frame->length;
-        if(plugin->on_error)
-        {    
+        user_context->data.type     = WS_DATA_INVALID;
+        user_context->data.length   = frame->length;
+        if (plugin->on_error)
+        {
             plugin->on_error(plugin->cookie, *user_context);
         }
         user_context->error = WS_ERR_OK;
@@ -1206,10 +1208,10 @@ static int ws_send_control_frame(WS_CONTEXT_STRUCT *context, uint8_t *data, uint
 {
     WS_FRAME_STRUCT frame = {0};
 
-    frame.data = data;
+    frame.data   = data;
     frame.length = length;
     frame.opcode = opcode;
-    frame.fin = true;
+    frame.fin    = true;
 
     return (ws_send_frame(context, &frame));
 }

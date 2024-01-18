@@ -36,7 +36,7 @@
  */
 #if defined(ELS)
 
-#include "fsl_css.h"
+#include "mcux_els.h"
 #include "fsl_debug_console.h"
 
 #include "psa/crypto.h"

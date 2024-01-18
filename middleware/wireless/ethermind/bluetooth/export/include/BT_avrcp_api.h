@@ -1864,7 +1864,7 @@ API_RESULT BT_avrcp_shutdown ( void );
  *  that AVRCP needs to call when any event occurs for this AVRCP Profile
  *  Instance.
  *
- *  \param AVRCP Handle (OUT)
+ *  \param [out] AVRCP Handle
  *         Denotes the AVRCP Profile instance for newly started AVRCP instance.
  *  \param [in] ntf_cb
  *         Callback function which will be called for all
@@ -1896,7 +1896,7 @@ API_RESULT BT_avrcp_start
  *   It disconnects all AVRCP control connections
  *   if present and stops the running timers..
  *
- *  \param AVRCP Handle (IN)
+ *  \param [in] AVRCP Handle
  *           Profile Instance representing this Profile.
  *
  *  \return API_RESULT

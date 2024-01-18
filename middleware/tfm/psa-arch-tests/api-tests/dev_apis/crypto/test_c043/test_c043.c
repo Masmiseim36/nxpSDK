@@ -1,5 +1,5 @@
 /** @file
- * Copyright (c) 2019-2021, Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2019-2023, Arm Limited or its affiliates. All rights reserved.
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -97,8 +97,7 @@ int32_t psa_raw_key_agreement_test(caller_security_t caller __UNUSED)
 
 int32_t psa_raw_key_agreement_negative_test(caller_security_t caller __UNUSED)
 {
-#ifdef ARCH_TEST_ECDH //NXP
-#ifdef ARCH_TEST_ECC_CURVE_SECP256R1 //NXP
+#if defined(ARCH_TEST_ECDH) && defined(ARCH_TEST_ECC_CURVE_SECP256R1)
 
     uint8_t     output[SIZE_50B]; //NXP
     int                     num_checks = sizeof(check2)/sizeof(check2[0]);
@@ -134,8 +133,10 @@ int32_t psa_raw_key_agreement_negative_test(caller_security_t caller __UNUSED)
                     output, check2[i].output_size, &output_length);
         TEST_ASSERT_EQUAL(status, PSA_ERROR_INVALID_HANDLE, TEST_CHECKPOINT_NUM(4));
     }
-#endif //NXP
-#endif //NXP
 
     return VAL_STATUS_SUCCESS;
+#else
+    val->print(PRINT_TEST, "No test available for the selected crypto configuration\n", 0);
+    return RESULT_SKIP(VAL_STATUS_NO_TESTS);
+#endif
 }

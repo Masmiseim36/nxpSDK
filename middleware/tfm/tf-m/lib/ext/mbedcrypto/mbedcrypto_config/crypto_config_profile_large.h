@@ -47,10 +47,10 @@
 #define PSA_WANT_ALG_CBC_NO_PADDING             1
 #define PSA_WANT_ALG_CBC_PKCS7                  1
 #define PSA_WANT_ALG_CCM                        1
-#define PSA_WANT_ALG_CMAC                       1    //NXP, required by PSA test large profile.
-#define PSA_WANT_ALG_CFB                        1    //NXP, required by PSA test large profile.
+#define PSA_WANT_ALG_CMAC                       1
+#define PSA_WANT_ALG_CFB                        1
 //#define PSA_WANT_ALG_CHACHA20_POLY1305          1
-#define PSA_WANT_ALG_CTR                        1    //NXP, required by PSA test large profile.
+#define PSA_WANT_ALG_CTR                        1
 #define PSA_WANT_ALG_DETERMINISTIC_ECDSA        1
 //#define PSA_WANT_ALG_ECB_NO_PADDING             1
 #define PSA_WANT_ALG_ECDH                       1
@@ -71,7 +71,7 @@
 //#define PSA_WANT_ALG_SHA_1                      1
 #define PSA_WANT_ALG_SHA_224                    1
 #define PSA_WANT_ALG_SHA_256                    1
-#define PSA_WANT_ALG_SHA_384                    1    //NXP, required by PSA test large profile.
+#define PSA_WANT_ALG_SHA_384                    1
 #define PSA_WANT_ALG_SHA_512                    1
 //#define PSA_WANT_ALG_STREAM_CIPHER              1
 #define PSA_WANT_ALG_TLS12_PRF                  1
@@ -93,8 +93,8 @@
  */
 //#define PSA_WANT_ECC_SECP_K1_224                1
 //#define PSA_WANT_ECC_SECP_K1_256                1
-//#define PSA_WANT_ECC_SECP_R1_192                1    //NXP NOTE: Not supported by PRINCE driver.
-//#define PSA_WANT_ECC_SECP_R1_224                1    //NXP NOTE: Not supported by PRINCE driver.
+//#define PSA_WANT_ECC_SECP_R1_192                1
+//#define PSA_WANT_ECC_SECP_R1_224                1
 #define PSA_WANT_ECC_SECP_R1_256                1
 #define PSA_WANT_ECC_SECP_R1_384                1
 //#define PSA_WANT_ECC_SECP_R1_521                1
@@ -111,5 +111,9 @@
 #define PSA_WANT_KEY_TYPE_RAW_DATA              1
 #define PSA_WANT_KEY_TYPE_RSA_KEY_PAIR          1
 #define PSA_WANT_KEY_TYPE_RSA_PUBLIC_KEY        1
+
+#ifdef CRYPTO_HW_ACCELERATOR
+#include "crypto_accelerator_config.h"
+#endif
 
 #endif /* PROFILE_L_PSA_CRYPTO_CONFIG_H */

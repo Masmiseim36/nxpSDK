@@ -1,5 +1,5 @@
 /** @file
- * Copyright (c) 2019-2022, Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2019-2023, Arm Limited or its affiliates. All rights reserved.
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -35,7 +35,7 @@ typedef struct {
     psa_status_t            expected_status;
 } test_data;
 
-#if defined(ARCH_TEST_RSA_1024) || defined(ARCH_TEST_RSA_PKCS1V15_CRYPT) //NXP
+#if defined(ARCH_TEST_RSA_1024) || defined(ARCH_TEST_RSA_PKCS1V15_CRYPT)
 
 static const test_data check1[] = {
 #ifdef ARCH_TEST_RSA_1024
@@ -217,5 +217,4 @@ static const test_data check1[] = {
 #endif
 #endif
 };
-
-#endif //NXP
+#endif

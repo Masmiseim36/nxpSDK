@@ -79,18 +79,20 @@ static int xf_proxy_register(UWORD32 core, xf_message_t *m)
     UWORD32             src = XF_MSG_SRC(m->id);
     UWORD32             client;
     xf_component_t *component;
-    
+    UWORD32 length = m->length - (sizeof(UWORD32) * XAF_MEM_POOL_TYPE_COMP_MAX);
+    void *buffer = (void *)((UWORD32)m->buffer + sizeof(UWORD32) * XAF_MEM_POOL_TYPE_COMP_MAX);
+
     /* ...allocate new client-id */
     XF_CHK_ERR((client = xf_client_alloc(cd)) != XF_CFG_MAX_CLIENTS, XAF_MEMORY_ERR);
-    
+
     /* ...create component via class factory */
-    if ((component = xf_component_factory(core, m->buffer, m->length)) == NULL)
+    if ((component = xf_component_factory(core, buffer, length)) == NULL)
     {
         TRACE(ERROR, _x("Component creation failed"));
-        
+
         /* ...recycle client-id */
         xf_client_free(cd, client);
-        
+
         /* ...return generic out-of-memory code always (tbd) */
         return XAF_MEMORY_ERR;
     }
@@ -100,17 +102,21 @@ static int xf_proxy_register(UWORD32 core, xf_message_t *m)
 
     /* ...set component "default" port specification ("destination") */
     component->id = __XF_PORT_SPEC(core, client, 0);
-    
+
     /* ...adjust session-id to include newly created component-id */
     m->id = __XF_MSG_ID(src, component->id);
 
-    TRACE(REG, _b("registered client: %u:%u (%s)"), core, client, (xf_id_t)m->buffer);
+    TRACE(REG, _b("registered client: %u:%u (%s)"), core, client, (xf_id_t)buffer);
 
     /* ...Assign the default/pre-init priority to component */
     component->priority = cd->component_default_priority_idx;
+
+    /* ...copy pool type of component memory types */
+    memcpy(component->mem_pool_type, m->buffer, sizeof(component->mem_pool_type));
+
     /* ...and return success to App Interface Layer (zero-length output) */
     xf_response_ok(m);
-    
+
     return 0;
 }
 
@@ -134,13 +140,13 @@ static int xf_proxy_free(UWORD32 core, xf_message_t *m)
 {
     /* ...command is valid only if shared memory interface for core is specified */
     XF_CHK_ERR(xf_shmem_enabled(core), XAF_MEMORY_ERR);
-    
+
     /* ...pass buffer freeing request to system-specific function */
     xf_shmem_free(core, m);
 
     /* ...return success to App Interface Layer (function never fails) */
     xf_response(m);
-        
+
     return 0;
 }
 
@@ -156,7 +162,7 @@ static int xf_proxy_route(UWORD32 core, xf_message_t *m)
 
     /* ...source component must reside on the local core */
     XF_CHK_ERR(XF_MSG_SRC_CORE(src) == core, -EINVAL);
-    
+
     /* ...make sure the "src" component is valid ("dst" may reside on other core) */
     if ((component = xf_client_lookup(XF_CORE_DATA(core), XF_PORT_CLIENT(src))) == NULL)
     {
@@ -176,7 +182,7 @@ static int xf_proxy_route(UWORD32 core, xf_message_t *m)
 
     /* ...route output port with source port set as destination */
     XF_CHK_API(xf_output_port_route(port, __XF_MSG_ID(dst, src), cmd->alloc_number, cmd->alloc_size, cmd->alloc_align));
-  
+
     TRACE(ROUTE, _b("Ports routed: %03x -> %03x"), src, dst);
 
     /* ...invoke component data-processing function directly (ignore errors? - tbd) */
@@ -294,7 +300,7 @@ static void *dsp_worker_entry(void *arg)
 #endif
         {
             int rc = __xf_msgq_recv_blocking(worker->queue, &msg, sizeof(msg)); /* ...wait indefinitely, TENA_2435. */
-            
+
             if (rc || !msg.component)
             {
                 TRACE(DISP, _b("dsp_worker_entry thread_exit, worker:%p msgq_err:%x msg.component:%p"), worker, rc, msg.component);
@@ -317,7 +323,7 @@ static void *dsp_worker_entry(void *arg)
                     TRACE(DISP, _b("In worker entry Error response to message id=%016llx - client %u:%u not registered"), (UWORD64)msg.msg->id, core, client);
                     xf_response_err(msg.msg);
                 }
-                else if ((core == XF_MSG_SRC_CORE(msg.msg->id) && xf_client_lookup(cd, XF_MSG_SRC_CLIENT(msg.msg->id))) || 
+                else if ((core == XF_MSG_SRC_CORE(msg.msg->id) && xf_client_lookup(cd, XF_MSG_SRC_CLIENT(msg.msg->id))) ||
                         (core != XF_MSG_SRC_CORE(msg.msg->id) && msg.msg->length != XF_MSG_LENGTH_INVALID))
                 {
                     TRACE(DISP, _b("In worker entry, Lookup failure response to message id=%016llx - client %u:%u not registered"), (UWORD64)msg.msg->id, core, client);
@@ -388,7 +394,7 @@ static void *dsp_worker_entry(void *arg)
             }
             else
             {
-                if ((core == XF_MSG_SRC_CORE(msg.msg->id) && xf_client_lookup(cd, XF_MSG_SRC_CLIENT(msg.msg->id))) || 
+                if ((core == XF_MSG_SRC_CORE(msg.msg->id) && xf_client_lookup(cd, XF_MSG_SRC_CLIENT(msg.msg->id))) ||
                         (core != XF_MSG_SRC_CORE(msg.msg->id) && msg.msg->length != XF_MSG_LENGTH_INVALID))
                 {
                     TRACE(DISP, _b("In worker entry, Lookup failure response to message id=%016llx - client %u:%u not registered"), (UWORD64)msg.msg->id, core, client);
@@ -409,16 +415,25 @@ static int xaf_proxy_create_worker(struct xf_worker *worker,
                                    UWORD32 priority, UWORD32 stack_size)
 {
     int ret;
+    void *pbuf = NULL;
 
 #if !defined(HAVE_FREERTOS)
-    worker->stack = xf_mem_alloc(stack_size, 4, worker->core, 0 /* shared */);
+    int msgq_size = __xf_msgq_get_size(100, sizeof(xf_worker_msg_t));
+    worker->stack = xf_mem_alloc(stack_size, 4, worker->core, 0 /* shared */, XAF_MEM_ID_COMP);
     if (worker->stack == NULL)
         return XAF_MEMORY_ERR;
+
+    pbuf = xf_mem_alloc(msgq_size, 4 /* align */, worker->core, 0 /* shared */, XAF_MEM_ID_COMP);
+    if(pbuf == NULL)
+    {
+        return XAF_MEMORY_ERR;
+    }
+    memset(pbuf, 0, msgq_size);
 #else /* HAVE_FREERTOS */
     worker->stack = NULL;
 #endif /* HAVE_FREERTOS */
 
-    worker->queue = __xf_msgq_create(100, sizeof(xf_worker_msg_t));
+    worker->queue = __xf_msgq_create(100, sizeof(xf_worker_msg_t), pbuf);
     if (!worker->queue) {
         ret = XAF_INVALIDPTR_ERR;
         goto err_queue;
@@ -428,10 +443,13 @@ static int xaf_proxy_create_worker(struct xf_worker *worker,
     /* ...local-scheduler initialized with DUMMY locks by default */
     xf_sched_init(&worker->sched);
 #else
-    if (xf_msg_pool_init(&worker->base_cancel_pool, XF_CFG_MAX_CLIENTS, worker->core, 0 /* shared */))
+    if (xf_msg_pool_init(&worker->base_cancel_pool, XF_CFG_MAX_CLIENTS, worker->core, 0, XAF_MEM_ID_COMP /* shared */))
     {
         ret = XAF_INVALIDPTR_ERR;
         __xf_msgq_destroy(worker->queue);
+#if !defined(HAVE_FREERTOS)
+        xf_mem_free(worker->queue, msgq_size, worker->core, 0 /* shared */, XAF_MEM_ID_COMP);
+#endif
         goto err_queue;
     }
     xf_msg_queue_init(&worker->base_cancel_queue);
@@ -451,14 +469,17 @@ static int xaf_proxy_create_worker(struct xf_worker *worker,
 
 err_thread:
     __xf_msgq_destroy(worker->queue);
+#if !defined(HAVE_FREERTOS)
+    xf_mem_free(worker->queue, msgq_size, worker->core, 0 /* shared */, XAF_MEM_ID_COMP);
+#endif
 
 #ifndef LOCAL_SCHED
-    xf_msg_pool_destroy(&worker->base_cancel_pool, worker->core, 0 /* shared */);
+    xf_msg_pool_destroy(&worker->base_cancel_pool, worker->core, 0 /* shared */, XAF_MEM_ID_COMP);
 #endif
 
 err_queue:
 #if !defined(HAVE_FREERTOS)
-    xf_mem_free(worker->stack, stack_size, worker->core, 0 /* shared */ );
+    xf_mem_free(worker->stack, stack_size, worker->core, 0 /* shared */, XAF_MEM_ID_COMP);
 #endif /* HAVE_FREERTOS */
     return ret;
 }
@@ -471,14 +492,14 @@ static int xf_proxy_set_priorities(UWORD32 core, xf_message_t *m)
     xf_set_priorities_msg_t *cmd = m->buffer;
 
     cd->worker = xf_mem_alloc((cmd->n_rt_priorities + 1) * sizeof(struct xf_worker),
-                              4, core, 0 /* shared */);
+                              4, core, 0 /* shared */, XAF_MEM_ID_COMP);
     cd->dsp_thread_priority = __xf_thread_get_priority(NULL);
-     
+
     if (cd->worker == NULL)
         return XAF_MEMORY_ERR;
 
     cd->worker->core = core;
-    rc = xaf_proxy_create_worker(cd->worker, cmd->bg_priority, cmd->stack_size);
+    rc = xaf_proxy_create_worker(cd->worker, cmd->bg_priority, XF_CORE_DATA(core)->worker_thread_stack_size[0]);
     if (rc < 0)
     {
         TRACE(DISP, _b("dsp_thread_create failed, bgworker:%p priority:%d"), cd->worker, cmd->bg_priority);
@@ -489,14 +510,14 @@ static int xf_proxy_set_priorities(UWORD32 core, xf_message_t *m)
         cd->worker[i+1].core = core;
         rc = xaf_proxy_create_worker(cd->worker + i + 1,
                                      cmd->rt_priority_base + i,
-                                     cmd->stack_size);
+                                     XF_CORE_DATA(core)->worker_thread_stack_size[i+1]);
         if (rc < 0)
         {
             TRACE(DISP, _b("dsp_thread_create failed, worker:%p priority:%d"), cd->worker + i + 1, cmd->rt_priority_base + i);
             return rc;
         }
     }
-    
+
     /* ...initialize scratch memory to NULL for all DSP worker threads */
     for (i = 0; i < cmd->n_rt_priorities+1; ++i)
     {
@@ -505,7 +526,7 @@ static int xf_proxy_set_priorities(UWORD32 core, xf_message_t *m)
     }
 
 /*...reinitializing locks */
-#if 1 
+#if 1
 #if !defined (LOCAL_SCHED)
     /* ...reinitialize sched lock */
     xf_sched_preempt_reinit(&cd->sched);
@@ -514,7 +535,10 @@ static int xf_proxy_set_priorities(UWORD32 core, xf_message_t *m)
     /* ...reinitialize shared pool lock */
     if(xf_shmem_enabled(core))
     {
-        xf_mm_preempt_reinit(&cd->shared_pool);
+        for(i = XAF_MEM_ID_DEV; i <= XAF_MEM_ID_DEV_MAX; i++)
+        {
+            xf_mm_preempt_reinit(&cd->shared_pool[i]);
+        }
     }
 
 #if XF_CFG_CORES_NUM > 1
@@ -523,7 +547,10 @@ static int xf_proxy_set_priorities(UWORD32 core, xf_message_t *m)
 #endif    // #if XF_CFG_CORES_NUM > 1
 
     /* ...reinitialize per-core memory loop */
-    xf_mm_preempt_reinit(&(XF_CORE_DATA(core)->local_pool));
+    for(i = XAF_MEM_ID_COMP; i <= XAF_MEM_ID_COMP_MAX; i++)
+    {
+        xf_mm_preempt_reinit(&(XF_CORE_DATA(core)->local_pool[i]));
+    }
 
     xf_sync_queue_preempt_reinit(&cd->queue);
 #if 0
@@ -538,7 +565,6 @@ static int xf_proxy_set_priorities(UWORD32 core, xf_message_t *m)
 #endif
 
     cd->n_workers = cmd->n_rt_priorities + 1;
-    cd->worker_stack_size = cmd->stack_size;
 
     cd->component_default_priority_idx = cmd->n_rt_priorities;
 
@@ -553,7 +579,7 @@ static int xf_proxy_set_priorities(UWORD32 core, xf_message_t *m)
 }
 
 /* ...proxy command processing table */
-static int (* const xf_proxy_cmd[])(UWORD32, xf_message_t *) = 
+static int (* const xf_proxy_cmd[])(UWORD32, xf_message_t *) =
 {
     [XF_OPCODE_TYPE(XF_REGISTER)] = xf_proxy_register,
     [XF_OPCODE_TYPE(XF_ALLOC)] = xf_proxy_alloc,
@@ -662,9 +688,9 @@ static void xf_worker_queue_purge(xf_core_data_t *cd, UWORD32 client, UWORD32 pr
 
     while (1)
     {
-        int rc = __xf_msgq_recv(worker->queue, &msg_tmp, sizeof(msg_tmp)); 
+        int rc = __xf_msgq_recv(worker->queue, &msg_tmp, sizeof(msg_tmp));
 
-        if(((msg_tmp.component == NULL) && (msg_tmp.msg == NULL)) || rc) 
+        if(((msg_tmp.component == NULL) && (msg_tmp.msg == NULL)) || rc)
         {
             /* ...break from loop once marker message is received */
             break;
@@ -678,7 +704,7 @@ static void xf_worker_queue_purge(xf_core_data_t *cd, UWORD32 client, UWORD32 pr
                     TRACE(DISP, _b("Error response to proxy message id=%016llx - client %u:%u getting unregistered"), (UWORD64)msg_tmp.msg->id, worker->core, client);
                     xf_response_err(msg_tmp.msg);
                 }
-                else if ((worker->core == XF_MSG_SRC_CORE(msg_tmp.msg->id) && xf_client_lookup(cd, XF_MSG_SRC_CLIENT(msg_tmp.msg->id))) || 
+                else if ((worker->core == XF_MSG_SRC_CORE(msg_tmp.msg->id) && xf_client_lookup(cd, XF_MSG_SRC_CLIENT(msg_tmp.msg->id))) ||
                         (worker->core != XF_MSG_SRC_CORE(msg_tmp.msg->id) && msg_tmp.msg->length != XF_MSG_LENGTH_INVALID))
                 {
                     TRACE(DISP, _b("Failure response to message id=%016llx - client %u:%u getting unregistered"), (UWORD64)msg_tmp.msg->id, worker->core, client);
@@ -701,11 +727,11 @@ static void xf_worker_queue_purge(xf_core_data_t *cd, UWORD32 client, UWORD32 pr
 static inline void xf_client_cleanup(xf_core_data_t *cd, UWORD32 client, UWORD32 priority)
 {
     if(cd->n_workers)
-    { 
+    {
         /* ...save current priority of thread */
         UWORD32 old_priority = __xf_thread_get_priority(NULL);
 
-        /* ...elevate priority of thread */ 
+        /* ...elevate priority of thread */
         __xf_thread_set_priority(NULL, cd->dsp_thread_priority + 1);
 
         /* ...respond to all messages received for deleting component */
@@ -730,7 +756,7 @@ void xf_core_process_message(xf_component_t *component, xf_message_t *m)
     UWORD32 client = XF_MSG_DST_CLIENT(m->id);
 
     /* ...capture value before component memory is freed */
-    UWORD32 priority = component->priority; 
+    UWORD32 priority = component->priority;
 
     /* ...pass message to component entry point */
     WORD32 ret = component->entry(component, m);
@@ -844,7 +870,7 @@ static inline void xf_core_dispatch(xf_core_data_t *cd, UWORD32 core, xf_message
     if (XF_MSG_DST_PROXY(m->id))
     {
         TRACE(DISP, _b("core[%u]::proxy-cmd(id=%016llx, opcode=%08x)"), core, (UWORD64)m->id, m->opcode);
-        
+
         /* ...process message addressed to proxy */
         xf_proxy_command(core, m);
 
@@ -864,7 +890,7 @@ static inline void xf_core_dispatch(xf_core_data_t *cd, UWORD32 core, xf_message
 
     /* ...message goes to local component */
     client = XF_MSG_DST_CLIENT(m->id);
-    
+
     /* ...check if client is alive */
     if ((component = xf_client_lookup(cd, client)) != NULL)
     {
@@ -904,7 +930,7 @@ static inline void xf_core_dispatch(xf_core_data_t *cd, UWORD32 core, xf_message
             }
         }
         else if ((!m->error) &&
-                 ((core == XF_MSG_SRC_CORE(m->id) && xf_client_lookup(cd, XF_MSG_SRC_CLIENT(m->id))) || 
+                 ((core == XF_MSG_SRC_CORE(m->id) && xf_client_lookup(cd, XF_MSG_SRC_CLIENT(m->id))) ||
                  (core != XF_MSG_SRC_CORE(m->id) && m->length != XF_MSG_LENGTH_INVALID)))
         {
             /* ...complete message with general internal failure response */
@@ -921,7 +947,7 @@ static inline void xf_core_dispatch(xf_core_data_t *cd, UWORD32 core, xf_message
             TRACE(DISP, _b("Error response to message id=%016llx - client %u:%u not registered"), (UWORD64)m->id, core, client);
             xf_response_err(m);
         }
-        else if ((core == XF_MSG_SRC_CORE(m->id) && xf_client_lookup(cd, XF_MSG_SRC_CLIENT(m->id))) || 
+        else if ((core == XF_MSG_SRC_CORE(m->id) && xf_client_lookup(cd, XF_MSG_SRC_CLIENT(m->id))) ||
                  (core != XF_MSG_SRC_CORE(m->id) && m->length != XF_MSG_LENGTH_INVALID))
         {
             /* ...complete message with general internal failure response */
@@ -1327,7 +1353,7 @@ int xf_core_init(UWORD32 core)
     xf_core_data_t     *cd = XF_CORE_DATA(core);
     xf_cmap_link_t     *link;
     UWORD32                 i;
-    
+
     xf_irq_init_backend();
 
     /* ...create list of free client descriptors */
@@ -1338,7 +1364,7 @@ int xf_core_init(UWORD32 core)
 
     /* ...set head of free clients list */
     cd->free = 0;
-    
+
     /* ...initialize local queue scheduler */
     xf_sched_init(&cd->sched);
     xf_sync_queue_init(&cd->queue);
@@ -1347,16 +1373,16 @@ int xf_core_init(UWORD32 core)
 #endif
     /* ...initialize IPI subsystem */
     XF_CHK_API(xf_ipi_init(core));
-    
+
     /* ...initialize shared read-write memory */
     XF_CHK_API(xf_shmem_enabled(core) ? xf_shmem_init(core) : 0);
 
     /* ...initialize scratch memory to NULL */
     cd->scratch = NULL;
-    
+
     /* ...okay... it's all good */
     TRACE(INIT, _b("core-%u initialized"), core);
-    
+
     return 0;
 }
 
@@ -1373,7 +1399,7 @@ int xf_core_deinit(UWORD32 core)
         UWORD32 src_id = 0, src_port = 0;
         UWORD32 dst_id = 0, dst_port = 0;
         xf_message_t *m;
-            
+
         for(dst=0; dst<XF_CFG_CORES_NUM; dst++)
         {
             if(dst == XF_CORE_ID_MASTER) continue;
@@ -1383,7 +1409,7 @@ int xf_core_deinit(UWORD32 core)
             m->opcode = XF_STOP; //TODO: other suitable opcode??
             m->length = 0;
             m->buffer = NULL;
-            
+
             //xf_ipc_b2a_flush(core, &m->buffer, m->length); /* ...flush the payload, not required if m->buffer == NULL */
             /* ...put message into local IPC queue */
             xf_ipc_send2(dst, (void*)m, sizeof(*m), m->buffer, m->length);
@@ -1397,7 +1423,7 @@ int xf_core_deinit(UWORD32 core)
             {
                 xf_ipc_recv2(core, (void **)&m, sizeof(*m));
                 if(m == NULL) break;
-                if(m->opcode == XF_STOP) 
+                if(m->opcode == XF_STOP)
                 {
                     dst--;
                     xf_msg_pool_put(&XF_CORE_DATA(core)->dsp_dsp_shmem_pool, m);
@@ -1406,12 +1432,9 @@ int xf_core_deinit(UWORD32 core)
         }while(dst && !xf_ipi_wait(core)); //TODO:why !xf_ipi_wait()??
     }
 #endif
-    
+
     if (cd->n_workers) {
         UWORD32 i;
-#if !defined(HAVE_FREERTOS)
-        UWORD32 stack_size = cd->worker_stack_size;
-#endif /* HAVE_FREERTOS */
 
 #if defined(HAVE_XOS) && !defined(__TOOLS_RI6_PLUS__)
         /* ...TENX-51553,TENA-2580: RI.2 temporary fix for XOS thread behaving incorrectly if they never execute */
@@ -1436,12 +1459,14 @@ int xf_core_deinit(UWORD32 core)
             __xf_thread_join(&worker->thread, NULL);
 
 #ifndef LOCAL_SCHED
-            xf_msg_pool_destroy(&worker->base_cancel_pool, core, 0 /* shared */);
+            xf_msg_pool_destroy(&worker->base_cancel_pool, core, 0 /* shared */, XAF_MEM_ID_COMP);
 #endif
-#if defined(HAVE_XOS)
-            xf_mem_free(worker->stack, stack_size, core, 0);
-#endif
+
             __xf_msgq_destroy(worker->queue);
+#if defined(HAVE_XOS)
+            xf_mem_free(worker->queue, __xf_msgq_get_size(100, sizeof(xf_worker_msg_t)), core, 0 /* shared */, XAF_MEM_ID_COMP);
+            xf_mem_free(worker->stack, XF_CORE_DATA(core)->worker_thread_stack_size[i], core, 0 /* shared */, XAF_MEM_ID_COMP);
+#endif //HAVE_XOS
         }
 
         if(xf_g_dsp->cb_compute_cycles && xf_g_dsp->pdsp_cb_stats)
@@ -1456,7 +1481,7 @@ int xf_core_deinit(UWORD32 core)
         }
 
         xf_mem_free(cd->worker, cd->n_workers * sizeof(struct xf_worker),
-                    core, 0);
+                    core, 0, XAF_MEM_ID_COMP);
         cd->n_workers = 0;
     }
 
@@ -1465,7 +1490,7 @@ int xf_core_deinit(UWORD32 core)
 
     /* ...deinitialize IPI subsystem */
     XF_CHK_API(xf_ipi_deinit(core));
- 
+
 #if 0
     xf_sync_queue_deinit(&cd->response);
 #endif
@@ -1487,10 +1512,10 @@ void xf_core_service(UWORD32 core)
     xf_task_t      *t;
 
     do
-    {           
+    {
         /* ...clear local status change */
         status = 0;
-            
+
 #if (XF_CFG_CORES_NUM > 1)
         /* ... process messages from IPC queue */
         while(1) //AR7
@@ -1569,6 +1594,6 @@ int xf_global_init(void)
 {
     /* ...what global data we have to initialize? - tbd */
     TRACE(INIT, _b("Global data initialized"));
-    
+
     return 0;
 }

@@ -35,4 +35,7 @@
 #define FLASH0_PAGE_SIZE              (256)  /* Page (256 bytes) basis, or word basis. */
 #define FLASH0_PROGRAM_UNIT           FLASH0_PAGE_SIZE         /* Minimum write size */
 
+#define CACHE_BASE                    CACHE64_CTRL0
+#define USART_BASE                    USART0
+
 #endif  /* __PLATFORM_BASE_ADDRESS_H__ */

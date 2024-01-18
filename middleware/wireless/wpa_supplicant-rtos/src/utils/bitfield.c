@@ -8,7 +8,7 @@
 
 #include "includes.h"
 
-#include "common.h"
+#include "utils/common.h"
 #include "bitfield.h"
 
 struct bitfield

@@ -11,7 +11,7 @@
 #ifndef WPS_UPNP_H
 #define WPS_UPNP_H
 
-#include "utils/wlist.h"
+#include "utils/dl_list.h"
 
 struct upnp_wps_device_sm;
 struct wps_context;

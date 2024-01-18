@@ -432,6 +432,72 @@ START_TEST(test_ip6_frag)
 }
 END_TEST
 
+START_TEST(test_ip6_addr_prefix_eq)
+{
+  int ret;
+  u8_t prefix_len;
+  u8_t i;
+
+  ip_addr_t prefix1 = IPADDR6_INIT_HOST(0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff);
+  ip_addr_t prefix2 = IPADDR6_INIT_HOST(0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff);
+  ip_addr_t prefix3 = IPADDR6_INIT_HOST(0x0, 0x0, 0x0, 0x0);
+  ip_addr_t prefix4 = IPADDR6_INIT_HOST(0xffffffff, 0xffffffff, 0x0, 0x0);
+
+  /* Test prefix of any length is equal to itself (identical pointers) */
+  for (prefix_len = 0U; prefix_len <= 128U; prefix_len++)
+  {
+    ret = ip6_addr_prefix_eq(ip_2_ip6(&prefix1), ip_2_ip6(&prefix1), prefix_len);
+    fail_unless(ret == 1);
+  }
+
+  /* Test prefix of any length is equal to identical prefix (different pointers) */
+  for (prefix_len = 0U; prefix_len <= 128U; prefix_len++)
+  {
+    ret = ip6_addr_prefix_eq(ip_2_ip6(&prefix1), ip_2_ip6(&prefix2), prefix_len);
+    fail_unless(ret == 1);
+  }
+
+  /* Test zero-length prefixes are equal for different addresses */
+  ret = ip6_addr_prefix_eq(ip_2_ip6(&prefix1), ip_2_ip6(&prefix3), 0U);
+  fail_unless(ret == 1);
+
+  /* Test different prefixes are not equal for any non-zero length */
+  for (prefix_len = 1U; prefix_len <= 128U; prefix_len++)
+  {
+    ret = ip6_addr_prefix_eq(ip_2_ip6(&prefix1), ip_2_ip6(&prefix3), prefix_len);
+    fail_unless(ret == 0);
+  }
+
+  /* Test prefixes with different zones are not equal */
+  prefix1.u_addr.ip6.zone = 1;
+  prefix2.u_addr.ip6.zone = 2;
+  ret = ip6_addr_prefix_eq(ip_2_ip6(&prefix1), ip_2_ip6(&prefix2), 0U);
+  fail_unless(ret == 0);
+  prefix1.u_addr.ip6.zone = IP6_NO_ZONE;
+  prefix2.u_addr.ip6.zone = IP6_NO_ZONE;
+
+  /* Test 64-96 bit prefixes */
+  for (i = 0; i <= 32; i++)
+  {
+    prefix4.u_addr.ip6.addr[2] = PP_HTONL((u32_t)((((u64_t)0xffffffff) << (32 - i)) & 0xffffffff));
+    for (prefix_len = 64; prefix_len <= 64 + i; prefix_len++)
+    {
+      ret = ip6_addr_prefix_eq(ip_2_ip6(&prefix4), ip_2_ip6(&prefix4), prefix_len);
+      fail_unless(ret == 1);
+      ret = ip6_addr_prefix_eq(ip_2_ip6(&prefix4), ip_2_ip6(&prefix1), prefix_len);
+      fail_unless(ret == 1);
+      ret = ip6_addr_prefix_eq(ip_2_ip6(&prefix4), ip_2_ip6(&prefix3), prefix_len);
+      fail_unless(ret == 0);
+    }
+    for (prefix_len = 65 + i; prefix_len <= 128; prefix_len++)
+    {
+      ret = ip6_addr_prefix_eq(ip_2_ip6(&prefix4), ip_2_ip6(&prefix1), prefix_len);
+      fail_unless(ret == 0);
+    }
+  }
+}
+END_TEST
+
 /** Create the suite including all tests for this module */
 Suite *
 ip6_suite(void)
@@ -444,7 +510,8 @@ ip6_suite(void)
     TESTFUNC(test_ip6_lladdr),
     TESTFUNC(test_ip6_dest_unreachable_chained_pbuf),
     TESTFUNC(test_ip6_frag_pbuf_len_assert),
-    TESTFUNC(test_ip6_frag)
+    TESTFUNC(test_ip6_frag),
+    TESTFUNC(test_ip6_addr_prefix_eq)
   };
   return create_suite("IPv6", tests, sizeof(tests)/sizeof(testfunc), ip6_setup, ip6_teardown);
 }

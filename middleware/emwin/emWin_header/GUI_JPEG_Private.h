@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2022  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2023  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.32 - Graphical user interface for embedded applications **
+** emWin V6.34 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2023-09-03
+SUA period:               2011-08-19 - 2024-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : GUI_JPEG_Private.h
@@ -59,11 +59,71 @@ Explanation of terms:
 
 /*********************************************************************
 *
+*       Configuration
+*
+**********************************************************************
+*/
+#define HUFF_TABLE_BITS 10   // 8 was old value. 10 seems best from a performance perspective
+
+#ifndef   GUI_JPEG_USE_CC_TABLE
+  #define GUI_JPEG_USE_CC_TABLE    0
+#endif
+#ifndef   GUI_JPEG_USE_LIMIT_TABLE
+  #define GUI_JPEG_USE_LIMIT_TABLE 0
+#endif
+#ifndef   GUI_JPEG_USE_WORD_WRITE
+#define   GUI_JPEG_USE_WORD_WRITE  1
+#endif
+#ifndef   GUI_JPEG_USE_HELIUM_H2V2
+  #define GUI_JPEG_USE_HELIUM_H2V2 0
+#endif
+
+/*********************************************************************
+*
 *       Defines
 *
 **********************************************************************
 */
 #define JPEG_LOCK_H(h) (GUI_JPEG_DCONTEXT *)GUI_LOCK_H(h)
+
+//
+// Function inlining
+//
+#ifndef   GUI_ALWAYS_INLINE
+  #include "SEGGER.h" // For INLINE define.
+  #define GUI_ALWAYS_INLINE  INLINE
+#endif
+#ifndef   GUI_NEVER_INLINE
+#define   GUI_NEVER_INLINE
+#endif
+//
+// Macros for color conversion
+//
+#if defined(GUI_SAT_INT_TO_U8)
+#define ASSIGN_SATURATED(x, v)  x = (U8)GUI_SAT_INT_TO_U8(v)
+#undef  GUI_JPEG_USE_LIMIT_TABLE
+#define GUI_JPEG_USE_LIMIT_TABLE 0
+#elif GUI_JPEG_USE_LIMIT_TABLE
+#define ASSIGN_SATURATED(x, v)  x = _aLimit[v + 0x100]
+#else
+#define ASSIGN_SATURATED(x, v) \
+    do {                         \
+      int s = v;                 \
+      if (s > 255) { s = 255; }  \
+      if (s < 0) { s = 0; }      \
+      x = s;                     \
+    } while (0)
+#endif
+//
+// Macros for IDCT
+//
+#define DESCALE(x, n)  (((x) + (((I32)1) << ((n) - 1))) >> (n))
+#define MULTIPLY(v, c) ((v) * (c))
+//
+// Constants for IDCT
+//
+#define CONST_BITS 13
+#define PASS1_BITS  2
 
 /*********************************************************************
 *
@@ -89,7 +149,7 @@ Explanation of terms:
 *
 *       Marker definitions
 */
-#define M_SOF0  0xc0 // Start Of Frame
+#define M_SOF0  0xc0 // Start Of Frame, non-differential, Huffman coding, Baseline DCT
 #define M_SOF1  0xc1
 #define M_SOF2  0xc2
 #define M_SOF3  0xc3
@@ -152,9 +212,9 @@ typedef struct {
 // Huffman table definition
 //
 typedef struct {
-  unsigned aLookUp[256];
-  U8       aCodeSize[256];
-  unsigned aTree[512];
+  U8    aCodeSize[256];                  // Size of symbol: How many bits are needed to (en/de)code it
+  I16   aLookUp[1 << HUFF_TABLE_BITS];   // Quick lookup so we do not need to go through tree for first 7-9 bits
+  I16   aTree[512];
 } HUFF_TABLE;
 
 //
@@ -167,17 +227,14 @@ typedef struct {
   GUI_HMEM hData;
 } COEFF_BUFFER;
 
-typedef struct GUI_JPEG_DCONTEXT GUI_JPEG_DCONTEXT;
-
 typedef struct {
   //
   // Function pointer for reading one byte
   //
-  int (* pfGetU8)(GUI_JPEG_DCONTEXT * pContext, U8 * pByte);
-
+  int (*pfGetU8)(GUI_JPEG_DCONTEXT * pContext, U8 * pByte);
   GUI_GET_DATA_FUNC * pfGetData; // 'GetData' Function pointer
   void * pParam;                 // Pointer passed to 'GetData' function
-  U32 Off;                       // Data pointer
+  U32    Off;                    // Data pointer
   //
   // Image size
   //
@@ -189,9 +246,8 @@ typedef struct {
   const U8 * pBuffer;
   unsigned   NumBytesInBuffer;
   U8         StartOfFile;
-  U8         aStuff[4];        // Stuff back buffer
-  U8         NumBytesStuffed;  // Number of stuffed bytes
   U8         IsProgressive;    // Flag is set to 1 if JPEG is progressive
+  unsigned PushBack;            // Push-back buffer, up to 2 bytes pushed back
 } GUI_JPEG_GETINFO;
 
 struct GUI_JPEG_DCONTEXT {
@@ -201,44 +257,6 @@ struct GUI_JPEG_DCONTEXT {
   //
   U32 BitBuffer;
   int NumBitsLeft;
-  //
-  // Huffman tables
-  //
-  U8 aHuffNumTableAvail[MAX_HUFFTABLES];
-  U8 aaHuffNum[MAX_HUFFTABLES][17];   // Pointer to number of Huffman codes per bit size
-  U8 aaHuffVal[MAX_HUFFTABLES][256];  // Pointer to Huffman codes
-  HUFF_TABLE aHuffTable[MAX_HUFFTABLES];
-  HUFF_TABLE * apDC_Huff[MAX_BLOCKSPERMCU];
-  HUFF_TABLE * apAC_Huff[MAX_BLOCKSPERMCU];
-  //
-  // Quantization tables
-  //
-  U16 aaQuantTbl[MAX_QUANTTABLES][64];
-  U16 * apQuantTbl[MAX_QUANTTABLES];
-  //
-  // Component information
-  //
-  U8 NumCompsPerFrame;                      // Number of components per frame
-  U8 aCompHSamp[MAX_COMPONENTS];            // Component's horizontal sampling factor
-  U8 aCompVSamp[MAX_COMPONENTS];            // Component's vertical sampling factor
-  U8 aCompQuant[MAX_COMPONENTS];            // Component's quantization table selector
-  U8 aCompId   [MAX_COMPONENTS];            // Component's ID
-  U8 NumCompsPerScan;                       // Number of components per scan
-  U8 aCompList[MAX_COMPSINSCAN];            // Components in this scan
-  U8 aCompDC_Tab[MAX_COMPONENTS];           // Component's DC Huffman coding table selector
-  U8 aCompAC_Tab[MAX_COMPONENTS];           // Component's AC Huffman coding table selector
-  unsigned * apComponent[MAX_BLOCKSPERMCU]; // Points into the table aLastDC_Val[]
-  unsigned   aLastDC_Val[MAX_COMPONENTS];   // Table of last DC values
-  //
-  // Data used for progressive scans
-  //
-  U8 SpectralStart;                        // Spectral selection start
-  U8 SpectralEnd;                          // Spectral selection end
-  U8 SuccessiveLow;                        // Successive approximation low
-  U8 SuccessiveHigh;                       // Successive approximation high
-  COEFF_BUFFER aDC_Coeffs[MAX_COMPONENTS]; // DC coefficient buffer for progressive scan
-  COEFF_BUFFER aAC_Coeffs[MAX_COMPONENTS]; // AC coefficient buffer for progressive scan
-  int aBlockY_MCU[MAX_COMPONENTS];         // 
   //
   // Common
   //
@@ -283,12 +301,43 @@ struct GUI_JPEG_DCONTEXT {
   GUI_HMEM hScanLine1; // Buffer 1, only used for V2 sampling factors
   U8 BufferIndex;
   //
-  // Arrays used for converting YCbCr to RGB
+  // Huffman tables
   //
-  int aCRR[256];
-  int aCBB[256];
-  I32 aCRG[256];
-  I32 aCBG[256];
+  U8 aHuffNumTableAvail[MAX_HUFFTABLES];
+  U8 aaHuffNum[MAX_HUFFTABLES][17];   // Pointer to number of Huffman codes per bit size
+  U8 aaHuffVal[MAX_HUFFTABLES][256];  // Pointer to Huffman codes
+  HUFF_TABLE aHuffTable[MAX_HUFFTABLES];
+  HUFF_TABLE * apDC_Huff[MAX_BLOCKSPERMCU];
+  HUFF_TABLE * apAC_Huff[MAX_BLOCKSPERMCU];
+  //
+  // Quantization tables
+  //
+  U16 aaQuantTbl[MAX_QUANTTABLES][64];
+  U16 * apQuantTbl[MAX_QUANTTABLES];
+  //
+  // Component information
+  //
+  U8 NumCompsPerFrame;                      // Number of components per frame
+  U8 aCompHSamp[MAX_COMPONENTS];            // Component's horizontal sampling factor
+  U8 aCompVSamp[MAX_COMPONENTS];            // Component's vertical sampling factor
+  U8 aCompQuant[MAX_COMPONENTS];            // Component's quantization table selector
+  U8 aCompId   [MAX_COMPONENTS];            // Component's ID
+  U8 NumCompsPerScan;                       // Number of components per scan
+  U8 aCompList[MAX_COMPSINSCAN];            // Components in this scan
+  U8 aCompDC_Tab[MAX_COMPONENTS];           // Component's DC Huffman coding table selector
+  U8 aCompAC_Tab[MAX_COMPONENTS];           // Component's AC Huffman coding table selector
+  unsigned * apComponent[MAX_BLOCKSPERMCU]; // Points into the table aLastDC_Val[]
+  unsigned   aLastDC_Val[MAX_COMPONENTS];   // Table of last DC values
+  //
+  // Data used for progressive scans
+  //
+  U8 SpectralStart;                        // Spectral selection start
+  U8 SpectralEnd;                          // Spectral selection end
+  U8 SuccessiveLow;                        // Successive approximation low
+  U8 SuccessiveHigh;                       // Successive approximation high
+  COEFF_BUFFER aDC_Coeffs[MAX_COMPONENTS]; // DC coefficient buffer for progressive scan
+  COEFF_BUFFER aAC_Coeffs[MAX_COMPONENTS]; // AC coefficient buffer for progressive scan
+  int aBlockY_MCU[MAX_COMPONENTS];         // 
 };
 
 /*********************************************************************
@@ -305,9 +354,11 @@ int       GUI_JPEG__GetData                 (void * p, const U8 ** ppData, unsig
 int       GUI_JPEG__InitDraw                (GUI_HMEM hContext);
 int       GUI_JPEG__ReadInfo                (GUI_HMEM hContext);
 int       GUI_JPEG__ReadUntilSOF            (GUI_HMEM hContext);
-void      GUI_JPEG__SetNextBand             (GUI_JPEG_DCONTEXT * pContext);
 int       GUI_JPEG__SkipLine                (GUI_JPEG_DCONTEXT * pContext);
+int       GUI_JPEG__TransformRow            (GUI_JPEG_DCONTEXT * pContext);
 int       GUI_JPEG__GetInfoEx               (GUI_HMEM hContext, GUI_JPEG_INFO * pInfo);
+//
+extern const U8 GUI_JPEG__aCoeffOrder[];
 
 #endif
 

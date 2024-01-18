@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: I2C: Inter-Integrated Circuit Driver</title>
+<title>MCUXpresso SDK API Reference Manual: FLEXCOMM: FLEXCOMM Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -101,236 +101,15 @@ $(document).ready(function(){initNavTree('a00244.html','');});
   <div class="summary">
 <a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">I2C: Inter-Integrated Circuit Driver</div>  </div>
+<div class="title">FLEXCOMM: FLEXCOMM Driver</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a peripheral driver for the Inter-Integrated Circuit (I2C) module of MCUXpresso SDK devices.</p>
-<p>The I2C driver includes functional APIs and transactional APIs.</p>
-<p>Functional APIs are feature/property target low-level APIs. Functional APIs can be used for the I2C master/slave initialization/configuration/operation for optimization/customization purpose. Using the functional APIs requires the knowledge of the I2C master peripheral and how to organize functional APIs to meet the application requirements. The I2C functional operation groups provide the functional APIs set.</p>
-<p>Transactional APIs are transaction target high-level APIs. The transactional APIs can be used to enable the peripheral quickly and also in the application if the code size and performance of transactional APIs satisfy the requirements. If the code size and performance are critical requirements, see the transactional API implementation and write custom code using the functional APIs or accessing the hardware registers.</p>
-<p>Transactional APIs support asynchronous transfer. This means that the functions <a class="el" href="a00035.html#gac7f76a04b6f6873c52ad176d58901fe9" title="Performs a non-blocking transaction on the I2C bus. ">I2C_MasterTransferNonBlocking()</a> set up the interrupt non-blocking transfer. When the transfer completes, the upper layer is notified through a callback function with the status.</p>
-<h1><a class="anchor" id="I2CTpyUC"></a>
-Typical use case</h1>
-<h2><a class="anchor" id="I2CMasterOpsFunctional"></a>
-Master Operation in functional method</h2>
-<div class="fragment"><div class="line"><a class="code" href="a00035.html#a00376">i2c_master_config_t</a> masterConfig;</div>
-<div class="line">uint8_t status;</div>
-<div class="line"><a class="code" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> result = <a class="code" href="a00240.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>;</div>
-<div class="line">uint8_t txBuff[BUFFER_SIZE];</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/* Get default configuration for master. */</span></div>
-<div class="line"><a class="code" href="a00035.html#gad69f2d63ea756dda60749ff6b09f587d">I2C_MasterGetDefaultConfig</a>(&amp;masterConfig);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/* Init I2C master. */</span></div>
-<div class="line"><a class="code" href="a00035.html#ga29f967b3ae8487a36ba2a58deb01ccae">I2C_MasterInit</a>(EXAMPLE_I2C_MASTER_BASEADDR, &amp;masterConfig, I2C_MASTER_CLK);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/* Send start and slave address. */</span></div>
-<div class="line"><a class="code" href="a00035.html#ga7664234966e4162e952b6d57efcaa8a6">I2C_MasterStart</a>(EXAMPLE_I2C_MASTER_BASEADDR, 7-bit slave address, <a class="code" href="a00035.html#ggab49c827b45635206f06e5737606e4611a93b476b469c2a4bfed5916b458ae9bb0">kI2C_Write</a>/<a class="code" href="a00035.html#ggab49c827b45635206f06e5737606e4611a3a7bb24dc8d1c1be8925603eeafe9b30">kI2C_Read</a>);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/* Wait address sent out. */</span></div>
-<div class="line"><span class="keywordflow">while</span>(!((status = I2C_GetStatusFlag(EXAMPLE_I2C_MASTER_BASEADDR)) &amp; kI2C_IntPendingFlag))</div>
-<div class="line">{</div>
-<div class="line"></div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="keywordflow">if</span>(status &amp; kI2C_ReceiveNakFlag)</div>
-<div class="line">{</div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code" href="a00245.html#gga61dadd085c1777f559549e05962b2c9ea72fd33d0b5263a63766e62f71d16be00">kStatus_I2C_Nak</a>;</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line">result = <a class="code" href="a00035.html#ga3b4d71b59e118adc63afbc5434e5e7dd">I2C_MasterWriteBlocking</a>(EXAMPLE_I2C_MASTER_BASEADDR, txBuff, BUFFER_SIZE, <a class="code" href="a00035.html#gga87ea07668194cfb46c7c368d2cb42433ae80f7b768b1621e42ac965d3d23de5e2">kI2C_TransferDefaultFlag</a>);</div>
-<div class="line"></div>
-<div class="line"><span class="keywordflow">if</span>(result)</div>
-<div class="line">{</div>
-<div class="line">    <span class="comment">/* If error occours, send STOP. */</span></div>
-<div class="line">    <a class="code" href="a00035.html#gaf46a8cc094fc18c6cadea8de71448723">I2C_MasterStop</a>(EXAMPLE_I2C_MASTER_BASEADDR, kI2CStop);</div>
-<div class="line">    <span class="keywordflow">return</span> result;</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="keywordflow">while</span>(!(I2C_GetStatusFlag(EXAMPLE_I2C_MASTER_BASEADDR) &amp; kI2C_IntPendingFlag))</div>
-<div class="line">{</div>
-<div class="line"></div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/* Wait all data sent out, send STOP. */</span></div>
-<div class="line"><a class="code" href="a00035.html#gaf46a8cc094fc18c6cadea8de71448723">I2C_MasterStop</a>(EXAMPLE_I2C_MASTER_BASEADDR, kI2CStop);</div>
-</div><!-- fragment --><h2><a class="anchor" id="I2CMasterOpsTransIRQ"></a>
-Master Operation in interrupt transactional method</h2>
-<div class="fragment"><div class="line">i2c_master_handle_t g_m_handle;</div>
-<div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> g_MasterCompletionFlag = <span class="keyword">false</span>;</div>
-<div class="line"><a class="code" href="a00035.html#a00376">i2c_master_config_t</a> masterConfig;</div>
-<div class="line">uint8_t status;</div>
-<div class="line"><a class="code" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> result = <a class="code" href="a00240.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>;</div>
-<div class="line">uint8_t txBuff[BUFFER_SIZE];</div>
-<div class="line">i2c_master_transfer_t masterXfer;</div>
-<div class="line"></div>
-<div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> i2c_master_callback(I2C_Type *base, i2c_master_handle_t *handle, <a class="code" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, <span class="keywordtype">void</span> *userData)</div>
-<div class="line">{</div>
-<div class="line">    <span class="comment">/* Signal transfer success when received success status. */</span></div>
-<div class="line">    <span class="keywordflow">if</span> (status == <a class="code" href="a00240.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>)</div>
-<div class="line">    {</div>
-<div class="line">        g_MasterCompletionFlag = <span class="keyword">true</span>;</div>
-<div class="line">    }</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/* Get default configuration for master. */</span></div>
-<div class="line"><a class="code" href="a00035.html#gad69f2d63ea756dda60749ff6b09f587d">I2C_MasterGetDefaultConfig</a>(&amp;masterConfig);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/* Init I2C master. */</span></div>
-<div class="line"><a class="code" href="a00035.html#ga29f967b3ae8487a36ba2a58deb01ccae">I2C_MasterInit</a>(EXAMPLE_I2C_MASTER_BASEADDR, &amp;masterConfig, I2C_MASTER_CLK);</div>
-<div class="line"></div>
-<div class="line">masterXfer.slaveAddress = I2C_MASTER_SLAVE_ADDR_7BIT;</div>
-<div class="line">masterXfer.direction = <a class="code" href="a00035.html#ggab49c827b45635206f06e5737606e4611a93b476b469c2a4bfed5916b458ae9bb0">kI2C_Write</a>;</div>
-<div class="line">masterXfer.subaddress = NULL;</div>
-<div class="line">masterXfer.subaddressSize = 0;</div>
-<div class="line">masterXfer.data = txBuff;</div>
-<div class="line">masterXfer.dataSize = BUFFER_SIZE;</div>
-<div class="line">masterXfer.flags = <a class="code" href="a00035.html#gga87ea07668194cfb46c7c368d2cb42433ae80f7b768b1621e42ac965d3d23de5e2">kI2C_TransferDefaultFlag</a>;</div>
-<div class="line"></div>
-<div class="line"><a class="code" href="a00035.html#ga31e3de02b57801c6896e6045c4a31268">I2C_MasterTransferCreateHandle</a>(EXAMPLE_I2C_MASTER_BASEADDR, &amp;g_m_handle, i2c_master_callback, NULL);</div>
-<div class="line"><a class="code" href="a00035.html#gac7f76a04b6f6873c52ad176d58901fe9">I2C_MasterTransferNonBlocking</a>(EXAMPLE_I2C_MASTER_BASEADDR, &amp;g_m_handle, &amp;masterXfer);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*  Wait for transfer completed. */</span></div>
-<div class="line"><span class="keywordflow">while</span> (!g_MasterCompletionFlag)</div>
-<div class="line">{</div>
-<div class="line">}</div>
-<div class="line">g_MasterCompletionFlag = <span class="keyword">false</span>;</div>
-</div><!-- fragment --><h2><a class="anchor" id="I2CMasterOpsTransDMA"></a>
-Master Operation in DMA transactional method</h2>
-<div class="fragment"><div class="line">i2c_master_dma_handle_t g_m_dma_handle;</div>
-<div class="line"><a class="code" href="a00015.html#a00333">dma_handle_t</a> dmaHandle;</div>
-<div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> g_MasterCompletionFlag = <span class="keyword">false</span>;</div>
-<div class="line"><a class="code" href="a00035.html#a00376">i2c_master_config_t</a> masterConfig;</div>
-<div class="line">uint8_t txBuff[BUFFER_SIZE];</div>
-<div class="line">i2c_master_transfer_t masterXfer;</div>
-<div class="line"></div>
-<div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> i2c_master_callback(I2C_Type *base, i2c_master_dma_handle_t *handle, <a class="code" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, <span class="keywordtype">void</span> *userData)</div>
-<div class="line">{</div>
-<div class="line">    <span class="comment">/* Signal transfer success when received success status. */</span></div>
-<div class="line">    <span class="keywordflow">if</span> (status == <a class="code" href="a00240.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>)</div>
-<div class="line">    {</div>
-<div class="line">        g_MasterCompletionFlag = <span class="keyword">true</span>;</div>
-<div class="line">    }</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/* Get default configuration for master. */</span></div>
-<div class="line"><a class="code" href="a00035.html#gad69f2d63ea756dda60749ff6b09f587d">I2C_MasterGetDefaultConfig</a>(&amp;masterConfig);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/* Init I2C master. */</span></div>
-<div class="line"><a class="code" href="a00035.html#ga29f967b3ae8487a36ba2a58deb01ccae">I2C_MasterInit</a>(EXAMPLE_I2C_MASTER_BASEADDR, &amp;masterConfig, I2C_MASTER_CLK);</div>
-<div class="line"></div>
-<div class="line">masterXfer.slaveAddress = I2C_MASTER_SLAVE_ADDR_7BIT;</div>
-<div class="line">masterXfer.direction = <a class="code" href="a00035.html#ggab49c827b45635206f06e5737606e4611a93b476b469c2a4bfed5916b458ae9bb0">kI2C_Write</a>;</div>
-<div class="line">masterXfer.subaddress = NULL;</div>
-<div class="line">masterXfer.subaddressSize = 0;</div>
-<div class="line">masterXfer.data = txBuff;</div>
-<div class="line">masterXfer.dataSize = BUFFER_SIZE;</div>
-<div class="line">masterXfer.flags = <a class="code" href="a00035.html#gga87ea07668194cfb46c7c368d2cb42433ae80f7b768b1621e42ac965d3d23de5e2">kI2C_TransferDefaultFlag</a>;</div>
-<div class="line"></div>
-<div class="line"><a class="code" href="a00015.html#gaa0293771d55ee1a7c42a8ffecb0728e7">DMA_EnableChannel</a>(EXAMPLE_DMA, EXAMPLE_I2C_MASTER_CHANNEL);</div>
-<div class="line"><a class="code" href="a00015.html#ga5354ff2c0c1ec53e2cbd712169fc5558">DMA_CreateHandle</a>(&amp;dmaHandle, EXAMPLE_DMA, EXAMPLE_I2C_MASTER_CHANNEL);</div>
-<div class="line"></div>
-<div class="line"><a class="code" href="a00036.html#ga83d8463e42b12e7b797a3f928f51b3cb">I2C_MasterTransferCreateHandleDMA</a>(EXAMPLE_I2C_MASTER_BASEADDR, &amp;g_m_dma_handle, i2c_master_callback, NULL, &amp;dmaHandle);</div>
-<div class="line"><a class="code" href="a00036.html#ga8643ea43510b8d97b94db05766444cd2">I2C_MasterTransferDMA</a>(EXAMPLE_I2C_MASTER_BASEADDR, &amp;g_m_dma_handle, &amp;masterXfer);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*  Wait for transfer completed. */</span></div>
-<div class="line"><span class="keywordflow">while</span> (!g_MasterCompletionFlag)</div>
-<div class="line">{</div>
-<div class="line">}</div>
-<div class="line">g_MasterCompletionFlag = <span class="keyword">false</span>;</div>
-</div><!-- fragment --><h2><a class="anchor" id="I2CSlaveOpsFunctional"></a>
-Slave Operation in functional method</h2>
-<div class="fragment"><div class="line"><a class="code" href="a00038.html#a00379">i2c_slave_config_t</a> slaveConfig;</div>
-<div class="line">uint8_t status;</div>
-<div class="line"><a class="code" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> result = <a class="code" href="a00240.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>;</div>
-<div class="line"></div>
-<div class="line"><a class="code" href="a00038.html#ga7115f80e28b62bbbd3be1a2a918529ba">I2C_SlaveGetDefaultConfig</a>(&amp;slaveConfig); <span class="comment">/*default configuration 7-bit addressing mode*/</span></div>
-<div class="line">slaveConfig.slaveAddr = 7-bit address</div>
-<div class="line">slaveConfig.addressingMode = kI2C_Address7bit/kI2C_RangeMatch;</div>
-<div class="line"><a class="code" href="a00038.html#ga175a81b5ab74dd78469d6cdea690d8cc">I2C_SlaveInit</a>(EXAMPLE_I2C_SLAVE_BASEADDR, &amp;slaveConfig);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/* Wait address match. */</span></div>
-<div class="line"><span class="keywordflow">while</span>(!((status = I2C_GetStatusFlag(EXAMPLE_I2C_SLAVE_BASEADDR)) &amp; kI2C_AddressMatchFlag))</div>
-<div class="line">{</div>
-<div class="line"></div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/* Slave transmit, master reading from slave. */</span></div>
-<div class="line"><span class="keywordflow">if</span> (status &amp; kI2C_TransferDirectionFlag)</div>
-<div class="line">{</div>
-<div class="line">    result = <a class="code" href="a00038.html#ga280404c6b1ede542f2c1c20bd382869c">I2C_SlaveWriteBlocking</a>(EXAMPLE_I2C_SLAVE_BASEADDR);</div>
-<div class="line">}</div>
-<div class="line"><span class="keywordflow">else</span></div>
-<div class="line">{</div>
-<div class="line">    <a class="code" href="a00038.html#ga89baaf8bc82b19c837032665e89a1707">I2C_SlaveReadBlocking</a>(EXAMPLE_I2C_SLAVE_BASEADDR);</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="keywordflow">return</span> result;</div>
-</div><!-- fragment --><h2><a class="anchor" id="I2CSlaveOpsTransIRQ"></a>
-Slave Operation in interrupt transactional method</h2>
-<div class="fragment"><div class="line"><a class="code" href="a00038.html#a00379">i2c_slave_config_t</a> slaveConfig;</div>
-<div class="line">i2c_slave_handle_t g_s_handle;</div>
-<div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> g_SlaveCompletionFlag = <span class="keyword">false</span>;</div>
-<div class="line"></div>
-<div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> i2c_slave_callback(I2C_Type *base, <a class="code" href="a00038.html#a00380">i2c_slave_transfer_t</a> *xfer, <span class="keywordtype">void</span> *userData)</div>
-<div class="line">{</div>
-<div class="line">    <span class="keywordflow">switch</span> (xfer-&gt;<a class="code" href="a00038.html#ad0a9e837e9df16d89bab98a78af5bd10">event</a>)</div>
-<div class="line">    {</div>
-<div class="line">        <span class="comment">/*  Transmit request */</span></div>
-<div class="line">        <span class="keywordflow">case</span> <a class="code" href="a00038.html#ggac53e5c96a2eed1b5a95b7d84be48f4aca2f85039a57379838909876a1d509b7aa">kI2C_SlaveTransmitEvent</a>:</div>
-<div class="line">            <span class="comment">/*  Update information for transmit process */</span></div>
-<div class="line">            xfer-&gt;data = g_slave_buff;</div>
-<div class="line">            xfer-&gt;dataSize = I2C_DATA_LENGTH;</div>
-<div class="line">            <span class="keywordflow">break</span>;</div>
-<div class="line"></div>
-<div class="line">        <span class="comment">/*  Receive request */</span></div>
-<div class="line">        <span class="keywordflow">case</span> <a class="code" href="a00038.html#ggac53e5c96a2eed1b5a95b7d84be48f4acaac8593e808a8137d1b5d3a51640779de">kI2C_SlaveReceiveEvent</a>:</div>
-<div class="line">            <span class="comment">/*  Update information for received process */</span></div>
-<div class="line">            xfer-&gt;data = g_slave_buff;</div>
-<div class="line">            xfer-&gt;dataSize = I2C_DATA_LENGTH;</div>
-<div class="line">            <span class="keywordflow">break</span>;</div>
-<div class="line"></div>
-<div class="line">        <span class="comment">/*  Transfer done */</span></div>
-<div class="line">        <span class="keywordflow">case</span> <a class="code" href="a00038.html#ggac53e5c96a2eed1b5a95b7d84be48f4aca38cca3cd668e73f51b8e574835d419df">kI2C_SlaveCompletionEvent</a>:</div>
-<div class="line">            g_SlaveCompletionFlag = <span class="keyword">true</span>;</div>
-<div class="line">            <span class="keywordflow">break</span>;</div>
-<div class="line"></div>
-<div class="line">        <span class="keywordflow">default</span>:</div>
-<div class="line">            g_SlaveCompletionFlag = <span class="keyword">true</span>;</div>
-<div class="line">            <span class="keywordflow">break</span>;</div>
-<div class="line">    }</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><a class="code" href="a00038.html#ga7115f80e28b62bbbd3be1a2a918529ba">I2C_SlaveGetDefaultConfig</a>(&amp;slaveConfig); <span class="comment">/*default configuration 7-bit addressing mode*/</span></div>
-<div class="line">slaveConfig.slaveAddr = 7-bit address</div>
-<div class="line">slaveConfig.addressingMode = kI2C_Address7bit/kI2C_RangeMatch;</div>
-<div class="line"></div>
-<div class="line"><a class="code" href="a00038.html#ga175a81b5ab74dd78469d6cdea690d8cc">I2C_SlaveInit</a>(EXAMPLE_I2C_SLAVE_BASEADDR, &amp;slaveConfig);</div>
-<div class="line"></div>
-<div class="line"><a class="code" href="a00038.html#gac9b90f575d92ff8ad3cc350a5c8ad1b9">I2C_SlaveTransferCreateHandle</a>(EXAMPLE_I2C_SLAVE_BASEADDR, &amp;g_s_handle, i2c_slave_callback, NULL);</div>
-<div class="line"></div>
-<div class="line"><a class="code" href="a00038.html#gaa387d81ea08a9d4b39cfeb3dfec505f7">I2C_SlaveTransferNonBlocking</a>(EXAMPLE_I2C_SLAVE_BASEADDR, &amp;g_s_handle, <a class="code" href="a00038.html#ggac53e5c96a2eed1b5a95b7d84be48f4aca38cca3cd668e73f51b8e574835d419df">kI2C_SlaveCompletionEvent</a>);</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/*  Wait for transfer completed. */</span></div>
-<div class="line"><span class="keywordflow">while</span> (!g_SlaveCompletionFlag)</div>
-<div class="line">{</div>
-<div class="line">}</div>
-<div class="line">g_SlaveCompletionFlag = <span class="keyword">false</span>;</div>
-</div><!-- fragment --> <table class="memberdecls">
+<p>The MCUXpresso SDK provides a generic driver and multiple protocol-specific FLEXCOMM drivers for the FLEXCOMM module of MCUXpresso SDK devices. </p>
+<table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
 Modules</h2></td></tr>
-<tr class="memitem:a00246"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00246.html">I2C CMSIS Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00036"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00036.html">I2C DMA Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00245"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00245.html">I2C Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00037"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html">I2C FreeRTOS Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00035"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html">I2C Master Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00038"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html">I2C Slave Driver</a></td></tr>
+<tr class="memitem:a00245"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00245.html">FLEXCOMM Driver</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->

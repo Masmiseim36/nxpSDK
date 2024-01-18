@@ -11,8 +11,10 @@
 #ifndef RTOS_SUPP_MGMT_H
 #define RTOS_SUPP_MGMT_H
 
+#ifndef CONFIG_ZEPHYR
 #include <lwip/netif.h>
 #include <lwip/netifapi.h>
+#endif
 #include <wlan.h>
 
 #define MAX_SSID_LEN 32
@@ -37,6 +39,10 @@ enum requested_ops
     STOP
 };
 
+#ifdef CONFIG_11K
+#define RRM_EVENT_NEIGHBOR_REP_COMPLETED "neighbor report parse completed"
+#endif
+
 int wpa_supp_init(void (*msg_cb)(const char *txt, size_t len));
 
 int wpa_supp_status(const struct netif *dev);
@@ -44,6 +50,8 @@ int wpa_supp_status(const struct netif *dev);
 int wpa_supp_scan(const struct netif *dev, wlan_scan_params_v2_t *params);
 
 int wpa_supp_abort_scan(const struct netif *dev);
+
+int wpa_supp_cancel_scan(const struct netif *dev);
 
 int wpa_supp_disable(const struct netif *dev, struct wlan_network *network);
 
@@ -107,6 +115,8 @@ int wpa_supp_roam(const struct netif *dev, unsigned char *bssid);
 
 int wpa_supp_ft_ds(const struct netif *dev, unsigned char *bssid);
 
+int wpa_supp_notify_assoc(const struct netif *dev);
+
 int wpa_supp_get_sta_info(const struct netif *dev, unsigned char *sta_addr, unsigned char *is_11n_enabled);
 
 #ifdef CONFIG_WPA_SUPP_WPS
@@ -117,11 +127,43 @@ int wpa_supp_wps_generate_pin(const struct netif *dev, unsigned int *pin);
 int wpa_supp_cancel_wps(const struct netif *dev, int is_ap);
 #endif
 
-int wpa_supp_start_ap(const struct netif *dev, struct wlan_network *network);
+#ifdef CONFIG_WPA_SUPP_DPP
+int wpa_supp_dpp_configurator_add(const struct netif *dev, int is_ap, const char *cmd);
+
+void wpa_supp_dpp_configurator_params(const struct netif *dev, int is_ap, const char *cmd);
+
+void wpa_supp_dpp_mud_url(const struct netif *dev, int is_ap, const char *cmd);
+
+int wpa_supp_dpp_bootstrap_gen(const struct netif *dev, int is_ap, const char *buf);
+
+const char *wpa_supp_dpp_bootstrap_get_uri(const struct netif *dev, int is_ap, unsigned int id);
+
+int wpa_supp_dpp_listen(const struct netif *dev, int is_ap, const char *cmd);
+
+int wpa_supp_dpp_stop_listen(const struct netif *dev, int is_ap);
+
+int wpa_supp_dpp_configurator_get_key(const struct netif *dev, int is_ap, unsigned int id, char *buf, size_t buflen);
+
+int wpa_supp_dpp_qr_code(const struct netif *dev, int is_ap, char *cmd);
+
+int wpa_supp_dpp_auth_init(const struct netif *dev, int is_ap, const char *cmd);
+
+int wpa_supp_dpp_pkex_add(const struct netif *dev, int is_ap, const char *cmd);
+
+int wpa_supp_dpp_chirp(const struct netif *dev, int is_ap, const char *cmd);
+
+int wpa_supp_dpp_reconfig(const struct netif *dev, const char *cmd);
+
+int wpa_supp_dpp_configurator_sign(const struct netif *dev, int is_ap, const char *cmd);
+#endif
+
+int wpa_supp_start_ap(const struct netif *dev, struct wlan_network *network, int reload);
 
 void wpa_supp_set_ap_max_num_sta(const struct netif *dev, unsigned int max_num_sta);
 
 void wpa_supp_set_ap_beacon_int(const struct netif *dev, unsigned short beacon_int);
+
+void wpa_supp_set_ap_max_num_sta(const struct netif *dev, unsigned int max_num_sta);
 
 void wpa_supp_set_ap_bw(const struct netif *dev, unsigned char bw);
 
@@ -134,6 +176,8 @@ void wpa_supp_set_ap_11d_state(const struct netif *dev, int state);
 int wpa_supp_stop_ap(const struct netif *dev, struct wlan_network *network);
 
 int wpa_supp_req_status(enum requested_ops ops);
+
+int wpa_supp_set_mac_acl(const struct netif *dev, int filter_mode, char mac_count, unsigned char *mac_addr);
 
 int wpa_supp_deinit(void);
 

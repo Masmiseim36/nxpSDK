@@ -59,12 +59,12 @@ static inline XA_ERRORCODE xa_mp3_get_config_param(xa_codec_handle_t handle, WOR
         /* ...return number of output channels */
         i_idx = XA_MP3DEC_CONFIG_PARAM_NUM_CHANNELS;
         break;
-        
+
     case XA_CODEC_CONFIG_PARAM_SAMPLE_RATE:
         /* ...return output sampling frequency */
         i_idx = XA_MP3DEC_CONFIG_PARAM_SAMP_FREQ;
         break;
-        
+
     case XA_CODEC_CONFIG_PARAM_PCM_WIDTH:
         /* ...return sample bit-width */
         i_idx = XA_MP3DEC_CONFIG_PARAM_PCM_WDSZ;
@@ -72,7 +72,7 @@ static inline XA_ERRORCODE xa_mp3_get_config_param(xa_codec_handle_t handle, WOR
     }
 #endif //PACK_WS_DUMMY
     /* ...pass to library */
-    return xa_mp3_dec(handle, XA_API_CMD_GET_CONFIG_PARAM, i_idx, pv_value);       
+    return xa_mp3_dec(handle, XA_API_CMD_GET_CONFIG_PARAM, i_idx, pv_value);
 }
 
 /*******************************************************************************

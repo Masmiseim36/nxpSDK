@@ -53,15 +53,18 @@ static mlan_status wlan_11n_dispatch_amsdu_pkt(mlan_private *priv, pmlan_buffer 
         pmbuf->data_offset += prx_pd->rx_pkt_offset;
 
         (void)__memcpy(priv->adapter, amsdu_inbuf, pmbuf->pbuf, sizeof(RxPD));
-        pbuf_copy_partial(pmbuf->lwip_pbuf, amsdu_inbuf + pmbuf->data_offset, prx_pd->rx_pkt_length, 0);
+        net_stack_buffer_copy_partial(pmbuf->lwip_pbuf, amsdu_inbuf + pmbuf->data_offset, prx_pd->rx_pkt_length, 0);
+#ifndef CONFIG_TX_RX_ZERO_COPY
         os_mem_free(pmbuf->pbuf);
-        pbuf_free(pmbuf->lwip_pbuf);
+#endif
         pmbuf->pbuf = amsdu_inbuf;
 
         (void)wlan_11n_deaggregate_pkt(priv, pmbuf);
-
+#ifndef CONFIG_TX_RX_ZERO_COPY
         os_mem_free(pmbuf);
-
+#endif
+        /* Free the net stack buffer after deaggregation and delivered to stack */
+        net_stack_buffer_free(pmbuf->lwip_pbuf);
         LEAVE();
         return MLAN_STATUS_SUCCESS;
     }
@@ -212,9 +215,11 @@ static mlan_status wlan_11n_free_rxreorder_pkt(t_void *priv, RxReorderTbl *rx_re
         pmpriv->adapter->callbacks.moal_spin_unlock(pmpriv->adapter->pmoal_handle, pmpriv->rx_pkt_lock);
         if (rx_tmp_ptr != NULL)
         {
-            pbuf_free((struct pbuf *)(((pmlan_buffer)rx_tmp_ptr)->lwip_pbuf));
+            net_stack_buffer_free(((pmlan_buffer)rx_tmp_ptr)->lwip_pbuf);
+#ifndef CONFIG_TX_RX_ZERO_COPY
             os_mem_free(((pmlan_buffer)rx_tmp_ptr)->pbuf);
             os_mem_free(rx_tmp_ptr);
+#endif
         }
     }
 

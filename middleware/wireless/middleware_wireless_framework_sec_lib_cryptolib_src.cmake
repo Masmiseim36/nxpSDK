@@ -5,10 +5,6 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/framework/SecLib/SecLib.c
-  ${CMAKE_CURRENT_LIST_DIR}/framework/SecLib/build/CryptoLib/src/big_integer.c
-  ${CMAKE_CURRENT_LIST_DIR}/framework/SecLib/build/CryptoLib/src/ec_p_256.c
-  ${CMAKE_CURRENT_LIST_DIR}/framework/SecLib/build/CryptoLib/src/ec_p_256_with_macros.c
-  ${CMAKE_CURRENT_LIST_DIR}/framework/SecLib/build/CryptoLib/src/ecdh.c
   ${CMAKE_CURRENT_LIST_DIR}/framework/SecLib/build/CryptoLib/src/SW_AES128.c
   ${CMAKE_CURRENT_LIST_DIR}/framework/SecLib/build/CryptoLib/src/SW_RNG.c
   ${CMAKE_CURRENT_LIST_DIR}/framework/SecLib/build/CryptoLib/src/SW_SHA1.c

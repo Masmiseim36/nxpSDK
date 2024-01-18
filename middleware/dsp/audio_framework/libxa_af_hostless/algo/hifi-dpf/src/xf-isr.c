@@ -43,7 +43,7 @@ void xf_msg_schedule_isr(xf_message_t *m)
 {
     UWORD32                 core = XF_MSG_DST_CORE(m->id);
     xf_core_data_t     *cd = XF_CORE_DATA(core);
-    
+
     /* ...interrupt masking protocol is used for protecting local message queue */
     xf_sync_enqueue(&cd->queue, m);
     /* ...resume local scheduler */

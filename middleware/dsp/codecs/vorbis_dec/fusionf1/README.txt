@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2006-2020 by Cadence Design Systems, Inc.  ALL RIGHTS RESERVED.
+# Copyright (c) 2006-2023 by Cadence Design Systems, Inc.  ALL RIGHTS RESERVED.
 # These coded instructions, statements, and computer programs are the
 # copyrighted works and confidential proprietary information of
 # Cadence Design Systems Inc.  They may be adapted and modified by bona fide
@@ -17,6 +17,45 @@ Tensilica HiFi Vorbis Decoder (with or without OGG container)
 ======================================================================
 Revision History
 ======================================================================
+
+Version 1.15p2 API 1.16: Sept 27, 2023
+
++ Patch release.
++ Fixed issue with out-of-sequence API error in case of output pingpong.
++ Built using RI-2023.11 toolchain with xt-clang compiler.
++ Programmer's Guide not updated.
+
+----------------------------------------------------------------------
+Version 1.15p1 API 1.16: Jan 24, 2023
+
++ Patch release.
++ Built using RI-2022.10 toolchain with xt-clang compiler.
++ Programmer's Guide not updated.
+
+----------------------------------------------------------------------
+Version 1.15 API 1.16: Oct 14, 2022
+
++ GA release.
++ Built using RI-2022.9 toolchain with xt-clang compiler.
++ Programmer's Guide reviewed and updated.
++ Optimized for HiFi 1.
+
+----------------------------------------------------------------------
+
+Version 1.14 API 1.16: May 13, 2020
+
++ Built with xt-xcc compiler with RI.4 tools (HiFi 3z only).
++ Verified performance and functionality with xt-clang compiler.
+
+----------------------------------------------------------------------
+
+Version 1.13p1 API 1.16: August 6, 2019
+
+[J2299] Fix issues reported by static code analysis tool.
+
+-Source code release with RG5 tools  for HiFi3 core
+
+----------------------------------------------------------------------
 
 Version 1.12 API 1.16: August 1, 2017
 
@@ -129,4 +168,3 @@ Version 1.5 API 1.12: October 19, 2006
 First customer release.
 
 ----------------------------------------------------------------------
-2019-12-10:08:17:RI-2019.2:469279:566169:481317::

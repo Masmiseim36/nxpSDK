@@ -20,7 +20,7 @@
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-#ifndef __XAF_FIO_TEST_H__ 
+#ifndef __XAF_FIO_TEST_H__
 #define __XAF_FIO_TEST_H__
 
 #include <string.h>
@@ -32,7 +32,9 @@
 #define STR_PRINT_SIZE 4096
 
 #define ARRAY_LENGTH 150
+#ifndef MIN
 #define MIN(a,b) (((a)<(b))?(a):(b))
+#endif
 
 typedef struct xaf_fio_buf_s {
     void               *pbase;
@@ -58,9 +60,9 @@ typedef struct{
     const char      * path;
     const char      * mode;
     void            * fptr;
-    void            * ptr; 
-    size_t            size; 
-    size_t            nmemb; 
+    void            * ptr;
+    size_t            size;
+    size_t            nmemb;
     void            * stream;
     int               data_len;
     char              str_print[ARRAY_LENGTH];
@@ -96,6 +98,6 @@ size_t fio_printf(xaf_fio_args_tx *p_args_tx,xaf_fio_args_rx *p_args_rx);
     fio_printf(&args_tx,&args_rx);\
 }
 #else // FIO_BUFFER
-#define FIO_PRINTF(...) 
+#define FIO_PRINTF(...)
 #endif
 #endif /* __XAF_FIO_TEST_H__ */

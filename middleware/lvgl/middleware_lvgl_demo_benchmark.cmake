@@ -20,8 +20,6 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
   ${CMAKE_CURRENT_LIST_DIR}/lvgl/demos
   ${CMAKE_CURRENT_LIST_DIR}/lvgl/demos/benchmark
-  ${CMAKE_CURRENT_LIST_DIR}/lvgl/examples/assets
-  ${CMAKE_CURRENT_LIST_DIR}/lvgl/demos/stress/assets
 )
 
 else()

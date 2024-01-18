@@ -3,7 +3,7 @@
  * Copyright 2016, 2022 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -26,11 +26,9 @@ void SHA1_Transform(uint32_t state[5], const uint8_t buffer[64]);
 /* blk0() and blk() perform the initial expand. */
 /* I got the idea of expanding during the round function from SSLeay */
 /* FIXME: can we do this in an endian-proof way? */
-#if (defined(BYTE_ORDER) && (BYTE_ORDER == BIG_ENDIAN)) ||\
-(!defined(BYTE_ORDER) && defined(BIG_ENDIAN))
+#if (defined(BYTE_ORDER) && (BYTE_ORDER == BIG_ENDIAN)) || (!defined(BYTE_ORDER) && defined(BIG_ENDIAN))
 #define blk0(i) block->l[i]
-#elif (defined(BYTE_ORDER) && (BYTE_ORDER == LITTLE_ENDIAN)) ||\
-(!defined(BYTE_ORDER) && !defined(BIG_ENDIAN))
+#elif (defined(BYTE_ORDER) && (BYTE_ORDER == LITTLE_ENDIAN)) || (!defined(BYTE_ORDER) && !defined(BIG_ENDIAN))
 #define blk0(i) (block->l[i] = (rol(block->l[i], 24) & 0xFF00FF00) | (rol(block->l[i], 8) & 0x00FF00FF))
 #else
 #error "Endianity not supported"
@@ -245,7 +243,7 @@ void SHA1_Final(SHA1_CTX *context, uint8_t digest[SHA1_DIGEST_SIZE])
     memset(context->count, 0, 8);
     memset(finalcount, 0, 8); /* SWR */
 
-#ifdef SHA1HANDSOFF /* make SHA1Transform overwrite its own static vars */
+#ifdef SHA1HANDSOFF           /* make SHA1Transform overwrite its own static vars */
     SHA1_Transform(context->state, context->buffer);
 #endif
 }

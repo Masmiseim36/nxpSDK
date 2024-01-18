@@ -8,6 +8,7 @@
 
 /*
  * Copyright (c) 2018 Simon Goldschmidt
+ * Copyright 2023 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -54,6 +55,24 @@ extern "C" {
 /** period (in milliseconds) of the application calling dhcp6_tmr() */
 #define DHCP6_TIMER_MSECS   500
 
+#if LWIP_IPV6_DHCP6_STATEFUL
+void dhcp6_set_client_id_duid(struct netif *netif, const void *duid, u16_t duid_len);
+#endif
+
+#if LWIP_IPV6_DHCP6_PD
+struct dhcp6_delegated_prefix
+{
+  ip6_addr_t prefix;
+  u8_t prefix_len;
+  u32_t prefix_pref; /* Prefix preferred lifetime [s] */
+  u32_t prefix_valid; /* Prefix valid lifetime [s] */
+};
+
+typedef void (*dhcp6_pd_callback_fn)(struct netif * netif, const struct dhcp6_delegated_prefix * prefix, u8_t valid);
+void dhcp6_register_pd_callback(struct netif *netif, dhcp6_pd_callback_fn callback);
+const struct dhcp6_delegated_prefix * dhcp6_get_delegated_prefix(struct netif * netif);
+#endif
+
 struct dhcp6
 {
   /** transaction identifier of last sent request */
@@ -62,15 +81,48 @@ struct dhcp6
   u8_t pcb_allocated;
   /** current DHCPv6 state machine state */
   u8_t state;
+  /** State after releasing of address is done */
+  u8_t state_after_release;
   /** retries of current request */
   u8_t tries;
-  /** if request config is triggered while another action is active, this keeps track of it */
-  u8_t request_config_pending;
   /** #ticks with period DHCP6_TIMER_MSECS for request timeout */
+  u16_t request_timeout_cntr;
   u16_t request_timeout;
+
+  /** upper bound of request timeout in #ticks */
+  u16_t max_request_timeout;
+
 #if LWIP_IPV6_DHCP6_STATEFUL
-  /* @todo: add more members here to keep track of stateful DHCPv6 data, like lease times */
+  /** Maximal count of retransmissions */
+  u8_t max_retrans_cnt;
+    /** Maximal duration of retransmissions */
+  u16_t max_retrans_dur;
+
+  u32_t trans_started_at;
+  void *server_id; /* Dynamically allocated mem with server id including its option header */
+  u8_t server_id_len; /* Length of server id including its option header */
+
+  const void *cli_id_usr_duid; /* Client ID DUID supplied by user */
+  u16_t cli_id_usr_duid_len; /* Lenght of client ID DUID supplied by user */
+
+  ip6_addr_t addr;
+  s8_t  addr_idx;
+  u32_t addr_pref;
+  u32_t addr_valid;
+  u32_t addr_t1;
+  u32_t addr_t2;
+
+  u8_t addr_by_slaac;
+
 #endif /* LWIP_IPV6_DHCP6_STATEFUL */
+
+#if LWIP_IPV6_DHCP6_PD
+  struct dhcp6_delegated_prefix prefix;
+  u32_t ia_pd_t1;
+  u32_t ia_pd_t2;
+
+  dhcp6_pd_callback_fn pd_callback;
+#endif /* LWIP_IPV6_DHCP6_PD  */
 };
 
 void dhcp6_set_struct(struct netif *netif, struct dhcp6 *dhcp6);
@@ -78,8 +130,7 @@ void dhcp6_set_struct(struct netif *netif, struct dhcp6 *dhcp6);
 #define dhcp6_remove_struct(netif) netif_set_client_data(netif, LWIP_NETIF_CLIENT_DATA_INDEX_DHCP6, NULL)
 void dhcp6_cleanup(struct netif *netif);
 
-err_t dhcp6_enable_stateful(struct netif *netif);
-err_t dhcp6_enable_stateless(struct netif *netif);
+err_t dhcp6_enable(struct netif *netif);
 void dhcp6_disable(struct netif *netif);
 
 void dhcp6_tmr(void);

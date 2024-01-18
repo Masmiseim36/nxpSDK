@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2022  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2023  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.32 - Graphical user interface for embedded applications **
+** emWin V6.34 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2023-09-03
+SUA period:               2011-08-19 - 2024-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : AppWizard.h
@@ -66,12 +66,20 @@ Purpose     : Interface of AppWizard
 #include "LISTBOX_Private.h"
 #include "WHEEL_Private.h"
 #include "MOVIE_Private.h"
+#include "RADIO_Private.h"
+#include "CHECKBOX_Private.h"
 
 #if (GUI_WINSUPPORT && GUI_SUPPORT_MEMDEV && WM_SUPPORT_TRANSPARENCY && GUI_SUPPORT_ROTATION)
 
 #if defined(__cplusplus)
   extern "C" {             // Make sure we have C-declarations in C++ programs
 #endif
+
+//
+// Switching on use of APPW_ATOM in conditions.
+// To be removed after change-over has been finished in comparison terms...
+//
+#define USE_ATOM 1
 
 /*####################################################################
 #
@@ -276,7 +284,9 @@ enum {
   TYPE_OBJECT_LISTVIEW,
   TYPE_OBJECT_LISTBOX,
   TYPE_OBJECT_WHEEL,
-  TYPE_OBJECT_MOVIE
+  TYPE_OBJECT_MOVIE,
+  TYPE_OBJECT_RADIO,
+  TYPE_OBJECT_CHECKBOX
 };
 
 //
@@ -322,8 +332,8 @@ enum {
   ATOM_VARIABLE,
   ATOM_OBJECT_GEO,
   ATOM_SCREEN_GEO,
-  ATOM_CONSTANT,
-  ATOM_OBJECT_PROP
+  ATOM_OBJECT_PROP,
+  ATOM_CONSTANT
 };
 
 //
@@ -345,7 +355,8 @@ enum {
   ATOM_PROP_NUMCOLS = 0,  // Number of columns
   ATOM_PROP_NUMROWS,      // Number of rows
   ATOM_PROP_NUMFRAMES,    // Number of frames
-  ATOM_PROP_VALUE         // Current value
+  ATOM_PROP_VALUE,        // Current value
+  ATOM_PROP_RELEASED      // Released item
 };
 
 //
@@ -571,55 +582,57 @@ enum {
   /*  3 */ APPW_SET_PROP_CONTENT     ,
   /*  4 */ APPW_SET_PROP_SORTCOLS    ,
   /*  5 */ APPW_SET_PROP_OFFSET      ,
-  /*  6 */ APPW_SET_PROP_POS         ,
-  /*  7 */ APPW_SET_PROP_VALUE       ,
-  /*  8 */ APPW_SET_PROP_PERIOD      ,
-  /*  9 */ APPW_SET_PROP_PERIOD2     ,
-  /* 50 */ APPW_SET_PROP_PERIOD3     ,
-  /*  1 */ APPW_SET_PROP_SNAP        ,
-  /*  2 */ APPW_SET_PROP_ALIGN       ,
-  /*  3 */ APPW_SET_PROP_RADIUS      ,
-  /*  4 */ APPW_SET_PROP_RADIUS2     ,
-  /*  5 */ APPW_SET_PROP_FRAME       ,
-  /*  6 */ APPW_SET_PROP_FRAME2      ,
-  /*  7 */ APPW_SET_PROP_FRAME3      ,
-  /*  8 */ APPW_SET_PROP_BORDER      ,
-  /*  9 */ APPW_SET_PROP_LENGTH      ,
-  /* 60 */ APPW_SET_PROP_HEIGHT      ,
-  /*  1 */ APPW_SET_PROP_HEIGHT2     ,
-  /*  2 */ APPW_SET_PROP_FIXED       ,
-  /*  3 */ APPW_SET_PROP_SPACING     ,
-  /*  4 */ APPW_SET_PROP_ROTATION    ,
-  /*  5 */ APPW_SET_PROP_ECCLEVEL    ,
-  /*  6 */ APPW_SET_PROP_VERSION     ,
-  /*  7 */ APPW_SET_PROP_FOCUSABLE   ,
-  /*  8 */ APPW_SET_PROP_MOTION      ,
-  /*  9 */ APPW_SET_PROP_INVERT      ,
-  /* 70 */ APPW_SET_PROP_VERTICAL    ,
-  /*  1 */ APPW_SET_PROP_HORIZONTAL  ,
-  /*  2 */ APPW_SET_PROP_ENDLESS     ,
-  /*  3 */ APPW_SET_PROP_PERSISTENT  ,
-  /*  4 */ APPW_SET_PROP_ROTATE      ,
-  /*  5 */ APPW_SET_PROP_FADE        ,
-  /*  6 */ APPW_SET_PROP_WRAP        ,
-  /*  7 */ APPW_SET_PROP_ROUNDEDVAL  ,
-  /*  8 */ APPW_SET_PROP_ROUNDEDEND  ,
-  /*  9 */ APPW_SET_PROP_OVERWRITE   ,
-  /* 80 */ APPW_SET_PROP_AUTORESTART ,
-  /*  1 */ APPW_SET_PROP_LQ          ,
-  /*  2 */ APPW_SET_PROP_STAYONTOP   ,
-  /*  3 */ APPW_SET_PROP_UNTOUCHABLE ,
-  /*  4 */ APPW_SET_PROP_PWMODE      ,
-  /*  5 */ APPW_SET_PROP_ROMODE      ,
-  /*  6 */ APPW_SET_PROP_CELLSELECT  ,
-  /*  7 */ APPW_SET_PROP_VISIBLE     ,
-  /*  8 */ APPW_SET_PROP_VISIBLE2    ,
-  /*  9 */ APPW_SET_PROP_VISIBLE3    ,
-  /* 90 */ APPW_SET_PROP_SWITCHOFF   ,
-  /*  1 */ APPW_SET_PROP_WHEELTEXT   ,
-  /*  2 */ APPW_SET_PROP_WHEELBITMAPS,
-  /*  3 */ APPW_SET_PROP_SCROLLERH   ,
-  /*  4 */ APPW_SET_PROP_SCROLLERV   ,
+  /*  6 */ APPW_SET_PROP_GROUPID     ,
+  /*  7 */ APPW_SET_PROP_POS         ,
+  /*  8 */ APPW_SET_PROP_VALUE       ,
+  /*  9 */ APPW_SET_PROP_PERIOD      ,
+  /* 50 */ APPW_SET_PROP_PERIOD2     ,
+  /*  1 */ APPW_SET_PROP_PERIOD3     ,
+  /*  2 */ APPW_SET_PROP_SNAP        ,
+  /*  3 */ APPW_SET_PROP_ALIGN       ,
+  /*  4 */ APPW_SET_PROP_RADIUS      ,
+  /*  5 */ APPW_SET_PROP_RADIUS2     ,
+  /*  6 */ APPW_SET_PROP_FRAME       ,
+  /*  7 */ APPW_SET_PROP_FRAME2      ,
+  /*  8 */ APPW_SET_PROP_FRAME3      ,
+  /*  9 */ APPW_SET_PROP_BORDER      ,
+  /* 60 */ APPW_SET_PROP_LENGTH      ,
+  /*  1 */ APPW_SET_PROP_HEIGHT      ,
+  /*  2 */ APPW_SET_PROP_HEIGHT2     ,
+  /*  3 */ APPW_SET_PROP_FIXED       ,
+  /*  4 */ APPW_SET_PROP_SPACING     ,
+  /*  5 */ APPW_SET_PROP_ROTATION    ,
+  /*  6 */ APPW_SET_PROP_ECCLEVEL    ,
+  /*  7 */ APPW_SET_PROP_VERSION     ,
+  /*  8 */ APPW_SET_PROP_FOCUSABLE   ,
+  /*  9 */ APPW_SET_PROP_MOTION      ,
+  /* 70 */ APPW_SET_PROP_INVERT      ,
+  /*  1 */ APPW_SET_PROP_VERTICAL    ,
+  /*  2 */ APPW_SET_PROP_HORIZONTAL  ,
+  /*  3 */ APPW_SET_PROP_ENDLESS     ,
+  /*  4 */ APPW_SET_PROP_PERSISTENT  ,
+  /*  5 */ APPW_SET_PROP_ROTATE      ,
+  /*  6 */ APPW_SET_PROP_FADE        ,
+  /*  7 */ APPW_SET_PROP_WRAP        ,
+  /*  8 */ APPW_SET_PROP_ROUNDEDVAL  ,
+  /*  9 */ APPW_SET_PROP_ROUNDEDEND  ,
+  /* 80 */ APPW_SET_PROP_OVERWRITE   ,
+  /*  1 */ APPW_SET_PROP_AUTORESTART ,
+  /*  2 */ APPW_SET_PROP_LQ          ,
+  /*  3 */ APPW_SET_PROP_STAYONTOP   ,
+  /*  4 */ APPW_SET_PROP_UNTOUCHABLE ,
+  /*  5 */ APPW_SET_PROP_PWMODE      ,
+  /*  6 */ APPW_SET_PROP_ROMODE      ,
+  /*  7 */ APPW_SET_PROP_CELLSELECT  ,
+  /*  8 */ APPW_SET_PROP_VISIBLE     ,
+  /*  9 */ APPW_SET_PROP_VISIBLE2    ,
+  /* 90 */ APPW_SET_PROP_VISIBLE3    ,
+  /*  1 */ APPW_SET_PROP_SWITCHOFF   ,
+  /*  2 */ APPW_SET_PROP_3STATE      ,
+  /*  3 */ APPW_SET_PROP_WHEELTEXT   ,
+  /*  4 */ APPW_SET_PROP_WHEELBITMAPS,
+  /*  5 */ APPW_SET_PROP_SCROLLERH   ,
+  /*  6 */ APPW_SET_PROP_SCROLLERV   ,
 };
 
 //
@@ -642,8 +655,8 @@ enum {
 //
 // Distinguishing between different possible text sources in APPW_GetLockedText()
 //
-#define APPW_USE_TEXT_HANDLE (-1)
-#define APPW_USE_OBJECT_ID   (-2)
+#define APPW_USE_TEXT_HANDLE (-2)
+#define APPW_USE_OBJECT_ID   (-3)
 
 //
 // Internal configuration macros
@@ -945,7 +958,11 @@ typedef struct {
 *   Comparison with 2 items to be compared by the given function pointer
 */
 typedef struct {
+#if USE_ATOM
+  APPW_ATOM        aAtom[2];
+#else
   APPW_COMP_ITEM   aElem[2];
+#endif
   int           (* pFunc)(I32 v0, I32 v1);
 } APPW_COND_COMP;
 
@@ -1198,8 +1215,8 @@ typedef struct {
 */
 typedef struct {
   GUI_COLOR Color;   // Color of focus rect
-  U32       Radius;  // Radius if required
-  U32       Width;   // Width  if required (minimum 1)
+  U8        Radius;  // Radius if required
+  U8        Width;   // Width  if required (minimum 1)
 } APPW_DRAW_FOCUS_INFO;
 
 /*********************************************************************
@@ -1332,6 +1349,7 @@ typedef struct {
   int                 xOffBm;
   int                 yOffBm;
   APPW_DRAW_OBJECT    apDraw[3];
+  GUI_COLOR           aColor[3];
   int                 TextId;
   WM_HTIMER           hTimer;
   GUI_FONT            Font;
@@ -1634,6 +1652,38 @@ typedef struct {
 
 /*********************************************************************
 *
+*       WM_OBJECT_RADIO
+*/
+typedef struct {
+  RADIO_Obj           Widget;      // GUI/WM-Widget
+  APPW_DISPOSE        Dispose;     // Dispose structure
+  U16                 aIdDraw[2];  // Pre- and Post-draw
+  GUI_COLOR           aColor[2];   // Optional colors for alpha bitmaps (0: normal, 1: disabled)
+  APPW_DRAW_OBJECT    apDraw[4];
+  GUI_FONT            Font;
+  GUI_XBF_DATA        FontData;
+  U16                 Offset;
+} WM_OBJECT_RADIO;
+
+/*********************************************************************
+*
+*       WM_OBJECT_CHECKBOX
+*/
+typedef struct {
+  CHECKBOX_Obj        Widget;      // GUI/WM-Widget
+  APPW_DISPOSE        Dispose;     // Dispose structure
+  U16                 aIdDraw[2];  // Pre- and Post-draw
+  U32                 State;
+  GUI_COLOR           aColor[2];   // Optional colors for alpha bitmaps (0: normal, 1: disabled)
+  APPW_DRAW_OBJECT    apDraw[6];
+  int                 TextId;
+  GUI_FONT            Font;
+  GUI_XBF_DATA        FontData;
+  U16                 Offset;
+} WM_OBJECT_CHECKBOX;
+
+/*********************************************************************
+*
 *       WM_OBJECT_WINDOW
 */
 typedef struct {
@@ -1694,6 +1744,8 @@ DEFAULT_FUNC(LISTVIEW);
 DEFAULT_FUNC(LISTBOX);
 DEFAULT_FUNC(WHEEL);
 DEFAULT_FUNC(MOVIE);
+DEFAULT_FUNC(RADIO);
+DEFAULT_FUNC(CHECKBOX);
 DEFAULT_CRCB(WINDOW);
 
 //
@@ -1729,6 +1781,7 @@ void                      APPW_Exec                    (void);
 void                      APPW_GetAtomInfo             (const APPW_ATOM * pAtom, APPW_ATOM_INFO * pInfo);
 I32                       APPW_GetAtomValue            (const APPW_ATOM * pAtom);
 APPW_ROOT_INFO          * APPW_GetCurrentRootInfo      (WM_HWIN hWin);
+int                       APPW_GetFocusWidth           (void);
 GUI_HMEM                  APPW_GetLockedText           (char ** ppBuffer, APPW_PARA_ITEM * pPara);
 int                       APPW_GetOpponent             (int Index);
 const char              * APPW_GetResourcePath         (void);
@@ -1740,6 +1793,7 @@ APPW_ROOT_INFO          * APPW_GetRootInfoByIndex      (int RootIndex);
 APPW_ROOT_INFO          * APPW_GetRootInfoByRootId     (U16 RootId);
 U8                        APPW_GetSupportFocus         (void);
 U8                        APPW_GetSupportScroller      (void);
+int                       APPW_HasAlpha                (GUI_COLOR Color);
 void                      APPW_Init                    (const char * pResourcePath);
 void                      APPW_InitResourcePath        (const char * pResourcePath);
 int                       APPW_IsValid                 (WM_HWIN hWin);
@@ -1836,6 +1890,15 @@ int                       APPW_SetVarData              (U16 Id, I32 Data);
 I32                       APPW_GetVarData              (U16 Id, int * pError);
 WM_HWIN                   APPW_GetVarWin               (void);
 int                       APPW_CalcTerm                (const APPW_CALC * pCalc);
+
+//
+// APPWConf.c / Resource.c
+//
+void                      APPW__GetResource            (APPW_ROOT_INFO         *** pppRootInfo,    int * pNumScreens,
+                                                        APPW_VAR_OBJECT         ** ppaVarList,     int * pNumVars,
+                                                        const APPW_SCROLLER_DEF ** ppaScrollerDef, int * pNumScrollers,
+                                                        APPW_DRAWING_ITEM      *** pppDrawingList, int * pNumDrawings);
+void                      APPW__GetTextInit            (GUI_CONST_STORAGE APPW_TEXT_INIT ** ppTextInit);
 
 //
 // APPW_X_xxx.c

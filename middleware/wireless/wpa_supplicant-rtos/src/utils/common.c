@@ -10,7 +10,7 @@
 #include <limits.h>
 
 #include "common/ieee802_11_defs.h"
-#include "common.h"
+#include "utils/common.h"
 
 static int hex2num(char c)
 {

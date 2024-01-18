@@ -14,7 +14,7 @@
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/utilities/str</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/utilities/debug_console</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../components/lists</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/utilities</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/utilities/shell</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../CMSIS/Core/Include</ListEntry>
             </value>
@@ -74,6 +74,13 @@
             <key>Libraries</key>
             <value inheritance="prepend" flag="-l">
               <ListEntry>xos</ListEntry>
+            </value>
+          </StringListMapEntry>
+          <StringListMapEntry>
+            <key>LinkerAdditionalOptions</key>
+            <value inheritance="append">
+              <ListEntry>-Wl,--orphan-handling=place&#13;
+</ListEntry>
             </value>
           </StringListMapEntry>
         </StringListMapOptions>

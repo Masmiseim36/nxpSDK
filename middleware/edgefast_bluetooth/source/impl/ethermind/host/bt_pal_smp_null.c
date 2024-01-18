@@ -87,7 +87,7 @@ static int bt_smp_accept(struct bt_conn *conn, struct bt_l2cap_chan **chan)
 		.recv = NULL,
 	};
 
-	BT_DBG("conn %p handle %u", conn, conn->handle);
+	LOG_DBG("conn %p handle %u", conn, conn->handle);
 
 	for (i = 0; i < ARRAY_SIZE(bt_smp_pool); i++) {
 		struct bt_l2cap_le_chan *smp = &bt_smp_pool[i];
@@ -103,7 +103,7 @@ static int bt_smp_accept(struct bt_conn *conn, struct bt_l2cap_chan **chan)
 		return 0;
 	}
 
-	BT_ERR("No available SMP context for conn %p", conn);
+	LOG_ERR("No available SMP context for conn %p", conn);
 
 	return -ENOMEM;
 }
@@ -195,7 +195,7 @@ static API_RESULT ethermind_bt_smp_cb
     (void)bd_addr;
     (void)bd_addr_type;
 
-    BT_DBG("SMP event =  %s, status %d", ethermind_bt_smp_event_get_name(event), status);
+    LOG_DBG("SMP event =  %s, status %d", ethermind_bt_smp_event_get_name(event), status);
 
     conn = bt_conn_lookup_device_id(*bd_handle);
 	assert(NULL != conn);
@@ -216,19 +216,19 @@ static API_RESULT ethermind_bt_smp_cb
         break;
 
     case SMP_AUTHENTICATION_REQUEST:
-        BT_DBG("Recvd SMP_AUTHENTICATION_REQUEST");
-        BT_DBG("BD Address : %02X %02X %02X %02X %02X %02X",
+        LOG_DBG("Recvd SMP_AUTHENTICATION_REQUEST");
+        LOG_DBG("BD Address : %02X %02X %02X %02X %02X %02X",
         bd_addr[0],bd_addr[1],bd_addr[2],bd_addr[3],bd_addr[4],bd_addr[5]);
-        BT_DBG("BD addr type : %s",
+        LOG_DBG("BD addr type : %s",
         (0 == bd_addr_type)? "Public Address": "Random Address");
 
         auth = (SMP_AUTH_INFO *)event_data;
 
-        BT_DBG("Authentication type : %s",
+        LOG_DBG("Authentication type : %s",
         (SMP_SEC_LEVEL_2 == (auth->security & 0x0F))?  "With MITM":
         "Encryption Only (without MITM)");
 
-        BT_DBG("Bonding type : %s",
+        LOG_DBG("Bonding type : %s",
         (auth->bonding)? "Bonding": "Non-Bonding");
 
         auth->param = BT_SMP_ERR_PAIRING_NOTSUPP;
@@ -240,10 +240,10 @@ static API_RESULT ethermind_bt_smp_cb
         break;
 
     case SMP_PASSKEY_ENTRY_REQUEST:
-        BT_DBG("Event   : SMP_PASSKEY_ENTRY_REQUEST");
-        BT_DBG("BD Address : %02X %02X %02X %02X %02X %02X",
+        LOG_DBG("Event   : SMP_PASSKEY_ENTRY_REQUEST");
+        LOG_DBG("BD Address : %02X %02X %02X %02X %02X %02X",
         bd_addr[0],bd_addr[1],bd_addr[2],bd_addr[3],bd_addr[4],bd_addr[5]);
-        BT_DBG("BD addr type : %s",
+        LOG_DBG("BD addr type : %s",
         (0 == bd_addr_type)? "Public Address": "Random Address");
 
         retval = BT_smp_passkey_entry_request_reply
@@ -261,7 +261,7 @@ static API_RESULT ethermind_bt_smp_cb
         break;
 
     case SMP_LONG_TERM_KEY_REQUEST:
-        BT_DBG("Sending -ve LTK request reply.");
+        LOG_DBG("Sending -ve LTK request reply.");
         ltk_null = 0;
         retval = BT_smp_long_term_key_request_reply
                     (
@@ -293,10 +293,10 @@ static API_RESULT ethermind_bt_smp_cb
         break;
 
     default:
-        BT_DBG("ERROR!!! Received unknown event. event = %02X", event);
+        LOG_DBG("ERROR!!! Received unknown event. event = %02X", event);
     }
 
-    BT_DBG("ret = %d", retval);
+    LOG_DBG("ret = %d", retval);
     bt_conn_unref(conn);
     return API_SUCCESS;
 }

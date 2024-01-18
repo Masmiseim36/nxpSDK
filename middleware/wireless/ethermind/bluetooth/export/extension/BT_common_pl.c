@@ -13,50 +13,6 @@
 /* ------------------------------------------- Header File Inclusion */
 #include "BT_common.h"
 
-/* It means that edgefast is using ethermind if CONFIG_BT_BREDR is defined */
-#if (defined (CONFIG_BT_BREDR) && (CONFIG_BT_BREDR))
-#ifdef BT_BCSP
-#undef BT_BCSP
-#endif
-
-#ifdef BNEP
-#undef BNEP
-#endif
-
-#if !(defined (CONFIG_BT_A2DP) && (CONFIG_BT_A2DP))
-#ifdef AVDTP
-#undef AVDTP
-#endif
-#endif
-
-#if !(defined (CONFIG_BT_AVRCP) && (CONFIG_BT_AVRCP))
-#ifdef AVCTP
-#undef AVCTP
-#endif
-#endif
-
-#ifdef MCAP
-#undef MCAP
-#endif
-
-#if !(defined (CONFIG_BT_AVRCP) && (CONFIG_BT_AVRCP))
-#ifdef OBEX
-#undef OBEX
-#endif
-#endif
-
-#ifdef HCRP
-#undef HCRP
-#endif
-#endif
-
-/* It means that edgefast is using ethermind if CONFIG_BT_BLE_DISABLE is defined */
-#if (defined (CONFIG_BT_BLE_DISABLE) && (CONFIG_BT_BLE_DISABLE))
-#ifdef ATT
-#undef ATT
-#endif
-#endif
-
 #ifdef CLASSIC_SEC_MANAGER
 #include "sm.h"
 #endif /* CLASSIC_SEC_MANAGER */

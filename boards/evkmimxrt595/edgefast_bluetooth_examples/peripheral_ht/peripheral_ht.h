@@ -2,15 +2,9 @@
 
 /*
  * Copyright (c) 2019 Aaron Tsui <aaron.tsui@outlook.com>
- *
+ * Copyright 2022 NXP
+ * 
  * SPDX-License-Identifier: Apache-2.0
- */
-
-/*
- * Copyright 2021 NXP
- * All rights reserved.
- *
- * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifdef __cplusplus

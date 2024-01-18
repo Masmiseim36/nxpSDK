@@ -123,13 +123,14 @@ static void bt_ready(int err)
         return;
     }
 
-    if (IS_ENABLED(CONFIG_BT_SETTINGS)) 
-    {
-        settings_load();
-    }
+#if (defined(CONFIG_BT_SETTINGS) && (CONFIG_BT_SETTINGS > 0))
+    settings_load();
+#endif /* CONFIG_BT_SETTINGS */
+
     PRINTF("Bluetooth initialized\n");
 
 	bt_conn_cb_register(&conn_callbacks);
+
 #if CONFIG_BT_SMP
     bt_conn_auth_cb_register(&auth_cb_display);
 #endif
@@ -155,6 +156,8 @@ static void bt_ready(int err)
 void peripheral_ipsp_task(void *pvParameters)
 {
     int err;
+
+    PRINTF("BLE Peripheral IPSP demo start...\n");
 
     err = bt_enable(bt_ready);
     if (err)

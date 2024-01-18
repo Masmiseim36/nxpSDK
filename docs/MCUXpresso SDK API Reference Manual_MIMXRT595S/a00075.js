@@ -1,18 +1,19 @@
 var a00075 =
 [
-    [ "wwdt_config_t", "a00075.html#a00485", [
-      [ "enableWwdt", "a00075.html#a405b63e15703dc92b3179b5089319e38", null ],
-      [ "enableWatchdogReset", "a00075.html#a78ce1ec4de049becaae7e3be51772313", null ],
-      [ "enableWatchdogProtect", "a00075.html#adc32c01dcffb7f140c8e1fd049862928", null ],
-      [ "enableLockOscillator", "a00075.html#ac0e6a4a8be4bd468fdb082a156219a44", null ],
-      [ "windowValue", "a00075.html#a6ec33e8656fe2cfc997634b348ca2cfa", null ],
-      [ "timeoutValue", "a00075.html#a9ada6867151ee688d47176cbe771cf2d", null ],
-      [ "warningValue", "a00075.html#a449186b990027ae1e7543458e2f8714a", null ],
-      [ "clockFreq_Hz", "a00075.html#a15e2f3ecd343280edfd8fbaa0bf8c9f4", null ]
+    [ "_wwdt_config", "a00075.html#a00476", [
+      [ "enableWwdt", "a00075.html#a4a2401c8e97f8eced0fdca7ffdabacbc", null ],
+      [ "enableWatchdogReset", "a00075.html#a6ff22b44e352c0182bdd87b9ff61ee2e", null ],
+      [ "enableWatchdogProtect", "a00075.html#adf57c281f83db946ed4553f513f00061", null ],
+      [ "enableLockOscillator", "a00075.html#aa664f6d30e5b267bf960ad09fb36275f", null ],
+      [ "windowValue", "a00075.html#ad7c0d3a959ecac990eed2c9cfc1a0f09", null ],
+      [ "timeoutValue", "a00075.html#ab55d5525745d39713c954d1296e2a9df", null ],
+      [ "warningValue", "a00075.html#a350a5289fd77fc6f5b2834a66726d80e", null ],
+      [ "clockFreq_Hz", "a00075.html#acbab700e360be852f9b80ab4a37d8f68", null ]
     ] ],
     [ "FSL_WWDT_DRIVER_VERSION", "a00075.html#gaf661d1e3e19a80b873c54fdbad5e966a", null ],
     [ "WWDT_FIRST_WORD_OF_REFRESH", "a00075.html#ga56228a5472034e453003e7f375c824ab", null ],
     [ "WWDT_SECOND_WORD_OF_REFRESH", "a00075.html#gab483f5384985a23bb28889b3c31da9ee", null ],
+    [ "wwdt_config_t", "a00075.html#gade4f744368e9723e83fdefb72e88e692", null ],
     [ "_wwdt_status_flags_t", "a00075.html#gaca0e9724bd1f25336527ea66c77e476f", [
       [ "kWWDT_TimeoutFlag", "a00075.html#ggaca0e9724bd1f25336527ea66c77e476faea9db9afc1f9c70872a755eaa24a4184", null ],
       [ "kWWDT_WarningFlag", "a00075.html#ggaca0e9724bd1f25336527ea66c77e476fa825be03d771f06e1d6cf947ca78f857e", null ]

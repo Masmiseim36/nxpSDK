@@ -8,7 +8,7 @@
 
 #include "includes.h"
 
-#include "common.h"
+#include "utils/common.h"
 #include "eap_defs.h"
 #include "eap_common.h"
 

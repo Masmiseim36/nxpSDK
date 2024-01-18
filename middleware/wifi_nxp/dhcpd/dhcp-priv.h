@@ -16,7 +16,11 @@
 #define dhcp_e(...) wmlog_e("dhcp", ##__VA_ARGS__)
 #define dhcp_w(...) wmlog_w("dhcp", ##__VA_ARGS__)
 
+#ifdef CONFIG_DHCP_SERVER_DEBUG
+#define dhcp_d(...) wmlog("dhcp", ##__VA_ARGS__)
+#else
 #define dhcp_d(...)
+#endif /* ! CONFIG_DHCP_DEBUG */
 
 #define SERVER_BUFFER_SIZE        1024
 #define MAC_IP_CACHE_SIZE         8

@@ -8,12 +8,18 @@
 #ifndef DRIVER_FREERTOS_H
 #define DRIVER_FREERTOS_H
 
+#ifndef CONFIG_ZEPHYR
 #include "lwip/netif.h"
+#endif
 
 #include "driver.h"
 #include "wpa_supplicant_i.h"
 #include "bss.h"
+#ifdef CONFIG_ZEPHYR
+#include "l2_packet/l2_packet.h"
+#else
 #include "l2_packet.h"
+#endif
 
 struct freertos_drv_ctx
 {
@@ -38,6 +44,7 @@ struct freertos_drv_if_ctx
     int beacon_set;
     union wpa_event_data *data;
     bool survey_res_get_in_prog;
+    unsigned int set_rekey_offload : 1;
 
     struct wpa_scan_results *scan_res2;
     bool scan_res2_get_in_prog;
@@ -95,6 +102,8 @@ struct freertos_wpa_supp_dev_callbk_fns
     void (*eapol_rx)(struct freertos_drv_if_ctx *if_ctx, union wpa_event_data *event);
 
     void (*signal_change)(struct freertos_drv_if_ctx *if_ctx, union wpa_event_data *event);
+
+    void (*ecsa_complete)(struct freertos_drv_if_ctx *if_ctx, union wpa_event_data *event);
 };
 
 struct freertos_hostapd_dev_callbk_fns
@@ -114,6 +123,8 @@ struct freertos_hostapd_dev_callbk_fns
     void (*eapol_rx)(struct freertos_drv_if_ctx *if_ctx, union wpa_event_data *event);
 
     void (*mgmt_tx_status)(struct freertos_drv_if_ctx *if_ctx, const u8 *frame, size_t len, bool ack);
+
+    void (*ecsa_complete)(struct freertos_drv_if_ctx *if_ctx, union wpa_event_data *event);
 };
 
 struct freertos_wpa_supp_dev_ops
@@ -141,6 +152,7 @@ struct freertos_wpa_supp_dev_ops
                    const unsigned char *key,
                    size_t key_len,
                    enum key_flag key_flag);
+    int (*set_rekey_info)(void *if_priv, const u8 *kek, size_t kek_len, const u8 *kck, size_t kck_len, const u8 *replay_ctr);
     int (*set_supp_port)(void *if_priv, int authorized, char *bssid);
     int (*set_country)(void *priv, const char *alpha2);
     int (*get_country)(void *priv, char *alpha2);
@@ -175,6 +187,7 @@ struct freertos_wpa_supp_dev_ops
     int (*stop_ap)(void *if_priv);
     int (*deinit_ap)(void *if_priv);
     int (*set_acl)(void *if_priv, struct hostapd_acl_params *params);
+    int (*dpp_listen)(void *priv, bool enable);
 };
 
 #endif /* DRIVER_FREERTOS_H */

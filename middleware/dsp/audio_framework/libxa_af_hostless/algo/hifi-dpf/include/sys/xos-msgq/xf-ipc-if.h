@@ -43,7 +43,7 @@ typedef void * xf_ipc_handle;
 typedef struct xf_ipc_config
 {
     /* ...shmem handle */
-    void *phandle;                      
+    void *phandle;
 
     /* ...shmem size in bytes */
     unsigned int handle_size;
@@ -100,7 +100,7 @@ typedef struct {
 extern xf_ipc_handle xf_g_ipc_handle;
 
 /*******************************************************************************
-                            ipc API functions 
+                            ipc API functions
 *******************************************************************************/
 /* ...complete IPC waiting and close dsp thread */
 static inline void xf_ipi_dsp_close(UWORD32 core)

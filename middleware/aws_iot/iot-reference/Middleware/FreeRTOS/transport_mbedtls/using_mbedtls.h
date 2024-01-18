@@ -44,7 +44,13 @@
 #include "mbedtls/threading.h"
 #include "mbedtls/x509.h"
 #include "mbedtls/pk.h"
+#include "mbedtls/version.h"
+#if defined(MBEDTLS_VERSION_NUMBER) && (MBEDTLS_VERSION_NUMBER < 0x03010000)
 #include "mbedtls/pk_internal.h"
+#include "mbedtls/net.h"
+#else
+#include "pk_wrap.h"
+#endif
 #include "mbedtls/error.h"
 #include "lwip/sockets.h"
 
@@ -69,7 +75,10 @@ typedef struct SSLContext
     mbedtls_x509_crt clientCert;          /**< @brief Client certificate context. */
     mbedtls_pk_context privKey;           /**< @brief Client private key context. */
     mbedtls_pk_info_t privKeyInfo;        /**< @brief Client private key info. */
-
+#ifdef MBEDTLS_USE_PSA_CRYPTO
+	mbedtls_ctr_drbg_context drbgCtx;	  /**< @brief DRBG context. */
+	mbedtls_entropy_context entropyCtx;   /**< @brief Entropy context. */
+#endif
     /* PKCS#11. */
     CK_FUNCTION_LIST_PTR pxP11FunctionList;
     CK_SESSION_HANDLE xP11Session;
@@ -115,6 +124,10 @@ typedef struct NetworkCredentials
     size_t passwordSize;             /**< @brief Size associated with #NetworkCredentials.pPassword. */
     const char * pClientCertLabel;   /**< @brief String representing the PKCS #11 label for the client certificate. */
     const char * pPrivateKeyLabel;   /**< @brief String representing the PKCS #11 label for the private key. */
+#ifdef MBEDTLS_USE_PSA_CRYPTO
+	uint32_t keyId;
+	uint32_t certId; 
+#endif
 } NetworkCredentials_t;
 
 

@@ -1,12 +1,13 @@
 /**
  * @file
  *
- * Multicast listener discovery for IPv6. Aims to be compliant with RFC 2710.
- * No support for MLDv2.
+ * Multicast listener discovery v2 for IPv6. Aims to be compliant with RFC 3810.
+ * No support for Source Specific Multicast.
  */
 
 /*
  * Copyright (c) 2010 Inico Technologies Ltd.
+ * Copyright 2023 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -58,16 +59,30 @@ extern "C" {
 struct mld_group {
   /** next link */
   struct mld_group *next;
+  /** next link for list of pending change reports */
+  struct mld_group *to_report_next;
   /** multicast address */
-  ip6_addr_t         group_address;
-  /** signifies we were the last person to report */
-  u8_t               last_reporter_flag;
-  /** current state of the group */
-  u8_t               group_state;
-  /** timer for reporting */
-  u16_t              timer;
+  ip6_addr_t group_address;
   /** counter of simultaneous uses */
-  u8_t               use;
+  u8_t use;
+  /** count of change reports to send */
+  u8_t chg_reps_to_send;
+};
+
+/** MLD data per netif */
+struct mld_data {
+    /** linked list of subscribed groups */
+    struct mld_group *groups;
+    /** linked list of groups to report */
+    struct mld_group *groups_to_report;
+    /** robustness variable (how many times each change shoud be sent) default 2 */
+    u8_t robustness;
+    /** Ticks remaining to send next change report */
+    u32_t chg_report_tmr;
+    /** Time to response to query. Default 10 s  max possible value 8 387 584 s */
+    u32_t max_response_delay;
+    /** Ticks remainig to send next general report */
+    u32_t general_report_tmr;
 };
 
 #define MLD6_TMR_INTERVAL              100 /* Milliseconds */
@@ -88,7 +103,7 @@ err_t  mld6_leavegroup_netif(struct netif *netif, const ip6_addr_t *groupaddr);
  * be received for correct IPv6 operation.
  * @see @ref netif_set_mld_mac_filter()
  */
-#define netif_mld6_data(netif) ((struct mld_group *)netif_get_client_data(netif, LWIP_NETIF_CLIENT_DATA_INDEX_MLD6))
+#define netif_mld6_data(netif) ((struct mld_data *)netif_get_client_data(netif, LWIP_NETIF_CLIENT_DATA_INDEX_MLD6))
 
 #ifdef __cplusplus
 }

@@ -270,7 +270,7 @@ static API_RESULT ethermind_avrcp_cb(
         {
             struct bt_avrcp_control_msg *msg = (struct bt_avrcp_control_msg *)(event_data);
 
-            BT_DBG("AVRCP_MESSAGE_IND");
+            LOG_DBG("AVRCP_MESSAGE_IND");
             // todo: check event_datalen is right or not..
 
             if (msg->header.op_code == BT_AVRCP_OPCODE_VENDOR_DEPENDENT)
@@ -295,7 +295,7 @@ static API_RESULT ethermind_avrcp_cb(
                 uint8_t replaced = 0;
                 struct bt_avrcp_control_msg *msg = (struct bt_avrcp_control_msg *)event_data;
 
-                BT_DBG("AVRCP_MESSAGE_CNF");
+                LOG_DBG("AVRCP_MESSAGE_CNF");
                 // todo: check event_datalen is right or not..
 
                 if (msg->header.op_code == BT_AVRCP_OPCODE_VENDOR_DEPENDENT)
@@ -328,7 +328,7 @@ static API_RESULT ethermind_avrcp_cb(
         {
             if (avrcp_cbs.browsing_received != NULL)
             {
-                BT_DBG("AVRCP_BOW_MESSAGE_IND");
+                LOG_DBG("AVRCP_BOW_MESSAGE_IND");
                 // todo: check event_datalen is right or not..
 
                 avrcp_cbs.browsing_received(avrcp->conn, bt_avrcp_parse_browsing_cmd_data(event_data, event_datalen),
@@ -341,7 +341,7 @@ static API_RESULT ethermind_avrcp_cb(
         {
             if (avrcp_cbs.browsing_rsp_received != NULL)
             {
-                BT_DBG("AVRCP_BOW_MESSAGE_RSP");
+                LOG_DBG("AVRCP_BOW_MESSAGE_RSP");
                 // todo: check event_datalen is right or not..
 
                 avrcp_cbs.browsing_rsp_received(
@@ -382,29 +382,29 @@ int bt_avrcp_init(void)
         }
         else
         {
-            BT_ERR("fail to create mutex");
+            LOG_ERR("fail to create mutex");
             return -EIO;
         }
     }
 
-    BT_DBG("initlaize avrcp");
+    LOG_DBG("initlaize avrcp");
     AVRCP_LOCK;
     ret = BT_avrcp_al_init();
     if (ret != API_SUCCESS)
     {
         AVRCP_UNLOCK;
-        BT_ERR("fail to initialize avrcp");
+        LOG_ERR("fail to initialize avrcp");
         return -EIO;
     }
 
 #if (defined(CONFIG_BT_AVRCP_CT) && ((CONFIG_BT_AVRCP_CT) > 0U))
 #if (defined(CONFIG_BT_AVRCP_COVER_ART) && ((CONFIG_BT_AVRCP_COVER_ART) > 0U))
-    BT_DBG("initlaize cover art initiator");
+    LOG_DBG("initlaize cover art initiator");
     ret = BT_avrcp_cai_init();
     if (ret != API_SUCCESS)
     {
         AVRCP_UNLOCK;
-        BT_ERR("fail to initialize cover art initiator");
+        LOG_ERR("fail to initialize cover art initiator");
         return -EIO;
     }
 #endif
@@ -412,12 +412,12 @@ int bt_avrcp_init(void)
 
 #if (defined(CONFIG_BT_AVRCP_TG) && ((CONFIG_BT_AVRCP_TG) > 0U))
 #if (defined(CONFIG_BT_AVRCP_COVER_ART) && ((CONFIG_BT_AVRCP_COVER_ART) > 0U))
-    BT_DBG("initlaize cover art responder");
+    LOG_DBG("initlaize cover art responder");
     ret = BT_avrcp_car_init();
     if (ret != API_SUCCESS)
     {
         AVRCP_UNLOCK;
-        BT_ERR("fail to initialize cover art responder");
+        LOG_ERR("fail to initialize cover art responder");
         return -EIO;
     }
 #endif
@@ -440,7 +440,7 @@ int bt_avrcp_register_callback(struct bt_avrcp_cb *cb)
         if (ret != API_SUCCESS)
         {
             AVRCP_UNLOCK;
-            BT_ERR("fail to start avrcp");
+            LOG_ERR("fail to start avrcp");
             return -EIO;
         }
     }
@@ -479,7 +479,7 @@ int bt_avrcp_control_connect(struct bt_conn *conn)
         {
             bt_avrcp_free_instance(avrcp);
         }
-        BT_ERR("fail to connect");
+        LOG_ERR("fail to connect");
         return -EIO;
     }
 
@@ -499,7 +499,7 @@ int bt_avrcp_control_disconnect(struct bt_conn *conn)
     ret = BT_avrcp_disconnect_req(&avrcp->ethermind_avrcp);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("fail to disconnect control channel")
+        LOG_ERR("fail to disconnect control channel")
         return -EINVAL;
     }
 
@@ -521,7 +521,7 @@ int bt_avrcp_response_info(struct bt_conn *conn, uint8_t subunit, uint8_t subuni
     ret = BT_avrcp_al_send_info_rsp(&avrcp->ethermind_avrcp, tl_msg_type, subunit, subunit_type);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("fail to call BT_avrcp_al_send_info_rsp");
+        LOG_ERR("fail to call BT_avrcp_al_send_info_rsp");
         return -EIO;
     }
 
@@ -551,7 +551,7 @@ int bt_avrcp_response_passthrough(struct bt_conn *conn, uint8_t rsp_type, struct
                                                cmd->pass_th.state_flag, vendor_op_id);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("fail to call BT_avrcp_al_send_passthrough_cmd_rsp");
+        LOG_ERR("fail to call BT_avrcp_al_send_passthrough_cmd_rsp");
         return -EIO;
     }
 
@@ -593,7 +593,7 @@ int bt_avrcp_response_vendor_dependent(
         ret = BT_avrcp_al_send_metadata_pdu(&avrcp->ethermind_avrcp, &vd_rsp_info, 0x01);
         if (ret != API_SUCCESS)
         {
-            BT_ERR("fail to call BT_avrcp_al_send_metadata_pdu");
+            LOG_ERR("fail to call BT_avrcp_al_send_metadata_pdu");
             return -EIO;
         }
         return 0;
@@ -737,7 +737,7 @@ int bt_avrcp_response_vendor_dependent(
     ret = BT_avrcp_al_send_metadata_pdu(&avrcp->ethermind_avrcp, &vd_rsp_info, 0x01);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("fail to call BT_avrcp_al_send_metadata_pdu");
+        LOG_ERR("fail to call BT_avrcp_al_send_metadata_pdu");
         return -EIO;
     }
 
@@ -1076,7 +1076,7 @@ int bt_avrcp_send_unit_info(struct bt_conn *conn)
     ret = BT_avrcp_al_send_unit_info(&avrcp->ethermind_avrcp);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("fail to call BT_avrcp_al_send_unit_info");
+        LOG_ERR("fail to call BT_avrcp_al_send_unit_info");
         return -EIO;
     }
 
@@ -1096,7 +1096,7 @@ int bt_avrcp_send_subunit_info(struct bt_conn *conn)
     ret = BT_avrcp_al_send_subunit_info(&avrcp->ethermind_avrcp);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("fail to call BT_avrcp_al_send_subunit_info");
+        LOG_ERR("fail to call BT_avrcp_al_send_subunit_info");
         return -EIO;
     }
 
@@ -1117,7 +1117,7 @@ int bt_avrcp_send_passthrough(struct bt_conn *conn, uint8_t op_id, uint8_t vendo
                                                state_flag, vendor_op_id);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("fail to call BT_AVRCP_COMMAND_TYPE_CONTROL");
+        LOG_ERR("fail to call BT_AVRCP_COMMAND_TYPE_CONTROL");
         return -EIO;
     }
 
@@ -1138,7 +1138,7 @@ int bt_avrcp_get_company_id_supported(struct bt_conn *conn)
     ret = BT_avrcp_al_get_companyid_supported(&avrcp->ethermind_avrcp);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("fail to call BT_AVRCP_COMMAND_TYPE_CONTROL");
+        LOG_ERR("fail to call BT_AVRCP_COMMAND_TYPE_CONTROL");
         return -EIO;
     }
 
@@ -1158,7 +1158,7 @@ int bt_avrcp_get_event_supported(struct bt_conn *conn)
     ret = BT_avrcp_al_get_event_supported(&avrcp->ethermind_avrcp);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("fail to call BT_AVRCP_COMMAND_TYPE_CONTROL");
+        LOG_ERR("fail to call BT_AVRCP_COMMAND_TYPE_CONTROL");
         return -EIO;
     }
 
@@ -1382,7 +1382,7 @@ int bt_avrcp_send_vendor_dependent(struct bt_conn *conn, uint8_t pdu_id, void *p
     ret = BT_avrcp_al_send_metadata_pdu(&avrcp->ethermind_avrcp, &pdu_info, 0x00);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("fail to call BT_avrcp_al_send_metadata_pdu");
+        LOG_ERR("fail to call BT_avrcp_al_send_metadata_pdu");
         return -EIO;
     }
 
@@ -1402,7 +1402,7 @@ int bt_avrcp_get_play_status(struct bt_conn *conn)
     ret = BT_avrcp_al_get_play_status(&avrcp->ethermind_avrcp);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("fail to call BT_avrcp_al_get_play_status");
+        LOG_ERR("fail to call BT_avrcp_al_get_play_status");
         return -EIO;
     }
 
@@ -1422,7 +1422,7 @@ int bt_avrcp_register_notification(struct bt_conn *conn, uint8_t event, uint32_t
     ret = BT_avrcp_al_register_notification(&avrcp->ethermind_avrcp, event, playback_interval);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("fail to call BT_avrcp_al_register_notification");
+        LOG_ERR("fail to call BT_avrcp_al_register_notification");
         return -EIO;
     }
 
@@ -1442,7 +1442,7 @@ int bt_avrcp_request_continuing_rsp(struct bt_conn *conn, uint8_t pdu_id)
     ret = BT_avrcp_al_send_request_continuing_rsp(&avrcp->ethermind_avrcp, pdu_id);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("fail to call BT_avrcp_al_send_request_continuing_rsp");
+        LOG_ERR("fail to call BT_avrcp_al_send_request_continuing_rsp");
         return -EIO;
     }
 
@@ -1462,7 +1462,7 @@ int bt_avrcp_abort_continuing_rsp(struct bt_conn *conn, uint8_t pdu_id)
     ret = BT_avrcp_al_send_abort_continuing_rsp(&avrcp->ethermind_avrcp, pdu_id);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("fail to call BT_avrcp_al_send_abort_continuing_rsp");
+        LOG_ERR("fail to call BT_avrcp_al_send_abort_continuing_rsp");
         return -EIO;
     }
 
@@ -1482,7 +1482,7 @@ int bt_avrcp_set_volume(struct bt_conn *conn, uint8_t volume)
     ret = BT_avrcp_al_set_absolute_volume(&avrcp->ethermind_avrcp, volume);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("fail to call BT_avrcp_al_set_absolute_volume");
+        LOG_ERR("fail to call BT_avrcp_al_set_absolute_volume");
         return -EIO;
     }
 
@@ -1502,7 +1502,7 @@ int bt_avrcp_set_addressed_player(struct bt_conn *conn, uint16_t player_id)
     ret = BT_avrcp_al_send_set_addressed_player_cmd(&avrcp->ethermind_avrcp, player_id);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("fail to call BT_avrcp_al_send_set_addressed_player_cmd");
+        LOG_ERR("fail to call BT_avrcp_al_send_set_addressed_player_cmd");
         return -EIO;
     }
 
@@ -1525,7 +1525,7 @@ int bt_avrcp_browsing_connect(struct bt_conn *conn)
     ret = BT_avrcp_channel_connect_req(&avrcp->ethermind_avrcp, conn->br.dst.val, AVCTP_CHANNEL_TYPE_BROWSING);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("fail to connect");
+        LOG_ERR("fail to connect");
         return -EIO;
     }
 
@@ -1545,7 +1545,7 @@ int bt_avrcp_browsing_disconnect(struct bt_conn *conn)
     ret = BT_avrcp_channel_disconnect_req(&avrcp->ethermind_avrcp, AVCTP_CHANNEL_TYPE_BROWSING);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("fail to disconnect browsing channel")
+        LOG_ERR("fail to disconnect browsing channel")
         return -EINVAL;
     }
 
@@ -1581,7 +1581,7 @@ int bt_avrcp_get_folder_items(struct bt_conn *conn, struct bt_avrcp_get_folder_i
     ret = BT_avrcp_al_get_folder_items(&avrcp->ethermind_avrcp, &get_param);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("fail to call BT_avrcp_al_get_folder_items");
+        LOG_ERR("fail to call BT_avrcp_al_get_folder_items");
         return -EIO;
     }
 
@@ -1601,7 +1601,7 @@ int bt_avrcp_change_path(struct bt_conn *conn, struct bt_avrcp_change_path_cmd *
     ret = BT_avrcp_al_change_path(&avrcp->ethermind_avrcp, param->uid_counter, param->direction, param->folder_uid);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("fail to call BT_avrcp_al_change_path");
+        LOG_ERR("fail to call BT_avrcp_al_change_path");
         return -EIO;
     }
 
@@ -1621,7 +1621,7 @@ int bt_avrcp_set_borwsed_player(struct bt_conn *conn, uint16_t player_id)
     ret = BT_avrcp_al_set_browsed_player(&avrcp->ethermind_avrcp, player_id);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("fail to call BT_avrcp_al_get_folder_items");
+        LOG_ERR("fail to call BT_avrcp_al_get_folder_items");
         return -EIO;
     }
 
@@ -1656,7 +1656,7 @@ int bt_avrcp_get_items_attribute(struct bt_conn *conn, struct bt_avrcp_get_item_
     ret = BT_avrcp_al_get_items_attribute(&avrcp->ethermind_avrcp, &attr_param);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("fail to call BT_avrcp_al_get_items_attribute");
+        LOG_ERR("fail to call BT_avrcp_al_get_items_attribute");
         return -EIO;
     }
 
@@ -1676,7 +1676,7 @@ int bt_avrcp_search(struct bt_conn *conn, struct bt_avrcp_search_cmd *param)
     ret = BT_avrcp_al_search(&avrcp->ethermind_avrcp, param->char_set, param->str, param->length);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("fail to call BT_avrcp_al_search");
+        LOG_ERR("fail to call BT_avrcp_al_search");
         return -EIO;
     }
 
@@ -1696,7 +1696,7 @@ int bt_avrcp_get_total_num_of_items(struct bt_conn *conn, uint8_t scope)
     ret = BT_avrcp_al_get_total_number_of_items(&avrcp->ethermind_avrcp, scope);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("fail to call BT_avrcp_al_get_total_number_of_items");
+        LOG_ERR("fail to call BT_avrcp_al_get_total_number_of_items");
         return -EIO;
     }
 
@@ -2032,7 +2032,7 @@ int bt_avrcp_response_browsing(struct bt_conn *conn,
         retval = BT_avrcp_al_send_browsing_cmd_rsp(&avrcp->ethermind_avrcp, &rsp_info);
         if (retval != API_SUCCESS)
         {
-            BT_ERR("FAILED !! Error Code = 0x%04X\n", retval);
+            LOG_ERR("FAILED !! Error Code = 0x%04X\n", retval);
         }
         return 0;
     }
@@ -2189,7 +2189,7 @@ int bt_avrcp_response_browsing(struct bt_conn *conn,
         retval = BT_avrcp_al_send_browsing_cmd_rsp(&avrcp->ethermind_avrcp, &rsp_info);
         if (retval != API_SUCCESS)
         {
-            BT_ERR("FAILED !! Error Code = 0x%04X\n", retval);
+            LOG_ERR("FAILED !! Error Code = 0x%04X\n", retval);
             return -EIO;
         }
     }
@@ -2335,7 +2335,7 @@ API_RESULT ethermind_avrcp_car_cb(AVRCP_CA_HANDLE *avrcp_ca_handle,
                     BT_avrcp_car_send_response(avrcp_ca_handle, event_type, AVRCP_CA_NOT_ACCEPTABLE_RSP, &ca_rsp_hdrs);
                 if (API_SUCCESS != retval)
                 {
-                    BT_ERR("Failed to send AVRCP_TG Cover Art Response - 0x%05X\n", retval);
+                    LOG_ERR("Failed to send AVRCP_TG Cover Art Response - 0x%05X\n", retval);
                 }
                 callback = 0;
                 break;
@@ -2431,7 +2431,7 @@ int bt_avrcp_cover_art_start_initiator(uint8_t *handle)
     API_RESULT ret = BT_avrcp_cai_start(handle, ethermind_avrcp_cai_cb);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("FAILED !! Error Code = 0x%04X\n", ret);
+        LOG_ERR("FAILED !! Error Code = 0x%04X\n", ret);
         return -EIO;
     }
     return 0;
@@ -2442,7 +2442,7 @@ int bt_avrcp_cover_art_stop_initiator(uint8_t handle)
     API_RESULT ret = BT_avrcp_cai_stop(&handle);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("FAILED !! Error Code = 0x%04X\n", ret);
+        LOG_ERR("FAILED !! Error Code = 0x%04X\n", ret);
         return -EIO;
     }
     return 0;
@@ -2455,7 +2455,7 @@ int bt_avrcp_cover_art_start_responder(uint8_t *handle)
     API_RESULT ret = BT_avrcp_car_start(handle, ethermind_avrcp_car_cb);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("FAILED !! Error Code = 0x%04X\n", ret);
+        LOG_ERR("FAILED !! Error Code = 0x%04X\n", ret);
         return -EIO;
     }
     return 0;
@@ -2466,7 +2466,7 @@ int bt_avrcp_cover_art_stop_responder(uint8_t handle)
     API_RESULT ret = BT_avrcp_car_stop(&handle);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("FAILED !! Error Code = 0x%04X\n", ret);
+        LOG_ERR("FAILED !! Error Code = 0x%04X\n", ret);
         return -EIO;
     }
     return 0;
@@ -2486,7 +2486,7 @@ int bt_avrcp_cover_art_connect(uint8_t handle, struct bt_conn *conn, struct bt_a
     ret = BT_avrcp_cai_connect(&handle, &connect_info);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("fail to connect");
+        LOG_ERR("fail to connect");
         return -EIO;
     }
 
@@ -2498,7 +2498,7 @@ int bt_avrcp_cover_art_disconnect(uint8_t handle)
     API_RESULT ret = BT_avrcp_cai_disconnect(&handle);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("fail to call BT_avrcp_cai_disconnect");
+        LOG_ERR("fail to call BT_avrcp_cai_disconnect");
         return -EIO;
     }
     return 0;
@@ -2518,7 +2518,7 @@ int bt_avrcp_get_image_property(uint8_t handle, struct bt_avrcp_get_image_proper
     ret = BT_avrcp_cai_get_image_properties(&handle, &ca_req_info);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("fail to call BT_avrcp_cai_get_image_properties");
+        LOG_ERR("fail to call BT_avrcp_cai_get_image_properties");
         return -EIO;
     }
 
@@ -2543,7 +2543,7 @@ int bt_avrcp_get_image(uint8_t handle, struct bt_avrcp_get_image *param)
     ret = BT_avrcp_cai_get_image(&handle, &ca_req_info);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("fail to call BT_avrcp_cai_get_image");
+        LOG_ERR("fail to call BT_avrcp_cai_get_image");
         return -EIO;
     }
 
@@ -2564,7 +2564,7 @@ int bt_avrcp_get_linked_thumbnail(uint8_t handle, struct bt_avrcp_get_linked_thu
     ret = BT_avrcp_cai_get_linked_thumbnail(&handle, &ca_req_info);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("fail to call BT_avrcp_cai_get_linked_thumbnail");
+        LOG_ERR("fail to call BT_avrcp_cai_get_linked_thumbnail");
         return -EIO;
     }
 
@@ -2578,7 +2578,7 @@ int bt_avrcp_abort(uint8_t handle)
     ret = BT_avrcp_cai_abort(&handle);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("fail to call BT_avrcp_cai_get_linked_thumbnail");
+        LOG_ERR("fail to call BT_avrcp_cai_get_linked_thumbnail");
         return -EIO;
     }
 
@@ -2634,7 +2634,7 @@ int bt_avrcp_send_request(uint8_t handle, uint8_t wait, struct bt_avrcp_cover_ar
     ret = BT_avrcp_cai_send_req(&handle, event_type, rsp->response, &ca_event_headers);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("fail to call BT_avrcp_cai_send_req");
+        LOG_ERR("fail to call BT_avrcp_cai_send_req");
         return -EIO;
     }
 
@@ -2716,7 +2716,7 @@ int bt_avrcp_response_cover_art(uint8_t handle, uint8_t cmd, uint8_t response, v
     ret = BT_avrcp_car_send_response(&handle, event_type, response, &ca_rsp_hdrs);
     if (ret != API_SUCCESS)
     {
-        BT_ERR("fail to call BT_avrcp_car_send_response");
+        LOG_ERR("fail to call BT_avrcp_car_send_response");
         return -EIO;
     }
 

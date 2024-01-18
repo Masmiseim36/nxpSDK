@@ -10,7 +10,7 @@
 
 #ifdef CONFIG_INTERNAL_MD5
 
-#include "common.h"
+#include "utils/common.h"
 #include "md5.h"
 #include "crypto.h"
 

@@ -7,6 +7,7 @@
  */
 
 #include "mbedtls/build_info.h"
+#include "mbedtls/error.h"
 
 #if defined(MBEDTLS_MCUX_ENTROPY) && (MBEDTLS_MCUX_ENTROPY == 1)
 
@@ -20,25 +21,13 @@
 #include "fsl_rng.h"
 #elif defined(FSL_FEATURE_SOC_LPC_RNG1_COUNT) && (FSL_FEATURE_SOC_LPC_RNG1_COUNT > 0)
 #include "fsl_rng.h"
+#elif defined(FSL_FEATURE_EDGELOCK) && (FSL_FEATURE_EDGELOCK > 0)
+#include "sss_crypto.h"
 #endif
-
-
-/* Defining the block in all cases, if platform supports CSS/ELS*/
-#if defined(ELS)
-#if defined(PSA_CRYPTO_DRIVER_HW_ACCEL_ENABLE)
-extern status_t  mbecrypto_mcux_els_pkc_init(void);
-#else
-#if defined(MBEDTLS_MCUX_USE_ELS)
+#if defined(MBEDTLS_MCUX_ELS) && MBEDTLS_MCUX_ELS
+#include "mcuxClEls.h"               /* Interface to the entire nxpClEls component */
 extern status_t  mbecrypto_mcux_els_init(void);
-#else
-#if defined(MBEDTLS_MCUX_CSS)
-#include "mcuxClCss.h"               /* Interface to the entire nxpClCss component */
-extern status_t  mbecrypto_mcux_css_init(void);
-#endif /* MBEDTLS_MCUX_USE_CLS */
-#endif /* MBEDTLS_MCUX_ELS */
-#endif /* PSA_CRYPTO_DRIVER_HW_ACCEL_ENABLE */
 #endif /* ELS */
-
 
 static void mbedtls_mcux_rng_init(void)
 {
@@ -57,31 +46,9 @@ static void mbedtls_mcux_rng_init(void)
     RNGA_Seed(RNG, SIM->UIDL);
 #elif defined(FSL_FEATURE_SOC_LPC_RNG1_COUNT) && (FSL_FEATURE_SOC_LPC_RNG1_COUNT > 0)
     RNG_Init(RNG);
-#endif
-    
-/* Defining the block in all cases, if platform supports CSS/ELS*/
-#if defined(ELS)
-
-#if defined(PSA_CRYPTO_DRIVER_HW_ACCEL_ENABLE)
-    mbecrypto_mcux_els_pkc_init();
-#else
-#if defined(MBEDTLS_MCUX_USE_ELS)
+#elif defined(MBEDTLS_MCUX_ELS) && MBEDTLS_MCUX_ELS
     mbecrypto_mcux_els_init();
-#else /* MBEDTLS_MCUX_USE_CSS*/
-#if defined(MBEDTLS_MCUX_CSS)
-#if 0 /* Simple initialization */
-    if( MCUX_CSSL_FP_RESULT(mcuxClCss_Enable_Async()) == MCUXCLCSS_STATUS_OK_WAIT) /* Enable the CSSv2. */
-    {
-        mcuxClCss_WaitForOperation(MCUXCLCSS_ERROR_FLAGS_CLEAR); /* Wait for the nxpClCss_Enable_Async operation to complete.*/
-    }
-#else
-    mbecrypto_mcux_css_init();
 #endif
-#endif /* MBEDTLS_MCUX_USE_CSS */
-#endif /* MBEDTLS_MCUX_ELS */
-#endif /* PSA_CRYPTO_DRIVER_HW_ACCEL_ENABLE */
-#endif /* ELS */
-
 }
 
 /* Entropy poll callback for a hardware source */
@@ -144,7 +111,26 @@ int mbedtls_hardware_poll(void *data, unsigned char *output, size_t len, size_t 
     result = kStatus_Success;
 #elif defined(FSL_FEATURE_SOC_LPC_RNG1_COUNT) && (FSL_FEATURE_SOC_LPC_RNG1_COUNT > 0)
     result = RNG_GetRandomData(RNG, output, len);
-#elif defined(ELS) //as CSS is renamed for LPC55S36 already, hence the update here
+#elif defined(FSL_FEATURE_EDGELOCK) && (FSL_FEATURE_SOC_LPC_RNG1_COUNT > 0)
+
+    result = kStatus_Fail;
+    sss_sscp_rng_t ctx;
+
+    if (CRYPTO_InitHardware() != kStatus_Success)
+    {
+        result = MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
+    }
+    if ((sss_sscp_rng_context_init(&g_sssSession, &ctx, 0u) == kStatus_SSS_Success)
+        && (sss_sscp_rng_get_random(&ctx, output, len) == kStatus_SSS_Success)
+        && (sss_sscp_rng_free(&ctx) == kStatus_SSS_Success))
+    {
+        result = kStatus_Success;
+    }
+    else
+    {
+        result = kStatus_Fail;
+    }
+#elif defined(ELS)
 
     uint8_t rn[MCUXCLCSS_RNG_DRBG_TEST_EXTRACT_OUTPUT_MIN_SIZE];
     size_t  length = len;

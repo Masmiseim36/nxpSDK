@@ -1564,6 +1564,7 @@ netif_create_ip6_linklocal_address(struct netif *netif, u8_t from_mac_48bit)
   LWIP_ASSERT_CORE_LOCKED();
 
   LWIP_ASSERT("netif_create_ip6_linklocal_address: invalid netif", netif != NULL);
+  LWIP_ASSERT("netif_create_ip6_linklocal_address: hwaddr_len too short", netif->hwaddr_len >= 6U);
 
   /* Link-local prefix. */
   ip_2_ip6(&netif->ip6_addr[0])->addr[0] = PP_HTONL(0xfe800000ul);

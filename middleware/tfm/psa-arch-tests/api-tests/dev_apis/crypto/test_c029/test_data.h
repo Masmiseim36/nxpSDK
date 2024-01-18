@@ -1,5 +1,5 @@
 /** @file
- * Copyright (c) 2019-2021, Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2019-2023, Arm Limited or its affiliates. All rights reserved.
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,7 +28,7 @@ typedef struct {
 } test_data;
 
 #if (defined(ARCH_TEST_HMAC) && (defined(ARCH_TEST_SHA256) || defined(ARCH_TEST_CMAC)) || \
-(defined(ARCH_TEST_AES_128) && (defined(ARCH_TEST_CBC_NO_PADDING) || defined(ARCH_TEST_CMAC)))) //NXP
+(defined(ARCH_TEST_AES_128) && (defined(ARCH_TEST_CBC_NO_PADDING) || defined(ARCH_TEST_CMAC))))
 static const test_data check1[] = {
 #ifdef ARCH_TEST_HMAC
 #ifdef ARCH_TEST_SHA256
@@ -147,4 +147,4 @@ static const test_data check1[] = {
 #endif
 #endif
 };
-#endif //NXP
+#endif

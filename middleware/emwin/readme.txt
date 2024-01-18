@@ -1,9 +1,8 @@
-Segger emWin v6.32b for NXP Platforms
+Segger emWin v6.34c for NXP Platforms
 =====================================
 
 These emWin library files were built using:
 
-- arm-none-eabi-gcc gcc version 10.3.2021.10
-- IAR C/C++ Compiler for ARM 9.30.1.329 (9.30.1.329)
-- Keil ARMClang Compiler V6.18 [MDK Professional 5.37]
-- MCUXpresso IDE v11.7.0 [Build 9198]
+- arm-none-eabi-gcc gcc version 12.2.rel1
+- IAR C/C++ Compiler for ARM 9.40.2.374 (9.40.2.374)
+- Keil ARMClang Compiler V6.18 [MDK Professional 5.38]

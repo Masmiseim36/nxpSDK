@@ -20,6 +20,21 @@ extern "C" {
 #include "fsl_adapter_flash.h"
 #include "fwk_platform.h"
 
+/*!
+ * @addtogroup OTA_module
+ * The OTA_module
+ *
+ * OTA_module provides APIs a collection of over the air update features.
+ * @{
+ */
+/*!
+ * @addtogroup OTA_server_support
+ * The OTA server module
+ *
+ * OTA_server_support provides APIs a collection of over the air update features.
+ * @{
+ */
+
 /************************************************************************************
 *************************************************************************************
 * Public type definitions
@@ -115,5 +130,12 @@ void OTA_ClientInfoCnf(uint8_t *pClientAddr, uint32_t offset, uint16_t devId);
 #ifdef __cplusplus
 }
 #endif
+
+/*!
+ * @}  end of OTA_server_support addtogroup
+ */
+/*!
+ * @}  end of OTA_module addtogroup
+ */
 
 #endif /* _OTA_SUPPORT_H_ */

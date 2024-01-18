@@ -198,7 +198,7 @@ DECL_CONST DECL_STATIC UCHAR smp_ecdh_oob_pub_key_pl[] =
 #endif /* SMP_HAVE_TBX_PL_ECDH */
 
 #ifdef SMP_LESC_CROSS_TXP_KEY_GEN
-/* LESC LK LTK generation Data struct */
+/* LESC LK LTK generation Data structure */
 DECL_STATIC SMP_LESC_LK_LTK_GEN_PL smp_lesc_txp_keys;
 
 /* LESC LK LTK key generation complete handler */
@@ -234,11 +234,14 @@ void smp_init_pl (void)
     i = 0;
 #endif /* (SMP_PL_DEVICE_LIST_SIZE > 1) */
     {
-        /* Initialize the device entuty */
+        /* Initialize the device entity */
         BT_mem_set (&smp_pl_device_list[i], 0x00, sizeof (SMP_DEVICE_PL));
     }
 
 #ifdef SMP_LESC
+    /* Initiaize the LESC OOB Data */
+    BT_mem_set(&smp_lesc_oob_data, 0x00, sizeof(smp_lesc_oob_data));
+
     /* Initialize state to IDLE */
     SMP_LESC_OOB_SET_STATE(&smp_lesc_oob_data, SMP_OOB_STATE_IDLE);
 #endif /* SMP_LESC */
@@ -259,7 +262,7 @@ void smp_init_pl (void)
     /* Initialize to Best Effort LESC requirements by platform */
     smp_lesc_policy_pl = SMP_PL_LESC_BEST_EFFORT;
 
-    /* Initiatlize KeyPress notification to Reset by platform */
+    /* Initialize KeyPress notification to Reset by platform */
     smp_lesc_key_press_ntf_pl = SMP_PL_LESC_KEY_PRESS_NTF_RESET;
 #endif /* SMP_LESC */
 
@@ -275,7 +278,7 @@ void smp_init_pl (void)
  * \par Description:
  *      This function adds the given device to the platform database
  *
- * \param [in] bd_addr  Peer bluetooth device address
+ * \param [in] bd_addr  Peer Bluetooth device address
  *
  * \return API_SUCCESS or Error Code stating the failure reason
  */
@@ -318,7 +321,7 @@ API_RESULT BT_smp_add_device_pl (/* IN */ BT_DEVICE_ADDR * bd_addr)
  * \par Description:
  *      This function removes the given device from the platform database
  *
- * \param [in] bd_addr  Peer bluetooth device address
+ * \param [in] bd_addr  Peer Bluetooth device address
  *
  * \return API_SUCCESS or Error Code stating the failure reason
  */
@@ -558,28 +561,135 @@ API_RESULT smp_get_oob_tk_pl
 }
 
 #ifdef SMP_LESC
-void smp_get_local_oob_public_key_pl( /* OUT */ UCHAR * l_pub_key)
+API_RESULT smp_get_local_oob_public_key_pl( /* OUT */ UCHAR * l_pub_key)
 {
+    UCHAR tmp_pkey[SMP_OOB_PUBLIC_KEY_SIZE];
+    API_RESULT retval;
+
+    /* Initialize */
+    retval = API_SUCCESS;
+    BT_mem_set(tmp_pkey, 0x0, SMP_OOB_PUBLIC_KEY_SIZE);
+
+    /* Check if pointer provided is not NULL */
     if (NULL != l_pub_key)
     {
-        BT_mem_copy(l_pub_key,smp_lesc_oob_data.pkey,SMP_OOB_PUBLIC_KEY_SIZE);
+        /* Check if LESC OOB Public Key is Available */
+        if ((SMP_OOB_STATE_IDLE == SMP_LESC_OOB_GET_STATE(&smp_lesc_oob_data)) &&
+            (0 != BT_mem_cmp
+                 (
+                     smp_lesc_oob_data.pkey,
+                     tmp_pkey,
+                     SMP_OOB_PUBLIC_KEY_SIZE
+                 )))
+        {
+            BT_mem_copy
+            (
+                l_pub_key,
+                smp_lesc_oob_data.pkey,
+                SMP_OOB_PUBLIC_KEY_SIZE
+            );
+        }
+        else
+        {
+            retval = SMP_INCORRECT_STATE;
+        }
     }
+    else
+    {
+        retval = SMP_INVALID_PARAMETERS;
+    }
+
+    return retval;
 }
 
-void smp_get_lesc_oob_l_rand_pl( /* OUT */ UCHAR * l_rand)
+API_RESULT smp_get_lesc_oob_l_rand_pl( /* OUT */ UCHAR * l_rand)
 {
+    UCHAR tmp_rand[SMP_OOB_RANDOM_VAL_SIZE];
+    API_RESULT retval;
+
+    /* Initialize */
+    retval = API_SUCCESS;
+    BT_mem_set(tmp_rand, 0x0, SMP_OOB_RANDOM_VAL_SIZE);
+
     if (NULL != l_rand)
     {
-        BT_mem_copy(l_rand,smp_lesc_oob_data.rand,SMP_OOB_RANDOM_VAL_SIZE);
+        SMP_TRC(
+        "[SMP] Fetching LESC Local OOB Rand Value.\n");
+
+        /* If LESC OOB Rand is Available and Generation State is correct */
+#ifndef SMP_LESC_CONST_OOB_VAL_SUPPORT
+        if ((SMP_OOB_STATE_IDLE == SMP_LESC_OOB_GET_STATE(&smp_lesc_oob_data)) &&
+            (0 != BT_mem_cmp
+                  (
+                      smp_lesc_oob_data.rand,
+                      tmp_rand,
+                      SMP_OOB_RANDOM_VAL_SIZE
+                  )))
+#else /* SMP_LESC_CONST_OOB_VAL_SUPPORT */
+        /**
+         * When Const OOB is used for easy of testing,
+         * check only for LESc OOB Generation state.
+         */
+        if (SMP_OOB_STATE_IDLE == SMP_LESC_OOB_GET_STATE(&smp_lesc_oob_data))
+#endif /* SMP_LESC_CONST_OOB_VAL_SUPPORT */
+
+        {
+            BT_mem_copy(l_rand,smp_lesc_oob_data.rand, SMP_OOB_RANDOM_VAL_SIZE);
+        }
+        else
+        {
+            retval = SMP_INCORRECT_STATE;
+        }
     }
+    else
+    {
+        retval = SMP_INVALID_PARAMETERS;
+    }
+
+    return retval;
 }
 
-void smp_get_lesc_oob_l_cnf_val_pl( /* OUT */ UCHAR * l_cnf_val)
+API_RESULT smp_get_lesc_oob_l_cnf_val_pl( /* OUT */ UCHAR * l_cnf_val)
 {
+    UCHAR tmp_cnf[SMP_OOB_CONFIRM_VAL_SIZE];
+    API_RESULT retval;
+
+    /* Initialize */
+    retval = API_SUCCESS;
+    BT_mem_set(tmp_cnf, 0x0, SMP_OOB_CONFIRM_VAL_SIZE);
+
     if (NULL != l_cnf_val)
     {
-        BT_mem_copy(l_cnf_val,smp_lesc_oob_data.cnf_val,SMP_OOB_CONFIRM_VAL_SIZE);
+        SMP_TRC(
+        "[SMP] Fetching LESC Local OOB Confirm Value.\n");
+
+        /* If LESC OOB Confirm is Available and Generation State is correct */
+        if ((SMP_OOB_STATE_IDLE == SMP_LESC_OOB_GET_STATE(&smp_lesc_oob_data)) &&
+            (0 != BT_mem_cmp
+                  (
+                      smp_lesc_oob_data.cnf_val,
+                      tmp_cnf,
+                      SMP_OOB_CONFIRM_VAL_SIZE
+                  )))
+        {
+            BT_mem_copy
+            (
+                l_cnf_val,
+                smp_lesc_oob_data.cnf_val,
+                SMP_OOB_CONFIRM_VAL_SIZE
+            );
+        }
+        else
+        {
+            retval = SMP_INCORRECT_STATE;
+        }
     }
+    else
+    {
+        retval = SMP_INVALID_PARAMETERS;
+    }
+
+    return retval;
 }
 
 API_RESULT smp_get_lesc_oob_pl
@@ -592,6 +702,9 @@ API_RESULT smp_get_lesc_oob_pl
     API_RESULT retval;
     BT_DEVICE_ADDR bd_addr;
     UCHAR i;
+
+    SMP_TRC(
+    "[SMP] >> smp_get_lesc_oob_pl\n");
 
     if ((NULL == r_conf_val) && (NULL == r_rand))
     {
@@ -613,20 +726,34 @@ API_RESULT smp_get_lesc_oob_pl
             i = 0;
 #endif /* (SMP_PL_DEVICE_LIST_SIZE > 1) */
             {
+                /**
+                 * Copy the Remote OOB Confirm/Rand values only when the
+                 * Remote entry is valid in the SMP PL Database and the
+                 * Remote OOB Data is available.
+                 */
                 if ((0x01U == smp_pl_device_list[i].used) &&
                     (BT_TRUE ==
-                    BT_COMPARE_BD_ADDR_AND_TYPE(&bd_addr, &smp_pl_device_list[i].bd_addr)))
+                    BT_COMPARE_BD_ADDR_AND_TYPE(&bd_addr, &smp_pl_device_list[i].bd_addr)) &&
+                    (0x01U == smp_pl_device_list[i].oob_flag))
                 {
                     /* Return the Remote LESC OOB Confirm Value if not NULL */
                     if (NULL != r_conf_val)
                     {
                         BT_mem_copy(r_conf_val, smp_pl_device_list[i].cnf_val, SMP_OOB_CONFIRM_VAL_SIZE);
+
+                        SMP_TRC(
+                        "[SMP] Fetching LESC Remote OOB Confirm Value\n");
+                        SMP_debug_dump_bytes(r_conf_val, SMP_OOB_CONFIRM_VAL_SIZE);
                     }
 
                     /* Return the Remote LESC OOB RAND Value if not NULL */
                     if (NULL != r_rand)
                     {
                         BT_mem_copy(r_rand, smp_pl_device_list[i].rand, SMP_OOB_RANDOM_VAL_SIZE);
+
+                        SMP_TRC(
+                        "[SMP] Fetching LESC Remote OOB Random Value\n");
+                        SMP_debug_dump_bytes(r_rand, SMP_OOB_RANDOM_VAL_SIZE);
                     }
 
                     retval = API_SUCCESS;
@@ -638,6 +765,9 @@ API_RESULT smp_get_lesc_oob_pl
             }
         }
     }
+
+    SMP_TRC(
+    "[SMP] << smp_get_lesc_oob_pl\n");
 
     return retval; /* API_FAILURE; */
 }
@@ -851,7 +981,7 @@ API_RESULT smp_gen_public_key_pl (void)
 
     SMP_debug_dump_bytes(smp_ecdh_pub_key_pl,sizeof(smp_ecdh_pub_key_pl));
 
-    /* Enqueue the Generated Public Key to the Write Tasak */
+    /* Enqueue the Generated Public Key to the Write Task */
 #ifdef SMP_HAVE_TBX_CMD_WT_BH
     return smp_enqueue_cmd_op_to_wt
            (
@@ -898,7 +1028,7 @@ API_RESULT smp_gen_dh_key_pl (UCHAR * r_pub_key)
 
     SMP_debug_dump_bytes(smp_ecdh_dhkey_pl,sizeof(smp_ecdh_dhkey_pl));
 
-    /* Enqueue the Generated ECDH Key to the Write Tasak */
+    /* Enqueue the Generated ECDH Key to the Write Task */
 #ifdef SMP_HAVE_TBX_CMD_WT_BH
     return smp_enqueue_cmd_op_to_wt
            (
@@ -940,7 +1070,7 @@ API_RESULT BT_smp_mark_device_untrusted_pl (/* IN */ SMP_BD_HANDLE * bd_handle)
     if(0U == (SMP_IS_VALID_BD_HANDLE(bd_handle)))
     {
         SMP_ERR(
-        "[SMP] Invalid paramter.\n");
+        "[SMP] Invalid parameter.\n");
 
         /* Return error */
         retval = SMP_INVALID_PARAMETERS; /* return SMP_INVALID_PARAMETERS; */
@@ -1100,7 +1230,7 @@ API_RESULT BT_smp_set_io_cap_pl (/* IN */ UCHAR io_cap)
     API_RESULT retval;
 
     SMP_TRC(
-    "[SMP] Recived Set IO Cap. io_cap = 0x%02X\n",
+    "[SMP] Received Set IO Cap. io_cap = 0x%02X\n",
     io_cap);
 
 #if (SMP_DEFAULT_IO_CAPABILITY != SMP_IO_CAPABILITY_NO_INPUT_NO_OUTPUT)
@@ -1109,7 +1239,7 @@ API_RESULT BT_smp_set_io_cap_pl (/* IN */ UCHAR io_cap)
     if(io_cap > SMP_IO_CAPABILITY_KEYBOARD_DISPLAY)
     {
         SMP_ERR(
-        "[SMP] Invalid paramter.\n");
+        "[SMP] Invalid parameter.\n");
 
         /* Return error */
         retval = SMP_INVALID_PARAMETERS;
@@ -1190,7 +1320,7 @@ API_RESULT BT_smp_set_max_encryption_key_size_pl (/* IN */ UCHAR key_size)
     retval = API_SUCCESS;
 
     SMP_TRC(
-    "[SMP] Recived Set Max Encryption Key size. key_distro = 0x%02X\n",
+    "[SMP] Received Set Max Encryption Key size. key_distro = 0x%02X\n",
     key_size);
 
 #ifndef SMP_NO_PARAM_CHECK
@@ -1198,7 +1328,7 @@ API_RESULT BT_smp_set_max_encryption_key_size_pl (/* IN */ UCHAR key_size)
         (SMP_MAX_ENCRYPTION_KEY_SIZE < key_size))
     {
         SMP_ERR(
-        "[SMP] Invalid paramter.\n");
+        "[SMP] Invalid parameter.\n");
 
         /* Return error */
         retval = SMP_INVALID_PARAMETERS; /* return SMP_INVALID_PARAMETERS; */
@@ -1264,14 +1394,14 @@ API_RESULT BT_smp_set_oob_data_pl
     retval = API_FAILURE;
 
     SMP_TRC(
-    "[SMP] Recived Set OOB data. oob_flag = 0x%02X\n",
+    "[SMP] Received Set OOB data. oob_flag = 0x%02X\n",
     oob_flag);
 
     /* If OOB data available and data pointer is NULL or invalid flag */
     if ((NULL == bd_addr) || ((0x01U == oob_flag) && (NULL == oob)) || (oob_flag > 0x01U))
     {
         SMP_ERR(
-        "[SMP] Invalid paramter.\n");
+        "[SMP] Invalid parameter.\n");
 
         /* Return error */
         retval = SMP_INVALID_PARAMETERS; /*  return SMP_INVALID_PARAMETERS; */
@@ -1379,7 +1509,7 @@ API_RESULT BT_smp_get_oob_data_pl
     if ((NULL == bd_addr) || (NULL == oob))
     {
         SMP_ERR(
-        "[SMP] Invalid paramter.\n");
+        "[SMP] Invalid parameter.\n");
 
         /* Return error */
         retval = SMP_INVALID_PARAMETERS; /* return SMP_INVALID_PARAMETERS; */
@@ -1599,10 +1729,10 @@ API_RESULT smp_purge_device_list_pl (UCHAR *free_index)
 
 
 /**
- * \brief To update the platform specific device attrbute.
+ * \brief To update the platform specific device attribute.
  *
  * \par Description:
- *      This is internal platform API to update/delte platform specific device.
+ *      This is internal platform API to update/delete platform specific device.
  *      This API is called whenever there connection/reconnection or
  *      pairing/authentication or disconnection.
  *
@@ -1611,7 +1741,7 @@ API_RESULT smp_purge_device_list_pl (UCHAR *free_index)
  *               device attribute.
  *        - \ref SMP_DEVICE_ATTR_PL_CONNECTION_COMPLETE To indicate connection
  *               is been establish to remote device and needs update platform
- *               specifci attribute.
+ *               specific attribute.
  *        - \ref SMP_DEVICE_ATTR_PL_AUTHENTICATION_COMPLETE To indicate
  *               successful authentication of a Link.
  *
@@ -1938,12 +2068,18 @@ API_RESULT BT_smp_generate_ediv_pl (void)
         /* Set state */
         key_gen_state = KEY_STATE_IN_EDIV_GEN;
 
+        /* Lock SMP */
+        smp_lock();
+
         /* Generate the RAND */
 #ifdef SMP_HAVE_TBX_PL_RAND
         smp_tbx_generate_rand(rnd_pl, SMP_RAND_64B_SIZE);
 #else /* SMP_HAVE_TBX_PL_RAND */
-        smp_tbx_generate_rand();
+        smp_tbx_generate_rand(SMP_RAND_64B_SIZE);
 #endif /* SMP_HAVE_TBX_PL_RAND */
+
+        /* Unlock SMP */
+        smp_unlock();
     }
 
     return retval;
@@ -2318,35 +2454,57 @@ API_RESULT BT_smp_generate_lesc_oob_local_data_pl
     /* Initialize the state of smp_lesc_oob_data */
     SMP_LESC_OOB_SET_STATE(&smp_lesc_oob_data,SMP_OOB_STATE_RAND_GEN);
 
+    /* Lock SMP */
+    smp_lock();
+
     /* Call Random Number Generation here */
-    (BT_IGNORE_RETURN_VALUE) smp_tbx_generate_rand();
+#ifdef SMP_HAVE_TBX_PL_RAND
+    smp_tbx_generate_rand(smp_lesc_oob_data.rand, SMP_OOB_RANDOM_VAL_SIZE);
+#else /* SMP_HAVE_TBX_PL_RAND */
+    (BT_IGNORE_RETURN_VALUE) smp_tbx_generate_rand(SMP_OOB_RANDOM_VAL_SIZE);
+#endif /* SMP_HAVE_TBX_PL_RAND */
+
+    /* Unlock SMP */
+    smp_unlock();
 
     return API_SUCCESS;
 }
 
-void smp_lesc_oob_handle_cmd_complete(UCHAR * data, UINT16 datalen)
+void smp_lesc_oob_handle_cmd_complete(UCHAR state, UCHAR * data, UINT16 datalen)
 {
+    /* Validate the caller state is expected in the expected state */
+    if (smp_lesc_oob_data.state != state)
+    {
+        SMP_INF("[SMP_PL] Spurious CommandComplete for OOB\n");
+        return;
+    }
+    
     /* Check the state of the LESC OOB data structure */
     switch(smp_lesc_oob_data.state)
     {
         case SMP_OOB_STATE_RAND_GEN:
-            /* Populate the data strucutre with the Random Number */
-            /* Received Random number is  8 bytes from controller */
-            BT_mem_set(smp_lesc_oob_data.rand,0x00,SMP_OOB_RANDOM_VAL_SIZE);
+            /* Populate the data structure with the Random Number */
+            BT_mem_set(smp_lesc_oob_data.rand, 0x00, SMP_OOB_RANDOM_VAL_SIZE);
 
 #ifndef SMP_LESC_CONST_OOB_VAL_SUPPORT
-
-            BT_mem_copy(smp_lesc_oob_data.rand, data, ((datalen > SMP_OOB_RANDOM_VAL_SIZE) ? SMP_OOB_RANDOM_VAL_SIZE : datalen));
-#else
-            /*
-             *  NOTE: If SMP_LESC_CONST_OOB_VAL_SUPPORT make the random
-             *        number as all zeros.
-             */
+            if (SMP_OOB_RANDOM_VAL_SIZE == datalen)
+            {
+                /*
+                 *  NOTE: If SMP_LESC_CONST_OOB_VAL_SUPPORT make the random
+                 *        number as all zeros.
+                 */
+                BT_mem_copy(smp_lesc_oob_data.rand, data, datalen);
+            }
+            else
+            {
+                SMP_ERR("[SMP_PL] SMP_OOB_RANDOM_VAL_SIZE != datalen\n");
+            }
+#else /* SMP_LESC_CONST_OOB_VAL_SUPPORT */
             BT_IGNORE_UNUSED_PARAM(datalen);
 #endif /* SMP_LESC_CONST_OOB_VAL_SUPPORT */
 
             /* Change State to Public key generation */
-            SMP_LESC_OOB_SET_STATE(&smp_lesc_oob_data,SMP_OOB_STATE_PUB_KEY_GEN);
+            SMP_LESC_OOB_SET_STATE(&smp_lesc_oob_data, SMP_OOB_STATE_PUB_KEY_GEN);
 
             /* Invoke Public Key Generation */
             (BT_IGNORE_RETURN_VALUE) smp_tbx_read_l_p256_pub_key();
@@ -2428,7 +2586,7 @@ void smp_lesc_oob_cnf_val_gen_complete(void)
         smp_lesc_oob_gen_handler(&smp_lesc_oob_data);
 
         /* Change state to IDLE */
-        SMP_LESC_OOB_SET_STATE(&smp_lesc_oob_data,SMP_OOB_STATE_IDLE);
+        SMP_LESC_OOB_SET_STATE(&smp_lesc_oob_data, SMP_OOB_STATE_IDLE);
     }
 }
 #endif /* SMP_HAVE_OOB_SUPPORT */
@@ -2477,7 +2635,7 @@ API_RESULT BT_smp_get_lk_ltk_pl
             {
                 SMP_TRC("[SMP] LTK to LK, CT2 = 0\n");
 
-                /* Populate the global Cross Transport Key Gen Data struct */
+                /* Populate the global Cross Transport Key Gen Data structure */
                 BT_mem_copy(smp_lesc_txp_keys.ltk, key, SMP_LTK_SIZE);
 
                 enc_key = smp_lesc_txp_keys.ltk;
@@ -2497,7 +2655,7 @@ API_RESULT BT_smp_get_lk_ltk_pl
             {
                 SMP_TRC("[SMP] LTK to LK, CT2 = 1\n");
 
-                /* Populate the global Cross Transport Key Gen Data struct */
+                /* Populate the global Cross Transport Key Gen Data structure */
                 BT_mem_copy(smp_lesc_txp_keys.ltk, key, SMP_LTK_SIZE);
 
                 enc_key = (UCHAR *)smp_lesc_lk_salt;
@@ -2520,7 +2678,7 @@ API_RESULT BT_smp_get_lk_ltk_pl
             {
                 SMP_TRC("[SMP] LK to LTK, CT2 = 0\n");
 
-                /* Populate the global Cross Transport Key Gen Data struct */
+                /* Populate the global Cross Transport Key Gen Data structure */
                 BT_mem_copy(smp_lesc_txp_keys.lk, key, SMP_LK_SIZE);
 
                 enc_key = smp_lesc_txp_keys.lk;
@@ -2540,7 +2698,7 @@ API_RESULT BT_smp_get_lk_ltk_pl
             {
                 SMP_TRC("[SMP] LTK to LK, CT2 = 1\n");
 
-                /* Populate the global Cross Transport Key Gen Data struct */
+                /* Populate the global Cross Transport Key Gen Data structure */
                 BT_mem_copy(smp_lesc_txp_keys.lk, key, SMP_LTK_SIZE);
 
                 enc_key = (UCHAR *)smp_lesc_ltk_salt;
@@ -2769,7 +2927,7 @@ API_RESULT BT_smp_set_passkey_revamp_mode_pl (/* IN */ UCHAR mode)
  * NOTE: Currently, the stack truncates the Random Number generated to 2 Octets,
  *       because, 3 byte random numbers have the possibility of realizing a
  *       decimal number more than 999999, which is incorrect. According to the
- *       specificaion, 6 digit numeric passkeys shall only be used.
+ *       specification, 6 digit numeric passkeys shall only be used.
  */
 API_RESULT smp_revamp_passkey_pl
            (
@@ -2816,7 +2974,7 @@ API_RESULT smp_revamp_passkey_pl
             "0x%02X [in HEX], %u [in Decimal]\n",
             t_pkey_val, t_pkey_val);
 
-            /* Erase the exisiting data */
+            /* Erase the existing data */
             BT_mem_set
             (
                 p_key_ptr,
@@ -2833,7 +2991,7 @@ API_RESULT smp_revamp_passkey_pl
              * to increase the generated passkey entropy
              * 1. Modulus of the resultant passkey with 1000000
              * 2. Take the value to the nearly 2^19 bits.
-             * 3. Anyother platform related logic can be added.
+             * 3. Any other platform related logic can be added.
              */
 
             SMP_TRC (

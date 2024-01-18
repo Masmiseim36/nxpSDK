@@ -44,7 +44,7 @@
 <h3>Legal Characters and Case Sensitivity</h3>
 <p>In the generic FAT filesystems, the legal characters for object name (file/directory name) are, <tt>0-9 A-Z ! # $ % &amp; ' ( ) - @ ^ _ ` { } ~</tt> in ASCII and extended characters <tt>\x80</tt> to <tt>\xFF</tt>. In the FAT filesystems with LFN extention, also <tt>+ , ; = [ ]</tt>, white space and extended characters <tt>U+000080</tt> to <tt>U+10FFFF</tt> are legal for the object name. White spaces and dots can be placed anywhere in the path name except end of the name. Trailing white spaces and dots are ignored.</p>
 <p>FAT filesystem is case-insensitive to the object names on the volume. Object name on the FAT volume is compared in case-insensitive. For instance, these three names, <tt>file.txt</tt>, <tt>File.Txt</tt> and <tt>FILE.TXT</tt>, are identical on the FAT filesystem. This is applied to extended charactres as well. When an object is created on the FAT volume, up converted name is recorded to the SFN entry, and the raw name is recorded to the LFN entry when LFN extension is exist.</p>
-<p>As for the MS-DOS and PC DOS for CJK (DOS/DBCS), extended characters ware recorded to the SFN entry without up-case conversion and compared in case-sensitive. This causes a problem on compatibility with Windows system when the object with extended characters is created on the volume by DOS/DBCS system; therfore the object names with DBCS extended characters should not be used on the FAT volume shared by those systems. FatFs works with case-sensitive to the extended characters in only non-LFN with DBCS configuration (DOS/DBCS specs). But in LFN configuration, FatFs works with case-insensitive to the extended character (WindowsNT specs).</p>
+<p>As for the MS-DOS and PC DOS for CJK (DOS/DBCS), extended characters ware recorded to the SFN entry without up-case conversion and compared in case-sensitive. This causes a problem on compatibility with Windows system when the object with extended characters is created on the volume by DOS/DBCS system; therfore the object names with DBCS extended characters should not be used on the FAT volume shared by those systems. FatFs works with case-sensitive to the extended characters in only non-LFN with DBCS configuration (DOS/DBCS specs). However, FatFs works with case-insensitive to the extended character (WindowsNT specs) in LFN configuration.</p>
 </div>
 
 <div class="para doc" id="uni">
@@ -61,7 +61,7 @@
 
 <div class="para doc" id="vol">
 <h3>Volume Management</h3>
-<p>By default, each logical drive is associated with the physical drive in same drive number. An FAT volume on the physical drive is serched in the volume mount process. It reads boot sectors and checks it if it is an FAT boot sector in order of LBA 0 as SFD format, 1st partition, 2nd partition, 3rd partition, ..., as MBR or GPT format.</p>
+<p>By default, each logical drive is associated with the physical drive in same drive number. An FAT volume on the physical drive is serched in the volume mount process. It reads boot sectors and checks it if it is an FAT VBR in order of LBA 0 as SFD format, 1st partition, 2nd partition, 3rd partition, ..., as MBR or GPT format.</p>
 <p>When multiple partition feature is enabled, <tt><a href="config.html#multi_partition">FF_MULTI_PARTITION = 1</a></tt>, each individual logical drive is associated with arbitrary partition or physical drive specified by volume management table, <tt>VolToPart[]</tt>. The table needs to be defined by user to resolve mappings of the logical drive numbers and the associated partitions or drives. Following code is an example of the volume management table.</p>
 <pre>
 Example: "0:", "1:" and "2:" are associated with three partitions on the physical drive 0 (a non-removable drive)
@@ -73,8 +73,10 @@ PARTITION VolToPart[FF_VOLUMES] = {
     {0, 3},     <span class="c">/* "2:" ==> 3rd partition on the pd#0 */</span>
     {1, 0}      <span class="c">/* "3:" ==> pd#1 as removable drive (auto-search) */</span>
 };
+
+
+<img src="../res/f7.png" width="900" height="288" alt="relationship between logical drive and physical drive">
 </pre>
-<div><img src="../res/f7.png" width="900" height="288" alt="relationship between logical drive and physical drive"></div>
 <p>There are some considerations when enable the multi-partition configuration.</p>
 <ul>
 <li>The physical drive that hosts two or more mounted partitions should be non-removable, or all volumes on the drive must be unmounted when remove the medium.</li>

@@ -24,19 +24,8 @@ extern "C" {
 
 #define mbedtls_sha256_context hashcrypt_hash_ctx_t
 
-/* CSS */
-#elif defined(MBEDTLS_MCUX_CSS_SHA256) && MBEDTLS_MCUX_CSS_SHA256
-
-#include <mcuxClHash.h>
-
-typedef struct mbedtls_sha256_context
-{
-    mcuxClHash_Context_t context;
-}
-mbedtls_sha256_context;
-
 /* ELS */
-#elif defined(MBEDTLS_MCUX_ELS_SHA256) && MBEDTLS_MCUX_ELS_SHA256  
+#elif defined(MBEDTLS_MCUX_ELS_SHA256) && MBEDTLS_MCUX_ELS_SHA256
 
 #include <mcuxClHash.h>
 typedef struct mbedtls_sha256_context

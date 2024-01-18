@@ -1,6 +1,6 @@
 /*! *********************************************************************************
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2018, 2022 NXP
+ * Copyright 2016-2018, 2022-2023 NXP
  * All rights reserved.
  *
  * \file
@@ -24,9 +24,13 @@
 #include "fsl_adapter_flash.h"
 #include "fsl_adapter_reset.h"
 #include "ModuleInfo.h"
+#include "fwk_config.h"
+#include "fwk_platform.h"
+
 #if defined(gFSCI_MemAllocTest_Enabled_d) && (gFSCI_MemAllocTest_Enabled_d)
 #include "fwk_timer_manager.h"
 #endif
+
 #if defined(KW45B41Z83_SERIES) || defined(KW45B41Z83_SERIES)
 #include "fwk_platform_ics.h"
 #endif
@@ -42,8 +46,6 @@
 #include "PWR_BlackBox_Interface.h"
 #endif
 
-#include "fsl_device_registers.h"
-
 #if (defined(gBeeStackIncluded_d) && gBeeStackIncluded_d == 1)
 #include "ZigbeeTask.h"
 #endif
@@ -52,9 +54,9 @@
 //#include "erpc_host.h"
 #endif
 
-#include "fwk_platform.h"
-
-#include "fwk_config.h"
+#if defined gPlatResetMethod_c
+#include "fwk_platform_reset.h"
+#endif
 
 #if gFsciIncluded_c
 /************************************************************************************
@@ -621,9 +623,15 @@ bool_t FSCI_MsgResetCPUReqFunc(clientPacket_t *pData, uint32_t fsciInterface)
 #endif
 
 #if gFSCI_ResetCpu_c
+#if defined gPlatResetMethod_c
+    /* Force use of alternate reset method */
+    PLATFORM_ResetCpu();
+#else
+    /* not defined same as if defined as gUseResetByNvicReset */
     OSA_DisableIRQGlobal();
     PLATFORM_Delay(500U);
     HAL_ResetMCU();
+#endif
 #endif
 
     (void)MEM_BufferFree(pData);
@@ -701,24 +709,67 @@ bool_t FSCI_MsgWriteExtendedAdrReqFunc(clientPacket_t *pData, uint32_t fsciInter
  * \param[in] pData pointer to location of the received data
  * \param[in] fsciInterface the interface on which the packet was received
  *
- * \return  TRUE in order to recycle the received message
+ * \return  TRUE if response fits in the buffer, FALSE otherwise, handled internally
  *
  * \remarks Remarks: this function is legacy
  *
  ********************************************************************************** */
 bool_t FSCI_MsgReadExtendedAdrReqFunc(clientPacket_t *pData, uint32_t fsciInterface)
 {
-#if gFSCI_IncludeMacCommands_c && !gFsciHost_802_15_4_c
-    Mac_GetExtendedAddress(&pData->structured.payload[sizeof(clientPacketStatus_t)],
-                           fsciGetMacInstanceId(fsciInterface));
+    clientPacket_t *pPkt;
+    bool_t          status;
+    /* Packet hdr, status and CRC */
+    uint16_t size = sizeof(clientPacketHdr_t) + sizeof(clientPacketStatus_t) + gFsci_TailBytes_c;
 
-    pData->structured.payload[0] = gFsciSuccess_c;
-    pData->structured.header.len = sizeof(clientPacketStatus_t) + sizeof(uint64_t);
-#else
-    pData->structured.payload[0] = (uint8_t)gFsciRequestIsDisabled_c;
-    pData->structured.header.len = sizeof(clientPacketStatus_t);
+#if gFSCI_IncludeMacCommands_c && !gFsciHost_802_15_4_c
+    /* Ext addr is 8 bytes */
+    size += sizeof(uint64_t);
 #endif
-    return TRUE;
+
+    if (MEM_BufferGetSize(pData) >= size)
+    {
+        pPkt = pData;
+    }
+    else
+    {
+        /* Need to allocate another buffer, as the current one is not large enough */
+        pPkt = MEM_BufferAlloc(size);
+    }
+
+    if (NULL == pPkt)
+    {
+        MEM_BufferFree(pData);
+        FSCI_Error(gFsciOutOfMessages_c, fsciInterface);
+        status = FALSE;
+    }
+    else
+    {
+#if gFSCI_IncludeMacCommands_c && !gFsciHost_802_15_4_c
+        Mac_GetExtendedAddress(&pPkt->structured.payload[sizeof(clientPacketStatus_t)],
+                               fsciGetMacInstanceId(fsciInterface));
+
+        pPkt->structured.payload[0] = gFsciSuccess_c;
+        pPkt->structured.header.len = sizeof(clientPacketStatus_t) + sizeof(uint64_t);
+#else
+        pPkt->structured.payload[0] = (uint8_t)gFsciRequestIsDisabled_c;
+        pPkt->structured.header.len = sizeof(clientPacketStatus_t);
+#endif
+
+        if (pPkt != pData)
+        {
+            MEM_BufferFree(pData);
+            pPkt->structured.header.opGroup = gFSCI_CnfOpcodeGroup_c;
+            pPkt->structured.header.opCode  = mFsciMsgReadExtendedAdrReq_c;
+            FSCI_transmitFormatedPacket(pPkt, fsciInterface);
+            status = FALSE;
+        }
+        else
+        {
+            status = TRUE;
+        }
+    }
+
+    return status;
 }
 
 /*! *********************************************************************************
@@ -1310,7 +1361,7 @@ bool_t FSCI_OtaSupportHandlerFunc(clientPacket_t *pData, uint32_t fsciInterface)
 bool_t FSCI_EnableBootloaderFunc(clientPacket_t *pData, uint32_t fsciInterface)
 {
 #if !(defined(K32W232H_SERIES) || defined(KW45B41Z83_SERIES) || defined(K32W1480_SERIES) || \
-      defined(KW45B41Z83_SERIES) || defined(MCXW345_SERIES))
+      defined(KW45B41Z83_SERIES) || defined(MCXW345_SERIES) || defined(NHS52S04_SERIES))
 #ifdef USE_MSD_BOOTLOADER
     (void)NV_FlashEraseSector(0xBFF8, FSL_FEATURE_FLASH_PFLASH_BLOCK_SECTOR_SIZE);
 #else

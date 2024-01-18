@@ -9,7 +9,7 @@
 #ifndef IEEE802_1X_KAY_H
 #define IEEE802_1X_KAY_H
 
-#include "utils/wlist.h"
+#include "utils/dl_list.h"
 #include "common/defs.h"
 #include "common/ieee802_1x_defs.h"
 

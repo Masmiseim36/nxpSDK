@@ -27,6 +27,7 @@
 uint32_t dhcp_address_timeout = DEFAULT_DHCP_ADDRESS_TIMEOUT;
 static os_mutex_t dhcpd_mutex;
 static int ctrl = -1;
+
 #define CTRL_PORT 12679
 static char ctrl_msg[16];
 
@@ -142,6 +143,9 @@ int dhcp_server_lease_timeout(uint32_t val)
  */
 static unsigned int next_yiaddr(void)
 {
+#ifdef CONFIG_DHCP_SERVER_DEBUG
+    struct in_addr ip;
+#endif
     uint32_t new_ip;
     struct bootp_header *hdr = (struct bootp_header *)(void *)dhcps.msg;
 
@@ -166,6 +170,11 @@ static unsigned int next_yiaddr(void)
         }
     }
 
+#ifdef CONFIG_DHCP_SERVER_DEBUG
+    ip.s_addr = new_ip;
+    dhcp_d("New client IP will be %s", inet_ntoa(ip));
+    ip.s_addr = dhcps.my_ip & dhcps.netmask;
+#endif
 
     return new_ip;
 }
@@ -430,6 +439,7 @@ static void dhcp_clean_sockets(void)
 {
     int ret;
 
+
     if (ctrl != -1)
     {
         ret = net_close(ctrl);
@@ -439,6 +449,7 @@ static void dhcp_clean_sockets(void)
         }
         ctrl = -1;
     }
+
     if (dhcps.sock != -1)
     {
         ret = net_close(dhcps.sock);
@@ -450,17 +461,19 @@ static void dhcp_clean_sockets(void)
     }
 }
 
+
 void dhcp_server(os_thread_arg_t data)
 {
     int ret;
-    static int one = 1;
     struct sockaddr_in caddr;
+    static int one = 1;
     struct sockaddr_in ctrl_listen;
     int addr_len = 0;
     int max_sock;
     int len;
     socklen_t flen = sizeof(caddr);
     fd_set rfds;
+
 
     (void)memset(&ctrl_listen, 0, sizeof(struct sockaddr_in));
 
@@ -489,7 +502,7 @@ void dhcp_server(os_thread_arg_t data)
     ret                         = net_bind(ctrl, (struct sockaddr *)(void *)&ctrl_listen, addr_len);
     if (ret < 0)
     {
-        dhcp_e("Failed to bind control socket", ctrl);
+        dhcp_e("Failed to bind control socket: %d ret %d", ctrl, ret);
         dhcp_clean_sockets();
         dns_free_allocations();
         os_thread_self_complete(NULL);
@@ -511,7 +524,7 @@ void dhcp_server(os_thread_arg_t data)
         /* Error in select? */
         if (ret < 0)
         {
-            dhcp_e("select failed", -1);
+            dhcp_e("select failed: %d", ret);
             goto done;
         }
 
@@ -524,7 +537,8 @@ void dhcp_server(os_thread_arg_t data)
                 dhcp_e(
                     "Failed to get control"
                     " message: %d\r\n",
-                    ctrl);
+                    ctrl
+                    );
             }
             else
             {
@@ -665,7 +679,8 @@ out:
 
 static int send_ctrl_msg(const char *msg)
 {
-    int ret, ctrl_tmp;
+    int ret;
+    int ctrl_tmp;
     struct sockaddr_in to_addr;
 
     /*

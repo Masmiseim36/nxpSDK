@@ -214,6 +214,21 @@ VOID conv2d_std_init_cir_buf(
     VOID **pp_inp,
     xa_nn_conv_state_t *p_state);
 
+VOID conv2d_std_update_cir_buf_slow(
+    WORD32 input_channels,
+    WORD32 input_channels_pad,
+    WORD32 input_bytewidth,
+    WORD32 input_width,
+    WORD32 input_height,
+    WORD32 y_padding,
+    WORD32 y_b_pad,
+    WORD32 x_padding,
+    WORD32 kernel_width,
+    WORD32 x_stride,
+    VOID **pp_inp,
+    WORD32 idx_beg_inp_width_pad,
+    xa_nn_conv_state_t *p_state);
+
 VOID conv2d_std_update_cir_buf(
     WORD32 input_channels,
     WORD32 input_channels_pad,

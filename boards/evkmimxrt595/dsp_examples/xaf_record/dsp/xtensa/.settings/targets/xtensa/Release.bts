@@ -37,13 +37,13 @@
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/vit_pre_proc</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/voice_seeker</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/test_inp</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/utilities</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/utilities/shell</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/voice_seeker/RT595_FusionF1/include</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/naturedsp/fusionf1/include</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/nn/nnlib/inc</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/voice_seeker/rdsp_utilities_public/include</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/voice_seeker/rdsp_utilities_public/rdsp_memory_utils_public</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/voice_seeker/RT595_FusionF1/rdsp_utilities_public/include</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/voice_seeker/RT595_FusionF1/rdsp_utilities_public/rdsp_memory_utils_public</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../CMSIS/Core/Include</ListEntry>
             </value>
           </StringListMapEntry>
@@ -63,8 +63,7 @@
               <ListEntry key="XA_RENDERER" value="1"/>
               <ListEntry key="XA_CAPTURER" value="1"/>
               <ListEntry key="XA_DISABLE_EVENT" value="1"/>
-              <ListEntry key="DEVICE_ID" value="VIT_IMXRT500"/>
-              <ListEntry key="__RENAMING__" value=""/>
+              <ListEntry key="VIT_DEVICE_ID" value="VIT_IMXRT500"/>
               <ListEntry key="HAVE_XOS" value=""/>
               <ListEntry key="HIFI_ONLY_XAF" value=""/>
               <ListEntry key="FIO_LOCAL_FS" value=""/>
@@ -73,6 +72,7 @@
               <ListEntry key="SERIAL_PORT_TYPE_UART" value="1"/>
               <ListEntry key="FSL_RTOS_XOS" value="1"/>
               <ListEntry key="DEBUG_CONSOLE_RX_ENABLE" value="0"/>
+              <ListEntry key="FUSIONDSP" value="1"/>
               <ListEntry key="NNLIB_V2" value=""/>
             </value>
           </KeyValueListMapEntry>
@@ -140,8 +140,9 @@
           <StringListMapEntry>
             <key>LinkerAdditionalOptions</key>
             <value inheritance="append">
-              <ListEntry>-Wl,--start-group&#13;
-${xt_project_loc}/../../../../../../middleware/vit/FusionF1/Lib/libVIT_Fusion_F1_v04_08_01.a&#13;
+              <ListEntry>-Wl,--orphan-handling=place&#13;
+-Wl,--start-group&#13;
+${xt_project_loc}/../../../../../../middleware/vit/FusionF1/Lib/libVIT_Fusion_F1_v04_09_00.a&#13;
 ${xt_project_loc}/../../../../../../middleware/voice_seeker/RT595_FusionF1/lib/libvoiceseeker_no_aec.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/naturedsp/fusionf1/libnaturedsp.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/nn/nnlib/lib/fusionf1/libxa_nnlib.a&#13;

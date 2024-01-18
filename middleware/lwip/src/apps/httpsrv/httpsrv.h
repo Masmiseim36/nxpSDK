@@ -247,7 +247,7 @@ typedef struct httpsrv_param_struct
     const HTTPSRV_SSI_LINK_STRUCT *ssi_lnk_tbl;  /* function callback table (dynamic web pages). It is optional. */
     const HTTPSRV_AUTH_REALM_STRUCT *auth_table; /* Table of authentication realms. It is optional. */
 #if HTTPSRV_CFG_WEBSOCKET_ENABLED
-    const WS_PLUGIN_STRUCT *ws_tbl; /* Table of WS plugins. It is optional. */
+    const WS_PLUGIN_STRUCT *ws_tbl;              /* Table of WS plugins. It is optional. */
 #endif
 #if HTTPSRV_CFG_WOLFSSL_ENABLE || HTTPSRV_CFG_MBEDTLS_ENABLE
     const HTTPSRV_TLS_PARAM_STRUCT *tls_param; /* TLS parameters. It is optional. */

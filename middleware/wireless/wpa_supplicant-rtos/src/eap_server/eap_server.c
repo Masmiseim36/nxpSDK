@@ -14,7 +14,7 @@
 
 #include "includes.h"
 
-#include "common.h"
+#include "utils/common.h"
 #include "crypto/sha256.h"
 #include "eap_i.h"
 #include "state_machine.h"

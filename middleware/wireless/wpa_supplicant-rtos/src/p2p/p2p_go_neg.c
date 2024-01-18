@@ -9,7 +9,7 @@
 #include "includes.h"
 
 #ifdef CONFIG_P2P
-#include "common.h"
+#include "utils/common.h"
 #include "utils/eloop.h"
 #include "common/ieee802_11_defs.h"
 #include "common/wpa_ctrl.h"

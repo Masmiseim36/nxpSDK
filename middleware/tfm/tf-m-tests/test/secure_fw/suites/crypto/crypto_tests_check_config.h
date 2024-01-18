@@ -12,7 +12,7 @@
 #include MBEDTLS_PSA_CRYPTO_CONFIG_FILE
 
 #if defined(TFM_CRYPTO_TEST_ALG_CBC) && \
-    (!defined(PSA_WANT_ALG_CBC_NO_PADDING) || !defined(PSA_WANT_ALG_CBC_PKCS7))
+    (!defined(PSA_WANT_ALG_CBC_NO_PADDING) && !defined(PSA_WANT_ALG_CBC_PKCS7))
 #error "TFM_CRYPTO_TEST_ALG_CBC enabled, but CBC mode is not defined!"
 #endif
 
@@ -38,6 +38,10 @@
 
 #if defined(TFM_CRYPTO_TEST_ALG_GCM) && !defined(PSA_WANT_ALG_GCM)
 #error "TFM_CRYPTO_TEST_ALG_GCM enabled, but GCM mode is not defined!"
+#endif
+
+#if defined(TFM_CRYPTO_TEST_ALG_SHA_224) && !defined(PSA_WANT_ALG_SHA_224)
+#error "TFM_CRYPTO_TEST_ALG_SHA_224 enabled, but SHA-224 algorithm is not defined!"
 #endif
 
 #if defined(TFM_CRYPTO_TEST_ALG_SHA_384) && !defined(PSA_WANT_ALG_SHA_384)
@@ -68,6 +72,11 @@
 #if defined(TFM_CRYPTO_TEST_ALG_RSASSA_PSS_VERIFICATION) && \
     !defined(PSA_WANT_ALG_RSA_PSS)
 #error "TFM_CRYPTO_TEST_ALG_RSASSA_PSS_VERIFICATION enabled, but RSA-PSS algorithm is not defined!"
+#endif
+
+#if defined(PSA_WANT_ALG_SHA_1)
+#undef TFM_CRYPTO_TEST_UNSUPPORTED_ALG
+#warning "SHA_1 algorithm is defined, disable TFM_CRYPTO_TEST_UNSUPPORTED_ALG!"
 #endif
 
 #endif /* MBEDTLS_PSA_CRYPTO_CONFIG_FILE */

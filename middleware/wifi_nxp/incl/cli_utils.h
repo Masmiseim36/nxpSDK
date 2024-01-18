@@ -8,8 +8,10 @@
  *
  */
 
-#ifndef __MTF_UTILS_H__
-#define __MTF_UTILS_H__
+#ifndef __CLI_UTILS_H__
+#define __CLI_UTILS_H__
+
+#include <stdbool.h>
 
 bool string_equal(const char *s1, const char *s2);
 bool get_uint(const char *arg, unsigned int *dest, unsigned int len);

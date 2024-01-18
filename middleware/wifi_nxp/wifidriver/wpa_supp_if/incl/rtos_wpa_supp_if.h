@@ -89,6 +89,9 @@ int wifi_nxp_wpa_supp_set_key(void *if_priv,
                               size_t key_len,
                               enum key_flag key_flag);
 
+int wifi_nxp_wpa_supp_set_rekey_info(
+    void *if_priv, const u8 *kek, size_t kek_len, const u8 *kck, size_t kck_len, const u8 *replay_ctr);
+
 int wifi_nxp_wpa_supp_remain_on_channel(void *if_priv, unsigned int freq, unsigned int duration);
 
 int wifi_nxp_wpa_supp_cancel_remain_on_channel(void *if_priv);
@@ -101,7 +104,7 @@ void wifi_nxp_wpa_supp_event_proc_scan_start(void *if_priv);
 
 void wifi_nxp_wpa_supp_event_proc_scan_abort(void *if_priv);
 
-void wifi_nxp_wpa_supp_event_proc_scan_done(void *if_priv, int aborted);
+void wifi_nxp_wpa_supp_event_proc_scan_done(void *if_priv, int aborted, int external_scan);
 
 void wifi_nxp_wpa_supp_event_proc_scan_res(void *if_priv,
                                            nxp_wifi_event_new_scan_result_t *scan_res,
@@ -139,6 +142,8 @@ void wifi_nxp_wpa_supp_event_proc_eapol_rx(void *if_priv,
                                            unsigned int event_len);
 void wifi_nxp_wpa_supp_event_mgmt_tx_status(void *if_priv, nxp_wifi_event_mlme_t *mlme_event, unsigned int event_len);
 
+void wifi_nxp_wpa_supp_event_proc_ecsa_complete(void *if_priv, nxp_wifi_ch_switch_info *ch_switch_info);
+
 void *wifi_nxp_hostapd_dev_init(void *hapd_drv_if_ctx,
                                 const char *iface_name,
                                 rtos_hostapd_dev_callbk_fns *hostapd_callbk_fns);
@@ -154,5 +159,6 @@ int wifi_nxp_hostapd_set_rts(void *if_priv, int rts_threshold);
 int wifi_nxp_hostapd_set_frag(void *if_priv, int frag_threshold);
 int wifi_nxp_hostapd_stop_ap(void *if_priv);
 int wifi_nxp_hostapd_set_acl(void *if_priv, struct hostapd_acl_params *params);
+int wifi_nxp_wpa_dpp_listen(void *if_priv, bool enable);
 #endif /* CONFIG_WPA_SUPP */
 #endif /*  __rtos_WPA_SUPP_IF_H__ */

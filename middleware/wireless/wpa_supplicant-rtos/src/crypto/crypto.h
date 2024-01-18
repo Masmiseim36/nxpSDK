@@ -21,6 +21,8 @@
 #ifndef CRYPTO_H
 #define CRYPTO_H
 
+#include <utils/common.h>
+
 /**
  * md4_vector - MD4 hash for data vector
  * @num_elem: Number of elements in the data vector
@@ -927,6 +929,15 @@ struct crypto_ecdh;
 struct crypto_ecdh *crypto_ecdh_init(int group);
 
 /**
+ * crypto_ecdh_init_owe - Initialize elliptic curve Diffie–Hellman context
+ * @group: Identifying number for the ECC group (IANA "Group Description"
+ *	attribute registry for RFC 2409)
+ * This function generates an ephemeral key pair.
+ * Returns: Pointer to ECDH context or %NULL on failure
+ */
+struct crypto_ecdh *crypto_ecdh_init_owe(int group);
+
+/**
  * crypto_ecdh_init2 - Initialize elliptic curve Diffie–Hellman context with a
  * given EC key
  * @group: Identifying number for the ECC group (IANA "Group Description"
@@ -946,6 +957,15 @@ struct crypto_ecdh *crypto_ecdh_init2(int group, struct crypto_ec_key *own_key);
 struct wpabuf *crypto_ecdh_get_pubkey(struct crypto_ecdh *ecdh, int inc_y);
 
 /**
+ * crypto_ecdh_get_pubkey_owe - Retrieve public key from ECDH context
+ * @ecdh: ECDH context from crypto_ecdh_init_owe()
+ * @inc_y: Whether public key should include y coordinate (explicit form)
+ * or not (compressed form)
+ * Returns: Binary data f the public key or %NULL on failure
+ */
+struct wpabuf *crypto_ecdh_get_pubkey_owe(struct crypto_ecdh *ecdh, int y);
+
+/**
  * crypto_ecdh_set_peerkey - Compute ECDH secret
  * @ecdh: ECDH context from crypto_ecdh_init() or crypto_ecdh_init2()
  * @inc_y: Whether peer's public key includes y coordinate (explicit form)
@@ -957,10 +977,27 @@ struct wpabuf *crypto_ecdh_get_pubkey(struct crypto_ecdh *ecdh, int inc_y);
 struct wpabuf *crypto_ecdh_set_peerkey(struct crypto_ecdh *ecdh, int inc_y, const u8 *key, size_t len);
 
 /**
+ * crypto_ecdh_set_peerkey_owe - Compute ECDH secret
+ * @ecdh: ECDH context from crypto_ecdh_init_owe()
+ * @inc_y: Whether peer's public key includes y coordinate (explicit form)
+ * or not (compressed form)
+ * @key: Binary data of the peer's public key
+ * @len: Length of the @key buffer
+ * Returns: Binary data with the EDCH secret
+ */
+struct wpabuf *crypto_ecdh_set_peerkey_owe(struct crypto_ecdh *ecdh, int inc_y, const u8 *key, size_t len);
+
+/**
  * crypto_ecdh_deinit - Free ECDH context
  * @ecdh: ECDH context from crypto_ecdh_init() or crypto_ecdh_init2()
  */
 void crypto_ecdh_deinit(struct crypto_ecdh *ecdh);
+
+/**
+ * crypto_ecdh_deinit_owe - Free ECDH context
+ * @ecdh: ECDH context from crypto_ecdh_init_owe()
+ */
+void crypto_ecdh_deinit_owe(struct crypto_ecdh *ecdh);
 
 /**
  * crypto_ecdh_prime_len - Get length of the prime in octets

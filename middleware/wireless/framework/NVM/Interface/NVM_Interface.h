@@ -66,6 +66,7 @@
  */
 
 #include "EmbeddedTypes.h"
+#include <stdbool.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -82,7 +83,7 @@ extern "C" {
  * Description: enable/disable NV storage module
  */
 #ifndef gNvStorageIncluded_d
-#define gNvStorageIncluded_d 0
+#define gNvStorageIncluded_d 1
 #endif
 
 /*
@@ -94,37 +95,12 @@ extern "C" {
 #endif
 
 /*
- * Name: gNvUseFlexNVM_d
- * Description: Use FlexNVM block as EEPROM backup (if the device supports FLEX-Memory)
- *              If the device has no such a feature, this define will have no effect.
- *              The configuration of the EEPROM and EERAM is done in NV_FlashHAL.h
- * WARNING: When FlexNVM is used, the NVM table must fit within the size of the
- *          FlexRAM R/W window. The calculus is as follow:
- *          Total_size = sum(Element_Size(i) x Elements_Count(i)) +
- *                       (Sizeof_Meta x table entries count) +
- *                       4 extra (guard) bytes.
- *
- *                       where:
- *                           i is the index of a particular table entry (range = 0..N)
- *                           N is the total count of valid table entries
- *                           Sizeof_Meta is the size of a meta information tag (4 bytes)
- *
- *          If Total_size exceeds the FlexRAM size, the initialization function
- *          NvModuleInit(), will return with 'gNVM_NvTableExceedFlexRAMSize_c'
- *          error code and the module initialization is failed.
- *
- */
-#ifndef gNvUseFlexNVM_d
-#define gNvUseFlexNVM_d 0
-#endif
-
-/*
  * Name: gNvFragmentation_Enabled_d
  * Description: enables/disables fragmented saves/restores, i.e. a particular element from a table entry
  *              can be saved / restored.
  */
 #ifndef gNvFragmentation_Enabled_d
-#define gNvFragmentation_Enabled_d 0
+#define gNvFragmentation_Enabled_d 1
 #endif
 
 /*
@@ -135,6 +111,27 @@ extern "C" {
 #define gNvMinimumFreeBytesCountStart_c 128U
 #endif
 
+/*
+ * Name: gNvDualImageSupport
+ * Description: Used to enable/disable dual image support on NVM
+ * Requires also gNvUseExtendedFeatureSet_d
+ * Notes: NOT SUPPORTED as it has not been fully tested
+ */
+#ifndef gNvDualImageSupport
+#define gNvDualImageSupport 0
+#endif
+
+#if gNvDualImageSupport
+#if defined gNvUseExtendedFeatureSet_d
+#if (gNvUseExtendedFeatureSet_d == 0)
+#warning "gNvUseExtendedFeatureSet_d must be set when using gNvDualImageSupport"
+#undef gNvUseExtendedFeatureSet_d
+#define gNvUseExtendedFeatureSet_d 1
+#endif
+#else /* defined gNvUseExtendedFeatureSet_d */
+#define gNvUseExtendedFeatureSet_d 1
+#endif /* defined gNvUseExtendedFeatureSet_d */
+#endif /* gNvDualImageSupport*/
 /*
  * Name: gNvUseExtendedFeatureSet_d
  * Description: enables/disables the extended feature set of the module:
@@ -153,7 +150,7 @@ extern "C" {
  *                without a copy in RAM
  */
 #ifndef gUnmirroredFeatureSet_d
-#define gUnmirroredFeatureSet_d FALSE
+#define gUnmirroredFeatureSet_d TRUE
 #endif
 
 /*
@@ -165,6 +162,38 @@ extern "C" {
 #define gNvTableKeptInRam_d FALSE
 #endif
 
+/*
+ * Name: gNvSalvageFromEccFault_d
+ * Description: set gNvSalvageFromEccFault_d to FALSE, if on ECC fault savaging procedure is required.
+ *              set gNvSalvageFromEccFault_d to TRUE, if ECC faults must be recovered - slower execution
+ */
+#ifndef gNvSalvageFromEccFault_d
+#define gNvSalvageFromEccFault_d FALSE
+#endif
+
+/*
+ * Name: gNvVerifyReadBackAfterProgram_d
+ * Description: set gNvVerifyReadBackAfterProgram_d to TRUE, if verification is enforced after each flash programming
+ * operation. set it to FALSE otherwise. Defaults to TRUE Note that this is required if gNvSalvageFromEccFault_d is set.
+ */
+#ifndef gNvVerifyReadBackAfterProgram_d
+#define gNvVerifyReadBackAfterProgram_d TRUE
+#else
+#if defined gNvSalvageFromEccFault_d && !defined gNvVerifyReadBackAfterProgram_d
+#undef gNvVerifyReadBackAfterProgram_d
+#define gNvVerifyReadBackAfterProgram_d TRUE
+#endif
+#endif
+
+/*
+ * Name: gNvLegacyTable_Disabled_d
+ * Description: set gNvLegacyTable_Disabled_d to FALSE, if need to recover old format data. Now deprecated.
+ *              Keppt for maintenance.
+ *              set gNvLegacyTable_Disabled_d to TRUE by default.
+ */
+#ifndef gNvLegacyTable_Disabled_d
+#define gNvLegacyTable_Disabled_d TRUE
+#endif
 /*
  * Name: gNvTableEntriesCountMax_c
  * Description: the maximum count of table entries that the application is
@@ -182,7 +211,7 @@ extern "C" {
  *              a power of 2
  */
 #ifndef gNvRecordsCopiedBufferSize_c
-#define gNvRecordsCopiedBufferSize_c 64
+#define gNvRecordsCopiedBufferSize_c 64u
 #endif
 
 /*
@@ -191,7 +220,7 @@ extern "C" {
  *              the chosen value needs to be a multiple of 4
  */
 #ifndef gNvCacheBufferSize_c
-#define gNvCacheBufferSize_c 64
+#define gNvCacheBufferSize_c 16u
 #endif
 
 /*
@@ -200,7 +229,7 @@ extern "C" {
  * Notes: See NvSaveOnInterval(). This is used for all data sets.
  */
 #ifndef gNvMinimumTicksBetweenSaves_c
-#define gNvMinimumTicksBetweenSaves_c 4
+#define gNvMinimumTicksBetweenSaves_c 4u
 #endif
 
 /*
@@ -209,7 +238,7 @@ extern "C" {
  * Notes: See NvSaveOnCount(). This is used for all data sets.
  */
 #ifndef gNvCountsBetweenSaves_c
-#define gNvCountsBetweenSaves_c 256
+#define gNvCountsBetweenSaves_c 256u
 #endif
 
 /*
@@ -225,7 +254,7 @@ extern "C" {
  * Description: retry count of the format operation, when it fails
  */
 #ifndef gNvFormatRetryCount_c
-#define gNvFormatRetryCount_c 3
+#define gNvFormatRetryCount_c 3u
 #endif
 
 /*
@@ -233,7 +262,7 @@ extern "C" {
  * Description: pending saves queue size
  */
 #ifndef gNvPendingSavesQueueSize_c
-#define gNvPendingSavesQueueSize_c 32
+#define gNvPendingSavesQueueSize_c 32u
 #endif
 
 /*
@@ -261,15 +290,6 @@ extern "C" {
  */
 #ifndef gNvEnableCriticalSection_c
 #define gNvEnableCriticalSection_c (1)
-#endif
-
-/* constants for FlexNVM  only */
-#ifndef gNvEepromDatasetSizeCode_c
-#define gNvEepromDatasetSizeCode_c 0x3u
-#endif
-
-#ifndef gNvEepromBackupSizeCode_c
-#define gNvEepromBackupSizeCode_c 0x4u
 #endif
 
 /* Save on interval w/ or w/o jitter */
@@ -351,9 +371,9 @@ extern uint32_t __stop_NVM_TABLE[];
     _Pragma("location=\"NVM_TABLE\"") __root const NVM_DataEntry_t SET_DATASET_STRUCT_NAME(dataEntryID) = { \
         pData, elementsCount, elementSize, dataEntryID, dataEntryType}
 #elif (defined(__CC_ARM) || defined(__ARMCC_VERSION))
-#define NVM_RegisterDataSet(pData, elementsCount, elementSize, dataEntryID, dataEntryType) \
-    const NVM_DataEntry_t SET_DATASET_STRUCT_NAME(dataEntryID)                             \
-        __attribute__((section("NVM_TABLE"))) = {pData, elementsCount, elementSize, dataEntryID, dataEntryType}
+#define NVM_RegisterDataSet(pData, elementsCount, elementSize, dataEntryID, dataEntryType)           \
+    const NVM_DataEntry_t SET_DATASET_STRUCT_NAME(dataEntryID) __attribute__((section("NVM_TABLE"))) \
+        __attribute__((used)) = {pData, elementsCount, elementSize, dataEntryID, dataEntryType}
 #elif defined(__GNUC__)
 #define NVM_RegisterDataSet(pData, elementsCount, elementSize, dataEntryID, dataEntryType) \
     extern const NVM_DataEntry_t SET_DATASET_STRUCT_NAME(dataEntryID);                     \
@@ -453,7 +473,7 @@ typedef enum NVM_Status_tag
     gNVM_RestoreFailure_c,           /*!< recovery failure */
     gNVM_FormatFailure_c,            /*!< format operation fails */
     gNVM_RegisterFailure_c,          /*!< invalid id or unmirrored data set */
-    gNVM_AlreadyRegistered,          /*!< id already registered in another entry*/
+    gNVM_AlreadyRegistered_c,        /*!< id already registered in another entry*/
     gNVM_SaveRequestRejected_c,      /*!< request couldn't be queued */
     gNVM_NvTableExceedFlexRAMSize_c, /*!< the table exceed the size of FlexRAM window */
     gNVM_NvWrongFlashDataIFRMap_c,   /*!< invalid data flash IFR map */
@@ -462,15 +482,16 @@ typedef enum NVM_Status_tag
     gNVM_IsMirroredDataSet_c,        /*!< data set is mirrored in RAM */
     gNVM_DefragBufferTooSmall_c,     /*!< buffer too small */
     gNVM_ReservedFlashTooSmall_c,    /*!< Flash buffer is too small */
-    gNVM_FragmentatedEntry_c,        /*!< entry fragmenttated */
-    gNVM_AlignamentError_c,          /*!< alignment error */
+    gNVM_FragmentedEntry_c,          /*!< entry fragmented */
+    gNVM_AlignmentError_c,           /*!< alignment error */
     gNVM_InvalidTableEntriesCount_c, /*!< invalid table entries count */
     gNVM_SaveRequestRecursive_c,     /*!< save request flag to run again */
     gNVM_AtomicSaveRecursive_c,      /*!< atomic save request flag to run again*/
-#if gNvUseFlexNVM_d
-    gNVM_FlashMemoryIsSecured_c,
-    gNVM_FlexNVMPartitioningFail_c
-#endif
+    gNVM_EccFault_c,                 /*!< ECC Fault detect on read */
+    gNVM_EccFaultWritingRecord_c,    /*!< ECC Fault detected on record read back after write */
+    gNVM_EccFaultWritingMeta_c,      /*!< ECC Fault detected on meta info read back after write */
+    gNVM_NbStatusCodes_c             /*< Not an erro code : number of existing */
+
 } NVM_Status_t;
 
 /*!
@@ -495,7 +516,7 @@ typedef struct NVM_Statistics_tag
  * Name: pNVM_DataTable
  * Description: a pointer to the NV data table stored in RAM
  */
-extern NVM_DataEntry_t *const pNVM_DataTable;
+extern NVM_DataEntry_t *pNVM_DataTable;
 
 #endif /* #if gNvStorageIncluded_d */
 
@@ -582,6 +603,14 @@ extern NVM_Status_t NvModuleInit(void);
  ********************************************************************************* */
 /* TODO : merge with __NvModuleInit some common processing */
 extern NVM_Status_t NvModuleReInit(void);
+
+/*! *********************************************************************************
+ * \brief Force clean reset of NVM structures.
+ *
+ * \note  Mostly useful for unit testing.
+ *
+ ********************************************************************************* */
+extern void NvModuleDeInit(void);
 
 /*! *********************************************************************************
  * \brief Move from NVM to Ram
@@ -780,8 +809,10 @@ extern void NvClearCriticalSection(void);
  *          are processed here. It must be called from a low-priority task, such as
  *          Idle task.Called from the idle task (bare-metal) or NVM_Task (MQX,
  *          FreeRTOS) to process the pending saves, erase or copy operations.
+ *
+ * \return Number of operations executed.
  ********************************************************************************* */
-extern void NvIdle(void);
+extern int NvIdle(void);
 
 /*! *********************************************************************************
  * \brief returns the Id of the task which hosts NvIdle function
@@ -939,6 +970,90 @@ extern void NvCompletePendingOperations(void);
 extern NVM_Status_t RecoverNvEntry(uint16_t index, NVM_DataEntry_t *entry);
 #endif
 #endif
+
+/*! *********************************************************************************
+ *  \brief Tell if there is a pending NVM operation in the queue
+ *
+ * \return bool Is there a pending operation in the queue
+ ********************************************************************************* */
+bool NvIsPendingOperation(void);
+
+/*! *********************************************************************************
+ *  \brief Register data entry array.
+ *  Note: used more specifically in the context of Dual Data Set feature when a single
+ *  NVM storage is shared between several applications.
+ *
+ * \param[in] tb_array   if NULL defaults to gNVM_TABLE_startAddr_c value otherwise
+ *                       load tb_array as base of table
+ * \param[in] nb_entries if 0 defaults to gNVM_TABLE_entries_c otherwise use nb_entries
+ *                       form tb_array.
+ ********************************************************************************* */
+void NvSetNvmDataTable(NVM_DataEntry_t *tb_array, uint16_t nb_entries);
+
+uint32_t NV_SweepRangeForEccFaults(uint32_t start_addr, uint32_t end_addr);
+
+/*
+ * Functions below are required in some NVM tests scenarii for setup or debug reasons.
+ * They should not be considered as public APIs to be used outside this context.
+ */
+/*! *********************************************************************************
+ *  \brief Dump NV storage flash contents.
+ *  Note: Requires gNvDebugEnabled_d to be defined. Requires PRINTF.
+ *
+ * \param[in] active_only dump active page only otherwise both pages are dumped.
+ ********************************************************************************* */
+void NV_ShowFlashTable(bool_t active_only);
+
+/*! *********************************************************************************
+ *  \brief Dump NVM meta data.
+ *  Note: Requires gNvDebugEnabled_d to be defined. Requires PRINTF.
+ *
+ ********************************************************************************* */
+void NV_ShowMetas(void);
+
+/*! *********************************************************************************
+ *  \brief Dump NVM RAM table.
+ *  Note: Requires gNvDebugEnabled_d to be defined. Requires PRINTF.
+ *
+ * \param[in] end_id ID of last record to be dumped.
+ ********************************************************************************* */
+void NV_ShowRamTable(uint16_t end_id);
+
+void NV_ShowDataEntry(uint8_t *ptr, uint16_t data_size);
+
+/*! *********************************************************************************
+ *  \brief Getter to retrieve first meta offset. Used in tests or debug.
+ *
+ ********************************************************************************* */
+uint16_t Nv_GetFirstMetaOffset(void);
+
+/*! *********************************************************************************
+ *  \brief Getter to retrieve NVM table size. Used in tests or debug.
+ *  Note: Requires gNvUseExtendedFeatureSet_d to be set.
+ *
+ * \return: NV Table footprint in NVM. Returns 0 if gNvUseExtendedFeatureSet_d is unset.
+ ********************************************************************************* */
+uint32_t NvGetTableSizeInFlash(void);
+
+/*! *********************************************************************************
+ *  \brief Set flash table version. Used in tests or debug.
+ * Note: Requires gNvUseExtendedFeatureSet_d to be defined to perform the action,
+ * otherwise does nothing
+ *
+ * \param[in] version version number to set in flash table.
+ ********************************************************************************* */
+void NvSetFlashTableversion(uint16_t version);
+
+/*! *********************************************************************************
+ *  \brief Lock NVM Mutex from outside NVM module. Testing purposes only.
+ *
+ ********************************************************************************* */
+void NV_MutexLock(void);
+/*! *********************************************************************************
+ *  \brief Unlock NVM Mutex from outside NVM module. Testing purposes only.
+ *
+ ********************************************************************************* */
+void NV_MutexUnlock(void);
 
 /*!
  * @}  end of NVM addtogroup

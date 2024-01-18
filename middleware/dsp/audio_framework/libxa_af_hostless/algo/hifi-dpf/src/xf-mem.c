@@ -38,7 +38,7 @@
  * Internal helpers
  ******************************************************************************/
 
-/* ...offset of frmwrk buffer pool start in (xf_shmem_data_t), 
+/* ...offset of frmwrk buffer pool start in (xf_shmem_data_t),
  * after considering struct xf_proxy_host_data for App Interface Layer and DSP Interface Layer */
 #define XA_COMP_BUF_SHMEM_STRUCT_SIZE   (sizeof(xf_shmem_data_t)-XF_CFG_REMOTE_IPC_POOL_SIZE)
 
@@ -46,7 +46,7 @@
 static inline xf_mm_block_t * xf_mm_block_init(void *addr, UWORD32 size)
 {
     xf_mm_block_t  *b = (xf_mm_block_t *)addr;
-    
+
     /* ...use 31 available bits of node color to keep aligned size */
     return b->l_node.color = size, b;
 }
@@ -88,12 +88,12 @@ static inline  xf_mm_block_t * xf_mm_find_by_size(xf_mm_pool_t *pool, UWORD32 si
 {
     rb_tree_t *tree = &pool->l_map;
     rb_idx_t   p_idx, t_idx;
-    
+
     /* ...find first block having length greater than requested */
     for (p_idx = rb_root(tree); p_idx != rb_null(tree); p_idx = rb_right(tree, p_idx))
     {
         xf_mm_block_t  *b = container_of(p_idx, xf_mm_block_t, l_node);
-        
+
         /* ...break upon finding first matching candidate */
         if (!xf_mm_block_length_less(b, size))
             break;
@@ -156,7 +156,7 @@ static void xf_mm_find_by_addr(xf_mm_pool_t *pool, void *addr, xf_mm_block_t **n
         {
             /* ...update lower neighbour */
             l_idx = p_idx;
-            
+
             /* ...and move towards higher addresses */
             p_idx = rb_right(tree, p_idx);
         }
@@ -164,7 +164,7 @@ static void xf_mm_find_by_addr(xf_mm_pool_t *pool, void *addr, xf_mm_block_t **n
         {
             /* ...update higher neighbour */
             r_idx = p_idx;
-            
+
             /* ...and move towards lower addresses */
             p_idx = rb_left(tree, p_idx);
         }
@@ -180,7 +180,7 @@ static void xf_mm_insert_size(xf_mm_pool_t *pool, xf_mm_block_t *b, UWORD32 size
 {
     rb_tree_t  *tree = &pool->l_map;
     rb_idx_t    p_idx, t_idx;
-    
+
     /* ...find the parent node for the next block */
     for (p_idx = rb_root(tree); p_idx != rb_null(tree); p_idx = t_idx)
     {
@@ -216,7 +216,7 @@ static void xf_mm_insert_addr(xf_mm_pool_t *pool, xf_mm_block_t *b)
 {
     rb_tree_t  *tree = &pool->a_map;
     rb_idx_t    p_idx, t_idx;
-    
+
     /* ...find the parent node for the next block */
     for (p_idx = rb_root(tree); p_idx != rb_null(tree); p_idx = t_idx)
     {
@@ -254,9 +254,9 @@ static void xf_mm_insert_addr(xf_mm_pool_t *pool, xf_mm_block_t *b)
 /* ...block allocation */
 void * xf_mm_alloc(xf_mm_pool_t *pool, UWORD32 size)
 {
-#if defined (XF_TRACE)    
+#if defined (XF_TRACE)
     UWORD32 osize = size;
-#endif    
+#endif
     xf_mm_block_t  *b;
 
     xf_flx_lock(&pool->lock);
@@ -274,21 +274,6 @@ void * xf_mm_alloc(xf_mm_pool_t *pool, UWORD32 size)
 
     /* ...remove the block from the L-map */
     rb_delete(&pool->l_map, &b->l_node);
-    
-    /* update the buffer utilization counters for DSP's component and framework buffers */
-    if(pool->addr == ((xf_shmem_data_t *)(xf_g_dsp->xf_ap_shmem_buffer))->buffer)
-    {
-        *xf_g_dsp->pdsp_frmwk_buf_size_curr += size;
-        if (*xf_g_dsp->pdsp_frmwk_buf_size_curr > *xf_g_dsp->pdsp_frmwk_buf_size_peak)
-            *xf_g_dsp->pdsp_frmwk_buf_size_peak = *xf_g_dsp->pdsp_frmwk_buf_size_curr;
-        
-    }
-    else if(pool->addr == xf_g_dsp->xf_dsp_local_buffer)
-    {
-        *xf_g_dsp->pdsp_comp_buf_size_curr += size;
-        if (*xf_g_dsp->pdsp_comp_buf_size_curr > *xf_g_dsp->pdsp_comp_buf_size_peak)
-            *xf_g_dsp->pdsp_comp_buf_size_peak = *xf_g_dsp->pdsp_comp_buf_size_curr;
-    }
 
     /* ...check if the size is exactly the same as requested */
     if ((size = xf_mm_block_length_sub(b, size)) == 0)
@@ -316,24 +301,13 @@ void * xf_mm_alloc(xf_mm_pool_t *pool, UWORD32 size)
 /* ...block deallocation */
 void xf_mm_free(xf_mm_pool_t *pool, void *addr, UWORD32 size)
 {
-#if defined (XF_TRACE)    
+#if defined (XF_TRACE)
     UWORD32 osize = size;
-#endif    
+#endif
     xf_mm_block_t  *b = xf_mm_block_init(addr, size);
     xf_mm_block_t  *n[2];
 
     xf_flx_lock(&pool->lock);
-
-#if 1 //TENA-2491
-    if(pool->addr == ((xf_shmem_data_t *)(xf_g_dsp->xf_ap_shmem_buffer))->buffer)
-    {
-        *xf_g_dsp->pdsp_frmwk_buf_size_curr -= size;
-    }
-    else if(pool->addr == xf_g_dsp->xf_dsp_local_buffer)
-    {
-        *xf_g_dsp->pdsp_comp_buf_size_curr -= size;
-    }
-#endif    
 
     /* ...find block neighbours in A-map */
     xf_mm_find_by_addr(pool, addr, n);
@@ -345,7 +319,7 @@ void xf_mm_free(xf_mm_pool_t *pool, void *addr, UWORD32 size)
         {
             /* ...merge free block with left neighbour; delete it from L-map */
             rb_delete(&pool->l_map, &n[0]->l_node);
-        
+
             /* ...adjust block length (block remains in A-map) */
             addr = (void *)(b = n[0]), size = xf_mm_block_length_add(b, size);
         }
@@ -355,7 +329,7 @@ void xf_mm_free(xf_mm_pool_t *pool, void *addr, UWORD32 size)
             n[0] = NULL;
         }
     }
-    
+
     /* ...check if we can merge block to right neighbour */
     if (n[1])
     {
@@ -363,7 +337,7 @@ void xf_mm_free(xf_mm_pool_t *pool, void *addr, UWORD32 size)
         {
             /* ...merge free block with right neighbour; delete it from L-map */
             rb_delete(&pool->l_map, &n[1]->l_node);
-        
+
             /* ...adjust block length */
             size = xf_mm_block_length_add(b, xf_mm_block_length(n[1]));
 
@@ -391,7 +365,7 @@ void xf_mm_free(xf_mm_pool_t *pool, void *addr, UWORD32 size)
         /* ...add new block into A-map */
         xf_mm_insert_addr(pool, b);
     }
-    
+
     /* ...add (new or adjusted) block into L-map */
     xf_mm_insert_size(pool, b, size);
 
@@ -402,14 +376,16 @@ void xf_mm_free(xf_mm_pool_t *pool, void *addr, UWORD32 size)
 /* ...initialize memory allocator */
 int xf_mm_init(xf_mm_pool_t *pool, void *addr, UWORD32 size)
 {
+    UWORD32 mem_pool_type = XAF_MEM_ID_DEV; //TODO, pass as funtion argument??
+
     /* ...check pool alignment validity */
     XF_CHK_ERR(((UWORD32)addr & (sizeof(xf_mm_block_t) - 1)) == 0, XAF_INVALIDVAL_ERR);
 
     /* ...check pool size validity */
     TRACE(INIT, _b("size=%d "), size);
     XF_CHK_ERR(((size) & (sizeof(xf_mm_block_t) - 1)) == 0, XAF_INVALIDVAL_ERR);
-    
-    /* ...set pool parameters (need that stuff at all? - tbd) */    
+
+    /* ...set pool parameters (need that stuff at all? - tbd) */
     pool->addr = addr, pool->size = size;
 
     /* ...initialize rb-trees */
@@ -423,14 +399,11 @@ int xf_mm_init(xf_mm_pool_t *pool, void *addr, UWORD32 size)
     TRACE(INIT, _b("memory allocator initialized: [%p..%p)"), addr, addr + size);
 
     /* initialize the buffer size utilization counters for DSP's component and framework buffers */
-    if(addr == (xf_g_dsp->xf_ap_shmem_buffer + XA_COMP_BUF_SHMEM_STRUCT_SIZE))
+    if(addr == (xf_g_dsp->xf_ap_shmem_buffer[mem_pool_type] + XA_COMP_BUF_SHMEM_STRUCT_SIZE))
     {
-        *xf_g_dsp->pdsp_frmwk_buf_size_peak = *xf_g_dsp->pdsp_frmwk_buf_size_curr = XA_COMP_BUF_SHMEM_STRUCT_SIZE;
+        (*xf_g_dsp->pdsp_frmwk_buf_size_peak)[mem_pool_type] = (*xf_g_dsp->pdsp_frmwk_buf_size_curr)[mem_pool_type] = XA_COMP_BUF_SHMEM_STRUCT_SIZE;
     }
-    else if(addr == (xf_g_dsp->xf_dsp_local_buffer))
-    {
-        *xf_g_dsp->pdsp_comp_buf_size_peak = *xf_g_dsp->pdsp_comp_buf_size_curr = 0;
-    }
+
 
     return 0;
 }
@@ -444,7 +417,7 @@ int xf_mm_preempt_reinit(xf_mm_pool_t *pool)
 
 /* ...deinitialize memory allocator */
 int xf_mm_deinit(xf_mm_pool_t *pool)
-{ 
+{
     xf_flx_lock_destroy(&pool->lock);
     return 0;
 }

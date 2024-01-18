@@ -60,6 +60,8 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/draw/sdl/lv_draw_sdl_line.c
   ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/draw/sdl/lv_draw_sdl_layer.c
   ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/draw/stm32_dma2d/lv_gpu_stm32_dma2d.c
+  ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/draw/renesas/lv_gpu_d2_ra6m3.c
+  ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/draw/renesas/lv_gpu_d2_draw_label.c
   ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/draw/sw/lv_draw_sw.c
   ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/draw/sw/lv_draw_sw_arc.c
   ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/draw/sw/lv_draw_sw_blend.c

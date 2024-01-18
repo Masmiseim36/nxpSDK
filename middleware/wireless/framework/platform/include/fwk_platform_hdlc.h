@@ -42,6 +42,13 @@ int PLATFORM_InitHdlcInterface(platform_hdlc_rx_callback_t callback, void *param
 int PLATFORM_TerminateHdlcInterface(void);
 
 /*!
+ * \brief Hard reset of the HDLC Interface
+ *
+ * \return int return status: >=0 for success, <0 for errors
+ */
+int PLATFORM_ResetHdlcInterface(void);
+
+/*!
  * \brief Sends a Spinel HDLC message to Controller.
  *        This allows complete abstraction of physical transport layers from one
  *        platform to another.

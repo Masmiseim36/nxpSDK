@@ -15,7 +15,9 @@
 
 #include "includes.h"
 
-#include "common.h"
+#ifdef CONFIG_EAP_MSCHAPV2
+
+#include "utils/common.h"
 #include "crypto/ms_funcs.h"
 #include "crypto/random.h"
 #include "common/wpa_ctrl.h"
@@ -916,3 +918,5 @@ int eap_peer_mschapv2_register(void)
 
     return eap_peer_method_register(eap);
 }
+
+#endif /* CONFIG_EAP_MSCHAPV2 */

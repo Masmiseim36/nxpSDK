@@ -15,7 +15,7 @@
 
 #include "common/defs.h"
 #include "common/dpp.h"
-#include "utils/wlist.h"
+#include "utils/dl_list.h"
 #include "ap_config.h"
 #include "drivers/driver.h"
 

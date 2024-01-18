@@ -172,6 +172,8 @@ struct _lwiperf_state_base {
   u8_t reverse;
   /* master state used to abort sessions (e.g. listener, main client) */
   lwiperf_state_base_t *related_master_state;
+  /* if related_master_state is removed, remember its address here */
+  void *deallocated_master_state_address;
 };
 
 /** Connection handle for a UDP iperf session */
@@ -320,6 +322,7 @@ lwiperf_list_remove(lwiperf_state_base_t *item)
     if (iter->related_master_state == item) {
       /* remove reference to the item which may be deallocated soon */
       iter->related_master_state = NULL;
+      iter->deallocated_master_state_address = (void *)item;
     }
     if (iter == item) {
       /* @debug: ensure this item is listed only once */
@@ -578,7 +581,7 @@ lwiperf_tx_start_impl(const ip_addr_t *remote_ip, u16_t remote_port, lwiperf_set
   } else {
     /* Register callback to send more data to a server */
     tcp_sent(newpcb, lwiperf_tcp_client_sent);
-  }  
+  }
   tcp_poll(newpcb, lwiperf_tcp_poll, 2U);
   tcp_err(newpcb, lwiperf_tcp_err);
 
@@ -614,7 +617,7 @@ static err_t
 lwiperf_tx_start_reverse(lwiperf_state_tcp_t *conn)
 {
   LWIP_ASSERT("conn != NULL", conn != NULL);
-  
+
   conn->base.reverse = 1;
 
   tcp_sent(conn->conn_pcb, lwiperf_tcp_client_sent);
@@ -1084,6 +1087,10 @@ lwiperf_udp_close(lwiperf_state_udp_t *conn, enum lwiperf_report_type report_typ
 {
   lwip_udp_conn_report(conn, report_type);
   lwiperf_list_remove(&conn->base);
+  if (conn->reported != NULL) {
+    pbuf_free(conn->reported);
+    conn->reported = NULL;
+  }
   if (conn->pcb != NULL) {
     ip_addr_t *local_addr = &conn->pcb->local_ip;
     if (ip_addr_ismulticast(local_addr)) {
@@ -1108,6 +1115,16 @@ lwiperf_udp_close(lwiperf_state_udp_t *conn, enum lwiperf_report_type report_typ
 static void
 lwiperf_udp_send_report(lwiperf_state_udp_t *conn)
 {
+    if (lwiperf_list_find(&conn->base) == NULL) {
+      /*
+       * Connection is no longer valid. This can happen if lwiperf_abort
+       * was called before lwiperf_udp_send_report is invoked for the second
+       * time by a timer.
+       */
+      LWIP_PLATFORM_DIAG(("conn invalid!"));
+      return;
+    }
+
     lwiperf_state_udp_t *s = (lwiperf_state_udp_t *)conn->base.related_master_state;
     struct pbuf *q = conn->reported;
     LWIP_ASSERT("no report buffer!", q != NULL);
@@ -1250,8 +1267,8 @@ lwiperf_udp_client_send_more(lwiperf_state_udp_t *conn)
       pbuf_free(p);
       /* adjust delay for ending retries */
       if (ending) {
-        conn->delay_target = 250000; /* ending retry delay : 250ms */
-        conn->frames_per_delay = 1U;
+        conn->delay_target = 50000; /* ending retry delay : 50ms */
+        conn->frames_per_delay = 10U;
       }
     } else {
       /* Do not close connection when pbuf_alloc() fails - it may recover later */
@@ -1446,11 +1463,11 @@ lwiperf_udp_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p,
   }
   else if (conn && !conn->base.server) {
     /* received server reports for client instances -> close it. */
+    lwiperf_udp_report_t *hdr;
+    hdr = (lwiperf_udp_report_t *)(pkt + 1);
+
     if (!conn->report_count) {
-      lwiperf_udp_report_t *hdr;
-      pkt = (struct UDP_datagram *)p->payload;
       pkt->id = htonl(datagramID);
-      hdr = (lwiperf_udp_report_t *)(pkt + 1);
       if (hdr->flags & PP_HTONL(LWIPERF_FLAGS_ANSWER_TEST)) {
         /* Adjust bytes transferred with the one from server report */
         LWIP_PLATFORM_DIAG(("Received report from server (0x%x).\n", lwip_ntohl(hdr->flags)));
@@ -1465,7 +1482,10 @@ lwiperf_udp_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p,
         LWIP_PLATFORM_DIAG(("Extended report unsupported yet.\n"));
       }
     }
-    conn->report_count++;
+
+    if (hdr->flags & PP_HTONL(LWIPERF_FLAGS_ANSWER_TEST)) {
+      conn->report_count++;
+    }
   }
   else if (datagramID >= 0) {
     struct timespec ts, dt;
@@ -1737,10 +1757,20 @@ lwiperf_start_udp_client(const ip_addr_t *local_addr, u16_t local_port,
     return NULL;
   }
   if (type == LWIPERF_DUAL || type == LWIPERF_TRADEOFF) {
-    /* tradeoff or dualtest requested. need to start a new server on another port */
+    /*
+    * tradeoff or dualtest requested. need to start a new server on another port
+    * When we bind ipv6 as local ip, if the DAD process of the current ip has not ended, the zone id of the currently bound ip will be invalid
+    * So when bind ipv6, use IP6_ADDR_ANY
+    */
+#if LWIP_IPV6
     s = lwiperf_start_udp_server(
-      local_addr ? local_addr : IP4_ADDR_ANY, local_port,
+      local_addr ? (IP_IS_V6(local_addr) ? IP6_ADDR_ANY : local_addr) : IP_ADDR_ANY, local_port,
       report_fn, report_arg);
+#elif LWIP_IPV4
+    s = lwiperf_start_udp_server(
+      local_addr ? local_addr : IP_ADDR_ANY, local_port,
+      report_fn, report_arg);
+#endif /* LWIP_IPV6 */
     if (s) {
       s->base.server |= 0x80; /* put a temporary server mark */
       sport = s->pcb->local_port; /* retrieve this server port */
@@ -1862,7 +1892,8 @@ lwiperf_abort(void *lwiperf_session)
   LWIP_ASSERT_CORE_LOCKED();
 
   for (i = lwiperf_all_connections; i != NULL; ) {
-    if ((i == lwiperf_session) || (i->related_master_state == lwiperf_session)) {
+    if ((i == lwiperf_session) || (i->related_master_state == lwiperf_session) ||
+        (i->deallocated_master_state_address == (void *)lwiperf_session)) {
       dealloc = i;
       i = i->next;
       if (last != NULL) {

@@ -1,5 +1,5 @@
 /** @file
- * Copyright (c) 2019-2022, Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2019-2023, Arm Limited or its affiliates. All rights reserved.
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -31,7 +31,7 @@ extern  uint32_t g_test_count;
 
 int32_t psa_aead_verify_test(caller_security_t caller __UNUSED)
 {
-#if ((defined(ARCH_TEST_CCM) || defined(ARCH_TEST_GCM)) && defined(ARCH_TEST_AES_128)) // NXP
+#if ((defined(ARCH_TEST_CCM) || defined(ARCH_TEST_GCM)) && defined(ARCH_TEST_AES_128))
     uint8_t  output[BUFFER_SIZE]; //NXP
     int32_t               i, status;
     size_t                length, verify_length;
@@ -147,8 +147,8 @@ int32_t psa_aead_verify_test(caller_security_t caller __UNUSED)
     }
 
     return VAL_STATUS_SUCCESS;
-#else //NXP
+#else
     val->print(PRINT_TEST, "No test available for the selected crypto configuration\n", 0);
     return RESULT_SKIP(VAL_STATUS_NO_TESTS);
-#endif //NXP
+#endif
 }

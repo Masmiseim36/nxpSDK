@@ -10,13 +10,28 @@
 #ifndef __ATT_INTERNAL_H__
 #define __ATT_INTERNAL_H__
 
+#include <bluetooth/l2cap.h>
+#include "BT_att_api.h"
+
 #define BT_EATT_PSM		0x27
 #define BT_ATT_DEFAULT_LE_MTU	23
 #define BT_ATT_TIMEOUT		BT_SECONDS(30)
 #define BT_ATT_REQ_SENT_TIMEOUT		BT_MSEC(1)
-
-/* ATT MTU must be equal for RX and TX, so select the smallest value */
+/* Local ATT Rx MTU
+ *
+ * This is the local 'Client Rx MTU'/'Server Rx MTU'. Core v5.3 Vol 3 Part F
+ * 3.4.2.2 requires that they are equal.
+ *
+ * The local ATT Server Rx MTU is limited to BT_L2CAP_TX_MTU because the GATT
+ * long attribute read protocol (Core v5.3 Vol 3 Part G 4.8.3) treats the ATT
+ * MTU as a promise about the read size. This requires the server to negotiate
+ * the ATT_MTU down to what it is actually able to send. This will unfortunately
+ * also limit how much the client is allowed to send.
+ */
+#define BT_LOCAL_ATT_MTU_EATT MIN(BT_L2CAP_SDU_RX_MTU, BT_L2CAP_SDU_TX_MTU)
 #define BT_ATT_MTU (MIN(BT_L2CAP_RX_MTU, BT_L2CAP_TX_MTU))
+#define BT_LOCAL_ATT_MTU_UATT MIN(BT_L2CAP_RX_MTU, BT_L2CAP_TX_MTU)
+#define BT_ATT_BUF_SIZE MAX(BT_LOCAL_ATT_MTU_UATT, BT_LOCAL_ATT_MTU_EATT)
 
 STRUCT_PACKED_PRE
 struct bt_att_hdr {
@@ -370,7 +385,6 @@ void bt_att_increment_tx_meta_data_attr_count(struct net_buf *buf, uint16_t attr
 bool bt_att_tx_meta_data_match(const struct net_buf *buf, bt_gatt_complete_func_t func,
 			       const void *user_data, enum bt_att_chan_opt chan_opt);
 
-void bt_att_free_tx_meta_data(const struct net_buf *buf);
 
 #if (defined(CONFIG_BT_EATT) && (CONFIG_BT_EATT > 0U))
 #define BT_ATT_CHAN_OPT(_params) (_params)->chan_opt

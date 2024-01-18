@@ -45,9 +45,7 @@
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/vit_pre_proc</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/voice_seeker</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/test_inp</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/utilities</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/EAP/Example_Application/CONFIG_HEADER</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/EAP/EAP_Includes</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/utilities/shell</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../CMSIS/Core/Include</ListEntry>
             </value>
@@ -70,25 +68,10 @@
               <ListEntry key="XA_SBC_ENCODER" value="1"/>
               <ListEntry key="XA_SBC_DECODER" value="1"/>
               <ListEntry key="XA_VORBIS_DECODER" value="1"/>
-              <ListEntry key="XA_CLIENT_PROXY" value="1"/>
               <ListEntry key="XA_PCM_GAIN" value="1"/>
               <ListEntry key="XA_SRC_PP_FX" value="1"/>
               <ListEntry key="XA_RENDERER" value="1"/>
-              <ListEntry key="ALGORITHM_VC" value="1"/>
-              <ListEntry key="ALGORITHM_CS" value="1"/>
-              <ListEntry key="ALGORITHM_DBE" value="1"/>
-              <ListEntry key="ALGORITHM_EQNB" value="1"/>
-              <ListEntry key="ALGORITHM_LM" value="1"/>
-              <ListEntry key="ALGORITHM_TE" value="1"/>
-              <ListEntry key="ALGORITHM_TG" value="1"/>
-              <ListEntry key="ALGORITHM_AVL" value="1"/>
-              <ListEntry key="ALGORITHM_PSA" value="1"/>
-              <ListEntry key="ALGORITHM_PR_EQNB" value="1"/>
-              <ListEntry key="ALGORITHM_LIMP" value="1"/>
-              <ListEntry key="ALGORITHM_LIMR" value="1"/>
-              <ListEntry key="ALGORITHM_XO" value="1"/>
               <ListEntry key="PLATFORM_ID" value="LVM_IMXRT500"/>
-              <ListEntry key="EAP_PROC" value=""/>
               <ListEntry key="HAVE_XOS" value=""/>
               <ListEntry key="HIFI_ONLY_XAF" value=""/>
               <ListEntry key="FIO_LOCAL_FS" value=""/>
@@ -161,7 +144,8 @@
           <StringListMapEntry>
             <key>LinkerAdditionalOptions</key>
             <value inheritance="append">
-              <ListEntry>-Wl,--start-group&#13;
+              <ListEntry>-Wl,--orphan-handling=place&#13;
+-Wl,--start-group&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/codecs/aacplus_dec/fusionf1/lib/xa_aacplus_v2_loas_dec.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/codecs/asrc_src_pp/fusionf1/lib/xa_asrc_src_pp.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/codecs/mp3_dec/fusionf1/lib/xa_mp3_dec.a&#13;
@@ -172,7 +156,6 @@ ${xt_project_loc}/../../../../../../middleware/dsp/codecs/opus/fusionf1/lib/xa_o
 ${xt_project_loc}/../../../../../../middleware/dsp/codecs/sbc_dec/fusionf1/lib/xa_sbc_dec.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/codecs/sbc_enc/fusionf1/lib/xa_sbc_enc.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/codecs/vorbis_dec/fusionf1/lib/xa_vorbis_dec.a&#13;
-${xt_project_loc}/../../../../../../middleware/EAP/EAP_Library/libEAP16_3_0_13_FP1_RT500.a&#13;
 -Wl,--end-group&#13;
 </ListEntry>
             </value>

@@ -108,14 +108,16 @@ static void dump_wlan_set_ed_mac_mode_usage(void)
     (void)PRINTF("\t    # 1       - enable EU adaptivity for 2.4GHz band\r\n");
     (void)PRINTF("\ted_offset_2g \r\n");
     (void)PRINTF("\t    # 0       - Default Energy Detect threshold\r\n");
-    (void)PRINTF("\t    #offset value range: 0x80 to 0x7F\r\n");
+    (void)PRINTF("\t    # ed_threshold = ed_base - ed_offset_2g\r\n");
+    (void)PRINTF("\t    # e.g., if ed_base default is -62dBm, ed_offset_2g is 0x8, then ed_threshold is -70dBm\r\n");
 #ifdef CONFIG_5GHz_SUPPORT
     (void)PRINTF("\ted_ctrl_5g \r\n");
     (void)PRINTF("\t    # 0       - disable EU adaptivity for 5GHz band\r\n");
     (void)PRINTF("\t    # 1       - enable EU adaptivity for 5GHz band\r\n");
-    (void)PRINTF("\ted_offset_2g \r\n");
+    (void)PRINTF("\ted_offset_5g \r\n");
     (void)PRINTF("\t    # 0       - Default Energy Detect threshold\r\n");
-    (void)PRINTF("\t    #offset value range: 0x80 to 0x7F\r\n");
+    (void)PRINTF("\t    # ed_threshold = ed_base - ed_offset_5g\r\n");
+    (void)PRINTF("\t    # e.g., if ed_base default is -62dBm, ed_offset_5g is 0x8, then ed_threshold is -70dBm\r\n");
 #endif
 }
 
@@ -304,16 +306,13 @@ static int wlan_memrdwr_getset(int argc, char *argv[])
 }
 #endif
 
-#if SDK_DEBUGCONSOLE != DEBUGCONSOLE_DISABLE
 static char *bw[]           = {"20 MHz", "40 MHz", "80 MHz", "160 MHz"};
 static char *rate_format[4] = {"LG", "HT", "VHT", "HE"};
 static char *lg_rate[]      = {"1 Mbps",  "2 Mbps",  "5.5 Mbps", "11 Mbps", "6 Mbps",  "9 Mbps",
                           "12 Mbps", "18 Mbps", "24 Mbps",  "36 Mbps", "48 Mbps", "54 Mbps"};
-#endif
 
 static void print_ds_rate(wlan_ds_rate ds_rate)
 {
-#if SDK_DEBUGCONSOLE != DEBUGCONSOLE_DISABLE
     if (ds_rate.sub_command == WIFI_DS_RATE_CFG)
     {
         (void)PRINTF("Tx Rate Configuration: \r\n");
@@ -338,11 +337,29 @@ static void print_ds_rate(wlan_ds_rate ds_rate)
             else
             { /* Do Nothing */
             }
-#if defined(CONFIG_11AC) || defined(CONFIG_11AX)
+#ifdef CONFIG_11AC
             if ((ds_rate.param.rate_cfg.rate_format == MLAN_RATE_FORMAT_VHT)
+#ifdef CONFIG_11AX
+                || (ds_rate.param.rate_cfg.rate_format == MLAN_RATE_FORMAT_HE)
+#endif
             )
             {
                 (void)PRINTF("    NSS:        %d\r\n", (int)ds_rate.param.rate_cfg.nss);
+            }
+#endif
+#ifdef CONFIG_11AX
+            if (ds_rate.param.rate_cfg.rate_setting == 0xffff)
+                (void)PRINTF("    Rate setting: Preamble type/BW/GI/STBC/.. : auto \r\n");
+            else
+            {
+                (void)PRINTF("    HE Rate setting:   0x%x\r\n", ds_rate.param.rate_cfg.rate_setting);
+                (void)PRINTF("        Preamble type: %x\r\n", (ds_rate.param.rate_cfg.rate_setting & 0x0003));
+                (void)PRINTF("        BW:            %x\r\n", (ds_rate.param.rate_cfg.rate_setting & 0x001C) >> 2);
+                (void)PRINTF("        LTF + GI size: %x\r\n", (ds_rate.param.rate_cfg.rate_setting & 0x0060) >> 5);
+                (void)PRINTF("        STBC:          %x\r\n", (ds_rate.param.rate_cfg.rate_setting & 0x0080) >> 7);
+                (void)PRINTF("        DCM:           %x\r\n", (ds_rate.param.rate_cfg.rate_setting & 0x0100) >> 8);
+                (void)PRINTF("        Coding:        %x\r\n", (ds_rate.param.rate_cfg.rate_setting & 0x0200) >> 9);
+                (void)PRINTF("        maxPE:         %x\r\n", (ds_rate.param.rate_cfg.rate_setting & 0x3000) >> 12);
             }
 #endif
         }
@@ -423,6 +440,28 @@ static void print_ds_rate(wlan_ds_rate ds_rate)
                     else
                         (void)PRINTF("    GI:   Short\r\n");
                 }
+#ifdef CONFIG_11AX
+                else if (datarate->tx_rate_format == 3)
+                {
+                    switch (datarate->tx_gi)
+                    {
+                        case 0:
+                            (void)PRINTF("    GI:   1xHELTF + GI 0.8us\r\n");
+                            break;
+                        case 1:
+                            (void)PRINTF("    GI:   2xHELTF + GI 0.8us\r\n");
+                            break;
+                        case 2:
+                            (void)PRINTF("    GI:   2xHELTF + GI 1.6us\r\n");
+                            break;
+                        case 3:
+                            (void)PRINTF(
+                                "    GI:   4xHELTF + GI 0.8us DCM=0 and STBC=0 or\r\n"
+                                "          4xHELTF + GI 3.2us Otherwise  \r\n");
+                            break;
+                    }
+                }
+#endif
 #if defined(CONFIG_11AC) || defined(CONFIG_11AX)
                 if (datarate->tx_rate_format >= 2)
                     (void)PRINTF("    NSS:  %d\r\n", datarate->tx_nss + 1);
@@ -460,6 +499,28 @@ static void print_ds_rate(wlan_ds_rate ds_rate)
                     else
                         (void)PRINTF("    GI:   Short\r\n");
                 }
+#ifdef CONFIG_11AX
+                else if (datarate->rx_rate_format == 3)
+                {
+                    switch (datarate->rx_gi)
+                    {
+                        case 0:
+                            (void)PRINTF("    GI:   1xHELTF + GI 0.8us\r\n");
+                            break;
+                        case 1:
+                            (void)PRINTF("    GI:   2xHELTF + GI 0.8us\r\n");
+                            break;
+                        case 2:
+                            (void)PRINTF("    GI:   2xHELTF + GI 1.6us\r\n");
+                            break;
+                        case 3:
+                            (void)PRINTF(
+                                "    GI:   4xHELTF + GI 0.8us DCM=0 and STBC=0 or\r\n"
+                                "          4xHELTF + GI 3.2us Otherwise  \r\n");
+                            break;
+                    }
+                }
+#endif
 #if defined(CONFIG_11AC) || defined(CONFIG_11AX)
                 if (datarate->rx_rate_format >= 2)
                     (void)PRINTF("    NSS:  %d\r\n", datarate->rx_nss + 1);
@@ -480,7 +541,6 @@ static void print_ds_rate(wlan_ds_rate ds_rate)
     else
     { /* Do Nothing */
     }
-#endif
 }
 
 static void dump_wlan_set_txratecfg_usage(void)
@@ -499,6 +559,9 @@ static void dump_wlan_set_txratecfg_usage(void)
     (void)PRINTF("\t        1:    HT\r\n");
 #ifdef CONFIG_11AC
     (void)PRINTF("\t        2:    VHT\r\n");
+#endif
+#ifdef CONFIG_11AX
+    (void)PRINTF("\t        3:    HE\r\n");
 #endif
     (void)PRINTF("\t        0xff: Auto\r\n");
     (void)PRINTF("\t<index> - This parameter specifies the rate or MCS index\r\n");
@@ -537,6 +600,21 @@ static void dump_wlan_set_txratecfg_usage(void)
     (void)PRINTF("\t        8       MCS8\r\n");
     (void)PRINTF("\t        9       MCS9\r\n");
 #endif
+#ifdef CONFIG_11AX
+    (void)PRINTF("\tIf <format> is 3 (HE),\r\n");
+    (void)PRINTF("\t        0       MCS0\r\n");
+    (void)PRINTF("\t        1       MCS1\r\n");
+    (void)PRINTF("\t        2       MCS2\r\n");
+    (void)PRINTF("\t        3       MCS3\r\n");
+    (void)PRINTF("\t        4       MCS4\r\n");
+    (void)PRINTF("\t        5       MCS5\r\n");
+    (void)PRINTF("\t        6       MCS6\r\n");
+    (void)PRINTF("\t        7       MCS7\r\n");
+    (void)PRINTF("\t        8       MCS8\r\n");
+    (void)PRINTF("\t        9       MCS9\r\n");
+    (void)PRINTF("\t        10      MCS10\r\n");
+    (void)PRINTF("\t        11      MCS11\r\n");
+#endif
 #if defined(CONFIG_11AX) || defined(CONFIG_11AC)
     (void)PRINTF("\t<nss> - This parameter specifies the NSS. It is valid only for VHT and HE\r\n");
     (void)PRINTF("\tIf <format> is 2 (VHT) or 3 (HE),\r\n");
@@ -553,12 +631,23 @@ static void dump_wlan_set_txratecfg_usage(void)
     (void)PRINTF("\t        0x0020  Short GI\r\n");
     (void)PRINTF("\t        0x0060  Short GI and Nsym mod 10=9\r\n");
 #endif
+#ifdef CONFIG_11AX
+    (void)PRINTF("\tIf <format> is 3 (HE),\r\n");
+    (void)PRINTF("\t        0x0000  1xHELTF + GI0.8us\r\n");
+    (void)PRINTF("\t        0x0020  2xHELTF + GI0.8us\r\n");
+    (void)PRINTF("\t        0x0040  2xHELTF + GI1.6us\r\n");
+    (void)PRINTF("\t        0x0060  4xHELTF + GI0.8us if DCM = 1 and STBC = 1\r\n");
+    (void)PRINTF("\t                4xHELTF + GI3.2us, otherwise\r\n");
+#endif
 }
 
 static void test_wlan_set_txratecfg(int argc, char **argv)
 {
     mlan_bss_type bss_type = (mlan_bss_type)0;
     wlan_ds_rate ds_rate;
+#ifdef CONFIG_11AX
+    wlan_txrate_setting *rate_setting = NULL;
+#endif
     int rv = WM_SUCCESS;
 
     if (argc < 3 ||
@@ -630,7 +719,9 @@ static void test_wlan_set_txratecfg(int argc, char **argv)
     }
 
     if ((ds_rate.param.rate_cfg.rate_format != MLAN_RATE_FORMAT_AUTO)
-#if   defined(CONFIG_11AC)
+#if defined(CONFIG_11AX)
+        && (ds_rate.param.rate_cfg.rate_format > MLAN_RATE_FORMAT_HE)
+#elif defined(CONFIG_11AC)
         && (ds_rate.param.rate_cfg.rate_format > MLAN_RATE_FORMAT_VHT)
 #else
     && (ds_rate.param.rate_cfg.rate_format > MLAN_RATE_FORMAT_HT)
@@ -653,6 +744,10 @@ static void test_wlan_set_txratecfg(int argc, char **argv)
             || ((ds_rate.param.rate_cfg.rate_format == MLAN_RATE_FORMAT_VHT) &&
                 (ds_rate.param.rate_cfg.rate_index > MLAN_RATE_INDEX_MCS9))
 #endif
+#ifdef CONFIG_11AX
+            || ((ds_rate.param.rate_cfg.rate_format == MLAN_RATE_FORMAT_HE) &&
+                (ds_rate.param.rate_cfg.rate_index > MLAN_RATE_INDEX_MCS11))
+#endif
         )
         {
             (void)PRINTF("Invalid index selection\r\n");
@@ -669,6 +764,56 @@ static void test_wlan_set_txratecfg(int argc, char **argv)
 
         if (argc == 6)
         {
+#ifdef CONFIG_11AX
+/* HE Preamble type */
+//#define HE_SU_PREAMBLE 0
+#define HE_ER_PREAMBLE 1
+
+/* HE ER SU Type */
+#define HE_ER_SU_BANDWIDTH_TONE242 0
+#define HE_ER_SU_BANDWIDTH_TONE106 1
+
+            rate_setting = (wlan_txrate_setting *)&ds_rate.param.rate_cfg.rate_setting;
+
+            if (ds_rate.param.rate_cfg.rate_format == MLAN_RATE_FORMAT_HE)
+            {
+                if (rate_setting->preamble == HE_ER_PREAMBLE)
+                {
+                    if (rate_setting->bandwidth == HE_ER_SU_BANDWIDTH_TONE242)
+                    {
+                        if ((ds_rate.param.rate_cfg.rate_index > MLAN_RATE_INDEX_MCS2) ||
+                            (ds_rate.param.rate_cfg.nss > MLAN_RATE_NSS1))
+                        {
+                            (void)PRINTF("Invalid rate and MCS or NSS configuration for 242 tone\r\n");
+                            goto done;
+                        }
+                    }
+                    else if (rate_setting->bandwidth == HE_ER_SU_BANDWIDTH_TONE106)
+                    {
+                        if ((ds_rate.param.rate_cfg.rate_index != MLAN_RATE_INDEX_MCS0) ||
+                            (ds_rate.param.rate_cfg.nss != MLAN_RATE_NSS1))
+                        {
+                            (void)PRINTF("Invalid rate and MCS or NSS configuration for 106 tone\r\n");
+                            goto done;
+                        }
+                    }
+                    else
+                    {
+                        (void)PRINTF("Invalid Bandwidth for HE ER Preamble\r\n");
+                        goto done;
+                    }
+                }
+                if ((rate_setting->dcm) && (rate_setting->stbc == 0))
+                {
+                    if ((ds_rate.param.rate_cfg.rate_index == MLAN_RATE_INDEX_MCS2) ||
+                        (ds_rate.param.rate_cfg.rate_index > MLAN_RATE_INDEX_MCS4))
+                    {
+                        (void)PRINTF("Invalid MCS configuration if DCM is supported\r\n");
+                        goto done;
+                    }
+                }
+            }
+#endif
         }
     }
 
@@ -784,7 +929,6 @@ void print_txpwrlimit(wlan_txpwrlimit_t *txpwrlimit)
     (void)PRINTF("\r\n");
 }
 
-
 static void print_chanlist(wlan_chanlist_t chanlist)
 {
     unsigned char i;
@@ -826,6 +970,11 @@ static void test_wlan_get_txpwrlimit(int argc, char **argv)
     wifi_SubBand_t subband;
     wlan_txpwrlimit_t *txpwrlimit = NULL;
 
+    ARG_UNUSED(chanlist_2g_cfg);
+#ifdef CONFIG_5GHz_SUPPORT
+    ARG_UNUSED(chanlist_5g_cfg);
+#endif
+
     if (argc != 2)
     {
         dump_wlan_get_txpwrlimit_usage();
@@ -866,8 +1015,10 @@ static void test_wlan_get_txpwrlimit(int argc, char **argv)
     {
         print_txpwrlimit(txpwrlimit);
     }
-	os_mem_free(txpwrlimit);
+    os_mem_free(txpwrlimit);
 }
+
+#ifndef CONFIG_COMPRESS_TX_PWTBL
 
 static void test_wlan_set_txpwrlimit(int argc, char **argv)
 {
@@ -897,7 +1048,7 @@ static void test_wlan_set_txpwrlimit(int argc, char **argv)
         {
 #endif
             txpwrlimit->subband = SubBand_2_4_GHz;
-            rv                 = wlan_get_txpwrlimit(txpwrlimit->subband, txpwrlimit);
+            rv                  = wlan_get_txpwrlimit(txpwrlimit->subband, txpwrlimit);
             if (rv != WM_SUCCESS)
             {
                 (void)PRINTF("Unable to get 2G TX PWR Limit configuration\r\n");
@@ -908,7 +1059,7 @@ static void test_wlan_set_txpwrlimit(int argc, char **argv)
             }
 #ifdef CONFIG_5GHz_SUPPORT
             txpwrlimit->subband = SubBand_5_GHz_0;
-            rv                 = wlan_get_txpwrlimit(txpwrlimit->subband, txpwrlimit);
+            rv                  = wlan_get_txpwrlimit(txpwrlimit->subband, txpwrlimit);
             if (rv != WM_SUCCESS)
             {
                 (void)PRINTF("Unable to get 5G SubBand0 TX PWR Limit configuration\r\n");
@@ -918,7 +1069,7 @@ static void test_wlan_set_txpwrlimit(int argc, char **argv)
                 print_txpwrlimit(txpwrlimit);
             }
             txpwrlimit->subband = SubBand_5_GHz_1;
-            rv                 = wlan_get_txpwrlimit(txpwrlimit->subband, txpwrlimit);
+            rv                  = wlan_get_txpwrlimit(txpwrlimit->subband, txpwrlimit);
             if (rv != WM_SUCCESS)
             {
                 (void)PRINTF("Unable to get 5G SubBand1 TX PWR Limit configuration\r\n");
@@ -928,7 +1079,7 @@ static void test_wlan_set_txpwrlimit(int argc, char **argv)
                 print_txpwrlimit(txpwrlimit);
             }
             txpwrlimit->subband = SubBand_5_GHz_2;
-            rv                 = wlan_get_txpwrlimit(txpwrlimit->subband, txpwrlimit);
+            rv                  = wlan_get_txpwrlimit(txpwrlimit->subband, txpwrlimit);
             if (rv != WM_SUCCESS)
             {
                 (void)PRINTF("Unable to get 5G SubBand2 TX PWR Limit configuration\r\n");
@@ -971,7 +1122,7 @@ static void test_wlan_set_chanlist_and_txpwrlimit(int argc, char **argv)
         {
 #endif
             txpwrlimit->subband = SubBand_2_4_GHz;
-            rv                 = wlan_get_txpwrlimit(txpwrlimit->subband, txpwrlimit);
+            rv                  = wlan_get_txpwrlimit(txpwrlimit->subband, txpwrlimit);
             if (rv != WM_SUCCESS)
             {
                 (void)PRINTF("Unable to get 2G TX PWR Limit configuration\r\n");
@@ -982,7 +1133,7 @@ static void test_wlan_set_chanlist_and_txpwrlimit(int argc, char **argv)
             }
 #ifdef CONFIG_5GHz_SUPPORT
             txpwrlimit->subband = SubBand_5_GHz_0;
-            rv                 = wlan_get_txpwrlimit(txpwrlimit->subband, txpwrlimit);
+            rv                  = wlan_get_txpwrlimit(txpwrlimit->subband, txpwrlimit);
             if (rv != WM_SUCCESS)
             {
                 (void)PRINTF("Unable to get 5G SubBand0 TX PWR Limit configuration\r\n");
@@ -992,7 +1143,7 @@ static void test_wlan_set_chanlist_and_txpwrlimit(int argc, char **argv)
                 print_txpwrlimit(txpwrlimit);
             }
             txpwrlimit->subband = SubBand_5_GHz_1;
-            rv                 = wlan_get_txpwrlimit(txpwrlimit->subband, txpwrlimit);
+            rv                  = wlan_get_txpwrlimit(txpwrlimit->subband, txpwrlimit);
             if (rv != WM_SUCCESS)
             {
                 (void)PRINTF("Unable to get 5G SubBand1 TX PWR Limit configuration\r\n");
@@ -1002,7 +1153,7 @@ static void test_wlan_set_chanlist_and_txpwrlimit(int argc, char **argv)
                 print_txpwrlimit(txpwrlimit);
             }
             txpwrlimit->subband = SubBand_5_GHz_2;
-            rv                 = wlan_get_txpwrlimit(txpwrlimit->subband, txpwrlimit);
+            rv                  = wlan_get_txpwrlimit(txpwrlimit->subband, txpwrlimit);
             if (rv != WM_SUCCESS)
             {
                 (void)PRINTF("Unable to get 5G SubBand2 TX PWR Limit configuration\r\n");
@@ -1028,42 +1179,34 @@ static void test_wlan_set_chanlist_and_txpwrlimit(int argc, char **argv)
     }
     os_mem_free(txpwrlimit);
 }
+#endif
 
 static void test_wlan_set_chanlist(int argc, char **argv)
 {
     wlan_chanlist_t chanlist;
 
+#if defined(CONFIG_COMPRESS_TX_PWTBL) && !defined(RW610)
+    ARG_UNUSED(rg_table_fc);
+    ARG_UNUSED(rg_table_fc_len);
+#endif
+
+
     (void)memset(&chanlist, 0x00, sizeof(wlan_chanlist_t));
 
-    int rv = wlan_set_chanlist(&chanlist_2g_cfg);
-    if (rv != WM_SUCCESS)
+    /* Get channel list of current region */
+    int ret = wlan_get_chanlist(&chanlist);
+    if (ret != WM_SUCCESS)
     {
-        (void)PRINTF("Unable to set 2G channel list configuration\r\n");
+        (void)PRINTF("Unable to get channel list of current region\r\n");
+        return;
     }
-    else
+    ret = wlan_set_chanlist(&chanlist);
+    if (ret != WM_SUCCESS)
     {
-#ifdef CONFIG_5GHz_SUPPORT
-        rv = wlan_set_chanlist(&chanlist_5g_cfg);
-        if (rv != WM_SUCCESS)
-        {
-            (void)PRINTF("Unable to set 5G channel list configuration\r\n");
-        }
-        else
-        {
-#endif
-            rv = wlan_get_chanlist(&chanlist);
-            if (rv != WM_SUCCESS)
-            {
-                (void)PRINTF("Unable to get channel list configuration\r\n");
-            }
-            else
-            {
-                print_chanlist(chanlist);
-            }
-#ifdef CONFIG_5GHz_SUPPORT
-        }
-#endif
+        (void)PRINTF("Failed to set channel list!\r\n");
+        return;
     }
+    print_chanlist(chanlist);
 }
 
 static void test_wlan_get_chanlist(int argc, char **argv)
@@ -1082,6 +1225,463 @@ static void test_wlan_get_chanlist(int argc, char **argv)
     }
 }
 
+#ifdef CONFIG_11AX
+static void dump_wlan_set_txomi_usage()
+{
+    (void)PRINTF("Usage:\r\n");
+    (void)PRINTF("wlan-set-tx-omi <interface> <tx-omi> <tx-option> <num_data_pkts>\r\n");
+    (void)PRINTF("where, interface = uap or sta\r\n");
+    (void)PRINTF("where, tx-omi =\r\n");
+    (void)PRINTF("\t Bit 0-2: Rx NSS\r\n");
+    (void)PRINTF("\t Bit 3-4: Channel Width. 0: 20MHz  1: 40MHz  2: 80MHz\r\n");
+    (void)PRINTF("\t Bit 5  : UL MU Disable\r\n");
+    (void)PRINTF("\t Bit 6-8: Tx NSTS (applies to client mode only)\r\n");
+    (void)PRINTF("\t Bit 9  : ER SU Disable\r\n");
+    (void)PRINTF("\t Bit 10 : DL MU-MIMO Resound Recommendation\r\n");
+    (void)PRINTF("\t Bit 11 : DL MU Data Disable\r\n");
+    (void)PRINTF("\t Example : For 1x1 SoC, to set bandwidth,\r\n");
+    (void)PRINTF("20M, tx-omi = 0x00\r\n");
+    (void)PRINTF("40M, tx-omi = 0x08\r\n");
+    (void)PRINTF("80M, tx-omi = 0x10\r\n");
+    (void)PRINTF("where, tx-option =\r\n");
+    (void)PRINTF("\t 0: send OMI in NULL Data\r\n");
+    (void)PRINTF("\t 1: send OMI in QoS Data\r\n");
+    (void)PRINTF("\t 0xff: send OMI in either QoS Data or NULL Data\r\n");
+    (void)PRINTF("where, num_data_pkts =\r\n");
+    (void)PRINTF("\t Set this value only when tx-option is 1 or 0xff.\r\n");
+    (void)PRINTF("\t Minimum value is 1\r\n");
+    (void)PRINTF("\t Maximum value is 16\r\n");
+    (void)PRINTF("\t num_data_pkts is applied only if OMI is sent in QoS data frame\r\n");
+    (void)PRINTF("\t It specifies the number of consecutive data frames containing the OMI\r\n");
+}
+
+
+static void test_wlan_set_rutxpwrlimit(int argc, char **argv)
+{
+    int rv;
+#ifdef CONFIG_COMPRESS_RU_TX_PWTBL
+    rv = wlan_set_11ax_rutxpowerlimit(rutxpowerlimit_cfg_set, sizeof(rutxpowerlimit_cfg_set));
+
+    if (rv != WM_SUCCESS)
+    {
+        (void)PRINTF("Unable to set RU TX PWR Limit configuration\r\n");
+    }
+#else
+    rv = wlan_set_11ax_rutxpowerlimit_legacy(&rutxpowerlimit_2g_cfg_set);
+    if (rv != WM_SUCCESS)
+    {
+        (void)PRINTF("Unable to set 2G RU TX PWR Limit configuration\r\n");
+    }
+#ifdef CONFIG_5GHz_SUPPORT
+    else
+    {
+        rv = wlan_set_11ax_rutxpowerlimit_legacy(&rutxpowerlimit_5g_cfg_set);
+        if (rv != WM_SUCCESS)
+        {
+            (void)PRINTF("Unable to set 5G RU TX PWR Limit configuration\r\n");
+        }
+    }
+#endif /* CONFIG_5GHz_SUPPORT */
+#endif /* CONFIG_COMPRESS_RU_TX_PWTBL */
+}
+
+
+static void test_wlan_set_tx_omi(int argc, char **argv)
+{
+    int ret;
+    t_u8 interface = 0;
+    uint16_t tx_omi;
+    uint8_t tx_option     = 0;
+    uint8_t num_data_pkts = 0;
+
+    if (argc != 4 && argc != 5)
+    {
+        dump_wlan_set_txomi_usage();
+        return;
+    }
+
+    errno = 0;
+
+    tx_omi    = (uint16_t)strtol(argv[2], NULL, 0);
+    tx_option = (uint8_t)strtol(argv[3], NULL, 0);
+
+    if (errno != 0)
+    {
+        (void)PRINTF("Error during strtoul errno:%d", errno);
+        errno = 0;
+    }
+
+    if (argc == 4)
+    {
+        if (tx_option != 0)
+        {
+            dump_wlan_set_txomi_usage();
+            return;
+        }
+        num_data_pkts = 1;
+    }
+    else
+    {
+        if (tx_option == 0)
+        {
+            dump_wlan_set_txomi_usage();
+            return;
+        }
+        num_data_pkts = (uint8_t)strtol(argv[4], NULL, 0);
+
+        if (errno != 0)
+            (void)PRINTF("Error during strtoul errno:%d", errno);
+
+        if (num_data_pkts < 1 || num_data_pkts > 16)
+        {
+            dump_wlan_set_txomi_usage();
+            return;
+        }
+    }
+
+    if (string_equal("sta", argv[1]))
+    {
+        interface = (t_u8)WLAN_BSS_TYPE_STA;
+    }
+    else if (string_equal("uap", argv[1]))
+    {
+        interface = (t_u8)WLAN_BSS_TYPE_UAP;
+    }
+
+    ret = wlan_set_11ax_tx_omi(interface, tx_omi, tx_option, num_data_pkts);
+
+    if (ret == WM_SUCCESS)
+    {
+        (void)PRINTF("TX OMI: 0x%x set\r\n", tx_omi);
+        (void)PRINTF("TX OPTION: 0x%x set\r\n", tx_option);
+        (void)PRINTF("TX NUM_DATA_PKTS: 0x%x set\r\n", num_data_pkts);
+    }
+    else
+    {
+        (void)PRINTF("Unable to set TX OMI: 0x%x\r\n", tx_omi);
+        (void)PRINTF("Unable to set TX OPTION: 0x%x\r\n", tx_option);
+        (void)PRINTF("Unable to set TX NUM_DATA_PKTS: 0x%x\r\n", num_data_pkts);
+    }
+}
+
+static void dump_wlan_set_tol_time_usage()
+{
+    (void)PRINTF("Usage:\r\n");
+    (void)PRINTF("set OBSS Narrow Bandwidth RU Tolerance Time\r\n");
+    (void)PRINTF("Pls set toltime when sta is in disconnect state.\r\n");
+    (void)PRINTF("wlan-set-toltime value\r\n");
+    (void)PRINTF("value:\r\n");
+    (void)PRINTF("Valid range[1..3600]\r\n");
+}
+
+static void test_wlan_set_toltime(int argc, char **argv)
+{
+    unsigned int value;
+    int ret;
+    if (argc != 2)
+    {
+        (void)PRINTF("Error: invalid number of arguments\r\n");
+        dump_wlan_set_tol_time_usage();
+        return;
+    }
+
+    if (get_uint(argv[1], &value, strlen(argv[1])))
+    {
+        (void)PRINTF("Error: invalid option argument\r\n");
+        dump_wlan_set_tol_time_usage();
+        return;
+    }
+
+    ret = wlan_set_11ax_tol_time(value);
+
+    if (ret != WM_SUCCESS)
+    {
+        (void)PRINTF("Error: Failed to set Tolerance Time.\r\n");
+        dump_wlan_set_tol_time_usage();
+        return;
+    }
+}
+
+static wlan_11ax_config_t ax_conf;
+#ifdef CONFIG_11AX_TWT
+static wlan_twt_setup_config_t twt_setup_conf;
+static wlan_twt_teardown_config_t teardown_conf;
+static wlan_btwt_config_t btwt_config;
+#endif /* CONFIG_11AX_TWT */
+
+/* cfg tables for 11axcfg and twt commands to FW */
+static uint8_t g_11ax_cfg[29] = {0};
+
+const static test_cfg_param_t g_11ax_cfg_param[] = {
+    /* name                 offset  len     notes */
+    {"band", 0, 1, NULL},
+    {"cap_id", 1, 2, NULL},
+    {"cap_len", 3, 2, NULL},
+    {"he_cap_id", 5, 1, NULL},
+    {"he_mac_cap_info", 6, 6, NULL},
+    {"he_phy_cap_info", 12, 11, NULL},
+    {"he_mcs_nss_support", 23, 4, NULL},
+    {"pe", 27, 2, NULL},
+};
+
+#ifdef CONFIG_11AX_TWT
+static uint8_t g_btwt_cfg[12] = {0};
+
+const static test_cfg_param_t g_btwt_cfg_param[] = {
+    /* name             offset  len   notes */
+    {"action", 0, 2, "only support 1: Set"},
+    {"sub_id", 2, 2, "Broadcast TWT AP config"},
+    {"nominal_wake", 4, 1, "range 64-255"},
+    {"max_sta_support", 5, 1, "Max STA Support"},
+    {"twt_mantissa", 6, 2, NULL},
+    {"twt_offset", 8, 2, NULL},
+    {"twt_exponent", 10, 1, NULL},
+    {"sp_gap", 11, 1, NULL},
+};
+
+static uint8_t g_twt_setup_cfg[12] = {0};
+
+static test_cfg_param_t g_twt_setup_cfg_param[] = {
+    /* name                 offset  len  notes */
+    {"implicit", 0, 1, "0: TWT session is explicit, 1: Session is implicit"},
+    {"announced", 1, 1, "0: Unannounced, 1: Announced TWT"},
+    {"trigger_enabled", 2, 1, "0: Non-Trigger enabled, 1: Trigger enabled TWT"},
+    {"twt_info_disabled", 3, 1, "0: TWT info enabled, 1: TWT info disabled"},
+    {"negotiation_type", 4, 1, "0: Individual TWT, 3: Broadcast TWT"},
+    {"twt_wakeup_duration", 5, 1, "time after which the TWT requesting STA can transition to doze state"},
+    {"flow_identifier", 6, 1, "Range: [0-7]"},
+    {"hard_constraint", 7, 1,
+     "0: FW can tweak the TWT setup parameters if it is rejected by AP, 1: FW should not tweak any parameters"},
+    {"twt_exponent", 8, 1, "Range: [0-63]"},
+    {"twt_mantissa", 9, 2, "Range: [0-sizeof(UINT16)]"},
+    {"twt_request", 11, 1, "Type, 0: REQUEST_TWT, 1: SUGGEST_TWT"},
+};
+
+static uint8_t g_twt_teardown_cfg[3] = {0};
+
+static test_cfg_param_t g_twt_teardown_cfg_param[] = {
+    /* name             offset  len  notes */
+    {"FlowIdentifier", 0, 1, "Range: [0-7]"},
+    {"NegotiationType", 1, 1, "0: Future Individual TWT SP start time, 1: Next Wake TBTT tim"},
+    {"TearDownAllTWT", 2, 1, "1: To teardown all TWT, 0 otherwise"},
+};
+#endif /* CONFIG_11AX_TWT */
+
+static void test_wlan_11ax_cfg(int argc, char **argv)
+{
+    test_wlan_cfg_process(TEST_WLAN_11AX_CFG, argc, argv);
+}
+
+#ifdef CONFIG_11AX_TWT
+static void test_wlan_bcast_twt(int argc, char **argv)
+{
+    test_wlan_cfg_process(TEST_WLAN_BCAST_TWT, argc, argv);
+}
+
+static void test_wlan_twt_setup(int argc, char **argv)
+{
+    test_wlan_cfg_process(TEST_WLAN_TWT_SETUP, argc, argv);
+}
+
+static void test_wlan_twt_teardown(int argc, char **argv)
+{
+    test_wlan_cfg_process(TEST_WLAN_TWT_TEARDOWN, argc, argv);
+}
+
+static void test_wlan_twt_report(int argc, char **argv)
+{
+    int i;
+    int j;
+    int num;
+    wlan_twt_report_t info;
+
+    memset(&info, 0x00, sizeof(info));
+    wlan_get_twt_report(&info);
+
+    num = info.length / WLAN_BTWT_REPORT_LEN;
+    num = num <= WLAN_BTWT_REPORT_MAX_NUM ? num : WLAN_BTWT_REPORT_MAX_NUM;
+
+    (void)PRINTF("twt_report len %hu, num %d, info:\r\n", info.length, num);
+    for (i = 0; i < num; i++)
+    {
+        (void)PRINTF("id[%d]:\r\n", i);
+        for (j = 0; j < WLAN_BTWT_REPORT_LEN; j++)
+        {
+            (void)PRINTF(" 0x%02x", info.data[i * WLAN_BTWT_REPORT_LEN + j]);
+        }
+        (void)PRINTF("\r\n");
+    }
+}
+#endif /* CONFIG_11AX_TWT */
+
+static void wlan_init_g_test_cfg_arrays()
+{
+    memcpy(g_11ax_cfg, wlan_get_11ax_cfg(), 29);
+#ifdef CONFIG_11AX_TWT
+    memcpy(g_btwt_cfg, wlan_get_btwt_cfg(), 12);
+    memcpy(g_twt_setup_cfg, wlan_get_twt_setup_cfg(), 12);
+    memcpy(g_twt_teardown_cfg, wlan_get_twt_teardown_cfg(), 3);
+#endif /* CONFIG_11AX_TWT */
+}
+
+/*
+ *  Cfg table for mutiple params commands in freeRTOS.
+ *  name:          cfg name
+ *  data:          cfg data stored and prepared to send
+ *  total_len:     len of cfg data
+ *  param_list:    param list of cfg data
+ *  param_num:     number of cfg param list
+ */
+static test_cfg_table_t g_test_cfg_table_list[] = {/*  name         data           total_len    param_list param_num*/
+                                                   {"11axcfg", g_11ax_cfg, 29, g_11ax_cfg_param, 8},
+#ifdef CONFIG_11AX_TWT
+                                                   {"twt_bcast", g_btwt_cfg, 12, g_btwt_cfg_param, 8},
+                                                   {"twt_setup", g_twt_setup_cfg, 12, g_twt_setup_cfg_param, 11},
+                                                   {"twt_teardown", g_twt_teardown_cfg, 3, g_twt_teardown_cfg_param, 3},
+#endif /* CONFIG_11AX_TWT */
+                                                   {NULL}};
+
+static void dump_cfg_data_param(int param_id, uint8_t *data, const test_cfg_param_t *param_cfg)
+{
+    int i;
+
+    (void)PRINTF("%s ", param_cfg->name);
+    if (param_cfg->notes != NULL)
+        (void)PRINTF("#### %s\r\n", param_cfg->notes);
+    else
+        (void)PRINTF("\r\n");
+
+    (void)PRINTF("[%d]: ", param_id);
+    for (i = 0; i < param_cfg->len; i++)
+    {
+        (void)PRINTF("0x%02x ", data[param_cfg->offset + i]);
+    }
+    (void)PRINTF("\r\n");
+}
+
+static void set_cfg_data_param(uint8_t *data, const test_cfg_param_t *param_cfg, char **argv)
+{
+    int i;
+
+    for (i = 0; i < param_cfg->len; i++)
+    {
+        data[param_cfg->offset + i] = a2hex(argv[3 + i]);
+    }
+}
+
+static void dump_cfg_data(test_cfg_table_t *cfg)
+{
+    int i;
+    uint8_t *data = cfg->data;
+
+    (void)PRINTF("cfg[%s] len[%d] param_num[%d]: \r\n", cfg->name, cfg->len, cfg->param_num);
+    for (i = 0; i < cfg->param_num; i++)
+    {
+        dump_cfg_data_param(i, data, &cfg->param_list[i]);
+    }
+}
+
+static void dump_cfg_help(test_cfg_table_t *cfg)
+{
+    dump_cfg_data(cfg);
+}
+
+/*
+ *  match param name and set data by input
+ *  argv[0] "wlan-xxxx"
+ *  argv[1] "set"
+ *  argv[2] param_id
+ *  argv[3] param_data_set
+ */
+static void set_cfg_data(test_cfg_table_t *cfg, int argc, char **argv)
+{
+    uint8_t *data                     = cfg->data;
+    const test_cfg_param_t *param_cfg = NULL;
+    int param_id                      = atoi(argv[2]);
+    /* input data starts from argv[3] */
+    int input_data_num = argc - 3;
+
+    if (param_id < 0 || param_id >= cfg->param_num)
+    {
+        (void)PRINTF("invalid param index %d\r\n", param_id);
+        return;
+    }
+
+    param_cfg = &cfg->param_list[param_id];
+    if (param_cfg->len != input_data_num)
+    {
+        (void)PRINTF("invalid input number %d, param has %d u8 arguments\r\n", input_data_num, param_cfg->len);
+        return;
+    }
+
+    set_cfg_data_param(data, param_cfg, argv);
+    dump_cfg_data_param(param_id, data, param_cfg);
+}
+
+static void send_cfg_msg(test_cfg_table_t *cfg, uint32_t index)
+{
+    int ret;
+
+    switch (index)
+    {
+        case TEST_WLAN_11AX_CFG:
+            (void)memcpy((void *)&ax_conf, (void *)cfg->data, sizeof(ax_conf));
+            ret = wlan_set_11ax_cfg(&ax_conf);
+            break;
+#ifdef CONFIG_11AX_TWT
+        case TEST_WLAN_BCAST_TWT:
+            (void)memcpy((void *)&btwt_config, (void *)cfg->data, sizeof(btwt_config));
+            ret = wlan_set_btwt_cfg(&btwt_config);
+            break;
+        case TEST_WLAN_TWT_SETUP:
+            (void)memcpy((void *)&twt_setup_conf, (void *)cfg->data, sizeof(twt_setup_conf));
+            ret = wlan_set_twt_setup_cfg(&twt_setup_conf);
+            break;
+        case TEST_WLAN_TWT_TEARDOWN:
+            (void)memcpy((void *)&teardown_conf, (void *)cfg->data, sizeof(teardown_conf));
+            ret = wlan_set_twt_teardown_cfg(&teardown_conf);
+            break;
+#endif /* CONFIG_11AX_TWT */
+        default:
+            ret = -1;
+            break;
+    }
+
+    (void)PRINTF("send config [%s] ret %d\r\n", cfg->name, ret);
+}
+
+void test_wlan_cfg_process(uint32_t index, int argc, char **argv)
+{
+    test_cfg_table_t *cfg = NULL;
+
+    /* last cfg table is invalid */
+    if (index >= (sizeof(g_test_cfg_table_list) / sizeof(test_cfg_table_t) - 1))
+    {
+        (void)PRINTF("cfg table too large index %u\r\n", index);
+        return;
+    }
+
+    cfg = &g_test_cfg_table_list[index];
+
+    if (argc < 2)
+    {
+        dump_cfg_help(cfg);
+        return;
+    }
+
+    if (string_equal("help", argv[1]))
+        dump_cfg_help(cfg);
+    else if (string_equal("dump", argv[1]))
+        dump_cfg_data(cfg);
+    else if (string_equal("set", argv[1]))
+        set_cfg_data(cfg, argc, argv);
+    else if (string_equal("done", argv[1]))
+        send_cfg_msg(cfg, index);
+    else
+        (void)PRINTF("unknown argument\r\n");
+}
+
+#endif /* CONFIG_11AX */
 
 #ifdef CONFIG_WIFI_CLOCKSYNC
 static void dump_wlan_get_tsf_info_usage(void)
@@ -1224,8 +1824,10 @@ static void test_set_clocksync_cfg(int argc, char **argv)
 
 static struct cli_command wlan_enhanced_commands[] = {
     {"wlan-get-txpwrlimit", "<subband>", test_wlan_get_txpwrlimit},
+#ifndef CONFIG_COMPRESS_TX_PWTBL
     {"wlan-set-txpwrlimit", NULL, test_wlan_set_txpwrlimit},
     {"wlan-set-chanlist-and-txpwrlimit", NULL, test_wlan_set_chanlist_and_txpwrlimit},
+#endif
     {"wlan-set-chanlist", NULL, test_wlan_set_chanlist},
     {"wlan-get-chanlist", NULL, test_wlan_get_chanlist},
 #ifdef CONFIG_11AC
@@ -1244,6 +1846,18 @@ static struct cli_command wlan_enhanced_commands[] = {
     {"wlan-set-ed-mac-mode", "<interface> <ed_ctrl_2g> <ed_offset_2g>", wlan_ed_mac_mode_set},
 #endif
     {"wlan-get-ed-mac-mode", "<interface>", wlan_ed_mac_mode_get},
+#ifdef CONFIG_11AX
+    {"wlan-set-tx-omi", "<interface> <tx-omi> <tx-option> <num_data_pkts>", test_wlan_set_tx_omi},
+    {"wlan-set-toltime", "<value>", test_wlan_set_toltime},
+    {"wlan-set-rutxpwrlimit", NULL, test_wlan_set_rutxpwrlimit},
+    {"wlan-11ax-cfg", "<11ax_cfg>", test_wlan_11ax_cfg},
+#ifdef CONFIG_11AX_TWT
+    {"wlan-11ax-bcast-twt", "<bcast_twt_cfg>", test_wlan_bcast_twt},
+    {"wlan-11ax-twt-setup", "<twt_cfg>", test_wlan_twt_setup},
+    {"wlan-11ax-twt-teardown", "<twt_cfg>", test_wlan_twt_teardown},
+    {"wlan-11ax-twt-report", "<twt_report_get>", test_wlan_twt_report},
+#endif /* CONFIG_11AX_TWT */
+#endif /* CONFIG_11AX */
 #ifdef CONFIG_WIFI_CLOCKSYNC
     {"wlan-get-tsfinfo", "<format-type>", test_get_tsf_info},
     {"wlan-set-clocksync", "<mode> <role> <gpio_pin> <gpio_level> <pulse width>", test_set_clocksync_cfg},
@@ -1252,8 +1866,23 @@ static struct cli_command wlan_enhanced_commands[] = {
 
 int wlan_enhanced_cli_init(void)
 {
+#ifdef CONFIG_11AX
+    wlan_init_g_test_cfg_arrays();
+#endif
+
     if (cli_register_commands(wlan_enhanced_commands,
                               (int)(sizeof(wlan_enhanced_commands) / sizeof(struct cli_command))) != 0)
+    {
+        return -WM_FAIL;
+    }
+
+    return WM_SUCCESS;
+}
+
+int wlan_enhanced_cli_deinit(void)
+{
+    if (cli_unregister_commands(wlan_enhanced_commands,
+                                (int)(sizeof(wlan_enhanced_commands) / sizeof(struct cli_command))) != 0)
     {
         return -WM_FAIL;
     }

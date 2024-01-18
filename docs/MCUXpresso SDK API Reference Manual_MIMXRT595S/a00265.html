@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: SEMA42: Hardware Semaphores Driver</title>
+<title>MCUXpresso SDK API Reference Manual: PINT: Pin Interrupt and Pattern Match Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,353 +99,522 @@ $(document).ready(function(){initNavTree('a00265.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
+<a href="#files">Files</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">SEMA42: Hardware Semaphores Driver</div>  </div>
+<div class="title">PINT: Pin Interrupt and Pattern Match Driver</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a driver for the SEMA42 module of MCUXpresso SDK devices.</p>
-<p>The SEMA42 driver is used for multicore platforms. Before using the SEMA42, call the <a class="el" href="a00265.html#ga13685f70a38ed1f8368581b475e963cf" title="Initializes the SEMA42 module. ">SEMA42_Init()</a> function to initialize the module. Note that this function only enables the clock but does not reset the gates because the module might be used by other processors at the same time. To reset the gates, call either the <a class="el" href="a00265.html#ga6fc8ecf853c6394511d55536d37c7d4f" title="Resets the SEMA42 gate to an unlocked status. ">SEMA42_ResetGate()</a> or <a class="el" href="a00265.html#ga9695921a658471089cddadb8789bb138" title="Resets all SEMA42 gates to an unlocked status. ">SEMA42_ResetAllGates()</a> functions. The function <a class="el" href="a00265.html#gae646085e5d791b895d478e9ef161c3b3" title="De-initializes the SEMA42 module. ">SEMA42_Deinit()</a> deinitializes the SEMA42.<br/>
- The SEMA42 provides two functions to lock the SEMA42 gate. The function <a class="el" href="a00265.html#gab5e2b0d71c6219bcfb381f4b70d7e7b0" title="Tries to lock the SEMA42 gate. ">SEMA42_TryLock()</a> tries to lock the gate. If the gate has been locked by another processor, this function returns an error immediately. The function <a class="el" href="a00265.html#gaab41e809f563868b6b477a7bb62c9ce2" title="Locks the SEMA42 gate. ">SEMA42_Lock()</a> is a blocking method, which waits until the gate is free and locks it.<br/>
- The <a class="el" href="a00265.html#gac19b80ba254697a9e22b54866226e879" title="Unlocks the SEMA42 gate. ">SEMA42_Unlock()</a> unlocks the SEMA42 gate. The gate can only be unlocked by the processor which locked it. If the gate is not locked by the current processor, this function takes no effect. The function <a class="el" href="a00265.html#gace62f3aae17c5f6d75764f932f2a673f" title="Gets the status of the SEMA42 gate. ">SEMA42_GetGateStatus()</a> returns a status whether the gate is unlocked and which processor locks the gate.<br/>
- The SEMA42 gate can be reset to unlock forcefully. The function <a class="el" href="a00265.html#ga6fc8ecf853c6394511d55536d37c7d4f" title="Resets the SEMA42 gate to an unlocked status. ">SEMA42_ResetGate()</a> resets a specific gate. The function <a class="el" href="a00265.html#ga9695921a658471089cddadb8789bb138" title="Resets all SEMA42 gates to an unlocked status. ">SEMA42_ResetAllGates()</a> resets all gates.</p>
-<h1><a class="anchor" id="SEMA42TypUC"></a>
-Typical use case</h1>
-<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/sema42 </p>
+<p>The MCUXpresso SDK provides a driver for the Pin Interrupt and Pattern match (PINT).<br/>
+ <br/>
+It can configure one or more pins to generate a pin interrupt when the pin or pattern match conditions are met. The pins do not have to be configured as gpio pins however they must be connected to PINT via INPUTMUX. Only the pin interrupt or pattern match function can be active for interrupt generation. If the pin interrupt function is enabled then the pattern match function can be used for wakeup via RXEV. <br/>
+</p>
+<h1><a class="anchor" id="PINTInit"></a>
+Pin Interrupt and Pattern match Driver operation</h1>
+<p><a class="el" href="a00265.html#ga363edbba9536380728e44bd7d1a0e7df" title="Configure PINT peripheral pin interrupt. ">PINT_PinInterruptConfig()</a> function configures the pins for pin interrupt.</p>
+<p><a class="el" href="a00265.html#ga1dc66cd865640c0b60eb128a868eab37" title="Configure PINT pattern match. ">PINT_PatternMatchConfig()</a> function configures the pins for pattern match.</p>
+<h2><a class="anchor" id="PINTPinInterruptTpyUC"></a>
+Pin Interrupt use case</h2>
+<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/pint </p>
+<h2><a class="anchor" id="PINTPatternMatchUC"></a>
+Pattern match use case</h2>
+<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/pint </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gaa2a42c2ffaa2a3b57c39a5e46988d7f3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#gaa2a42c2ffaa2a3b57c39a5e46988d7f3">SEMA42_GATE_NUM_RESET_ALL</a>&#160;&#160;&#160;(64U)</td></tr>
-<tr class="memdesc:gaa2a42c2ffaa2a3b57c39a5e46988d7f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number to reset all SEMA42 gates.  <a href="#gaa2a42c2ffaa2a3b57c39a5e46988d7f3">More...</a><br/></td></tr>
-<tr class="separator:gaa2a42c2ffaa2a3b57c39a5e46988d7f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga530cd6b85fc81427b81eb16b837b7dfd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga530cd6b85fc81427b81eb16b837b7dfd">SEMA42_GATEn</a>(base, n)&#160;&#160;&#160;(((volatile uint8_t *)(&amp;((base)-&gt;GATE3)))[(n) ^ 3U])</td></tr>
-<tr class="memdesc:ga530cd6b85fc81427b81eb16b837b7dfd"><td class="mdescLeft">&#160;</td><td class="mdescRight">SEMA42 gate n register address.  <a href="#ga530cd6b85fc81427b81eb16b837b7dfd">More...</a><br/></td></tr>
-<tr class="separator:ga530cd6b85fc81427b81eb16b837b7dfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
+Files</h2></td></tr>
+<tr class="memitem:a00208"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00208.html">fsl_pint.h</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga1444166a5b3130cdd3f3c5a40f102ff3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1444166a5b3130cdd3f3c5a40f102ff3"></a>
+typedef enum <a class="el" href="a00265.html#ga2e08ec6acfb4d114d470ff86a0bef497">_pint_pin_enable</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga1444166a5b3130cdd3f3c5a40f102ff3">pint_pin_enable_t</a></td></tr>
+<tr class="memdesc:ga1444166a5b3130cdd3f3c5a40f102ff3"><td class="mdescLeft">&#160;</td><td class="mdescRight">PINT Pin Interrupt enable type. <br/></td></tr>
+<tr class="separator:ga1444166a5b3130cdd3f3c5a40f102ff3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa230ebd4a048282d15d3ce2d9fa9deac"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa230ebd4a048282d15d3ce2d9fa9deac"></a>
+typedef enum <a class="el" href="a00265.html#gaf3fe032c283828db1b5790b3922be911">_pint_int</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#gaa230ebd4a048282d15d3ce2d9fa9deac">pint_pin_int_t</a></td></tr>
+<tr class="memdesc:gaa230ebd4a048282d15d3ce2d9fa9deac"><td class="mdescLeft">&#160;</td><td class="mdescRight">PINT Pin Interrupt type. <br/></td></tr>
+<tr class="separator:gaa230ebd4a048282d15d3ce2d9fa9deac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga69c6555d76c0c009931e669464c9be5d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga69c6555d76c0c009931e669464c9be5d"></a>
+typedef enum <a class="el" href="a00265.html#ga7adaf153a42d62fb9b02d6468f7279a9">_pint_pmatch_input_src</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga69c6555d76c0c009931e669464c9be5d">pint_pmatch_input_src_t</a></td></tr>
+<tr class="memdesc:ga69c6555d76c0c009931e669464c9be5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">PINT Pattern Match bit slice input source type. <br/></td></tr>
+<tr class="separator:ga69c6555d76c0c009931e669464c9be5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga859582ee39bfbd70c9305dbd2d68459d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga859582ee39bfbd70c9305dbd2d68459d"></a>
+typedef enum <a class="el" href="a00265.html#ga67c1b06ba8a5e6faf0af44c2bfeccc47">_pint_pmatch_bslice</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga859582ee39bfbd70c9305dbd2d68459d">pint_pmatch_bslice_t</a></td></tr>
+<tr class="memdesc:ga859582ee39bfbd70c9305dbd2d68459d"><td class="mdescLeft">&#160;</td><td class="mdescRight">PINT Pattern Match bit slice type. <br/></td></tr>
+<tr class="separator:ga859582ee39bfbd70c9305dbd2d68459d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga17c131767c557e4e95809612c27fa2b5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga17c131767c557e4e95809612c27fa2b5"></a>
+typedef enum <br class="typebreak"/>
+<a class="el" href="a00265.html#ga395ddf0144533abe3773a44dfc6a8a28">_pint_pmatch_bslice_cfg</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga17c131767c557e4e95809612c27fa2b5">pint_pmatch_bslice_cfg_t</a></td></tr>
+<tr class="memdesc:ga17c131767c557e4e95809612c27fa2b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">PINT Pattern Match configuration type. <br/></td></tr>
+<tr class="separator:ga17c131767c557e4e95809612c27fa2b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga262ac9596c0926fbe5f346e0f6aaf9f5"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga262ac9596c0926fbe5f346e0f6aaf9f5">pint_cb_t</a> )(<a class="el" href="a00265.html#gaa230ebd4a048282d15d3ce2d9fa9deac">pint_pin_int_t</a> pintr, uint32_t pmatch_status)</td></tr>
+<tr class="memdesc:ga262ac9596c0926fbe5f346e0f6aaf9f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">PINT Callback function.  <a href="#ga262ac9596c0926fbe5f346e0f6aaf9f5">More...</a><br/></td></tr>
+<tr class="separator:ga262ac9596c0926fbe5f346e0f6aaf9f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:gaf8654c714018c6241d9ebd01f3fb5a26"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00265.html#ggaf8654c714018c6241d9ebd01f3fb5a26ad5619ab112a016977ca65fb758bf6c17">kStatus_SEMA42_Busy</a> = MAKE_STATUS(kStatusGroup_SEMA42, 0), 
+<tr class="memitem:ga2e08ec6acfb4d114d470ff86a0bef497"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga2e08ec6acfb4d114d470ff86a0bef497">_pint_pin_enable</a> { <br/>
+&#160;&#160;<a class="el" href="a00265.html#gga2e08ec6acfb4d114d470ff86a0bef497aa48de84b39b48759086f2d7ae0c8091e">kPINT_PinIntEnableNone</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00265.html#ggaf8654c714018c6241d9ebd01f3fb5a26ab405b2900737aa815ebc18ea68df56b1">kStatus_SEMA42_Reseting</a> = MAKE_STATUS(kStatusGroup_SEMA42, 1)
+&#160;&#160;<a class="el" href="a00265.html#gga2e08ec6acfb4d114d470ff86a0bef497ae873d30aec2ca54de88c69f55ea42a07">kPINT_PinIntEnableRiseEdge</a> = PINT_PIN_RISE_EDGE, 
 <br/>
- }</td></tr>
-<tr class="memdesc:gaf8654c714018c6241d9ebd01f3fb5a26"><td class="mdescLeft">&#160;</td><td class="mdescRight">SEMA42 status return codes.  <a href="a00265.html#gaf8654c714018c6241d9ebd01f3fb5a26">More...</a><br/></td></tr>
-<tr class="separator:gaf8654c714018c6241d9ebd01f3fb5a26"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga84eaf8f6200932ad09d0a75ece6e463d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga84eaf8f6200932ad09d0a75ece6e463d">sema42_gate_status_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00265.html#gga84eaf8f6200932ad09d0a75ece6e463daf9c45d68a643bac3a34b65a5cf1aade6">kSEMA42_Unlocked</a> = 0U, 
+&#160;&#160;<a class="el" href="a00265.html#gga2e08ec6acfb4d114d470ff86a0bef497a6f54d55ac52e8e697f83637109560e89">kPINT_PinIntEnableFallEdge</a> = PINT_PIN_FALL_EDGE, 
 <br/>
-&#160;&#160;<a class="el" href="a00265.html#gga84eaf8f6200932ad09d0a75ece6e463da3006dc26747f1eb2b8e1941660f7dc24">kSEMA42_LockedByProc0</a> = 1U, 
+&#160;&#160;<a class="el" href="a00265.html#gga2e08ec6acfb4d114d470ff86a0bef497a58ac8e76b409274b7d02ef6e9805dcef">kPINT_PinIntEnableBothEdges</a> = PINT_PIN_BOTH_EDGE, 
 <br/>
-&#160;&#160;<a class="el" href="a00265.html#gga84eaf8f6200932ad09d0a75ece6e463daf4a285b99114632b0b00c85ea7bf1956">kSEMA42_LockedByProc1</a> = 2U, 
+&#160;&#160;<a class="el" href="a00265.html#gga2e08ec6acfb4d114d470ff86a0bef497a3bd6a570eee5c1fddd95ef2411b35a7e">kPINT_PinIntEnableLowLevel</a> = PINT_PIN_LOW_LEVEL, 
 <br/>
-&#160;&#160;<a class="el" href="a00265.html#gga84eaf8f6200932ad09d0a75ece6e463da94c2081e5497a328126e879bf874fbc5">kSEMA42_LockedByProc2</a> = 3U, 
-<br/>
-&#160;&#160;<a class="el" href="a00265.html#gga84eaf8f6200932ad09d0a75ece6e463dad41b71c7142766ca69c0aade4c3bee53">kSEMA42_LockedByProc3</a> = 4U, 
-<br/>
-&#160;&#160;<a class="el" href="a00265.html#gga84eaf8f6200932ad09d0a75ece6e463da9e984cd6c8ea942d67614cbd8faa7799">kSEMA42_LockedByProc4</a> = 5U, 
-<br/>
-&#160;&#160;<a class="el" href="a00265.html#gga84eaf8f6200932ad09d0a75ece6e463dad5f2f1cfd86ec744eb9c406baccdeeaf">kSEMA42_LockedByProc5</a> = 6U, 
-<br/>
-&#160;&#160;<a class="el" href="a00265.html#gga84eaf8f6200932ad09d0a75ece6e463da20694487b850dcb86cab5735686d9590">kSEMA42_LockedByProc6</a> = 7U, 
-<br/>
-&#160;&#160;<a class="el" href="a00265.html#gga84eaf8f6200932ad09d0a75ece6e463da94c20f5d4e13f9ed07cf370b3bbe33cb">kSEMA42_LockedByProc7</a> = 8U, 
-<br/>
-&#160;&#160;<a class="el" href="a00265.html#gga84eaf8f6200932ad09d0a75ece6e463dad614e32d0b0814c1fe69c3e0c92f7f94">kSEMA42_LockedByProc8</a> = 9U, 
-<br/>
-&#160;&#160;<a class="el" href="a00265.html#gga84eaf8f6200932ad09d0a75ece6e463da26fb2f4b8ceeae21a8e93fd069d9f2e4">kSEMA42_LockedByProc9</a> = 10U, 
-<br/>
-&#160;&#160;<a class="el" href="a00265.html#gga84eaf8f6200932ad09d0a75ece6e463dad888ea149e3b30c04aec2e828f97deee">kSEMA42_LockedByProc10</a> = 11U, 
-<br/>
-&#160;&#160;<a class="el" href="a00265.html#gga84eaf8f6200932ad09d0a75ece6e463da1923aba10a72c8729327a9c8e6a008f1">kSEMA42_LockedByProc11</a> = 12U, 
-<br/>
-&#160;&#160;<a class="el" href="a00265.html#gga84eaf8f6200932ad09d0a75ece6e463dac2129067e57645365d38996426d8197f">kSEMA42_LockedByProc12</a> = 13U, 
-<br/>
-&#160;&#160;<a class="el" href="a00265.html#gga84eaf8f6200932ad09d0a75ece6e463da6e63d742de6625c789e49b0586f73c3e">kSEMA42_LockedByProc13</a> = 14U, 
-<br/>
-&#160;&#160;<a class="el" href="a00265.html#gga84eaf8f6200932ad09d0a75ece6e463daed15def9132f383c674644194a699ef9">kSEMA42_LockedByProc14</a> = 15U
+&#160;&#160;<a class="el" href="a00265.html#gga2e08ec6acfb4d114d470ff86a0bef497affc9b2756b7642ddb60ea78f4bbbd592">kPINT_PinIntEnableHighLevel</a> = PINT_PIN_HIGH_LEVEL
 <br/>
  }</td></tr>
-<tr class="memdesc:ga84eaf8f6200932ad09d0a75ece6e463d"><td class="mdescLeft">&#160;</td><td class="mdescRight">SEMA42 gate lock status.  <a href="a00265.html#ga84eaf8f6200932ad09d0a75ece6e463d">More...</a><br/></td></tr>
-<tr class="separator:ga84eaf8f6200932ad09d0a75ece6e463d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga2e08ec6acfb4d114d470ff86a0bef497"><td class="mdescLeft">&#160;</td><td class="mdescRight">PINT Pin Interrupt enable type.  <a href="a00265.html#ga2e08ec6acfb4d114d470ff86a0bef497">More...</a><br/></td></tr>
+<tr class="separator:ga2e08ec6acfb4d114d470ff86a0bef497"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf3fe032c283828db1b5790b3922be911"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#gaf3fe032c283828db1b5790b3922be911">_pint_int</a> { <br/>
+&#160;&#160;<a class="el" href="a00265.html#ggaf3fe032c283828db1b5790b3922be911a5df52c4fbb437e61b638d35cbc550162">kPINT_PinInt0</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00265.html#ggaf3fe032c283828db1b5790b3922be911ab62e1c2d3cdccef05e45ae9028cecbb4">kPINT_PinInt1</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00265.html#ggaf3fe032c283828db1b5790b3922be911a81913bc912b5164bb749b6a2e8823808">kPINT_PinInt2</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00265.html#ggaf3fe032c283828db1b5790b3922be911a751ce5a16f196ca04d08d2e5d65af47c">kPINT_PinInt3</a> = 3U, 
+<br/>
+&#160;&#160;<a class="el" href="a00265.html#ggaf3fe032c283828db1b5790b3922be911acf173e0dc3d44c77bb08146494a0249b">kPINT_PinInt4</a> = 4U, 
+<br/>
+&#160;&#160;<a class="el" href="a00265.html#ggaf3fe032c283828db1b5790b3922be911a45fc443b2ec03c89708ac897fc3fc902">kPINT_PinInt5</a> = 5U, 
+<br/>
+&#160;&#160;<a class="el" href="a00265.html#ggaf3fe032c283828db1b5790b3922be911adf92ec20d1fa6a12bda6c42e5304cf46">kPINT_PinInt6</a> = 6U, 
+<br/>
+&#160;&#160;<a class="el" href="a00265.html#ggaf3fe032c283828db1b5790b3922be911aae1e0da9add6e3e1dd57705a682d65fa">kPINT_PinInt7</a> = 7U
+<br/>
+ }</td></tr>
+<tr class="memdesc:gaf3fe032c283828db1b5790b3922be911"><td class="mdescLeft">&#160;</td><td class="mdescRight">PINT Pin Interrupt type.  <a href="a00265.html#gaf3fe032c283828db1b5790b3922be911">More...</a><br/></td></tr>
+<tr class="separator:gaf3fe032c283828db1b5790b3922be911"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7adaf153a42d62fb9b02d6468f7279a9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga7adaf153a42d62fb9b02d6468f7279a9">_pint_pmatch_input_src</a> { <br/>
+&#160;&#160;<a class="el" href="a00265.html#gga7adaf153a42d62fb9b02d6468f7279a9a51f543e6f680df9beb5841231b7b3a96">kPINT_PatternMatchInp0Src</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00265.html#gga7adaf153a42d62fb9b02d6468f7279a9a6fc5c9dbee30b375feb9ce6c86b224c2">kPINT_PatternMatchInp1Src</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00265.html#gga7adaf153a42d62fb9b02d6468f7279a9a41b057b493937cd87bc212cb2e316f8a">kPINT_PatternMatchInp2Src</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00265.html#gga7adaf153a42d62fb9b02d6468f7279a9a6be4432cb9e687d043a2c25c1af48869">kPINT_PatternMatchInp3Src</a> = 3U, 
+<br/>
+&#160;&#160;<a class="el" href="a00265.html#gga7adaf153a42d62fb9b02d6468f7279a9aabc93fc28498f5577939f38e0513304c">kPINT_PatternMatchInp4Src</a> = 4U, 
+<br/>
+&#160;&#160;<a class="el" href="a00265.html#gga7adaf153a42d62fb9b02d6468f7279a9a78ff6e40ab17d81181284c56b62b77aa">kPINT_PatternMatchInp5Src</a> = 5U, 
+<br/>
+&#160;&#160;<a class="el" href="a00265.html#gga7adaf153a42d62fb9b02d6468f7279a9a9b2f5abc74e498a599f5c005a6cc911f">kPINT_PatternMatchInp6Src</a> = 6U, 
+<br/>
+&#160;&#160;<a class="el" href="a00265.html#gga7adaf153a42d62fb9b02d6468f7279a9a2c93115b816dc676460cfc1be85778f0">kPINT_PatternMatchInp7Src</a> = 7U, 
+<br/>
+&#160;&#160;<a class="el" href="a00265.html#gga7adaf153a42d62fb9b02d6468f7279a9a1f7f561990336a81a46f22395820907d">kPINT_SecPatternMatchInp0Src</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00265.html#gga7adaf153a42d62fb9b02d6468f7279a9a8cc05c9aec163085b7a2b4481fdc971d">kPINT_SecPatternMatchInp1Src</a> = 1U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga7adaf153a42d62fb9b02d6468f7279a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">PINT Pattern Match bit slice input source type.  <a href="a00265.html#ga7adaf153a42d62fb9b02d6468f7279a9">More...</a><br/></td></tr>
+<tr class="separator:ga7adaf153a42d62fb9b02d6468f7279a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga67c1b06ba8a5e6faf0af44c2bfeccc47"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga67c1b06ba8a5e6faf0af44c2bfeccc47">_pint_pmatch_bslice</a> { <br/>
+&#160;&#160;<a class="el" href="a00265.html#gga67c1b06ba8a5e6faf0af44c2bfeccc47a106986aeb5e12c2b76e070def3b37d95">kPINT_PatternMatchBSlice0</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00265.html#gga67c1b06ba8a5e6faf0af44c2bfeccc47a0d3bf0a5022325acaae66e172c984db0">kPINT_PatternMatchBSlice1</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00265.html#gga67c1b06ba8a5e6faf0af44c2bfeccc47af00e092237b1b299bdfdd901f207c468">kPINT_PatternMatchBSlice2</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00265.html#gga67c1b06ba8a5e6faf0af44c2bfeccc47ae5db81838d55c8a8839b1dd47954d865">kPINT_PatternMatchBSlice3</a> = 3U, 
+<br/>
+&#160;&#160;<a class="el" href="a00265.html#gga67c1b06ba8a5e6faf0af44c2bfeccc47ac0ce3f2fbc216bc3cec68c47263530c5">kPINT_PatternMatchBSlice4</a> = 4U, 
+<br/>
+&#160;&#160;<a class="el" href="a00265.html#gga67c1b06ba8a5e6faf0af44c2bfeccc47a1ca87ca7db6ec59b675c6e70abc45da0">kPINT_PatternMatchBSlice5</a> = 5U, 
+<br/>
+&#160;&#160;<a class="el" href="a00265.html#gga67c1b06ba8a5e6faf0af44c2bfeccc47a86a79a77b44e91f432bb8ee9070f9602">kPINT_PatternMatchBSlice6</a> = 6U, 
+<br/>
+&#160;&#160;<a class="el" href="a00265.html#gga67c1b06ba8a5e6faf0af44c2bfeccc47a3a75ed56ef8a3429c01fc686f22b8e8a">kPINT_PatternMatchBSlice7</a> = 7U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga67c1b06ba8a5e6faf0af44c2bfeccc47"><td class="mdescLeft">&#160;</td><td class="mdescRight">PINT Pattern Match bit slice type.  <a href="a00265.html#ga67c1b06ba8a5e6faf0af44c2bfeccc47">More...</a><br/></td></tr>
+<tr class="separator:ga67c1b06ba8a5e6faf0af44c2bfeccc47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga395ddf0144533abe3773a44dfc6a8a28"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga395ddf0144533abe3773a44dfc6a8a28">_pint_pmatch_bslice_cfg</a> { <br/>
+&#160;&#160;<a class="el" href="a00265.html#gga395ddf0144533abe3773a44dfc6a8a28a128703d2c2175a315aaffad869ed6a32">kPINT_PatternMatchAlways</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00265.html#gga395ddf0144533abe3773a44dfc6a8a28a654c70eeed38b0be2271dc51d7cc04f5">kPINT_PatternMatchStickyRise</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00265.html#gga395ddf0144533abe3773a44dfc6a8a28a9d2a3e9717c34de3a884b695f35a6c37">kPINT_PatternMatchStickyFall</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00265.html#gga395ddf0144533abe3773a44dfc6a8a28a059c3472509304186252b655cf486d8b">kPINT_PatternMatchStickyBothEdges</a> = 3U, 
+<br/>
+&#160;&#160;<a class="el" href="a00265.html#gga395ddf0144533abe3773a44dfc6a8a28a7dc0770cf7ffe184788c30bd1ac9c515">kPINT_PatternMatchHigh</a> = 4U, 
+<br/>
+&#160;&#160;<a class="el" href="a00265.html#gga395ddf0144533abe3773a44dfc6a8a28a3b4af984526871b66489b0eb294d2df5">kPINT_PatternMatchLow</a> = 5U, 
+<br/>
+&#160;&#160;<a class="el" href="a00265.html#gga395ddf0144533abe3773a44dfc6a8a28ab5630ebfbc6e52c9b04f659918c094f2">kPINT_PatternMatchNever</a> = 6U, 
+<br/>
+&#160;&#160;<a class="el" href="a00265.html#gga395ddf0144533abe3773a44dfc6a8a28aac967156901735a43316f7f1c4720328">kPINT_PatternMatchBothEdges</a> = 7U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga395ddf0144533abe3773a44dfc6a8a28"><td class="mdescLeft">&#160;</td><td class="mdescRight">PINT Pattern Match configuration type.  <a href="a00265.html#ga395ddf0144533abe3773a44dfc6a8a28">More...</a><br/></td></tr>
+<tr class="separator:ga395ddf0144533abe3773a44dfc6a8a28"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga13685f70a38ed1f8368581b475e963cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga13685f70a38ed1f8368581b475e963cf">SEMA42_Init</a> (SEMA42_Type *base)</td></tr>
-<tr class="memdesc:ga13685f70a38ed1f8368581b475e963cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the SEMA42 module.  <a href="#ga13685f70a38ed1f8368581b475e963cf">More...</a><br/></td></tr>
-<tr class="separator:ga13685f70a38ed1f8368581b475e963cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae646085e5d791b895d478e9ef161c3b3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#gae646085e5d791b895d478e9ef161c3b3">SEMA42_Deinit</a> (SEMA42_Type *base)</td></tr>
-<tr class="memdesc:gae646085e5d791b895d478e9ef161c3b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-initializes the SEMA42 module.  <a href="#gae646085e5d791b895d478e9ef161c3b3">More...</a><br/></td></tr>
-<tr class="separator:gae646085e5d791b895d478e9ef161c3b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab5e2b0d71c6219bcfb381f4b70d7e7b0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#gab5e2b0d71c6219bcfb381f4b70d7e7b0">SEMA42_TryLock</a> (SEMA42_Type *base, uint8_t gateNum, uint8_t procNum)</td></tr>
-<tr class="memdesc:gab5e2b0d71c6219bcfb381f4b70d7e7b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tries to lock the SEMA42 gate.  <a href="#gab5e2b0d71c6219bcfb381f4b70d7e7b0">More...</a><br/></td></tr>
-<tr class="separator:gab5e2b0d71c6219bcfb381f4b70d7e7b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaab41e809f563868b6b477a7bb62c9ce2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#gaab41e809f563868b6b477a7bb62c9ce2">SEMA42_Lock</a> (SEMA42_Type *base, uint8_t gateNum, uint8_t procNum)</td></tr>
-<tr class="memdesc:gaab41e809f563868b6b477a7bb62c9ce2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Locks the SEMA42 gate.  <a href="#gaab41e809f563868b6b477a7bb62c9ce2">More...</a><br/></td></tr>
-<tr class="separator:gaab41e809f563868b6b477a7bb62c9ce2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac19b80ba254697a9e22b54866226e879"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#gac19b80ba254697a9e22b54866226e879">SEMA42_Unlock</a> (SEMA42_Type *base, uint8_t gateNum)</td></tr>
-<tr class="memdesc:gac19b80ba254697a9e22b54866226e879"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unlocks the SEMA42 gate.  <a href="#gac19b80ba254697a9e22b54866226e879">More...</a><br/></td></tr>
-<tr class="separator:gac19b80ba254697a9e22b54866226e879"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gace62f3aae17c5f6d75764f932f2a673f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00265.html#ga84eaf8f6200932ad09d0a75ece6e463d">sema42_gate_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#gace62f3aae17c5f6d75764f932f2a673f">SEMA42_GetGateStatus</a> (SEMA42_Type *base, uint8_t gateNum)</td></tr>
-<tr class="memdesc:gace62f3aae17c5f6d75764f932f2a673f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the status of the SEMA42 gate.  <a href="#gace62f3aae17c5f6d75764f932f2a673f">More...</a><br/></td></tr>
-<tr class="separator:gace62f3aae17c5f6d75764f932f2a673f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6fc8ecf853c6394511d55536d37c7d4f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga6fc8ecf853c6394511d55536d37c7d4f">SEMA42_ResetGate</a> (SEMA42_Type *base, uint8_t gateNum)</td></tr>
-<tr class="memdesc:ga6fc8ecf853c6394511d55536d37c7d4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the SEMA42 gate to an unlocked status.  <a href="#ga6fc8ecf853c6394511d55536d37c7d4f">More...</a><br/></td></tr>
-<tr class="separator:ga6fc8ecf853c6394511d55536d37c7d4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9695921a658471089cddadb8789bb138"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga9695921a658471089cddadb8789bb138">SEMA42_ResetAllGates</a> (SEMA42_Type *base)</td></tr>
-<tr class="memdesc:ga9695921a658471089cddadb8789bb138"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets all SEMA42 gates to an unlocked status.  <a href="#ga9695921a658471089cddadb8789bb138">More...</a><br/></td></tr>
-<tr class="separator:ga9695921a658471089cddadb8789bb138"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf043d142dac622bedd50b736b52ac6e9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#gaf043d142dac622bedd50b736b52ac6e9">PINT_Init</a> (PINT_Type *base)</td></tr>
+<tr class="memdesc:gaf043d142dac622bedd50b736b52ac6e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize PINT peripheral.  <a href="#gaf043d142dac622bedd50b736b52ac6e9">More...</a><br/></td></tr>
+<tr class="separator:gaf043d142dac622bedd50b736b52ac6e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga363edbba9536380728e44bd7d1a0e7df"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga363edbba9536380728e44bd7d1a0e7df">PINT_PinInterruptConfig</a> (PINT_Type *base, <a class="el" href="a00265.html#gaa230ebd4a048282d15d3ce2d9fa9deac">pint_pin_int_t</a> intr, <a class="el" href="a00265.html#ga1444166a5b3130cdd3f3c5a40f102ff3">pint_pin_enable_t</a> enable, <a class="el" href="a00265.html#ga262ac9596c0926fbe5f346e0f6aaf9f5">pint_cb_t</a> callback)</td></tr>
+<tr class="memdesc:ga363edbba9536380728e44bd7d1a0e7df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure PINT peripheral pin interrupt.  <a href="#ga363edbba9536380728e44bd7d1a0e7df">More...</a><br/></td></tr>
+<tr class="separator:ga363edbba9536380728e44bd7d1a0e7df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga12c568c9b7f6d46257dc63505a381701"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga12c568c9b7f6d46257dc63505a381701">PINT_PinInterruptGetConfig</a> (PINT_Type *base, <a class="el" href="a00265.html#gaa230ebd4a048282d15d3ce2d9fa9deac">pint_pin_int_t</a> pintr, <a class="el" href="a00265.html#ga1444166a5b3130cdd3f3c5a40f102ff3">pint_pin_enable_t</a> *enable, <a class="el" href="a00265.html#ga262ac9596c0926fbe5f346e0f6aaf9f5">pint_cb_t</a> *callback)</td></tr>
+<tr class="memdesc:ga12c568c9b7f6d46257dc63505a381701"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get PINT peripheral pin interrupt configuration.  <a href="#ga12c568c9b7f6d46257dc63505a381701">More...</a><br/></td></tr>
+<tr class="separator:ga12c568c9b7f6d46257dc63505a381701"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab784e6aea0129b0c90164462bd0dbac5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#gab784e6aea0129b0c90164462bd0dbac5">PINT_PinInterruptClrStatus</a> (PINT_Type *base, <a class="el" href="a00265.html#gaa230ebd4a048282d15d3ce2d9fa9deac">pint_pin_int_t</a> pintr)</td></tr>
+<tr class="memdesc:gab784e6aea0129b0c90164462bd0dbac5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear Selected pin interrupt status only when the pin was triggered by edge-sensitive.  <a href="#gab784e6aea0129b0c90164462bd0dbac5">More...</a><br/></td></tr>
+<tr class="separator:gab784e6aea0129b0c90164462bd0dbac5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga99a96e386a822de59ac2d60149ec47f3"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga99a96e386a822de59ac2d60149ec47f3">PINT_PinInterruptGetStatus</a> (PINT_Type *base, <a class="el" href="a00265.html#gaa230ebd4a048282d15d3ce2d9fa9deac">pint_pin_int_t</a> pintr)</td></tr>
+<tr class="memdesc:ga99a96e386a822de59ac2d60149ec47f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Selected pin interrupt status.  <a href="#ga99a96e386a822de59ac2d60149ec47f3">More...</a><br/></td></tr>
+<tr class="separator:ga99a96e386a822de59ac2d60149ec47f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gace94acb3f70964230b2606fdbeb5f58b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#gace94acb3f70964230b2606fdbeb5f58b">PINT_PinInterruptClrStatusAll</a> (PINT_Type *base)</td></tr>
+<tr class="memdesc:gace94acb3f70964230b2606fdbeb5f58b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear all pin interrupts status only when pins were triggered by edge-sensitive.  <a href="#gace94acb3f70964230b2606fdbeb5f58b">More...</a><br/></td></tr>
+<tr class="separator:gace94acb3f70964230b2606fdbeb5f58b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab5dbaf58c90b1ef54bcd2c5dba9e178f"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#gab5dbaf58c90b1ef54bcd2c5dba9e178f">PINT_PinInterruptGetStatusAll</a> (PINT_Type *base)</td></tr>
+<tr class="memdesc:gab5dbaf58c90b1ef54bcd2c5dba9e178f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get all pin interrupts status.  <a href="#gab5dbaf58c90b1ef54bcd2c5dba9e178f">More...</a><br/></td></tr>
+<tr class="separator:gab5dbaf58c90b1ef54bcd2c5dba9e178f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga055c655c611b5645ce6903557ef809bb"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga055c655c611b5645ce6903557ef809bb">PINT_PinInterruptClrFallFlag</a> (PINT_Type *base, <a class="el" href="a00265.html#gaa230ebd4a048282d15d3ce2d9fa9deac">pint_pin_int_t</a> pintr)</td></tr>
+<tr class="memdesc:ga055c655c611b5645ce6903557ef809bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear Selected pin interrupt fall flag.  <a href="#ga055c655c611b5645ce6903557ef809bb">More...</a><br/></td></tr>
+<tr class="separator:ga055c655c611b5645ce6903557ef809bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaace443444dec2e5b7e3e20cf69c53def"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#gaace443444dec2e5b7e3e20cf69c53def">PINT_PinInterruptGetFallFlag</a> (PINT_Type *base, <a class="el" href="a00265.html#gaa230ebd4a048282d15d3ce2d9fa9deac">pint_pin_int_t</a> pintr)</td></tr>
+<tr class="memdesc:gaace443444dec2e5b7e3e20cf69c53def"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get selected pin interrupt fall flag.  <a href="#gaace443444dec2e5b7e3e20cf69c53def">More...</a><br/></td></tr>
+<tr class="separator:gaace443444dec2e5b7e3e20cf69c53def"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga11c44cbe5b42c79b22a3053c85b1e5d0"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga11c44cbe5b42c79b22a3053c85b1e5d0">PINT_PinInterruptClrFallFlagAll</a> (PINT_Type *base)</td></tr>
+<tr class="memdesc:ga11c44cbe5b42c79b22a3053c85b1e5d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear all pin interrupt fall flags.  <a href="#ga11c44cbe5b42c79b22a3053c85b1e5d0">More...</a><br/></td></tr>
+<tr class="separator:ga11c44cbe5b42c79b22a3053c85b1e5d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga58eced039e8c793b7ff148d6cfacde5b"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga58eced039e8c793b7ff148d6cfacde5b">PINT_PinInterruptGetFallFlagAll</a> (PINT_Type *base)</td></tr>
+<tr class="memdesc:ga58eced039e8c793b7ff148d6cfacde5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get all pin interrupt fall flags.  <a href="#ga58eced039e8c793b7ff148d6cfacde5b">More...</a><br/></td></tr>
+<tr class="separator:ga58eced039e8c793b7ff148d6cfacde5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga269af5856a4cfd5d2a171b4777d6884a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga269af5856a4cfd5d2a171b4777d6884a">PINT_PinInterruptClrRiseFlag</a> (PINT_Type *base, <a class="el" href="a00265.html#gaa230ebd4a048282d15d3ce2d9fa9deac">pint_pin_int_t</a> pintr)</td></tr>
+<tr class="memdesc:ga269af5856a4cfd5d2a171b4777d6884a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear Selected pin interrupt rise flag.  <a href="#ga269af5856a4cfd5d2a171b4777d6884a">More...</a><br/></td></tr>
+<tr class="separator:ga269af5856a4cfd5d2a171b4777d6884a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaec7a3986f92f8c11a70a80af1a93a3b6"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#gaec7a3986f92f8c11a70a80af1a93a3b6">PINT_PinInterruptGetRiseFlag</a> (PINT_Type *base, <a class="el" href="a00265.html#gaa230ebd4a048282d15d3ce2d9fa9deac">pint_pin_int_t</a> pintr)</td></tr>
+<tr class="memdesc:gaec7a3986f92f8c11a70a80af1a93a3b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get selected pin interrupt rise flag.  <a href="#gaec7a3986f92f8c11a70a80af1a93a3b6">More...</a><br/></td></tr>
+<tr class="separator:gaec7a3986f92f8c11a70a80af1a93a3b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga53dd5706866fa0313689db6e4d9c1a9b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga53dd5706866fa0313689db6e4d9c1a9b">PINT_PinInterruptClrRiseFlagAll</a> (PINT_Type *base)</td></tr>
+<tr class="memdesc:ga53dd5706866fa0313689db6e4d9c1a9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear all pin interrupt rise flags.  <a href="#ga53dd5706866fa0313689db6e4d9c1a9b">More...</a><br/></td></tr>
+<tr class="separator:ga53dd5706866fa0313689db6e4d9c1a9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga08b623f67c277521182f8c9e630037ae"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga08b623f67c277521182f8c9e630037ae">PINT_PinInterruptGetRiseFlagAll</a> (PINT_Type *base)</td></tr>
+<tr class="memdesc:ga08b623f67c277521182f8c9e630037ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get all pin interrupt rise flags.  <a href="#ga08b623f67c277521182f8c9e630037ae">More...</a><br/></td></tr>
+<tr class="separator:ga08b623f67c277521182f8c9e630037ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1dc66cd865640c0b60eb128a868eab37"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga1dc66cd865640c0b60eb128a868eab37">PINT_PatternMatchConfig</a> (PINT_Type *base, <a class="el" href="a00265.html#ga859582ee39bfbd70c9305dbd2d68459d">pint_pmatch_bslice_t</a> bslice, pint_pmatch_cfg_t *cfg)</td></tr>
+<tr class="memdesc:ga1dc66cd865640c0b60eb128a868eab37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure PINT pattern match.  <a href="#ga1dc66cd865640c0b60eb128a868eab37">More...</a><br/></td></tr>
+<tr class="separator:ga1dc66cd865640c0b60eb128a868eab37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6d4f8e83cec4bc716231c97c2ceb5421"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga6d4f8e83cec4bc716231c97c2ceb5421">PINT_PatternMatchGetConfig</a> (PINT_Type *base, <a class="el" href="a00265.html#ga859582ee39bfbd70c9305dbd2d68459d">pint_pmatch_bslice_t</a> bslice, pint_pmatch_cfg_t *cfg)</td></tr>
+<tr class="memdesc:ga6d4f8e83cec4bc716231c97c2ceb5421"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get PINT pattern match configuration.  <a href="#ga6d4f8e83cec4bc716231c97c2ceb5421">More...</a><br/></td></tr>
+<tr class="separator:ga6d4f8e83cec4bc716231c97c2ceb5421"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga74b3eece6c6eabc38f3194b125ff80d5"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga74b3eece6c6eabc38f3194b125ff80d5">PINT_PatternMatchGetStatus</a> (PINT_Type *base, <a class="el" href="a00265.html#ga859582ee39bfbd70c9305dbd2d68459d">pint_pmatch_bslice_t</a> bslice)</td></tr>
+<tr class="memdesc:ga74b3eece6c6eabc38f3194b125ff80d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get pattern match bit slice status.  <a href="#ga74b3eece6c6eabc38f3194b125ff80d5">More...</a><br/></td></tr>
+<tr class="separator:ga74b3eece6c6eabc38f3194b125ff80d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga567b159bbfa265ed02c4900769ed8fe4"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga567b159bbfa265ed02c4900769ed8fe4">PINT_PatternMatchGetStatusAll</a> (PINT_Type *base)</td></tr>
+<tr class="memdesc:ga567b159bbfa265ed02c4900769ed8fe4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get status of all pattern match bit slices.  <a href="#ga567b159bbfa265ed02c4900769ed8fe4">More...</a><br/></td></tr>
+<tr class="separator:ga567b159bbfa265ed02c4900769ed8fe4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga00d40f5f01c445206f1f800dcc7b6e89"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga00d40f5f01c445206f1f800dcc7b6e89">PINT_PatternMatchResetDetectLogic</a> (PINT_Type *base)</td></tr>
+<tr class="memdesc:ga00d40f5f01c445206f1f800dcc7b6e89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset pattern match detection logic.  <a href="#ga00d40f5f01c445206f1f800dcc7b6e89">More...</a><br/></td></tr>
+<tr class="separator:ga00d40f5f01c445206f1f800dcc7b6e89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8911d499fb65ffe496c01f65bad9314f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga8911d499fb65ffe496c01f65bad9314f">PINT_PatternMatchEnable</a> (PINT_Type *base)</td></tr>
+<tr class="memdesc:ga8911d499fb65ffe496c01f65bad9314f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable pattern match function.  <a href="#ga8911d499fb65ffe496c01f65bad9314f">More...</a><br/></td></tr>
+<tr class="separator:ga8911d499fb65ffe496c01f65bad9314f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4dd886dc387a64a5cb146ccd7297e1e1"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga4dd886dc387a64a5cb146ccd7297e1e1">PINT_PatternMatchDisable</a> (PINT_Type *base)</td></tr>
+<tr class="memdesc:ga4dd886dc387a64a5cb146ccd7297e1e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable pattern match function.  <a href="#ga4dd886dc387a64a5cb146ccd7297e1e1">More...</a><br/></td></tr>
+<tr class="separator:ga4dd886dc387a64a5cb146ccd7297e1e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf5754b4b1d1436c359dde18101657d4e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#gaf5754b4b1d1436c359dde18101657d4e">PINT_PatternMatchEnableRXEV</a> (PINT_Type *base)</td></tr>
+<tr class="memdesc:gaf5754b4b1d1436c359dde18101657d4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable RXEV output.  <a href="#gaf5754b4b1d1436c359dde18101657d4e">More...</a><br/></td></tr>
+<tr class="separator:gaf5754b4b1d1436c359dde18101657d4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga73f0e7280f898bf99fe92b3519878a77"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga73f0e7280f898bf99fe92b3519878a77">PINT_PatternMatchDisableRXEV</a> (PINT_Type *base)</td></tr>
+<tr class="memdesc:ga73f0e7280f898bf99fe92b3519878a77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable RXEV output.  <a href="#ga73f0e7280f898bf99fe92b3519878a77">More...</a><br/></td></tr>
+<tr class="separator:ga73f0e7280f898bf99fe92b3519878a77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac6b1406205adace6696a1647250ad76d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#gac6b1406205adace6696a1647250ad76d">PINT_EnableCallback</a> (PINT_Type *base)</td></tr>
+<tr class="memdesc:gac6b1406205adace6696a1647250ad76d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable callback.  <a href="#gac6b1406205adace6696a1647250ad76d">More...</a><br/></td></tr>
+<tr class="separator:gac6b1406205adace6696a1647250ad76d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gada262638d555d9a503ddcdbed24ec475"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#gada262638d555d9a503ddcdbed24ec475">PINT_DisableCallback</a> (PINT_Type *base)</td></tr>
+<tr class="memdesc:gada262638d555d9a503ddcdbed24ec475"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable callback.  <a href="#gada262638d555d9a503ddcdbed24ec475">More...</a><br/></td></tr>
+<tr class="separator:gada262638d555d9a503ddcdbed24ec475"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga78ffa3e09e17db8dc6a9038123ad1c46"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga78ffa3e09e17db8dc6a9038123ad1c46">PINT_Deinit</a> (PINT_Type *base)</td></tr>
+<tr class="memdesc:ga78ffa3e09e17db8dc6a9038123ad1c46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitialize PINT peripheral.  <a href="#ga78ffa3e09e17db8dc6a9038123ad1c46">More...</a><br/></td></tr>
+<tr class="separator:ga78ffa3e09e17db8dc6a9038123ad1c46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2cb0ee73a24657dd6994cb00b78c3137"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga2cb0ee73a24657dd6994cb00b78c3137">PINT_EnableCallbackByIndex</a> (PINT_Type *base, <a class="el" href="a00265.html#gaa230ebd4a048282d15d3ce2d9fa9deac">pint_pin_int_t</a> pintIdx)</td></tr>
+<tr class="memdesc:ga2cb0ee73a24657dd6994cb00b78c3137"><td class="mdescLeft">&#160;</td><td class="mdescRight">enable callback by pin index.  <a href="#ga2cb0ee73a24657dd6994cb00b78c3137">More...</a><br/></td></tr>
+<tr class="separator:ga2cb0ee73a24657dd6994cb00b78c3137"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad7300bf374c0cdc65fadff76f3ee7e5c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#gad7300bf374c0cdc65fadff76f3ee7e5c">PINT_DisableCallbackByIndex</a> (PINT_Type *base, <a class="el" href="a00265.html#gaa230ebd4a048282d15d3ce2d9fa9deac">pint_pin_int_t</a> pintIdx)</td></tr>
+<tr class="memdesc:gad7300bf374c0cdc65fadff76f3ee7e5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">disable callback by pin index.  <a href="#gad7300bf374c0cdc65fadff76f3ee7e5c">More...</a><br/></td></tr>
+<tr class="separator:gad7300bf374c0cdc65fadff76f3ee7e5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga9d157e87f2444c405d2ebf7fe9a39508"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9d157e87f2444c405d2ebf7fe9a39508"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga9d157e87f2444c405d2ebf7fe9a39508">FSL_SEMA42_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00240.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 3))</td></tr>
-<tr class="memdesc:ga9d157e87f2444c405d2ebf7fe9a39508"><td class="mdescLeft">&#160;</td><td class="mdescRight">SEMA42 driver version. <br/></td></tr>
-<tr class="separator:ga9d157e87f2444c405d2ebf7fe9a39508"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2c7d26f7018dc7e75c1e090090628069"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2c7d26f7018dc7e75c1e090090628069"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>FSL_PINT_DRIVER_VERSION</b>&#160;&#160;&#160;(<a class="el" href="a00242.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 12))</td></tr>
+<tr class="separator:ga2c7d26f7018dc7e75c1e090090628069"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gaa2a42c2ffaa2a3b57c39a5e46988d7f3"></a>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga262ac9596c0926fbe5f346e0f6aaf9f5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SEMA42_GATE_NUM_RESET_ALL&#160;&#160;&#160;(64U)</td>
+          <td class="memname">typedef void(* pint_cb_t)(<a class="el" href="a00265.html#gaa230ebd4a048282d15d3ce2d9fa9deac">pint_pin_int_t</a> pintr, uint32_t pmatch_status)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ga530cd6b85fc81427b81eb16b837b7dfd"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SEMA42_GATEn</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">base, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">n&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td>&#160;&#160;&#160;(((volatile uint8_t *)(&amp;((base)-&gt;GATE3)))[(n) ^ 3U])</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The SEMA42 gates are sorted in the order 3, 2, 1, 0, 7, 6, 5, 4, ... not in the order 0, 1, 2, 3, 4, 5, 6, 7, ... The macro SEMA42_GATEn gets the SEMA42 gate based on the gate index.</p>
-<p>The input gate index is XOR'ed with 3U: 0 ^ 3 = 3 1 ^ 3 = 2 2 ^ 3 = 1 3 ^ 3 = 0 4 ^ 3 = 7 5 ^ 3 = 6 6 ^ 3 = 5 7 ^ 3 = 4 ... </p>
 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gaf8654c714018c6241d9ebd01f3fb5a26"></a>
+<a class="anchor" id="ga2e08ec6acfb4d114d470ff86a0bef497"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">anonymous enum</td>
+          <td class="memname">enum <a class="el" href="a00265.html#ga2e08ec6acfb4d114d470ff86a0bef497">_pint_pin_enable</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaf8654c714018c6241d9ebd01f3fb5a26ad5619ab112a016977ca65fb758bf6c17"></a>kStatus_SEMA42_Busy</em>&nbsp;</td><td class="fielddoc">
-<p>SEMA42 gate has been locked by other processor. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga2e08ec6acfb4d114d470ff86a0bef497aa48de84b39b48759086f2d7ae0c8091e"></a>kPINT_PinIntEnableNone</em>&nbsp;</td><td class="fielddoc">
+<p>Do not generate Pin Interrupt. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf8654c714018c6241d9ebd01f3fb5a26ab405b2900737aa815ebc18ea68df56b1"></a>kStatus_SEMA42_Reseting</em>&nbsp;</td><td class="fielddoc">
-<p>SEMA42 gate reseting is ongoing. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga2e08ec6acfb4d114d470ff86a0bef497ae873d30aec2ca54de88c69f55ea42a07"></a>kPINT_PinIntEnableRiseEdge</em>&nbsp;</td><td class="fielddoc">
+<p>Generate Pin Interrupt on rising edge. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga2e08ec6acfb4d114d470ff86a0bef497a6f54d55ac52e8e697f83637109560e89"></a>kPINT_PinIntEnableFallEdge</em>&nbsp;</td><td class="fielddoc">
+<p>Generate Pin Interrupt on falling edge. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga2e08ec6acfb4d114d470ff86a0bef497a58ac8e76b409274b7d02ef6e9805dcef"></a>kPINT_PinIntEnableBothEdges</em>&nbsp;</td><td class="fielddoc">
+<p>Generate Pin Interrupt on both edges. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga2e08ec6acfb4d114d470ff86a0bef497a3bd6a570eee5c1fddd95ef2411b35a7e"></a>kPINT_PinIntEnableLowLevel</em>&nbsp;</td><td class="fielddoc">
+<p>Generate Pin Interrupt on low level. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga2e08ec6acfb4d114d470ff86a0bef497affc9b2756b7642ddb60ea78f4bbbd592"></a>kPINT_PinIntEnableHighLevel</em>&nbsp;</td><td class="fielddoc">
+<p>Generate Pin Interrupt on high level. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga84eaf8f6200932ad09d0a75ece6e463d"></a>
+<a class="anchor" id="gaf3fe032c283828db1b5790b3922be911"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00265.html#ga84eaf8f6200932ad09d0a75ece6e463d">sema42_gate_status_t</a></td>
+          <td class="memname">enum <a class="el" href="a00265.html#gaf3fe032c283828db1b5790b3922be911">_pint_int</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga84eaf8f6200932ad09d0a75ece6e463daf9c45d68a643bac3a34b65a5cf1aade6"></a>kSEMA42_Unlocked</em>&nbsp;</td><td class="fielddoc">
-<p>The gate is unlocked. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaf3fe032c283828db1b5790b3922be911a5df52c4fbb437e61b638d35cbc550162"></a>kPINT_PinInt0</em>&nbsp;</td><td class="fielddoc">
+<p>Pin Interrupt 0. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga84eaf8f6200932ad09d0a75ece6e463da3006dc26747f1eb2b8e1941660f7dc24"></a>kSEMA42_LockedByProc0</em>&nbsp;</td><td class="fielddoc">
-<p>The gate is locked by processor 0. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf3fe032c283828db1b5790b3922be911ab62e1c2d3cdccef05e45ae9028cecbb4"></a>kPINT_PinInt1</em>&nbsp;</td><td class="fielddoc">
+<p>Pin Interrupt 1. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga84eaf8f6200932ad09d0a75ece6e463daf4a285b99114632b0b00c85ea7bf1956"></a>kSEMA42_LockedByProc1</em>&nbsp;</td><td class="fielddoc">
-<p>The gate is locked by processor 1. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf3fe032c283828db1b5790b3922be911a81913bc912b5164bb749b6a2e8823808"></a>kPINT_PinInt2</em>&nbsp;</td><td class="fielddoc">
+<p>Pin Interrupt 2. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga84eaf8f6200932ad09d0a75ece6e463da94c2081e5497a328126e879bf874fbc5"></a>kSEMA42_LockedByProc2</em>&nbsp;</td><td class="fielddoc">
-<p>The gate is locked by processor 2. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf3fe032c283828db1b5790b3922be911a751ce5a16f196ca04d08d2e5d65af47c"></a>kPINT_PinInt3</em>&nbsp;</td><td class="fielddoc">
+<p>Pin Interrupt 3. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga84eaf8f6200932ad09d0a75ece6e463dad41b71c7142766ca69c0aade4c3bee53"></a>kSEMA42_LockedByProc3</em>&nbsp;</td><td class="fielddoc">
-<p>The gate is locked by processor 3. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf3fe032c283828db1b5790b3922be911acf173e0dc3d44c77bb08146494a0249b"></a>kPINT_PinInt4</em>&nbsp;</td><td class="fielddoc">
+<p>Pin Interrupt 4. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga84eaf8f6200932ad09d0a75ece6e463da9e984cd6c8ea942d67614cbd8faa7799"></a>kSEMA42_LockedByProc4</em>&nbsp;</td><td class="fielddoc">
-<p>The gate is locked by processor 4. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf3fe032c283828db1b5790b3922be911a45fc443b2ec03c89708ac897fc3fc902"></a>kPINT_PinInt5</em>&nbsp;</td><td class="fielddoc">
+<p>Pin Interrupt 5. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga84eaf8f6200932ad09d0a75ece6e463dad5f2f1cfd86ec744eb9c406baccdeeaf"></a>kSEMA42_LockedByProc5</em>&nbsp;</td><td class="fielddoc">
-<p>The gate is locked by processor 5. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf3fe032c283828db1b5790b3922be911adf92ec20d1fa6a12bda6c42e5304cf46"></a>kPINT_PinInt6</em>&nbsp;</td><td class="fielddoc">
+<p>Pin Interrupt 6. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga84eaf8f6200932ad09d0a75ece6e463da20694487b850dcb86cab5735686d9590"></a>kSEMA42_LockedByProc6</em>&nbsp;</td><td class="fielddoc">
-<p>The gate is locked by processor 6. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf3fe032c283828db1b5790b3922be911aae1e0da9add6e3e1dd57705a682d65fa"></a>kPINT_PinInt7</em>&nbsp;</td><td class="fielddoc">
+<p>Pin Interrupt 7. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga84eaf8f6200932ad09d0a75ece6e463da94c20f5d4e13f9ed07cf370b3bbe33cb"></a>kSEMA42_LockedByProc7</em>&nbsp;</td><td class="fielddoc">
-<p>The gate is locked by processor 7. </p>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga7adaf153a42d62fb9b02d6468f7279a9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00265.html#ga7adaf153a42d62fb9b02d6468f7279a9">_pint_pmatch_input_src</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga7adaf153a42d62fb9b02d6468f7279a9a51f543e6f680df9beb5841231b7b3a96"></a>kPINT_PatternMatchInp0Src</em>&nbsp;</td><td class="fielddoc">
+<p>Input source 0. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga84eaf8f6200932ad09d0a75ece6e463dad614e32d0b0814c1fe69c3e0c92f7f94"></a>kSEMA42_LockedByProc8</em>&nbsp;</td><td class="fielddoc">
-<p>The gate is locked by processor 8. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7adaf153a42d62fb9b02d6468f7279a9a6fc5c9dbee30b375feb9ce6c86b224c2"></a>kPINT_PatternMatchInp1Src</em>&nbsp;</td><td class="fielddoc">
+<p>Input source 1. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga84eaf8f6200932ad09d0a75ece6e463da26fb2f4b8ceeae21a8e93fd069d9f2e4"></a>kSEMA42_LockedByProc9</em>&nbsp;</td><td class="fielddoc">
-<p>The gate is locked by processor 9. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7adaf153a42d62fb9b02d6468f7279a9a41b057b493937cd87bc212cb2e316f8a"></a>kPINT_PatternMatchInp2Src</em>&nbsp;</td><td class="fielddoc">
+<p>Input source 2. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga84eaf8f6200932ad09d0a75ece6e463dad888ea149e3b30c04aec2e828f97deee"></a>kSEMA42_LockedByProc10</em>&nbsp;</td><td class="fielddoc">
-<p>The gate is locked by processor 10. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7adaf153a42d62fb9b02d6468f7279a9a6be4432cb9e687d043a2c25c1af48869"></a>kPINT_PatternMatchInp3Src</em>&nbsp;</td><td class="fielddoc">
+<p>Input source 3. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga84eaf8f6200932ad09d0a75ece6e463da1923aba10a72c8729327a9c8e6a008f1"></a>kSEMA42_LockedByProc11</em>&nbsp;</td><td class="fielddoc">
-<p>The gate is locked by processor 11. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7adaf153a42d62fb9b02d6468f7279a9aabc93fc28498f5577939f38e0513304c"></a>kPINT_PatternMatchInp4Src</em>&nbsp;</td><td class="fielddoc">
+<p>Input source 4. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga84eaf8f6200932ad09d0a75ece6e463dac2129067e57645365d38996426d8197f"></a>kSEMA42_LockedByProc12</em>&nbsp;</td><td class="fielddoc">
-<p>The gate is locked by processor 12. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7adaf153a42d62fb9b02d6468f7279a9a78ff6e40ab17d81181284c56b62b77aa"></a>kPINT_PatternMatchInp5Src</em>&nbsp;</td><td class="fielddoc">
+<p>Input source 5. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga84eaf8f6200932ad09d0a75ece6e463da6e63d742de6625c789e49b0586f73c3e"></a>kSEMA42_LockedByProc13</em>&nbsp;</td><td class="fielddoc">
-<p>The gate is locked by processor 13. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7adaf153a42d62fb9b02d6468f7279a9a9b2f5abc74e498a599f5c005a6cc911f"></a>kPINT_PatternMatchInp6Src</em>&nbsp;</td><td class="fielddoc">
+<p>Input source 6. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga84eaf8f6200932ad09d0a75ece6e463daed15def9132f383c674644194a699ef9"></a>kSEMA42_LockedByProc14</em>&nbsp;</td><td class="fielddoc">
-<p>The gate is locked by processor 14. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7adaf153a42d62fb9b02d6468f7279a9a2c93115b816dc676460cfc1be85778f0"></a>kPINT_PatternMatchInp7Src</em>&nbsp;</td><td class="fielddoc">
+<p>Input source 7. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7adaf153a42d62fb9b02d6468f7279a9a1f7f561990336a81a46f22395820907d"></a>kPINT_SecPatternMatchInp0Src</em>&nbsp;</td><td class="fielddoc">
+<p>Input source 0. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7adaf153a42d62fb9b02d6468f7279a9a8cc05c9aec163085b7a2b4481fdc971d"></a>kPINT_SecPatternMatchInp1Src</em>&nbsp;</td><td class="fielddoc">
+<p>Input source 1. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga67c1b06ba8a5e6faf0af44c2bfeccc47"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00265.html#ga67c1b06ba8a5e6faf0af44c2bfeccc47">_pint_pmatch_bslice</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga67c1b06ba8a5e6faf0af44c2bfeccc47a106986aeb5e12c2b76e070def3b37d95"></a>kPINT_PatternMatchBSlice0</em>&nbsp;</td><td class="fielddoc">
+<p>Bit slice 0. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga67c1b06ba8a5e6faf0af44c2bfeccc47a0d3bf0a5022325acaae66e172c984db0"></a>kPINT_PatternMatchBSlice1</em>&nbsp;</td><td class="fielddoc">
+<p>Bit slice 1. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga67c1b06ba8a5e6faf0af44c2bfeccc47af00e092237b1b299bdfdd901f207c468"></a>kPINT_PatternMatchBSlice2</em>&nbsp;</td><td class="fielddoc">
+<p>Bit slice 2. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga67c1b06ba8a5e6faf0af44c2bfeccc47ae5db81838d55c8a8839b1dd47954d865"></a>kPINT_PatternMatchBSlice3</em>&nbsp;</td><td class="fielddoc">
+<p>Bit slice 3. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga67c1b06ba8a5e6faf0af44c2bfeccc47ac0ce3f2fbc216bc3cec68c47263530c5"></a>kPINT_PatternMatchBSlice4</em>&nbsp;</td><td class="fielddoc">
+<p>Bit slice 4. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga67c1b06ba8a5e6faf0af44c2bfeccc47a1ca87ca7db6ec59b675c6e70abc45da0"></a>kPINT_PatternMatchBSlice5</em>&nbsp;</td><td class="fielddoc">
+<p>Bit slice 5. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga67c1b06ba8a5e6faf0af44c2bfeccc47a86a79a77b44e91f432bb8ee9070f9602"></a>kPINT_PatternMatchBSlice6</em>&nbsp;</td><td class="fielddoc">
+<p>Bit slice 6. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga67c1b06ba8a5e6faf0af44c2bfeccc47a3a75ed56ef8a3429c01fc686f22b8e8a"></a>kPINT_PatternMatchBSlice7</em>&nbsp;</td><td class="fielddoc">
+<p>Bit slice 7. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga395ddf0144533abe3773a44dfc6a8a28"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00265.html#ga395ddf0144533abe3773a44dfc6a8a28">_pint_pmatch_bslice_cfg</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga395ddf0144533abe3773a44dfc6a8a28a128703d2c2175a315aaffad869ed6a32"></a>kPINT_PatternMatchAlways</em>&nbsp;</td><td class="fielddoc">
+<p>Always Contributes to product term match. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga395ddf0144533abe3773a44dfc6a8a28a654c70eeed38b0be2271dc51d7cc04f5"></a>kPINT_PatternMatchStickyRise</em>&nbsp;</td><td class="fielddoc">
+<p>Sticky Rising edge. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga395ddf0144533abe3773a44dfc6a8a28a9d2a3e9717c34de3a884b695f35a6c37"></a>kPINT_PatternMatchStickyFall</em>&nbsp;</td><td class="fielddoc">
+<p>Sticky Falling edge. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga395ddf0144533abe3773a44dfc6a8a28a059c3472509304186252b655cf486d8b"></a>kPINT_PatternMatchStickyBothEdges</em>&nbsp;</td><td class="fielddoc">
+<p>Sticky Rising or Falling edge. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga395ddf0144533abe3773a44dfc6a8a28a7dc0770cf7ffe184788c30bd1ac9c515"></a>kPINT_PatternMatchHigh</em>&nbsp;</td><td class="fielddoc">
+<p>High level. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga395ddf0144533abe3773a44dfc6a8a28a3b4af984526871b66489b0eb294d2df5"></a>kPINT_PatternMatchLow</em>&nbsp;</td><td class="fielddoc">
+<p>Low level. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga395ddf0144533abe3773a44dfc6a8a28ab5630ebfbc6e52c9b04f659918c094f2"></a>kPINT_PatternMatchNever</em>&nbsp;</td><td class="fielddoc">
+<p>Never contributes to product term match. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga395ddf0144533abe3773a44dfc6a8a28aac967156901735a43316f7f1c4720328"></a>kPINT_PatternMatchBothEdges</em>&nbsp;</td><td class="fielddoc">
+<p>Either rising or falling edge. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga13685f70a38ed1f8368581b475e963cf"></a>
+<a class="anchor" id="gaf043d142dac622bedd50b736b52ac6e9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void SEMA42_Init </td>
+          <td class="memname">void PINT_Init </td>
           <td>(</td>
-          <td class="paramtype">SEMA42_Type *&#160;</td>
+          <td class="paramtype">PINT_Type *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function initializes the SEMA42 module. It only enables the clock but does not reset the gates because the module might be used by other processors at the same time. To reset the gates, call either SEMA42_ResetGate or SEMA42_ResetAllGates function.</p>
+<p>This function initializes the PINT peripheral and enables the clock.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>SEMA42 peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gae646085e5d791b895d478e9ef161c3b3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SEMA42_Deinit </td>
-          <td>(</td>
-          <td class="paramtype">SEMA42_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function de-initializes the SEMA42 module. It only disables the clock.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SEMA42 peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gab5e2b0d71c6219bcfb381f4b70d7e7b0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SEMA42_TryLock </td>
-          <td>(</td>
-          <td class="paramtype">SEMA42_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>gateNum</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>procNum</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function tries to lock the specific SEMA42 gate. If the gate has been locked by another processor, this function returns an error code.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SEMA42 peripheral base address. </td></tr>
-    <tr><td class="paramname">gateNum</td><td>Gate number to lock. </td></tr>
-    <tr><td class="paramname">procNum</td><td>Current processor number.</td></tr>
+    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td>Lock the sema42 gate successfully. </td></tr>
-    <tr><td class="paramname">kStatus_SEMA42_Busy</td><td>Sema42 gate has been locked by another processor. </td></tr>
+    <tr><td class="paramname">None.</td><td></td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gaab41e809f563868b6b477a7bb62c9ce2"></a>
+<a class="anchor" id="ga363edbba9536380728e44bd7d1a0e7df"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void SEMA42_Lock </td>
+          <td class="memname">void PINT_PinInterruptConfig </td>
           <td>(</td>
-          <td class="paramtype">SEMA42_Type *&#160;</td>
+          <td class="paramtype">PINT_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>gateNum</em>, </td>
+          <td class="paramtype"><a class="el" href="a00265.html#gaa230ebd4a048282d15d3ce2d9fa9deac">pint_pin_int_t</a>&#160;</td>
+          <td class="paramname"><em>intr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>procNum</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00265.html#ga1444166a5b3130cdd3f3c5a40f102ff3">pint_pin_enable_t</a>&#160;</td>
+          <td class="paramname"><em>enable</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00265.html#ga262ac9596c0926fbe5f346e0f6aaf9f5">pint_cb_t</a>&#160;</td>
+          <td class="paramname"><em>callback</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -454,19 +623,120 @@ Driver version</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function locks the specific SEMA42 gate. If the gate has been locked by other processors, this function waits until it is unlocked and then lock it.</p>
+<p>This function configures a given pin interrupt.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>SEMA42 peripheral base address. </td></tr>
-    <tr><td class="paramname">gateNum</td><td>Gate number to lock. </td></tr>
-    <tr><td class="paramname">procNum</td><td>Current processor number. </td></tr>
+    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral. </td></tr>
+    <tr><td class="paramname">intr</td><td>Pin interrupt. </td></tr>
+    <tr><td class="paramname">enable</td><td>Selects detection logic. </td></tr>
+    <tr><td class="paramname">callback</td><td>Callback.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None.</td><td></td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gac19b80ba254697a9e22b54866226e879"></a>
+<a class="anchor" id="ga12c568c9b7f6d46257dc63505a381701"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PINT_PinInterruptGetConfig </td>
+          <td>(</td>
+          <td class="paramtype">PINT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00265.html#gaa230ebd4a048282d15d3ce2d9fa9deac">pint_pin_int_t</a>&#160;</td>
+          <td class="paramname"><em>pintr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00265.html#ga1444166a5b3130cdd3f3c5a40f102ff3">pint_pin_enable_t</a> *&#160;</td>
+          <td class="paramname"><em>enable</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00265.html#ga262ac9596c0926fbe5f346e0f6aaf9f5">pint_cb_t</a> *&#160;</td>
+          <td class="paramname"><em>callback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function returns the configuration of a given pin interrupt.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral. </td></tr>
+    <tr><td class="paramname">pintr</td><td>Pin interrupt. </td></tr>
+    <tr><td class="paramname">enable</td><td>Pointer to store the detection logic. </td></tr>
+    <tr><td class="paramname">callback</td><td>Callback.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None.</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gab784e6aea0129b0c90164462bd0dbac5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PINT_PinInterruptClrStatus </td>
+          <td>(</td>
+          <td class="paramtype">PINT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00265.html#gaa230ebd4a048282d15d3ce2d9fa9deac">pint_pin_int_t</a>&#160;</td>
+          <td class="paramname"><em>pintr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function clears the selected pin interrupt status.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral. </td></tr>
+    <tr><td class="paramname">pintr</td><td>Pin interrupt.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None.</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga99a96e386a822de59ac2d60149ec47f3"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -474,16 +744,16 @@ Driver version</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void SEMA42_Unlock </td>
+          <td class="memname">static uint32_t PINT_PinInterruptGetStatus </td>
           <td>(</td>
-          <td class="paramtype">SEMA42_Type *&#160;</td>
+          <td class="paramtype">PINT_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>gateNum</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00265.html#gaa230ebd4a048282d15d3ce2d9fa9deac">pint_pin_int_t</a>&#160;</td>
+          <td class="paramname"><em>pintr</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -497,102 +767,53 @@ Driver version</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This function unlocks the specific SEMA42 gate. It only writes unlock value to the SEMA42 gate register. However, it does not check whether the SEMA42 gate is locked by the current processor or not. As a result, if the SEMA42 gate is not locked by the current processor, this function has no effect.</p>
+<p>This function returns the selected pin interrupt status.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>SEMA42 peripheral base address. </td></tr>
-    <tr><td class="paramname">gateNum</td><td>Gate number to unlock. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gace62f3aae17c5f6d75764f932f2a673f"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static <a class="el" href="a00265.html#ga84eaf8f6200932ad09d0a75ece6e463d">sema42_gate_status_t</a> SEMA42_GetGateStatus </td>
-          <td>(</td>
-          <td class="paramtype">SEMA42_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>gateNum</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function checks the lock status of a specific SEMA42 gate.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SEMA42 peripheral base address. </td></tr>
-    <tr><td class="paramname">gateNum</td><td>Gate number.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>status Current status. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga6fc8ecf853c6394511d55536d37c7d4f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SEMA42_ResetGate </td>
-          <td>(</td>
-          <td class="paramtype">SEMA42_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>gateNum</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function resets a SEMA42 gate to an unlocked status.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>SEMA42 peripheral base address. </td></tr>
-    <tr><td class="paramname">gateNum</td><td>Gate number.</td></tr>
+    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral. </td></tr>
+    <tr><td class="paramname">pintr</td><td>Pin interrupt.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td>SEMA42 gate is reset successfully. </td></tr>
-    <tr><td class="paramname">kStatus_SEMA42_Reseting</td><td>Some other reset process is ongoing. </td></tr>
+    <tr><td class="paramname">status</td><td>= 0 No pin interrupt request. = 1 Selected Pin interrupt request active. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga9695921a658471089cddadb8789bb138"></a>
+<a class="anchor" id="gace94acb3f70964230b2606fdbeb5f58b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PINT_PinInterruptClrStatusAll </td>
+          <td>(</td>
+          <td class="paramtype">PINT_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function clears the status of all pin interrupts.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None.</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gab5dbaf58c90b1ef54bcd2c5dba9e178f"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -600,9 +821,9 @@ Driver version</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SEMA42_ResetAllGates </td>
+          <td class="memname">static uint32_t PINT_PinInterruptGetStatusAll </td>
           <td>(</td>
-          <td class="paramtype">SEMA42_Type *&#160;</td>
+          <td class="paramtype">PINT_Type *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
@@ -613,17 +834,879 @@ Driver version</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This function resets all SEMA42 gate to an unlocked status.</p>
+<p>This function returns the status of all pin interrupts.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>SEMA42 peripheral base address.</td></tr>
+    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td>SEMA42 is reset successfully. </td></tr>
-    <tr><td class="paramname">kStatus_SEMA42_Reseting</td><td>Some other reset process is ongoing. </td></tr>
+    <tr><td class="paramname">status</td><td>Each bit position indicates the status of corresponding pin interrupt. = 0 No pin interrupt request. = 1 Pin interrupt request active. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga055c655c611b5645ce6903557ef809bb"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void PINT_PinInterruptClrFallFlag </td>
+          <td>(</td>
+          <td class="paramtype">PINT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00265.html#gaa230ebd4a048282d15d3ce2d9fa9deac">pint_pin_int_t</a>&#160;</td>
+          <td class="paramname"><em>pintr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function clears the selected pin interrupt fall flag.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral. </td></tr>
+    <tr><td class="paramname">pintr</td><td>Pin interrupt.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None.</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaace443444dec2e5b7e3e20cf69c53def"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t PINT_PinInterruptGetFallFlag </td>
+          <td>(</td>
+          <td class="paramtype">PINT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00265.html#gaa230ebd4a048282d15d3ce2d9fa9deac">pint_pin_int_t</a>&#160;</td>
+          <td class="paramname"><em>pintr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function returns the selected pin interrupt fall flag.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral. </td></tr>
+    <tr><td class="paramname">pintr</td><td>Pin interrupt.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">flag</td><td>= 0 Falling edge has not been detected. = 1 Falling edge has been detected. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga11c44cbe5b42c79b22a3053c85b1e5d0"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void PINT_PinInterruptClrFallFlagAll </td>
+          <td>(</td>
+          <td class="paramtype">PINT_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function clears the fall flag for all pin interrupts.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None.</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga58eced039e8c793b7ff148d6cfacde5b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t PINT_PinInterruptGetFallFlagAll </td>
+          <td>(</td>
+          <td class="paramtype">PINT_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function returns the fall flag of all pin interrupts.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">flags</td><td>Each bit position indicates the falling edge detection of the corresponding pin interrupt. 0 Falling edge has not been detected. = 1 Falling edge has been detected. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga269af5856a4cfd5d2a171b4777d6884a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void PINT_PinInterruptClrRiseFlag </td>
+          <td>(</td>
+          <td class="paramtype">PINT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00265.html#gaa230ebd4a048282d15d3ce2d9fa9deac">pint_pin_int_t</a>&#160;</td>
+          <td class="paramname"><em>pintr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function clears the selected pin interrupt rise flag.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral. </td></tr>
+    <tr><td class="paramname">pintr</td><td>Pin interrupt.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None.</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaec7a3986f92f8c11a70a80af1a93a3b6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t PINT_PinInterruptGetRiseFlag </td>
+          <td>(</td>
+          <td class="paramtype">PINT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00265.html#gaa230ebd4a048282d15d3ce2d9fa9deac">pint_pin_int_t</a>&#160;</td>
+          <td class="paramname"><em>pintr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function returns the selected pin interrupt rise flag.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral. </td></tr>
+    <tr><td class="paramname">pintr</td><td>Pin interrupt.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">flag</td><td>= 0 Rising edge has not been detected. = 1 Rising edge has been detected. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga53dd5706866fa0313689db6e4d9c1a9b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void PINT_PinInterruptClrRiseFlagAll </td>
+          <td>(</td>
+          <td class="paramtype">PINT_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function clears the rise flag for all pin interrupts.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None.</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga08b623f67c277521182f8c9e630037ae"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t PINT_PinInterruptGetRiseFlagAll </td>
+          <td>(</td>
+          <td class="paramtype">PINT_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function returns the rise flag of all pin interrupts.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">flags</td><td>Each bit position indicates the rising edge detection of the corresponding pin interrupt. 0 Rising edge has not been detected. = 1 Rising edge has been detected. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga1dc66cd865640c0b60eb128a868eab37"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PINT_PatternMatchConfig </td>
+          <td>(</td>
+          <td class="paramtype">PINT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00265.html#ga859582ee39bfbd70c9305dbd2d68459d">pint_pmatch_bslice_t</a>&#160;</td>
+          <td class="paramname"><em>bslice</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">pint_pmatch_cfg_t *&#160;</td>
+          <td class="paramname"><em>cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function configures a given pattern match bit slice.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral. </td></tr>
+    <tr><td class="paramname">bslice</td><td>Pattern match bit slice number. </td></tr>
+    <tr><td class="paramname">cfg</td><td>Pointer to bit slice configuration.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None.</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga6d4f8e83cec4bc716231c97c2ceb5421"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PINT_PatternMatchGetConfig </td>
+          <td>(</td>
+          <td class="paramtype">PINT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00265.html#ga859582ee39bfbd70c9305dbd2d68459d">pint_pmatch_bslice_t</a>&#160;</td>
+          <td class="paramname"><em>bslice</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">pint_pmatch_cfg_t *&#160;</td>
+          <td class="paramname"><em>cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function returns the configuration of a given pattern match bit slice.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral. </td></tr>
+    <tr><td class="paramname">bslice</td><td>Pattern match bit slice number. </td></tr>
+    <tr><td class="paramname">cfg</td><td>Pointer to bit slice configuration.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None.</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga74b3eece6c6eabc38f3194b125ff80d5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t PINT_PatternMatchGetStatus </td>
+          <td>(</td>
+          <td class="paramtype">PINT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00265.html#ga859582ee39bfbd70c9305dbd2d68459d">pint_pmatch_bslice_t</a>&#160;</td>
+          <td class="paramname"><em>bslice</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function returns the status of selected bit slice.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral. </td></tr>
+    <tr><td class="paramname">bslice</td><td>Pattern match bit slice number.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">status</td><td>= 0 Match has not been detected. = 1 Match has been detected. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga567b159bbfa265ed02c4900769ed8fe4"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t PINT_PatternMatchGetStatusAll </td>
+          <td>(</td>
+          <td class="paramtype">PINT_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function returns the status of all bit slices.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">status</td><td>Each bit position indicates the match status of corresponding bit slice. = 0 Match has not been detected. = 1 Match has been detected. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga00d40f5f01c445206f1f800dcc7b6e89"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t PINT_PatternMatchResetDetectLogic </td>
+          <td>(</td>
+          <td class="paramtype">PINT_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function resets the pattern match detection logic if any of the product term is matching.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">pmstatus</td><td>Each bit position indicates the match status of corresponding bit slice. = 0 Match was detected. = 1 Match was not detected. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga8911d499fb65ffe496c01f65bad9314f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void PINT_PatternMatchEnable </td>
+          <td>(</td>
+          <td class="paramtype">PINT_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function enables the pattern match function.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None.</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga4dd886dc387a64a5cb146ccd7297e1e1"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void PINT_PatternMatchDisable </td>
+          <td>(</td>
+          <td class="paramtype">PINT_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function disables the pattern match function.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None.</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaf5754b4b1d1436c359dde18101657d4e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void PINT_PatternMatchEnableRXEV </td>
+          <td>(</td>
+          <td class="paramtype">PINT_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function enables the pattern match RXEV output.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None.</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga73f0e7280f898bf99fe92b3519878a77"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void PINT_PatternMatchDisableRXEV </td>
+          <td>(</td>
+          <td class="paramtype">PINT_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function disables the pattern match RXEV output.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None.</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gac6b1406205adace6696a1647250ad76d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PINT_EnableCallback </td>
+          <td>(</td>
+          <td class="paramtype">PINT_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function enables the interrupt for the selected PINT peripheral. Although the pin(s) are monitored as soon as they are enabled, the callback function is not enabled until this function is called.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None.</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gada262638d555d9a503ddcdbed24ec475"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PINT_DisableCallback </td>
+          <td>(</td>
+          <td class="paramtype">PINT_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function disables the interrupt for the selected PINT peripheral. Although the pins are still being monitored but the callback function is not called.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Base address of the peripheral.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None.</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga78ffa3e09e17db8dc6a9038123ad1c46"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PINT_Deinit </td>
+          <td>(</td>
+          <td class="paramtype">PINT_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function disables the PINT clock.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None.</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga2cb0ee73a24657dd6994cb00b78c3137"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PINT_EnableCallbackByIndex </td>
+          <td>(</td>
+          <td class="paramtype">PINT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00265.html#gaa230ebd4a048282d15d3ce2d9fa9deac">pint_pin_int_t</a>&#160;</td>
+          <td class="paramname"><em>pintIdx</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function enables callback by pin index instead of enabling all pins.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Base address of the peripheral. </td></tr>
+    <tr><td class="paramname">pintIdx</td><td>pin index.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None.</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gad7300bf374c0cdc65fadff76f3ee7e5c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PINT_DisableCallbackByIndex </td>
+          <td>(</td>
+          <td class="paramtype">PINT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00265.html#gaa230ebd4a048282d15d3ce2d9fa9deac">pint_pin_int_t</a>&#160;</td>
+          <td class="paramname"><em>pintIdx</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function disables callback by pin index instead of disabling all pins.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Base address of the peripheral. </td></tr>
+    <tr><td class="paramname">pintIdx</td><td>pin index.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None.</td><td></td></tr>
   </table>
   </dd>
 </dl>

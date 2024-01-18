@@ -1,5 +1,5 @@
 /** @file
- * Copyright (c) 2019-2022, Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2019-2023, Arm Limited or its affiliates. All rights reserved.
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -33,7 +33,7 @@ typedef struct {
 } test_data;
 
 #if ((defined(ARCH_TEST_RSA_1024) && (defined(ARCH_TEST_RSA_PKCS1V15_SIGN) || defined(ARCH_TEST_RSA_PKCS1V15_SIGN_RAW) || defined(ARCH_TEST_SHA256)))||\
-(defined(ARCH_TEST_SHA256) && (defined(ARCH_TEST_DETERMINISTIC_ECDSA) || defined(ARCH_TEST_ECC_CURVE_SECP256R1)))) // NXP
+(defined(ARCH_TEST_SHA256) && (defined(ARCH_TEST_DETERMINISTIC_ECDSA) || defined(ARCH_TEST_ECC_CURVE_SECP256R1))))
 
 static const test_data check1[] = {
 #ifdef ARCH_TEST_RSA_1024
@@ -92,7 +92,7 @@ static const test_data check1[] = {
 {
     .test_desc        = "Test psa_verify_message - ECDSA KEY_PAIR SECP256R1 SHA-256\n",
     .type             = PSA_KEY_TYPE_ECC_KEY_PAIR(PSA_ECC_FAMILY_SECP_R1),
-    .data             = ec_keypair,
+    .data             = ec_keypair_deterministic,
     .data_length      = 32,
     .usage_flags      = PSA_KEY_USAGE_VERIFY_MESSAGE,
     .alg              = PSA_ALG_DETERMINISTIC_ECDSA(PSA_ALG_SHA_256),
@@ -226,4 +226,4 @@ static const test_data check1[] = {
 #endif
 #endif
 };
-#endif //NXP
+#endif

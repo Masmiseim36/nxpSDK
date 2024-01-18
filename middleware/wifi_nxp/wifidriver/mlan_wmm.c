@@ -18,7 +18,9 @@ Change log:
 /* Additional WMSDK header files */
 #include <wmerrno.h>
 #include <wm_os.h>
-
+#ifdef CONFIG_TX_RX_ZERO_COPY
+#include <wm_net.h>
+#endif
 /* Always keep this include at the end of all include files */
 #include <mlan_remap_mem_operations.h>
 /********************************************************
@@ -133,13 +135,17 @@ t_void wlan_clean_txrx(pmlan_private priv)
 
     ENTER();
 
+#ifdef CONFIG_WMM
+    wlan_cleanup_bypass_txq(MLAN_BSS_TYPE_STA);
+#endif
+
     wlan_11n_cleanup_reorder_tbl(priv);
 
     (void)pmadapter->callbacks.moal_spin_lock(pmadapter->pmoal_handle, priv->wmm.ra_list_spinlock);
     wlan_11n_deleteall_txbastream_tbl(priv);
 #ifdef CONFIG_WMM
     wlan_ralist_del_all_enh(priv);
-#endif /* CONFIG_MLAN_WMSDK */
+#endif /* CONFIG_WMM */
     (void)__memcpy(pmadapter, tos_to_tid, ac_to_tid, sizeof(tos_to_tid));
 
     priv->num_drop_pkts = 0;
@@ -572,51 +578,18 @@ static outbuf_t *wifi_wmm_get_alter_buf_from_txqueue(const uint8_t interface, t_
     ra_list_head = (raListTbl *)&mlan_adap->priv[interface]->wmm.tid_tbl_ptr[queue].ra_list;
     ra_list      = (raListTbl *)util_peek_list(mlan_adap->pmoal_handle, (mlan_list_head *)ra_list_head, MNULL, MNULL);
 
-    if (mlan_adap->priv[interface]->tx_pause == MTRUE)
+    while (ra_list && ra_list != ra_list_head)
     {
-        while (ra_list && ra_list != ra_list_head)
+        mlan_adap->callbacks.moal_semaphore_get(mlan_adap->pmoal_handle, &ra_list->buf_head.plock);
+        if (__memcmp(mlan_adap, ra, ra_list->ra, MLAN_MAC_ADDR_LENGTH) && ra_list->tx_pause == MTRUE &&
+            ra_list->total_pkts != 0)
         {
-            mlan_adap->callbacks.moal_semaphore_get(mlan_adap->pmoal_handle, &ra_list->buf_head.plock);
-            if (ra_list->total_pkts != 0)
-            {
-                buf = (outbuf_t *)util_dequeue_list(mlan_adap->pmoal_handle, &ra_list->buf_head, MNULL, MNULL);
-                if (buf != MNULL)
-                    goto SUCC;
-            }
-            mlan_adap->callbacks.moal_semaphore_put(mlan_adap->pmoal_handle, &ra_list->buf_head.plock);
-            ra_list = ra_list->pnext;
+            buf = (outbuf_t *)util_dequeue_list(mlan_adap->pmoal_handle, &ra_list->buf_head, MNULL, MNULL);
+            if (buf != MNULL)
+                goto SUCC;
         }
-    }
-    else if (tx_pause == MTRUE)
-    {
-        while (ra_list && ra_list != ra_list_head)
-        {
-            mlan_adap->callbacks.moal_semaphore_get(mlan_adap->pmoal_handle, &ra_list->buf_head.plock);
-            if (!__memcmp(mlan_adap, ra, ra_list->ra, MLAN_MAC_ADDR_LENGTH) && ra_list->total_pkts != 0)
-            {
-                buf = (outbuf_t *)util_dequeue_list(mlan_adap->pmoal_handle, &ra_list->buf_head, MNULL, MNULL);
-                if (buf != MNULL)
-                    goto SUCC;
-            }
-            mlan_adap->callbacks.moal_semaphore_put(mlan_adap->pmoal_handle, &ra_list->buf_head.plock);
-            ra_list = ra_list->pnext;
-        }
-    }
-    else
-    {
-        while (ra_list && ra_list != ra_list_head)
-        {
-            mlan_adap->callbacks.moal_semaphore_get(mlan_adap->pmoal_handle, &ra_list->buf_head.plock);
-            if (__memcmp(mlan_adap, ra, ra_list->ra, MLAN_MAC_ADDR_LENGTH) && ra_list->tx_pause == MTRUE &&
-                ra_list->total_pkts != 0)
-            {
-                buf = (outbuf_t *)util_dequeue_list(mlan_adap->pmoal_handle, &ra_list->buf_head, MNULL, MNULL);
-                if (buf != MNULL)
-                    goto SUCC;
-            }
-            mlan_adap->callbacks.moal_semaphore_put(mlan_adap->pmoal_handle, &ra_list->buf_head.plock);
-            ra_list = ra_list->pnext;
-        }
+        mlan_adap->callbacks.moal_semaphore_put(mlan_adap->pmoal_handle, &ra_list->buf_head.plock);
+        ra_list = ra_list->pnext;
     }
 
 FAIL:
@@ -627,6 +600,10 @@ SUCC:
     mlan_adap->priv[interface]->wmm.pkts_queued[queue]--;
     ra_list->total_pkts--;
     ra_list->drop_count++;
+#ifdef CONFIG_TX_RX_ZERO_COPY
+    /* Before replacement, need free the buffer from stack first */
+    net_stack_buffer_free(buf->buffer);
+#endif
 
     mlan_adap->callbacks.moal_semaphore_put(mlan_adap->pmoal_handle, &ra_list->buf_head.plock);
 
@@ -645,26 +622,23 @@ uint8_t *wifi_wmm_get_outbuf_enh(
     outbuf_t *buf = MNULL;
     t_u8 tx_pause;
 
-    /* check tx_pause */
-    tx_pause     = wifi_wmm_is_tx_pause(interface, queue, ra);
-    *is_tx_pause = (tx_pause == MTRUE) ? true : false;
-
-    if (tx_pause == MTRUE)
-    {
-        *outbuf_len = 0;
-        return MNULL;
-    }
-
     buf = wifi_wmm_buf_get();
     if (buf != MNULL)
         goto SUCC;
 
+    /* check tx_pause */
+    tx_pause     = wifi_wmm_is_tx_pause(interface, queue, ra);
+    *is_tx_pause = (tx_pause == MTRUE) ? true : false;
+
     /* loop tid_tbl to find buf to replace in wmm ralists */
-    for (i = 0; i < MAX_AC_QUEUES; i++)
+    if (tx_pause == MFALSE)
     {
-        buf = wifi_wmm_get_alter_buf_from_txqueue(interface, ra, i, tx_pause);
-        if (buf != MNULL)
-            goto SUCC;
+        for (i = 0; i < MAX_AC_QUEUES; i++)
+        {
+            buf = wifi_wmm_get_alter_buf_from_txqueue(interface, ra, i, tx_pause);
+            if (buf != MNULL)
+                goto SUCC;
+        }
     }
 
     *outbuf_len = 0;
@@ -714,9 +688,12 @@ int wlan_wmm_add_buf_txqueue_enh(const uint8_t interface, const uint8_t *buffer,
     else
         priv = mlan_adap->priv[1];
 
-    /* refer to low_level_output payload memcpy */
+        /* refer to low_level_output payload memcpy */
+#ifdef CONFIG_TX_RX_ZERO_COPY
+    wifi_wmm_da_to_ra(&((outbuf_t *)buffer)->eth_header[0], ra);
+#else
     wifi_wmm_da_to_ra(&((outbuf_t *)buffer)->data[0], ra);
-
+#endif
     mlan_adap->callbacks.moal_semaphore_get(mlan_adap->pmoal_handle, &priv->wmm.tid_tbl_ptr[pkt_prio].ra_list.plock);
 
     ralist = wlan_wmm_get_queue_raptr_enh(priv, pkt_prio, ra);
@@ -771,6 +748,11 @@ void wifi_wmm_buf_put(outbuf_t *buf)
     mlan_adap->callbacks.moal_semaphore_get(mlan_adap->pmoal_handle, &mlan_adap->outbuf_pool.free_list.plock);
 
     assert(mlan_adap->outbuf_pool.free_cnt < MAX_WMM_BUF_NUM);
+
+#ifdef CONFIG_TX_RX_ZERO_COPY
+    /* Free driver's reference count for network buffer */
+    net_stack_buffer_free(buf->buffer);
+#endif
 
     util_enqueue_list_tail(mlan_adap->pmoal_handle, &mlan_adap->outbuf_pool.free_list, &buf->entry, MNULL, MNULL);
     mlan_adap->outbuf_pool.free_cnt++;
@@ -1076,5 +1058,97 @@ void wifi_wmm_drop_pause_replaced(const uint8_t interface)
         mlan_adap->priv[0]->driver_error_cnt.tx_wmm_pause_replaced++;
     else if (interface == MLAN_BSS_TYPE_UAP)
         mlan_adap->priv[1]->driver_error_cnt.tx_wmm_pause_replaced++;
+}
+
+void wlan_get_bypass_lock(uint8_t interface)
+{
+    pmlan_private priv = mlan_adap->priv[interface];
+
+    mlan_adap->callbacks.moal_semaphore_get(mlan_adap->pmoal_handle, &priv->bypass_txq.plock);
+}
+
+void wlan_put_bypass_lock(uint8_t interface)
+{
+    pmlan_private priv = mlan_adap->priv[interface];
+
+    mlan_adap->callbacks.moal_semaphore_put(mlan_adap->pmoal_handle, &priv->bypass_txq.plock);
+}
+
+void wlan_add_buf_bypass_txq(const uint8_t *buffer, const uint8_t interface)
+{
+    pmlan_private priv = mlan_adap->priv[interface];
+
+    wlan_get_bypass_lock(interface);
+
+    util_enqueue_list_tail(mlan_adap->pmoal_handle, &priv->bypass_txq, (mlan_linked_list *)buffer, MNULL, MNULL);
+    priv->bypass_txq_cnt++;
+
+    wlan_put_bypass_lock(interface);
+}
+
+t_u8 wlan_bypass_txq_empty(uint8_t interface)
+{
+    return (mlan_adap->priv[interface]->bypass_txq_cnt) ? MFALSE : MTRUE;
+}
+
+int wifi_bypass_txq_init(void)
+{
+    pmlan_private priv = NULL;
+    int i;
+
+    for (i = 0; i < mlan_adap->priv_num; ++i)
+    {
+        priv = mlan_adap->priv[i];
+        if (priv != MNULL)
+        {
+            /* Initialize bypass_txq */
+            util_init_list_head((t_void *)mlan_adap->pmoal_handle, &priv->bypass_txq, MFALSE, MNULL);
+            priv->bypass_txq_cnt = 0;
+
+            if (mlan_adap->callbacks.moal_init_semaphore(mlan_adap->pmoal_handle, "bypass_txq_sem",
+                                                         &priv->bypass_txq.plock) != MLAN_STATUS_SUCCESS)
+                return WM_E_NOMEM;
+        }
+    }
+
+    return WM_SUCCESS;
+}
+
+void wlan_cleanup_bypass_txq(uint8_t interface)
+{
+    bypass_outbuf_t *buf;
+    pmlan_private priv = mlan_adap->priv[interface];
+
+    /*Free hold buff*/
+    while (!wlan_bypass_txq_empty(interface))
+    {
+        wlan_get_bypass_lock(interface);
+
+        buf = (bypass_outbuf_t *)util_dequeue_list(mlan_adap->pmoal_handle, &priv->bypass_txq, MNULL, MNULL);
+        priv->bypass_txq_cnt--;
+        os_mem_free((t_u8 *)buf);
+
+        wlan_put_bypass_lock(interface);
+    }
+}
+
+void wifi_bypass_txq_deinit(void)
+{
+    pmlan_private priv = NULL;
+    int i;
+
+    for (i = 0; i < mlan_adap->priv_num; ++i)
+    {
+        priv = mlan_adap->priv[i];
+        if (priv != MNULL)
+        {
+            wlan_cleanup_bypass_txq(i);
+
+            mlan_adap->callbacks.moal_free_semaphore(mlan_adap->pmoal_handle, &priv->bypass_txq.plock);
+            /* Deinit bypass_txq */
+            util_free_list_head(mlan_adap->pmoal_handle, &priv->bypass_txq, MNULL);
+            priv->bypass_txq_cnt = 0;
+        }
+    }
 }
 #endif /* CONFIG_WMM */

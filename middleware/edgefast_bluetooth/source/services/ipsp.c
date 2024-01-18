@@ -26,7 +26,7 @@ NET_BUF_POOL_DEFINE(data_pool, 1, IPSP_MTU, USER_DATA_MIN, NULL);
 
 static int l2cap_rx(struct bt_l2cap_chan *chan, struct net_buf *buf);
 static struct net_buf *alloc_buf_cb(struct bt_l2cap_chan *chan);
-static int ipsp_accept(struct bt_conn *conn, struct bt_l2cap_chan **ppl2cap_chan);
+static int ipsp_accept(struct bt_conn *conn, struct bt_l2cap_server *server, struct bt_l2cap_chan **ppl2cap_chan);
 
 
 /** IPSP GATT Service Declaration */
@@ -72,7 +72,7 @@ static int l2cap_rx(struct bt_l2cap_chan *chan, struct net_buf *buf)
     return 0;
 }
 
-static int ipsp_accept(struct bt_conn *conn, struct bt_l2cap_chan **ppl2cap_chan)
+static int ipsp_accept(struct bt_conn *conn, struct bt_l2cap_server *server, struct bt_l2cap_chan **ppl2cap_chan)
 {
     l2cap_chan.chan.ops = &l2cap_ops;
     l2cap_chan.rx.mtu = IPSP_MTU;
@@ -112,7 +112,7 @@ int ipsp_listen(void)
 
     err = bt_l2cap_server_register(&ipsp_l2cap);
     if (err < 0) {
-        /* BT_ERR("IPSS registration failed %d", err); */
+        /* LOG_ERR("IPSS registration failed %d", err); */
     }
     return err;
 }

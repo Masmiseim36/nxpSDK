@@ -41,7 +41,7 @@ typedef struct rb_node
 {
     /* ...pointers to parent and two children */
     rb_idx_t            parent, left, right;
-    
+
     /* ...node color (least-significant-bit only) */
     UWORD64                 color;
 
@@ -53,7 +53,7 @@ typedef struct rb_tree_t
     /* ...tree sentinel node */
     rb_node_t           root;
 
-}   rb_tree_t;    
+}   rb_tree_t;
 
 /*******************************************************************************
  * Helpers

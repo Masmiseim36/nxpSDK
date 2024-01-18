@@ -99,7 +99,8 @@
           <StringListMapEntry>
             <key>LinkerAdditionalOptions</key>
             <value inheritance="append">
-              <ListEntry>-Wl,--start-group&#13;
+              <ListEntry>-Wl,--orphan-handling=place&#13;
+-Wl,--start-group&#13;
 ${xt_project_loc}/../glow_bundle/model.o&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/nn/nnlib/lib/fusionf1/libxa_nnlib.a&#13;
 -Wl,--end-group&#13;

@@ -13,4 +13,4 @@ The information comprises :
 
 The information can be retrieved using shell commands or FSCI commands.
 
-Detailed data types and APIs used in KW45_ConnFWK_APIs_documentation.pdf.
+Detailed data types and APIs used in ConnFWK_APIs_documentation.pdf.

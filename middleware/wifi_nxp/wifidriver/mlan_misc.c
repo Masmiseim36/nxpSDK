@@ -292,7 +292,8 @@ mlan_status wlan_bypass_802dot11_mgmt_pkt(void *data)
     pmgmt_pkt_hdr = (wlan_mgmt_pkt *)((t_u8 *)rxpd + rxpd->rx_pkt_offset);
     pieee_pkt_hdr = (wlan_802_11_header *)&pmgmt_pkt_hdr->wlan_header;
     sub_type      = IEEE80211_GET_FC_MGMT_FRAME_SUBTYPE(pieee_pkt_hdr->frm_ctl);
-    category      = *((t_u8 *)pieee_pkt_hdr + sizeof(wlan_802_11_header));
+    // coverity[overrun-local:SUPPRESS]
+    category = *((t_u8 *)pieee_pkt_hdr + sizeof(wlan_802_11_header));
 
     if ((pmgmt_pkt_hdr->wlan_header.frm_ctl & IEEE80211_FC_MGMT_FRAME_TYPE_MASK) == 0)
     {
@@ -346,8 +347,14 @@ void wlan_add_ext_capa_info_ie(IN mlan_private *pmpriv, IN BSSDescriptor_t *pbss
         pext_cap->ext_cap.TDLSSupport = 1;
     }
 
+#ifdef CONFIG_11AX
+    if (pbss_desc && pbss_desc->multi_bssid_ap)
+        SET_EXTCAP_MULTI_BSSID(pext_cap->ext_cap);
+    if (wlan_check_11ax_twt_supported(pmpriv, pbss_desc))
+        SET_EXTCAP_TWT_REQ(pext_cap->ext_cap);
+#endif
 #ifdef CONFIG_11V
-        pext_cap->ext_cap.BSS_Transition = 1;
+    pext_cap->ext_cap.BSS_Transition = 1;
 #endif
 
     *pptlv_out += sizeof(MrvlIETypes_ExtCap_t);
@@ -442,6 +449,14 @@ static mlan_status wlan_rate_ioctl_set_rate_index(IN pmlan_adapter pmadapter, IN
             bitmap_rates[i] = 0x0;
         }
 #endif
+#ifdef CONFIG_11AX
+        /* [18..25] HE */
+        /* Support all HE-MCSs rate for NSS1 and 2 */
+        for (i = 18; i < 20; i++)
+            bitmap_rates[i] = 0x0FFF;
+        for (i = 20; i < NELEMENTS(bitmap_rates); i++)
+            bitmap_rates[i] = 0x0;
+#endif
     }
     else
     {
@@ -491,6 +506,25 @@ static mlan_status wlan_rate_ioctl_set_rate_index(IN pmlan_adapter pmadapter, IN
             {
                 bitmap_rates[10 + nss - MLAN_RATE_NSS1] = (shift_index << rate_index);
                 ret                                     = MLAN_STATUS_SUCCESS;
+            }
+        }
+#endif
+#ifdef CONFIG_11AX
+        if (rate_format == MLAN_RATE_FORMAT_HE)
+        {
+            if (IS_FW_SUPPORT_11AX(pmadapter))
+            {
+                if ((rate_index <= MLAN_RATE_INDEX_MCS11) && (MLAN_RATE_NSS1 <= nss) && (nss <= MLAN_RATE_NSS2))
+                {
+                    bitmap_rates[18 + nss - MLAN_RATE_NSS1] = (1 << rate_index);
+                    ret                                     = MLAN_STATUS_SUCCESS;
+                }
+            }
+            else
+            {
+                PRINTM(MERROR, "Error! Fw doesn't support 11AX\n");
+                LEAVE();
+                return MLAN_STATUS_FAILURE;
             }
         }
 #endif
@@ -772,6 +806,38 @@ mlan_status wlan_misc_ioctl_rf_test_cfg(pmlan_adapter pmadapter, pmlan_ioctl_req
     if (ret == MLAN_STATUS_SUCCESS)
         ret = MLAN_STATUS_PENDING;
 done:
+    LEAVE();
+    return ret;
+}
+#endif
+
+#if defined(CONFIG_WIFI_IND_RESET) && defined(CONFIG_WIFI_IND_DNLD)
+/**
+ *  @brief Configure GPIO independent reset
+ *
+ *  @param pmadapter    A pointer to mlan_adapter structure
+ *  @param pioctl_req   A pointer to ioctl request buffer
+ *
+ *  @return             MLAN_STATUS_PENDING --success, otherwise fail
+ */
+mlan_status wlan_misc_ioctl_ind_rst_cfg(pmlan_adapter pmadapter, pmlan_ioctl_req pioctl_req)
+{
+    mlan_private *pmpriv   = pmadapter->priv[pioctl_req->bss_index];
+    mlan_ds_misc_cfg *misc = (mlan_ds_misc_cfg *)pioctl_req->pbuf;
+    mlan_status ret        = MLAN_STATUS_SUCCESS;
+    t_u16 cmd_action       = 0;
+
+    ENTER();
+
+    if (pioctl_req->action == MLAN_ACT_GET)
+        cmd_action = HostCmd_ACT_GEN_GET;
+    else
+        cmd_action = HostCmd_ACT_GEN_SET;
+
+    /* Send request to firmware */
+    ret = wlan_prepare_cmd(pmpriv, HostCmd_CMD_INDEPENDENT_RESET_CFG, cmd_action, 0, (t_void *)pioctl_req,
+                           (t_void *)&misc->param.ind_rst_cfg);
+
     LEAVE();
     return ret;
 }

@@ -33,7 +33,7 @@
 #endif /* CONFIG_CTRL_IFACE_UDP_IPV6 */
 
 #include "wpa_ctrl.h"
-#include "common.h"
+#include <utils/common.h>
 
 #if defined(CONFIG_CTRL_IFACE_UNIX) || defined(CONFIG_CTRL_IFACE_UDP)
 #define CTRL_IFACE_SOCKET

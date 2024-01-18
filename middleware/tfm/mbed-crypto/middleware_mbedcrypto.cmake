@@ -7,6 +7,7 @@ if(CONFIG_USE_middleware_mbedcrypto_port)
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/library/aes.c
+  ${CMAKE_CURRENT_LIST_DIR}/library/aesce.c
   ${CMAKE_CURRENT_LIST_DIR}/library/aesni.c
   ${CMAKE_CURRENT_LIST_DIR}/library/asn1parse.c
   ${CMAKE_CURRENT_LIST_DIR}/library/asn1write.c
@@ -70,6 +71,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/library/psa_crypto_slot_management.c
   ${CMAKE_CURRENT_LIST_DIR}/library/psa_crypto_storage.c
   ${CMAKE_CURRENT_LIST_DIR}/library/psa_its_file.c
+  ${CMAKE_CURRENT_LIST_DIR}/library/psa_util.c
   ${CMAKE_CURRENT_LIST_DIR}/library/ripemd160.c
   ${CMAKE_CURRENT_LIST_DIR}/library/rsa.c
   ${CMAKE_CURRENT_LIST_DIR}/library/rsa_alt_helpers.c

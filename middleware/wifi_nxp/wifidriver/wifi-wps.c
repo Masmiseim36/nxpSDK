@@ -9,8 +9,6 @@
  */
 
 #include <mlan_api.h>
-#include <lwip/opt.h>
-#include <lwip/def.h>
 
 #define SC_Device_Password_ID 0x1012
 
@@ -43,15 +41,20 @@ static t_u16 wps_parser(t_u8 *message, size_t size)
 
     while ((void *)ptlv < (void *)plast_byte)
     {
-        ptlv->Type   = ntohs(ptlv->Type);
-        ptlv->Length = ntohs(ptlv->Length);
+		/* Barriers are normally not required but do ensure the code is
+		 * completely within the specified behaviour for the architecture. */
+        __asm volatile ( "dsb" ::: "memory" );
+        __asm volatile ( "isb" );
+
+		ptlv->Type   = mlan_ntohs(ptlv->Type);
+        ptlv->Length = mlan_ntohs(ptlv->Length);
 
         switch (ptlv->Type)
         {
             case SC_Device_Password_ID:
                 wifi_d("SC_Device_Password_ID :: ");
                 memcpy(&device_password_id, data, sizeof(t_u16));
-                device_password_id = ntohs(device_password_id);
+                device_password_id = mlan_ntohs(device_password_id);
                 wifi_d("device_password_id = 0x%x", device_password_id);
                 break;
             default:
@@ -60,8 +63,8 @@ static t_u16 wps_parser(t_u8 *message, size_t size)
 
         len = ptlv->Length + sizeof(MrvlIEParamSet_t);
 
-        ptlv->Type   = htons(ptlv->Type);
-        ptlv->Length = htons(ptlv->Length);
+        ptlv->Type   = mlan_htons(ptlv->Type);
+        ptlv->Length = mlan_htons(ptlv->Length);
 
         ptlv = (MrvlIEParamSet_t *)((t_u8 *)ptlv + len);
 

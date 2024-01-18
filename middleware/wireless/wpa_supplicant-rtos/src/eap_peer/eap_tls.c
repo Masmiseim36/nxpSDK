@@ -8,7 +8,9 @@
 
 #include "includes.h"
 
-#include "common.h"
+#ifdef CONFIG_EAP_TLS
+
+#include "utils/common.h"
 #include "crypto/tls.h"
 #include "eap_i.h"
 #include "eap_tls_common.h"
@@ -482,3 +484,5 @@ int eap_peer_wfa_unauth_tls_register(void)
     return eap_peer_method_register(eap);
 }
 #endif /* CONFIG_HS20 */
+
+#endif /* CONFIG_EAP_TLS */

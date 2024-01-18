@@ -35,4 +35,4 @@
 #define PERF_START   /* null definition */
 #define PERF_STOP(x) /* null definition */
 
-#endif /* __PERF_H__ */
+#endif               /* __PERF_H__ */

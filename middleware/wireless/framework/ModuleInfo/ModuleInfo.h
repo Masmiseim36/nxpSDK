@@ -49,24 +49,26 @@
 #ifndef MAX_REGISTERED_MODULES_STRLEN
 #define MAX_REGISTERED_MODULES_STRLEN 128
 #endif
-#if defined(__GNUC__)
+
+/* First check if Keil is used before checking GNUC because GNUC is also defined when using Keil. */
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
+extern uint32_t Image$$VERSION_TAGS$$Base[];
+extern uint32_t Image$$VERSION_TAGS$$Limit[];
+
+#define gVERSION_TAGS_startAddr_d ((moduleInfo_t *)Image$$VERSION_TAGS$$Base)
+#define gVERSION_TAGS_endAddr_d   ((moduleInfo_t *)Image$$VERSION_TAGS$$Limit)
+
+#elif (defined(__IAR_SYSTEMS_ICC__))
+#define gVERSION_TAGS_startAddr_d ((moduleInfo_t *)__section_begin(".VERSION_TAGS"))
+#define gVERSION_TAGS_endAddr_d   ((moduleInfo_t *)__section_end(".VERSION_TAGS"))
+
+#elif defined(__GNUC__)
 
 extern uint32_t __start_VERSION_TAGS[];
 extern uint32_t __stop_VERSION_TAGS[];
 
 #define gVERSION_TAGS_startAddr_d ((moduleInfo_t *)__start_VERSION_TAGS)
 #define gVERSION_TAGS_endAddr_d   ((moduleInfo_t *)__stop_VERSION_TAGS)
-
-#elif (defined(__IAR_SYSTEMS_ICC__))
-#define gVERSION_TAGS_startAddr_d ((moduleInfo_t *)__section_begin(".VERSION_TAGS"))
-#define gVERSION_TAGS_endAddr_d   ((moduleInfo_t *)__section_end(".VERSION_TAGS"))
-#elif (defined(__CC_ARM))
-
-extern uint32_t Image$$VERSION_TAGS$$Base[];
-extern uint32_t Image$$VERSION_TAGS$$Limit[];
-
-#define gVERSION_TAGS_startAddr_d ((moduleInfo_t *)Image$$VERSION_TAGS$$Base)
-#define gVERSION_TAGS_endAddr_d   ((moduleInfo_t *)Image$$VERSION_TAGS$$Limit)
 
 #else
 #define gVERSION_TAGS_startAddr_d ((moduleInfo_t *)0)

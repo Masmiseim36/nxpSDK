@@ -12,7 +12,7 @@
 #include <sqlite3.h>
 #endif /* CONFIG_SQLITE */
 
-#include "common.h"
+#include "utils/common.h"
 #include "radius.h"
 #include "eloop.h"
 #include "eap_server/eap.h"

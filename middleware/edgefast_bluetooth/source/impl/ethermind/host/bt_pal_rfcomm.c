@@ -173,11 +173,11 @@ static int rfcomm_accept(uint8_t channel)
 
     if (API_SUCCESS == ret)
     {
-        BT_INFO("[RFCOMM] RFCOMM Accept on Server Channel %d is created successfully, waitting for RFCOMM_ACCEPT Event.\n",channel);
+        LOG_INF("[RFCOMM] RFCOMM Accept on Server Channel %d is created successfully, waitting for RFCOMM_ACCEPT Event.\n",channel);
     }
     else
     {
-        BT_ERR("[RFCOMM] RFCOMM Accept on Server Channel %d is created failed, reason = 0x%04X.\n", channel, ret);
+        LOG_ERR("[RFCOMM] RFCOMM Accept on Server Channel %d is created failed, reason = 0x%04X.\n", channel, ret);
     }
 
     return rfcomm_convert_return_value(ret);
@@ -235,7 +235,7 @@ static struct bt_rfcomm_dlc * rfcomm_get_dlc(RFCOMM_HANDLE * rfcomm_hdl, uint8_t
 {
     struct bt_rfcomm_dlc *dlc;
 
-    BT_INFO ("[RFCOMM] > get_rfcomm_handle_with_rfcomm()\n");
+    LOG_INF ("[RFCOMM] > get_rfcomm_handle_with_rfcomm()\n");
 
     EDGEFAST_RFCOMM_LOCK;
     switch(rfcomm_event)
@@ -640,7 +640,7 @@ static API_RESULT rfcomm_callback(uint8_t event_type, RFCOMM_HANDLE * handle, ui
     EDGEFAST_RFCOMM_UNLOCK;
     if((CONFIG_BT_RFCOMM_SESSION_MAX_COUNT == s_index) && (RFCOMM_ACCEPT != event_type))
     {
-        BT_ERR("[RFCOMM] Not find the rfcomm session.\n");
+        LOG_ERR("[RFCOMM] Not find the rfcomm session.\n");
         return API_FAILURE;
     }
 
@@ -650,7 +650,7 @@ static API_RESULT rfcomm_callback(uint8_t event_type, RFCOMM_HANDLE * handle, ui
         dlc = rfcomm_get_dlc(handle, event_type, s_index);
         if ((NULL == dlc) && (RFCOMM_ACCEPT != event_type))
         {
-            BT_ERR("[RFCOMM] FAILED to Find RFCOMM Handle\n");
+            LOG_ERR("[RFCOMM] FAILED to Find RFCOMM Handle\n");
             return API_FAILURE;
         }
     }
@@ -658,7 +658,7 @@ static API_RESULT rfcomm_callback(uint8_t event_type, RFCOMM_HANDLE * handle, ui
     switch (event_type)
     {
     case RFCOMM_OPEN:
-        BT_INFO ("[RFCOMM] RFCOMM CB: Received RFCOMM Open Event. Result = 0x%04X\n", result);
+        LOG_INF ("[RFCOMM] RFCOMM CB: Received RFCOMM Open Event. Result = 0x%04X\n", result);
 
         /** Handle RFCOMM Open */
         if (API_SUCCESS == result)
@@ -666,7 +666,7 @@ static API_RESULT rfcomm_callback(uint8_t event_type, RFCOMM_HANDLE * handle, ui
             dlc->dlci  = handle->dlci;
             dlc->state = RFCOMM_CONNECTED;
 
-            BT_INFO("[RFCOMM] Remote device " BT_DEVICE_ADDR_ONLY_FRMT_SPECIFIER " \n",
+            LOG_INF("[RFCOMM] Remote device " BT_DEVICE_ADDR_ONLY_FRMT_SPECIFIER " \n",
             BT_DEVICE_ADDR_ONLY_PRINT_STR (handle->bd_addr));
 
             /** Get application registered dlc which contains application connected, disconnected, recv callback */
@@ -690,13 +690,13 @@ static API_RESULT rfcomm_callback(uint8_t event_type, RFCOMM_HANDLE * handle, ui
         break;
 
     case RFCOMM_ACCEPT:
-        BT_INFO ("[RFCOMM] RFCOMM CB: Received RFCOMM Accept Event. Result = 0x%04X\n",result);
+        LOG_INF ("[RFCOMM] RFCOMM CB: Received RFCOMM Accept Event. Result = 0x%04X\n",result);
 
         /** Find server */
         server = rfcomm_server_lookup_channel(handle->server_channel);
         if (NULL == server)
         {
-            BT_ERR ("[RFCOMM] RFCOMM CB: Server channel %d isn't registed.", handle->server_channel);
+            LOG_ERR ("[RFCOMM] RFCOMM CB: Server channel %d isn't registed.", handle->server_channel);
             (void)BT_rfcomm_close(handle);
             return API_FAILURE;
         }
@@ -712,7 +712,7 @@ static API_RESULT rfcomm_callback(uint8_t event_type, RFCOMM_HANDLE * handle, ui
             conn = bt_conn_lookup_device_id(deviceHandle);
             if(NULL == conn)
             {
-                BT_ERR("[RFCOMM] FAILED to get conn handle\n");
+                LOG_ERR("[RFCOMM] FAILED to get conn handle\n");
                 (void)BT_rfcomm_close(handle);
                 return API_FAILURE;
             }
@@ -724,7 +724,7 @@ static API_RESULT rfcomm_callback(uint8_t event_type, RFCOMM_HANDLE * handle, ui
             /** Get application registered dlc which contains application connected, disconnected, recv callback */
             if((NULL != server->accept) && (server->accept(conn, &dlc) < 0))
             {
-                BT_ERR("[RFCOMM] Incoming connection rejected");
+                LOG_ERR("[RFCOMM] Incoming connection rejected");
                 (void)BT_rfcomm_close(handle);
                 return API_FAILURE;
             }
@@ -735,7 +735,7 @@ static API_RESULT rfcomm_callback(uint8_t event_type, RFCOMM_HANDLE * handle, ui
                     s_index = rfcomm_get_free_session(conn);
                     if(CONFIG_BT_RFCOMM_SESSION_MAX_COUNT == s_index)
                     {
-                        BT_ERR("[RFCOMM] No free rfcomm session entity.\n");
+                        LOG_ERR("[RFCOMM] No free rfcomm session entity.\n");
                         (void)BT_rfcomm_close(handle);
                         return API_FAILURE;
                     }
@@ -767,7 +767,7 @@ static API_RESULT rfcomm_callback(uint8_t event_type, RFCOMM_HANDLE * handle, ui
 
     case RFCOMM_CLOSE:
     case RFCOMM_RESET:
-        BT_INFO ("[RFCOMM] RFCOMM CB: Received RFCOMM Close/Reset. Result = 0x%04X\n",result);
+        LOG_INF ("[RFCOMM] RFCOMM CB: Received RFCOMM Close/Reset. Result = 0x%04X\n",result);
 
         if (((API_SUCCESS == result) && (RFCOMM_IN_DISCONNECT == dlc->state)) /** RFCOMM CLOSE event for initializing rfcomm disconnect */
             || ((0x2642 == result) && (RFCOMM_CONNECTED == dlc->state)))      /** RFCOMM CLOSE event for accepting rfcomm disconnect, 0x0042-RFCOMM_DLCI_CLOSED_BY_DISC_COMMAND */
@@ -789,7 +789,7 @@ static API_RESULT rfcomm_callback(uint8_t event_type, RFCOMM_HANDLE * handle, ui
         break;
 
     case RFCOMM_WRITE:
-        BT_INFO ("[RFCOMM] RFCOMM CB: Received RFCOMM Write. Result = 0x%04X\n",result);
+        LOG_INF ("[RFCOMM] RFCOMM CB: Received RFCOMM Write. Result = 0x%04X\n",result);
         if ((NULL != dlc->ops) && (NULL != dlc->ops->sent))
         {
             buf = bt_rfcomm_create_pdu(&rfcomm_pool);
@@ -801,7 +801,7 @@ static API_RESULT rfcomm_callback(uint8_t event_type, RFCOMM_HANDLE * handle, ui
         break;
 
     case RFCOMM_READ:
-        BT_INFO ("[RFCOMM] RFCOMM CB: Received RFCOMM Read. Result = 0x%04X, Data Length = %u\n",result, datalen);
+        LOG_INF ("[RFCOMM] RFCOMM CB: Received RFCOMM Read. Result = 0x%04X, Data Length = %u\n",result, datalen);
 
         if ((NULL != dlc->ops) && (NULL != dlc->ops->recv))
         {
@@ -829,7 +829,7 @@ static API_RESULT rfcomm_callback(uint8_t event_type, RFCOMM_HANDLE * handle, ui
           ctr_cb = rfcomm_get_control_callback(&rfcomm_control, event_type);
           if (NULL == ctr_cb)
           {
-              BT_ERR("[RFCOMM] [RFCOMM] FAILED to Find RFCOMM Handle\n");
+              LOG_ERR("[RFCOMM] [RFCOMM] FAILED to Find RFCOMM Handle\n");
               return API_FAILURE;
           }
           if(NULL != ctr_cb->cb)
@@ -848,7 +848,7 @@ static API_RESULT rfcomm_callback(uint8_t event_type, RFCOMM_HANDLE * handle, ui
           ctr_cb = rfcomm_get_control_callback(&rfcomm_control, event_type);
           if (NULL == ctr_cb)
           {
-              BT_ERR("[RFCOMM] [RFCOMM] FAILED to Find RFCOMM Handle\n");
+              LOG_ERR("[RFCOMM] [RFCOMM] FAILED to Find RFCOMM Handle\n");
               return API_FAILURE;
           }
           if(NULL != ctr_cb->cb)
@@ -877,7 +877,7 @@ static API_RESULT rfcomm_control_callback(uint8_t event_type, RFCOMM_HANDLE * ha
     control = rfcomm_get_control(handle, event_type);
     if (NULL == control)
     {
-        BT_ERR("[RFCOMM] [RFCOMM] FAILED to Find RFCOMM Handle\n");
+        LOG_ERR("[RFCOMM] [RFCOMM] FAILED to Find RFCOMM Handle\n");
         return API_FAILURE;
     }
 
@@ -885,7 +885,7 @@ static API_RESULT rfcomm_control_callback(uint8_t event_type, RFCOMM_HANDLE * ha
     ctr_cb = rfcomm_get_control_callback(control, event_type);
     if (NULL == ctr_cb)
     {
-        BT_ERR("[RFCOMM] [RFCOMM] FAILED to Find RFCOMM Handle\n");
+        LOG_ERR("[RFCOMM] [RFCOMM] FAILED to Find RFCOMM Handle\n");
         return API_FAILURE;
     }
 
@@ -973,7 +973,7 @@ static void rfcomm_init(void)
         /** create rfcomm mutex */
         if (KOSA_StatusSuccess != OSA_MutexCreate((osa_mutex_handle_t)rfcomm_lock_mutex))
         {
-            BT_ERR("[RFCOMM] RFCOMM OSA_MutexCreate() failed!\n");
+            LOG_ERR("[RFCOMM] RFCOMM OSA_MutexCreate() failed!\n");
         }
 
         /** init rfcomm session entity */
@@ -1046,14 +1046,14 @@ int bt_rfcomm_server_register(struct bt_rfcomm_server *server)
         (server->channel > RFCOMM_CHANNEL_END) ||
         (NULL == server->accept))
     {
-        BT_ERR("[RFCOMM] Invalid parameter.\n");
+        LOG_ERR("[RFCOMM] Invalid parameter.\n");
         return -EINVAL;
     }
 
     /** Check if given channel is already in use */
     if (NULL != rfcomm_server_lookup_channel(server->channel))
     {
-        BT_INFO("[RFCOMM] Channel %d is already registered.\n", server->channel);
+        LOG_INF("[RFCOMM] Channel %d is already registered.\n", server->channel);
         return -EADDRINUSE;
     }
 
@@ -1094,13 +1094,13 @@ int bt_rfcomm_dlc_connect(struct bt_conn *conn, struct bt_rfcomm_dlc *dlc, uint8
 
 	if ((NULL == dlc) || ((channel < RFCOMM_CHANNEL_START || channel > RFCOMM_CHANNEL_END)))
     {
-        BT_ERR("[RFCOMM] Not valid parameter.\n");
+        LOG_ERR("[RFCOMM] Not valid parameter.\n");
 		return -EINVAL;
 	}
 
 	if (!conn || conn->state != BT_CONN_CONNECTED)
     {
-        BT_ERR("[RFCOMM] Not valid state.\n");
+        LOG_ERR("[RFCOMM] Not valid state.\n");
 		return -ENOTCONN;
 	}
 
@@ -1111,7 +1111,7 @@ int bt_rfcomm_dlc_connect(struct bt_conn *conn, struct bt_rfcomm_dlc *dlc, uint8
         index = rfcomm_get_free_session(conn);
         if(CONFIG_BT_RFCOMM_SESSION_MAX_COUNT == index)
         {
-            BT_ERR("[RFCOMM] RFCOMM dlc connect on server %d is created failed, no free rfcomm session entity.\n",rfcomm_hdl.server_channel);
+            LOG_ERR("[RFCOMM] RFCOMM dlc connect on server %d is created failed, no free rfcomm session entity.\n",rfcomm_hdl.server_channel);
             return -ENOBUFS;
         }
         rfcomm_session[index].role = BT_RFCOMM_ROLE_INITIATOR;
@@ -1125,7 +1125,7 @@ int bt_rfcomm_dlc_connect(struct bt_conn *conn, struct bt_rfcomm_dlc *dlc, uint8
                (channel == ((dlc_hdl->dlci)>>1)) &&
                (0 == memcmp(conn, dlc->session->conn, sizeof(struct bt_conn))))
             {
-                BT_ERR("[RFCOMM] Client channel %d is already connected.\n", channel);
+                LOG_ERR("[RFCOMM] Client channel %d is already connected.\n", channel);
                 return -EINVAL;
             }
         }
@@ -1145,7 +1145,7 @@ int bt_rfcomm_dlc_connect(struct bt_conn *conn, struct bt_rfcomm_dlc *dlc, uint8
     ret = BT_rfcomm_open(rfcomm_hdl.bd_addr, rfcomm_hdl.server_channel, &rfcomm_hdl);
     if (API_SUCCESS == ret)
     {
-        BT_INFO("[RFCOMM] RFCOMM dlc connect on server %d is created successfully, waitting for RFCOMM_OPEN Event.\n",rfcomm_hdl.server_channel);
+        LOG_INF("[RFCOMM] RFCOMM dlc connect on server %d is created successfully, waitting for RFCOMM_OPEN Event.\n",rfcomm_hdl.server_channel);
         dlc->session = &rfcomm_session[index];
         dlc->role    = BT_RFCOMM_ROLE_INITIATOR;
         dlc->dlci    = channel;
@@ -1156,7 +1156,7 @@ int bt_rfcomm_dlc_connect(struct bt_conn *conn, struct bt_rfcomm_dlc *dlc, uint8
     }
     else
     {
-        BT_ERR("[RFCOMM] RFCOMM dlc connect on server %d is created failed, reason = 0x%04X.\n",rfcomm_hdl.server_channel, ret);
+        LOG_ERR("[RFCOMM] RFCOMM dlc connect on server %d is created failed, reason = 0x%04X.\n",rfcomm_hdl.server_channel, ret);
         rfcomm_init_session(index);
     }
 
@@ -1183,11 +1183,11 @@ int bt_rfcomm_dlc_send(struct bt_rfcomm_dlc *dlc, struct net_buf *buf)
     ret = BT_rfcomm_write(&rfcomm_hdl, buf->b.data, buf->b.len, NULL);
     if (API_SUCCESS == ret)
     {
-        BT_INFO("[RFCOMM] RFCOMM Write data is created successfully, waitting for RFCOMM Write Event.\n");
+        LOG_INF("[RFCOMM] RFCOMM Write data is created successfully, waitting for RFCOMM Write Event.\n");
     }
     else
     {
-        BT_ERR("[RFCOMM] RFCOMM Write %d data is created failed, reason is 0x%04X.\n",ret);
+        LOG_ERR("[RFCOMM] RFCOMM Write %d data is created failed, reason is 0x%04X.\n",ret);
     }
 
     err = rfcomm_convert_return_value(ret);
@@ -1215,12 +1215,12 @@ int bt_rfcomm_dlc_disconnect(struct bt_rfcomm_dlc *dlc)
     if (API_SUCCESS == ret)
     {
         /** Set RFCOMM Entity State to 'In Disconnect' */
-        BT_INFO("[RFCOMM] RFCOMM dlc disconnect is created successfully, waitting for RFCOMM Close event.\n");
+        LOG_INF("[RFCOMM] RFCOMM dlc disconnect is created successfully, waitting for RFCOMM Close event.\n");
         dlc->state = RFCOMM_IN_DISCONNECT;
     }
     else
     {
-        BT_ERR("[RFCOMM] RFCOMM dlc disconnect is created failed, reason is 0x%04X.\n",ret);
+        LOG_ERR("[RFCOMM] RFCOMM dlc disconnect is created failed, reason is 0x%04X.\n",ret);
     }
 
     err = rfcomm_convert_return_value(ret);
@@ -1353,11 +1353,11 @@ static int bt_rfcomm_send_test(struct bt_rfcomm_control *control)
     ret = BT_rfcomm_send_test(&rfcomm_hdl, &test_data);
     if(API_SUCCESS == ret)
     {
-        BT_INFO("[RFCOMM] RFCOMM dlc send session test command successfully, waitting for RFCOMM_SEND_TEST event.\n");
+        LOG_INF("[RFCOMM] RFCOMM dlc send session test command successfully, waitting for RFCOMM_SEND_TEST event.\n");
     }
     else
     {
-        BT_ERR("[RFCOMM] RFCOMM dlc send session test command failed, reason is 0x%04X.\n",ret);
+        LOG_ERR("[RFCOMM] RFCOMM dlc send session test command failed, reason is 0x%04X.\n",ret);
     }
 
     return rfcomm_convert_return_value(ret);
@@ -1416,11 +1416,11 @@ static int bt_rfcomm_send_flow_control(struct bt_rfcomm_control *control)
     ret = BT_rfcomm_send_fc(&rfcomm_hdl, operation);
     if(API_SUCCESS == ret)
     {
-        BT_INFO("[RFCOMM] RFCOMM send flow control command successfully, waitting for RFCOMM_SEND_FC_ON/OFF event.\n");
+        LOG_INF("[RFCOMM] RFCOMM send flow control command successfully, waitting for RFCOMM_SEND_FC_ON/OFF event.\n");
     }
     else
     {
-        BT_ERR("[RFCOMM] RFCOMM send flow control command failed, reason is 0x%04X.\n",ret);
+        LOG_ERR("[RFCOMM] RFCOMM send flow control command failed, reason is 0x%04X.\n",ret);
     }
 
     return rfcomm_convert_return_value(ret);
@@ -1493,11 +1493,11 @@ static int bt_rfcomm_get_rpn(struct bt_rfcomm_control *control)
     retval = BT_rfcomm_send_rpn(&rfcomm_hdl, &rpn_request);
     if (API_SUCCESS == retval)
     {
-        BT_INFO("[RFCOMM] RFCOMM Send RPN Request created successfully, waitting for RFCOMM_RPN_REQUEST_OPTION Event.\n");
+        LOG_INF("[RFCOMM] RFCOMM Send RPN Request created successfully, waitting for RFCOMM_RPN_REQUEST_OPTION Event.\n");
     }
     else
     {
-        BT_ERR("[RFCOMM] RFCOMM Send RPN Request created failed, reason is 0x%04X.\n",retval);
+        LOG_ERR("[RFCOMM] RFCOMM Send RPN Request created failed, reason is 0x%04X.\n",retval);
     }
 
     return rfcomm_convert_return_value(retval);
@@ -1559,11 +1559,11 @@ static int bt_rfcomm_set_rpn(struct bt_rfcomm_control *control)
     retval = BT_rfcomm_send_rpn(&rfcomm_hdl, &rpn_command);
     if (API_SUCCESS == retval)
     {
-        BT_INFO("[RFCOMM] RFCOMM Send RPN Command created successfully, waitting for RFCOMM_RPN_COMMAND_OPTION Event.\n");
+        LOG_INF("[RFCOMM] RFCOMM Send RPN Command created successfully, waitting for RFCOMM_RPN_COMMAND_OPTION Event.\n");
     }
     else
     {
-        BT_ERR("[RFCOMM] RFCOMM Send RPN Command created failed, reason is 0x%04X.\n",retval);
+        LOG_ERR("[RFCOMM] RFCOMM Send RPN Command created failed, reason is 0x%04X.\n",retval);
     }
 
     return rfcomm_convert_return_value(retval);
@@ -1627,11 +1627,11 @@ static int bt_rfcomm_send_pn(struct bt_rfcomm_control *control)
 
     if (API_SUCCESS == retval)
     {
-        BT_INFO("[RFCOMM] RFCOMM Send PN Command created successfully, waitting for RFCOMM_SEND_PN Event.\n");
+        LOG_INF("[RFCOMM] RFCOMM Send PN Command created successfully, waitting for RFCOMM_SEND_PN Event.\n");
     }
     else
     {
-        BT_ERR("[RFCOMM] RFCOMM Send PN Command created failed, reason is 0x%04X.\n",retval);
+        LOG_ERR("[RFCOMM] RFCOMM Send PN Command created failed, reason is 0x%04X.\n",retval);
     }
 
     return rfcomm_convert_return_value(retval);
@@ -1705,11 +1705,11 @@ static int bt_rfcomm_get_local_pn(struct bt_rfcomm_control *control)
 
     if (API_SUCCESS == retval)
     {
-        BT_INFO("[RFCOMM] RFCOMM get local PN successfully.\n");
+        LOG_INF("[RFCOMM] RFCOMM get local PN successfully.\n");
     }
     else
     {
-        BT_ERR("[RFCOMM] RFCOMM get local PN failed, reason is 0x%04X.\n",retval);
+        LOG_ERR("[RFCOMM] RFCOMM get local PN failed, reason is 0x%04X.\n",retval);
     }
 
     return rfcomm_convert_return_value(retval);
@@ -1753,11 +1753,11 @@ static int bt_rfcomm_send_rls(struct bt_rfcomm_control *control)
     retval = BT_rfcomm_send_rls(&rfcomm_hdl, &rfcomm_rls);
     if (API_SUCCESS == retval)
     {
-        BT_INFO("[RFCOMM] RFCOMM Send RLS Command created successfully, waitting for RFCOMM_SEND_RLS Event.\n");
+        LOG_INF("[RFCOMM] RFCOMM Send RLS Command created successfully, waitting for RFCOMM_SEND_RLS Event.\n");
     }
     else
     {
-        BT_ERR("[RFCOMM] RFCOMM Send RLS Command created failed, reason is 0x%04X.\n",retval);
+        LOG_ERR("[RFCOMM] RFCOMM Send RLS Command created failed, reason is 0x%04X.\n",retval);
     }
 
     return rfcomm_convert_return_value(retval);
@@ -1801,11 +1801,11 @@ static int bt_rfcomm_send_msc(struct bt_rfcomm_control *control)
     retval = BT_rfcomm_send_msc(&rfcomm_hdl, &rfcomm_msc);
     if (API_SUCCESS == retval)
     {
-        BT_INFO("[RFCOMM] RFCOMM set MSC successfully, waitting for RFCOMM_SEND_MSC event.\n");
+        LOG_INF("[RFCOMM] RFCOMM set MSC successfully, waitting for RFCOMM_SEND_MSC event.\n");
     }
     else
     {
-        BT_ERR("[RFCOMM] RFCOMM set MSC failed, reason is 0x%04X.\n",retval);
+        LOG_ERR("[RFCOMM] RFCOMM set MSC failed, reason is 0x%04X.\n",retval);
     }
 
     return rfcomm_convert_return_value(retval);

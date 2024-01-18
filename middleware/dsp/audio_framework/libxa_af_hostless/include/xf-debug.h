@@ -42,7 +42,7 @@
 #ifndef container_of
 #define container_of(ptr, type, member) \
     ((type *)((void *)(ptr) - offset_of(type, member)))
-#endif 
+#endif
 
 /*******************************************************************************
  * Bug check for constant conditions (file scope)
@@ -283,3 +283,18 @@ while (0)
     }                                           \
     (int)__ret;                                 \
 })
+
+/* ...check range */
+#define XAF_CHK_RANGE(val, min, max)                        \
+({                                                          \
+    int __ret = val;                                        \
+                                                            \
+    if ((__ret < (int)min) || (__ret > (int)max))           \
+    {                                                       \
+        TRACE(ERROR, _x("Invalid value: %d"), __ret);       \
+        return XAF_INVALIDVAL_ERR;                          \
+    }                                                       \
+    __ret;                                                  \
+})
+
+

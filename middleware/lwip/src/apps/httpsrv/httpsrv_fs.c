@@ -3,15 +3,15 @@
  * Copyright 2016 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 /*
-* Comments:
-*
-*   This file contains the functions that are used to initialize FS
-*   It also contains the FS driver functions.
-*/
+ * Comments:
+ *
+ *   This file contains the functions that are used to initialize FS
+ *   It also contains the FS driver functions.
+ */
 #include "httpsrv_fs.h"
 #include "httpsrv_port.h"
 
@@ -23,12 +23,12 @@ static uint32_t httpsrv_fs_move_file_pointer(HTTPSRV_FS_FILE_PTR, int32_t *);
 const HTTPSRV_FS_DIR_ENTRY *ROOT;
 
 /*FUNCTION*-------------------------------------------------------------------
-*
-* Function Name    : HTTPSRV_FS_init
-* Returned Value   : HTTPSRV_FS error code.
-* Comments         : Initialize the Trivial File System.
-*
-*END*---------------------------------------------------------------------*/
+ *
+ * Function Name    : HTTPSRV_FS_init
+ * Returned Value   : HTTPSRV_FS error code.
+ * Comments         : Initialize the Trivial File System.
+ *
+ *END*---------------------------------------------------------------------*/
 
 void HTTPSRV_FS_init(
     /*[IN] pointer to the first entry of the root HTTPSRV_FS directory  */
@@ -38,19 +38,19 @@ void HTTPSRV_FS_init(
 }
 
 /*FUNCTION*-------------------------------------------------------------------
-*
-* Function Name    : HTTPSRV_FS_open
-* Returned Value   : HTTPSRV_FS error code.
-* Comments         : Opens HTTPSRV_FS driver and initializes given file descriptor.
-*
-*END*----------------------------------------------------------------------*/
+ *
+ * Function Name    : HTTPSRV_FS_open
+ * Returned Value   : HTTPSRV_FS error code.
+ * Comments         : Opens HTTPSRV_FS driver and initializes given file descriptor.
+ *
+ *END*----------------------------------------------------------------------*/
 
 HTTPSRV_FS_FILE_PTR HTTPSRV_FS_open(
     /* [IN] the remaining portion of the name of the device */
     char *open_name_ptr)
 {
-    int32_t error_code = HTTPSRV_FS_OK;
-    HTTPSRV_FS_FILE_PTR fd_ptr = NULL; /* the file handle for the device being opened */
+    int32_t error_code                = HTTPSRV_FS_OK;
+    HTTPSRV_FS_FILE_PTR fd_ptr        = NULL; /* the file handle for the device being opened */
     const HTTPSRV_FS_DIR_ENTRY *entry = NULL;
 
     if (open_name_ptr && (*open_name_ptr != '\0'))
@@ -64,9 +64,9 @@ HTTPSRV_FS_FILE_PTR HTTPSRV_FS_open(
             {
                 /* Initialise the file information fields */
                 fd_ptr->DEV_DATA_PTR = entry;
-                fd_ptr->LOCATION = 0;
-                fd_ptr->ERROR = 0;
-                fd_ptr->SIZE = ((HTTPSRV_FS_DIR_ENTRY_PTR)fd_ptr->DEV_DATA_PTR)->SIZE;
+                fd_ptr->LOCATION     = 0;
+                fd_ptr->ERROR        = 0;
+                fd_ptr->SIZE         = ((HTTPSRV_FS_DIR_ENTRY_PTR)fd_ptr->DEV_DATA_PTR)->SIZE;
             }
         }
     }
@@ -74,12 +74,12 @@ HTTPSRV_FS_FILE_PTR HTTPSRV_FS_open(
 }
 
 /*FUNCTION*-------------------------------------------------------------------
-*
-* Function Name    : HTTPSRV_FS_close
-* Returned Value   : HTTPSRV_FS error code.
-* Comments         : Closes given file descriptor.
-*
-*END*----------------------------------------------------------------------*/
+ *
+ * Function Name    : HTTPSRV_FS_close
+ * Returned Value   : HTTPSRV_FS error code.
+ * Comments         : Closes given file descriptor.
+ *
+ *END*----------------------------------------------------------------------*/
 
 void HTTPSRV_FS_close(
     /* [IN/OUT] the file handle for the device being closed */
@@ -93,12 +93,12 @@ void HTTPSRV_FS_close(
 }
 
 /*FUNCTION*-------------------------------------------------------------------
-*
-* Function Name    : HTTPSRV_FS_read
-* Returned Value   : Number of characters read.
-* Comments         : Reads data from given file.
-*
-*END*----------------------------------------------------------------------*/
+ *
+ * Function Name    : HTTPSRV_FS_read
+ * Returned Value   : Number of characters read.
+ * Comments         : Reads data from given file.
+ *
+ *END*----------------------------------------------------------------------*/
 
 int32_t HTTPSRV_FS_read(
     /* [IN/OUT] the stream to perform the operation on */
@@ -119,7 +119,7 @@ int32_t HTTPSRV_FS_read(
     if (error_code != HTTPSRV_FS_OK)
     {
         file_ptr->ERROR = error_code;
-        ret = error_code;
+        ret             = error_code;
     }
     else
     {
@@ -194,12 +194,12 @@ int32_t HTTPSRV_FS_fseek(HTTPSRV_FS_FILE_PTR file_ptr, int32_t offset, uint32_t 
 }
 
 /*FUNCTION*-------------------------------------------------------------------
-*
-* Function Name    : HTTPSRV_FS_ioctl
-* Returned Value   : HTTPSRV_FS error code.
-* Comments         : Performs specified operation related to given file.
-*
-*END*----------------------------------------------------------------------*/
+ *
+ * Function Name    : HTTPSRV_FS_ioctl
+ * Returned Value   : HTTPSRV_FS error code.
+ * Comments         : Performs specified operation related to given file.
+ *
+ *END*----------------------------------------------------------------------*/
 
 int32_t HTTPSRV_FS_ioctl(
     /* [IN] the stream to perform the operation on */
@@ -268,13 +268,13 @@ int32_t HTTPSRV_FS_ioctl(
 }
 
 /*FUNCTION*-------------------------------------------------------------------
-*
-* Function Name    : httpsrv_fs_cmp
-* Returned Value   : -1, 0, 1 depending on path1 <, ==, > path2.
-* Comments         : Compares file paths. Not case sensitive. Both delimiters
-*                    '/' and '\' supported.
-*
-*END*---------------------------------------------------------------------*/
+ *
+ * Function Name    : httpsrv_fs_cmp
+ * Returned Value   : -1, 0, 1 depending on path1 <, ==, > path2.
+ * Comments         : Compares file paths. Not case sensitive. Both delimiters
+ *                    '/' and '\' supported.
+ *
+ *END*---------------------------------------------------------------------*/
 
 static int32_t httpsrv_fs_cmp(
     /* [IN] first file path to compare */
@@ -310,12 +310,12 @@ static int32_t httpsrv_fs_cmp(
 }
 
 /*FUNCTION*-------------------------------------------------------------------
-*
-* Function Name    : httpsrv_fs_open_file
-* Returned Value   : Pointer to HTTPSRV_FS directory entry or NULL.
-* Comments         : Searches for specified file and returns directory entry.
-*
-*END*---------------------------------------------------------------------*/
+ *
+ * Function Name    : httpsrv_fs_open_file
+ * Returned Value   : Pointer to HTTPSRV_FS directory entry or NULL.
+ * Comments         : Searches for specified file and returns directory entry.
+ *
+ *END*---------------------------------------------------------------------*/
 
 static const HTTPSRV_FS_DIR_ENTRY *httpsrv_fs_open_file(
     /* [IN] HTTPSRV_FS IO drive information */
@@ -335,7 +335,7 @@ static const HTTPSRV_FS_DIR_ENTRY *httpsrv_fs_open_file(
         return NULL;
     }
     *error_ptr = HTTPSRV_FS_FILE_NOT_FOUND;
-    entry = /* (HTTPSRV_FS_DIR_ENTRY_PTR)drive_ptr-> */ ROOT;
+    entry      = /* (HTTPSRV_FS_DIR_ENTRY_PTR)drive_ptr-> */ ROOT;
     while (entry->NAME != NULL)
     {
         if (httpsrv_fs_cmp(entry->NAME, pathname) == 0)
@@ -349,12 +349,12 @@ static const HTTPSRV_FS_DIR_ENTRY *httpsrv_fs_open_file(
 }
 
 /*FUNCTION*-------------------------------------------------------------------
-*
-* Function Name    : httpsrv_fs_read
-* Returned Value   : Number of bytes actually read.
-* Comments         : Reads given file and stores data into the given buffer.
-*
-*END*---------------------------------------------------------------------*/
+ *
+ * Function Name    : httpsrv_fs_read
+ * Returned Value   : Number of bytes actually read.
+ * Comments         : Reads given file and stores data into the given buffer.
+ *
+ *END*---------------------------------------------------------------------*/
 
 static uint32_t httpsrv_fs_read(
     /* [IN/OUT] file to read from */
@@ -395,12 +395,12 @@ static uint32_t httpsrv_fs_read(
 }
 
 /*FUNCTION*-------------------------------------------------------------------
-*
-* Function Name    : httpsrv_fs_move_file_pointer
-* Returned Value   : New file location.
-* Comments         : Performs seek within given file.
-*
-*END*---------------------------------------------------------------------*/
+ *
+ * Function Name    : httpsrv_fs_move_file_pointer
+ * Returned Value   : New file location.
+ * Comments         : Performs seek within given file.
+ *
+ *END*---------------------------------------------------------------------*/
 
 static uint32_t httpsrv_fs_move_file_pointer(
     /* [IN/OUT] file to seek within */
@@ -417,7 +417,7 @@ static uint32_t httpsrv_fs_move_file_pointer(
     }
     if (file_fd_ptr->LOCATION > file_fd_ptr->SIZE)
     {
-        *error_ptr = HTTPSRV_FS_EOF;
+        *error_ptr            = HTTPSRV_FS_EOF;
         file_fd_ptr->LOCATION = file_fd_ptr->SIZE;
     }
     return (file_fd_ptr->LOCATION);

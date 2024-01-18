@@ -39,32 +39,32 @@
  ******************************************************************************/
 
 /* ...initialize input port structure */
-int xf_input_port_init(xf_input_port_t *port, UWORD32 size, UWORD32 align, UWORD32 core)
+int xf_input_port_init(xf_input_port_t *port, UWORD32 size, UWORD32 align, UWORD32 core, UWORD32 mem_pool_type)
 {
     /* ...allocate local internal buffer of particular size and alignment */
     if (size)
     {
         /* ...internal buffer is used */
-        XF_CHK_ERR(port->buffer = xf_mem_alloc(size, align, core, 0 /* shared */), XAF_MEMORY_ERR);
+        XF_CHK_ERR(port->buffer = xf_mem_alloc(size, align, core, 0 /* shared */, mem_pool_type), XAF_MEMORY_ERR);
     }
     else
     {
         /* ...no internal buffering is used */
         port->buffer = NULL;
     }
-    
+
     /* ...initialize message queue */
     xf_msg_queue_init(&port->queue);
-    
+
     /* ...set buffer size */
     port->length = size;
-    
+
     /* ...enable input by default */
     port->flags = XF_INPUT_FLAG_ENABLED | XF_INPUT_FLAG_CREATED;
 
     /* ...mark buffer is empty */
     port->filled = 0, port->access = NULL;
-    
+
     TRACE(INIT, _b("input-port[%p] created - %p@%u[%u]"), port, port->buffer, align, size);
 
     return 0;
@@ -78,7 +78,7 @@ int xf_input_port_put(xf_input_port_t *port, xf_message_t *m)
     {
         /* ...input disabled; this is an error condition, likely */
         TRACE(INPUT, _b("input-port[%p] disabled"), port);
-        
+
         /* ...release the message instantly */
         xf_response_ok(m);
 
@@ -204,15 +204,15 @@ int xf_input_port_fill(xf_input_port_t *port)
         TRACE(INPUT, _b("No message ready"));
         return 0;
     }
-    
+
     /* ...calculate total amount of bytes we need to copy */
     n = (WORD32)(port->length - filled);
-    
+
     /* ...get at most "n" bytes from input message(s) buffer(s) */
     while (n > 0)
     {
         UWORD32     k;
-        
+
         /* ...determine the size of the chunk to copy */
         ((k = remaining) > (UWORD32)n ? k = (UWORD32)n : 0);
 
@@ -230,20 +230,20 @@ int xf_input_port_fill(xf_input_port_t *port)
 
             /* ...do not release message yet */
             TRACE(INPUT, _b("input-port[%p] done"), port);
-            
+
             /* ...and break the loop */
             break;
         }
 
         /* ...buffer must be set */
         BUG(!port->access, _x("invalid port state"));
-            
+
         /* ...get required amount from input buffer */
         memcpy(port->buffer + filled, port->access, k), port->access += k;
-        
+
         /* ...advance buffer positions */
         filled += k, copied += k, n -= k;
-        
+
         /* ...check if input buffer is processed completely */
         if ((remaining -= k) == 0)
         {
@@ -262,7 +262,7 @@ int xf_input_port_fill(xf_input_port_t *port)
 
     /* ...update buffer positions */
     port->filled = filled, port->remaining = remaining;
-    
+
     /* ...return indicator whether input buffer is prefilled */
     return (n == 0);
 }
@@ -292,9 +292,9 @@ void xf_input_port_consume(xf_input_port_t *port, UWORD32 n)
     else if (port->filled > n)
     {
         UWORD32     k = port->filled - n;
-        
+
         /* ...move tail of buffer to the head (safe to use memcpy) */
-        memcpy(port->buffer, port->buffer + n, k);        
+        memcpy(port->buffer, port->buffer + n, k);
 
         /* ...adjust filled position */
         port->filled = k;
@@ -313,7 +313,7 @@ void xf_input_port_purge(xf_input_port_t *port)
 
     /* ...bail out early if port is not created */
     if (!xf_input_port_created(port))   return;
-    
+
     /* ...free all queued messages with generic "ok" response */
     while ((m = xf_msg_dequeue(&port->queue)) != NULL)
     {
@@ -322,10 +322,10 @@ void xf_input_port_purge(xf_input_port_t *port)
 
     /* ...reset internal buffer position */
     port->filled = 0, port->access = NULL;
-    
+
     /* ...reset port flags */
     port->flags = (port->flags & ~__XF_INPUT_FLAGS(~0)) | XF_INPUT_FLAG_ENABLED | XF_INPUT_FLAG_CREATED;
-    
+
     TRACE(INPUT, _b("input-port[%p] purged"), port);
 }
 
@@ -337,7 +337,7 @@ void xf_input_port_control_save(xf_input_port_t *port, xf_message_t *m)
 
     /* ...place message into internal queue */
     xf_msg_enqueue(&port->queue, m);
-    
+
     /* ...set port purging flag */
     port->flags ^= XF_INPUT_FLAG_PURGING;
 
@@ -359,7 +359,7 @@ void xf_input_port_purge_done(xf_input_port_t *port)
 
     /* ...complete saved flow-control message */
     xf_response_ok(m);
-    
+
     /* ...clear port purging flag */
     port->flags ^= XF_INPUT_FLAG_PURGING;
 
@@ -367,17 +367,17 @@ void xf_input_port_purge_done(xf_input_port_t *port)
 }
 
 /* ...destroy input port data */
-void xf_input_port_destroy(xf_input_port_t *port, UWORD32 core)
+void xf_input_port_destroy(xf_input_port_t *port, UWORD32 core, UWORD32 mem_pool_type)
 {
     /* ...bail out earlier if port is not created */
     if (!xf_input_port_created(port))   return;
-    
+
     /* ...deallocate input buffer if needed */
-    (port->buffer ? xf_mem_free(port->buffer, port->length, core, 0), port->buffer = NULL : 0);
+    (port->buffer ? xf_mem_free(port->buffer, port->length, core, 0, mem_pool_type), port->buffer = NULL : 0);
 
     /* ...reset input port flags */
     port->flags = 0;
-    
+
     TRACE(INIT, _b("input-port[%p] destroyed"), port);
 }
 
@@ -390,7 +390,7 @@ int xf_output_port_init(xf_output_port_t *port, UWORD32 size)
 {
     /*  ...initialize message queue */
     xf_msg_queue_init(&port->queue);
-    
+
     /* ...set output buffer length */
     port->length = size;
 
@@ -402,16 +402,20 @@ int xf_output_port_init(xf_output_port_t *port, UWORD32 size)
     return 0;
 }
 
-/* ...route output port */
-int xf_output_port_route(xf_output_port_t *port, xf_msg_id_dtype id, UWORD32 n, UWORD32 length, UWORD32 align)
+int xf_output_port_route_alloc(xf_output_port_t *port, UWORD32 length, UWORD32 mem_pool_type)
 {
-    UWORD32             core = XF_MSG_DST_CORE(id);
-    UWORD32             shared = XF_MSG_SHARED(id);
-    xf_message_t   *m;
-    UWORD32             i;
-    
-    /* ...allocate message pool for a port; extra message for control */
-    XF_CHK_API(xf_msg_pool_init(&port->pool, n + 1, core, shared));
+    if(!(port->flags & XF_OUTPUT_FLAG_ROUTING) || port->length)
+    {
+        TRACE(ROUTE, _b("output-port[%p] route:%s buffer_length:%d"), port, (port->length)?"already allocated":"alloc error", port->length);
+        return 1;
+    }
+
+    UWORD32 i, n;
+    xf_message_t   *m = xf_output_port_control_msg(port);
+    UWORD64 id = m->id;
+    UWORD32 core = XF_MSG_DST_CORE(id);
+    UWORD32 shared = XF_MSG_SHARED(id);
+    n = port->pool.n-1;
 
     /* ...allocate required amount of buffers */
     for (i = 1; i <= n; i++)
@@ -421,12 +425,13 @@ int xf_output_port_route(xf_output_port_t *port, xf_msg_id_dtype id, UWORD32 n, 
 
         /* ...wipe out message link pointer (debugging) */
         m->next = NULL;
-        
+
         /* ...set message parameters */
         m->id = id;
         m->opcode = XF_FILL_THIS_BUFFER;
         m->length = length;
-        m->buffer = xf_mem_alloc(length, align, core, shared);
+        m->buffer = xf_mem_alloc(length, port->align, core, shared, mem_pool_type);
+        m->error = 0;
 
         /* ...if allocation failed, do a cleanup */
         if (!m->buffer)     goto error;
@@ -435,25 +440,13 @@ int xf_output_port_route(xf_output_port_t *port, xf_msg_id_dtype id, UWORD32 n, 
         xf_msg_enqueue(&port->queue, m);
     }
 
-    /* ...setup flow-control message */
-    m = xf_output_port_control_msg(port);
-    m->id = id;
-    m->length = 0;
-    m->buffer = NULL;
-
-    /* ...wipe out message link pointer (debugging) */
-    m->next = NULL;
-    
     /* ...save port length */
     port->length = length;
 
     /* ...mark port is routed */
-    port->flags |= XF_OUTPUT_FLAG_ROUTED;
+    port->flags ^= (XF_OUTPUT_FLAG_ROUTING | XF_OUTPUT_FLAG_ROUTED);
 
-    /* ...clear port idle flag */
-    port->flags &= ~XF_OUTPUT_FLAG_IDLE;
-
-    TRACE(ROUTE, _b("output-port[%p] routed: %08x -> %08x"), port, XF_MSG_DST(id), XF_MSG_SRC(id));
+    TRACE(ROUTE, _b("output-port[%p] routed: %08x -> %08x. buffer_length:%d"), port, XF_MSG_DST(id), XF_MSG_SRC(id), length);
 
     return 0;
 
@@ -464,16 +457,110 @@ error:
         m = xf_msg_pool_item(&port->pool, i);
 
         /* ...free item */
-        xf_mem_free(m->buffer, length, core, shared);
+        xf_mem_free(m->buffer, port->length, core, shared, mem_pool_type);
     }
 
     /* ...destroy pool data */
-    xf_msg_pool_destroy(&port->pool, core, shared);
-    
+    xf_msg_pool_destroy(&port->pool, core, shared, mem_pool_type);
+
     /* ...reset message queue (it is empty again) */
     xf_msg_queue_init(&port->queue);
 
     return XAF_MEMORY_ERR;
+}
+
+/* ...route output port */
+int xf_output_port_route(xf_output_port_t *port, xf_msg_id_dtype id, UWORD32 n, UWORD32 length, UWORD32 align, UWORD32 mem_pool_type)
+{
+    UWORD32             core = XF_MSG_DST_CORE(id);
+    xf_message_t   *m;
+    UWORD32             shared = XF_MSG_SHARED(id);
+
+    /* ...allocate message pool for a port; extra message for control */
+    XF_CHK_API(xf_msg_pool_init(&port->pool, n + 1, core, shared, mem_pool_type));
+
+#if 0
+    UWORD32             i;
+    /* ...allocate required amount of buffers */
+    for (i = 1; i <= n; i++)
+    {
+        /* ...get message from pool (directly; bypass that "get" interface) */
+        m = xf_msg_pool_item(&port->pool, i);
+
+        /* ...wipe out message link pointer (debugging) */
+        m->next = NULL;
+
+        /* ...set message parameters */
+        m->id = id;
+        m->opcode = XF_FILL_THIS_BUFFER;
+        m->length = length;
+        m->buffer = xf_mem_alloc(length, align, core, shared, mem_pool_type);
+
+        /* ...if allocation failed, do a cleanup */
+        if (!m->buffer)     goto error;
+
+        /* ...place message into output port */
+        xf_msg_enqueue(&port->queue, m);
+    }
+#endif
+    /* ...setup flow-control message */
+    m = xf_output_port_control_msg(port);
+    m->id = id;
+    m->length = 0;
+    m->buffer = NULL;
+    m->error = 0;
+
+    /* ...wipe out message link pointer (debugging) */
+    m->next = NULL;
+
+#if 0
+    /* ...save port length */
+    port->length = length;
+
+    /* ...mark port is routed */
+    port->flags |= XF_OUTPUT_FLAG_ROUTED;
+#else
+    /* ...save port length, will be updated in buffer allocation function */
+    port->length = 0;
+
+    /* ...mark port is routed */
+    port->flags |= XF_OUTPUT_FLAG_ROUTING;
+
+    /* ...save port buffer alignment */
+    port->align = align;
+#endif
+
+    /* ...clear port idle flag */
+    port->flags &= ~XF_OUTPUT_FLAG_IDLE;
+
+    TRACE(ROUTE, _b("output-port[%p] in routing: %08x -> %08x"), port, XF_MSG_DST(id), XF_MSG_SRC(id));
+
+    if(length)
+    {
+        return(xf_output_port_route_alloc(port, length, mem_pool_type));
+    }
+
+    return 0;
+
+#if 0
+error:
+    /* ...allocation failed; do a cleanup */
+    while (--i)
+    {
+        m = xf_msg_pool_item(&port->pool, i);
+
+        /* ...free item */
+        xf_mem_free(m->buffer, length, core, shared, mem_pool_type);
+    }
+
+    /* ...destroy pool data */
+    xf_msg_pool_destroy(&port->pool, core, shared, mem_pool_type);
+
+    /* ...reset message queue (it is empty again) */
+    xf_msg_queue_init(&port->queue);
+
+    return XAF_MEMORY_ERR;
+#endif
 }
 
 /* ...start output port unrouting sequence */
@@ -484,25 +571,25 @@ void xf_output_port_unroute_start(xf_output_port_t *port, xf_message_t *m)
 
     /* ...save message in the queue */
     port->unroute = m;
-    
+
     /* ...put port unrouting flag */
     port->flags |= XF_OUTPUT_FLAG_UNROUTING;
 }
 
 /* ...complete port unrouting sequence */
-void xf_output_port_unroute_done(xf_output_port_t *port)
+void xf_output_port_unroute_done(xf_output_port_t *port, UWORD32 mem_pool_type)
 {
     xf_message_t   *m;
-    
+
     /* ...make sure we have an outstanding port unrouting sequence */
     BUG(!xf_output_port_unrouting(port), _x("invalid state: %x"), port->flags);
 
     /* ...retrieve enqueued control-flow message */
     m = port->unroute, port->unroute = NULL;
-    
+
     /* ...destroy port buffers */
-    xf_output_port_unroute(port);
-    
+    xf_output_port_unroute(port, mem_pool_type);
+
     /* ...message cannot be NULL */
     BUG(m == NULL, _x("invalid port state"));
 
@@ -511,14 +598,14 @@ void xf_output_port_unroute_done(xf_output_port_t *port)
 }
 
 /* ...unroute output port and destroy all memory buffers allocated */
-void xf_output_port_unroute(xf_output_port_t *port)
+void xf_output_port_unroute(xf_output_port_t *port, UWORD32 mem_pool_type)
 {
     xf_message_t   *m = xf_output_port_control_msg(port);
     UWORD32             core = XF_MSG_DST_CORE(m->id);
-    UWORD32             shared = XF_MSG_SHARED(m->id);   
+    UWORD32             shared = XF_MSG_SHARED(m->id);
     UWORD32             n = port->pool.n - 1;
     UWORD32             i;
-    
+
     /* ...free all messages (we are running on "dst" core) */
     for (i = 1; i <= n; i++)
     {
@@ -526,11 +613,11 @@ void xf_output_port_unroute(xf_output_port_t *port)
         m = xf_msg_pool_item(&port->pool, i);
 
         /* ...free message buffer (must exist) */
-        xf_mem_free(m->buffer, port->length, core, shared);
+        xf_mem_free(m->buffer, port->length, core, shared, mem_pool_type);
     }
 
     /* ...destroy pool data */
-    xf_msg_pool_destroy(&port->pool, core, shared);
+    xf_msg_pool_destroy(&port->pool, core, shared, mem_pool_type);
 
     /* ...reset all flags */
     port->flags = XF_OUTPUT_FLAG_CREATED | XF_OUTPUT_FLAG_IDLE;
@@ -561,7 +648,7 @@ void * xf_output_port_data(xf_output_port_t *port)
 
     /* ...make sure message length is sane */
     BUG(m->length < port->length, _x("Insufficient buffer length: %u < %u"), m->length, port->length);
-        
+
     /* ...return access buffer pointer */
     return m->buffer;
 }
@@ -570,7 +657,7 @@ void * xf_output_port_data(xf_output_port_t *port)
 int xf_output_port_produce(xf_output_port_t *port, UWORD32 n)
 {
     xf_message_t   *m = xf_msg_dequeue(&port->queue);
-    
+
     /* ...message cannot be NULL */
     BUG(m == NULL, _x("Invalid transaction"));
 
@@ -582,7 +669,7 @@ int xf_output_port_produce(xf_output_port_t *port, UWORD32 n)
 
     /* ...clear port idle flag (technically, not needed for unrouted port) */
     port->flags &= ~XF_OUTPUT_FLAG_IDLE;
-    
+
     /* ...return indication of pending message availability */
     return (xf_msg_queue_head(&port->queue) != NULL);
 }
@@ -596,13 +683,13 @@ int xf_output_port_flush(xf_output_port_t *port, UWORD32 opcode)
     if (xf_output_port_routed(port))
     {
         /* ...if port is idle, satisfy immediately */
-        if ((port->flags & XF_OUTPUT_FLAG_IDLE) 
+        if ((port->flags & XF_OUTPUT_FLAG_IDLE)
             && (opcode != XF_FILL_THIS_BUFFER) /* ...TENA-2662 */
         )
         {
             return 1;
         }
-        
+
         /* ...start flushing sequence if not already started */
         if ((port->flags & XF_OUTPUT_FLAG_FLUSHING) == 0)
         {
@@ -614,11 +701,11 @@ int xf_output_port_flush(xf_output_port_t *port, UWORD32 opcode)
 
             /* ...set flow-control operation */
             m->opcode = opcode;
-        
+
             /* ...message is a command, but source and destination are swapped */
             xf_response(m);
         }
-        
+
         /* ...zero-result indicates the flushing is in progress */
         return 0;
     }
@@ -641,7 +728,7 @@ void xf_output_port_flush_done(xf_output_port_t *port)
 {
     /* ...make sure flushing sequence is ongoing */
     BUG((port->flags & XF_OUTPUT_FLAG_FLUSHING) == 0, _x("invalid state: %x"), port->flags);
-    
+
     /* ...clear flushing flag and set idle flag */
     port->flags ^= XF_OUTPUT_FLAG_IDLE | XF_OUTPUT_FLAG_FLUSHING;
 
@@ -649,7 +736,7 @@ void xf_output_port_flush_done(xf_output_port_t *port)
 }
 
 /* ...destroy output port */
-void xf_output_port_destroy(xf_output_port_t *port, UWORD32 core)
+void xf_output_port_destroy(xf_output_port_t *port, UWORD32 core, UWORD32 mem_pool_type)
 {
     /* ...check if port is routed */
     if (xf_output_port_routed(port))
@@ -658,7 +745,7 @@ void xf_output_port_destroy(xf_output_port_t *port, UWORD32 core)
         BUG(!xf_output_port_idle(port), _x("destroying non-idle port[%p]"), port);
 
         /* ...unroute port */
-        xf_output_port_unroute(port);
+        xf_output_port_unroute(port, mem_pool_type);
     }
 
     /* ...reset port flags */

@@ -459,7 +459,6 @@ typedef struct _A2DP_DEVICE_INFO
 #ifdef AVDTP_HAVE_MULTIPLEXING
     UCHAR multiplexing_conf;
 #endif /* AVDTP_HAVE_MULTIPLEXING */
-
 }A2DP_DEVICE_INFO;
 
 /** \} */
@@ -1706,10 +1705,18 @@ API_RESULT BT_a2dp_suspend
  *                      describing the cause of failure.
  *
  *  \remarks
- *  This API should be called to send Media frames only after the
- *  A2DP module has given the indication for steaming state.
- *  The streaming state is set only when the A2DP notifies application
- *  with A2DP_START_CNF or A2DP_START_IND events.
+ *  1. This API should be called to send Media frames only after the
+ *     A2DP module has given the indication for steaming state.
+ *     The streaming state is set only when the A2DP notifies application
+ *     with A2DP_START_CNF or A2DP_START_IND events.
+ *
+ *  2. If A2DP inst correspond to mandatory SBC codec then the application
+ *     is expected to submit only SBC encoded frames. The BT_a2dp_media_write()
+ *     internally forms AVDTP media packet and send to the peer.
+ *
+ *  3. If A2DP inst correspond to a optional codecs like MPEG-1,2, MPEG-2,4
+ *     or any other vendor specific codec, then the application is expected
+ *     to form complete media packet(RTP Header + Media Payload) and submit.
  */
 #ifndef A2DP_SUPPORT_MULTIPLE_MEDIA_FRAME_WRITE
 API_RESULT BT_a2dp_media_write
@@ -1844,6 +1851,34 @@ API_RESULT BT_a2dp_set_media_mtu
                /* IN */  UCHAR   inst,
                /* IN */  UINT16  in_mtu
            );
+
+#ifdef A2DP_ENABLE_SEID_ACCESS
+/**
+ *  \brief To get stream end point identifiers.
+ *
+ *  \par Description:
+ *  This API is used to get the local and remote SEP identifiers of a
+ *  configured A2DP instance.
+ *
+ *  \param [in] inst
+ *         Codec Instance representing this Codec.
+ *  \param [out] local_seid
+ *         Address to fetch the local seid.
+ *  \param [out] remote_seid
+ *         Address to fetch the remote seid.
+ *
+ *  \return API_RESULT: API_SUCCESS on success otherwise an error code
+ *                      describing the cause of failure.
+ *
+ *  \remarks
+ */
+API_RESULT BT_a2dp_get_sep_id
+           (
+               /* IN */  UCHAR   inst,
+               /* OUT */ UCHAR * local_seid,
+               /* OUT */ UCHAR * remote_seid
+           );
+#endif /* A2DP_ENABLE_SEID_ACCESS */
 
 #ifdef AVDTP_ASSISTIVE_MODE
 /**
@@ -2150,6 +2185,7 @@ API_RESULT BT_a2dp_send_rsp
         BT_a2dp_send_rsp((inst), AVDTP_SUSPEND_CNF, (reason))
 #endif /* AVDTP_STREAM_NO_AUTORSP */
 /** \} */
+
 #ifdef __cplusplus
 };
 #endif

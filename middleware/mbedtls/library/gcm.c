@@ -35,6 +35,7 @@
 #include "mbedtls/platform.h"
 #include "mbedtls/platform_util.h"
 #include "mbedtls/error.h"
+#include "mbedtls/constant_time.h"
 
 #include <string.h>
 
@@ -438,6 +439,7 @@ int mbedtls_gcm_finish(mbedtls_gcm_context *ctx,
 #endif /* MBEDTLS_AES_GCM_FINISH_ALT */
 /* NXP added for HW accelerators support */
 #if !defined(MBEDTLS_GCM_CRYPT_ALT)
+#if !defined(MBEDTLS_GCM_ONE_GO_ALT)
 int mbedtls_gcm_crypt_and_tag(mbedtls_gcm_context *ctx,
                               int mode,
                               size_t length,
@@ -473,6 +475,8 @@ int mbedtls_gcm_crypt_and_tag(mbedtls_gcm_context *ctx,
 
     return 0;
 }
+#endif /* !MBEDTLS_GCM_ONE_GO_ALT */
+/* NXP added for HW accelerators support */
 
 int mbedtls_gcm_auth_decrypt(mbedtls_gcm_context *ctx,
                              size_t length,
@@ -487,7 +491,6 @@ int mbedtls_gcm_auth_decrypt(mbedtls_gcm_context *ctx,
 {
     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;
     unsigned char check_tag[16];
-    size_t i;
     int diff;
 
     GCM_VALIDATE_RET(ctx != NULL);
@@ -504,9 +507,7 @@ int mbedtls_gcm_auth_decrypt(mbedtls_gcm_context *ctx,
     }
 
     /* Check tag in "constant-time" */
-    for (diff = 0, i = 0; i < tag_len; i++) {
-        diff |= tag[i] ^ check_tag[i];
-    }
+    diff = mbedtls_ct_memcmp(tag, check_tag, tag_len);
 
     if (diff != 0) {
         mbedtls_platform_zeroize(output, length);

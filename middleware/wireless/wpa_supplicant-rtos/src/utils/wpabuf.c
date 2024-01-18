@@ -8,7 +8,7 @@
 
 #include "includes.h"
 
-#include "common.h"
+#include "utils/common.h"
 #include "trace.h"
 #include "wpabuf.h"
 

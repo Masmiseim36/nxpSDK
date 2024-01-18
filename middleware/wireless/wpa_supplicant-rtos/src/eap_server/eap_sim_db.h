@@ -97,4 +97,6 @@ int eap_sim_db_resynchronize(struct eap_sim_db_data *data, const char *username,
 
 char *sim_get_username(const u8 *identity, size_t identity_len);
 
+int send_eap_sim_db_event(char *msg);
+
 #endif /* EAP_SIM_DB_H */

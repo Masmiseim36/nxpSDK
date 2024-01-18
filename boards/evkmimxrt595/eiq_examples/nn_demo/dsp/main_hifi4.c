@@ -32,18 +32,17 @@
  ******************************************************************************/
 #define BOARD_XTAL_SYS_CLK_HZ 24000000U /*!< Board xtal_sys frequency in Hz */
 #define BOARD_XTAL32K_CLK_HZ  32768U    /*!< Board xtal32K frequency in Hz */
-#define INIT_DEBUG_CONSOLE 0
+#define INIT_DEBUG_CONSOLE    0
 
 #define APP_RPMSG_READY_EVENT_DATA    (1)
 #define APP_RPMSG_EP_READY_EVENT_DATA (2)
 
 #define NOTIF_EVT_RPMSG_RECEIVED_DATA (1 << 0)
 #define NOTIF_EVT                     (NOTIF_EVT_RPMSG_RECEIVED_DATA)
-#define DSP_THREAD_STACK_SIZE (8 * 1024)
-#define DSP_THREAD_PRIORITY   (XOS_MAX_PRIORITY - 3)
+#define DSP_THREAD_STACK_SIZE         (8 * 1024)
+#define DSP_THREAD_PRIORITY           (XOS_MAX_PRIORITY - 3)
 
 #define AUDIO_BUFFER_SIZE (32 * 1024)
-
 
 #if (INIT_DEBUG_CONSOLE == 1)
 #define DSP_PRINTF PRINTF
@@ -59,7 +58,6 @@ typedef struct dsp_handle_t_
 
     XosMutex rpmsgMutex;
 } dsp_handle_t;
-
 
 /*******************************************************************************
  * Prototypes
@@ -106,7 +104,6 @@ static void XOS_Init(void)
 
     xos_start_system_timer(-1, 0);
 }
-
 
 static int rpmsg_callback(void *payload, uint32_t payload_len, uint32_t src, void *priv)
 {
@@ -228,7 +225,6 @@ int DSP_Main(void *arg, int wake_value)
     srtm_message msg;
     int status;
 
-
     DSP_PRINTF("[DSP_Main] start\r\n");
 
     dsp->rpmsg_queue = malloc(XOS_MSGQ_SIZE(10, sizeof(srtm_message)));
@@ -253,7 +249,7 @@ int DSP_Main(void *arg, int wake_value)
 
     /* Send an empty message signaling DSP is ready */
     memset(&msg, 0, sizeof(srtm_message));
-    rpmsg_lite_send(dsp->rpmsg, dsp->ept, MCU_EPT_ADDR, (char*)&msg, sizeof(srtm_message), RL_DONT_BLOCK);
+    rpmsg_lite_send(dsp->rpmsg, dsp->ept, MCU_EPT_ADDR, (char *)&msg, sizeof(srtm_message), RL_DONT_BLOCK);
 
     while (1)
     {
@@ -298,4 +294,3 @@ int main(void)
     /* Should not reach this statement. */
     return 0;
 }
-

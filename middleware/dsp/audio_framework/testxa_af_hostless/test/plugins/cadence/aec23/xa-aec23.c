@@ -26,7 +26,7 @@
  * Sample aec23 plugin
  ******************************************************************************/
 
-#define MODULE_TAG                     AEC23 
+#define MODULE_TAG                     AEC23
 
 /*******************************************************************************
  * Includes
@@ -53,7 +53,7 @@ extern clk_t aec23_cycles;
 #define XA_MIMO_CFG_DEFAULT_CHANNELS	2
 #define XA_MIMO_CFG_FRAME_SIZE_BYTES	1024
 
-#define XA_MIMO_CFG_PERSIST_SIZE	4	
+#define XA_MIMO_CFG_PERSIST_SIZE	4
 #define XA_MIMO_CFG_SCRATCH_SIZE	4
 
 #define XA_MIMO_IN_PORTS		2
@@ -71,17 +71,17 @@ typedef struct XAPcmAec
 {
     /* ...aec state */
     UWORD32                 state;
-    
+
     /* ...sampling rate */
     UWORD32                 sample_rate;
 
     /* ... input port parameters */
     /* ...number of bytes in input buffer */
     UWORD32                 in_buffer_size;
-    
+
     /* ...input buffers */
     void               	    *input[XA_MIMO_IN_PORTS];
-    
+
     UWORD32                 consumed[XA_MIMO_IN_PORTS];
 
     /* ...number of valid samples in individual buffers */
@@ -94,18 +94,18 @@ typedef struct XAPcmAec
     /* ... output port parameters */
     /* ...number of bytes in input/output buffer */
     UWORD32                 out_buffer_size;
-    
+
     /* ...output buffer */
     void               	    *output[XA_MIMO_OUT_PORTS];
 
     UWORD32                 produced[XA_MIMO_OUT_PORTS];
-    
+
     UWORD32                 num_out_ports; /* ... number of output ports active */
 
     /* ...scratch buffer pointer */
     void               	    *scratch;
     void               	    *persist;
-    
+
     UWORD32		    persist_size;
     UWORD32		    scratch_size;
 
@@ -160,7 +160,7 @@ static inline void xa_aec_preinit(XAPcmAec *d)
 {
     /* ...pre-configuration initialization; reset internal data */
     memset(d, 0, sizeof(*d));
-        
+
     /* ...set default parameters */
     d->num_in_ports 	= XA_MIMO_IN_PORTS;
     d->num_out_ports 	= XA_MIMO_OUT_PORTS;
@@ -195,35 +195,35 @@ static XA_ERRORCODE xa_aec_do_execute_stereo_16bit(XAPcmAec *d)
       /* reset consumed/produced counters */
       for (i = 0;i < (d->num_in_ports); i++)
         d->consumed[i] = 0;
-      
+
       for (i = 0;i < (d->num_out_ports); i++)
-        d->produced[i] = 0; 
+        d->produced[i] = 0;
 
       if((d->state & XA_AEC_FLAG_EXEC_DONE) && (d->input_length[0] > 0))
       {
         d->state         &= ~XA_AEC_FLAG_EXEC_DONE;
-      
+
         TRACE(PROCESS, _b("reset exec done as input port 0 received new input %d bytes"), d->input_length[0]);
       }
 
       if((d->state & XA_AEC_FLAG_EXEC_DONE) && (d->input_length[1] > 0))
       {
         d->state         &= ~XA_AEC_FLAG_EXEC_DONE;
-        
+
         TRACE(PROCESS, _b("reset exec done as input port 1 received new input %d bytes"), d->input_length[1]);
       }
 
       if((d->port_state[0] & XA_AEC_FLAG_COMPLETE) && (d->input_length[0] > 0))
       {
         d->port_state[0] &= ~XA_AEC_FLAG_COMPLETE;
-        
+
         TRACE(PROCESS, _b("reset port-complete as input port 0 received new input %d bytes"), d->input_length[0]);
       }
 
       if((d->port_state[1] & XA_AEC_FLAG_COMPLETE) && (d->input_length[1] > 0))
       {
         d->port_state[1] &= ~XA_AEC_FLAG_COMPLETE;
-        
+
         TRACE(PROCESS, _b("reset port-complete as input port 1 received new input %d bytes"), d->input_length[1]);
       }
 
@@ -241,7 +241,7 @@ static XA_ERRORCODE xa_aec_do_execute_stereo_16bit(XAPcmAec *d)
       }
 
       TRACE(PROCESS, _b("in length:(%d, %d)"), d->input_length[0], d->input_length[1]);
-      
+
       /* mic input port-0 - non-fatal error if MIC input port is paused OR not connected */
       if(!(d->port_state[0] & XA_AEC_FLAG_COMPLETE) && ((d->port_state[0] & XA_AEC_FLAG_PORT_PAUSED) || !(d->port_state[0] & XA_AEC_FLAG_PORT_CONNECTED)))
       {
@@ -289,13 +289,13 @@ static XA_ERRORCODE xa_aec_do_execute_stereo_16bit(XAPcmAec *d)
 
       for (i = 0;i < (d->num_out_ports); i++)
       {
-            if((d->output[i] == NULL) && (d->port_state[i + d->num_in_ports] & XA_AEC_FLAG_PORT_CONNECTED)) 
+            if((d->output[i] == NULL) && (d->port_state[i + d->num_in_ports] & XA_AEC_FLAG_PORT_CONNECTED))
             {
                 return XA_AEC23_EXEC_NONFATAL_NO_DATA;
             }
       }
 
-      nSize = XA_MIMO_CFG_FRAME_SIZE_BYTES >> 1;    //size of each sample is 2 bytes    
+      nSize = XA_MIMO_CFG_FRAME_SIZE_BYTES >> 1;    //size of each sample is 2 bytes
 
       for (i=0;(i < d->input_length[0]>>1); i++)
       {
@@ -303,9 +303,9 @@ static XA_ERRORCODE xa_aec_do_execute_stereo_16bit(XAPcmAec *d)
           input0 = *pIn0++;
           product0 = (WORD32)input0*gain0;
           product0 = product0 >> 12;
-          
+
           product0 = _MIN(MAX_16BIT, _MAX(product0, MIN_16BIT));
-          
+
           *pOut0++ = (WORD16)product0;
       }
       for (;i < nSize; i++)
@@ -325,9 +325,9 @@ static XA_ERRORCODE xa_aec_do_execute_stereo_16bit(XAPcmAec *d)
           input1 = *pIn1++;
           product1 = (WORD32)input1 * gain1;
           product1 = product1 >> 12;
-          
+
           product1 = _MIN(MAX_16BIT, _MAX(product1, MIN_16BIT));
-          
+
           *pOut1++ = (WORD16)product1;
       }
       for (;i < nSize; i++)
@@ -341,7 +341,7 @@ static XA_ERRORCODE xa_aec_do_execute_stereo_16bit(XAPcmAec *d)
         d->input_length[1] = 0;
       }
       d->produced[1] = XA_MIMO_CFG_FRAME_SIZE_BYTES;
-      
+
       if(!(d->port_state[4] & XA_AEC_FLAG_PORT_PAUSED) && (d->port_state[4] & XA_AEC_FLAG_PORT_CONNECTED))
       {
         WORD16    *pIn1 = (WORD16 *) d->input[1];
@@ -351,9 +351,9 @@ static XA_ERRORCODE xa_aec_do_execute_stereo_16bit(XAPcmAec *d)
             input1 = *pIn1++;
             product1 = (WORD32)input1 * gain1;
             product1 = product1 >> 12;
-            
+
             product1 = _MIN(MAX_16BIT, _MAX(product1, MIN_16BIT));
-            
+
             *pOut2++ = (WORD16)product1;
         }
         for (;i < nSize; i++)
@@ -362,28 +362,28 @@ static XA_ERRORCODE xa_aec_do_execute_stereo_16bit(XAPcmAec *d)
         }
         d->produced[2] = XA_MIMO_CFG_FRAME_SIZE_BYTES;
       }
-      
+
       /* ...put flag saying we have output buffer */
       d->state |= XA_AEC_FLAG_OUTPUT;
 
       if ((d->port_state[0] & XA_AEC_FLAG_INPUT_OVER) && (d->input_length[0] == 0))
       {
-        d->port_state[0] &= ~XA_AEC_FLAG_INPUT_OVER;     
-        d->port_state[0] |= XA_AEC_FLAG_COMPLETE;     
-        
+        d->port_state[0] &= ~XA_AEC_FLAG_INPUT_OVER;
+        d->port_state[0] |= XA_AEC_FLAG_COMPLETE;
+
         TRACE(PROCESS, _b("input port 0 completed"));
       }
- 
+
       if ((d->port_state[1] & XA_AEC_FLAG_INPUT_OVER) && (d->input_length[1] == 0))
       {
-        d->port_state[1] &= ~XA_AEC_FLAG_INPUT_OVER;     
-        d->port_state[1] |= XA_AEC_FLAG_COMPLETE;     
-        
+        d->port_state[1] &= ~XA_AEC_FLAG_INPUT_OVER;
+        d->port_state[1] |= XA_AEC_FLAG_COMPLETE;
+
         TRACE(PROCESS, _b("input port 1 completed"));
       }
 
       /* ... EXEC done if both ports have reveieved input over */
-      if(((d->port_state[0] & XA_AEC_FLAG_COMPLETE)) && 
+      if(((d->port_state[0] & XA_AEC_FLAG_COMPLETE)) &&
 	     ((d->port_state[1] & XA_AEC_FLAG_COMPLETE) || ((d->port_state[1] & XA_AEC_FLAG_PORT_PAUSED) || !(d->port_state[1] & XA_AEC_FLAG_PORT_CONNECTED)))
       )
       {
@@ -400,7 +400,7 @@ static XA_ERRORCODE xa_aec_do_execute_stereo_16bit(XAPcmAec *d)
 
     /* ...return success result code */
     return XA_NO_ERROR;
-}    
+}
 
 /* ...runtime reset */
 static XA_ERRORCODE xa_aec_do_runtime_init(XAPcmAec *d)
@@ -419,7 +419,7 @@ static XA_ERRORCODE xa_aec_get_api_size(XAPcmAec *d, WORD32 i_idx, pVOID pv_valu
     XF_CHK_ERR(pv_value, XA_API_FATAL_INVALID_CMD_TYPE);
     /* ...retrieve API structure size */
     *(WORD32 *)pv_value = sizeof(*d);
-    
+
     return XA_NO_ERROR;
 }
 
@@ -439,24 +439,24 @@ static XA_ERRORCODE xa_aec_init(XAPcmAec *d, WORD32 i_idx, pVOID pv_value)
 
         /* ...and mark aec has been created */
         d->state = XA_AEC_FLAG_PREINIT_DONE;
-        
+
         return XA_NO_ERROR;
     }
-    
+
     case XA_CMD_TYPE_INIT_API_POST_CONFIG_PARAMS:
     {
         /* ...post-configuration initialization (all parameters are set) */
         XF_CHK_ERR(d->state & XA_AEC_FLAG_PREINIT_DONE, XA_API_FATAL_INVALID_CMD_TYPE);
-    
+
         /* ...calculate input/output buffer size in bytes */
         //d->in_buffer_size = d->channels * d->frame_size * (d->pcm_width == 16 ? sizeof(WORD16) : sizeof(WORD32));
-        
+
         /* ...mark post-initialization is complete */
         d->state |= XA_AEC_FLAG_POSTINIT_DONE;
-        
+
         return XA_NO_ERROR;
     }
-    
+
     case XA_CMD_TYPE_INIT_PROCESS:
     {
         /* ...kick run-time initialization process; make sure aec is setup */
@@ -464,21 +464,21 @@ static XA_ERRORCODE xa_aec_init(XAPcmAec *d, WORD32 i_idx, pVOID pv_value)
 
         /* ...enter into execution stage */
         d->state |= XA_AEC_FLAG_RUNNING;
-        
+
         return XA_NO_ERROR;
     }
-    
+
     case XA_CMD_TYPE_INIT_DONE_QUERY:
     {
         /* ...check if initialization is done; make sure pointer is sane */
         XF_CHK_ERR(pv_value, XA_API_FATAL_INVALID_CMD_TYPE);
-        
+
         /* ...put current status */
         *(WORD32 *)pv_value = (d->state & XA_AEC_FLAG_RUNNING ? 1 : 0);
 
         return XA_NO_ERROR;
     }
-    
+
     default:
         /* ...unrecognized command type */
         TRACE(ERROR, _x("Unrecognized command type: %X"), i_idx);
@@ -490,7 +490,7 @@ static XA_ERRORCODE xa_aec_init(XAPcmAec *d, WORD32 i_idx, pVOID pv_value)
 static XA_ERRORCODE xa_aec_set_config_param(XAPcmAec *d, WORD32 i_idx, pVOID pv_value)
 {
     UWORD32     i_value;
-    
+
     /* ...sanity check - aec pointer must be sane */
     XF_CHK_ERR(d && pv_value, XA_API_FATAL_INVALID_CMD_TYPE);
 
@@ -499,11 +499,11 @@ static XA_ERRORCODE xa_aec_set_config_param(XAPcmAec *d, WORD32 i_idx, pVOID pv_
 
     /* ...get parameter value  */
     i_value = (UWORD32) *(WORD32 *)pv_value;
-    
+
     /* ...process individual configuration parameter */
     switch (i_idx & 0xF)
     {
-    case XA_AEC23_CONFIG_PARAM_SAMPLE_RATE:      
+    case XA_AEC23_CONFIG_PARAM_SAMPLE_RATE:
          {
             /* ...set aec sample rate */
             switch((UWORD32)i_value)
@@ -592,7 +592,7 @@ static XA_ERRORCODE xa_aec_get_config_param(XAPcmAec *d, WORD32 i_idx, pVOID pv_
 
     /* ...make sure pre-initialization is completed */
     XF_CHK_ERR(d->state & XA_AEC_FLAG_PREINIT_DONE, XA_API_FATAL_INVALID_CMD_TYPE);
-    
+
     /* ...process individual configuration parameter */
     switch (i_idx & 0xF)
     {
@@ -600,7 +600,7 @@ static XA_ERRORCODE xa_aec_get_config_param(XAPcmAec *d, WORD32 i_idx, pVOID pv_
         /* ...return aec sample rate */
         *(WORD32 *)pv_value = d->sample_rate;
         return XA_NO_ERROR;
-        
+
     case XA_AEC23_CONFIG_PARAM_PCM_WIDTH:
         /* ...return current PCM width */
         *(WORD32 *)pv_value = d->pcm_width;
@@ -627,10 +627,10 @@ static XA_ERRORCODE xa_aec_execute(XAPcmAec *d, WORD32 i_idx, pVOID pv_value)
 
     /* ...sanity check - aec must be valid */
     XF_CHK_ERR(d, XA_API_FATAL_INVALID_CMD_TYPE);
-    
+
     /* ...aec must be in running state */
     XF_CHK_ERR(d->state & XA_AEC_FLAG_RUNNING, XA_API_FATAL_INVALID_CMD_TYPE);
-    
+
     /* ...process individual command type */
     switch (i_idx)
     {
@@ -645,17 +645,17 @@ static XA_ERRORCODE xa_aec_execute(XAPcmAec *d, WORD32 i_idx, pVOID pv_value)
         aec23_cycles += clk_diff(aec23_stop, aec23_start);
 #endif
         return ret;
-        
+
     case XA_CMD_TYPE_DONE_QUERY:
         /* ...check if processing is complete */
         XF_CHK_ERR(pv_value, XA_API_FATAL_INVALID_CMD_TYPE);
         *(WORD32 *)pv_value = (d->state & XA_AEC_FLAG_EXEC_DONE ? 1 : 0);
         return XA_NO_ERROR;
-        
+
     case XA_CMD_TYPE_DO_RUNTIME_INIT:
         /* ...reset aec operation */
         return xa_aec_do_runtime_init(d);
-        
+
     default:
         /* ...unrecognized command */
         TRACE(ERROR, _x("Invalid index: %X"), i_idx);
@@ -667,25 +667,25 @@ static XA_ERRORCODE xa_aec_execute(XAPcmAec *d, WORD32 i_idx, pVOID pv_value)
 static XA_ERRORCODE xa_aec_set_input_bytes(XAPcmAec *d, WORD32 i_idx, pVOID pv_value)
 {
     UWORD32     size;
-    
+
     /* ...sanity check - check parameters */
     XF_CHK_ERR(d && pv_value, XA_API_FATAL_INVALID_CMD_TYPE);
 
     /* ...track index must be valid */
     XF_CHK_ERR(i_idx >= 0 && i_idx < d->num_in_ports, XA_API_FATAL_INVALID_CMD_TYPE);
-    
+
     /* ...aec must be initialized */
     XF_CHK_ERR(d->state & XA_AEC_FLAG_POSTINIT_DONE, XA_API_FATAL_INVALID_CMD_TYPE);
-    
+
     /* ...input buffer must exist */
     XF_CHK_ERR(d->input[i_idx], XA_API_FATAL_INVALID_CMD_TYPE);
-    
+
     /* ...input frame length should not be zero (in bytes) */
     XF_CHK_ERR((size = (UWORD32)*(WORD32 *)pv_value) >= 0, XA_AEC23_CONFIG_FATAL_RANGE);
 
     /* ...all is correct; set input buffer length in bytes */
     d->input_length[i_idx] = size;
-    
+
     return XA_NO_ERROR;
 }
 
@@ -699,10 +699,10 @@ static XA_ERRORCODE xa_aec_get_output_bytes(XAPcmAec *d, WORD32 i_idx, pVOID pv_
     p_idx = i_idx-d->num_in_ports;
     /* ...track index must be zero */
     XF_CHK_ERR((p_idx >= 0) && (p_idx < d->num_out_ports), XA_API_FATAL_INVALID_CMD_TYPE);
-    
+
     /* ...aec must be running */
     XF_CHK_ERR(d->state & XA_AEC_FLAG_RUNNING, XA_API_FATAL_INVALID_CMD_TYPE);
-    
+
     /* ...output buffer must exist */
     //XF_CHK_ERR(d->output, XA_AEC23_EXEC_FATAL_OUTPUT);
     XF_CHK_ERR(d->output, XA_AEC23_EXEC_FATAL_STATE);
@@ -721,17 +721,17 @@ static XA_ERRORCODE xa_aec_get_curidx_input_buf(XAPcmAec *d, WORD32 i_idx, pVOID
 
     /* ...track index must be valid */
     XF_CHK_ERR(i_idx >= 0 && i_idx < XA_MIMO_IN_PORTS, XA_API_FATAL_INVALID_CMD_TYPE);
-    
+
     /* ...aec must be running */
     XF_CHK_ERR(d->state & XA_AEC_FLAG_RUNNING, XA_AEC23_EXEC_FATAL_STATE);
-    
+
     /* ...input buffer must exist */
     //XF_CHK_ERR(d->input[i_idx], XA_AEC23_EXEC_FATAL_INPUT);
     XF_CHK_ERR(d->input[i_idx], XA_AEC23_EXEC_FATAL_STATE);
 
     /* ...return number of bytes consumed (always consume fixed-length chunk) */
     *(WORD32 *)pv_value = d->consumed[i_idx];
-    
+
     return XA_NO_ERROR;
 }
 
@@ -743,9 +743,9 @@ static XA_ERRORCODE xa_aec_input_over(XAPcmAec *d, WORD32 i_idx, pVOID pv_value)
 
     /* ... port specific end-of-stream flag */
     d->port_state[i_idx] |= XA_AEC_FLAG_INPUT_OVER;
-    
+
     TRACE(PROCESS, _b("Input-over-condition signalled for port %d"), i_idx);
-    
+
     return XA_NO_ERROR;
 }
 
@@ -761,10 +761,10 @@ static XA_ERRORCODE xa_aec_get_memtabs_size(XAPcmAec *d, WORD32 i_idx, pVOID pv_
 
     /* ...check aec is pre-initialized */
     XF_CHK_ERR(d->state & XA_AEC_FLAG_PREINIT_DONE, XA_API_FATAL_INVALID_CMD_TYPE);
-    
+
     /* ...we have all our tables inside API structure - good? tbd */
     *(WORD32 *)pv_value = 0;
-    
+
     return XA_NO_ERROR;
 }
 
@@ -776,7 +776,7 @@ static XA_ERRORCODE xa_aec_set_memtabs_ptr(XAPcmAec *d, WORD32 i_idx, pVOID pv_v
 
     /* ...check aec is pre-initialized */
     XF_CHK_ERR(d->state & XA_AEC_FLAG_PREINIT_DONE, XA_API_FATAL_INVALID_CMD_TYPE);
-    
+
     /* ...do not do anything; just return success - tbd */
     return XA_NO_ERROR;
 }
@@ -786,10 +786,10 @@ static XA_ERRORCODE xa_aec_get_n_memtabs(XAPcmAec *d, WORD32 i_idx, pVOID pv_val
 {
     /* ...basic sanity checks */
     XF_CHK_ERR(d && pv_value, XA_API_FATAL_INVALID_CMD_TYPE);
-    
+
     /* ...we have N input ports, M output ports and 1 persistent and 1 scratch buffer */
     *(WORD32 *)pv_value = d->num_in_ports + d->num_out_ports + 1 + 1;
-    
+
     return XA_NO_ERROR;
 }
 
@@ -845,7 +845,7 @@ static XA_ERRORCODE xa_aec_get_mem_info_alignment(XAPcmAec *d, WORD32 i_idx, pVO
 
     /* ...all buffers are 4-bytes aligned */
     *(WORD32 *)pv_value = 4;
-        
+
     return XA_NO_ERROR;
 }
 
@@ -938,11 +938,11 @@ static XA_ERRORCODE xa_aec_set_mem_ptr(XAPcmAec *d, WORD32 i_idx, pVOID pv_value
  * API command hooks
  ******************************************************************************/
 
-static XA_ERRORCODE (* const xa_aec_api[])(XAPcmAec *, WORD32, pVOID) = 
+static XA_ERRORCODE (* const xa_aec_api[])(XAPcmAec *, WORD32, pVOID) =
 {
     [XA_API_CMD_GET_API_SIZE]           = xa_aec_get_api_size,
 
-    [XA_API_CMD_INIT]                   = xa_aec_init, 
+    [XA_API_CMD_INIT]                   = xa_aec_init,
     [XA_API_CMD_SET_CONFIG_PARAM]       = xa_aec_set_config_param,
     [XA_API_CMD_GET_CONFIG_PARAM]       = xa_aec_get_config_param,
 
@@ -974,10 +974,10 @@ XA_ERRORCODE xa_dummy_aec23(xa_codec_handle_t p_xa_module_obj, WORD32 i_cmd, WOR
 
     /* ...check if command index is sane */
     XF_CHK_ERR(i_cmd < XA_AEC_API_COMMANDS_NUM, XA_API_FATAL_INVALID_CMD);
-    
+
     /* ...see if command is defined */
     XF_CHK_ERR(xa_aec_api[i_cmd], XA_API_FATAL_INVALID_CMD);
-    
+
     /* ...execute requested command */
     return (xa_aec_api[i_cmd](d, i_idx, pv_value));
 }

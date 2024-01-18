@@ -11,7 +11,7 @@
 #include "fsl_os_abstraction.h"
 
 #include "includes.h"
-#include "common.h"
+#include "utils/common.h"
 #include "common/defs.h"
 #include "common/ptksa_cache.h"
 #include "wpa_supplicant/config.h"
@@ -37,6 +37,11 @@
 #include "ap/ap_config.h"
 #include "ap/wps_hostapd.h"
 #include "ap/sta_info.h"
+#endif
+
+#ifdef CONFIG_DPP
+#include "ap/dpp_hostapd.h"
+#include "wpa_supplicant/dpp_supplicant.h"
 #endif
 
 #define EAP_TTLS_AUTH_PAP      1
@@ -91,12 +96,19 @@ static inline struct wpa_supplicant *get_wpa_s_handle(const struct netif *dev)
 
     OSA_SemaphorePost((osa_semaphore_handle_t)wpaSuppReadySemaphoreHandle);
 
+#ifdef CONFIG_ZEPHYR
+    const struct device *dev_temp = NULL;
+    dev_temp = net_if_get_device((struct net_if *)dev);
+    strncpy(ifname, dev_temp->name, NETIF_NAMESIZE - 1);
+    ifname[NETIF_NAMESIZE - 1] = '\0';
+#else
     (void)netifapi_netif_index_to_name(dev->num + 1, ifname);
+#endif
 
     wpa_s = wpa_supplicant_get_iface(global, ifname);
     if (!wpa_s)
     {
-        wpa_printf(MSG_DEBUG, "%s: Unable to get wpa_s handle for %s", __func__, dev->name);
+        wpa_printf(MSG_DEBUG, "%s: Unable to get wpa_s handle for %s", __func__, ifname);
         return NULL;
     }
 
@@ -118,12 +130,19 @@ static inline struct hostapd_iface *get_hostapd_handle(const struct netif *dev)
 
     OSA_SemaphorePost((osa_semaphore_handle_t)hostapdReadySemaphoreHandle);
 
+#ifdef CONFIG_ZEPHYR
+    const struct device *dev_temp = NULL;
+    dev_temp = net_if_get_device((struct net_if *)dev);
+    strncpy(ifname, dev_temp->name, NETIF_NAMESIZE - 1);
+    ifname[NETIF_NAMESIZE - 1] = '\0';
+#else
     (void)netifapi_netif_index_to_name(dev->num + 1, ifname);
+#endif
 
     hapd_s = hostapd_get_interface(ifname);
     if (!hapd_s)
     {
-        wpa_printf(MSG_DEBUG, "%s: Unable to get hapd_s handle for %s", __func__, dev->name);
+        wpa_printf(MSG_DEBUG, "%s: Unable to get hapd_s handle for %s", __func__, ifname);
         return NULL;
     }
 
@@ -437,10 +456,32 @@ out:
     OSA_MutexUnlock((osa_mutex_handle_t)wpa_supplicant_mutex);
 
     return ret;
-
 }
 
-#ifdef CONFIG_HOSTAPD
+int wpa_supp_cancel_scan(const struct netif *dev)
+{
+    struct wpa_supplicant *wpa_s;
+    int ret = 0;
+
+    OSA_MutexLock((osa_mutex_handle_t)wpa_supplicant_mutex, osaWaitForever_c);
+
+    wpa_s = get_wpa_s_handle(dev);
+    if (!wpa_s)
+    {
+        ret = -1;
+        goto out;
+    }
+    if (wpa_s->wpa_state == WPA_SCANNING || wpa_s->wpa_state == WPA_DISCONNECTED)
+        wpa_supplicant_cancel_scan(wpa_s);
+
+    send_wpa_supplicant_dummy_event();
+
+out:
+    OSA_MutexUnlock((osa_mutex_handle_t)wpa_supplicant_mutex);
+
+    return ret;
+}
+
 #ifdef CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE
 
 static int wpa_config_process_blob(struct wpa_config *config, char *name, u8 *data, size_t data_len)
@@ -475,6 +516,10 @@ static int wpa_config_process_blob(struct wpa_config *config, char *name, u8 *da
 
     return 0;
 }
+#endif
+
+#ifdef CONFIG_HOSTAPD
+#ifdef CONFIG_WPA_SUPP_CRYPTO_AP_ENTERPRISE
 
 static struct hostapd_eap_user *hostapd_config_read_default_eap_user(struct wlan_network *network,
                                                                      struct hostapd_eap_user **pnew_user)
@@ -493,25 +538,52 @@ static struct hostapd_eap_user *hostapd_config_read_default_eap_user(struct wlan
     }
     user->force_version = -1;
 
-    if ((network->security.type == WLAN_SECURITY_EAP_PEAP_MSCHAPV2) ||
+#ifdef CONFIG_EAP_PEAP
+    if (
+#ifdef CONFIG_EAP_MSCHAPV2
+        (network->security.type == WLAN_SECURITY_EAP_PEAP_MSCHAPV2) ||
+#endif
+#ifdef CONFIG_EAP_TLS
         (network->security.type == WLAN_SECURITY_EAP_PEAP_TLS) ||
-        (network->security.type == WLAN_SECURITY_EAP_PEAP_GTC))
+#endif
+#ifdef CONFIG_EAP_GTC
+        (network->security.type == WLAN_SECURITY_EAP_PEAP_GTC) ||
+#endif
+        false)
     {
         user->methods[0].method = EAP_TYPE_PEAP;
         user->methods[0].vendor = EAP_VENDOR_IETF;
     }
-    else if ((network->security.type == WLAN_SECURITY_EAP_TTLS_MSCHAPV2) ||
-             (network->security.type == WLAN_SECURITY_EAP_TTLS))
+#endif
+
+#ifdef CONFIG_EAP_TTLS
+    if (
+#ifdef CONFIG_EAP_MSCHAPV2
+        (network->security.type == WLAN_SECURITY_EAP_TTLS_MSCHAPV2) ||
+#endif
+#ifdef CONFIG_EAP_TLS
+        (network->security.type == WLAN_SECURITY_EAP_TTLS) ||
+#endif
+        false)
     {
         user->methods[0].method = EAP_TYPE_TTLS;
         user->methods[0].vendor = EAP_VENDOR_IETF;
     }
-    else if ((network->security.type == WLAN_SECURITY_EAP_FAST_MSCHAPV2) ||
-             (network->security.type == WLAN_SECURITY_EAP_FAST_GTC))
+#endif
+#ifdef CONFIG_EAP_FAST
+    if (
+#ifdef CONFIG_EAP_MSCHAPV2
+        (network->security.type == WLAN_SECURITY_EAP_FAST_MSCHAPV2) ||
+#endif
+#ifdef CONFIG_EAP_GTC
+        (network->security.type == WLAN_SECURITY_EAP_FAST_GTC) ||
+#endif
+        false)
     {
         user->methods[0].method = EAP_TYPE_FAST;
         user->methods[0].vendor = EAP_VENDOR_IETF;
     }
+#endif
 
     if (tail == NULL)
     {
@@ -523,8 +595,54 @@ static struct hostapd_eap_user *hostapd_config_read_default_eap_user(struct wlan
         tail       = user;
     }
 
-#if 0
-    for (i = 0; i < 9; i++)
+    *pnew_user = new_user;
+
+    return tail;
+
+failed:
+    if (new_user)
+        hostapd_config_free_eap_user(new_user);
+
+    return NULL;
+}
+
+static int hostapd_config_read_default2_eap_user(struct wlan_network *network,
+                                                 struct hostapd_bss_config *conf)
+{
+    struct hostapd_eap_user *user = NULL, *tail = NULL, *new_user = NULL;
+    u8 i, idx = 0, idx_inc = 0, idx_max = 9;
+    char *id[] = {"0", "1", "2", "3", "4", "5", "6", "7", "8"};
+    u32 method;
+
+#ifdef CONFIG_EAP_SIM
+    if (network->security.type == WLAN_SECURITY_EAP_SIM)
+    {
+        idx = 1;
+        idx_inc = 2;
+        idx_max = 6;
+        method = EAP_TYPE_SIM;
+    }
+#endif
+#ifdef CONFIG_EAP_AKA
+    if (network->security.type == WLAN_SECURITY_EAP_AKA)
+    {
+        idx = 0;
+        idx_inc = 2;
+        idx_max = 5;
+        method = EAP_TYPE_AKA;
+    }
+#endif
+#ifdef CONFIG_EAP_AKA_PRIME
+    if (network->security.type == WLAN_SECURITY_EAP_AKA_PRIME)
+    {
+        idx = 6;
+        idx_inc = 1;
+        idx_max = 9;
+        method = EAP_TYPE_AKA_PRIME;
+    }
+#endif
+
+    for (i = idx; i < idx_max; i += idx_inc)
     {
         user = os_zalloc(sizeof(*user));
         if (user == NULL)
@@ -546,16 +664,8 @@ static struct hostapd_eap_user *hostapd_config_read_default_eap_user(struct wlan
         user->identity_len    = os_strlen(id[i]);
         user->wildcard_prefix = 1;
 
-        user->methods[0].method = EAP_TYPE_PEAP;
+        user->methods[0].method = method;
         user->methods[0].vendor = EAP_VENDOR_IETF;
-        user->methods[1].method = EAP_TYPE_TTLS;
-        user->methods[1].vendor = EAP_VENDOR_IETF;
-        user->methods[2].method = EAP_TYPE_TLS;
-        user->methods[2].vendor = EAP_VENDOR_IETF;
-        user->methods[3].method = EAP_TYPE_SIM;
-        user->methods[3].vendor = EAP_VENDOR_IETF;
-        user->methods[4].method = EAP_TYPE_AKA;
-        user->methods[4].vendor = EAP_VENDOR_IETF;
 
         if (tail == NULL)
         {
@@ -567,19 +677,20 @@ static struct hostapd_eap_user *hostapd_config_read_default_eap_user(struct wlan
             tail       = user;
         }
     }
-#endif
 
-    *pnew_user = new_user;
+    hostapd_config_free_eap_users(conf->eap_user);
+    conf->eap_user = new_user;
 
-    return tail;
+    return 0;
 
 failed:
     if (new_user)
         hostapd_config_free_eap_user(new_user);
 
-    return NULL;
+    return -1;
 }
 
+#ifdef CONFIG_EAP_TLS
 static int hostapd_config_read_eap_user(const size_t nusers,
                                         const char (*identities)[IDENTITY_MAX_LENGTH],
                                         struct hostapd_bss_config *conf)
@@ -648,6 +759,7 @@ static int hostapd_config_read_eap_user(const size_t nusers,
 
     return ret;
 }
+#endif
 
 static int hostapd_config_read_eap_phase2_user(struct wlan_network *network, struct hostapd_bss_config *conf)
 {
@@ -669,10 +781,24 @@ static int hostapd_config_read_eap_phase2_user(struct wlan_network *network, str
         identity = (const char *)&network->security.identities[i];
         password = (const char *)&network->security.passwords[i];
 
-        if ((network->security.type == WLAN_SECURITY_EAP_PEAP_MSCHAPV2) ||
+        if (
+#ifdef CONFIG_EAP_PEAP
+#ifdef CONFIG_EAP_MSCHAPV2
+            (network->security.type == WLAN_SECURITY_EAP_PEAP_MSCHAPV2) ||
+#endif
+#ifdef CONFIG_EAP_GTC
             (network->security.type == WLAN_SECURITY_EAP_PEAP_GTC) ||
+#endif
+#endif
+#ifdef CONFIG_EAP_FAST
+#ifdef CONFIG_EAP_MSCHAPV2
             (network->security.type == WLAN_SECURITY_EAP_FAST_MSCHAPV2) ||
-            (network->security.type == WLAN_SECURITY_EAP_FAST_GTC))
+#endif
+#ifdef CONFIG_EAP_GTC
+            (network->security.type == WLAN_SECURITY_EAP_FAST_GTC) ||
+#endif
+#endif
+            false)
         {
             user = os_zalloc(sizeof(*user));
             if (user == NULL)
@@ -693,11 +819,14 @@ static int hostapd_config_read_eap_phase2_user(struct wlan_network *network, str
 
             user->identity_len = os_strlen(identity);
 
+#ifdef CONFIG_EAP_MSCHAPV2
             user->methods[0].method = EAP_TYPE_MSCHAPV2;
             user->methods[0].vendor = EAP_VENDOR_IETF;
+#endif
+#ifdef CONFIG_EAP_GTC
             user->methods[1].method = EAP_TYPE_GTC;
             user->methods[1].vendor = EAP_VENDOR_IETF;
-
+#endif
             user->password = os_memdup(password, os_strlen(password));
             if (user->password == NULL)
             {
@@ -720,7 +849,15 @@ static int hostapd_config_read_eap_phase2_user(struct wlan_network *network, str
                 tail       = user;
             }
         }
-        else if ((network->security.type == WLAN_SECURITY_EAP_PEAP_TLS) || (network->security.type == WLAN_SECURITY_EAP_TTLS))
+#ifdef CONFIG_EAP_TLS
+        if (
+#ifdef CONFIG_EAP_PEAP
+            (network->security.type == WLAN_SECURITY_EAP_PEAP_TLS) ||
+#endif
+#ifdef CONFIG_EAP_TTLS
+            (network->security.type == WLAN_SECURITY_EAP_TTLS) ||
+#endif
+            false)
         {
             user = os_zalloc(sizeof(*user));
             if (user == NULL)
@@ -766,7 +903,10 @@ static int hostapd_config_read_eap_phase2_user(struct wlan_network *network, str
                 tail       = user;
             }
         }
-        else if (network->security.type == WLAN_SECURITY_EAP_TTLS_MSCHAPV2)
+#endif
+#ifdef CONFIG_EAP_TTLS
+#ifdef CONFIG_EAP_MSCHAPV2
+        if (network->security.type == WLAN_SECURITY_EAP_TTLS_MSCHAPV2)
         {
             user = os_zalloc(sizeof(*user));
             if (user == NULL)
@@ -817,6 +957,8 @@ static int hostapd_config_read_eap_phase2_user(struct wlan_network *network, str
                 tail       = user;
             }
         }
+#endif
+#endif
         continue;
 
     failed:
@@ -838,7 +980,6 @@ static int hostapd_config_read_eap_phase2_user(struct wlan_network *network, str
 
     return ret;
 }
-
 #endif
 
 #ifdef CONFIG_WPA_SUPP_WPA3
@@ -915,6 +1056,46 @@ fail:
 }
 #endif
 
+static int wpa_parse_intlist(int **int_list, char *val)
+{
+    int *list;
+    int count;
+    char *pos, *end;
+
+    os_free(*int_list);
+    *int_list = NULL;
+
+    pos   = val;
+    count = 0;
+    while (*pos != '\0')
+    {
+        if (*pos == ' ')
+            count++;
+        pos++;
+    }
+
+    list = os_malloc(sizeof(int) * (count + 2));
+    if (list == NULL)
+        return -1;
+    pos   = val;
+    count = 0;
+    while (*pos != '\0')
+    {
+        end = os_strchr(pos, ' ');
+        if (end)
+            *end = '\0';
+
+        list[count++] = atoi(pos);
+        if (!end)
+            break;
+        pos = end + 1;
+    }
+    list[count] = -1;
+
+    *int_list = list;
+    return 0;
+}
+
 static int hostapd_update_bss(struct hostapd_iface *hapd_s, struct wlan_network *network)
 {
     struct hostapd_config *conf;
@@ -949,8 +1130,16 @@ static int hostapd_update_bss(struct hostapd_iface *hapd_s, struct wlan_network 
     conf->channel = network->channel;
     conf->acs     = conf->channel == 0;
 
-    conf->spectrum_mgmt_required = 1;
-    conf->local_pwr_constraint = 3;
+    if(conf->ieee80211d)
+    {
+        conf->spectrum_mgmt_required = 1;
+        conf->local_pwr_constraint = 3;
+    }
+    else
+    {
+        conf->spectrum_mgmt_required = 0;
+        conf->local_pwr_constraint = -1;
+    }
 
     conf->obss_interval = 10;
 
@@ -991,7 +1180,6 @@ static int hostapd_update_bss(struct hostapd_iface *hapd_s, struct wlan_network 
             if (network->channel > 14)
             {
                 conf->vht_oper_chwidth             = network->vht_oper_chwidth;
-                conf->vht_oper_centr_freq_seg0_idx = network->channel + 6;
             }
             else
             {
@@ -1017,7 +1205,6 @@ static int hostapd_update_bss(struct hostapd_iface *hapd_s, struct wlan_network 
             if (network->channel > 14)
             {
                 conf->he_oper_chwidth             = network->he_oper_chwidth;
-                conf->he_oper_centr_freq_seg0_idx = network->channel + 6;
             }
             else
             {
@@ -1030,7 +1217,8 @@ static int hostapd_update_bss(struct hostapd_iface *hapd_s, struct wlan_network 
         conf->he_phy_capab.he_mu_beamformer = 0;
         conf->he_op.he_bss_color            = 1;
         conf->he_op.he_default_pe_duration  = 0;
-        conf->he_op.he_basic_mcs_nss_set    = 2;
+        /* Set default basic MCS/NSS set to single stream MCS 0-7 */
+        conf->he_op.he_basic_mcs_nss_set    = 0xfffc;
     }
     else
     {
@@ -1052,7 +1240,7 @@ static int hostapd_update_bss(struct hostapd_iface *hapd_s, struct wlan_network 
     ssid->ssid_set   = 1;
     ssid->short_ssid = crc32(ssid->ssid, ssid->ssid_len);
 
-    bss->wpa_key_mgmt = WPA_KEY_MGMT_NONE;
+    bss->wpa_key_mgmt = network->security.key_mgmt;
 
     if (network->security.type != WLAN_SECURITY_NONE)
     {
@@ -1066,23 +1254,53 @@ static int hostapd_update_bss(struct hostapd_iface *hapd_s, struct wlan_network 
 
     switch (network->security.type)
     {
-#ifdef CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE
+#ifdef CONFIG_WPA_SUPP_CRYPTO_AP_ENTERPRISE
+#ifdef CONFIG_EAP_TLS
         case WLAN_SECURITY_EAP_TLS:
         case WLAN_SECURITY_EAP_TLS_SHA256:
 #ifdef CONFIG_11R
         case WLAN_SECURITY_EAP_TLS_FT:
         case WLAN_SECURITY_EAP_TLS_FT_SHA384:
 #endif
+#endif
+#ifdef CONFIG_EAP_TTLS
         case WLAN_SECURITY_EAP_TTLS:
+#ifdef CONFIG_EAP_MSCHAPV2
         case WLAN_SECURITY_EAP_TTLS_MSCHAPV2:
+#endif
+#endif
+#ifdef CONFIG_EAP_PEAP
+#ifdef CONFIG_EAP_MSCHAPV2
         case WLAN_SECURITY_EAP_PEAP_MSCHAPV2:
+#endif
+#ifdef CONFIG_EAP_TLS
         case WLAN_SECURITY_EAP_PEAP_TLS:
+#endif
+#ifdef CONFIG_EAP_GTC
         case WLAN_SECURITY_EAP_PEAP_GTC:
+#endif
+#endif
+#ifdef CONFIG_EAP_FAST
+#ifdef CONFIG_EAP_MSCHAPV2
         case WLAN_SECURITY_EAP_FAST_MSCHAPV2:
+#endif
+#ifdef CONFIG_EAP_GTC
         case WLAN_SECURITY_EAP_FAST_GTC:
-
+#endif
+#endif
+#ifdef CONFIG_EAP_SIM
+        case WLAN_SECURITY_EAP_SIM:
+#endif
+#ifdef CONFIG_EAP_AKA
+        case WLAN_SECURITY_EAP_AKA:
+#endif
+#ifdef CONFIG_EAP_AKA_PRIME
+        case WLAN_SECURITY_EAP_AKA_PRIME:
+#endif
             if (network->security.type == WLAN_SECURITY_EAP_TLS_SHA256)
+            {
                 bss->wpa_key_mgmt = WPA_KEY_MGMT_IEEE8021X_SHA256;
+            }
 #ifdef CONFIG_11R
             else if (network->security.type == WLAN_SECURITY_EAP_TLS_FT)
             {
@@ -1126,34 +1344,64 @@ static int hostapd_update_bss(struct hostapd_iface *hapd_s, struct wlan_network 
             bss->eapol_version = 2;
             bss->eap_server    = 1;
 
-            if ((network->security.type == WLAN_SECURITY_EAP_FAST_MSCHAPV2) ||
-                (network->security.type == WLAN_SECURITY_EAP_FAST_GTC))
+#ifdef CONFIG_EAP_FAST
+            if (
+#ifdef CONFIG_EAP_MSCHAPV2
+                    (network->security.type == WLAN_SECURITY_EAP_FAST_MSCHAPV2) ||
+#endif
+#ifdef CONFIG_EAP_GTC
+                    (network->security.type == WLAN_SECURITY_EAP_FAST_GTC)
+#endif
+                    || false)
             {
-                bss->pac_opaque_encr_key = os_zalloc(16);
-                if (bss->pac_opaque_encr_key == NULL)
+                size_t idlen = os_strlen(network->security.pac_opaque_encr_key);
+                if (idlen != 32)
                 {
-                    wpa_printf(MSG_DEBUG, "%s: EAP FAST encr key alloc failed", __func__);
+                    wpa_printf(MSG_ERROR, "Invalid pac_opaque_encr_key");
                     return -1;
                 }
 
-                os_get_random(bss->pac_opaque_encr_key, 16);
+                os_free(bss->pac_opaque_encr_key);
+                bss->pac_opaque_encr_key = os_malloc(16);
 
-                bss->eap_fast_a_id = os_zalloc(16);
                 if (bss->pac_opaque_encr_key == NULL)
                 {
-                    wpa_printf(MSG_DEBUG, "%s: EAP FAST a id alloc failed", __func__);
+                    wpa_printf(MSG_ERROR, "No memory for pac_opaque_encr_key");
+                    return -1;
+                }
+                else if (hexstr2bin(network->security.pac_opaque_encr_key, bss->pac_opaque_encr_key, 16))
+                {
+                    wpa_printf(MSG_ERROR, "Invalid pac_opaque_encr_key");
                     return -1;
                 }
 
-                os_get_random(bss->eap_fast_a_id, 16);
+                idlen = os_strlen(network->security.a_id);
+                if (idlen & 1)
+                {
+                    wpa_printf(MSG_ERROR, "Invalid eap_fast_a_id");
+                    return -1;
+                }
 
-                bss->eap_fast_a_id_len = 16;
+                os_free(bss->eap_fast_a_id);
+                bss->eap_fast_a_id = os_malloc(idlen / 2);
+                if (bss->eap_fast_a_id == NULL || hexstr2bin(network->security.a_id, bss->eap_fast_a_id, idlen / 2))
+                {
+                    wpa_printf(MSG_ERROR, "Line %d: Failed to parse eap_fast_a_id");
+                    os_free(bss->eap_fast_a_id);
+                    bss->eap_fast_a_id = NULL;
+                    return -1;
+                }
+                else
+                {
+                    bss->eap_fast_a_id_len = idlen / 2;
+                }
 
-                bss->eap_fast_a_id_info = dup_binstr("hostapd_test_server", os_strlen("hostapd_test_server"));
+                bss->eap_fast_a_id_info =
+                    dup_binstr("hostapd FAST/MSCHAPv2 GTC", os_strlen("hostapd FAST/MSCHAPv2 GTC"));
 
-                bss->eap_fast_prov = 3;
+                bss->eap_fast_prov = network->security.fast_prov;
             }
-
+#endif
             bss->ca_cert_blob_len     = network->security.ca_cert_len;
             bss->ca_cert_blob         = network->security.ca_cert_data;
             bss->server_cert_blob_len = network->security.server_cert_len;
@@ -1167,11 +1415,11 @@ static int hostapd_update_bss(struct hostapd_iface *hapd_s, struct wlan_network 
             bss->private_key_passwd =
                 dup_binstr(network->security.server_key_passwd, os_strlen(network->security.server_key_passwd));
 
+#ifdef CONFIG_EAP_TLS
             if ((network->security.type == WLAN_SECURITY_EAP_TLS) ||
                 (network->security.type == WLAN_SECURITY_EAP_TLS_SHA256)
 #ifdef CONFIG_11R
-                ||
-                (network->security.type == WLAN_SECURITY_EAP_TLS_FT) ||
+                || (network->security.type == WLAN_SECURITY_EAP_TLS_FT) ||
                 (network->security.type == WLAN_SECURITY_EAP_TLS_FT_SHA384)
 #endif
                 )
@@ -1183,14 +1431,55 @@ static int hostapd_update_bss(struct hostapd_iface *hapd_s, struct wlan_network 
                     return -1;
                 }
             }
+#endif
 
-            if ((network->security.type == WLAN_SECURITY_EAP_TTLS) ||
+            if (
+#ifdef CONFIG_EAP_SIM
+                (network->security.type == WLAN_SECURITY_EAP_SIM) ||
+#endif
+#ifdef CONFIG_EAP_AKA
+                (network->security.type == WLAN_SECURITY_EAP_AKA) ||
+#endif
+#ifdef CONFIG_EAP_AKA_PRIME
+                (network->security.type == WLAN_SECURITY_EAP_AKA_PRIME) ||
+#endif
+                false)
+            {
+                ret = hostapd_config_read_default2_eap_user(network, bss);
+                if (ret != 0)
+                {
+                    wpa_printf(MSG_DEBUG, "%s:Failed to read eap users", __func__);
+                    return -1;
+                }
+            }
+
+            if (
+#ifdef CONFIG_EAP_TTLS
+                (network->security.type == WLAN_SECURITY_EAP_TTLS) ||
+#ifdef CONFIG_EAP_MSCHAPV2
                 (network->security.type == WLAN_SECURITY_EAP_TTLS_MSCHAPV2) ||
+#endif
+#endif
+#ifdef CONFIG_EAP_PEAP
+#ifdef CONFIG_EAP_MSCHAPV2
                 (network->security.type == WLAN_SECURITY_EAP_PEAP_MSCHAPV2) ||
+#endif
+#ifdef CONFIG_EAP_TTLS
                 (network->security.type == WLAN_SECURITY_EAP_PEAP_TLS) ||
+#endif
+#ifdef CONFIG_EAP_GTC
                 (network->security.type == WLAN_SECURITY_EAP_PEAP_GTC) ||
+#endif
+#endif
+#ifdef CONFIG_EAP_FAST
+#ifdef CONFIG_EAP_MSCHAPV2
                 (network->security.type == WLAN_SECURITY_EAP_FAST_MSCHAPV2) ||
-                (network->security.type == WLAN_SECURITY_EAP_FAST_GTC))
+#endif
+#ifdef CONFIG_EAP_GTC
+                (network->security.type == WLAN_SECURITY_EAP_FAST_GTC) ||
+#endif
+#endif
+                false)
             {
                 ret = hostapd_config_read_eap_phase2_user(network, bss);
                 if (ret != 0)
@@ -1206,10 +1495,9 @@ static int hostapd_update_bss(struct hostapd_iface *hapd_s, struct wlan_network 
         case WLAN_SECURITY_WPA3_SAE:
         case WLAN_SECURITY_WPA2_WPA3_SAE_MIXED:
 #ifdef CONFIG_11R
-        case WLAN_SECURITY_WPA3_SAE_FT:
-            if (network->security.type == WLAN_SECURITY_WPA3_SAE_FT)
+        case WLAN_SECURITY_WPA3_FT_SAE:
+            if (network->security.type == WLAN_SECURITY_WPA3_FT_SAE)
             {
-                bss->wpa_key_mgmt          = WPA_KEY_MGMT_SAE | WPA_KEY_MGMT_FT_SAE;
                 bss->mobility_domain[0]    = 'a';
                 bss->mobility_domain[1]    = '3';
                 bss->pmk_r1_push           = 1;
@@ -1220,22 +1508,32 @@ static int hostapd_update_bss(struct hostapd_iface *hapd_s, struct wlan_network 
 #endif
                 if (network->security.type == WLAN_SECURITY_WPA2_WPA3_SAE_MIXED)
             {
-                bss->wpa_key_mgmt        = WPA_KEY_MGMT_PSK | WPA_KEY_MGMT_SAE;
-                bss->ssid.wpa_passphrase = os_strdup(network->security.psk);
-                if (bss->ssid.wpa_passphrase)
+                if (network->security.pmk_valid && bss->ssid.wpa_psk)
                 {
-                    hostapd_config_clear_wpa_psk(&bss->ssid.wpa_psk);
-                    bss->ssid.wpa_passphrase_set = 1;
+                    os_memcpy(bss->ssid.wpa_psk->psk, network->security.pmk, PMK_LEN);
+                    bss->ssid.wpa_psk->group = 1;
+                    bss->ssid.wpa_psk_set    = 1;
                 }
                 else
                 {
-                    wpa_printf(MSG_DEBUG, "%s:Failed to copy passphrase", __func__);
-                    return -1;
+                    bss->ssid.wpa_passphrase = os_strdup(network->security.psk);
+                    if (bss->ssid.wpa_passphrase)
+                    {
+                        hostapd_config_clear_wpa_psk(&bss->ssid.wpa_psk);
+                        bss->ssid.wpa_passphrase_set = 1;
+                    }
+                    else
+                    {
+                        wpa_printf(MSG_DEBUG, "%s:Failed to copy passphrase", __func__);
+                        return -1;
+                    }
                 }
             }
-            else
+
+            if (wpa_parse_intlist(&bss->sae_groups, network->security.sae_groups))
             {
-                bss->wpa_key_mgmt = WPA_KEY_MGMT_SAE;
+                wpa_printf(MSG_ERROR, "Invalid sae_groups value");
+                return -1;
             }
 
             bss->sae_pwe            = network->security.pwe_derivation;
@@ -1252,20 +1550,23 @@ static int hostapd_update_bss(struct hostapd_iface *hapd_s, struct wlan_network 
 #endif
 #ifdef CONFIG_OWE
         case WLAN_SECURITY_OWE_ONLY:
-            bss->wpa_key_mgmt = WPA_KEY_MGMT_OWE;
+
+            if (wpa_parse_intlist(&bss->owe_groups, network->security.owe_groups))
+            {
+                wpa_printf(MSG_ERROR, "Invalid owe_groups value");
+                return -1;
+            }
             break;
 #endif
         case WLAN_SECURITY_WPA2:
 #ifdef CONFIG_11R
         case WLAN_SECURITY_WPA2_FT:
 #endif
-        case WLAN_SECURITY_WPA2_SHA256:
         case WLAN_SECURITY_WPA_WPA2_MIXED:
 
 #ifdef CONFIG_11R
             if (network->security.type == WLAN_SECURITY_WPA2_FT)
             {
-                bss->wpa_key_mgmt          = WPA_KEY_MGMT_PSK | WPA_KEY_MGMT_FT_PSK;
                 bss->mobility_domain[0]    = 'a';
                 bss->mobility_domain[1]    = '4';
                 bss->pmk_r1_push           = 1;
@@ -1274,34 +1575,80 @@ static int hostapd_update_bss(struct hostapd_iface *hapd_s, struct wlan_network 
             }
             else
 #endif
-                if (network->security.type == WLAN_SECURITY_WPA2_SHA256)
-                bss->wpa_key_mgmt = WPA_KEY_MGMT_PSK_SHA256;
-            else
             {
-                bss->wpa_key_mgmt = WPA_KEY_MGMT_PSK;
                 if (network->security.type == WLAN_SECURITY_WPA_WPA2_MIXED)
                 {
                     bss->wpa = WPA_PROTO_WPA | WPA_PROTO_RSN;
                 }
             }
 
-            // str_clear_free(bss->ssid.wpa_passphrase);
-            bss->ssid.wpa_passphrase = os_strdup(network->security.psk);
-            if (bss->ssid.wpa_passphrase)
+            if (network->security.pmk_valid && bss->ssid.wpa_psk)
             {
-                hostapd_config_clear_wpa_psk(&bss->ssid.wpa_psk);
-                bss->ssid.wpa_passphrase_set = 1;
+                os_memcpy(bss->ssid.wpa_psk->psk, network->security.pmk, PMK_LEN);
+                bss->ssid.wpa_psk->group = 1;
+                bss->ssid.wpa_psk_set    = 1;
             }
             else
             {
-                wpa_printf(MSG_DEBUG, "%s:Failed to copy passphrase", __func__);
-                return -1;
+                // str_clear_free(bss->ssid.wpa_passphrase);
+                bss->ssid.wpa_passphrase = os_strdup(network->security.psk);
+                if (bss->ssid.wpa_passphrase)
+                {
+                    hostapd_config_clear_wpa_psk(&bss->ssid.wpa_psk);
+                    bss->ssid.wpa_passphrase_set = 1;
+                }
+                else
+                {
+                    wpa_printf(MSG_DEBUG, "%s:Failed to copy passphrase", __func__);
+                    return -1;
+                }
             }
             break;
+#ifdef CONFIG_DPP
+        case WLAN_SECURITY_DPP:
+            bss->wpa_key_mgmt = WPA_KEY_MGMT_DPP;
+            break;
+#endif
         default:
             break;
     }
 
+#ifdef CONFIG_DPP
+    if ((network->security.key_mgmt & WLAN_KEY_MGMT_DPP) || (network->security.key_mgmt & WLAN_KEY_MGMT_PSK) ||
+        (network->security.key_mgmt & WLAN_KEY_MGMT_SAE) || (network->security.key_mgmt & WLAN_KEY_MGMT_IEEE8021X))
+    {
+        if (network->security.dpp_connector)
+        {
+            os_free(bss->dpp_connector);
+            bss->dpp_connector = os_strdup((const char *)network->security.dpp_connector);
+        }
+        if (network->security.dpp_c_sign_key)
+        {
+            wpabuf_free(bss->dpp_csign);
+            bss->dpp_csign = wpabuf_parse_bin((const char *)network->security.dpp_c_sign_key);
+            if (!bss->dpp_csign)
+            {
+                wpa_printf(MSG_ERROR, "%s: Invalid dpp_csign '%s'", __func__, network->security.dpp_c_sign_key);
+                return -1;
+            }
+        }
+        if (network->security.dpp_net_access_key)
+        {
+            wpabuf_free(bss->dpp_netaccesskey);
+            bss->dpp_netaccesskey = wpabuf_parse_bin((const char *)network->security.dpp_net_access_key);
+            if (!bss->dpp_netaccesskey)
+            {
+                wpa_printf(MSG_ERROR, "%s: Invalid dpp_netaccesskey '%s'", __func__, network->security.dpp_net_access_key);
+                return -1;
+            }
+        }
+#ifdef CONFIG_DPP2
+        /* Add channels from scan results for APs that advertise Configurator
+         * Connectivity element */
+        bss->dpp_configurator_connectivity = 1;
+#endif /* CONFIG_DPP2 */
+    }
+#endif
     if ((network->security.mfpc) && (network->security.mfpr))
         bss->ieee80211w = MGMT_FRAME_PROTECTION_REQUIRED;
     else if (network->security.mfpc)
@@ -1375,31 +1722,51 @@ static int hostapd_free_bss(struct hostapd_iface *hapd_s, struct wlan_network *n
     switch (network->security.type)
     {
 #ifdef CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE
+#ifdef CONFIG_EAP_TLS
         case WLAN_SECURITY_EAP_TLS:
         case WLAN_SECURITY_EAP_TLS_SHA256:
 #ifdef CONFIG_11R
         case WLAN_SECURITY_EAP_TLS_FT:
         case WLAN_SECURITY_EAP_TLS_FT_SHA384:
 #endif
+#endif
+#ifdef CONFIG_EAP_TTLS
         case WLAN_SECURITY_EAP_TTLS:
+#ifdef CONFIG_EAP_MSCHAPV2
         case WLAN_SECURITY_EAP_TTLS_MSCHAPV2:
+#endif
+#endif
+#ifdef CONFIG_EAP_PEAP
+#ifdef CONFIG_EAP_MSCHAPV2
         case WLAN_SECURITY_EAP_PEAP_MSCHAPV2:
+#endif
+#ifdef CONFIG_EAP_TLS
         case WLAN_SECURITY_EAP_PEAP_TLS:
+#endif
+#ifdef CONFIG_EAP_GTC
         case WLAN_SECURITY_EAP_PEAP_GTC:
+#endif
+#endif
+#ifdef CONFIG_EAP_FAST
+#ifdef CONFIG_EAP_MSCHAPV2
         case WLAN_SECURITY_EAP_FAST_MSCHAPV2:
+#endif
+#ifdef CONFIG_EAP_GTC
         case WLAN_SECURITY_EAP_FAST_GTC:
-
+#endif
             if (bss->pac_opaque_encr_key)
             {
                 os_free(bss->pac_opaque_encr_key);
+                bss->pac_opaque_encr_key = NULL;
             }
             if (bss->eap_fast_a_id)
             {
                 os_free(bss->eap_fast_a_id);
+                bss->eap_fast_a_id = NULL;
             }
             str_clear_free(bss->eap_fast_a_id_info);
             bss->eap_fast_a_id_info = NULL;
-
+#endif
             hostapd_config_free_eap_users(bss->eap_user);
             bss->eap_user = NULL;
             break;
@@ -1411,7 +1778,7 @@ static int hostapd_free_bss(struct hostapd_iface *hapd_s, struct wlan_network *n
             hostapd_config_clear_wpa_psk(&bss->ssid.wpa_psk);
         case WLAN_SECURITY_WPA3_SAE:
 #ifdef CONFIG_11R
-        case WLAN_SECURITY_WPA3_SAE_FT:
+        case WLAN_SECURITY_WPA3_FT_SAE:
 #endif
             hostapd_config_free_sae_passwords(bss);
             break;
@@ -1424,7 +1791,6 @@ static int hostapd_free_bss(struct hostapd_iface *hapd_s, struct wlan_network *n
 #ifdef CONFIG_11R
         case WLAN_SECURITY_WPA2_FT:
 #endif
-        case WLAN_SECURITY_WPA2_SHA256:
         case WLAN_SECURITY_WPA_WPA2_MIXED:
 
             str_clear_free(bss->ssid.wpa_passphrase);
@@ -1436,117 +1802,21 @@ static int hostapd_free_bss(struct hostapd_iface *hapd_s, struct wlan_network *n
     }
 
     hostapd_reset_bss(bss);
-
+    if (bss->accept_mac)
+    {
+        os_free(bss->accept_mac);
+        bss->accept_mac =0;
+    }
+    if (bss->deny_mac)
+    {
+        os_free(bss->deny_mac);
+        bss->deny_mac = 0;
+    }
     return 0;
 }
-
 #endif
 
 #ifdef CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE
-
-static int wpa_config_parse_eap(struct wpa_ssid *ssid, const char *value)
-{
-    int last, errors = 0;
-    char *start, *end, *buf;
-    struct eap_method_type *methods = NULL, *tmp;
-    size_t num_methods              = 0;
-
-    buf = os_strdup(value);
-    if (buf == NULL)
-        return -1;
-    start = buf;
-
-    while (*start != '\0')
-    {
-        while (*start == ' ' || *start == '\t')
-            start++;
-        if (*start == '\0')
-            break;
-        end = start;
-        while (*end != ' ' && *end != '\t' && *end != '\0')
-            end++;
-        last    = *end == '\0';
-        *end    = '\0';
-        tmp     = methods;
-        methods = os_realloc_array(methods, num_methods + 1, sizeof(*methods));
-        if (methods == NULL)
-        {
-            os_free(tmp);
-            os_free(buf);
-            return -1;
-        }
-        methods[num_methods].method = eap_peer_get_type(start, &methods[num_methods].vendor);
-        if (methods[num_methods].vendor == EAP_VENDOR_IETF && methods[num_methods].method == EAP_TYPE_NONE)
-        {
-            wpa_printf(MSG_DEBUG,
-                       "unknown EAP method "
-                       "'%s'",
-                       start);
-            wpa_printf(MSG_DEBUG,
-                       "You may need to add support for"
-                       " this EAP method during wpa_supplicant\n"
-                       "build time configuration.\n"
-                       "See README for more information.");
-            errors++;
-        }
-        else if (methods[num_methods].vendor == EAP_VENDOR_IETF && methods[num_methods].method == EAP_TYPE_LEAP)
-            ssid->leap++;
-        else
-            ssid->non_leap++;
-        num_methods++;
-        if (last)
-            break;
-        start = end + 1;
-    }
-    os_free(buf);
-
-    tmp     = methods;
-    methods = os_realloc_array(methods, num_methods + 1, sizeof(*methods));
-    if (methods == NULL)
-    {
-        os_free(tmp);
-        return -1;
-    }
-    methods[num_methods].vendor = EAP_VENDOR_IETF;
-    methods[num_methods].method = EAP_TYPE_NONE;
-    num_methods++;
-
-    if (!errors && ssid->eap.eap_methods)
-    {
-        struct eap_method_type *prev_m;
-        size_t i, j, prev_methods, match = 0;
-
-        prev_m = ssid->eap.eap_methods;
-        for (i = 0; prev_m[i].vendor != EAP_VENDOR_IETF || prev_m[i].method != EAP_TYPE_NONE; i++)
-        {
-            /* Count the methods */
-        }
-        prev_methods = i + 1;
-
-        for (i = 0; prev_methods == num_methods && i < prev_methods; i++)
-        {
-            for (j = 0; j < num_methods; j++)
-            {
-                if (prev_m[i].vendor == methods[j].vendor && prev_m[i].method == methods[j].method)
-                {
-                    match++;
-                    break;
-                }
-            }
-        }
-        if (match == num_methods)
-        {
-            os_free(methods);
-            return 1;
-        }
-    }
-    wpa_hexdump(MSG_MSGDUMP, "eap methods", (u8 *)methods, num_methods * sizeof(*methods));
-    os_free(ssid->eap.eap_methods);
-    ssid->eap.eap_methods = methods;
-    return errors ? -1 : 0;
-}
-#endif
-
 static void str2hex(const char *str, char *strH)
 {
     unsigned int i, j;
@@ -1558,6 +1828,7 @@ static void str2hex(const char *str, char *strH)
 
     strH[j] = '\0';
 }
+#endif
 
 int wpa_supp_add_network(const struct netif *dev, struct wlan_network *network)
 {
@@ -1566,14 +1837,14 @@ int wpa_supp_add_network(const struct netif *dev, struct wlan_network *network)
     bool pmf              = true;
     struct wpa_supplicant *wpa_s;
 #ifdef CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE
-    char phase1[256];
+    char phase1[256] = {0};
     char *openssl_ciphers;
+    char HashH[65] = {0};
+    char hashstr[128] = {0};
 #endif
 #ifdef CONFIG_HOSTAPD
     struct hostapd_iface *hapd_s;
 #endif
-    char HashH[65] = {0};
-    char hashstr[128];
 
     OSA_MutexLock((osa_mutex_handle_t)wpa_supplicant_mutex, osaWaitForever_c);
 
@@ -1603,9 +1874,9 @@ int wpa_supp_add_network(const struct netif *dev, struct wlan_network *network)
         ssid->ssid_len = os_strlen(network->ssid);
         memcpy(ssid->ssid, network->ssid, ssid->ssid_len);
         ssid->disabled = 1;
-        ssid->key_mgmt = WPA_KEY_MGMT_NONE;
+        ssid->key_mgmt = network->security.key_mgmt;
         ssid->scan_ssid = 1;
-        ssid->proactive_key_caching = network->security.pkc;
+        //ssid->proactive_key_caching = network->security.pkc;
 
         if (network->security.type == WLAN_SECURITY_WILDCARD)
         {
@@ -1693,38 +1964,70 @@ int wpa_supp_add_network(const struct netif *dev, struct wlan_network *network)
         switch (network->security.type)
         {
 #ifdef CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE
+#ifdef CONFIG_EAP_TLS
             case WLAN_SECURITY_EAP_TLS:
             case WLAN_SECURITY_EAP_TLS_SHA256:
 #ifdef CONFIG_11R
             case WLAN_SECURITY_EAP_TLS_FT:
             case WLAN_SECURITY_EAP_TLS_FT_SHA384:
 #endif
+#endif
+#ifdef CONFIG_EAP_TTLS
             case WLAN_SECURITY_EAP_TTLS:
+#ifdef CONFIG_EAP_MSCHAPV2
             case WLAN_SECURITY_EAP_TTLS_MSCHAPV2:
+#endif
+#endif
+#ifdef CONFIG_EAP_PEAP
+#ifdef CONFIG_EAP_MSCHAPV2
             case WLAN_SECURITY_EAP_PEAP_MSCHAPV2:
+#endif
+#ifdef CONFIG_EAP_TLS
             case WLAN_SECURITY_EAP_PEAP_TLS:
+#endif
+#ifdef CONFIG_EAP_GTC
             case WLAN_SECURITY_EAP_PEAP_GTC:
-            case WLAN_SECURITY_EAP_SIM:
-            case WLAN_SECURITY_EAP_AKA:
-            case WLAN_SECURITY_EAP_AKA_PRIME:
+#endif
+#endif
+#ifdef CONFIG_EAP_FAST
+#ifdef CONFIG_EAP_MSCHAPV2
             case WLAN_SECURITY_EAP_FAST_MSCHAPV2:
+#endif
+#ifdef CONFIG_EAP_GTC
             case WLAN_SECURITY_EAP_FAST_GTC:
-            case WLAN_SECURITY_EAP_WILDCARD:
-
+#endif
+#endif
+#ifdef CONFIG_EAP_SIM
+            case WLAN_SECURITY_EAP_SIM:
+#endif
+#ifdef CONFIG_EAP_AKA
+            case WLAN_SECURITY_EAP_AKA:
+#endif
+#ifdef CONFIG_EAP_AKA_PRIME
+            case WLAN_SECURITY_EAP_AKA_PRIME:
+#endif
                 if (network->role == WLAN_BSS_ROLE_UAP)
                 {
                     ret = -1;
                     goto out;
                 }
+#ifdef CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE
+#ifdef CONFIG_EAP_TLS
                 if (network->security.type == WLAN_SECURITY_EAP_TLS_SHA256)
                     ssid->key_mgmt = WPA_KEY_MGMT_IEEE8021X_SHA256;
 #ifdef CONFIG_11R
                 else if (network->security.type == WLAN_SECURITY_EAP_TLS_FT)
                     ssid->key_mgmt = WPA_KEY_MGMT_FT_IEEE8021X;
                 else if (network->security.type == WLAN_SECURITY_EAP_TLS_FT_SHA384)
+                {
                     ssid->key_mgmt = WPA_KEY_MGMT_FT_IEEE8021X_SHA384;
+                    openssl_ciphers = "SUITEB192";
+                }
+
 #endif
                 else
+#endif
+#endif
                 {
                     if (network->security.wpa3_sb_192)
                     {
@@ -1745,41 +2048,15 @@ int wpa_supp_add_network(const struct netif *dev, struct wlan_network *network)
                 str_clear_free((char *)wpa_s->conf->openssl_ciphers);
                 wpa_s->conf->openssl_ciphers = dup_binstr(openssl_ciphers, os_strlen(openssl_ciphers));
 
-                if (network->security.type == WLAN_SECURITY_EAP_WILDCARD)
+                ssid->eap.eap_methods = os_zalloc(sizeof(struct eap_method_type));
+                if (!ssid->eap.eap_methods)
                 {
-                    const char *methods = "TLS PEAP TTLS FAST SIM AKA AKA'";
-                    const char *phase2  = "auth=MSCHAPV2 auth=TLS autheap=TLS auth=GTC";
-                    int prov            = network->security.pac_len == 0 ? 1 : 3;
-
-                    os_snprintf(phase1, sizeof(phase1),
-                                "peapver=%d peaplabel=%d fast_provisioning=%d fast_pac_format=binary",
-                                network->security.eap_ver, network->security.peap_label, prov);
-
-                    ret = wpa_config_parse_eap(ssid, methods);
-                    if (ret < 0)
-                    {
-                        ret = -1;
-                        goto out;
-                    }
-
-                    str_clear_free(ssid->eap.phase1);
-                    ssid->eap.phase1 = dup_binstr(phase1, os_strlen(phase1));
-
-                    str_clear_free(ssid->eap.phase2);
-                    ssid->eap.phase2 = dup_binstr(phase2, os_strlen(phase2));
+                    ret = -1;
+                    goto out;
                 }
-                else
-                {
-                    ssid->eap.eap_methods = os_zalloc(sizeof(struct eap_method_type));
-                    if (!ssid->eap.eap_methods)
-                    {
-                        ret = -1;
-                        goto out;
-                    }
 
-                    ssid->eap.eap_methods->vendor = EAP_VENDOR_IETF;
-                    ssid->eap.eap_methods->method = EAP_TYPE_TLS;
-                }
+                ssid->eap.eap_methods->vendor = EAP_VENDOR_IETF;
+                ssid->eap.eap_methods->method = EAP_TYPE_TLS;
 
                 ssid->eap.anonymous_identity_len = os_strlen(network->security.anonymous_identity);
                 if (ssid->eap.anonymous_identity_len)
@@ -1807,6 +2084,12 @@ int wpa_supp_add_network(const struct netif *dev, struct wlan_network *network)
                 {
                     str_clear_free(ssid->eap.cert.domain_match);
                     ssid->eap.cert.domain_match = dup_binstr(network->security.domain_match, os_strlen(network->security.domain_match));
+                }
+
+                if (os_strlen(network->security.domain_suffix_match))
+                {
+                    str_clear_free(ssid->eap.cert.domain_suffix_match);
+                    ssid->eap.cert.domain_suffix_match = dup_binstr(network->security.domain_suffix_match, os_strlen(network->security.domain_suffix_match));
                 }
 
                 if (os_strlen(network->security.ca_cert_hash))
@@ -1899,15 +2182,10 @@ int wpa_supp_add_network(const struct netif *dev, struct wlan_network *network)
                         dup_binstr(network->security.client_key_passwd, os_strlen(network->security.client_key_passwd));
                 }
 
-                if (network->security.pac_len)
-                {
-                    wpa_config_process_blob(wpa_s->conf, "eap-fast-pac", network->security.pac_data,
-                                            network->security.pac_len);
-                }
-
                 str_clear_free(ssid->eap.pac_file);
                 ssid->eap.pac_file = dup_binstr("blob://eap-fast-pac", os_strlen("blob://eap-fast-pac"));
 
+#ifdef CONFIG_EAP_TTLS
                 if (network->security.type == WLAN_SECURITY_EAP_TTLS)
                 {
                     ssid->eap.eap_methods->method = EAP_TYPE_TTLS;
@@ -1917,7 +2195,8 @@ int wpa_supp_add_network(const struct netif *dev, struct wlan_network *network)
                     str_clear_free(ssid->eap.phase2);
                     ssid->eap.phase2 = dup_binstr(phase2, os_strlen(phase2));
                 }
-                else if (network->security.type == WLAN_SECURITY_EAP_TTLS_MSCHAPV2)
+#ifdef CONFIG_EAP_MSCHAPV2
+                if (network->security.type == WLAN_SECURITY_EAP_TTLS_MSCHAPV2)
                 {
                     ssid->eap.eap_methods->method = EAP_TYPE_TTLS;
 
@@ -1926,14 +2205,18 @@ int wpa_supp_add_network(const struct netif *dev, struct wlan_network *network)
                     str_clear_free(ssid->eap.phase2);
                     ssid->eap.phase2 = dup_binstr(phase2, os_strlen(phase2));
                 }
-                else if (network->security.type == WLAN_SECURITY_EAP_PEAP_MSCHAPV2)
+#endif
+#endif
+#ifdef CONFIG_EAP_PEAP
+#ifdef CONFIG_EAP_MSCHAPV2
+                if (network->security.type == WLAN_SECURITY_EAP_PEAP_MSCHAPV2)
                 {
                     ssid->eap.eap_methods->method = EAP_TYPE_PEAP;
 
                     const char *phase2 = "auth=MSCHAPV2";
 
-                    os_snprintf(phase1, sizeof(phase1), "peapver=%d peaplabel=%d", network->security.eap_ver,
-                                network->security.peap_label);
+                    os_snprintf(phase1, sizeof(phase1), "peapver=%d peaplabel=%d crypto_binding=%d", network->security.eap_ver,
+                                network->security.peap_label, network->security.eap_crypto_binding);
 
                     str_clear_free(ssid->eap.phase1);
                     ssid->eap.phase1 = dup_binstr(phase1, os_strlen(phase1));
@@ -1941,14 +2224,16 @@ int wpa_supp_add_network(const struct netif *dev, struct wlan_network *network)
                     str_clear_free(ssid->eap.phase2);
                     ssid->eap.phase2 = dup_binstr(phase2, os_strlen(phase2));
                 }
-                else if (network->security.type == WLAN_SECURITY_EAP_PEAP_TLS)
+#endif
+#ifdef CONFIG_EAP_TLS
+                if (network->security.type == WLAN_SECURITY_EAP_PEAP_TLS)
                 {
                     ssid->eap.eap_methods->method = EAP_TYPE_PEAP;
 
                     const char *phase2 = "auth=TLS";
 
-                    os_snprintf(phase1, sizeof(phase1), "peapver=%d peaplabel=%d", network->security.eap_ver,
-                                network->security.peap_label);
+                    os_snprintf(phase1, sizeof(phase1), "peapver=%d peaplabel=%d crypto_binding=%d", network->security.eap_ver,
+                                network->security.peap_label, network->security.eap_crypto_binding);
 
                     str_clear_free(ssid->eap.phase1);
                     ssid->eap.phase1 = dup_binstr(phase1, os_strlen(phase1));
@@ -1956,14 +2241,16 @@ int wpa_supp_add_network(const struct netif *dev, struct wlan_network *network)
                     str_clear_free(ssid->eap.phase2);
                     ssid->eap.phase2 = dup_binstr(phase2, os_strlen(phase2));
                 }
-                else if (network->security.type == WLAN_SECURITY_EAP_PEAP_GTC)
+#endif
+#ifdef CONFIG_EAP_GTC
+                if (network->security.type == WLAN_SECURITY_EAP_PEAP_GTC)
                 {
                     ssid->eap.eap_methods->method = EAP_TYPE_PEAP;
 
                     const char *phase2 = "auth=GTC";
 
-                    os_snprintf(phase1, sizeof(phase1), "peapver=%d peaplabel=%d", network->security.eap_ver,
-                                network->security.peap_label);
+                    os_snprintf(phase1, sizeof(phase1), "peapver=%d peaplabel=%d crypto_binding=%d", network->security.eap_ver,
+                                network->security.peap_label, network->security.eap_crypto_binding);
 
                     str_clear_free(ssid->eap.phase1);
                     ssid->eap.phase1 = dup_binstr(phase1, os_strlen(phase1));
@@ -1971,23 +2258,45 @@ int wpa_supp_add_network(const struct netif *dev, struct wlan_network *network)
                     str_clear_free(ssid->eap.phase2);
                     ssid->eap.phase2 = dup_binstr(phase2, os_strlen(phase2));
                 }
-                else if (network->security.type == WLAN_SECURITY_EAP_SIM)
+#endif
+#endif
+#ifdef CONFIG_EAP_SIM
+                if (network->security.type == WLAN_SECURITY_EAP_SIM)
                 {
+                    os_snprintf(phase1, sizeof(phase1), "result_ind=%d", network->security.eap_result_ind);
+                    str_clear_free(ssid->eap.phase1);
+                    ssid->eap.phase1 = dup_binstr(phase1, os_strlen(phase1));
+
                     ssid->eap.eap_methods->method = EAP_TYPE_SIM;
                 }
-                else if (network->security.type == WLAN_SECURITY_EAP_AKA)
+#endif
+#ifdef CONFIG_EAP_AKA
+                if (network->security.type == WLAN_SECURITY_EAP_AKA)
                 {
+                    os_snprintf(phase1, sizeof(phase1), "result_ind=%d", network->security.eap_result_ind);
+                    str_clear_free(ssid->eap.phase1);
+                    ssid->eap.phase1 = dup_binstr(phase1, os_strlen(phase1));
+
                     ssid->eap.eap_methods->method = EAP_TYPE_AKA;
                 }
-                else if (network->security.type == WLAN_SECURITY_EAP_AKA_PRIME)
+#endif
+#ifdef CONFIG_EAP_AKA_PRIME
+                if (network->security.type == WLAN_SECURITY_EAP_AKA_PRIME)
                 {
+                    os_snprintf(phase1, sizeof(phase1), "result_ind=%d", network->security.eap_result_ind);
+                    str_clear_free(ssid->eap.phase1);
+                    ssid->eap.phase1 = dup_binstr(phase1, os_strlen(phase1));
+
                     ssid->eap.eap_methods->method = EAP_TYPE_AKA_PRIME;
                 }
-                else if (network->security.type == WLAN_SECURITY_EAP_FAST_MSCHAPV2)
+#endif
+#ifdef CONFIG_EAP_FAST
+#ifdef CONFIG_EAP_MSCHAPV2
+                if (network->security.type == WLAN_SECURITY_EAP_FAST_MSCHAPV2)
                 {
                     ssid->eap.eap_methods->method = EAP_TYPE_FAST;
 
-                    int prov           = network->security.pac_len == 0 ? 1 : 3;
+                    int prov           = 3;
                     const char *phase2 = "auth=MSCHAPV2";
 
                     os_snprintf(phase1, sizeof(phase1), "fast_provisioning=%d fast_pac_format=binary", prov);
@@ -1998,11 +2307,13 @@ int wpa_supp_add_network(const struct netif *dev, struct wlan_network *network)
                     str_clear_free(ssid->eap.phase2);
                     ssid->eap.phase2 = dup_binstr(phase2, os_strlen(phase2));
                 }
-                else if (network->security.type == WLAN_SECURITY_EAP_FAST_GTC)
+#endif
+#ifdef CONFIG_EAP_GTC
+                if (network->security.type == WLAN_SECURITY_EAP_FAST_GTC)
                 {
                     ssid->eap.eap_methods->method = EAP_TYPE_FAST;
 
-                    int prov           = network->security.pac_len == 0 ? 1 : 3;
+                    int prov           = 3;
                     const char *phase2 = "auth=GTC";
 
                     os_snprintf(phase1, sizeof(phase1), "fast_provisioning=%d fast_pac_format=binary", prov);
@@ -2013,28 +2324,27 @@ int wpa_supp_add_network(const struct netif *dev, struct wlan_network *network)
                     str_clear_free(ssid->eap.phase2);
                     ssid->eap.phase2 = dup_binstr(phase2, os_strlen(phase2));
                 }
-
+#endif
+#endif
                 break;
 #endif
 #ifdef CONFIG_WPA_SUPP_WPA3
             case WLAN_SECURITY_WPA3_SAE:
             case WLAN_SECURITY_WPA2_WPA3_SAE_MIXED:
 #ifdef CONFIG_11R
-            case WLAN_SECURITY_WPA3_SAE_FT:
-                if (network->security.type == WLAN_SECURITY_WPA3_SAE_FT)
+            case WLAN_SECURITY_WPA3_FT_SAE:
+                if (network->security.type == WLAN_SECURITY_WPA3_FT_SAE)
                 {
                     if (network->role == WLAN_BSS_ROLE_UAP)
                     {
                         ret = -1;
                         goto out;
                     }
-                    ssid->key_mgmt = WPA_KEY_MGMT_FT_SAE;
                 }
                 else
 #endif
                     if (network->security.type == WLAN_SECURITY_WPA2_WPA3_SAE_MIXED)
                     {
-                        ssid->key_mgmt        = WPA_KEY_MGMT_PSK | WPA_KEY_MGMT_SAE;
                         str_clear_free(ssid->passphrase);
                         ssid->passphrase = dup_binstr(network->security.psk, network->security.psk_len);
 
@@ -2047,10 +2357,12 @@ int wpa_supp_add_network(const struct netif *dev, struct wlan_network *network)
                         wpa_config_update_psk(ssid);
 
                     }
-                    else
-                    {
-                        ssid->key_mgmt = WPA_KEY_MGMT_SAE;
-                    }
+
+                if (wpa_parse_intlist(&wpa_s->conf->sae_groups, network->security.sae_groups))
+                {
+                    wpa_printf(MSG_ERROR, "Invalid sae_groups value");
+                    return -1;
+                }
 
                 wpa_s->conf->sae_pwe     = network->security.pwe_derivation;
                 ssid->transition_disable = network->security.transition_disable;
@@ -2067,13 +2379,11 @@ int wpa_supp_add_network(const struct netif *dev, struct wlan_network *network)
 #endif
 #ifdef CONFIG_OWE
             case WLAN_SECURITY_OWE_ONLY:
-                ssid->key_mgmt = WPA_KEY_MGMT_OWE;
                 ssid->owe_only = 1;
                 break;
 #endif
             case WLAN_SECURITY_WPA:
             case WLAN_SECURITY_WPA2:
-            case WLAN_SECURITY_WPA2_SHA256:
             case WLAN_SECURITY_WPA_WPA2_MIXED:
 #ifdef CONFIG_11R
             case WLAN_SECURITY_WPA2_FT:
@@ -2084,23 +2394,8 @@ int wpa_supp_add_network(const struct netif *dev, struct wlan_network *network)
                         ret = -1;
                         goto out;
                     }
-                    ssid->key_mgmt = WPA_KEY_MGMT_FT_PSK;
                 }
-                else
 #endif
-                    if (network->security.type == WLAN_SECURITY_WPA2_SHA256)
-                {
-                    ssid->key_mgmt = WPA_KEY_MGMT_PSK_SHA256;
-                }
-                else
-                {
-                    ssid->key_mgmt = WPA_KEY_MGMT_PSK;
-                    if ((network->security.mfpc) || (network->security.mfpr))
-                    {
-                        ssid->key_mgmt |= WPA_KEY_MGMT_PSK_SHA256;
-                    }
-                }
-
                 ssid->group_cipher    = WPA_CIPHER_CCMP | WPA_CIPHER_TKIP;
                 ssid->proto           = WPA_PROTO_RSN;
                 ssid->pairwise_cipher = WPA_CIPHER_CCMP;
@@ -2110,6 +2405,11 @@ int wpa_supp_add_network(const struct netif *dev, struct wlan_network *network)
                     ssid->proto           |= WPA_PROTO_WPA;
                     ssid->group_cipher    |= WPA_CIPHER_TKIP;
                     ssid->pairwise_cipher |= WPA_CIPHER_TKIP;
+                }
+
+                if (network->security.type == WLAN_SECURITY_WPA2)
+                {
+                    ssid->group_cipher    |= WPA_CIPHER_TKIP;
                 }
 
                 if (network->security.pmk_valid)
@@ -2176,7 +2476,7 @@ static void wpa_supp_scan_res_fail_handler(struct wpa_supplicant *wpa_s)
 
 int wpa_supp_connect(const struct netif *dev, struct wlan_network *network)
 {
-    struct wpa_ssid *ssid = NULL;
+    struct wpa_ssid *ssid = NULL, *ssid_prev = NULL;
     struct wpa_supplicant *wpa_s;
     int ret = 0;
 
@@ -2189,7 +2489,7 @@ int wpa_supp_connect(const struct netif *dev, struct wlan_network *network)
         goto out;
     }
 
-    ssid = wpa_s->conf->ssid;
+    ssid = ssid_prev = wpa_s->conf->ssid;
 
     while (ssid)
     {
@@ -2197,13 +2497,22 @@ int wpa_supp_connect(const struct netif *dev, struct wlan_network *network)
         {
             break;
         }
+        ssid_prev = ssid;
         ssid = ssid->next;
     }
-
     if (ssid == NULL)
     {
         ret = -1;
         goto out;
+    }
+
+    /* the specific connect ssid isn't in the foremost */
+    if (ssid != ssid_prev)
+    {
+       /* remove the specific connect ssid to the foremost in the conf->ssid list */
+      ssid_prev->next = ssid->next;
+      ssid->next = wpa_s->conf->ssid;
+      wpa_s->conf->ssid = ssid;
     }
 
     if (ssid && ssid == wpa_s->current_ssid && wpa_s->current_ssid && wpa_s->wpa_state >= WPA_AUTHENTICATING)
@@ -2365,22 +2674,48 @@ int wpa_supp_remove_network(const struct netif *dev, struct wlan_network *networ
         switch (network->security.type)
         {
 #ifdef CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE
+#ifdef CONFIG_EAP_TLS
             case WLAN_SECURITY_EAP_TLS:
             case WLAN_SECURITY_EAP_TLS_SHA256:
 #ifdef CONFIG_11R
             case WLAN_SECURITY_EAP_TLS_FT:
             case WLAN_SECURITY_EAP_TLS_FT_SHA384:
 #endif
+#endif
+#ifdef CONFIG_EAP_TTLS
             case WLAN_SECURITY_EAP_TTLS:
+#ifdef CONFIG_EAP_MSCHAPV2
             case WLAN_SECURITY_EAP_TTLS_MSCHAPV2:
+#endif
+#endif
+#ifdef CONFIG_EAP_PEAP
+#ifdef CONFIG_EAP_MSCHAPV2
             case WLAN_SECURITY_EAP_PEAP_MSCHAPV2:
+#endif
+#ifdef CONFIG_EAP_TLS
             case WLAN_SECURITY_EAP_PEAP_TLS:
+#endif
+#ifdef CONFIG_EAP_GTC
             case WLAN_SECURITY_EAP_PEAP_GTC:
-            case WLAN_SECURITY_EAP_SIM:
-            case WLAN_SECURITY_EAP_AKA:
-            case WLAN_SECURITY_EAP_AKA_PRIME:
+#endif
+#endif
+#ifdef CONFIG_EAP_FAST
+#ifdef CONFIG_EAP_MSCHAPV2
             case WLAN_SECURITY_EAP_FAST_MSCHAPV2:
+#endif
+#ifdef CONFIG_EAP_GTC
             case WLAN_SECURITY_EAP_FAST_GTC:
+#endif
+#endif
+#ifdef CONFIG_EAP_SIM
+            case WLAN_SECURITY_EAP_SIM:
+#endif
+#ifdef CONFIG_EAP_AKA
+            case WLAN_SECURITY_EAP_AKA:
+#endif
+#ifdef CONFIG_EAP_AKA_PRIME
+            case WLAN_SECURITY_EAP_AKA_PRIME:
+#endif
                 wpa_config_remove_blob(wpa_s->conf, "ca_cert");
                 wpa_config_remove_blob(wpa_s->conf, "client_cert");
                 wpa_config_remove_blob(wpa_s->conf, "private_key");
@@ -2649,7 +2984,7 @@ out:
 #endif
 }
 
-int wpa_supp_start_ap(const struct netif *dev, struct wlan_network *network)
+int wpa_supp_start_ap(const struct netif *dev, struct wlan_network *network, int reload)
 {
     int ret = 0;
 
@@ -2687,14 +3022,13 @@ int wpa_supp_start_ap(const struct netif *dev, struct wlan_network *network)
         conf->ht_capab &= ~HT_CAP_INFO_SUPP_CHANNEL_WIDTH_SET;
         conf->ht_capab &= ~HT_CAP_INFO_SHORT_GI40MHZ;
 
-
 #ifdef CONFIG_11AC
-        conf->vht_oper_chwidth             = 0;
-        conf->vht_oper_centr_freq_seg0_idx = 0;
+        conf->vht_oper_chwidth             = CHANWIDTH_USE_HT;
+        conf->vht_oper_centr_freq_seg0_idx = network->channel;
 #endif
 #ifdef CONFIG_11AX
-        conf->he_oper_chwidth             = 0;
-        conf->he_oper_centr_freq_seg0_idx = 0;
+        conf->he_oper_chwidth             = CHANWIDTH_USE_HT;
+        conf->he_oper_centr_freq_seg0_idx = network->channel;
 #endif
     }
     else if (bandwidth == 2)
@@ -2703,21 +3037,106 @@ int wpa_supp_start_ap(const struct netif *dev, struct wlan_network *network)
         conf->ht_capab |= HT_CAP_INFO_SHORT_GI40MHZ;
 
 #ifdef CONFIG_11AC
-        conf->vht_oper_chwidth             = 0;
-        conf->vht_oper_centr_freq_seg0_idx = 0;
+        conf->vht_oper_chwidth             = CHANWIDTH_USE_HT;
+        if (network->channel >= 36 && network->channel <= 40)
+        {
+            conf->vht_oper_centr_freq_seg0_idx = 38;
+        }
+        else if (network->channel >= 44 && network->channel <= 48)
+        {
+            conf->vht_oper_centr_freq_seg0_idx = 46;
+        }
+        else if (network->channel >= 149 && network->channel <= 153)
+        {
+            conf->vht_oper_centr_freq_seg0_idx = 151;
+        }
+        else if (network->channel >= 157 && network->channel <= 161)
+        {
+            conf->vht_oper_centr_freq_seg0_idx = 159;
+        }
+        else if (network->channel >= 165 && network->channel <= 169)
+        {
+            conf->vht_oper_centr_freq_seg1_idx = 167;
+        }
+        else if (network->channel >= 173 && network->channel <= 177)
+        {
+            conf->vht_oper_centr_freq_seg0_idx = 175;
+        }
 #endif
 #ifdef CONFIG_11AX
-        conf->he_oper_chwidth             = 0;
-        conf->he_oper_centr_freq_seg0_idx = 0;
+        conf->he_oper_chwidth             = CHANWIDTH_USE_HT;
+        if (network->channel >= 36 && network->channel <= 40)
+        {
+            conf->he_oper_centr_freq_seg0_idx = 38;
+        }
+        else if (network->channel >= 44 && network->channel <= 48)
+        {
+            conf->he_oper_centr_freq_seg0_idx = 46;
+        }
+        else if (network->channel >= 149 && network->channel <= 153)
+        {
+            conf->he_oper_centr_freq_seg0_idx = 151;
+        }
+        else if (network->channel >= 157 && network->channel <= 161)
+        {
+            conf->he_oper_centr_freq_seg0_idx = 159;
+        }
+        else if (network->channel >= 165 && network->channel <= 169)
+        {
+            conf->he_oper_centr_freq_seg0_idx = 167;
+        }
+        else if (network->channel >= 173 && network->channel <= 177)
+        {
+            conf->he_oper_centr_freq_seg0_idx = 175;
+        }
 #endif
     }
     else if (bandwidth == 3)
     {
         conf->ht_capab |= HT_CAP_INFO_SUPP_CHANNEL_WIDTH_SET;
         conf->ht_capab |= HT_CAP_INFO_SHORT_GI40MHZ;
+
+#ifdef CONFIG_11AC
+        conf->vht_oper_chwidth             = CHANWIDTH_80MHZ;
+
+        if (network->channel >= 36 && network->channel <= 48)
+        {
+            conf->vht_oper_centr_freq_seg0_idx = 42;
+        }
+        else if (network->channel >= 149 && network->channel <= 161)
+        {
+            conf->vht_oper_centr_freq_seg0_idx = 155;
+        }
+        else if (network->channel >= 165 && network->channel <= 177)
+        {
+            conf->vht_oper_centr_freq_seg0_idx = 171;
+        }
+#endif
+#ifdef CONFIG_11AX
+        conf->he_oper_chwidth             = CHANWIDTH_80MHZ;
+        if (network->channel >= 36 && network->channel <= 48)
+        {
+            conf->he_oper_centr_freq_seg0_idx = 42;
+        }
+        else if (network->channel >= 149 && network->channel <= 161)
+        {
+            conf->he_oper_centr_freq_seg0_idx = 155;
+        }
+        else if (network->channel >= 165 && network->channel <= 177)
+        {
+            conf->he_oper_centr_freq_seg0_idx = 171;
+        }
+#endif
     }
 
-    ret                            = hostapd_enable_iface(hapd_s);
+    if (reload)
+    {
+        ret                            = hostapd_reload_iface(hapd_s);
+    }
+    else
+    {
+        ret                            = hostapd_enable_iface(hapd_s);
+    }
     wpa_supp_api_ctrl.dev          = dev;
     wpa_supp_api_ctrl.requested_op = START;
 out:
@@ -3041,7 +3460,7 @@ static void wpas_neighbor_rep_cb(void *ctx, struct wpabuf *neighbor_rep)
         data = end;
         len -= 2 + nr_len;
     }
-
+    wpa_msg_ctrl(wpa_s, MSG_INFO, RRM_EVENT_NEIGHBOR_REP_COMPLETED);
 out:
     wpabuf_free(neighbor_rep);
 }
@@ -3216,6 +3635,30 @@ out:
     return ret;
 }
 #endif /* CONFIG_11R */
+
+int wpa_supp_notify_assoc(const struct netif *dev)
+{
+    struct wpa_supplicant *wpa_s;
+    struct wpa_bss *bss;
+    const u8 *mdie;
+    int ret = 0;
+
+    OSA_MutexLock((osa_mutex_handle_t)wpa_supplicant_mutex, osaWaitForever_c);
+
+    wpa_s = get_wpa_s_handle(dev);
+    if (!wpa_s)
+    {
+        ret = -1;
+        goto out;
+    }
+
+    wpa_sm_notify_assoc(wpa_s->wpa, wpa_s->current_bss->bssid);
+
+out:
+    OSA_MutexUnlock((osa_mutex_handle_t)wpa_supplicant_mutex);
+
+    return ret;
+}
 
 #ifdef CONFIG_HOSTAPD
 int wpa_supp_get_sta_info(const struct netif *dev, unsigned char *sta_addr, unsigned char *is_11n_enabled)
@@ -3477,6 +3920,701 @@ out:
 }
 #endif
 
+#ifdef CONFIG_DPP
+int wpa_supp_dpp_bootstrap_gen(const struct netif *dev, int is_ap, const char *buf)
+{
+    struct wpa_supplicant *wpa_s;
+    int id = -1;
+
+    OSA_MutexLock((osa_mutex_handle_t)wpa_supplicant_mutex, osaWaitForever_c);
+
+#ifdef CONFIG_HOSTAPD
+    if (is_ap)
+    {
+        struct hostapd_iface *hapd_s;
+        struct hostapd_data *hapd;
+
+        hapd_s = get_hostapd_handle(dev);
+        if (!hapd_s)
+        {
+            goto out;
+        }
+        hapd = hapd_s->bss[0];
+        id = dpp_bootstrap_gen(hapd->iface->interfaces->dpp, buf);
+        if (id < 0)
+        {
+            wpa_printf(MSG_DEBUG, "%s:Failed to generate bootstrap\n", __func__);
+        }
+    }
+    else
+    {
+#endif
+        wpa_s = get_wpa_s_handle(dev);
+        if (!wpa_s)
+        {
+            goto out;
+        }
+
+#ifdef CONFIG_AP
+        if (wpa_s->ap_iface)
+        {
+            goto out;
+        }
+#endif /* CONFIG_AP */
+
+        id = dpp_bootstrap_gen(wpa_s->dpp, buf);
+        if (id < 0)
+        {
+            wpa_printf(MSG_DEBUG, "%s:Failed to generate bootstrap\n", __func__);
+        }
+
+#ifdef CONFIG_HOSTAPD
+    }
+#endif
+out:
+    OSA_MutexUnlock((osa_mutex_handle_t)wpa_supplicant_mutex);
+
+    return id;
+}
+
+const char *wpa_supp_dpp_bootstrap_get_uri(const struct netif *dev, int is_ap, unsigned int id)
+{
+    struct wpa_supplicant *wpa_s;
+    const char *uri = NULL;
+
+    OSA_MutexLock((osa_mutex_handle_t)wpa_supplicant_mutex, osaWaitForever_c);
+
+#ifdef CONFIG_HOSTAPD
+    if (is_ap)
+    {
+        struct hostapd_iface *hapd_s;
+        struct hostapd_data *hapd;
+
+        hapd_s = get_hostapd_handle(dev);
+        if (!hapd_s)
+        {
+            goto out;
+        }
+        hapd = hapd_s->bss[0];
+        uri = dpp_bootstrap_get_uri(hapd->iface->interfaces->dpp, id);
+    }
+    else
+    {
+#endif
+        wpa_s = get_wpa_s_handle(dev);
+        if (!wpa_s)
+        {
+            goto out;
+        }
+
+#ifdef CONFIG_AP
+        if (wpa_s->ap_iface)
+        {
+            goto out;
+        }
+#endif /* CONFIG_AP */
+
+        uri = dpp_bootstrap_get_uri(wpa_s->dpp, id);
+
+#ifdef CONFIG_HOSTAPD
+    }
+#endif
+out:
+    OSA_MutexUnlock((osa_mutex_handle_t)wpa_supplicant_mutex);
+
+    return uri;
+}
+
+int wpa_supp_dpp_listen(const struct netif *dev, int is_ap, const char *cmd)
+{
+    struct wpa_supplicant *wpa_s;
+    int ret = 0;
+
+    OSA_MutexLock((osa_mutex_handle_t)wpa_supplicant_mutex, osaWaitForever_c);
+
+#ifdef CONFIG_HOSTAPD
+    if (is_ap)
+    {
+        struct hostapd_iface *hapd_s;
+        struct hostapd_data *hapd;
+
+        hapd_s = get_hostapd_handle(dev);
+        if (!hapd_s)
+        {
+            ret = -1;
+            goto out;
+        }
+        hapd = hapd_s->bss[0];
+        ret = hostapd_dpp_listen(hapd, cmd);
+    }
+    else
+    {
+#endif
+        wpa_s = get_wpa_s_handle(dev);
+        if (!wpa_s)
+        {
+            ret = -1;
+            goto out;
+        }
+
+#ifdef CONFIG_AP
+        if (wpa_s->ap_iface)
+        {
+            ret = -1;
+            goto out;
+        }
+#endif /* CONFIG_AP */
+
+        wpa_s->conf->dpp_config_processing = 2;
+        ret = wpas_dpp_listen(wpa_s, cmd);
+
+#ifdef CONFIG_HOSTAPD
+    }
+#endif
+out:
+    OSA_MutexUnlock((osa_mutex_handle_t)wpa_supplicant_mutex);
+
+    return ret;
+}
+
+int wpa_supp_dpp_stop_listen(const struct netif *dev, int is_ap)
+{
+    struct wpa_supplicant *wpa_s;
+    int ret = 0;
+
+    OSA_MutexLock((osa_mutex_handle_t)wpa_supplicant_mutex, osaWaitForever_c);
+
+#ifdef CONFIG_HOSTAPD
+    if (is_ap)
+    {
+        struct hostapd_iface *hapd_s;
+        struct hostapd_data *hapd;
+
+        hapd_s = get_hostapd_handle(dev);
+        if (!hapd_s)
+        {
+            ret = -1;
+            goto out;
+        }
+        hapd = hapd_s->bss[0];
+        hostapd_dpp_listen_stop(hapd);
+    }
+    else
+    {
+#endif
+        wpa_s = get_wpa_s_handle(dev);
+        if (!wpa_s)
+        {
+            ret = -1;
+            goto out;
+        }
+
+#ifdef CONFIG_AP
+        if (wpa_s->ap_iface)
+        {
+            ret = -1;
+            goto out;
+        }
+#endif /* CONFIG_AP */
+
+        wpas_dpp_listen_stop(wpa_s);
+
+#ifdef CONFIG_HOSTAPD
+    }
+#endif
+out:
+    OSA_MutexUnlock((osa_mutex_handle_t)wpa_supplicant_mutex);
+
+    return ret;
+}
+
+int wpa_supp_dpp_configurator_add(const struct netif *dev, int is_ap, const char *cmd)
+{
+    struct wpa_supplicant *wpa_s;
+    int ret = 0;
+
+    OSA_MutexLock((osa_mutex_handle_t)wpa_supplicant_mutex, osaWaitForever_c);
+
+#ifdef CONFIG_HOSTAPD
+    if (is_ap)
+    {
+        struct hostapd_iface *hapd_s;
+        struct hostapd_data *hapd;
+
+        hapd_s = get_hostapd_handle(dev);
+        if (!hapd_s)
+        {
+            ret = -1;
+            goto out;
+        }
+        hapd = hapd_s->bss[0];
+        ret = dpp_configurator_add(hapd->iface->interfaces->dpp, cmd);
+    }
+    else
+    {
+#endif
+        wpa_s = get_wpa_s_handle(dev);
+        if (!wpa_s)
+        {
+            ret = -1;
+            goto out;
+        }
+
+#ifdef CONFIG_AP
+        if (wpa_s->ap_iface)
+        {
+            ret = -1;
+            goto out;
+        }
+#endif /* CONFIG_AP */
+
+        ret = dpp_configurator_add(wpa_s->dpp, cmd);
+
+#ifdef CONFIG_HOSTAPD
+    }
+#endif
+out:
+    OSA_MutexUnlock((osa_mutex_handle_t)wpa_supplicant_mutex);
+
+    return ret;
+}
+
+void wpa_supp_dpp_configurator_params(const struct netif *dev, int is_ap, const char *cmd)
+{
+    struct wpa_supplicant *wpa_s;
+
+    OSA_MutexLock((osa_mutex_handle_t)wpa_supplicant_mutex, osaWaitForever_c);
+
+#ifdef CONFIG_HOSTAPD
+    if (is_ap)
+    {
+        struct hostapd_iface *hapd_s;
+        struct hostapd_data *hapd;
+
+        hapd_s = get_hostapd_handle(dev);
+        if (!hapd_s)
+        {
+            goto out;
+        }
+        hapd = hapd_s->bss[0];
+        os_free(hapd->dpp_configurator_params);
+        hapd->dpp_configurator_params = os_strdup(cmd);
+    }
+    else
+    {
+#endif
+        wpa_s = get_wpa_s_handle(dev);
+        if (!wpa_s)
+        {
+            goto out;
+        }
+
+#ifdef CONFIG_AP
+        if (wpa_s->ap_iface)
+        {
+            goto out;
+        }
+#endif /* CONFIG_AP */
+
+        os_free(wpa_s->dpp_configurator_params);
+        wpa_s->dpp_configurator_params = os_strdup(cmd);
+
+#ifdef CONFIG_HOSTAPD
+    }
+#endif
+out:
+    OSA_MutexUnlock((osa_mutex_handle_t)wpa_supplicant_mutex);
+}
+
+void wpa_supp_dpp_mud_url(const struct netif *dev, int is_ap, const char *cmd)
+{
+    struct wpa_supplicant *wpa_s;
+
+    OSA_MutexLock((osa_mutex_handle_t)wpa_supplicant_mutex, osaWaitForever_c);
+
+#ifdef CONFIG_HOSTAPD
+    if (is_ap)
+    {
+        struct hostapd_iface *hapd_s;
+        struct hostapd_data *hapd;
+
+        hapd_s = get_hostapd_handle(dev);
+        if (!hapd_s || !hapd_s->conf)
+        {
+            goto out;
+        }
+        hapd = hapd_s->bss[0];
+        os_free(hapd->conf->dpp_mud_url);
+        hapd->conf->dpp_mud_url = os_strdup(cmd);
+    }
+    else
+    {
+#endif
+        wpa_s = get_wpa_s_handle(dev);
+        if (!wpa_s || !wpa_s->conf)
+        {
+            goto out;
+        }
+
+#ifdef CONFIG_AP
+        if (wpa_s->ap_iface)
+        {
+            goto out;
+        }
+#endif /* CONFIG_AP */
+
+        os_free(wpa_s->conf->dpp_mud_url);
+        wpa_s->conf->dpp_mud_url = os_strdup(cmd);
+
+#ifdef CONFIG_HOSTAPD
+    }
+#endif
+out:
+    OSA_MutexUnlock((osa_mutex_handle_t)wpa_supplicant_mutex);
+}
+
+int wpa_supp_dpp_configurator_get_key(const struct netif *dev, int is_ap, unsigned int id, char *buf, size_t buflen)
+{
+    struct wpa_supplicant *wpa_s;
+    int ret = 0;
+
+    OSA_MutexLock((osa_mutex_handle_t)wpa_supplicant_mutex, osaWaitForever_c);
+
+#ifdef CONFIG_HOSTAPD
+    if (is_ap)
+    {
+        struct hostapd_iface *hapd_s;
+        struct hostapd_data *hapd;
+
+        hapd_s = get_hostapd_handle(dev);
+        if (!hapd_s)
+        {
+            ret = -1;
+            goto out;
+        }
+        hapd = hapd_s->bss[0];
+        ret = dpp_configurator_get_key_id(hapd->iface->interfaces->dpp, id, buf, buflen);
+    }
+    else
+    {
+#endif
+        wpa_s = get_wpa_s_handle(dev);
+        if (!wpa_s)
+        {
+            ret = -1;
+            goto out;
+        }
+
+#ifdef CONFIG_AP
+        if (wpa_s->ap_iface)
+        {
+            ret = -1;
+            goto out;
+        }
+#endif /* CONFIG_AP */
+
+        ret = dpp_configurator_get_key_id(wpa_s->dpp, id, buf, buflen);
+
+#ifdef CONFIG_HOSTAPD
+    }
+#endif
+out:
+    OSA_MutexUnlock((osa_mutex_handle_t)wpa_supplicant_mutex);
+
+    return ret;
+}
+
+int wpa_supp_dpp_qr_code(const struct netif *dev, int is_ap, char *cmd)
+{
+    struct wpa_supplicant *wpa_s;
+    int ret = 0;
+
+    OSA_MutexLock((osa_mutex_handle_t)wpa_supplicant_mutex, osaWaitForever_c);
+
+#ifdef CONFIG_HOSTAPD
+    if (is_ap)
+    {
+        struct hostapd_iface *hapd_s;
+        struct hostapd_data *hapd;
+
+        hapd_s = get_hostapd_handle(dev);
+        if (!hapd_s)
+        {
+            ret = -1;
+            goto out;
+        }
+        hapd = hapd_s->bss[0];
+        ret = hostapd_dpp_qr_code(hapd, cmd);
+    }
+    else
+    {
+#endif
+        wpa_s = get_wpa_s_handle(dev);
+        if (!wpa_s)
+        {
+            ret = -1;
+            goto out;
+        }
+
+#ifdef CONFIG_AP
+        if (wpa_s->ap_iface)
+        {
+            ret = -1;
+            goto out;
+        }
+#endif /* CONFIG_AP */
+
+        ret = wpas_dpp_qr_code(wpa_s, cmd);
+
+#ifdef CONFIG_HOSTAPD
+    }
+#endif
+out:
+    OSA_MutexUnlock((osa_mutex_handle_t)wpa_supplicant_mutex);
+
+    return ret;
+}
+
+int wpa_supp_dpp_auth_init(const struct netif *dev, int is_ap, const char *cmd)
+{
+    struct wpa_supplicant *wpa_s;
+    int ret = 0;
+
+    OSA_MutexLock((osa_mutex_handle_t)wpa_supplicant_mutex, osaWaitForever_c);
+
+#ifdef CONFIG_HOSTAPD
+    if (is_ap)
+    {
+        struct hostapd_iface *hapd_s;
+        struct hostapd_data *hapd;
+
+        hapd_s = get_hostapd_handle(dev);
+        if (!hapd_s)
+        {
+            ret = -1;
+            goto out;
+        }
+        hapd = hapd_s->bss[0];
+        hapd->dpp_resp_wait_time = 5000;
+        ret = hostapd_dpp_auth_init(hapd, cmd);
+    }
+    else
+    {
+#endif
+        wpa_s = get_wpa_s_handle(dev);
+        if (!wpa_s)
+        {
+            ret = -1;
+            goto out;
+        }
+
+#ifdef CONFIG_AP
+        if (wpa_s->ap_iface)
+        {
+            ret = -1;
+            goto out;
+        }
+#endif /* CONFIG_AP */
+        wpa_s->dpp_resp_wait_time = 5000;
+        wpa_s->conf->dpp_config_processing = 2;
+        ret = wpas_dpp_auth_init(wpa_s, cmd);
+
+#ifdef CONFIG_HOSTAPD
+    }
+#endif
+out:
+    OSA_MutexUnlock((osa_mutex_handle_t)wpa_supplicant_mutex);
+
+    return ret;
+}
+
+int wpa_supp_dpp_pkex_add(const struct netif *dev, int is_ap, const char *cmd)
+{
+    struct wpa_supplicant *wpa_s;
+    int ret = 0;
+
+    OSA_MutexLock((osa_mutex_handle_t)wpa_supplicant_mutex, osaWaitForever_c);
+
+#ifdef CONFIG_HOSTAPD
+    if (is_ap)
+    {
+        struct hostapd_iface *hapd_s;
+        struct hostapd_data *hapd;
+
+        hapd_s = get_hostapd_handle(dev);
+        if (!hapd_s)
+        {
+            ret = -1;
+            goto out;
+        }
+        hapd = hapd_s->bss[0];
+        hapd->dpp_resp_wait_time = 5000;
+        ret = hostapd_dpp_pkex_add(hapd, cmd);
+    }
+    else
+    {
+#endif
+        wpa_s = get_wpa_s_handle(dev);
+        if (!wpa_s)
+        {
+            ret = -1;
+            goto out;
+        }
+
+#ifdef CONFIG_AP
+        if (wpa_s->ap_iface)
+        {
+            ret = -1;
+            goto out;
+        }
+#endif /* CONFIG_AP */
+
+        wpa_s->dpp_resp_wait_time = 5000;
+        wpa_s->conf->dpp_config_processing = 2;
+        ret = wpas_dpp_pkex_add(wpa_s, cmd);
+
+#ifdef CONFIG_HOSTAPD
+    }
+#endif
+out:
+    OSA_MutexUnlock((osa_mutex_handle_t)wpa_supplicant_mutex);
+
+    return ret;
+}
+
+int wpa_supp_dpp_chirp(const struct netif *dev, int is_ap, const char *cmd)
+{
+    struct wpa_supplicant *wpa_s;
+    int ret = 0;
+
+    OSA_MutexLock((osa_mutex_handle_t)wpa_supplicant_mutex, osaWaitForever_c);
+
+#ifdef CONFIG_HOSTAPD
+    if (is_ap)
+    {
+        struct hostapd_iface *hapd_s;
+        struct hostapd_data *hapd;
+
+        hapd_s = get_hostapd_handle(dev);
+        if (!hapd_s)
+        {
+            ret = -1;
+            goto out;
+        }
+        hapd = hapd_s->bss[0];
+        hapd->dpp_resp_wait_time = 5000;
+#ifdef CONFIG_DPP2
+        ret = hostapd_dpp_chirp(hapd, cmd);
+#endif
+    }
+    else
+    {
+#endif
+        wpa_s = get_wpa_s_handle(dev);
+        if (!wpa_s)
+        {
+            ret = -1;
+            goto out;
+        }
+
+#ifdef CONFIG_AP
+        if (wpa_s->ap_iface)
+        {
+            ret = -1;
+            goto out;
+        }
+#endif /* CONFIG_AP */
+
+        wpa_s->dpp_resp_wait_time = 5000;
+        wpa_s->conf->dpp_config_processing = 2;
+#ifdef CONFIG_DPP2
+        ret = wpas_dpp_chirp(wpa_s, cmd);
+#endif
+
+#ifdef CONFIG_HOSTAPD
+    }
+#endif
+out:
+    OSA_MutexUnlock((osa_mutex_handle_t)wpa_supplicant_mutex);
+
+    return ret;
+}
+
+int wpa_supp_dpp_reconfig(const struct netif *dev, const char *cmd)
+{
+    struct wpa_supplicant *wpa_s;
+    int ret = 0;
+
+    OSA_MutexLock((osa_mutex_handle_t)wpa_supplicant_mutex, osaWaitForever_c);
+
+    wpa_s = get_wpa_s_handle(dev);
+    if (!wpa_s)
+    {
+        ret = -1;
+        goto out;
+    }
+#ifdef CONFIG_DPP2
+    ret = wpas_dpp_reconfig(wpa_s, cmd);
+#endif
+
+out:
+    OSA_MutexUnlock((osa_mutex_handle_t)wpa_supplicant_mutex);
+
+    return ret;
+}
+
+int wpa_supp_dpp_configurator_sign(const struct netif *dev, int is_ap, const char *cmd)
+{
+    struct wpa_supplicant *wpa_s;
+    int ret = 0;
+
+    OSA_MutexLock((osa_mutex_handle_t)wpa_supplicant_mutex, osaWaitForever_c);
+
+#ifdef CONFIG_HOSTAPD
+    if (is_ap)
+    {
+        struct hostapd_iface *hapd_s;
+        struct hostapd_data *hapd;
+
+        hapd_s = get_hostapd_handle(dev);
+        if (!hapd_s)
+        {
+            ret = -1;
+            goto out;
+        }
+        hapd = hapd_s->bss[0];
+        ret = hostapd_dpp_configurator_sign(hapd, cmd);
+    }
+    else
+    {
+#endif
+        wpa_s = get_wpa_s_handle(dev);
+        if (!wpa_s)
+        {
+            ret = -1;
+            goto out;
+        }
+
+#ifdef CONFIG_AP
+        if (wpa_s->ap_iface)
+        {
+            ret = -1;
+            goto out;
+        }
+#endif /* CONFIG_AP */
+
+        ret = wpas_dpp_configurator_sign(wpa_s, cmd);
+
+#ifdef CONFIG_HOSTAPD
+    }
+#endif
+out:
+    OSA_MutexUnlock((osa_mutex_handle_t)wpa_supplicant_mutex);
+
+    return ret;
+}
+#endif /* CONFIG_DPP */
+
 static inline enum wlan_security_type wpas_key_mgmt_to_wpa(int key_mgmt)
 {
     switch (key_mgmt)
@@ -3484,9 +4622,12 @@ static inline enum wlan_security_type wpas_key_mgmt_to_wpa(int key_mgmt)
         case WPA_KEY_MGMT_NONE:
             return WLAN_SECURITY_NONE;
         case WPA_KEY_MGMT_PSK:
-            return WLAN_SECURITY_WPA2;
         case WPA_KEY_MGMT_PSK_SHA256:
-            return WLAN_SECURITY_WPA2_SHA256;
+            return WLAN_SECURITY_WPA2;
+#ifdef CONFIG_OWE
+        case WPA_KEY_MGMT_OWE:
+            return WLAN_SECURITY_OWE_ONLY;
+#endif
         case WPA_KEY_MGMT_SAE:
             return WLAN_SECURITY_WPA3_SAE;
         default:
@@ -3526,164 +4667,6 @@ out:
     OSA_MutexUnlock((osa_mutex_handle_t)wpa_supplicant_mutex);
     return status;
 }
-
-#ifdef CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE
-
-static int eapol_get_status(struct wpa_supplicant *wpa_s, struct wlan_network *network)
-{
-    int ret = 0;
-    char *reply;
-    const int reply_size = 512;
-    int ver, method = EAP_TYPE_NONE;
-    char *pos, *pos2, *pos3, *m;
-    char a[128], name[10] = {0}, p2m[20] = {0};
-    int name_set = 0;
-
-    reply = os_zalloc(reply_size);
-    if (reply == NULL)
-    {
-        ret = -1;
-        goto out;
-    }
-
-    ret = eapol_sm_get_status(wpa_s->eapol, reply, reply_size, 0);
-    if (ret == 0)
-    {
-        ret = -1;
-        goto out;
-    }
-
-    pos2 = reply;
-
-    do
-    {
-        if (pos2 == NULL)
-        {
-            break;
-        }
-
-        (void)sscanf(pos2, "%[^\r\n]s", a);
-
-        pos = os_strstr(pos2, "\r\n");
-
-        if (pos == NULL)
-        {
-            break;
-        }
-
-        pos2 = pos + 2;
-
-        pos3 = os_strstr(a, "selectedMethod=");
-
-        if (pos3)
-        {
-            method = atoi(pos3 + 15);
-
-            if ((method != EAP_TYPE_TTLS) && (method != EAP_TYPE_PEAP))
-            {
-                break;
-            }
-
-            pos3 = os_strstr(a, "(");
-
-            m = pos3 + 1;
-
-            pos3 = os_strstr(a, ")");
-
-            *pos3 = '\0';
-
-            strcpy(name, m);
-
-            name_set = 1;
-
-            continue;
-        }
-
-        if (name_set)
-        {
-            pos3 = os_strstr(a, name);
-
-            if (pos3)
-            {
-                ver = atoi(pos3 + 9);
-
-                network->security.eap_ver = ver;
-
-                pos3 = os_strstr(a, "Phase2 method=");
-
-                if (pos3)
-                {
-                    pos3 = pos3 + 14;
-
-                    strcpy(p2m, pos3);
-                }
-            }
-        }
-    } while (pos);
-
-    if (method == EAP_TYPE_TLS)
-    {
-        network->security.type = WLAN_SECURITY_EAP_TLS;
-    }
-    else if (method == EAP_TYPE_SIM)
-    {
-        network->security.type = WLAN_SECURITY_EAP_SIM;
-    }
-    else if (method == EAP_TYPE_AKA)
-    {
-        network->security.type = WLAN_SECURITY_EAP_AKA;
-    }
-    else if (method == EAP_TYPE_AKA_PRIME)
-    {
-        network->security.type = WLAN_SECURITY_EAP_AKA_PRIME;
-    }
-    else if (method == EAP_TYPE_TTLS)
-    {
-        if (os_strstr(p2m, "EAP-TLS") != 0)
-        {
-            network->security.type = WLAN_SECURITY_EAP_TTLS;
-        }
-        else if (os_strstr(p2m, "MSCHAPV2") != 0)
-        {
-            network->security.type = WLAN_SECURITY_EAP_TTLS_MSCHAPV2;
-        }
-    }
-    else if (method == EAP_TYPE_PEAP)
-    {
-        if (os_strstr(p2m, "TLS") != 0)
-        {
-            network->security.type = WLAN_SECURITY_EAP_PEAP_TLS;
-        }
-        else if (os_strstr(p2m, "MSCHAPV2") != 0)
-        {
-            network->security.type = WLAN_SECURITY_EAP_PEAP_MSCHAPV2;
-        }
-        else if (os_strstr(p2m, "GTC") != 0)
-        {
-            network->security.type = WLAN_SECURITY_EAP_PEAP_GTC;
-        }
-    }
-    else if (method == EAP_TYPE_FAST)
-    {
-        if (os_strstr(p2m, "MSCHAPV2") != 0)
-        {
-            network->security.type = WLAN_SECURITY_EAP_FAST_MSCHAPV2;
-        }
-        else if (os_strstr(p2m, "GTC") != 0)
-        {
-            network->security.type = WLAN_SECURITY_EAP_FAST_GTC;
-        }
-    }
-
-out:
-    if (reply)
-    {
-        os_free(reply);
-    }
-
-    return ret;
-}
-#endif
 
 int wpa_supp_network_status(const struct netif *dev, struct wlan_network *network)
 {
@@ -3759,17 +4742,12 @@ int wpa_supp_network_status(const struct netif *dev, struct wlan_network *networ
                 }
                 os_memcpy(network->ssid, _ssid, ssid_len);
 
-#ifdef CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE
-                if ((network->role == WLAN_BSS_ROLE_STA) && (network->security.type == WLAN_SECURITY_EAP_WILDCARD))
-                {
-                    (void)eapol_get_status(wpa_s, network);
-                }
-#endif
                 if (os_strstr(network->name, "wps_network"))
                 {
                     os_memset(network->name, 0x00, sizeof(network->name));
                     os_memcpy(network->name, _ssid, ssid_len);
                     network->id            = ssid->id;
+                    network->wps_network   = true;
                     network->security.type = wpas_key_mgmt_to_wpa(ssid->key_mgmt);
 
                     if (ssid->export_keys)
@@ -3792,6 +4770,9 @@ int wpa_supp_network_status(const struct netif *dev, struct wlan_network *networ
                     }
                 }
             }
+
+            network->beacon_period = wpa_s->current_bss->beacon_int;
+
             ret = wpa_drv_signal_poll(wpa_s, si);
             if (!ret)
             {
@@ -3802,21 +4783,12 @@ int wpa_supp_network_status(const struct netif *dev, struct wlan_network *networ
                 network->rssi = -WPA_INVALID_NOISE;
             }
 
-            if (wpa_bss_get_ie(wpa_s->current_bss, WLAN_EID_HT_CAP))
-            {
-                network->dot11n = true;
-            }
+            network->dot11n = wpa_s->connection_ht;
 #ifdef CONFIG_11AC
-            if (wpa_bss_get_ie(wpa_s->current_bss, WLAN_EID_VHT_CAP))
-            {
-                network->dot11ac = true;
-            }
+            network->dot11ac = wpa_s->connection_vht;
 #endif
 #ifdef CONFIG_11AX
-            if (wpa_bss_get_ie(wpa_s->current_bss, WLAN_EID_EXTENSION))
-            {
-                network->dot11ax = true;
-            }
+            network->dot11ax = wpa_s->connection_he;
 #endif
 
 #ifdef CONFIG_11K
@@ -3844,6 +4816,83 @@ out:
     os_free(si);
     OSA_MutexUnlock((osa_mutex_handle_t)wpa_supplicant_mutex);
     return ret;
+}
+
+static int wpa_supp_add_acl_maclist(struct mac_acl_entry **acl, int *num, int vlan_id, const u8 *addr)
+{
+    struct mac_acl_entry *newacl;
+
+    newacl = os_realloc_array(*acl, *num + 1, sizeof(**acl));
+    if (!newacl)
+    {
+        wpa_printf(MSG_ERROR, "MAC list reallocation failed");
+        return -1;
+    }
+
+    *acl = newacl;
+    os_memcpy((*acl)[*num].addr, addr, ETH_ALEN);
+    os_memset(&(*acl)[*num].vlan_id, 0, sizeof((*acl)[*num].vlan_id));
+    (*acl)[*num].vlan_id.untagged = vlan_id;
+    (*acl)[*num].vlan_id.notempty = !!vlan_id;
+    (*num)++;
+    return 0;
+}
+
+int wpa_supp_set_mac_acl(const struct netif *dev, int filter_mode, char mac_count, unsigned char *mac_addr)
+{
+    struct hostapd_iface *hapd_s;
+    struct hostapd_data *hapd;
+    struct hostapd_bss_config *bss;
+    hapd_s = get_hostapd_handle(dev);
+    if (!hapd_s)
+    {
+        return -1;
+    }
+    hapd = hapd_s->bss[0];
+    bss = hapd->conf;
+
+    switch(filter_mode)
+    {
+        case 0:
+            bss->macaddr_acl = 0;
+            if (bss->accept_mac)
+                os_free(bss->accept_mac);
+            bss->accept_mac	 = NULL;
+            bss->num_accept_mac = 0;
+
+            if (bss->deny_mac)
+                os_free(bss->deny_mac);
+            bss->deny_mac	   = NULL;
+            bss->num_deny_mac = 0;
+            break;
+        case 1:
+            for (int num = 0; num < mac_count;)
+            {
+                if (wpa_supp_add_acl_maclist(&bss->accept_mac, &num, 0, &mac_addr[num*WLAN_MAC_ADDR_LENGTH]) < 0)
+                {
+                    wpa_printf(MSG_ERROR, "Line %d: add accept_mac fail", __LINE__);
+                    return -1;
+                }
+            }
+            bss->num_accept_mac = mac_count;
+            bss->macaddr_acl = 1;
+            break;
+        case 2:
+            for (int num = 0; num < mac_count;)
+            {
+                if (wpa_supp_add_acl_maclist(&bss->deny_mac, &num, 0, &mac_addr[num*WLAN_MAC_ADDR_LENGTH]) < 0)
+                {
+                    wpa_printf(MSG_ERROR, "Line %d: add deny_mac fail", __LINE__);
+                    return -1;
+                }
+            }
+            bss->num_deny_mac = mac_count;
+            bss->macaddr_acl = 0;
+            break;
+        default:
+          return -1;
+    }
+    return 0;
 }
 
 static void (*msg_cb_ptr)(const char *txt, size_t len);

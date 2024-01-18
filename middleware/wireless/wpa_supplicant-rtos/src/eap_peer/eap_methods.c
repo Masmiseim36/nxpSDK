@@ -11,7 +11,7 @@
 #include <dlfcn.h>
 #endif /* CONFIG_DYNAMIC_EAP_METHODS */
 
-#include "common.h"
+#include "utils/common.h"
 #include "eap_i.h"
 #include "eap_methods.h"
 

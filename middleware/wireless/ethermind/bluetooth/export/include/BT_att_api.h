@@ -263,7 +263,7 @@
  *  asynchronous notification callback \ref ATT_NTF_CB in \ref ATT_APPLICATION
  *  registered using \ref BT_att_register.
  */
-/** Request from Peer to estalish Connection Oriented Channel for ATT */
+/** Request from Peer to establish Connection Oriented Channel for ATT */
 #define ATT_CONNECT_REQ           0x80U
 
 /** Transport Connection Event */
@@ -285,7 +285,7 @@
  * Most of these events are associated with ATT PDUs which are defined
  * in ATT specification section 'ATTRIBUTE PROTOCL PDUS'.
  * The parameters associated with these events are the same as defined in
- * the refered ATT section.
+ * the referred ATT section.
  *
  * For the locally generated events, the associated parameters are described
  * along with the event.
@@ -445,7 +445,7 @@
         DEVICE_HANDLE_INIT ((handle).device_id);\
         (handle).att_id = ATT_CON_ID_INIT_VAL
 
-/** ATT Application Information Intialization Macro */
+/** ATT Application Information Initialization Macro */
 #define ATT_INIT_APPLICATION(appl_inst)\
         (appl_inst)->cb = ATT_APPL_CB_INIT_VAL;
 
@@ -539,6 +539,16 @@ typedef struct
  * \ref att_error_codes or any other internal error code from the stack.
  * \param data_param Data or Parameter associated with the event if any or NULL.
  * \param data_len Size of the data_param. 0 if data_param is NULL.
+ * \note
+ * The "data_len" parameter is also an indicator of the following when the
+ * corresponding "att_event" is \ref ATT_CONNECTION_IND and the "event_result"
+ * is \ref API_SUCCESS :
+ *   - when this is equal to size of \ref BT_DEVICE_ADDR, the ATT Instance
+ *     that is successfully established is over LE Fixed Channel.
+ *   - when this is equal to Zero, the ATT Instance that is successfully
+ *     established is over BREDR.
+ *   - For all other values, one of more Instances of Enhanced ATT are
+ *     established.
  */
 typedef API_RESULT (*ATT_NTF_CB)
         (
@@ -630,7 +640,7 @@ typedef struct
  *  Is used in multiple commands - see \ref ATT_READ_RSP_PARAM,
  *  \ref ATT_FIND_BY_TYPE_VAL_REQ_PARAM, \ref ATT_READ_BLOB_RSP_PARAM etc.
  *
- *  In ATT Read Response for example, if the attribute length is 30 octects,
+ *  In ATT Read Response for example, if the attribute length is 30 octets,
  *  and the MTU is 23 octets, the only the first 22 octets can be sent by ATT,
  *  therefore actual length will be 22 (MTU-1).
  *  However, if the ATT MTU is configured to be 54 for example, all 30 octets
@@ -695,7 +705,7 @@ typedef struct
     /** Number of Elements in the Array */
     UINT16                  list_count;
 
-    /** Out paramater indicating number of pairs actually sent */
+    /** Out parameter indicating number of pairs actually sent */
     UINT16                  actual_count;
 
 }ATT_HANDLE_UUID_LIST;

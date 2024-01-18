@@ -192,7 +192,6 @@
  */
 #define BT_4_1
 
-
 /*
  *  BT_4_2
  *
@@ -521,9 +520,9 @@
  *
  *  Dependency: BT_2_1_EDR must be defined.
  */
-#ifdef BT_DUAL_MODE
+#ifdef BT_2_1_EDR
 #define CLASSIC_SEC_MANAGER
-#endif /* BT_DUAL_MODE */
+#endif /* BT_2_1_EDR */
 
 #ifdef BT_SSP
 
@@ -584,19 +583,6 @@
 #define BT_SSP_PE
 
 #endif /* BT_SSP */
-
-#ifdef BT_DUAL_MODE
-/*
- *  BTSIG_ERRATA_11838
- *
- *  This flag is used to enable the Bluetooth SIG security errata 11838
- *  at https://www.bluetooth.org/docman/handlers/DownloadDoc.ashx?doc_id=470741
- *  for the Knob Attack (https://knobattack.com/)
- *
- *  Dependency: BT_SSP must be defined.
- */
-#define BTSIG_ERRATA_11838
-#endif /* BT_DUAL_MODE */
 
 /* ----------------------------------------------------------------------- */
 /* ==== Stack Architecture Flags ========================================= */
@@ -998,11 +984,26 @@
 #endif /* (defined STORAGE_CHECK_CONSISTENCY_ON_RESTORE && !defined BT_STORAGE) */
 
 /*
+ *  BT_ANALYZER
+ *
+ *  This flag enables logging/injecting HCI traffic in different formats
+ *  and/or live viewer tools.
+ */
+#define BT_ANALYZER
+
+/*
  *  BT_SNOOP
  *
  *  This flag enables logging HCI traffic in btsnoop format.
  */
 #define BT_SNOOP
+
+/*
+ *  BT_ELLISYS
+ *
+ *  This flag enables injecting HCI traffic to Ellisys viewer.
+ */
+/* #define BT_ELLISYS */
 
 /*
  *  BT_SUPPORT_ERR_IND_CALLBACK
@@ -1098,10 +1099,12 @@
 #define MCAP
 #endif /* BT_SINGLE_MODE */
 
+#ifdef BT_LE
 #if (defined GAP_CENTRAL || defined GAP_PERIPHERAL)
 #define SMP
 #define ATT
 #endif /* (defined GAP_CENTRAL || defined GAP_PERIPHERAL) */
+#endif /* BT_LE */
 
 /* ----------------------------------------------------------------------- */
 /* ==== Module Inclusion Flags for EtherMind Profiles ==================== */
@@ -1144,7 +1147,9 @@
 #define SAP_CLIENT
 #define PBAP_PCE
 #define PBAP_PSE
+#if !(defined(HFP_BRIDGING) && defined(A2DP_BRIDGING) && defined(AVRCP_BRIDGING))
 #define HDP
+#endif
 #define MAP_MCE
 #define MAP_MSE
 /* #define SYNCP */
@@ -1488,6 +1493,19 @@
  */
 #define HAVE_HCI_COMMAND_PARAMS_INIT
 
+
+/*
+ *  HCI_ENABLE_LINKINFO_LOOKUP_FROM_CONNHANDLE
+ *
+ *  This flag enables BT_hci_get_bd_addr_for_connection_handle() API
+ *  to retrive remote bluetooth device address and link type
+ *  for a specified HCI connection handle.
+ *  By default this flag should be disabled.
+ *
+ *  Dependancy: None
+ */
+/* #define HCI_ENABLE_LINKINFO_LOOKUP_FROM_CONNHANDLE */
+
 /*
  * Feature flags for HCI Commands defined for BLE Single Mode
  *
@@ -1642,6 +1660,20 @@
  *  Dependency: None.
  */
 /* #define HCI_HAVE_LE_LONG_TERM_KEY_REQ_SUBEVENT */
+
+/*
+ *  HCI_HACK_HANDLE_SET_RANDOM_ADDR_SUCCESS_WHEN_ADV_ENABLE
+ *
+ *  Bluetooth Core Specification does not allow setting the local random address,
+ *  when the Avertising is enabled. It is observed some of the bluetooth controllers
+ *  do not adher to this and allow setting random address while advertising is enabled.
+ *  This flag enables supporting such non-compliant controllers.
+ *
+ *  By default, this macro is not defined.
+ *
+ *  Dependency: None.
+ */
+/* #define HCI_HACK_HANDLE_SET_RANDOM_ADDR_SUCCESS_WHEN_ADV_ENABLE */
 
 #endif /* BT_LE */
 
@@ -2819,6 +2851,18 @@
  * Default: Disable
  */
 /* #define SDP_DYNAMIC_DB */
+
+/*
+ * HAVE_SDP_DB_DUMP
+ *
+ * This flag enables interface to dump SDP Database on console.
+ *
+ * Dependency: SDP_SERVER must be defined.
+ *
+ * Default: Disable
+ */
+/* #define HAVE_SDP_DB_DUMP */
+
 #endif /* SDP_SERVER */
 #endif /* SDP */
 
@@ -2922,6 +2966,16 @@
  *  Dependency: None.
  */
 /* #define BNEP_WRITE_NO_WRITE_TASK */
+
+/*
+ *  BNEP_DONT_IND_UNKNOWN_EXT_HDR
+ *
+ *  This flag disables BNEP to indicate unknown extension headers to upper layer.
+ *  This should be disabled by default.
+ *
+ *  Dependency: None.
+ */
+/* #define BNEP_DONT_IND_UNKNOWN_EXT_HDR */
 #endif /* BNEP */
 
 /* ---------------------------------------------------------------------- */
@@ -2944,7 +2998,7 @@
  *
  *  Dependency: None.
  */
-#define AVDTP_HAVE_REPORTING_SERVICE
+/*#define AVDTP_HAVE_REPORTING_SERVICE*/
 
 /*
  *  AVDTP_HAVE_RECOVERY_SERVICE
@@ -2953,7 +3007,7 @@
  *
  *  Dependency: None.
  */
-#define AVDTP_HAVE_RECOVERY_SERVICE
+/*#define AVDTP_HAVE_RECOVERY_SERVICE*/
 
 /*
  *  AVDTP_HAVE_ROHC_SERVICE
@@ -2962,7 +3016,7 @@
  *
  *  Dependency: None.
  */
-#define AVDTP_HAVE_ROHC_SERVICE
+/*#define AVDTP_HAVE_ROHC_SERVICE*/
 
 /*
  *  AVDTP_HAVE_MULTIPLEXING
@@ -2971,7 +3025,7 @@
  *
  *  Dependency: None.
  */
-#define AVDTP_HAVE_MULTIPLEXING
+/*#define AVDTP_HAVE_MULTIPLEXING*/
 
 /*
  *  AVDTP_ASSISTIVE_MODE
@@ -3327,6 +3381,18 @@
 #define MCAP_BQB_TEST
 
 /*
+ * MCAP_PTS_WORK_AROUND
+ *
+ * This flag is enabled for some of the workaround related to PTS.
+ * Once the related defects are fixed at the PTS end, this feature
+ * flag will no longer be required for BQB qualification and can be
+ * removed.
+ *
+ *  Dependency: The 'MCAP' flag must be enabled.
+ */
+/* #define MCAP_PTS_WORK_AROUND */
+
+/*
  *  MCAP_TEST
  *
  *  This flag enables MCAP routines that are used for test purposes.
@@ -3465,7 +3531,7 @@
  *
  *  Dependency: A2DP.
  */
-#define A2DP_MPEG_1_2
+/*#define A2DP_MPEG_1_2*/
 
 /*
  *  A2DP_MPEG_2_4
@@ -3474,7 +3540,7 @@
  *
  *  Dependency: A2DP.
  */
-#define A2DP_MPEG_2_4
+/*#define A2DP_MPEG_2_4*/
 
 /*
  *  A2DP_VENDOR_CODEC
@@ -3483,7 +3549,7 @@
  *
  *  Dependency: A2DP.
  */
-#define A2DP_VENDOR_CODEC
+/*#define A2DP_VENDOR_CODEC*/
 
 /*
  *  A2DP_1_3
@@ -3494,6 +3560,37 @@
  *  Dependency: AVDTP_HAVE_DELAY_REPORTING
  */
 #define A2DP_1_3
+
+/*
+ *  A2DP_HAVE_ABORT_INTERFACE
+ *
+ *  This flag enables sending AVDTP ABORT Signalling message from
+ *  EtherMind A2DP module.
+ *
+ *  Dependency: A2DP
+ */
+#define A2DP_HAVE_ABORT_INTERFACE
+
+/*
+ *  AVDTP_STREAM_NO_AUTORSP
+ *
+ *  This flag suppresses the AVDTP module from automatically respond
+ *  to AVDTP Start and AVDTP Suspend requests from peer. The application
+ *  is expected to respond with the appropriate API.
+ *
+ *  Dependency: None
+ */
+/* #define AVDTP_STREAM_NO_AUTORSP */
+
+/*
+ *  A2DP_ENABLE_SEID_ACCESS
+ *
+ *  This flag enables A2DP interface to access the Local and Remote
+ *  SEID of a configured A2DP instance.
+ *
+ *  Dependency: None
+ */
+/* #define A2DP_ENABLE_SEID_ACCESS */
 
 #endif /* A2DP */
 
@@ -3741,6 +3838,19 @@
  *  Dependency: OBEX_OVER_L2CAP
  */
 #define BIP_1_2
+
+/* ----------------------------------------------------------------------- */
+/* ==== BPP Module Specific Flags ======================================= */
+/* ----------------------------------------------------------------------- */
+/*
+ *  BPP_HAVE_OBEX_AUTHENTICATION
+ *
+ *  If defined, this flag enables OBEX Aunthication procedure during the BPP Connection.
+ *  This flag is common for both BPP Printer and BPP Sender implementation.
+ *
+ *  Dependency: NONE
+ */
+/* #define BPP_HAVE_OBEX_AUTHENTICATION */
 #endif /* BIP */
 
 /* ----------------------------------------------------------------------- */
@@ -4591,6 +4701,22 @@
  */
 #define ATT_NOTIFY_UNEXPECTED_PDU
 
+/**
+ *  ATT_VALIDATE_READ_BY_TYPE_RSP_HVP_LEN
+ *
+ *  This flag enables length check in ATT API \ref BT_att_read_by_type_rsp to
+ *  verify if all the provided Handle Value Pairs, as parameter to this API,
+ *  are of same length.
+ *
+ *  When application using the ATT API \ref BT_att_read_by_type_rsp ensures
+ *  parameters are validated and only Handle Pairs which have same length are
+ *  included in the parameter list, this flag can be disabled to reduce the
+ *  code size.
+ *
+ *  Dependency: None.
+ */
+#define ATT_VALIDATE_READ_BY_TYPE_RSP_HVP_LEN
+
 /* ----------------------------------------------------------------------- */
 /* ==== GATT Protocol Related Flags ====================================== */
 /* ----------------------------------------------------------------------- */
@@ -4672,6 +4798,20 @@
 #define BT_HAVE_GATT_DB_DYNAMIC_GLOBAL_ARRAY
 #endif /* GATT_DB_DYNAMIC */
 
+/*
+ *  BT_HAVE_GATT_DB_RECORDS_SORTED_BY_UUID_SIZE
+ *
+ *  This flag enables sorting of Service records based on service UUID sizes.
+ *
+ *  Service records with 16-bit Service UUIDs are placed in the GATT DB as one collection,
+ *  and 128-bit ones another collection.
+ *
+ *  Dependency: GATT_DB_DYNAMIC.
+ */
+#ifdef GATT_DB_DYNAMIC
+/* #define BT_HAVE_GATT_DB_RECORDS_SORTED_BY_UUID_SIZE */
+#endif /* GATT_DB_DYNAMIC */
+
 /**
  *  GATT_DB_SUPPORT_128_BIT_UUID
  *
@@ -4727,6 +4867,22 @@
 #define GATT_DB_VALIDATE_TRANSPORT_ACCESS
 #endif /* BT_DUAL_MODE */
 #endif /* ATT */
+
+/* ----------------------------------------------------------------------- */
+/* ==== BT SIG Errata Flags ============================================== */
+/* ----------------------------------------------------------------------- */
+#if (defined BT_DUAL_MODE && !defined HCI_SET_MIN_ENCRYPTION_KEY_SIZE_SUPPORT)
+/*
+ *  BTSIG_ERRATA_11838
+ *
+ *  This flag is used to enable the Bluetooth SIG security errata 11838
+ *  at https://www.bluetooth.org/docman/handlers/DownloadDoc.ashx?doc_id=470741
+ *  for the Knob Attack (https://knobattack.com/)
+ *
+ *  Dependency: BT_SSP must be defined.
+ */
+#define BTSIG_ERRATA_11838
+#endif /* (defined BT_DUAL_MODE && !defined HCI_SET_MIN_ENCRYPTION_KEY_SIZE_SUPPORT) */
 
 /* ----------------------------------------------------------------------- */
 /* ==== JPL Related Flags ====================================== */
@@ -4804,15 +4960,6 @@
  *  Dependency: None
  */
 #define BT_LOG_TIMESTAMP
-
-/*
- * By Default SPP_MAX_ENTITY will be 2. 1 SPP instance is created having SERIALPORT_UUID with default server_channel number 2.
- * and 1 SPP_VS instance having CustomUUID_0 or default SERIALPORT_UUID on server_channel number 3.
- *
- * With SPP_ENABLE_MAX_CONN_RANGE enabled 20 SPP instances are created having SERIALPORT_UUID with 20 different server_channels
- * and 1 SPP_VS instance created having CustomUUID_0 or with default SERIALPORT_UUID on another server_channel.
- */
-#define SPP_ENABLE_MAX_CONN_RANGE
 
 /*
  * By Default SPP_MAX_ENTITY will be 2. 1 SPP instance is created having SERIALPORT_UUID with default server_channel number 2.

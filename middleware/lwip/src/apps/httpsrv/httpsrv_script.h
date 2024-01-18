@@ -3,7 +3,7 @@
  * Copyright 2016 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 #ifndef HTTPSRV_SCRIPT_H_

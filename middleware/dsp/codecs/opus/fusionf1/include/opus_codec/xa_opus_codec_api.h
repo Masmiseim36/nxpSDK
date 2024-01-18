@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2022 Cadence Design Systems, Inc.
+ * Copyright (c) 2014-2023 Cadence Design Systems, Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -92,7 +92,9 @@ typedef struct
              - XA_OPUS_APPLICATION_VOIP 
              - XA_OPUS_APPLICATION_AUDIO 
              - XA_OPUS_APPLICATION_RESTRICTED_LOWDELAY                                      */
+#ifndef SILK_ONLY
     WORD32 application;
+#endif
 
     /* I:   Input signal sampling rate in Hertz; 8000/12000/16000/24000/48000               */
     WORD32 API_sampleRate;
@@ -127,24 +129,29 @@ typedef struct
              - XA_OPUS_BANDWIDTH_FULLBAND                                                   */
     WORD32 max_bandwidth;                        
 
-    /* I:   max payload size in bytes; [XA_OPUS_AUTO(0), XA_OPUS_MAX_BYTES_PER_PACKET] range  */
+    /* I:   max payload size in bytes; [XA_OPUS_AUTO(0), XA_OPUS_MAX_BYTES_PER_PACKET-4] range  */
     WORD32 max_payload;
 
     /* I:   Complexity mode; (0-10), 0 is lowest, 5 is medium and 10 is highest complexity  */
     WORD32 complexity;
 
+#ifndef CELT_ONLY
     /* I:   Flag to enable SILK inband FEC;  0/1                                            */
     WORD32 SILK_InBandFEC_enabled;
+#endif
 
     /* I:   Configures mono/stereo forcing in the encoder; 0/1/2 (0 - forcing disabled)     */
     WORD32 force_numChannels;
 
+#ifndef CELT_ONLY
     /* I:   Flag to enable discontinuous transmission (DTX); 0/1                            */
     WORD32 SILK_DTX_enabled;
+#endif
 
     /* I:   Uplink packet loss in percent (0-100)                                           */
     WORD32 packetLossPercentage;
 
+#if !defined(SILK_ONLY) && !defined(CELT_ONLY)
     /* I:   Force encode mode;
              - XA_OPUS_AUTO(0)
              - XA_OPUS_MODE_SILK_ONLY
@@ -157,6 +164,7 @@ typedef struct
              - XA_OPUS_SIGNAL_VOICE
              - XA_OPUS_SIGNAL_MUSIC                                                         */
 	WORD32 signal_type;
+#endif
 
     /* I/O:   Resets the encoder state to be equivalent to a freshly initialized state; 0/1  
     Note: Non-zero values are treated as 1                                                  */
@@ -181,8 +189,10 @@ typedef struct
     for channel_mapping 1, 1-XA_OPUS_MAX_NUM_CHANNELS                                       */
     WORD32 API_numChannels;
 	
+#ifndef CELT_ONLY
 	/* I:   Flag to enable SILK inband FEC;                                                 */
     WORD32 SILK_InBandFEC_enabled;
+#endif
 
     /* I:   Decoder gain adjustment, [-32768, 32767] range, default:0;                      */
     WORD32 gain;
@@ -272,6 +282,8 @@ enum xa_error_nonfatal_execute_opus_codec
     XA_OPUS_EXECUTE_NONFATAL_INTERNAL_ERROR               = XA_ERROR_CODE(xa_severity_nonfatal, xa_class_execute, XA_CODEC_OPUS, 2),
     XA_OPUS_EXECUTE_NONFATAL_INVALID_PACKET               = XA_ERROR_CODE(xa_severity_nonfatal, xa_class_execute, XA_CODEC_OPUS, 3),
     XA_OPUS_EXECUTE_NONFATAL_INVALID_FORCED_MODE_SETTINGS = XA_ERROR_CODE(xa_severity_nonfatal, xa_class_execute, XA_CODEC_OPUS, 4),
+    XA_OPUS_EXECUTE_NONFATAL_UNSUPPORTED_MODE             = XA_ERROR_CODE(xa_severity_nonfatal, xa_class_execute, XA_CODEC_OPUS, 5),
+    XA_OPUS_EXECUTE_NONFATAL_HYBRID_MODE_DECODED          = XA_ERROR_CODE(xa_severity_nonfatal, xa_class_execute, XA_CODEC_OPUS, 6),
 };
 
 /* Fatal Errors */
@@ -312,7 +324,15 @@ XA_ERRORCODE xa_opus_enc
 );
 
 WORD32 xa_opus_enc_get_handle_byte_size( WORD32 numChannels );
-WORD32 xa_opus_enc_get_scratch_byte_size();
+#ifndef CONFIGURE_MEM_ALLOC
+WORD32 xa_opus_enc_get_scratch_byte_size ();
+#else
+#if defined(CELT_ONLY)
+WORD32 xa_opus_enc_get_scratch_byte_size (WORD32 numChannels, WORD32 sampleRate, WORD32 application);
+#else
+WORD32 xa_opus_enc_get_scratch_byte_size (WORD32 numChannels, WORD32 sampleRate);
+#endif        
+#endif
 
 /******************************************************************************
  *         Decoder function                                                   *

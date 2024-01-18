@@ -54,7 +54,7 @@
 #define __xf_shmem__        __attribute__((__aligned__(XF_PROXY_ALIGNMENT)))
 
 /* ...use hifi core agnostic maximum cache-line size */
-#define XF_PROXY_MAX_CACHE_ALIGNMENT    256 
+#define XF_PROXY_MAX_CACHE_ALIGNMENT    256
 
 /* ...properly aligned shared memory structure */
 #define __xf_shmem_max_cache__          __attribute__((__aligned__(XF_PROXY_MAX_CACHE_ALIGNMENT)))
@@ -100,7 +100,7 @@ static inline int xf_atomic_test_and_clear(volatile UWORD32 *bitmap, UWORD32 mas
     status = __xf_disable_interrupts();
     v = *bitmap, *bitmap = v & ~mask;
     __xf_restore_interrupts(status);
-    
+
     return (v & mask);
 }
 
@@ -121,7 +121,7 @@ static inline UWORD32 xf_atomic_clear(volatile UWORD32 *bitmap, UWORD32 mask)
 {
     UWORD32     status;
     UWORD32     v;
-    
+
     /* ...atomicity is assured by interrupts masking */
     status = __xf_disable_interrupts();
     v = *bitmap, *bitmap = (v &= ~mask);

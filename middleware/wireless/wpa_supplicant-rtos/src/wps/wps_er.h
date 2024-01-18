@@ -9,7 +9,7 @@
 #ifndef WPS_ER_H
 #define WPS_ER_H
 
-#include "utils/wlist.h"
+#include "utils/dl_list.h"
 
 struct wps_er_sta
 {

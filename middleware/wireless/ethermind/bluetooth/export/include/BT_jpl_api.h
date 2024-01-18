@@ -310,7 +310,7 @@ API_RESULT BT_jpl_add_frames
  *  \par Description
  *       To remove PCM data from JPL.
  *
- *  \param [in] data 
+ *  \param [in] data
  *         Pointer to the PCM buffer block that has been played and
  *         can be freed. All buffer blocks till this one will be
  *         freed.

@@ -89,7 +89,7 @@ enum test_suite_err_t run_testsuite(struct test_suite_t *test_suite)
     uint32_t skipped_tests = 0;
     uint32_t i;
     struct test_t *p_test;
-    struct test_result_t ret = {TEST_PASSED}; //NXP was 0, for IAR
+    struct test_result_t ret = {0};
 
     if (test_suite == 0 || test_suite->freg == 0) {
         print_error("TEST_SUITE_ERR_INVALID_DATA!");

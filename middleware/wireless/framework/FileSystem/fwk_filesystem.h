@@ -38,6 +38,11 @@ extern "C" {
 #define FWK_FILESYSTEM_LOCAL_BUF_SIZE 0
 #endif
 
+/* Flag enabled only for debug purpose: it enables the display of the time to write in flash */
+#ifndef FWK_FILESYSTEM_PROFILING
+#define FWK_FILESYSTEM_PROFILING 0
+#endif
+
 /**
  * \brief Initialize and configure the File System using LittleFS
  *

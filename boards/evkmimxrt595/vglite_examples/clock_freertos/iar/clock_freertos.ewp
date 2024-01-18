@@ -387,6 +387,7 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
@@ -1505,6 +1506,7 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
@@ -2622,6 +2624,7 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
@@ -3740,6 +3743,7 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
@@ -4530,7 +4534,7 @@
   <group>
     <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
   <group>
@@ -4657,6 +4661,18 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_smartdma_prv.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_smartdma_rt500.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_smartdma_rt500.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_smartdma_mcxn.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_smartdma_mcxn.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_soc_mipi_dsi.h</name>
@@ -4897,6 +4913,9 @@
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/vglite/inc/vg_lite_text.h</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/vglite/inc/nxp_support.h</name>
+      </file>
     </group>
     <group>
       <name>VGLite</name>
@@ -4911,6 +4930,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/vglite/VGLite/vg_lite_path.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/vglite/VGLite/nxp_support.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/vglite/VGLite/vg_lite_flat.h</name>
@@ -5128,6 +5150,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/fsl_assert.h</name>
     </file>
   </group>
   <group>

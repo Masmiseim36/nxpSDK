@@ -20,6 +20,10 @@
 #define __ASSERT(test, fmt, ...) assert(test)
 #endif /* __ASSERT */
 
+#ifndef __ASSERT_PRINT
+#define __ASSERT_PRINT(...) PRINTF(__VA_ARGS__); assert(false)
+#endif /* __ASSERT_PRINT */
+
 #ifndef __ASSERT_NO_MSG
 #define __ASSERT_NO_MSG(test) assert(test)
 #endif /* __ASSERT_NO_MSG */

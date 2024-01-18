@@ -59,10 +59,56 @@ extern "C" {
 #endif
 
 /**
- * @brief Ceiling function applied to @p numerator / @p divider as a fraction.
+ * @brief Divide and round up.
+ *
+ * Example:
+ * @code{.c}
+ * DIV_ROUND_UP(1, 2); // 1
+ * DIV_ROUND_UP(3, 2); // 2
+ * @endcode
+ *
+ * @param n Numerator.
+ * @param d Denominator.
+ *
+ * @return The result of @p n / @p d, rounded up.
  */
-#define ceiling_fraction(numerator, divider) \
-	(((numerator) + ((divider) - 1)) / (divider))
+#define DIV_ROUND_UP(n, d) (((n) + (d) - 1) / (d))
+
+/**
+ * @brief Ceiling function applied to @p numerator / @p divider as a fraction.
+ * @deprecated Use DIV_ROUND_UP() instead.
+ */
+#define ceiling_fraction(numerator, divider) DIV_ROUND_UP(numerator, divider)
+
+#ifndef MAX
+/**
+ * @brief Obtain the maximum of two values.
+ *
+ * @note Arguments are evaluated twice. Use Z_MAX for a GCC-only, single
+ * evaluation version
+ *
+ * @param a First value.
+ * @param b Second value.
+ *
+ * @returns Maximum value of @p a and @p b.
+ */
+#define MAX(a, b) (((a) > (b)) ? (a) : (b))
+#endif
+
+#ifndef MIN
+/**
+ * @brief Obtain the minimum of two values.
+ *
+ * @note Arguments are evaluated twice. Use Z_MIN for a GCC-only, single
+ * evaluation version
+ *
+ * @param a First value.
+ * @param b Second value.
+ *
+ * @returns Minimum value of @p a and @p b.
+ */
+#define MIN(a, b) (((a) < (b)) ? (a) : (b))
+#endif
 
 #ifndef __fallthrough
 #define __fallthrough
@@ -74,18 +120,26 @@ extern "C" {
  * In C but not C++, this causes a compile error if @p array is not an array
  * (e.g. if @p ptr and @p array are mixed up).
  *
- * @param ptr a pointer
  * @param array an array
+ * @param ptr a pointer
  * @return 1 if @p ptr is part of @p array, 0 otherwise
  */
-#define PART_OF_ARRAY(array, ptr) \
-	((ptr) && ((ptr) >= &array[0] && (ptr) < &array[ARRAY_SIZE(array)]))
+#define PART_OF_ARRAY(array, ptr)                                                                  \
+	((ptr) && POINTER_TO_UINT(array) <= POINTER_TO_UINT(ptr) &&                                \
+	 POINTER_TO_UINT(ptr) < POINTER_TO_UINT(&(array)[ARRAY_SIZE(array)]))
 
 #ifndef CONTAINER_OF
 #define CONTAINER_OF(ptr, type, field) \
 	((type *)((void *)(((char *)(ptr)) - offsetof(type, field))))
 #endif
 
+#ifndef IS_ARRAY_ELEMENT
+#define IS_ARRAY_ELEMENT(array, ptr)                                                               \
+	((ptr) && POINTER_TO_UINT(array) <= POINTER_TO_UINT(ptr) &&                          \
+	 POINTER_TO_UINT(ptr) < POINTER_TO_UINT(&(array)[ARRAY_SIZE(array)]) &&                    \
+	 (POINTER_TO_UINT(ptr) - POINTER_TO_UINT(array)) % sizeof((array)[0]) == 0)
+#endif   
+          
 /**
  * @def CLAMP
  * @brief Clamp a value to a given range.
@@ -144,15 +198,15 @@ uint8_t u8_to_dec(char *buf, uint8_t buflen, uint8_t value);
  *
  * @htmlonly
  * Example:
- *      char test_str[] = "€€€";
+ *      char test_str[] = "ï¿½ï¿½ï¿½";
  *      char trunc_utf8[8];
  *
- *      printf("Original : %s\n", test_str); // €€€
+ *      printf("Original : %s\n", test_str); // ï¿½ï¿½ï¿½
  *      strncpy(trunc_utf8, test_str, sizeof(trunc_utf8));
  *      trunc_utf8[sizeof(trunc_utf8) - 1] = '\0';
- *      printf("Bad      : %s\n", trunc_utf8); // €€?
+ *      printf("Bad      : %s\n", trunc_utf8); // ï¿½ï¿½?
  *      utf8_trunc(trunc_utf8);
- *      printf("Truncated: %s\n", trunc_utf8); // €€
+ *      printf("Truncated: %s\n", trunc_utf8); // ï¿½ï¿½
  * @endhtmlonly
  *
  * @param utf8_str NULL-terminated string

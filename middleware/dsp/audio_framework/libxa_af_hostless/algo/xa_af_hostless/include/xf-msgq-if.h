@@ -35,6 +35,8 @@
 #define DIE_MSGQ_ENTRY                 0x4
 #define DSP_DIE_MSGQ_ENTRY             0x8
 
+#define SEND_LOCAL_MSGQ_ENTRIES         16
+
 typedef struct IPC_MSGQ {
 
     xf_msgq_t     cmd_msgq;

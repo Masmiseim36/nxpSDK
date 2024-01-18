@@ -32,7 +32,7 @@
 
 /* API version information is directly modified by the packing script, do not change */
 #define XA_APIVERSION_MAJOR 3
-#define XA_APIVERSION_MINOR 0
+#define XA_APIVERSION_MINOR 2
 
 /* last compatible version */
 /* sometimes a new API version is just for a bugfix, or a added feature  in */

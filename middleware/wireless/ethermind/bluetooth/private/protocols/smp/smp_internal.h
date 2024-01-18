@@ -314,6 +314,12 @@
 #define SMP_CODE_LESC_TBX_F5_KEY_LENGTH_PARAM        0x0100U
 #endif /* SMP_LESC */
 
+/* Random Generation States */
+#define SMP_RAND_IDLE                               0x00U
+/* TODO: describe what is P1 and P2 */
+#define SMP_RAND_P1                                 0x01U
+#define SMP_RAND_P2                                 0x02U
+
 /* ----------------------------------------- Macros */
 /** To Lock SMP global mutex */
 #define smp_lock()          BT_MUTEX_LOCK(smp_mutex, SMP)
@@ -889,7 +895,10 @@ API_RESULT smp_tbx_128B_encrypt(UCHAR * key, UCHAR * data, UCHAR * encout);
 #ifdef SMP_HAVE_TBX_PL_RAND
 API_RESULT smp_tbx_generate_rand (UCHAR * n_rand, UINT16 size);
 #else /* SMP_HAVE_TBX_PL_RAND */
-#define smp_tbx_generate_rand()     BT_hci_le_rand()
+/* Rand Size can be max of 16 octets. Typically 8 or 16 octets */
+#define smp_tbx_generate_rand(size) \
+        BT_hci_le_rand(); \
+        smp_rand_state = (SMP_RAND_64B_SIZE >= (size)) ? SMP_RAND_P2 : SMP_RAND_P1;
 #endif /* SMP_HAVE_TBX_PL_RAND */
 
 #ifdef SMP_HAVE_TBX_PL_ECDH
@@ -1128,3 +1137,4 @@ void smp_tbx_aes_cmac_128_encryption_complete (UCHAR index, UCHAR status, UCHAR 
 #endif /* ((defined SMP_DATA_SIGNING) || (defined SMP_LESC)) */
 
 #endif /* _H_SMP_INTERNAL_ */
+

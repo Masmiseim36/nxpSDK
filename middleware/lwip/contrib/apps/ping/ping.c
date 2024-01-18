@@ -120,7 +120,11 @@ ping_prepare_echo( struct icmp_echo_hdr *iecho, u16_t len)
     ((char*)iecho)[sizeof(struct icmp_echo_hdr) + i] = (char)i;
   }
 
+#if CHECKSUM_GEN_ICMP == 1
   iecho->chksum = inet_chksum(iecho, len);
+#else
+  iecho->chksum = 0;
+#endif
 }
 
 #if PING_USE_SOCKETS

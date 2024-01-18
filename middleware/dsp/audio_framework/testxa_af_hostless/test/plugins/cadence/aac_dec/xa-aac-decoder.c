@@ -80,22 +80,22 @@ static inline XA_ERRORCODE xa_aac_get_config_param(xa_codec_handle_t handle, WOR
         /* ...return number of output channels */
         i_idx = XA_AACDEC_CONFIG_PARAM_OUTNCHANS;
         break;
-        
+
     case XA_CODEC_CONFIG_PARAM_SAMPLE_RATE:
         /* ...return output sampling frequency */
         i_idx = XA_AACDEC_CONFIG_PARAM_SAMP_FREQ;
         break;
-        
+
     case XA_CODEC_CONFIG_PARAM_PCM_WIDTH:
         /* ...return sample bit-width */
         i_idx = XA_AACDEC_CONFIG_PARAM_PCM_WDSZ;
         break;
     }
 #endif //PACK_WS_DUMMY
-    
+
     /* ...pass to library */
     return xa_aac_dec(handle, XA_API_CMD_GET_CONFIG_PARAM, i_idx, pv_value);
-        
+
 }
 
 /*******************************************************************************
@@ -111,8 +111,8 @@ XA_ERRORCODE xa_aac_decoder(xa_codec_handle_t p_xa_module_obj, WORD32 i_cmd, WOR
 #endif
     if (i_cmd == XA_API_CMD_GET_CONFIG_PARAM)
     {
-       
-        
+
+
         ret = xa_aac_get_config_param(p_xa_module_obj, i_idx, pv_value);
     }
     else
@@ -124,9 +124,9 @@ XA_ERRORCODE xa_aac_decoder(xa_codec_handle_t p_xa_module_obj, WORD32 i_cmd, WOR
 #ifdef XAF_PROFILE
         comp_stop = clk_read_stop(CLK_SELN_THREAD);
 		aac_dec_cycles += (int)(comp_stop - comp_start);
-		
+
 #endif
-        
+
     }
 	return ret;
 }

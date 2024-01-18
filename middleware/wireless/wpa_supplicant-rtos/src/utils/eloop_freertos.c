@@ -16,9 +16,9 @@
 
 #include "fsl_os_abstraction.h"
 
-#include "common.h"
+#include "utils/common.h"
 #include "trace.h"
-#include "list.h"
+#include "dl_list.h"
 #include "eloop.h"
 #include "block_alloc.h"
 #include "supp_main.h"
@@ -26,6 +26,10 @@
 #define UNUSED __attribute__((__unused__))
 
 #define MAX_ELOOP_TIMEOUTS 100
+
+#ifdef CONFIG_ZEPHYR
+#define portMAX_DELAY (uint32_t)0xffffffffUL
+#endif
 
 struct eloop_sock
 {
@@ -619,6 +623,9 @@ int eloop_register_signal_reconfig(eloop_signal_handler handler, void *user_data
 #endif
 }
 
+#ifdef CONFIG_ZEPHYR
+extern struct k_event suppMainTaskEvent;
+#endif
 void eloop_run(void)
 {
     //fd_set *rfds, *wfds, *efds;
@@ -669,7 +676,13 @@ void eloop_run(void)
         eloop_process_pending_signals();
 #endif
 
+#ifdef CONFIG_ZEPHYR
+        taskNotification = k_event_wait(&suppMainTaskEvent, (1U << DUMMY) | (1U << EVENT), false,
+            eloop.timeout ? K_MSEC(timeout_ms): K_FOREVER);
+        k_event_clear(&suppMainTaskEvent, 0xFF);
+#else
         xTaskNotifyWait(0U, ULONG_MAX, &taskNotification, eloop.timeout ? timeout_ms : portMAX_DELAY);
+#endif
 
         /* check if some registered timeouts have occurred */
         if (eloop.timeout)

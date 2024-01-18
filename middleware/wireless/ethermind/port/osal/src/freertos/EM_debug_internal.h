@@ -3,7 +3,7 @@
  *  \file EM_debug_internal.h
  *
  *  Internal Header File of EtherMind Debug Library
- *  for Linux (User-mode).
+ *  for FreeRTOS
  */
 
 /*

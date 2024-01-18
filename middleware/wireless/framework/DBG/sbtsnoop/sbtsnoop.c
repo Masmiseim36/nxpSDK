@@ -39,24 +39,23 @@ static void sbtsnoop_freset(void);
 /* -------------------------------------------------------------------------- */
 /*                               Private memory                               */
 /* -------------------------------------------------------------------------- */
-
-static const uint8_t *serial_btsnoop_menu = (uint8_t *) "\r\n\
---------------------------------------------\r\n\
-             SERIAL BTSNOOP MENU\n\
---------------------------------------------\r\n\
-  0 - Exit \r\n\
-  1 - Refresh \r\n\
-  2 - Open Serial BTSNOOP File\r\n\
-  3 - Close Serial BTSNOOP File\r\n\
-  4 - Dump current BTSNOOP File\r\n\
-";
+static char const serial_btsnoop_menu[] =
+    "\r\n"
+    "--------------------------------------------\r\n"
+    "         SERIAL BTSNOOP MENU\r\n"
+    "--------------------------------------------\r\n"
+    "  0 - Exit \r\n"
+    "  1 - Refresh \r\n"
+    "  2 - Open Serial BTSNOOP File\r\n"
+    "  3 - Close Serial BTSNOOP File\r\n"
+    "  4 - Dump current BTSNOOP File\r\n";
 
 static uint8_t  btsnoop_log[SBTSNOOP_LOG_SIZE];
 static uint32_t btsnoop_log_index = 0U;
 static bool     btsnoop_enable = false;
 
-static uint8_t btsnoop_hdr[16] = {
-    'b','t','s','n','o','o','p','\0',   // identification pattern
+static const uint8_t btsnoop_hdr[16] = {
+    0x62U,0x74U,0x73,0x6eU,0x6fU,0x6fU,0x70U, 0x00,   // identification pattern "btsnoop null terminated string"
     0x00U,0x00U,0x00U,0x01U,            // version number = 1
     0x00U,0x00U,0x03U,0xEAU             // datalink type 1002
 };
@@ -73,7 +72,7 @@ void sbtsnoop_fopen(void)
         sbtsnoop_fclose();
     }
     btsnoop_enable = true;
-    sbtsnoop_fwrite(btsnoop_hdr, 16U);
+    sbtsnoop_fwrite((void*)btsnoop_hdr, 16U);
     sbtsnoop_log_printf("[SBTSNOOP] Serial BTSNOOP file opened\r\n");
 }
 
@@ -94,7 +93,7 @@ void sbtsnoop_fwrite(void* pkt, uint16_t size)
              * to avoid information loss */
             sbtsnoop_fread();
         }
-        memcpy(&btsnoop_log[btsnoop_log_index], (uint8_t*)pkt, size);
+        (void)memcpy(&btsnoop_log[btsnoop_log_index], (uint8_t*)pkt, size);
         btsnoop_log_index += size;
     }
 }
@@ -105,13 +104,13 @@ void sbtsnoop_fread(void)
     {
         sbtsnoop_log_printf("********** SERIAL BTSNOOP DUMP **********\r\n");
 
-        int lines = (btsnoop_log_index >> SBTSNOOP_BYTES_PER_LINE_SHIFT) + 1;
+        uint32_t lines = (btsnoop_log_index >> SBTSNOOP_BYTES_PER_LINE_SHIFT) + 1u;
 
-        for(int i = 0; i < lines; i++)
+        for(uint32_t i = 0u; i < lines; i++)
         {
-            for(int j = 0; j < SBTSNOOP_BYTES_PER_LINE; j++)
+            for(uint32_t j = 0u; j < SBTSNOOP_BYTES_PER_LINE; j++)
             {
-                int index = (i << SBTSNOOP_BYTES_PER_LINE_SHIFT) + j;
+                uint32_t index = (i << SBTSNOOP_BYTES_PER_LINE_SHIFT) + j;
                 if(index >= btsnoop_log_index)
                 {
                     break;
@@ -207,16 +206,16 @@ void main_serial_btsnoop_operations(void)
 {
     unsigned int  choice;
 
-    while(1)
+    while(true)
     {
         sbtsnoop_log_printf("%s \r\n", serial_btsnoop_menu);
-        sbtsnoop_log_printf("Enter you choice : ");
+        sbtsnoop_log_printf("Enter your choice : ");
         sbtsnoop_log_scanf("%d", &choice);
 
         switch(choice)
         {
         case 0:
-            return;
+            break;
 
         case 1:
             break;

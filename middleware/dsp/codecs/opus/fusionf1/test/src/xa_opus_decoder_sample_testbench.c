@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2022 Cadence Design Systems, Inc.
+ * Copyright (c) 2014-2023 Cadence Design Systems, Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -135,7 +135,13 @@ int profile_frame = 0;//1;//2822;//5488;
 
 #define XA_MAX_CMD_LINE_LENGTH 1024
 #define XA_MAX_ARGS 50
-#define PARAMFILE "paramfilesimple_decode.txt"
+#ifdef CELT_ONLY
+  #define PARAMFILE "paramfilesimple_decode_celt.txt"
+#elif SILK_ONLY
+  #define PARAMFILE "paramfilesimple_decode_silk.txt"
+#else
+  #define PARAMFILE "paramfilesimple_decode.txt"
+#endif
 
 /* Application and testbench error handler */
 #define XA_TESTBENCH_FATAL_MEM_ALLOC_FAILED                0xFFFF8000
@@ -189,7 +195,9 @@ static void print_usage( char* argv[] )
     printf( "Usage: %s -fs:<sampling rate (8000/12000/16000/24000/48000) Hz; default: 48000> -numch:<channels (1-8); default: 2> "
         "[options] -ifile:<input_file> -ofile:<output_file>\n\n", argv[0]);
     printf( "Options:\n" );
+#ifndef CELT_ONLY
     printf( "-inbandfec:<fec_flag (0/1)>  : enable or disable SILK inband FEC (non-zero value is treated as 1)\n" );
+#endif
     printf( "-loss:<perc>                 : simulate packet loss, in percent (0-100); default: 0\n" );
 #ifdef ENABLE_OGG_SUPPORT
     printf( "-btype:<ogg/raw>             : bitstream type, ogg or raw; default: raw\n" );
@@ -423,12 +431,14 @@ int xa_opus_dec_main_process( int argc, char* argv[] )
 				exit(0);
 			}	
         }
+#ifndef CELT_ONLY
         else if( strncmp( argv[ args ], "-inbandfec:",11 ) == 0 )
         {
             //INBandFEC_enabled = 1;
             sscanf( argv[ args ] + 11, "%d", &dec_control.SILK_InBandFEC_enabled );
             args++;
         } 
+#endif
         else if( strncmp( argv[ args ], "-loss:",6 ) == 0 ) 
         {
             sscanf( argv[ args ] + 6, "%d", &packetLoss_perc );
@@ -443,7 +453,7 @@ int xa_opus_dec_main_process( int argc, char* argv[] )
         {
 			if((strlen(argv[ args ])-7) > 1024) 
    			{
-        		printf( "Error: Input file name length too large, max allowed length is 1024\n");
+        		printf( "Error: Input file name length too large, supports less than 1024 characters.\n");
         		exit( 0 );
     		}
             sscanf( argv[ args ] + 7, "%s", bitInFileName );
@@ -453,7 +463,7 @@ int xa_opus_dec_main_process( int argc, char* argv[] )
         {
 			if((strlen(argv[ args ])-7) > 1024) 
    			{
-        		printf( "Error: Output file name length too large, max allowed length is 1024\n");
+        		printf( "Error: Output file name length too large, supports less than 1024 characters.\n");
         		exit( 0 );
     		}
             sscanf( argv[ args ] + 7, "%s", speechOutFileName );
@@ -699,7 +709,11 @@ int xa_opus_dec_main_process( int argc, char* argv[] )
     scratch_size += 30*1024;
 #endif
     enc_speech_size = XA_OPUS_MAX_DEC_INP_BYTES*dec_control.nb_streams;
+#ifndef CONFIGURE_MEM_ALLOC
     synth_speech_size = XA_OPUS_MAX_BYTES_CHANNEL_PACKET * dec_control.API_numChannels;
+#else
+    synth_speech_size = sizeof( WORD16 ) * 6 * dec_control.API_sampleRate / 50 * dec_control.API_numChannels;
+#endif
 
     fprintf(stdout, "\nOpus Decoder runtime memory usage:");
     fprintf(stdout, "\nPersistent state size: %6d bytes\n", handle_size);
@@ -1275,7 +1289,9 @@ int xa_opus_dec_main_process( int argc, char* argv[] )
     }
 
     /* Empty the recieve buffer */
+#ifndef CELT_ONLY
     if (dec_control.SILK_InBandFEC_enabled == 0)
+#endif
     {
         if( nBytesPerPacket[ 0 ] == 0 ) 
         {

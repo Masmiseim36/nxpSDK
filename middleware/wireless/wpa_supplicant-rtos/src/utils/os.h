@@ -76,14 +76,16 @@ static inline int os_reltime_before(struct os_reltime *a, struct os_reltime *b)
 static inline void os_reltime_sub(struct os_reltime *a, struct os_reltime *b, struct os_reltime *res)
 {
     res->sec  = a->sec - b->sec;
-    res->usec = a->usec - b->usec;
-#if 0
-    if (res->usec < 0)
+
+    if (a->usec < b->usec)
     {
         res->sec--;
-        res->usec += 1000000;
+        res->usec = a->usec - b->usec + 1000000;
     }
-#endif
+    else
+    {
+        res->usec = a->usec - b->usec;
+    }
 }
 
 static inline void os_reltime_age(struct os_reltime *start, struct os_reltime *age)
@@ -246,7 +248,7 @@ int os_file_exists(const char *fname);
  */
 // int os_fdatasync(FILE *stream);
 
-#if defined(CONFIG_FREERTOS)
+#if defined(CONFIG_ZEPHYR) || defined(CONFIG_FREERTOS)
 /**
  * os_malloc - Allocate dynamic memory
  * @size: Size of the buffer to allocate
@@ -538,17 +540,17 @@ void os_free(void *ptr);
 char *os_strdup(const char *s);
 #else /* WPA_TRACE */
 #ifndef os_malloc
-#if !defined(CONFIG_FREERTOS)
+#if !(defined(CONFIG_ZEPHYR) || defined(CONFIG_FREERTOS))
 #define os_malloc(s) malloc((s))
 #endif
 #endif
 #ifndef os_realloc
-#if !defined(CONFIG_FREERTOS)
+#if !(defined(CONFIG_ZEPHYR) || defined(CONFIG_FREERTOS))
 #define os_realloc(p, s) realloc((p), (s))
 #endif
 #endif
 #ifndef os_free
-#if !defined(CONFIG_FREERTOS)
+#if !(defined(CONFIG_ZEPHYR) || defined(CONFIG_FREERTOS))
 #define os_free(p) free((p))
 #endif
 #endif

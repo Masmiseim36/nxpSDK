@@ -13,8 +13,8 @@
  */
 #include <string.h>
 #include <stdlib.h>
-#include <fsl_debug_console.h>
 
+#include <fsl_debug_console.h>
 #include <cli.h>
 #include <cli_utils.h>
 #include <ctype.h>

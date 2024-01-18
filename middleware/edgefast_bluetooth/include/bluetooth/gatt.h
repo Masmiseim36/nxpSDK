@@ -17,6 +17,7 @@
  * @{
  */
 
+#include <stdint.h>
 #include <stddef.h>
 #include <sys/slist.h>
 #if !(defined(__ICCARM__) || defined(__CC_ARM) || defined(__ARMCC_VERSION))
@@ -393,9 +394,15 @@ void bt_gatt_cb_register(struct bt_gatt_cb *cb);
  *  All services registered after settings_load will trigger a new database hash
  *  calculation and a new hash stored.
  *
+ *  There are two situations where this function can be called: either before
+ *  `bt_init()` has been called, or after `settings_load()` has been called.
+ *  Registering a service in the middle is not supported and will return an
+ *  error.
+ *
  *  @param svc Service containing the available attributes
  *
  *  @return 0 in case of success or negative value in case of error.
+ *  @return -EAGAIN if `bt_init()` has been called but `settings_load()` hasn't yet.
  */
 int bt_gatt_service_register(struct bt_gatt_service *svc);
 
@@ -1315,7 +1322,8 @@ struct bt_gatt_exchange_params {
  *  @note Shall only be used once per connection.
  *
  *  The Response comes in callback @p params->func. The callback is run from
- *  the BT RX thread. @p params must remain valid until start of callback.
+ *  the context specified by 'config BT_RECV_CONTEXT'.
+ *  @p params must remain valid until start of callback.
  *
  *  This function will block while the ATT request queue is full, except when
  *  called from the BT RX thread, as this would cause a deadlock.
@@ -1505,6 +1513,9 @@ struct bt_gatt_read_params;
 /** @typedef bt_gatt_read_func_t
  *  @brief Read callback function
  *
+ *  When reading using by_uuid, `params->start_handle` is the attribute handle
+ *  for this `data` item.
+ *
  *  @param conn Connection object.
  *  @param err ATT error code.
  *  @param params Read parameters used.
@@ -1578,7 +1589,8 @@ struct bt_gatt_read_params {
  *  offset.
  *
  *  The Response comes in callback @p params->func. The callback is run from
- *  the BT RX thread. @p params must remain valid until start of callback.
+ *  the context specified by 'config BT_RECV_CONTEXT'.
+ *  @p params must remain valid until start of callback.
  *
  *  This function will block while the ATT request queue is full, except when
  *  called from the BT RX thread, as this would cause a deadlock.
@@ -1628,7 +1640,8 @@ struct bt_gatt_write_params {
 /** @brief Write Attribute Value by handle
  *
  *  The Response comes in callback @p params->func. The callback is run from
- *  the BT RX thread. @p params must remain valid until start of callback.
+ *  the context specified by 'config BT_RECV_CONTEXT'.
+ *  @p params must remain valid until start of callback.
  *
  *  This function will block while the ATT request queue is full, except when
  *  called from Bluetooth event context. When called from Bluetooth context,
@@ -1780,8 +1793,21 @@ enum {
 	 *
 	 *  If set, indicates write operation is pending waiting remote end to
 	 *  respond.
+	 *
+	 *  @note Internal use only.
 	 */
 	BT_GATT_SUBSCRIBE_FLAG_WRITE_PENDING,
+	/** @brief Sent flag
+	 *
+	 *  If set, indicates that a subscription request (CCC write) has
+	 *  already been sent in the active connection.
+	 *
+	 *  Used to avoid sending subscription requests multiple times when the
+	 *  @kconfig{CONFIG_BT_GATT_AUTO_RESUBSCRIBE} quirk is enabled.
+	 *
+	 *  @note Internal use only.
+	 */
+	BT_GATT_SUBSCRIBE_FLAG_SENT,
 
 	BT_GATT_SUBSCRIBE_NUM_FLAGS
 };
@@ -1834,13 +1860,14 @@ struct bt_gatt_subscribe_params {
  *  this callback. Notification callback with NULL data will not be called if
  *  subscription was removed by this method.
  *
- *  The Response comes in callback @p params->func. The callback is run from
- *  the BT RX thread. @p params must remain valid until start of callback.
+ *  The Response comes in callback @p params->subscribe. The callback is run from
+ *  the context specified by 'config BT_RECV_CONTEXT'.
  *  The Notification callback @p params->notify is also called from the BT RX
  *  thread.
  *
- *  @note Notifications are asynchronous therefore the parameters need to
- *        remain valid while subscribed.
+ *  @note Notifications are asynchronous therefore the @p params must remain
+ *        valid while subscribed and cannot be reused for additional subscriptions
+ *        whilst active.
  *
  *  This function will block while the ATT request queue is full, except when
  *  called from the BT RX thread, as this would cause a deadlock.

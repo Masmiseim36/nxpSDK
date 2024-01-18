@@ -1,14 +1,16 @@
 var a00269 =
 [
-    [ "DEBUG_CONSOLE_TRANSMIT_BUFFER_LEN", "a00269.html#ga028eff2428680ec9e47eed17d7ad6180", null ],
-    [ "DEBUG_CONSOLE_RECEIVE_BUFFER_LEN", "a00269.html#gadad6011e61c820f396b1c13568dbfe16", null ],
-    [ "DEBUG_CONSOLE_TX_RELIABLE_ENABLE", "a00269.html#gab2823ff7917ffeaaccf805f739116ec1", null ],
-    [ "DEBUG_CONSOLE_RX_ENABLE", "a00269.html#ga27259eda6262948659d081ea4b7ad2fe", null ],
-    [ "DEBUG_CONSOLE_PRINTF_MAX_LOG_LEN", "a00269.html#ga9777b06b434b336e5a2c1b21421c9ea3", null ],
-    [ "DEBUG_CONSOLE_SCANF_MAX_LOG_LEN", "a00269.html#gab2afcebb59f366867a49bb888b8d043d", null ],
-    [ "DEBUG_CONSOLE_SYNCHRONIZATION_BM", "a00269.html#ga1cbe5dd480860843788779e39d1d0d1e", null ],
-    [ "DEBUG_CONSOLE_SYNCHRONIZATION_FREERTOS", "a00269.html#ga9589914d5a8b1cfedf834d52a6574496", null ],
-    [ "DEBUG_CONSOLE_SYNCHRONIZATION_MODE", "a00269.html#ga7b85f4e4309413064a69c99e7327d3f2", null ],
-    [ "DEBUG_CONSOLE_ENABLE_ECHO_FUNCTION", "a00269.html#ga5cc1f7845683fbde63e9619f38aac2d1", null ],
-    [ "BOARD_USE_VIRTUALCOM", "a00269.html#ga74776e2523880761897d8b57199e5596", null ]
+    [ "FSL_UTICK_DRIVER_VERSION", "a00269.html#gaba15862a7512fc2a9c3bcccdb8b76bbf", null ],
+    [ "utick_mode_t", "a00269.html#gaafc6d7333c89e21b1b73e035a01d37eb", null ],
+    [ "utick_callback_t", "a00269.html#ga4f7c7bdd94699bdc40c684a07f347c3f", null ],
+    [ "_utick_mode", "a00269.html#gaf9a069d105186556236c0ef23c9ad35f", [
+      [ "kUTICK_Onetime", "a00269.html#ggaf9a069d105186556236c0ef23c9ad35faaeeddd009e9c2424172ad197ead2d97b", null ],
+      [ "kUTICK_Repeat", "a00269.html#ggaf9a069d105186556236c0ef23c9ad35fa865f02b62034aa073e56629375dee16e", null ]
+    ] ],
+    [ "UTICK_Init", "a00269.html#ga612c590e311ff59c5036d9cf9b3d5141", null ],
+    [ "UTICK_Deinit", "a00269.html#ga926b042935b415c79beaa6d2552309e0", null ],
+    [ "UTICK_GetStatusFlags", "a00269.html#ga1073003f8cf4c006ee7b6258556b4df9", null ],
+    [ "UTICK_ClearStatusFlags", "a00269.html#ga42e9e599ac4c314382bc0e99f4ca4d52", null ],
+    [ "UTICK_SetTick", "a00269.html#ga5b314cad747ef275f03fb8cd11b524ee", null ],
+    [ "UTICK_HandleIRQ", "a00269.html#gaf1399bca52f347f0db63b88cda0973b8", null ]
 ];

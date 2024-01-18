@@ -150,8 +150,8 @@ static inline int __xf_thread_init(xf_thread_t *thread)
 static inline int __xf_thread_create(xf_thread_t *thread, xf_entry_t *f,
                                      void *arg, const char *name, void *stack,
                                      unsigned int stack_size, int priority)
-{  
-    return xos_thread_create(thread, 0, ( XosThreadFunc *)f, arg, name, stack, stack_size, priority, 0, 0);
+{
+    return xos_thread_create(thread, 0, ( XosThreadFunc *)f, arg, name, stack, stack_size, (int8_t)priority, 0, 0);
 }
 
 static inline void __xf_thread_yield(void)
@@ -178,14 +178,14 @@ static inline int __xf_thread_join(xf_thread_t *thread, int32_t * p_exitcode)
 static inline int __xf_thread_destroy(xf_thread_t *thread)
 {
     int    r;
-    
+
     /* ...wait until thread terminates */
     /* v-tbd - avoid infinite wait for join */
-    //xos_thread_join(thread, &r); 
-    
+    //xos_thread_join(thread, &r);
+
     /* ...delete thread, free up TCB, stack */
     r = xos_thread_delete(thread);
-    
+
     /* ...return final status */
     return r;
 }
@@ -199,9 +199,9 @@ static inline const char *__xf_thread_name(xf_thread_t *thread)
 static inline int32_t __xf_thread_sleep_msec(uint64_t msecs)
 {
     int32_t    r;
-    
+
     r = xos_thread_sleep_msec( msecs );
-    
+
     /* ...return final status */
     return r;
 }
@@ -211,14 +211,14 @@ static inline int32_t __xf_thread_sleep_msec(uint64_t msecs)
 #define XF_THREAD_STATE_READY	(XOS_THREAD_STATE_READY)
 #define XF_THREAD_STATE_RUNNING	(XOS_THREAD_STATE_RUNNING)
 #define XF_THREAD_STATE_BLOCKED (XOS_THREAD_STATE_BLOCKED)
-#define XF_THREAD_STATE_EXITED  (XOS_THREAD_STATE_EXITED) 
+#define XF_THREAD_STATE_EXITED  (XOS_THREAD_STATE_EXITED)
 
 static inline int32_t __xf_thread_get_state (xf_thread_t *thread)
 {
     int32_t    r = 0;
-    
+
     r = (int)xos_thread_get_state( thread );
-    
+
     /* ...return final status */
     return r;
 }
@@ -241,7 +241,7 @@ static inline int32_t __xf_thread_get_priority (xf_thread_t *thread)
 static inline int32_t __xf_thread_set_priority (xf_thread_t *thread, int32_t priority)
 {
     int r = 0;
-    xos_thread_set_priority(thread ? thread : XOS_THREAD_SELF, priority);
+    xos_thread_set_priority(thread ? thread : XOS_THREAD_SELF, (int8_t)priority);
 
     return r;
 }

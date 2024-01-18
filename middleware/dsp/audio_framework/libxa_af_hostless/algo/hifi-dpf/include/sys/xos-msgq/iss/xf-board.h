@@ -58,7 +58,7 @@ static inline void XF_PROXY_NOTIFY_PEER(core)
 #endif
 
 /* ...clear pending interrupt mask - do nothing for iss */
-#define XF_PROXY_SYNC_PEER(core)        
+#define XF_PROXY_SYNC_PEER(core)
 
 /*******************************************************************************
  * Auxiliary helper functions

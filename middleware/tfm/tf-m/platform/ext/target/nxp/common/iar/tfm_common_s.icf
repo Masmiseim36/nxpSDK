@@ -55,10 +55,16 @@ define block ER_TFM_CODE with fixed order, alignment = 8, maximum size = S_CODE_
        ro object *libtfm_spm*,
 };
 
-define block TFM_UNPRIV_CODE with alignment = TFM_LINKER_UNPRIV_CODE_ALIGNMENT {
+define block TFM_UNPRIV_CODE_START with alignment = TFM_LINKER_UNPRIV_CODE_ALIGNMENT {
        section SFN,
        readonly
        };
+
+    /*
+     * This empty, zero long execution region is here to mark the end address
+     * of TFM unprivileged code.
+     */
+define block TFM_UNPRIV_CODE_END with alignment = TFM_LINKER_UNPRIV_CODE_ALIGNMENT, size = 0 { };
 
     /**** Section for holding partition RO load data */
     /*
@@ -116,7 +122,7 @@ define block TFM_APP_CODE_START with alignment = TFM_LINKER_APP_ROT_LINKER_CODE_
         ro object *tfm_ipc_client_test.*,
         ro object *intermedia_tfm_ipc_client_test.*,
         ro object *load_info_tfm_ipc_client_test.*,
-// #ifdef TEST_FRAMEWORK_S
+// #ifdef TFM_S_REG_TEST
         ro object *tfm_secure_client_2.*,
         ro object *intermedia_tfm_secure_client_2.*,
         ro object *load_info_tfm_secure_client_2.*,
@@ -195,7 +201,7 @@ define block TFM_APP_ROT_LINKER_DATA with alignment = TFM_LINKER_APP_ROT_LINKER_
         rw object *tfm_ipc_client_test.*,
         rw object *intermedia_tfm_ipc_client_test.*,
         rw object *load_info_tfm_ipc_client_test.*,
-// #ifdef TEST_FRAMEWORK_S
+// #ifdef TFM_S_REG_TEST
         rw object *tfm_secure_client_2.*,
         rw object *intermedia_tfm_secure_client_2.*,
         rw object *load_info_tfm_secure_client_2.*,
@@ -305,7 +311,8 @@ define block LR_CODE with fixed order, maximum size = S_CODE_SIZE {
        block VENEER_ALIGN,
 #endif
        block ER_TFM_CODE,
-       block TFM_UNPRIV_CODE,
+       block TFM_UNPRIV_CODE_START,
+       block TFM_UNPRIV_CODE_END,
 
        block TFM_SP_LOAD_LIST,
 

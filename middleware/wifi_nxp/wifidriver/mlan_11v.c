@@ -15,7 +15,6 @@ Change log:
 
 #include <mlan_api.h>
 #include "wifi-sdio.h"
-
 #ifdef CONFIG_11V
 #define BTM_RESP_BUF_SIZE      200
 #define WNM_BTM_QUERY_BUF_SIZE 10U
@@ -208,6 +207,7 @@ void wlan_process_mgmt_wnm_btm_req(t_u8 *pos, t_u8 *end, t_u8 *src_addr, t_u8 *d
         if (preport == NULL)
         {
             wifi_e("No memory available for neighbor report.");
+            os_mem_free((void *)pnlist_rep_param);
             return;
         }
 
@@ -300,6 +300,8 @@ void wlan_process_mgmt_wnm_btm_req(t_u8 *pos, t_u8 *end, t_u8 *src_addr, t_u8 *d
         }
 
         wlan_send_mgmt_wnm_btm_resp(dialog_token, status, dest_addr, src_addr, NULL, ptagnr, tagnr_len, protect);
+		/* If don't use variable pnlist_rep_param, free allocated memory ! */
+        os_mem_free((void *)pnlist_rep_param);
     }
 }
 

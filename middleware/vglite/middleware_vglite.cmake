@@ -8,6 +8,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/VGLite/vg_lite_image.c
   ${CMAKE_CURRENT_LIST_DIR}/VGLite/vg_lite_matrix.c
   ${CMAKE_CURRENT_LIST_DIR}/VGLite/vg_lite_path.c
+  ${CMAKE_CURRENT_LIST_DIR}/VGLite/nxp_support.c
   ${CMAKE_CURRENT_LIST_DIR}/VGLite/vg_lite_flat.c
   ${CMAKE_CURRENT_LIST_DIR}/VGLite/rtos/vg_lite_os.c
   ${CMAKE_CURRENT_LIST_DIR}/font/buf_reader.c

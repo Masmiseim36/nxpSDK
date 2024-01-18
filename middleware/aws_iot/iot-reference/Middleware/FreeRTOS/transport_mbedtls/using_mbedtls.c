@@ -123,6 +123,35 @@ static void sslContextFree( SSLContext_t * pSslContext );
 
 /*-----------------------------------------------------------*/
 
+
+
+#ifdef MBEDTLS_USE_PSA_CRYPTO
+/**
+ * @brief Helper for reading the specified certificate object, if present,
+ * out of storage, into RAM, and then into an mbedTLS certificate context
+ * object.
+ *
+ * @param[in] pSslContext Caller TLS context.
+ * @param[in] certId Certificate ID.
+ *
+ * @return Zero on success.
+ */
+static CK_RV readCertificateIntoContext( SSLContext_t * pSslContext,
+                                         uint32_t certId);
+
+/**
+ * @brief Helper for setting up potentially hardware-based cryptographic context
+ * for the client TLS certificate and private key.
+ *
+ * @param[in] Caller context.
+ * @param[in] Key ID.
+ *
+ * @return Zero on success.
+ */
+static CK_RV initializeClientKeys( SSLContext_t * pxCtx,
+                                   uint32_t keyId );
+#else //MBEDTLS_USE_PSA_CRYPTO
+
 /**
  * @brief Callback that wraps PKCS#11 using secure element for random number generation.
  *
@@ -189,7 +218,7 @@ static int privateKeySigningCallback( void * pvContext,
                                                        unsigned char *,
                                                        size_t ),
                                       void * pvRng );
-
+#endif //MBEDTLS_USE_PSA_CRYPTO
 /**
  * @brief Setup TLS by initializing contexts and setting configurations.
  *
@@ -261,8 +290,17 @@ static void sslContextInit( SSLContext_t * pSslContext )
     mbedtls_x509_crt_init( &( pSslContext->clientCert ) );
     mbedtls_ssl_init( &( pSslContext->context ) );
 
+#ifndef MBEDTLS_USE_PSA_CRYPTO
     xInitializePkcs11Session( &( pSslContext->xP11Session ) );
     C_GetFunctionList( &( pSslContext->pxP11FunctionList ) );
+#else
+	const char *pers = "tls_context";
+	mbedtls_ctr_drbg_init(&( pSslContext->drbgCtx ) ) ;
+	mbedtls_entropy_init(&( pSslContext->entropyCtx ) );
+	mbedtls_ctr_drbg_seed(&(pSslContext->drbgCtx),
+		mbedtls_entropy_func, &(pSslContext->entropyCtx),
+		(const unsigned char *)pers, strlen(pers));
+#endif
 }
 /*-----------------------------------------------------------*/
 
@@ -274,11 +312,45 @@ static void sslContextFree( SSLContext_t * pSslContext )
     mbedtls_x509_crt_free( &( pSslContext->rootCa ) );
     mbedtls_x509_crt_free( &( pSslContext->clientCert ) );
     mbedtls_ssl_config_free( &( pSslContext->config ) );
-
+#ifdef MBEDTLS_USE_PSA_CRYPTO
+	mbedtls_ctr_drbg_free(&( pSslContext->drbgCtx ) ) ;
+	mbedtls_pk_free(&( pSslContext->privKey));
+#else
     pSslContext->pxP11FunctionList->C_CloseSession( pSslContext->xP11Session );
+#endif
 }
 /*-----------------------------------------------------------*/
 
+#ifdef MBEDTLS_USE_PSA_CRYPTO
+
+static CK_RV readCertificateIntoContext( SSLContext_t * pSslContext,
+                                         uint32_t certId)
+{
+    CK_RV xResult = CKR_OK;
+  	size_t client_cert_length = 0;
+	uint8_t client_cert[4096]={0};
+	xResult = psa_export_key(certId, client_cert, sizeof(client_cert), &client_cert_length);
+	
+    if( xResult == CKR_OK )
+	{
+		xResult = mbedtls_x509_crt_parse( &pSslContext->clientCert,
+										  client_cert,
+										  client_cert_length );
+	}
+	
+	return xResult;
+}
+
+static CK_RV initializeClientKeys( SSLContext_t * pxCtx,
+                                   uint32_t keyId )
+{
+    CK_RV xResult = CKR_OK;
+  	
+    xResult = mbedtls_pk_setup_opaque(&pxCtx->privKey, keyId);               
+
+	return xResult;
+}
+#else
 static CK_RV readCertificateIntoContext( SSLContext_t * pSslContext,
                                          const char * pcLabelName,
                                          CK_OBJECT_CLASS xClass,
@@ -608,6 +680,7 @@ static int generateRandomBytes( void * pvCtx,
 
     return xResult;
 }
+#endif
 
 /*-----------------------------------------------------------*/
 
@@ -623,9 +696,13 @@ static TlsTransportStatus_t tlsSetup( NetworkContext_t * pNetworkContext,
     configASSERT( pHostName != NULL );
     configASSERT( pNetworkCredentials != NULL );
     configASSERT( pNetworkCredentials->pRootCa != NULL );
+#ifdef MBEDTLS_USE_PSA_CRYPTO
+	configASSERT( pNetworkCredentials->keyId != NULL );
+    configASSERT( pNetworkCredentials->certId != NULL );
+#else
     configASSERT( pNetworkCredentials->pClientCertLabel != NULL );
     configASSERT( pNetworkCredentials->pPrivateKeyLabel != NULL );
-
+#endif
     /* Initialize the mbed TLS context structures. */
     sslContextInit( &( pNetworkContext->sslContext ) );
 
@@ -661,9 +738,15 @@ static TlsTransportStatus_t tlsSetup( NetworkContext_t * pNetworkContext,
         /* Set SSL authmode and the RNG context. */
         mbedtls_ssl_conf_authmode( &( pNetworkContext->sslContext.config ),
                                    MBEDTLS_SSL_VERIFY_REQUIRED );
+#ifdef MBEDTLS_USE_PSA_CRYPTO
+		mbedtls_ssl_conf_rng(&(pNetworkContext->sslContext.config),
+							 mbedtls_ctr_drbg_random,
+							 &(pNetworkContext->sslContext.drbgCtx));
+#else
         mbedtls_ssl_conf_rng( &( pNetworkContext->sslContext.config ),
                               generateRandomBytes,
                               &pNetworkContext->sslContext );
+#endif	
         mbedtls_ssl_conf_cert_profile( &( pNetworkContext->sslContext.config ),
                                        &( pNetworkContext->sslContext.certProfile ) );
 
@@ -691,9 +774,13 @@ static TlsTransportStatus_t tlsSetup( NetworkContext_t * pNetworkContext,
     if( returnStatus == TLS_TRANSPORT_SUCCESS )
     {
         /* Setup the client private key. */
+#ifdef MBEDTLS_USE_PSA_CRYPTO
+        xResult = initializeClientKeys( &( pNetworkContext->sslContext ),
+                                        pNetworkCredentials->keyId );
+#else
         xResult = initializeClientKeys( &( pNetworkContext->sslContext ),
                                         pNetworkCredentials->pPrivateKeyLabel );
-
+#endif
         if( xResult != CKR_OK )
         {
             LogError( ( "Failed to setup key handling by PKCS #11." ) );
@@ -703,10 +790,15 @@ static TlsTransportStatus_t tlsSetup( NetworkContext_t * pNetworkContext,
         else
         {
             /* Setup the client certificate. */
+#ifdef MBEDTLS_USE_PSA_CRYPTO
+            xResult = readCertificateIntoContext( &( pNetworkContext->sslContext ),
+                                                  pNetworkCredentials->certId);
+#else
             xResult = readCertificateIntoContext( &( pNetworkContext->sslContext ),
                                                   pNetworkCredentials->pClientCertLabel,
                                                   CKO_CERTIFICATE,
                                                   &( pNetworkContext->sslContext.clientCert ) );
+#endif
 
             if( xResult != CKR_OK )
             {
@@ -949,7 +1041,7 @@ int mbedtls_bio_lwip_recv( void * ctx,
          * 2. EAGAIN if the socket is blocking and have waited long enough but
          *    packet is not received.
          */
-        if( ( errno == EWOULDBLOCK ) || ( errno == EAGAIN ) )
+        if( ( errno == EWOULDBLOCK ) /*|| ( errno == EAGAIN )*/ )
         {
             recvStatus = MBEDTLS_ERR_SSL_WANT_READ; /* timeout or would block */
         }
@@ -976,7 +1068,6 @@ TlsTransportStatus_t TLS_FreeRTOS_Connect( NetworkContext_t * pNetworkContext,
                                            uint32_t sendTimeoutMs )
 {
     TlsTransportStatus_t returnStatus = TLS_TRANSPORT_SUCCESS;
-    int opt;
 
     if( ( pNetworkContext == NULL ) ||
         ( pHostName == NULL ) ||
@@ -1018,15 +1109,17 @@ TlsTransportStatus_t TLS_FreeRTOS_Connect( NetworkContext_t * pNetworkContext,
         returnStatus = tlsSetup( pNetworkContext, pHostName, pNetworkCredentials );
     }
 
+#if 0
     if( returnStatus == TLS_TRANSPORT_SUCCESS )
     {
-        opt = 1;
+        int opt = 1;
 
         if( lwip_ioctl( pNetworkContext->tcpSocket, FIONBIO, &opt ) != 0 )
         {
             returnStatus = TLS_TRANSPORT_CONNECT_FAILURE;
         }
     }
+#endif
 
     /* Clean up on failure. */
     if( returnStatus != TLS_TRANSPORT_SUCCESS )

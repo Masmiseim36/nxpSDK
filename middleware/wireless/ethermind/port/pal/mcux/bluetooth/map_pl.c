@@ -1135,7 +1135,7 @@ API_RESULT BT_map_get_message_file_pl
         (sizeof(rdir) - BT_str_len(rdir) - 1)
     );
 
-    BT_str_n_copy(dir, rdir, (sizeof(dir) - 1));
+    BT_str_n_copy(dir, rdir, (sizeof(rdir) - 1));
 
     first = BT_FALSE;
 

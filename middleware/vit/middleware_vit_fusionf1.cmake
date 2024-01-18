@@ -13,7 +13,7 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
 if((CONFIG_TOOLCHAIN STREQUAL xcc OR CONFIG_TOOLCHAIN STREQUAL xtensa))
   target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE
     -Wl,--start-group
-      ${CMAKE_CURRENT_LIST_DIR}/FusionF1/Lib/libVIT_Fusion_F1_v04_08_01.a
+      ${CMAKE_CURRENT_LIST_DIR}/FusionF1/Lib/libVIT_Fusion_F1_v04_09_00.a
       -Wl,--end-group
   )
 endif()

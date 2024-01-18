@@ -75,12 +75,12 @@ typedef struct xa_src_pp
 
 static inline XA_ERRORCODE xa_src_pp_get_config_param(xa_src_pp_t *p_src_state, xa_codec_handle_t handle, WORD32 i_idx, pVOID pv_value)
 {
-    if (p_src_state == NULL) 
+    if (p_src_state == NULL)
     {
         *(WORD32 *) pv_value = 0;
         return XA_NO_ERROR;
     }
-    
+
 #ifndef PACK_WS_DUMMY
     /* ...translate "standard" parameter index into internal value */
     switch (i_idx)
@@ -89,12 +89,12 @@ static inline XA_ERRORCODE xa_src_pp_get_config_param(xa_src_pp_t *p_src_state, 
     case XA_CODEC_CONFIG_PARAM_CHANNELS:
         *(WORD32 *) pv_value = p_src_state->in_channels;
         break;
-        
+
     case XA_SRC_PP_CONFIG_PARAM_OUTPUT_SAMPLE_RATE:
     case XA_CODEC_CONFIG_PARAM_SAMPLE_RATE:
         *(WORD32 *) pv_value = p_src_state->out_fs;
         break;
-        
+
     case XA_SRC_PP_CONFIG_PARAM_BYTES_PER_SAMPLE:
         *(WORD32 *) pv_value = p_src_state->pcm_width_bytes;
         break;
@@ -104,7 +104,7 @@ static inline XA_ERRORCODE xa_src_pp_get_config_param(xa_src_pp_t *p_src_state, 
         break;
     }
 #endif //PACK_WS_DUMMY
-    
+
     return XA_NO_ERROR;
 }
 
@@ -141,9 +141,9 @@ static inline XA_ERRORCODE xa_src_pp_set_config_param(xa_src_pp_t *p_src_state, 
         }
     }
 #endif //PACK_WS_DUMMY
-    
+
     /* ...pass to library */
-    return xa_src_pp(handle, XA_API_CMD_SET_CONFIG_PARAM, i_idx, pv_value);       
+    return xa_src_pp(handle, XA_API_CMD_SET_CONFIG_PARAM, i_idx, pv_value);
 }
 
 /*******************************************************************************
@@ -158,7 +158,7 @@ XA_ERRORCODE xa_src_pp_fx (xa_codec_handle_t p_xa_module_hdl, WORD32 i_cmd, WORD
 #endif
     xa_src_pp_t *p_src_state;
     xa_codec_handle_t p_xa_module_obj;
- 
+
     p_src_state = (xa_src_pp_t *) p_xa_module_hdl;
 
     if (p_xa_module_hdl == NULL)
@@ -177,14 +177,14 @@ XA_ERRORCODE xa_src_pp_fx (xa_codec_handle_t p_xa_module_hdl, WORD32 i_cmd, WORD
 
     if (i_cmd == XA_API_CMD_GET_CURIDX_INPUT_BUF)
     {
-        *(WORD32 *) pv_value = p_src_state->consumed_bytes;  
+        *(WORD32 *) pv_value = p_src_state->consumed_bytes;
         return XA_NO_ERROR;
     }
-   
+
     if (i_cmd == XA_API_CMD_SET_INPUT_BYTES)
     {
         WORD32 insize = *(WORD32 *) pv_value;
-        
+
         p_src_state->in_bytes = insize;
 
         insize = insize/p_src_state->in_channels;
@@ -214,7 +214,7 @@ XA_ERRORCODE xa_src_pp_fx (xa_codec_handle_t p_xa_module_hdl, WORD32 i_cmd, WORD
 
     {
         if (i_cmd == XA_API_CMD_INIT && i_idx == XA_CMD_TYPE_INIT_API_PRE_CONFIG_PARAMS)
-            memset(p_src_state, 0, sizeof(xa_src_pp_t));             
+            memset(p_src_state, 0, sizeof(xa_src_pp_t));
 
         if (i_cmd == XA_API_CMD_SET_MEM_PTR)
         {
@@ -231,9 +231,9 @@ XA_ERRORCODE xa_src_pp_fx (xa_codec_handle_t p_xa_module_hdl, WORD32 i_cmd, WORD
             xa_src_pp(p_xa_module_obj, XA_API_CMD_SET_CONFIG_PARAM, XA_SRC_PP_CONFIG_PARAM_SET_OUTPUT_BUF_PTR, p_src_state->p_outbuf);
         }
 #endif //PACK_WS_DUMMY
-       
-        if (p_src_state != NULL) 
-        { 
+
+        if (p_src_state != NULL)
+        {
             if ((p_src_state->input_over == 1) && (p_src_state->in_bytes == 0))
                 xa_src_pp(p_xa_module_obj, XA_API_CMD_INPUT_OVER, 0, NULL);
         }
@@ -269,15 +269,15 @@ XA_ERRORCODE xa_src_pp_fx (xa_codec_handle_t p_xa_module_hdl, WORD32 i_cmd, WORD
 
         if (i_cmd == XA_API_CMD_GET_API_SIZE)
         {
-            *(WORD32 *) pv_value += (sizeof(xa_src_pp_t) + 7);     
+            *(WORD32 *) pv_value += (sizeof(xa_src_pp_t) + 7);
         }
 
         if((i_cmd == XA_API_CMD_SET_MEM_PTR) && (i_idx == XA_MEMTYPE_SCRATCH) && (ret == XA_NO_ERROR))
         {
             if(p_src_state->p_scratch_buf && ((unsigned int)p_src_state->p_scratch_buf != (unsigned int)pv_value))
             {
-                /* ...necessary for the new scratch pointer changed durig run-time can be propagated 
-                 * into the library, else previous scratch pointer will be used which can lead to 
+                /* ...necessary for the new scratch pointer changed durig run-time can be propagated
+                 * into the library, else previous scratch pointer will be used which can lead to
                  * undesired side effects. */
                 ret = xa_src_pp(p_xa_module_obj, XA_API_CMD_EXECUTE, XA_CMD_TYPE_DO_RUNTIME_INIT, NULL);
             }

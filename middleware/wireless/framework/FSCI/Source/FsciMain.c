@@ -117,7 +117,7 @@ gFsciStatus_t FSCI_Monitor(opGroup_t opGroup, void *pData, void *param, uint32_t
 {
     gFsciStatus_t status = gFsciSuccess_c;
 #if gFsciIncluded_c
-    gFsciOpGroup_t *p;
+    gFsciOpGroup_t *p = NULL;
 
     /* Skip if the request originated in FSCI */
     if (mFsciSrcInterface == fsciInterface)
@@ -126,7 +126,7 @@ gFsciStatus_t FSCI_Monitor(opGroup_t opGroup, void *pData, void *param, uint32_t
     }
     else
     {
-        /* Search for the registered calback function */
+        /* Search for the registered callback function */
         p = FSCI_GetReqOpGroup(opGroup, (uint8_t)fsciInterface);
 
         if (NULL == p) /* The OpGroup was not found */
@@ -215,7 +215,7 @@ gFsciStatus_t FSCI_RegisterOpGroup(
 {
     gFsciStatus_t status = gFsciSuccess_c;
 #if gFsciIncluded_c
-    if ((FSCI_GetReqOpGroup(opGroup, (uint8_t)fsciInterface) != NULL) || (gNumberOfOG > gFsciMaxOpGroups_c) ||
+    if ((FSCI_GetReqOpGroup(opGroup, (uint8_t)fsciInterface) != NULL) || (gNumberOfOG >= gFsciMaxOpGroups_c) ||
         (fsciInterface >= (uint32_t)gFsciMaxInterfaces_c))
     {
         status = gFsciError_c;

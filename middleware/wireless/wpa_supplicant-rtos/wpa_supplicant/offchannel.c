@@ -10,7 +10,7 @@
 #include "includes.h"
 
 #ifdef CONFIG_OFFCHANNEL
-#include "common.h"
+#include "utils/common.h"
 #include "utils/eloop.h"
 #include "wpa_supplicant_i.h"
 #include "p2p_supplicant.h"

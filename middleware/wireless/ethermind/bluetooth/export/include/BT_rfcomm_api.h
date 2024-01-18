@@ -203,7 +203,7 @@ typedef struct _RFCOMM_HANDLE
     API_RESULT (* notify_cb)
                (
                    UCHAR                     event_type,  /* Event Identifier */
-                   struct _RFCOMM_HANDLE *    handle,      /* RFCOMM Handle */
+                   struct _RFCOMM_HANDLE    *handle,      /* RFCOMM Handle */
                    UINT16                    result,      /* Result/Response */
                    UCHAR *                   data,        /* Returned Data */
                    UINT16                    datalen      /* Returned Data Length */
@@ -926,7 +926,7 @@ API_RESULT BT_rfcomm_send_pn
  *        be set to size of RFCOMM_RPN. If an RPN Request had been sent to the
  *        peer, the data parameter holds the current port settings of the peer
  *        device for the RFCOMM DLC. If an RPN Command had been sent to the peer,
- *        the data parameter holds the result and port settings that the peer has
+ *        the data parameter holds the resultant port settings that the peer has
  *        accepted or rejected (for more information see description of
  *        RFCOMM_RPN data type).
  */

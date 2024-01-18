@@ -8,7 +8,7 @@
 
 #include "includes.h"
 
-#include "common.h"
+#include "utils/common.h"
 #include "defs.h"
 #include "wpa_common.h"
 #include "drivers/driver.h"

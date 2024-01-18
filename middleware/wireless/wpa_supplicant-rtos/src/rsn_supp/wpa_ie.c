@@ -8,7 +8,7 @@
 
 #include "includes.h"
 
-#include "common.h"
+#include "utils/common.h"
 #include "wpa.h"
 #include "pmksa_cache.h"
 #include "common/ieee802_11_defs.h"

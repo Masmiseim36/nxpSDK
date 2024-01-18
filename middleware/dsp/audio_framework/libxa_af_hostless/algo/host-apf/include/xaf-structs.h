@@ -127,7 +127,7 @@ struct xaf_comp {
 
     xaf_comp_state  comp_state;
 
-    void           *comp_ptr; 
+    void           *comp_ptr;
 
     xf_handle_t     handle;
 
@@ -139,7 +139,7 @@ struct xaf_comp {
 typedef struct xaf_adev_s {
 
     xaf_node_chain_t comp_chain;
-    
+
 #ifndef XA_DISABLE_EVENT
     xaf_node_chain_t event_chain;
 #endif
@@ -148,8 +148,8 @@ typedef struct xaf_adev_s {
 
     void *adev_ptr;
     void *p_apMem;
-    void *p_dspLocalBuff;
-    void *p_apSharedMem;
+    void *p_dspLocalBuff[XAF_MEM_ID_MAX];
+    void *p_apSharedMem[XAF_MEM_ID_MAX];
     void *p_dspSharedMem;
 
     xaf_adev_state  adev_state;
@@ -167,7 +167,7 @@ typedef struct xaf_adsp_s {
 
     void *adev_ptr;
     void *p_dspMem;
-    void *p_dspLocalBuff;
+    void *p_dspLocalBuff[XAF_MEM_ID_MAX];
     void *p_dspSharedMem;
     void *xf_g_dsp;
 

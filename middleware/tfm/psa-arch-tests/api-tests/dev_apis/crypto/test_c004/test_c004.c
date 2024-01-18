@@ -1,5 +1,5 @@
 /** @file
- * Copyright (c) 2018-2020, Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2018-2023, Arm Limited or its affiliates. All rights reserved.
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -80,10 +80,14 @@ int32_t test_psa_export_public_key(caller_security_t caller __UNUSED)
 
         /* If failure is expected, continue with the next data set */
         if (check1[i].expected_status != PSA_SUCCESS)
+        {
+            status = val->crypto_function(VAL_CRYPTO_DESTROY_KEY, key);
+            TEST_ASSERT_EQUAL(status, PSA_SUCCESS, TEST_CHECKPOINT_NUM(5));
             continue;
+        }
 
         TEST_ASSERT_EQUAL(expected_data_length, check1[i].expected_data_length,
-                          TEST_CHECKPOINT_NUM(5));
+                          TEST_CHECKPOINT_NUM(6));
 
         /* Check if original key data matches with the exported data */
         if (check1[i].type == PSA_KEY_TYPE_RSA_KEY_PAIR)
@@ -93,7 +97,7 @@ int32_t test_psa_export_public_key(caller_security_t caller __UNUSED)
         else
             data = check1[i].data;
         TEST_ASSERT_MEMCMP(data, check1[i].expected_data, expected_data_length,
-                           TEST_CHECKPOINT_NUM(6));
+                           TEST_CHECKPOINT_NUM(7));
 
         /* Destroy the key handle and check if export key fails */
         status = val->crypto_function(VAL_CRYPTO_DESTROY_KEY, key);

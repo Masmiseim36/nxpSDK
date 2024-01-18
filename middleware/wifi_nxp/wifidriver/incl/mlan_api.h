@@ -30,12 +30,16 @@
 #include "mlan_11n.h"
 #include "mlan_11h.h"
 #include "mlan_11ac.h"
+#ifdef CONFIG_11AX
+#include "mlan_11ax.h"
+#endif
 #include "mlan_11n_aggr.h"
 #include "mlan_sdio.h"
 #include "mlan_11n_rxreorder.h"
 #include "mlan_meas.h"
 #include "mlan_uap.h"
 #include <wifi-debug.h>
+#include <wifi-sdio.h>
 #include "wifi-internal.h"
 #include "mlan_action.h"
 #ifdef CONFIG_11V
@@ -45,6 +49,23 @@
 #include "mlan_11k.h"
 #endif
 /* #define CONFIG_WIFI_DEBUG */
+
+static inline void panic(const char *msg)
+{
+    PRINTF("%s\r\n", msg);
+    assert(0);
+}
+
+/** Wait until a condition becomes true */
+#define ASSERT(cond)                                          \
+    do                                                        \
+    {                                                         \
+        if (!(cond))                                          \
+        {                                                     \
+            PRINTF("ASSERT: %s: %d\r\n", __func__, __LINE__); \
+            panic("Assert failed: Panic!");                   \
+        }                                                     \
+    } while (0)
 
 #ifdef CONFIG_WIFI_DEBUG
 /* #define DEBUG_11N_ASSOC */
@@ -147,6 +168,10 @@ extern mlan_adapter *mlan_adap;
 extern os_rw_lock_t sleep_rwlock;
 
 
+#ifdef CONFIG_WMM
+extern os_semaphore_t txbuf_sem;
+#endif
+
 extern bool sta_ampdu_rx_enable;
 #ifdef DUMP_PACKET_MAC
 void dump_mac_addr(const char *msg, unsigned char *addr);
@@ -181,7 +206,7 @@ bool wmsdk_is_11N_enabled(void);
 void wlan_abort_split_scan(void);
 
 void wlan_scan_process_results(IN mlan_private *pmpriv);
-
+bool wlan_use_non_default_ht_vht_cap(IN BSSDescriptor_t *pbss_desc);
 bool check_for_wpa2_entp_ie(bool *wpa2_entp_IE_exist, const void *element_data, unsigned element_len);
 
 static inline mlan_status wifi_check_bss_entry_wpa2_entp_only(BSSDescriptor_t *pbss_entry,
@@ -232,6 +257,10 @@ int wifi_send_add_wpa3_password(int mode, char *ssid, char *password, unsigned i
 int wifi_send_add_wpa_pmk(int mode, char *ssid, char *bssid, char *pmk, unsigned int len);
 bool wifi_11d_is_channel_allowed(int channel);
 
+#ifdef CONFIG_11AX
+void wifi_request_get_fw_info(mlan_private *priv, mlan_fw_info *fw_info);
+
+#endif
 
 /**
  * Get the string representation of the wlan firmware extended version.
@@ -274,6 +303,9 @@ int wifi_set_key(int bss_index,
                  unsigned seq_len,
                  const uint8_t *mac_addr,
                  unsigned int flags);
+int wifi_set_rekey_info(
+    int bss_index, const t_u8 *kek, size_t kek_len, const t_u8 *kck, size_t kck_len, const t_u8 *replay_ctr);
+
 /**
  * Get User Data from OTP Memory
  *
@@ -328,6 +360,8 @@ wlan_mgmt_pkt *wifi_PrepDefaultMgtMsg(t_u8 sub_type,
                                       mlan_802_11_mac_addr *Bssid,
                                       t_u16 pkt_len);
 
+
+
 int wifi_set_custom_ie(custom_ie *beacon_ies_data,
                        custom_ie *beacon_wps_ies_data,
                        custom_ie *proberesp_ies_data,
@@ -376,6 +410,9 @@ int wrapper_bssdesc_second_set(int bss_index,
 #ifdef CONFIG_11AC
                                bool *pvhtcap_ie_present,
 #endif
+#ifdef CONFIG_11AX
+                               bool *phecap_ie_present,
+#endif
                                bool *wmm_ie_present,
                                uint16_t *band,
                                bool *wps_IE_exist,
@@ -394,7 +431,7 @@ int wrapper_bssdesc_second_set(int bss_index,
                                uint8_t *trans_bssid,
                                int *trans_ssid_len,
                                uint8_t *trans_ssid
-#ifdef CONFIG_MBO
+#ifdef CONFIG_DRIVER_MBO
                                ,
                                bool *mbo_assoc_disallowed
 #endif
@@ -410,10 +447,20 @@ int wifi_request_bgscan(mlan_private *pmpriv);
 int wifi_send_sched_scan_cmd(nxp_wifi_trigger_sched_scan_t *params);
 int wifi_send_stop_sched_scan_cmd(void);
 #endif
-int wifi_set_tol_time(const t_u32 tol_time);
 
 
 
 int wifi_tx_ampdu_prot_mode(tx_ampdu_prot_mode_para *prot_mode, t_u16 action);
+
+
+#ifdef CONFIG_IMD3_CFG
+int wifi_imd3_cfg(t_u8 imd3_value);
+#endif
+
+#ifdef CONFIG_AUTO_RECONNECT
+int wifi_auto_reconnect_enable(wifi_auto_reconnect_config_t auto_reconnect_config);
+int wifi_auto_reconnect_disable(void);
+int wifi_get_auto_reconnect_config(wifi_auto_reconnect_config_t *auto_reconnect_config);
+#endif
 
 #endif /* __MLAN_API_H__ */

@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2022  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2023  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.32 - Graphical user interface for embedded applications **
+** emWin V6.34 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2023-09-03
+SUA period:               2011-08-19 - 2024-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : LISTBOX.h
@@ -102,6 +102,7 @@ typedef WM_HMEM LISTBOX_Handle;
 #define LISTBOX_CF_FIXEDSCROLLMODE   (1 << 4)
 #define LISTBOX_CF_MOTION_H          (1 << 5)
 #define LISTBOX_CF_MOTION_V          (1 << 6)
+#define LISTBOX_CF_USE_COPY          (1 << 7)
 #define LISTBOX_SF_AUTOSCROLLBAR_H   LISTBOX_CF_AUTOSCROLLBAR_H
 #define LISTBOX_SF_AUTOSCROLLBAR_V   LISTBOX_CF_AUTOSCROLLBAR_V
 #define LISTBOX_SF_MULTISEL          LISTBOX_CF_MULTISEL
@@ -157,6 +158,7 @@ void             LISTBOX_AddStringH            (LISTBOX_Handle hObj, WM_HMEM hSt
 void             LISTBOX_Clear                 (LISTBOX_Handle hObj);
 void             LISTBOX_DecSel                (LISTBOX_Handle hObj);
 void             LISTBOX_DeleteItem            (LISTBOX_Handle hObj, unsigned Index);
+void             LISTBOX_EnableCopy            (LISTBOX_Handle hObj, unsigned OnOff);
 void             LISTBOX_EnableMotion          (LISTBOX_Handle hObj, int Flags);
 void             LISTBOX_EnableWrapMode        (LISTBOX_Handle hObj, int OnOff);
 GUI_COLOR        LISTBOX_GetBkColor            (LISTBOX_Handle hObj, unsigned Index);
@@ -200,7 +202,6 @@ void             LISTBOX_SetText               (LISTBOX_Handle hObj, const GUI_C
 void             LISTBOX_SetTextAlign          (LISTBOX_Handle hObj, int Align);
 GUI_COLOR        LISTBOX_SetTextColor          (LISTBOX_Handle hObj, unsigned Index, GUI_COLOR Color);
 int              LISTBOX_SetUserData           (LISTBOX_Handle hObj, const void * pSrc, int NumBytes);
-int              LISTBOX_UpdateScrollers       (LISTBOX_Handle hObj);
 
 /*********************************************************************
 *

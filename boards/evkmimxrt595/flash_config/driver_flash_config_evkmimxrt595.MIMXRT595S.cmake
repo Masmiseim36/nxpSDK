@@ -3,7 +3,7 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-if((CONFIG_BOARD STREQUAL evkmimxrt595) AND CONFIG_USE_driver_iap)
+if(CONFIG_USE_driver_iap)
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/flash_config.c

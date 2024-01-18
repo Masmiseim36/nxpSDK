@@ -39,22 +39,22 @@ typedef struct xf_input_port
 {
     /* ...message queue */
     xf_msg_queue_t          queue;
-    
+
     /* ...internal contiguous buffer to store incoming data */
     void                   *buffer;
 
     /* ...size of internal buffer */
     UWORD32                     length;
-    
+
     /* ...current writing position in the buffer */
     UWORD32                     filled;
-    
+
     /* ...interim pointer to input message buffer */
     void                   *access;
-    
+
     /* ...remaining length of current input message */
     UWORD32                     remaining;
-    
+
     /* ...execution flags */
     UWORD32                     flags;
 
@@ -152,6 +152,9 @@ typedef struct xf_output_port
     /* ...output port flags */
     UWORD32                     flags;
 
+    /* ...output port buffer align in bytes */
+    UWORD32                     align;
+
 }   xf_output_port_t;
 
 /*******************************************************************************
@@ -179,11 +182,14 @@ typedef struct xf_output_port
 /* ...port is being unrouted */
 #define XF_OUTPUT_FLAG_UNROUTING        (1 << 6)
 
+/* ...port is being routed */
+#define XF_OUTPUT_FLAG_ROUTING          (1 << 7)
+
 /* ...base output port flags accessor */
-#define __XF_OUTPUT_FLAGS(flags)        ((flags) & ((1 << 7) - 1))
+#define __XF_OUTPUT_FLAGS(flags)        ((flags) & ((1 << 8) - 1))
 
 /* ...custom output port flag */
-#define __XF_OUTPUT_FLAG(f)             ((f) << 7)
+#define __XF_OUTPUT_FLAG(f)             ((f) << 8)
 
 /*******************************************************************************
  * Helpers
@@ -236,7 +242,7 @@ static inline int xf_output_port_flushing(xf_output_port_t *port)
  ******************************************************************************/
 
 /* ...initialize input port structure */
-extern int  xf_input_port_init(xf_input_port_t *port, UWORD32 size, UWORD32 align, UWORD32 core);
+extern int  xf_input_port_init(xf_input_port_t *port, UWORD32 size, UWORD32 align, UWORD32 core, UWORD32 mem_pool_type);
 
 /* ...put message into input port queue */
 extern int  xf_input_port_put(xf_input_port_t *port, xf_message_t *m);
@@ -257,7 +263,7 @@ extern void xf_input_port_control_save(xf_input_port_t *port, xf_message_t *m);
 extern void xf_input_port_purge_done(xf_input_port_t *port);
 
 /* ...destroy input port data */
-extern void xf_input_port_destroy(xf_input_port_t *port, UWORD32 core);
+extern void xf_input_port_destroy(xf_input_port_t *port, UWORD32 core, UWORD32 mem_pool_type);
 
 /*******************************************************************************
  * Output port API
@@ -273,16 +279,16 @@ extern int  xf_output_port_put(xf_output_port_t *port, xf_message_t *m);
 extern void * xf_output_port_data(xf_output_port_t *port);
 
 /* ...route output port */
-extern int xf_output_port_route(xf_output_port_t *port, xf_msg_id_dtype id, UWORD32 n, UWORD32 length, UWORD32 align);
+extern int xf_output_port_route(xf_output_port_t *port, xf_msg_id_dtype id, UWORD32 n, UWORD32 length, UWORD32 align, UWORD32 mem_pool_type);
 
 /* ...unroute output port */
-extern void xf_output_port_unroute(xf_output_port_t *port);
+extern void xf_output_port_unroute(xf_output_port_t *port, UWORD32 mem_pool_type);
 
 /* ...start output port unrouting sequence */
 extern void xf_output_port_unroute_start(xf_output_port_t *port, xf_message_t *m);
 
 /* ...complete port unrouting sequence */
-extern void xf_output_port_unroute_done(xf_output_port_t *port);
+extern void xf_output_port_unroute_done(xf_output_port_t *port, UWORD32 mem_pool_type);
 
 /* ...produce output message marking amount of bytes produced */
 extern int  xf_output_port_produce(xf_output_port_t *port, UWORD32 n);
@@ -297,11 +303,13 @@ extern int xf_output_port_flush(xf_output_port_t *port, UWORD32 opcode);
 extern void xf_output_port_flush_done(xf_output_port_t *port);
 
 /* ...destroy output port data */
-extern void xf_output_port_destroy(xf_output_port_t *port, UWORD32 core);
+extern void xf_output_port_destroy(xf_output_port_t *port, UWORD32 core, UWORD32 mem_pool_type);
 
+/* ...allocate connect buffers on routed output port. */
+extern int xf_output_port_route_alloc(xf_output_port_t *port, UWORD32 length, UWORD32 mem_pool_type);
 
 /*******************************************************************************
- * Port BITMASK validation macro 
+ * Port BITMASK validation macro
  ******************************************************************************/
 
 #define XF_CHK_PORT_MASK(mask, idx) ((mask) & (1 << (idx)))

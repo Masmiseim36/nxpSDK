@@ -330,10 +330,11 @@ static RdspStatus VoiceSeeker_Initialize(voice_seeker_t *d)
      * Retrieve VoiceSeekerLight version and configuration
      */
     rdsp_voiceseekerlight_ver_struct_t vsl_version;
-    VoiceSeekerLight_GetLibVersion(&vsl, &vsl_version.major, &vsl_version.minor, &vsl_version.patch);
-    DSP_PRINTF("[DSP VoiceSeeker] VoiceSeekerLight_GetLibVersion: v%i.%i.%i\n", vsl_version.major, vsl_version.minor, vsl_version.patch);
+    VoiceSeekerLight_GetLibVersion(&vsl, &vsl_version);
+    DSP_PRINTF("[DSP VoiceSeeker] VoiceSeekerLight_GetLibVersion: v%i.%i.%i\r\n", vsl_version.major, vsl_version.minor, vsl_version.patch);
 
-    VoiceSeekerLight_GetConfig(&vsl, &vsl_config);
+    rdsp_voiceseekerlight_config_t vsl_config_info;
+    VoiceSeekerLight_GetConfig(&vsl, &vsl_config_info);
 
     // Unpack configuration
     framesize_in = vsl_constants.framesize_in;

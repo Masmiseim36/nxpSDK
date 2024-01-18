@@ -11,7 +11,7 @@
 #include <math.h>
 
 #include "utils/common.h"
-#include "utils/wlist.h"
+#include "utils/dl_list.h"
 #include "common/ieee802_11_defs.h"
 #include "common/hw_features_common.h"
 #include "common/wpa_ctrl.h"

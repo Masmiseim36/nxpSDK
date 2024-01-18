@@ -2102,6 +2102,7 @@ int mbedtls_aes_crypt_ctr(mbedtls_aes_context *ctx,
 
 #if defined(MBEDTLS_CCM_C)
 
+#if defined(MBEDTLS_CCM_ALT)
 #include "mbedtls/ccm.h"
 
 /*
@@ -2419,7 +2420,9 @@ int mbedtls_ccm_auth_decrypt(mbedtls_ccm_context *ctx,
                           actTag,
                           tag_len);
 }
-#endif /* CCM */
+
+#endif /* MBEDTLS_CCM_ALT */
+#endif /* MBEDTLS_CCM_C */
 
 #endif /* MBEDTLS_FREESCALE_HASHCRYPT_AES */
 #endif /* MBEDTLS_AES_ALT */

@@ -23,12 +23,14 @@
 #ifndef __XAF_MEM_H__
 #define __XAF_MEM_H__
 
+#define AUDIO_COMP_FAST_BUF_SIZE    (512 << 10)
+#define FRMWK_APP_IF_BUF_SIZE       (256 << 10)
 
 typedef struct {
-    int persi_mem_dev;
-    int num_malloc_dev;
-    int persi_mem_comp;
-    int num_malloc_comp;
+    int persi_mem_dev[XAF_MEM_ID_MAX];
+    int num_malloc_dev[XAF_MEM_ID_MAX];
+    int persi_mem_comp[XAF_MEM_ID_MAX];
+    int num_malloc_comp[XAF_MEM_ID_MAX];
 }mem_obj_t;
 
 

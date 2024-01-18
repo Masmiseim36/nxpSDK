@@ -8,7 +8,9 @@
 
 #include "includes.h"
 
-#include "common.h"
+#ifdef CONFIG_EAP_PEAP
+
+#include "utils/common.h"
 #include "crypto/sha1.h"
 #include "crypto/tls.h"
 #include "eap_common/eap_tlv_common.h"
@@ -1372,3 +1374,5 @@ int eap_peer_peap_register(void)
 
 	return eap_peer_method_register(eap);
 }
+
+#endif /* CONFIG_EAP_PEAP */

@@ -51,7 +51,7 @@
 /** L2CAP SDU Header Length for LE Information Frame used in CBFC Mode */
 #define L2CAP_CREDIT_MODE_SDU_HDR_LEN                   2U
 
-/** L2CAP Header Length for LE Informaton Frame used in CBFC Mode */
+/** L2CAP Header Length for LE Information Frame used in CBFC Mode */
 #define L2CAP_CREDIT_MODE_HDR_LEN                       \
         (L2CAP_HDR_LEN + L2CAP_CREDIT_MODE_SDU_HDR_LEN)
 #endif /* ((defined L2CAP_SUPPORT_CBFC_MODE) || (defined L2CAP_SUPPORT_ECBFC_MODE)) */
@@ -61,7 +61,7 @@
 /** L2CAP SDU Header Length for LE Information Frame used in ECBFC Mode */
 #define L2CAP_ECBFC_SDU_HDR_LEN                         2U
 
-/** L2CAP Header Length for LE Informaton Frame used in ECBFC Mode */
+/** L2CAP Header Length for LE Information Frame used in ECBFC Mode */
 #define L2CAP_ECBFC_HDR_LEN                       \
         (L2CAP_HDR_LEN + L2CAP_ECBFC_SDU_HDR_LEN)
 
@@ -469,7 +469,7 @@ typedef struct
     UINT16   monitor_timeout;
 
     /**
-     *  Maximum size of paylod data L2CAP entity is
+     *  Maximum size of payload data L2CAP entity is
      *  capable of accepting
      */
     UINT16   mps;
@@ -601,7 +601,7 @@ typedef struct
 
    /**
     *  If both L2CAP_HAVE_PING_INFO_SUPPORT and L2CAP_TX_COMPLETE_CALLBACK
-    *  are not defined compiler will generate warnings due to the empty srtucure.
+    *  are not defined compiler will generate warnings due to the empty structure.
     * To avoid this a dummy variable is declared, which serves no purpose.
     */
    UCHAR dummy;
@@ -751,7 +751,7 @@ typedef struct psm_struct_cbfc
      *                indicates an error condition
      *                (e.g. peer device violating credit flow, or MTU size limit)
      *     3. Buffer Pointer: Data/payload received from the peer device.
-     *     4. Buffer Length: Receieved data/payload length.
+     *     4. Buffer Length: Received data/payload length.
      */
     API_RESULT (* l2ca_data_read_cb)(UINT16 lcid, UINT16 result, UCHAR *data, UINT16 datalen);
 
@@ -811,7 +811,7 @@ typedef struct psm_struct_cbfc
 #ifdef L2CAP_SUPPORT_ECBFC_MODE
 /**
  *  The structure representing the Connection Parameter for
- *  L2CAP Ehnaced Credit Based Flow Control Mode.
+ *  L2CAP Enhanced Credit Based Flow Control Mode.
  */
 typedef struct l2cap_ecbfc_connect_param
 {
@@ -864,7 +864,7 @@ typedef struct l2cap_ecbfc_connect_param
 
 /**
  *  The structure representing the Reconfiguration Parameter for
- *  L2CAP Ehnaced Credit Based Flow Control Mode.
+ *  L2CAP Enhanced Credit Based Flow Control Mode.
  */
 typedef struct l2cap_ecbfc_reconfig_param
 {
@@ -994,7 +994,7 @@ typedef struct psm_struct_ecbfc
      *                indicates an error condition
      *                (e.g. peer device violating credit flow, or MTU size limit)
      *     3. Buffer Pointer: Data/payload received from the peer device.
-     *     4. Buffer Length: Receieved data/payload length.
+     *     4. Buffer Length: Received data/payload length.
      */
     API_RESULT (* l2ca_data_read_cb)(UINT16 lcid, UINT16 result, UCHAR * data, UINT16 datalen);
 
@@ -1177,7 +1177,7 @@ void em_l2cap_shutdown (void);
  *
  *  \par Description:
  *       This function is the Bluetooth-ON handler for L2CAP module, and it
- *       performs bluetooth specific initializations for the L2CAP module.
+ *       performs Bluetooth specific initializations for the L2CAP module.
  */
 void l2cap_bt_init (void);
 /**
@@ -1185,7 +1185,7 @@ void l2cap_bt_init (void);
  *
  *  \par Description:
  *       This function is the Bluetooth-OFF handler for L2CAP module, and it
- *       performs bluetooth specific shutdown for the L2CAP module.
+ *       performs Bluetooth specific shutdown for the L2CAP module.
  */
 void l2cap_bt_shutdown ( void );
 #else
@@ -1217,7 +1217,7 @@ void l2cap_bt_shutdown ( void );
  *  \return None
  *
  *  \note
- *  It is adviced that the Upper Layers call this API
+ *  It is advised that the Upper Layers call this API
  *  prior to registration of the PSM to initialize
  *  unused (optional) L2CA Callbacks to NULL.
  */
@@ -1239,7 +1239,7 @@ void l2cap_init_psm
  *
  *  \param [in] l2cap_psm
  *         Pointer to the L2CAP_PSM structure, allocated by the upper
- *         layer prior to calling this API. It is adviced that the upper
+ *         layer prior to calling this API. It is advised that the upper
  *         layer use l2cap_init_psm() API to initialize the L2CAP_PSM
  *         structure, to set NULL for the optional L2CA callbacks. All
  *         mandatory L2CA callbacks must be populated
@@ -1475,9 +1475,9 @@ API_RESULT l2cap_lp_data_read
  *       Active or Piconet Broadcast when sending Connectionless Group
  *       Data.
  *
- *  \param handle (IN)
+ *  \param [in] handle
  *         LMP Handle of the remote device.
- *  \param mode (IN)
+ *  \param [in] mode
  *         Current Mode of the ACL Connection to Device corresponding
  *         to BD_ADDR
  *
@@ -1500,9 +1500,9 @@ API_RESULT l2cap_lp_mode_change_ind
  *  of LMP, so that L2CAP can perform fragmentation of L2CAP PDUs before
  *  they are transmitted to LMP.
  *
- *  \param lmp_packet_size (IN)
+ *  \param [in] lmp_packet_size
  *         Maximum LMP Fragment size
- *  \param lmp_max_packets (IN)
+ *  \param [in] lmp_max_packets
  *         Number of LMP Fragments that can be outstanding
  *
  *  \return None
@@ -2176,7 +2176,7 @@ API_RESULT l2ca_group_disable_clt ( /* IN */ UINT16 psm);
  *  This API allows upper layers or applications to configure the Timeout
  *  for L2CAP Configuration Timer.
  *
- *  \param seconds (IN)
+ *  \param [in] seconds
  *         Timeout value in seconds for L2CAP Configuration Timer
  *
  *  \return API_RESULT:
@@ -2655,7 +2655,7 @@ API_RESULT l2ca_cbfc_send_flow_control_credit
  *     For subsequent LE-frames, 'n' = L
  *
  *  There are two ways 'buffer' and 'buffer_len' can be passed to this interface,
- *  and that dependts on if 'L2CAP_ALLOC_FOR_CBFC_SDU' feature flag is defined
+ *  and that dependents on if 'L2CAP_ALLOC_FOR_CBFC_SDU' feature flag is defined
  *  or not.
  *
  *  If 'L2CAP_ALLOC_FOR_CBFC_SDU' feature flag is defined:
@@ -2671,20 +2671,20 @@ API_RESULT l2ca_cbfc_send_flow_control_credit
  *  If 'L2CAP_ALLOC_FOR_CBFC_SDU' feature flag is not defined:
  *  - 'buffer' shall have additional 6 Octets of memory for L2CAP header,
  *    and have L2CAP SDU Length field and Information Payload filled.
- *    L2CAP will costruct the remaining Basic L2CAP Header fields,
+ *    L2CAP will construct the remaining Basic L2CAP Header fields,
  *    in the 'buffer' provided by the caller.
  *  - 'buffer_len' shall contain the length 'L2CAP SDU Length' field
  *    in addition to the length of Information Payload (i.e., all the octets
  *    filled by the caller).
  *  - L2CAP will assume the caller has provided an allocate memory for
  *    the complete LE-frame. L2CAP will frame the Basic L2CAP Header in the
- *    provied buffer. L2CAP will free the application 'buffer' once the
+ *    provided buffer. L2CAP will free the application 'buffer' once the
  *    transmission of SDU is complete.
  *  - If the 'buffer' is allocated, application shall not free the memory
  *    on return of this API. Application shall free the buffer in the handling
  *    of corresponding Tx complete callback l2ca_data_write_cb().
  *
- *  In general, for memory constaint devices, 'L2CAP_ALLOC_FOR_CBFC_SDU'
+ *  In general, for memory constraint devices, 'L2CAP_ALLOC_FOR_CBFC_SDU'
  *  should not be defined.
  *  This is to avoid allocation of buffer for L2CAP SDU in the L2CAP implementation
  *  and also to avoid copying the data from application buffer to L2CAP buffer
@@ -2954,7 +2954,7 @@ API_RESULT l2ca_ecbfc_reconfig_rsp
  *     For subsequent LE-frames, 'n' = L
  *
  *  There are two ways 'buffer' and 'buffer_len' can be passed to this interface,
- *  and that dependts on if 'L2CAP_ALLOC_FOR_CBFC_SDU' feature flag is defined
+ *  and that dependents on if 'L2CAP_ALLOC_FOR_CBFC_SDU' feature flag is defined
  *  or not.
  *
  *  If 'L2CAP_ALLOC_FOR_CBFC_SDU' feature flag is defined:
@@ -2970,20 +2970,20 @@ API_RESULT l2ca_ecbfc_reconfig_rsp
  *  If 'L2CAP_ALLOC_FOR_CBFC_SDU' feature flag is not defined:
  *  - 'buffer' shall have additional 6 Octets of memory for L2CAP header,
  *    and have L2CAP SDU Length field and Information Payload filled.
- *    L2CAP will costruct the remaining Basic L2CAP Header fields,
+ *    L2CAP will construct the remaining Basic L2CAP Header fields,
  *    in the 'buffer' provided by the caller.
  *  - 'buffer_len' shall contain the length 'L2CAP SDU Length' field
  *    in addition to the length of Information Payload (i.e., all the octets
  *    filled by the caller).
  *  - L2CAP will assume the caller has provided an allocate memory for
  *    the complete LE-frame. L2CAP will frame the Basic L2CAP Header in the
- *    provied buffer. L2CAP will free the application 'buffer' once the
+ *    provided buffer. L2CAP will free the application 'buffer' once the
  *    transmission of SDU is complete.
  *  - If the 'buffer' is allocated, application shall not free the memory
  *    on return of this API. Application shall free the buffer in the handling
  *    of corresponding Tx complete callback l2ca_data_write_cb().
  *
- *  In general, for memory constaint devices, 'L2CAP_ALLOC_FOR_CBFC_SDU'
+ *  In general, for memory constraint devices, 'L2CAP_ALLOC_FOR_CBFC_SDU'
  *  should not be defined.
  *  This is to avoid allocation of buffer for L2CAP SDU in the L2CAP implementation
  *  and also to avoid copying the data from application buffer to L2CAP buffer
@@ -3017,7 +3017,7 @@ API_RESULT l2ca_ecbfc_reconfig_rsp
  *                0 - process the packet as usual
  *
  *  Currently, no packet drop is implemented for received I/S-frames,
- *  though l2cap_test_packet_drop_rx() is called - so, the appl can
+ *  though l2cap_test_packet_drop_rx() is called - so, the application can
  *  print what is being received, but returning 1 from this function
  *  will be ignored.
  *

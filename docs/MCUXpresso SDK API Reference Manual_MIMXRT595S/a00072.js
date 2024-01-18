@@ -1,23 +1,28 @@
 var a00072 =
 [
-    [ "usart_dma_handle_t", "a00072.html#a00310", [
-      [ "base", "a00072.html#ae9aae3e4298a725621990e5dcf91dc17", null ],
-      [ "callback", "a00072.html#abcd58fdcb247711f816f281da46e95e2", null ],
-      [ "userData", "a00072.html#a488190d1dcc91ef5878192e2fb3d4c4c", null ],
-      [ "rxDataSizeAll", "a00072.html#a1e1b9e64b9515c58bee18b74efccc9db", null ],
-      [ "txDataSizeAll", "a00072.html#aa370ed2abb5078e9d0f076e9cb626f3f", null ],
-      [ "txDmaHandle", "a00072.html#a5c666430a9a98cead94c37ae8b29f0c6", null ],
-      [ "rxDmaHandle", "a00072.html#a58634a39c6435f4e48e0f5ac0048dab4", null ],
-      [ "txState", "a00072.html#aa3e21045d269a136733d156e00a65c2a", null ],
-      [ "rxState", "a00072.html#a4685f9bce4df0ca019c01a543f2ef832", null ]
+    [ "rtos_usart_config", "a00072.html#a00487", [
+      [ "base", "a00072.html#ac2c11e2f563e88fd7235fd1c04c43695", null ],
+      [ "srcclk", "a00072.html#a7e5bade020ab0937c336700835e0b534", null ],
+      [ "baudrate", "a00072.html#add54d5367186b402624be17d78b85f5c", null ],
+      [ "parity", "a00072.html#a07bf211da1c7475ae952bc3c92d668fe", null ],
+      [ "stopbits", "a00072.html#acd3500c39b73d6acbbbf5f4192376dc9", null ],
+      [ "buffer", "a00072.html#a7ee13e3eb1fe35fc47e6732632305038", null ],
+      [ "buffer_size", "a00072.html#a0a13bc07966a8b84553e6010d4ea0e34", null ]
     ] ],
-    [ "FSL_USART_DMA_DRIVER_VERSION", "a00072.html#ga4d50b0d6519186dc79dbf56a0ef36c30", null ],
-    [ "usart_dma_transfer_callback_t", "a00072.html#ga60203b058d1ee4f2467d0c10e152ecb1", null ],
-    [ "USART_TransferCreateHandleDMA", "a00072.html#ga3108003aa0b8bd3ec34b8235041d1466", null ],
-    [ "USART_TransferSendDMA", "a00072.html#ga767c45246b3981930e391837bf627e68", null ],
-    [ "USART_TransferReceiveDMA", "a00072.html#ga4b68b4d54821ef43a671dabf432a48ae", null ],
-    [ "USART_TransferAbortSendDMA", "a00072.html#ga9e75a5b85d21c16fe3fb1c2acbecfe83", null ],
-    [ "USART_TransferAbortReceiveDMA", "a00072.html#gad31eba091fa591d44443f218c7da1492", null ],
-    [ "USART_TransferGetReceiveCountDMA", "a00072.html#ga350224781deacfd5e1f95da262381858", null ],
-    [ "USART_TransferGetSendCountDMA", "a00072.html#ga836de4ddc9a103584f47cd31c78f9277", null ]
+    [ "_usart_rtos_handle", "a00072.html#a00456", [
+      [ "base", "a00072.html#adc027d47fa85140e7b3db5dbb40966dc", null ],
+      [ "txTransfer", "a00072.html#a91e74bc39d7b39179e7527bce1df602f", null ],
+      [ "rxTransfer", "a00072.html#aca6f85a82e4bb8b599c7091fc7144c2b", null ],
+      [ "rxSemaphore", "a00072.html#aa7ac308760bf10b54fa30bd0385843a2", null ],
+      [ "txSemaphore", "a00072.html#a6f90db802f6c60b1ace2719106332f61", null ],
+      [ "rxEvent", "a00072.html#abe3985cdaa339dcaf71d076962418f50", null ],
+      [ "txEvent", "a00072.html#add5efe27cd4ea2dca0d9c41cbb80789e", null ],
+      [ "t_state", "a00072.html#adab1b63867f17750ac02bc4f1bda8ea7", null ]
+    ] ],
+    [ "FSL_USART_FREERTOS_DRIVER_VERSION", "a00072.html#ga76b62468480f39084a7b0c5785e6a9f2", null ],
+    [ "usart_rtos_handle_t", "a00072.html#gafe53adee4959375e828ab8f7d0c4ace3", null ],
+    [ "USART_RTOS_Init", "a00072.html#ga304a1b0f3f224c3fa97043015a632aa6", null ],
+    [ "USART_RTOS_Deinit", "a00072.html#ga053c811eb6768cd6949e8e7126f6527a", null ],
+    [ "USART_RTOS_Send", "a00072.html#gac5ba10a31fbee50135f110fc126db666", null ],
+    [ "USART_RTOS_Receive", "a00072.html#gaa74ca6b91bf6592492b2777efc52fa7e", null ]
 ];

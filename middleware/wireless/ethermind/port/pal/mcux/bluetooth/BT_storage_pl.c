@@ -33,10 +33,7 @@ DECL_STATIC lfs_t * lfs;
 DECL_STATIC lfs_file_t * fp[STORAGE_NUM_TYPES];
 DECL_STATIC lfs_file_t lfs_file[STORAGE_NUM_TYPES];
 
-#endif /* CONFIG_BT_SETTINGS */
-
 /* Storage File Name array */
-#if ((defined(CONFIG_BT_SETTINGS)) && (CONFIG_BT_SETTINGS))
 DECL_STATIC UCHAR * fn[STORAGE_NUM_TYPES] =
 {
     (UCHAR *)"btps.db",
@@ -44,19 +41,6 @@ DECL_STATIC UCHAR * fn[STORAGE_NUM_TYPES] =
     (UCHAR *)"btrn.db",
 #endif /* STORAGE_RETENTION_SUPPORT */
 };
-#endif
-
-#if ((defined(CONFIG_BT_SETTINGS)) && (CONFIG_BT_SETTINGS))
-DECL_STATIC lfs_t * lfs;
-#endif /* CONFIG_BT_SETTINGS */
-
-/* if CONFIG_BT_SETTINGS is not enable, disable STORAGE_IDLE_TASK_SYNC_ENABLE */
-#if !((defined(CONFIG_BT_SETTINGS)) && (CONFIG_BT_SETTINGS))
-#if defined STORAGE_IDLE_TASK_SYNC_ENABLE
-#undef STORAGE_IDLE_TASK_SYNC_ENABLE
-#define STORAGE_IDLE_TASK_SYNC_ENABLE (0)
-#endif
-#endif
 
 #if ((defined STORAGE_IDLE_TASK_SYNC_ENABLE) && (STORAGE_IDLE_TASK_SYNC_ENABLE))
 static OSA_TASK_HANDLE_DEFINE(s_nvmIdleTask);
@@ -70,6 +54,16 @@ static osa_semaphore_handle_t g_nvWriteBack;
 static OSA_SEMAPHORE_HANDLE_DEFINE(g_nvWriteBackHandle);
 static volatile bool g_nvWriteBackState[STORAGE_NUM_TYPES];
 #endif /* STORAGE_IDLE_TASK_SYNC_ENABLE */
+
+#endif /* CONFIG_BT_SETTINGS */
+
+/* if CONFIG_BT_SETTINGS is not enable, disable STORAGE_IDLE_TASK_SYNC_ENABLE */
+#if !((defined(CONFIG_BT_SETTINGS)) && (CONFIG_BT_SETTINGS))
+#if defined STORAGE_IDLE_TASK_SYNC_ENABLE
+#undef STORAGE_IDLE_TASK_SYNC_ENABLE
+#define STORAGE_IDLE_TASK_SYNC_ENABLE (0)
+#endif
+#endif
 
 #if ((((defined(CONFIG_BT_SETTINGS)) && (CONFIG_BT_SETTINGS)) &&\
       ((defined STORAGE_IDLE_TASK_SYNC_ENABLE) && (STORAGE_IDLE_TASK_SYNC_ENABLE))) ||\
@@ -107,7 +101,6 @@ static void storage_idle_task(osa_task_param_t arg)
                 {
                     g_nvWriteBackState[i] = false;
 
-#if ((defined(CONFIG_BT_SETTINGS)) && (CONFIG_BT_SETTINGS))
                     err = lfs_file_open (lfs, &lfs_file[i], (CHAR *)fn[i], LFS_O_WRONLY | LFS_O_CREAT);
                     if (err >= 0)
                     {
@@ -115,7 +108,6 @@ static void storage_idle_task(osa_task_param_t arg)
                         assert(err >= 0);
                         (void)lfs_file_close(lfs, &lfs_file[i]);
                     }
-#endif /* CONFIG_BT_SETTINGS */
                 }
             }
         }
@@ -132,7 +124,6 @@ void storage_bt_init_pl (void)
     osa_status_t ret;
 #endif
 
-#if ((defined(CONFIG_BT_SETTINGS)) && (CONFIG_BT_SETTINGS))
     for (i = 0; i < STORAGE_NUM_TYPES; i++)
     {
         fp[i] = NULL;
@@ -141,7 +132,6 @@ void storage_bt_init_pl (void)
     lfs = lfs_pl_init();
 
     assert(NULL != lfs);
-#endif /* CONFIG_BT_SETTINGS */
 
 #if ((defined STORAGE_IDLE_TASK_SYNC_ENABLE) && (STORAGE_IDLE_TASK_SYNC_ENABLE))
     if (NULL == g_nvWriteBack)

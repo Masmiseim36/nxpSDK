@@ -8,6 +8,8 @@
 #ifndef _WORK_QUEUE_H_
 #define _WORK_QUEUE_H_
 
+#include <sys/slist.h>
+
 #include "fsl_os_abstraction.h"
 
 /*! @brief Work queue task priority.
@@ -34,16 +36,7 @@
 #define CONFIG_OS_TICK_INTERVAL 1
 #endif /* CONFIG_OS_TICK_INTERVAL */
 
-#ifndef CONFIG_WORK_QUEUE_MSG_QUEUE_COUNT
-#define CONFIG_WORK_QUEUE_MSG_QUEUE_COUNT 16
-#endif
-
-struct bt_work_queue {
-    osa_msgq_handle_t queue;
-    OSA_MSGQ_HANDLE_DEFINE(queueHandle, CONFIG_WORK_QUEUE_MSG_QUEUE_COUNT, sizeof(void *));
-	osa_task_handle_t thread;
-    OSA_TASK_HANDLE_DEFINE(threadHandle);
-};
+struct bt_work;
 
 typedef enum bt_work_state {
     BT_WORK_STATE_NONE = 0,                    /* NO Work state */
@@ -51,13 +44,11 @@ typedef enum bt_work_state {
     BT_WORK_STATE_DELAY_PENDING = (1 << 1),    /* Work item delay pending state */
 } bt_work_state_t ;
 
-struct bt_work;
-
 typedef void (*bt_work_handler_t)(struct bt_work *work);
 
 struct bt_work
 {
-    void *next;
+    bt_list_node_t node;
     bt_work_handler_t handler;
     uint32_t state;
 };
@@ -66,19 +57,7 @@ struct bt_delayed_work
 {
     struct bt_work work;
     uint32_t timeOut;
-    union
-    {
-        struct bt_work_queue *workQueue;
-        struct bt_delayed_work *next;
-    };
-};
-
-struct bt_delayed_work_queue
-{
-    struct bt_delayed_work* pending;
-    osa_mutex_handle_t mutex;
-    OSA_MUTEX_HANDLE_DEFINE(mutexHandle);
-    uint32_t                tick;
+    void *workQueue;
 };
 
 #define BT_WORK_INITIALIZER(work_handler) \
@@ -92,6 +71,7 @@ struct bt_delayed_work_queue
         BT_WORK_INITIALIZER(work_handler)
 
 int bt_work_queue_init(void);
+void *bt_work_queue_task_handle(void);
 
 int bt_work_init(struct bt_work *work, bt_work_handler_t handler);
 void bt_work_submit(struct bt_work *work);
@@ -118,5 +98,15 @@ int bt_delayed_work_cancel(struct bt_delayed_work *work);
 #define k_work_cancel_delayable bt_delayed_work_cancel
 
 struct k_work_delayable * k_work_delayable_from_work(struct k_work *work);
+
+#define Z_WORK_DELAYABLE_INITIALIZER(work_handler) { \
+	.work = { \
+		.handler = work_handler, \
+	}, \
+}
+
+#define K_WORK_DELAYABLE_DEFINE(work, work_handler) \
+	struct k_work_delayable work \
+	  = Z_WORK_DELAYABLE_INITIALIZER(work_handler)
 
 #endif /* _WORK_QUEUE_H_ */

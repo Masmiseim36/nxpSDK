@@ -5,9 +5,8 @@
  *
  */
 
-/** @file cli.h
- *
- *  @brief CLI module
+/*! \file cli.h
+ * \brief CLI module
  *
  *  \section cli_usage Usage
  *  The CLI module lets you register commands with the CLI interface. Modules
@@ -20,6 +19,9 @@
 #ifndef __CLI_H__
 #define __CLI_H__
 #include <wmtypes.h>
+
+
+#define CONFIG_APP_FRM_CLI_HISTORY
 
 /** Structure for registering CLI commands */
 struct cli_command
@@ -64,6 +66,13 @@ int cli_unregister_command(const struct cli_command *command);
  */
 int cli_init(void);
 
+/** DeInitialize the CLI module
+ *
+ * \return WM_SUCCESS on success
+ * \return error code otherwise.
+ */
+int cli_deinit(void);
+
 /** Stop the CLI thread and carry out the cleanup
  *
  * \return WM_SUCCESS on success
@@ -92,7 +101,7 @@ int cli_register_commands(const struct cli_command *commands, int num_commands);
  */
 int cli_unregister_commands(const struct cli_command *commands, int num_commands);
 
-/* Get a command buffer
+/** Get a command buffer
  *
  * If an external input task wants to use the CLI, it can use
  * cli_get_cmd_buffer() to get a command buffer that it can then
@@ -104,7 +113,7 @@ int cli_unregister_commands(const struct cli_command *commands, int num_commands
  */
 int cli_get_cmd_buffer(char **buff);
 
-/* Submit a command buffer to the CLI
+/** Submit a command buffer to the CLI
  *
  * Sends the command buffer to the CLI for processing.
  *
@@ -114,16 +123,28 @@ int cli_get_cmd_buffer(char **buff);
  */
 int cli_submit_cmd_buffer(char **buff);
 
-/*
+/**
+ * @internal
+ *
  */
 typedef int (*cli_name_val_get)(const char *name, char *value, int max_len);
 
-/*
+/**
+ * @internal
+ *
  */
 typedef int (*cli_name_val_set)(const char *name, const char *value);
+#ifdef CONFIG_APP_FRM_CLI_HISTORY
+/**
+ * @internal
+ *
+ * Hook registration function for cli history functionality
+ */
+int cli_add_history_hook(cli_name_val_get get_cb, cli_name_val_set set_cb);
+#endif /* CONFIG_APP_FRM_CLI_HISTORY */
 
 
-/*
+/**
  * @internal
  *
  * CLI help command to print all registered CLIs

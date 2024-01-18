@@ -4213,15 +4213,26 @@ static u16 owe_process_assoc_req(struct hostapd_data *hapd,
 		prime_len = 66;
 	else
 		return WLAN_STATUS_FINITE_CYCLIC_GROUP_NOT_SUPPORTED;
-
+#if defined(CONFIG_FREERTOS) || defined(CONFIG_ZEPHYR)
+	crypto_ecdh_deinit_owe(sta->owe_ecdh);
+#else
 	crypto_ecdh_deinit(sta->owe_ecdh);
+#endif
+#if defined(CONFIG_FREERTOS) || defined(CONFIG_ZEPHYR)
+	sta->owe_ecdh = crypto_ecdh_init_owe(group);
+#else
 	sta->owe_ecdh = crypto_ecdh_init(group);
+#endif
 	if (!sta->owe_ecdh)
 		return WLAN_STATUS_FINITE_CYCLIC_GROUP_NOT_SUPPORTED;
 	sta->owe_group = group;
-
+#if defined(CONFIG_FREERTOS) || defined(CONFIG_ZEPHYR)
+	secret = crypto_ecdh_set_peerkey_owe(sta->owe_ecdh, 0, owe_dh + 2,
+					 owe_dh_len - 2);
+#else
 	secret = crypto_ecdh_set_peerkey(sta->owe_ecdh, 0, owe_dh + 2,
 					 owe_dh_len - 2);
+#endif
 	secret = wpabuf_zeropad(secret, prime_len);
 	if (!secret) {
 		wpa_printf(MSG_DEBUG, "OWE: Invalid peer DH public key");
@@ -4230,8 +4241,11 @@ static u16 owe_process_assoc_req(struct hostapd_data *hapd,
 	wpa_hexdump_buf_key(MSG_DEBUG, "OWE: DH shared secret", secret);
 
 	/* prk = HKDF-extract(C | A | group, z) */
-
+#if defined(CONFIG_FREERTOS) || defined(CONFIG_ZEPHYR)
+	pub = crypto_ecdh_get_pubkey_owe(sta->owe_ecdh, 0);
+#else
 	pub = crypto_ecdh_get_pubkey(sta->owe_ecdh, 0);
+#endif
 	if (!pub) {
 		wpabuf_clear_free(secret);
 		return WLAN_STATUS_UNSPECIFIED_FAILURE;
@@ -4409,8 +4423,11 @@ u16 owe_process_rsn_ie(struct hostapd_data *hapd,
 
 	if (sta->owe_ecdh) {
 		struct wpabuf *pub;
-
+#if defined(CONFIG_FREERTOS) || defined(CONFIG_ZEPHYR)
+		pub = crypto_ecdh_get_pubkey_owe(sta->owe_ecdh, 0);
+#else
 		pub = crypto_ecdh_get_pubkey(sta->owe_ecdh, 0);
+#endif
 		if (!pub) {
 			status = WLAN_STATUS_UNSPECIFIED_FAILURE;
 			goto end;
@@ -5205,8 +5222,11 @@ rsnxe_done:
 	    wpa_auth_sta_key_mgmt(sta->wpa_sm) == WPA_KEY_MGMT_OWE &&
 	    !wpa_auth_sta_get_pmksa(sta->wpa_sm)) {
 		struct wpabuf *pub;
-
+#if defined(CONFIG_FREERTOS) || defined(CONFIG_ZEPHYR)
+		pub = crypto_ecdh_get_pubkey_owe(sta->owe_ecdh, 0);
+#else
 		pub = crypto_ecdh_get_pubkey(sta->owe_ecdh, 0);
+#endif
 		if (!pub) {
 			res = WLAN_STATUS_UNSPECIFIED_FAILURE;
 			goto done;
@@ -5378,8 +5398,11 @@ u8 * owe_assoc_req_process(struct hostapd_data *hapd, struct sta_info *sta,
 
 	if (sta->owe_ecdh && owe_buf) {
 		struct wpabuf *pub;
-
+#if defined(CONFIG_FREERTOS) || defined(CONFIG_ZEPHYR)
+		pub = crypto_ecdh_get_pubkey_owe(sta->owe_ecdh, 0);
+#else
 		pub = crypto_ecdh_get_pubkey(sta->owe_ecdh, 0);
+#endif
 		if (!pub) {
 			*status = WLAN_STATUS_UNSPECIFIED_FAILURE;
 			return owe_buf;

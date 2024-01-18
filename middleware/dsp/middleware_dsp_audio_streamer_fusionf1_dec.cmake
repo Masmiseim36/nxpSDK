@@ -27,6 +27,12 @@ if((CONFIG_TOOLCHAIN STREQUAL xcc OR CONFIG_TOOLCHAIN STREQUAL xtensa))
       ${CMAKE_CURRENT_LIST_DIR}/codecs/opus/fusionf1/lib/xa_opus_codec.a
       ${CMAKE_CURRENT_LIST_DIR}/codecs/opus/fusionf1/lib/xa_opus_dec.a
       ${CMAKE_CURRENT_LIST_DIR}/codecs/opus/fusionf1/lib/xa_opus_enc.a
+      ${CMAKE_CURRENT_LIST_DIR}/codecs/opus/fusionf1/lib/silk/xa_opus_silk_codec.a
+      ${CMAKE_CURRENT_LIST_DIR}/codecs/opus/fusionf1/lib/silk/xa_opus_silk_dec.a
+      ${CMAKE_CURRENT_LIST_DIR}/codecs/opus/fusionf1/lib/silk/xa_opus_silk_enc.a
+      ${CMAKE_CURRENT_LIST_DIR}/codecs/opus/fusionf1/lib/celt/xa_opus_celt_codec.a
+      ${CMAKE_CURRENT_LIST_DIR}/codecs/opus/fusionf1/lib/celt/xa_opus_celt_dec.a
+      ${CMAKE_CURRENT_LIST_DIR}/codecs/opus/fusionf1/lib/celt/xa_opus_celt_enc.a
       ${CMAKE_CURRENT_LIST_DIR}/codecs/sbc_dec/fusionf1/lib/xa_sbc_dec.a
       ${CMAKE_CURRENT_LIST_DIR}/codecs/sbc_enc/fusionf1/lib/xa_sbc_enc.a
       ${CMAKE_CURRENT_LIST_DIR}/codecs/vorbis_dec/fusionf1/lib/xa_vorbis_dec.a

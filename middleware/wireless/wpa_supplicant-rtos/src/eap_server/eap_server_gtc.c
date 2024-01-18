@@ -8,7 +8,9 @@
 
 #include "includes.h"
 
-#include "common.h"
+#ifdef CONFIG_EAP_GTC
+
+#include "utils/common.h"
 #include "eap_i.h"
 
 struct eap_gtc_data
@@ -226,3 +228,5 @@ int eap_server_gtc_register(void)
 
     return eap_server_method_register(eap);
 }
+
+#endif /* CONFIG_EAP_GTC */

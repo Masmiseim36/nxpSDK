@@ -48,7 +48,8 @@ const struct wpa_driver_ops *const wpa_drivers[] = {
     &wpa_driver_none_ops,
 #endif /* CONFIG_DRIVER_NONE */
 #ifdef CONFIG_ZEPHYR
-    &wpa_driver_zep_ops,
+    &wpa_driver_freertos_ops,
+    // &wpa_driver_zep_ops,
 #endif /* CONFIG_DRIVER_NONE */
 #ifdef CONFIG_FREERTOS
     &wpa_driver_freertos_ops,

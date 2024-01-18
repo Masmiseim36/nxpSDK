@@ -32,12 +32,12 @@
 static bool ieeeps_enabled;
 static bool deepsleepps_enabled;
 
-static void wifi_set_ps_cfg(t_u16 multiple_dtims,
-                            t_u16 bcn_miss_timeout,
-                            t_u16 local_listen_interval,
-                            t_u16 adhoc_wake_period,
-                            t_u16 mode,
-                            t_u16 delay_to_ps)
+void wifi_set_ps_cfg(t_u16 multiple_dtims,
+                     t_u16 bcn_miss_timeout,
+                     t_u16 local_listen_interval,
+                     t_u16 adhoc_wake_period,
+                     t_u16 mode,
+                     t_u16 delay_to_ps)
 {
     pmlan_adapter pmadapter          = ((mlan_private *)mlan_adap->priv[0])->adapter;
     pmadapter->bcn_miss_time_out     = bcn_miss_timeout;
@@ -65,12 +65,16 @@ void wifi_configure_listen_interval(int listen_interval)
     pmadapter->local_listen_interval = (t_u16)listen_interval;
 }
 
+#ifdef CONFIG_HOST_SLEEP
 int wifi_send_hs_cfg_cmd(mlan_bss_type interface, t_u32 ipv4_addr, t_u16 action, t_u32 conditions)
 {
+    pmlan_adapter pmadapter     = ((mlan_private *)mlan_adap->priv[0])->adapter;
     arpfilter_header *arpfilter = NULL;
     filter_entry *entry         = NULL;
     void *pdata_buf             = NULL;
     hs_config_param hs_cfg_obj;
+    t_u8 *tlv                                      = NULL;
+    MrvlIEtypes_MgmtFrameFilter_t *mgmt_filter_tlv = NULL;
 
     (void)wifi_get_command_lock();
 
@@ -106,7 +110,9 @@ int wifi_send_hs_cfg_cmd(mlan_bss_type interface, t_u32 ipv4_addr, t_u16 action,
     arpfilter->type = TLV_TYPE_ARP_FILTER;
     arpfilter->len  = 0;
 
-    if ((ipv4_addr != 0U) && (action == (t_u16)HS_CONFIGURE) && (conditions != (t_u32)(HOST_SLEEP_CFG_CANCEL)))
+    if ((ipv4_addr != 0U) && (action == (t_u16)HS_CONFIGURE) &&
+        (conditions &
+         (WIFI_WAKE_ON_MULTICAST | WIFI_WAKE_ON_ALL_BROADCAST | WIFI_WAKE_ON_UNICAST | WIFI_WAKE_ON_ARP_BROADCAST)))
     {
         entry = (filter_entry *)((uint32_t)arpfilter + sizeof(arpfilter_header));
         if ((conditions & (t_u32)(WIFI_WAKE_ON_MULTICAST)) != 0U)
@@ -153,12 +159,36 @@ int wifi_send_hs_cfg_cmd(mlan_bss_type interface, t_u32 ipv4_addr, t_u16 action,
     {
         /** Do nothing */
     }
+    if (action == (t_u16)HS_CONFIGURE)
+    {
+        tlv = (t_u8 *)((uint32_t)cmd + cmd->size);
+
+        if (pmadapter->mgmt_filter[0].type)
+        {
+            int i = 0;
+            mgmt_frame_filter mgmt_filter[MAX_MGMT_FRAME_FILTER];
+            (void)memset(mgmt_filter, 0, MAX_MGMT_FRAME_FILTER * sizeof(mgmt_frame_filter));
+            mgmt_filter_tlv              = (MrvlIEtypes_MgmtFrameFilter_t *)tlv;
+            mgmt_filter_tlv->header.type = wlan_cpu_to_le16(TLV_TYPE_MGMT_FRAME_WAKEUP);
+            tlv += sizeof(MrvlIEtypesHeader_t);
+            while (i < MAX_MGMT_FRAME_FILTER && pmadapter->mgmt_filter[i].type)
+            {
+                mgmt_filter[i].action     = (t_u8)pmadapter->mgmt_filter[i].action;
+                mgmt_filter[i].type       = (t_u8)pmadapter->mgmt_filter[i].type;
+                mgmt_filter[i].frame_mask = wlan_cpu_to_le32(pmadapter->mgmt_filter[i].frame_mask);
+                i++;
+            }
+            (void)memcpy((t_u8 *)mgmt_filter_tlv->filter, (t_u8 *)mgmt_filter, i * sizeof(mgmt_frame_filter));
+            tlv += i * sizeof(mgmt_frame_filter);
+            mgmt_filter_tlv->header.len = wlan_cpu_to_le16(i * sizeof(mgmt_frame_filter));
+            cmd->size += i * sizeof(mgmt_frame_filter) + sizeof(MrvlIEtypesHeader_t);
+        }
+    }
 
     (void)wifi_wait_for_cmdresp(NULL);
     return (int)status;
 }
 
-#ifdef CONFIG_HOST_SLEEP
 int wifi_cancel_host_sleep(mlan_bss_type interface)
 {
     void *pdata_buf = NULL;
@@ -231,6 +261,13 @@ int wifi_exit_deepsleep_power_save(void)
     return wifi_send_power_save_command(DIS_AUTO_PS, BITMAP_AUTO_DS, MLAN_BSS_TYPE_STA, &idletime);
 }
 
+int wifi_set_power_save_mode(void)
+{
+    t_u32 mode = BLOCK_CMD_IN_PRE_ASLEEP;
+
+    return wifi_send_power_save_command(EXT_PS_PARAM, 0U, MLAN_BSS_TYPE_STA, &mode);
+}
+
 int wifi_uap_ps_inactivity_sleep_enter(mlan_bss_type type,
                                        unsigned int ctrl_bitmap,
                                        unsigned int min_sleep,
@@ -286,8 +323,17 @@ void send_sleep_confirm_command(mlan_bss_type interface)
     if (mlan_adap->ps_state == PS_STATE_PRE_SLEEP)
     {
         mlan_adap->ps_state = PS_STATE_SLEEP_CFM;
+#ifdef CONFIG_WIFI_PS_DEBUG
         wcmdr_d("+");
+#endif
+
+        /* Write mutex is used to avoid the case that, during waiting for sleep confirm cmd response,
+         * wifi_driver_tx task or other tx task might be scheduled and send data to FW */
+        os_mutex_get(&(sleep_rwlock.write_mutex), OS_WAIT_FOREVER);
+
         (void)wifi_wait_for_cmdresp(NULL);
+
+        os_mutex_put(&(sleep_rwlock.write_mutex));
     }
     else
     {
@@ -295,6 +341,7 @@ void send_sleep_confirm_command(mlan_bss_type interface)
     }
 }
 
+#ifdef CONFIG_HOST_SLEEP
 /* fixme: accept HostCmd_DS_COMMAND directly */
 void wifi_process_hs_cfg_resp(t_u8 *cmd_res_buffer)
 {
@@ -303,21 +350,28 @@ void wifi_process_hs_cfg_resp(t_u8 *cmd_res_buffer)
     if (hs_cfg->action == (t_u16)HS_ACTIVATE)
     {
         pwr_d("Host sleep activated");
+        pmadapter->is_hs_configured = MFALSE;
         wlan_update_rxreorder_tbl(pmadapter, MTRUE);
-#ifdef CONFIG_HOST_SLEEP
         wifi_event_completion(WIFI_EVENT_HS_ACTIVATED, WIFI_EVENT_REASON_SUCCESS, NULL);
-#endif
     }
     else
     {
+        if (hs_cfg->params.hs_config.conditions != HOST_SLEEP_CFG_CANCEL)
+        {
+            pmadapter->is_hs_configured = MTRUE;
+        }
         pwr_d("Host sleep configuration done");
     }
 }
+#endif
 
 enum wifi_event_reason wifi_process_ps_enh_response(t_u8 *cmd_res_buffer, t_u16 *ps_event, t_u16 *action)
 {
     enum wifi_event_reason result = WIFI_EVENT_REASON_FAILURE;
     MrvlIEtypesHeader_t *mrvl_tlv = NULL;
+#ifdef CONFIG_HOST_SLEEP
+    pmlan_adapter pmadapter       = ((mlan_private *)mlan_adap->priv[0])->adapter;
+#endif
     HostCmd_DS_802_11_PS_MODE_ENH *ps_mode = (HostCmd_DS_802_11_PS_MODE_ENH *)(void *)(cmd_res_buffer + S_DS_GEN);
 
     *ps_event = (t_u16)WIFI_EVENT_PS_INVALID;
@@ -333,7 +387,8 @@ enum wifi_event_reason wifi_process_ps_enh_response(t_u8 *cmd_res_buffer, t_u16 
                 mrvl_tlv =
                     (MrvlIEtypesHeader_t *)(void *)((uint8_t *)mrvl_tlv + mrvl_tlv->len + sizeof(MrvlIEtypesHeader_t));
             }
-            pwr_d("Enabled Deep Sleep mode");
+
+            *ps_event           = (t_u16)WIFI_EVENT_DEEP_SLEEP;
             deepsleepps_enabled = true;
         }
         if ((ps_mode->params.auto_ps.ps_bitmap & BITMAP_STA_PS) != 0U)
@@ -352,9 +407,11 @@ enum wifi_event_reason wifi_process_ps_enh_response(t_u8 *cmd_res_buffer, t_u16 
                 "%u %u",
                 ps_tlv->param.null_pkt_interval, ps_tlv->param.multiple_dtims, ps_tlv->param.local_listen_interval,
                 ps_tlv->param.bcn_miss_timeout, ps_tlv->param.delay_to_ps, ps_tlv->param.mode);
+
+            *ps_event      = (t_u16)WIFI_EVENT_IEEE_PS;
             ieeeps_enabled = true;
         }
-        result = WIFI_EVENT_REASON_SUCCESS;
+        return WIFI_EVENT_REASON_SUCCESS;
     }
     else if (ps_mode->action == (t_u16)DIS_AUTO_PS)
     {
@@ -372,7 +429,7 @@ enum wifi_event_reason wifi_process_ps_enh_response(t_u8 *cmd_res_buffer, t_u16 
             *ps_event      = (t_u16)WIFI_EVENT_IEEE_PS;
             ieeeps_enabled = false;
         }
-        result = WIFI_EVENT_REASON_SUCCESS;
+        return WIFI_EVENT_REASON_SUCCESS;
     }
     else if (ps_mode->action == (t_u16)GET_PS)
     {
@@ -404,9 +461,15 @@ enum wifi_event_reason wifi_process_ps_enh_response(t_u8 *cmd_res_buffer, t_u16 
     }
     else if (ps_mode->action == (t_u16)SLEEP_CONFIRM)
     {
+#ifdef CONFIG_WIFI_PS_DEBUG
         wcmdr_d("#");
+#endif
 
-        if (ieeeps_enabled)
+        if ((ieeeps_enabled) && (deepsleepps_enabled))
+        {
+            *ps_event = (t_u16)WIFI_EVENT_IEEE_DEEP_SLEEP;
+        }
+        else if (ieeeps_enabled)
         {
             *ps_event = (t_u16)WIFI_EVENT_IEEE_PS;
         }
@@ -432,11 +495,15 @@ enum wifi_event_reason wifi_process_ps_enh_response(t_u8 *cmd_res_buffer, t_u16 
 #endif
             if (ret == WM_SUCCESS)
             {
+#ifdef CONFIG_WIFI_PS_DEBUG
                 wcmdr_d("Get sleep rw lock successfully");
+#endif
             }
             else
             {
+#ifdef CONFIG_WIFI_PS_DEBUG
                 pwr_e("Failed to get sleep rw lock");
+#endif
                 return WIFI_EVENT_REASON_FAILURE;
             }
         }
@@ -447,7 +514,13 @@ enum wifi_event_reason wifi_process_ps_enh_response(t_u8 *cmd_res_buffer, t_u16 
 
         result = WIFI_EVENT_REASON_SUCCESS;
 #ifdef CONFIG_HOST_SLEEP
-        wifi_event_completion(WIFI_EVENT_SLEEP_CONFIRM_DONE, result, NULL);
+        if (pmadapter->is_hs_configured)
+        {
+            pwr_d("Host sleep activated");
+            pmadapter->is_hs_configured = MFALSE;
+            wlan_update_rxreorder_tbl(pmadapter, MTRUE);
+            wifi_event_completion(WIFI_EVENT_SLEEP_CONFIRM_DONE, result, NULL);
+        }
 #endif
     }
     else
@@ -456,4 +529,21 @@ enum wifi_event_reason wifi_process_ps_enh_response(t_u8 *cmd_res_buffer, t_u16 
 
     return result;
 }
+
+#ifdef CONFIG_HOST_SLEEP
+int wifi_get_wakeup_reason(t_u16 *hs_wakeup_reason)
+{
+    wifi_get_command_lock();
+    HostCmd_DS_COMMAND *cmd = wifi_get_command_buffer();
+
+    (void)memset(cmd, 0x00, sizeof(HostCmd_DS_COMMAND));
+    cmd->seq_num = HostCmd_SET_SEQ_NO_BSS_INFO(0 /* seq_num */, 0 /* bss_num */, BSS_TYPE_STA);
+    cmd->result  = 0x0;
+
+    wlan_ops_sta_prepare_cmd((mlan_private *)mlan_adap->priv[0], HostCmd_CMD_HS_WAKEUP_REASON, HostCmd_ACT_GEN_GET, 0,
+                             NULL, hs_wakeup_reason, cmd);
+    wifi_wait_for_cmdresp(hs_wakeup_reason);
+    return WM_SUCCESS;
+}
+#endif
 

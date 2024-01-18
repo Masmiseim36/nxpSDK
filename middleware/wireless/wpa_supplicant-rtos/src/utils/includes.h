@@ -23,9 +23,11 @@
 #include <stdarg.h>
 #include <string.h>
 #ifndef _WIN32_WCE
-#include <signal.h>
-//#include <sys/types.h>
-//#include <errno.h>
+//#include <signal.h>
+#ifdef CONFIG_ZEPHYR
+#include <sys/types.h>
+#include <errno.h>
+#endif
 #endif /* _WIN32_WCE */
 #include <ctype.h>
 
@@ -56,6 +58,8 @@
 #include <zephyr/shell/shell.h>
 #endif /* defined(CONFIG_ZEPHYR) */
 
+#include <wm_net.h>
+
 #if defined(CONFIG_FREERTOS)
 
 #if defined(CONFIG_POSIX_API)
@@ -69,7 +73,7 @@
 #endif /* defined(CONFIG_POSIX_API) */
 //#include <zephyr/shell/shell.h>
 #include <fsl_debug_console.h>
-#include <wm_net.h>
+#endif /* defined(CONFIG_FREERTOS) */
 
 #ifdef CONFIG_WPA_SUPP_CRYPTO
 
@@ -107,6 +111,11 @@
 #define CONFIG_SHA384
 #define CONFIG_SHA512
 #define CONFIG_DES
+#define CONFIG_AES
+#endif
+
+#ifndef CONFIG_AES
+#define CONFIG_INTERNAL_AES
 #endif
 
 #ifdef CONFIG_11R
@@ -184,33 +193,23 @@
 #define CONFIG_OFFCHANNEL
 #endif
 
-#ifdef CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE
+#ifdef CONFIG_WPA_SUPP_DPP
+#define CONFIG_DPP
+#ifdef CONFIG_WPA_SUPP_DPP2
+#define CONFIG_DPP2
+#endif
+#ifdef CONFIG_WPA_SUPP_DPP3
+#define CONFIG_DPP3
+#endif
+#define CONFIG_GAS
+#define CONFIG_OFFCHANNEL
+#define CONFIG_GAS_SERVER
 #ifdef CONFIG_WPA_SUPP_AP
-#define RADIUS_SERVER
-#define EAP_SERVER
-#define EAP_SERVER_IDENTITY
+#define CONFIG_INTERWORKING
+#endif /* CONFIG_WPA_SUPP_AP */
 #endif
-#define EAP_TLS
-#define IEEE8021X_EAPOL
-#define EAP_PEAP
-#define EAP_TTLS
-//#define EAP_MD5
-#define EAP_MSCHAPv2
-//#define EAP_LEAP
-//#define EAP_PSK
-#if !defined(CONFIG_FIPS)
-//#define EAP_FAST
-#endif
-//#define EAP_PAX
-//#define EAP_SAKE
-//#define EAP_GPSK
-//#define EAP_PWD
-//#define EAP_EKE
-//#define EAP_IKEv2
-//#define EAP_SIM
-//#define EAP_AKA
-//#define EAP_AKA_PRIME
-#define EAP_GTC
+
+#if defined(CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE) || defined(CONFIG_WPA_SUPP_CRYPTO_AP_ENTERPRISE)
 
 #define CONFIG_SUITEB
 #define CONFIG_SUITEB192
@@ -242,24 +241,96 @@
 #define NEED_AES_EAX
 #define NEED_AES_SIV
 #define NEED_AES_CTR
-#define NEED_AES_ENCBLOCK
+#define CONFIG_SIM_SIMULATOR
+#define CONFIG_USIM_SIMULATOR
+#define NEED_MILENAGE
 #define NEED_AES_ENC
+#define IEEE8021X_EAPOL
+
+#ifdef CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE
+#ifdef CONFIG_EAP_TLS
+#define EAP_TLS
+#endif
+#ifdef CONFIG_EAP_PEAP
+#define EAP_PEAP
+#endif
+#ifdef CONFIG_EAP_TTLS
+#define EAP_TTLS
+#endif
+//#define EAP_MD5
+//#define EAP_LEAP
+//#define EAP_PSK
+#if !defined(CONFIG_FIPS)
+#ifdef CONFIG_EAP_FAST
+#define EAP_FAST
+#endif
+#endif
+//#define EAP_PAX
+//#define EAP_SAKE
+//#define EAP_GPSK
+//#define EAP_PWD
+//#define EAP_EKE
+//#define EAP_IKEv2
+#ifdef CONFIG_EAP_SIM
+#define EAP_SIM
+#define CONFIG_EAP_SIM_COMMON
+#endif
+#ifdef CONFIG_EAP_AKA_PRIME
+#define EAP_AKA_PRIME
+#define CONFIG_EAP_AKA
+#endif
+#ifdef CONFIG_EAP_AKA
+#define EAP_AKA
+#define CONFIG_EAP_SIM_COMMON
+#endif
+#ifdef CONFIG_EAP_MSCHAPV2
+#define EAP_MSCHAPv2
+#endif
+#ifdef CONFIG_EAP_GTC
+#define EAP_GTC
+#endif
+#endif
 
 #ifdef CONFIG_WPA_SUPP_AP
+#ifdef CONFIG_WPA_SUPP_CRYPTO_AP_ENTERPRISE
+#define RADIUS_SERVER
+#define EAP_SERVER
+#define EAP_SERVER_IDENTITY
+#ifdef CONFIG_EAP_TLS
 #define EAP_SERVER_TLS
+#endif
+#ifdef CONFIG_EAP_PEAP
 #define EAP_SERVER_PEAP
+#endif
+#ifdef CONFIG_EAP_TTLS
 #define EAP_SERVER_TTLS
-#define EAP_SERVER_MSCHAPV2
-#define EAP_SERVER_GTC
-//#define EAP_SERVER_SIM
-//#define EAP_SERVER_AKA
-//#define EAP_SERVER_AKA_PRIME
+#endif
+#define EAP_SIM_DB
+#ifdef CONFIG_EAP_SIM
+#define EAP_SERVER_SIM
+#endif
+#ifdef CONFIG_EAP_AKA_PRIME
+#define EAP_SERVER_AKA_PRIME
+#define CONFIG_EAP_AKA
+#endif
+#ifdef CONFIG_EAP_AKA
+#define EAP_SERVER_AKA
+#define CONFIG_EAP_SIM_COMMON
+#endif
 #if !defined(CONFIG_FIPS)
-//#define EAP_SERVER_FAST
+#ifdef CONFIG_EAP_FAST
+#define EAP_SERVER_FAST
 #endif
 #endif
-#endif /* CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE */
+#ifdef CONFIG_EAP_MSCHAPV2
+#define EAP_SERVER_MSCHAPV2
+#endif
+#ifdef CONFIG_EAP_GTC
+#define EAP_SERVER_GTC
+#endif
+#endif
+#endif
 
-#endif /* defined(CONFIG_FREERTOS) */
+#endif /* CONFIG_WPA_SUPP_CRYPTO_ENTERPRISE || CONFIG_WPA_SUPP_CRYPTO_AP_ENTERPRISE */
 
 #endif /* INCLUDES_H */

@@ -58,11 +58,15 @@ typedef struct xf_component
 
     /* ...component destructor function */
     int                   (*exit)(struct xf_component *, xf_message_t *);
-    
+
 #ifndef XA_DISABLE_EVENT
     /* ...component error handler function */
     int                   (*error_handler)(struct xf_component *, XA_ERRORCODE);
 #endif
+
+    /* ...pool type of component memory types */
+    UWORD32 mem_pool_type[XAF_MEM_POOL_TYPE_COMP_MAX];
+
 }   xf_component_t;
 
 /*******************************************************************************
@@ -89,7 +93,7 @@ static inline UWORD32 xf_component_core(xf_component_t *component)
     xf_sched_t *__sched = &XF_CORE_DATA(xf_component_core((c)))->sched; \
     xf_sched_cancel(__sched, &(c)->task);                               \
 })
-    
+
 /*******************************************************************************
  * API functions
  ******************************************************************************/

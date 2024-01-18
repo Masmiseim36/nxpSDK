@@ -923,6 +923,11 @@ int wlan_cmd_append_11ac_tlv(mlan_private *pmpriv, BSSDescriptor_t *pbss_desc, t
                        (t_u8 *)pbss_desc->pvht_cap + sizeof(IEEEtypes_Header_t), pvht_cap->header.len);
 
         wlan_fill_vht_cap_tlv(pmpriv, pvht_cap, pbss_desc->bss_band, (t_u8)MTRUE);
+        if (wlan_use_non_default_ht_vht_cap(pbss_desc))
+        {
+            /* Indicate 3 STS in VHT cap info */
+            pvht_cap->vht_cap.vht_cap_info = ((pvht_cap->vht_cap.vht_cap_info & (~(0x7 << 13))) | (0x2 << 13));
+        }
 
         HEXDUMP("VHT_CAPABILITIES IE", (t_u8 *)pvht_cap, sizeof(MrvlIETypes_VHTCap_t));
         *ppbuffer += sizeof(MrvlIETypes_VHTCap_t);

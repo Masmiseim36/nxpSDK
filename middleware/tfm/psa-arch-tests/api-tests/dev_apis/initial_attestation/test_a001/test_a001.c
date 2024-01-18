@@ -1,5 +1,5 @@
 /** @file
- * Copyright (c) 2019-2020, Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2019-2023, Arm Limited or its affiliates. All rights reserved.
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -39,7 +39,7 @@ int32_t psa_initial_attestation_get_token_test(caller_security_t caller __UNUSED
 
     for (i = 0; i < num_checks; i++)
     {
-        size_t                  challenge_size = check1[i].challenge_size; //NXP
+        size_t                  challenge_size = check1[i].challenge_size;
 
         val->print(PRINT_TEST, "[Check %d] ", g_test_count++);
         val->print(PRINT_TEST, check1[i].test_desc, 0);
@@ -48,7 +48,7 @@ int32_t psa_initial_attestation_get_token_test(caller_security_t caller __UNUSED
         memset(token_buffer, 0, sizeof(token_buffer));
 
         status = val->attestation_function(VAL_INITIAL_ATTEST_GET_TOKEN_SIZE,
-                     challenge_size, &token_buffer_size); //NXP
+                     challenge_size, &token_buffer_size);
         if (status != PSA_SUCCESS)
         {
             if (challenge_size != PSA_INITIAL_ATTEST_CHALLENGE_SIZE_32 ||
@@ -56,7 +56,7 @@ int32_t psa_initial_attestation_get_token_test(caller_security_t caller __UNUSED
                 challenge_size != PSA_INITIAL_ATTEST_CHALLENGE_SIZE_64)
             {
                 token_buffer_size = check1[i].token_size;
-                challenge_size = check1[i].actual_challenge_size; //NXP
+                challenge_size = check1[i].actual_challenge_size;
             }
             else
                 return status;
@@ -69,7 +69,7 @@ int32_t psa_initial_attestation_get_token_test(caller_security_t caller __UNUSED
         }
 
         status = val->attestation_function(VAL_INITIAL_ATTEST_GET_TOKEN, challenge,
-                     challenge_size, token_buffer, token_buffer_size, &token_size);   //NXP
+                     challenge_size, token_buffer, token_buffer_size, &token_size);
         TEST_ASSERT_EQUAL(status, check1[i].expected_status, TEST_CHECKPOINT_NUM(1));
 
         if (check1[i].expected_status != PSA_SUCCESS)
@@ -77,7 +77,7 @@ int32_t psa_initial_attestation_get_token_test(caller_security_t caller __UNUSED
 
         /* Validate the token */
         status = val->attestation_function(VAL_INITIAL_ATTEST_VERIFY_TOKEN, challenge,
-                    challenge_size, token_buffer, token_size);                         //NXP 
+                    challenge_size, token_buffer, token_size);
         TEST_ASSERT_EQUAL(status, PSA_SUCCESS, TEST_CHECKPOINT_NUM(2));
     }
 

@@ -11,7 +11,7 @@
 #include "includes.h"
 
 #ifdef CONFIG_GAS
-#include "common.h"
+#include "utils/common.h"
 #include "utils/eloop.h"
 #include "common/ieee802_11_defs.h"
 #include "common/gas.h"
@@ -24,7 +24,12 @@
 #include "gas_query.h"
 
 /** GAS query timeout in seconds */
+
+#if defined(CONFIG_FREERTOS) || defined(CONFIG_ZEPHYR)
+#define GAS_QUERY_TIMEOUT_PERIOD 5
+#else
 #define GAS_QUERY_TIMEOUT_PERIOD 2
+#endif
 
 /* GAS query wait-time / duration in ms */
 #define GAS_QUERY_WAIT_TIME_INITIAL  1000

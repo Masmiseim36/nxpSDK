@@ -393,7 +393,11 @@ void ap_free_sta(struct hostapd_data *hapd, struct sta_info *sta)
 
 #ifdef CONFIG_OWE
     bin_clear_free(sta->owe_pmk, sta->owe_pmk_len);
+#if defined(CONFIG_FREERTOS) || defined(CONFIG_ZEPHYR)
+    crypto_ecdh_deinit_owe(sta->owe_ecdh);
+#else
     crypto_ecdh_deinit(sta->owe_ecdh);
+#endif
 #endif /* CONFIG_OWE */
 
 #ifdef CONFIG_DPP2

@@ -160,7 +160,7 @@ int main(void)
  * packets (for fragmentation purposes) */
 #define HTTP_RESPONSE \
     "HTTP/1.0 200 OK\r\nContent-Type: text/html\r\n\r\n" \
-    "<h2>mbed TLS Test Server</h2>\r\n" \
+    "<h2>Mbed TLS Test Server</h2>\r\n" \
     "<p>Successful connection using: %s</p>\r\n" // LONG_RESPONSE
 
 /*
@@ -3437,7 +3437,6 @@ data_exchange:
             switch (ret) {
                 case MBEDTLS_ERR_SSL_PEER_CLOSE_NOTIFY:
                     mbedtls_printf(" connection was closed gracefully\n");
-                    ret = 0;
                     goto close_notify;
 
                 default:

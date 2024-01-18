@@ -321,6 +321,8 @@ void httpsrv_destroy_server(HTTPSRV_STRUCT *server)
             sys_sem_free(&server->ses_cnt);
         }
 
+        /* server->finished is deallocated later */
+
 #if HTTPSRV_CFG_WOLFSSL_ENABLE || HTTPSRV_CFG_MBEDTLS_ENABLE
         if (server->tls_ctx)
         {
@@ -388,7 +390,7 @@ static int32_t httpsrv_init_socket(HTTPSRV_STRUCT *server)
     else
 #endif
 #if LWIP_IPV4
-    if (server->params.address.ss_family == AF_INET)
+        if (server->params.address.ss_family == AF_INET)
     {
         error = lwip_bind(server->sock, (struct sockaddr *)&server->params.address, sizeof(struct sockaddr_in));
     }
@@ -428,7 +430,7 @@ static int32_t httpsrv_set_params(HTTPSRV_STRUCT *server, HTTPSRV_PARAM_STRUCT *
 {
 #if LWIP_IPV6
     server->params.address.ss_family                              = AF_INET6;
-    ((struct sockaddr_in6 *)(&server->params.address))->sin6_port = PP_HTONS(HTTPSRV_CFG_DEFAULT_HTTP_PORT);  
+    ((struct sockaddr_in6 *)(&server->params.address))->sin6_port = PP_HTONS(HTTPSRV_CFG_DEFAULT_HTTP_PORT);
 #elif LWIP_IPV4
     server->params.address.ss_family                            = AF_INET;
     ((struct sockaddr_in *)(&server->params.address))->sin_port = PP_HTONS(HTTPSRV_CFG_DEFAULT_HTTP_PORT);
@@ -462,7 +464,7 @@ static int32_t httpsrv_set_params(HTTPSRV_STRUCT *server, HTTPSRV_PARAM_STRUCT *
         else
 #endif
 #if LWIP_IPV4
-        if (server->params.address.ss_family == AF_INET)
+            if (server->params.address.ss_family == AF_INET)
         {
             if (((struct sockaddr_in *)(&params->address))->sin_port)
                 ((struct sockaddr_in *)(&server->params.address))->sin_port =
@@ -516,10 +518,10 @@ static int32_t httpsrv_set_params(HTTPSRV_STRUCT *server, HTTPSRV_PARAM_STRUCT *
                     ((struct sockaddr_in6 *)(&server->params.address))->sin6_port =
                         PP_HTONS(HTTPSRV_CFG_DEFAULT_HTTPS_PORT);
             }
-			else
+            else
 #endif
 #if LWIP_IPV4
-            if (server->params.address.ss_family == AF_INET)
+                if (server->params.address.ss_family == AF_INET)
             {
                 /* Set default port.*/
                 if (((struct sockaddr_in *)(&params->address))->sin_port == 0)
@@ -528,7 +530,7 @@ static int32_t httpsrv_set_params(HTTPSRV_STRUCT *server, HTTPSRV_PARAM_STRUCT *
                         PP_HTONS(HTTPSRV_CFG_DEFAULT_HTTPS_PORT);
                 }
             }
-			else
+            else
 #endif
             {
             }

@@ -303,7 +303,6 @@ status_t SD_WriteBlocks(sd_card_t *card, const uint8_t *buffer, uint32_t startBl
  * @param startBlock The start block index.
  * @param blockCount The number of blocks to erase.
  * @retval #kStatus_InvalidArgument Invalid argument.
- * @retval #kStatus_SDMMC_WaitWriteCompleteFailed Send status failed.
  * @retval #kStatus_SDMMC_TransferFailed Transfer failed.
  * @retval #kStatus_SDMMC_WaitWriteCompleteFailed Send status failed.
  * @retval #kStatus_Success Operate successfully.

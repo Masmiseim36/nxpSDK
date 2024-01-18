@@ -100,7 +100,9 @@ __attribute__((weak)) void sco_audio_spkr_play_pl_ext (UCHAR * m_data, UINT16 m_
 static UCHAR WBS_mode = 0U;
 void sco_audio_init_pl (void)
 {
+#ifndef HFP_BRIDGING
     sco_audio_init_pl_ext();
+#endif //HFP_BRIDGING
 }
 
 void sco_audio_shutdown_pl (void)
@@ -118,8 +120,9 @@ API_RESULT sco_audio_setup_pl (SCO_AUDIO_EP_INFO *ep_info)
         printf ("SCO EndPoint Info. is NULL\n");
         return API_FAILURE;
     }
-
+#ifndef HFP_BRIDGING
     (BT_IGNORE_RETURN_VALUE) sco_audio_setup_pl_ext (ep_info);
+#endif //HFP_BRIDGING
     /**
      * TODO: Validate Config. parameters
      */
@@ -129,8 +132,13 @@ API_RESULT sco_audio_setup_pl (SCO_AUDIO_EP_INFO *ep_info)
     return retval;
 }
 
+#ifdef HFP_BRIDGING
+static int num_sco_conn = 0U;
+#endif //HFP_BRIDGING
+
 API_RESULT sco_audio_start_pl (void)
 {
+	API_RESULT  retval = API_SUCCESS;
 #ifdef NVRAM_WORKAROUND
     /* Disable storage update */
     BT_storage_disable_store();
@@ -138,12 +146,21 @@ API_RESULT sco_audio_start_pl (void)
     printf("Sending Vendor command 006f now\n");
     UCHAR new[6U] = {0x00U, 0x00U, 0x08U, 0x00U, 0x00U, 0x00U};
     (BT_IGNORE_RETURN_VALUE) BT_hci_vendor_specific_command(0x006fU, new, sizeof(new));
-
-    return sco_audio_start_pl_ext();
+#ifndef HFP_BRIDGING
+    retval = sco_audio_start_pl_ext();
+#endif //HFP_BRIDGING
+    return retval;
 }
 
 API_RESULT sco_audio_stop_pl (void)
 {
+#ifdef HFP_BRIDGING
+	if(num_sco_conn > 0)
+	{
+		num_sco_conn--;
+	}
+    printf("num_sco_conn = %d\n",num_sco_conn);
+#endif //HFP_BRIDGING
    /* Send VSC 0x73 command to enable WBS for second next call */
     if (0U != WBS_mode)
     {
@@ -158,7 +175,9 @@ API_RESULT sco_audio_stop_pl (void)
         (BT_IGNORE_RETURN_VALUE) BT_hci_vendor_specific_command(0x0073U, new4, sizeof(new4));
     }
 
+#ifndef HFP_BRIDGING
     (BT_IGNORE_RETURN_VALUE) sco_audio_stop_pl_ext();
+#endif //HFP_BRIDGING
 
 #ifdef NVRAM_WORKAROUND
     /* Disable storage update */
@@ -213,26 +232,36 @@ void sco_audio_set_wideband_pl (UCHAR enable)
 
 void sco_audio_play_ringtone_pl (void)
 {
+#ifndef HFP_BRIDGING
     sco_audio_play_ringtone_pl_ext();
+#endif //HFP_BRIDGING
 }
 
 void sco_audio_play_inband_ringtone_pl (void)
 {
+#ifndef HFP_BRIDGING
     sco_audio_play_inband_ringtone_pl_ext();
+#endif //HFP_BRIDGING
 }
 
 void sco_audio_set_speaker_volume_pl(UCHAR value)
 {
+#ifndef HFP_BRIDGING
     (void)sco_audio_set_speaker_volume(value);
+#endif //HFP_BRIDGING
 }
 
 void sco_audio_set_microphone_gain_pl(UCHAR value)
 {
+#ifndef HFP_BRIDGING
     (void)sco_audio_set_microphone_gain(value);
+#endif //HFP_BRIDGING
 }
 void sco_audio_play_ringtone_exit_pl (void)
 {
+#ifndef HFP_BRIDGING
     sco_audio_play_ringtone_exit_pl_ext();
+#endif //HFP_BRIDGING
 }
 
 #ifdef HCI_SCO
@@ -243,4 +272,22 @@ void sco_audio_spkr_play_pl (UCHAR * m_data, UINT16 m_datalen)
 }
 #endif /* HCI_SCO */
 
+#ifdef HFP_BRIDGING
+API_RESULT sco_bridge_audio_start_pl (UINT16 sco_handle_1, UINT16 sco_handle_2)
+{
+	printf("Sending Vendor command for sco-bridging now for handles 0x%x, 0x%x\n", sco_handle_1, sco_handle_2);
+	UCHAR new[6U];
+	new[0] = 0x00U;
+	new[1] = 0x01U;
+	new[2] = sco_handle_1 & 0x00FFU;
+	new[3] = (sco_handle_1 >> 8) & 0x00FFU;
+	new[4] = sco_handle_2 & 0x00FFU;
+	new[5] = (sco_handle_2 >> 8) & 0x00FFU;
 
+	for(int i = 0; i < 6; i++)
+	{
+		printf("%x\n", new[i]);
+	}
+	return BT_hci_vendor_specific_command(0x006fU, new, sizeof(new));
+}
+#endif //HFP_BRIDGING

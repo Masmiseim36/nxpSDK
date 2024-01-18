@@ -9,6 +9,8 @@
 #ifndef WPA_COMMON_H
 #define WPA_COMMON_H
 
+#include <utils/common.h>
+
 /* IEEE 802.11i */
 #define PMKID_LEN              16
 #define PMK_LEN                32

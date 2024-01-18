@@ -485,7 +485,7 @@
     <link>
       <name>utilities/fsl_shell.c</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/utilities/fsl_shell.c</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/utilities/shell/fsl_shell.c</locationURI>
     </link>
     <link>
       <name>utilities</name>
@@ -495,7 +495,7 @@
     <link>
       <name>utilities/fsl_shell.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/utilities/fsl_shell.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/utilities/shell/fsl_shell.h</locationURI>
     </link>
     <link>
       <name>drivers</name>

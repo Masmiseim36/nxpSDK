@@ -3,12 +3,12 @@
  * Copyright 2016 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 /*
-*   This file contains various UTF-8 functions.
-*/
+ *   This file contains various UTF-8 functions.
+ */
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -27,7 +27,7 @@ bool utf8_is_valid(uint8_t *input, uint32_t length, uint8_t **bad, uint32_t *mis
     uint32_t n;
 
     position = input;
-    max = input + length;
+    max      = input + length;
     *missing = 0;
 
     while (position < max)

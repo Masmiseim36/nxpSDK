@@ -1,6 +1,6 @@
 /*! *********************************************************************************
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2022 NXP
+ * Copyright 2016-2023 NXP
  * All rights reserved.
  *
  * \file
@@ -8,16 +8,16 @@
  * SPDX-License-Identifier: BSD-3-Clause
  ********************************************************************************** */
 #include "RNG_Interface.h"
-#if !defined USE_SENTINEL_RNG || (USE_SENTINEL_RNG == 0)
+#include "fwk_config.h"
 #include "FunctionLib.h"
-#include "fsl_component_panic.h"
-#include "mbedtls/entropy.h"
-#include "mbedtls/hmac_drbg.h"
-#include "mbedtls/md.h"
-
 #include "fsl_device_registers.h"
 #include "fsl_os_abstraction.h"
 #include "fsl_common.h"
+
+#if !defined gRngUseSecureSubSystem_d || (gRngUseSecureSubSystem_d == 0)
+#include "mbedtls/entropy.h"
+#include "mbedtls/hmac_drbg.h"
+#include "mbedtls/md.h"
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -35,13 +35,12 @@ static const unsigned char mPrngPersonalizationString_c[] = "cPRNGPersonalizatio
 static const unsigned char mPrngPersonalizationString_c[] = "PRNG Personalization String";
 #endif /* defined(cPRNGPersonalizationString_c) */
 
-#if USE_RTOS && gRngUseMutex_c
-#define RNG_MUTEX_LOCK()   OSA_MutexLock((osa_mutex_handle_t)mRngMutexId, osaWaitForever_c)
-#define RNG_MUTEX_UNLOCK() OSA_MutexUnlock((osa_mutex_handle_t)mRngMutexId)
-#else
-#define RNG_MUTEX_LOCK()
-#define RNG_MUTEX_UNLOCK()
-#endif /* USE_RTOS */
+extern osa_status_t SecLibMutexCreate(void);
+extern osa_status_t SecLibMutexLock(void);
+extern osa_status_t SecLibMutexUnlock(void);
+
+#define RNG_MUTEX_LOCK()   (void)SecLibMutexLock()
+#define RNG_MUTEX_UNLOCK() (void)SecLibMutexUnlock()
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -57,11 +56,6 @@ static bool_t mPrngSeeded        = FALSE;
 
 static bool_t   mPolyRngSeeded = FALSE;
 static uint32_t mPolyRngRandom = 0xDEADBEEF;
-
-#if USE_RTOS && gRngUseMutex_c
-/*! Mutex used to protect RNG Contexts when a RTOS is used. */
-OSA_MUTEX_HANDLE_DEFINE(mRngMutexId);
-#endif /* USE_RTOS */
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -93,38 +87,35 @@ static int RNG_entropy_func(void *data, unsigned char *output, size_t len);
 uint8_t RNG_Init(void)
 {
     int     rngResult = 0;
-    uint8_t result    = gRngSuccess_d;
+    uint8_t result    = gRngInternalError_d;
 
     mbedtls_entropy_init(&mRngEntropyCtx);
     mbedtls_hmac_drbg_init(&mRngHmacDrbgCtx);
     mRngCtxInitialized = TRUE;
-
-#if USE_RTOS && gRngUseMutex_c
-    if (result == gRngSuccess_d)
+    do
     {
-        /*! Initialize the Rng Mutex here. */
-        if (KOSA_StatusSuccess != OSA_MutexCreate((osa_mutex_handle_t)mRngMutexId))
+        (void)SecLibMutexCreate();
+
+        RNG_MUTEX_LOCK();
+        rngResult = mbedtls_entropy_func(&mRngEntropyCtx, (unsigned char *)&mPolyRngRandom, sizeof(mPolyRngRandom));
+        RNG_MUTEX_UNLOCK();
+
+        if (rngResult != 0)
         {
-            panic(ID_PANIC(0, 0), (uint32_t)RNG_Init, 0, 0);
-            result = gRngInternalError_d;
+            break;
         }
-    }
-#endif
-
-    RNG_MUTEX_LOCK();
-    rngResult = mbedtls_entropy_func(&mRngEntropyCtx, (unsigned char *)&mPolyRngRandom, sizeof(mPolyRngRandom));
-    RNG_MUTEX_UNLOCK();
-
-    if (rngResult == 0)
-    {
         mPolyRngSeeded = TRUE;
-    }
-    else
-    {
-        result = gRngInternalError_d;
-    }
-
+        result         = gRngSuccess_d;
+    } while (0 != 0);
     return result;
+}
+
+void RNG_ReInit(void)
+{
+#if USE_SENTINEL_RNG
+    (void)CRYPTO_ReinitHardware();
+#endif
+    return;
 }
 
 /*! *********************************************************************************

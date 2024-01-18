@@ -207,7 +207,7 @@ static mlan_status wlan_ret_mfg_config_trigger_frame(pmlan_private pmpriv,
 mlan_status wlan_ret_mfg(pmlan_private pmpriv, HostCmd_DS_COMMAND *resp, void *pioctl_buf)
 {
     HostCmd_DS_MFG_CMD_GENERIC_CFG *mcmd = (HostCmd_DS_MFG_CMD_GENERIC_CFG *)&resp->params.mfg_generic_cfg;
-    mlan_ds_misc_cfg *misc_cfg = (mlan_ds_misc_cfg*) pioctl_buf;
+    mlan_ds_misc_cfg *misc_cfg           = (mlan_ds_misc_cfg *)pioctl_buf;
     mlan_ds_mfg_cmd_generic_cfg *cfg     = MNULL;
     mlan_status ret                      = MLAN_STATUS_SUCCESS;
 
@@ -240,7 +240,7 @@ mlan_status wlan_ret_mfg(pmlan_private pmpriv, HostCmd_DS_COMMAND *resp, void *p
         case MFG_CMD_RF_BAND_AG:
         case MFG_CMD_RF_CHANNELBW:
         case MFG_CMD_RADIO_MODE_CFG:
-		case MFG_CMD_RFPWR:
+        case MFG_CMD_RFPWR:
             break;
         default:
             ret = MLAN_STATUS_FAILURE;
@@ -301,6 +301,22 @@ static mlan_status wlan_ret_802_11_snmp_mib(IN pmlan_private pmpriv,
                 if (mib != MNULL)
                 {
                     mib->param.dtim_period = ul_temp;
+                }
+                break;
+            case FragThresh_i:
+                ul_temp = wlan_le16_to_cpu(*((t_u16 *)(psmib->value)));
+                PRINTM(MINFO, "SNMP_RESP: FragThsd =%u\n", ul_temp);
+                if (mib)
+                {
+                    mib->param.frag_threshold = ul_temp;
+                }
+                break;
+            case RtsThresh_i:
+                ul_temp = wlan_le16_to_cpu(*((t_u16 *)(psmib->value)));
+                PRINTM(MINFO, "SNMP_RESP: RTSThsd =%u\n", ul_temp);
+                if (mib)
+                {
+                    mib->param.rts_threshold = ul_temp;
                 }
                 break;
             default:
@@ -472,6 +488,7 @@ static mlan_status wlan_ret_tx_power_cfg(IN pmlan_private pmpriv,
             ppg_tlv->length = wlan_le16_to_cpu(ppg_tlv->length);
             if (pmpriv->adapter->hw_status == WlanHardwareStatusInitializing)
             {
+                // coverity[overrun-buffer-val:SUPPRESS]
                 (void)wlan_get_power_level(pmpriv, ptxp_cfg);
             }
             pmpriv->tx_power_level = (t_u16)pg->power_min;
@@ -692,11 +709,24 @@ mlan_status wlan_ops_sta_process_cmdresp(IN t_void *priv, IN t_u16 cmdresp_no, I
             ret = wlan_ret_chan_region_cfg(pmpriv, resp, pioctl_buf);
             break;
 #endif
+        case HostCmd_CMD_BOOT_SLEEP:
+            ret = wlan_ret_boot_sleep(pmpriv, resp, pioctl_buf);
+            break;
+#ifdef CONFIG_11AX
+        case HostCmd_CMD_11AX_CMD:
+            ret = wlan_ret_11ax_cmd(pmpriv, resp, pioctl_buf);
+            break;
+#endif
 #ifdef CONFIG_WIFI_CLOCKSYNC
         case HostCmd_GPIO_TSF_LATCH_PARAM_CONFIG:
             ret = wlan_ret_gpio_tsf_latch(pmpriv, resp, pioctl_buf);
             break;
 #endif /* CONFIG_WIFI_CLOCKSYNC */
+#if defined(CONFIG_WIFI_IND_RESET) && defined(CONFIG_WIFI_IND_DNLD)
+        case HostCmd_CMD_INDEPENDENT_RESET_CFG:
+            ret = wlan_ret_ind_rst_cfg(pmpriv, resp, pioctl_buf);
+            break;
+#endif
         default:
             PRINTM(MERROR, "CMD_RESP: Unknown command response %#x\n", resp->command);
             break;

@@ -235,13 +235,13 @@
           <state>XA_VORBIS_DECODER=1</state>
           <state>XA_PCM_GAIN=1</state>
           <state>XA_SRC_PP_FX=1</state>
-          <state>XA_CLIENT_PROXY=1</state>
           <state>XA_RENDERER=1</state>
           <state>DSP_IMAGE_COPY_TO_RAM=1</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8904_ENABLE</state>
+          <state>SDK_I3C_BASED_COMPONENT_USED=1</state>
           <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
           <state>SD_ENABLED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
@@ -381,7 +381,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/sd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk</state>
@@ -389,6 +389,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
@@ -1364,13 +1365,13 @@
           <state>XA_VORBIS_DECODER=1</state>
           <state>XA_PCM_GAIN=1</state>
           <state>XA_SRC_PP_FX=1</state>
-          <state>XA_CLIENT_PROXY=1</state>
           <state>XA_RENDERER=1</state>
           <state>DSP_IMAGE_COPY_TO_RAM=1</state>
           <state>MCUXPRESSO_SDK</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8904_ENABLE</state>
+          <state>SDK_I3C_BASED_COMPONENT_USED=1</state>
           <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
           <state>SD_ENABLED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
@@ -1510,7 +1511,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/shell</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/sd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk</state>
@@ -1518,6 +1519,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
@@ -2301,60 +2303,6 @@
     </file>
   </group>
   <group>
-    <name>resources</name>
-    <file>
-      <name>$PROJ_DIR$/../hihat_dec_out.pcm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../hihat.mp3.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../hihat_48k.mp3.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../hihat.ogg.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../hihat_trim.pcm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../hihat_trim.sbc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../hihat_vorbis_dec_out_trim.pcm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../hihat_vor.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../hihat_pcm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../sbc_test_02_trim.sbc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../sbc_test_02_trim.out.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../testvector04-48000-2ch_trim.out.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../testvector04.bit.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../testvector11-16000-1ch_trim.out.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../testvector11-16kHz-1ch-20kbps_trim.bit.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../aac.adts.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../aac.ref.h</name>
-    </file>
-  </group>
-  <group>
     <name>board</name>
     <file>
       <name>$PROJ_DIR$/../pin_mux.c</name>
@@ -2394,6 +2342,48 @@
     </file>
   </group>
   <group>
+    <name>resources</name>
+    <file>
+      <name>$PROJ_DIR$/../aac.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../hihat_dec_out.pcm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../hihat_trim.pcm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../hihat_trim.sbc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../hihat_vor.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../mp3.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../oggvorbis.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../opus.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../rawvorbis.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../sbc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../testvector04.bit.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../testvector11-16000-1ch_trim.out.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../testvector11-16kHz-1ch-20kbps_trim.bit.h</name>
+    </file>
+  </group>
+  <group>
     <name>dsp_binary</name>
     <file>
       <name>$PROJ_DIR$/../../dsp/binary/dsp_data_debug.bin</name>
@@ -2417,7 +2407,7 @@
   <group>
     <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
   <group>
@@ -2879,10 +2869,10 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/fsl_shell.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/shell/fsl_shell.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/fsl_shell.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/shell/fsl_shell.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</name>
@@ -2901,6 +2891,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/fsl_assert.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</name>

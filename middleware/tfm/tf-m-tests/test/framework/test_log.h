@@ -19,7 +19,7 @@ extern "C" {
 #endif
 
 #ifdef USE_SP_LOG
-#define TEST_LOG(...)  tfm_sp_log_printf(__VA_ARGS__) //NXP was printf(), workaround Keil error
+#define TEST_LOG(...) printf(__VA_ARGS__)
 #else
 #define TEST_LOG(...) tfm_log_printf(__VA_ARGS__)
 #endif /* USE_SP_LOG */

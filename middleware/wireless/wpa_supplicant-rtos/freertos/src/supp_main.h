@@ -22,6 +22,9 @@ typedef enum __wpa_supp_event
 struct wpa_supplicant_event_msg
 {
     int hostapd;
+#ifdef CONFIG_ZEPHYR
+    bool ignore_msg;
+#endif
     void *ctx;
     enum wpa_event_type event;
     void *data;

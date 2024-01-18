@@ -524,6 +524,7 @@ static shell_status_t cmd_write_without_rsp(shell_handle_t shell,
 	}
 
 	repeat = 0U;
+	err = 0;
 
 	if (argc > 4) {
 		repeat = strtoul(argv[4], NULL, 16);
@@ -562,7 +563,9 @@ static uint8_t notify_func(struct bt_conn *conn,
 		return BT_GATT_ITER_STOP;
 	}
 
-	shell_print(ctx_shell, "Notification: data %p length %u", data, length);
+	shell_print(ctx_shell, "Notification: value_handle %u, length %u",
+		    params->value_handle, length);
+	shell_hexdump(ctx_shell, data, length);
 
 	return BT_GATT_ITER_CONTINUE;
 }
@@ -716,7 +719,7 @@ static uint8_t print_attr(const struct bt_gatt_attr *attr, uint16_t handle,
 
 static shell_status_t cmd_show_db(shell_handle_t shell, int32_t argc, char *argv[])
 {
-	struct bt_uuid_16 uuid;
+	struct bt_uuid_16 uuid16;
 	size_t total_len;
 
 	memset(&stats, 0, sizeof(stats));
@@ -724,14 +727,14 @@ static shell_status_t cmd_show_db(shell_handle_t shell, int32_t argc, char *argv
 	if (argc > 1) {
 		uint16_t num_matches = 0;
 
-		uuid.uuid.type = BT_UUID_TYPE_16;
-		uuid.val = strtoul(argv[1], NULL, 16);
+		uuid16.uuid.type = BT_UUID_TYPE_16;
+		uuid16.val = strtoul(argv[1], NULL, 16);
 
 		if (argc > 2) {
 			num_matches = strtoul(argv[2], NULL, 10);
 		}
 
-		bt_gatt_foreach_attr_type(0x0001, 0xffff, &uuid.uuid, NULL,
+		bt_gatt_foreach_attr_type(0x0001, 0xffff, &uuid16.uuid, NULL,
 					  num_matches, print_attr,
 					  (void *)shell);
 		return kStatus_SHELL_Success;
@@ -957,36 +960,75 @@ static void notify_cb(struct bt_conn *conn, void *user_data)
 	shell_print(shell, "Nofication sent to conn %p", conn);
 }
 
+static uint8_t found_attr(const struct bt_gatt_attr *attr, uint16_t handle,
+			  void *user_data)
+{
+	const struct bt_gatt_attr **found = user_data;
+
+	*found = attr;
+
+	return BT_GATT_ITER_STOP;
+}
+
+static const struct bt_gatt_attr *find_attr(uint16_t handle)
+{
+	const struct bt_gatt_attr *attr = NULL;
+
+	bt_gatt_foreach_attr(handle, handle, found_attr, &attr);
+
+	return attr;
+}
 static shell_status_t cmd_notify(shell_handle_t shell, int32_t argc, char *argv[])
 {
-	struct bt_gatt_notify_params params;
-	uint8_t data = 0;
+	const struct bt_gatt_attr *attr;
+	int err;
+	size_t data_len;
+	unsigned long handle;
+	static char data[BT_ATT_MAX_ATTRIBUTE_LEN];
 
-	if (!echo_enabled) {
-		shell_error(shell, "No clients have enabled notifications for the vnd1_echo CCC.");
+	const char *arg_handle = argv[1];
+	const char *arg_data = argv[2];
+	size_t arg_data_len = strlen(arg_data);
+
+	err = 0;
+	handle = shell_strtoul(arg_handle, 16, &err);
+	if (err) {
+		shell_error(shell, "Handle '%s': Not a valid hex number.", arg_handle);
 		return kStatus_SHELL_Error;
 	}
 
-	if (argc > 1) {
-		data = strtoul(argv[1], NULL, 16);
+	if (!IN_RANGE(handle, BT_ATT_FIRST_ATTRIBUTE_HANDLE, BT_ATT_LAST_ATTRIBUTE_HANDLE)) {
+		shell_error(shell, "Handle 0x%lx: Impossible value.", handle);
+		return kStatus_SHELL_Error;
 	}
 
-	memset(&params, 0, sizeof(params));
+	if ((arg_data_len / 2) > BT_ATT_MAX_ATTRIBUTE_LEN) {
+		shell_error(shell, "Data: Size exceeds legal attribute size.");
+		return kStatus_SHELL_Error;
+	}
 
-	params.uuid = &vnd1_echo_uuid.uuid;
-	params.attr = vnd1_attrs;
-	params.data = &data;
-	params.len = sizeof(data);
-	params.func = notify_cb;
-	params.user_data = (void *)shell;
-	SET_CHAN_OPT_ANY(params);
+	data_len = hex2bin(arg_data, arg_data_len, (uint8_t *)data, sizeof(data));
+	if (data_len == 0 && arg_data_len != 0) {
+		shell_error(shell, "Data: Bad hex.");
+		return kStatus_SHELL_Error;
+	}
 
-	bt_gatt_notify_cb(NULL, &params);
+	attr = find_attr(handle);
+	if (!attr) {
+		shell_error(shell, "Handle 0x%lx: Local attribute not found.", handle);
+		return kStatus_SHELL_Error;
+	}
+
+	err = bt_gatt_notify(NULL, attr, data, data_len);
+	if (err) {
+		shell_error(shell, "bt_gatt_notify errno %d (%s)", -err, strerror(-err));
+	}
 
 	return kStatus_SHELL_Success;
 }
 
 #if (defined(CONFIG_BT_GATT_NOTIFY_MULTIPLE) && (CONFIG_BT_GATT_NOTIFY_MULTIPLE > 0))
+
 static shell_status_t cmd_notify_mult(shell_handle_t shell, int32_t argc, char *argv[])
 {
 	const size_t max_cnt = CONFIG_BT_L2CAP_TX_BUF_COUNT;

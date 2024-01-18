@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2022 NXP
+ * Copyright 2016-2023 NXP
  * All rights reserved.
  *
  *
@@ -192,6 +192,7 @@ void httpsrv_server_task(void *arg)
     /* Server release.*/
     httpsrv_destroy_server(server);
     server->server_tid = 0;
+    sys_sem_signal(&server->finished);
 
     vTaskDelete(NULL);
 }

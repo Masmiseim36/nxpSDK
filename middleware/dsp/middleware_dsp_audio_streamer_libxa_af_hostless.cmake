@@ -21,9 +21,9 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-mem.c
   ${CMAKE_CURRENT_LIST_DIR}/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-msg.c
   ${CMAKE_CURRENT_LIST_DIR}/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-msgq.c
-  ${CMAKE_CURRENT_LIST_DIR}/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-msgq1.c
   ${CMAKE_CURRENT_LIST_DIR}/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-sched.c
   ${CMAKE_CURRENT_LIST_DIR}/audio_framework/libxa_af_hostless/algo/host-apf/src/xaf-api.c
+  ${CMAKE_CURRENT_LIST_DIR}/audio_framework/libxa_af_hostless/algo/host-apf/src/xf-msgq1.c
   ${CMAKE_CURRENT_LIST_DIR}/audio_framework/libxa_af_hostless/algo/host-apf/src/xf-proxy.c
   ${CMAKE_CURRENT_LIST_DIR}/audio_framework/libxa_af_hostless/algo/host-apf/src/xf-trace.c
 )

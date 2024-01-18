@@ -123,10 +123,10 @@ static inline int xf_time_after(UWORD32 a, UWORD32 b)
 {
     return ((WORD32)(a - b) > 0);
 }
-    
+
 /* ...compare timstamps */
 static inline int xf_time_before(UWORD32 a, UWORD32 b)
 {
     return ((WORD32)(a - b) < 0);
 }
-    
+

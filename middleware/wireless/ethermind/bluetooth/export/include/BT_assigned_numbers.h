@@ -57,7 +57,7 @@
  *     |  |  |  |  |  |  |  |  |  |  |
  *     |  |  |  |  |  |  |  |  |  |  |_ Limited Discoveral Mode
  *     |  |  |  |  |  |  |  |  |  |
- *     |  |  |  |  |  |  |  |  |  |__ (Reserved)
+ *     |  |  |  |  |  |  |  |  |  |__ LE Audio
  *     |  |  |  |  |  |  |  |  |
  *     |  |  |  |  |  |  |  |  |__ (Reserved)
  *     |  |  |  |  |  |  |  |
@@ -79,6 +79,7 @@
  *
  */
 #define BT_MSC_LIMITED_DISCOVERABLE  0x00002000U
+#define BT_MSC_LE_AUDIO              0x00004000U
 #define BT_MSC_POSITIONING           0x00010000U
 #define BT_MSC_NETWORKING            0x00020000U
 #define BT_MSC_RENDERING             0x00040000U
@@ -748,6 +749,9 @@
 /* Local Name */
 #define HCI_EIR_DATA_TYPE_SHORTENED_LOCAL_NAME        0x08U
 #define HCI_EIR_DATA_TYPE_COMPLETE_LOCAL_NAME         0x09U
+
+/* Resolvable Set Identifier */
+#define HCI_EIR_DATA_TYPE_RSI                         0x2EU
 
 /* TX Power Level */
 #define HCI_EIR_DATA_TYPE_TX_POWER_LEVEL              0x0AU

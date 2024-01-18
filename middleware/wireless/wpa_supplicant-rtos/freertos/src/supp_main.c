@@ -9,11 +9,16 @@
  */
 
 #include "fsl_os_abstraction.h"
+#ifdef CONFIG_ZEPHYR
+#include "wm_net_decl.h"
+#else
 #include <lwip/sys.h>
 #include <lwip/netif.h>
 #include <lwip/netifapi.h>
+#endif
+
 #include "includes.h"
-#include "common.h"
+#include "utils/common.h"
 #include "eloop.h"
 #include "wpa_supplicant/config.h"
 #include "wpa_supplicant_i.h"
@@ -62,33 +67,57 @@
 #include "css_pkc_mbedtls.h"
 #elif defined(MBEDTLS_MCUX_ELS_PKC_API)
 #include "platform_hw_ip.h"
+#include "mbedtls/threading.h"
 #include "els_pkc_mbedtls.h"
 #elif defined(MBEDTLS_MCUX_ELS_API)
 #include "platform_hw_ip.h"
 #include "els_mbedtls.h"
+#elif defined(MBEDTLS_MCUX_ELE_S400_API)
+#include "ele_mbedtls.h"
 #else
+#ifdef CONFIG_KSDK_MBEDTLS
 #include "ksdk_mbedtls.h"
 #endif
+#endif
+
 #endif /* CONFIG_WPA_SUPP_CRYPTO */
 
-const int WPA_SUPP_TASK_PRIO       = 2; //OS_PRIO_2;
-
-extern osa_semaphore_handle_t wpaSuppReadySemaphoreHandle;
-extern osa_semaphore_handle_t hostapdReadySemaphoreHandle;
+extern OSA_SEMAPHORE_HANDLE_DEFINE(wpaSuppReadySemaphoreHandle);
+#ifdef CONFIG_HOSTAPD
+extern OSA_SEMAPHORE_HANDLE_DEFINE(hostapdReadySemaphoreHandle);
+#endif
 
 #define WS_NUM_MESSAGES (20)
 
-static sys_mbox_t event_queue;
-
 struct wpa_global *global;
+
+#ifdef CONFIG_ZEPHYR
+
+const int WPA_SUPP_TASK_PRIO       = CONFIG_WIFI_MAX_PRIO + 1; //OS_PRIO_2;
+
+struct k_thread suppMainTask;
+k_tid_t supplicant_thread;
+K_THREAD_STACK_DEFINE(suppMainTaskStack, CONFIG_WPA_SUPP_THREAD_STACK_SIZE);
+
+static void supplicant_main_task(void *arg, void *arg2, void *arg3);
+
+K_MSGQ_DEFINE(event_queue, sizeof(void *), WS_NUM_MESSAGES, 4);
+K_EVENT_DEFINE(suppMainTaskEvent);
+
+#else
+
+const int WPA_SUPP_TASK_PRIO       = 2; //OS_PRIO_2;
+
+#define CONFIG_SUPP_MAIN_THREAD_STACK_SIZE 1536
+
+static sys_mbox_t event_queue;
 
 sys_thread_t supplicant_thread;
 
 static void supplicant_main_task(osa_task_param_t arg);
 
 OSA_TASK_HANDLE_DEFINE(suppMainTaskHandle);
-
-#define CONFIG_SUPP_MAIN_THREAD_STACK_SIZE 1536
+#endif
 
 struct hapd_global
 {
@@ -129,15 +158,28 @@ static void iface_cb(struct netif *iface, void *user_data)
 {
     struct wpa_interface *ifaces = user_data;
     char own_addr[NETIF_MAX_HWADDR_LEN];
+#ifdef CONFIG_ZEPHYR
+    const struct net_linkaddr *link_addr = NULL;
+    const struct device *dev             = NULL;
 
+    link_addr = net_if_get_link_addr((struct net_if *)iface);
+    os_memcpy(own_addr, link_addr->addr, link_addr->len);
+#else
     os_memcpy(own_addr, iface->hwaddr, iface->hwaddr_len);
+#endif
 
     memset(ifname, 0, sizeof(ifname));
 
+#ifdef CONFIG_ZEPHYR
+    dev = net_if_get_device((struct net_if *)iface);
+    strncpy(ifname, dev->name, NETIF_NAMESIZE - 1);
+    ifname[NETIF_NAMESIZE - 1] = '\0';
+#else
     (void)netifapi_netif_index_to_name(iface->num + 1, ifname);
 
     wpa_printf(MSG_INFO, "iface_cb: iface %s ifindex %d %02x:%02x:%02x:%02x:%02x:%02x", ifname,
                netif_get_index(iface), own_addr[0], own_addr[1], own_addr[2], own_addr[3], own_addr[4], own_addr[5]);
+#endif
 
     ifaces[idx++].ifname = ifname;
 }
@@ -147,9 +189,13 @@ void process_wpa_supplicant_event()
     void *mem;
     struct wpa_supplicant_event_msg *msg = NULL;
 
+#ifdef CONFIG_ZEPHYR
+    while (k_msgq_get(&event_queue, &mem, K_NO_WAIT) == 0)
+#else
     if (sys_mbox_valid(&event_queue))
     {
         while (sys_mbox_tryfetch(&event_queue, &mem) != SYS_MBOX_EMPTY)
+#endif
         {
             if (mem != NULL)
             {
@@ -170,11 +216,18 @@ void process_wpa_supplicant_event()
                 os_free(msg);
             }
         }
-    }
+#ifndef CONFIG_ZEPHYR
+     }
+#endif
 }
 
 static void notify_wpa_supplicant_event(wpa_supp_event_t event)
 {
+#ifdef CONFIG_ZEPHYR
+    k_event_post(&suppMainTaskEvent, (1U << event));
+    k_yield();
+    k_sleep(K_MSEC(10));
+#else
     if (__get_IPSR())
     {
         portBASE_TYPE taskToWake = pdFALSE;
@@ -191,6 +244,7 @@ static void notify_wpa_supplicant_event(wpa_supp_event_t event)
         portYIELD();
         os_thread_sleep(10);
     }
+#endif
 }
 
 int send_wpa_supplicant_dummy_event()
@@ -202,14 +256,22 @@ int send_wpa_supplicant_dummy_event()
 
 int send_wpa_supplicant_event(struct wpa_supplicant_event_msg *msg)
 {
+#ifdef CONFIG_ZEPHYR
+    k_msgq_put(&event_queue, (void *)(&msg), K_FOREVER);
+#else
     sys_mbox_post(&event_queue, (void *)msg);
+#endif
 
     notify_wpa_supplicant_event(EVENT);
 
     return 0;
 }
 
+#ifdef CONFIG_ZEPHYR
+static void supplicant_main_task(void *arg, void *arg1, void *arg2)
+#else
 static void supplicant_main_task(osa_task_param_t arg)
+#endif
 {
     // const char *iface_name = (const char *)arg;
     struct netif *netif;
@@ -218,14 +280,20 @@ static void supplicant_main_task(osa_task_param_t arg)
     int iface_count, exitcode = -1;
     struct wpa_params params;
 
+#ifndef CONFIG_ZEPHYR
     if (sys_mbox_new(&event_queue, WS_NUM_MESSAGES) != ERR_OK)
     {
         wpa_printf(MSG_ERROR, "Failed to create msg queue");
         return;
     }
+#endif
 
     os_memset(&params, 0, sizeof(params));
+#ifdef CONFIG_WPA_SUPP_DPP
+    params.wpa_debug_level = MSG_INFO;
+#else
     params.wpa_debug_level = CONFIG_WPA_SUPP_DEBUG_LEVEL;
+#endif
 
     wpa_printf(MSG_INFO, "%s: %d Starting wpa_supplicant thread with debug level: %d\n", __func__, __LINE__,
                params.wpa_debug_level);
@@ -318,7 +386,8 @@ static void supplicant_main_task(osa_task_param_t arg)
             exitcode = -1;
             break;
         }
-        wpa_s->conf->okc = 0;
+        wpa_s->conf->okc = 1;
+        wpa_s->conf->wps_cred_processing = 2;
         wpa_s->conf->filter_ssids = 1;
         if (i == 0)
             wpa_s->conf->ap_scan = 1;
@@ -351,6 +420,9 @@ out:
     os_free(params.match_ifaces);
 #endif /* CONFIG_MATCH_IFACE */
 
+#ifdef CONFIG_ZEPHYR
+    k_msgq_purge(&event_queue);
+#else
     if (event_queue != NULL)
     {
         void *mem;
@@ -372,12 +444,15 @@ out:
         }
         sys_mbox_free(&event_queue);
     }
+#endif
 
     wpa_printf(MSG_INFO, "wpa_supplicant_main: exitcode %d", exitcode);
 
     (void)OSA_SemaphorePost((osa_semaphore_handle_t)wpaSuppReadySemaphoreHandle);
 
+#ifndef CONFIG_ZEPHYR
     vTaskDelete(NULL);
+#endif
 
     return;
 }
@@ -398,8 +473,15 @@ int start_wpa_supplicant(char *iface_name)
     }
 #endif
 
+#ifdef CONFIG_ZEPHYR
+    supplicant_thread = k_thread_create(&suppMainTask, suppMainTaskStack,
+        K_THREAD_STACK_SIZEOF(suppMainTaskStack), supplicant_main_task, iface_name, NULL, NULL,
+        WPA_SUPP_TASK_PRIO, 0, K_NO_WAIT);
+    k_thread_name_set(supplicant_thread, "wpa_supplicant");
+#else
     supplicant_thread = sys_thread_new("wpa_supplicant", supplicant_main_task, iface_name,
                                        CONFIG_SUPP_MAIN_THREAD_STACK_SIZE, WPA_SUPP_TASK_PRIO);
+#endif
 
     return ret;
 }
@@ -421,7 +503,11 @@ int stop_wpa_supplicant(void)
     /* Send dummy notification to supplicant thread for unblocking its eloop*/
     send_wpa_supplicant_dummy_event();
     /* Context Switch so that wpa suppplicant thread get chance to terminate eloop*/
+#ifdef CONFIG_ZEPHYR
+    k_yield();
+#else
     portYIELD();
+#endif
 
     status = OSA_SemaphoreWait((osa_semaphore_handle_t)wpaSuppReadySemaphoreHandle, osaWaitForever_c);
 
@@ -834,7 +920,14 @@ struct hostapd_config *hostapd_config_read2(const char *fname)
 
     char if_name[NETIF_NAMESIZE] = {0};
 
+#ifdef CONFIG_ZEPHYR
+    const struct device *dev = NULL;
+    dev = net_if_get_device((struct net_if *)netif);
+    strncpy(if_name, dev->name, NETIF_NAMESIZE - 1);
+    if_name[NETIF_NAMESIZE - 1] = '\0';
+#else
     (void)netifapi_netif_index_to_name(netif->num + 1, if_name);
+#endif
 
     conf = hostapd_config_defaults();
     if (conf == NULL)
@@ -859,7 +952,12 @@ struct hostapd_config *hostapd_config_read2(const char *fname)
     bss->logger_stdout_level = HOSTAPD_LEVEL_INFO;
     bss->logger_stdout       = 0xffff;
     bss->nas_identifier      = os_strdup("ap.example.com");
+    bss->eap_sim_db          = os_strdup("unix:/tmp/hlr_auc_gw.sock");
+#ifdef RW610
+    os_memcpy(conf->country, "US ", 3);
+#else	
     os_memcpy(conf->country, "WW ", 3);
+#endif
     conf->hw_mode        = HOSTAPD_MODE_IEEE80211G;
     bss->wps_state       = WPS_STATE_CONFIGURED;
     bss->eap_server      = 1;
@@ -872,6 +970,7 @@ struct hostapd_config *hostapd_config_read2(const char *fname)
     conf->acs_num_scans = 1;
 #endif /* CONFIG_ACS */
     conf->ieee80211n = 1;
+    conf->ieee80211h = 0;
     conf->ht_capab |= HT_CAP_INFO_SUPP_CHANNEL_WIDTH_SET;
     conf->secondary_channel = 1;
     conf->ht_capab |= HT_CAP_INFO_SHORT_GI20MHZ;
@@ -906,6 +1005,12 @@ static int hostapd_enable_iface_cb(struct hostapd_iface *hapd_iface)
     bss = hapd_iface->bss[0];
 
     bss->conf->start_disabled = 0;
+
+    if (hostapd_config_check(hapd_iface->conf, 1) < 0)
+    {
+        wpa_printf(MSG_INFO, "Invalid configuration - cannot enable");
+        return -1;
+    }
 
     if (hostapd_setup_interface(hapd_iface))
     {
@@ -987,7 +1092,7 @@ static void hostapd_main_task(osa_task_param_t arg)
 #endif /* CONFIG_DPP2 */
     interfaces.dpp = dpp_global_init(&dpp_conf);
     if (!interfaces.dpp)
-        return -1;
+        return;
 #endif /* CONFIG_DPP */
 
     wpa_msg_register_ifname_cb(hostapd_msg_ifname_cb);
@@ -1017,7 +1122,14 @@ static void hostapd_main_task(osa_task_param_t arg)
 
     char if_name[NETIF_NAMESIZE] = {0};
 
+#ifdef CONFIG_ZEPHYR
+    const struct device *dev = NULL;
+    dev = net_if_get_device((struct net_if *)netif);
+    strncpy(if_name, dev->name, NETIF_NAMESIZE - 1);
+    if_name[NETIF_NAMESIZE - 1] = '\0';
+#else
     (void)netifapi_netif_index_to_name(netif->num + 1, if_name);
+#endif
 
     for (i = 0; i < interfaces.count; i++)
     {

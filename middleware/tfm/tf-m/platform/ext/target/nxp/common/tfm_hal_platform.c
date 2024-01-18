@@ -12,54 +12,55 @@
 #include "tfm_plat_defs.h"
 #include "uart_stdout.h"
 #include "fih.h"
+#include "region_defs.h"
+#include "region.h"
 #include "tfm_spm_log.h"
 
-extern const struct memory_region_limits memory_regions;
+/* The section names come from the scatter file */
+REGION_DECLARE(Load$$LR$$, LR_NS_PARTITION, $$Base);
+REGION_DECLARE(Image$$, ER_VENEER, $$Base);
+REGION_DECLARE(Image$$, VENEER_ALIGN, $$Limit);
+#ifdef BL2
+REGION_DECLARE(Load$$LR$$, LR_SECONDARY_PARTITION, $$Base);
+#endif /* BL2 */
 
-#ifdef PLAT_HAS_ITRC /* Intrusion and Tamper Response Controller (ITRC) */
-#include "fsl_itrc.h"
-static enum tfm_plat_err_t init_itrc(void)
-{
-    /* Clear all possible pending Event/Action statuses */
-    ITRC_ClearAllStatus(ITRC);
+const struct memory_region_limits memory_regions = {
+    .non_secure_code_start =
+        (uint32_t)&REGION_NAME(Load$$LR$$, LR_NS_PARTITION, $$Base) +
+        BL2_HEADER_SIZE,
 
-    /* Lock all events in ITRC (except Sw Events). */
-    ITRC_SetActionToEvent(ITRC, kITRC_ChipReset, kITRC_CssGlitch, kITRC_Lock, kITRC_Enable);
-    ITRC_SetActionToEvent(ITRC, kITRC_ChipReset, kITRC_RtcTamper, kITRC_Lock, kITRC_Enable);
-    ITRC_SetActionToEvent(ITRC, kITRC_ChipReset, kITRC_Cdog, kITRC_Lock, kITRC_Enable);
-    ITRC_SetActionToEvent(ITRC, kITRC_ChipReset, kITRC_BodVbat, kITRC_Lock, kITRC_Enable);
-    ITRC_SetActionToEvent(ITRC, kITRC_ChipReset, kITRC_BodVdd, kITRC_Lock, kITRC_Enable);
-    ITRC_SetActionToEvent(ITRC, kITRC_ChipReset, kITRC_Watchdog, kITRC_Lock, kITRC_Enable);
-#if 0 /* Disabled, to avoid HW reset on debug mail box start, reading erased memory. */
-    ITRC_SetActionToEvent(ITRC, kITRC_ChipReset, kITRC_FlashEcc, kITRC_Lock, kITRC_Enable);
-#endif
-    ITRC_SetActionToEvent(ITRC, kITRC_ChipReset, kITRC_Ahb, kITRC_Lock, kITRC_Enable);
-    ITRC_SetActionToEvent(ITRC, kITRC_ChipReset, kITRC_CssErr, kITRC_Lock, kITRC_Enable);
-#if defined(FSL_FEATURE_ITRC_HAS_SYSCON_GLITCH) && (FSL_FEATURE_ITRC_HAS_SYSCON_GLITCH > 0)
-    ITRC_SetActionToEvent(ITRC, kITRC_ChipReset, kITRC_SysconGlitch, kITRC_Lock, kITRC_Enable);
-#endif
-    ITRC_SetActionToEvent(ITRC, kITRC_ChipReset, kITRC_Pkc, kITRC_Lock, kITRC_Enable);
+    .non_secure_partition_base =
+        (uint32_t)&REGION_NAME(Load$$LR$$, LR_NS_PARTITION, $$Base),
 
-    return TFM_PLAT_ERR_SUCCESS;
-}
-#endif /* PLAT_HAS_ITRC */
+    .non_secure_partition_limit =
+        (uint32_t)&REGION_NAME(Load$$LR$$, LR_NS_PARTITION, $$Base) +
+        NS_PARTITION_SIZE - 1,
 
-#ifdef TFM_FIH_PROFILE_ON
-fih_int tfm_hal_platform_init(void)
-#else
-enum tfm_hal_status_t tfm_hal_platform_init(void)
-#endif
+    .veneer_base =
+        (uint32_t)&REGION_NAME(Image$$, ER_VENEER, $$Base),
+
+    .veneer_limit =
+        (uint32_t)&REGION_NAME(Image$$, VENEER_ALIGN, $$Limit),
+
+#ifdef BL2
+    .secondary_partition_base =
+        (uint32_t)&REGION_NAME(Load$$LR$$, LR_SECONDARY_PARTITION, $$Base),
+
+    .secondary_partition_limit =
+        (uint32_t)&REGION_NAME(Load$$LR$$, LR_SECONDARY_PARTITION, $$Base) +
+        SECONDARY_PARTITION_SIZE - 1,
+#endif /* BL2 */
+};
+
+extern void BOARD_InitHardware(void);
+
+FIH_RET_TYPE(enum tfm_hal_status_t) tfm_hal_platform_init(void)
 {
     enum tfm_plat_err_t plat_err = TFM_PLAT_ERR_SYSTEM_ERR;
 
-    stdio_init();
+    BOARD_InitHardware();
 
-#ifdef PLAT_HAS_ITRC /* Intrusion and Tamper Response Controller (ITRC) */
-    plat_err = init_itrc();
-    if (plat_err != TFM_PLAT_ERR_SUCCESS) {
-        FIH_RET(fih_int_encode(TFM_HAL_ERROR_GENERIC));
-    }
-#endif
+    stdio_init();
 
     plat_err = enable_fault_handlers();
     if (plat_err != TFM_PLAT_ERR_SUCCESS) {
@@ -106,31 +107,74 @@ uint32_t tfm_hal_get_ns_entry_point(void)
     return *((uint32_t *)(memory_regions.non_secure_code_start + 4));
 }
 
-#ifdef FIH_ENABLE_DELAY  
-
-/* This implementation is based on MCUBoot */
-#include "mbedtls/ctr_drbg.h"
-#include "mbedtls/entropy.h"
-
-static mbedtls_entropy_context fih_entropy_ctx;
-static mbedtls_ctr_drbg_context fih_drbg_ctx;
-
-fih_int tfm_fih_random_init(void)
+enum tfm_plat_err_t enable_fault_handlers(void)
 {
-    mbedtls_entropy_init(&fih_entropy_ctx);
-    mbedtls_ctr_drbg_init(&fih_drbg_ctx);
-    mbedtls_ctr_drbg_seed(&fih_drbg_ctx , mbedtls_entropy_func,
-                          &fih_entropy_ctx, NULL, 0);
+    /* Explicitly set secure fault priority to the highest */
+    NVIC_SetPriority(SecureFault_IRQn, 0);
 
-    return FIH_SUCCESS;
+    /* Enables BUS, MEM, USG and Secure faults */
+    SCB->SHCSR |= SCB_SHCSR_USGFAULTENA_Msk
+                  | SCB_SHCSR_BUSFAULTENA_Msk
+                  | SCB_SHCSR_MEMFAULTENA_Msk
+                  | SCB_SHCSR_SECUREFAULTENA_Msk;
+    return TFM_PLAT_ERR_SUCCESS;
 }
 
-void tfm_fih_random_generate(uint8_t *rand)
+/* To write into AIRCR register, 0x5FA value must be write to the VECTKEY field,
+ * otherwise the processor ignores the write.
+ */
+#define SCB_AIRCR_WRITE_MASK ((0x5FAUL << SCB_AIRCR_VECTKEY_Pos))
+
+enum tfm_plat_err_t system_reset_cfg(void)
 {
-    mbedtls_ctr_drbg_random(&fih_drbg_ctx, (unsigned char*) rand, sizeof(uint8_t));
+    uint32_t reg_value = SCB->AIRCR;
+
+    /* Clear SCB_AIRCR_VECTKEY value */
+    reg_value &= ~(uint32_t)(SCB_AIRCR_VECTKEY_Msk);
+
+    /* Enable system reset request only to the secure world */
+    reg_value |= (uint32_t)(SCB_AIRCR_WRITE_MASK | SCB_AIRCR_SYSRESETREQS_Msk);
+
+    SCB->AIRCR = reg_value;
+
+    return TFM_PLAT_ERR_SUCCESS;
 }
 
-#endif /* FIH_ENABLE_DELAY */
+enum tfm_plat_err_t init_debug(void)
+{
+
+#if !defined(DAUTH_CHIP_DEFAULT)
+#error "Debug features are set during provisioning. Application is not able to change them as the SYSCTRL->DEBUG_LOCK_EN is locked by the MCU secure boot.  "
+#endif
+    return TFM_PLAT_ERR_SUCCESS;
+}
+
+/*----------------- NVIC interrupt target state to NS configuration ----------*/
+enum tfm_plat_err_t nvic_interrupt_target_state_cfg(void)
+{
+    /* Target every interrupt to NS; unimplemented interrupts will be WI */
+    for (uint8_t i=0; i<sizeof(NVIC->ITNS)/sizeof(NVIC->ITNS[0]); i++) {
+        NVIC->ITNS[i] = 0xFFFFFFFF;
+    }
+
+#if defined(SEC_VIO_IRQn)
+    /* Make sure that MPC and PPC are targeted to S state */
+    NVIC_ClearTargetState(SEC_VIO_IRQn);
+#endif
+
+    return TFM_PLAT_ERR_SUCCESS;
+}
+
+/*----------------- NVIC interrupt enabling for S peripherals ----------------*/
+enum tfm_plat_err_t nvic_interrupt_enable(void)
+{
+#if defined(SEC_VIO_IRQn)
+    /* MPC/PPC interrupt enabling */
+    NVIC_EnableIRQ(SEC_VIO_IRQn);
+#endif
+
+    return TFM_PLAT_ERR_SUCCESS;
+}
 
 /* Alternative Control Flow Integrity, using  Code Watchdog Timer */
 #if defined(FIH_ENABLE_CFI) & defined(FIH_CFI_ALT) & defined(CDOG)
@@ -143,13 +187,12 @@ static void fih_cdog_init(void)
     status_t result = kStatus_Fail;
     cdog_config_t conf;
     
-    /* Initialize HASHCRYPT */
+    /* Initialize CDOG */
     CDOG_GetDefaultConfig(&conf);
 
     conf.timeout    = kCDOG_FaultCtrl_EnableInterrupt;
     conf.miscompare = kCDOG_FaultCtrl_EnableInterrupt;
     conf.sequence   = kCDOG_FaultCtrl_EnableInterrupt;
-    conf.control    = kCDOG_FaultCtrl_EnableReset; /* Note: Control can generate only reset */
     conf.state      = kCDOG_FaultCtrl_EnableInterrupt;
     conf.address    = kCDOG_FaultCtrl_EnableInterrupt;
     conf.irq_pause  = kCDOG_IrqPauseCtrl_Pause;

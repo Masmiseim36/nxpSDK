@@ -353,7 +353,7 @@ static API_RESULT bt_hfp_ag_set_esco_channel_parameters(uint8_t set_sco_param, H
     /* Null Check for eSCO parameters */
     if ((BT_TRUE == set_sco_param) && (NULL == sco_params))
     {
-        BT_ERR("Unable to set NULL as eSCO parameters\n");
+        LOG_ERR("Unable to set NULL as eSCO parameters\n");
         return API_FAILURE;
     }
 
@@ -376,32 +376,32 @@ static void bt_hfp_ag_handle_retval_from_hfag(uint16_t retval)
     switch (retval)
     {
         case API_SUCCESS:
-            BT_DBG("BT_HFP_AG API_SUCCESS\n");
+            LOG_DBG("BT_HFP_AG API_SUCCESS\n");
             break;
         case HFP_AG_ERR_NULL_PARAMETER:
-            BT_ERR("BT_HFP_AG HFP_AG_ERR_NULL_PARAMETER\n");
+            LOG_ERR("BT_HFP_AG HFP_AG_ERR_NULL_PARAMETER\n");
             break;
         case HFP_AG_MUTEX_INIT_FAILED:
-            BT_ERR("BT_HFP_AG HFP_AG_MUTEX_INIT_FAILED \n");
+            LOG_ERR("BT_HFP_AG HFP_AG_MUTEX_INIT_FAILED \n");
             break;
         case HFP_AG_ERR_INVALID_PARAMETER:
-            BT_ERR("BT_HFP_AG HFP_AG_ERR_INVALID_PARAMETER\n");
+            LOG_ERR("BT_HFP_AG HFP_AG_ERR_INVALID_PARAMETER\n");
             break;
         case HFP_AG_ERR_INVALID_STATE:
-            BT_ERR("BT_HFP_AG HFP_AG_ERR_INVALID_STATE\n");
+            LOG_ERR("BT_HFP_AG HFP_AG_ERR_INVALID_STATE\n");
             break;
         case HFP_AG_ERR_STOP_PENDING:
-            BT_ERR("BT_HFP_AG HFP_AG_ERR_STOP_PENDING\n");
+            LOG_ERR("BT_HFP_AG HFP_AG_ERR_STOP_PENDING\n");
             break;
         case HFP_AG_MUTEX_LOCK_FAILED:
-            BT_ERR("BT_HFP_AG HFP_AG_MUTEX_LOCK_FAILED\n");
+            LOG_ERR("BT_HFP_AG HFP_AG_MUTEX_LOCK_FAILED\n");
             break;
         case HFP_AG_MUTEX_UNLOCK_FAILED:
-            BT_ERR("BT_HFP_AG HFP_AG_MUTEX_UNLOCK_FAILED\n");
+            LOG_ERR("BT_HFP_AG HFP_AG_MUTEX_UNLOCK_FAILED\n");
             break;
 
         default:
-            BT_DBG("BT_HFP_AG Result: 0x%04X\n", retval);
+            LOG_DBG("BT_HFP_AG Result: 0x%04X\n", retval);
     } /* End Switch */
 
     return;
@@ -418,7 +418,7 @@ static API_RESULT hfp_ag_callback(HFP_AG_EVENTS hfp_ag_event, API_RESULT result,
     switch (hfp_ag_event)
     {
         case HFP_AG_CONNECT_IND:
-            BT_DBG("BT_HFP_AG HFP_AG_CONNECT_IND \n");
+            LOG_DBG("BT_HFP_AG HFP_AG_CONNECT_IND \n");
             bt_hfp_agag_state = BT_HFP_AG_STATE_CONNECTED;
 
             s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_inband = BT_TRUE;
@@ -432,7 +432,7 @@ static API_RESULT hfp_ag_callback(HFP_AG_EVENTS hfp_ag_event, API_RESULT result,
             break;
 
         case HFP_AG_CONNECT_CNF:
-            BT_DBG("BT_HFP_AG HFP_AG_CONNECT_CNF \n");
+            LOG_DBG("BT_HFP_AG HFP_AG_CONNECT_CNF \n");
             if (API_SUCCESS == result)
             {
                 bt_hfp_agag_state = BT_HFP_AG_STATE_CONNECTED;
@@ -448,9 +448,9 @@ static API_RESULT hfp_ag_callback(HFP_AG_EVENTS hfp_ag_event, API_RESULT result,
             break;
         case HFP_AG_DISCONNECT_IND:
             BT_mem_copy(recvd_bd_addr, (uint8_t *)data, data_length);
-            BT_DBG("BT_HFP_AG HFP_AG_DISCONNECT_IND \n");
+            LOG_DBG("BT_HFP_AG HFP_AG_DISCONNECT_IND \n");
 
-            BT_DBG(BT_DEVICE_ADDR_ONLY_FRMT_SPECIFIER, BT_DEVICE_ADDR_ONLY_PRINT_STR(recvd_bd_addr));
+            LOG_DBG(BT_DEVICE_ADDR_ONLY_FRMT_SPECIFIER, BT_DEVICE_ADDR_ONLY_PRINT_STR(recvd_bd_addr));
 
             bt_hfp_agag_state = BT_HFP_AG_STATE_DISCONNECTED;
 
@@ -462,9 +462,9 @@ static API_RESULT hfp_ag_callback(HFP_AG_EVENTS hfp_ag_event, API_RESULT result,
 
         case HFP_AG_DISCONNECT_CNF:
             BT_mem_copy(recvd_bd_addr, (uint8_t *)data, data_length);
-            BT_DBG("BT_HFP_AG HFP_AG_DISCONNECT_CNF \n");
+            LOG_DBG("BT_HFP_AG HFP_AG_DISCONNECT_CNF \n");
 
-            BT_DBG(BT_DEVICE_ADDR_ONLY_FRMT_SPECIFIER, BT_DEVICE_ADDR_ONLY_PRINT_STR(recvd_bd_addr));
+            LOG_DBG(BT_DEVICE_ADDR_ONLY_FRMT_SPECIFIER, BT_DEVICE_ADDR_ONLY_PRINT_STR(recvd_bd_addr));
 
             bt_hfp_agag_state = BT_HFP_AG_STATE_DISCONNECTED;
 
@@ -476,13 +476,13 @@ static API_RESULT hfp_ag_callback(HFP_AG_EVENTS hfp_ag_event, API_RESULT result,
             break;
 
         case HFP_AG_STOP_CNF:
-            BT_DBG("BT_HFP_AG HFP_AG_STOP_CNF \n");
+            LOG_DBG("BT_HFP_AG HFP_AG_STOP_CNF \n");
             break;
 
         case HFP_AG_SEND_DATA_CNF:
             if (API_SUCCESS != result)
             {
-                BT_DBG("BT_HFP_AG HFP_AG_SEND_DATA_CNF \n");
+                LOG_DBG("BT_HFP_AG HFP_AG_SEND_DATA_CNF \n");
                 bt_hfp_ag_handle_retval_from_hfag(result);
             }
 
@@ -508,27 +508,27 @@ static API_RESULT hfp_ag_callback(HFP_AG_EVENTS hfp_ag_event, API_RESULT result,
 
                     if (API_SUCCESS != retval)
                     {
-                        BT_ERR("BT_hfp_ag_send_data Failed - 0x%04X\n", retval);
+                        LOG_ERR("BT_hfp_ag_send_data Failed - 0x%04X\n", retval);
                         BT_free_mem(bt_hfp_ag_send[bt_hfp_ag_sendrd].buf);
                     }
                 }
             }
             else
             {
-                BT_DBG("*** Spurious Send Data Cnf ***\n");
+                LOG_DBG("*** Spurious Send Data Cnf ***\n");
             }
             break;
 
         case HFP_AG_RECVD_DATA_IND:
-            BT_DBG("BT_HFP_AG HFP_AG_RECVD_ATCMD \n");
-            BT_DBG("BT_HFP_AG CMD LEN : %d \n", (uint16_t)data_length);
+            LOG_DBG("BT_HFP_AG HFP_AG_RECVD_ATCMD \n");
+            LOG_DBG("BT_HFP_AG CMD LEN : %d \n", (uint16_t)data_length);
 
             recvd_data = (uint8_t *)data;
             for (i = 0; i < data_length; i++)
             {
-                BT_DBG("%c", recvd_data[i]);
+                LOG_DBG("%c", recvd_data[i]);
             }
-            BT_DBG("\n");
+            LOG_DBG("\n");
 
 #ifndef HFP_AG_NO_AUTOMATED_SLC_RESPONSE
             {
@@ -565,7 +565,7 @@ static API_RESULT hfp_ag_callback(HFP_AG_EVENTS hfp_ag_event, API_RESULT result,
                         case AT_BRSF:
                             s_actived_bt_hfp_ag->hf_features =
                                 atoi((char const *)&at_response.global_at_str[at_response.param->start_of_value_index]);
-                            BT_DBG("Get peer brsf: %x\n", s_actived_bt_hfp_ag->hf_features);
+                            LOG_DBG("Get peer brsf: %x\n", s_actived_bt_hfp_ag->hf_features);
                             bt_hfp_ag_send_at_rsp(HFAG_BRSF, NULL);
                             bt_hfp_ag_send_at_rsp(HFAG_OK, NULL);
 
@@ -602,12 +602,12 @@ static API_RESULT hfp_ag_callback(HFP_AG_EVENTS hfp_ag_event, API_RESULT result,
                                 switch (at_response.global_at_str[at_response.param->start_of_value_index])
                                 {
                                     case '1':
-                                        BT_DBG("NREC Enabled\n");
+                                        LOG_DBG("NREC Enabled\n");
                                         bt_hfp_ag_send_at_rsp(HFAG_OK, NULL);
                                         break;
 
                                     case '0':
-                                        BT_DBG("NREC Disbled\n");
+                                        LOG_DBG("NREC Disbled\n");
                                         bt_hfp_ag_send_at_rsp(HFAG_OK, NULL);
                                         break;
 
@@ -622,7 +622,7 @@ static API_RESULT hfp_ag_callback(HFP_AG_EVENTS hfp_ag_event, API_RESULT result,
                             switch (at_response.global_at_str[at_response.param->start_of_value_index])
                             {
                                 case '1':
-                                    BT_DBG("VR Enabled\n");
+                                    LOG_DBG("VR Enabled\n");
                                     bt_hfp_ag_send_at_rsp(HFAG_OK, NULL);
 
                                      if (s_actived_bt_hfp_ag->bt_hfp_ag_cb->brva)
@@ -634,7 +634,7 @@ static API_RESULT hfp_ag_callback(HFP_AG_EVENTS hfp_ag_event, API_RESULT result,
                                     break;
 
                                 case '0':
-                                    BT_DBG("VR Disbled\n");
+                                    LOG_DBG("VR Disbled\n");
                                     bt_hfp_ag_send_at_rsp(HFAG_OK, NULL);
                                      if (s_actived_bt_hfp_ag->bt_hfp_ag_cb->brva)
                                      {
@@ -645,7 +645,7 @@ static API_RESULT hfp_ag_callback(HFP_AG_EVENTS hfp_ag_event, API_RESULT result,
                                     break;
 
                                 case '2':
-                                    BT_DBG("EVR Enabled\n");
+                                    LOG_DBG("EVR Enabled\n");
                                     bt_hfp_ag_send_at_rsp(HFAG_OK, NULL);
                                     break;
 
@@ -658,7 +658,7 @@ static API_RESULT hfp_ag_callback(HFP_AG_EVENTS hfp_ag_event, API_RESULT result,
                         case AT_VGS:
                             s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_vgs = (uint8_t)atoi(
                                 (char const *)&at_response.global_at_str[at_response.param->start_of_value_index]);
-                            BT_DBG("Speaker Gain Updated - %d\n", s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_vgs);
+                            LOG_DBG("Speaker Gain Updated - %d\n", s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_vgs);
                             bt_hfp_ag_send_at_rsp(HFAG_OK, NULL);
                             if (s_actived_bt_hfp_ag->bt_hfp_ag_cb->volume_control)
                             {
@@ -671,7 +671,7 @@ static API_RESULT hfp_ag_callback(HFP_AG_EVENTS hfp_ag_event, API_RESULT result,
                         case AT_VGM:
                             s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_vgm = (uint8_t)atoi(
                                 (char const *)&at_response.global_at_str[at_response.param->start_of_value_index]);
-                            BT_DBG("Microphone Gain Updated - %d\n",
+                            LOG_DBG("Microphone Gain Updated - %d\n",
                                    s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_vgm);
                             if (s_actived_bt_hfp_ag->bt_hfp_ag_cb->volume_control)
                             {
@@ -828,7 +828,7 @@ static void hfp_ag_start_pre(void)
     /* local varibale to extract the supported features */
     uint8_t attr_value[] = {0x09, 0x00, 0x00};
 
-    BT_DBG("Selected the Local HFP_AG Supported Features(as Decimal value)\n: %x", BT_HFP_AG_SUPPORTED_FEATURES);
+    LOG_DBG("Selected the Local HFP_AG Supported Features(as Decimal value)\n: %x", BT_HFP_AG_SUPPORTED_FEATURES);
 
     sprintf((char *)hfp_ag_local_supported_features, "%u", BT_HFP_AG_SUPPORTED_FEATURES);
 
@@ -889,7 +889,7 @@ static void bt_hfp_ag_send_rsp(uint8_t *rsp, uint16_t rsplen)
     buf = (uint8_t *)BT_alloc_mem(rsplen);
     if (NULL == buf)
     {
-        BT_ERR("Failed to allocate buffer\n");
+        LOG_ERR("Failed to allocate buffer\n");
         return;
     }
 
@@ -906,7 +906,7 @@ static void bt_hfp_ag_send_rsp(uint8_t *rsp, uint16_t rsplen)
 
         if (API_SUCCESS != retval)
         {
-            BT_ERR("BT_hfp_ag_send_data Failed - 0x%04X\n", retval);
+            LOG_ERR("BT_hfp_ag_send_data Failed - 0x%04X\n", retval);
             BT_free_mem(buf);
         }
     }
@@ -1081,7 +1081,7 @@ int bt_hfp_ag_connect(struct bt_conn *conn,
 
         BT_dbase_activate_record(config->server_channel);
 
-        BT_DBG("\nBT HFP AG Profile Started Successfully\n");
+        LOG_DBG("\nBT HFP AG Profile Started Successfully\n");
     }
     else
     {
@@ -1123,7 +1123,7 @@ int bt_hfp_ag_send_enable_voice_recognition(struct bt_hfp_ag *hfp_ag)
     assert(hfp_ag);
     if (!(hfp_ag->hf_features & 0x0008))
     {
-        BT_DBG("HFU does not support VR feature\n");
+        LOG_DBG("HFU does not support VR feature\n");
         return -EIO;
     }
 
@@ -1139,7 +1139,7 @@ int bt_hfp_ag_send_disable_voice_recognition(struct bt_hfp_ag *hfp_ag)
     assert(hfp_ag);
     if (!(hfp_ag->hf_features & 0x0008))
     {
-        BT_DBG("HFU does not support VR feature\n");
+        LOG_DBG("HFU does not support VR feature\n");
         return -EIO;
     }
 
@@ -1172,15 +1172,15 @@ void bt_hfp_ag_open_audio(struct bt_hfp_ag *hfp_ag, uint8_t codec)
     struct bt_conn *bt_so_conn;
     /* Update the eSCO channel paramters for Codec */
     bt_hfp_ag_set_esco_channel_parameters(BT_TRUE, bt_hfp_ag_esco_params[codec]);
-    BT_DBG("> bt_hfp_ag_set_esco_channel_parameters \n");
+    LOG_DBG("> bt_hfp_ag_set_esco_channel_parameters \n");
     if (hfp_ag->bt_so_conn == NULL)
     {
         bt_so_conn = bt_conn_create_sco((const bt_addr_t *)hfp_ag->peerAddr);
         if (NULL == bt_so_conn)
         {
-            BT_ERR("FAILED !! bt_conn_create_sco \n");
+            LOG_ERR("FAILED !! bt_conn_create_sco \n");
         }
-        BT_DBG(" bt_conn_create_sco  Sucuss\n");
+        LOG_DBG(" bt_conn_create_sco  Sucuss\n");
         hfp_ag->bt_so_conn = bt_so_conn;
     }
 }
@@ -1193,11 +1193,11 @@ void bt_hfp_ag_close_audio(struct bt_hfp_ag *hfp_ag)
         retval = bt_conn_disconnect(hfp_ag->bt_so_conn, 0x13U);
         if (0 == retval)
         {
-            BT_DBG("Disconnected SCO Connection 0x%04X\n", hfp_ag->bt_so_conn);
+            LOG_DBG("Disconnected SCO Connection 0x%04X\n", hfp_ag->bt_so_conn);
         }
         else
         {
-            BT_ERR("SCO Connection for HFP-Unit not found\n");
+            LOG_ERR("SCO Connection for HFP-Unit not found\n");
         }
         bt_conn_unref(hfp_ag->bt_so_conn);
         hfp_ag->bt_so_conn = NULL;
@@ -1336,7 +1336,7 @@ void bt_hfp_ag_call_status_pl(struct bt_hfp_ag *hfp_ag, hfp_ag_call_status_t sta
                 if (hfp_ag->bt_hfp_ag_config->bt_hfp_ag_codec_negotiate)
                 {
                     bt_hfp_ag_send_at_rsp(HFAG_BCS, NULL);
-                    BT_DBG("hfp_ag_call_call_incoming HFAG_BCS \n");
+                    LOG_DBG("hfp_ag_call_call_incoming HFAG_BCS \n");
                 }
                 else
                 {
@@ -1464,17 +1464,17 @@ static uint8_t bt_hfp_ag_sdp_user(struct bt_conn *conn, struct bt_sdp_client_res
 
     if ((result) && (result->resp_buf))
     {
-        BT_INFO("sdp success callback\r\n");
+        LOG_INF("sdp success callback\r\n");
         res = bt_sdp_get_proto_param(result->resp_buf, BT_SDP_PROTO_RFCOMM, &param);
         if (res < 0)
         {
-            BT_ERR("PSM is not found\r\n");
+            LOG_ERR("PSM is not found\r\n");
             return BT_SDP_DISCOVER_UUID_CONTINUE;
         }
-        BT_INFO("param %x\r\n", param);
+        LOG_INF("param %x\r\n", param);
         if (param != 0)
         {
-            BT_INFO("HFP  Service found. Connecting ...\n");
+            LOG_INF("HFP  Service found. Connecting ...\n");
             for (int i = 0; i < CONFIG_BT_MAX_CONN; i++)
             {
                 if (s_hfp_sdp[i].bt_conn == conn)
@@ -1492,7 +1492,7 @@ static uint8_t bt_hfp_ag_sdp_user(struct bt_conn *conn, struct bt_sdp_client_res
     }
     else
     {
-        BT_ERR("sdp fail callback\r\n");
+        LOG_ERR("sdp fail callback\r\n");
         return BT_SDP_DISCOVER_UUID_CONTINUE;
     }
 }
@@ -1515,11 +1515,11 @@ int bt_hfp_ag_discover(struct bt_conn *conn, bt_hfp_ag_discover_callback discove
             res                           = bt_sdp_discover(conn, &discov_hfp_hf);
             if (res)
             {
-                BT_ERR("SDP discovery failed: result\r\n");
+                LOG_ERR("SDP discovery failed: result\r\n");
             }
             else
             {
-                BT_INFO("SDP discovery started\r\n");
+                LOG_INF("SDP discovery started\r\n");
             }
             return res;
         }

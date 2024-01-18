@@ -1,3 +1,22 @@
+rem(){ :;};rem '
+@goto b
+';
+#!/bin/sh
+
+build_target=$(echo $xt_build_target | tr [:upper:] [:lower:])
+bin_path=../binary
+rm_cmd=(rm -f)
+
+echo pre-clean rule
+if test -f "$bin_path/dsp_text_$build_target.bin"; then $rm_cmd "$bin_path/dsp_text_$build_target.bin"
+fi
+if test -f "$bin_path/dsp_data_$build_target.bin"; then $rm_cmd "$bin_path/dsp_data_$build_target.bin"
+fi
+if test -f "$bin_path/dsp_ncache_$build_target.bin"; then $rm_cmd "$bin_path/dsp_reset_$build_target.bin"
+fi
+exit
+
+:b
 @echo off
 :: get build target from the environment variable and make it's first letter lowercase
 setlocal enabledelayedexpansion

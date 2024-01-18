@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: LPADC: 12-bit SAR Analog-to-Digital Converter Driver</title>
+<title>MCUXpresso SDK API Reference Manual: LCDIF: LCD interface</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,718 +99,628 @@ $(document).ready(function(){initNavTree('a00048.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#files">Files</a> &#124;
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">LPADC: 12-bit SAR Analog-to-Digital Converter Driver</div>  </div>
+<div class="title">LCDIF: LCD interface</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a peripheral driver for the 12-bit SAR Analog-to-Digital Converter (LPADC) module of MCUXpresso SDK devices.</p>
-<h1><a class="anchor" id="LPADCTpyUC"></a>
-Typical use case</h1>
-<h2><a class="anchor" id="LPADCPolConfig"></a>
-Polling Configuration</h2>
-<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/lpadc </p>
-<h2><a class="anchor" id="LPADCIntConfig"></a>
-Interrupt Configuration</h2>
-<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/lpadc </p>
+<p>The MCUXpresso SDK provides a peripheral driver for the LCD interface (LCDIF) module of MCUXpresso SDK devices. </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
-Files</h2></td></tr>
-<tr class="memitem:a00183"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00183.html">fsl_lpadc.h</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00398"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a00398">lpadc_config_t</a></td></tr>
-<tr class="memdesc:a00398"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPADC global configuration.  <a href="a00048.html#a00398">More...</a><br/></td></tr>
-<tr class="separator:a00398"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00399"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a00399">lpadc_conv_command_config_t</a></td></tr>
-<tr class="memdesc:a00399"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define structure to keep the configuration for conversion command.  <a href="a00048.html#a00399">More...</a><br/></td></tr>
-<tr class="separator:a00399"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00401"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a00401">lpadc_conv_trigger_config_t</a></td></tr>
-<tr class="memdesc:a00401"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define structure to keep the configuration for conversion trigger.  <a href="a00048.html#a00401">More...</a><br/></td></tr>
-<tr class="separator:a00401"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00400"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a00400">lpadc_conv_result_t</a></td></tr>
-<tr class="memdesc:a00400"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define the structure to keep the conversion result.  <a href="a00048.html#a00400">More...</a><br/></td></tr>
-<tr class="separator:a00400"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00392"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a00392">_lcdif_dpi_config</a></td></tr>
+<tr class="memdesc:a00392"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configuration for LCDIF module to work in DBI mode.  <a href="a00048.html#a00392">More...</a><br/></td></tr>
+<tr class="separator:a00392"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00393"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a00393">_lcdif_fb_config</a></td></tr>
+<tr class="memdesc:a00393"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF frame buffer configuration.  <a href="a00048.html#a00393">More...</a><br/></td></tr>
+<tr class="separator:a00393"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00390"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a00390">_lcdif_cursor_config</a></td></tr>
+<tr class="memdesc:a00390"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF cursor configuration.  <a href="a00048.html#a00390">More...</a><br/></td></tr>
+<tr class="separator:a00390"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00391"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a00391">_lcdif_dither_config</a></td></tr>
+<tr class="memdesc:a00391"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF dither configuration.  <a href="a00048.html#a00391">More...</a><br/></td></tr>
+<tr class="separator:a00391"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gae305eca1c95975e49ea88d0d39aeb3e0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gae305eca1c95975e49ea88d0d39aeb3e0">LPADC_GET_ACTIVE_COMMAND_STATUS</a>(statusVal)&#160;&#160;&#160;((statusVal &amp; ADC_STAT_CMDACT_MASK) &gt;&gt; ADC_STAT_CMDACT_SHIFT)</td></tr>
-<tr class="memdesc:gae305eca1c95975e49ea88d0d39aeb3e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define the MACRO function to get command status from status value.  <a href="#gae305eca1c95975e49ea88d0d39aeb3e0">More...</a><br/></td></tr>
-<tr class="separator:gae305eca1c95975e49ea88d0d39aeb3e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga48a0c8b6bac1e45cc7bdc93ccc288786"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga48a0c8b6bac1e45cc7bdc93ccc288786">LPADC_GET_ACTIVE_TRIGGER_STATUE</a>(statusVal)&#160;&#160;&#160;((statusVal &amp; ADC_STAT_TRGACT_MASK) &gt;&gt; ADC_STAT_TRGACT_SHIFT)</td></tr>
-<tr class="memdesc:ga48a0c8b6bac1e45cc7bdc93ccc288786"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define the MACRO function to get trigger status from status value.  <a href="#ga48a0c8b6bac1e45cc7bdc93ccc288786">More...</a><br/></td></tr>
-<tr class="separator:ga48a0c8b6bac1e45cc7bdc93ccc288786"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga59226e4d188d172b3df72f6976766dd6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga59226e4d188d172b3df72f6976766dd6">LCDIF_MAKE_CURSOR_COLOR</a>(r, g, b)&#160;&#160;&#160;(((r) &lt;&lt; 16U) | ((g) &lt;&lt; 8U) | ((b) &lt;&lt; 0U))</td></tr>
+<tr class="memdesc:ga59226e4d188d172b3df72f6976766dd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the cursor color, every element should be in the range of 0 ~ 255.  <a href="#ga59226e4d188d172b3df72f6976766dd6">More...</a><br/></td></tr>
+<tr class="separator:ga59226e4d188d172b3df72f6976766dd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1c8701d1bffcab393b254ffd9c64dc3c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga1c8701d1bffcab393b254ffd9c64dc3c">LCDIF_MAKE_GAMMA_VALUE</a>(r, g, b)&#160;&#160;&#160;(((r) &lt;&lt; 16U) | ((g) &lt;&lt; 8U) | ((b) &lt;&lt; 0U))</td></tr>
+<tr class="memdesc:ga1c8701d1bffcab393b254ffd9c64dc3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the gamma value set to LCDIF gamma table, every element should be in the range of 0~255.  <a href="#ga1c8701d1bffcab393b254ffd9c64dc3c">More...</a><br/></td></tr>
+<tr class="separator:ga1c8701d1bffcab393b254ffd9c64dc3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9b3c1e1727697f2846397dee63ba51b4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga9b3c1e1727697f2846397dee63ba51b4">LCDIF_FB_ALIGN</a>&#160;&#160;&#160;128U</td></tr>
+<tr class="memdesc:ga9b3c1e1727697f2846397dee63ba51b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The frame buffer should be 128 byte aligned.  <a href="#ga9b3c1e1727697f2846397dee63ba51b4">More...</a><br/></td></tr>
+<tr class="separator:ga9b3c1e1727697f2846397dee63ba51b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga35c38704589fb7e742a1d6462a77699f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga35c38704589fb7e742a1d6462a77699f">LCDIF_GAMMA_INDEX_MAX</a>&#160;&#160;&#160;256U</td></tr>
+<tr class="memdesc:ga35c38704589fb7e742a1d6462a77699f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gamma index max value.  <a href="#ga35c38704589fb7e742a1d6462a77699f">More...</a><br/></td></tr>
+<tr class="separator:ga35c38704589fb7e742a1d6462a77699f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga270843d0ec2b7d9346fefee2aac7fd71"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga270843d0ec2b7d9346fefee2aac7fd71"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga270843d0ec2b7d9346fefee2aac7fd71">LCDIF_CURSOR_SIZE</a>&#160;&#160;&#160;32U</td></tr>
+<tr class="memdesc:ga270843d0ec2b7d9346fefee2aac7fd71"><td class="mdescLeft">&#160;</td><td class="mdescRight">The cursor size is 32 x 32. <br/></td></tr>
+<tr class="separator:ga270843d0ec2b7d9346fefee2aac7fd71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga63488d118f1e179642ebfe3adc326009"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00048.html#gaef0af22da98aeb483b5ba8b62c694dfa">_lcdif_output_format</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga63488d118f1e179642ebfe3adc326009">lcdif_output_format_t</a></td></tr>
+<tr class="memdesc:ga63488d118f1e179642ebfe3adc326009"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF DPI output format.  <a href="#ga63488d118f1e179642ebfe3adc326009">More...</a><br/></td></tr>
+<tr class="separator:ga63488d118f1e179642ebfe3adc326009"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1415266211a535981560e018a21688df"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00048.html#a00392">_lcdif_dpi_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga1415266211a535981560e018a21688df">lcdif_dpi_config_t</a></td></tr>
+<tr class="memdesc:ga1415266211a535981560e018a21688df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configuration for LCDIF module to work in DBI mode.  <a href="#ga1415266211a535981560e018a21688df">More...</a><br/></td></tr>
+<tr class="separator:ga1415266211a535981560e018a21688df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac00e47e2507aa8a9e6afea960d6c919a"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00048.html#ga682e10a8d0c26d12d0b1216f6a9f14df">_lcdif_fb_format</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gac00e47e2507aa8a9e6afea960d6c919a">lcdif_fb_format_t</a></td></tr>
+<tr class="memdesc:gac00e47e2507aa8a9e6afea960d6c919a"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF frame buffer pixel format.  <a href="#gac00e47e2507aa8a9e6afea960d6c919a">More...</a><br/></td></tr>
+<tr class="separator:gac00e47e2507aa8a9e6afea960d6c919a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5a2e497ada20ec405cd00cb1ee974ad8"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00048.html#a00393">_lcdif_fb_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga5a2e497ada20ec405cd00cb1ee974ad8">lcdif_fb_config_t</a></td></tr>
+<tr class="memdesc:ga5a2e497ada20ec405cd00cb1ee974ad8"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF frame buffer configuration.  <a href="#ga5a2e497ada20ec405cd00cb1ee974ad8">More...</a><br/></td></tr>
+<tr class="separator:ga5a2e497ada20ec405cd00cb1ee974ad8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5189c7cb86dbddcbf43cc5fe1a7e75bf"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00048.html#ga29869b579a68e5db70e24fd6838573f5">_lcdif_cursor_format</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga5189c7cb86dbddcbf43cc5fe1a7e75bf">lcdif_cursor_format_t</a></td></tr>
+<tr class="memdesc:ga5189c7cb86dbddcbf43cc5fe1a7e75bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF cursor format.  <a href="#ga5189c7cb86dbddcbf43cc5fe1a7e75bf">More...</a><br/></td></tr>
+<tr class="separator:ga5189c7cb86dbddcbf43cc5fe1a7e75bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga66ec42c3469ab9d600523e8937dad3a7"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00048.html#a00390">_lcdif_cursor_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga66ec42c3469ab9d600523e8937dad3a7">lcdif_cursor_config_t</a></td></tr>
+<tr class="memdesc:ga66ec42c3469ab9d600523e8937dad3a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF cursor configuration.  <a href="#ga66ec42c3469ab9d600523e8937dad3a7">More...</a><br/></td></tr>
+<tr class="separator:ga66ec42c3469ab9d600523e8937dad3a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8fe3d309ed1a498f661fa514cede3adb"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00048.html#a00391">_lcdif_dither_config</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga8fe3d309ed1a498f661fa514cede3adb">lcdif_dither_config_t</a></td></tr>
+<tr class="memdesc:ga8fe3d309ed1a498f661fa514cede3adb"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF dither configuration.  <a href="#ga8fe3d309ed1a498f661fa514cede3adb">More...</a><br/></td></tr>
+<tr class="separator:ga8fe3d309ed1a498f661fa514cede3adb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:gaf40ddd93026be88551f23b9428e98e22"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gaf40ddd93026be88551f23b9428e98e22">_lpadc_status_flags</a> { <br/>
-&#160;&#160;<a class="el" href="a00048.html#ggaf40ddd93026be88551f23b9428e98e22aa52211bffea2def3062daff07532cb28">kLPADC_ResultFIFOOverflowFlag</a> = ADC_STAT_FOF_MASK, 
+<tr class="memitem:gacbd1a1f016048fe79f77c89c43ab7d69"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gacbd1a1f016048fe79f77c89c43ab7d69">_lcdif_polarity_flags</a> { <br/>
+&#160;&#160;<a class="el" href="a00048.html#ggacbd1a1f016048fe79f77c89c43ab7d69ad43556a2480fab6e6a83dba2f43903ce">kLCDIF_VsyncActiveLow</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00048.html#ggaf40ddd93026be88551f23b9428e98e22a7bd75ce7f5f38970c10f03c77075fc5d">kLPADC_ResultFIFOReadyFlag</a> = ADC_STAT_RDY_MASK
+&#160;&#160;<a class="el" href="a00048.html#ggacbd1a1f016048fe79f77c89c43ab7d69acc9a4a9f81de243c2337c6c32ac9d28b">kLCDIF_VsyncActiveHigh</a> = (1U &lt;&lt; 0U), 
 <br/>
- }</td></tr>
-<tr class="memdesc:gaf40ddd93026be88551f23b9428e98e22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define hardware flags of the module.  <a href="a00048.html#gaf40ddd93026be88551f23b9428e98e22">More...</a><br/></td></tr>
-<tr class="separator:gaf40ddd93026be88551f23b9428e98e22"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaeba33be014c52b093d5e7815dcf8e6b3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gaeba33be014c52b093d5e7815dcf8e6b3">_lpadc_interrupt_enable</a> { <br/>
-&#160;&#160;<a class="el" href="a00048.html#ggaeba33be014c52b093d5e7815dcf8e6b3a487f293b5443e2b9c39412f4476f7638">kLPADC_ResultFIFOOverflowInterruptEnable</a> = ADC_IE_FOFIE_MASK, 
+&#160;&#160;<a class="el" href="a00048.html#ggacbd1a1f016048fe79f77c89c43ab7d69ac1d9e497bb1e16d685a708ea4fd4ae1f">kLCDIF_HsyncActiveLow</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00048.html#ggaeba33be014c52b093d5e7815dcf8e6b3a90f6e2b2819d89b685281a440b10b8b5">kLPADC_FIFOWatermarkInterruptEnable</a> = ADC_IE_FWMIE_MASK
+&#160;&#160;<a class="el" href="a00048.html#ggacbd1a1f016048fe79f77c89c43ab7d69a8398f52fc2ec870e8c2efbea00773032">kLCDIF_HsyncActiveHigh</a> = (1U &lt;&lt; 1U), 
 <br/>
- }</td></tr>
-<tr class="memdesc:gaeba33be014c52b093d5e7815dcf8e6b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define interrupt switchers of the module.  <a href="a00048.html#gaeba33be014c52b093d5e7815dcf8e6b3">More...</a><br/></td></tr>
-<tr class="separator:gaeba33be014c52b093d5e7815dcf8e6b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa0d71fb3a1bd431af8cf5aacc2e8fc6c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gaa0d71fb3a1bd431af8cf5aacc2e8fc6c">lpadc_sample_scale_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00048.html#ggaa0d71fb3a1bd431af8cf5aacc2e8fc6ca2d5ef37dc371402d7b50992f6724f2fd">kLPADC_SamplePartScale</a>, 
+&#160;&#160;<a class="el" href="a00048.html#ggacbd1a1f016048fe79f77c89c43ab7d69a34436f9dd3d168eec5a0b72ffe2d470e">kLCDIF_DataEnableActiveLow</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00048.html#ggaa0d71fb3a1bd431af8cf5aacc2e8fc6cacf9a7acbde288c4de0a60d0018457721">kLPADC_SampleFullScale</a> = 1U
+&#160;&#160;<a class="el" href="a00048.html#ggacbd1a1f016048fe79f77c89c43ab7d69a6e41b6197d6dace5ce1160e6c1ff20cc">kLCDIF_DataEnableActiveHigh</a> = (1U &lt;&lt; 2U), 
+<br/>
+&#160;&#160;<a class="el" href="a00048.html#ggacbd1a1f016048fe79f77c89c43ab7d69a1b40a65cb92d5045449659ea902297a6">kLCDIF_DriveDataOnFallingClkEdge</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00048.html#ggacbd1a1f016048fe79f77c89c43ab7d69a6c7313c291216e2c865e77a3d1b8a495">kLCDIF_DriveDataOnRisingClkEdge</a> = (1U &lt;&lt; 3U)
 <br/>
  }</td></tr>
-<tr class="memdesc:gaa0d71fb3a1bd431af8cf5aacc2e8fc6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define enumeration of sample scale mode.  <a href="a00048.html#gaa0d71fb3a1bd431af8cf5aacc2e8fc6c">More...</a><br/></td></tr>
-<tr class="separator:gaa0d71fb3a1bd431af8cf5aacc2e8fc6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga03c78bd98bf88df854e5a67e86521e7a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga03c78bd98bf88df854e5a67e86521e7a">lpadc_sample_channel_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00048.html#gga03c78bd98bf88df854e5a67e86521e7aae511411bd331e3049a5c9583163e4fe2">kLPADC_SampleChannelSingleEndSideA</a> = 0U, 
+<tr class="memdesc:gacbd1a1f016048fe79f77c89c43ab7d69"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF signal polarity flags.  <a href="a00048.html#gacbd1a1f016048fe79f77c89c43ab7d69">More...</a><br/></td></tr>
+<tr class="separator:gacbd1a1f016048fe79f77c89c43ab7d69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaef0af22da98aeb483b5ba8b62c694dfa"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gaef0af22da98aeb483b5ba8b62c694dfa">_lcdif_output_format</a> { <br/>
+&#160;&#160;<a class="el" href="a00048.html#ggaef0af22da98aeb483b5ba8b62c694dfaa3ae6b5d98a236cb4d9692ed59e1f0b80">kLCDIF_Output16BitConfig1</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00048.html#gga03c78bd98bf88df854e5a67e86521e7aab477a25f4b1cef6b47115b7bb4b9583c">kLPADC_SampleChannelSingleEndSideB</a> = 1U
+&#160;&#160;<a class="el" href="a00048.html#ggaef0af22da98aeb483b5ba8b62c694dfaad831e8aa1cd484c1c86a98e6707dfa38">kLCDIF_Output16BitConfig2</a> = 1U, 
 <br/>
- }</td></tr>
-<tr class="memdesc:ga03c78bd98bf88df854e5a67e86521e7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define enumeration of channel sample mode.  <a href="a00048.html#ga03c78bd98bf88df854e5a67e86521e7a">More...</a><br/></td></tr>
-<tr class="separator:ga03c78bd98bf88df854e5a67e86521e7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabb529e856c73d606ce37f7da01a0f6f3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gabb529e856c73d606ce37f7da01a0f6f3">lpadc_hardware_average_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00048.html#ggabb529e856c73d606ce37f7da01a0f6f3adeae8ae097545482c1942926119d968c">kLPADC_HardwareAverageCount1</a> = 0U, 
+&#160;&#160;<a class="el" href="a00048.html#ggaef0af22da98aeb483b5ba8b62c694dfaaa569045521e6c08f36a9d2f8cb866510">kLCDIF_Output16BitConfig3</a> = 2U, 
 <br/>
-&#160;&#160;<a class="el" href="a00048.html#ggabb529e856c73d606ce37f7da01a0f6f3a03e731d3d2e024623fd22145c484b797">kLPADC_HardwareAverageCount2</a> = 1U, 
+&#160;&#160;<a class="el" href="a00048.html#ggaef0af22da98aeb483b5ba8b62c694dfaa4c6286d64dbf3b63ac4ca50393879239">kLCDIF_Output18BitConfig1</a> = 3U, 
 <br/>
-&#160;&#160;<a class="el" href="a00048.html#ggabb529e856c73d606ce37f7da01a0f6f3a0eda65451db63f4a0c1d154f851f9353">kLPADC_HardwareAverageCount4</a> = 2U, 
+&#160;&#160;<a class="el" href="a00048.html#ggaef0af22da98aeb483b5ba8b62c694dfaad91ae01b58fb8fe4694fc0fb1fc1850e">kLCDIF_Output18BitConfig2</a> = 4U, 
 <br/>
-&#160;&#160;<a class="el" href="a00048.html#ggabb529e856c73d606ce37f7da01a0f6f3a3cc487e2f5720a5c45318f69028c32cc">kLPADC_HardwareAverageCount8</a> = 3U, 
-<br/>
-&#160;&#160;<a class="el" href="a00048.html#ggabb529e856c73d606ce37f7da01a0f6f3ad5fece9b31b47f741c413fe7445df855">kLPADC_HardwareAverageCount16</a> = 4U, 
-<br/>
-&#160;&#160;<a class="el" href="a00048.html#ggabb529e856c73d606ce37f7da01a0f6f3a4cfb338bc49982bc7e58a7f0949bf425">kLPADC_HardwareAverageCount32</a> = 5U, 
-<br/>
-&#160;&#160;<a class="el" href="a00048.html#ggabb529e856c73d606ce37f7da01a0f6f3a081530884310024c8d2750735b6295ea">kLPADC_HardwareAverageCount64</a> = 6U, 
-<br/>
-&#160;&#160;<a class="el" href="a00048.html#ggabb529e856c73d606ce37f7da01a0f6f3a4f86910a33fa9874108753b6de1947ce">kLPADC_HardwareAverageCount128</a> = 7U
+&#160;&#160;<a class="el" href="a00048.html#ggaef0af22da98aeb483b5ba8b62c694dfaada2fe0a90f6abfca86a5e05f1ecfbb57">kLCDIF_Output24Bit</a> = 5U
 <br/>
  }</td></tr>
-<tr class="memdesc:gabb529e856c73d606ce37f7da01a0f6f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define enumeration of hardware average selection.  <a href="a00048.html#gabb529e856c73d606ce37f7da01a0f6f3">More...</a><br/></td></tr>
-<tr class="separator:gabb529e856c73d606ce37f7da01a0f6f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac70e2c24ba9ef059ee2487d821136e85"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gac70e2c24ba9ef059ee2487d821136e85">lpadc_sample_time_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00048.html#ggac70e2c24ba9ef059ee2487d821136e85abfd94e19de3d57b94fae9baded5804db">kLPADC_SampleTimeADCK3</a> = 0U, 
+<tr class="memdesc:gaef0af22da98aeb483b5ba8b62c694dfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF DPI output format.  <a href="a00048.html#gaef0af22da98aeb483b5ba8b62c694dfa">More...</a><br/></td></tr>
+<tr class="separator:gaef0af22da98aeb483b5ba8b62c694dfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga682e10a8d0c26d12d0b1216f6a9f14df"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga682e10a8d0c26d12d0b1216f6a9f14df">_lcdif_fb_format</a> { <br/>
+&#160;&#160;<a class="el" href="a00048.html#gga682e10a8d0c26d12d0b1216f6a9f14dfadc2d1b0b2b513de6d75a1bd99bebbf58">kLCDIF_PixelFormatXRGB444</a> = 1, 
 <br/>
-&#160;&#160;<a class="el" href="a00048.html#ggac70e2c24ba9ef059ee2487d821136e85a441c59d3df7a1ad5b64416e6a08dd246">kLPADC_SampleTimeADCK5</a> = 1U, 
+&#160;&#160;<a class="el" href="a00048.html#gga682e10a8d0c26d12d0b1216f6a9f14dfa47c83850d82cdecdbd7f6b614cb79f87">kLCDIF_PixelFormatXRGB4444</a> = 1, 
 <br/>
-&#160;&#160;<a class="el" href="a00048.html#ggac70e2c24ba9ef059ee2487d821136e85aa2a17502f50e36de117b337994c21dc2">kLPADC_SampleTimeADCK7</a> = 2U, 
+&#160;&#160;<a class="el" href="a00048.html#gga682e10a8d0c26d12d0b1216f6a9f14dfa41c2dfedf8f9cdffd36ec25b30029280">kLCDIF_PixelFormatXRGB1555</a> = 2, 
 <br/>
-&#160;&#160;<a class="el" href="a00048.html#ggac70e2c24ba9ef059ee2487d821136e85a4a980813baf6845d528db2a265475905">kLPADC_SampleTimeADCK11</a> = 3U, 
+&#160;&#160;<a class="el" href="a00048.html#gga682e10a8d0c26d12d0b1216f6a9f14dfabb8af96612b1082431622dc50d10f1e7">kLCDIF_PixelFormatRGB565</a> = 3, 
 <br/>
-&#160;&#160;<a class="el" href="a00048.html#ggac70e2c24ba9ef059ee2487d821136e85a7f5bb84adb8783fd6fa8d3ce5ed31f3a">kLPADC_SampleTimeADCK19</a> = 4U, 
-<br/>
-&#160;&#160;<a class="el" href="a00048.html#ggac70e2c24ba9ef059ee2487d821136e85a9d59f3e6e9335223746533051f83a20b">kLPADC_SampleTimeADCK35</a> = 5U, 
-<br/>
-&#160;&#160;<a class="el" href="a00048.html#ggac70e2c24ba9ef059ee2487d821136e85a653e653b0ee479f6b42ff4b8ffea49ac">kLPADC_SampleTimeADCK67</a> = 6U, 
-<br/>
-&#160;&#160;<a class="el" href="a00048.html#ggac70e2c24ba9ef059ee2487d821136e85ae327cbad1ded4882cbcd53ad5e6c2262">kLPADC_SampleTimeADCK131</a> = 7U
+&#160;&#160;<a class="el" href="a00048.html#gga682e10a8d0c26d12d0b1216f6a9f14dfaeeaaa6d79f8192c043e41fb8ee16b6e3">kLCDIF_PixelFormatXRGB8888</a> = 4
 <br/>
  }</td></tr>
-<tr class="memdesc:gac70e2c24ba9ef059ee2487d821136e85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define enumeration of sample time selection.  <a href="a00048.html#gac70e2c24ba9ef059ee2487d821136e85">More...</a><br/></td></tr>
-<tr class="separator:gac70e2c24ba9ef059ee2487d821136e85"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad7a09557254487374b1b125f2146ba22"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gad7a09557254487374b1b125f2146ba22">lpadc_hardware_compare_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00048.html#ggad7a09557254487374b1b125f2146ba22ab205c4a4aa1cd79f38be81e6469f2fd2">kLPADC_HardwareCompareDisabled</a> = 0U, 
+<tr class="memdesc:ga682e10a8d0c26d12d0b1216f6a9f14df"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF frame buffer pixel format.  <a href="a00048.html#ga682e10a8d0c26d12d0b1216f6a9f14df">More...</a><br/></td></tr>
+<tr class="separator:ga682e10a8d0c26d12d0b1216f6a9f14df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabb35141167dc39b20256742723a76fcd"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gabb35141167dc39b20256742723a76fcd">_lcdif_interrupt</a> { <a class="el" href="a00048.html#ggabb35141167dc39b20256742723a76fcda6cecd0087b4f593a3cad12ed75a6efaa">kLCDIF_Display0FrameDoneInterrupt</a>
+ }</td></tr>
+<tr class="memdesc:gabb35141167dc39b20256742723a76fcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF interrupt and status.  <a href="a00048.html#gabb35141167dc39b20256742723a76fcd">More...</a><br/></td></tr>
+<tr class="separator:gabb35141167dc39b20256742723a76fcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga29869b579a68e5db70e24fd6838573f5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga29869b579a68e5db70e24fd6838573f5">_lcdif_cursor_format</a> { <br/>
+&#160;&#160;<a class="el" href="a00048.html#gga29869b579a68e5db70e24fd6838573f5a7e5a57926e5f87f35a453688e826c148">kLCDIF_CursorMasked</a> = 1, 
 <br/>
-&#160;&#160;<a class="el" href="a00048.html#ggad7a09557254487374b1b125f2146ba22a0e30824c70217e386a1dfbaaecbd7b67">kLPADC_HardwareCompareStoreOnTrue</a> = 2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00048.html#ggad7a09557254487374b1b125f2146ba22a11bc71ef00c5e95a18431947fe0362e1">kLPADC_HardwareCompareRepeatUntilTrue</a> = 3U
+&#160;&#160;<a class="el" href="a00048.html#gga29869b579a68e5db70e24fd6838573f5adfc857aaf0b25ea58bbf95ee5430ef47">kLCDIF_CursorARGB8888</a> = 2
 <br/>
  }</td></tr>
-<tr class="memdesc:gad7a09557254487374b1b125f2146ba22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define enumeration of hardware compare mode.  <a href="a00048.html#gad7a09557254487374b1b125f2146ba22">More...</a><br/></td></tr>
-<tr class="separator:gad7a09557254487374b1b125f2146ba22"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac8bce529fe3a77c5a22136eac3c7d626"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gac8bce529fe3a77c5a22136eac3c7d626">lpadc_reference_voltage_source_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00048.html#ggac8bce529fe3a77c5a22136eac3c7d626a8d40316bc847f29e588ff1a50775ab11">kLPADC_ReferenceVoltageAlt1</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00048.html#ggac8bce529fe3a77c5a22136eac3c7d626a7f45d8cf9f4a252f22d52b8a82db304a">kLPADC_ReferenceVoltageAlt2</a> = 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00048.html#ggac8bce529fe3a77c5a22136eac3c7d626a8c41f94955b5b1141956d61fc2feb44c">kLPADC_ReferenceVoltageAlt3</a> = 2U
-<br/>
- }</td></tr>
-<tr class="memdesc:gac8bce529fe3a77c5a22136eac3c7d626"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define enumeration of reference voltage source.  <a href="a00048.html#gac8bce529fe3a77c5a22136eac3c7d626">More...</a><br/></td></tr>
-<tr class="separator:gac8bce529fe3a77c5a22136eac3c7d626"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab930081517abc866eaa456e58fd365aa"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gab930081517abc866eaa456e58fd365aa">lpadc_power_level_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00048.html#ggab930081517abc866eaa456e58fd365aaac88970640320826c36101d8e7fa5a9c9">kLPADC_PowerLevelAlt1</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00048.html#ggab930081517abc866eaa456e58fd365aaaca71931306fe195df044d6a889639919">kLPADC_PowerLevelAlt2</a> = 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00048.html#ggab930081517abc866eaa456e58fd365aaaed7771e49eeec9fee65726c600956d6d">kLPADC_PowerLevelAlt3</a> = 2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00048.html#ggab930081517abc866eaa456e58fd365aaa2f34a351174cf34ee124ccfc7f2bf9d2">kLPADC_PowerLevelAlt4</a> = 3U
-<br/>
- }</td></tr>
-<tr class="memdesc:gab930081517abc866eaa456e58fd365aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define enumeration of power configuration.  <a href="a00048.html#gab930081517abc866eaa456e58fd365aa">More...</a><br/></td></tr>
-<tr class="separator:gab930081517abc866eaa456e58fd365aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4c65872fd8d9cca041a6d668473537c3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga4c65872fd8d9cca041a6d668473537c3">lpadc_trigger_priority_policy_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00048.html#gga4c65872fd8d9cca041a6d668473537c3a0fec3ebd14c77fc5a1711cb3ed7a2ab5">kLPADC_TriggerPriorityPreemptImmediately</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00048.html#gga4c65872fd8d9cca041a6d668473537c3a406eb5620e19a0cad27c10211c548a46">kLPADC_TriggerPriorityPreemptSoftly</a> = 1U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga4c65872fd8d9cca041a6d668473537c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define enumeration of trigger priority policy.  <a href="a00048.html#ga4c65872fd8d9cca041a6d668473537c3">More...</a><br/></td></tr>
-<tr class="separator:ga4c65872fd8d9cca041a6d668473537c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga29869b579a68e5db70e24fd6838573f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">LCDIF cursor format.  <a href="a00048.html#ga29869b579a68e5db70e24fd6838573f5">More...</a><br/></td></tr>
+<tr class="separator:ga29869b579a68e5db70e24fd6838573f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gaee2f174428a5a63890934f9ecdaf08dd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gaee2f174428a5a63890934f9ecdaf08dd">LCDIF_DpiModeGetDefaultConfig</a> (<a class="el" href="a00048.html#ga1415266211a535981560e018a21688df">lcdif_dpi_config_t</a> *config)</td></tr>
+<tr class="memdesc:gaee2f174428a5a63890934f9ecdaf08dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the default configuration for to initialize the LCDIF.  <a href="#gaee2f174428a5a63890934f9ecdaf08dd">More...</a><br/></td></tr>
+<tr class="separator:gaee2f174428a5a63890934f9ecdaf08dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3d990d2e41cd7a733f74e48ea949dbbd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga3d990d2e41cd7a733f74e48ea949dbbd">LCDIF_DpiModeSetConfig</a> (LCDIF_Type *base, uint8_t displayIndex, const <a class="el" href="a00048.html#ga1415266211a535981560e018a21688df">lcdif_dpi_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga3d990d2e41cd7a733f74e48ea949dbbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the LCDIF to work in DPI mode.  <a href="#ga3d990d2e41cd7a733f74e48ea949dbbd">More...</a><br/></td></tr>
+<tr class="separator:ga3d990d2e41cd7a733f74e48ea949dbbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:gab8a795637177dc9973e0fd2f5b29b6c3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gab8a795637177dc9973e0fd2f5b29b6c3">FSL_LPADC_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00240.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 6, 2))</td></tr>
-<tr class="memdesc:gab8a795637177dc9973e0fd2f5b29b6c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPADC driver version 2.6.2.  <a href="#gab8a795637177dc9973e0fd2f5b29b6c3">More...</a><br/></td></tr>
-<tr class="separator:gab8a795637177dc9973e0fd2f5b29b6c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5d1ad4967f26c92e508b2031ddcb213d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5d1ad4967f26c92e508b2031ddcb213d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>FSL_LCDIF_DRIVER_VERSION</b>&#160;&#160;&#160;(<a class="el" href="a00242.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 2))</td></tr>
+<tr class="separator:ga5d1ad4967f26c92e508b2031ddcb213d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Initialization &amp; de-initialization.</h2></td></tr>
-<tr class="memitem:gaf13dbab92e7a26afb07b3bb2cbaab793"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gaf13dbab92e7a26afb07b3bb2cbaab793">LPADC_Init</a> (ADC_Type *base, const <a class="el" href="a00048.html#a00398">lpadc_config_t</a> *config)</td></tr>
-<tr class="memdesc:gaf13dbab92e7a26afb07b3bb2cbaab793"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the LPADC module.  <a href="#gaf13dbab92e7a26afb07b3bb2cbaab793">More...</a><br/></td></tr>
-<tr class="separator:gaf13dbab92e7a26afb07b3bb2cbaab793"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga94c79af85a28c45bc642226292b14d1c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga94c79af85a28c45bc642226292b14d1c">LPADC_GetDefaultConfig</a> (<a class="el" href="a00048.html#a00398">lpadc_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga94c79af85a28c45bc642226292b14d1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an available pre-defined settings for initial configuration.  <a href="#ga94c79af85a28c45bc642226292b14d1c">More...</a><br/></td></tr>
-<tr class="separator:ga94c79af85a28c45bc642226292b14d1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabc10ae5663788ea5c7f77e2f3517a677"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gabc10ae5663788ea5c7f77e2f3517a677">LPADC_Deinit</a> (ADC_Type *base)</td></tr>
-<tr class="memdesc:gabc10ae5663788ea5c7f77e2f3517a677"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-initializes the LPADC module.  <a href="#gabc10ae5663788ea5c7f77e2f3517a677">More...</a><br/></td></tr>
-<tr class="separator:gabc10ae5663788ea5c7f77e2f3517a677"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf76592d9f392cd30b738f599b2e71344"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gaf76592d9f392cd30b738f599b2e71344">LPADC_Enable</a> (ADC_Type *base, bool enable)</td></tr>
-<tr class="memdesc:gaf76592d9f392cd30b738f599b2e71344"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switch on/off the LPADC module.  <a href="#gaf76592d9f392cd30b738f599b2e71344">More...</a><br/></td></tr>
-<tr class="separator:gaf76592d9f392cd30b738f599b2e71344"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab6e4218842365ee6c620cfc59db213c4"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gab6e4218842365ee6c620cfc59db213c4">LPADC_DoResetFIFO</a> (ADC_Type *base)</td></tr>
-<tr class="memdesc:gab6e4218842365ee6c620cfc59db213c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do reset the conversion FIFO.  <a href="#gab6e4218842365ee6c620cfc59db213c4">More...</a><br/></td></tr>
-<tr class="separator:gab6e4218842365ee6c620cfc59db213c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3d6911f2f9ad7fd2fdf93c3b5d1e80f7"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga3d6911f2f9ad7fd2fdf93c3b5d1e80f7">LPADC_DoResetConfig</a> (ADC_Type *base)</td></tr>
-<tr class="memdesc:ga3d6911f2f9ad7fd2fdf93c3b5d1e80f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do reset the module's configuration.  <a href="#ga3d6911f2f9ad7fd2fdf93c3b5d1e80f7">More...</a><br/></td></tr>
-<tr class="separator:ga3d6911f2f9ad7fd2fdf93c3b5d1e80f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Initialization and deinitialization</h2></td></tr>
+<tr class="memitem:gab0523d22a3a8d515aa2fb762efebb4bc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gab0523d22a3a8d515aa2fb762efebb4bc">LCDIF_Init</a> (LCDIF_Type *base)</td></tr>
+<tr class="memdesc:gab0523d22a3a8d515aa2fb762efebb4bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the LCDIF.  <a href="#gab0523d22a3a8d515aa2fb762efebb4bc">More...</a><br/></td></tr>
+<tr class="separator:gab0523d22a3a8d515aa2fb762efebb4bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga818172091bd80e756a19c13b44544d4c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga818172091bd80e756a19c13b44544d4c">LCDIF_Deinit</a> (LCDIF_Type *base)</td></tr>
+<tr class="memdesc:ga818172091bd80e756a19c13b44544d4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-initialize the LCDIF.  <a href="#ga818172091bd80e756a19c13b44544d4c">More...</a><br/></td></tr>
+<tr class="separator:ga818172091bd80e756a19c13b44544d4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Status</h2></td></tr>
-<tr class="memitem:gaa2793911f11091179bfcd8e9b1860300"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gaa2793911f11091179bfcd8e9b1860300">LPADC_GetStatusFlags</a> (ADC_Type *base)</td></tr>
-<tr class="memdesc:gaa2793911f11091179bfcd8e9b1860300"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get status flags.  <a href="#gaa2793911f11091179bfcd8e9b1860300">More...</a><br/></td></tr>
-<tr class="separator:gaa2793911f11091179bfcd8e9b1860300"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga77ba72fad1e0f84b42809da6918e6532"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga77ba72fad1e0f84b42809da6918e6532">LPADC_ClearStatusFlags</a> (ADC_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:ga77ba72fad1e0f84b42809da6918e6532"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear status flags.  <a href="#ga77ba72fad1e0f84b42809da6918e6532">More...</a><br/></td></tr>
-<tr class="separator:ga77ba72fad1e0f84b42809da6918e6532"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Frame buffer</h2></td></tr>
+<tr class="memitem:ga3dd0dd8aaf355978ecafa7bfcb10542e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga3dd0dd8aaf355978ecafa7bfcb10542e">LCDIF_SetFrameBufferConfig</a> (LCDIF_Type *base, uint8_t fbIndex, const <a class="el" href="a00048.html#ga5a2e497ada20ec405cd00cb1ee974ad8">lcdif_fb_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga3dd0dd8aaf355978ecafa7bfcb10542e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the LCDIF frame buffer.  <a href="#ga3dd0dd8aaf355978ecafa7bfcb10542e">More...</a><br/></td></tr>
+<tr class="separator:ga3dd0dd8aaf355978ecafa7bfcb10542e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga678c29005f0cacec1bde485425e0bf56"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga678c29005f0cacec1bde485425e0bf56">LCDIF_FrameBufferGetDefaultConfig</a> (<a class="el" href="a00048.html#ga5a2e497ada20ec405cd00cb1ee974ad8">lcdif_fb_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga678c29005f0cacec1bde485425e0bf56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get default frame buffer configuration.  <a href="#ga678c29005f0cacec1bde485425e0bf56">More...</a><br/></td></tr>
+<tr class="separator:ga678c29005f0cacec1bde485425e0bf56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0c73e4bacf024dfe0bd6067dab787265"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga0c73e4bacf024dfe0bd6067dab787265">LCDIF_SetFrameBufferAddr</a> (LCDIF_Type *base, uint8_t fbIndex, uint32_t address)</td></tr>
+<tr class="memdesc:ga0c73e4bacf024dfe0bd6067dab787265"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the frame buffer to LCDIF.  <a href="#ga0c73e4bacf024dfe0bd6067dab787265">More...</a><br/></td></tr>
+<tr class="separator:ga0c73e4bacf024dfe0bd6067dab787265"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga58f7e2933dd2ba24b1f92b07594b4141"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga58f7e2933dd2ba24b1f92b07594b4141">LCDIF_SetFrameBufferStride</a> (LCDIF_Type *base, uint8_t fbIndex, uint32_t strideBytes)</td></tr>
+<tr class="memdesc:ga58f7e2933dd2ba24b1f92b07594b4141"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the frame buffer stride.  <a href="#ga58f7e2933dd2ba24b1f92b07594b4141">More...</a><br/></td></tr>
+<tr class="separator:ga58f7e2933dd2ba24b1f92b07594b4141"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Dither</h2></td></tr>
+<tr class="memitem:ga6bd634282f266a1f5abcad74cc01f065"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga6bd634282f266a1f5abcad74cc01f065">LCDIF_SetDitherConfig</a> (LCDIF_Type *base, uint8_t displayIndex, const <a class="el" href="a00048.html#ga8fe3d309ed1a498f661fa514cede3adb">lcdif_dither_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga6bd634282f266a1f5abcad74cc01f065"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the dither configuration.  <a href="#ga6bd634282f266a1f5abcad74cc01f065">More...</a><br/></td></tr>
+<tr class="separator:ga6bd634282f266a1f5abcad74cc01f065"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Gamma correction</h2></td></tr>
+<tr class="memitem:ga87ce294f816311c7bfcb6cb98983da70"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga87ce294f816311c7bfcb6cb98983da70">LCDIF_SetGammaData</a> (LCDIF_Type *base, uint8_t fbIndex, uint16_t startIndex, const uint32_t *gamma, uint16_t gammaLen)</td></tr>
+<tr class="memdesc:ga87ce294f816311c7bfcb6cb98983da70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the gamma translation values to the LCDIF gamma table.  <a href="#ga87ce294f816311c7bfcb6cb98983da70">More...</a><br/></td></tr>
+<tr class="separator:ga87ce294f816311c7bfcb6cb98983da70"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Interrupts</h2></td></tr>
-<tr class="memitem:ga2c147558843514556795fd52f86aca56"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga2c147558843514556795fd52f86aca56">LPADC_EnableInterrupts</a> (ADC_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:ga2c147558843514556795fd52f86aca56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable interrupts.  <a href="#ga2c147558843514556795fd52f86aca56">More...</a><br/></td></tr>
-<tr class="separator:ga2c147558843514556795fd52f86aca56"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5c633af2aeab39c215d3b5aa6172ccb7"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga5c633af2aeab39c215d3b5aa6172ccb7">LPADC_DisableInterrupts</a> (ADC_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:ga5c633af2aeab39c215d3b5aa6172ccb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable interrupts.  <a href="#ga5c633af2aeab39c215d3b5aa6172ccb7">More...</a><br/></td></tr>
-<tr class="separator:ga5c633af2aeab39c215d3b5aa6172ccb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td class="ititle" colspan="2"><p><a class="anchor" id="amgrpef93a3489be4eb6ab75dcc2de341337f"></a>The interrupt must be enabled, otherwise the interrupt flags will not assert. </p>
+</td></tr>
+<tr class="memitem:gac427bd0a2d8572de0ccc3736b5629f57"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gac427bd0a2d8572de0ccc3736b5629f57">LCDIF_EnableInterrupts</a> (LCDIF_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:gac427bd0a2d8572de0ccc3736b5629f57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables LCDIF interrupt requests.  <a href="#gac427bd0a2d8572de0ccc3736b5629f57">More...</a><br/></td></tr>
+<tr class="separator:gac427bd0a2d8572de0ccc3736b5629f57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga28f933e4671bc5dfcca66e06b3256f0a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga28f933e4671bc5dfcca66e06b3256f0a">LCDIF_DisableInterrupts</a> (LCDIF_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:ga28f933e4671bc5dfcca66e06b3256f0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable LCDIF interrupt requests.  <a href="#ga28f933e4671bc5dfcca66e06b3256f0a">More...</a><br/></td></tr>
+<tr class="separator:ga28f933e4671bc5dfcca66e06b3256f0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabd7b321bbb9d21339ea69c2818cfaf8d"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gabd7b321bbb9d21339ea69c2818cfaf8d">LCDIF_GetAndClearInterruptPendingFlags</a> (LCDIF_Type *base)</td></tr>
+<tr class="memdesc:gabd7b321bbb9d21339ea69c2818cfaf8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get and clear LCDIF interrupt pending status.  <a href="#gabd7b321bbb9d21339ea69c2818cfaf8d">More...</a><br/></td></tr>
+<tr class="separator:gabd7b321bbb9d21339ea69c2818cfaf8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-DMA Control</h2></td></tr>
-<tr class="memitem:gacaaa33bc4d9cfd8fad4fac8f1475d97c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gacaaa33bc4d9cfd8fad4fac8f1475d97c">LPADC_EnableFIFOWatermarkDMA</a> (ADC_Type *base, bool enable)</td></tr>
-<tr class="memdesc:gacaaa33bc4d9cfd8fad4fac8f1475d97c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switch on/off the DMA trigger for FIFO watermark event.  <a href="#gacaaa33bc4d9cfd8fad4fac8f1475d97c">More...</a><br/></td></tr>
-<tr class="separator:gacaaa33bc4d9cfd8fad4fac8f1475d97c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Trigger and conversion with FIFO.</h2></td></tr>
-<tr class="memitem:ga51b39db4ab530f900aa3a88a3047daf3"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga51b39db4ab530f900aa3a88a3047daf3">LPADC_GetConvResultCount</a> (ADC_Type *base)</td></tr>
-<tr class="memdesc:ga51b39db4ab530f900aa3a88a3047daf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the count of result kept in conversion FIFO.  <a href="#ga51b39db4ab530f900aa3a88a3047daf3">More...</a><br/></td></tr>
-<tr class="separator:ga51b39db4ab530f900aa3a88a3047daf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1862883b3c4ce8365ad1f1a6c64043cc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga1862883b3c4ce8365ad1f1a6c64043cc">LPADC_GetConvResult</a> (ADC_Type *base, <a class="el" href="a00048.html#a00400">lpadc_conv_result_t</a> *result)</td></tr>
-<tr class="memdesc:ga1862883b3c4ce8365ad1f1a6c64043cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the result in conversion FIFO.  <a href="#ga1862883b3c4ce8365ad1f1a6c64043cc">More...</a><br/></td></tr>
-<tr class="separator:ga1862883b3c4ce8365ad1f1a6c64043cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga67927722ab525eda9e31d1f7554f02a4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga67927722ab525eda9e31d1f7554f02a4">LPADC_SetConvTriggerConfig</a> (ADC_Type *base, uint32_t triggerId, const <a class="el" href="a00048.html#a00401">lpadc_conv_trigger_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga67927722ab525eda9e31d1f7554f02a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the conversion trigger source.  <a href="#ga67927722ab525eda9e31d1f7554f02a4">More...</a><br/></td></tr>
-<tr class="separator:ga67927722ab525eda9e31d1f7554f02a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga44e286bc27b1e8fee3f4796ca9196a27"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga44e286bc27b1e8fee3f4796ca9196a27">LPADC_GetDefaultConvTriggerConfig</a> (<a class="el" href="a00048.html#a00401">lpadc_conv_trigger_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga44e286bc27b1e8fee3f4796ca9196a27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an available pre-defined settings for trigger's configuration.  <a href="#ga44e286bc27b1e8fee3f4796ca9196a27">More...</a><br/></td></tr>
-<tr class="separator:ga44e286bc27b1e8fee3f4796ca9196a27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacaef94ac48a3e0a34f9235f88767b7a3"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gacaef94ac48a3e0a34f9235f88767b7a3">LPADC_DoSoftwareTrigger</a> (ADC_Type *base, uint32_t triggerIdMask)</td></tr>
-<tr class="memdesc:gacaef94ac48a3e0a34f9235f88767b7a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do software trigger to conversion command.  <a href="#gacaef94ac48a3e0a34f9235f88767b7a3">More...</a><br/></td></tr>
-<tr class="separator:gacaef94ac48a3e0a34f9235f88767b7a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga500d8b7b0323136353e10fdfad2e40c7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga500d8b7b0323136353e10fdfad2e40c7">LPADC_SetConvCommandConfig</a> (ADC_Type *base, uint32_t commandId, const <a class="el" href="a00048.html#a00399">lpadc_conv_command_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga500d8b7b0323136353e10fdfad2e40c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure conversion command.  <a href="#ga500d8b7b0323136353e10fdfad2e40c7">More...</a><br/></td></tr>
-<tr class="separator:ga500d8b7b0323136353e10fdfad2e40c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa3f7fd90bdbd65fbc4e5b88e904173f9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gaa3f7fd90bdbd65fbc4e5b88e904173f9">LPADC_GetDefaultConvCommandConfig</a> (<a class="el" href="a00048.html#a00399">lpadc_conv_command_config_t</a> *config)</td></tr>
-<tr class="memdesc:gaa3f7fd90bdbd65fbc4e5b88e904173f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an available pre-defined settings for conversion command's configuration.  <a href="#gaa3f7fd90bdbd65fbc4e5b88e904173f9">More...</a><br/></td></tr>
-<tr class="separator:gaa3f7fd90bdbd65fbc4e5b88e904173f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Cursor</h2></td></tr>
+<tr><td class="ititle" colspan="2"><p><a class="anchor" id="amgrp9abdae4fa5d93330363a88ed8a5e7946"></a>Top-left point and Hot spot are two different cursor point.</p>
+<p>Top-left point is used as the base address for the cursor. Hot spot is used in a search for a corresponding screen coordinate when a selection is made, such as when the "Enter" key or left mouse button is pushed.</p>
+<pre class="fragment">  Top-left point
+       +-------------------------------+
+       |                               |
+       |   Hot spot                    |
+       |      +-------                 |
+       |      |    \                   |
+       |      | \   \                  |
+       |      |  \   \                 |
+       |          \   \                |
+       |           \   \               |
+       |            \   \              |
+       |             \   \             |
+       |              \                |
+       |                               |
+       +-------------------------------+</pre><p>For format masked, one cursor pixel is 2bits. 32x32 cursor pixels have 32 cursor color rows. Each cursor color row is 64bits.</p>
+<p>cursorColorRow_H[31:0] = colorRow[63:32] cursorColorRow_L[31:0] = colorRow[31:0] xorCursor = cursorColorRow_H[cursorXPos[4:0]] andCursor = cursorColorRow_L[cursorXPos[4:0]]</p>
+<p>The output cursor color is:</p>
+<p>andCursor xorCursor cursor color 0 0 Background register color 0 1 Foreground register color 1 0 Frame buffer pixel color 1 1 Invert frame buffer pixel color </p>
+</td></tr>
+<tr class="memitem:ga46518ea0bbcae6644f60b9e448b94dbd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga46518ea0bbcae6644f60b9e448b94dbd">LCDIF_CursorGetDefaultConfig</a> (<a class="el" href="a00048.html#ga66ec42c3469ab9d600523e8937dad3a7">lcdif_cursor_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga46518ea0bbcae6644f60b9e448b94dbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the hardware cursor default configuration.  <a href="#ga46518ea0bbcae6644f60b9e448b94dbd">More...</a><br/></td></tr>
+<tr class="separator:ga46518ea0bbcae6644f60b9e448b94dbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad5e18f101ac53cd9ae4ab655075ec179"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gad5e18f101ac53cd9ae4ab655075ec179">LCDIF_SetCursorConfig</a> (LCDIF_Type *base, const <a class="el" href="a00048.html#ga66ec42c3469ab9d600523e8937dad3a7">lcdif_cursor_config_t</a> *config)</td></tr>
+<tr class="memdesc:gad5e18f101ac53cd9ae4ab655075ec179"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the cursor.  <a href="#gad5e18f101ac53cd9ae4ab655075ec179">More...</a><br/></td></tr>
+<tr class="separator:gad5e18f101ac53cd9ae4ab655075ec179"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0aed14a8feac14fcbc7f7da03585181d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga0aed14a8feac14fcbc7f7da03585181d">LCDIF_SetCursorHotspotPosition</a> (LCDIF_Type *base, uint16_t x, uint16_t y)</td></tr>
+<tr class="memdesc:ga0aed14a8feac14fcbc7f7da03585181d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the cursor hotspot postion.  <a href="#ga0aed14a8feac14fcbc7f7da03585181d">More...</a><br/></td></tr>
+<tr class="separator:ga0aed14a8feac14fcbc7f7da03585181d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad872652fbbda43e1ed5a83463743d365"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gad872652fbbda43e1ed5a83463743d365">LCDIF_SetCursorBufferAddress</a> (LCDIF_Type *base, uint32_t address)</td></tr>
+<tr class="memdesc:gad872652fbbda43e1ed5a83463743d365"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the cursor memory address.  <a href="#gad872652fbbda43e1ed5a83463743d365">More...</a><br/></td></tr>
+<tr class="separator:gad872652fbbda43e1ed5a83463743d365"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gada8ff5341c29870ef7bf65fa06e45a2d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gada8ff5341c29870ef7bf65fa06e45a2d">LCDIF_SetCursorColor</a> (LCDIF_Type *base, uint32_t background, uint32_t foreground)</td></tr>
+<tr class="memdesc:gada8ff5341c29870ef7bf65fa06e45a2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the cursor color.  <a href="#gada8ff5341c29870ef7bf65fa06e45a2d">More...</a><br/></td></tr>
+<tr class="separator:gada8ff5341c29870ef7bf65fa06e45a2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00398" id="a00398"></a>
+<a name="a00392" id="a00392"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct lpadc_config_t</td>
+          <td class="memname">struct _lcdif_dpi_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>This structure would used to keep the settings for initialization. </p>
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:aaea91ec993dc5e8f4afca61b3be6a484"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#aaea91ec993dc5e8f4afca61b3be6a484">panelWidth</a></td></tr>
+<tr class="memdesc:aaea91ec993dc5e8f4afca61b3be6a484"><td class="mdescLeft">&#160;</td><td class="mdescRight">Display panel width, pixels per line.  <a href="#aaea91ec993dc5e8f4afca61b3be6a484">More...</a><br/></td></tr>
+<tr class="separator:aaea91ec993dc5e8f4afca61b3be6a484"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab320050c1f0feed0eeb088dcbf77e558"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ab320050c1f0feed0eeb088dcbf77e558">panelHeight</a></td></tr>
+<tr class="memdesc:ab320050c1f0feed0eeb088dcbf77e558"><td class="mdescLeft">&#160;</td><td class="mdescRight">Display panel height, how many lines per panel.  <a href="#ab320050c1f0feed0eeb088dcbf77e558">More...</a><br/></td></tr>
+<tr class="separator:ab320050c1f0feed0eeb088dcbf77e558"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aacaeeee663c61ddba33d7bbdbdba5f97"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#aacaeeee663c61ddba33d7bbdbdba5f97">hsw</a></td></tr>
+<tr class="memdesc:aacaeeee663c61ddba33d7bbdbdba5f97"><td class="mdescLeft">&#160;</td><td class="mdescRight">HSYNC pulse width.  <a href="#aacaeeee663c61ddba33d7bbdbdba5f97">More...</a><br/></td></tr>
+<tr class="separator:aacaeeee663c61ddba33d7bbdbdba5f97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20fdfb36a7b4194cab862b4ceeb7d654"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a20fdfb36a7b4194cab862b4ceeb7d654">hfp</a></td></tr>
+<tr class="memdesc:a20fdfb36a7b4194cab862b4ceeb7d654"><td class="mdescLeft">&#160;</td><td class="mdescRight">Horizontal front porch.  <a href="#a20fdfb36a7b4194cab862b4ceeb7d654">More...</a><br/></td></tr>
+<tr class="separator:a20fdfb36a7b4194cab862b4ceeb7d654"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad76be2bdc916a07206807b7e22ccd01a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ad76be2bdc916a07206807b7e22ccd01a">hbp</a></td></tr>
+<tr class="memdesc:ad76be2bdc916a07206807b7e22ccd01a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Horizontal back porch.  <a href="#ad76be2bdc916a07206807b7e22ccd01a">More...</a><br/></td></tr>
+<tr class="separator:ad76be2bdc916a07206807b7e22ccd01a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71e518b9f1405607cb0c018b559535a5"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a71e518b9f1405607cb0c018b559535a5">vsw</a></td></tr>
+<tr class="memdesc:a71e518b9f1405607cb0c018b559535a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">VSYNC pulse width.  <a href="#a71e518b9f1405607cb0c018b559535a5">More...</a><br/></td></tr>
+<tr class="separator:a71e518b9f1405607cb0c018b559535a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14c4376ff09e608052579f29b10f50cb"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a14c4376ff09e608052579f29b10f50cb">vfp</a></td></tr>
+<tr class="memdesc:a14c4376ff09e608052579f29b10f50cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vrtical front porch.  <a href="#a14c4376ff09e608052579f29b10f50cb">More...</a><br/></td></tr>
+<tr class="separator:a14c4376ff09e608052579f29b10f50cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a180eb81a2a48e0b1aeab9f6c7be38ec8"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a180eb81a2a48e0b1aeab9f6c7be38ec8">vbp</a></td></tr>
+<tr class="memdesc:a180eb81a2a48e0b1aeab9f6c7be38ec8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vertical back porch.  <a href="#a180eb81a2a48e0b1aeab9f6c7be38ec8">More...</a><br/></td></tr>
+<tr class="separator:a180eb81a2a48e0b1aeab9f6c7be38ec8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19801884ae2e0ee3a4902670d44bc57a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a19801884ae2e0ee3a4902670d44bc57a">polarityFlags</a></td></tr>
+<tr class="memdesc:a19801884ae2e0ee3a4902670d44bc57a"><td class="mdescLeft">&#160;</td><td class="mdescRight">OR'ed value of <a class="el" href="a00048.html#gacbd1a1f016048fe79f77c89c43ab7d69">_lcdif_polarity_flags</a>, used to contol the signal polarity.  <a href="#a19801884ae2e0ee3a4902670d44bc57a">More...</a><br/></td></tr>
+<tr class="separator:a19801884ae2e0ee3a4902670d44bc57a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae747aaa8752905eca25d6c8da50606cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00048.html#ga63488d118f1e179642ebfe3adc326009">lcdif_output_format_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ae747aaa8752905eca25d6c8da50606cb">format</a></td></tr>
+<tr class="memdesc:ae747aaa8752905eca25d6c8da50606cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">DPI output format.  <a href="#ae747aaa8752905eca25d6c8da50606cb">More...</a><br/></td></tr>
+<tr class="separator:ae747aaa8752905eca25d6c8da50606cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="aaea91ec993dc5e8f4afca61b3be6a484"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t _lcdif_dpi_config::panelWidth</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ab320050c1f0feed0eeb088dcbf77e558"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t _lcdif_dpi_config::panelHeight</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aacaeeee663c61ddba33d7bbdbdba5f97"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t _lcdif_dpi_config::hsw</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a20fdfb36a7b4194cab862b4ceeb7d654"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t _lcdif_dpi_config::hfp</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ad76be2bdc916a07206807b7e22ccd01a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t _lcdif_dpi_config::hbp</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a71e518b9f1405607cb0c018b559535a5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t _lcdif_dpi_config::vsw</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a14c4376ff09e608052579f29b10f50cb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t _lcdif_dpi_config::vfp</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a180eb81a2a48e0b1aeab9f6c7be38ec8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t _lcdif_dpi_config::vbp</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a19801884ae2e0ee3a4902670d44bc57a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t _lcdif_dpi_config::polarityFlags</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ae747aaa8752905eca25d6c8da50606cb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00048.html#ga63488d118f1e179642ebfe3adc326009">lcdif_output_format_t</a> _lcdif_dpi_config::format</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="a00393" id="a00393"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct _lcdif_fb_config</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a9063044f498ffec7a3182ce5a5e5d08c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a9063044f498ffec7a3182ce5a5e5d08c">enable</a></td></tr>
+<tr class="memdesc:a9063044f498ffec7a3182ce5a5e5d08c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the frame buffer output.  <a href="#a9063044f498ffec7a3182ce5a5e5d08c">More...</a><br/></td></tr>
+<tr class="separator:a9063044f498ffec7a3182ce5a5e5d08c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade0164ae03092e87073d7d7b33b598fa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ade0164ae03092e87073d7d7b33b598fa">enableGamma</a></td></tr>
+<tr class="memdesc:ade0164ae03092e87073d7d7b33b598fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the gamma correction.  <a href="#ade0164ae03092e87073d7d7b33b598fa">More...</a><br/></td></tr>
+<tr class="separator:ade0164ae03092e87073d7d7b33b598fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7611c8b0b9a3578da6ee6a0acecd8210"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00048.html#gac00e47e2507aa8a9e6afea960d6c919a">lcdif_fb_format_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a7611c8b0b9a3578da6ee6a0acecd8210">format</a></td></tr>
+<tr class="memdesc:a7611c8b0b9a3578da6ee6a0acecd8210"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frame buffer pixel format.  <a href="#a7611c8b0b9a3578da6ee6a0acecd8210">More...</a><br/></td></tr>
+<tr class="separator:a7611c8b0b9a3578da6ee6a0acecd8210"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="a9063044f498ffec7a3182ce5a5e5d08c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool _lcdif_fb_config::enable</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ade0164ae03092e87073d7d7b33b598fa"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool _lcdif_fb_config::enableGamma</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a7611c8b0b9a3578da6ee6a0acecd8210"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00048.html#gac00e47e2507aa8a9e6afea960d6c919a">lcdif_fb_format_t</a> _lcdif_fb_config::format</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="a00390" id="a00390"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct _lcdif_cursor_config</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a3984a1c5b9dd35cb8e4193266df142cb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a3984a1c5b9dd35cb8e4193266df142cb">enable</a></td></tr>
+<tr class="memdesc:a3984a1c5b9dd35cb8e4193266df142cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the cursor or not.  <a href="#a3984a1c5b9dd35cb8e4193266df142cb">More...</a><br/></td></tr>
+<tr class="separator:a3984a1c5b9dd35cb8e4193266df142cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a067fab4fe1b41d686ffe6a67b575090c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00048.html#ga5189c7cb86dbddcbf43cc5fe1a7e75bf">lcdif_cursor_format_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a067fab4fe1b41d686ffe6a67b575090c">format</a></td></tr>
+<tr class="memdesc:a067fab4fe1b41d686ffe6a67b575090c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cursor format.  <a href="#a067fab4fe1b41d686ffe6a67b575090c">More...</a><br/></td></tr>
+<tr class="separator:a067fab4fe1b41d686ffe6a67b575090c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a939ebd731dd405c2a9123df2e26c522a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a939ebd731dd405c2a9123df2e26c522a"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a939ebd731dd405c2a9123df2e26c522a">hotspotOffsetX</a></td></tr>
+<tr class="memdesc:a939ebd731dd405c2a9123df2e26c522a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Offset of the hotspot to top left point, range 0 ~ 31. <br/></td></tr>
+<tr class="separator:a939ebd731dd405c2a9123df2e26c522a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05f512353cfd25a71042a10a67e68a08"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a05f512353cfd25a71042a10a67e68a08"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a05f512353cfd25a71042a10a67e68a08">hotspotOffsetY</a></td></tr>
+<tr class="memdesc:a05f512353cfd25a71042a10a67e68a08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Offset of the hotspot to top left point, range 0 ~ 31. <br/></td></tr>
+<tr class="separator:a05f512353cfd25a71042a10a67e68a08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="a3984a1c5b9dd35cb8e4193266df142cb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool _lcdif_cursor_config::enable</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a067fab4fe1b41d686ffe6a67b575090c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00048.html#ga5189c7cb86dbddcbf43cc5fe1a7e75bf">lcdif_cursor_format_t</a> _lcdif_cursor_config::format</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="a00391" id="a00391"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct _lcdif_dither_config</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><ol type="1">
+<li>Decide which bit of pixel color to enhance. This is configured by the <a class="el" href="a00048.html#a00b7fde97f3cfe572c64c07edae99414">lcdif_dither_config_t::redSize</a>, <a class="el" href="a00048.html#a6f429ad0eedabd5660d554eb6bf252e4">lcdif_dither_config_t::greenSize</a>, and <a class="el" href="a00048.html#acd082e7eaa63a9c1fc835df8c4c3799d">lcdif_dither_config_t::blueSize</a>. For example, setting redSize=6 means it is the 6th bit starting from the MSB that we want to enhance, in other words, it is the RedColor[2]bit from RedColor[7:0]. greenSize and blueSize function in the same way.</li>
+<li>Create the look-up table. a. The Look-Up Table includes 16 entries, 4 bits for each. b. The Look-Up Table provides a value U[3:0] through the index X[1:0] and Y[1:0]. c. The color value RedColor[3:0] is used to compare with this U[3:0]. d. If RedColor[3:0] &gt; U[3:0], and RedColor[7:2] is not 6'b111111, then the final color value is: NewRedColor = RedColor[7:2] + 1'b1. e. If RedColor[3:0] &lt;= U[3:0], then NewRedColor = RedColor[7:2]. </li>
+</ol>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:ac47a5a50ba40ca3b021b4be239a048f3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ac47a5a50ba40ca3b021b4be239a048f3">enableInDozeMode</a></td></tr>
-<tr class="memdesc:ac47a5a50ba40ca3b021b4be239a048f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Control system transition to Stop and Wait power modes while ADC is converting.  <a href="#ac47a5a50ba40ca3b021b4be239a048f3">More...</a><br/></td></tr>
-<tr class="separator:ac47a5a50ba40ca3b021b4be239a048f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab62dd78747ca5df971c30ad59d0127ba"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ab62dd78747ca5df971c30ad59d0127ba">enableAnalogPreliminary</a></td></tr>
-<tr class="memdesc:ab62dd78747ca5df971c30ad59d0127ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADC analog circuits are pre-enabled and ready to execute conversions without startup delays(at the cost of higher DC current consumption).  <a href="#ab62dd78747ca5df971c30ad59d0127ba">More...</a><br/></td></tr>
-<tr class="separator:ab62dd78747ca5df971c30ad59d0127ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a05885e7359e788bfee8bee8b1b7e17ac"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a05885e7359e788bfee8bee8b1b7e17ac">powerUpDelay</a></td></tr>
-<tr class="memdesc:a05885e7359e788bfee8bee8b1b7e17ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">When the analog circuits are not pre-enabled, the ADC analog circuits are only powered while the ADC is active and there is a counted delay defined by this field after an initial trigger transitions the ADC from its Idle state to allow time for the analog circuits to stabilize.  <a href="#a05885e7359e788bfee8bee8b1b7e17ac">More...</a><br/></td></tr>
-<tr class="separator:a05885e7359e788bfee8bee8b1b7e17ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af2a2e2e253efb0a783435fe171091b3f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00048.html#gac8bce529fe3a77c5a22136eac3c7d626">lpadc_reference_voltage_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#af2a2e2e253efb0a783435fe171091b3f">referenceVoltageSource</a></td></tr>
-<tr class="memdesc:af2a2e2e253efb0a783435fe171091b3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects the voltage reference high used for conversions.  <a href="#af2a2e2e253efb0a783435fe171091b3f">More...</a><br/></td></tr>
-<tr class="separator:af2a2e2e253efb0a783435fe171091b3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa95f676c2ce209a53e411045a118b7d7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00048.html#gab930081517abc866eaa456e58fd365aa">lpadc_power_level_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#aa95f676c2ce209a53e411045a118b7d7">powerLevelMode</a></td></tr>
-<tr class="memdesc:aa95f676c2ce209a53e411045a118b7d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Power Configuration Selection.  <a href="#aa95f676c2ce209a53e411045a118b7d7">More...</a><br/></td></tr>
-<tr class="separator:aa95f676c2ce209a53e411045a118b7d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6790dea9cdf41dbe47a312f46d046d39"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00048.html#ga4c65872fd8d9cca041a6d668473537c3">lpadc_trigger_priority_policy_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a6790dea9cdf41dbe47a312f46d046d39">triggerPriorityPolicy</a></td></tr>
-<tr class="memdesc:a6790dea9cdf41dbe47a312f46d046d39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Control how higher priority triggers are handled, see to lpadc_trigger_priority_policy_t.  <a href="#a6790dea9cdf41dbe47a312f46d046d39">More...</a><br/></td></tr>
-<tr class="separator:a6790dea9cdf41dbe47a312f46d046d39"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54cc3c1d27305b3916a0ce2fc1f86af0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a54cc3c1d27305b3916a0ce2fc1f86af0">enableConvPause</a></td></tr>
-<tr class="memdesc:a54cc3c1d27305b3916a0ce2fc1f86af0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the ADC pausing function.  <a href="#a54cc3c1d27305b3916a0ce2fc1f86af0">More...</a><br/></td></tr>
-<tr class="separator:a54cc3c1d27305b3916a0ce2fc1f86af0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a95cd7bea05bf46e0f5444762aba38fbe"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a95cd7bea05bf46e0f5444762aba38fbe">convPauseDelay</a></td></tr>
-<tr class="memdesc:a95cd7bea05bf46e0f5444762aba38fbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controls the duration of pausing during command execution sequencing.  <a href="#a95cd7bea05bf46e0f5444762aba38fbe">More...</a><br/></td></tr>
-<tr class="separator:a95cd7bea05bf46e0f5444762aba38fbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb5cae2223bf1d49e13332308ceae79b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#aeb5cae2223bf1d49e13332308ceae79b">FIFOWatermark</a></td></tr>
-<tr class="memdesc:aeb5cae2223bf1d49e13332308ceae79b"><td class="mdescLeft">&#160;</td><td class="mdescRight">FIFOWatermark is a programmable threshold setting.  <a href="#aeb5cae2223bf1d49e13332308ceae79b">More...</a><br/></td></tr>
-<tr class="separator:aeb5cae2223bf1d49e13332308ceae79b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c5b7d4fc0f5c80604cb16bff8732510"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a3c5b7d4fc0f5c80604cb16bff8732510">enable</a></td></tr>
+<tr class="memdesc:a3c5b7d4fc0f5c80604cb16bff8732510"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or not.  <a href="#a3c5b7d4fc0f5c80604cb16bff8732510">More...</a><br/></td></tr>
+<tr class="separator:a3c5b7d4fc0f5c80604cb16bff8732510"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00b7fde97f3cfe572c64c07edae99414"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a00b7fde97f3cfe572c64c07edae99414">redSize</a></td></tr>
+<tr class="memdesc:a00b7fde97f3cfe572c64c07edae99414"><td class="mdescLeft">&#160;</td><td class="mdescRight">Red color size, valid region 4-8.  <a href="#a00b7fde97f3cfe572c64c07edae99414">More...</a><br/></td></tr>
+<tr class="separator:a00b7fde97f3cfe572c64c07edae99414"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f429ad0eedabd5660d554eb6bf252e4"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a6f429ad0eedabd5660d554eb6bf252e4">greenSize</a></td></tr>
+<tr class="memdesc:a6f429ad0eedabd5660d554eb6bf252e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Green color size, valid region 4-8.  <a href="#a6f429ad0eedabd5660d554eb6bf252e4">More...</a><br/></td></tr>
+<tr class="separator:a6f429ad0eedabd5660d554eb6bf252e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd082e7eaa63a9c1fc835df8c4c3799d"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#acd082e7eaa63a9c1fc835df8c4c3799d">blueSize</a></td></tr>
+<tr class="memdesc:acd082e7eaa63a9c1fc835df8c4c3799d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Blue color size, valid region 4-8.  <a href="#acd082e7eaa63a9c1fc835df8c4c3799d">More...</a><br/></td></tr>
+<tr class="separator:acd082e7eaa63a9c1fc835df8c4c3799d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6e59b322cec4d50e46a13fc45193b68"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ab6e59b322cec4d50e46a13fc45193b68">low</a></td></tr>
+<tr class="memdesc:ab6e59b322cec4d50e46a13fc45193b68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Low part of the look up table.  <a href="#ab6e59b322cec4d50e46a13fc45193b68">More...</a><br/></td></tr>
+<tr class="separator:ab6e59b322cec4d50e46a13fc45193b68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4bb4a365131a73e9aaad4f7d869dfc2d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a4bb4a365131a73e9aaad4f7d869dfc2d">high</a></td></tr>
+<tr class="memdesc:a4bb4a365131a73e9aaad4f7d869dfc2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">High part of the look up table.  <a href="#a4bb4a365131a73e9aaad4f7d869dfc2d">More...</a><br/></td></tr>
+<tr class="separator:a4bb4a365131a73e9aaad4f7d869dfc2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="ac47a5a50ba40ca3b021b4be239a048f3"></a>
+<a class="anchor" id="a3c5b7d4fc0f5c80604cb16bff8732510"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool lpadc_config_t::enableInDozeMode</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>When enabled in Doze mode, immediate entries to Wait or Stop are allowed. When disabled, the ADC will wait for the current averaging iteration/FIFO storage to complete before acknowledging stop or wait mode entry. </p>
-
-</div>
-</div>
-<a class="anchor" id="ab62dd78747ca5df971c30ad59d0127ba"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool lpadc_config_t::enableAnalogPreliminary</td>
+          <td class="memname">bool _lcdif_dither_config::enable</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a05885e7359e788bfee8bee8b1b7e17ac"></a>
+<a class="anchor" id="a00b7fde97f3cfe572c64c07edae99414"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t lpadc_config_t::powerUpDelay</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The startup delay count of (powerUpDelay * 4) ADCK cycles must result in a longer delay than the analog startup time. </p>
-
-</div>
-</div>
-<a class="anchor" id="af2a2e2e253efb0a783435fe171091b3f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00048.html#gac8bce529fe3a77c5a22136eac3c7d626">lpadc_reference_voltage_source_t</a> lpadc_config_t::referenceVoltageSource</td>
+          <td class="memname">uint8_t _lcdif_dither_config::redSize</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="aa95f676c2ce209a53e411045a118b7d7"></a>
+<a class="anchor" id="a6f429ad0eedabd5660d554eb6bf252e4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00048.html#gab930081517abc866eaa456e58fd365aa">lpadc_power_level_mode_t</a> lpadc_config_t::powerLevelMode</td>
+          <td class="memname">uint8_t _lcdif_dither_config::greenSize</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a6790dea9cdf41dbe47a312f46d046d39"></a>
+<a class="anchor" id="acd082e7eaa63a9c1fc835df8c4c3799d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00048.html#ga4c65872fd8d9cca041a6d668473537c3">lpadc_trigger_priority_policy_t</a> lpadc_config_t::triggerPriorityPolicy</td>
+          <td class="memname">uint8_t _lcdif_dither_config::blueSize</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a54cc3c1d27305b3916a0ce2fc1f86af0"></a>
+<a class="anchor" id="ab6e59b322cec4d50e46a13fc45193b68"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool lpadc_config_t::enableConvPause</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>When enabled, a programmable delay is inserted during command execution sequencing between LOOP iterations, between commands in a sequence, and between conversions when command is executing in "Compare Until True" configuration. </p>
-
-</div>
-</div>
-<a class="anchor" id="a95cd7bea05bf46e0f5444762aba38fbe"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t lpadc_config_t::convPauseDelay</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The pause delay is a count of (convPauseDelay*4) ADCK cycles. Only available when ADC pausing function is enabled. The available value range is in 9-bit. </p>
-
-</div>
-</div>
-<a class="anchor" id="aeb5cae2223bf1d49e13332308ceae79b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t lpadc_config_t::FIFOWatermark</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>When the number of datawords stored in the ADC Result FIFO is greater than the value in this field, the ready flag would be asserted to indicate stored data has reached the programmable threshold. </p>
-
-</div>
-</div>
-
-</div>
-</div>
-<a name="a00399" id="a00399"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct lpadc_conv_command_config_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:ad83d6cc054bd648551aa7a875e5e8a58"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00048.html#ga03c78bd98bf88df854e5a67e86521e7a">lpadc_sample_channel_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ad83d6cc054bd648551aa7a875e5e8a58">sampleChannelMode</a></td></tr>
-<tr class="memdesc:ad83d6cc054bd648551aa7a875e5e8a58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Channel sample mode.  <a href="#ad83d6cc054bd648551aa7a875e5e8a58">More...</a><br/></td></tr>
-<tr class="separator:ad83d6cc054bd648551aa7a875e5e8a58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34b3392e374a496930b09d8c5a410d7b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a34b3392e374a496930b09d8c5a410d7b">channelNumber</a></td></tr>
-<tr class="memdesc:a34b3392e374a496930b09d8c5a410d7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Channel number, select the channel or channel pair.  <a href="#a34b3392e374a496930b09d8c5a410d7b">More...</a><br/></td></tr>
-<tr class="separator:a34b3392e374a496930b09d8c5a410d7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adcf04257bab0b975b7667a25bf4cbcdf"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#adcf04257bab0b975b7667a25bf4cbcdf">chainedNextCommandNumber</a></td></tr>
-<tr class="memdesc:adcf04257bab0b975b7667a25bf4cbcdf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects the next command to be executed after this command completes.  <a href="#adcf04257bab0b975b7667a25bf4cbcdf">More...</a><br/></td></tr>
-<tr class="separator:adcf04257bab0b975b7667a25bf4cbcdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a66e3347e2c2f96cadd5805bca6409646"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a66e3347e2c2f96cadd5805bca6409646">enableAutoChannelIncrement</a></td></tr>
-<tr class="memdesc:a66e3347e2c2f96cadd5805bca6409646"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loop with increment: when disabled, the "loopCount" field selects the number of times the selected channel is converted consecutively; when enabled, the "loopCount" field defines how many consecutive channels are converted as part of the command execution.  <a href="#a66e3347e2c2f96cadd5805bca6409646">More...</a><br/></td></tr>
-<tr class="separator:a66e3347e2c2f96cadd5805bca6409646"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ce69c5cf297a804b5510d779036c867"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a7ce69c5cf297a804b5510d779036c867">loopCount</a></td></tr>
-<tr class="memdesc:a7ce69c5cf297a804b5510d779036c867"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects how many times this command executes before finish and transition to the next command or Idle state.  <a href="#a7ce69c5cf297a804b5510d779036c867">More...</a><br/></td></tr>
-<tr class="separator:a7ce69c5cf297a804b5510d779036c867"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c44cc7c4a60d180e6a9aae0501e8752"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00048.html#gabb529e856c73d606ce37f7da01a0f6f3">lpadc_hardware_average_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a1c44cc7c4a60d180e6a9aae0501e8752">hardwareAverageMode</a></td></tr>
-<tr class="memdesc:a1c44cc7c4a60d180e6a9aae0501e8752"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hardware average selection.  <a href="#a1c44cc7c4a60d180e6a9aae0501e8752">More...</a><br/></td></tr>
-<tr class="separator:a1c44cc7c4a60d180e6a9aae0501e8752"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a24deb3ab5d573ce3b17ed48987350b65"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00048.html#gac70e2c24ba9ef059ee2487d821136e85">lpadc_sample_time_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a24deb3ab5d573ce3b17ed48987350b65">sampleTimeMode</a></td></tr>
-<tr class="memdesc:a24deb3ab5d573ce3b17ed48987350b65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sample time selection.  <a href="#a24deb3ab5d573ce3b17ed48987350b65">More...</a><br/></td></tr>
-<tr class="separator:a24deb3ab5d573ce3b17ed48987350b65"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5bb19c6af0abf963655462a350c53ce4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00048.html#gad7a09557254487374b1b125f2146ba22">lpadc_hardware_compare_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a5bb19c6af0abf963655462a350c53ce4">hardwareCompareMode</a></td></tr>
-<tr class="memdesc:a5bb19c6af0abf963655462a350c53ce4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hardware compare selection.  <a href="#a5bb19c6af0abf963655462a350c53ce4">More...</a><br/></td></tr>
-<tr class="separator:a5bb19c6af0abf963655462a350c53ce4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4bc748a87503d1d30fce8652296a21a1"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a4bc748a87503d1d30fce8652296a21a1">hardwareCompareValueHigh</a></td></tr>
-<tr class="memdesc:a4bc748a87503d1d30fce8652296a21a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare Value High.  <a href="#a4bc748a87503d1d30fce8652296a21a1">More...</a><br/></td></tr>
-<tr class="separator:a4bc748a87503d1d30fce8652296a21a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aded6fd827d36d7f20693cf5f361ec57e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#aded6fd827d36d7f20693cf5f361ec57e">hardwareCompareValueLow</a></td></tr>
-<tr class="memdesc:aded6fd827d36d7f20693cf5f361ec57e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare Value Low.  <a href="#aded6fd827d36d7f20693cf5f361ec57e">More...</a><br/></td></tr>
-<tr class="separator:aded6fd827d36d7f20693cf5f361ec57e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="ad83d6cc054bd648551aa7a875e5e8a58"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00048.html#ga03c78bd98bf88df854e5a67e86521e7a">lpadc_sample_channel_mode_t</a> lpadc_conv_command_config_t::sampleChannelMode</td>
+          <td class="memname">uint32_t _lcdif_dither_config::low</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a34b3392e374a496930b09d8c5a410d7b"></a>
+<a class="anchor" id="a4bb4a365131a73e9aaad4f7d869dfc2d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t lpadc_conv_command_config_t::channelNumber</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="adcf04257bab0b975b7667a25bf4cbcdf"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t lpadc_conv_command_config_t::chainedNextCommandNumber</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>1-15 is available, 0 is to terminate the chain after this command. </p>
-
-</div>
-</div>
-<a class="anchor" id="a66e3347e2c2f96cadd5805bca6409646"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool lpadc_conv_command_config_t::enableAutoChannelIncrement</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a7ce69c5cf297a804b5510d779036c867"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t lpadc_conv_command_config_t::loopCount</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Command executes LOOP+1 times. 0-15 is available. </p>
-
-</div>
-</div>
-<a class="anchor" id="a1c44cc7c4a60d180e6a9aae0501e8752"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00048.html#gabb529e856c73d606ce37f7da01a0f6f3">lpadc_hardware_average_mode_t</a> lpadc_conv_command_config_t::hardwareAverageMode</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a24deb3ab5d573ce3b17ed48987350b65"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00048.html#gac70e2c24ba9ef059ee2487d821136e85">lpadc_sample_time_mode_t</a> lpadc_conv_command_config_t::sampleTimeMode</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a5bb19c6af0abf963655462a350c53ce4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00048.html#gad7a09557254487374b1b125f2146ba22">lpadc_hardware_compare_mode_t</a> lpadc_conv_command_config_t::hardwareCompareMode</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a4bc748a87503d1d30fce8652296a21a1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t lpadc_conv_command_config_t::hardwareCompareValueHigh</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The available value range is in 16-bit. </p>
-
-</div>
-</div>
-<a class="anchor" id="aded6fd827d36d7f20693cf5f361ec57e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t lpadc_conv_command_config_t::hardwareCompareValueLow</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The available value range is in 16-bit. </p>
-
-</div>
-</div>
-
-</div>
-</div>
-<a name="a00401" id="a00401"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct lpadc_conv_trigger_config_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:ae1c77e5afcb5c9d2b80ac92cc5de597e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ae1c77e5afcb5c9d2b80ac92cc5de597e">targetCommandId</a></td></tr>
-<tr class="memdesc:ae1c77e5afcb5c9d2b80ac92cc5de597e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select the command from command buffer to execute upon detect of the associated trigger event.  <a href="#ae1c77e5afcb5c9d2b80ac92cc5de597e">More...</a><br/></td></tr>
-<tr class="separator:ae1c77e5afcb5c9d2b80ac92cc5de597e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a33fd3b422ca9c26c1eb915ef8fdc3c3e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a33fd3b422ca9c26c1eb915ef8fdc3c3e">delayPower</a></td></tr>
-<tr class="memdesc:a33fd3b422ca9c26c1eb915ef8fdc3c3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select the trigger delay duration to wait at the start of servicing a trigger event.  <a href="#a33fd3b422ca9c26c1eb915ef8fdc3c3e">More...</a><br/></td></tr>
-<tr class="separator:a33fd3b422ca9c26c1eb915ef8fdc3c3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e4d3a907597cd2c8c712ae967c5ac2f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a2e4d3a907597cd2c8c712ae967c5ac2f">priority</a></td></tr>
-<tr class="memdesc:a2e4d3a907597cd2c8c712ae967c5ac2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the priority of the associated trigger source.  <a href="#a2e4d3a907597cd2c8c712ae967c5ac2f">More...</a><br/></td></tr>
-<tr class="separator:a2e4d3a907597cd2c8c712ae967c5ac2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a32a44ab0d65a0666b659027b93738c95"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a32a44ab0d65a0666b659027b93738c95">enableHardwareTrigger</a></td></tr>
-<tr class="memdesc:a32a44ab0d65a0666b659027b93738c95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable hardware trigger source to initiate conversion on the rising edge of the input trigger source or not.  <a href="#a32a44ab0d65a0666b659027b93738c95">More...</a><br/></td></tr>
-<tr class="separator:a32a44ab0d65a0666b659027b93738c95"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="ae1c77e5afcb5c9d2b80ac92cc5de597e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t lpadc_conv_trigger_config_t::targetCommandId</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a33fd3b422ca9c26c1eb915ef8fdc3c3e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t lpadc_conv_trigger_config_t::delayPower</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>When this field is clear, then no delay is incurred. When this field is set to a non-zero value, the duration for the delay is 2^delayPower ADCK cycles. The available value range is 4-bit. </p>
-
-</div>
-</div>
-<a class="anchor" id="a2e4d3a907597cd2c8c712ae967c5ac2f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t lpadc_conv_trigger_config_t::priority</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>If two or more triggers have the same priority level setting, the lower order trigger event has the higher priority. The lower value for this field is for the higher priority, the available value range is 1-bit. </p>
-
-</div>
-</div>
-<a class="anchor" id="a32a44ab0d65a0666b659027b93738c95"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool lpadc_conv_trigger_config_t::enableHardwareTrigger</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>THe software trigger is always available. </p>
-
-</div>
-</div>
-
-</div>
-</div>
-<a name="a00400" id="a00400"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct lpadc_conv_result_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"></div><table class="memberdecls">
-<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a7ed6dcbf44ad017014525335013c817b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a7ed6dcbf44ad017014525335013c817b">commandIdSource</a></td></tr>
-<tr class="memdesc:a7ed6dcbf44ad017014525335013c817b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicate the command buffer being executed that generated this result.  <a href="#a7ed6dcbf44ad017014525335013c817b">More...</a><br/></td></tr>
-<tr class="separator:a7ed6dcbf44ad017014525335013c817b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a87e1ee666c960928797ca574f1bcae1b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a87e1ee666c960928797ca574f1bcae1b">loopCountIndex</a></td></tr>
-<tr class="memdesc:a87e1ee666c960928797ca574f1bcae1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicate the loop count value during command execution that generated this result.  <a href="#a87e1ee666c960928797ca574f1bcae1b">More...</a><br/></td></tr>
-<tr class="separator:a87e1ee666c960928797ca574f1bcae1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad3b63c03e1c136e4293dd82a443f1de2"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ad3b63c03e1c136e4293dd82a443f1de2">triggerIdSource</a></td></tr>
-<tr class="memdesc:ad3b63c03e1c136e4293dd82a443f1de2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicate the trigger source that initiated a conversion and generated this result.  <a href="#ad3b63c03e1c136e4293dd82a443f1de2">More...</a><br/></td></tr>
-<tr class="separator:ad3b63c03e1c136e4293dd82a443f1de2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4add4f13e761e8048d4434eb195f44d5"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a4add4f13e761e8048d4434eb195f44d5">convValue</a></td></tr>
-<tr class="memdesc:a4add4f13e761e8048d4434eb195f44d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data result.  <a href="#a4add4f13e761e8048d4434eb195f44d5">More...</a><br/></td></tr>
-<tr class="separator:a4add4f13e761e8048d4434eb195f44d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a7ed6dcbf44ad017014525335013c817b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t lpadc_conv_result_t::commandIdSource</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a87e1ee666c960928797ca574f1bcae1b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t lpadc_conv_result_t::loopCountIndex</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ad3b63c03e1c136e4293dd82a443f1de2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t lpadc_conv_result_t::triggerIdSource</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a4add4f13e761e8048d4434eb195f44d5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t lpadc_conv_result_t::convValue</td>
+          <td class="memname">uint32_t _lcdif_dither_config::high</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -821,327 +731,483 @@ Trigger and conversion with FIFO.</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gab8a795637177dc9973e0fd2f5b29b6c3"></a>
+<a class="anchor" id="ga59226e4d188d172b3df72f6976766dd6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_LPADC_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00240.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 6, 2))</td>
+          <td class="memname">#define LCDIF_MAKE_CURSOR_COLOR</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">r, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">g, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">b&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;(((r) &lt;&lt; 16U) | ((g) &lt;&lt; 8U) | ((b) &lt;&lt; 0U))</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="gae305eca1c95975e49ea88d0d39aeb3e0"></a>
+<a class="anchor" id="ga1c8701d1bffcab393b254ffd9c64dc3c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define LPADC_GET_ACTIVE_COMMAND_STATUS</td>
+          <td class="memname">#define LCDIF_MAKE_GAMMA_VALUE</td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname">statusVal</td><td>)</td>
-          <td>&#160;&#160;&#160;((statusVal &amp; ADC_STAT_CMDACT_MASK) &gt;&gt; ADC_STAT_CMDACT_SHIFT)</td>
+          <td class="paramname">r, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">g, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">b&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;(((r) &lt;&lt; 16U) | ((g) &lt;&lt; 8U) | ((b) &lt;&lt; 0U))</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The statusVal is the return value from <a class="el" href="a00048.html#gaa2793911f11091179bfcd8e9b1860300" title="Get status flags. ">LPADC_GetStatusFlags()</a>. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga48a0c8b6bac1e45cc7bdc93ccc288786"></a>
+<a class="anchor" id="ga9b3c1e1727697f2846397dee63ba51b4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define LPADC_GET_ACTIVE_TRIGGER_STATUE</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">statusVal</td><td>)</td>
-          <td>&#160;&#160;&#160;((statusVal &amp; ADC_STAT_TRGACT_MASK) &gt;&gt; ADC_STAT_TRGACT_SHIFT)</td>
+          <td class="memname">#define LCDIF_FB_ALIGN&#160;&#160;&#160;128U</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The statusVal is the return value from <a class="el" href="a00048.html#gaa2793911f11091179bfcd8e9b1860300" title="Get status flags. ">LPADC_GetStatusFlags()</a>. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga35c38704589fb7e742a1d6462a77699f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LCDIF_GAMMA_INDEX_MAX&#160;&#160;&#160;256U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga63488d118f1e179642ebfe3adc326009"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00048.html#gaef0af22da98aeb483b5ba8b62c694dfa">_lcdif_output_format</a>  <a class="el" href="a00048.html#ga63488d118f1e179642ebfe3adc326009">lcdif_output_format_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga1415266211a535981560e018a21688df"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00048.html#a00392">_lcdif_dpi_config</a>  <a class="el" href="a00048.html#ga1415266211a535981560e018a21688df">lcdif_dpi_config_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gac00e47e2507aa8a9e6afea960d6c919a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00048.html#ga682e10a8d0c26d12d0b1216f6a9f14df">_lcdif_fb_format</a>  <a class="el" href="a00048.html#gac00e47e2507aa8a9e6afea960d6c919a">lcdif_fb_format_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga5a2e497ada20ec405cd00cb1ee974ad8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00048.html#a00393">_lcdif_fb_config</a>  <a class="el" href="a00048.html#ga5a2e497ada20ec405cd00cb1ee974ad8">lcdif_fb_config_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga5189c7cb86dbddcbf43cc5fe1a7e75bf"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00048.html#ga29869b579a68e5db70e24fd6838573f5">_lcdif_cursor_format</a>  <a class="el" href="a00048.html#ga5189c7cb86dbddcbf43cc5fe1a7e75bf">lcdif_cursor_format_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga66ec42c3469ab9d600523e8937dad3a7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00048.html#a00390">_lcdif_cursor_config</a>  <a class="el" href="a00048.html#ga66ec42c3469ab9d600523e8937dad3a7">lcdif_cursor_config_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga8fe3d309ed1a498f661fa514cede3adb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00048.html#a00391">_lcdif_dither_config</a>  <a class="el" href="a00048.html#ga8fe3d309ed1a498f661fa514cede3adb">lcdif_dither_config_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<ol type="1">
+<li>Decide which bit of pixel color to enhance. This is configured by the <a class="el" href="a00048.html#a00b7fde97f3cfe572c64c07edae99414">lcdif_dither_config_t::redSize</a>, <a class="el" href="a00048.html#a6f429ad0eedabd5660d554eb6bf252e4">lcdif_dither_config_t::greenSize</a>, and <a class="el" href="a00048.html#acd082e7eaa63a9c1fc835df8c4c3799d">lcdif_dither_config_t::blueSize</a>. For example, setting redSize=6 means it is the 6th bit starting from the MSB that we want to enhance, in other words, it is the RedColor[2]bit from RedColor[7:0]. greenSize and blueSize function in the same way.</li>
+<li>Create the look-up table. a. The Look-Up Table includes 16 entries, 4 bits for each. b. The Look-Up Table provides a value U[3:0] through the index X[1:0] and Y[1:0]. c. The color value RedColor[3:0] is used to compare with this U[3:0]. d. If RedColor[3:0] &gt; U[3:0], and RedColor[7:2] is not 6'b111111, then the final color value is: NewRedColor = RedColor[7:2] + 1'b1. e. If RedColor[3:0] &lt;= U[3:0], then NewRedColor = RedColor[7:2]. </li>
+</ol>
 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gaf40ddd93026be88551f23b9428e98e22"></a>
+<a class="anchor" id="gacbd1a1f016048fe79f77c89c43ab7d69"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00048.html#gaf40ddd93026be88551f23b9428e98e22">_lpadc_status_flags</a></td>
+          <td class="memname">enum <a class="el" href="a00048.html#gacbd1a1f016048fe79f77c89c43ab7d69">_lcdif_polarity_flags</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaf40ddd93026be88551f23b9428e98e22aa52211bffea2def3062daff07532cb28"></a>kLPADC_ResultFIFOOverflowFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Indicates that more data has been written to the Result FIFO than it can hold. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggacbd1a1f016048fe79f77c89c43ab7d69ad43556a2480fab6e6a83dba2f43903ce"></a>kLCDIF_VsyncActiveLow</em>&nbsp;</td><td class="fielddoc">
+<p>VSYNC active low. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf40ddd93026be88551f23b9428e98e22a7bd75ce7f5f38970c10f03c77075fc5d"></a>kLPADC_ResultFIFOReadyFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Indicates when the number of valid datawords in the result FIFO is greater than the setting watermark level. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggacbd1a1f016048fe79f77c89c43ab7d69acc9a4a9f81de243c2337c6c32ac9d28b"></a>kLCDIF_VsyncActiveHigh</em>&nbsp;</td><td class="fielddoc">
+<p>VSYNC active high. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggacbd1a1f016048fe79f77c89c43ab7d69ac1d9e497bb1e16d685a708ea4fd4ae1f"></a>kLCDIF_HsyncActiveLow</em>&nbsp;</td><td class="fielddoc">
+<p>HSYNC active low. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggacbd1a1f016048fe79f77c89c43ab7d69a8398f52fc2ec870e8c2efbea00773032"></a>kLCDIF_HsyncActiveHigh</em>&nbsp;</td><td class="fielddoc">
+<p>HSYNC active high. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggacbd1a1f016048fe79f77c89c43ab7d69a34436f9dd3d168eec5a0b72ffe2d470e"></a>kLCDIF_DataEnableActiveLow</em>&nbsp;</td><td class="fielddoc">
+<p>Data enable line active low. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggacbd1a1f016048fe79f77c89c43ab7d69a6e41b6197d6dace5ce1160e6c1ff20cc"></a>kLCDIF_DataEnableActiveHigh</em>&nbsp;</td><td class="fielddoc">
+<p>Data enable line active high. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggacbd1a1f016048fe79f77c89c43ab7d69a1b40a65cb92d5045449659ea902297a6"></a>kLCDIF_DriveDataOnFallingClkEdge</em>&nbsp;</td><td class="fielddoc">
+<p>Drive data on falling clock edge, capture data on rising clock edge. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggacbd1a1f016048fe79f77c89c43ab7d69a6c7313c291216e2c865e77a3d1b8a495"></a>kLCDIF_DriveDataOnRisingClkEdge</em>&nbsp;</td><td class="fielddoc">
+<p>Drive data on falling clock edge, capture data on rising clock edge. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gaeba33be014c52b093d5e7815dcf8e6b3"></a>
+<a class="anchor" id="gaef0af22da98aeb483b5ba8b62c694dfa"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00048.html#gaeba33be014c52b093d5e7815dcf8e6b3">_lpadc_interrupt_enable</a></td>
+          <td class="memname">enum <a class="el" href="a00048.html#gaef0af22da98aeb483b5ba8b62c694dfa">_lcdif_output_format</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaeba33be014c52b093d5e7815dcf8e6b3a487f293b5443e2b9c39412f4476f7638"></a>kLPADC_ResultFIFOOverflowInterruptEnable</em>&nbsp;</td><td class="fielddoc">
-<p>Configures ADC to generate overflow interrupt requests when FOF flag is asserted. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaef0af22da98aeb483b5ba8b62c694dfaa3ae6b5d98a236cb4d9692ed59e1f0b80"></a>kLCDIF_Output16BitConfig1</em>&nbsp;</td><td class="fielddoc">
+<p>16-bit configuration 1. </p>
+<p>RGB565: XXXXXXXX_RRRRRGGG_GGGBBBBB. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaeba33be014c52b093d5e7815dcf8e6b3a90f6e2b2819d89b685281a440b10b8b5"></a>kLPADC_FIFOWatermarkInterruptEnable</em>&nbsp;</td><td class="fielddoc">
-<p>Configures ADC to generate watermark interrupt requests when RDY flag is asserted. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaef0af22da98aeb483b5ba8b62c694dfaad831e8aa1cd484c1c86a98e6707dfa38"></a>kLCDIF_Output16BitConfig2</em>&nbsp;</td><td class="fielddoc">
+<p>16-bit configuration 2. </p>
+<p>RGB565: XXXRRRRR_XXGGGGGG_XXXBBBBB. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaef0af22da98aeb483b5ba8b62c694dfaaa569045521e6c08f36a9d2f8cb866510"></a>kLCDIF_Output16BitConfig3</em>&nbsp;</td><td class="fielddoc">
+<p>16-bit configuration 3. </p>
+<p>RGB565: XXRRRRRX_XXGGGGGG_XXBBBBBX. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaef0af22da98aeb483b5ba8b62c694dfaa4c6286d64dbf3b63ac4ca50393879239"></a>kLCDIF_Output18BitConfig1</em>&nbsp;</td><td class="fielddoc">
+<p>18-bit configuration 1. </p>
+<p>RGB666: XXXXXXRR_RRRRGGGG_GGBBBBBB. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaef0af22da98aeb483b5ba8b62c694dfaad91ae01b58fb8fe4694fc0fb1fc1850e"></a>kLCDIF_Output18BitConfig2</em>&nbsp;</td><td class="fielddoc">
+<p>18-bit configuration 2. </p>
+<p>RGB666: XXRRRRRR_XXGGGGGG_XXBBBBBB. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaef0af22da98aeb483b5ba8b62c694dfaada2fe0a90f6abfca86a5e05f1ecfbb57"></a>kLCDIF_Output24Bit</em>&nbsp;</td><td class="fielddoc">
+<p>24-bit. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gaa0d71fb3a1bd431af8cf5aacc2e8fc6c"></a>
+<a class="anchor" id="ga682e10a8d0c26d12d0b1216f6a9f14df"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00048.html#gaa0d71fb3a1bd431af8cf5aacc2e8fc6c">lpadc_sample_scale_mode_t</a></td>
+          <td class="memname">enum <a class="el" href="a00048.html#ga682e10a8d0c26d12d0b1216f6a9f14df">_lcdif_fb_format</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The sample scale mode is used to reduce the selected ADC analog channel input voltage level by a factor. The maximum possible voltage on the ADC channel input should be considered when selecting a scale mode to ensure that the reducing factor always results voltage level at or below the VREFH reference. This reducing capability allows conversion of analog inputs higher than VREFH. A-side and B-side channel inputs are both scaled using the scale mode. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaa0d71fb3a1bd431af8cf5aacc2e8fc6ca2d5ef37dc371402d7b50992f6724f2fd"></a>kLPADC_SamplePartScale</em>&nbsp;</td><td class="fielddoc">
-<p>Use divided input voltage signal. </p>
-<p>(For scale select,please refer to the reference manual). </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga682e10a8d0c26d12d0b1216f6a9f14dfadc2d1b0b2b513de6d75a1bd99bebbf58"></a>kLCDIF_PixelFormatXRGB444</em>&nbsp;</td><td class="fielddoc">
+<p>XRGB4444, deprecated, use kLCDIF_PixelFormatXRGB4444 instead. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa0d71fb3a1bd431af8cf5aacc2e8fc6cacf9a7acbde288c4de0a60d0018457721"></a>kLPADC_SampleFullScale</em>&nbsp;</td><td class="fielddoc">
-<p>Full scale (Factor of 1). </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga682e10a8d0c26d12d0b1216f6a9f14dfa47c83850d82cdecdbd7f6b614cb79f87"></a>kLCDIF_PixelFormatXRGB4444</em>&nbsp;</td><td class="fielddoc">
+<p>XRGB4444, 16-bit each pixel, 4-bit each element. </p>
+<p>R4G4B4 in reference manual. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga682e10a8d0c26d12d0b1216f6a9f14dfa41c2dfedf8f9cdffd36ec25b30029280"></a>kLCDIF_PixelFormatXRGB1555</em>&nbsp;</td><td class="fielddoc">
+<p>XRGB1555, 16-bit each pixel, 5-bit each element. </p>
+<p>R5G5B5 in reference manual. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga682e10a8d0c26d12d0b1216f6a9f14dfabb8af96612b1082431622dc50d10f1e7"></a>kLCDIF_PixelFormatRGB565</em>&nbsp;</td><td class="fielddoc">
+<p>RGB565, 16-bit each pixel. </p>
+<p>R5G6B5 in reference manual. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga682e10a8d0c26d12d0b1216f6a9f14dfaeeaaa6d79f8192c043e41fb8ee16b6e3"></a>kLCDIF_PixelFormatXRGB8888</em>&nbsp;</td><td class="fielddoc">
+<p>XRGB8888, 32-bit each pixel, 8-bit each element. </p>
+<p>R8G8B8 in reference manual. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga03c78bd98bf88df854e5a67e86521e7a"></a>
+<a class="anchor" id="gabb35141167dc39b20256742723a76fcd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00048.html#ga03c78bd98bf88df854e5a67e86521e7a">lpadc_sample_channel_mode_t</a></td>
+          <td class="memname">enum <a class="el" href="a00048.html#gabb35141167dc39b20256742723a76fcd">_lcdif_interrupt</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The channel sample mode configures the channel with single-end/differential/dual-single-end, side A/B. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga03c78bd98bf88df854e5a67e86521e7aae511411bd331e3049a5c9583163e4fe2"></a>kLPADC_SampleChannelSingleEndSideA</em>&nbsp;</td><td class="fielddoc">
-<p>Single end mode, using side A. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga03c78bd98bf88df854e5a67e86521e7aab477a25f4b1cef6b47115b7bb4b9583c"></a>kLPADC_SampleChannelSingleEndSideB</em>&nbsp;</td><td class="fielddoc">
-<p>Single end mode, using side B. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggabb35141167dc39b20256742723a76fcda6cecd0087b4f593a3cad12ed75a6efaa"></a>kLCDIF_Display0FrameDoneInterrupt</em>&nbsp;</td><td class="fielddoc">
+<p>The last pixel of visible area in frame is shown. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gabb529e856c73d606ce37f7da01a0f6f3"></a>
+<a class="anchor" id="ga29869b579a68e5db70e24fd6838573f5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00048.html#gabb529e856c73d606ce37f7da01a0f6f3">lpadc_hardware_average_mode_t</a></td>
+          <td class="memname">enum <a class="el" href="a00048.html#ga29869b579a68e5db70e24fd6838573f5">_lcdif_cursor_format</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>It Selects how many ADC conversions are averaged to create the ADC result. An internal storage buffer is used to capture temporary results while the averaging iterations are executed. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggabb529e856c73d606ce37f7da01a0f6f3adeae8ae097545482c1942926119d968c"></a>kLPADC_HardwareAverageCount1</em>&nbsp;</td><td class="fielddoc">
-<p>Single conversion. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga29869b579a68e5db70e24fd6838573f5a7e5a57926e5f87f35a453688e826c148"></a>kLCDIF_CursorMasked</em>&nbsp;</td><td class="fielddoc">
+<p>Masked format. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabb529e856c73d606ce37f7da01a0f6f3a03e731d3d2e024623fd22145c484b797"></a>kLPADC_HardwareAverageCount2</em>&nbsp;</td><td class="fielddoc">
-<p>2 conversions averaged. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabb529e856c73d606ce37f7da01a0f6f3a0eda65451db63f4a0c1d154f851f9353"></a>kLPADC_HardwareAverageCount4</em>&nbsp;</td><td class="fielddoc">
-<p>4 conversions averaged. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabb529e856c73d606ce37f7da01a0f6f3a3cc487e2f5720a5c45318f69028c32cc"></a>kLPADC_HardwareAverageCount8</em>&nbsp;</td><td class="fielddoc">
-<p>8 conversions averaged. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabb529e856c73d606ce37f7da01a0f6f3ad5fece9b31b47f741c413fe7445df855"></a>kLPADC_HardwareAverageCount16</em>&nbsp;</td><td class="fielddoc">
-<p>16 conversions averaged. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabb529e856c73d606ce37f7da01a0f6f3a4cfb338bc49982bc7e58a7f0949bf425"></a>kLPADC_HardwareAverageCount32</em>&nbsp;</td><td class="fielddoc">
-<p>32 conversions averaged. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabb529e856c73d606ce37f7da01a0f6f3a081530884310024c8d2750735b6295ea"></a>kLPADC_HardwareAverageCount64</em>&nbsp;</td><td class="fielddoc">
-<p>64 conversions averaged. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabb529e856c73d606ce37f7da01a0f6f3a4f86910a33fa9874108753b6de1947ce"></a>kLPADC_HardwareAverageCount128</em>&nbsp;</td><td class="fielddoc">
-<p>128 conversions averaged. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gac70e2c24ba9ef059ee2487d821136e85"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00048.html#gac70e2c24ba9ef059ee2487d821136e85">lpadc_sample_time_mode_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The shortest sample time maximizes conversion speed for lower impedance inputs. Extending sample time allows higher impedance inputs to be accurately sampled. Longer sample times can also be used to lower overall power consumption when command looping and sequencing is configured and high conversion rates are not required. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggac70e2c24ba9ef059ee2487d821136e85abfd94e19de3d57b94fae9baded5804db"></a>kLPADC_SampleTimeADCK3</em>&nbsp;</td><td class="fielddoc">
-<p>3 ADCK cycles total sample time. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggac70e2c24ba9ef059ee2487d821136e85a441c59d3df7a1ad5b64416e6a08dd246"></a>kLPADC_SampleTimeADCK5</em>&nbsp;</td><td class="fielddoc">
-<p>5 ADCK cycles total sample time. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggac70e2c24ba9ef059ee2487d821136e85aa2a17502f50e36de117b337994c21dc2"></a>kLPADC_SampleTimeADCK7</em>&nbsp;</td><td class="fielddoc">
-<p>7 ADCK cycles total sample time. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggac70e2c24ba9ef059ee2487d821136e85a4a980813baf6845d528db2a265475905"></a>kLPADC_SampleTimeADCK11</em>&nbsp;</td><td class="fielddoc">
-<p>11 ADCK cycles total sample time. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggac70e2c24ba9ef059ee2487d821136e85a7f5bb84adb8783fd6fa8d3ce5ed31f3a"></a>kLPADC_SampleTimeADCK19</em>&nbsp;</td><td class="fielddoc">
-<p>19 ADCK cycles total sample time. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggac70e2c24ba9ef059ee2487d821136e85a9d59f3e6e9335223746533051f83a20b"></a>kLPADC_SampleTimeADCK35</em>&nbsp;</td><td class="fielddoc">
-<p>35 ADCK cycles total sample time. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggac70e2c24ba9ef059ee2487d821136e85a653e653b0ee479f6b42ff4b8ffea49ac"></a>kLPADC_SampleTimeADCK67</em>&nbsp;</td><td class="fielddoc">
-<p>69 ADCK cycles total sample time. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggac70e2c24ba9ef059ee2487d821136e85ae327cbad1ded4882cbcd53ad5e6c2262"></a>kLPADC_SampleTimeADCK131</em>&nbsp;</td><td class="fielddoc">
-<p>131 ADCK cycles total sample time. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gad7a09557254487374b1b125f2146ba22"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00048.html#gad7a09557254487374b1b125f2146ba22">lpadc_hardware_compare_mode_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>After an ADC channel input is sampled and converted and any averaging iterations are performed, this mode setting guides operation of the automatic compare function to optionally only store when the compare operation is true. When compare is enabled, the conversion result is compared to the compare values. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggad7a09557254487374b1b125f2146ba22ab205c4a4aa1cd79f38be81e6469f2fd2"></a>kLPADC_HardwareCompareDisabled</em>&nbsp;</td><td class="fielddoc">
-<p>Compare disabled. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad7a09557254487374b1b125f2146ba22a0e30824c70217e386a1dfbaaecbd7b67"></a>kLPADC_HardwareCompareStoreOnTrue</em>&nbsp;</td><td class="fielddoc">
-<p>Compare enabled. </p>
-<p>Store on true. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggad7a09557254487374b1b125f2146ba22a11bc71ef00c5e95a18431947fe0362e1"></a>kLPADC_HardwareCompareRepeatUntilTrue</em>&nbsp;</td><td class="fielddoc">
-<p>Compare enabled. </p>
-<p>Repeat channel acquisition until true. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gac8bce529fe3a77c5a22136eac3c7d626"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00048.html#gac8bce529fe3a77c5a22136eac3c7d626">lpadc_reference_voltage_source_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>For detail information, need to check the SoC's specification. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggac8bce529fe3a77c5a22136eac3c7d626a8d40316bc847f29e588ff1a50775ab11"></a>kLPADC_ReferenceVoltageAlt1</em>&nbsp;</td><td class="fielddoc">
-<p>Option 1 setting. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggac8bce529fe3a77c5a22136eac3c7d626a7f45d8cf9f4a252f22d52b8a82db304a"></a>kLPADC_ReferenceVoltageAlt2</em>&nbsp;</td><td class="fielddoc">
-<p>Option 2 setting. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggac8bce529fe3a77c5a22136eac3c7d626a8c41f94955b5b1141956d61fc2feb44c"></a>kLPADC_ReferenceVoltageAlt3</em>&nbsp;</td><td class="fielddoc">
-<p>Option 3 setting. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gab930081517abc866eaa456e58fd365aa"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00048.html#gab930081517abc866eaa456e58fd365aa">lpadc_power_level_mode_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Configures the ADC for power and performance. In the highest power setting the highest conversion rates will be possible. Refer to the device data sheet for power and performance capabilities for each setting. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab930081517abc866eaa456e58fd365aaac88970640320826c36101d8e7fa5a9c9"></a>kLPADC_PowerLevelAlt1</em>&nbsp;</td><td class="fielddoc">
-<p>Lowest power setting. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab930081517abc866eaa456e58fd365aaaca71931306fe195df044d6a889639919"></a>kLPADC_PowerLevelAlt2</em>&nbsp;</td><td class="fielddoc">
-<p>Next lowest power setting. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab930081517abc866eaa456e58fd365aaaed7771e49eeec9fee65726c600956d6d"></a>kLPADC_PowerLevelAlt3</em>&nbsp;</td><td class="fielddoc">
-<p>... </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab930081517abc866eaa456e58fd365aaa2f34a351174cf34ee124ccfc7f2bf9d2"></a>kLPADC_PowerLevelAlt4</em>&nbsp;</td><td class="fielddoc">
-<p>Highest power setting. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga4c65872fd8d9cca041a6d668473537c3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00048.html#ga4c65872fd8d9cca041a6d668473537c3">lpadc_trigger_priority_policy_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This selection controls how higher priority triggers are handled. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga4c65872fd8d9cca041a6d668473537c3a0fec3ebd14c77fc5a1711cb3ed7a2ab5"></a>kLPADC_TriggerPriorityPreemptImmediately</em>&nbsp;</td><td class="fielddoc">
-<p>If a higher priority trigger is detected during command processing, the current conversion is aborted and the new command specified by the trigger is started. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga4c65872fd8d9cca041a6d668473537c3a406eb5620e19a0cad27c10211c548a46"></a>kLPADC_TriggerPriorityPreemptSoftly</em>&nbsp;</td><td class="fielddoc">
-<p>If a higher priority trigger is received during command processing, the current conversion is completed (including averaging iterations and compare function if enabled) and stored to the result FIFO before the higher priority trigger/command is initiated. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga29869b579a68e5db70e24fd6838573f5adfc857aaf0b25ea58bbf95ee5430ef47"></a>kLCDIF_CursorARGB8888</em>&nbsp;</td><td class="fielddoc">
+<p>ARGB8888. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gaf13dbab92e7a26afb07b3bb2cbaab793"></a>
+<a class="anchor" id="gab0523d22a3a8d515aa2fb762efebb4bc"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void LPADC_Init </td>
+          <td class="memname"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LCDIF_Init </td>
           <td>(</td>
-          <td class="paramtype">ADC_Type *&#160;</td>
+          <td class="paramtype">LCDIF_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function initializes the LCDIF to work.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>LCDIF peripheral base address.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Initialize successfully. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga818172091bd80e756a19c13b44544d4c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LCDIF_Deinit </td>
+          <td>(</td>
+          <td class="paramtype">LCDIF_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function disables the LCDIF peripheral clock.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>LCDIF peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaee2f174428a5a63890934f9ecdaf08dd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LCDIF_DpiModeGetDefaultConfig </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00048.html#ga1415266211a535981560e018a21688df">lcdif_dpi_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The default configuration value is:</p>
+<div class="fragment"><div class="line">   config-&gt;panelWidth = 0;</div>
+<div class="line">   config-&gt;panelHeight = 0;</div>
+<div class="line">   config-&gt;hsw = 0;</div>
+<div class="line">   config-&gt;hfp = 0;</div>
+<div class="line">   config-&gt;hbp = 0;</div>
+<div class="line">   config-&gt;vsw = 0;</div>
+<div class="line">   config-&gt;vfp = 0;</div>
+<div class="line">   config-&gt;vbp = 0;</div>
+<div class="line">   config-&gt;polarityFlags = <a class="code" href="a00048.html#ggacbd1a1f016048fe79f77c89c43ab7d69ad43556a2480fab6e6a83dba2f43903ce">kLCDIF_VsyncActiveLow</a> | <a class="code" href="a00048.html#ggacbd1a1f016048fe79f77c89c43ab7d69ac1d9e497bb1e16d685a708ea4fd4ae1f">kLCDIF_HsyncActiveLow</a> | <a class="code" href="a00048.html#ggacbd1a1f016048fe79f77c89c43ab7d69a6e41b6197d6dace5ce1160e6c1ff20cc">kLCDIF_DataEnableActiveHigh</a> |</div>
+<div class="line"><a class="code" href="a00048.html#ggacbd1a1f016048fe79f77c89c43ab7d69a1b40a65cb92d5045449659ea902297a6">kLCDIF_DriveDataOnFallingClkEdge</a>; config-&gt;format = <a class="code" href="a00048.html#ggaef0af22da98aeb483b5ba8b62c694dfaada2fe0a90f6abfca86a5e05f1ecfbb57">kLCDIF_Output24Bit</a>;</div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">config</td><td>Pointer to the LCDIF configuration. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga3d990d2e41cd7a733f74e48ea949dbbd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LCDIF_DpiModeSetConfig </td>
+          <td>(</td>
+          <td class="paramtype">LCDIF_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00048.html#a00398">lpadc_config_t</a> *&#160;</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>displayIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a00048.html#ga1415266211a535981560e018a21688df">lcdif_dpi_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function configures the LCDIF DPI display.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>LCDIF peripheral base address. </td></tr>
+    <tr><td class="paramname">displayIndex</td><td>Display index. </td></tr>
+    <tr><td class="paramname">config</td><td>Pointer to the configuration structure.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Initialize successfully. </td></tr>
+    <tr><td class="paramname">kStatus_InvalidArgument</td><td>Initialize failed because of invalid argument. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga3dd0dd8aaf355978ecafa7bfcb10542e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LCDIF_SetFrameBufferConfig </td>
+          <td>(</td>
+          <td class="paramtype">LCDIF_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>fbIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a00048.html#ga5a2e497ada20ec405cd00cb1ee974ad8">lcdif_fb_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -1153,70 +1219,39 @@ Trigger and conversion with FIFO.</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>LPADC peripheral base address. </td></tr>
-    <tr><td class="paramname">config</td><td>Pointer to configuration structure. See "lpadc_config_t". </td></tr>
+    <tr><td class="paramname">base</td><td>LCDIF peripheral base address. </td></tr>
+    <tr><td class="paramname">fbIndex</td><td>Frame buffer index. </td></tr>
+    <tr><td class="paramname">config</td><td>Pointer to the configuration structure. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga94c79af85a28c45bc642226292b14d1c"></a>
+<a class="anchor" id="ga678c29005f0cacec1bde485425e0bf56"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void LPADC_GetDefaultConfig </td>
+          <td class="memname">void LCDIF_FrameBufferGetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00048.html#a00398">lpadc_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00048.html#ga5a2e497ada20ec405cd00cb1ee974ad8">lcdif_fb_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function initializes the converter configuration structure with an available settings. The default values are: </p>
-<div class="fragment"><div class="line">*   config-&gt;enableInDozeMode        = <span class="keyword">true</span>;</div>
-<div class="line">*   config-&gt;enableAnalogPreliminary = <span class="keyword">false</span>;</div>
-<div class="line">*   config-&gt;powerUpDelay            = 0x80;</div>
-<div class="line">*   config-&gt;referenceVoltageSource  = <a class="code" href="a00048.html#ggac8bce529fe3a77c5a22136eac3c7d626a8d40316bc847f29e588ff1a50775ab11">kLPADC_ReferenceVoltageAlt1</a>;</div>
-<div class="line">*   config-&gt;powerLevelMode          = <a class="code" href="a00048.html#ggab930081517abc866eaa456e58fd365aaac88970640320826c36101d8e7fa5a9c9">kLPADC_PowerLevelAlt1</a>;</div>
-<div class="line">*   config-&gt;triggerPriorityPolicy   = <a class="code" href="a00048.html#gga4c65872fd8d9cca041a6d668473537c3a0fec3ebd14c77fc5a1711cb3ed7a2ab5">kLPADC_TriggerPriorityPreemptImmediately</a>;</div>
-<div class="line">*   config-&gt;enableConvPause         = <span class="keyword">false</span>;</div>
-<div class="line">*   config-&gt;convPauseDelay          = 0U;</div>
-<div class="line">*   config-&gt;FIFOWatermark           = 0U;</div>
-<div class="line">* </div>
-</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">config</td><td>Pointer to configuration structure. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gabc10ae5663788ea5c7f77e2f3517a677"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void LPADC_Deinit </td>
-          <td>(</td>
-          <td class="paramtype">ADC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<p>The default configuration is config-&gt;enable = true; config-&gt;enableGamma = false; config-&gt;format = kLCDIF_PixelFormatRGB565;</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>LPADC peripheral base address. </td></tr>
+    <tr><td class="paramname">config</td><td>Pointer to the configuration structure. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gaf76592d9f392cd30b738f599b2e71344"></a>
+<a class="anchor" id="ga0c73e4bacf024dfe0bd6067dab787265"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1224,16 +1259,22 @@ Trigger and conversion with FIFO.</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void LPADC_Enable </td>
+          <td class="memname">static void LCDIF_SetFrameBufferAddr </td>
           <td>(</td>
-          <td class="paramtype">ADC_Type *&#160;</td>
+          <td class="paramtype">LCDIF_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>fbIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1249,107 +1290,151 @@ Trigger and conversion with FIFO.</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>LPADC peripheral base address. </td></tr>
-    <tr><td class="paramname">enable</td><td>switcher to the module. </td></tr>
+    <tr><td class="paramname">base</td><td>LCDIF peripheral base address. </td></tr>
+    <tr><td class="paramname">fbIndex</td><td>Frame buffer index. </td></tr>
+    <tr><td class="paramname">address</td><td>Frame buffer address. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>The address must be 128 bytes aligned. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gab6e4218842365ee6c620cfc59db213c4"></a>
+<a class="anchor" id="ga58f7e2933dd2ba24b1f92b07594b4141"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void LPADC_DoResetFIFO </td>
+          <td class="memname">void LCDIF_SetFrameBufferStride </td>
           <td>(</td>
-          <td class="paramtype">ADC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
+          <td class="paramtype">LCDIF_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>fbIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>strideBytes</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>LPADC peripheral base address. </td></tr>
+    <tr><td class="paramname">base</td><td>LCDIF peripheral base address. </td></tr>
+    <tr><td class="paramname">fbIndex</td><td>Frame buffer index. </td></tr>
+    <tr><td class="paramname">strideBytes</td><td>The stride in byte. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga3d6911f2f9ad7fd2fdf93c3b5d1e80f7"></a>
+<a class="anchor" id="ga6bd634282f266a1f5abcad74cc01f065"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void LPADC_DoResetConfig </td>
+          <td class="memname">void LCDIF_SetDitherConfig </td>
           <td>(</td>
-          <td class="paramtype">ADC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
+          <td class="paramtype">LCDIF_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Reset all ADC internal logic and registers, except the Control Register (ADCx_CTRL).</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>LPADC peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa2793911f11091179bfcd8e9b1860300"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
         <tr>
-          <td class="memname">static uint32_t LPADC_GetStatusFlags </td>
-          <td>(</td>
-          <td class="paramtype">ADC_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>displayIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a00048.html#ga8fe3d309ed1a498f661fa514cede3adb">lcdif_dither_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>LPADC peripheral base address. </td></tr>
+    <tr><td class="paramname">base</td><td>LCDIF peripheral base address. </td></tr>
+    <tr><td class="paramname">displayIndex</td><td>Index to configure. </td></tr>
+    <tr><td class="paramname">config</td><td>Pointer to the configuration structure. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>status flags' mask. See to <a class="el" href="a00048.html#gaf40ddd93026be88551f23b9428e98e22" title="Define hardware flags of the module. ">_lpadc_status_flags</a>. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga77ba72fad1e0f84b42809da6918e6532"></a>
+<a class="anchor" id="ga87ce294f816311c7bfcb6cb98983da70"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LCDIF_SetGammaData </td>
+          <td>(</td>
+          <td class="paramtype">LCDIF_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>fbIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>startIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint32_t *&#160;</td>
+          <td class="paramname"><em>gamma</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>gammaLen</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>LCDIF peripheral base address. </td></tr>
+    <tr><td class="paramname">fbIndex</td><td>The frame buffer index. </td></tr>
+    <tr><td class="paramname">startIndex</td><td>Start index in the gamma table that the value will be set to. </td></tr>
+    <tr><td class="paramname">gamma</td><td>The gamma values to set to the gamma table in LCDIF, could be defined using LCDIF_MAKE_GAMMA_VALUE. </td></tr>
+    <tr><td class="paramname">gammaLen</td><td>The length of the <code>gamma</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gac427bd0a2d8572de0ccc3736b5629f57"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1357,9 +1442,9 @@ Trigger and conversion with FIFO.</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void LPADC_ClearStatusFlags </td>
+          <td class="memname">static void LCDIF_EnableInterrupts </td>
           <td>(</td>
-          <td class="paramtype">ADC_Type *&#160;</td>
+          <td class="paramtype">LCDIF_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -1380,18 +1465,17 @@ Trigger and conversion with FIFO.</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Only the flags can be cleared by writing ADCx_STATUS register would be cleared by this API.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>LPADC peripheral base address. </td></tr>
-    <tr><td class="paramname">mask</td><td>Mask value for flags to be cleared. See to <a class="el" href="a00048.html#gaf40ddd93026be88551f23b9428e98e22" title="Define hardware flags of the module. ">_lpadc_status_flags</a>. </td></tr>
+    <tr><td class="paramname">base</td><td>LCDIF peripheral base address. </td></tr>
+    <tr><td class="paramname">mask</td><td>The interrupts to enable, pass in as OR'ed value of <a class="el" href="a00048.html#gabb35141167dc39b20256742723a76fcd">_lcdif_interrupt</a>. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga2c147558843514556795fd52f86aca56"></a>
+<a class="anchor" id="ga28f933e4671bc5dfcca66e06b3256f0a"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1399,9 +1483,9 @@ Trigger and conversion with FIFO.</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void LPADC_EnableInterrupts </td>
+          <td class="memname">static void LCDIF_DisableInterrupts </td>
           <td>(</td>
-          <td class="paramtype">ADC_Type *&#160;</td>
+          <td class="paramtype">LCDIF_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -1424,15 +1508,15 @@ Trigger and conversion with FIFO.</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>LPADC peripheral base address. </td></tr>
-    <tr><td class="paramname">mask</td><td>Mask value for interrupt events. See to <a class="el" href="a00048.html#gaeba33be014c52b093d5e7815dcf8e6b3" title="Define interrupt switchers of the module. ">_lpadc_interrupt_enable</a>. </td></tr>
+    <tr><td class="paramname">base</td><td>LCDIF peripheral base address. </td></tr>
+    <tr><td class="paramname">mask</td><td>The interrupts to disable, pass in as OR'ed value of <a class="el" href="a00048.html#gabb35141167dc39b20256742723a76fcd">_lcdif_interrupt</a>. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga5c633af2aeab39c215d3b5aa6172ccb7"></a>
+<a class="anchor" id="gabd7b321bbb9d21339ea69c2818cfaf8d"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1440,91 +1524,9 @@ Trigger and conversion with FIFO.</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void LPADC_DisableInterrupts </td>
+          <td class="memname">static uint32_t LCDIF_GetAndClearInterruptPendingFlags </td>
           <td>(</td>
-          <td class="paramtype">ADC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>LPADC peripheral base address. </td></tr>
-    <tr><td class="paramname">mask</td><td>Mask value for interrupt events. See to <a class="el" href="a00048.html#gaeba33be014c52b093d5e7815dcf8e6b3" title="Define interrupt switchers of the module. ">_lpadc_interrupt_enable</a>. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gacaaa33bc4d9cfd8fad4fac8f1475d97c"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void LPADC_EnableFIFOWatermarkDMA </td>
-          <td>(</td>
-          <td class="paramtype">ADC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>LPADC peripheral base address. </td></tr>
-    <tr><td class="paramname">enable</td><td>Switcher to the event. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga51b39db4ab530f900aa3a88a3047daf3"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t LPADC_GetConvResultCount </td>
-          <td>(</td>
-          <td class="paramtype">ADC_Type *&#160;</td>
+          <td class="paramtype">LCDIF_Type *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1537,68 +1539,56 @@ Trigger and conversion with FIFO.</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>LPADC peripheral base address. </td></tr>
+    <tr><td class="paramname">base</td><td>LCDIF peripheral base address. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The count of result kept in conversion FIFO. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The interrupt pending status.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The interrupt must be enabled, otherwise the interrupt flags will not assert. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga1862883b3c4ce8365ad1f1a6c64043cc"></a>
+<a class="anchor" id="ga46518ea0bbcae6644f60b9e448b94dbd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool LPADC_GetConvResult </td>
+          <td class="memname">void LCDIF_CursorGetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype">ADC_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype"><a class="el" href="a00048.html#ga66ec42c3469ab9d600523e8937dad3a7">lcdif_cursor_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00048.html#a00400">lpadc_conv_result_t</a> *&#160;</td>
-          <td class="paramname"><em>result</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
+<p>The default configuration values are:</p>
+<div class="fragment"><div class="line">config-&gt;enable = <span class="keyword">true</span>;</div>
+<div class="line">config-&gt;format = <a class="code" href="a00048.html#gga29869b579a68e5db70e24fd6838573f5a7e5a57926e5f87f35a453688e826c148">kLCDIF_CursorMasked</a>;</div>
+<div class="line">config-&gt;hotspotOffsetX = 0;</div>
+<div class="line">config-&gt;hotspotOffsetY = 0;</div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>LPADC peripheral base address. </td></tr>
-    <tr><td class="paramname">result</td><td>Pointer to structure variable that keeps the conversion result in conversion FIFO.</td></tr>
+    <tr><td class="paramname">config</td><td>Pointer to the hardware cursor configuration structure. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Status whether FIFO entry is valid. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga67927722ab525eda9e31d1f7554f02a4"></a>
+<a class="anchor" id="gad5e18f101ac53cd9ae4ab655075ec179"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void LPADC_SetConvTriggerConfig </td>
+          <td class="memname">void LCDIF_SetCursorConfig </td>
           <td>(</td>
-          <td class="paramtype">ADC_Type *&#160;</td>
+          <td class="paramtype">LCDIF_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>triggerId</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00048.html#a00401">lpadc_conv_trigger_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00048.html#ga66ec42c3469ab9d600523e8937dad3a7">lcdif_cursor_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -1608,47 +1598,17 @@ Trigger and conversion with FIFO.</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Each programmable trigger can launch the conversion command in command buffer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>LPADC peripheral base address. </td></tr>
-    <tr><td class="paramname">triggerId</td><td>ID for each trigger. Typically, the available value range is from 0. </td></tr>
-    <tr><td class="paramname">config</td><td>Pointer to configuration structure. See to <a class="el" href="a00048.html#a00401" title="Define structure to keep the configuration for conversion trigger. ">lpadc_conv_trigger_config_t</a>. </td></tr>
+    <tr><td class="paramname">base</td><td>LCDIF peripheral base address. </td></tr>
+    <tr><td class="paramname">config</td><td>Cursor configuration. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga44e286bc27b1e8fee3f4796ca9196a27"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void LPADC_GetDefaultConvTriggerConfig </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00048.html#a00401">lpadc_conv_trigger_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function initializes the trigger's configuration structure with an available settings. The default values are: </p>
-<div class="fragment"><div class="line">*   config-&gt;commandIdSource       = 0U;</div>
-<div class="line">*   config-&gt;loopCountIndex        = 0U;</div>
-<div class="line">*   config-&gt;triggerIdSource       = 0U;</div>
-<div class="line">*   config-&gt;enableHardwareTrigger = <span class="keyword">false</span>;</div>
-<div class="line">* </div>
-</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">config</td><td>Pointer to configuration structure. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gacaef94ac48a3e0a34f9235f88767b7a3"></a>
+<a class="anchor" id="ga0aed14a8feac14fcbc7f7da03585181d"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1656,16 +1616,22 @@ Trigger and conversion with FIFO.</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void LPADC_DoSoftwareTrigger </td>
+          <td class="memname">static void LCDIF_SetCursorHotspotPosition </td>
           <td>(</td>
-          <td class="paramtype">ADC_Type *&#160;</td>
+          <td class="paramtype">LCDIF_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>triggerIdMask</em>&#160;</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1681,35 +1647,77 @@ Trigger and conversion with FIFO.</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>LPADC peripheral base address. </td></tr>
-    <tr><td class="paramname">triggerIdMask</td><td>Mask value for software trigger indexes, which count from zero. </td></tr>
+    <tr><td class="paramname">base</td><td>LCDIF peripheral base address. </td></tr>
+    <tr><td class="paramname">x</td><td>X coordinate of the hotspot, range 0 ~ 8191. </td></tr>
+    <tr><td class="paramname">y</td><td>Y coordinate of the hotspot, range 0 ~ 8191. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga500d8b7b0323136353e10fdfad2e40c7"></a>
+<a class="anchor" id="gad872652fbbda43e1ed5a83463743d365"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void LPADC_SetConvCommandConfig </td>
+          <td class="memname">static void LCDIF_SetCursorBufferAddress </td>
           <td>(</td>
-          <td class="paramtype">ADC_Type *&#160;</td>
+          <td class="paramtype">LCDIF_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>commandId</em>, </td>
+          <td class="paramname"><em>address</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>LCDIF peripheral base address. </td></tr>
+    <tr><td class="paramname">address</td><td>Memory address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gada8ff5341c29870ef7bf65fa06e45a2d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LCDIF_SetCursorColor </td>
+          <td>(</td>
+          <td class="paramtype">LCDIF_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00048.html#a00399">lpadc_conv_command_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>background</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>foreground</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1720,48 +1728,9 @@ Trigger and conversion with FIFO.</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>LPADC peripheral base address. </td></tr>
-    <tr><td class="paramname">commandId</td><td>ID for command in command buffer. Typically, the available value range is 1 - 15. </td></tr>
-    <tr><td class="paramname">config</td><td>Pointer to configuration structure. See to <a class="el" href="a00048.html#a00399" title="Define structure to keep the configuration for conversion command. ">lpadc_conv_command_config_t</a>. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa3f7fd90bdbd65fbc4e5b88e904173f9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void LPADC_GetDefaultConvCommandConfig </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00048.html#a00399">lpadc_conv_command_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function initializes the conversion command's configuration structure with an available settings. The default values are: </p>
-<div class="fragment"><div class="line">*   config-&gt;sampleScaleMode            = <a class="code" href="a00048.html#ggaa0d71fb3a1bd431af8cf5aacc2e8fc6cacf9a7acbde288c4de0a60d0018457721">kLPADC_SampleFullScale</a>;</div>
-<div class="line">*   config-&gt;channelBScaleMode          = <a class="code" href="a00048.html#ggaa0d71fb3a1bd431af8cf5aacc2e8fc6cacf9a7acbde288c4de0a60d0018457721">kLPADC_SampleFullScale</a>;</div>
-<div class="line">*   config-&gt;channelSampleMode          = <a class="code" href="a00048.html#gga03c78bd98bf88df854e5a67e86521e7aae511411bd331e3049a5c9583163e4fe2">kLPADC_SampleChannelSingleEndSideA</a>;</div>
-<div class="line">*   config-&gt;channelNumber              = 0U;</div>
-<div class="line">*   config-&gt;chainedNextCmdNumber       = 0U;</div>
-<div class="line">*   config-&gt;enableAutoChannelIncrement = <span class="keyword">false</span>;</div>
-<div class="line">*   config-&gt;loopCount                  = 0U;</div>
-<div class="line">*   config-&gt;hardwareAverageMode        = <a class="code" href="a00048.html#ggabb529e856c73d606ce37f7da01a0f6f3adeae8ae097545482c1942926119d968c">kLPADC_HardwareAverageCount1</a>;</div>
-<div class="line">*   config-&gt;sampleTimeMode             = <a class="code" href="a00048.html#ggac70e2c24ba9ef059ee2487d821136e85abfd94e19de3d57b94fae9baded5804db">kLPADC_SampleTimeADCK3</a>;</div>
-<div class="line">*   config-&gt;hardwareCompareMode        = <a class="code" href="a00048.html#ggad7a09557254487374b1b125f2146ba22ab205c4a4aa1cd79f38be81e6469f2fd2">kLPADC_HardwareCompareDisabled</a>;</div>
-<div class="line">*   config-&gt;hardwareCompareValueHigh   = 0U;</div>
-<div class="line">*   config-&gt;hardwareCompareValueLow    = 0U;</div>
-<div class="line">*   config-&gt;conversionResolutionMode   = kLPADC_ConversionResolutionStandard;</div>
-<div class="line">*   config-&gt;enableWaitTrigger          = <span class="keyword">false</span>;</div>
-<div class="line">*   config-&gt;enableChannelB             = <span class="keyword">false</span>;</div>
-<div class="line">* </div>
-</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">config</td><td>Pointer to configuration structure. </td></tr>
+    <tr><td class="paramname">base</td><td>LCDIF peripheral base address. </td></tr>
+    <tr><td class="paramname">background</td><td>Background color, could be defined use <a class="el" href="a00048.html#ga59226e4d188d172b3df72f6976766dd6">LCDIF_MAKE_CURSOR_COLOR</a> </td></tr>
+    <tr><td class="paramname">foreground</td><td>Foreground color, could be defined use <a class="el" href="a00048.html#ga59226e4d188d172b3df72f6976766dd6">LCDIF_MAKE_CURSOR_COLOR</a> </td></tr>
   </table>
   </dd>
 </dl>

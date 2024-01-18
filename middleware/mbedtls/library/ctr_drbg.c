@@ -19,7 +19,7 @@
 /*
  *  The NIST SP 800-90 DRBGs are described in the following publication.
  *
- *  http://csrc.nist.gov/publications/nistpubs/800-90/SP800-90revised_March2007.pdf
+ *  https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-90r.pdf
  */
 
 #include "common.h"
@@ -30,6 +30,7 @@
 #include "mbedtls/platform_util.h"
 #include "mbedtls/error.h"
 
+#include <limits.h>
 #include <string.h>
 
 #if defined(MBEDTLS_FS_IO)
@@ -37,6 +38,9 @@
 #endif
 
 #include "mbedtls/platform.h"
+
+/* NXP added */
+#if !defined(MBEDTLS_CTR_DRBG_ALT)
 
 /*
  * CTR_DRBG context initialization
@@ -680,6 +684,9 @@ exit:
     return mbedtls_ctr_drbg_write_seed_file(ctx, path);
 }
 #endif /* MBEDTLS_FS_IO */
+
+/* NXP added */
+#endif /* MBEDTLS_CTR_DRBG_ALT */
 
 #if defined(MBEDTLS_SELF_TEST)
 

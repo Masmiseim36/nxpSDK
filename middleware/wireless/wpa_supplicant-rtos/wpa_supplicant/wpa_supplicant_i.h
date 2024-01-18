@@ -10,7 +10,7 @@
 #define WPA_SUPPLICANT_I_H
 
 #include "utils/bitfield.h"
-#include "utils/wlist.h"
+#include "utils/dl_list.h"
 #include "common/defs.h"
 #include "common/sae.h"
 #include "common/wpa_ctrl.h"

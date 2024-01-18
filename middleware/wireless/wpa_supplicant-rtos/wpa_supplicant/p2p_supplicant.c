@@ -10,7 +10,7 @@
 #include "includes.h"
 
 #ifdef CONFIG_P2P
-#include "common.h"
+#include "utils/common.h"
 #include "eloop.h"
 #include "common/ieee802_11_common.h"
 #include "common/ieee802_11_defs.h"
@@ -219,7 +219,9 @@ static unsigned int wpas_p2p_valid_oper_freqs(struct wpa_supplicant *wpa_s,
 
     os_free(freqs);
 
+#if !(defined(CONFIG_ZEPHYR) || defined(CONFIG_FREERTOS))
     dump_freq_data(wpa_s, "valid for P2P", p2p_freqs, j);
+#endif /* CONFIG_ZEPHYR , CONFIG_FREERTOS*/
 
     return j;
 }

@@ -5,6 +5,7 @@
 
 /*
  * Copyright (c) 2001-2004 Swedish Institute of Computer Science.
+ * Copyright 2023 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -45,19 +46,62 @@ extern "C" {
 #endif
 
 #define MLD6_HBH_HLEN 8
-/** Multicast listener report/query/done message header. */
+/** Multicast listener query message header. */
 #ifdef PACK_STRUCT_USE_INCLUDES
 #  include "arch/bpstruct.h"
 #endif
 PACK_STRUCT_BEGIN
-struct mld_header {
+struct mld_header_query {
   PACK_STRUCT_FLD_8(u8_t type);
   PACK_STRUCT_FLD_8(u8_t code);
   PACK_STRUCT_FIELD(u16_t chksum);
-  PACK_STRUCT_FIELD(u16_t max_resp_delay);
+  PACK_STRUCT_FIELD(u16_t max_resp_code);
   PACK_STRUCT_FIELD(u16_t reserved);
   PACK_STRUCT_FLD_S(ip6_addr_p_t multicast_address);
-  /* Options follow. */
+
+  /* bits 0..2 QRV Querier's Robustness Variable */
+  /* bit  3    S Flag Suppress Router-Side Processing */
+  /* bits 4..7 Reserved */
+  PACK_STRUCT_FLD_8(u8_t s_qrv);
+
+  PACK_STRUCT_FLD_8(u8_t qqic);
+  PACK_STRUCT_FLD_8(u16_t number_of_sources);
+  /* Source addresses may follow */
+} PACK_STRUCT_STRUCT;
+PACK_STRUCT_END
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/epstruct.h"
+#endif
+
+/** Multicast listener reply (report) message header. */
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/bpstruct.h"
+#endif
+PACK_STRUCT_BEGIN
+struct mld_header_reply {
+    PACK_STRUCT_FLD_8(u8_t type);
+    PACK_STRUCT_FLD_8(u8_t reserved);
+    PACK_STRUCT_FIELD(u16_t chksum);
+    PACK_STRUCT_FIELD(u16_t reserved2);
+    PACK_STRUCT_FIELD(u16_t nr_address_records);
+    /* Multicast address records follows */
+} PACK_STRUCT_STRUCT;
+PACK_STRUCT_END
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/epstruct.h"
+#endif
+
+/** Multicast Address Record. */
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/bpstruct.h"
+#endif
+PACK_STRUCT_BEGIN
+struct mld_addr_record {
+    PACK_STRUCT_FLD_8(u8_t type);
+    PACK_STRUCT_FLD_8(u8_t aux_data_len);
+    PACK_STRUCT_FLD_8(u16_t number_of_sources);
+    PACK_STRUCT_FLD_S(ip6_addr_p_t multicast_address);
+    /* Source Addresses follows */
 } PACK_STRUCT_STRUCT;
 PACK_STRUCT_END
 #ifdef PACK_STRUCT_USE_INCLUDES

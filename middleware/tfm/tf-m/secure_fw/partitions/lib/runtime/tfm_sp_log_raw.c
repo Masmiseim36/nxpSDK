@@ -95,7 +95,7 @@ static int _tfm_hex_num_output(struct formatted_buffer_t *pb, uint32_t num,
     return count;
 }
 
-static int _tfm_sp_log_vprintf(const char *fmt, va_list ap)     //NXP to avoid error in Keil L6200E: Symbol vprintf multiply defined (by printfa.o and tfm_sp_log_raw.o).
+int vprintf(const char *fmt, va_list ap)
 {
     int count = 0;
     struct formatted_buffer_t outputbuf;
@@ -162,13 +162,13 @@ static int _tfm_sp_log_vprintf(const char *fmt, va_list ap)     //NXP to avoid e
     return count;
 }
 
-int tfm_sp_log_printf(const char *fmt, ...) //NXP was printf(), workaround Keil error
+int printf(const char *fmt, ...)
 {
     int count = 0;
     va_list ap;
 
     va_start(ap, fmt);
-    count = _tfm_sp_log_vprintf(fmt, ap);   //NXP was vprintf(), workaround Keil error
+    count = vprintf(fmt, ap);
     va_end(ap);
 
     return count;

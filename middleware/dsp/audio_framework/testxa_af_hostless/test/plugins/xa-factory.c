@@ -72,7 +72,6 @@ extern XA_ERRORCODE xa_hotword_decoder(xa_codec_handle_t, WORD32, WORD32, pVOID)
 extern XA_ERRORCODE xa_aac_decoder(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_mixer(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_pcm_gain(xa_codec_handle_t, WORD32, WORD32, pVOID);
-extern XA_ERRORCODE xa_client_proxy(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_voice_seeker(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_vit_pre_proc(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_mp3_encoder(xa_codec_handle_t, WORD32, WORD32, pVOID);
@@ -96,11 +95,31 @@ extern XA_ERRORCODE xa_sbc_encoder(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_sbc_decoder(xa_codec_handle_t, WORD32, WORD32, pVOID);
 
 /* ...component class factories */
+#ifndef XA_DISABLE_CLASS_AUDIO_CODEC
 extern void * xa_audio_codec_factory(UWORD32 core, xa_codec_func_t process, xaf_comp_type comp_type);
+#else
+void * xa_audio_codec_factory(UWORD32 core, xa_codec_func_t process, xaf_comp_type comp_type) { return NULL; }
+#endif
+#ifndef XA_DISABLE_CLASS_MIXER
 extern void * xa_mixer_factory(UWORD32 core, xa_codec_func_t process, xaf_comp_type comp_type);
+#else
+void * xa_mixer_factory(UWORD32 core, xa_codec_func_t process, xaf_comp_type comp_type) { return NULL; }
+#endif
+#ifndef XA_DISABLE_CLASS_RENDERER
 extern void * xa_renderer_factory(UWORD32 core, xa_codec_func_t process,xaf_comp_type comp_type);
+#else
+void * xa_renderer_factory(UWORD32 core, xa_codec_func_t process,xaf_comp_type comp_type) { return NULL; }
+#endif
+#ifndef XA_DISABLE_CLASS_CAPTURER
 extern void * xa_capturer_factory(UWORD32 core, xa_codec_func_t process,xaf_comp_type comp_type);
+#else
+void * xa_capturer_factory(UWORD32 core, xa_codec_func_t process,xaf_comp_type comp_type) { return NULL; }
+#endif
+#ifndef XA_DISABLE_CLASS_MIMO_PROC
 extern void * xa_mimo_proc_factory(UWORD32 core, xa_codec_func_t process, xaf_comp_type comp_type);
+#else
+void * xa_mimo_proc_factory(UWORD32 core, xa_codec_func_t process, xaf_comp_type comp_type) { return NULL; }
+#endif
 
 /*******************************************************************************
  * Local constants definitions
@@ -135,9 +154,6 @@ static const xf_component_id_t xf_component_id[] =
 #endif
 #if XA_PCM_GAIN
     { "post-proc/pcm_gain",      xa_audio_codec_factory,     xa_pcm_gain },
-#endif
-#if XA_CLIENT_PROXY
-    { "post-proc/client_proxy",      xa_audio_codec_factory,     xa_client_proxy },
 #endif
 #if XA_VOICE_SEEKER
 	{ "pre-proc/voice_seeker",      xa_audio_codec_factory,     xa_voice_seeker },
@@ -240,7 +256,7 @@ void * xf_component_factory(UWORD32 core, xf_id_t id, UWORD32 length)
     {
         for(comp_type = XAF_DECODER; comp_type < XAF_MAX_COMPTYPE; comp_type++)
         {
-            if(NULL != strstr(xf_component_id[i].id, comp_id[comp_type]))
+            if( 0 == strncmp(xf_component_id[i].id, comp_id[comp_type], strlen(comp_id[comp_type])))
                 break;
         }
 

@@ -50,10 +50,10 @@ int f_printf (
     %[flag][width][precision][size]type
 </pre>
 <dl>
-<dt>flag</dt><dd>Padding options. A <tt>-</tt> specifies left-aligned. A <tt>0</tt> specifies zero padded. The default setting is in right-aligned and space padded.</dd>
-<dt>width</dt><dd>Minimum width of the field, <tt>1-99</tt> or <tt>*</tt>. If the width of generated string is less than the specified value, rest field is padded with spaces or zeros. An <tt>*</tt> specifies the value comes from an argument in int type.</dd>
-<dt>precision</dt><dd>Specifies number of fractional digits or maximum width of string, <tt>.0-.99</tt> or <tt>.*</tt>. If number is omitted, it will be same as <tt>.0</tt>. Default setting is 6 for number and no limit for string.</dd>
-<dt>size</dt><dd>Specifies size of integer argument, <tt>l</tt>(long) and <tt>ll</tt>(long long). If <tt>sizeof (long) == sizeof (int)</tt> is true (this is typical of 32-bit systems), prefix <tt>l</tt> can be omitted for long integer argument. The default size is int for integer arrument and floating point argument is always assumed double.</dd>
+<dt>flag</dt><dd>Padding option. A <tt>-</tt> specifies left-aligned. A <tt>0</tt> specifies zero padded. The default setting is in right-aligned and space padded.</dd>
+<dt>width</dt><dd>Minimum width of the field, <tt>1-99</tt> or <tt>*</tt>. If the width of generated string is less than the minimum width, rest field is padded with spaces or zeros. An <tt>*</tt> specifies the value comes from an argument in int type. The default setting is zero.</dd>
+<dt>precision</dt><dd>Specifies number of fractional digits or maximum width of string, <tt>.0-.99</tt> or <tt>.*</tt>. If the number is omitted, it is same as <tt>.0</tt>. Default setting is 6 for number and no limit for string.</dd>
+<dt>size</dt><dd>Specifies size of integer argument, <tt>l</tt>(long) and <tt>ll</tt>(long long). If <tt>sizeof (long) == sizeof (int)</tt> is true (this is typical of 32-bit systems), prefix <tt>l</tt> can be omitted for long integer argument. The default size is int for integer argument and floating point argument is always assumed double as the default argument promotion.</dd>
 <dt>type</dt><dd>Specifies type of the output format and the argument as shown below. The length of generated string is in assumtion of int is 32-bit.
 <table class="lst1">
 <tr><th>Type</th><th>Format</th><th>Argument</th><th>Length</th></tr>
@@ -70,6 +70,7 @@ int f_printf (
 </dd>
 </dl>
 <p>When FatFs is configured for Unicode API (<tt><a href="config.html#lfn_unicode">FF_LFN_UNICODE</a> &gt;= 1</tt>), character encoding on the string fuctions, <tt>f_putc</tt>, <tt>f_puts</tt>, <tt>f_printf</tt> and <tt>f_gets</tt> function, is also switched to Unicode. The Unicode characters in multiple encoding unit, such as surrogate pair and multi-byte sequence, should not be divided into two function calls, or the character will be lost. The character encoding <em>on the file</em> to be written via this function is selected by <tt><a href="config.html#strf_encode">FF_STRF_ENCODE</a></tt>. The characters with wrong encoding or invalid for the output encoding will be lost.</p>
+<p>If <tt>sprintf</tt> is used in the project and code conversion is not needed, <tt>f_write</tt> with <tt>sprintf</tt> will be efficient in code size and performance rather than <tt>f_printf</tt>.</p>
 </div>
 
 

@@ -35,6 +35,8 @@ bt_list_node_t *bt_list_get_not_empty(bt_list_t *list);
 void bt_list_remove(bt_list_t *list, bt_list_node_t *prev_node, bt_list_node_t *node);
 void bt_list_insert(bt_list_t *list, bt_list_node_t *prev, bt_list_node_t *node);
 
+void bt_list_scan(bt_list_t *list, bool (*cb)(void* node, void* p), void *param);
+
 #define BT_LIST_CONTAINER(__ln, __n, __t) \
         ((NULL != __ln) ? CONTAINER_OF(__ln, __t, __n) : NULL)
 

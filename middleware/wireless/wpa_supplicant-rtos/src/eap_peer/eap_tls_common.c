@@ -8,7 +8,7 @@
 
 #include "includes.h"
 
-#include "common.h"
+#include "utils/common.h"
 #include "crypto/sha1.h"
 #include "crypto/tls.h"
 #include "eap_i.h"

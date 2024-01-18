@@ -18,7 +18,7 @@ set(LWIP_VERSION_REVISION "0")
 # LWIP_VERSION_RC is set to LWIP_RC_RELEASE for official releases
 # LWIP_VERSION_RC is set to LWIP_RC_DEVELOPMENT for Git versions
 # Numbers 1..31 are reserved for release candidates
-set(LWIP_VERSION_RC       "LWIP_RC_DEVELOPMENT")
+set(LWIP_VERSION_RC       "LWIP_RC_RELEASE")
 
 if ("${LWIP_VERSION_RC}" STREQUAL "LWIP_RC_RELEASE")
     set(LWIP_VERSION_STRING
@@ -98,8 +98,11 @@ set(lwipnetif_SRCS
     ${LWIP_DIR}/src/netif/ethernet.c
     ${LWIP_DIR}/src/netif/bridgeif.c
     ${LWIP_DIR}/src/netif/bridgeif_fdb.c
-    ${LWIP_DIR}/src/netif/slipif.c
 )
+
+if (NOT ${LWIP_EXCLUDE_SLIPIF})
+	list(APPEND lwipnetif_SRCS ${LWIP_DIR}/src/netif/slipif.c)
+endif()
 
 # 6LoWPAN
 set(lwipsixlowpan_SRCS

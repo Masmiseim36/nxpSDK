@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, _DEBUG=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/osa;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/alt_mode;../../../../../../components/i2c;../../../../../../components/lists;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/uart;../../../../../../devices/MIMXRT595S;../../../../../evkmimxrt595/flash_config;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd/phy_interface;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
+              <IncludePath>..;../../../../../../components/osa;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/alt_mode;../../../../../../components/i2c;../../../../../../components/lists;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/uart;../../../../../../devices/MIMXRT595S;../../../../../evkmimxrt595/flash_config;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd/phy_interface;../../../../../../devices/MIMXRT595S/utilities;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1067,6 +1067,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>
@@ -1488,7 +1493,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/osa;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/alt_mode;../../../../../../components/i2c;../../../../../../components/lists;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/uart;../../../../../../devices/MIMXRT595S;../../../../../evkmimxrt595/flash_config;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd/phy_interface;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
+              <IncludePath>..;../../../../../../components/osa;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/alt_mode;../../../../../../components/i2c;../../../../../../components/lists;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/uart;../../../../../../devices/MIMXRT595S;../../../../../evkmimxrt595/flash_config;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd/phy_interface;../../../../../../devices/MIMXRT595S/utilities;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2223,6 +2228,11 @@
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_assert.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_str.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
@@ -2642,7 +2652,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, _DEBUG=0, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/osa;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/alt_mode;../../../../../../components/i2c;../../../../../../components/lists;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/uart;../../../../../../devices/MIMXRT595S;../../../../../evkmimxrt595/flash_config;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd/phy_interface;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
+              <IncludePath>..;../../../../../../components/osa;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/alt_mode;../../../../../../components/i2c;../../../../../../components/lists;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/uart;../../../../../../devices/MIMXRT595S;../../../../../evkmimxrt595/flash_config;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd/phy_interface;../../../../../../devices/MIMXRT595S/utilities;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3377,6 +3387,11 @@
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_assert.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_str.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
@@ -3796,7 +3811,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SDK_OS_BAREMETAL, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/osa;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/alt_mode;../../../../../../components/i2c;../../../../../../components/lists;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/uart;../../../../../../devices/MIMXRT595S;../../../../../evkmimxrt595/flash_config;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd/phy_interface;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
+              <IncludePath>..;../../../../../../components/osa;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/alt_mode;../../../../../../components/i2c;../../../../../../components/lists;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/uart;../../../../../../devices/MIMXRT595S;../../../../../evkmimxrt595/flash_config;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd/phy_interface;../../../../../../devices/MIMXRT595S/utilities;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4529,6 +4544,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>

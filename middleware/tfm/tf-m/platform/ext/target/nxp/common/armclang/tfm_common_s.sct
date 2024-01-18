@@ -66,9 +66,16 @@ LR_CODE S_CODE_START S_CODE_SIZE {
     }
 
     /**** Unprivileged Secure code start here */
-    TFM_UNPRIV_CODE +0 ALIGN TFM_LINKER_UNPRIV_CODE_ALIGNMENT {
+    TFM_UNPRIV_CODE_START +0 ALIGN TFM_LINKER_UNPRIV_CODE_ALIGNMENT {
         *(SFN)
         * (+RO)
+    }
+
+    /*
+     * This empty, zero long execution region is here to mark the end address
+     * of TFM unprivileged code.
+     */
+    TFM_UNPRIV_CODE_END +0 ALIGN TFM_LINKER_UNPRIV_CODE_ALIGNMENT EMPTY 0x0 {
     }
 
     /**** Section for holding partition RO load data */
@@ -136,7 +143,7 @@ LR_CODE S_CODE_START S_CODE_SIZE {
         *load_info_tfm_ipc_client_test.*  (+RO)
         *(TFM_SP_IPC_CLIENT_TEST_ATTR_FN)
 
-// #ifdef TEST_FRAMEWORK_S
+// #ifdef TFM_S_REG_TEST
         *tfm_secure_client_2.*  (+RO)
         *intermedia_tfm_secure_client_2.*  (+RO)
         *load_info_tfm_secure_client_2.*  (+RO)
@@ -259,7 +266,7 @@ LR_CODE S_CODE_START S_CODE_SIZE {
         *(TFM_SP_IPC_CLIENT_TEST_ATTR_RW)
         *(TFM_SP_IPC_CLIENT_TEST_ATTR_ZI)
 
-// #ifdef TEST_FRAMEWORK_S
+// #ifdef TFM_S_REG_TEST
         *tfm_secure_client_2.*  (+RW +ZI)
         *intermedia_tfm_secure_client_2.*  (+RW +ZI)
         *load_info_tfm_secure_client_2.*  (+RW +ZI)

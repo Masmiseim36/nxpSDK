@@ -13,7 +13,7 @@
 **         Linker file for the Keil ARM C/C++ Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2021 NXP
+**     Copyright 2016-2021,2023 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -23,20 +23,6 @@
 **
 ** ###################################################################
 */
-
-/* NVM */
-/* By default, the NVM is not used. */
-#if !(defined(gUseNVMLink_d))
-    #define gUseNVMLink_d              0
-#endif
-
-#if !(defined(gEraseNVMLink_d))
-    #define gEraseNVMLink_d            0
-#endif
-
-#if !(defined(gNVMSectorCountLink_d))
-    #define gNVMSectorCountLink_d      4
-#endif
 
 
 /* USB BDT size */
@@ -57,6 +43,7 @@
 /* The SRAM region [0x10000-0x1BFFF] is reserved for ROM code. */
 /* The SRAM region [0x0-0xFFFF], [0x1C000-0x1FFFF] are reserved for app-specific use cases. */
 /* The SRAM region [0x20000-0x7FFFF] is reserved for Non-cached shared memory between M33 and DSP. */
+/* The SRAM region [0x80000-0x27FFFF] is reserved for DSP code and data. */
 
 #if (defined(__ram_vector_table__))
   #define __ram_vector_table_size__    0x00000200
@@ -64,52 +51,31 @@
   #define __ram_vector_table_size__    0x00000000
 #endif
 
+#define LITTLEFS_REGION_SIZE           0x00800000
+
 #define  m_interrupts_start            0x08001000
 #define  m_interrupts_size             0x00000200
 
 #define  m_text_start                  0x08001200
-#define _ROM_END_                      0x0B7FFFFF
+#define  m_text_size                   0x03FFEE00 - LITTLEFS_REGION_SIZE
 
 #define m_interrupts_ram_start         0x20080000
 #define m_interrupts_ram_size          __ram_vector_table_size__
 
-#define NVM_ADAPTER_TABLE_SIZE         0x200
-#define NVM_TABLE_SIZE                 0x1000
-#define NVM_TABLE_START                m_interrupts_ram_start + m_interrupts_ram_size
-
-#define m_data_start                   (m_interrupts_ram_start + m_interrupts_ram_size + NVM_TABLE_SIZE)
-#define m_data_size                    (0x00280000 - m_interrupts_ram_size - NVM_TABLE_SIZE)
+#define  m_data_start                  (m_interrupts_ram_start + m_interrupts_ram_size)
+#define  m_data_size                   (0x00280000 - m_interrupts_ram_size)
 
 #define  m_usb_sram_start              0x40140000
 #define  m_usb_sram_size               0x00004000
 
 #define  m_boot_flash_conf_start       0x08000400
 
-#define STORAGE_AREA_LENGTH            0x10000
-
-#define STORAGE_AREA_SIZE             STORAGE_AREA_LENGTH
-#define STORAGE_AREA_START            (_ROM_END_ - STORAGE_AREA_SIZE + 1)
-#define m_text_size                   (_ROM_END_ - m_text_start - STORAGE_AREA_SIZE - NVM_ADAPTER_TABLE_SIZE + 1)
-
-/*** NVM Configuration Start ***/
-#if (defined(gUseNVMLink_d))
-  #define NVM_AREA_START              STORAGE_AREA_START
-  
-  /* 4k flash sector size */
-  #define NV_STORAGE_SECTOR_SIZE      0x1000
-  #define NV_STORAGE_MAX_SECTORS      gNVMSectorCountLink_d
-  #define NVM_AREA_SIZE               (NV_STORAGE_SECTOR_SIZE * NV_STORAGE_MAX_SECTORS)
-
-  #define NV_STORAGE_END_ADDRESS      (NVM_AREA_START + NVM_AREA_SIZE - 1)
-  #define NV_STORAGE_START_ADDRESS    (NVM_AREA_START)
-#endif
-/*** NVM Configuration End ***/
+/* NOTE: The last LITTLEFS_REGION_SIZE Flash( in range (m_text_start + m_text_size) ~ (m_text_start + m_text_size + LITTLEFS_REGION_SIZE -1)) is reserved for litteFS data */
 
 /*** littleFS configuration Start ***/
-#define EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS  (_ROM_END_ + 1)
-#define EDGEFAST_BT_LITTLEFS_STORAGE_END_ADDRESS    (0x0BFFFFFF + 1)
-#define EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE    (0x1000)
-#define EDGEFAST_BT_LITTLEFS_STORAGE_MAX_SECTORS    ((EDGEFAST_BT_LITTLEFS_STORAGE_END_ADDRESS - EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS) / EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE)
+#define EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS  (m_text_start + m_text_size)
+#define EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE    (0x1000)    /* 4k flash sector size */
+#define EDGEFAST_BT_LITTLEFS_STORAGE_MAX_SECTORS    (LITTLEFS_REGION_SIZE / EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE)
 /*** littleFS configuration End ***/
 
 LR_m_flash_conf m_boot_flash_conf_start m_interrupts_start-m_boot_flash_conf_start {
@@ -148,14 +114,7 @@ LR_m_interrupts m_interrupts_start m_text_start+m_text_size-m_interrupts_start {
     * (._bt_l2cap_br_fixed_chan*)
   }
 
-  ER_NVM_ADAPTER_TABLE m_text_start+m_text_size UNINIT NVM_ADAPTER_TABLE_SIZE { ; load address = execution address
-    * (*NVM_ADAPTER_TABLE)
-  }
-
-  NVM_region NV_STORAGE_START_ADDRESS EMPTY NVM_AREA_SIZE { ; load address = execution address
-  }
-
-  EDGEFAST_BT_LittleFS_region EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS EMPTY (EDGEFAST_BT_LITTLEFS_STORAGE_END_ADDRESS - EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS) { ; load address = execution address
+  EDGEFAST_BT_LittleFS_region EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS EMPTY (LITTLEFS_REGION_SIZE) { ; load address = execution address
   }
 
 #if (defined(__ram_vector_table__))
@@ -166,10 +125,6 @@ LR_m_interrupts m_interrupts_start m_text_start+m_text_size-m_interrupts_start {
   }
 #endif
 
-  RW_NVM_TABLE NVM_TABLE_START UNINIT NVM_TABLE_SIZE { ; RW data
-    * (*NVM_TABLE)
-  }
-
   RW_m_data m_data_start ALIGN 4 m_data_size-Stack_Size-Heap_Size { ; RW data
     * (CodeQuickAccess)
     * (DataQuickAccess)
@@ -178,8 +133,19 @@ LR_m_interrupts m_interrupts_start m_text_start+m_text_size-m_interrupts_start {
     /* Necessary to run flash routines from SRAM */
     fsl_adapter_flexspi_nor_flash.o (+RO +RW +ZI)
     fsl_flexspi.o (+RO +RW +ZI)
-    NV_Flash.o (+RO +RW +ZI)
     mflash_drv.o (+RO +RW +ZI)
+	controller_low_power.o (+RO +RW +ZI)
+	board_lp.o (+RO +RW +ZI)
+	fwk_platform.o (+RO +RW +ZI)
+	fwk_platform_lowpower.o (+RO +RW +ZI)
+	fsl_pm_core.o (+RO +RW +ZI)
+	fsl_pm_device.o (+RO +RW +ZI)
+	fsl_power.o (+RO +RW +ZI)
+	fsl_gpio.o (+RO +RW +ZI)
+	fsl_adapter_rt_gpio.o (+RO +RW +ZI)
+	fsl_component_generic_list.o (+RO +RW +ZI)
+	fsl_common_arm.o (+RO +RW +ZI)
+	memseta.o (+RO +RW +ZI)
     * (NonCacheable.init)
     * (*NonCacheable)
   }

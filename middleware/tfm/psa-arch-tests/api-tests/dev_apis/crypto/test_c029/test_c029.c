@@ -1,5 +1,5 @@
 /** @file
- * Copyright (c) 2019-2021, Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2019-2023, Arm Limited or its affiliates. All rights reserved.
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -33,7 +33,7 @@ static int32_t  valid_test_input_index = -1;
 int32_t psa_mac_verify_setup_test(caller_security_t caller __UNUSED)
 {
 #if (defined(ARCH_TEST_HMAC) && (defined(ARCH_TEST_SHA256) || defined(ARCH_TEST_CMAC)) || \
-(defined(ARCH_TEST_AES_128) && (defined(ARCH_TEST_CBC_NO_PADDING) || defined(ARCH_TEST_CMAC)))) //NXP
+(defined(ARCH_TEST_AES_128) && (defined(ARCH_TEST_CBC_NO_PADDING) || defined(ARCH_TEST_CMAC))))
     int                   num_checks = sizeof(check1)/sizeof(check1[0]);
     int32_t               i, status;
     psa_key_attributes_t  attributes = PSA_KEY_ATTRIBUTES_INIT;
@@ -119,17 +119,16 @@ int32_t psa_mac_verify_setup_test(caller_security_t caller __UNUSED)
     }
 
     return VAL_STATUS_SUCCESS;
-#else //NXP
+#else
     val->print(PRINT_TEST, "No test available for the selected crypto configuration\n", 0);
     return RESULT_SKIP(VAL_STATUS_NO_TESTS);
-#endif //NXP
-
+#endif
 }
 
 int32_t psa_mac_verify_setup_negative_test(caller_security_t caller __UNUSED)
 {
 #if (defined(ARCH_TEST_HMAC) && (defined(ARCH_TEST_SHA256) || defined(ARCH_TEST_CMAC)) || \
-(defined(ARCH_TEST_AES_128) && (defined(ARCH_TEST_CBC_NO_PADDING) || defined(ARCH_TEST_CMAC)))) //NXP
+(defined(ARCH_TEST_AES_128) && (defined(ARCH_TEST_CBC_NO_PADDING) || defined(ARCH_TEST_CMAC))))
     int32_t             status;
     psa_key_id_t        key = 11;
     psa_mac_operation_t operation;
@@ -171,10 +170,9 @@ int32_t psa_mac_verify_setup_negative_test(caller_security_t caller __UNUSED)
     TEST_ASSERT_EQUAL(status, PSA_ERROR_INVALID_HANDLE, TEST_CHECKPOINT_NUM(4));
 
     return VAL_STATUS_SUCCESS;
-#else //NXP
+#else
     val->print(PRINT_TEST, "No test available for the selected crypto configuration\n", 0);
     return RESULT_SKIP(VAL_STATUS_NO_TESTS);
-#endif //NXP
-
+#endif
 }
 

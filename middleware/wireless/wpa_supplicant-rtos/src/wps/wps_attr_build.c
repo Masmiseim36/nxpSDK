@@ -9,7 +9,7 @@
 #include "includes.h"
 
 #ifdef CONFIG_WPS
-#include "common.h"
+#include "utils/common.h"
 #include "crypto/aes_wrap.h"
 #include "crypto/crypto.h"
 #include "crypto/dh_group5.h"

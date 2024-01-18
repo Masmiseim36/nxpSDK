@@ -1,37 +1,40 @@
 var a00050 =
 [
-    [ "mmc_usr_param_t", "a00050.html#a00408", [
-      [ "ioStrength", "a00050.html#a8f74c9dd9fd1f4d4982010c9c8f81d1a", null ],
-      [ "maxFreq", "a00050.html#a4329e1d007e30129bb4544a58bd84f13", null ],
-      [ "capability", "a00050.html#ae3d0401fb63d202b3d1d1cbb7c741468", null ]
+    [ "_mmc_usr_param", "a00050.html#a00401", [
+      [ "ioStrength", "a00050.html#a2492f6e7b46c91eb978c8bfb6d109c68", null ],
+      [ "maxFreq", "a00050.html#a008dd91bb763e5383059eea046c45ac0", null ],
+      [ "capability", "a00050.html#ab30eb27aa2f2a59815adfb8ede7db78e", null ]
     ] ],
-    [ "mmc_card_t", "a00050.html#a00403", [
-      [ "host", "a00050.html#a12ab48f6985e78ef81d34ab22b8fc878", null ],
-      [ "usrParam", "a00050.html#ad1054b9eecc0633e8ca70ba164918b2a", null ],
-      [ "isHostReady", "a00050.html#ab14a00fcc66890836622884227bd1873", null ],
-      [ "noInteralAlign", "a00050.html#a306fbd3a3215259f9b380f8e8423f172", null ],
-      [ "busClock_Hz", "a00050.html#a70c3243e9802d253fb260c6ee2557c8e", null ],
-      [ "relativeAddress", "a00050.html#a2056ad945bf983dcf197d682508d1035", null ],
-      [ "enablePreDefinedBlockCount", "a00050.html#ac163495eae9eb73be22075956d62aa64", null ],
-      [ "flags", "a00050.html#a234ecfb0c811094377b4b829ea3ba0ac", null ],
-      [ "internalBuffer", "a00050.html#ac62c08dd4ae6fa2938127e5ca556b614", null ],
-      [ "ocr", "a00050.html#a0b3899f0be098f696fd5bc212d4b597e", null ],
-      [ "cid", "a00050.html#a31922f2befc3b24acfae2fb948a1398b", null ],
-      [ "csd", "a00050.html#a70c9d4972f53e5b156eb65ed719e773a", null ],
-      [ "extendedCsd", "a00050.html#a1abe5e60e629c2e8cd6f52f70c147053", null ],
-      [ "blockSize", "a00050.html#a4cbb05171fc7209226ac22515fcdf365", null ],
-      [ "userPartitionBlocks", "a00050.html#aaf035e6ccfee3bd92ef690d2aff5254d", null ],
-      [ "bootPartitionBlocks", "a00050.html#af76cbe7469a71b0695dae5b8e42088bf", null ],
-      [ "eraseGroupBlocks", "a00050.html#a73c3b6a62f48d65719f95ae41ad9456d", null ],
-      [ "currentPartition", "a00050.html#a8be2e5d491724a446334e871f06207af", null ],
-      [ "hostVoltageWindowVCCQ", "a00050.html#ae9a7cc5d13cc3cb5b7921f4d4073e681", null ],
-      [ "hostVoltageWindowVCC", "a00050.html#ac9c494f7476052a7eff992d03abdd0d5", null ],
-      [ "busTiming", "a00050.html#aa77eb86df76d49460eb2b9de2a2a3ccd", null ],
-      [ "busWidth", "a00050.html#aed7ad8dbb338c62d7290c6b8fcea0d09", null ],
-      [ "lock", "a00050.html#a90649f0ffe1dc3f76848f91bd1e94416", null ]
+    [ "_mmc_card", "a00050.html#a00396", [
+      [ "host", "a00050.html#a30cc4dbbaa472aa5d1100d51d6c15c89", null ],
+      [ "usrParam", "a00050.html#ac618738b6922f5b78e35a503d9cb4766", null ],
+      [ "isHostReady", "a00050.html#a7d825ef388f8ffc8999970cdc5c9f993", null ],
+      [ "noInteralAlign", "a00050.html#a96cacb1bff48c1038b9a652914a8e368", null ],
+      [ "busClock_Hz", "a00050.html#acb055f60fd033bf343b7e5ff800cb3f0", null ],
+      [ "relativeAddress", "a00050.html#a113333f1f137500a4eb228fc472ae1b6", null ],
+      [ "enablePreDefinedBlockCount", "a00050.html#a65ed393e3ecfc128c76f5b8430ec67d5", null ],
+      [ "flags", "a00050.html#acb4fedfe62837d1fbf732c31f892abf6", null ],
+      [ "internalBuffer", "a00050.html#ad6c1f6f1a0eee9ef98cd025fca7574ee", null ],
+      [ "ocr", "a00050.html#ae64eb8c922a66132a3fe3fee85c02272", null ],
+      [ "cid", "a00050.html#a29214263836c7926601537413cd36326", null ],
+      [ "csd", "a00050.html#a21da22a7211b5c9ec8eaa60fe1ede2de", null ],
+      [ "extendedCsd", "a00050.html#aff5e6eaae4ea2928f46c643efc688db3", null ],
+      [ "blockSize", "a00050.html#a832a43eb5725c93de422279af52d5b98", null ],
+      [ "userPartitionBlocks", "a00050.html#a7b0e08b35289ef2fba0ab6cb3c4caa14", null ],
+      [ "bootPartitionBlocks", "a00050.html#a9a2f7983025d764ea428f1a5f64ecea6", null ],
+      [ "eraseGroupBlocks", "a00050.html#a952389c4583f24b75bf7104e92b65b05", null ],
+      [ "currentPartition", "a00050.html#aac1d842eb7c4be3b01b812470b156a0c", null ],
+      [ "hostVoltageWindowVCCQ", "a00050.html#aea564024177a5f8b83715a4bea26a660", null ],
+      [ "hostVoltageWindowVCC", "a00050.html#a34e7bbd988a33dda1eb9b08211b78688", null ],
+      [ "busTiming", "a00050.html#aeb623ca3d3f3beb02143ebdf317bf255", null ],
+      [ "busWidth", "a00050.html#abeb01f8de945cd9efb47cd755b049028", null ],
+      [ "lock", "a00050.html#ae2976750b8fba83778c78b2926e1edb9", null ]
     ] ],
     [ "FSL_MMC_DRIVER_VERSION", "a00050.html#gaa853e6ed145fdde29cb8277c789ab5cb", null ],
-    [ "mmc_io_strength_t", "a00050.html#ga5615d27683e82898b6d4526eff8efcd8", [
+    [ "mmc_sleep_awake_t", "a00050.html#gacd8cb5bb52d6eb3d5b5042bc887dbe47", null ],
+    [ "mmc_io_strength_t", "a00050.html#ga5615d27683e82898b6d4526eff8efcd8", null ],
+    [ "mmc_usr_param_t", "a00050.html#gacfc78ba35ecb16844db02e696445c4ee", null ],
+    [ "mmc_card_t", "a00050.html#gaaf83cf346c0bc8bad98979da67156257", [
       [ "kMMC_SupportHighSpeed26MHZFlag", "a00050.html#gga098384b0034af0daa7c9c5c82b563567a0f2e16ba804bfabd3c81fee5fa780c95", null ],
       [ "kMMC_SupportHighSpeed52MHZFlag", "a00050.html#gga098384b0034af0daa7c9c5c82b563567adb778db370818747d81df90b23298bf1", null ],
       [ "kMMC_SupportHighSpeedDDR52MHZ180V300VFlag", "a00050.html#gga098384b0034af0daa7c9c5c82b563567af873861eb6356bd1a236d4741d3bd382", null ],
@@ -46,9 +49,9 @@ var a00050 =
       [ "kMMC_SupportHighSpeedBootFlag", "a00050.html#gga098384b0034af0daa7c9c5c82b563567a57438a043537958e8324400ce3788ed0", null ],
       [ "kMMC_SupportEnhanceHS400StrobeFlag", "a00050.html#gga098384b0034af0daa7c9c5c82b563567a39d546b05b2c725a822419330606bba5", null ]
     ] ],
-    [ "mmc_sleep_awake_t", "a00050.html#gab89d4d12909a44eb53f0f366ea542cf4", [
-      [ "kMMC_Sleep", "a00050.html#ggab89d4d12909a44eb53f0f366ea542cf4a766aba45b5704265a1dfdf8d8d1ef5b2", null ],
-      [ "kMMC_Awake", "a00050.html#ggab89d4d12909a44eb53f0f366ea542cf4a68ce50ee0ddf66b369033f79da5328e9", null ]
+    [ "_mmc_sleep_awake", "a00050.html#gaf0d5a316617bfdec3b93cd29228b5bb7", [
+      [ "kMMC_Sleep", "a00050.html#ggaf0d5a316617bfdec3b93cd29228b5bb7a766aba45b5704265a1dfdf8d8d1ef5b2", null ],
+      [ "kMMC_Awake", "a00050.html#ggaf0d5a316617bfdec3b93cd29228b5bb7a68ce50ee0ddf66b369033f79da5328e9", null ]
     ] ],
     [ "MMC_Init", "a00050.html#ga03f006d98725caeee8162ebb1250ff86", null ],
     [ "MMC_Deinit", "a00050.html#gab67cdb5a21909356c4abadf3a4d8b40c", null ],

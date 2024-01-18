@@ -86,6 +86,7 @@ bt_list_node_t *bt_list_get(bt_list_t *list)
     if (NULL != p)
     {
         list->head = list->head->next;
+        p->next = NULL;
     }
     EnableGlobalIRQ(reg);
 
@@ -210,6 +211,7 @@ bool bt_list_find_and_remove(bt_list_t *list, bt_list_node_t *node)
         {
             q->next = node->next;
         }
+        node->next = NULL;
         ret = true;
     }
     else
@@ -272,4 +274,35 @@ bool bt_list_find(bt_list_t *list, bt_list_node_t *node)
     EnableGlobalIRQ(reg);
 
     return ret;
+}
+
+
+void bt_list_scan(bt_list_t *list, bool (*cb)(void* node, void* p), void *param)
+{
+    bt_list_node_t *p;
+    bt_list_node_t *q;
+    unsigned int reg;
+    bool ret;
+
+    if ((NULL == list))
+    {
+        return;
+    }
+
+    reg = DisableGlobalIRQ();
+    p = list->head;
+    while (NULL != p)
+    {
+        q = p->next;
+        if (NULL != cb)
+        {
+            ret = cb(p, param);
+            if (false == ret)
+            {
+                break;
+            }
+        }
+        p = q;
+    }
+    EnableGlobalIRQ(reg);
 }

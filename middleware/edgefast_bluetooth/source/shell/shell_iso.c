@@ -4,9 +4,9 @@
  */
 
 /*
- * Copyright (C) 2022 NXP
  * Copyright (c) 2020 Intel Corporation
  * Copyright (c) 2021 Nordic Semiconductor ASA
+ * Copyright (C) 2022-2023 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -83,8 +83,10 @@ static uint32_t get_next_sn(uint32_t last_sn, int64_t *last_ticks,
 static void iso_recv(struct bt_iso_chan *chan, const struct bt_iso_recv_info *info,
 		struct net_buf *buf)
 {
+	if (info->flags & BT_ISO_FLAGS_VALID) {
 	shell_print(ctx_shell, "Incoming data channel %p len %u, seq: %d, ts: %d",
 		    chan, buf->len, info->seq_num, info->ts);
+	}
 }
 
 static void iso_connected(struct bt_iso_chan *chan)
@@ -187,58 +189,170 @@ static shell_status_t cmd_cig_create(shell_handle_t shell, int32_t argc, char *a
 		}
 	}
 
+	err = 0;
 	if (argc > 2) {
-		param.interval = strtol(argv[2], NULL, 0);
+		unsigned long interval;
+
+		interval = shell_strtoul(argv[2], 0, &err);
+		if (err != 0) {
+			shell_error(shell, "Could not parse interval: %d", err);
+
+			return kStatus_SHELL_Error;
+		}
+
+		if (!IN_RANGE(interval,
+			      BT_ISO_SDU_INTERVAL_MIN,
+			      BT_ISO_SDU_INTERVAL_MAX)) {
+			shell_error(shell, "Invalid interval %lu", interval);
+
+			return kStatus_SHELL_Error;
+		}
+
+		param.interval = interval;
 	} else {
 		param.interval = 10000;
 	}
 	cis_sdu_interval_us = param.interval;
 
 	if (argc > 3) {
-		param.packing = strtol(argv[3], NULL, 0);
+		unsigned long packing;
+
+		packing = shell_strtoul(argv[3], 0, &err);
+		if (err != 0) {
+			shell_error(shell, "Could not parse packing: %d", err);
+
+			return kStatus_SHELL_Error;
+		}
+
+		if (packing != BT_ISO_PACKING_SEQUENTIAL && packing != BT_ISO_PACKING_INTERLEAVED) {
+			shell_error(shell, "Invalid packing %lu", packing);
+
+			return kStatus_SHELL_Error;
+		}
+
+		param.packing = packing;
 	} else {
 		param.packing = 0;
 	}
 
 	if (argc > 4) {
-		param.framing = strtol(argv[4], NULL, 0);
+		unsigned long framing;
+
+		framing = shell_strtoul(argv[4], 0, &err);
+		if (err != 0) {
+			shell_error(shell, "Could not parse framing: %d", err);
+
+			return kStatus_SHELL_Error;
+		}
+
+		if (framing != BT_ISO_FRAMING_UNFRAMED && framing != BT_ISO_FRAMING_FRAMED) {
+			shell_error(shell, "Invalid framing %lu", framing);
+
+			return kStatus_SHELL_Error;
+		}
+
+		param.framing = framing;
 	} else {
 		param.framing = 0;
 	}
 
 	if (argc > 5) {
-		param.latency = strtol(argv[5], NULL, 0);
+		unsigned long latency;
+
+		latency = shell_strtoul(argv[5], 0, &err);
+		if (err != 0) {
+			shell_error(shell, "Could not parse latency: %d", err);
+
+			return kStatus_SHELL_Error;
+		}
+
+		if (!IN_RANGE(latency,
+			      BT_ISO_LATENCY_MIN,
+			      BT_ISO_LATENCY_MAX)) {
+			shell_error(shell, "Invalid latency %lu", latency);
+
+			return kStatus_SHELL_Error;
+		}
+
+		param.latency = latency;
 	} else {
 		param.latency = 10;
 	}
 
 	if (argc > 6) {
+		unsigned long sdu;
+
+		sdu = shell_strtoul(argv[6], 0, &err);
+		if (err != 0) {
+			shell_error(shell, "Could not parse sdu: %d", err);
+
+			return kStatus_SHELL_Error;
+		}
+
+		if (sdu > BT_ISO_MAX_SDU) {
+			shell_error(shell, "Invalid sdu %lu", sdu);
+
+			return kStatus_SHELL_Error;
+		}
+
 		if (chans[0]->qos->tx) {
-			chans[0]->qos->tx->sdu = strtol(argv[6], NULL, 0);
+			chans[0]->qos->tx->sdu = sdu;
 		}
 
 		if (chans[0]->qos->rx) {
-			chans[0]->qos->rx->sdu = strtol(argv[6], NULL, 0);
+			chans[0]->qos->rx->sdu = sdu;
 		}
 	}
 
 	if (argc > 7) {
+		unsigned long phy;
+
+		phy = shell_strtoul(argv[7], 0, &err);
+		if (err != 0) {
+			shell_error(shell, "Could not parse phy: %d", err);
+
+			return kStatus_SHELL_Error;
+		}
+
+		if (phy != BT_GAP_LE_PHY_1M &&
+		    phy != BT_GAP_LE_PHY_2M &&
+		    phy != BT_GAP_LE_PHY_CODED) {
+			shell_error(shell, "Invalid phy %lu", phy);
+
+			return kStatus_SHELL_Error;
+		}
+
 		if (chans[0]->qos->tx) {
-			chans[0]->qos->tx->phy = strtol(argv[7], NULL, 0);
+			chans[0]->qos->tx->phy = phy;
 		}
 
 		if (chans[0]->qos->rx) {
-			chans[0]->qos->rx->phy = strtol(argv[7], NULL, 0);
+			chans[0]->qos->rx->phy = phy;
 		}
 	}
 
 	if (argc > 8) {
+		unsigned long rtn;
+
+		rtn = shell_strtoul(argv[8], 0, &err);
+		if (err != 0) {
+			shell_error(shell, "Could not parse rtn: %d", err);
+
+			return kStatus_SHELL_Error;
+		}
+
+		if (rtn > BT_ISO_CONNECTED_RTN_MAX) {
+			shell_error(shell, "Invalid rtn %lu", rtn);
+
+			return kStatus_SHELL_Error;
+		}
+
 		if (chans[0]->qos->tx) {
-			chans[0]->qos->tx->rtn = strtol(argv[8], NULL, 0);
+			chans[0]->qos->tx->rtn = rtn;
 		}
 
 		if (chans[0]->qos->rx) {
-			chans[0]->qos->rx->rtn = strtol(argv[8], NULL, 0);
+			chans[0]->qos->rx->rtn = rtn;
 		}
 	}
 
@@ -388,11 +502,18 @@ static shell_status_t cmd_send(shell_handle_t shell, int32_t argc, char *argv[])
 	static uint8_t buf_data[CONFIG_BT_ISO_TX_MTU] = {
 		[0 ... (CONFIG_BT_ISO_TX_MTU - 1)] = 0xff
 	};
-	int ret, len, count = 1;
+	unsigned long count = 1;
 	struct net_buf *buf;
+	int ret = 0;
+	int len;
 
 	if (argc > 1) {
-		count = strtoul(argv[1], NULL, 10);
+		count = shell_strtoul(argv[1], 0, &ret);
+		if (ret != 0) {
+			shell_error(shell, "Could not parse count: %d", ret);
+
+			return kStatus_SHELL_Error;
+		}
 	}
 
 	if (!iso_chan.iso) {
@@ -491,11 +612,18 @@ static shell_status_t cmd_broadcast(shell_handle_t shell, int32_t argc, char *ar
 	static uint8_t buf_data[CONFIG_BT_ISO_TX_MTU] = {
 		[0 ... (CONFIG_BT_ISO_TX_MTU - 1)] = 0xff
 	};
-	int ret, len, count = 1;
+	unsigned long count = 1;
 	struct net_buf *buf;
+	int ret = 0;
+	int len;
 
 	if (argc > 1) {
-		count = strtoul(argv[1], NULL, 10);
+		count = shell_strtoul(argv[1], 0, &ret);
+		if (ret != 0) {
+			shell_error(shell, "Could not parse count: %d", ret);
+
+			return kStatus_SHELL_Error;
+		}
 	}
 
 	if (!bis_iso_chan.iso) {
@@ -617,9 +745,23 @@ static shell_status_t cmd_big_sync(shell_handle_t shell, int32_t argc, char *arg
 	/* TODO: Add support to select which PA sync to BIG sync to */
 	struct bt_le_per_adv_sync *pa_sync = per_adv_syncs[0];
 	struct bt_iso_big_sync_param param;
+	unsigned long bis_bitfield;
 
 	if (!pa_sync) {
 		shell_error(shell, "No PA sync selected");
+		return kStatus_SHELL_Error;
+	}
+
+	bis_bitfield = shell_strtoul(argv[1], 0, &err);
+	if (err != 0) {
+		shell_error(shell, "Could not parse bis_bitfield: %d", err);
+
+		return kStatus_SHELL_Error;
+	}
+
+	if (bis_bitfield > BIT_MASK(BT_ISO_BIS_INDEX_MAX)) {
+		shell_error(shell, "Invalid bis_bitfield: %lu", bis_bitfield);
+
 		return kStatus_SHELL_Error;
 	}
 
@@ -628,17 +770,13 @@ static shell_status_t cmd_big_sync(shell_handle_t shell, int32_t argc, char *arg
 	param.bis_channels = bis_channels;
 	param.num_bis = BIS_ISO_CHAN_COUNT;
 	param.encryption = false;
-	param.bis_bitfield = strtoul(argv[1], NULL, 16);
+	param.bis_bitfield = bis_bitfield;
 	param.mse = 0;
 	param.sync_timeout = 0xFF;
 
-	for (int i = 2; i < argc; i++) {
+	for (size_t i = 2U; i < argc; i++) {
 		if (!strcmp(argv[i], "mse")) {
-			param.mse = strtoul(argv[i], NULL, 16);
-		} else if (!strcmp(argv[i], "timeout")) {
-			param.sync_timeout = strtoul(argv[i], NULL, 16);
-		} else if (!strcmp(argv[i], "enc")) {
-			uint8_t bcode_len;
+			unsigned long mse;
 
 			i++;
 			if (i == argc) {
@@ -646,16 +784,72 @@ static shell_status_t cmd_big_sync(shell_handle_t shell, int32_t argc, char *arg
 				return kStatus_SHELL_Error;
 			}
 
+			mse = shell_strtoul(argv[i], 0, &err);
+			if (err != 0) {
+				shell_error(shell, "Could not parse mse: %d", err);
+
+				return kStatus_SHELL_Error;
+			}
+
+			if (!IN_RANGE(mse,
+				      BT_ISO_SYNC_MSE_MIN,
+				      BT_ISO_SYNC_MSE_MAX)) {
+				shell_error(shell, "Invalid mse %lu", mse);
+
+				return kStatus_SHELL_Error;
+			}
+
+			param.mse = mse;
+		} else if (!strcmp(argv[i], "timeout")) {
+			unsigned long sync_timeout;
+
+			i++;
+			if (i == argc) {
+				shell_help(shell);
+				return kStatus_SHELL_Error;
+			}
+
+			sync_timeout = shell_strtoul(argv[i], 0, &err);
+			if (err != 0) {
+				shell_error(shell,
+					    "Could not parse sync_timeout: %d",
+					    err);
+
+				return kStatus_SHELL_Error;
+			}
+
+			if (!IN_RANGE(sync_timeout,
+				      BT_ISO_SYNC_MSE_MIN,
+				      BT_ISO_SYNC_MSE_MAX)) {
+				shell_error(shell, "Invalid sync_timeout %lu",
+					    sync_timeout);
+
+				return kStatus_SHELL_Error;
+			}
+
+			param.sync_timeout = sync_timeout;
+		} else if (!strcmp(argv[i], "enc")) {
+			size_t bcode_len;
+
+			i++;
+			if (i == argc) {
+				shell_help(shell);
+				return kStatus_SHELL_Error;
+			}
+
+			memset(param.bcode, 0, sizeof(param.bcode));
 			bcode_len = hex2bin(argv[i], strlen(argv[i]), param.bcode,
 					    sizeof(param.bcode));
 
-			if (!bcode_len || bcode_len != sizeof(param.bcode)) {
-				shell_error(shell, "Invalid Broadcast Code Length");
+			if (bcode_len == 0) {
+				shell_error(shell, "Invalid Broadcast Code");
+
 				return kStatus_SHELL_Error;
 			}
+
 			param.encryption = true;
 		} else {
-			shell_help(shell);
+			shell_help(sh);
 			return kStatus_SHELL_Error;
 		}
 	}

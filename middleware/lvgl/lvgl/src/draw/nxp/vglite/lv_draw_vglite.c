@@ -327,8 +327,7 @@ static void lv_draw_vglite_line(lv_draw_ctx_t * draw_ctx, const lv_draw_line_dsc
     rel_clip_area.y1 = LV_MIN(point1->y, point2->y) - dsc->width / 2;
     rel_clip_area.y2 = LV_MAX(point1->y, point2->y) + dsc->width / 2;
 
-    lv_area_t clipped_coords;
-    if(!_lv_area_intersect(&clipped_coords, &rel_clip_area, draw_ctx->clip_area))
+    if(!_lv_area_intersect(&rel_clip_area, &rel_clip_area, draw_ctx->clip_area))
         return; /*Fully clipped, nothing to do*/
 
     lv_area_move(&rel_clip_area, -draw_ctx->buf_area->x1, -draw_ctx->buf_area->y1);

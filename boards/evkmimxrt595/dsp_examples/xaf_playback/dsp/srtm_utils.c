@@ -17,6 +17,7 @@
 #include "srtm_config.h"
 
 #include "xaf-utils-test.h"
+#include "xaf-fio-test.h"
 
 #include "fsl_gpio.h"
 #include "fsl_sema42.h"
@@ -25,6 +26,21 @@
 
 xa_app_event_handler_fxn_t *g_app_handler_fn;
 XosMsgQueue *event_queue = NULL;
+int g_execution_abort_flag = 0;
+xf_thread_t g_disconnect_thread;
+int g_num_comps_in_graph = 0;
+xf_thread_t *g_comp_thread;
+
+_XA_API_ERR_MAP error_map_table_api[XA_NUM_API_ERRS]=
+{
+    {(int)XAF_RTOS_ERR,       "rtos error"},
+    {(int)XAF_INVALIDVAL_ERR,    "invalid value"},
+    {(int)XAF_ROUTING_ERR,    "routing error"},
+    {(int)XAF_INVALIDPTR_ERR,        "invalid pointer"},
+    {(int)XAF_API_ERR,          "API error"},
+    {(int)XAF_TIMEOUT_ERR,   "message queue Timeout"},
+    {(int)XAF_MEMORY_ERR,   "memory error"},
+};
 
 /*******************************************************************************
  * Utility Functions
@@ -364,6 +380,35 @@ int DSP_ProcessThread(void *arg, int wake_value)
     return 0;
 }
 
+int abort_blocked_threads()
+{
+    int i;
+
+    /*...set global abort flag immediately */
+    g_execution_abort_flag = 1;
+
+    /* Ignore if not enabled in the testbench */
+    if ( g_num_comps_in_graph == 0 )
+        return -1;
+
+    for( i=0; i<g_num_comps_in_graph; i++ )
+    {
+        if ( __xf_thread_get_state(&g_comp_thread[i]) == XF_THREAD_STATE_BLOCKED )
+        {
+            fprintf(stderr, "Aborting thread: %d\n", i);
+            __xf_thread_cancel( (xf_thread_t *) &g_comp_thread[i] );
+        }
+    }
+
+    if ( __xf_thread_get_state(&g_disconnect_thread) == XF_THREAD_STATE_BLOCKED )
+    {
+        fprintf(stderr, "Aborting disconnect thread\n");
+        __xf_thread_cancel( &g_disconnect_thread );
+    }
+
+    return 0;
+}
+
 #ifndef XA_DISABLE_EVENT
 void *event_handler_entry(void *arg)
 {
@@ -476,4 +521,28 @@ void xa_app_free_event_queue()
     xos_msgq_delete(event_queue);
     free(event_queue);
     event_queue = NULL;
+}
+
+void print_mem_stats(void * p_adev, xaf_adev_config_t adev_config)
+{
+    /* collect memory stats before closing the device */
+    WORD32 meminfo[3 + XAF_MEM_ID_MAX], k, i;
+    if(xaf_get_mem_stats(p_adev, adev_config.core, &meminfo[0]))
+    {
+        FIO_PRINTF(stdout,"Init is incomplete, reliable memory stats are unavailable.\n");
+    }
+    else
+    {
+        FIO_PRINTF(stderr,"Local Memory used by DSP Components, in bytes            : %8d of %8d\n", meminfo[0], adev_config.audio_component_buffer_size[XAF_MEM_ID_COMP]);
+        FIO_PRINTF(stderr,"Shared Memory used by Components and Framework, in bytes : %8d of %8d\n", meminfo[1], adev_config.audio_framework_buffer_size[XAF_MEM_ID_DEV]);
+        FIO_PRINTF(stderr,"Local Memory used by Framework, in bytes                 : %8d\n", meminfo[2]);
+
+        for(k = XAF_MEM_ID_COMP+1, i=5 ; k<XAF_MEM_ID_MAX ; k++, i++)
+        {
+            if(meminfo[i])
+            {
+                FIO_PRINTF(stderr,"Local Memory type[%d] used by DSP Components, in bytes    : %8d of %8d\n", k, meminfo[i], adev_config.audio_component_buffer_size[k]);
+            }
+        }
+    }
 }

@@ -10,7 +10,7 @@
 
 #ifdef CONFIG_INTERNAL_MD4
 
-#include "common.h"
+#include "utils/common.h"
 #include "crypto.h"
 
 #define MD4_BLOCK_LENGTH  64

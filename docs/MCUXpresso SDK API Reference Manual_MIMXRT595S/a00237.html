@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: CASPER: The Cryptographic Accelerator and Signal Processing Engine with RAM sharing</title>
+<title>MCUXpresso SDK API Reference Manual: I2S_BRIDGE: I2S bridging and signal sharing configuration</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -98,37 +98,11 @@ $(document).ready(function(){initNavTree('a00237.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">CASPER: The Cryptographic Accelerator and Signal Processing Engine with RAM sharing</div>  </div>
+<div class="title">I2S_BRIDGE: I2S bridging and signal sharing configuration</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a peripheral driver for the Cryptographic Accelerator and Signal Processing Engine with RAM sharing (CASPER) module of MCUXpresso SDK devices. The CASPER peripheral provides acceleration of asymmetric cryptographic algorithms as well as optionally of certain signal processing algorithms. The cryptographic acceleration is normally used in conjunction with pure-hardware blocks for hashing and symmetric cryptography, thereby providing performance and energy efficiency for a range of cryptographic uses.</p>
-<p>Blocking synchronous APIs are provided for selected cryptographic algorithms using CASPER hardware. The driver interface intends to be easily integrated with generic software crypto libraries such as mbedTLS or wolfSSL. The CASPER operations are complete (and results are made availabe for further usage) when a function returns. When called, these functions do not return until an CASPER operation is complete. These functions use main CPU for simple polling loops to determine operation complete or error status and also for plaintext or ciphertext data movements. The driver functions are not re-entrant. These functions provide typical interface to upper layer or application software.</p>
-<h1><a class="anchor" id="CASPERInit"></a>
-CASPER Driver Initialization and deinitialization</h1>
-<p>CASPER Driver is initialized by calling the <a class="el" href="a00238.html#gaa1948fcf9c7301808a765341b4fa72a8" title="Enables clock and disables reset for CASPER peripheral. ">CASPER_Init()</a> function, it resets the CASPER module and enables it's clock. CASPER Driver is deinitialized by calling the <a class="el" href="a00238.html#ga44e39a60b2116a93d89fb2d06ec8c290" title="Disables clock for CASPER peripheral. ">CASPER_Deinit()</a> function, it disables CASPER module clock.</p>
-<h1><a class="anchor" id="CASPERRtos"></a>
-Comments about API usage in RTOS</h1>
-<p>CASPER operations provided by this driver are not re-entrant. Thus, application software shall ensure the CASPER module operation is not requested from different tasks or interrupt service routines while an operation is in progress.</p>
-<h1><a class="anchor" id="CASPERIsr"></a>
-Comments about API usage in interrupt handler</h1>
-<p>All APIs shall not be used from interrupt handler as global variables are used.</p>
-<h1><a class="anchor" id="CASPEREx"></a>
-CASPER Driver Examples</h1>
-<h2><a class="anchor" id="CASPERSimpleEx"></a>
-Simple examples</h2>
-<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/casper/ </p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00238"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00238.html">casper_driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00239"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00239.html">casper_driver_pkha</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
+<p>The MCUXpresso SDK provides a peripheral driver for the I2S Bridging/Signal Sharing module of MCUXpresso SDK devices. For furter details, see the corresponding chapter. </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->

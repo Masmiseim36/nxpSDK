@@ -45,7 +45,7 @@ typedef struct xf_core_ro_data
 
     /* ...shared memory message pool data - here? - tbd */
     xf_msg_pool_t       pool;
-    
+
     /* ...anything else? - tbd */
 
 }   xf_core_ro_data_t;
@@ -92,7 +92,7 @@ typedef union xf_cmap_link
 {
     /* ...poiner to active client */
     xf_component_t     *c;
-    
+
     /* ...index to a client in the list (values 0..XF_CFG_MAX_CLIENTS) */
     UWORD32                 next;
 
@@ -127,19 +127,19 @@ typedef struct xf_core_data
 #if 0
     /* ...pending response queue (submitted from ISR context) */
     xf_sync_queue_t     response;
-#endif    
+#endif
 
     /* ...per-core component mapping */
     xf_cmap_link_t      cmap[XF_CFG_MAX_CLIENTS];
 
     /* ...index of first free client */
     UWORD32                 free;
-    
+
     /* ...local DSP memory pool */
-    xf_mm_pool_t        local_pool;
-    
+    xf_mm_pool_t        local_pool[XAF_MEM_ID_MAX];
+
     /* ...shared AP-DSP memory pool (if enabled) */
-    xf_mm_pool_t        shared_pool;    
+    xf_mm_pool_t        shared_pool[XAF_MEM_ID_MAX];
 
     /* ...opaque system-specific shared memory data handle */
     xf_shmem_handle_t   shmem;
@@ -151,7 +151,7 @@ typedef struct xf_core_data
     xf_trace_data_t     trace;
 
     UWORD32 n_workers;
-    UWORD32 worker_stack_size;
+
     struct xf_worker *worker;
     /* ...any debugging information? for memory allocation etc... ? */
 
@@ -171,6 +171,9 @@ typedef struct xf_core_data
 
     /* ...dsp thread priority */
     UWORD32 dsp_thread_priority;
+
+    /* ...worker thread stack sizes */
+    UWORD32 worker_thread_stack_size[XAF_MAX_WORKER_THREADS];
 
 }   xf_core_data_t;
 
@@ -221,28 +224,30 @@ typedef struct {
     //__xf_core_rw_data_t     xf_core_rw_data[XF_CFG_CORES_NUM];
     __xf_core_rw_data_t     xf_core_rw_data[1];
 
-    UWORD8 *xf_ap_shmem_buffer;
-    WORD32 xf_ap_shmem_buffer_size;
+    UWORD8 *xf_ap_shmem_buffer[XAF_MEM_ID_MAX];
+    WORD32 xf_ap_shmem_buffer_size[XAF_MEM_ID_MAX];
 
 #if XF_CFG_CORES_NUM > 1
     UWORD8 *xf_dsp_shmem_buffer;
     UWORD32 xf_dsp_shmem_buffer_size;
 #endif    // #if XF_CFG_CORES_NUM > 1
 
-    UWORD8 *xf_dsp_local_buffer;
-    WORD32 xf_dsp_local_buffer_size;
+    UWORD8 *xf_dsp_local_buffer[XAF_MEM_ID_MAX];
+    WORD32 xf_dsp_local_buffer_size[XAF_MEM_ID_MAX];
 
-    WORD32 *pdsp_comp_buf_size_peak;    /* cumulative buffer size used in bytes from audio_comp_buf_size */
-    WORD32 *pdsp_frmwk_buf_size_peak;   /* cumulative buffer size used in bytes from audio_frmwk_buf_size */
-    WORD32 *pdsp_comp_buf_size_curr;    /* current usage from audio_comp_buf_size in bytes */
-    WORD32 *pdsp_frmwk_buf_size_curr;   /* current usage from audio_frmwk_buf_size in bytes */  
-    xaf_perf_stats_t *pdsp_cb_stats;                /* ...for cumulative execution cycles of all worker threads of a core */
-    int (*cb_compute_cycles)(xaf_perf_stats_t*);    /* ...call-back function used by DSP to update MCPS stats before DSP thread is deleted */
+    WORD32 (*pdsp_comp_buf_size_peak)[XAF_MEM_ID_MAX];    /* ...cumulative buffer size used in bytes from audio_comp_buf_size   */
+    WORD32 (*pdsp_comp_buf_size_curr)[XAF_MEM_ID_MAX];    /* ...current usage from audio_comp_buf_size in bytes                 */
+    WORD32 (*pdsp_frmwk_buf_size_peak)[XAF_MEM_ID_MAX];   /* ...cumulative buffer size used in bytes from audio_frmwk_buf_size  */
+    WORD32 (*pdsp_frmwk_buf_size_curr)[XAF_MEM_ID_MAX];   /* ...current usage from audio_frmwk_buf_size in bytes                */
+    xaf_perf_stats_t *pdsp_cb_stats;                      /* ...for cumulative execution cycles of all worker threads of a core */
+    int (*cb_compute_cycles)(xaf_perf_stats_t*);          /* ...call-back function used by DSP to update MCPS stats before DSP thread is deleted */
 
 #if (XF_CFG_CORES_NUM > 1)
     xf_event_t msgq_event;
     xf_event_t *pmsgq_event;
 #endif
+
+    UWORD32 worker_thread_stack_size[XAF_MAX_WORKER_THREADS]; /* ...user configurable worker stack size */
 
 } xf_dsp_t;
 

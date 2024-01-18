@@ -132,11 +132,11 @@ BT_BOTTOM_HALF ( hci_transport_data_read_bh );
 #endif /* BT_TRANSPORT_SINGLE_TASK */
 
 /* --------------------------------------------- Section 'BCSP' */
-#if 0
+#ifdef BT_BCSP
 BT_BOTTOM_HALF ( bcsp_link_establishment_bh );
 BT_BOTTOM_HALF ( bcsp_sequence_tx_bh );
 BT_BOTTOM_HALF ( bcsp_sequence_ack_bh );
-#endif /* 0 */
+#endif /* BT_BCSP */
 
 /* --------------------------------------------- Section 'HCI' */
 BT_BOTTOM_HALF ( hci_command_tx_bh );
@@ -153,6 +153,9 @@ BT_BOTTOM_HALF ( l2cap_fec_data_receiver_bh );
 #if ((defined L2CAP_SUPPORT_CBFC_MODE) || (defined L2CAP_SUPPORT_ECBFC_MODE))
 BT_BOTTOM_HALF ( l2ca_channel_data_write_bh );
 #endif /* L2CAP_SUPPORT_CBFC_MODE || L2CAP_SUPPORT_ECBFC_MODE */
+
+/* --------------------------------------------- Section 'ATT' */
+BT_BOTTOM_HALF(att_ecbfc_connect_rsp_bh);
 
 /* --------------------------------------------- Section 'SMP' */
 BT_BOTTOM_HALF ( smp_auth_complete_bh );

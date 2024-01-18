@@ -9,7 +9,7 @@
 #include "includes.h"
 
 #ifdef CONFIG_AP
-#include "common.h"
+#include "utils/common.h"
 #include "common/ieee802_11_defs.h"
 #include "fst/fst.h"
 #include "sta_info.h"

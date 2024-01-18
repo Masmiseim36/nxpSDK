@@ -106,9 +106,9 @@ assets. As the agent has the capability to forward and represent non-secure
 clients, it is the agent's duty to identify the non-secure clients it is
 representing.
 
-Updated Programming Items
-=========================
-These Client APIs are the expansion based on the standard Client APIs:
+Updated programming interfaces
+==============================
+These Client APIs are expanded from the standard Client APIs:
 
 - ``agent_psa_connect`` is extended from ``psa_connect``.
 - ``agent_psa_call`` is extended from ``psa_call``.
@@ -131,7 +131,7 @@ requests.
 .. code-block:: c
 
   psa_handle_t agent_psa_connect(uint32_t sid, uint32_t version,
-                                 int32_t ns_client_id, void *client_data);
+                                 int32_t ns_client_id, const void *client_data);
 
 One extra parameter ``ns_client_id`` added to tell SPM which NS client the
 agent is representing when API gets called. It is recorded in the handle
@@ -142,27 +142,26 @@ case. This mechanism can provide chances for the agents calling APIs for their
 own service accessing and API works asynchronously.
 
 As mentioned, the standard FFM Client service accessing API are blocked until
-the IPC message gets replied to. This API returns immediately without waiting
-for acknowledgement. A ``psa_handle_t`` is allocated and returned if no error
-occurred because a unique value is needed to help the agent manage the
-non-secure clients and the requests. The subsequent ``agent_psa_call``
-or ``agent_psa_close`` with this allocated but not acknowledged handle gets
-an ``In progress`` status code.
+the IPC message gets replied to. While this API returns immediately without
+waiting for acknowledgement. Unless an error occurred, these agent-specific
+API returns PSA_SUCCESS always. The replies for these access requests are
+always fetched initiative by the agent with a ``psa_get``.
 
 .. code-block:: c
 
-  typedef struct {
-      psa_invec     in_vecs[PSA_MAX_IOVEC];
-      psa_outvec    out_vecs[PSA_MAX_IOVEC];
-  } client_vectors_t;
+  struct client_vectors {
+      psa_invec     * in_vec;
+      psa_outvec    * out_vec;
+  };
 
-  typedef struct {
-      int32_t ns_client_id;
-      void    *client_data;
-  } client_param_t;
+  struct client_params {
+      int32_t     ns_client_id;
+      const void *client_data;
+  };
 
-  psa_status_t agent_psa_call(psa_handle_t handle, int32_t type,
-                              client_vectors_t *vecs, client_param_t *params);
+  psa_status_t agent_psa_call(psa_handle_t handle, int32_t ctrl_param,
+                              const struct client_vectors *vecs,
+                              const struct client_params *params);
 
 Compared to the standard ``psa_call``, this API:
 
@@ -188,7 +187,7 @@ defined:
 
 .. code-block:: c
 
-  #define PSA_MSG_ACK            (0x00000004u)
+  #define ASYNC_MSG_REPLY            (0x00000004u)
 
 This signal can be sent to agent type component only. An agent can call
 ``psa_get`` with this signal to get one acknowledged message. This signal is
@@ -197,9 +196,8 @@ cleared when all queued messages for the agent have been retrieved using
 For the stateless handle, the internal handle object is freed after this
 ``psa_get`` call. The agent can know what kind of message is acknowledged by
 the ``type`` member in the ``psa_msg_t``, and the ``client_data`` passed in is
-put in member ``rhandle``. If no 'PSA_MSG_ACK' signals pending, calling
-``psa_get`` gets an state representing ``not ready`` to the caller. This
-state is to be defined.
+put in member ``rhandle``. If no 'ASYNC_MSG_REPLY' signals pending, calling
+``psa_get`` gets ``panic``.
 
 Code Example
 ============
@@ -223,7 +221,7 @@ Code Example
       psa_signal_t   signals;
       psa_status_t   status;
       psa_msg_t      msg;
-      client_param_t client_param;
+      struct client_params client_param;
       struct __customized_t ns_msg;
 
       while (1) {
@@ -234,13 +232,14 @@ Code Example
               __customized_platform_get_mail(&ns_msg);
 
               /*
-               * MACRO 'SID', 'VER', 'NSID' and 'VECTORS' represents necessary
-               * information extraction from 'ns_msg', put MACRO names here
-               * and leave the details to the implementation.
+               * MACRO 'SID', 'VER', 'NSID', 'INVEC_LEN', 'OUTVEC_LEN', and
+               * 'VECTORS' represent necessary information extraction from
+               * 'ns_msg', put MACRO names here and leave the details to the
+               * implementation.
                */
               if (ns_msg.type == PSA_IPC_CONNECT) {
-                  ns_msg.handle = agent_psa_connect(SID(ns_msg), VER(ns_msg),
-                                                    NSID(ns_msg), &ns_msg);
+                  status = agent_psa_connect(SID(ns_msg), VER(ns_msg),
+                                             NSID(ns_msg), &ns_msg);
               } else if (ns_msg.type == PSA_IPC_CLOSE) {
                   psa_close(ns_msg.handle);
               } else {
@@ -248,19 +247,22 @@ Code Example
                   client_param.ns_client_id = ns_msg.client_id;
                   client_param.client_data  = &ns_msg;
 
-                  ns_msg.status = agent_psa_call(ns_msg.handle,
-                                                 ns_msg.type,
-                                                 VECTORS(ns_msg),
-                                                 &client_param);
-                  /* Handle the stateless service case. */
-                  if (ns_msg.handle == NULL &&
-                      ns_msg.status != PSA_ERROR_IN_PROGRESS) {
-                      ns_msg.handle = (psa_handle_t)ns_msg.status;
-                  }
+                  status = agent_psa_call(ns_msg.handle,
+                                          PARAM_PACK(ns_msg.type,
+                                                    INVEC_LEN(ns_msg),
+                                                    OUTVEC_LEN(ns_msg)),
+                                          VECTORS(ns_msg),
+                                          &client_param);
               }
-          } else if (signals & PSA_MSG_ACK) {
+              /*
+               * The service access reply is always fetched by a later
+               * `psa_get` hence here only errors need to be dispatched.
+               */
+              error_dispatch(status);
+
+          } else if (signals & ASYNC_MSG_REPLY) {
               /* The handle is freed for stateless service after 'psa_get'. */
-              status        = psa_get(PSA_MSG_ACK, &msg);
+              status        = psa_get(ASYNC_MSG_REPLY, &msg);
               ms_msg        = msg.rhandle;
               ns_msg.status = status;
               __customized_platform__send_mail(&ns_msg);
@@ -272,6 +274,178 @@ Code Example
   ``__customized*`` API are implementation-specific APIs to be implemented by
   the mailbox Agent developer.
 
+****************************
+API implementation reference
+****************************
+Takes ``psa_call`` as the example here to showcase the difference between the
+interface and its calling implementation logic. The prototype of the
+implementation logic for ``psa_call`` in SPM is:
+
+.. code-block:: c
+
+  psa_status_t tfm_spm_client_psa_call(psa_handle_t handle,
+                                       uint32_t ctrl_param,
+                                       const psa_invec *inptr,
+                                       psa_outvec *outptr);
+
+And the prototype for agent-specific ``agent_psa_call``:
+
+.. code-block:: c
+
+  psa_status_t agent_psa_call(psa_handle_t handle, int32_t ctrl_param,
+                              const struct client_vectors *vecs,
+                              const struct client_params *params);
+
+
+The internal logic for ``agent_psa_call()`` is similar to
+``tfm_psa_call_pack()`` in IPC model. A new field ``agent_psa_call`` in
+partition metadata is added. ``tfm_agent_psa_call()``. ``tfm_agent_psa_call()``
+reuses the existing ``tfm_spm_client_psa_call()`` as the internal
+implementation. The procedure after ``tfm_agent_psa_call()`` gets called is
+slightly different compared to a classic ``psa_call`` procedure (Error handling
+is not described here as it works as usual):
+
+- Extract ``inptr`` and ``outptr`` from ``vecs`` before calling
+  ``tfm_spm_client_psa_call``.
+- After ``tfm_spm_client_psa_call`` created a ``psa_msg_t`` instance, the
+  member ``client_id`` in the instance needs to be updated to a value given by
+  ``ns_client_id`` of argument ``params`` to indicate the non-secure client
+  the mailbox agent is representing.
+- The member ``client_data`` in the argument ``params`` needs to be recorded
+  for a future reply usage.
+
+Here ``tfm_spm_client_psa_call`` needs more inputs to accomplish the required
+operations such as NS client ID updating and backup the ``client_data``. But
+it would be inefficient if these inputs were given by arguments, because the
+caller was not always an agent so in most of the cases these extra arguments
+were not used, but the classic ``psa_call`` procedure would be forced to fill
+them always before calling ``tfm_spm_client_psa_call``.
+
+A solution referencing the local storage scheme can save the cost spent on
+extra arguments passing, this solution:
+
+- Calls an agent-specific callback for the extra steps during
+  ``tfm_spm_client_psa_call`` when the caller is a mailbox agent.
+- Puts callback required inputs in the local storage.
+
+Here is the pseudo-code for this solution:
+
+.. code-block:: c
+
+  psa_status_t tfm_spm_client_psa_call(psa_handle_t handle,
+                                       uint32_t ctrl_param,
+                                       const psa_invec *inptr,
+                                       psa_outvec *outptr)
+  {
+      ...
+      if (CALLER()->flags & MAILBOX_AGENT) {
+          post_handling_mailbox(p_connection);
+      }
+      ...
+  }
+
+  void post_handling_mailbox(connection_t *p_conn)
+  {
+      p_conn->msg.client_id   = LOCAL_STORAGE()->client_param.ns_client_id;
+      p_conn->msg.client_data = LOCAL_STORAGE()->client_param.client_data;
+  }
+
+The ``client_data`` saved in the connection instance will be returned to the
+caller when it calls ``psa_get`` to retrieve the reply.
+
+Local storage for SPM
+=====================
+The local storage mechanism can be similar to what :doc:`SPRTL </design_docs/services/secure_partition_runtime_library>`
+does. The stack top is still the ideal place for local storage indicator
+because SPM also has its dedicated stack. For Armv8m, shifting the xSPLIM to
+detect stack overflow is an advantage. For earlier architecture versions, a
+global variable saving the stack top is still applicable.
+
+.. important::
+  This mechanism may conflict with some private 'alloca' implementations,
+  remember the local storage must be put at the top of the stack,
+  and `alloca` working buffer is put after (usually higher addresses for the
+  descending stack case) the local storage data.
+
+Example:
+
+.. code-block:: c
+
+  void *claim_local_storage(uint32_t sz)
+  {
+      PSPLIM += sz;
+      return PSPLIM;
+  }
+
+Customized manifest attribute
+=============================
+Two extra customized manifest attributes are added:
+
+============= ====================================================
+Name          Description
+============= ====================================================
+ns_agent      Indicate if manifest owner is an Agent.
+------------- ----------------------------------------------------
+ns_client_ids Possible non-secure Client ID values (<0).
+============= ====================================================
+
+Attribute 'ns_client_ids' can be a set of numbers, or it can use a range
+expression such as [min, max]. The tooling can detect ID overlap between
+multiple non-secure agents.
+
+***********************
+Manifest tooling update
+***********************
+The manifest for agents involves specific keys ('ns_agent' e.g.), these keys
+give hints about how to achieve out-of-FFM partitions which might be abused
+easily by developers, for example, claim partitions as agents. Some
+restrictions need to be applied in the manifest tool to limit the general
+secure service development referencing these keys.
+
+.. note::
+  The limitations can mitigate the abuse but can't prevent it, as developers
+  own all the source code they are working with.
+
+One mechanism: adding a confirmation in the partition list file.
+
+.. parsed-literal::
+
+  "description": "Non-Secure Mailbox Agent",
+  "manifest": "${CMAKE_SOURCE_DIR}/secure_fw/partitions/ns_agent_mailbox/ns_agent_mailbox.yaml",
+  "non_ffm_attributes": "ns_agent", "other_option",
+
+``non_ffm_attributes`` tells the manifest tool that ``ns_agent`` is valid
+in ns_agent_mailbox.ymal. Otherwise, the manifest tool reports an error when a
+non-agent service abuses ns_agent in its manifest.
+
+***********************************
+Runtime programming characteristics
+***********************************
+
+Mailbox agent shall not be blocked by Agent-specific APIs. It can be blocked when:
+
+- It is calling standard PSA Client APIs.
+- It is calling ``psa_wait``.
+
+IDLE processing
+===============
+Only ONE place is recommended to enter IDLE. The place is decided based on the
+system topologies:
+
+- If there is one Trustzone-based NSPE, this NSPE is the recommended place no
+  matter how many mailbox agents are in the system.
+- If there are only mailbox-based NSPEs, entering IDLE can happen in
+  one of the mailbox agents.
+
+The solution is:
+
+- An IDLE entering API is provided in SPRTL.
+- A partition without specific flag can't call this API.
+- The manifest tooling counts the partitions with this specific flag, and
+  assert errors when multiple instances are found.
+
 --------------
 
-*Copyright (c) 2022, Arm Limited. All rights reserved.*
+*Copyright (c) 2022-2023, Arm Limited. All rights reserved.*
+*Copyright (c) 2023 Cypress Semiconductor Corporation (an Infineon company)
+or an affiliate of Cypress Semiconductor Corporation. All rights reserved.*

@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2022  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2023  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.32 - Graphical user interface for embedded applications **
+** emWin V6.34 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2023-09-03
+SUA period:               2011-08-19 - 2024-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : LCD.h
@@ -170,6 +170,7 @@ extern const LCD_API_COLOR_CONV LCD_API_ColorConv_16;
 extern const LCD_API_COLOR_CONV LCD_API_ColorConv_1616I;
 extern const LCD_API_COLOR_CONV LCD_API_ColorConv_111;
 extern const LCD_API_COLOR_CONV LCD_API_ColorConv_222;
+extern const LCD_API_COLOR_CONV LCD_API_ColorConv_2222;
 extern const LCD_API_COLOR_CONV LCD_API_ColorConv_233;
 extern const LCD_API_COLOR_CONV LCD_API_ColorConv_323;
 extern const LCD_API_COLOR_CONV LCD_API_ColorConv_332;
@@ -194,6 +195,7 @@ extern const LCD_API_COLOR_CONV LCD_API_ColorConv_8888I;
 extern const LCD_API_COLOR_CONV LCD_API_ColorConv_M111;
 extern const LCD_API_COLOR_CONV LCD_API_ColorConv_M1555I;
 extern const LCD_API_COLOR_CONV LCD_API_ColorConv_M222;
+extern const LCD_API_COLOR_CONV LCD_API_ColorConv_M2222I;
 extern const LCD_API_COLOR_CONV LCD_API_ColorConv_M233;
 extern const LCD_API_COLOR_CONV LCD_API_ColorConv_M323;
 extern const LCD_API_COLOR_CONV LCD_API_ColorConv_M332;
@@ -230,6 +232,7 @@ extern const LCD_API_COLOR_CONV LCD_API_ColorConv_M8888I;
 #define GUICC_1616I     &LCD_API_ColorConv_1616I
 #define GUICC_111       &LCD_API_ColorConv_111
 #define GUICC_222       &LCD_API_ColorConv_222
+#define GUICC_2222      &LCD_API_ColorConv_2222
 #define GUICC_233       &LCD_API_ColorConv_233
 #define GUICC_323       &LCD_API_ColorConv_323
 #define GUICC_332       &LCD_API_ColorConv_332
@@ -255,6 +258,7 @@ extern const LCD_API_COLOR_CONV LCD_API_ColorConv_M8888I;
 #define GUICC_M111      &LCD_API_ColorConv_M111
 #define GUICC_M1555I    &LCD_API_ColorConv_M1555I
 #define GUICC_M222      &LCD_API_ColorConv_M222
+#define GUICC_M2222I    &LCD_API_ColorConv_M2222I
 #define GUICC_M233      &LCD_API_ColorConv_M233
 #define GUICC_M323      &LCD_API_ColorConv_M323
 #define GUICC_M332      &LCD_API_ColorConv_M332
@@ -443,6 +447,7 @@ void      * LCD_GetVRAMAddr  (void);
 void      * LCD_GetVRAMAddrEx(int LayerIndex);
 
 void (* LCD_GetDevFunc(int LayerIndex, int Item))(void);
+int     LCD_GetHasFunc(int LayerIndex, int Item);
 
 /*********************************************************************
 *
@@ -500,7 +505,7 @@ int  LCD_ROTATE_SetSelEx              (int Index, int LayerIndex);
 #define LCD_DEVFUNC_DRAWBMP_1BPP  0x20 /* ...drawing a 1bpp bitmap */
 #define LCD_DEVFUNC_COPYBUFFER    0x21 /* ...copying complete frame buffers */
 #define LCD_DEVFUNC_SHOWBUFFER    0x22 /* ...shows the given buffer */
-#define LCD_DEVFUNC_COPYRECT      0x23 /* ...filling a rectangular area */
+#define LCD_DEVFUNC_COPYRECT      0x23 /* ...copying a rectangular area */
 #define LCD_DEVFUNC_DRAWBMP_16BPP 0x24 /* ...drawing a 16bpp bitmap */
 #define LCD_DEVFUNC_DRAWBMP_8BPP  0x25 /* ...drawing a 8bpp bitmap */
 #define LCD_DEVFUNC_READPIXEL     0x26 /* ...reading a pixel index */

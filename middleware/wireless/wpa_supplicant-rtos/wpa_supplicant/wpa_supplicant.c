@@ -16,7 +16,7 @@
 #include <fnmatch.h>
 #endif /* CONFIG_MATCH_IFACE */
 
-#include "common.h"
+#include "utils/common.h"
 #include "crypto/random.h"
 #include "crypto/sha1.h"
 #include "eapol_supp/eapol_supp_sm.h"

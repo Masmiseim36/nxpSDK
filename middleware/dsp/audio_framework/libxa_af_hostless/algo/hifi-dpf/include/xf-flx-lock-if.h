@@ -41,8 +41,8 @@ typedef struct xf_flx_lock
     xf_lock_t    lock;
     xf_lock_type lock_type;
     UWORD32      intr_mask;
-    
-} xf_flx_lock_t; 
+
+} xf_flx_lock_t;
 
 /* ...flexible lock initialization */
 static inline void xf_flx_lock_init(xf_flx_lock_t *flx_lock, xf_lock_type lock_type)
@@ -59,7 +59,7 @@ static inline void xf_flx_lock_init(xf_flx_lock_t *flx_lock, xf_lock_type lock_t
         flx_lock->lock_type = XF_MUTEX_BASED_LOCK;
         __xf_lock_init(&flx_lock->lock);
         break;
-    } 
+    }
 }
 
 /* ...flexible lock re-initialization */
@@ -79,7 +79,7 @@ static inline void xf_flx_lock_reinit(xf_flx_lock_t *flx_lock, xf_lock_type lock
         flx_lock->lock_type = XF_MUTEX_BASED_LOCK;
         __xf_lock_init(&flx_lock->lock);
         break;
-    } 
+    }
 }
 
 /* ...flexible lock deletion */
@@ -94,7 +94,7 @@ static inline void xf_flx_lock_destroy(xf_flx_lock_t *flx_lock)
     case XF_MUTEX_BASED_LOCK:
         __xf_lock_destroy(&flx_lock->lock);
         break;
-    } 
+    }
 
 }
 
@@ -113,7 +113,7 @@ static inline void xf_flx_lock(xf_flx_lock_t *flx_lock)
     case XF_MUTEX_BASED_LOCK:
         __xf_lock(&flx_lock->lock);
         break;
-    } 
+    }
 }
 
 /* ...flexible lock release */
@@ -131,7 +131,7 @@ static inline void xf_flx_unlock(xf_flx_lock_t *flx_lock)
     case XF_MUTEX_BASED_LOCK:
         __xf_unlock(&flx_lock->lock);
         break;
-    } 
+    }
 }
 
 #endif /* _XF_FLX_LOCK_IF_H_ */

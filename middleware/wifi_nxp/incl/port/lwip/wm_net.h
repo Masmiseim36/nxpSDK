@@ -68,13 +68,6 @@
 #endif
 #endif
 
-/*
- * fixme: This dependancy of wm_net on wlc manager header should be
- * removed. This is the lowest level file used to access lwip
- * functionality and should not contain higher layer dependancies.
- */
-#include <wlan.h>
-
 #define NET_SUCCESS WM_SUCCESS
 #define NET_ERROR   (-WM_FAIL)
 #define NET_ENOBUFS ENOBUFS
@@ -98,6 +91,70 @@
 #define net_connect(sock, addr, len)                  connect(sock, addr, len)
 #define net_read(sock, data, len)                     read(sock, data, len)
 #define net_write(sock, data, len)                    write(sock, data, len)
+
+/** Address types to be used by the element net_ip_config.addr_type below
+ */
+enum net_address_types
+{
+    /** static IP address */
+    NET_ADDR_TYPE_STATIC = 0,
+    /** Dynamic  IP address*/
+    NET_ADDR_TYPE_DHCP = 1,
+    /** Link level address */
+    NET_ADDR_TYPE_LLA = 2,
+};
+
+/** This data structure represents an IPv4 address */
+struct net_ipv4_config
+{
+    /** Set to \ref ADDR_TYPE_DHCP to use DHCP to obtain the IP address or
+     *  \ref ADDR_TYPE_STATIC to use a static IP. In case of static IP
+     *  address ip, gw, netmask and dns members must be specified.  When
+     *  using DHCP, the ip, gw, netmask and dns are overwritten by the
+     *  values obtained from the DHCP server. They should be zeroed out if
+     *  not used. */
+    enum net_address_types addr_type;
+    /** The system's IP address in network order. */
+    unsigned address;
+    /** The system's default gateway in network order. */
+    unsigned gw;
+    /** The system's subnet mask in network order. */
+    unsigned netmask;
+    /** The system's primary dns server in network order. */
+    unsigned dns1;
+    /** The system's secondary dns server in network order. */
+    unsigned dns2;
+};
+
+#ifdef CONFIG_IPV6
+/** This data structure represents an IPv6 address */
+struct net_ipv6_config
+{
+    /** The system's IPv6 address in network order. */
+    unsigned address[4];
+    /** The address type: linklocal, site-local or global. */
+    unsigned char addr_type;
+    /** The state of IPv6 address (Tentative, Preferred, etc). */
+    unsigned char addr_state;
+};
+#endif
+
+/** Network IP configuration.
+ *
+ *  This data structure represents the network IP configuration
+ *  for IPv4 as well as IPv6 addresses
+ */
+struct net_ip_config
+{
+#ifdef CONFIG_IPV6
+    /** The network IPv6 address configuration that should be
+     * associated with this interface. */
+    struct net_ipv6_config ipv6[CONFIG_MAX_IPV6_ADDRESSES];
+#endif
+    /** The network IPv4 address configuration that should be
+     * associated with this interface. */
+    struct net_ipv4_config ipv4;
+};
 
 /** Set hostname for network interface
  *
@@ -175,6 +232,54 @@ static inline uint32_t net_inet_aton(const char *cp)
  *
  */
 void net_wlan_set_mac_address(unsigned char *stamac, unsigned char *uapmac);
+
+/** Skip a number of bytes at the start of a stack buffer
+ *
+ * \param[in] buf input stack buffer.
+ * \param[in] in_offset offset to skip.
+ *
+ * \return the payload pointer after skip a number of bytes
+ */
+static inline uint8_t *net_stack_buffer_skip(void *buf, uint16_t in_offset)
+{
+    uint16_t out_offset = 0;
+    struct pbuf *p = pbuf_skip((struct pbuf *)buf, in_offset, &out_offset);
+    return (uint8_t*)(p->payload) + out_offset;
+}
+
+/** Free a buffer allocated from stack memory
+ *
+ * \param[in] buf stack buffer pointer.
+ *
+ */
+static inline void net_stack_buffer_free(void *buf)
+{
+    pbuf_free((struct pbuf *)buf);
+}
+
+/** Copy (part of) the contents of a packet buffer to an application supplied buffer
+ *
+ * \param[in] stack_buffer the stack buffer from which to copy data.
+ * \param[in] dst the destination buffer.
+ * \param[in] len length of data to copy.
+ * \param[in] offset offset into the stack buffer from where to begin copying
+ * \return copy status based on stack definition.
+ */
+static inline int net_stack_buffer_copy_partial(void *stack_buffer, void *dst, uint16_t len, uint16_t offset)
+{
+    return pbuf_copy_partial((const struct pbuf *)stack_buffer, dst, len, offset);
+}
+
+/** Get the data payload inside the stack buffer.
+ *
+ * \param[in] buf input stack buffer.
+ *
+ * \return the payload pointer of the stack buffer.
+ */
+static inline void *net_stack_buffer_get_payload(void *buf)
+{
+    return ((struct pbuf *)buf)->payload;
+}
 
 /**
  * Get network host entry
@@ -258,14 +363,14 @@ int net_wlan_deinit(void);
 
 /** Get STA interface netif structure pointer
  *
- * \rerurn A pointer to STA interface netif structure
+ * \return A pointer to STA interface netif structure
  *
  */
 struct netif *net_get_sta_interface(void);
 
 /** Get uAP interface netif structure pointer
  *
- * \rerurn A pointer to uAP interface netif structure
+ * \return A pointer to uAP interface netif structure
  *
  */
 struct netif *net_get_uap_interface(void);
@@ -314,7 +419,6 @@ void *net_get_uap_handle(void);
  *
  * \param[in] intrfc_handle interface handle
  *
- * \return void
  */
 void net_interface_up(void *intrfc_handle);
 
@@ -325,7 +429,6 @@ void net_interface_up(void *intrfc_handle);
  *
  * \param[in] intrfc_handle interface handle
  *
- * \return void
  */
 void net_interface_down(void *intrfc_handle);
 
@@ -336,7 +439,6 @@ void net_interface_down(void *intrfc_handle);
  *
  * \param[in] intrfc_handle interface handle
  *
- * \return void
  */
 void net_interface_dhcp_stop(void *intrfc_handle);
 
@@ -347,7 +449,6 @@ void net_interface_dhcp_stop(void *intrfc_handle);
  *
  * \param[in] intrfc_handle interface handle
  *
- * \return void
  */
 void net_interface_dhcp_cleanup(void *intrfc_handle);
 
@@ -358,7 +459,7 @@ void net_interface_dhcp_cleanup(void *intrfc_handle);
  *
  * \return WM_SUCCESS on success or an error code.
  */
-int net_configure_address(struct wlan_ip_config *addr, void *intrfc_handle);
+int net_configure_address(struct net_ip_config *addr, void *intrfc_handle);
 
 /** Configure DNS server address
  *
@@ -366,47 +467,47 @@ int net_configure_address(struct wlan_ip_config *addr, void *intrfc_handle);
  * \param[in] role Network wireless BSS Role
  *
  */
-void net_configure_dns(struct wlan_ip_config *ip, enum wlan_bss_role role);
+void net_configure_dns(struct net_ip_config *ip, unsigned int role);
 
-/** Get interface IP Address in \ref wlan_ip_config
+/** Get interface IP Address in \ref net_ip_config
  *
  * This function will get the IP address of a given interface. Use
  * net_get_sta_handle(), net_get_uap_handle() to get
  * interface handle.
  *
- * \param[out] addr \ref wlan_ip_config
+ * \param[out] addr \ref net_ip_config
  * \param[in] intrfc_handle interface handle
  *
  * \return WM_SUCCESS on success or error code.
  */
-int net_get_if_addr(struct wlan_ip_config *addr, void *intrfc_handle);
+int net_get_if_addr(struct net_ip_config *addr, void *intrfc_handle);
 
 #ifdef CONFIG_IPV6
-/** Get interface IPv6 Addresses & their states in \ref wlan_ip_config
+/** Get interface IPv6 Addresses & their states in \ref net_ip_config
  *
  * This function will get the IPv6 addresses & address states of a given
  * interface. Use net_get_sta_handle() to get interface handle.
  *
- * \param[out] addr \ref wlan_ip_config
+ * \param[out] addr \ref net_ip_config
  * \param[in] intrfc_handle interface handle
  *
  * \return WM_SUCCESS on success or error code.
  */
-int net_get_if_ipv6_addr(struct wlan_ip_config *addr, void *intrfc_handle);
+int net_get_if_ipv6_addr(struct net_ip_config *addr, void *intrfc_handle);
 
 /** Get list of preferred IPv6 Addresses of a given interface
- * in \ref wlan_ip_config
+ * in \ref net_ip_config
  *
  * This function will get the list of IPv6 addresses whose address state
  * is Preferred.
  * Use net_get_sta_handle() to get interface handle.
  *
- * \param[out] addr \ref wlan_ip_config
+ * \param[out] addr \ref net_ip_config
  * \param[in] intrfc_handle interface handle
  *
  * \return Number of IPv6 addresses whose address state is Preferred
  */
-int net_get_if_ipv6_pref_addr(struct wlan_ip_config *addr, void *intrfc_handle);
+int net_get_if_ipv6_pref_addr(struct net_ip_config *addr, void *intrfc_handle);
 
 /** Get the description of IPv6 address state
  *
@@ -424,22 +525,22 @@ char *ipv6_addr_state_to_desc(unsigned char addr_state);
  * This function will get the IPv6 address type description like -
  * Linklocal, Global, Sitelocal, Uniquelocal
  *
- * \param[in] ipv6_conf Pointer to IPv6 configuration of type \ref ipv6_config
+ * \param[in] ipv6_conf Pointer to IPv6 configuration of type \ref net_ipv6_config
  *
  * \return IPv6 address description
  */
-char *ipv6_addr_addr_to_desc(struct ipv6_config *ipv6_conf);
+char *ipv6_addr_addr_to_desc(struct net_ipv6_config *ipv6_conf);
 
 /** Get the description of IPv6 address type
  *
  * This function will get the IPv6 address type description like -
  * Linklocal, Global, Sitelocal, Uniquelocal
  *
- * \param[in] ipv6_conf Pointer to IPv6 configuration of type \ref ipv6_config
+ * \param[in] ipv6_conf Pointer to IPv6 configuration of type \ref net_ipv6_config
  *
  * \return IPv6 address type description
  */
-char *ipv6_addr_type_to_desc(struct ipv6_config *ipv6_conf);
+char *ipv6_addr_type_to_desc(struct net_ipv6_config *ipv6_conf);
 #endif /* CONFIG_IPV6 */
 
 /** Get interface Name string containing name and number
@@ -474,7 +575,7 @@ int net_get_if_ip_addr(uint32_t *ip, void *intrfc_handle);
  * net_get_sta_handle(), net_get_uap_handle() to get
  * interface handle.
  *
- * \param[in] mask Subnet Mask pointer
+ * \param[in] nm Subnet Mask pointer
  * \param[in] intrfc_handle interface
  *
  * \return WM_SUCCESS on success or error code.
@@ -510,7 +611,7 @@ void net_ipv6stack_init(struct netif *netif);
 void net_stat(void);
 
 
-#ifndef CONFIG_WPA_SUPP
+#ifdef MGMT_RX
 void rx_mgmt_register_callback(int (*rx_mgmt_cb_fn)(const enum wlan_bss_type bss_type,
                                                     const wifi_mgmt_frame_t *frame,
                                                     const size_t len));

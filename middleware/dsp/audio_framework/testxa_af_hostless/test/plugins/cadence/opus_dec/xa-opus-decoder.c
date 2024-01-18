@@ -53,6 +53,7 @@
 extern clk_t dec_cycles;
 #endif
 
+/* ...XA_ZERO_COPY indicates that the buffer used for payload is allocated directly by the test-application. XAF library does not allocate any intenal buffer and transacts this buffer pointer between test-application and component. */
 #if defined(XA_ZERO_COPY) && (XF_CFG_CORES_NUM > 1)
 /* ...prevent instructions reordering */
 #define barrier()                           \
@@ -69,7 +70,7 @@ extern clk_t dec_cycles;
 #define XF_IPC_INVALIDATE(buf, length) \
         ({ if ((length)) { xthal_dcache_region_invalidate((buf), (length)); barrier(); } buf; })
 #else
-#define XF_IPC_FLUSH(buf, length)   (void)0        
+#define XF_IPC_FLUSH(buf, length)   (void)0
 #define XF_IPC_INVALIDATE(buf, length)  (void)0
 #endif  //XF_CFG_CORES_NUM > 1
 #endif  //XA_ZERO_COPY
@@ -237,7 +238,7 @@ static XA_ERRORCODE xa_opus_decoder_init(XA_OPUS_Decoder *d, WORD32 i_idx, pVOID
     case XA_CMD_TYPE_INIT_API_PRE_CONFIG_PARAMS:
         {
             memset(d, 0, sizeof(*d));
-            
+
             /* ...init defaults */
             {
                 /* If stream type is XA_RAW_OPUS_STREAM and sample rate and number of channels are not passed from command line revert to default */
@@ -527,14 +528,14 @@ static XA_ERRORCODE xa_opus_decoder_set_config_param(XA_OPUS_Decoder *d, WORD32 
         xaf_ext_buffer_t *ext_buf = (xaf_ext_buffer_t *) pv_value;
 #if defined(XA_ZERO_COPY) && (XF_CFG_CORES_NUM > 1)
 #if XF_LOCAL_IPC_NON_COHERENT
-        XF_IPC_INVALIDATE(ext_buf, sizeof(xaf_ext_buffer_t)); 
-        XF_IPC_INVALIDATE(ext_buf->data, ext_buf->valid_data_size); 
+        XF_IPC_INVALIDATE(ext_buf, sizeof(xaf_ext_buffer_t));
+        XF_IPC_INVALIDATE(ext_buf->data, ext_buf->valid_data_size);
 #endif
 #endif
         memcpy(d->dec_control.stream_map, ext_buf->data, ext_buf->valid_data_size);
         break;
     }
-    
+
     default:
         /* ...unrecognised command */
         TRACE(ERROR, _x("Invalid index: %X"), i_idx);
@@ -579,15 +580,15 @@ static XA_ERRORCODE xa_opus_decoder_get_config_param(XA_OPUS_Decoder *d, WORD32 
         xaf_ext_buffer_t *ext_buf = (xaf_ext_buffer_t *) pv_value;
 #if defined(XA_ZERO_COPY) && (XF_CFG_CORES_NUM > 1)
 #if XF_LOCAL_IPC_NON_COHERENT
-        XF_IPC_INVALIDATE(ext_buf, sizeof(xaf_ext_buffer_t)); 
+        XF_IPC_INVALIDATE(ext_buf, sizeof(xaf_ext_buffer_t));
 #endif
 #endif
         memcpy(ext_buf->data, d->dec_control.stream_map, sizeof(d->dec_control.stream_map));
         ext_buf->valid_data_size = sizeof(d->dec_control.stream_map);
 #if defined(XA_ZERO_COPY) && (XF_CFG_CORES_NUM > 1)
 #if XF_LOCAL_IPC_NON_COHERENT
-        XF_IPC_FLUSH(ext_buf->data, ext_buf->valid_data_size); 
-        XF_IPC_FLUSH(ext_buf, sizeof(xaf_ext_buffer_t)); 
+        XF_IPC_FLUSH(ext_buf->data, ext_buf->valid_data_size);
+        XF_IPC_FLUSH(ext_buf, sizeof(xaf_ext_buffer_t));
 #endif
 #endif
         break;
@@ -907,8 +908,8 @@ static XA_ERRORCODE xa_opus_decoder_execute(XA_OPUS_Decoder *d, WORD32 i_idx, pV
             d->produced = 0;
             do
             {
-                error_code = xa_opus_dec( (xa_codec_handle_t)(d->internal_data), 
-                                            ((pUWORD8)decoderInput), 
+                error_code = xa_opus_dec( (xa_codec_handle_t)(d->internal_data),
+                                            ((pUWORD8)decoderInput),
                                             output_ptr, nBytes, &d->dec_control, (pWORD16)&output_length, d->scratch );
                 is_fatal = (XA_ERROR_SEVERITY(error_code) != 0);
                 XF_CHK_ERR(!(is_fatal), error_code);
@@ -922,7 +923,7 @@ static XA_ERRORCODE xa_opus_decoder_execute(XA_OPUS_Decoder *d, WORD32 i_idx, pV
                     d->produced = 0;
                     frames  = 0;
                     break;
-                }                
+                }
             } while (d->dec_control.moreInternalDecoderFrames);
         }
         else
@@ -933,8 +934,8 @@ static XA_ERRORCODE xa_opus_decoder_execute(XA_OPUS_Decoder *d, WORD32 i_idx, pV
             d->produced = 0;
             for( i = 0; i < d->dec_control.framesPerPacket; i++ )
             {
-                error_code = xa_opus_dec( (xa_codec_handle_t)(d->internal_data), 
-                                            ((pUWORD8)decoderInput), 
+                error_code = xa_opus_dec( (xa_codec_handle_t)(d->internal_data),
+                                            ((pUWORD8)decoderInput),
                                             output_ptr, nBytes, &d->dec_control, (pWORD16)&output_length, d->scratch );
                 is_fatal = (XA_ERROR_SEVERITY(error_code) != 0);
                 XF_CHK_ERR(!(is_fatal), error_code);
@@ -945,7 +946,7 @@ static XA_ERRORCODE xa_opus_decoder_execute(XA_OPUS_Decoder *d, WORD32 i_idx, pV
         }
 
         d->state |= XA_OPUS_DEC_FLAG_OUTPUT;
-        
+
         return error_code;
     }
     case XA_CMD_TYPE_DONE_QUERY:
@@ -1120,7 +1121,8 @@ static XA_ERRORCODE xa_opus_decoder_get_mem_info_size(XA_OPUS_Decoder *d, WORD32
 
     default:
         /* ...invalid index */
-        return XF_CHK_ERR(0, XA_API_FATAL_INVALID_CMD_TYPE);
+        TRACE(ERROR, _x("check failed"));
+        return XA_API_FATAL_INVALID_CMD_TYPE;
     }
 
     return XA_NO_ERROR;
@@ -1164,7 +1166,7 @@ static XA_ERRORCODE xa_opus_decoder_get_mem_info_type(XA_OPUS_Decoder *d, WORD32
         /* ...scratch buffer */
         *(WORD32 *)pv_value = XA_MEMTYPE_SCRATCH;
         return XA_NO_ERROR;
-    
+
     case 3:
         /* ...persistant buffer */
         *(WORD32 *)pv_value = XA_MEMTYPE_PERSIST;
@@ -1172,7 +1174,8 @@ static XA_ERRORCODE xa_opus_decoder_get_mem_info_type(XA_OPUS_Decoder *d, WORD32
 
     default:
         /* ...invalid index */
-        return XF_CHK_ERR(0, XA_API_FATAL_INVALID_CMD_TYPE);
+        TRACE(ERROR, _x("check failed"));
+        return XA_API_FATAL_INVALID_CMD_TYPE;
     }
 }
 
@@ -1227,7 +1230,8 @@ static XA_ERRORCODE xa_opus_decoder_set_mem_ptr(XA_OPUS_Decoder *d, WORD32 i_idx
 
     default:
         /* ...invalid index */
-        return XF_CHK_ERR(0, XA_API_FATAL_INVALID_CMD_TYPE);
+        TRACE(ERROR, _x("check failed"));
+        return XA_API_FATAL_INVALID_CMD_TYPE;
     }
 
     return XA_NO_ERROR;

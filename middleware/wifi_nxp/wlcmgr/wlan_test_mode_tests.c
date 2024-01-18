@@ -51,12 +51,42 @@ static void wlan_rf_test_mode_set(int argc, char *argv[])
     if (ret == WM_SUCCESS)
     {
         rf_test_mode = true;
-        (void)PRINTF("RF Test Mode configuration successful\r\n");
+        (void)PRINTF("RF Test Mode Set configuration successful\r\n");
     }
     else
     {
-        (void)PRINTF("RF Test Mode configuration failed\r\n");
+        (void)PRINTF("RF Test Mode Set configuration failed\r\n");
         dump_wlan_set_rf_test_mode_usage();
+    }
+}
+
+static void dump_wlan_unset_rf_test_mode_usage(void)
+{
+    (void)PRINTF("Usage:\r\n");
+    (void)PRINTF("wlan-unset-rf-test-mode \r\n");
+    (void)PRINTF("\r\n");
+}
+
+static void wlan_rf_test_mode_unset(int argc, char *argv[])
+{
+    int ret;
+
+    if (argc != 1)
+    {
+        dump_wlan_unset_rf_test_mode_usage();
+        return;
+    }
+
+    ret = wlan_unset_rf_test_mode();
+    if (ret == WM_SUCCESS)
+    {
+        rf_test_mode = false;
+        (void)PRINTF("RF Test Mode Unset configuration successful\r\n");
+    }
+    else
+    {
+        (void)PRINTF("RF Test Mode Unset configuration failed\r\n");
+        dump_wlan_unset_rf_test_mode_usage();
     }
 }
 
@@ -399,7 +429,15 @@ static void dump_wlan_set_tx_cont_mode_usage(void)
     (void)PRINTF("Tx Data Rate          (Rate Index corresponding to legacy/HT/VHT rates)\r\n");
     (void)PRINTF("\r\n");
     (void)PRINTF("To Disable:\r\n");
-    (void)PRINTF("wlan-set-rf-tx-cont-mode 0\r\n");
+#ifdef SD9177
+    (void)PRINTF("Set all parameters with expected values\r\n");
+#else
+    (void)PRINTF("  In Continuous Wave Mode:\r\n");
+    (void)PRINTF("    Step1: wlan-set-rf-tx-cont-mode 0 1 0 0 0 0 \r\n");
+    (void)PRINTF("    Step2: wlan-set-rf-tx-cont-mode 0 \r\n");
+    (void)PRINTF("  In none continuous Wave Mode:\r\n");
+    (void)PRINTF("    Step1: wlan-set-rf-tx-cont-mode 0 \r\n");
+#endif
     (void)PRINTF("\r\n");
 }
 
@@ -635,7 +673,7 @@ static void dump_wlan_set_tx_power_usage(void)
     (void)PRINTF("\r\n");
 }
 
-#if !defined(SD8978) && !defined(SD8987)
+#if !defined(SD8978) && !defined(SD8987) && !defined(SD9177)
 /*
  *  @brief PowerLevelToDUT11Bits
  *
@@ -664,10 +702,10 @@ static void PowerLevelToDUT11Bits(int Pwr, uint32_t *PowerLevel)
 static void wlan_rf_tx_power_set(int argc, char *argv[])
 {
     int ret;
-    uint8_t power;
+    uint32_t power;
     uint8_t mod;
     uint8_t path_id;
-#if !defined(SD8978) && !defined(SD8987)
+#if !defined(SD8978) && !defined(SD8987) && !defined(SD9177)
     uint32_t power_converted = 0xffffffff;
 #endif
 
@@ -705,7 +743,7 @@ static void wlan_rf_tx_power_set(int argc, char *argv[])
         return;
     }
 
-#if !defined(SD8978) && !defined(SD8987)
+#if !defined(SD8978) && !defined(SD8987) && !defined(SD9177)
     /* We need to convert user power vals including -ve vals as per labtool */
     PowerLevelToDUT11Bits((int)power, &power_converted);
     ret = wlan_set_rf_tx_power(power_converted, mod, path_id);
@@ -733,7 +771,7 @@ static void dump_wlan_set_tx_frame_usage(void)
         "wlan-set-rf-tx-frame <start> <data_rate> <frame_pattern> <frame_len> <adjust_burst_sifs> <burst_sifs_in_us> "
         "<short_preamble> <act_sub_ch> <short_gi> <adv_coding> <tx_bf> <gf_mode> <stbc> <bssid>\r\n");
     (void)PRINTF("Enable                 (0:disable, 1:enable)\r\n");
-    (void)PRINTF("Tx Data Rate           (Rate Index corresponding to legacy/HT/VHT rates)\r\n");
+    (void)PRINTF("Tx Data Rate           (Rate Index corresponding to legacy/HT/VHT rates)(Enter hexadecimal value)\r\n");
     (void)PRINTF("Payload Pattern        (0 to 0xFFFFFFFF) (Enter hexadecimal value)\r\n");
     (void)PRINTF("Payload Length         (1 to 0x400) (Enter hexadecimal value)\r\n");
     (void)PRINTF("Adjust Burst SIFS3 Gap (0:disable, 1:enable)\r\n");
@@ -1152,6 +1190,7 @@ static void wlan_rf_radio_mode_set(int argc, char *argv[])
 
 static struct cli_command wlan_test_mode_commands[] = {
     {"wlan-set-rf-test-mode", NULL, wlan_rf_test_mode_set},
+    {"wlan-unset-rf-test-mode", NULL, wlan_rf_test_mode_unset},
     {"wlan-set-rf-tx-antenna", "<antenna>", wlan_rf_tx_antenna_set},
     {"wlan-get-rf-tx-antenna", NULL, wlan_rf_tx_antenna_get},
     {"wlan-set-rf-rx-antenna", "<antenna>", wlan_rf_rx_antenna_set},
@@ -1186,6 +1225,17 @@ int wlan_test_mode_cli_init(void)
 {
     if (cli_register_commands(wlan_test_mode_commands, sizeof(wlan_test_mode_commands) / sizeof(struct cli_command)) !=
         0U)
+    {
+        return -WM_FAIL;
+    }
+
+    return WM_SUCCESS;
+}
+
+int wlan_test_mode_cli_deinit(void)
+{
+    if (cli_unregister_commands(wlan_test_mode_commands,
+		                sizeof(wlan_test_mode_commands) / sizeof(struct cli_command)) != 0U)
     {
         return -WM_FAIL;
     }

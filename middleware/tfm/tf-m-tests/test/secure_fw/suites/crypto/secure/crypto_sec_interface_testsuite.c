@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2022, Arm Limited. All rights reserved.
+ * Copyright (c) 2018-2023, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -28,8 +28,10 @@ static void tfm_crypto_test_1008(struct test_result_t *ret);
 #ifdef TFM_CRYPTO_TEST_ALG_CFB
 static void tfm_crypto_test_1009(struct test_result_t *ret);
 #endif /* TFM_CRYPTO_TEST_ALG_CFB */
+#ifdef TFM_CRYPTO_TEST_UNSUPPORTED_ALG
 static void tfm_crypto_test_1010(struct test_result_t *ret);
-#ifdef TFM_CRYPTO_TEST_ALG_SHA_224 //NXP
+#endif /* TFM_CRYPTO_TEST_UNSUPPORTED_ALG */
+#ifdef TFM_CRYPTO_TEST_ALG_SHA_224
 static void tfm_crypto_test_1011(struct test_result_t *ret);
 #endif
 static void tfm_crypto_test_1012(struct test_result_t *ret);
@@ -39,7 +41,9 @@ static void tfm_crypto_test_1013(struct test_result_t *ret);
 #ifdef TFM_CRYPTO_TEST_ALG_SHA_512
 static void tfm_crypto_test_1014(struct test_result_t *ret);
 #endif /* TFM_CRYPTO_TEST_ALG_SHA_512 */
+#ifdef TFM_CRYPTO_TEST_UNSUPPORTED_ALG
 static void tfm_crypto_test_1019(struct test_result_t *ret);
+#endif /* TFM_CRYPTO_TEST_UNSUPPORTED_ALG */
 static void tfm_crypto_test_1020(struct test_result_t *ret);
 #ifdef TFM_CRYPTO_TEST_ALG_SHA_384
 static void tfm_crypto_test_1021(struct test_result_t *ret);
@@ -47,7 +51,7 @@ static void tfm_crypto_test_1021(struct test_result_t *ret);
 #ifdef TFM_CRYPTO_TEST_ALG_SHA_512
 static void tfm_crypto_test_1022(struct test_result_t *ret);
 #endif /* TFM_CRYPTO_TEST_ALG_SHA_512 */
-#ifdef TFM_CRYPTO_TEST_ALG_SHA_224 //NXP
+#ifdef TFM_CRYPTO_TEST_ALG_SHA_224
 static void tfm_crypto_test_1024(struct test_result_t *ret);
 #endif
 #ifdef TFM_CRYPTO_TEST_ALG_CCM
@@ -58,7 +62,9 @@ static void tfm_crypto_test_1031(struct test_result_t *ret);
 #endif /* TFM_CRYPTO_TEST_ALG_GCM */
 static void tfm_crypto_test_1032(struct test_result_t *ret);
 static void tfm_crypto_test_1033(struct test_result_t *ret);
+#ifdef TFM_INTERNAL_TRUSTED_STORAGE_SERVICE
 static void tfm_crypto_test_1034(struct test_result_t *ret);
+#endif /* TFM_INTERNAL_TRUSTED_STORAGE_SERVICE */
 static void tfm_crypto_test_1035(struct test_result_t *ret);
 #ifdef TFM_CRYPTO_TEST_ALG_CCM
 static void tfm_crypto_test_1036(struct test_result_t *ret);
@@ -124,12 +130,14 @@ static struct test_t crypto_tests[] = {
     {&tfm_crypto_test_1009, "TFM_S_CRYPTO_TEST_1009",
      "Secure Symmetric encryption invalid cipher (HMAC-128-CFB)"},
 #endif /* TFM_CRYPTO_TEST_ALG_CFB */
+#ifdef TFM_CRYPTO_TEST_UNSUPPORTED_ALG
     {&tfm_crypto_test_1010, "TFM_S_CRYPTO_TEST_1010",
      "Secure Unsupported Hash (SHA-1) interface"},
-#ifdef TFM_CRYPTO_TEST_ALG_SHA_224 //NXP
+#endif /* TFM_CRYPTO_TEST_UNSUPPORTED_ALG */
+#ifdef TFM_CRYPTO_TEST_ALG_SHA_224
     {&tfm_crypto_test_1011, "TFM_S_CRYPTO_TEST_1011",
      "Secure Hash (SHA-224) interface"},
-#endif 
+#endif
     {&tfm_crypto_test_1012, "TFM_S_CRYPTO_TEST_1012",
      "Secure Hash (SHA-256) interface"},
 #ifdef TFM_CRYPTO_TEST_ALG_SHA_384
@@ -140,8 +148,10 @@ static struct test_t crypto_tests[] = {
     {&tfm_crypto_test_1014, "TFM_S_CRYPTO_TEST_1014",
      "Secure Hash (SHA-512) interface"},
 #endif /* TFM_CRYPTO_TEST_ALG_SHA_512 */
+#ifdef TFM_CRYPTO_TEST_UNSUPPORTED_ALG
     {&tfm_crypto_test_1019, "TFM_S_CRYPTO_TEST_1019",
      "Secure Unsupported HMAC (SHA-1) interface"},
+#endif /* TFM_CRYPTO_TEST_UNSUPPORTED_ALG */
     {&tfm_crypto_test_1020, "TFM_S_CRYPTO_TEST_1020",
      "Secure HMAC (SHA-256) interface"},
 #ifdef TFM_CRYPTO_TEST_ALG_SHA_384
@@ -152,7 +162,7 @@ static struct test_t crypto_tests[] = {
     {&tfm_crypto_test_1022, "TFM_S_CRYPTO_TEST_1022",
      "Secure HMAC (SHA-512) interface"},
 #endif /* TFM_CRYPTO_TEST_ALG_SHA_512 */
-#ifdef TFM_CRYPTO_TEST_ALG_SHA_224 //NXP
+#ifdef TFM_CRYPTO_TEST_ALG_SHA_224
     {&tfm_crypto_test_1024, "TFM_S_CRYPTO_TEST_1024",
      "Secure HMAC with long key (SHA-224) interface"},
 #endif
@@ -168,8 +178,10 @@ static struct test_t crypto_tests[] = {
      "Secure key policy interface"},
     {&tfm_crypto_test_1033, "TFM_S_CRYPTO_TEST_1033",
      "Secure key policy check permissions"},
+#ifdef TFM_INTERNAL_TRUSTED_STORAGE_SERVICE
     {&tfm_crypto_test_1034, "TFM_S_CRYPTO_TEST_1034",
      "Secure persistent key interface"},
+#endif /* TFM_INTERNAL_TRUSTED_STORAGE_SERVICE */
     {&tfm_crypto_test_1035, "TFM_S_CRYPTO_TEST_1035",
      "Key access control"},
 #ifdef TFM_CRYPTO_TEST_ALG_CCM
@@ -305,12 +317,14 @@ static void tfm_crypto_test_1009(struct test_result_t *ret)
 }
 #endif /* TFM_CRYPTO_TEST_ALG_CFB */
 
+#ifdef TFM_CRYPTO_TEST_UNSUPPORTED_ALG
 static void tfm_crypto_test_1010(struct test_result_t *ret)
 {
     psa_unsupported_hash_test(PSA_ALG_SHA_1, ret);
 }
+#endif /* TFM_CRYPTO_TEST_UNSUPPORTED_ALG */
 
-#ifdef TFM_CRYPTO_TEST_ALG_SHA_224 //NXP
+#ifdef TFM_CRYPTO_TEST_ALG_SHA_224
 static void tfm_crypto_test_1011(struct test_result_t *ret)
 {
     psa_hash_test(PSA_ALG_SHA_224, ret);
@@ -336,11 +350,13 @@ static void tfm_crypto_test_1014(struct test_result_t *ret)
 }
 #endif /* TFM_CRYPTO_TEST_ALG_SHA_512 */
 
+#ifdef TFM_CRYPTO_TEST_UNSUPPORTED_ALG
 static void tfm_crypto_test_1019(struct test_result_t *ret)
 {
     psa_unsupported_mac_test(PSA_KEY_TYPE_HMAC, PSA_ALG_HMAC(PSA_ALG_SHA_1),
                              ret);
 }
+#endif /* TFM_CRYPTO_TEST_UNSUPPORTED_ALG */
 
 static void tfm_crypto_test_1020(struct test_result_t *ret)
 {
@@ -364,7 +380,7 @@ static void tfm_crypto_test_1022(struct test_result_t *ret)
 }
 #endif /* TFM_CRYPTO_TEST_ALG_SHA_512 */
 
-#ifdef TFM_CRYPTO_TEST_ALG_SHA_224 //NXP
+#ifdef TFM_CRYPTO_TEST_ALG_SHA_224
 static void tfm_crypto_test_1024(struct test_result_t *ret)
 {
     psa_mac_test(PSA_ALG_HMAC(PSA_ALG_SHA_224),
@@ -398,10 +414,12 @@ static void tfm_crypto_test_1033(struct test_result_t *ret)
     psa_policy_invalid_policy_usage_test(ret);
 }
 
+#ifdef TFM_INTERNAL_TRUSTED_STORAGE_SERVICE
 static void tfm_crypto_test_1034(struct test_result_t *ret)
 {
     psa_persistent_key_test(1, ret);
 }
+#endif /* TFM_INTERNAL_TRUSTED_STORAGE_SERVICE */
 
 /**
  * \brief Tests key access control based on partition ID

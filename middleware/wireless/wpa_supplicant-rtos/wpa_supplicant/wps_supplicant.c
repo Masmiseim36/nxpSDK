@@ -9,7 +9,7 @@
 #include "includes.h"
 
 #ifdef CONFIG_WPS
-#include "common.h"
+#include "utils/common.h"
 #include "eloop.h"
 #include "uuid.h"
 #include "crypto/random.h"

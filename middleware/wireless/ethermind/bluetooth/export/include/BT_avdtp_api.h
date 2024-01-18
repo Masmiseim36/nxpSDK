@@ -3209,6 +3209,37 @@ API_RESULT BT_avdtp_set_flushable
 
 #endif /* HAVE_AVDTP_MEDIA_PKT_FLUSHABLE */
 
+#ifdef AVDTP_STREAM_NO_AUTORSP
+/**
+ *  \brief To send response to AVDTP stream commands Start and Suspend.
+ *
+ *  \par Description:
+ *  This API enables the upper layer to send stream response to the commands
+ *  AVDTP Start and Suspend.
+ *
+ *  \param [in] handle
+ *         The AVDTP Handle corresponding to the connection
+ *         on which to send the response.
+ *
+ *  \param [in] rsp_type
+ *         The streaming response - whether AVDTP_START_CNF or AVDTP_SUSPEND_CNF.
+ *
+ *  \param [in] rsp_code
+ *         The response code.
+ *
+ *  \return API_RESULT
+ *          API_SUCCESS, or, an Error Code from BT_error.h
+ *
+ *  \note
+ */
+API_RESULT BT_avdtp_stream_response
+           (
+               /* IN */  AVDTP_HANDLE * handle,
+               /* IN */  UCHAR          rsp_type,
+               /* IN */  UCHAR          rsp_code
+           );
+#endif /* AVDTP_STREAM_NO_AUTORSP */
+
 #ifdef HAVE_AVDTP_SET_GET_SIG_CH_OUTMTU
 /**
  *  \brief To set/get Out MTU of AVDTP signalling channel.

@@ -1,13 +1,5 @@
 	    *(.data*)
 	    . = ALIGN(4);
-	    PROVIDE(__start_NVM_TABLE = .);
-	    KEEP(*(.NVM_TABLE));
-	    PROVIDE(__stop_NVM_TABLE = .);
-	    . = ALIGN(4);
-	    PROVIDE(__start_NVM_ADAPTER_TABLE = .);
-	    KEEP(*(.NVM_ADAPTER_TABLE));
-	    PROVIDE(__stop_NVM_ADAPTER_TABLE = .);
-	    . = ALIGN(4);
 	    _net_buf_pool_list = .;
 	    KEEP(*(SORT(._net_buf_pool*)))
 	    . = ALIGN(4);
@@ -18,6 +10,17 @@
         <#if memory.name=="SRAM">
         *fsl_adapter_flexspi_nor_flash.o(.text .text* .rodata .rodata*)
         *fsl_flexspi.o(.text .text* .rodata .rodata*)
-        *NV_Flash.o(.text .text* .rodata .rodata*)
         *mflash_drv.o(.text .text* .rodata .rodata*)
+		*controller_low_power.o(.text .text* .rodata .rodata*)
+        *board_lp.o(.text .text* .rodata .rodata*)
+        *fwk_platform.o(.text .text* .rodata .rodata*)
+        *fwk_platform_lowpower.o(.text .text* .rodata .rodata*)
+        *fsl_pm_core.o(.text .text* .rodata .rodata*)
+        *fsl_pm_device.o(.text .text* .rodata .rodata*)
+        *fsl_power.o(.text .text* .rodata .rodata*)
+        *fsl_gpio.o(.text .text* .rodata .rodata*)
+        *fsl_adapter_rt_gpio.o(.text .text* .rodata .rodata*)
+        *fsl_component_generic_list.o(.text .text* .rodata .rodata*)
+        *fsl_common_arm.o(.text .text* .rodata .rodata*)
+        *libc_a-memset.o(.text .text* .rodata .rodata*)
         </#if>

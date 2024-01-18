@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2021-2022, Arm Limited. All rights reserved.
- * Copyright (c) 2021-2022 Cypress Semiconductor Corporation (an Infineon
+ * Copyright (c) 2021-2023 Cypress Semiconductor Corporation (an Infineon
  * company) or an affiliate of Cypress Semiconductor Corporation. All rights
  * reserved.
  *
@@ -76,7 +76,7 @@ const struct partition_tfm_ns_mailbox_agent_load_info_t tfm_ns_mailbox_agent_loa
         .flags                      = 0
                                     | PARTITION_MODEL_IPC
                                     | PARTITION_MODEL_PSA_ROT
-                                    | PARTITION_NS_AGENT
+                                    | PARTITION_NS_AGENT_MB
                                     | PARTITION_PRI_LOW,
         .entry                      = ENTRY_TO_POSITION(ns_agent_mailbox_entry),
         .stack_size                 = 0x800,

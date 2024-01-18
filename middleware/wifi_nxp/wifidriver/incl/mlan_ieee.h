@@ -69,6 +69,13 @@ typedef enum
     IEEE_TYPE_DATA
 } IEEEtypes_MsgType_e;
 
+#ifdef CONFIG_11AX
+typedef enum _IEEEtypes_Ext_ElementId_e
+{
+    HE_CAPABILITY = 35,
+    HE_OPERATION  = 36
+} IEEEtypes_Ext_ElementId_e;
+#endif
 
 /** IEEE Type definitions  */
 typedef MLAN_PACK_START enum _IEEEtypes_ElementId_e {
@@ -114,9 +121,12 @@ typedef MLAN_PACK_START enum _IEEEtypes_ElementId_e {
 #ifdef CONFIG_11K
     RRM_ENABLED_CAP = 70,
 #endif
+    MULTI_BSSID = 71,
     BSSCO_2040          = 72,
     OVERLAPBSSSCANPARAM = 74,
+    NONTX_BSSID_CAP = 83,
 
+    MBSSID_INDEX = 85,
     EXT_CAPABILITY = 127,
 
     /* ERP_INFO = 42, */
@@ -378,6 +388,16 @@ typedef MLAN_PACK_START struct _IEEEtypes_CapInfo_t
     t_u8 immediate_block_ack : 1;
 } MLAN_PACK_END IEEEtypes_CapInfo_t, *pIEEEtypes_CapInfo_t;
 
+/** IEEEtypes_Ssid_t */
+typedef MLAN_PACK_START struct _IEEEtypes_Ssid_t
+{
+    /** SSID: Element ID */
+    t_u8 element_id;
+    /** SSID : Length */
+    t_u8 len;
+    /** ssid */
+    t_u8 ssid[MLAN_MAX_SSID_LENGTH];
+} MLAN_PACK_END IEEEtypes_Ssid_t, *pIEEEtypes_Ssid_t;
 
 /** IEEEtypes_CfParamSet_t */
 typedef MLAN_PACK_START struct _IEEEtypes_CfParamSet_t
@@ -1117,8 +1137,13 @@ typedef MLAN_PACK_START struct _ExtCap_t
     t_u8 rsvdBit74 : 1;            /* bit 74 */
     t_u8 rsvdBit75 : 1;            /* bit 75 */
     t_u8 rsvdBit76 : 1;            /* bit 76 */
+#ifdef CONFIG_11AX
+    t_u8 TWTReq : 1;               /* bit 77 */
+    t_u8 TWTResp : 1;              /* bit 78 */
+#else
     t_u8 rsvdBit77 : 1; /* bit 77 */
     t_u8 rsvdBit78 : 1; /* bit 78 */
+#endif
     t_u8 rsvdBit79 : 1;            /* bit 79 */
 
 } MLAN_PACK_END ExtCap_t, *pExtCap_t;
@@ -1160,6 +1185,56 @@ typedef MLAN_PACK_START struct _IEEEtypes_HTInfo_t
     HTInfo_t ht_info;
 } MLAN_PACK_END IEEEtypes_HTInfo_t, *pIEEEtypes_HTInfo_t;
 
+/** the AP which send the multi_bssid IE */
+#define MULTI_BSSID_AP 1
+/** the AP which don't send beacon */
+#define MULTI_BSSID_SUB_AP 2
+/** IEEEtypes_NotxBssCap_t */
+typedef MLAN_PACK_START struct _IEEEtypes_NotxBssCap_t
+{
+    /** Nontransmitted BSSID Capability: Element ID */
+    t_u8 element_id;
+    /** Nontransmitted BSSID Capability : Length */
+    t_u8 len;
+    /** capability */
+    t_u16 cap;
+} MLAN_PACK_END IEEEtypes_NotxBssCap_t, *pIEEEtypes_NotxBssCap_t;
+
+/** Multi BSSID IE */
+typedef MLAN_PACK_START struct _IEEEtypes_MultiBSSIDIndex_t
+{
+    /** Generic IE header */
+    IEEEtypes_Header_t ieee_hdr;
+    /** BSSID Index */
+    t_u8 bssid_index;
+    /** DTIM Period (Optional, not Present in ProbeRsp) */
+    t_u8 dtim_period;
+    /** DTIM Count (Optional, not Present in ProbeRsp) */
+    t_u8 dtim_count;
+} MLAN_PACK_END IEEEtypes_MultiBSSIDIndex_t, *pIEEEtypes_MultiBSSIDIndex_t;
+
+/** NonTransmitted BSSID Profile Subelement IE */
+/** SUBID for IEEEtypes_NonTransBSSIDCap_t */
+#define NONTRANS_BSSID_PROFILE_SUBELEM_ID 0
+
+/** NonTransmitted BSSID Capability IE */
+typedef MLAN_PACK_START struct _IEEEtypes_NonTransBSSIDProfile_t
+{
+    /** Generic IE header */
+    IEEEtypes_Header_t ieee_hdr;
+    t_u8 profile_data[];
+} MLAN_PACK_END IEEEtypes_NonTransBSSIDProfile_t, *pIEEEtypes_NonTransBSSIDProfile_t;
+
+/** Multi BSSID IE */
+typedef MLAN_PACK_START struct _IEEEtypes_MultiBSSID_t
+{
+    /** Generic IE header */
+    IEEEtypes_Header_t ieee_hdr;
+    /** Max BSSID Indicator */
+    t_u8 max_bssid_indicator;
+    /** Optional Subelement data*/
+    t_u8 sub_elem_data[];
+} MLAN_PACK_END IEEEtypes_MultiBSSID_t, *pIEEEtypes_MultiBSSID_t;
 
 /** 20/40 BSS Coexistence IE */
 typedef MLAN_PACK_START struct _IEEEtypes_2040BSSCo_t
@@ -1671,6 +1746,10 @@ typedef MLAN_PACK_START struct
 #define BG_SCAN_WAIT_ALL_CHAN_DONE 0x80000000
 /** Maximum number of channels that can be sent in bg scan config */
 #define WLAN_BG_SCAN_CHAN_MAX 38
+#ifdef CONFIG_UNII4_BAND_SUPPORT
+/** max bgscan chan number, include UNII_4 channel */
+#define WLAN_BG_SCAN_CHAN_MAX_UNII_4 41
+#endif
 /** Min BGSCAN interval 30 second */
 #define MIN_BGSCAN_INTERVAL 30000
 /** default repeat count */
@@ -1685,6 +1764,40 @@ typedef MLAN_PACK_START struct
 /** delta rssi */
 #define DELTA_RSSI 10
 
+#ifdef CONFIG_11AX
+typedef MLAN_PACK_START struct _IEEEtypes_Extension_t
+{
+    /** Generic IE header */
+    IEEEtypes_Header_t ieee_hdr;
+    /** Element id extension */
+    t_u8 ext_id;
+    /** payload */
+    t_u8 data[];
+} MLAN_PACK_END IEEEtypes_Extension_t, *pIEEEtypes_Extension_t;
+
+typedef MLAN_PACK_START struct _IEEEtypes_HeMcsNss_t
+{
+    /** HE Rx MCS and NSS Set */
+    t_u16 rx_mcs;
+    /** HE Tx MCS and NSS Set*/
+    t_u16 tx_mcs;
+} MLAN_PACK_END IEEEtypes_HeMcsNss_t, *pIEEEtypes_HeMcsNss_t;
+
+typedef MLAN_PACK_START struct _IEEEtypes_HECap_t
+{
+    /** Generic IE header */
+    IEEEtypes_Header_t ieee_hdr;
+    /** Element id extension */
+    t_u8 ext_id;
+    /** he mac capability info */
+    t_u8 he_mac_cap[6];
+    /** he phy capability info */
+    t_u8 he_phy_cap[11];
+    /** he txrx mcs support , size would be 4 or 8 or 12 */
+    t_u8 he_txrx_mcs_support[4];
+    /** PPE Thresholds (optional) */
+} MLAN_PACK_END IEEEtypes_HECap_t, *pIEEEtypes_HECap_t;
+#endif
 
 /** MBO IE header */
 #define MBO_IE_HEADER_LEN 6U
@@ -1809,6 +1922,8 @@ typedef MLAN_PACK_START struct
     t_u8 snr_threshold;
     /** repeat count */
     t_u16 repeat_count;
+    /** start later flag */
+    t_u16 start_later;
     /** SSID filter list used in the to limit the scan results */
     wlan_user_scan_ssid ssid_list[MRVDRV_MAX_SSID_LIST_LENGTH];
     /** Variable number (fixed maximum) of channels to scan up */
@@ -1943,6 +2058,10 @@ typedef struct _BSSDescriptor_t
     IEEEtypes_HTInfo_t *pht_info;
     /** HT Information Offset */
     /* t_u16 ht_info_offset; */
+    /** Flag to indicate this is multi_bssid_ap */
+    t_u8 multi_bssid_ap;
+    /** the mac address of multi-bssid AP */
+    mlan_802_11_mac_addr multi_bssid_ap_addr;
     /** 20/40 BSS Coexistence IE */
     IEEEtypes_2040BSSCo_t *pbss_co_2040;
     /** VHT Capabilities IE */
@@ -2015,6 +2134,16 @@ typedef struct _BSSDescriptor_t
 #endif
     IEEEtypes_ExtCap_t ext_cap_saved;
     bool ext_cap_exist;
+#ifdef CONFIG_11AX
+    /** HE Capability IE */
+    IEEEtypes_HECap_t *phe_cap;
+    /** HE Capability IE offset */
+    t_u16 he_cap_offset;
+    /** HE operation IE */
+    IEEEtypes_Extension_t *phe_oprat;
+    /** HE operation IE offset */
+    t_u16 he_oprat_offset;
+#endif
     /*
       fixme: The legacy code used IEEEtypes_RSN_IE_t which is of 24
       bytes. There seems to be confusion about the exact structure to
@@ -2036,6 +2165,9 @@ typedef struct _BSSDescriptor_t
     IEEEtypes_Rsnx_t rsnx_ie_saved;
     /** RSNX IE offset in the beacon buffer */
     t_u16 rsnx_offset;
+
+    bool brcm_ie_exist;
+    bool epigram_ie_exist;
 #if defined(CONFIG_11R) || defined(CONFIG_11K)
     unsigned char md_ie_buff[MLAN_MAX_MDIE_LEN];
     size_t md_ie_buff_len;
@@ -2053,7 +2185,7 @@ typedef struct _BSSDescriptor_t
 #ifdef CONFIG_11V
     bool bss_transition_supported;
 #endif
-#ifdef CONFIG_MBO
+#ifdef CONFIG_DRIVER_MBO
     bool mbo_assoc_disallowed;
 #endif
 } BSSDescriptor_t, *pBSSDescriptor_t;

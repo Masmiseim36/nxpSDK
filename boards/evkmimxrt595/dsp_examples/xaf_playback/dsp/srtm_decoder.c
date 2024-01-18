@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2022 NXP
+ * Copyright 2018-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -14,6 +14,7 @@
 #include <xtensa/xos.h>
 
 #include "xaf-utils-test.h"
+#include "xaf-fio-test.h"
 #if XA_AAC_DECODER
 #include "xa_aac_dec_api.h"
 #endif
@@ -47,6 +48,9 @@
  ******************************************************************************/
 #define AUDIO_FRMWK_BUF_SIZE (64 * 1024)
 #define AUDIO_COMP_BUF_SIZE  (256 * 1024)
+
+int audio_frmwk_buf_size;
+int audio_comp_buf_size;
 
 #define AAC_DEC_PCM_WIDTH 16
 
@@ -119,7 +123,7 @@ static XAF_ERR_CODE renderer_setup(void *p_renderer, xaf_format_t *format)
 /*******************************************************************************
  * Commands processing
  ******************************************************************************/
-int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_name)
+int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams)
 {
     int ret;
     void *p_adev     = NULL;
@@ -139,41 +143,25 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
     int param_num;
     xf_id_t dec_id;
 
-    int raw_input;
-    bool output_renderer;
-    uint32_t *input_size, *output_size;
     xaf_format_t dec_format;
-    uint32_t num_out_buf;
+
+    /* Param 0 Decoder type */
+	/* Param 1 Buffer address with encoded data */
+	/* Param 2 Encoded data size */
 
 #if (defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET)
-    dsp->buffer_in.data = (char *)MEMORY_ConvertMemoryMapAddress(pCmdParams[0], kMEMORY_Local2DMA);
+    dsp->buffer_in.data = (char *)MEMORY_ConvertMemoryMapAddress(pCmdParams[1], kMEMORY_Local2DMA);
 #else
-    dsp->buffer_in.data  = (char *)pCmdParams[0];
+    dsp->buffer_in.data  = (char *)pCmdParams[1];
 #endif
-    dsp->buffer_in.size = (uint32_t)pCmdParams[1];
-
-#if (defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET)
-    dsp->buffer_out.data = (char *)MEMORY_ConvertMemoryMapAddress(pCmdParams[2], kMEMORY_Local2DMA);
-#else
-    dsp->buffer_out.data = (char *)pCmdParams[2];
-#endif
-    dsp->buffer_out.size = (uint32_t)pCmdParams[3];
+    dsp->buffer_in.size = (uint32_t)pCmdParams[2];
 
     dsp->buffer_in.index  = 0;
-    dsp->buffer_out.index = 0;
 
-    output_renderer = (bool)pCmdParams[4];
-    input_size      = &pCmdParams[5];
-    output_size     = &pCmdParams[6];
-    if (dec_name == SRTM_Command_VORBIS)
-    {
-        raw_input = (pCmdParams[7] != 0U) ? 1 : 0;
-    }
-
-    switch (dec_name)
+    switch (pCmdParams[0])
     {
 #if XA_AAC_DECODER
-        case SRTM_Command_AAC:
+        case SRTM_Decoder_AAC:
             param[0]  = XA_AACDEC_CONFIG_PARAM_PCM_WDSZ;
             param[1]  = AAC_DEC_PCM_WIDTH;
             param_num = 1;
@@ -181,7 +169,7 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
             break;
 #endif
 #if XA_MP3_DECODER
-        case SRTM_Command_MP3:
+        case SRTM_Decoder_MP3:
             param[0]  = XA_MP3DEC_CONFIG_PARAM_PCM_WDSZ;
             param[1]  = MP3_DEC_PCM_WIDTH;
             param_num = 1;
@@ -189,7 +177,7 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
             break;
 #endif
 #if XA_OPUS_DECODER
-        case SRTM_Command_OPUS_DEC:
+        case SRTM_Decoder_OPUS:
             param[0]  = XA_OPUS_DEC_CONFIG_PARAM_CHANNELS;
             param[1]  = OPUS_DEC_NUM_CH;
             param[2]  = XA_OPUS_DEC_CONFIG_PARAM_PCM_WIDTH;
@@ -211,7 +199,7 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
             break;
 #endif
 #if XA_SBC_DECODER
-        case SRTM_Command_SBC_DEC:
+        case SRTM_Decoder_SBC:
             /* Workaround: SBC decoder has not config params to set,
              * but XAF requires set config to be called in order to get through
              * XA_API_CMD_INIT / XA_CMD_TYPE_INIT_API_POST_CONFIG_PARAMS phase */
@@ -222,14 +210,15 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
             break;
 #endif
 #if XA_VORBIS_DECODER
-        case SRTM_Command_VORBIS:
+        case SRTM_Decoder_VORBIS_OGG:
+        case SRTM_Decoder_VORBIS_RAW:
             param[0] = XA_VORBISDEC_CONFIG_PARAM_RAW_VORBIS_FILE_MODE;
-            param[1] = raw_input;
+            param[1] = pCmdParams[0] == SRTM_Decoder_VORBIS_RAW ? 1 : 0;
             param[2] = XA_VORBISDEC_CONFIG_PARAM_OGG_MAX_PAGE_SIZE;
             param[3] = VORBIS_DEC_OGG_MAX_PAGE_SIZE;
             param[4] = XA_VORBISDEC_CONFIG_PARAM_RUNTIME_MEM;
             param[5] = VORBIS_DEC_RUNTIME_MEM;
-            if (raw_input)
+            if (pCmdParams[0] == SRTM_Decoder_VORBIS_RAW)
             {
                 param[6]  = XA_VORBISDEC_CONFIG_PARAM_RAW_VORBIS_LAST_PKT_GRANULE_POS;
                 param[7]  = VORBIS_DEC_RAW_VORBIS_LAST_PKT_GRANULE_POS;
@@ -249,33 +238,22 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
     }
 
     xaf_adev_config_default_init(&device_config);
+    audio_frmwk_buf_size = AUDIO_FRMWK_BUF_SIZE;
+    audio_comp_buf_size = AUDIO_COMP_BUF_SIZE;
+    device_config.audio_component_buffer_size[XAF_MEM_ID_COMP] = AUDIO_COMP_BUF_SIZE;
+    device_config.audio_framework_buffer_size[XAF_MEM_ID_DEV] = AUDIO_FRMWK_BUF_SIZE;
+    device_config.core = XF_CORE_ID;
 
-    device_config.pmem_malloc                 = DSP_Malloc;
-    device_config.pmem_free                   = DSP_Free;
-    device_config.audio_component_buffer_size = AUDIO_COMP_BUF_SIZE;
-    device_config.audio_framework_buffer_size = AUDIO_FRMWK_BUF_SIZE;
-
-    ret = xaf_adev_open(&p_adev, &device_config);
-    if (ret != XAF_NO_ERR)
-    {
-        DSP_PRINTF("xaf_adev_open failure: %d\r\n", ret);
-        goto error_cleanup;
-    }
+    TST_CHK_API_ADEV_OPEN(p_adev, device_config, "[DSP Codec] Audio Device Open\r\n");
 
     DSP_PRINTF("[DSP Codec] Audio Device Ready\r\n");
-
-    /* Create decoder component
-     * 2 input buffers
-     * 1 output buffer for decode to memory buffer
-     * 0 output buffer for decode to renderer
-     */
-    num_out_buf = (output_renderer) ? 0 : 1;
+    dsp->audio_device = p_adev;
 
     xaf_comp_config_default_init(&comp_config);
 
     comp_config.comp_id            = dec_id;
     comp_config.num_input_buffers  = 1;
-    comp_config.num_output_buffers = num_out_buf;
+    comp_config.num_output_buffers = 0;
     comp_config.pp_inbuf           = (pVOID(*)[XAF_MAX_INBUFS]) & dec_inbuf[0];
     comp_config.comp_type          = XAF_DECODER;
 
@@ -345,68 +323,65 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
     /* Store decoder component into context to pass to processing thread */
     dsp->comp = p_decoder;
 
-    if (output_renderer)
-    {
-        /* Get decoder format from the decoder */
-        ret = get_dec_config(p_decoder, &dec_format);
-        if (ret != XAF_NO_ERR)
-        {
-            DSP_PRINTF("get_dec_config failure: %d\r\n", ret);
-            goto error_cleanup;
-        }
+	/* Get decoder format from the decoder */
+	ret = get_dec_config(p_decoder, &dec_format);
+	if (ret != XAF_NO_ERR)
+	{
+		DSP_PRINTF("get_dec_config failure: %d\r\n", ret);
+		goto error_cleanup;
+	}
 
-        xaf_comp_config_default_init(&comp_config);
+	xaf_comp_config_default_init(&comp_config);
 
-        comp_config.comp_id            = "renderer";
-        comp_config.num_input_buffers  = 0;
-        comp_config.num_output_buffers = 0;
-        comp_config.pp_inbuf           = NULL;
-        comp_config.comp_type          = XAF_RENDERER;
+	comp_config.comp_id            = "renderer";
+	comp_config.num_input_buffers  = 0;
+	comp_config.num_output_buffers = 0;
+	comp_config.pp_inbuf           = NULL;
+	comp_config.comp_type          = XAF_RENDERER;
 
-        ret = xaf_comp_create(p_adev, &p_renderer, &comp_config);
-        if (ret != XAF_NO_ERR)
-        {
-            DSP_PRINTF("xaf_comp_create failure: %d\r\n", ret);
-            goto error_cleanup;
-        }
+	ret = xaf_comp_create(p_adev, &p_renderer, &comp_config);
+	if (ret != XAF_NO_ERR)
+	{
+		DSP_PRINTF("xaf_comp_create failure: %d\r\n", ret);
+		goto error_cleanup;
+	}
 
-        if (dec_name == SRTM_Command_VORBIS)
-        {
-            dec_format.sample_rate = VORBIS_DEC_SAMPLE_RATE;
-        }
+	if ((pCmdParams[0] == SRTM_Decoder_VORBIS_OGG) || (pCmdParams[0] == SRTM_Decoder_VORBIS_RAW))
+	{
+		dec_format.sample_rate = VORBIS_DEC_SAMPLE_RATE;
+	}
 
-        /* Setup renderer to match decoded PCM format */
-        ret = renderer_setup(p_renderer, &dec_format);
-        if (ret != XAF_NO_ERR)
-        {
-            DSP_PRINTF("renderer_setup failure: %d\r\n", ret);
-            goto error_cleanup;
-        }
+	/* Setup renderer to match decoded PCM format */
+	ret = renderer_setup(p_renderer, &dec_format);
+	if (ret != XAF_NO_ERR)
+	{
+		DSP_PRINTF("renderer_setup failure: %d\r\n", ret);
+		goto error_cleanup;
+	}
 
-        DSP_PRINTF("[DSP Codec] Renderer component created\r\n");
+	DSP_PRINTF("[DSP Codec] Renderer component created\r\n");
 
-        ret = xaf_connect(p_decoder, 1, p_renderer, 0, 4);
-        if (ret != XAF_NO_ERR)
-        {
-            DSP_PRINTF("xaf_connect failure: %d\r\n", ret);
-            goto error_cleanup;
-        }
-        DSP_PRINTF("[DSP Codec] Connected XA_DECODER -> XA_RENDERER\r\n");
+	ret = xaf_connect(p_decoder, 1, p_renderer, 0, 4);
+	if (ret != XAF_NO_ERR)
+	{
+		DSP_PRINTF("xaf_connect failure: %d\r\n", ret);
+		goto error_cleanup;
+	}
+	DSP_PRINTF("[DSP Codec] Connected XA_DECODER -> XA_RENDERER\r\n");
 
-        ret = xaf_comp_process(p_adev, p_renderer, NULL, 0, XAF_START_FLAG);
-        if (ret != XAF_NO_ERR)
-        {
-            DSP_PRINTF("xaf_comp_process XAF_START_FLAG renderer failure: %d\r\n", ret);
-            goto error_cleanup;
-        }
+	ret = xaf_comp_process(p_adev, p_renderer, NULL, 0, XAF_START_FLAG);
+	if (ret != XAF_NO_ERR)
+	{
+		DSP_PRINTF("xaf_comp_process XAF_START_FLAG renderer failure: %d\r\n", ret);
+		goto error_cleanup;
+	}
 
-        ret = xaf_comp_get_status(p_adev, p_renderer, &dec_status, &dec_info[0]);
-        if (ret != XAF_NO_ERR)
-        {
-            DSP_PRINTF("xaf_comp_get_status XA_RENDERER failure: %d\r\n", ret);
-            return -1;
-        }
-    }
+	ret = xaf_comp_get_status(p_adev, p_renderer, &dec_status, &dec_info[0]);
+	if (ret != XAF_NO_ERR)
+	{
+		DSP_PRINTF("xaf_comp_get_status XA_RENDERER failure: %d\r\n", ret);
+		return -1;
+	}
 
     /* Initialize buffer read/write functions */
     dsp->audio_read  = DSP_AudioRead;
@@ -459,50 +434,26 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
     }
     p_decoder = NULL;
 
-    if (output_renderer)
-    {
-        ret = xaf_comp_delete(p_renderer);
-        if (ret != XAF_NO_ERR)
-        {
-            DSP_PRINTF("xaf_comp_delete failure: %d\r\n", ret);
-            goto error_cleanup;
-        }
-        p_renderer = NULL;
-    }
+	ret = xaf_comp_delete(p_renderer);
+	if (ret != XAF_NO_ERR)
+	{
+		DSP_PRINTF("xaf_comp_delete failure: %d\r\n", ret);
+		goto error_cleanup;
+	}
+	p_renderer = NULL;
 
-    ret = xaf_adev_close(p_adev, XAF_ADEV_NORMAL_CLOSE);
-    if (ret != XAF_NO_ERR)
-    {
-        DSP_PRINTF("xaf_adev_close failure: %d\r\n", ret);
-        goto error_cleanup;
-    }
+    TST_CHK_API_ADEV_CLOSE(p_adev, XAF_ADEV_NORMAL_CLOSE, device_config, "xaf_adev_close");
     p_adev = NULL;
 
     DSP_PRINTF("[DSP Codec] Audio device closed\r\n\r\n");
-
-    /* Report the size of the input and decoded output buffer */
-    *input_size  = dsp->buffer_in.index;
-    *output_size = dsp->buffer_out.index;
 
     return 0;
 
 error_cleanup:
     if (p_adev != NULL)
     {
-        ret = xaf_adev_close(p_adev, XAF_ADEV_FORCE_CLOSE);
-        if (ret != XAF_NO_ERR)
-        {
-            DSP_PRINTF("xaf_adev_close failure: %d\r\n", ret);
-        }
-        else
-        {
-            DSP_PRINTF("[DSP Codec] Audio device closed\r\n\r\n");
-        }
+        TST_CHK_API_ADEV_CLOSE(p_adev, XAF_ADEV_FORCE_CLOSE, device_config, "xaf_adev_close");
     }
-
-    /* Report the size of the input and decoded output buffer */
-    *input_size  = dsp->buffer_in.index;
-    *output_size = dsp->buffer_out.index;
 
     return -1;
 }

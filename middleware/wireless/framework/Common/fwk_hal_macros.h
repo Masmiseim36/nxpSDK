@@ -1,5 +1,5 @@
 /*! *********************************************************************************
- * Copyright 2022 NXP
+ * Copyright 2022-2023 NXP
  * All rights reserved.
  *
  * \file
@@ -8,6 +8,8 @@
  ********************************************************************************** */
 #ifndef _HAL_MACROS_H_
 #define _HAL_MACROS_H_
+
+#include <stdint.h>
 
 /* Required for __REV definition */
 #if defined(__IAR_SYSTEMS_ICC__)
@@ -65,7 +67,7 @@ static inline uint32_t __hal_ctz(uint32_t x)
  * @brief
  * HAL_BSR Bit Scan Reverse ( find MSB bit set in a bit field )
  * HAL_BSF Bit Scan Forward ( find LSB bit set in a bit field )
- * HAL_FFS Find LSB bit position + 1 per standard ffs definition
+ * HAL_FFS Find First Bit Set Find LSB bit position + 1 per standard ffs definition
  *
  ****************************************************************************************
  */
@@ -99,5 +101,47 @@ static inline uint32_t __hal_ctz(uint32_t x)
 
 #define HAL_BSWAP16(_x_) HAL_REV16((_x_))
 #define HAL_BSWAP32(_x_) HAL_REV32((_x_))
+
+/*!
+ ****************************************************************************************
+ * @brief
+ * KB used to define memory sizes expressed in kilobytes
+ * MB used to define memory sizes expressed in megabytes
+ ****************************************************************************************
+ */
+#ifndef KB
+#define KB(x) (((uint32_t)x) << 10u)
+#endif
+#ifndef MB
+#define MB(x) (((uint32_t)x) << 20u)
+#endif
+
+/*!
+ ****************************************************************************************
+ * @brief
+ * KHz used to define frequencies in kHz
+ * MHz used to define frequencies in MHz
+ ****************************************************************************************
+ */
+#define KHz(x) (((uint32_t)x) * 1000U)
+#define MHz(x) (((uint32_t)x) * 1000000U)
+
+#define SET_BIT(bitmap, i) bitmap[((i) >> 5)] |= (1U << ((i)&0x1f))
+#define CLR_BIT(bitmap, i) bitmap[((i) >> 5)] &= ~(1U << ((i)&0x1f))
+#define GET_BIT(bitmap, i) (((bitmap[(i) >> 5] & (1U << ((i)&0x1f))) >> ((i)&0x1f)) != 0U)
+
+/* LOG_1, LOG_2, LOG_4, LOG_8: used by LOG macro */
+#define LOG_1(n) (((n) >= 2) ? 1 : 0)
+#define LOG_2(n) (((n) >= (1 << 2)) ? (2 + LOG_1((n) >> 2)) : LOG_1(n))
+#define LOG_4(n) (((n) >= (1 << 4)) ? (4 + LOG_2((n) >> 4)) : LOG_2(n))
+#define LOG_8(n) (((n) >= (1 << 8)) ? (8 + LOG_4((n) >> 8)) : LOG_4(n))
+/*
+ * Macro to compute log2 of a constant at compile time.
+ * Does not make sense for runtime log2 calculation.
+ * Computation should be based on __builtin_clz.
+ * For in
+ *
+ */
+#define LOG(n) (((n) >= (1 << 16)) ? (16 + LOG_8((n) >> 16)) : LOG_8(n))
 
 #endif

@@ -2,7 +2,7 @@
 /**
  *  \file att.h
  *
- *  This file contains the fuction definitions which are exported to other
+ *  This file contains the function definitions which are exported to other
  *  EtherMind modules for interfacing with Attribute Protocol.
  */
 
@@ -56,7 +56,7 @@ void att_bt_init (void);
  *
  *  \par Description:
  *  This function is the Bluetooth-OFF handler for ATT module, and it
- *  performs bluetooth specific shutdown for the module - currently,
+ *  performs Bluetooth specific shutdown for the module - currently,
  *  nothing is done here.
  *
  *  \return None

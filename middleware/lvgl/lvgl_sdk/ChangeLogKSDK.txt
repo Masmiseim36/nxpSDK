@@ -3,6 +3,12 @@
 
 @section LVGL LVGL for KSDK
 
+  - 8.3.10_rev1
+    - Integrate LVGL 8.3.10 to SDK.
+
+  - 8.3.9_rev1
+    - Integrate LVGL 8.3.9 to SDK.
+
   - 8.3.5_rev1
     - Integrate LVGL 8.3.5 to SDK.
 	

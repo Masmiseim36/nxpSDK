@@ -1011,7 +1011,11 @@ void psa_cipher_test(const psa_key_type_t key_type,
                                 &output_length);
 
     if (status != PSA_SUCCESS) {
-        TEST_FAIL("Error encrypting with the single-shot API");
+        if (status == PSA_ERROR_NOT_SUPPORTED) {
+            TEST_FAIL("Algorithm NOT SUPPORTED by the implementation");
+        } else {
+            TEST_FAIL("Error encrypting with the single-shot API");
+        }
         goto destroy_key;
     }
 
@@ -1525,6 +1529,11 @@ void psa_mac_test(const psa_algorithm_t alg,
     /* Setup the mac object for hmac */
     status = psa_mac_verify_setup(&handle, key_id_local, alg);
     if (status != PSA_SUCCESS) {
+        if (status == PSA_ERROR_NOT_SUPPORTED) {
+            TEST_FAIL("Algorithm NOT SUPPORTED by the implementation");
+            goto destroy_key_mac;
+        }
+
         TEST_FAIL("Error setting up mac operation object");
         goto destroy_key_mac;
     }
@@ -1858,7 +1867,7 @@ void psa_aead_test(const psa_key_type_t key_type,
     /* Setup up the decryption object */
     status = psa_aead_decrypt_setup(&decop, key_id_local, alg);
     if (status != PSA_SUCCESS) {
-        TEST_FAIL("Error setting uup AEAD object");
+        TEST_FAIL("Error setting up AEAD object");
         goto destroy_key_aead;
     }
 
@@ -2086,7 +2095,7 @@ void psa_policy_key_interface_test(struct test_result_t *ret)
 void psa_policy_invalid_policy_usage_test(struct test_result_t *ret)
 {
     psa_status_t status;
-    psa_algorithm_t alg, not_permit_alg;
+    psa_algorithm_t alg = PSA_ALG_NONE, not_permit_alg = PSA_ALG_NONE;
     psa_cipher_operation_t handle = psa_cipher_operation_init();
     psa_key_attributes_t key_attributes = psa_key_attributes_init();
     psa_key_id_t key_id_local = PSA_KEY_ID_NULL;
@@ -2121,7 +2130,7 @@ void psa_policy_invalid_policy_usage_test(struct test_result_t *ret)
         }
     }
 
-    if (j == NR_TEST_AES_MODE) {
+    if (alg == PSA_ALG_NONE || not_permit_alg == PSA_ALG_NONE) {
         TEST_LOG("Unable to find two Cipher algs. Skip this test case.\r\n");
         return;
     }
@@ -2332,11 +2341,21 @@ static const uint8_t reference_encoded_r_s[] = {
 };
 
 /* Buffer to hold the peer key of the key agreement process */
-static uint8_t raw_agreement_peer_key[KEY_DERIV_RAW_MAX_PEER_LEN] = {0};
-
+static uint8_t raw_agreement_peer_key[KEY_DERIV_RAW_MAX_PEER_LEN];
+static uint8_t raw_agreement_output_buffer[KEY_DERIV_RAW_OUTPUT_LEN];
 static uint8_t key_deriv_secret[KEY_DERIV_SECRET_LEN];
 static uint8_t key_deriv_label_info[KEY_DERIV_LABEL_INFO_LEN];
 static uint8_t key_deriv_seed_salt[KEY_DERIV_SEED_SALT_LEN];
+/* Reference data for the shared secret obtained by multiplying the private
+ * key contained in ecdsa_private_key and its associated public key, and
+ * taking the value of x of the resulting point as the shared secret
+ */
+static const uint8_t raw_agreement_reference_secret[KEY_DERIV_RAW_OUTPUT_LEN] = {
+    0x09, 0x3f, 0x86, 0x0d, 0x68, 0x0b, 0xb4, 0xe0,
+    0x72, 0xa4, 0x23, 0x50, 0xd6, 0x67, 0x06, 0x06,
+    0x3c, 0x8c, 0xb7, 0xb6, 0x49, 0xb6, 0x49, 0x1f,
+    0x7b, 0xcb, 0x6d, 0x36, 0xe6, 0x63, 0x7e, 0x0c,
+};
 
 void psa_key_agreement_test(psa_algorithm_t deriv_alg,
                             struct test_result_t *ret)
@@ -2345,7 +2364,6 @@ void psa_key_agreement_test(psa_algorithm_t deriv_alg,
     psa_key_type_t key_type;
     psa_key_id_t input_key_id_local = PSA_KEY_ID_NULL;
     psa_key_attributes_t input_key_attr = PSA_KEY_ATTRIBUTES_INIT;
-    uint8_t raw_agreement_output_buffer[KEY_DERIV_RAW_OUTPUT_LEN] = {0};
     size_t raw_agreement_output_size = 0;
     size_t public_key_length = 0;
 
@@ -2390,6 +2408,14 @@ void psa_key_agreement_test(psa_algorithm_t deriv_alg,
 
     if (raw_agreement_output_size != sizeof(ecdsa_private_key)) {
         TEST_FAIL("Agreed key size is different than expected!");
+        goto destroy_key;
+    }
+
+    /* Check that the shared secret matches the reference provided */
+    if (memcmp(raw_agreement_output_buffer,
+               raw_agreement_reference_secret,
+               sizeof(raw_agreement_reference_secret)) != 0) {
+        TEST_FAIL("Computed shared secret does not match the reference!");
         goto destroy_key;
     }
 
@@ -2973,6 +2999,11 @@ void psa_verify_rsassa_pss_test(struct test_result_t *ret)
                                 message, sizeof(message) - 1,
                                 signature_pss_sha_256, sizeof(signature_pss_sha_256));
     if (status != PSA_SUCCESS) {
+        if (status == PSA_ERROR_NOT_SUPPORTED) {
+            TEST_FAIL("Algorithm NOT SUPPORTED by the implementation");
+            goto destroy_key;
+        }
+
         TEST_FAIL("Signature verification failed in the verify_message!");
         goto destroy_key;
     }

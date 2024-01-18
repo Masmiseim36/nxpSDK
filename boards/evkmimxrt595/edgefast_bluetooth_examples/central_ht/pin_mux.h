@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2021-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -47,62 +47,6 @@ void BOARD_InitBootPins(void);
  *
  */
 void BOARD_InitPins(void); /* Function assigned for the Cortex-M33 */
-
-#define IOPCTL_PIO_ANAMUX_DI 0x00u      /*!<@brief Analog mux is disabled */
-#define IOPCTL_PIO_FULLDRIVE_DI 0x00u   /*!<@brief Normal drive */
-#define IOPCTL_PIO_FUNC1 0x01u          /*!<@brief Selects pin function 1 */
-#define IOPCTL_PIO_INBUF_DI 0x00u       /*!<@brief Disable input buffer function */
-#define IOPCTL_PIO_INBUF_EN 0x40u       /*!<@brief Enables input buffer function */
-#define IOPCTL_PIO_INV_DI 0x00u         /*!<@brief Input function is not inverted */
-#define IOPCTL_PIO_PSEDRAIN_DI 0x00u    /*!<@brief Pseudo Output Drain is disabled */
-#define IOPCTL_PIO_PULLDOWN_EN 0x00u    /*!<@brief Enable pull-down function */
-#define IOPCTL_PIO_PULLUP_EN 0x20u      /*!<@brief Enable pull-up function */
-#define IOPCTL_PIO_PUPD_DI 0x00u        /*!<@brief Disable pull-up / pull-down function */
-#define IOPCTL_PIO_PUPD_EN 0x10u        /*!<@brief Enable pull-up / pull-down function */
-#define IOPCTL_PIO_SLEW_RATE_SLOW 0x80u /*!<@brief Slow mode */
-
-/*! @name I3C0_PUR (coord C14), J18[3]
-  @{ */
-/* Routed pin properties */
-#define BOARD_INITI3CPINS_I3C0_PUR_PERIPHERAL I3C0   /*!<@brief Peripheral name */
-#define BOARD_INITI3CPINS_I3C0_PUR_SIGNAL PUR        /*!<@brief Signal name */
-                                                     /* @} */
-
-/*! @name I3C0_SDA (coord D10), J18[2]/U8[3]/U114[A2]
-  @{ */
-/* Routed pin properties */
-#define BOARD_INITI3CPINS_I3C0_SDA_PERIPHERAL I3C0               /*!<@brief Peripheral name */
-#define BOARD_INITI3CPINS_I3C0_SDA_SIGNAL SDA                    /*!<@brief Signal name */
-                                                                 /* @} */
-
-/*! @name I3C0_SCL (coord B10), J18[1]/U8[2]/U114[A1]
-  @{ */
-/* Routed pin properties */
-#define BOARD_INITI3CPINS_I3C0_SCL_PERIPHERAL I3C0               /*!<@brief Peripheral name */
-#define BOARD_INITI3CPINS_I3C0_SCL_SIGNAL SCL                    /*!<@brief Signal name */
-                                                                 /* @} */
-
-/*!
- * @brief Configures pin routing and optionally pin electrical features.
- *
- */
-void BOARD_InitI3CPins(void); /* Function assigned for the Cortex-M33 */
-
-#define IOPCTL_PIO_ANAMUX_DI 0x00u      /*!<@brief Analog mux is disabled */
-#define IOPCTL_PIO_FULLDRIVE_DI 0x00u   /*!<@brief Normal drive */
-#define IOPCTL_PIO_FUNC0 0x00u          /*!<@brief Selects pin function 0 */
-#define IOPCTL_PIO_INBUF_EN 0x40u       /*!<@brief Enables input buffer function */
-#define IOPCTL_PIO_INV_DI 0x00u         /*!<@brief Input function is not inverted */
-#define IOPCTL_PIO_PSEDRAIN_DI 0x00u    /*!<@brief Pseudo Output Drain is disabled */
-#define IOPCTL_PIO_PULLUP_EN 0x20u      /*!<@brief Enable pull-up function */
-#define IOPCTL_PIO_PUPD_EN 0x10u        /*!<@brief Enable pull-up / pull-down function */
-#define IOPCTL_PIO_SLEW_RATE_SLOW 0x80u /*!<@brief Slow mode */
-
-/*!
- * @brief Configures pin routing and optionally pin electrical features.
- *
- */
-void BOARD_InitI3CPinsAsGPIO(void); /* Function assigned for the Cortex-M33 */
 
 #define IOPCTL_PIO_ANAMUX_DI 0x00u        /*!<@brief Analog mux is disabled */
 #define IOPCTL_PIO_FULLDRIVE_DI 0x00u     /*!<@brief Normal drive */
@@ -282,6 +226,7 @@ void BOARD_InitFlexSPI0BPins(void); /* Function assigned for the Cortex-M33 */
 #define IOPCTL_PIO_FULLDRIVE_DI 0x00u     /*!<@brief Normal drive */
 #define IOPCTL_PIO_FUNC0 0x00u            /*!<@brief Selects pin function 0 */
 #define IOPCTL_PIO_FUNC1 0x01u            /*!<@brief Selects pin function 1 */
+#define IOPCTL_PIO_FUNC7 0x07u            /*!<@brief Selects pin function 7 */
 #define IOPCTL_PIO_INBUF_DI 0x00u         /*!<@brief Disable input buffer function */
 #define IOPCTL_PIO_INBUF_EN 0x40u         /*!<@brief Enables input buffer function */
 #define IOPCTL_PIO_INV_DI 0x00u           /*!<@brief Input function is not inverted */
@@ -359,31 +304,6 @@ void BOARD_InitFlexSPI0BPins(void); /* Function assigned for the Cortex-M33 */
 void BOARD_InitPinsM2(void); /* Function assigned for the Cortex-M33 */
 
 #define IOPCTL_PIO_ANAMUX_DI 0x00u        /*!<@brief Analog mux is disabled */
-#define IOPCTL_PIO_FULLDRIVE_EN 0x0100u   /*!<@brief Full drive enable */
-#define IOPCTL_PIO_FUNC1 0x01u            /*!<@brief Selects pin function 1 */
-#define IOPCTL_PIO_FUNC7 0x07u            /*!<@brief Selects pin function 7 */
-#define IOPCTL_PIO_INBUF_DI 0x00u         /*!<@brief Disable input buffer function */
-#define IOPCTL_PIO_INBUF_EN 0x40u         /*!<@brief Enables input buffer function */
-#define IOPCTL_PIO_INV_DI 0x00u           /*!<@brief Input function is not inverted */
-#define IOPCTL_PIO_PSEDRAIN_DI 0x00u      /*!<@brief Pseudo Output Drain is disabled */
-#define IOPCTL_PIO_PULLDOWN_EN 0x00u      /*!<@brief Enable pull-down function */
-#define IOPCTL_PIO_PUPD_DI 0x00u          /*!<@brief Disable pull-up / pull-down function */
-#define IOPCTL_PIO_SLEW_RATE_NORMAL 0x00u /*!<@brief Normal mode */
-
-/*! @name MCLK (coord M5), JP27[2]
-  @{ */
-/* Routed pin properties */
-#define BOARD_INITAUDIOPINS_MCLK_PERIPHERAL CLKCTL /*!<@brief Peripheral name */
-#define BOARD_INITAUDIOPINS_MCLK_SIGNAL MCLK       /*!<@brief Signal name */
-                                                   /* @} */
-
-/*!
- * @brief Configures pin routing and optionally pin electrical features.
- *
- */
-void BOARD_InitAudioPins(void); /* Function assigned for the Cortex-M33 */
-
-#define IOPCTL_PIO_ANAMUX_DI 0x00u        /*!<@brief Analog mux is disabled */
 #define IOPCTL_PIO_FULLDRIVE_DI 0x00u     /*!<@brief Normal drive */
 #define IOPCTL_PIO_FUNC1 0x01u            /*!<@brief Selects pin function 1 */
 #define IOPCTL_PIO_INBUF_EN 0x40u         /*!<@brief Enables input buffer function */
@@ -419,7 +339,54 @@ void BOARD_InitArduinoUARTPins(void); /* Function assigned for the Cortex-M33 */
 #define IOPCTL_PIO_ANAMUX_DI 0x00u        /*!<@brief Analog mux is disabled */
 #define IOPCTL_PIO_FULLDRIVE_DI 0x00u     /*!<@brief Normal drive */
 #define IOPCTL_PIO_FUNC0 0x00u            /*!<@brief Selects pin function 0 */
+#define IOPCTL_PIO_INBUF_EN 0x40u         /*!<@brief Enables input buffer function */
+#define IOPCTL_PIO_INV_DI 0x00u           /*!<@brief Input function is not inverted */
+#define IOPCTL_PIO_PSEDRAIN_DI 0x00u      /*!<@brief Pseudo Output Drain is disabled */
+#define IOPCTL_PIO_PULLDOWN_EN 0x00u      /*!<@brief Enable pull-down function */
+#define IOPCTL_PIO_PUPD_DI 0x00u          /*!<@brief Disable pull-up / pull-down function */
+#define IOPCTL_PIO_SLEW_RATE_NORMAL 0x00u /*!<@brief Normal mode */
+
+/*!
+ * @brief Configures pin routing and optionally pin electrical features.
+ *
+ */
+void BOARD_InitLowPowerPins(void); /* Function assigned for the Cortex-M33 */
+
+#define IOPCTL_PIO_ANAMUX_DI 0x00u        /*!<@brief Analog mux is disabled */
+#define IOPCTL_PIO_FULLDRIVE_DI 0x00u     /*!<@brief Normal drive */
+#define IOPCTL_PIO_FUNC0 0x00u            /*!<@brief Selects pin function 0 */
+#define IOPCTL_PIO_INBUF_EN 0x40u         /*!<@brief Enables input buffer function */
+#define IOPCTL_PIO_INV_DI 0x00u           /*!<@brief Input function is not inverted */
+#define IOPCTL_PIO_PSEDRAIN_EN 0x0400u    /*!<@brief Pseudo Output Drain is enabled */
+#define IOPCTL_PIO_PULLDOWN_EN 0x00u      /*!<@brief Enable pull-down function */
+#define IOPCTL_PIO_PUPD_DI 0x00u          /*!<@brief Disable pull-up / pull-down function */
+#define IOPCTL_PIO_SLEW_RATE_NORMAL 0x00u /*!<@brief Normal mode */
+
+/*! @name PMIC_I2C_SCL (coord K4), U30[D5]
+  @{ */
+/* Routed pin properties */
+#define BOARD_INITPMICPINS_PMIC_I2C_SCL_PERIPHERAL FLEXCOMM15 /*!<@brief Peripheral name */
+#define BOARD_INITPMICPINS_PMIC_I2C_SCL_SIGNAL SCL            /*!<@brief Signal name */
+                                                              /* @} */
+
+/*! @name PMIC_I2C_SDA (coord K6), U30[E5]
+  @{ */
+/* Routed pin properties */
+#define BOARD_INITPMICPINS_PMIC_I2C_SDA_PERIPHERAL FLEXCOMM15 /*!<@brief Peripheral name */
+#define BOARD_INITPMICPINS_PMIC_I2C_SDA_SIGNAL SDA            /*!<@brief Signal name */
+                                                              /* @} */
+
+/*!
+ * @brief Configures pin routing and optionally pin electrical features.
+ *
+ */
+void BOARD_InitPmicPins(void); /* Function assigned for the Cortex-M33 */
+
+#define IOPCTL_PIO_ANAMUX_DI 0x00u        /*!<@brief Analog mux is disabled */
+#define IOPCTL_PIO_FULLDRIVE_DI 0x00u     /*!<@brief Normal drive */
+#define IOPCTL_PIO_FUNC0 0x00u            /*!<@brief Selects pin function 0 */
 #define IOPCTL_PIO_FUNC1 0x01u            /*!<@brief Selects pin function 1 */
+#define IOPCTL_PIO_FUNC5 0x05u            /*!<@brief Selects pin function 5 */
 #define IOPCTL_PIO_INBUF_DI 0x00u         /*!<@brief Disable input buffer function */
 #define IOPCTL_PIO_INBUF_EN 0x40u         /*!<@brief Enables input buffer function */
 #define IOPCTL_PIO_INV_DI 0x00u           /*!<@brief Input function is not inverted */
@@ -430,79 +397,208 @@ void BOARD_InitArduinoUARTPins(void); /* Function assigned for the Cortex-M33 */
 #define IOPCTL_PIO_PUPD_EN 0x10u          /*!<@brief Enable pull-up / pull-down function */
 #define IOPCTL_PIO_SLEW_RATE_NORMAL 0x00u /*!<@brief Normal mode */
 
-/*! @name SD0_CARD_DET_N (coord T3), J32[10]/SD0_CARD_DET_N
+/*! @name SD0_CLK (coord R5), U111A[M6]/SD0_CLK
   @{ */
 /* Routed pin properties */
-#define BOARD_INITPINSSD_SD0_CARD_DET_N_PERIPHERAL USDHC0              /*!<@brief Peripheral name */
-#define BOARD_INITPINSSD_SD0_CARD_DET_N_SIGNAL USDHC_CARD_DET          /*!<@brief Signal name */
-                                                                       /* @} */
-
-/*! @name SD0_D0 (coord U4), U111A[A3]/SD0_D0
-  @{ */
-/* Routed pin properties */
-#define BOARD_INITPINSSD_SD0_D0_PERIPHERAL USDHC0        /*!<@brief Peripheral name */
-#define BOARD_INITPINSSD_SD0_D0_SIGNAL USDHC_DATA        /*!<@brief Signal name */
-#define BOARD_INITPINSSD_SD0_D0_CHANNEL 0                /*!<@brief Signal channel */
-                                                         /* @} */
-
-/*! @name SD0_D1 (coord T4), U111A[A4]/SD0_D1
-  @{ */
-/* Routed pin properties */
-#define BOARD_INITPINSSD_SD0_D1_PERIPHERAL USDHC0        /*!<@brief Peripheral name */
-#define BOARD_INITPINSSD_SD0_D1_SIGNAL USDHC_DATA        /*!<@brief Signal name */
-#define BOARD_INITPINSSD_SD0_D1_CHANNEL 1                /*!<@brief Signal channel */
-                                                         /* @} */
-
-/*! @name SD0_D2 (coord T7), U111A[A5]/SD0_D2
-  @{ */
-/* Routed pin properties */
-#define BOARD_INITPINSSD_SD0_D2_PERIPHERAL USDHC0        /*!<@brief Peripheral name */
-#define BOARD_INITPINSSD_SD0_D2_SIGNAL USDHC_DATA        /*!<@brief Signal name */
-#define BOARD_INITPINSSD_SD0_D2_CHANNEL 2                /*!<@brief Signal channel */
-                                                         /* @} */
-
-/*! @name SD0_D3 (coord U6), U111A[B2]/SD0_D3
-  @{ */
-/* Routed pin properties */
-#define BOARD_INITPINSSD_SD0_D3_PERIPHERAL USDHC0        /*!<@brief Peripheral name */
-#define BOARD_INITPINSSD_SD0_D3_SIGNAL USDHC_DATA        /*!<@brief Signal name */
-#define BOARD_INITPINSSD_SD0_D3_CHANNEL 3                /*!<@brief Signal channel */
-                                                         /* @} */
+#define BOARD_INITEMMCPINS_SD0_CLK_PERIPHERAL USDHC0         /*!<@brief Peripheral name */
+#define BOARD_INITEMMCPINS_SD0_CLK_SIGNAL USDHC_CLK          /*!<@brief Signal name */
+                                                             /* @} */
 
 /*! @name SD0_CMD (coord R6), U111A[M5]/SD0_CMD
   @{ */
 /* Routed pin properties */
-#define BOARD_INITPINSSD_SD0_CMD_PERIPHERAL USDHC0         /*!<@brief Peripheral name */
-#define BOARD_INITPINSSD_SD0_CMD_SIGNAL USDHC_CMD          /*!<@brief Signal name */
-                                                           /* @} */
+#define BOARD_INITEMMCPINS_SD0_CMD_PERIPHERAL USDHC0         /*!<@brief Peripheral name */
+#define BOARD_INITEMMCPINS_SD0_CMD_SIGNAL USDHC_CMD          /*!<@brief Signal name */
+                                                             /* @} */
 
-/*! @name SD0_CLK (coord R5), U111A[M6]/SD0_CLK
+/*! @name SD0_D0 (coord U4), U111A[A3]/SD0_D0
   @{ */
 /* Routed pin properties */
-#define BOARD_INITPINSSD_SD0_CLK_PERIPHERAL USDHC0         /*!<@brief Peripheral name */
-#define BOARD_INITPINSSD_SD0_CLK_SIGNAL USDHC_CLK          /*!<@brief Signal name */
+#define BOARD_INITEMMCPINS_SD0_D0_PERIPHERAL USDHC0        /*!<@brief Peripheral name */
+#define BOARD_INITEMMCPINS_SD0_D0_SIGNAL USDHC_DATA        /*!<@brief Signal name */
+#define BOARD_INITEMMCPINS_SD0_D0_CHANNEL 0                /*!<@brief Signal channel */
                                                            /* @} */
+
+/*! @name SD0_D1 (coord T4), U111A[A4]/SD0_D1
+  @{ */
+/* Routed pin properties */
+#define BOARD_INITEMMCPINS_SD0_D1_PERIPHERAL USDHC0        /*!<@brief Peripheral name */
+#define BOARD_INITEMMCPINS_SD0_D1_SIGNAL USDHC_DATA        /*!<@brief Signal name */
+#define BOARD_INITEMMCPINS_SD0_D1_CHANNEL 1                /*!<@brief Signal channel */
+                                                           /* @} */
+
+/*! @name SD0_D2 (coord T7), U111A[A5]/SD0_D2
+  @{ */
+/* Routed pin properties */
+#define BOARD_INITEMMCPINS_SD0_D2_PERIPHERAL USDHC0        /*!<@brief Peripheral name */
+#define BOARD_INITEMMCPINS_SD0_D2_SIGNAL USDHC_DATA        /*!<@brief Signal name */
+#define BOARD_INITEMMCPINS_SD0_D2_CHANNEL 2                /*!<@brief Signal channel */
+                                                           /* @} */
+
+/*! @name SD0_D3 (coord U6), U111A[B2]/SD0_D3
+  @{ */
+/* Routed pin properties */
+#define BOARD_INITEMMCPINS_SD0_D3_PERIPHERAL USDHC0        /*!<@brief Peripheral name */
+#define BOARD_INITEMMCPINS_SD0_D3_SIGNAL USDHC_DATA        /*!<@brief Signal name */
+#define BOARD_INITEMMCPINS_SD0_D3_CHANNEL 3                /*!<@brief Signal channel */
+                                                           /* @} */
+
+/*! @name SD0_D4 (coord P5), U111A[B3]/SD0_D4
+  @{ */
+/* Routed pin properties */
+#define BOARD_INITEMMCPINS_SD0_D4_PERIPHERAL USDHC0        /*!<@brief Peripheral name */
+#define BOARD_INITEMMCPINS_SD0_D4_SIGNAL USDHC_DATA        /*!<@brief Signal name */
+#define BOARD_INITEMMCPINS_SD0_D4_CHANNEL 4                /*!<@brief Signal channel */
+                                                           /* @} */
+
+/*! @name SD0_D5 (coord R4), U111A[B4]/SD0_D5
+  @{ */
+/* Routed pin properties */
+#define BOARD_INITEMMCPINS_SD0_D5_PERIPHERAL USDHC0        /*!<@brief Peripheral name */
+#define BOARD_INITEMMCPINS_SD0_D5_SIGNAL USDHC_DATA        /*!<@brief Signal name */
+#define BOARD_INITEMMCPINS_SD0_D5_CHANNEL 5                /*!<@brief Signal channel */
+                                                           /* @} */
+
+/*! @name SD0_D6 (coord P4), U111A[B5]/SD0_D6
+  @{ */
+/* Routed pin properties */
+#define BOARD_INITEMMCPINS_SD0_D6_PERIPHERAL USDHC0        /*!<@brief Peripheral name */
+#define BOARD_INITEMMCPINS_SD0_D6_SIGNAL USDHC_DATA        /*!<@brief Signal name */
+#define BOARD_INITEMMCPINS_SD0_D6_CHANNEL 6                /*!<@brief Signal channel */
+                                                           /* @} */
+
+/*! @name SD0_D7 (coord T6), U111A[B6]/SD0_D7
+  @{ */
+/* Routed pin properties */
+#define BOARD_INITEMMCPINS_SD0_D7_PERIPHERAL USDHC0        /*!<@brief Peripheral name */
+#define BOARD_INITEMMCPINS_SD0_D7_SIGNAL USDHC_DATA        /*!<@brief Signal name */
+#define BOARD_INITEMMCPINS_SD0_D7_CHANNEL 7                /*!<@brief Signal channel */
+                                                           /* @} */
+
+/*! @name SD0_CARD_DET_N (coord T3), J32[10]/SD0_CARD_DET_N
+  @{ */
+/* Routed pin properties */
+/*!
+ * @brief Peripheral name */
+#define BOARD_INITEMMCPINS_SD0_CARD_DET_N_PERIPHERAL USDHC0
+/*!
+ * @brief Signal name */
+#define BOARD_INITEMMCPINS_SD0_CARD_DET_N_SIGNAL USDHC_CARD_DET
+/* @} */
 
 /*! @name PIO4_0 (coord N15), U117[B2]
   @{ */
 /* Routed pin properties */
-#define BOARD_INITPINSSD_SDC_3V3_PERIPHERAL GPIO                    /*!<@brief Peripheral name */
-#define BOARD_INITPINSSD_SDC_3V3_SIGNAL PIO4                        /*!<@brief Signal name */
-#define BOARD_INITPINSSD_SDC_3V3_CHANNEL 0                          /*!<@brief Signal channel */
+#define BOARD_INITEMMCPINS_SDC_3V3_PERIPHERAL GPIO          /*!<@brief Peripheral name */
+#define BOARD_INITEMMCPINS_SDC_3V3_SIGNAL PIO4              /*!<@brief Signal name */
+#define BOARD_INITEMMCPINS_SDC_3V3_CHANNEL 0                /*!<@brief Signal channel */
 
 /* Symbols to be used with GPIO driver */
-#define BOARD_INITPINSSD_SDC_3V3_GPIO GPIO                          /*!<@brief GPIO peripheral base pointer */
-#define BOARD_INITPINSSD_SDC_3V3_GPIO_PIN_MASK (1U << 0U)           /*!<@brief GPIO pin mask */
-#define BOARD_INITPINSSD_SDC_3V3_PORT 4U                            /*!<@brief PORT peripheral base pointer */
-#define BOARD_INITPINSSD_SDC_3V3_PIN 0U                             /*!<@brief PORT pin number */
-#define BOARD_INITPINSSD_SDC_3V3_PIN_MASK (1U << 0U)                /*!<@brief PORT pin mask */
-                                                                    /* @} */
+#define BOARD_INITEMMCPINS_SDC_3V3_GPIO GPIO                /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITEMMCPINS_SDC_3V3_GPIO_PIN_MASK (1U << 0U) /*!<@brief GPIO pin mask */
+#define BOARD_INITEMMCPINS_SDC_3V3_PORT 4U                  /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITEMMCPINS_SDC_3V3_PIN 0U                   /*!<@brief PORT pin number */
+#define BOARD_INITEMMCPINS_SDC_3V3_PIN_MASK (1U << 0U)      /*!<@brief PORT pin mask */
+                                                            /* @} */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
  *
  */
-void BOARD_InitPinsSD(void); /* Function assigned for the Cortex-M33 */
+void BOARD_InitEmmcPins(void); /* Function assigned for the Cortex-M33 */
+
+#define IOPCTL_PIO_ANAMUX_DI 0x00u        /*!<@brief Analog mux is disabled */
+#define IOPCTL_PIO_FULLDRIVE_EN 0x0100u   /*!<@brief Full drive enable */
+#define IOPCTL_PIO_FUNC2 0x02u            /*!<@brief Selects pin function 2 */
+#define IOPCTL_PIO_INBUF_EN 0x40u         /*!<@brief Enables input buffer function */
+#define IOPCTL_PIO_INV_DI 0x00u           /*!<@brief Input function is not inverted */
+#define IOPCTL_PIO_PSEDRAIN_DI 0x00u      /*!<@brief Pseudo Output Drain is disabled */
+#define IOPCTL_PIO_PULLDOWN_EN 0x00u      /*!<@brief Enable pull-down function */
+#define IOPCTL_PIO_PUPD_DI 0x00u          /*!<@brief Disable pull-up / pull-down function */
+#define IOPCTL_PIO_SLEW_RATE_NORMAL 0x00u /*!<@brief Normal mode */
+
+/*! @name FLEXSPI1_SCLK (coord H2), U108[B2]
+  @{ */
+/* Routed pin properties */
+#define BOARD_INITPSRAMPINS_PSRAM_CLK_PERIPHERAL FLEXSPI1    /*!<@brief Peripheral name */
+#define BOARD_INITPSRAMPINS_PSRAM_CLK_SIGNAL FLEXSPI_SCLK    /*!<@brief Signal name */
+                                                             /* @} */
+
+/*! @name FLEXSPI1_DATA0 (coord H1), U108[D3]
+  @{ */
+/* Routed pin properties */
+#define BOARD_INITPSRAMPINS_PSRAM_ADQ0_PERIPHERAL FLEXSPI1     /*!<@brief Peripheral name */
+#define BOARD_INITPSRAMPINS_PSRAM_ADQ0_SIGNAL FLEXSPI_DATA0    /*!<@brief Signal name */
+                                                               /* @} */
+
+/*! @name FLEXSPI1_DATA1 (coord G2), U108[D2]
+  @{ */
+/* Routed pin properties */
+#define BOARD_INITPSRAMPINS_PSRAM_ADQ1_PERIPHERAL FLEXSPI1     /*!<@brief Peripheral name */
+#define BOARD_INITPSRAMPINS_PSRAM_ADQ1_SIGNAL FLEXSPI_DATA1    /*!<@brief Signal name */
+                                                               /* @} */
+
+/*! @name FLEXSPI1_DATA2 (coord F1), U108[C4]
+  @{ */
+/* Routed pin properties */
+#define BOARD_INITPSRAMPINS_PSRAM_ADQ2_PERIPHERAL FLEXSPI1     /*!<@brief Peripheral name */
+#define BOARD_INITPSRAMPINS_PSRAM_ADQ2_SIGNAL FLEXSPI_DATA2    /*!<@brief Signal name */
+                                                               /* @} */
+
+/*! @name FLEXSPI1_DATA3 (coord K3), U108[D4]
+  @{ */
+/* Routed pin properties */
+#define BOARD_INITPSRAMPINS_PSRAM_ADQ3_PERIPHERAL FLEXSPI1     /*!<@brief Peripheral name */
+#define BOARD_INITPSRAMPINS_PSRAM_ADQ3_SIGNAL FLEXSPI_DATA3    /*!<@brief Signal name */
+                                                               /* @} */
+
+/*! @name FLEXSPI1_DQS (coord H3), U108[C3]
+  @{ */
+/* Routed pin properties */
+#define BOARD_INITPSRAMPINS_PSRAM_DQS_PERIPHERAL FLEXSPI1   /*!<@brief Peripheral name */
+#define BOARD_INITPSRAMPINS_PSRAM_DQS_SIGNAL FLEXSPI_DQS    /*!<@brief Signal name */
+                                                            /* @} */
+
+/*! @name FLEXSPI1_SS0_N (coord E13), U108[A3]
+  @{ */
+/* Routed pin properties */
+#define BOARD_INITPSRAMPINS_PSRAM_CE_PERIPHERAL FLEXSPI1     /*!<@brief Peripheral name */
+#define BOARD_INITPSRAMPINS_PSRAM_CE_SIGNAL FLEXSPI_SS0_N    /*!<@brief Signal name */
+                                                             /* @} */
+
+/*! @name FLEXSPI1_DATA4 (coord H5), U108[D5]
+  @{ */
+/* Routed pin properties */
+#define BOARD_INITPSRAMPINS_PSRAM_ADQ4_PERIPHERAL FLEXSPI1     /*!<@brief Peripheral name */
+#define BOARD_INITPSRAMPINS_PSRAM_ADQ4_SIGNAL FLEXSPI_DATA4    /*!<@brief Signal name */
+                                                               /* @} */
+
+/*! @name FLEXSPI1_DATA5 (coord H4), U108[E3]
+  @{ */
+/* Routed pin properties */
+#define BOARD_INITPSRAMPINS_PSRAM_ADQ5_PERIPHERAL FLEXSPI1     /*!<@brief Peripheral name */
+#define BOARD_INITPSRAMPINS_PSRAM_ADQ5_SIGNAL FLEXSPI_DATA5    /*!<@brief Signal name */
+                                                               /* @} */
+
+/*! @name FLEXSPI1_DATA6 (coord J3), U108[E2]
+  @{ */
+/* Routed pin properties */
+#define BOARD_INITPSRAMPINS_PSRAM_ADQ6_PERIPHERAL FLEXSPI1     /*!<@brief Peripheral name */
+#define BOARD_INITPSRAMPINS_PSRAM_ADQ6_SIGNAL FLEXSPI_DATA6    /*!<@brief Signal name */
+                                                               /* @} */
+
+/*! @name FLEXSPI1_DATA7 (coord J4), U108[E1]
+  @{ */
+/* Routed pin properties */
+#define BOARD_INITPSRAMPINS_PSRAM_ADQ7_PERIPHERAL FLEXSPI1     /*!<@brief Peripheral name */
+#define BOARD_INITPSRAMPINS_PSRAM_ADQ7_SIGNAL FLEXSPI_DATA7    /*!<@brief Signal name */
+                                                               /* @} */
+
+/*!
+ * @brief Configures pin routing and optionally pin electrical features.
+ *
+ */
+void BOARD_InitPsRamPins(void); /* Function assigned for the Cortex-M33 */
 
 #if defined(__cplusplus)
 }

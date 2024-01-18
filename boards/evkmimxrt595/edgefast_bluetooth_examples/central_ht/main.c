@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2021-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -9,6 +9,11 @@
 
 #include "FreeRTOS.h"
 #include "task.h"
+
+#if defined(APP_LOWPOWER_ENABLED) && (APP_LOWPOWER_ENABLED > 0)
+#include "PWR_Interface.h"
+#include "fwk_platform_lowpower.h"
+#endif /* APP_LOWPOWER_ENABLED */
 
 #include "central_ht.h"
 
@@ -24,6 +29,10 @@
 #if (((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP)))
 #include "ksdk_mbedtls.h"
 #endif /* CONFIG_BT_SMP */
+#if defined(APP_MEM_POWER_OPT) && (APP_MEM_POWER_OPT > 0)
+#include "fsl_mmc.h"
+#include "sdmmc_config.h"
+#endif /* APP_MEM_POWER_OPT */
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -50,10 +59,14 @@
  * Prototypes
  ******************************************************************************/
 extern void BOARD_InitHardware(void);
+extern void APP_InitServices(void);
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+#if defined(APP_MEM_POWER_OPT) && (APP_MEM_POWER_OPT > 0)
+extern mmc_card_t g_mmc;
+#endif /* APP_MEM_POWER_OPT */
 
 /*******************************************************************************
  * Code
@@ -185,11 +198,27 @@ void USB_HostIsrEnable(void)
     EnableIRQ((IRQn_Type)irqNumber);
 }
 
-
 int main(void)
 {
-    BOARD_InitBootPins();
+	RESET_ClearPeripheralReset(kHSGPIO0_RST_SHIFT_RSTn);
+    RESET_ClearPeripheralReset(kHSGPIO3_RST_SHIFT_RSTn);
+    RESET_ClearPeripheralReset(kHSGPIO4_RST_SHIFT_RSTn);
+
+	BOARD_InitBootPins();
     BOARD_InitBootClocks();
+
+#if defined(APP_LOWPOWER_ENABLED) && (APP_LOWPOWER_ENABLED > 0)
+    BOARD_InitLowPowerPins();
+    BOARD_InitPmicPins();
+#endif /* APP_LOWPOWER_ENABLED */
+
+#if defined(APP_MEM_POWER_OPT) && (APP_MEM_POWER_OPT > 0)
+    BOARD_InitPsRamPins();
+    BOARD_InitEmmcPins();
+    BOARD_InitPsRam();
+    //PSRAM_EnterDeepPowerDowen();
+    BOARD_MMC_Config(&g_mmc, BOARD_SDMMC_MMC_HOST_IRQ_PRIORITY);
+#endif /* APP_MEM_POWER_OPT */
 
 #if defined(K32W061_TRANSCEIVER)
     BOARD_InitDebugConsole();
@@ -204,12 +233,24 @@ int main(void)
     CLOCK_AttachClk(BOARD_BT_UART_CLK_ATTACH);
 #endif
 
+#if defined(WIFI_88W8987_BOARD_MURATA_1ZM_M2)
+    CLOCK_EnableOsc32K(true);               /* Enable 32KHz Oscillator clock */
+    CLOCK_EnableClock(kCLOCK_Rtc);          /* Enable the RTC peripheral clock */
+    RTC->CTRL &= ~RTC_CTRL_SWRESET_MASK;    /* Make sure the reset bit is cleared */
+    RTC->CTRL &= ~RTC_CTRL_RTC_OSC_PD_MASK; /* The RTC Oscillator is powered up */
+#endif
+
     /* Set FlexSPI clock: source AUX0_PLL, divide by 4 */
     BOARD_SetFlexspiClock(FLEXSPI0, 2U, 4U);
 
 #if (((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP)))
     CRYPTO_InitHardware();
 #endif /* CONFIG_BT_SMP */
+
+#if (defined(APP_LOWPOWER_ENABLED) && (APP_LOWPOWER_ENABLED > 0))|| \
+    (defined(APP_USE_SENSORS) && (APP_USE_SENSORS > 0))
+    APP_InitServices();
+#endif
 
     if (xTaskCreate(central_ht_task, "central_ht_task", configMINIMAL_STACK_SIZE * 8, NULL, tskIDLE_PRIORITY + 1, NULL) != pdPASS)
     {
@@ -222,3 +263,37 @@ int main(void)
     for (;;)
         ;
 }
+
+#if defined(APP_LOWPOWER_ENABLED) && (APP_LOWPOWER_ENABLED > 0)
+void vPortSuppressTicksAndSleep(TickType_t xExpectedIdleTime)
+{
+    bool abortIdle = false;
+    uint64_t expectedIdleTimeUs, actualIdleTimeUs;
+    uint32_t irqMask = DisableGlobalIRQ();
+
+    /* Disable and prepare systicks for low power. */
+    abortIdle = PWR_SysticksPreProcess((uint32_t)xExpectedIdleTime, &expectedIdleTimeUs);
+
+#if defined(WIFI_IW416_BOARD_MURATA_1XK_M2)
+    /* Check if host is allowed to enter low power mode. */
+    if(0 == PLATFORM_AllowEnterLowPower())
+    {
+        abortIdle = true;
+        SysTick->CTRL |= (SysTick_CTRL_TICKINT_Msk | SysTick_CTRL_ENABLE_Msk);
+    }
+#endif
+
+    if (abortIdle == false)
+    {
+        /* Enter low power with a maximal timeout. */
+        actualIdleTimeUs = PWR_EnterLowPower(expectedIdleTimeUs);
+
+        /* Re enable systicks and compensate systick timebase. */
+        PWR_SysticksPostProcess(expectedIdleTimeUs, actualIdleTimeUs);
+    }
+
+    /* Exit from critical section. */
+    EnableGlobalIRQ(irqMask);
+}
+#endif /* APP_LOWPOWER_ENABLED */
+

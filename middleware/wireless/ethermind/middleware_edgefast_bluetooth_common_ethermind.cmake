@@ -25,6 +25,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/port/pal/mcux/bluetooth/pbap_pl.c
   ${CMAKE_CURRENT_LIST_DIR}/port/pal/mcux/bluetooth/write_task_pl.c
   ${CMAKE_CURRENT_LIST_DIR}/port/pal/mcux/bluetooth/littlefs_pl.c
+  ${CMAKE_CURRENT_LIST_DIR}/port/pal/mcux/bluetooth/fw_loader_uart.c
   ${CMAKE_CURRENT_LIST_DIR}/port/pal/mcux/ethal/ethal_config.c
   ${CMAKE_CURRENT_LIST_DIR}/port/pal/mcux/ethal/ethal_debug.c
   ${CMAKE_CURRENT_LIST_DIR}/port/pal/mcux/ethal/ethal_fops.c

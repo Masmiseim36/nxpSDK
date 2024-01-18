@@ -53,7 +53,8 @@ void device_queue_full_pl(DEVICE_LINK_TYPE    link_type)
 {
 #if (defined BT_DUAL_MODE || defined CLASSIC_SEC_MANAGER)
     UINT32 sm_index;
-#endif
+#endif /* (defined BT_DUAL_MODE || defined CLASSIC_SEC_MANAGER) */
+
     UCHAR  smp_index;
 
 #ifdef BT_DUAL_MODE

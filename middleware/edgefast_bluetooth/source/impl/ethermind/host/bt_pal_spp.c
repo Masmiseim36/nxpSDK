@@ -463,7 +463,7 @@ static void spp_initialize(void)
         /** create spp Mutex */
         if (KOSA_StatusSuccess != OSA_MutexCreate((osa_mutex_handle_t)spp_lock_mutex))
         {
-            BT_ERR("[SPP] OSA_MutexCreate() failed!\n");
+            LOG_ERR("[SPP] OSA_MutexCreate() failed!\n");
         }
 
         /** init spp entity */
@@ -565,15 +565,15 @@ static void spp_sdp_cb
     /** It can come only while creating connection. verify */
     if (API_SUCCESS != status)
     {
-        BT_INFO("[SPP] STATUS : %X \n", status);
-        BT_INFO("[SPP] COMMAND : %X \n", command);
+        LOG_INF("[SPP] STATUS : %X \n", status);
+        LOG_INF("[SPP] COMMAND : %X \n", command);
 
         /** Implies that SDP open was successful but service search failed */
         if (command == SDP_ServiceSearchAttributeResponse)
         {
             sdp_close_due2error = 2;
 
-            BT_INFO("[SPP] SDP CB : Closing SDP \n");
+            LOG_INF("[SPP] SDP CB : Closing SDP \n");
 
             BT_sdp_close(&sdp_handle);
 
@@ -589,7 +589,7 @@ static void spp_sdp_cb
 
             if (NULL == attribute_data)
             {
-                BT_ERR("[SPP] SDP CB : Alloc mem failed, closing SDP \n");
+                LOG_ERR("[SPP] SDP CB : Alloc mem failed, closing SDP \n");
                 /** Error in SDP operation */
                 sdp_close_due2error = 2;
 
@@ -616,11 +616,11 @@ static void spp_sdp_cb
 
             if (API_SUCCESS != err)
             {
-                BT_ERR("[SPP] SDP CB:BT_sdp_servicesearchattributerequest Failed\n");
+                LOG_ERR("[SPP] SDP CB:BT_sdp_servicesearchattributerequest Failed\n");
 
                 BT_free_mem(attribute_data);
 
-                BT_ERR("[SPP] Closing SDP Connection\n");
+                LOG_ERR("[SPP] Closing SDP Connection\n");
 
                 /** Error in SDP operation */
                 sdp_close_due2error = 2;
@@ -639,7 +639,7 @@ static void spp_sdp_cb
         case SDP_Close: /** SDP Close callback */
             sdp_close_due2error = 0;
 
-            BT_INFO("[SPP] SDP CB : SDP PROCEDURE DONE... \n");
+            LOG_INF("[SPP] SDP CB : SDP PROCEDURE DONE... \n");
 
             break;
 
@@ -696,7 +696,7 @@ static void spp_sdp_cb
 
         case SDP_ErrorResponse:
 
-            BT_INFO("[SPP] SDP_ErrorResponse \n");
+            LOG_INF("[SPP] SDP_ErrorResponse \n");
 
             /** Free allocated memory for attribute data */
             BT_free_mem(data);
@@ -723,7 +723,7 @@ static int spp_server_accepted(struct bt_conn *conn, struct bt_rfcomm_dlc **dlc)
     index = spp_get_free_entity();
     if (CONFIG_BT_SPP_MAX_CONN == index)
     {
-        BT_ERR("[SPP]: No free spp_entity[].\n");
+        LOG_ERR("[SPP]: No free spp_entity[].\n");
         err = -ENOMEM;
     }
     else
@@ -788,7 +788,7 @@ static void spp_connected(struct bt_rfcomm_dlc *dlc)
         EDGEFAST_SPP_UNLOCK;
         if(CONFIG_BT_SPP_SERVER_MAX_COUNT == index)
         {
-            BT_ERR ("[SPP]: Not find registered spp server channel %d\n", (dlc->dlci)>>1);
+            LOG_ERR ("[SPP]: Not find registered spp server channel %d\n", (dlc->dlci)>>1);
             return;
         }
 
@@ -846,11 +846,11 @@ int bt_spp_discover(struct bt_conn *conn, discover_cb_t *cb)
         ret = BT_sdp_open(&sdp_handle);
         if (API_SUCCESS != ret)
         {
-            BT_ERR ("SPP SDP open failed, reason = 0x%04X \n", ret);
+            LOG_ERR ("SPP SDP open failed, reason = 0x%04X \n", ret);
         }
         else
         {
-            BT_INFO("[SPP] SPP SDP open successfully, wait for SDP_Open event.\n");
+            LOG_INF("[SPP] SPP SDP open successfully, wait for SDP_Open event.\n");
         }
 
         err = (int)ret;
@@ -869,7 +869,7 @@ int bt_spp_server_register(uint8_t channel, bt_spp_callback *cb)
 
     if (NULL == cb)
     {
-        BT_ERR("[SPP] SPP callback shouldn't be NULL.\n");
+        LOG_ERR("[SPP] SPP callback shouldn't be NULL.\n");
         err = -EINVAL;
     }
     else
@@ -888,7 +888,7 @@ int bt_spp_server_register(uint8_t channel, bt_spp_callback *cb)
 
         if (CONFIG_BT_SPP_SERVER_MAX_COUNT != index)
         {
-            BT_ERR("[SPP] Channel %d is already registered.\n", channel);
+            LOG_ERR("[SPP] Channel %d is already registered.\n", channel);
             err = -EINVAL;
         }
         else
@@ -907,7 +907,7 @@ int bt_spp_server_register(uint8_t channel, bt_spp_callback *cb)
 
             if (CONFIG_BT_SPP_SERVER_MAX_COUNT == index)
             {
-                BT_ERR("[SPP] No free spp_server[] entitiy.\n");
+                LOG_ERR("[SPP] No free spp_server[] entitiy.\n");
                 err = -ENOMEM;
             }
             else
@@ -921,12 +921,12 @@ int bt_spp_server_register(uint8_t channel, bt_spp_callback *cb)
                 err = bt_rfcomm_server_register(&spp_server[index].server);
                 if (0 != err)
                 {
-                    BT_ERR("[SPP] SPP register server channel %d failed, reason = 0x%04X\n", spp_server[index].server.channel, err);
+                    LOG_ERR("[SPP] SPP register server channel %d failed, reason = 0x%04X\n", spp_server[index].server.channel, err);
                     SPP_INIT_SERVER(index);
                 }
                 else
                 {
-                    BT_INFO("[SPP] SPP register server %d successfully, waiting for spp_server_accepted.\n", spp_server[index].server.channel);
+                    LOG_INF("[SPP] SPP register server %d successfully, waiting for spp_server_accepted.\n", spp_server[index].server.channel);
                 }
             }
         }
@@ -944,7 +944,7 @@ int bt_spp_client_connect(struct bt_conn *conn, uint8_t channel, bt_spp_callback
 
     if ((NULL == conn) || (NULL == cb) || (NULL == spp))
     {
-        BT_ERR("[SPP] Invalid parameter.\n");
+        LOG_ERR("[SPP] Invalid parameter.\n");
         err = -EINVAL;
     }
     else
@@ -964,7 +964,7 @@ int bt_spp_client_connect(struct bt_conn *conn, uint8_t channel, bt_spp_callback
         EDGEFAST_SPP_UNLOCK;
         if (CONFIG_BT_SPP_MAX_CONN != index)
         {
-            BT_ERR("[SPP] SPP client %d exists.\n", channel);
+            LOG_ERR("[SPP] SPP client %d exists.\n", channel);
             return -EINVAL;
         }
 
@@ -972,7 +972,7 @@ int bt_spp_client_connect(struct bt_conn *conn, uint8_t channel, bt_spp_callback
         index = spp_get_free_entity();
         if (CONFIG_BT_SPP_MAX_CONN == index)
         {
-            BT_ERR("[SPP] No free spp_entity[].\n");
+            LOG_ERR("[SPP] No free spp_entity[].\n");
             err = -ENOMEM;
         }
         else
@@ -995,13 +995,13 @@ int bt_spp_client_connect(struct bt_conn *conn, uint8_t channel, bt_spp_callback
             err = bt_rfcomm_dlc_connect(spp_entity[index].conn, &spp_entity[index].dlc, spp_entity[index].channel);
             if (0 == err)
             {
-                BT_INFO("[SPP] SPP connect server %d successfully, waiting for spp_connected callback.\n", spp_entity[index].channel);
+                LOG_INF("[SPP] SPP connect server %d successfully, waiting for spp_connected callback.\n", spp_entity[index].channel);
                 spp_entity[index].state = SPP_IN_CONNECT;
                 *spp = &spp_entity[index];
             }
             else
             {
-                BT_ERR("[SPP] SPP connect server %d failed, reason = 0x%04X\n", spp_entity[index].channel, err);
+                LOG_ERR("[SPP] SPP connect server %d failed, reason = 0x%04X\n", spp_entity[index].channel, err);
                 SPP_INIT_ENTITY(index);
                 *spp = NULL;
             }
@@ -1030,18 +1030,18 @@ int bt_spp_data_send(struct bt_spp *spp, uint8_t *data, uint16_t len)
             err = bt_rfcomm_dlc_send(&spp->dlc, buf);
             if (0 != err)
             {
-                BT_ERR("[SPP] SPP send data failed, reason = 0x%04X\n",err);
+                LOG_ERR("[SPP] SPP send data failed, reason = 0x%04X\n",err);
             }
             else
             {
-                BT_INFO("[SPP] SPP send data successfully, waiting for SPP_SEND_CNF event.");
+                LOG_INF("[SPP] SPP send data successfully, waiting for SPP_SEND_CNF event.");
             }
              net_buf_unref(buf);
         }
         else
         {
             err = -EINVAL;
-            BT_ERR("[SPP] SPP send data failed, current spp isn't in connection.\n");
+            LOG_ERR("[SPP] SPP send data failed, current spp isn't in connection.\n");
         }
     }
 
@@ -1064,18 +1064,18 @@ int bt_spp_disconnect(struct bt_spp *spp)
 
             if (0 != err)
             {
-                BT_ERR("[SPP] SPP disconnect failed, reason = 0x%04X\n",err);
+                LOG_ERR("[SPP] SPP disconnect failed, reason = 0x%04X\n",err);
             }
             else
             {
                 spp->state = SPP_IN_DISCONNECT;
-                BT_INFO("[SPP] SPP disconnect successfully, waiting for SPP_DISCONNECT_CNF event.");
+                LOG_INF("[SPP] SPP disconnect successfully, waiting for SPP_DISCONNECT_CNF event.");
             }
         }
         else
         {
             err = -EINVAL;
-            BT_ERR("[SPP] SPP disconnect failed, current spp isn't in connection.\n");
+            LOG_ERR("[SPP] SPP disconnect failed, current spp isn't in connection.\n");
         }
     }
 
@@ -1189,14 +1189,14 @@ int bt_spp_request_port_setting(struct bt_conn *conn, uint8_t channel, bt_spp_ro
     ctl_hdl = spp_get_free_control_entity();
     if(CONFIG_BT_SPP_MAX_CONN == ctl_hdl)
     {
-        BT_ERR("[SPP] No available spp control entity.\n");
+        LOG_ERR("[SPP] No available spp control entity.\n");
         return -ENOMEM;
     }
 
     index = initialize_spp_control_entity(ctl_hdl, conn, channel, role, cb);
     if(CONFIG_BT_SPP_MAX_CONN == index)
     {
-        BT_ERR("[SPP] No free spp entity.\n");
+        LOG_ERR("[SPP] No free spp entity.\n");
         return -ENOMEM;
     }
 
@@ -1206,11 +1206,11 @@ int bt_spp_request_port_setting(struct bt_conn *conn, uint8_t channel, bt_spp_ro
     err = bt_rfcomm_send_control(&spp_control[ctl_hdl].rfcomm_ctr);
     if (API_SUCCESS == err)
     {
-        BT_INFO("[SPP] SPP get remote port setting successfully, waitting for BT_RFCOMM_RPN_REQUEST event.\n");
+        LOG_INF("[SPP] SPP get remote port setting successfully, waitting for BT_RFCOMM_RPN_REQUEST event.\n");
     }
     else
     {
-        BT_ERR("[SPP] SPP get remote port setting failed, reason is 0x%04X.\n",err);
+        LOG_ERR("[SPP] SPP get remote port setting failed, reason is 0x%04X.\n",err);
         if(SPP_CONTROL_CONFIG == spp_control[ctl_hdl].state)
         {
             spp_entity[index].state = SPP_IDLE;
@@ -1239,14 +1239,14 @@ int bt_spp_negotiate_port_setting(struct bt_conn * conn, uint8_t channel, bt_spp
     ctl_hdl = spp_get_free_control_entity();
     if(CONFIG_BT_SPP_MAX_CONN == ctl_hdl)
     {
-        BT_ERR("[SPP] No available spp control entity.\n");
+        LOG_ERR("[SPP] No available spp control entity.\n");
         return -ENOMEM;
     }
 
     index = initialize_spp_control_entity(ctl_hdl, conn, channel, role, cb);
     if(CONFIG_BT_SPP_MAX_CONN == index)
     {
-        BT_ERR("[SPP] No available spp entity.\n");
+        LOG_ERR("[SPP] No available spp entity.\n");
         return -ENOMEM;
     }
 
@@ -1259,11 +1259,11 @@ int bt_spp_negotiate_port_setting(struct bt_conn * conn, uint8_t channel, bt_spp
 
     if (API_SUCCESS == err)
     {
-        BT_INFO("[SPP] SPP get remote port setting successfully, waitting for control_message callback.\n");
+        LOG_INF("[SPP] SPP get remote port setting successfully, waitting for control_message callback.\n");
     }
     else
     {
-        BT_ERR("[SPP] SPP get remote port setting failed, reason is 0x%04X.\n",err);
+        LOG_ERR("[SPP] SPP get remote port setting failed, reason is 0x%04X.\n",err);
         if(SPP_CONTROL_CONFIG == spp_control[ctl_hdl].state)
         {
             spp_entity[index].state = SPP_IDLE;
@@ -1292,14 +1292,14 @@ int bt_spp_send_pn(struct bt_conn * conn, uint8_t channel, bt_spp_role_t role, b
     ctl_hdl = spp_get_free_control_entity();
     if(CONFIG_BT_SPP_MAX_CONN == ctl_hdl)
     {
-        BT_ERR("[SPP] No available spp control entity.\n");
+        LOG_ERR("[SPP] No available spp control entity.\n");
         return -ENOMEM;
     }
 
     index = initialize_spp_control_entity(ctl_hdl, conn, channel, role, cb);
     if(CONFIG_BT_SPP_MAX_CONN == index)
     {
-        BT_ERR("[SPP] No available spp entity.\n");
+        LOG_ERR("[SPP] No available spp entity.\n");
         return index;
     }
 
@@ -1312,11 +1312,11 @@ int bt_spp_send_pn(struct bt_conn * conn, uint8_t channel, bt_spp_role_t role, b
     err = bt_rfcomm_send_control(&spp_control[ctl_hdl].rfcomm_ctr);
     if (0 == err)
     {
-        BT_INFO("[SPP] SPP set mtu successfully, waitting for control_message callback.\n");
+        LOG_INF("[SPP] SPP set mtu successfully, waitting for control_message callback.\n");
     }
     else
     {
-        BT_ERR("[SPP] SPP set mtu failed, reason is 0x%04X.\n",err);
+        LOG_ERR("[SPP] SPP set mtu failed, reason is 0x%04X.\n",err);
         if(SPP_CONTROL_CONFIG == spp_control[ctl_hdl].state)
         {
             spp_entity[index].state = SPP_IDLE;
@@ -1346,14 +1346,14 @@ int bt_spp_get_local_pn(struct bt_conn * conn, uint8_t channel, bt_spp_role_t ro
     ctl_hdl = spp_get_free_control_entity();
     if(CONFIG_BT_SPP_MAX_CONN == ctl_hdl)
     {
-        BT_ERR("[SPP] No available spp control entity.\n");
+        LOG_ERR("[SPP] No available spp control entity.\n");
         return -ENOMEM;
     }
 
     index = initialize_spp_control_entity(ctl_hdl, conn, channel, role, NULL);
     if(CONFIG_BT_SPP_MAX_CONN == index)
     {
-        BT_ERR("[SPP] No available spp entity.\n");
+        LOG_ERR("[SPP] No available spp entity.\n");
         return index;
     }
 
@@ -1363,11 +1363,11 @@ int bt_spp_get_local_pn(struct bt_conn * conn, uint8_t channel, bt_spp_role_t ro
     err = bt_rfcomm_send_control(&spp_control[ctl_hdl].rfcomm_ctr);
     if (0 != err)
     {
-        BT_ERR("[SPP] SPP get local pn failed, reason = 0x%04X\n",err);
+        LOG_ERR("[SPP] SPP get local pn failed, reason = 0x%04X\n",err);
     }
     else
     {
-        BT_INFO("[SPP] SPP get local pn successfuly.");
+        LOG_INF("[SPP] SPP get local pn successfuly.");
 
         memcpy(pn, &spp_control[ctl_hdl].rfcomm_ctr.control_data.pn, sizeof(struct bt_spp_pn));
         pn->mtu  = spp_control[ctl_hdl].rfcomm_ctr.control_data.pn.mtu;
@@ -1402,7 +1402,7 @@ int bt_spp_send_rls(struct bt_spp *spp, struct bt_spp_rls *rls)
             index = spp_get_free_control_entity();
             if(CONFIG_BT_SPP_MAX_CONN == index)
             {
-                BT_ERR("[SPP] No available spp control entity.\n");
+                LOG_ERR("[SPP] No available spp control entity.\n");
                 return -ENOMEM;
             }
 
@@ -1437,18 +1437,18 @@ int bt_spp_send_rls(struct bt_spp *spp, struct bt_spp_rls *rls)
             err = bt_rfcomm_send_control(&spp_control[index].rfcomm_ctr);
             if (0 != err)
             {
-                BT_ERR("[SPP] SPP send rls failed, reason = 0x%04X\n",err);
+                LOG_ERR("[SPP] SPP send rls failed, reason = 0x%04X\n",err);
                 init_spp_control(&spp_control[index]);
             }
             else
             {
-                BT_INFO("[SPP] SPP send rls successfully, waiting for callback event.");
+                LOG_INF("[SPP] SPP send rls successfully, waiting for callback event.");
             }
         }
         else
         {
             err = -EINVAL;
-            BT_ERR("[SPP] SPP send rls failed, current spp isn't in connection.\n");
+            LOG_ERR("[SPP] SPP send rls failed, current spp isn't in connection.\n");
         }
     }
 
@@ -1472,7 +1472,7 @@ int bt_spp_send_msc(struct bt_spp *spp, struct bt_spp_msc *msc)
             index = spp_get_free_control_entity();
             if(CONFIG_BT_SPP_MAX_CONN == index)
             {
-                BT_ERR("[SPP] No available spp control entity.\n");
+                LOG_ERR("[SPP] No available spp control entity.\n");
                 return -ENOMEM;
             }
 
@@ -1486,18 +1486,18 @@ int bt_spp_send_msc(struct bt_spp *spp, struct bt_spp_msc *msc)
 
             if (0 != err)
             {
-                BT_ERR("[SPP] SPP send msc failed, reason = 0x%04X\n",err);
+                LOG_ERR("[SPP] SPP send msc failed, reason = 0x%04X\n",err);
                 init_spp_control(&spp_control[index]);
             }
             else
             {
-                BT_INFO("[SPP] SPP send msc successfully, waiting for callback event.");
+                LOG_INF("[SPP] SPP send msc successfully, waiting for callback event.");
             }
         }
         else
         {
             err = -EINVAL;
-            BT_ERR("[SPP] SPP send msc failed, current spp isn't in connection.\n");
+            LOG_ERR("[SPP] SPP send msc failed, current spp isn't in connection.\n");
         }
     }
 

@@ -369,6 +369,7 @@
           <state>$PROJ_DIR$/../../../../../evkmimxrt595/flash_config</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd/phy_interface</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
@@ -1466,6 +1467,7 @@
           <state>$PROJ_DIR$/../../../../../evkmimxrt595/flash_config</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd/phy_interface</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
@@ -2563,6 +2565,7 @@
           <state>$PROJ_DIR$/../../../../../evkmimxrt595/flash_config</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd/phy_interface</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
@@ -3660,6 +3663,7 @@
           <state>$PROJ_DIR$/../../../../../evkmimxrt595/flash_config</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd/ptn5110</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/pd/phy_interface</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
@@ -4779,6 +4783,9 @@
     <name>utilities</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/fsl_assert.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</name>

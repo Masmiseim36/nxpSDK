@@ -48,8 +48,8 @@
     ((id) & ~(((UNIT<<XF_AP_IPC_CLIENT_BITS)-1) << (XF_DSP_CORE_BITS + XF_MSG_ID_BITS)))
 
 /* ...port specification (12 bits) */
-#define __XF_PORT_SPEC(core, id, port)  ((xf_msg_id_dtype)(core) | ((id) << XF_DSP_CORE_BITS) | ((port) << (XF_DSP_PORT_SHIFT_BITS)))
-#define __XF_PORT_SPEC2(id, port)       ((xf_msg_id_dtype)(id) | ((port) << (XF_DSP_PORT_SHIFT_BITS)))
+#define __XF_PORT_SPEC(core, id, port)  ((xf_msg_id_dtype)(core) | ((id) << XF_DSP_CORE_BITS) | ((xf_msg_id_dtype)(port) << (XF_DSP_PORT_SHIFT_BITS)))
+#define __XF_PORT_SPEC2(id, port)       ((xf_msg_id_dtype)(id) | ((xf_msg_id_dtype)(port) << (XF_DSP_PORT_SHIFT_BITS)))
 #define XF_PORT_CORE(spec)              (UWORD32)((spec) & ((UNIT<<XF_DSP_CORE_BITS)-1))
 #define XF_PORT_CLIENT(spec)            (UWORD32)(((spec) >> XF_DSP_CLIENT_SHIFT_BITS) & ((UNIT<<XF_DSP_CLIENT_BITS)-1))
 #define XF_PORT_ID(spec)                (UWORD32)(((spec) >> XF_DSP_PORT_SHIFT_BITS) & ((UNIT<<XF_DSP_PORT_BITS)-1))
@@ -76,7 +76,7 @@
 #define XF_AP_CLIENT(id)                (UWORD32)(((id) >> (XF_MSG_ID_BITS + XF_DSP_CORE_BITS + XF_AP_IPC_CLIENT_BITS)) & ((UNIT << (XF_AP_CLIENT_BITS))-1))
 #define __XF_AP_PROXY(core)             ((xf_msg_id_dtype)(core) | (UNIT << (XF_MSG_ID_BITS-1)))
 #define __XF_DSP_PROXY(core)            ((xf_msg_id_dtype)(core) | (UNIT << (XF_MSG_ID_BITS-1)))
-#define __XF_AP_CLIENT(core, client)    ((core) | ((client) << (XF_AP_IPC_CLIENT_BITS + XF_DSP_CORE_BITS)) | (UNIT << (XF_MSG_ID_BITS-1)))
+#define __XF_AP_CLIENT(core, client)    ((xf_msg_id_dtype)(core) | ((client) << (XF_AP_IPC_CLIENT_BITS + XF_DSP_CORE_BITS)) | (UNIT << (XF_MSG_ID_BITS-1)))
 
 /* ...check if DSP message is shared between cores */
 #define XF_MSG_SHARED(id)               \
@@ -175,21 +175,21 @@ typedef struct xf_start_msg
 
     /* ...number of channels */
     UWORD32             channels;
-    
+
     /* ...sample width */
     UWORD32             pcm_width;
-    
+
     /* ...minimal size of intput buffer */
     UWORD32             input_length[XF_CFG_MAX_IN_PORTS];
-    
+
     /* ...size of output buffer */
     UWORD32             output_length[XF_CFG_MAX_OUT_PORTS];
- 
+
     /* ...size of probe buffer */
     UWORD32				probe_length;
-   
+
 }   __attribute__((__packed__)) xf_start_msg_t;
-    
+
 /*******************************************************************************
  * XF_GET_PARAM message
  ******************************************************************************/
@@ -259,7 +259,7 @@ typedef struct xf_ext_param_desc
     UWORD32                 length;
 
 }   __attribute__ ((__packed__, __aligned__(4))) xf_ext_param_desc_t;
-    
+
 /* ...message body (no response message? - tbd) */
 typedef struct xf_ext_param_msg
 {
@@ -293,7 +293,7 @@ typedef struct xf_route_port_msg
 	/* ...alignment restriction for a buffer */
 	UWORD32                 alloc_align;
 
-}	__attribute__((__packed__)) xf_route_port_msg_t;
+}	__attribute__((__packed__, __aligned__(sizeof(xf_msg_id_dtype)))) xf_route_port_msg_t;
 
 /*******************************************************************************
  * XF_UNROUTE definition
@@ -308,7 +308,7 @@ typedef struct xf_unroute_port_msg
 	/* ...destination port specification */
 	xf_msg_id_dtype         dst;
 
-}	__attribute__((__packed__)) xf_unroute_port_msg_t;
+}	__attribute__((__packed__, __aligned__(sizeof(xf_msg_id_dtype)))) xf_unroute_port_msg_t;
 
 #ifndef XA_DISABLE_EVENT
 /*******************************************************************************
@@ -339,7 +339,7 @@ typedef struct xf_event_channel_msg
 	/* ...alignment restriction for a buffer */
 	UWORD32                 alloc_align;
 
-}	__attribute__((__packed__)) xf_event_channel_msg_t;
+}	__attribute__((__packed__, __aligned__(sizeof(xf_msg_id_dtype)))) xf_event_channel_msg_t;
 
 /*******************************************************************************
  * XF_EVENT_CHANNEL_DELETE definition
@@ -360,7 +360,7 @@ typedef struct xf_event_channel_delete_msg
     /* ... dest command */
     UWORD32                 dst_cfg_param;
 
-}	__attribute__((__packed__)) xf_event_channel_delete_msg_t;
+}	__attribute__((__packed__, __aligned__(sizeof(xf_msg_id_dtype)))) xf_event_channel_delete_msg_t;
 #endif  /* XA_DISABLE_EVENT */
 
 /*******************************************************************************
@@ -379,6 +379,4 @@ typedef struct xf_set_priorities_msg
     /* priority for background/default processing */
     UWORD32 bg_priority;
 
-    /* stack size for worker threads */
-    UWORD32 stack_size;
 } xf_set_priorities_msg_t;

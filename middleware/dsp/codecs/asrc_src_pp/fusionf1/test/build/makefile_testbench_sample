@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2011-2020 Cadence Design Systems, Inc.
+# Copyright (c) 2011-2023 Cadence Design Systems, Inc.
 # 
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -28,7 +28,7 @@ DEV_SUFFIX?=_hifi3
 
 
 #all: 	   build_src_pp	  build_src384k_pp
-all: 	   build_src_pp
+all: 	   build_src_pp   
 clean: 	   clean_src_pp
 install: install_src_pp
 runall:      run_src_pp
@@ -47,6 +47,7 @@ endif
 
 ifeq ("$(APP_NAME)", "src384k_pp")
 CFLAGS+=-DUSE_SRC384KHZ_TRIMMED_LIBRARY
+CFLAGS += -DSUPPORT_384KHZ -DTRIMMED_384kHzSPL
 else
 ifneq ($(DISABLE_ASRC),1)
 CFLAGS+=-DASRC_ENABLE
@@ -67,7 +68,6 @@ SRCDIRS = \
     $(TESTDIR)/src \
 
 INCLUDE_DIRS = \
-    $(TESTDIR)/include \
     include 
 
 ifdef STD_FILES
@@ -92,6 +92,8 @@ build_srcplus_pp:
 	make -f $(THIS_MAKEFILE) app_build APP_NAME=srcplus_pp
 
 build_src384k_pp:
+	make -f $(THIS_MAKEFILE) app_build APP_NAME=src384k_pp
+src384k_pp:
 	make -f $(THIS_MAKEFILE) app_build APP_NAME=src384k_pp
 	
 clean_src_pp:

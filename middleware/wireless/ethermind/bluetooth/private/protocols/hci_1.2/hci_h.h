@@ -23,12 +23,14 @@
 #define HCI_START_OF_L2CAP_PACKET                   0x02U
 #define HCI_CONTINUATION_OF_L2CAP_PACKET            0x01U
 
+#if (defined BT_PBF || defined BT_4_0)
 /**
  * Non - Automatically - Flushable Packet Boundary Flag
  * introduced with 2.1+EDR Specification
  */
 #define HCI_START_OF_NON_FLUSHABLE_L2CAP_PACKET     0x00U
 #define HCI_START_OF_FLUSHABLE_L2CAP_PACKET         0x02U
+#endif /* (defined BT_PBF || defined BT_4_0) */
 
 #ifdef HCI_ISO_DATA
 /** Packet Boundary Flag in the ISO Data Header */
@@ -64,6 +66,18 @@ API_RESULT hci_transport_read_data
                UCHAR *  packet,
                UINT16   length
            );
+
+#ifndef HCI_TX_RUN_TIME_SELECTION
+API_RESULT hci_transport_write_data
+           (
+               UCHAR    packet_type,
+               UCHAR *  packet_data,
+               UINT16   packet_len,
+               UCHAR    flag
+           );
+#else /* HCI_TX_RUN_TIME_SELECTION */
+extern HCI_TRANSPORT_CB hci_transport_write_data;
+#endif /* HCI_TX_RUN_TIME_SELECTION */
 
 /** Function to handle invalid packet type received at the HCI Transport */
 #ifdef HT_ENABLE_INVALID_RX_IND

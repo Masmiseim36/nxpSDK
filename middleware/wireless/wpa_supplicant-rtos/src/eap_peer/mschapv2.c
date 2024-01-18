@@ -8,7 +8,9 @@
 
 #include "includes.h"
 
-#include "common.h"
+#ifdef CONFIG_EAP_MSCHAPV2
+
+#include "utils/common.h"
 #include "crypto/ms_funcs.h"
 #include "mschapv2.h"
 
@@ -108,3 +110,5 @@ int mschapv2_verify_auth_response(const u8 *auth_response, const u8 *buf, size_t
         return -1;
     return 0;
 }
+
+#endif /* CONFIG_EAP_MSCHAPV2 */

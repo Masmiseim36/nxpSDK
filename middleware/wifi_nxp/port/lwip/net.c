@@ -140,7 +140,7 @@ char *ipv6_addr_state_to_desc(unsigned char addr_state)
     }
 }
 
-char *ipv6_addr_addr_to_desc(struct ipv6_config *ipv6_conf)
+char *ipv6_addr_addr_to_desc(struct net_ipv6_config *ipv6_conf)
 {
     ip6_addr_t ip6_addr;
 
@@ -149,7 +149,7 @@ char *ipv6_addr_addr_to_desc(struct ipv6_config *ipv6_conf)
     return inet6_ntoa(ip6_addr);
 }
 
-char *ipv6_addr_type_to_desc(struct ipv6_config *ipv6_conf)
+char *ipv6_addr_type_to_desc(struct net_ipv6_config *ipv6_conf)
 {
     ip6_addr_t ip6_addr;
 
@@ -356,9 +356,7 @@ static int net_netif_deinit(struct netif *netif)
 
     if (netif->state != NULL)
     {
-#ifndef CONFIG_WPA_SUPP
         mem_free(netif->state);
-#endif
         netif->state = NULL;
     }
 
@@ -610,11 +608,10 @@ void net_interface_dhcp_cleanup(void *intrfc_handle)
     (void)dhcp_cleanup(&if_handle->netif);
 }
 
-int net_configure_address(struct wlan_ip_config *addr, void *intrfc_handle)
+int net_configure_address(struct net_ip_config *addr, void *intrfc_handle)
 {
 #ifdef CONFIG_IPV6
     t_u8 i;
-    ip_addr_t zero_addr = IPADDR6_INIT_HOST(0x0, 0x0, 0x0, 0x0);
 #endif
 
     if (addr == NULL)
@@ -629,20 +626,23 @@ int net_configure_address(struct wlan_ip_config *addr, void *intrfc_handle)
     interface_t *if_handle = (interface_t *)intrfc_handle;
 
     net_d("configuring interface %s (with %s)", (if_handle == &g_mlan) ? "mlan" : "uap",
-          (addr->ipv4.addr_type == ADDR_TYPE_DHCP) ? "DHCP client" : "Static IP");
+          (addr->ipv4.addr_type == NET_ADDR_TYPE_DHCP) ? "DHCP client" : "Static IP");
 
     (void)netifapi_netif_set_down(&if_handle->netif);
     wm_netif_status_callback_ptr = NULL;
 
 #ifdef CONFIG_IPV6
-    if (if_handle == &g_mlan)
+    if (if_handle == &g_mlan || if_handle == &g_uap)
     {
         LOCK_TCPIP_CORE();
 
         for (i = 0; i < CONFIG_MAX_IPV6_ADDRESSES; i++)
         {
-            netif_ip6_addr_set(&if_handle->netif, i, ip_2_ip6(&zero_addr));
-            netif_ip6_addr_set_state(&if_handle->netif, i, IP6_ADDR_INVALID);
+            if (if_handle->netif.ip6_addr_state[i] != IP6_ADDR_INVALID)
+            {
+                netif_ip6_addr_set_state(&if_handle->netif, i, IP6_ADDR_INVALID);
+                netif_ip6_addr_set(&if_handle->netif, i, IP6_ADDR_ANY6);
+            }
         }
 
         netif_create_ip6_linklocal_address(&if_handle->netif, 1);
@@ -664,7 +664,7 @@ int net_configure_address(struct wlan_ip_config *addr, void *intrfc_handle)
     }
     switch (addr->ipv4.addr_type)
     {
-        case ADDR_TYPE_STATIC:
+        case NET_ADDR_TYPE_STATIC:
             ip_2_ip4(&(if_handle->ipaddr))->addr = addr->ipv4.address;
             ip_2_ip4(&(if_handle->nmask))->addr  = addr->ipv4.netmask;
             ip_2_ip4(&(if_handle->gw))->addr     = addr->ipv4.gw;
@@ -673,7 +673,7 @@ int net_configure_address(struct wlan_ip_config *addr, void *intrfc_handle)
             (void)netifapi_netif_set_up(&if_handle->netif);
             break;
 
-        case ADDR_TYPE_DHCP:
+        case NET_ADDR_TYPE_DHCP:
             /* Reset the address since we might be
                transitioning from static to DHCP */
             (void)memset(&if_handle->ipaddr, 0, sizeof(ip_addr_t));
@@ -686,7 +686,7 @@ int net_configure_address(struct wlan_ip_config *addr, void *intrfc_handle)
             wm_netif_status_callback_ptr = wm_netif_status_callback;
             (void)netifapi_dhcp_start(&if_handle->netif);
             break;
-        case ADDR_TYPE_LLA:
+        case NET_ADDR_TYPE_LLA:
             /* For dhcp, instead of netifapi_netif_set_up, a
                netifapi_dhcp_start() call will be used */
             net_e("Not supported as of now...");
@@ -719,7 +719,7 @@ int net_configure_address(struct wlan_ip_config *addr, void *intrfc_handle)
     return WM_SUCCESS;
 }
 
-int net_get_if_addr(struct wlan_ip_config *addr, void *intrfc_handle)
+int net_get_if_addr(struct net_ip_config *addr, void *intrfc_handle)
 {
     const ip_addr_t *tmp;
     interface_t *if_handle = (interface_t *)intrfc_handle;
@@ -737,7 +737,7 @@ int net_get_if_addr(struct wlan_ip_config *addr, void *intrfc_handle)
 }
 
 #ifdef CONFIG_IPV6
-int net_get_if_ipv6_addr(struct wlan_ip_config *addr, void *intrfc_handle)
+int net_get_if_ipv6_addr(struct net_ip_config *addr, void *intrfc_handle)
 {
     interface_t *if_handle = (interface_t *)intrfc_handle;
     int i;
@@ -751,7 +751,7 @@ int net_get_if_ipv6_addr(struct wlan_ip_config *addr, void *intrfc_handle)
     return WM_SUCCESS;
 }
 
-int net_get_if_ipv6_pref_addr(struct wlan_ip_config *addr, void *intrfc_handle)
+int net_get_if_ipv6_pref_addr(struct net_ip_config *addr, void *intrfc_handle)
 {
     int i, ret = 0;
     interface_t *if_handle = (interface_t *)intrfc_handle;
@@ -802,11 +802,11 @@ int net_get_if_ip_mask(uint32_t *nm, void *intrfc_handle)
     return WM_SUCCESS;
 }
 
-void net_configure_dns(struct wlan_ip_config *ip, enum wlan_bss_role role)
+void net_configure_dns(struct net_ip_config *ip, unsigned int role)
 {
     ip4_addr_t tmp;
 
-    if (ip->ipv4.addr_type == ADDR_TYPE_STATIC)
+    if (ip->ipv4.addr_type == NET_ADDR_TYPE_STATIC)
     {
         if (role != WLAN_BSS_ROLE_UAP)
         {

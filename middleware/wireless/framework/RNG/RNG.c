@@ -1,13 +1,12 @@
 /*! *********************************************************************************
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017, 2019 NXP
+ * Copyright 2016-2017, 2019, 2023 NXP
  * All rights reserved.
  *
  * \file
  *
  * SPDX-License-Identifier: BSD-3-Clause
  ********************************************************************************** */
-
 #include "RNG_Interface.h"
 #include "FunctionLib.h"
 #include "SecLib.h"
@@ -17,7 +16,9 @@
 
 #if defined ELEMU_VER_FEATURE
 /* TODO move to platform config file */
+#ifndef gRngUseSecureSubSystem_d
 #define gRngUseSecureSubSystem_d 1
+#endif
 #endif
 
 #if defined(CPU_MCXW345CHNA)
@@ -48,21 +49,17 @@
 * Private macros
 *************************************************************************************
 ********************************************************************************** */
+
 #ifndef gRNG_UsePhyRngForInitialSeed_d
 #define gRNG_UsePhyRngForInitialSeed_d 0
 #endif
 
-#define mPRNG_NoOfBits_c      (256U)
-#define mPRNG_NoOfBytes_c     (mPRNG_NoOfBits_c / 8U)
-#define mPRNG_NoOfLongWords_c (mPRNG_NoOfBits_c / 32U)
+extern osa_status_t SecLibMutexCreate(void);
+extern osa_status_t SecLibMutexLock(void);
+extern osa_status_t SecLibMutexUnlock(void);
 
-#if USE_RTOS && gRngUseMutex_c
-#define RNG_MUTEX_LOCK()   OSA_MutexLock((osa_mutex_handle_t)rng_ctx.mRngMutexId, osaWaitForever_c)
-#define RNG_MUTEX_UNLOCK() OSA_MutexUnlock((osa_mutex_handle_t)rng_ctx.mRngMutexId)
-#else
-#define RNG_MUTEX_LOCK()
-#define RNG_MUTEX_UNLOCK()
-#endif /* USE_RTOS */
+#define RNG_MUTEX_LOCK()   (void)SecLibMutexLock()
+#define RNG_MUTEX_UNLOCK() (void)SecLibMutexUnlock()
 
 #define mPRNG_NoOfBits_c      (256U)
 #define mPRNG_NoOfBytes_c     (mPRNG_NoOfBits_c / 8U)
@@ -76,6 +73,12 @@
     }
 #endif
 
+#if ((defined(FSL_FEATURE_SOC_TRNG_COUNT)) && (FSL_FEATURE_SOC_TRNG_COUNT > 0U))
+#if (defined(RW610_SERIES) || defined(RW612_SERIES))
+#define TRNG0      TRNG
+#define TRNG0_IRQn TRNG_IRQn
+#endif
+#endif
 typedef struct rng_ctx_t
 {
     bool_t Initialized;
@@ -86,11 +89,6 @@ typedef struct rng_ctx_t
     uint32_t XKEY[mPRNG_NoOfLongWords_c];
     uint32_t mPRNG_Requests;
 #endif
-#if USE_RTOS && gRngUseMutex_c
-    /*! Mutex used to protect RNG Contexts when a RTOS is used. */
-    OSA_MUTEX_HANDLE_DEFINE(mRngMutexId);
-#endif /* USE_RTOS */
-
 } RNG_context_t;
 
 /*! *********************************************************************************
@@ -98,7 +96,6 @@ typedef struct rng_ctx_t
 * Private memory declarations
 *************************************************************************************
 ********************************************************************************** */
-
 static RNG_context_t rng_ctx = {
     .Initialized = FALSE,
     .mPrngSeeded = FALSE,
@@ -166,14 +163,9 @@ uint8_t RNG_Init(void)
         {
             break;
         }
-#if USE_RTOS && gRngUseMutex_c
-        /*! Initialize the Rng Mutex here. */
-        if (KOSA_StatusSuccess != OSA_MutexCreate((osa_mutex_handle_t)rng_ctx.mRngMutexId))
-        {
-            status = gRngInternalError_d;
-            break;
-        }
-#endif
+        /* Create SecLib mutex here in case it was not done already.
+         * Does nothing without error otherwise */
+        (void)SecLibMutexCreate();
 #if defined(gRngSeedHwParamStorage_d) || defined(gRngSeedStorageAddr_d)
         seed = Rng_read_seed_from_flash();
         /* A valid seed has been stored to NVM */
@@ -203,6 +195,14 @@ uint8_t RNG_Init(void)
     } while (false);
     /* Init Successful */
     return status;
+}
+
+void RNG_ReInit(void)
+{
+#if gRngUseSecureSubSystem_d
+    (void)CRYPTO_ReinitHardware();
+#endif
+    return;
 }
 
 /*! *********************************************************************************
@@ -480,7 +480,9 @@ static bool_t mRngDisallowMcuSleep = FALSE;
 #define RNG_DisallowDeviceToSleep()
 #define RNG_AllowDeviceToSleep()
 #endif
-
+#if (defined(RW610_SERIES) || defined(RW612_SERIES))
+#define TRNG0 TRNG
+#endif
 static void TRNG_GoToSleep(void)
 {
     if ((TRNG0->MCTL & TRNG_MCTL_ENT_VAL_MASK) != 0U)
@@ -648,7 +650,7 @@ uint8_t RNG_Specific_GetRandomU32(uint32_t *pRandomNo, int16_t *returned_bytes)
     return gRngInternalError_d;
 }
 
-#elif defined gRngUseSecureSubSystem_d || (gRngUseSecureSubSystem_d != 0)
+#elif defined gRngUseSecureSubSystem_d && (gRngUseSecureSubSystem_d != 0)
 static uint16_t _RNG_SSS_Get_RndBytes(uint8_t *pOut, uint16_t outBytes)
 {
     uint16_t       outputBytes = 0;

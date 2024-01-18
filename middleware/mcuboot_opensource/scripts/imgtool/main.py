@@ -22,6 +22,7 @@ import click
 import getpass
 import imgtool.keys as keys
 import sys
+import base64
 from imgtool import image, imgtool_version
 from imgtool.version import decode_version
 from .keys import (
@@ -59,6 +60,7 @@ def gen_x25519(keyfile, passwd):
 
 
 valid_langs = ['c', 'rust']
+valid_encodings = ['lang-c', 'lang-rust', 'pem']
 keygens = {
     'rsa-2048':   gen_rsa2048,
     'rsa-3072':   gen_rsa3072,
@@ -67,6 +69,19 @@ keygens = {
     'ed25519':    gen_ed25519,
     'x25519':     gen_x25519,
 }
+valid_formats = ['openssl', 'pkcs8']
+
+
+def load_signature(sigfile):
+    with open(sigfile, 'rb') as f:
+        signature = base64.b64decode(f.read())
+        return signature
+
+
+def save_signature(sigfile, sig):
+    with open(sigfile, 'wb') as f:
+        signature = base64.b64encode(sig)
+        f.write(signature)
 
 
 def load_key(keyfile):
@@ -103,20 +118,35 @@ def keygen(type, key, password):
     keygens[type](key, password)
 
 
-@click.option('-l', '--lang', metavar='lang', default=valid_langs[0],
-              type=click.Choice(valid_langs))
+@click.option('-l', '--lang', metavar='lang',
+              type=click.Choice(valid_langs),
+              help='This option is deprecated. Please use the '
+                   '`--encoding` option. '
+                   'Valid langs: {}'.format(', '.join(valid_langs)))
+@click.option('-e', '--encoding', metavar='encoding',
+              type=click.Choice(valid_encodings),
+              help='Valid encodings: {}'.format(', '.join(valid_encodings)))
 @click.option('-k', '--key', metavar='filename', required=True)
 @click.command(help='Dump public key from keypair')
-def getpub(key, lang):
+def getpub(key, encoding, lang):
+    if encoding and lang:
+        raise click.UsageError('Please use only one of `--encoding/-e` '
+                               'or `--lang/-l`')
+    elif not encoding and not lang:
+        # Preserve old behavior defaulting to `c`. If `lang` is removed,
+        # `default=valid_encodings[0]` should be added to `-e` param.
+        lang = valid_langs[0]
     key = load_key(key)
     if key is None:
         print("Invalid passphrase")
-    elif lang == 'c':
+    elif lang == 'c' or encoding == 'lang-c':
         key.emit_c_public()
-    elif lang == 'rust':
+    elif lang == 'rust' or encoding == 'lang-rust':
         key.emit_rust_public()
+    elif encoding == 'pem':
+        key.emit_public_pem()
     else:
-        raise ValueError("BUG: should never get here!")
+        raise click.UsageError()
 
 
 @click.option('--minimal', default=False, is_flag=True,
@@ -125,13 +155,17 @@ def getpub(key, lang):
                    'might require changes to the build config. Check the docs!'
               )
 @click.option('-k', '--key', metavar='filename', required=True)
+@click.option('-f', '--format',
+              type=click.Choice(valid_formats),
+              help='Valid formats: {}'.format(', '.join(valid_formats))
+              )
 @click.command(help='Dump private key from keypair')
-def getpriv(key, minimal):
+def getpriv(key, minimal, format):
     key = load_key(key)
     if key is None:
         print("Invalid passphrase")
     try:
-        key.emit_private(minimal)
+        key.emit_private(minimal, format)
     except (RSAUsageError, ECDSAUsageError, Ed25519UsageError,
             X25519UsageError) as e:
         raise click.UsageError(e)
@@ -251,7 +285,7 @@ class BasedIntParamType(click.ParamType):
               help='Encrypt image using the provided public key. '
                    '(Not supported in direct-xip or ram-load mode.)')
 @click.option('--encrypt-keylen', default='128',
-              type=click.Choice(['128','256']),
+              type=click.Choice(['128', '256']),
               help='When encrypting the image using AES, select a 128 bit or '
                    '256 bit key len.')
 @click.option('-c', '--clear', required=False, is_flag=True, default=False,
@@ -303,6 +337,18 @@ class BasedIntParamType(click.ParamType):
               default='hash', help='In what format to add the public key to '
               'the image manifest: full key or hash of the key.')
 @click.option('-k', '--key', metavar='filename')
+@click.option('--fix-sig', metavar='filename',
+              help='fixed signature for the image. It will be used instead of '
+              'the signature calculated using the public key')
+@click.option('--fix-sig-pubkey', metavar='filename',
+              help='public key relevant to fixed signature')
+@click.option('--sig-out', metavar='filename',
+              help='Path to the file to which signature will be written. '
+              'The image signature will be encoded as base64 formatted string')
+@click.option('--vector-to-sign', type=click.Choice(['payload', 'digest']),
+              help='send to OUTFILE the payload or payload''s digest instead '
+              'of complied image. These data can be used for external image '
+              'signing')
 @click.command(help='''Create a signed or unsigned image\n
                INFILE and OUTFILE are parsed as Intel HEX if the params have
                .hex extension, otherwise binary format is used''')
@@ -310,7 +356,8 @@ def sign(key, public_key_format, align, version, pad_sig, header_size,
          pad_header, slot_size, pad, confirm, max_sectors, overwrite_only,
          endian, encrypt_keylen, encrypt, infile, outfile, dependencies,
          load_addr, hex_addr, erased_val, save_enctlv, security_counter,
-         boot_record, custom_tlv, rom_fixed, max_align, clear):
+         boot_record, custom_tlv, rom_fixed, max_align, clear, fix_sig,
+         fix_sig_pubkey, sig_out, vector_to_sign):
 
     if confirm:
         # Confirmed but non-padded images don't make much sense, because
@@ -356,9 +403,31 @@ def sign(key, public_key_format, align, version, pad_sig, header_size,
         else:
             custom_tlvs[tag] = value.encode('utf-8')
 
+    # Allow signature calculated externally.
+    raw_signature = load_signature(fix_sig) if fix_sig else None
+
+    baked_signature = None
+    pub_key = None
+
+    if raw_signature is not None:
+        if fix_sig_pubkey is None:
+            raise click.UsageError(
+                'public key of the fixed signature is not specified')
+
+        pub_key = load_key(fix_sig_pubkey)
+
+        baked_signature = {
+            'value': raw_signature
+        }
+
     img.create(key, public_key_format, enckey, dependencies, boot_record,
-               custom_tlvs, int(encrypt_keylen), clear)
+               custom_tlvs, int(encrypt_keylen), clear, baked_signature,
+               pub_key, vector_to_sign)
     img.save(outfile, hex_addr)
+
+    if sig_out is not None:
+        new_signature = img.get_signature()
+        save_signature(sig_out, new_signature)
 
 
 class AliasesGroup(click.Group):

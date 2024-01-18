@@ -1,6 +1,6 @@
 /*! *********************************************************************************
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017, 2019-2021 NXP
+ * Copyright 2016-2017, 2019-2023 NXP
  * All rights reserved.
  *
  * \file
@@ -15,16 +15,36 @@
 #include "FunctionLib.h"
 #include "fsl_os_abstraction.h"
 
+#if defined gNvDebugEnabled_d && (gNvDebugEnabled_d > 0)
+#include <stdio.h> /* required for sprintf */
+#include "fsl_debug_console.h"
+//#define NV_DEBUG 1
+#endif
+
 #if gUnmirroredFeatureSet_d
 #include "fsl_component_mem_manager.h"
 #endif
 
-#if (gNvUseFlexNVM_d == TRUE)
-#include "fsl_adapter_reset.h"
-#endif /* gNvUseFlexNVM_d == TRUE */
+#if ((defined(gNvmEnableFSCIMonitoring_c)) && (gNvmEnableFSCIMonitoring_c > 0U))
+#if !((defined(gFsciIncluded_c)) && (gFsciIncluded_c > 0U))
+#error "NVM FSCI monitoring requires gFsciIncluded_c to be sat to TRUE"
+#endif
+#endif
 
-#if (((defined(gFsciIncluded_c)) && (gFsciIncluded_c > 0U)) && (gNvmEnableFSCIRequests_c || gNvmEnableFSCIMonitoring_c))
+#if (gNvmEnableFSCIRequests_c || gNvmEnableFSCIMonitoring_c)
 #include "NV_FsciCommands.h"
+#endif
+
+#if (gNvmEnableFSCIMonitoring_c)
+#define FSCI_NV_VIRT_PAGE_ERASE_MONITOR(_cond_, _status_) FSCI_MsgNVPageEraseMonitoring(_cond_, _status_)
+#define FSCI_NV_WRITE_MONITOR(_id__, _elt_idx_, _all_)    FSCI_MsgNVWriteMonitoring(_id__, _elt_idx_, _all_)
+#define FSCI_NV_RESTORE_MONITOR(_id_, _bstart_, _status_) FSCI_MsgNVRestoreMonitoring(_id_, _bstart_, _status_)
+#define FSCI_NV_VIRT_PAGE_MONITOR(_bstart_, _status_)     FSCI_MsgNVVirtualPageMonitoring(_bstart_, _status_)
+#else
+#define FSCI_NV_VIRT_PAGE_ERASE_MONITOR(_cond_, _status_)
+#define FSCI_NV_WRITE_MONITOR(_id__, _elt_idx_, _all_)
+#define FSCI_NV_RESTORE_MONITOR(_id_, _bstart_, _status_)
+#define FSCI_NV_VIRT_PAGE_MONITOR(_bstart_, _status_)
 #endif
 
 /*****************************************************************************
@@ -32,6 +52,13 @@
  * Private macros
  *****************************************************************************
  *****************************************************************************/
+
+#if defined(__IAR_SYSTEMS_ICC__)
+#define __RAMFUNC __ramfunc
+#elif defined(__GNUC__)
+#define __RAMFUNC __attribute__((section(".ramfunc"))) __attribute__((__noinline__))
+#endif
+
 __attribute__((weak)) uint64_t TM_GetTimestamp(void);
 __attribute__((weak)) uint64_t TM_GetTimestamp(void)
 {
@@ -43,21 +70,13 @@ __attribute__((weak)) void RNG_GetRandomNo(uint32_t *pRandomNo)
 {
     *pRandomNo = 0x123;
 }
-#define NV_FlashRead(pSrc, pDest, size) (void)HAL_FlashRead((uint32_t)(pSrc), size, (uint8_t *)(pDest));
 
 #if gNvStorageIncluded_d
 
 #if (gUnmirroredFeatureSet_d == TRUE)
-#if (gNvUseFlexNVM_d == TRUE)
-#error "*** ERROR: gUnmirroredFeatureSet_d not implemented on FlexNVM"
-#endif
 #if (gNvFragmentation_Enabled_d == FALSE)
 #error "*** ERROR: gNvFragmentation_Enabled_d should be enabled for gUnmirroredFeatureSet_d"
 #endif
-#endif
-
-#if ((gNvUseFlexNVM_d == TRUE) && (gNvUseExtendedFeatureSet_d == TRUE))
-#error "*** ERROR: gNvUseExtendedFeatureSet_d not available on FlexNVM"
 #endif
 
 /*
@@ -94,20 +113,6 @@ __attribute__((weak)) void RNG_GetRandomNo(uint32_t *pRandomNo)
  */
 #define gNvLegacyOffset_c 4U
 
-#if (gNvUseFlexNVM_d == TRUE) /* FlexNVM */
-/*
- * Name: gEEPROM_DATA_SET_SIZE_CODE_c
- * Description: EEPROM Data set size code
- */
-#define gEEPROM_DATA_SET_SIZE_CODE_c (0x31U)
-
-/*
- * Name: gFLEXNVM_PARTITION_CODE_c
- * Description: FlexNVM partition code
- */
-#define gFLEXNVM_PARTITION_CODE_c (0x8U)
-#endif /* (gNvUseFlexNVM_d == TRUE) */
-
 #endif /* gNvStorageIncluded_d */
 
 #if (!defined(GCOV_DO_COVERAGE) || (GCOV_DO_COVERAGE == 0))
@@ -117,6 +122,17 @@ __attribute__((weak)) void RNG_GetRandomNo(uint32_t *pRandomNo)
 #define NVM_STATIC __WEAK
 #define NVM_PUBLIC __WEAK
 #endif
+
+/*
+ * Increment index modulo gNvPendingSavesQueueSize_c
+ */
+#define INCREMENT_Q_INDEX(x)                               \
+    {                                                      \
+        if (++(x) == (uint16_t)gNvPendingSavesQueueSize_c) \
+        {                                                  \
+            (x) = 0;                                       \
+        }                                                  \
+    }
 
 /*****************************************************************************
  *****************************************************************************
@@ -173,9 +189,7 @@ NVM_STATIC NVM_Status_t __NvEraseEntryFromStorage(uint16_t entryId, uint16_t tab
  * Parameter(s): -
  * Return: -
  *****************************************************************************/
-#if (gNvUseFlexNVM_d == FALSE) /* no FlexNVM */
 NVM_STATIC void InitNVMConfig(void);
-#endif
 
 /******************************************************************************
  * Name: __NvAtomicSave
@@ -231,9 +245,9 @@ NVM_STATIC NVM_Status_t __NvFormat(void);
  *              FreeRTOS) to process the pending saves, erase or copy
  *              operations.
  * Parameters: -
- * Return: -
+ * Return: Number of operations executed.
  ******************************************************************************/
-NVM_STATIC void __NvIdle(void);
+NVM_STATIC int __NvIdle(void);
 /******************************************************************************
  * Name: __NvIsDataSetDirty
  * Description: return TRUE if the element pointed by ptrData is dirty
@@ -288,7 +302,7 @@ NVM_STATIC NVM_Status_t __NvSaveOnInterval(void *ptrData);
  * Name: __NvSaveOnIdle
  * Description: Save the data pointed by ptrData on the next call to NvIdle()
  * Parameter(s): [IN] ptrData - pointer to data to be saved
- *               [IN] saveRestoreAll - specify if all the elements from the NVM table
+ *               [IN] saveAll - specify if all the elements from the NVM table
  *                              entry shall be saved
  * Return: gNVM_OK_c - if operation completed successfully
  *         gNVM_Error_c - in case of error(s)
@@ -349,18 +363,53 @@ NVM_STATIC void __NvmRestoreUnmirrored(void);
  * Name: NvInitPendingSavesQueue
  * Description: Initialize the pending saves queue
  * Parameters: [IN] pQueue - pointer to queue
- * Return: TRUE if the pointer is valid, FALSE otherwise
+ * Return: none
  ******************************************************************************/
-NVM_STATIC bool_t NvInitPendingSavesQueue(NVM_SaveQueue_t *pQueue);
+NVM_STATIC void NvInitPendingSavesQueue(NVM_SaveQueue_t *pQueue);
 
 /******************************************************************************
  * Name: NvPushPendingSave
- * Description: Add a new pending save to the queue
+ * Description: Add a new pending save to the queue tail
  * Parameters: [IN] pQueue - pointer to queue
  *             [IN] data - data to be saved
  * Return: TRUE if the push operation succeeded, FALSE otherwise
  ******************************************************************************/
 NVM_STATIC bool_t NvPushPendingSave(NVM_SaveQueue_t *pQueue, NVM_TableEntryInfo_t data);
+
+/******************************************************************************
+ * Name: NvGetPendingSaveHead
+ * Description: Retrieves the head element from the pending saves queue leaving=
+ *              it at head position. Also see NvPopPendingSave.
+ * Parameters: [IN] pQueue - pointer to queue
+ *             [OUT] pData - pointer to the location where data will be placed
+ * Return: TRUE if the get head operation succeeded, FALSE otherwise
+ ******************************************************************************/
+NVM_STATIC bool_t NvGetPendingSaveHead(NVM_SaveQueue_t *pQueue, NVM_TableEntryInfo_t *pData);
+
+/******************************************************************************
+ * Name: NvRemovePendingSaveHead
+ * Description: Consume pending save queue head by incrementing its head index.
+ *              Also see NvPopPendingSave.
+ * Parameters: [IN] pQueue - pointer to queue
+ * Return: none
+ ******************************************************************************/
+NVM_STATIC void NvRemovePendingSaveHead(NVM_SaveQueue_t *pQueue);
+
+/******************************************************************************
+ * Name: NvLookAheadInPendingSaveQueue
+ * Description: Search through pending save queue if an update is pending on the
+ *              element designated by an id and index.
+ *
+ * Parameters: [IN] pQueue - pointer to queue
+ *             [IN] searched_id
+ *             [IN] searched_index
+ *
+ * Return: op_type of pending operation OP_NONE if not found,
+ *         OP_SAVE_ALL or OP_SAVE_SINGLE if found
+ ******************************************************************************/
+NVM_STATIC uint8_t NvLookAheadInPendingSaveQueue(NVM_SaveQueue_t *pQueue,
+                                                 uint16_t         searched_id,
+                                                 uint16_t         searched_index);
 
 /******************************************************************************
  * Name: NvPopPendingSave
@@ -379,12 +428,7 @@ NVM_STATIC bool_t NvPopPendingSave(NVM_SaveQueue_t *pQueue, NVM_TableEntryInfo_t
  ******************************************************************************/
 NVM_STATIC uint16_t NvGetPendingSavesCount(NVM_SaveQueue_t *pQueue);
 
-/*****************************************************************
- * The below functions are compiled only if FlexNVM is NOT used
- *****************************************************************/
-
-#if (gNvUseFlexNVM_d == FALSE) /* no FlexNVM */
-
+#if (!defined(gNvLegacyTable_Disabled_d) || (gNvLegacyTable_Disabled_d == 0))
 /******************************************************************************
  * Name: UpgradeLegacyTable
  * Description: Upgrades an legacy table to the new format
@@ -392,6 +436,7 @@ NVM_STATIC uint16_t NvGetPendingSavesCount(NVM_SaveQueue_t *pQueue);
  * Return: -
  *****************************************************************************/
 NVM_STATIC NVM_Status_t UpgradeLegacyTable(void);
+#endif
 
 /******************************************************************************
  * Name: NvUpdateSize
@@ -415,7 +460,8 @@ NVM_STATIC NVM_Status_t NvEraseVirtualPage(NVM_VirtualPageID_t pageID);
  * Name: NvInitStorageSystem
  * Description: Initialize the storage system, retrieve the active page and
  *              the page counter. Called once by NvModuleInit() function.
- * Parameter(s): [IN] read_legacy_location - if  set to true, the reads will be made on legacy page counter locations
+ * Parameter(s): [IN] read_legacy_location - if  set to true, the reads will be
+ *               made on legacy page counter locations
  * Return: -
  *****************************************************************************/
 NVM_STATIC void NvInitStorageSystem(bool_t read_legacy_location);
@@ -536,6 +582,36 @@ NVM_STATIC NVM_Status_t NvInternalDefragmentedCopy(uint32_t              srcMeta
                                                    NVM_RecordMetaInfo_t *ownerRecordMetaInfo);
 #endif /* #if gNvFragmentation_Enabled_d */
 
+#if defined gNvDebugEnabled_d && (gNvDebugEnabled_d > 0)
+/******************************************************************************
+ * Name: NV_ShowPageMetas
+ * Description: Dump NVM page entry table meta data.
+ * Parameter(s): [IN] page_id - page whose meta data are to be dumped.
+ *               [IN] ecc_checks TRUE if ECC detection is required
+ * Return: -
+ *****************************************************************************/
+NVM_STATIC void NV_ShowPageMetas(NVM_VirtualPageID_t page_id, bool ecc_checks);
+/******************************************************************************
+ * Name: NV_ShowPageTableInfo
+ * Description: Dump NVM page entry table meta data.
+ * Parameter(s): [IN] page_id - page whose table info is to be dumped.
+ *               [IN] ecc_checks TRUE if ECC detection is required
+ * Return: -
+ *****************************************************************************/
+NVM_STATIC void NV_ShowPageTableInfo(NVM_VirtualPageID_t page_id, bool ecc_checks);
+/******************************************************************************
+ * Name: NvFlashDump
+ * Description: Dump flash contents to the debug console.
+ *              Contents are read with ECC check. If the dumped 16 byte area contains
+ *              an ECC error, 'xx' are displayed the line preeeding the fault.
+ *              Otherwise the data are dumped in lines of 16 hex bytes, one per flash phrase.
+ * Parameter(s): [IN] ptr - dump start pointer
+ *               [IN] data_size number of byte to display
+ * Return: -
+ *****************************************************************************/
+NVM_STATIC void NvFlashDump(uint8_t *ptr, uint16_t data_size);
+#endif
+
 /******************************************************************************
  * Name: NvCopyPage
  * Description: Copy the active page content to the mirror page. Only the
@@ -576,9 +652,9 @@ NVM_STATIC NVM_Status_t NvInternalFormat(uint32_t pageCounterValue);
  * Description: Saves the NV table
  * Parameter(s): [IN] pageId - the virtual page ID where the table will be
  *                             saved
- * Return: TRUE if table saved successfully, FALSE otherwise
- ******************************************************************************/
-NVM_STATIC bool_t NvSaveRamTable(NVM_VirtualPageID_t pageId);
+ * Return: gNVM_OK_c if table saved successfully, other values otherwise
+ *  ******************************************************************************/
+NVM_STATIC NVM_Status_t NvSaveRamTable(NVM_VirtualPageID_t pageId);
 
 #if gNvUseExtendedFeatureSet_d
 
@@ -609,8 +685,6 @@ NVM_STATIC bool_t NvIsRamTableUpdated(void);
  ******************************************************************************/
 NVM_STATIC bool_t NvGetTableEntry(uint16_t tblEntryId, NVM_DataEntry_t *pDataEntry);
 #endif /* gNvUseExtendedFeatureSet_d */
-
-#endif /* no FlexNVM */
 
 /******************************************************************************
  * Name: NvGetEntryFromDataPtr
@@ -691,37 +765,55 @@ NVM_STATIC NVM_Status_t NvAddSaveRequestToQueue(NVM_TableEntryInfo_t *ptrTblIdx)
  ******************************************************************************/
 NVM_STATIC uint8_t GetRandomRange(uint8_t low, uint8_t high);
 
-#if (gNvUseFlexNVM_d == TRUE) /*** FlexNVM ***/
+#if gNvDualImageSupport
+/******************************************************************************
+ * Name: NvGetEntryInfoNeedToAddInNVM
+ * Description:
+ * Parameter(s):
+ * Return: number of entries
+ ******************************************************************************/
+NVM_STATIC uint32_t NvGetEntryInfoNeedToAddInNVM(void);
+#endif
+/******************************************************************************
+ * Name: NV_FlashRead
+ * Description: Reads flash contents copying to RAM storage.
+ *
+ * Parameter(s): flash_addr destination address in flash
+ *               size length to be read
+ *               ram_buf destination in RAM to copy flash to.
+ *               check_ecc_fault if TRUE the data is read disablin ECC bus faults but notifying of error.
+ *               otherwise plain memcpy from flash to RAM.
+ * Return: statuc gNVM_OK_c if OK, gNVM_EccFault_c in case of ECC error.
+ ******************************************************************************/
+NVM_STATIC NVM_Status_t NV_FlashRead(uint32_t flash_addr, uint8_t *ram_buf, size_t size, bool_t check_ecc_fault);
 
 /******************************************************************************
- * Name: NvGetFlexLastMetaInfo
- * Description: Get FlexRAM last meta information address
- * Parameter(s): -
- * Return: the address of the last valid meta information
+ * Name: NV_FlashProgram
+ * Description: Calls HAL_FlashProgram and verifies operation reading back
+ *              flash content
+ * Parameter(s): flash_addr destination address in flash. Must be phrase aligned.
+ *               size length to be written
+ *               ram_buf source from which data are read and written to flash
+ *               catch_ecc_faults if TRUE the data is read back catching ECC faults
+ * Return: statuc gNVM_OK_c if OK, gNVM_MetaInfoWriteError_c in case of error.
  ******************************************************************************/
-NVM_STATIC uint32_t NvGetFlexLastMetaInfo(void);
+NVM_STATIC NVM_Status_t NV_FlashProgram(uint32_t flash_addr, size_t size, uint8_t *ram_buf, bool_t catch_ecc_faults);
 
 /******************************************************************************
- * Name: NvGetFlexMetaInfoFromId
- * Description: Get FlexRAM meta information tag from table entry ID
- * Parameter(s): [IN] tblEntryId - table entry ID
- *               [OUT] pMetaInfo - a pointer to a memory location where the
- *                                 meta information tag will be stored
- * Return: -
+ * Name: NV_FlashProgramUnaligned
+ * Description: Calls HAL_FlashProgramUnaligned and verifies operation reading
+ *              back flash content
+ * Parameter(s): flash_addr destination address in flash
+ *               size length to be written
+ *               ram_buf source buffer from which data are read and written to flash
+ *               catch_ecc_faults if TRUE the data is read back catching ECC faults
+ * Return: status gNVM_OK_c if OK, gNVM_RecordWriteError_c in case of error.
  ******************************************************************************/
-NVM_STATIC void NvGetFlexMetaInfoFromId(NvTableEntryId_t tblEntryId, NVM_FlexMetaInfo_t *pMetaInfo);
+NVM_STATIC NVM_Status_t NV_FlashProgramUnaligned(uint32_t flash_addr,
+                                                 size_t   size,
+                                                 uint8_t *ram_buf,
+                                                 bool_t   catch_ecc_faults);
 
-/******************************************************************************
- * Name: NvCheckNvmTableForFlexRAMUsage
- * Description: Check if the existing NVM table fits within the FlexRAM window
- * Parameter(s): -
- * Return: gNVM_NvTableExceedFlexRAMSize_c - the table exceed the size of
- *                                           FlexRAM window
- *         gNVM_OK_c - the table fits within the size of window FlexRAM window
- ******************************************************************************/
-NVM_STATIC NVM_Status_t NvCheckNvmTableForFlexRAMUsage(void);
-
-#endif /* gNvUseFlexNVM_d */
 #endif /* gNvStorageIncluded_d */
 
 /*****************************************************************************
@@ -731,17 +823,11 @@ NVM_STATIC NVM_Status_t NvCheckNvmTableForFlexRAMUsage(void);
  *****************************************************************************/
 
 #if gNvStorageIncluded_d
-
-#if (gNvUseFlexNVM_d == FALSE) /* no FlexNVM */
-
 /*
  * Name: mNvActivePageId
  * Description: variable that holds the ID of the active page
  */
-#if !gNvDebugEnabled_d
-NVM_STATIC
-#endif
-NVM_VirtualPageID_t mNvActivePageId;
+NVM_STATIC NVM_VirtualPageID_t mNvActivePageId;
 
 /*
  * Name: mNvPageCounter
@@ -749,16 +835,13 @@ NVM_VirtualPageID_t mNvActivePageId;
  *              and also to provide statistical information about
  *              how many times the virtual page was erased
  */
-NVM_STATIC uint32_t mNvPageCounter = 0;
+NVM_STATIC uint32_t mNvPageCounter = 0U;
 
 /*
  * Name: mNvVirtualPageProperty
  * Description: virtual page properties
  */
-#if !gNvDebugEnabled_d
-NVM_STATIC
-#endif
-NVM_VirtualPageProperties_t mNvVirtualPageProperty[gNvVirtualPagesCount_c];
+NVM_STATIC NVM_VirtualPageProperties_t mNvVirtualPageProperty[gNvVirtualPagesCount_c];
 
 /*
  * Name: mNvCopyOperationIsPending
@@ -797,10 +880,7 @@ NVM_STATIC uint16_t maNvRecordsCpyOffsets[gNvRecordsCopiedBufferSize_c];
  * Name: mNvTableSizeInFlash
  * Description: the size of the NV table stored in the FLASH memory
  */
-#if !gNvDebugEnabled_d
-NVM_STATIC
-#endif
-uint32_t mNvTableSizeInFlash = 0;
+NVM_STATIC uint32_t mNvTableSizeInFlash = 0U;
 
 /*
  * Name: mNvTableMarker
@@ -814,10 +894,7 @@ NVM_STATIC uint16_t mNvTableMarker = gNvTableMarker_c;
  * Description: FLASH NV application version, used for determining when table upgrade
  *              happened
  */
-#if !gNvDebugEnabled_d
-NVM_STATIC
-#endif
-uint16_t mNvFlashTableVersion = gNvFlashTableVersion_c;
+NVM_STATIC uint16_t mNvFlashTableVersion = gNvFlashTableVersion_c;
 
 /*
  * Name: mNvTableUpdated
@@ -830,8 +907,6 @@ NVM_STATIC bool_t mNvTableUpdated;
 
 #endif /* gNvUseExtendedFeatureSet_d */
 
-#endif /* no FlexNVM */
-
 /*
  * Name: mNvModuleInitialized
  * Description: variable that holds the NVM initialisation status
@@ -842,19 +917,19 @@ NVM_STATIC bool_t mNvModuleInitialized = FALSE;
  * Name: mNvCriticalSectionFlag
  * Description: If this counter is != 0, do not save to NV Storage
  */
-NVM_STATIC uint8_t mNvCriticalSectionFlag = 0;
+NVM_STATIC uint8_t mNvCriticalSectionFlag = 0U;
 
 /*
  * Name: gNvMinimumTicksBetweenSaves
  * Description: Minimum number of calls to NvTimerTick() between saves of a given data set
  */
-NVM_STATIC NvSaveInterval_t gNvMinimumTicksBetweenSaves = gNvMinimumTicksBetweenSaves_c;
+NVM_STATIC NvSaveInterval_t mNvMinimumTicksBetweenSaves = gNvMinimumTicksBetweenSaves_c;
 
 /*
  * Name: gNvCountsBetweenSaves
  * Description: Minimum number of calls to NvSaveOnIdle() between saves of a given data set
  */
-NVM_STATIC NvSaveCounter_t gNvCountsBetweenSaves = gNvCountsBetweenSaves_c;
+NVM_STATIC NvSaveCounter_t mNvCountsBetweenSaves = gNvCountsBetweenSaves_c;
 
 /*
  * Name: mNvPendingSavesQueue
@@ -878,7 +953,7 @@ NVM_STATIC bool_t mNvSaveOnIntervalEvent;
  * Name: mNvLastTimestampValue
  * Description: the value of the last timestamp used by the Save-On-Interval functionality
  */
-NVM_STATIC uint64_t mNvLastTimestampValue = 0;
+NVM_STATIC uint64_t mNvLastTimestampValue = 0U;
 
 /*
  * Name: mNVMMutexId
@@ -893,7 +968,7 @@ OSA_MUTEX_HANDLE_DEFINE(mNVMMutexId);
  * Name: mNvIdleTaskId
  * Description: stores the Id of the task which hosts NvIdle function.
  */
-static osa_task_handle_t mNvIdleTaskId = NULL;
+NVM_STATIC osa_task_handle_t mNvIdleTaskId = NULL;
 
 /*
  * Name: eraseNVMFirst
@@ -905,7 +980,7 @@ static osa_task_handle_t mNvIdleTaskId = NULL;
 #if defined(__IAR_SYSTEMS_ICC__)
 #pragma section                            = "fEraseNVM"
 #pragma location                           = "fEraseNVM"
-NVM_STATIC const uint32_t eraseNVMFirst[4] = {0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff};
+NVM_STATIC const uint32_t eraseNVMFirst[4] = {0xffffffffu, 0xffffffffu, 0xffffffffu, 0xffffffffu};
 
 /*
  * Name: eraseNVMSecond
@@ -917,7 +992,7 @@ NVM_STATIC const uint32_t eraseNVMFirst[4] = {0xffffffff, 0xffffffff, 0xffffffff
 #pragma section  = "sEraseNVM"
 #pragma location = "sEraseNVM"
 
-NVM_STATIC const uint32_t eraseNVMSecond[4] = {0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff};
+NVM_STATIC const uint32_t eraseNVMSecond[4] = {0xffffffffu, 0xffffffffu, 0xffffffffu, 0xffffffffu};
 
 #endif /* __IAR_SYSTEMS_ICC__  */
 #endif /* gNvStorageIncluded_d */
@@ -929,15 +1004,20 @@ NVM_STATIC const uint32_t eraseNVMSecond[4] = {0xffffffff, 0xffffffff, 0xfffffff
  *****************************************************************************/
 
 #if gNvStorageIncluded_d
-
-#if (gNvUseFlexNVM_d == FALSE) /* no FlexNVM */
-#if (!(defined(__CC_ARM) || defined(__UVISION_VERSION)))
+#if (!(defined(__CC_ARM) || defined(__UVISION_VERSION) || defined(__ARMCC_VERSION)))
 /*
  * Name: NV_STORAGE_START_ADDRESS
  * Description: NV_STORAGE_START_ADDRESS from linker command file is used by this code
  *              as Raw Sector Start Address.
  */
 extern uint32_t NV_STORAGE_START_ADDRESS[];
+
+/*
+ * Name: NV_STORAGE_END_ADDRESS
+ * Description: NV_STORAGE_END_ADDRESS from linker command file is used by this code
+ *              as Raw Sector End Address.
+ */
+extern uint32_t NV_STORAGE_END_ADDRESS[];
 
 /*
  * Name: NV_STORAGE_SECTOR_SIZE
@@ -964,7 +1044,6 @@ extern uint32_t Image$$NVM_region$$Length;
 #define NV_STORAGE_SECTOR_SIZE   FSL_FEATURE_FLASH_SECTOR_SIZE_BYTES
 #define NV_STORAGE_MAX_SECTORS   (NVM_LENGTH / NV_STORAGE_SECTOR_SIZE)
 #endif /* __CC_ARM */
-#endif /* no FlexNVM */
 
 /*
  * Name:  pNVM_DataTable
@@ -972,8 +1051,23 @@ extern uint32_t Image$$NVM_region$$Length;
  *              or in RAM memory. If stored in RAM, the gNVM_TABLE_startAddr_c must be updated
  *              accordingly
  */
-NVM_DataEntry_t *const pNVM_DataTable = (NVM_DataEntry_t *)gNVM_TABLE_startAddr_c;
+NVM_DataEntry_t *pNVM_DataTable = (NVM_DataEntry_t *)gNVM_TABLE_startAddr_c;
 
+NVM_STATIC uint16_t mNVM_DataTableNbEntries = 0U;
+
+#if gNvDualImageSupport
+typedef union NVM_TableAndEntryInfo_tag
+{
+    NVM_TableInfo_t tableInfo;
+    NVM_EntryInfo_t entryInfo;
+} NVM_TableAndEntryInfo_t;
+
+NVM_STATIC uint16_t mNvDiffEntryId[gNvTableEntriesCountMax_c];
+NVM_STATIC uint16_t mNvNeedAddEntryCnt = 0U;
+
+NVM_STATIC NVM_VirtualPageID_t mNvPreviousActivePageId = gVirtualPageNone_c;
+
+#endif /* gNvDualImageSupport */
 #endif /* gNvStorageIncluded_d */
 
 /*****************************************************************************
@@ -1014,9 +1108,7 @@ NVM_STATIC NVM_Status_t __NvRegisterTableEntry(void *           ptrData,
     uint16_t     loopCnt = 0;
     uint16_t     nullPos = gNvTableEntriesCountMax_c;
     NVM_Status_t status;
-    bool_t       ret            = FALSE;
-    uint32_t     tableEndAddr   = (uint32_t)gNVM_TABLE_endAddr_c;
-    uint32_t     tableStartAddr = (uint32_t)gNVM_TABLE_startAddr_c;
+    bool_t       ret = FALSE;
 
     if (!mNvModuleInitialized)
     {
@@ -1038,7 +1130,7 @@ NVM_STATIC NVM_Status_t __NvRegisterTableEntry(void *           ptrData,
             else
 #endif
             {
-                while (loopCnt < (uint16_t)((tableEndAddr - tableStartAddr) / sizeof(NVM_DataEntry_t)))
+                while (loopCnt < mNVM_DataTableNbEntries)
                 {
                     if ((pNVM_DataTable[loopCnt].pData == NULL) && (!overwrite))
                     {
@@ -1060,7 +1152,7 @@ NVM_STATIC NVM_Status_t __NvRegisterTableEntry(void *           ptrData,
                         }
                         else
                         {
-                            status = gNVM_AlreadyRegistered;
+                            status = gNVM_AlreadyRegistered_c;
                         }
                         ret = TRUE;
                         break;
@@ -1087,14 +1179,16 @@ NVM_STATIC NVM_Status_t __NvRegisterTableEntry(void *           ptrData,
                         }
                         else
                         {
-/*update the flash table*/
-#if (((defined(gFsciIncluded_c)) && (gFsciIncluded_c > 0U)) && \
-     ((defined(gNvmEnableFSCIMonitoring_c)) && (gNvmEnableFSCIMonitoring_c > 0U)))
-                            FSCI_MsgNVVirtualPageMonitoring(TRUE, gNVM_OK_c);
-                            FSCI_MsgNVVirtualPageMonitoring(FALSE, status = NvCopyPage(gNvCopyAll_c));
-#else
+                            /*update the flash table*/
+                            FSCI_NV_VIRT_PAGE_MONITOR(TRUE, gNVM_OK_c);
                             status = NvCopyPage(gNvCopyAll_c);
-#endif
+#if defined gNvSalvageFromEccFault_d && (gNvSalvageFromEccFault_d > 0)
+                            if (gNVM_EccFault_c == status)
+                            {
+                                status = NvCopyPage(gNvCopyAll_c);
+                            }
+#endif /* gNvSalvageFromEccFault_d */
+                            FSCI_NV_VIRT_PAGE_MONITOR(FALSE, status);
                         }
                     }
                     else
@@ -1151,7 +1245,7 @@ NVM_STATIC NVM_Status_t __NvEraseEntryFromStorage(uint16_t entryId, uint16_t tab
     else
     {
         /* Check if is in pending queue - if yes than remove it */
-        if (NvGetPendingSavesCount(&mNvPendingSavesQueue) != 0u)
+        if (NvIsPendingOperation())
         {
             /* Start from the queue's head */
             loopCnt         = mNvPendingSavesQueue.Head;
@@ -1171,7 +1265,7 @@ NVM_STATIC NVM_Status_t __NvEraseEntryFromStorage(uint16_t entryId, uint16_t tab
                 }
             }
         }
-        maDatasetInfo[tableEntryIndex].countsToNextSave = gNvCountsBetweenSaves;
+        maDatasetInfo[tableEntryIndex].countsToNextSave = mNvCountsBetweenSaves;
         maDatasetInfo[tableEntryIndex].saveNextInterval = FALSE;
 
         /* postpone the operation */
@@ -1186,13 +1280,15 @@ NVM_STATIC NVM_Status_t __NvEraseEntryFromStorage(uint16_t entryId, uint16_t tab
              * but skipping while copying the table entry to be erased */
             if (gEmptyPageMetaAddress_c != mNvVirtualPageProperty[mNvActivePageId].NvLastMetaInfoAddress)
             {
-#if (((defined(gFsciIncluded_c)) && (gFsciIncluded_c > 0U)) && \
-     ((defined(gNvmEnableFSCIMonitoring_c)) && (gNvmEnableFSCIMonitoring_c > 0U)))
-                FSCI_MsgNVVirtualPageMonitoring(TRUE, gNVM_OK_c);
-                FSCI_MsgNVVirtualPageMonitoring(FALSE, status = NvCopyPage(entryId));
-#else
+                FSCI_NV_VIRT_PAGE_MONITOR(TRUE, gNVM_OK_c);
                 status = NvCopyPage(entryId);
-#endif
+#if defined gNvSalvageFromEccFault_d && (gNvSalvageFromEccFault_d > 0)
+                if (gNVM_EccFault_c == status)
+                {
+                    status = NvCopyPage(gNvCopyAll_c);
+                }
+#endif /* gNvSalvageFromEccFault_d */
+                FSCI_NV_VIRT_PAGE_MONITOR(FALSE, status);
             }
         }
     }
@@ -1234,11 +1330,15 @@ NVM_Status_t RecoverNvEntry(uint16_t index, NVM_DataEntry_t *entry)
         {
             addr = mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress + sizeof(NVM_TableInfo_t) +
                    index * sizeof(NVM_EntryInfo_t);
-            NV_FlashRead(addr, (uint8_t *)&entryInfo, sizeof(NVM_EntryInfo_t));
-            entry->DataEntryID   = entryInfo.fields.NvDataEntryID;
-            entry->DataEntryType = entryInfo.fields.NvDataEntryType;
-            entry->ElementsCount = entryInfo.fields.NvElementsCount;
-            entry->ElementSize   = entryInfo.fields.NvElementSize;
+            status = NV_FlashRead(addr, (uint8_t *)&entryInfo, sizeof(NVM_EntryInfo_t),
+                                  mNvVirtualPageProperty[mNvActivePageId].has_ecc_faults);
+            if (gNVM_OK_c == status)
+            {
+                entry->DataEntryID   = entryInfo.fields.NvDataEntryID;
+                entry->DataEntryType = entryInfo.fields.NvDataEntryType;
+                entry->ElementsCount = entryInfo.fields.NvElementsCount;
+                entry->ElementSize   = entryInfo.fields.NvElementSize;
+            }
         }
     }
     return status;
@@ -1262,6 +1362,7 @@ NVM_STATIC bool_t NvIsRamTableUpdated(void)
     bool_t          idFound;
     bool_t          ret = FALSE;
     NVM_EntryInfo_t entryInfo;
+    NVM_Status_t    st;
 
     /* address = page raw sector start address + page counter size + table marker + table version */
     addr = mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress + sizeof(NVM_TableInfo_t);
@@ -1272,46 +1373,59 @@ NVM_STATIC bool_t NvIsRamTableUpdated(void)
     do
     {
         /* read ID */
-        NV_FlashRead((uint32_t *)addr, (uint8_t *)&entryInfo, sizeof(NVM_EntryInfo_t));
-
-        idFound = FALSE;
-        idx     = 0;
-
-        while (idx < gNVM_TABLE_entries_c)
+        st = NV_FlashRead(addr, (uint8_t *)&entryInfo, sizeof(NVM_EntryInfo_t),
+                          mNvVirtualPageProperty[mNvActivePageId].has_ecc_faults);
+        if (st == gNVM_OK_c)
         {
-            if (entryInfo.fields.NvDataEntryID == pNVM_DataTable[idx].DataEntryID)
+            idFound = FALSE;
+            idx     = 0;
+
+            while (idx < mNVM_DataTableNbEntries)
             {
-                idFound = TRUE;
+                if (entryInfo.fields.NvDataEntryID == pNVM_DataTable[idx].DataEntryID)
+                {
+                    idFound = TRUE;
+                    break;
+                }
+
+                /* increment the index */
+                idx++;
+            }
+#if gNvDualImageSupport
+            if (!idFound)
+            {
+                /* If entry from NVM is not found in entry from RAM, not need to update it as this entry is save by
+                 * other application */
+            }
+            else
+            {
+#else  /* gNvDualImageSupport */
+            if (!idFound)
+            {
+                ret = TRUE;
                 break;
             }
+#endif /* gNvDualImageSupport */
+                if ((((uint16_t)gNVM_MirroredInRam_c == entryInfo.fields.NvDataEntryType) ||
+                     ((uint16_t)gNVM_MirroredInRam_c == pNVM_DataTable[idx].DataEntryType)) &&
+                    (entryInfo.fields.NvDataEntryType != pNVM_DataTable[idx].DataEntryType))
+                {
+                    ret = TRUE;
+                    break;
+                }
+                if ((entryInfo.fields.NvElementsCount != pNVM_DataTable[idx].ElementsCount) ||
+                    (entryInfo.fields.NvElementSize != pNVM_DataTable[idx].ElementSize))
+                {
+                    ret = TRUE;
+                    break;
+                }
+#if gNvDualImageSupport
+            }
+#endif /* gNvDualImageSupport */
 
-            /* increment the index */
-            idx++;
+            /* increment the address */
+            addr += sizeof(NVM_EntryInfo_t);
         }
-
-        if (!idFound)
-        {
-            ret = TRUE;
-            break;
-        }
-
-        if ((((uint16_t)gNVM_MirroredInRam_c == entryInfo.fields.NvDataEntryType) ||
-             ((uint16_t)gNVM_MirroredInRam_c == pNVM_DataTable[idx].DataEntryType)) &&
-            (entryInfo.fields.NvDataEntryType != pNVM_DataTable[idx].DataEntryType))
-        {
-            ret = TRUE;
-            break;
-        }
-        if ((entryInfo.fields.NvElementsCount != pNVM_DataTable[idx].ElementsCount) ||
-            (entryInfo.fields.NvElementSize != pNVM_DataTable[idx].ElementSize))
-        {
-            ret = TRUE;
-            break;
-        }
-
-        /* increment the address */
-        addr += sizeof(NVM_EntryInfo_t);
-
     } while (addr < endAddr);
 
     return ret;
@@ -1330,41 +1444,50 @@ NVM_STATIC bool_t NvGetTableEntry(uint16_t tblEntryId, NVM_DataEntry_t *pDataEnt
     NVM_EntryInfo_t tmp;
     NVM_TableInfo_t table;
     bool_t          ret = FALSE;
-
-    pDataEntry->pData = NULL; /* the data pointer is not saved on FLASH table and
-                               * shall not be used by the caller of this function */
+    NVM_Status_t    st  = gNVM_OK_c;
+    pDataEntry->pData   = NULL; /* the data pointer is not saved on FLASH table and
+                                 * shall not be used by the caller of this function */
 
     addr = mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress;
 
-    NV_FlashRead((uint32_t *)addr, &tmp, sizeof(NVM_TableInfo_t));
-    table.rawValue = tmp.rawValue;
-    if (mNvTableMarker == table.fields.NvTableMarker)
+    st = NV_FlashRead(addr, (uint8_t *)&tmp, sizeof(NVM_TableInfo_t),
+                      mNvVirtualPageProperty[mNvActivePageId].has_ecc_faults);
+    if (st == gNVM_OK_c)
     {
-        /* increment address */
-        addr += sizeof(NVM_TableInfo_t);
-
-        do
+        table.rawValue = tmp.rawValue;
+        if (mNvTableMarker == table.fields.NvTableMarker)
         {
-            NV_FlashRead((uint32_t *)addr, &tmp, sizeof(NVM_EntryInfo_t));
-            table.rawValue = tmp.rawValue;
-            if (table.fields.NvTableMarker == mNvTableMarker)
-            {
-                /* reached end of table */
-                break;
-            }
-            if (tmp.fields.NvDataEntryID == tblEntryId)
-            {
-                pDataEntry->DataEntryID   = tmp.fields.NvDataEntryID;
-                pDataEntry->DataEntryType = tmp.fields.NvDataEntryType;
-                pDataEntry->ElementsCount = tmp.fields.NvElementsCount;
-                pDataEntry->ElementSize   = tmp.fields.NvElementSize;
-                ret                       = TRUE;
-                break;
-            }
+            /* increment address */
+            addr += sizeof(NVM_TableInfo_t);
 
-            /* continue searching */
-            addr += sizeof(NVM_EntryInfo_t);
-        } while (addr < mNvVirtualPageProperty[mNvActivePageId].NvRawSectorEndAddress);
+            do
+            {
+                st = NV_FlashRead(addr, (uint8_t *)&tmp, sizeof(NVM_EntryInfo_t),
+                                  mNvVirtualPageProperty[mNvActivePageId].has_ecc_faults);
+                if (st != gNVM_OK_c)
+                {
+                    break;
+                }
+                table.rawValue = tmp.rawValue;
+                if (table.fields.NvTableMarker == mNvTableMarker)
+                {
+                    /* reached end of table */
+                    break;
+                }
+                if (tmp.fields.NvDataEntryID == tblEntryId)
+                {
+                    pDataEntry->DataEntryID   = tmp.fields.NvDataEntryID;
+                    pDataEntry->DataEntryType = tmp.fields.NvDataEntryType;
+                    pDataEntry->ElementsCount = tmp.fields.NvElementsCount;
+                    pDataEntry->ElementSize   = tmp.fields.NvElementSize;
+                    ret                       = TRUE;
+                    break;
+                }
+
+                /* continue searching */
+                addr += sizeof(NVM_EntryInfo_t);
+            } while (addr < mNvVirtualPageProperty[mNvActivePageId].NvRawSectorEndAddress);
+        }
     }
 
     if (FALSE == ret)
@@ -1388,31 +1511,240 @@ NVM_STATIC uint32_t NvGetFlashTableSize(void)
     uint32_t        addr;
     uint32_t        size = 0U;
     NVM_TableInfo_t tableInfo;
-
+    NVM_Status_t    st;
     /* compute the size of the table stored in Flash memory */
     addr = mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress;
 
-    NV_FlashRead((uint32_t *)addr, (uint8_t *)&tableInfo, sizeof(NVM_TableInfo_t));
-
-    if (gNvTableMarker_c == tableInfo.fields.NvTableMarker)
+    st = NV_FlashRead(addr, (uint8_t *)&tableInfo, sizeof(NVM_TableInfo_t),
+                      mNvVirtualPageProperty[mNvActivePageId].has_ecc_faults);
+    if (st == gNVM_OK_c)
     {
-        addr += sizeof(NVM_TableInfo_t);
-
-        do
+        if (gNvTableMarker_c == tableInfo.fields.NvTableMarker)
         {
-            NV_FlashRead((uint32_t *)addr, (uint8_t *)&tableInfo, sizeof(NVM_TableInfo_t));
-
-            if (gNvTableMarker_c == tableInfo.fields.NvTableMarker)
-            {
-                break;
-            }
-            size += sizeof(NVM_TableInfo_t);
             addr += sizeof(NVM_TableInfo_t);
 
-        } while (addr < mNvVirtualPageProperty[mNvActivePageId].NvRawSectorEndAddress);
+            do
+            {
+                st = NV_FlashRead(addr, (uint8_t *)&tableInfo, sizeof(NVM_TableInfo_t),
+                                  mNvVirtualPageProperty[mNvActivePageId].has_ecc_faults);
+                if (st != gNVM_OK_c)
+                {
+                    size = 0;
+                    break;
+                }
+                if (gNvTableMarker_c == tableInfo.fields.NvTableMarker)
+                {
+                    break;
+                }
+                size += sizeof(NVM_TableInfo_t);
+                addr += sizeof(NVM_TableInfo_t);
+
+            } while (addr < mNvVirtualPageProperty[mNvActivePageId].NvRawSectorEndAddress);
+        }
     }
     return size;
 }
+
+#if gNvDualImageSupport
+/******************************************************************************
+ * Name: NvGetEntryInfoNeedToAddInNVM
+ * Description:
+ * Return: number of entries to be added in NVM page
+ ******************************************************************************/
+NVM_STATIC uint32_t NvGetEntryInfoNeedToAddInNVM(void)
+{
+    uint16_t                i, j;
+    uint32_t                addr, endAddr;
+    bool_t                  isDiffEntry;
+    NVM_TableAndEntryInfo_t tableAndEntryInfo;
+    uint16_t                NV_AllNVMEntryId[gNvTableEntriesCountMax_c];
+    uint16_t                AllNVMEntryCnt = 0;
+
+    /* compute the size of the Entry stored in Flash memory */
+    FLib_MemSet(&NV_AllNVMEntryId[0], 0u, sizeof(uint16_t) * gNvTableEntriesCountMax_c);
+
+    addr               = mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress;
+    mNvNeedAddEntryCnt = 0;
+    (void)NV_FlashRead(addr, (uint8_t *)&tableAndEntryInfo, sizeof(NVM_TableInfo_t),
+                       mNvVirtualPageProperty[mNvActivePageId].has_ecc_faults);
+
+    if (gNvTableMarker_c == tableAndEntryInfo.tableInfo.fields.NvTableMarker)
+    {
+        addr += sizeof(NVM_TableInfo_t);
+        endAddr = addr + mNvTableSizeInFlash;
+        /* Get all Entry ID from NVM*/
+        do
+        {
+            (void)NV_FlashRead(addr, (uint8_t *)&tableAndEntryInfo, sizeof(NVM_TableInfo_t), FALSE);
+
+            if (gNvTableMarker_c == tableAndEntryInfo.tableInfo.fields.NvTableMarker)
+            {
+                break;
+            }
+            if (tableAndEntryInfo.entryInfo.fields.NvDataEntryID != gNvInvalidTableEntryIndex_c)
+            {
+                if (AllNVMEntryCnt < gNvTableEntriesCountMax_c - 1u)
+                {
+                    NV_AllNVMEntryId[AllNVMEntryCnt] = tableAndEntryInfo.entryInfo.fields.NvDataEntryID;
+                    AllNVMEntryCnt++;
+                }
+                else
+                {
+                    assert(AllNVMEntryCnt < gNvTableEntriesCountMax_c - 1u);
+                }
+            }
+            addr += sizeof(NVM_TableInfo_t);
+        } while (addr < endAddr);
+
+        i = 0;
+        assert(NULL != pNVM_DataTable);
+        while (i < mNVM_DataTableNbEntries)
+        {
+            j           = 0;
+            isDiffEntry = TRUE;
+            for (j = 0; j < AllNVMEntryCnt; j++)
+            {
+                if (pNVM_DataTable[i].DataEntryID == NV_AllNVMEntryId[j])
+                {
+                    isDiffEntry = FALSE;
+                    break;
+                }
+            }
+
+            if (isDiffEntry)
+            {
+                if (mNvNeedAddEntryCnt < gNvTableEntriesCountMax_c - 1u)
+                {
+                    mNvDiffEntryId[mNvNeedAddEntryCnt++] = pNVM_DataTable[i].DataEntryID;
+                }
+                else
+                {
+                    assert(mNvNeedAddEntryCnt < gNvTableEntriesCountMax_c - 1u);
+                }
+            }
+            i++;
+        }
+    }
+
+    return mNvNeedAddEntryCnt;
+}
+/******************************************************************************
+ * Name: NvSaveAllDataSetEntry
+ * Description: Commit Data Entry structures to flash
+ * Parameters: pDstAddr address to write to. Gets updated as entries are appended
+ * Return: gNVM_OK_c if operation successful, other values in case of error.
+ ******************************************************************************/
+NVM_STATIC NVM_Status_t NvSaveAllDataSetEntry(uint32_t *pDstAddr)
+{
+    uint32_t        srcStartAddr;
+    uint32_t        srcEndAddr;
+    NVM_EntryInfo_t entryInfo;
+
+    uint16_t     idx, DifIdx;
+    bool_t       isSameEntryFoundInRam; //, isRemainEntry;
+    bool_t       isSaveError;
+    NVM_Status_t status = gNVM_OK_c;
+
+    if (mNvPreviousActivePageId != gVirtualPageNone_c)
+    {
+        /* startAddr = page raw sector start address + page counter size + table marker + table version */
+        srcStartAddr =
+            mNvVirtualPageProperty[mNvPreviousActivePageId].NvRawSectorStartAddress + sizeof(NVM_TableInfo_t);
+        /* compute the search end address */
+        srcEndAddr = srcStartAddr + mNvTableSizeInFlash;
+
+        do
+        {
+            /* read NV table entry info */
+            /* Let's assume that the source page is free of errors */
+            (void)NV_FlashRead(srcStartAddr, (uint8_t *)&entryInfo, sizeof(NVM_EntryInfo_t), FALSE);
+            isSameEntryFoundInRam = FALSE;
+            idx                   = 0;
+            while (idx < mNVM_DataTableNbEntries)
+            {
+                assert(NULL != pNVM_DataTable);
+                if (pNVM_DataTable[idx].DataEntryID == entryInfo.fields.NvDataEntryID)
+                {
+                    /* we use entry info from RAM and construct NVM_EntryInfo_t to be written to NVM */
+                    FLib_MemSet(&entryInfo, 0xffu, sizeof(NVM_EntryInfo_t)); /* set padding bytes to 0xff */
+                    entryInfo.fields.NvDataEntryID   = pNVM_DataTable[idx].DataEntryID;
+                    entryInfo.fields.NvDataEntryType = pNVM_DataTable[idx].DataEntryType;
+                    entryInfo.fields.NvElementsCount = pNVM_DataTable[idx].ElementsCount;
+                    entryInfo.fields.NvElementSize   = pNVM_DataTable[idx].ElementSize;
+                    isSameEntryFoundInRam            = TRUE;
+                    break;
+                }
+                /* increment table entry index */
+                idx++;
+            }
+
+            if (!isSameEntryFoundInRam)
+            {
+                /* we use entry info from NVM  */
+                /* write the one found in NVM as was already */
+            }
+            status = NV_FlashProgram(*pDstAddr, sizeof(NVM_EntryInfo_t), (uint8_t *)&entryInfo, TRUE);
+            if (gNVM_OK_c != status)
+            {
+                break;
+            }
+
+            /* increment address */
+            *pDstAddr += sizeof(NVM_EntryInfo_t);
+            srcStartAddr += sizeof(NVM_EntryInfo_t);
+        } while (srcStartAddr < srcEndAddr);
+    }
+    /* Do not continue if a previous error was raised already */
+    if (gNVM_OK_c == status)
+    {
+        /* Previous we save all NV Entry from NVM, and part of NV Entry from RAM which have same entry ID as from NVM
+           also saved, next step we save remain NV Entry from RAM */
+        if (mNvNeedAddEntryCnt != 0)
+        {
+            idx         = 0;
+            DifIdx      = 0;
+            isSaveError = FALSE;
+            while (idx < mNVM_DataTableNbEntries)
+            {
+                for (DifIdx = 0; DifIdx < mNvNeedAddEntryCnt; DifIdx++)
+                {
+                    /* different entries from NVM are also saved */
+                    if (mNvDiffEntryId[DifIdx] == pNVM_DataTable[idx].DataEntryID)
+                    {
+                        /* we use entry info from RAM */
+                        FLib_MemSet(&entryInfo, 0xffu, sizeof(NVM_EntryInfo_t));
+                        entryInfo.fields.NvDataEntryID   = pNVM_DataTable[idx].DataEntryID;
+                        entryInfo.fields.NvDataEntryType = pNVM_DataTable[idx].DataEntryType;
+                        entryInfo.fields.NvElementsCount = pNVM_DataTable[idx].ElementsCount;
+                        entryInfo.fields.NvElementSize   = pNVM_DataTable[idx].ElementSize;
+                        status = NV_FlashProgram(*pDstAddr, sizeof(NVM_EntryInfo_t), (uint8_t *)&entryInfo, TRUE);
+                        if (gNVM_OK_c != status)
+                        {
+                            isSaveError = TRUE;
+                            break;
+                        }
+                        *pDstAddr += sizeof(NVM_EntryInfo_t);
+                    }
+                }
+                if (isSaveError)
+                {
+                    break;
+                }
+                /* increment table entry index */
+                idx++;
+            }
+
+            if (!isSaveError)
+            {
+                mNvNeedAddEntryCnt = 0;
+            }
+        }
+    }
+
+    return status;
+}
+
+#endif /* gNvDualImageSupport */
 
 #endif /* gNvUseExtendedFeatureSet_d */
 
@@ -1433,10 +1765,8 @@ NVM_STATIC uint32_t NvGetFlashTableSize(void)
  *****************************************************************************/
 NVM_STATIC NVM_Status_t __NvAtomicSave(void)
 {
-    NVM_Status_t         status         = gNVM_OK_c;
-    uint16_t             loopCnt        = 0;
-    uint32_t             tableEndAddr   = (uint32_t)gNVM_TABLE_endAddr_c;
-    uint32_t             tableStartAddr = (uint32_t)gNVM_TABLE_startAddr_c;
+    NVM_Status_t         status  = gNVM_OK_c;
+    uint16_t             loopCnt = 0;
     NVM_TableEntryInfo_t tblIdx;
 #if gUnmirroredFeatureSet_d
     uint16_t loopCnt2 = 0;
@@ -1450,7 +1780,7 @@ NVM_STATIC NVM_Status_t __NvAtomicSave(void)
     {
         /* remove all non unmirrored erase operations from the queue */
 #if gUnmirroredFeatureSet_d
-        if (NvGetPendingSavesCount(&mNvPendingSavesQueue) != 0u)
+        if (NvIsPendingOperation())
         {
             /* Start from the queue's head */
             loopCnt         = mNvPendingSavesQueue.Head;
@@ -1484,15 +1814,15 @@ NVM_STATIC NVM_Status_t __NvAtomicSave(void)
             }
         }
 #else  /*gUnmirroredFeatureSet_d*/
-        (void)NvInitPendingSavesQueue(&mNvPendingSavesQueue);
+        NvInitPendingSavesQueue(&mNvPendingSavesQueue);
 #endif /*gUnmirroredFeatureSet_d*/
         /* if critical section, add a special entry in the queue */
         if (mNvCriticalSectionFlag != 0u)
         {
-            tblIdx.entryId        = gNvCopyAll_c;
-            tblIdx.elementIndex   = gNvCopyAll_c;
-            tblIdx.saveRestoreAll = TRUE;
-            status                = NvAddSaveRequestToQueue(&tblIdx);
+            tblIdx.entryId      = gNvCopyAll_c;
+            tblIdx.elementIndex = gNvCopyAll_c;
+            tblIdx.op_type      = OP_SAVE_ALL;
+            status              = NvAddSaveRequestToQueue(&tblIdx);
             if ((gNVM_SaveRequestRejected_c != status) && (gNVM_AtomicSaveRecursive_c != status))
             {
                 status = gNVM_CriticalSectionActive_c;
@@ -1500,7 +1830,7 @@ NVM_STATIC NVM_Status_t __NvAtomicSave(void)
         }
         else
         {
-            while (loopCnt < (uint16_t)((tableEndAddr - tableStartAddr) / sizeof(NVM_DataEntry_t)))
+            while (loopCnt < mNVM_DataTableNbEntries)
             {
 #if gUnmirroredFeatureSet_d
                 if (gNVM_MirroredInRam_c != (NVM_DataEntryType_t)pNVM_DataTable[loopCnt].DataEntryType)
@@ -1589,9 +1919,9 @@ NVM_STATIC NVM_Status_t __NvSyncSave(void *ptrData, bool_t saveAll)
             {
 /* write the save all flag */
 #if gNvFragmentation_Enabled_d
-                tblIdx.saveRestoreAll = saveAll;
+                tblIdx.op_type = saveAll ? OP_SAVE_ALL : OP_SAVE_SINGLE;
 #else
-                tblIdx.saveRestoreAll = TRUE;
+                tblIdx.op_type = OP_SAVE_ALL;
 #endif /* gNvFragmentation_Enabled_d */
 
                 if (mNvCriticalSectionFlag != 0u)
@@ -1604,18 +1934,19 @@ NVM_STATIC NVM_Status_t __NvSyncSave(void *ptrData, bool_t saveAll)
                 }
                 else
                 {
-#if (gNvUseFlexNVM_d == FALSE) /* no FlexNVM */
                     status = NvWriteRecord(&tblIdx);
                     if (status == gNVM_PageCopyPending_c)
                     {
-/* copy active page */
-#if (((defined(gFsciIncluded_c)) && (gFsciIncluded_c > 0U)) && \
-     ((defined(gNvmEnableFSCIMonitoring_c)) && (gNvmEnableFSCIMonitoring_c > 0U)))
-                        FSCI_MsgNVVirtualPageMonitoring(TRUE, gNVM_OK_c);
-                        FSCI_MsgNVVirtualPageMonitoring(FALSE, status = NvCopyPage(gNvCopyAll_c));
-#else
+                        /* copy active page */
+                        FSCI_NV_VIRT_PAGE_MONITOR(TRUE, gNVM_OK_c);
                         status = NvCopyPage(gNvCopyAll_c);
-#endif
+#if defined gNvSalvageFromEccFault_d && (gNvSalvageFromEccFault_d > 0)
+                        if (gNVM_EccFault_c == status)
+                        {
+                            status = NvCopyPage(gNvCopyAll_c);
+                        }
+#endif /* gNvSalvageFromEccFault_d */
+                        FSCI_NV_VIRT_PAGE_MONITOR(FALSE, status);
                         if (status == gNVM_OK_c)
                         {
                             mNvCopyOperationIsPending = FALSE;
@@ -1632,15 +1963,6 @@ NVM_STATIC NVM_Status_t __NvSyncSave(void *ptrData, bool_t saveAll)
                             }
                         }
                     }
-#else /* FlexNVM */
-                    /* write record */
-                    status = NvWriteRecord(&tblIdx);
-#if FSL_FEATURE_FLASH_IS_FTFL
-                    /* wait for EEPROM system to be ready (fix@ENGR283453) */
-                    while (!(REG_BIT_GET(gFlashConfig.ftfxRegBase + FTFx_SSD_FCNFG_OFFSET, FTFx_SSD_FCNFG_EEERDY)))
-                        ;
-#endif
-#endif
                 }
             }
         }
@@ -1662,12 +1984,9 @@ NVM_STATIC NVM_Status_t __NvSyncSave(void *ptrData, bool_t saveAll)
  *****************************************************************************/
 NVM_STATIC NVM_Status_t __NvFormat(void)
 {
-    NVM_Status_t status = gNVM_OK_c;
-#if (gNvUseFlexNVM_d == FALSE) /* no FlexNVM */
+    NVM_Status_t    status = gNVM_OK_c;
     NVM_TableInfo_t tableInfo;
 #if gUnmirroredFeatureSet_d
-    uint32_t tableEndAddr   = (uint32_t)gNVM_TABLE_endAddr_c;
-    uint32_t tableStartAddr = (uint32_t)gNVM_TABLE_startAddr_c;
     uint16_t loopCnt;
     uint16_t loopCnt2;
 #endif
@@ -1684,18 +2003,17 @@ NVM_STATIC NVM_Status_t __NvFormat(void)
         }
         else
         {
-            NV_FlashRead((uint32_t *)mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress,
-                         (uint8_t *)&tableInfo, sizeof(NVM_TableInfo_t));
-
-            status = NvInternalFormat((uint32_t)tableInfo.fields.NvPageCounter);
+            status = NV_FlashRead(mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress,
+                                  (uint8_t *)&tableInfo, sizeof(NVM_TableInfo_t), TRUE);
             if (gNVM_OK_c == status)
             {
-#if gUnmirroredFeatureSet_d
+                status = NvInternalFormat((uint32_t)tableInfo.fields.NvPageCounter);
+                if (gNVM_OK_c == status)
                 {
-                    for (loopCnt = 0; loopCnt < (uint16_t)((tableEndAddr - tableStartAddr) / sizeof(NVM_DataEntry_t));
-                         loopCnt++)
+#if gUnmirroredFeatureSet_d
+                    for (loopCnt = 0; loopCnt < mNVM_DataTableNbEntries; loopCnt++)
                     {
-                        maDatasetInfo[loopCnt].countsToNextSave = gNvCountsBetweenSaves;
+                        maDatasetInfo[loopCnt].countsToNextSave = mNvCountsBetweenSaves;
                         maDatasetInfo[loopCnt].saveNextInterval = FALSE;
                         if ((NVM_DataEntryType_t)pNVM_DataTable[loopCnt].DataEntryType != gNVM_MirroredInRam_c)
                         {
@@ -1708,58 +2026,13 @@ NVM_STATIC NVM_Status_t __NvFormat(void)
                             }
                         }
                     }
-                }
 #endif
-                /* clear the save queue */
-                (void)NvInitPendingSavesQueue(&mNvPendingSavesQueue);
+                    /* clear the save queue */
+                    NvInitPendingSavesQueue(&mNvPendingSavesQueue);
+                }
             }
         }
     }
-#else /* FlexNVM */
-
-    uint8_t buff[gNvFlexFormatBufferSize_c];
-    uint32_t addr;
-    uint16_t size;
-
-    FLib_MemSet(buff, gNvErasedFlashCellValue_c, gNvFlexFormatBufferSize_c);
-
-#if FSL_FEATURE_FLASH_IS_FTFL
-    addr = gFlexNvmDriver.ftfxConfig.flexramBlockBase;
-    size = gFlexNvmDriver.ftfxConfig.flexramTotalSize;
-
-    while (size)
-    {
-        /* wait for EEPROM system to be ready */
-        while (!(REG_BIT_GET(gFlexNvmDriver.ftfxRegBase + FTFx_SSD_FCNFG_OFFSET, FTFx_SSD_FCNFG_EEERDY)))
-            ;
-
-        if (kStatus_FLASH_Success != EEEWrite(&gFlexNvmDriver, addr, sizeof(buff), buff))
-        {
-            status = gNVM_FormatFailure_c;
-            break;
-        }
-        size -= gNvFlexFormatBufferSize_c;
-        addr += gNvFlexFormatBufferSize_c;
-    }
-#endif /* FSL_FEATURE_FLASH_IS_FTFL */
-
-#if FSL_FEATURE_FLASH_IS_FTFE
-    addr = gFlexNvmDriver.ftfxConfig.flexramBlockBase;
-    size = gFlexNvmDriver.ftfxConfig.flexramTotalSize;
-
-    while (size)
-    {
-        if (kStatus_FLASH_Success != FLEXNVM_EepromWrite(&gFlexNvmDriver, addr, buff, sizeof(buff)))
-        {
-            status = gNVM_FormatFailure_c;
-            break;
-        }
-        size -= gNvFlexFormatBufferSize_c;
-        addr += gNvFlexFormatBufferSize_c;
-    }
-#endif /* FSL_FEATURE_FLASH_IS_FTFE */
-
-#endif /* gNvUseFlexNVM_d */
     return status;
 }
 
@@ -1769,15 +2042,14 @@ NVM_STATIC NVM_Status_t __NvFormat(void)
  *              FreeRTOS) to process the pending saves, erase or copy
  *              operations.
  * Parameters: -
- * Return: -
+ * Return: Number of operations executed.
  ******************************************************************************/
-NVM_STATIC void __NvIdle(void)
+NVM_STATIC int __NvIdle(void)
 {
     NVM_TableEntryInfo_t tblIdx;
-#if (gNvUseFlexNVM_d == FALSE) /* no FlexNVM */
-    NVM_Status_t status;
-    bool_t       ret = FALSE;
-#endif
+    int                  nb_operation = 0;
+    NVM_Status_t         status;
+    bool_t               ret = FALSE;
 
     uint64_t currentTimestampValue = 0;
 
@@ -1787,16 +2059,17 @@ NVM_STATIC void __NvIdle(void)
 
     if (mNvModuleInitialized && (mNvCriticalSectionFlag == 0u))
     {
-#if (gNvUseFlexNVM_d == FALSE) /* no FlexNVM */
         if (mNvCopyOperationIsPending)
         {
-#if (((defined(gFsciIncluded_c)) && (gFsciIncluded_c > 0U)) && \
-     ((defined(gNvmEnableFSCIMonitoring_c)) && (gNvmEnableFSCIMonitoring_c > 0U)))
-            FSCI_MsgNVVirtualPageMonitoring(TRUE, gNVM_OK_c);
-            FSCI_MsgNVVirtualPageMonitoring(FALSE, status = NvCopyPage(gNvCopyAll_c));
-#else
+            FSCI_NV_VIRT_PAGE_MONITOR(TRUE, gNVM_OK_c);
             status = NvCopyPage(gNvCopyAll_c);
-#endif
+#if defined gNvSalvageFromEccFault_d && (gNvSalvageFromEccFault_d > 0)
+            if (gNVM_EccFault_c == status)
+            {
+                status = NvCopyPage(gNvCopyAll_c);
+            }
+#endif /* gNvSalvageFromEccFault_d */
+            FSCI_NV_VIRT_PAGE_MONITOR(FALSE, status);
             if (gNVM_OK_c == status)
             {
                 mNvCopyOperationIsPending = FALSE;
@@ -1812,11 +2085,8 @@ NVM_STATIC void __NvIdle(void)
                 mNvVirtualPageProperty[mNvErasePgCmdStatus.NvPageToErase].NvLastMetaInfoAddress =
                     gEmptyPageMetaAddress_c;
                 mNvErasePgCmdStatus.NvErasePending = FALSE;
-#if (((defined(gFsciIncluded_c)) && (gFsciIncluded_c > 0U)) && \
-     ((defined(gNvmEnableFSCIMonitoring_c)) && (gNvmEnableFSCIMonitoring_c > 0U)))
-                FSCI_MsgNVPageEraseMonitoring(
+                FSCI_NV_VIRT_PAGE_ERASE_MONITOR(
                     mNvVirtualPageProperty[mNvErasePgCmdStatus.NvPageToErase].NvRawSectorStartAddress, gNVM_OK_c);
-#endif
                 ret = TRUE;
             }
             else
@@ -1837,7 +2107,6 @@ NVM_STATIC void __NvIdle(void)
             }
         }
         if (FALSE == ret)
-#endif
         {
             /* process the save-on-interval requests */
             if (mNvSaveOnIntervalEvent)
@@ -1860,38 +2129,38 @@ NVM_STATIC void __NvIdle(void)
             }
 
             /* process the save-on-idle requests */
-            if (NvGetPendingSavesCount(&mNvPendingSavesQueue) != 0u)
+            while (
+                NvGetPendingSaveHead(&mNvPendingSavesQueue,
+                                     &tblIdx)) /* so long as we find something in Head, there are pendaing operations */
             {
-                while (NvPopPendingSave(&mNvPendingSavesQueue, &tblIdx))
+                if ((gNvCopyAll_c == tblIdx.entryId) && (gNvCopyAll_c == tblIdx.elementIndex) &&
+                    (OP_SAVE_ALL == tblIdx.op_type))
                 {
-                    if ((gNvCopyAll_c == tblIdx.entryId) && (gNvCopyAll_c == tblIdx.elementIndex) &&
-                        (TRUE == tblIdx.saveRestoreAll))
-                    {
-                        (void)__NvAtomicSave();
-                        continue;
-                    }
-                    else if (gNvInvalidDataEntry_c == tblIdx.entryId)
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        /*MISRA rule 15.7*/
-                    }
-
-#if (gNvUseFlexNVM_d == FALSE) /* no FlexNVM */
-                    if (NvWriteRecord(&tblIdx) == gNVM_PageCopyPending_c)
-                    {
-                        (void)NvAddSaveRequestToQueue(&tblIdx);
-                        break;
-                    }
-#else /* FlexNVM */
-                    NvWriteRecord(&tblIdx);
-#endif
+                    (void)__NvAtomicSave();
+                    NvRemovePendingSaveHead(&mNvPendingSavesQueue);
+                    continue;
                 }
+                else if (gNvInvalidDataEntry_c == tblIdx.entryId)
+                {
+                    NvRemovePendingSaveHead(&mNvPendingSavesQueue);
+                    continue;
+                }
+                else
+                {
+                    /*MISRA rule 15.7*/
+                }
+
+                if (NvWriteRecord(&tblIdx) == gNVM_PageCopyPending_c)
+                {
+                    /* was left in queue : do not add again and reorder write */
+                    break;
+                }
+                NvRemovePendingSaveHead(&mNvPendingSavesQueue);
+                nb_operation++;
             }
         }
     }
+    return nb_operation;
 }
 /******************************************************************************
  * Name: __NvIsDataSetDirty
@@ -1963,37 +2232,28 @@ NVM_STATIC NVM_Status_t __NvRestoreDataSet(void *ptrData, bool_t restoreAll)
 
     if (!mNvModuleInitialized)
     {
-#if (((defined(gFsciIncluded_c)) && (gFsciIncluded_c > 0U)) && \
-     ((defined(gNvmEnableFSCIMonitoring_c)) && (gNvmEnableFSCIMonitoring_c > 0U)))
-        FSCI_MsgNVRestoreMonitoring(0, TRUE, (uint8_t)gNVM_ModuleNotInitialized_c);
-#endif
         nvmStatus = gNVM_ModuleNotInitialized_c;
+        FSCI_NV_RESTORE_MONITOR(0, TRUE, nvmStatus);
     }
     else
     {
         if (NULL == ptrData)
         {
-#if (((defined(gFsciIncluded_c)) && (gFsciIncluded_c > 0U)) && \
-     ((defined(gNvmEnableFSCIMonitoring_c)) && (gNvmEnableFSCIMonitoring_c > 0U)))
-            FSCI_MsgNVRestoreMonitoring(0, TRUE, (uint8_t)gNVM_NullPointer_c);
-#endif
             nvmStatus = gNVM_NullPointer_c;
+            FSCI_NV_RESTORE_MONITOR(0, TRUE, nvmStatus);
         }
         else
         {
 #if gNvFragmentation_Enabled_d
-            tblIdx.saveRestoreAll = restoreAll;
+            tblIdx.op_type = restoreAll ? OP_SAVE_ALL : OP_SAVE_SINGLE;
 #else
-            tblIdx.saveRestoreAll = TRUE;
+            tblIdx.op_type = OP_SAVE_ALL;
 #endif /* gNvFragmentation_Enabled_d */
             /* get table and element indexes */
             if (gNVM_OK_c != NvGetEntryFromDataPtr(ptrData, &tblIdx))
             {
-#if (((defined(gFsciIncluded_c)) && (gFsciIncluded_c > 0U)) && \
-     ((defined(gNvmEnableFSCIMonitoring_c)) && (gNvmEnableFSCIMonitoring_c > 0U)))
-                FSCI_MsgNVRestoreMonitoring(tblIdx.entryId, TRUE, (uint8_t)gNVM_PointerOutOfRange_c);
-#endif
                 nvmStatus = gNVM_PointerOutOfRange_c;
+                FSCI_NV_RESTORE_MONITOR(tblIdx.entryId, TRUE, (uint8_t)nvmStatus);
             }
             else
             {
@@ -2005,22 +2265,15 @@ NVM_STATIC NVM_Status_t __NvRestoreDataSet(void *ptrData, bool_t restoreAll)
 
                 if (gNVM_MirroredInRam_c != (NVM_DataEntryType_t)pNVM_DataTable[tableEntryIdx].DataEntryType)
                 {
-                    tblIdx.saveRestoreAll = FALSE;
+                    tblIdx.op_type = OP_SAVE_SINGLE;
                 }
 
 #endif
 
-/* Do Nv Restore Data */
-#if (((defined(gFsciIncluded_c)) && (gFsciIncluded_c > 0U)) && \
-     ((defined(gNvmEnableFSCIMonitoring_c)) && (gNvmEnableFSCIMonitoring_c > 0U)))
-                {
-                    FSCI_MsgNVRestoreMonitoring(tblIdx.entryId, TRUE, (uint8_t)gNVM_OK_c);
-                    nvmStatus = NvRestoreData(&tblIdx);
-                    FSCI_MsgNVRestoreMonitoring(tblIdx.entryId, FALSE, (uint8_t)nvmStatus);
-                }
-#else
+                /* Do Nv Restore Data */
+                FSCI_NV_RESTORE_MONITOR(tblIdx.entryId, TRUE, (uint8_t)gNVM_OK_c);
                 nvmStatus = NvRestoreData(&tblIdx);
-#endif
+                FSCI_NV_RESTORE_MONITOR(tblIdx.entryId, FALSE, (uint8_t)nvmStatus);
             }
         }
     }
@@ -2042,7 +2295,7 @@ NVM_STATIC bool_t __NvTimerTick(bool_t countTick)
     NVM_TableEntryInfo_t tblIdx;
     uint16_t             idx = 0;
 
-    while (idx < gNVM_TABLE_entries_c)
+    while (idx < mNVM_DataTableNbEntries)
     {
         if (countTick)
         {
@@ -2064,19 +2317,18 @@ NVM_STATIC bool_t __NvTimerTick(bool_t countTick)
 #if gUnmirroredFeatureSet_d
                 if (gNVM_MirroredInRam_c != (NVM_DataEntryType_t)pNVM_DataTable[idx].DataEntryType)
                 {
-                    tblIdx.elementIndex   = maDatasetInfo[idx].elementIndex;
-                    tblIdx.saveRestoreAll = FALSE;
+                    tblIdx.elementIndex = maDatasetInfo[idx].elementIndex;
+                    tblIdx.op_type      = OP_SAVE_SINGLE;
                 }
                 else
 #endif
                 {
-                    tblIdx.elementIndex   = 0;
-                    tblIdx.saveRestoreAll = TRUE;
+                    tblIdx.elementIndex = 0;
+                    tblIdx.op_type      = OP_SAVE_ALL;
                 }
                 maDatasetInfo[idx].saveNextInterval = FALSE;
                 if (mNvCriticalSectionFlag == 0u)
                 {
-#if (gNvUseFlexNVM_d == FALSE) /* no FlexNVM */
                     if (NvWriteRecord(&tblIdx) == gNVM_PageCopyPending_c)
                     {
                         /* retry next time we have a tick */
@@ -2085,9 +2337,6 @@ NVM_STATIC bool_t __NvTimerTick(bool_t countTick)
                             maDatasetInfo[idx].saveNextInterval = TRUE;
                         }
                     }
-#else /* FlexNVM */
-                    NvWriteRecord(&tblIdx);
-#endif
                 }
                 else
                 {
@@ -2144,8 +2393,8 @@ NVM_STATIC NVM_Status_t __NvSaveOnCount(void *ptrData)
                 else
                 {
                     /* all the elements of the NVM table entry will be saved */
-                    tblIdx.saveRestoreAll                         = TRUE;
-                    maDatasetInfo[tableEntryIdx].countsToNextSave = gNvCountsBetweenSaves;
+                    tblIdx.op_type                                = OP_SAVE_ALL;
+                    maDatasetInfo[tableEntryIdx].countsToNextSave = mNvCountsBetweenSaves;
                     status                                        = NvAddSaveRequestToQueue(&tblIdx);
                 }
             }
@@ -2190,7 +2439,7 @@ NVM_STATIC NVM_Status_t __NvSaveOnInterval(void *ptrData)
             {
                 if (maDatasetInfo[tableEntryIdx].saveNextInterval == FALSE)
                 {
-                    maDatasetInfo[tableEntryIdx].ticksToNextSave  = gNvMinimumTicksBetweenSaves;
+                    maDatasetInfo[tableEntryIdx].ticksToNextSave  = mNvMinimumTicksBetweenSaves;
                     maDatasetInfo[tableEntryIdx].saveNextInterval = TRUE;
 #if gUnmirroredFeatureSet_d
                     if (gNVM_MirroredInRam_c != (NVM_DataEntryType_t)pNVM_DataTable[tableEntryIdx].DataEntryType)
@@ -2211,7 +2460,7 @@ NVM_STATIC NVM_Status_t __NvSaveOnInterval(void *ptrData)
  * Name: __NvSaveOnIdle
  * Description: Save the data pointed by ptrData on the next call to NvIdle()
  * Parameter(s): [IN] ptrData - pointer to data to be saved
- *               [IN] saveRestoreAll - specify if all the elements from the NVM table
+ *               [IN] saveAll - specify if all the elements from the NVM table
  *                              entry shall be saved
  * Return: gNVM_OK_c - if operation completed successfully
  *         gNVM_Error_c - in case of error(s)
@@ -2240,9 +2489,9 @@ NVM_STATIC NVM_Status_t __NvSaveOnIdle(void *ptrData, bool_t saveAll)
             {
 /* write the save all flag */
 #if gNvFragmentation_Enabled_d
-                tblIdx.saveRestoreAll = saveAll;
+                tblIdx.op_type = saveAll ? OP_SAVE_ALL : OP_SAVE_SINGLE;
 #else
-                tblIdx.saveRestoreAll = TRUE;
+                tblIdx.op_type = OP_SAVE_ALL;
 #endif /* gNvFragmentation_Enabled_d */
 
                 status = NvAddSaveRequestToQueue(&tblIdx);
@@ -2252,7 +2501,6 @@ NVM_STATIC NVM_Status_t __NvSaveOnIdle(void *ptrData, bool_t saveAll)
     return status;
 }
 
-#if (gNvUseFlexNVM_d == FALSE)
 /******************************************************************************
  * Name: __NvModulePostInit
  * Description: Do post Initialize the NV storage module when format failure
@@ -2281,14 +2529,15 @@ NVM_STATIC NVM_Status_t __NvModulePostInit(void)
         {
             if (pageFreeSpace < gNvMinimumFreeBytesCountStart_c)
             {
-#if (((defined(gFsciIncluded_c)) && (gFsciIncluded_c > 0U)) && \
-     ((defined(gNvmEnableFSCIMonitoring_c)) && (gNvmEnableFSCIMonitoring_c > 0U)))
-                FSCI_MsgNVVirtualPageMonitoring(TRUE, gNVM_OK_c);
+                FSCI_NV_VIRT_PAGE_MONITOR(TRUE, gNVM_OK_c);
                 status = NvCopyPage(gNvCopyAll_c);
-                FSCI_MsgNVVirtualPageMonitoring(FALSE, status);
-#else
-                status = NvCopyPage(gNvCopyAll_c);
-#endif
+#if defined gNvSalvageFromEccFault_d && (gNvSalvageFromEccFault_d > 0)
+                if (gNVM_EccFault_c == status)
+                {
+                    status = NvCopyPage(gNvCopyAll_c);
+                }
+#endif /* gNvSalvageFromEccFault_d */
+                FSCI_NV_VIRT_PAGE_MONITOR(FALSE, status);
             }
 #if gUnmirroredFeatureSet_d
             __NvmRestoreUnmirrored();
@@ -2302,7 +2551,56 @@ NVM_STATIC NVM_Status_t __NvModulePostInit(void)
     }
     return status;
 }
+
+void NvModuleDeInit(void)
+{
+    mNvPageCounter          = ~0UL;
+    mNVM_DataTableNbEntries = 0u;
+    FLib_MemSet(&mNvVirtualPageProperty[0], 0u,
+                gNvVirtualPagesCount_c * sizeof(NVM_VirtualPageProperties_t)); /*! virtual page properties */
+
+    mNvCopyOperationIsPending = FALSE;
+
+    mNvErasePgCmdStatus.NvErasePending  = FALSE;
+    mNvErasePgCmdStatus.NvPageToErase   = gVirtualPageNone_c;
+    mNvErasePgCmdStatus.NvSectorAddress = 0u;
+
+    mNvFlashConfigInitialised = FALSE;
+
+#if gNvFragmentation_Enabled_d
+    FLib_MemSet(&maNvRecordsCpyOffsets[0], 0u, gNvRecordsCopiedBufferSize_c * sizeof(maNvRecordsCpyOffsets[0]));
 #endif
+
+#if gNvUseExtendedFeatureSet_d
+    mNvTableSizeInFlash  = 0u;
+    mNvTableMarker       = 0u;
+    mNvFlashTableVersion = 0u;
+    mNvTableUpdated      = FALSE;
+#endif /* gNvUseExtendedFeatureSet_d */
+
+    mNvModuleInitialized        = FALSE;
+    mNvCriticalSectionFlag      = 0u;
+    mNvMinimumTicksBetweenSaves = gNvMinimumTicksBetweenSaves_c;
+    mNvCountsBetweenSaves       = gNvCountsBetweenSaves_c;
+
+    FLib_MemSet(&mNvPendingSavesQueue, 0u, sizeof(maNvRecordsCpyOffsets[0]));
+
+    FLib_MemSet(&maDatasetInfo[0], 0u, gNvTableEntriesCountMax_c * sizeof(NVM_DatasetInfo_t));
+
+    mNvSaveOnIntervalEvent = FALSE; /*! flag used to signal an 'SaveOnInterval' event */
+
+    mNvLastTimestampValue = 0uL;
+
+    mNvActivePageId = gVirtualPageNone_c;
+
+#if gNvUseExtendedFeatureSet_d
+    mNvTableMarker       = gNvTableMarker_c;
+    mNvFlashTableVersion = gNvFlashTableVersion_c;
+    mNvTableUpdated      = FALSE;
+#endif /* gNvUseExtendedFeatureSet_d */
+
+    mNvModuleInitialized = FALSE;
+}
 
 /******************************************************************************
  * Name: __NvModuleInit
@@ -2322,38 +2620,38 @@ NVM_STATIC NVM_Status_t __NvModulePostInit(void)
 NVM_STATIC NVM_Status_t __NvModuleInit(bool_t flashInit)
 {
     uint16_t     loopCnt;
-    NVM_Status_t status = gNVM_OK_c;
-#if (gNvUseFlexNVM_d == FALSE) /* no FlexNVM */
-    uint32_t flashEstimateSize = 0U;
-    uint32_t pageFreeSpace     = 0;
-    uint32_t tableEndAddr      = (uint32_t)gNVM_TABLE_endAddr_c;
-    uint32_t tableStartAddr    = (uint32_t)gNVM_TABLE_startAddr_c;
+    NVM_Status_t status            = gNVM_OK_c;
+    uint32_t     flashEstimateSize = 0U;
+    uint32_t     pageFreeSpace     = 0;
+
+    if (mNVM_DataTableNbEntries == 0u)
+    {
+        /* If deinit was applied need to reset to normal value deduced from NVM_TABLE section size.
+           Might be made to pint explicitly on an alternate dataset so test if initialized.
+        */
+        mNVM_DataTableNbEntries = gNVM_TABLE_entries_c;
+    }
 #if gNvUseExtendedFeatureSet_d
     bool_t ret = FALSE;
 #endif
-#else  /* no FlexNVM */
-    ftfx_security_state_t securityStatus;
-    status_t result;
-    uint32_t eepromTotalSize;
-#endif /* no FlexNVM */
-
-#if (gNvUseFlexNVM_d == FALSE) /* no FlexNVM */
 #if defined(__IAR_SYSTEMS_ICC__)
     (void)eraseNVMFirst;
     (void)eraseNVMSecond;
 #endif
-#endif
-
-    if ((gNVM_TABLE_entries_c == 0U) || (gNVM_TABLE_entries_c >= gNvTableEntriesCountMax_c))
+    if ((mNVM_DataTableNbEntries == 0U) || (mNVM_DataTableNbEntries >= gNvTableEntriesCountMax_c))
     {
         status = gNVM_InvalidTableEntriesCount_c;
     }
     else
     {
-#if ((gNvUseFlexNVM_d == FALSE) && (gNvFragmentation_Enabled_d == TRUE))
-        for (loopCnt = 0; loopCnt < (uint16_t)((tableEndAddr - tableStartAddr) / sizeof(NVM_DataEntry_t)); loopCnt++)
+#if (gNvDualImageSupport)
+        FLib_MemSet(&mNvDiffEntryId[0], 0u, gNvTableEntriesCountMax_c * sizeof(mNvDiffEntryId[0]));
+#endif
+
+#if (gNvFragmentation_Enabled_d == TRUE)
+        for (loopCnt = 0; loopCnt < mNVM_DataTableNbEntries; loopCnt++)
         {
-            if (pNVM_DataTable[loopCnt].ElementsCount > gNvRecordsCopiedBufferSize_c)
+            if (pNVM_DataTable[loopCnt].ElementsCount > (uint32_t)gNvRecordsCopiedBufferSize_c)
             {
                 status = gNVM_DefragBufferTooSmall_c;
                 break;
@@ -2363,129 +2661,17 @@ NVM_STATIC NVM_Status_t __NvModuleInit(bool_t flashInit)
 #endif
         {
             /* Initialize the pending saves queue */
-            (void)NvInitPendingSavesQueue(&mNvPendingSavesQueue);
+            NvInitPendingSavesQueue(&mNvPendingSavesQueue);
 
             /* Initialize the data set info table */
             for (loopCnt = 0; loopCnt < (uint16_t)gNvTableEntriesCountMax_c; loopCnt++)
             {
                 maDatasetInfo[loopCnt].saveNextInterval = FALSE;
-                maDatasetInfo[loopCnt].countsToNextSave = gNvCountsBetweenSaves;
+                maDatasetInfo[loopCnt].countsToNextSave = mNvCountsBetweenSaves;
             }
 
             /* initialize the event used by save-on-interval functionality */
             mNvSaveOnIntervalEvent = FALSE;
-
-#if (gNvUseFlexNVM_d == TRUE) /* FlexNVM */
-
-            /* init the FLASH driver */
-            if (flashInit)
-            {
-                NV_Init();
-            }
-
-#if FSL_FEATURE_FLASH_IS_FTFL && (DEBLOCK_SIZE != 0)
-            /* check if the flash registers are configured to support FlexNVM as EEPROM,
-            if not enable this feature*/
-            if (0 == gFlexNvmDriver.ftfxConfig.flexramTotalSize)
-            {
-                DEFlashPartition(&gFlexNvmDriver, gNvEepromDatasetSizeCode_c, gNvEepromBackupSizeCode_c,
-                                 gFlashLaunchCommand);
-            }
-            /* check if the NVM table fits within the size of the FlexRAM window */
-            if (gNVM_OK_c != NvCheckNvmTableForFlexRAMUsage())
-            {
-                status = gNVM_NvTableExceedFlexRAMSize_c;
-            }
-            else
-            {
-                /* check data flash IFR map */
-                if (gFlexNvmDriver.ftfxConfig.flexramTotalSize == 0)
-                {
-                    status = gNVM_NvWrongFlashDataIFRMap_c;
-                }
-                else
-                {
-                    /* Enable the EERAM */
-                    SetEEEEnable(&gFlexNvmDriver, EEE_ENABLE, FlashCommandSequence);
-
-                    /* NVM module is now initialized */
-                    mNvModuleInitialized = TRUE;
-                }
-            }
-#endif /* FSL_FEATURE_FLASH_IS_FTFL */
-
-#if FSL_FEATURE_FLASH_IS_FTFE
-            securityStatus = kFTFx_SecurityStateNotSecure;
-
-            /* Check security status. */
-            result = FLEXNVM_GetSecurityState(&gFlexNvmDriver, &securityStatus);
-            if (kStatus_FLASH_Success != result)
-            {
-                status = gNVM_Error_c;
-            }
-            else
-            {
-                if (kFTFx_SecurityStateNotSecure != securityStatus)
-                {
-                    status = gNVM_FlashMemoryIsSecured_c;
-                }
-                else
-                {
-                    /* Get total EEPROM size */
-                    FLEXNVM_GetProperty(&gFlexNvmDriver, kFLEXNVM_PropertyEepromTotalSize, &eepromTotalSize);
-
-                    /* If no EEPROM set, partition the device as follows:
-                          -> DFLASH size = 0,
-                          -> EEPROM backup size = 256KB,
-                          -> EEPROM dataset size = 2KB,
-                          -> FLEXRAM = 8KB
-                    */
-                    if (!eepromTotalSize)
-                    {
-                        uint32_t eepromDataSizeCode   = gEEPROM_DATA_SET_SIZE_CODE_c;
-                        uint32_t flexnvmPartitionCode = gFLEXNVM_PARTITION_CODE_c;
-
-                        /* Disable interrupts */
-                        OSA_InterruptDisable();
-                        /* Try to configure FlexNVM block as EEprom */
-                        result = FLEXNVM_ProgramPartition(&gFlexNvmDriver,
-                                                          kFTFx_PartitionFlexramLoadOptLoadedWithValidEepromData,
-                                                          eepromDataSizeCode, flexnvmPartitionCode);
-                        /* Enable interrupts */
-                        OSA_InterruptEnable();
-
-                        if (kStatus_FLASH_Success != result)
-                        {
-                            status = gNVM_FlexNVMPartitioningFail_c;
-                        }
-                        else
-                        {
-                            /* Reset the MCU so that the changes become effective */
-                            ResetMCU();
-                        }
-                    }
-
-                    if (gNVM_OK_c == status)
-                    {
-                        /* check if the NVM table fits within the size of the FlexRAM window */
-                        if (gNVM_OK_c != NvCheckNvmTableForFlexRAMUsage())
-                        {
-                            status = gNVM_NvTableExceedFlexRAMSize_c;
-                        }
-                        else
-                        {
-                            /* Enable the EERAM */
-                            FLEXNVM_SetFlexramFunction(&gFlexNvmDriver, kFTFx_FlexramFuncOptAvailableForEeprom);
-
-                            /* NVM module is now initialized */
-                            mNvModuleInitialized = TRUE;
-                        }
-                    }
-                }
-            }
-#endif /* FSL_FEATURE_FLASH_IS_FTFE */
-
-#else /* no FlexNVM */
 
             /* check linker file symbol definition for sector count; it should be multiple of 2 */
             if ((((uint32_t)NV_STORAGE_MAX_SECTORS) & 0x1u) != 0u)
@@ -2501,10 +2687,12 @@ NVM_STATIC NVM_Status_t __NvModuleInit(bool_t flashInit)
                 if (mNvActivePageId == gVirtualPageNone_c)
                 {
                     mNvActivePageId = gFirstVirtualPage_c;
+#if gNvDualImageSupport
+                    (void)NvGetEntryInfoNeedToAddInNVM();
+#endif /* gNvDualImageSupport */
                     status = NvInternalFormat(0);
                     (void)NvGetPageFreeSpace(&pageFreeSpace);
-                    for (loopCnt = 0; loopCnt < (uint16_t)((tableEndAddr - tableStartAddr) / sizeof(NVM_DataEntry_t));
-                         loopCnt++)
+                    for (loopCnt = 0; loopCnt < mNVM_DataTableNbEntries; loopCnt++)
                     {
                         flashEstimateSize +=
                             (NvUpdateSize(pNVM_DataTable[loopCnt].ElementSize) + sizeof(NVM_RecordMetaInfo_t)) *
@@ -2525,6 +2713,9 @@ NVM_STATIC NVM_Status_t __NvModuleInit(bool_t flashInit)
 
                     if (0u == mNvTableSizeInFlash) /* no NV table found in FLASH, format the system */
                     {
+#if gNvDualImageSupport
+                        NvGetEntryInfoNeedToAddInNVM();
+#endif                                                /* gNvDualImageSupport */
                         status = NvInternalFormat(0); /* will also save the NV table to FLASH memory */
                         if (status != gNVM_OK_c)
                         {
@@ -2535,24 +2726,32 @@ NVM_STATIC NVM_Status_t __NvModuleInit(bool_t flashInit)
                     {
                         /* check if the RAM table was updated (e.g. new binary image via OTA) */
                         mNvTableUpdated = (GetFlashTableVersion() != mNvFlashTableVersion) || NvIsRamTableUpdated();
+#if gNvDualImageSupport
+                        if (NvGetEntryInfoNeedToAddInNVM() != 0)
+                        {
+                            mNvTableUpdated = TRUE;
+                        }
+#endif /* gNvDualImageSupport */
                         if (mNvTableUpdated)
                         {
                             ret = TRUE;
                             if (gNVM_OK_c == NvUpdateLastMetaInfoAddress())
                             {
-/* copy the new RAM table and the page content */
-#if (((defined(gFsciIncluded_c)) && (gFsciIncluded_c > 0U)) && \
-     ((defined(gNvmEnableFSCIMonitoring_c)) && (gNvmEnableFSCIMonitoring_c > 0U)))
-                                FSCI_MsgNVVirtualPageMonitoring(TRUE, gNVM_OK_c);
+                                /* copy the new RAM table and the page content */
+                                FSCI_NV_VIRT_PAGE_MONITOR(TRUE, gNVM_OK_c);
                                 status = NvCopyPage(gNvCopyAll_c);
-                                FSCI_MsgNVVirtualPageMonitoring(FALSE, status);
-#else
-                                status = NvCopyPage(gNvCopyAll_c);
-#endif
+#if defined gNvSalvageFromEccFault_d && (gNvSalvageFromEccFault_d > 0)
+                                if (gNVM_EccFault_c == status)
+                                {
+                                    status = NvCopyPage(gNvCopyAll_c);
+                                }
+#endif /* gNvSalvageFromEccFault_d */
+
+                                FSCI_NV_VIRT_PAGE_MONITOR(FALSE, status);
 
                                 /* NVM module is now initialised */
                                 mNvModuleInitialized = TRUE;
-                                mNvTableUpdated = FALSE;
+                                mNvTableUpdated      = FALSE;
 
 #if gUnmirroredFeatureSet_d
                                 __NvmRestoreUnmirrored();
@@ -2572,7 +2771,6 @@ NVM_STATIC NVM_Status_t __NvModuleInit(bool_t flashInit)
                     }
                 }
             }
-#endif
         }
     }
     return status;
@@ -2581,8 +2779,8 @@ NVM_STATIC NVM_Status_t __NvModuleInit(bool_t flashInit)
 /******************************************************************************
  * Name: NvModuleReInit
  * Description: Reinit the NV module , reload from Flash to RAM the latest NVM changes
- *      Usefull for RAM off use case in lowpower
- *    Same than __NvModuleInit without call to NV_Init(); and no mNvModuleInitialized protection
+ *      Useful for RAM off use case in lowpower
+ *    Same as __NvModuleInit without call to NV_Init(); and no mNvModuleInitialized protection
  *  TODO : merge with __NvModuleInit some common processing
  *****************************************************************************/
 NVM_Status_t NvModuleReInit(void)
@@ -2605,6 +2803,7 @@ NVM_STATIC bool_t NvIsRecordErased(uint16_t srcTableEntryIdx, uint16_t srcTableE
 {
     bool_t               status      = FALSE;
     NVM_RecordMetaInfo_t srcMetaInfo = {0};
+
     while (srcMetaAddress < (mNvVirtualPageProperty[mNvActivePageId].NvRawSectorEndAddress))
     {
         (void)NvGetMetaInfo(mNvActivePageId, srcMetaAddress, &srcMetaInfo);
@@ -2692,7 +2891,7 @@ NVM_STATIC void __NvmRestoreUnmirrored(void)
             metaInfoAddress -= sizeof(NVM_RecordMetaInfo_t);
         }
 
-        while (loopCnt < gNVM_TABLE_entries_c)
+        while (loopCnt < mNVM_DataTableNbEntries)
         {
             if (gNVM_NotMirroredInRamAutoRestore_c == (NVM_DataEntryType_t)pNVM_DataTable[loopCnt].DataEntryType)
             {
@@ -2738,7 +2937,7 @@ NVM_STATIC NVM_Status_t __NvmMoveToRam(void **ppData)
             if (!NvIsNVMFlashAddress(*ppData) && (*ppData != NULL))
             {
                 /* Check if is in pendding queue - if yes than remove it */
-                if (NvGetPendingSavesCount(&mNvPendingSavesQueue) != 0u)
+                if (NvIsPendingOperation())
                 {
                     /* Start from the queue's head */
                     loopIdx         = mNvPendingSavesQueue.Head;
@@ -2829,7 +3028,7 @@ NVM_STATIC NVM_Status_t __NvmErase(void **ppData)
             else
             {
                 /* Check if is in pending queue - if yes than remove it */
-                if (NvGetPendingSavesCount(&mNvPendingSavesQueue) != 0u)
+                if (NvIsPendingOperation())
                 {
                     /* Start from the queue's head */
                     loopCnt         = mNvPendingSavesQueue.Head;
@@ -2888,19 +3087,14 @@ NVM_STATIC bool_t NvIsNVMFlashAddress(void *address)
  * Name: NvInitPendingSavesQueue
  * Description: Initialize the pending saves queue
  * Parameters: [IN] pQueue - pointer to queue
- * Return: TRUE if the pointer is valid, FALSE otherwise
+ * Return: none
  ******************************************************************************/
-NVM_STATIC bool_t NvInitPendingSavesQueue(NVM_SaveQueue_t *pQueue)
+NVM_STATIC void NvInitPendingSavesQueue(NVM_SaveQueue_t *pQueue)
 {
-    bool_t status = FALSE;
-    if (NULL != pQueue)
-    {
-        pQueue->Head         = 0;
-        pQueue->Tail         = 0;
-        pQueue->EntriesCount = 0;
-        status               = TRUE;
-    }
-    return status;
+    assert(NULL != pQueue);
+    pQueue->Head         = 0;
+    pQueue->Tail         = 0;
+    pQueue->EntriesCount = 0;
 }
 
 /******************************************************************************
@@ -2913,43 +3107,53 @@ NVM_STATIC bool_t NvInitPendingSavesQueue(NVM_SaveQueue_t *pQueue)
 NVM_STATIC bool_t NvPushPendingSave(NVM_SaveQueue_t *pQueue, NVM_TableEntryInfo_t data)
 {
     bool_t status = FALSE;
-    bool_t ret    = FALSE;
-    if (NULL != pQueue)
+
+    assert(NULL != pQueue); /* this is an internal function always called with non NULL queue pointer */
+
+    /* Can only add to queue if at least one slot is remaining */
+    if (pQueue->EntriesCount < (uint16_t)(gNvPendingSavesQueueSize_c))
     {
-        if ((pQueue->Tail == pQueue->Head) && (pQueue->EntriesCount > 0u))
-        {
-#if gFifoOverwriteEnabled_c
-            /* Increment and wrap the head when it reaches gNvPendingSavesQueueSize_c */
-            if (++pQueue->Head >= (uint16_t)gNvPendingSavesQueueSize_c)
-            {
-                pQueue->Head = 0;
-            }
-            (void)ret;
-#else
-            ret = TRUE;
-#endif
-        }
-        if (FALSE == ret)
-        {
-            /* Add the item to queue */
-            pQueue->QData[pQueue->Tail] = data;
+        /* Add the item to queue */
+        pQueue->QData[pQueue->Tail] = data;
+        /* Increment and wrap the tail when it reaches gNvPendingSavesQueueSize_c */
+        INCREMENT_Q_INDEX(pQueue->Tail);
 
-            /* Increment and wrap the tail when it reaches gNvPendingSavesQueueSize_c */
-            if (++pQueue->Tail >= (uint16_t)gNvPendingSavesQueueSize_c)
-            {
-                pQueue->Tail = 0;
-            }
+        /* Increment the entries count */
+        pQueue->EntriesCount++;
 
-            /* Increment the entries count */
-            if (pQueue->EntriesCount < (uint16_t)(gNvPendingSavesQueueSize_c))
-            {
-                pQueue->EntriesCount++;
-            }
+        status = TRUE;
+    }
 
-            status = TRUE;
-        }
+    return status;
+}
+
+/******************************************************************************
+ * Name: NvGetPendingSaveHead
+ * Description: Retrieves the head element from the pending saves queue
+ * Parameters: [IN] pQueue - pointer to queue
+ *             [OUT] pData - pointer to the location where data will be placed
+ * Return: TRUE if the pop operation succeeded, FALSE otherwise
+ ******************************************************************************/
+NVM_STATIC bool_t NvGetPendingSaveHead(NVM_SaveQueue_t *pQueue, NVM_TableEntryInfo_t *pData)
+{
+    bool_t status = FALSE;
+    assert(pQueue != NULL);
+    assert(pData != NULL);
+    if (pQueue->EntriesCount != 0u)
+    {
+        *pData = pQueue->QData[pQueue->Head];
+        status = TRUE;
     }
     return status;
+}
+
+NVM_STATIC void NvRemovePendingSaveHead(NVM_SaveQueue_t *pQueue)
+{
+    /* Increment and wrap the head when it reaches gNvPendingSavesQueueSize_c */
+    INCREMENT_Q_INDEX(pQueue->Head);
+
+    /* Decrement the entries count */
+    pQueue->EntriesCount--;
 }
 
 /******************************************************************************
@@ -2962,25 +3166,17 @@ NVM_STATIC bool_t NvPushPendingSave(NVM_SaveQueue_t *pQueue, NVM_TableEntryInfo_
 NVM_STATIC bool_t NvPopPendingSave(NVM_SaveQueue_t *pQueue, NVM_TableEntryInfo_t *pData)
 {
     bool_t status = TRUE;
-    if ((NULL == pQueue) || (pQueue->EntriesCount <= 0u) || ((NULL == pData)))
-    {
-        status = FALSE;
-    }
-    else
-    {
-        *pData = pQueue->QData[pQueue->Head];
 
-        /* Increment and wrap the head when it reaches gNvPendingSavesQueueSize_c */
-        if (++pQueue->Head >= (uint16_t)gNvPendingSavesQueueSize_c)
-        {
-            pQueue->Head = 0;
-        }
+    status = NvGetPendingSaveHead(pQueue, pData);
 
-        /* Decrement the entries count */
-        pQueue->EntriesCount--;
+    if (status == TRUE)
+    {
+        /* Update Head index to consume head */
+        NvRemovePendingSaveHead(pQueue);
     }
     return status;
 }
+
 /******************************************************************************
  * Name: NvGetPendingSavesCount
  * Description: self explanatory
@@ -2997,11 +3193,39 @@ NVM_STATIC uint16_t NvGetPendingSavesCount(NVM_SaveQueue_t *pQueue)
     return status;
 }
 
-/*****************************************************************
- * The below functions are compiled only if FlexNVM is NOT used
- *****************************************************************/
+/******************************************************************************
+ * Name: NvLookAheadInPendingSaveQueue
+ * Description: Retrieves the head element from the pending saves queue
+ * Parameters: [IN] pQueue - pointer to queue
+ *             [IN] searched_id - entry Id
+ *             [IN] searched_index
+ * Return: TRUE if the pop operation succeeded, FALSE otherwise
+ ******************************************************************************/
+NVM_STATIC uint8_t NvLookAheadInPendingSaveQueue(NVM_SaveQueue_t *pQueue, uint16_t searched_id, uint16_t searched_index)
+{
+    eNvFlashOp_t found = OP_NONE;
+    uint16_t     i;
+    if (pQueue->EntriesCount != 0u)
+    {
+        i = pQueue->Head;
+        while (i != pQueue->Tail)
+        {
+            NVM_TableEntryInfo_t *elm = &pQueue->QData[i];
+            if (elm->entryId == searched_id)
+            {
+                if ((elm->op_type == OP_SAVE_ALL) ||
+                    ((elm->elementIndex == searched_index) && (elm->op_type == OP_SAVE_SINGLE)))
+                {
+                    found = elm->op_type;
+                    break;
+                }
+            }
+            INCREMENT_Q_INDEX(i);
+        }
+    }
 
-#if (gNvUseFlexNVM_d == FALSE) /* no FlexNVM */
+    return (uint8_t)found;
+}
 
 /******************************************************************************
  * Name: InitNVMConfig
@@ -3109,40 +3333,45 @@ NVM_STATIC NVM_Status_t NvEraseVirtualPage(NVM_VirtualPageID_t pageID)
     }
     else
     {
-        /* erase virtual page */
-        status = (NVM_Status_t)HAL_FlashEraseSector(mNvVirtualPageProperty[pageID].NvRawSectorStartAddress,
-                                                    mNvVirtualPageProperty[pageID].NvTotalPageSize);
-        if (kStatus_HAL_Flash_Success != (hal_flash_status_t)status)
+        /* Blank check first */
+        status = NvVirtualPageBlankCheck(pageID);
+        if (gNVM_OK_c != status)
         {
-            status = gNVM_SectorEraseFail_c;
+            /* If already blank avoid unrequired erase */
+            /* erase virtual page */
+            if (kStatus_HAL_Flash_Success !=
+                HAL_FlashEraseSector(mNvVirtualPageProperty[pageID].NvRawSectorStartAddress,
+                                     mNvVirtualPageProperty[pageID].NvTotalPageSize))
+            {
+                status = gNVM_SectorEraseFail_c;
+            }
+            else
+            {
+                status = NvVirtualPageBlankCheck(pageID);
+            }
         }
-        else
-        {
-            status = NvVirtualPageBlankCheck(pageID);
-        }
-#if (((defined(gFsciIncluded_c)) && (gFsciIncluded_c > 0U)) && \
-     ((defined(gNvmEnableFSCIMonitoring_c)) && (gNvmEnableFSCIMonitoring_c > 0U)))
-        FSCI_MsgNVPageEraseMonitoring(mNvVirtualPageProperty[pageID].NvRawSectorStartAddress, status);
-#endif
+        /* After erase ECC errors got cleaned */
+        mNvVirtualPageProperty[pageID].has_ecc_faults = FALSE; /* erase virtual page */
+        FSCI_NV_VIRT_PAGE_ERASE_MONITOR(mNvVirtualPageProperty[pageID].NvRawSectorStartAddress, status);
     }
     return status;
 }
 /******************************************************************************
  * Name: NvSetErasePgCmdStatus
- * Description: Nv Set Erase Page CmdStatus
+ * Description: Nv Set Erase Page CmdStatus. Sets mNvActivePageId
  * Parameter(s): [IN] PageToErase - the ID of the page to be erased
- * Parameter(s): [IN] read_legacy_location - need use legacy locaton
+ * Parameter(s): [IN] last_pass - may be set to false the first time
+ *                    if checking backwark compatibility.
+ *                    Has to be true the last time.
  * Parameter(s): [IN] doPageBlankCheck - need do page blank check
  * Parameter(s): -
  * Return: -
  *****************************************************************************/
-NVM_STATIC void NvSetErasePgCmdStatus(NVM_VirtualPageID_t PageToErase,
-                                      bool_t              read_legacy_location,
-                                      bool_t              doPageBlankCheck)
+NVM_STATIC void NvSetErasePgCmdStatus(NVM_VirtualPageID_t PageToErase, bool_t last_pass, bool_t doPageBlankCheck)
 {
     mNvActivePageId = (PageToErase == gSecondVirtualPage_c) ? gFirstVirtualPage_c : gSecondVirtualPage_c;
 
-    if (read_legacy_location)
+    if (last_pass)
     {
         /* check need do BlankCheck */
         if (((gNVM_PageIsNotBlank_c == NvVirtualPageBlankCheck(PageToErase)) && doPageBlankCheck) ||
@@ -3156,34 +3385,75 @@ NVM_STATIC void NvSetErasePgCmdStatus(NVM_VirtualPageID_t PageToErase,
     }
 }
 
+NVM_STATIC NVM_Status_t ReadPageTopCount(NVM_VirtualPageProperties_t *page_prop, uint32_t *top_count)
+{
+    *top_count = gPageCounterMaxValue_c;
+    /* Avoid direct read to flash in case of ECC fault */
+    return NV_FlashRead(page_prop->NvRawSectorStartAddress, (uint8_t *)top_count, sizeof(*top_count), TRUE);
+}
+
+/*
+ * Erase virtual pages whose top count is unset / or not readable.
+ */
 NVM_STATIC void NvPostFwUpdateMaintenance(void)
 {
-    NVM_VirtualPageID_t pageID;
-    uint32_t            sect_sz = (uint32_t)((uint8_t *)NV_STORAGE_SECTOR_SIZE);
+    uint8_t  pageID;
+    uint32_t sect_sz = (uint32_t)((uint8_t *)NV_STORAGE_SECTOR_SIZE);
 
-    for (pageID = gFirstVirtualPage_c; pageID <= gSecondVirtualPage_c; pageID++)
+    for (pageID = (uint8_t)gFirstVirtualPage_c; pageID < gVirtualPageNb_c; pageID++)
     {
         NVM_VirtualPageProperties_t *page_props = &mNvVirtualPageProperty[pageID];
-        uint32_t                     p          = page_props->NvRawSectorStartAddress;
-
-        if (*(uint32_t *)p == 0xffffffff)
+        uint32_t                     top_count;
+        if (ReadPageTopCount(page_props, &top_count) != gNVM_OK_c)
         {
-            /* we read 0xffffffff from the flash: it either means that it is blank / erased or written with 0xffffffff .
-             * HAL_FlashVerifyErase does not make the difference!
-             */
-            for (uint8_t i = 0; i < page_props->NvRawSectorsCount; i++)
+            assert(0);
+            /* ECC Error detected erase whole page regardless of any other consideration */
+            (void)HAL_FlashEraseSector(page_props->NvRawSectorStartAddress, page_props->NvTotalPageSize);
+        }
+        else
+        {
+            uint32_t p = page_props->NvRawSectorStartAddress;
+
+            if (top_count == gPageCounterMaxValue_c)
             {
-                /* Check if sector requires an erase */
-                if (HAL_FlashVerifyErase(p, sect_sz, kHAL_Flash_MarginValueNormal) != kStatus_HAL_Flash_Success)
+                /* we read 0xffffffffU from the flash: it either means that it is blank / erased or written with
+                 * 0xffffffff . HAL_FlashVerifyErase does not make the difference!
+                 */
+                for (uint8_t i = 0; i < page_props->NvRawSectorsCount; i++)
                 {
-                    HAL_FlashEraseSector(p, sect_sz);
+                    /* Check if sector requires an erase */
+                    if (HAL_FlashVerifyErase(p, sect_sz, kHAL_Flash_MarginValueNormal) != kStatus_HAL_Flash_Success)
+                    {
+                        (void)HAL_FlashEraseSector(p, sect_sz);
+                    }
+                    p += sect_sz;
                 }
-                p += sect_sz;
             }
         }
     }
 }
 
+/*
+ * Name: IsVirtualPageValid
+ * Description: Check virtual page validity.
+ * Parameter(s): v_page pointer of probed virtual page.
+ * Return: TRUE if valid FALSE otherwise
+ */
+NVM_STATIC bool_t IsVirtualPageValid(NVM_VirtualPageProperties_t *v_page)
+{
+    bool_t valid = FALSE;
+    if ((v_page->CounterTop == v_page->CounterBottom) && (gPageCounterMaxValue_c != v_page->CounterTop))
+    {
+        valid = TRUE;
+#if defined gNvSalvageFromEccFault_d && (gNvSalvageFromEccFault_d > 0)
+        if (v_page->has_ecc_faults != FALSE)
+        {
+            valid = FALSE;
+        }
+#endif
+    }
+    return valid;
+}
 /******************************************************************************
  * Name: NvInitStorageSystem
  * Description: Initialize the storage system, retrieve the active page and
@@ -3193,77 +3463,98 @@ NVM_STATIC void NvPostFwUpdateMaintenance(void)
  *****************************************************************************/
 NVM_STATIC void NvInitStorageSystem(bool_t read_legacy_location)
 {
-    uint32_t value;
-    uint32_t firstPageCounterTopValue;
-    uint32_t firstPageCounterBottomValue;
-    uint32_t secondPageCounterTopValue;
-    uint32_t secondPageCounterBottomValue;
-    uint8_t  location_offset = (read_legacy_location ? gNvLegacyOffset_c : 0u);
+    uint32_t     value;
+    uint32_t     location_offset = (read_legacy_location ? gNvLegacyOffset_c : 0u);
+    NVM_Status_t st;
+
+#if defined gNvSalvageFromEccFault_d && (gNvSalvageFromEccFault_d > 0)
+    /* Sweep virtual pages to find possible ECC errors */
+    for (uint8_t idx = (uint8_t)gFirstVirtualPage_c; idx < gVirtualPageNb_c; idx++)
+    {
+        uint32_t fault_at;
+        uint32_t start = mNvVirtualPageProperty[idx].NvRawSectorStartAddress;
+        uint32_t end   = mNvVirtualPageProperty[idx].NvRawSectorEndAddress;
+
+        mNvVirtualPageProperty[idx].has_ecc_faults = FALSE;
+
+        /* We hop from flash phrase to flash phrase to hunt for ECC faults */
+        fault_at = NV_SweepRangeForEccFaults(start, end);
+        if (fault_at < end)
+        {
+            mNvVirtualPageProperty[idx].has_ecc_faults = TRUE;
+        }
+    }
+#endif
 
     NvPostFwUpdateMaintenance();
-
-    /* read both pages counter values */
-    NV_FlashRead((uint8_t *)mNvVirtualPageProperty[gFirstVirtualPage_c].NvRawSectorStartAddress, (uint8_t *)&value,
-                 sizeof(value));
-    firstPageCounterTopValue = value;
-    NV_FlashRead((uint8_t *)mNvVirtualPageProperty[gFirstVirtualPage_c].NvRawSectorEndAddress -
-                     sizeof(NVM_TableInfo_t) + 1u + location_offset,
-                 (uint8_t *)&value, sizeof(value));
-    firstPageCounterBottomValue = value;
-
-    NV_FlashRead((uint8_t *)mNvVirtualPageProperty[gSecondVirtualPage_c].NvRawSectorStartAddress, (uint8_t *)&value,
-                 sizeof(value));
-    secondPageCounterTopValue = value;
-    NV_FlashRead((uint8_t *)mNvVirtualPageProperty[gSecondVirtualPage_c].NvRawSectorEndAddress -
-                     sizeof(NVM_TableInfo_t) + 1u + location_offset,
-                 (uint8_t *)&value, sizeof(value));
-    secondPageCounterBottomValue = value;
+    uint32_t bottom_cnt_offset = sizeof(NVM_TableInfo_t) - 1u - location_offset;
+    for (uint8_t idx = (uint8_t)gFirstVirtualPage_c; idx < gVirtualPageNb_c; idx++)
+    {
+        /* Read bottom and top counter for both virtual pages. */
+        NVM_VirtualPageProperties_t *page_prop = &mNvVirtualPageProperty[idx];
+        page_prop->CounterTop = page_prop->CounterBottom = 0U;
+        /* virt_page[idx].CounterTop = gPageCounterMaxValue_c; Done by memset above nouse setting explicitly */
+        /* read both pages counter values */
+        /* If gNvSalvageFromEccFault_d is undefined NV_FlashRead necessarily returns gNVM_OK_c */
+        st = NV_FlashRead(page_prop->NvRawSectorStartAddress, (uint8_t *)&value, sizeof(value),
+                          page_prop->has_ecc_faults);
+        if (st == gNVM_OK_c)
+        {
+            page_prop->CounterTop = value;
+        }
+        st = NV_FlashRead(page_prop->NvRawSectorEndAddress - bottom_cnt_offset, (uint8_t *)&value, sizeof(value),
+                          page_prop->has_ecc_faults);
+        if (st == gNVM_OK_c)
+        {
+            page_prop->CounterBottom = value;
+        }
+    }
 
     /* get the active page */
-    if ((firstPageCounterTopValue == firstPageCounterBottomValue) &&
-        (gPageCounterMaxValue_c != firstPageCounterTopValue)) /* first page is valid */
+    if (IsVirtualPageValid(&mNvVirtualPageProperty[gFirstVirtualPage_c])) /* first page is valid */
     {
-        if ((secondPageCounterTopValue == secondPageCounterBottomValue) &&
-            (gPageCounterMaxValue_c != secondPageCounterTopValue)) /* second page is valid */
+        if (IsVirtualPageValid(&mNvVirtualPageProperty[gSecondVirtualPage_c])) /* second page is valid */
         {
-            if (firstPageCounterTopValue >= secondPageCounterTopValue)
+            /* Both valid: determine which is most recent */
+            if (mNvVirtualPageProperty[gFirstVirtualPage_c].CounterTop >=
+                mNvVirtualPageProperty[gSecondVirtualPage_c].CounterTop)
             {
                 /* first page is active */
-                mNvPageCounter  = firstPageCounterTopValue;
                 mNvActivePageId = gFirstVirtualPage_c;
             }
             else
             {
                 /* second page is active */
-                mNvPageCounter  = secondPageCounterTopValue;
                 mNvActivePageId = gSecondVirtualPage_c;
             }
+            mNvPageCounter = mNvVirtualPageProperty[mNvActivePageId].CounterTop;
         }
         else
         {
-            if (secondPageCounterTopValue != secondPageCounterBottomValue)
+            if (mNvVirtualPageProperty[gSecondVirtualPage_c].CounterTop !=
+                mNvVirtualPageProperty[gSecondVirtualPage_c].CounterBottom)
             {
                 /* first page is active */
-                mNvPageCounter = firstPageCounterTopValue;
+                mNvPageCounter = mNvVirtualPageProperty[gFirstVirtualPage_c].CounterTop;
                 NvSetErasePgCmdStatus(gSecondVirtualPage_c, read_legacy_location, FALSE);
             }
             else
             {
                 /* first page is active */
-                mNvPageCounter = firstPageCounterTopValue;
+                mNvPageCounter = mNvVirtualPageProperty[gFirstVirtualPage_c].CounterTop;
                 NvSetErasePgCmdStatus(gSecondVirtualPage_c, read_legacy_location, TRUE);
             }
         }
     }
     else
     {
-        if (firstPageCounterTopValue != firstPageCounterBottomValue) /* first page is not valid */
+        if (mNvVirtualPageProperty[gFirstVirtualPage_c].CounterTop !=
+            mNvVirtualPageProperty[gFirstVirtualPage_c].CounterBottom) /* first page is not valid */
         {
-            if ((secondPageCounterTopValue == secondPageCounterBottomValue) &&
-                (gPageCounterMaxValue_c != secondPageCounterTopValue)) /* second page is valid */
+            if (IsVirtualPageValid(&mNvVirtualPageProperty[gSecondVirtualPage_c])) /* second page is valid */
             {
                 /* second page is active */
-                mNvPageCounter = secondPageCounterTopValue;
+                mNvPageCounter = mNvVirtualPageProperty[gSecondVirtualPage_c].CounterTop;
                 NvSetErasePgCmdStatus(gFirstVirtualPage_c, read_legacy_location, FALSE);
             }
             else
@@ -3273,11 +3564,10 @@ NVM_STATIC void NvInitStorageSystem(bool_t read_legacy_location)
         }
         else
         {
-            if ((secondPageCounterTopValue == secondPageCounterBottomValue) &&
-                (gPageCounterMaxValue_c != secondPageCounterTopValue)) /* second page is valid */
+            if (IsVirtualPageValid(&mNvVirtualPageProperty[gSecondVirtualPage_c])) /* second page is valid */
             {
                 /* second page is active */
-                mNvPageCounter = secondPageCounterTopValue;
+                mNvPageCounter = mNvVirtualPageProperty[gSecondVirtualPage_c].CounterTop;
                 NvSetErasePgCmdStatus(gFirstVirtualPage_c, read_legacy_location, TRUE);
             }
             else
@@ -3332,8 +3622,12 @@ NVM_STATIC NVM_Status_t NvUpdateLastMetaInfoAddress(void)
 
     while (readAddress < mNvVirtualPageProperty[mNvActivePageId].NvRawSectorEndAddress)
     {
-        NV_FlashRead((uint8_t *)readAddress, (uint8_t *)&metaValue, sizeof(metaValue));
-
+        status = NV_FlashRead(readAddress, (uint8_t *)&metaValue, sizeof(metaValue), TRUE);
+        if (gNVM_OK_c != status)
+        {
+            status = gNVM_MetaNotFound_c;
+            break;
+        }
         if (gNvGuardValue_c == metaValue.rawValue)
         {
             if (readAddress == (mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress + gNvFirstMetaOffset_c))
@@ -3352,8 +3646,11 @@ NVM_STATIC NVM_Status_t NvUpdateLastMetaInfoAddress(void)
                 while (readAddress >=
                        (mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress + gNvFirstMetaOffset_c))
                 {
-                    NV_FlashRead((uint8_t *)readAddress, (uint8_t *)&metaValue, sizeof(metaValue));
-
+                    status = NV_FlashRead(readAddress, (uint8_t *)&metaValue, sizeof(metaValue), TRUE);
+                    if (gNVM_OK_c != status)
+                    {
+                        break;
+                    }
                     if ((metaValue.fields.NvValidationStartByte == metaValue.fields.NvValidationEndByte) &&
                         ((gValidationByteSingleRecord_c == metaValue.fields.NvValidationStartByte) ||
                          (gValidationByteAllRecords_c == metaValue.fields.NvValidationStartByte)))
@@ -3367,7 +3664,11 @@ NVM_STATIC NVM_Status_t NvUpdateLastMetaInfoAddress(void)
                                 if (metaValue.fields.NvmRecordOffset == 0u)
                                 {
                                     readAddress -= sizeof(NVM_RecordMetaInfo_t);
-                                    NV_FlashRead((uint8_t *)readAddress, (uint8_t *)&metaValue, sizeof(metaValue));
+                                    status = NV_FlashRead(readAddress, (uint8_t *)&metaValue, sizeof(metaValue), TRUE);
+                                    if (gNVM_OK_c != status)
+                                    {
+                                        break;
+                                    }
                                 }
                                 else
                                 {
@@ -3423,8 +3724,8 @@ NVM_STATIC NVM_Status_t NvGetMetaInfo(NVM_VirtualPageID_t   pageId,
     else
     {
         /* read the meta information tag */
-        NV_FlashRead((uint8_t *)metaInfoAddress, (uint8_t *)pMetaInfo, sizeof(NVM_RecordMetaInfo_t));
-        status = gNVM_OK_c;
+        status = NV_FlashRead(metaInfoAddress, (uint8_t *)pMetaInfo, sizeof(NVM_RecordMetaInfo_t),
+                              mNvVirtualPageProperty[mNvActivePageId].has_ecc_faults);
     }
     return status;
 }
@@ -3554,15 +3855,27 @@ NVM_STATIC bool_t NvIsRecordCopied(NVM_VirtualPageID_t pageId, NVM_RecordMetaInf
     uint32_t             loopAddress;
     NVM_RecordMetaInfo_t metaValue;
     bool_t               retVal;
+    NVM_Status_t         status;
 
     loopAddress = mNvVirtualPageProperty[pageId].NvRawSectorStartAddress + gNvFirstMetaOffset_c;
-    retVal      = FALSE;
+#if gNvDualImageSupport
+    loopAddress += sizeof(NVM_TableInfo_t) * mNvNeedAddEntryCnt;
+#endif
+
+    retVal = FALSE;
 
     do
     {
         /* read the meta information tag */
-        NV_FlashRead((uint8_t *)loopAddress, (uint8_t *)&metaValue, sizeof(NVM_RecordMetaInfo_t));
+        status = NV_FlashRead(loopAddress, (uint8_t *)&metaValue, sizeof(NVM_RecordMetaInfo_t),
+                              mNvVirtualPageProperty[mNvActivePageId].has_ecc_faults);
 
+        if (status == gNVM_EccFault_c)
+        {
+            /* detected fault while reading meta data - skip and jump to next */
+            loopAddress += sizeof(NVM_RecordMetaInfo_t);
+            continue;
+        }
         if (gNvGuardValue_c == metaValue.rawValue)
         {
             /* reached last meta */
@@ -3643,13 +3956,13 @@ NVM_STATIC NVM_Status_t NvInternalCopy(uint32_t              dstAddress,
                                        uint16_t              size)
 {
     uint16_t             innerOffset;
-    uint8_t              cacheBuffer[gNvCacheBufferSize_c];
+    uint8_t              cacheBuffer[gNvCacheBufferSize_c] = {0U};
     NVM_RecordMetaInfo_t dstMetaInfo;
     uint16_t             diffSize = 0;
     uint16_t             diffIdx  = 0;
     uint16_t             ramSize  = 0;
     uint8_t              misalignedBytes;
-    uint8_t              loopIdx;
+    uint16_t             loopIdx;
     uint16_t             loopEnd;
     NVM_Status_t         status = gNVM_OK_c;
 
@@ -3665,16 +3978,29 @@ NVM_STATIC NVM_Status_t NvInternalCopy(uint32_t              dstAddress,
 
     if (srcMetaInfo->fields.NvValidationStartByte != gValidationByteSingleRecord_c)
     {
-        ramSize = pNVM_DataTable[srcTblEntryIdx].ElementsCount * pNVM_DataTable[srcTblEntryIdx].ElementSize;
-        /* if the bytes to copy are less then RAM table entry space, the supplementary bytes to write on the destination
-         * page will be retrieved from RAM table entry. This is the case when the RAM table has been updated and the new
-         * entry's elements count is greater then the one existing in the previous RAM table, now stored in the FLASH
-         * active page (source page) */
-        if (size < ramSize)
+#if gNvDualImageSupport
+        /* if the srcTableEntryIdx is invalid for this function, it means the entry is from NVM, not from registed RAM
+           then it not need to check if NvTable is changed from RAM  */
+        if (srcTblEntryIdx == gNvInvalidTableEntryIndex_c)
         {
-            diffSize = ramSize - size;
-            diffIdx  = size / pNVM_DataTable[srcTblEntryIdx].ElementSize;
+            // not action needs
         }
+        else
+        {
+#endif /* gNvDualImageSupport */
+            ramSize = pNVM_DataTable[srcTblEntryIdx].ElementsCount * pNVM_DataTable[srcTblEntryIdx].ElementSize;
+            /* if the bytes to copy are less then RAM table entry space, the supplementary bytes to write on the
+             * destination page will be retrieved from RAM table entry. This is the case when the RAM table has been
+             * updated and the new entry's elements count is greater then the one existing in the previous RAM table,
+             * now stored in the FLASH active page (source page) */
+            if (size < ramSize)
+            {
+                diffSize = ramSize - size;
+                diffIdx  = size / pNVM_DataTable[srcTblEntryIdx].ElementSize;
+            }
+#if gNvDualImageSupport
+        }
+#endif /* gNvDualImageSupport */
     }
 
     while (size != 0u)
@@ -3682,13 +4008,15 @@ NVM_STATIC NVM_Status_t NvInternalCopy(uint32_t              dstAddress,
         if (size > (uint16_t)gNvCacheBufferSize_c)
         {
             /* copy from FLASH to cache buffer */
-            NV_FlashRead((uint8_t *)mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress +
-                             srcMetaInfo->fields.NvmRecordOffset + innerOffset,
-                         (uint8_t *)&cacheBuffer[0], (uint16_t)gNvCacheBufferSize_c);
+            /* The source page is unlikely to contain errors because if we reached this point it means the meta data
+             * of the source were safely read, so the contents of the record must be error free. */
+            (void)NV_FlashRead(mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress +
+                                   srcMetaInfo->fields.NvmRecordOffset + innerOffset,
+                               (uint8_t *)&cacheBuffer[0], (uint16_t)gNvCacheBufferSize_c, FALSE);
 
             /* write to destination page */
-            if (kStatus_HAL_Flash_Success ==
-                HAL_FlashProgramUnaligned(dstAddress, (uint16_t)gNvCacheBufferSize_c, cacheBuffer))
+            status = NV_FlashProgramUnaligned(dstAddress, (uint16_t)gNvCacheBufferSize_c, (uint8_t *)cacheBuffer, TRUE);
+            if (gNVM_OK_c == status)
             {
                 /* update the destination record address copy */
                 dstAddress += (uint16_t)gNvCacheBufferSize_c;
@@ -3697,17 +4025,21 @@ NVM_STATIC NVM_Status_t NvInternalCopy(uint32_t              dstAddress,
                 /* update the inner offset value */
                 innerOffset += (uint16_t)gNvCacheBufferSize_c;
 
-                continue;
+                /* continue since no error */
             }
-            status = gNVM_RecordWriteError_c;
-            break;
+            else
+            {
+                /* The copy of the record contents did not go well  */
+                /* It might mean that an ECC error occurred while writing */
+                break;
+            }
         }
         else
         {
-            /* copy from FLASH to cache buffer */
-            NV_FlashRead((uint8_t *)mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress +
-                             srcMetaInfo->fields.NvmRecordOffset + innerOffset,
-                         (uint8_t *)&cacheBuffer[0], size);
+            /* copy from FLASH to cache buffer: assuming error free record contents  */
+            (void)NV_FlashRead(mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress +
+                                   srcMetaInfo->fields.NvmRecordOffset + innerOffset,
+                               (uint8_t *)&cacheBuffer[0], size, FALSE);
             break;
         }
     }
@@ -3735,7 +4067,7 @@ NVM_STATIC NVM_Status_t NvInternalCopy(uint32_t              dstAddress,
                 loopEnd = (uint16_t)PGM_SIZE_BYTE - misalignedBytes;
 
                 /* update with data from RAM */
-                for (loopIdx = 0; loopIdx < loopEnd; loopIdx++)
+                for (loopIdx = 0U; loopIdx < loopEnd; loopIdx++)
                 {
                     cacheBuffer[misalignedBytes] =
                         *((uint8_t *)pNVM_DataTable[srcTblEntryIdx].pData +
@@ -3749,11 +4081,8 @@ NVM_STATIC NVM_Status_t NvInternalCopy(uint32_t              dstAddress,
                 }
 
                 /* write to Flash destination page */
-                if (kStatus_HAL_Flash_Success != HAL_FlashProgramUnaligned(dstAddress, PGM_SIZE_BYTE, cacheBuffer))
-                {
-                    status = gNVM_RecordWriteError_c;
-                }
-                else
+                status = NV_FlashProgramUnaligned(dstAddress, (uint16_t)PGM_SIZE_BYTE, (uint8_t *)cacheBuffer, TRUE);
+                if (gNVM_OK_c == status)
                 {
                     /* align to next 32 bit boundary */
                     dstAddress += (uint32_t)PGM_SIZE_BYTE;
@@ -3763,31 +4092,23 @@ NVM_STATIC NVM_Status_t NvInternalCopy(uint32_t              dstAddress,
             if (gNVM_OK_c == status)
             {
                 /* write to Flash destination page the rest of the aligned data */
-                if (kStatus_HAL_Flash_Success !=
-                    HAL_FlashProgramUnaligned(dstAddress, (uint32_t)diffSize - (uint32_t)innerOffset,
-                                              ((uint8_t *)pNVM_DataTable[srcTblEntryIdx].pData +
-                                               (diffIdx * pNVM_DataTable[srcTblEntryIdx].ElementSize) + innerOffset)))
-                {
-                    status = gNVM_RecordWriteError_c;
-                }
+                uint16_t sz      = (uint16_t)((uint32_t)diffSize - (uint32_t)innerOffset);
+                uint8_t *src_ptr = (uint8_t *)pNVM_DataTable[srcTblEntryIdx].pData +
+                                   (diffIdx * pNVM_DataTable[srcTblEntryIdx].ElementSize) + innerOffset;
+                status = NV_FlashProgramUnaligned(dstAddress, sz, src_ptr, TRUE);
             }
         }
         else
         {
             /* write to destination page */
-            if (kStatus_HAL_Flash_Success == HAL_FlashProgramUnaligned(dstAddress, (uint16_t)size, cacheBuffer))
-            {
-            }
-            else
-            {
-                status = gNVM_RecordWriteError_c;
-            }
+            status = NV_FlashProgramUnaligned(dstAddress, (uint16_t)size, cacheBuffer, TRUE);
         }
         if (gNVM_OK_c == status)
         {
             /* write the associated record meta information */
-            if (kStatus_HAL_Flash_Success !=
-                HAL_FlashProgramUnaligned(dstMetaAddress, sizeof(NVM_RecordMetaInfo_t), (uint8_t *)(&dstMetaInfo)))
+            /* Use aligned version of programming API because meta data are always aligned */
+            status = NV_FlashProgram(dstMetaAddress, sizeof(NVM_RecordMetaInfo_t), (uint8_t *)(&dstMetaInfo), TRUE);
+            if (gNVM_OK_c != status)
             {
                 status = gNVM_MetaInfoWriteError_c;
             }
@@ -3848,8 +4169,29 @@ NVM_STATIC void NvInternalRecordsUpdate(uint32_t              srcMetaAddr,
     NVM_RecordMetaInfo_t metaInfo    = {0};
     uint32_t             metaAddress = srcMetaAddr;
 
-    /* clear the records offsets buffer */
-    FLib_MemSet(maNvRecordsCpyOffsets, 0, (uint32_t)sizeof(uint16_t) * pNVM_DataTable[srcTblEntryIdx].ElementsCount);
+#if gNvDualImageSupport
+    NVM_DataEntry_t flashDataEntry;
+    /* if the srcTblEntryIdx is invalid, it means the entry may is from NVM, then size should from NVM entry  */
+    if (srcTblEntryIdx == gNvInvalidTableEntryIndex_c)
+    {
+        /* get current meta information */
+        (void)NvGetMetaInfo(mNvActivePageId, metaAddress, &metaInfo);
+        /* get Entey table from NVM*/
+        (void)NvGetTableEntry(metaInfo.fields.NvmDataEntryID, &flashDataEntry);
+        /* clear the records offsets buffer */
+        FLib_MemSet(maNvRecordsCpyOffsets, 0, (uint32_t)sizeof(uint16_t) * flashDataEntry.ElementsCount);
+
+        FLib_MemSet((uint8_t *)&metaInfo, 0, (uint32_t)sizeof(NVM_RecordMetaInfo_t));
+    }
+    else
+    {
+#endif /* gNvDualImageSupport */
+        /* clear the records offsets buffer */
+        FLib_MemSet(maNvRecordsCpyOffsets, 0,
+                    (uint32_t)sizeof(uint16_t) * pNVM_DataTable[srcTblEntryIdx].ElementsCount);
+#if gNvDualImageSupport
+    }
+#endif /* gNvDualImageSupport */
 
     while (metaAddress > (uint32_t)ownerRecordMetaInfo)
     {
@@ -3864,14 +4206,31 @@ NVM_STATIC void NvInternalRecordsUpdate(uint32_t              srcMetaAddr,
             continue;
         }
 
-        /* check if the element still belongs to an valid RAM table entry */
-        if (metaInfo.fields.NvmElementIndex >= pNVM_DataTable[srcTblEntryIdx].ElementsCount)
+#if gNvDualImageSupport
+        if (srcTblEntryIdx == gNvInvalidTableEntryIndex_c)
         {
-            /* the FLASH element is no longer a current RAM table entry element */
-            metaAddress -= sizeof(NVM_RecordMetaInfo_t);
-            continue;
+            /* if the srcTblEntryIdx is invalid, it means the entry may is from NVM, then not need if the element still
+             * belongs to an valid RAM  */
+            if (metaInfo.fields.NvmElementIndex >= flashDataEntry.ElementsCount)
+            {
+                /* JIA:maybe something wrong*/
+                metaAddress -= sizeof(NVM_RecordMetaInfo_t);
+                continue;
+            }
         }
-
+        else
+        {
+#endif /* gNvDualImageSupport */
+            /* check if the element still belongs to an valid RAM table entry */
+            if (metaInfo.fields.NvmElementIndex >= pNVM_DataTable[srcTblEntryIdx].ElementsCount)
+            {
+                /* the FLASH element is no longer a current RAM table entry element */
+                metaAddress -= sizeof(NVM_RecordMetaInfo_t);
+                continue;
+            }
+#if gNvDualImageSupport
+        }
+#endif /* gNvDualImageSupport */
         /* found a new single record not copied */
         if ((metaInfo.fields.NvmDataEntryID == ownerRecordMetaInfo->fields.NvmDataEntryID) &&
             (0u == maNvRecordsCpyOffsets[metaInfo.fields.NvmElementIndex]))
@@ -3900,40 +4259,163 @@ NVM_STATIC NVM_Status_t NvInternalDefragmentedCopy(uint32_t              srcMeta
                                                    NVM_RecordMetaInfo_t *ownerRecordMetaInfo)
 {
     NVM_Status_t status = gNVM_OK_c;
+#if gNvDualImageSupport
+    uint32_t size;
+#else  /* gNvDualImageSupport */
     uint32_t size = (uint32_t)pNVM_DataTable[srcTblEntryIdx].ElementSize * pNVM_DataTable[srcTblEntryIdx].ElementsCount;
+#endif /* gNvDualImageSupport */
     uint8_t  space_left;
     uint16_t copy_amount;
     uint8_t  dstBuffer[PGM_SIZE_BYTE];
-    uint16_t element_idx           = 0;
-    uint8_t  element_inner_copied  = 0;
-    uint16_t written_buffers_count = 0;
+    uint16_t element_idx           = 0U;
+    uint8_t  element_inner_copied  = 0U;
+    uint32_t written_buffers_count = 0U;
 
     NVM_RecordMetaInfo_t dstMetaInfo;
 #if gNvUseExtendedFeatureSet_d
     NVM_DataEntry_t flashDataEntry;
     bool_t          fillFromRAM = FALSE;
+
+#if gNvDualImageSupport
+    NVM_DataEntry_t *    flashDataEntryForSave;
+    NVM_RecordMetaInfo_t srcMetaInfo = {0};
+    /* if the srcTblEntryIdx is invalid, it means the entry may is from NVM,
+       then size should from NVM entry  */
+    if (srcTblEntryIdx == gNvInvalidTableEntryIndex_c)
+    {
+        /* get current meta information */
+        (void)NvGetMetaInfo(mNvActivePageId, srcMetaAddr, &srcMetaInfo);
+        /* get Entey table from NVM*/
+        (void)NvGetTableEntry(srcMetaInfo.fields.NvmDataEntryID, &flashDataEntry);
+        size = (uint32_t)flashDataEntry.ElementSize * flashDataEntry.ElementsCount;
+    }
+    else
+    {
+        size = (uint32_t)pNVM_DataTable[srcTblEntryIdx].ElementSize * pNVM_DataTable[srcTblEntryIdx].ElementsCount;
+    }
+#endif /* gNvDualImageSupport */
+
 #endif /* gNvUseExtendedFeatureSet_d */
 
 #if gNvUseExtendedFeatureSet_d
-    fillFromRAM = FALSE;
-    /* RAM table was updated */
-    if (mNvTableUpdated)
+
+#if gNvDualImageSupport
+    /* if the srcTblEntryIdx is invalid, it means the entry may is from NVM,
+       then not need to consider RAM table */
+    if (srcTblEntryIdx == gNvInvalidTableEntryIndex_c)
     {
-        (void)NvGetTableEntry(pNVM_DataTable[srcTblEntryIdx].DataEntryID, &flashDataEntry);
-        if (pNVM_DataTable[srcTblEntryIdx].ElementsCount > flashDataEntry.ElementsCount)
-        {
-            /* fill the FLASH destination page with the default RAM value for the missing element(s) */
-            fillFromRAM = TRUE;
-        }
+        fillFromRAM           = FALSE;
+        flashDataEntryForSave = &flashDataEntry;
+        // no action needs
     }
+    else
+    {
+        flashDataEntryForSave = &pNVM_DataTable[srcTblEntryIdx];
+#endif /* gNvDualImageSupport */
+        fillFromRAM = FALSE;
+        /* RAM table was updated */
+        if (mNvTableUpdated)
+        {
+            (void)NvGetTableEntry(pNVM_DataTable[srcTblEntryIdx].DataEntryID, &flashDataEntry);
+            if (pNVM_DataTable[srcTblEntryIdx].ElementsCount > flashDataEntry.ElementsCount)
+            {
+                /* fill the FLASH destination page with the default RAM value for the missing element(s) */
+                fillFromRAM = TRUE;
+            }
+        }
+
+#if gNvDualImageSupport
+    }
+#endif /* gNvDualImageSupport */
 #endif /* gNvUseExtendedFeatureSet_d */
 
+    /* Function used to find all valid single offset value for a dataset, the offset value will be stored in
+     * maNvRecordsCpyOffsets */
     NvInternalRecordsUpdate(srcMetaAddr, srcTblEntryIdx, ownerRecordMetaInfo);
     while (size != 0u)
     {
         space_left = PGM_SIZE_BYTE;
         FLib_MemSet(dstBuffer, 0xFF, PGM_SIZE_BYTE);
 
+#if gNvDualImageSupport
+        /* fill the internal buffer */
+        while ((0u != space_left) && (element_idx < flashDataEntryForSave->ElementsCount))
+        {
+            /* plenty of space left to copy the rest of the element */
+            if (space_left >= (flashDataEntryForSave->ElementSize - element_inner_copied))
+            {
+                copy_amount = flashDataEntryForSave->ElementSize - element_inner_copied;
+#if gNvUseExtendedFeatureSet_d
+                /* copy the rest of the data from the RAM entry */
+                if (fillFromRAM && element_idx >= flashDataEntry.ElementsCount)
+                {
+                    FLib_MemCpy(
+                        dstBuffer + ((uint8_t)PGM_SIZE_BYTE - space_left),
+                        (uint8_t *)((uint32_t)(uint32_t *)flashDataEntryForSave->pData +
+                                    (uint32_t)element_idx * flashDataEntryForSave->ElementSize + element_inner_copied),
+                        copy_amount);
+                }
+                else
+#endif
+                    /* copy from the owning full record save if no single save offset was found */
+                    if (0u == maNvRecordsCpyOffsets[element_idx])
+                {
+                    FLib_MemCpy(dstBuffer + ((uint8_t)PGM_SIZE_BYTE - space_left),
+                                (uint8_t *)(mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress +
+                                            ownerRecordMetaInfo->fields.NvmRecordOffset +
+                                            element_idx * flashDataEntryForSave->ElementSize + element_inner_copied),
+                                copy_amount);
+                }
+                else
+                {
+                    FLib_MemCpy(dstBuffer + ((uint8_t)PGM_SIZE_BYTE - space_left),
+                                (uint8_t *)(mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress +
+                                            maNvRecordsCpyOffsets[element_idx] + element_inner_copied),
+                                copy_amount);
+                }
+                space_left -= (uint8_t)copy_amount;
+
+                /* move to next element */
+                element_idx++;
+                element_inner_copied = 0;
+                continue;
+            }
+            else
+            {
+                copy_amount = space_left;
+#if gNvUseExtendedFeatureSet_d
+                /* copy the rest of the data from the RAM entry */
+                if (fillFromRAM && element_idx >= flashDataEntry.ElementsCount)
+                {
+                    FLib_MemCpy(
+                        dstBuffer + ((uint8_t)PGM_SIZE_BYTE - space_left),
+                        (uint8_t *)((uint32_t)(uint32_t *)flashDataEntryForSave->pData +
+                                    (uint32_t)element_idx * flashDataEntryForSave->ElementSize + element_inner_copied),
+                        copy_amount);
+                }
+                else
+#endif
+                    /* copy from the owning full record save if no single save offset was found */
+                    if (0u == maNvRecordsCpyOffsets[element_idx])
+                {
+                    FLib_MemCpy(dstBuffer + ((uint8_t)PGM_SIZE_BYTE - space_left),
+                                (uint8_t *)(mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress +
+                                            ownerRecordMetaInfo->fields.NvmRecordOffset +
+                                            element_idx * flashDataEntryForSave->ElementSize + element_inner_copied),
+                                copy_amount);
+                }
+                else
+                {
+                    FLib_MemCpy(dstBuffer + ((uint8_t)PGM_SIZE_BYTE - space_left),
+                                (uint8_t *)(mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress +
+                                            maNvRecordsCpyOffsets[element_idx] + element_inner_copied),
+                                copy_amount);
+                }
+                element_inner_copied += (uint8_t)copy_amount;
+                break;
+            }
+        }
+#else /* gNvDualImageSupport */
         /* fill the internal buffer */
         while ((0u != space_left) && (element_idx < pNVM_DataTable[srcTblEntryIdx].ElementsCount))
         {
@@ -3975,7 +4457,6 @@ NVM_STATIC NVM_Status_t NvInternalDefragmentedCopy(uint32_t              srcMeta
                 /* move to next element */
                 element_idx++;
                 element_inner_copied = 0;
-                continue;
             }
             else
             {
@@ -4013,9 +4494,11 @@ NVM_STATIC NVM_Status_t NvInternalDefragmentedCopy(uint32_t              srcMeta
                 break;
             }
         }
+#endif /* gNvDualImageSupport */
         /* write the record data */
-        if (kStatus_HAL_Flash_Success !=
-            HAL_FlashProgramUnaligned(dstRecordAddr + written_buffers_count * PGM_SIZE_BYTE, PGM_SIZE_BYTE, dstBuffer))
+        status = NV_FlashProgramUnaligned(dstRecordAddr + (written_buffers_count * PGM_SIZE_BYTE), PGM_SIZE_BYTE,
+                                          dstBuffer, TRUE);
+        if (gNVM_OK_c != status)
         {
             status = gNVM_RecordWriteError_c;
             break;
@@ -4044,16 +4527,12 @@ NVM_STATIC NVM_Status_t NvInternalDefragmentedCopy(uint32_t              srcMeta
          * controller */
         if ((dstMetaInfo.fields.NvmRecordOffset & (uint16_t)0x3) != 0u)
         {
-            status = gNVM_AlignamentError_c;
+            status = gNVM_AlignmentError_c;
         }
         else
         {
             /* write the associated record meta information */
-            if (kStatus_HAL_Flash_Success !=
-                HAL_FlashProgram(dstMetaAddr, sizeof(NVM_RecordMetaInfo_t), (uint8_t *)(&dstMetaInfo)))
-            {
-                status = gNVM_MetaInfoWriteError_c;
-            }
+            status = NV_FlashProgram(dstMetaAddr, sizeof(NVM_RecordMetaInfo_t), (uint8_t *)(&dstMetaInfo), TRUE);
         }
     }
     return status;
@@ -4080,8 +4559,10 @@ NVM_STATIC bool_t NvIsMetaInfoValid(uint32_t *            srcMetaAddress,
 #if gNvUseExtendedFeatureSet_d
     uint16_t idx;
     bool_t   entryFound;
-    uint32_t tableEndAddr   = (uint32_t)gNVM_TABLE_endAddr_c;
-    uint32_t tableStartAddr = (uint32_t)gNVM_TABLE_startAddr_c;
+
+#if gNvDualImageSupport
+    NVM_DataEntry_t flashDataEntry;
+#endif /* gNvDualImageSupport */
 #endif /* gNvUseExtendedFeatureSet_d */
 
     /* do ... while(FALSE) for MISRA 15.5 control flow problem */
@@ -4096,7 +4577,7 @@ NVM_STATIC bool_t NvIsMetaInfoValid(uint32_t *            srcMetaAddress,
             entryFound = FALSE;
 
             /* check if the saved entry is still present in the new RAM table */
-            while (idx < (uint16_t)((tableEndAddr - tableStartAddr) / sizeof(NVM_DataEntry_t)))
+            while (idx < mNVM_DataTableNbEntries)
             {
                 if (srcMetaInfo->fields.NvmDataEntryID == pNVM_DataTable[idx].DataEntryID)
                 {
@@ -4108,10 +4589,21 @@ NVM_STATIC bool_t NvIsMetaInfoValid(uint32_t *            srcMetaAddress,
 
             if (!entryFound)
             {
+#if gNvDualImageSupport
+                /* Not only check if the entry from RAM, but also check if it in NVM*/
+                if (NvGetTableEntry(srcMetaInfo->fields.NvmDataEntryID, &flashDataEntry) == false)
+                {
+                    /* The Table also not found from NVM*/
+                    *srcMetaAddress -= sizeof(NVM_RecordMetaInfo_t);
+                    state = FALSE;
+                    break;
+                }
+#else  /* gNvDualImageSupport */
                 /* move to the next meta info */
                 *srcMetaAddress -= sizeof(NVM_RecordMetaInfo_t);
                 state = FALSE;
                 break;
+#endif /* gNvDualImageSupport */
             }
         }
 #endif /* gNvUseExtendedFeatureSet_d */
@@ -4121,7 +4613,11 @@ NVM_STATIC bool_t NvIsMetaInfoValid(uint32_t *            srcMetaAddress,
         /* Check if VSB ?= VEB */
         if (NvIsRecordCopied(dstPageId, srcMetaInfo) ||
             (srcMetaInfo->fields.NvValidationStartByte != srcMetaInfo->fields.NvValidationEndByte) ||
+#if gNvDualImageSupport
+            (srcMetaInfo->fields.NvmDataEntryID == skipEntryId))
+#else  /* gNvDualImageSupport */
             (*srcTableEntryIdx == gNvInvalidDataEntry_c) || (srcMetaInfo->fields.NvmDataEntryID == skipEntryId))
+#endif /* gNvDualImageSupport */
         {
             /* go to the next meta information tag */
             *srcMetaAddress -= sizeof(NVM_RecordMetaInfo_t);
@@ -4139,18 +4635,25 @@ NVM_STATIC bool_t NvIsMetaInfoValid(uint32_t *            srcMetaAddress,
         }
 
 #if gUnmirroredFeatureSet_d
-        if (gNVM_MirroredInRam_c != (NVM_DataEntryType_t)pNVM_DataTable[*srcTableEntryIdx].DataEntryType)
+#if gNvDualImageSupport
+        if (*srcTableEntryIdx != gNvInvalidTableEntryIndex_c)
         {
-            /*check if the data was erased using NvErase or is just uninitialised*/
-            if (NULL == ((void **)pNVM_DataTable[*srcTableEntryIdx].pData)[srcMetaInfo->fields.NvmElementIndex] &&
-                NvIsRecordErased(*srcTableEntryIdx, srcMetaInfo->fields.NvmElementIndex, *srcMetaAddress))
+#endif /* gNvDualImageSupport */
+            if (gNVM_MirroredInRam_c != (NVM_DataEntryType_t)pNVM_DataTable[*srcTableEntryIdx].DataEntryType)
             {
-                /* go to the next meta information tag */
-                *srcMetaAddress -= sizeof(NVM_RecordMetaInfo_t);
-                state = FALSE;
-                break;
+                /*check if the data was erased using NvErase or is just uninitialised*/
+                if (NULL == ((void **)pNVM_DataTable[*srcTableEntryIdx].pData)[srcMetaInfo->fields.NvmElementIndex] &&
+                    NvIsRecordErased(*srcTableEntryIdx, srcMetaInfo->fields.NvmElementIndex, *srcMetaAddress))
+                {
+                    /* go to the next meta information tag */
+                    *srcMetaAddress -= sizeof(NVM_RecordMetaInfo_t);
+                    state = FALSE;
+                    break;
+                }
             }
+#if gNvDualImageSupport
         }
+#endif /* gNvDualImageSupport */
 #endif
     } while (FALSE);
 
@@ -4260,9 +4763,32 @@ NVM_STATIC NVM_Status_t NvCopyRecord(uint32_t *            dstMetaAddress,
     NVM_Status_t status;
     /* if the copy operation must take elements from ram */
 #if gNvUseExtendedFeatureSet_d
-    if (mNvTableUpdated && *tableUpgraded &&
-        *bytesToCopy <
-            (uint32_t)pNVM_DataTable[*srcTableEntryIdx].ElementsCount * pNVM_DataTable[*srcTableEntryIdx].ElementSize)
+
+#if gNvDualImageSupport
+    NVM_DataEntry_t flashDataEntry;
+    /* if the srcTableEntryIdx is invalid, it means the entry is from NVM,
+       then it not need to check if NvTable is changed from RAM  */
+    if (*srcTableEntryIdx == gNvInvalidTableEntryIndex_c)
+    {
+        NvGetTableEntry(srcMetaInfo->fields.NvmDataEntryID, &flashDataEntry);
+
+        if (mNvTableUpdated && *tableUpgraded &&
+            *bytesToCopy < (uint32_t)flashDataEntry.ElementsCount * flashDataEntry.ElementSize)
+        {
+            /* make sure the adress can hold the entire space (+ what is taken from ram) */
+            *dstRecordAddress -= NvUpdateSize((uint32_t)flashDataEntry.ElementsCount * flashDataEntry.ElementSize);
+        }
+        else
+        {
+            /* compute the destination record start address */
+            *dstRecordAddress -= NvUpdateSize(*bytesToCopy);
+        }
+    }
+    else
+#endif /* gNvDualImageSupport */
+        if (mNvTableUpdated && *tableUpgraded &&
+            *bytesToCopy < (uint32_t)pNVM_DataTable[*srcTableEntryIdx].ElementsCount *
+                               pNVM_DataTable[*srcTableEntryIdx].ElementSize)
     {
         /* make sure the adress can hold the entire space (+ what is taken from ram) */
         *dstRecordAddress -= NvUpdateSize((uint32_t)pNVM_DataTable[*srcTableEntryIdx].ElementsCount *
@@ -4302,8 +4828,8 @@ NVM_STATIC NVM_Status_t NvCopyRecord(uint32_t *            dstMetaAddress,
  * Description: Copy the active page content to the mirror page. Only the
  *              latest table entries / elements are copied. A merge operation
  *              is performed before copy if an entry has single elements
- *              saved priori and newer than the table entry. If one or more
- *              elements were singular saved and the NV page doesn't has a
+ *              saved priorily and newer than the table entry. If one or more
+ *              elements were singular saved and the NV page doesn't have a
  *              full table entry saved, then the elements are copied as they
  *              are.
  * Parameter(s): [IN] skipEntryId - the entry ID to be skipped when page
@@ -4336,12 +4862,26 @@ NVM_STATIC NVM_Status_t NvCopyPage(NvTableEntryId_t skipEntryId)
     uint32_t tblEntryMetaAddress = 0;
 #endif
     uint32_t bytesToCopy;
-
+#if gNvDualImageSupport
+    NVM_DataEntry_t flashDataEntry;
+#endif /* gNvDualImageSupport */
     /* status variable */
     NVM_Status_t status = gNVM_OK_c;
 
     dstPageId = (NVM_VirtualPageID_t)(uint8_t)(((uint8_t)mNvActivePageId + 1u) % 2u);
 
+#ifdef NV_DEBUG
+    for (NVM_VirtualPageID_t i = gFirstVirtualPage_c; i <= gSecondVirtualPage_c; i++)
+    {
+        NVM_VirtualPageProperties_t *vpage_prop = &mNvVirtualPageProperty[i];
+        if (vpage_prop->NvLastMetaInfoAddress != gEmptyPageMetaAddress_c && vpage_prop->NvLastMetaInfoAddress != 0u)
+        {
+            uint16_t dump_sz =
+                vpage_prop->NvLastMetaInfoAddress + sizeof(NVM_RecordMetaInfo_t) - vpage_prop->NvRawSectorStartAddress;
+            NvFlashDump((uint8_t *)vpage_prop->NvRawSectorStartAddress, dump_sz);
+        }
+    }
+#endif
     /* Check if the destination page is blank. If not, erase it. */
     if (gNVM_PageIsNotBlank_c == NvVirtualPageBlankCheck(dstPageId))
     {
@@ -4351,6 +4891,9 @@ NVM_STATIC NVM_Status_t NvCopyPage(NvTableEntryId_t skipEntryId)
     {
         /* initialise the destination page meta info start address */
         dstMetaAddress = mNvVirtualPageProperty[dstPageId].NvRawSectorStartAddress + gNvFirstMetaOffset_c;
+#if gNvDualImageSupport
+        dstMetaAddress += (sizeof(NVM_TableInfo_t) * mNvNeedAddEntryCnt);
+#endif /* gNvDualImageSupport */
 #if gNvUseExtendedFeatureSet_d
         if (mNvTableUpdated)
         {
@@ -4365,38 +4908,80 @@ NVM_STATIC NVM_Status_t NvCopyPage(NvTableEntryId_t skipEntryId)
         {
             /* initialise the destination page record start address */
             dstRecordAddress = mNvVirtualPageProperty[dstPageId].NvRawSectorEndAddress - sizeof(NVM_TableInfo_t) + 1U;
-
             while (srcMetaAddress >=
                    (mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress + gNvFirstMetaOffset_c))
             {
                 /* get current meta information */
-                (void)NvGetMetaInfo(mNvActivePageId, srcMetaAddress, &srcMetaInfo);
+                status = NvGetMetaInfo(mNvActivePageId, srcMetaAddress, &srcMetaInfo);
+                /* Presumably the ECC fault could only happen at the latest record write.
+                 * This must denote that the writing of the meta data failed. Skip this failed write.
+                 * The error must have been detected synchronously so the write operation should still be pending
+                 * in the queue. End the copy first then will reattempt this failed write operation. Likewise, if
+                 * the ECC error has occurred while writing the record contents, not its meta, the operation was
+                 * aborted and will be reattempted naturally because the order is still pending in the queue.
+                 */
+                if (gNVM_EccFault_c == status)
+                {
+                    continue;
+                }
 
                 /* Check if meta info is vaild */
                 if (!NvIsMetaInfoValid(&srcMetaAddress, &srcMetaInfo, &srcTableEntryIdx, skipEntryId, dstPageId))
                 {
                     continue;
                 }
-
-                /* compute the destination record start address */
-                bytesToCopy = (uint32_t)pNVM_DataTable[srcTableEntryIdx].ElementsCount *
-                              pNVM_DataTable[srcTableEntryIdx].ElementSize;
-
-                /* Check if NvTable is changed */
-                if (NvIsNvTableChanged(&srcMetaAddress, &srcMetaInfo, &srcTableEntryIdx,
-#if gNvUseExtendedFeatureSet_d
-                                       &tableUpgraded,
-#endif /* gNvUseExtendedFeatureSet_d */
-                                       &bytesToCopy))
+#if gNvDualImageSupport
+                /* if meta info is vaild, but the srcTableEntryIdx is invalid, it means the entry is from NVM,
+                   then it not need to check if NvTable is changed from RAM  */
+                if (srcTableEntryIdx == gNvInvalidTableEntryIndex_c)
                 {
-                    continue;
+                    (void)NvGetTableEntry(srcMetaInfo.fields.NvmDataEntryID, &flashDataEntry);
+                    /* compute the destination record start address */
+                    bytesToCopy = (uint32_t)flashDataEntry.ElementsCount * flashDataEntry.ElementSize;
                 }
+                else
+                {
+#endif /* gNvDualImageSupport */
+                    /* compute the destination record start address */
+                    bytesToCopy = (uint32_t)pNVM_DataTable[srcTableEntryIdx].ElementsCount *
+                                  pNVM_DataTable[srcTableEntryIdx].ElementSize;
+
+                    /* Check if NvTable is changed */
+                    if (NvIsNvTableChanged(&srcMetaAddress, &srcMetaInfo, &srcTableEntryIdx,
+#if gNvUseExtendedFeatureSet_d
+                                           &tableUpgraded,
+#endif /* gNvUseExtendedFeatureSet_d */
+                                           &bytesToCopy))
+                    {
+                        continue;
+                    }
+#if gNvDualImageSupport
+                }
+#endif /* gNvDualImageSupport */
 
 #if gNvFragmentation_Enabled_d
                 if (srcMetaInfo.fields.NvValidationStartByte == gValidationByteSingleRecord_c)
                 {
 #if gUnmirroredFeatureSet_d
-                    if (gNVM_MirroredInRam_c != (NVM_DataEntryType_t)pNVM_DataTable[srcTableEntryIdx].DataEntryType)
+
+#if gNvDualImageSupport
+                    /* if meta info is vaild, but the srcTableEntryIdx is invalid, it means the entry is from NVM,
+                       then it not need to check if NvTable is changed from RAM  */
+                    if (srcTableEntryIdx == gNvInvalidTableEntryIndex_c)
+                    {
+                        if (gNVM_MirroredInRam_c != flashDataEntry.DataEntryType)
+                        {
+                            tblEntryMetaAddress = 0;
+                        }
+                        else
+                        {
+                            tblEntryMetaAddress =
+                                NvGetTblEntryMetaAddrFromId(srcMetaAddress, srcMetaInfo.fields.NvmDataEntryID);
+                        }
+                    }
+                    else
+#endif /* gNvDualImageSupport */
+                        if (gNVM_MirroredInRam_c != (NVM_DataEntryType_t)pNVM_DataTable[srcTableEntryIdx].DataEntryType)
                     {
                         tblEntryMetaAddress = 0;
                     }
@@ -4407,12 +4992,37 @@ NVM_STATIC NVM_Status_t NvCopyPage(NvTableEntryId_t skipEntryId)
                             NvGetTblEntryMetaAddrFromId(srcMetaAddress, srcMetaInfo.fields.NvmDataEntryID);
                     }
 
+                    if (NvLookAheadInPendingSaveQueue(&mNvPendingSavesQueue, srcMetaInfo.fields.NvmDataEntryID,
+                                                      srcMetaInfo.fields.NvmElementIndex) != (uint8_t)OP_NONE)
+                    {
+                        /* skip and continue : either we found a pending save operation that will obliterate the
+                         * same element or the whole array */
+                        /* move to the next meta info */
+                        srcMetaAddress -= sizeof(NVM_RecordMetaInfo_t);
+                        continue;
+                    }
+
                     /* if the record has no full entry associated perform simple copy */
                     if (tblEntryMetaAddress == 0u)
                     {
                         /* compute the 'real record size' taking into consideration that the FTFL controller only writes
                          * in burst of 4 bytes */
-                        bytesToCopy = pNVM_DataTable[srcTableEntryIdx].ElementSize;
+#if gNvDualImageSupport
+                        /* if the srcTableEntryIdx is invalid, it means the entry is from NVM,
+                           then it not need to check if NvTable is changed from RAM  */
+                        if (srcTableEntryIdx == gNvInvalidTableEntryIndex_c)
+                        {
+                            /* compute the destination record start address */
+                            bytesToCopy = flashDataEntry.ElementSize;
+                        }
+                        else
+                        {
+#endif /* gNvDualImageSupport */
+                            bytesToCopy = pNVM_DataTable[srcTableEntryIdx].ElementSize;
+
+#if gNvDualImageSupport
+                        }
+#endif /* gNvDualImageSupport */
                         dstRecordAddress -= NvUpdateSize(bytesToCopy);
 
                         status = NvInternalCopy(dstRecordAddress, dstMetaAddress, &srcMetaInfo, srcTableEntryIdx,
@@ -4422,18 +5032,32 @@ NVM_STATIC NVM_Status_t NvCopyPage(NvTableEntryId_t skipEntryId)
                             break;
                         }
 #if gUnmirroredFeatureSet_d
-                        if (gNVM_MirroredInRam_c != (NVM_DataEntryType_t)pNVM_DataTable[srcTableEntryIdx].DataEntryType)
+#if gNvDualImageSupport
+                        /* if the srcTableEntryIdx is invalid, it means the entry is from NVM,
+                         then it not need to check if NvTable is changed from RAM  */
+                        if (srcTableEntryIdx == gNvInvalidTableEntryIndex_c)
                         {
-                            OSA_InterruptDisable();
-                            /* set the pointer to the flash data */
-                            if (NvIsNVMFlashAddress(((void **)pNVM_DataTable[srcTableEntryIdx]
-                                                         .pData)[srcMetaInfo.fields.NvmElementIndex]))
-                            {
-                                ((uint8_t **)pNVM_DataTable[srcTableEntryIdx]
-                                     .pData)[srcMetaInfo.fields.NvmElementIndex] = (uint8_t *)dstRecordAddress;
-                            }
-                            OSA_InterruptEnable();
+                            // no action needs
                         }
+                        else
+                        {
+#endif /* gNvDualImageSupport */
+                            if (gNVM_MirroredInRam_c !=
+                                (NVM_DataEntryType_t)pNVM_DataTable[srcTableEntryIdx].DataEntryType)
+                            {
+                                OSA_InterruptDisable();
+                                /* set the pointer to the flash data */
+                                if (NvIsNVMFlashAddress(((void **)pNVM_DataTable[srcTableEntryIdx]
+                                                             .pData)[srcMetaInfo.fields.NvmElementIndex]))
+                                {
+                                    ((uint8_t **)pNVM_DataTable[srcTableEntryIdx]
+                                         .pData)[srcMetaInfo.fields.NvmElementIndex] = (uint8_t *)dstRecordAddress;
+                                }
+                                OSA_InterruptEnable();
+                            }
+#if gNvDualImageSupport
+                        }
+#endif /* gNvDualImageSupport */
 #endif
                         /* update destination meta information address */
                         dstMetaAddress += sizeof(NVM_RecordMetaInfo_t);
@@ -4456,6 +5080,14 @@ NVM_STATIC NVM_Status_t NvCopyPage(NvTableEntryId_t skipEntryId)
                                  &bytesToCopy);
                 if (gNVM_OK_c != status)
                 {
+                    if (gNVM_EccFault_c == status || gNVM_EccFaultWritingMeta_c == status ||
+                        gNVM_EccFaultWritingRecord_c == status)
+                    {
+                        assert(0);
+#if defined gNvDebugEnabled_d && (gNvDebugEnabled_d > 0)
+                        NV_ShowPageMetas(dstPageId, true);
+#endif
+                    }
                     break;
                 }
 
@@ -4465,41 +5097,36 @@ NVM_STATIC NVM_Status_t NvCopyPage(NvTableEntryId_t skipEntryId)
                 /* move to the next meta info */
                 srcMetaAddress -= sizeof(NVM_RecordMetaInfo_t);
             };
-        }
+        } /* srcMetaAddress != gEmptyPageMetaAddress_c */
 
         if (gNVM_OK_c == status)
         {
-            /* make a request to erase the old page */
-            mNvErasePgCmdStatus.NvPageToErase   = mNvActivePageId;
-            mNvErasePgCmdStatus.NvSectorAddress = mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress;
-            mNvErasePgCmdStatus.NvErasePending  = TRUE;
-
-            /* update the the active page ID */
-            mNvActivePageId = dstPageId;
-
             /* update the last meta info address */
             if (dstMetaAddress == firstMetaAddress)
             {
-                mNvVirtualPageProperty[mNvActivePageId].NvLastMetaInfoAddress = gEmptyPageMetaAddress_c;
+                mNvVirtualPageProperty[dstPageId].NvLastMetaInfoAddress = gEmptyPageMetaAddress_c;
             }
             else
             {
-                mNvVirtualPageProperty[mNvActivePageId].NvLastMetaInfoAddress =
-                    dstMetaAddress - sizeof(NVM_RecordMetaInfo_t);
+                mNvVirtualPageProperty[dstPageId].NvLastMetaInfoAddress = dstMetaAddress - sizeof(NVM_RecordMetaInfo_t);
             }
 
 #if gUnmirroredFeatureSet_d
-            mNvVirtualPageProperty[mNvActivePageId].NvLastMetaUnerasedInfoAddress =
-                mNvVirtualPageProperty[mNvActivePageId].NvLastMetaInfoAddress;
+            mNvVirtualPageProperty[dstPageId].NvLastMetaUnerasedInfoAddress =
+                mNvVirtualPageProperty[dstPageId].NvLastMetaInfoAddress;
 #endif
 
             mNvPageCounter++;
             /* save the current RAM table */
-            if (!NvSaveRamTable(dstPageId))
-            {
-                status = gNVM_Error_c;
-            }
-            else
+#if gNvDualImageSupport
+            /* Set mNvPreviousActivePageId but postpone mNvActivePageId update until NvSaveRamTable status is known.
+             mNvPreviousActivePageId is used in NvSaveRamTable.
+            */
+            mNvPreviousActivePageId = mNvActivePageId;
+#endif /* gNvDualImageSupport */
+            status = NvSaveRamTable(dstPageId);
+
+            if (gNVM_OK_c == status)
             {
 #if gNvUseExtendedFeatureSet_d
                 if (mNvTableUpdated)
@@ -4511,6 +5138,21 @@ NVM_STATIC NVM_Status_t NvCopyPage(NvTableEntryId_t skipEntryId)
                     mNvTableUpdated = FALSE;
                 }
 #endif /* gNvUseExtendedFeatureSet_d */
+                /* make a request to erase the old page */
+                mNvErasePgCmdStatus.NvPageToErase   = mNvActivePageId;
+                mNvErasePgCmdStatus.NvSectorAddress = mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress;
+                mNvErasePgCmdStatus.NvErasePending  = TRUE;
+
+                /* update the the active page ID */
+
+                mNvActivePageId = dstPageId;
+            }
+            else
+            {
+                assert(0);
+#if defined gNvDebugEnabled_d && (gNvDebugEnabled_d > 0)
+                NV_ShowPageMetas(dstPageId, true);
+#endif
             }
         }
     }
@@ -4556,12 +5198,14 @@ NVM_STATIC NVM_Status_t NvInternalFormat(uint32_t pageCounterValue)
             }
         }
     }
-
+#if gNvDualImageSupport
+    mNvPreviousActivePageId = gVirtualPageNone_c;
+#endif /* gNvDualImageSupport */
     /* active page after format = first virtual page */
     mNvActivePageId = gFirstVirtualPage_c;
 
     /* save NV table from RAM memory to FLASH memory */
-    if (FALSE == NvSaveRamTable(mNvActivePageId))
+    if (gNVM_OK_c != NvSaveRamTable(mNvActivePageId))
     {
         status = gNVM_FormatFailure_c;
     }
@@ -4582,82 +5226,95 @@ NVM_STATIC NVM_Status_t NvInternalFormat(uint32_t pageCounterValue)
 
 /******************************************************************************
  * Name: NvSaveRamTable
- * Description: Saves the NV table
+ * Description: Saves the NV table. Called from NvCopyPage.
+ *              Check flash program operation.
  * Parameter(s): [IN] pageId - the virtual page ID where the table will be
  *                             saved
- * Return: TRUE if table saved successfully, FALSE otherwise
+ * Return: gNVM_OK_c if table saved successfully, other error statuses otherwise.
  ******************************************************************************/
-NVM_STATIC bool_t NvSaveRamTable(NVM_VirtualPageID_t pageId)
+NVM_STATIC NVM_Status_t NvSaveRamTable(NVM_VirtualPageID_t pageId)
 {
-    uint64_t tmp;
-    uint32_t addr;
-#if gNvUseExtendedFeatureSet_d
-    uint16_t idx;
-    bool_t   ret = FALSE;
-#endif
-    bool_t status = FALSE;
+    uint32_t     addr;
+    NVM_Status_t status = gNVM_Error_c;
 
     assert(NULL != pNVM_DataTable);
-    /* write table qualifier start */
-    addr = mNvVirtualPageProperty[pageId].NvRawSectorStartAddress;
-
-#if gNvUseExtendedFeatureSet_d
-    tmp = ((NVM_TableInfo_t){.fields.NvPageCounter  = mNvPageCounter,
-                             .fields.NvTableMarker  = mNvTableMarker,
-                             .fields.NvTableVersion = mNvFlashTableVersion})
-              .rawValue;
-#else
-    tmp = ((NVM_TableInfo_t){.fields.NvPageCounter = mNvPageCounter}).rawValue;
-#endif
-    /*write page counter, table amrker, table version top*/
-    if (kStatus_HAL_Flash_Success == HAL_FlashProgram(addr, sizeof(NVM_TableInfo_t), (uint8_t *)(&tmp)))
+    do
     {
+        NVM_TableInfo_t tbInfo;
+        /* write table qualifier start */
+        addr = mNvVirtualPageProperty[pageId].NvRawSectorStartAddress;
+        FLib_MemSet((uint8_t *)&tbInfo, 0xff, sizeof(NVM_TableInfo_t));
+        /* Page counter exists whether gNvUseExtendedFeatureSet_d is defined or not */
+        tbInfo.fields.NvPageCounter = mNvPageCounter;
+#if gNvUseExtendedFeatureSet_d
+        tbInfo.fields.NvTableMarker  = mNvTableMarker;
+        tbInfo.fields.NvTableVersion = mNvFlashTableVersion;
+#endif
+        /*write page counter, table marker, table version top*/
+        status = NV_FlashProgram(addr, sizeof(NVM_TableInfo_t), (uint8_t *)&tbInfo, TRUE);
+        if (gNVM_OK_c != status)
+        {
+            break;
+        }
 #if gNvUseExtendedFeatureSet_d
         addr += sizeof(NVM_TableInfo_t);
-        idx = 0;
-        while (idx < gNVM_TABLE_entries_c)
+#if gNvDualImageSupport
+        status = NvSaveAllDataSetEntry(&addr);
+        if (gNVM_OK_c != status)
         {
+            break;
+        }
+#else /* gNvDualImageSupport */
+        for (uint16_t idx = 0; idx < mNVM_DataTableNbEntries; idx++)
+        {
+            NVM_EntryInfo_t entryInfo;
             /* write data entry ID */
-            tmp = ((NVM_EntryInfo_t){.fields.NvDataEntryID   = pNVM_DataTable[idx].DataEntryID,
-                                     .fields.NvDataEntryType = pNVM_DataTable[idx].DataEntryType,
-                                     .fields.NvElementsCount = pNVM_DataTable[idx].ElementsCount,
-                                     .fields.NvElementSize   = pNVM_DataTable[idx].ElementSize})
-                      .rawValue;
-            if (kStatus_HAL_Flash_Success != HAL_FlashProgram(addr, sizeof(NVM_EntryInfo_t), (uint8_t *)(&tmp)))
+            FLib_MemSet((uint8_t *)&entryInfo, 0xff, sizeof(NVM_EntryInfo_t));
+            entryInfo.fields.NvDataEntryID   = pNVM_DataTable[idx].DataEntryID;
+            entryInfo.fields.NvDataEntryType = pNVM_DataTable[idx].DataEntryType;
+            entryInfo.fields.NvElementsCount = pNVM_DataTable[idx].ElementsCount;
+            entryInfo.fields.NvElementSize   = pNVM_DataTable[idx].ElementSize;
+            status = NV_FlashProgram(addr, sizeof(NVM_EntryInfo_t), (uint8_t *)&entryInfo, TRUE);
+            if (gNVM_OK_c != status)
             {
-                ret = TRUE;
                 break;
             }
             /* increment address */
             addr += sizeof(NVM_EntryInfo_t);
 
             /* increment table entry index */
-            idx++;
         }
-        if (FALSE == ret)
-        {
-            tmp = ((NVM_TableInfo_t){.fields.NvTableMarker = mNvTableMarker}).rawValue;
-            /* write table qualifier end, the rest 6 bytes are left 0x00 */
-            if (kStatus_HAL_Flash_Success != HAL_FlashProgram(addr, sizeof(NVM_EntryInfo_t), (uint8_t *)(&tmp)))
-            {
-                ret = TRUE;
-            }
-        }
-        if (FALSE == ret)
 #endif
+
+        if (gNVM_OK_c != status)
         {
-            /*write page counter bottom*/
-            tmp = ((NVM_TableInfo_t){.fields.NvPageCounter = mNvPageCounter}).rawValue;
-            if (kStatus_HAL_Flash_Success ==
-                HAL_FlashProgram((mNvVirtualPageProperty[pageId].NvRawSectorEndAddress - sizeof(NVM_TableInfo_t) + 1U),
-                                 sizeof(NVM_TableInfo_t), (uint8_t *)&tmp))
-            {
-                status = TRUE;
-            }
+            break;
         }
-    }
+
+        FLib_MemSet((uint8_t *)&tbInfo, 0xff, sizeof(NVM_TableInfo_t));
+        tbInfo.fields.NvPageCounter = 0U;
+#if gNvUseExtendedFeatureSet_d
+        tbInfo.fields.NvTableMarker  = mNvTableMarker;
+        tbInfo.fields.NvTableVersion = 0U;
+#endif
+        /* write table qualifier end, the rest 6 bytes are left 0x00 */
+        status = NV_FlashProgram(addr, sizeof(NVM_TableInfo_t), (uint8_t *)&tbInfo, TRUE);
+        if (gNVM_OK_c != status)
+        {
+            break;
+        }
+#endif
+        /*write page counter bottom*/
+        FLib_MemSet((uint8_t *)&tbInfo, 0xff, sizeof(NVM_TableInfo_t));
+        tbInfo.fields.NvPageCounter = mNvPageCounter;
+
+        status = NV_FlashProgram((mNvVirtualPageProperty[pageId].NvRawSectorEndAddress - sizeof(NVM_TableInfo_t) + 1U),
+                                 sizeof(NVM_TableInfo_t), (uint8_t *)&tbInfo, TRUE);
+    } while (false);
+
     return status;
 }
+
 #if (!defined(gNvLegacyTable_Disabled_d) || (gNvLegacyTable_Disabled_d == 0))
 /******************************************************************************
  * Name: UpgradeLegacyTableToFlash
@@ -4685,20 +5342,20 @@ NVM_STATIC NVM_Status_t UpgradeLegacyTableToFlash(uint32_t            read_addre
     {
         /* copy the data */
 #if (defined(FTFx_PHRASE_SIZE) && (PGM_SIZE_BYTE == FTFx_PHRASE_SIZE))
-        if (kStatus_HAL_Flash_Success !=
-            HAL_FlashProgram(
-                mNvVirtualPageProperty[dstPageId].NvRawSectorStartAddress + last_record_offset,
-                mNvVirtualPageProperty[mNvActivePageId].NvTotalPageSize - last_record_offset -
-                    sizeof(legacy_page_counter) - 4,
-                (uint8_t *)mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress + last_record_offset))
+        if (gNVM_OK_c != NV_FlashProgram(mNvVirtualPageProperty[dstPageId].NvRawSectorStartAddress + last_record_offset,
+                                         mNvVirtualPageProperty[mNvActivePageId].NvTotalPageSize - last_record_offset -
+                                             sizeof(legacy_page_counter) - 4,
+                                         (uint8_t *)mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress +
+                                             last_record_offset),
+            TRUE)
 #else
-        if (kStatus_HAL_Flash_Success !=
-            HAL_FlashProgram(
+        if (gNVM_OK_c !=
+            NV_FlashProgram(
                 mNvVirtualPageProperty[dstPageId].NvRawSectorStartAddress + last_record_offset -
                     sizeof(legacy_page_counter),
                 mNvVirtualPageProperty[mNvActivePageId].NvTotalPageSize - last_record_offset -
                     sizeof(legacy_page_counter),
-                (uint8_t *)mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress + last_record_offset))
+                (uint8_t *)mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress + last_record_offset, TRUE))
 #endif
         {
             status = gNVM_Error_c;
@@ -4714,8 +5371,8 @@ NVM_STATIC NVM_Status_t UpgradeLegacyTableToFlash(uint32_t            read_addre
             tableData = ((NVM_TableInfo_t){.fields.NvPageCounter = mNvPageCounter});
 #endif
 
-            if (kStatus_HAL_Flash_Success != HAL_FlashProgram(mNvVirtualPageProperty[dstPageId].NvRawSectorStartAddress,
-                                                              sizeof(NVM_TableInfo_t), (uint8_t *)(&tableData)))
+            if (gNVM_OK_c != NV_FlashProgram(mNvVirtualPageProperty[dstPageId].NvRawSectorStartAddress,
+                                             sizeof(NVM_TableInfo_t), (uint8_t *)(&tableData), TRUE))
             {
                 status = gNVM_Error_c;
             }
@@ -4723,10 +5380,9 @@ NVM_STATIC NVM_Status_t UpgradeLegacyTableToFlash(uint32_t            read_addre
             {
                 /* write page counter bottom */
                 tableData = ((NVM_TableInfo_t){.fields.NvPageCounter = legacy_page_counter});
-                if (kStatus_HAL_Flash_Success !=
-                    HAL_FlashProgram(
-                        (mNvVirtualPageProperty[dstPageId].NvRawSectorEndAddress - sizeof(NVM_TableInfo_t) + 1U),
-                        sizeof(NVM_TableInfo_t), (uint8_t *)&tableData))
+                if (gNVM_OK_c != NV_FlashProgram((mNvVirtualPageProperty[dstPageId].NvRawSectorEndAddress -
+                                                  sizeof(NVM_TableInfo_t) + 1U),
+                                                 sizeof(NVM_TableInfo_t), (uint8_t *)&tableData, TRUE))
                 {
                     status = gNVM_Error_c;
                 }
@@ -4780,17 +5436,19 @@ NVM_STATIC NVM_Status_t UpgradeLegacyTable(void)
     {
         /* read legacy page counter */
         read_address = mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress;
-        NV_FlashRead((uint8_t *)read_address, (uint8_t *)&legacy_page_counter, sizeof(legacy_page_counter));
+        NV_FlashRead(read_address, (uint8_t *)&legacy_page_counter, sizeof(legacy_page_counter),
+                     mNvVirtualPageProperty[mNvActivePageId].has_ecc_faults);
         legacy_page_counter += 1U;
-        offset = sizeof(NVM_TableInfo_t);
+        offset = (uint16_t)sizeof(NVM_TableInfo_t);
         read_address += sizeof(legacy_page_counter);
         /* copy the flash table */
 #if gNvUseExtendedFeatureSet_d
 #if (defined(FTFx_PHRASE_SIZE) && (PGM_SIZE_BYTE == FTFx_PHRASE_SIZE))
-        /* 4 0xFF allignement bytes */
+        /* 4 0xFF alignement bytes */
         read_address += 4;
 #endif
-        NV_FlashRead((uint8_t *)read_address, (uint8_t *)&legacy_table_marker, sizeof(legacy_table_marker));
+        NV_FlashRead(read_address, (uint8_t *)&legacy_table_marker, sizeof(legacy_table_marker),
+                     mNvVirtualPageProperty[mNvActivePageId].has_ecc_faults);
         read_address += sizeof(legacy_table_marker);
 #if (defined(FTFx_PHRASE_SIZE) && (PGM_SIZE_BYTE == FTFx_PHRASE_SIZE))
         /* 4 0xFF allignement bytes */
@@ -4798,13 +5456,15 @@ NVM_STATIC NVM_Status_t UpgradeLegacyTable(void)
 #endif
         while (read_address < mNvVirtualPageProperty[mNvActivePageId].NvRawSectorEndAddress)
         {
-            NV_FlashRead((uint8_t *)read_address, (uint8_t *)&value, sizeof(value));
+            NV_FlashRead(read_address, (uint8_t *)&value, sizeof(value),
+                         mNvVirtualPageProperty[mNvActivePageId].has_ecc_faults);
             if (legacy_table_marker == value)
             {
                 break;
             }
 
-            NV_FlashRead((uint8_t *)read_address, (uint8_t *)&tableEntry, sizeof(tableEntry));
+            NV_FlashRead(read_address, (uint8_t *)&tableEntry, sizeof(tableEntry),
+                         mNvVirtualPageProperty[mNvActivePageId].has_ecc_faults);
 /* upgrade entry */
 #if (defined(FTFx_PHRASE_SIZE) && (PGM_SIZE_BYTE == FTFx_PHRASE_SIZE))
             value                             = tableEntry.fields.NvElementSize;
@@ -4830,15 +5490,14 @@ NVM_STATIC NVM_Status_t UpgradeLegacyTable(void)
             }
 #endif
             /*write table entries to the destination page*/
-            if (kStatus_HAL_Flash_Success !=
-                HAL_FlashProgram(mNvVirtualPageProperty[dstPageId].NvRawSectorStartAddress + offset,
-                                 sizeof(NVM_EntryInfo_t), (uint8_t *)&tableEntry))
+            if (gNVM_OK_c != NV_FlashProgram(mNvVirtualPageProperty[dstPageId].NvRawSectorStartAddress + offset,
+                                             sizeof(NVM_EntryInfo_t), (uint8_t *)&tableEntry, TRUE))
             {
                 status = gNVM_Error_c;
                 ret    = TRUE;
                 break;
             }
-            offset += sizeof(NVM_EntryInfo_t);
+            offset += (uint16_t)sizeof(NVM_EntryInfo_t);
             read_address += sizeof(NVM_EntryInfo_t);
         }
         if (gNVM_OK_c == status)
@@ -4852,9 +5511,8 @@ NVM_STATIC NVM_Status_t UpgradeLegacyTable(void)
             {
                 tableData = ((NVM_TableInfo_t){.fields.NvTableMarker = mNvTableMarker});
                 /* write table qualifier end, the rest 6 bytes are left 0x00 */
-                if (kStatus_HAL_Flash_Success !=
-                    HAL_FlashProgram(mNvVirtualPageProperty[dstPageId].NvRawSectorStartAddress + offset,
-                                     sizeof(NVM_TableInfo_t), (uint8_t *)(&tableData)))
+                if (gNVM_OK_c != NV_FlashProgram(mNvVirtualPageProperty[dstPageId].NvRawSectorStartAddress + offset,
+                                                 sizeof(NVM_TableInfo_t), (uint8_t *)(&tableData), TRUE))
                 {
                     status = gNVM_Error_c;
                     ret    = TRUE;
@@ -4862,7 +5520,7 @@ NVM_STATIC NVM_Status_t UpgradeLegacyTable(void)
                 else
                 {
                     read_address += sizeof(legacy_table_marker);
-                    offset += sizeof(NVM_TableInfo_t);
+                    offset += (uint16_t)sizeof(NVM_TableInfo_t);
                 }
             }
         }
@@ -4877,7 +5535,8 @@ NVM_STATIC NVM_Status_t UpgradeLegacyTable(void)
             /* copy metas */
             while (read_address < mNvVirtualPageProperty[mNvActivePageId].NvRawSectorEndAddress)
             {
-                NV_FlashRead((uint32_t *)read_address, (uint8_t *)&meta, sizeof(NVM_RecordMetaInfo_t));
+                NV_FlashRead(read_address, (uint8_t *)&meta, sizeof(NVM_RecordMetaInfo_t),
+                             mNvVirtualPageProperty[mNvActivePageId].has_ecc_faults);
                 if (gNvGuardValue_c == meta.rawValue)
                 {
                     break;
@@ -4896,14 +5555,13 @@ NVM_STATIC NVM_Status_t UpgradeLegacyTable(void)
                 }
 #endif
                 /* write the meta */
-                if (kStatus_HAL_Flash_Success !=
-                    HAL_FlashProgram(mNvVirtualPageProperty[dstPageId].NvRawSectorStartAddress + offset,
-                                     sizeof(NVM_RecordMetaInfo_t), (uint8_t *)&meta))
+                if (gNVM_OK_c != NV_FlashProgram(mNvVirtualPageProperty[dstPageId].NvRawSectorStartAddress + offset,
+                                                 sizeof(NVM_RecordMetaInfo_t), (uint8_t *)&meta, TRUE))
                 {
                     status = gNVM_Error_c;
                     break;
                 }
-                offset += sizeof(NVM_RecordMetaInfo_t);
+                offset += (uint16_t)sizeof(NVM_RecordMetaInfo_t);
                 read_address += sizeof(NVM_RecordMetaInfo_t);
             }
 
@@ -4916,7 +5574,6 @@ NVM_STATIC NVM_Status_t UpgradeLegacyTable(void)
     }
     return status;
 }
-#endif /* no FlexNVM */
 #endif /* gNvLegacyTable_Disabled_d */
 /******************************************************************************
  * Name: NvGetEntryFromDataPtr
@@ -4934,7 +5591,7 @@ NVM_STATIC NVM_Status_t NvGetEntryFromDataPtr(void *pData, NVM_TableEntryInfo_t 
     uint16_t     idx    = 0;
     NVM_Status_t status = gNVM_PointerOutOfRange_c;
 
-    while (idx < gNVM_TABLE_entries_c)
+    while (idx < mNVM_DataTableNbEntries)
     {
         if (((uint8_t *)pData >= (uint8_t *)pNVM_DataTable[idx].pData))
         {
@@ -4945,7 +5602,8 @@ NVM_STATIC NVM_Status_t NvGetEntryFromDataPtr(void *pData, NVM_TableEntryInfo_t 
                     ((uint8_t *)pNVM_DataTable[idx].pData + (sizeof(void *) * pNVM_DataTable[idx].ElementsCount)))
                 {
                     int32_t offset       = (uint8_t *)pData - (uint8_t *)pNVM_DataTable[idx].pData;
-                    pIndex->elementIndex = (uint16_t)offset / sizeof(void *);
+                    int32_t index        = offset / ((int32_t)sizeof(void *));
+                    pIndex->elementIndex = (uint16_t)index;
                     pIndex->entryId      = pNVM_DataTable[idx].DataEntryID;
                     status               = gNVM_OK_c;
                     break;
@@ -5017,7 +5675,6 @@ NVM_STATIC NVM_Status_t NvGetTableEntryIndexFromDataPtr(void *                pD
  *               [IN] newRecordAddress - the address of record info will write to
  * Return: the status of the operation
  *****************************************************************************/
-#if (gNvUseFlexNVM_d == FALSE) /* no FlexNVM */
 NVM_STATIC bool_t NvMetaAndRecordAddressRegulate(uint32_t  pageFreeSpace,
                                                  uint32_t  totalRecordSize,
                                                  uint32_t  realRecordSize,
@@ -5113,7 +5770,7 @@ NVM_STATIC bool_t NvMetaAndRecordAddressRegulate(uint32_t  pageFreeSpace,
  *****************************************************************************/
 NVM_STATIC NVM_Status_t NvWriteRecordToFlash(NVM_TableEntryInfo_t *tblIndexes,
                                              uint16_t              tableEntryIdx,
-                                             NVM_RecordMetaInfo_t  metaInfo,
+                                             NVM_RecordMetaInfo_t *p_metaInfo,
                                              uint32_t              metaInfoAddress,
                                              uint32_t              newRecordAddress,
                                              uint32_t              recordSize,
@@ -5137,39 +5794,37 @@ NVM_STATIC NVM_Status_t NvWriteRecordToFlash(NVM_TableEntryInfo_t *tblIndexes,
     if (0U == srcAddress)
     {
         /* It's an erased unmirrored dataset */
-        metaInfo.fields.NvmRecordOffset = 0;
+        p_metaInfo->fields.NvmRecordOffset = 0U;
     }
-    if (kStatus_HAL_Flash_Success ==
-        (srcAddress ? HAL_FlashProgramUnaligned(newRecordAddress, recordSize, (uint8_t *)srcAddress) :
-                      kStatus_HAL_Flash_Success))
+    else
+    {
+        status = NV_FlashProgramUnaligned(newRecordAddress, recordSize, (uint8_t *)srcAddress, TRUE);
+    }
 #else
-    if (kStatus_HAL_Flash_Success == HAL_FlashProgramUnaligned(newRecordAddress, recordSize, (uint8_t *)srcAddress))
+    status = NV_FlashProgramUnaligned(newRecordAddress, recordSize, (uint8_t *)srcAddress, TRUE);
 #endif
+    if (gNVM_OK_c == status)
     {
         /* record successfully written, now write the associated record meta information */
-        if (kStatus_HAL_Flash_Success ==
-            HAL_FlashProgram(metaInfoAddress, sizeof(NVM_RecordMetaInfo_t), (uint8_t *)(&metaInfo)))
+        status = NV_FlashProgram(metaInfoAddress, sizeof(NVM_RecordMetaInfo_t), (uint8_t *)p_metaInfo, TRUE);
+        if (gNVM_OK_c == status)
         {
             /* update the last record meta information */
             mNvVirtualPageProperty[mNvActivePageId].NvLastMetaInfoAddress = metaInfoAddress;
 /* update the last unerased meta info address */
 #if gUnmirroredFeatureSet_d
-            if (0u != metaInfo.fields.NvmRecordOffset)
+            if (0u != p_metaInfo->fields.NvmRecordOffset)
             {
                 mNvVirtualPageProperty[mNvActivePageId].NvLastMetaUnerasedInfoAddress = metaInfoAddress;
             }
 #endif
-/* Empty macro when nvm monitoring is not enabled */
-#if (((defined(gFsciIncluded_c)) && (gFsciIncluded_c > 0U)) && \
-     ((defined(gNvmEnableFSCIMonitoring_c)) && (gNvmEnableFSCIMonitoring_c > 0U)))
-            FSCI_MsgNVWriteMonitoring(metaInfo.fields.NvmDataEntryID, tblIndexes->elementIndex,
-                                      tblIndexes->saveRestoreAll);
-#endif
-
+            /* Empty macro when nvm monitoring is not enabled */
+            FSCI_NV_WRITE_MONITOR(p_metaInfo->fields.NvmDataEntryID, tblIndexes->elementIndex,
+                                  (tblIndexes->op_type == OP_SAVE_ALL) ? TRUE : FALSE);
 #if gUnmirroredFeatureSet_d
             if (gNVM_MirroredInRam_c != (NVM_DataEntryType_t)pNVM_DataTable[tableEntryIdx].DataEntryType)
             {
-                if (0u != metaInfo.fields.NvmRecordOffset)
+                if (0u != p_metaInfo->fields.NvmRecordOffset)
                 {
                     uint8_t *pTempAddress =
                         (uint8_t *)((uint8_t **)pNVM_DataTable[tableEntryIdx].pData)[tblIndexes->elementIndex];
@@ -5183,16 +5838,30 @@ NVM_STATIC NVM_Status_t NvWriteRecordToFlash(NVM_TableEntryInfo_t *tblIndexes,
         }
         else
         {
-            status = gNVM_MetaInfoWriteError_c;
+            if (gNVM_EccFault_c == status)
+            {
+                status = gNVM_EccFaultWritingMeta_c;
+            }
+            else
+            {
+                status = gNVM_MetaInfoWriteError_c;
+            }
         }
     }
     else
     {
-        status = gNVM_RecordWriteError_c;
+        if (gNVM_EccFault_c == status)
+        {
+            status = gNVM_EccFaultWritingRecord_c;
+        }
+        else
+        {
+            status = gNVM_RecordWriteError_c;
+        }
     }
     return status;
 }
-#endif /* gNvUseFlexNVM_d == FALSE */
+
 /******************************************************************************
  * Name: NvWriteRecord
  * Description: writes a record
@@ -5206,7 +5875,6 @@ NVM_STATIC NVM_Status_t NvWriteRecordToFlash(NVM_TableEntryInfo_t *tblIndexes,
  *****************************************************************************/
 NVM_STATIC NVM_Status_t NvWriteRecord(NVM_TableEntryInfo_t *tblIndexes)
 {
-#if (gNvUseFlexNVM_d == FALSE) /* no FlexNVM */
     uint32_t             metaInfoAddress;
     uint32_t             newRecordAddress;
     NVM_RecordMetaInfo_t metaInfo;
@@ -5220,12 +5888,7 @@ NVM_STATIC NVM_Status_t NvWriteRecord(NVM_TableEntryInfo_t *tblIndexes)
 #if gUnmirroredFeatureSet_d
     bool_t ret = FALSE;
 #endif
-#else /* FlexNVM */
-    uint32_t lastFlexMetaInfoAddress;
-    NVM_FlexMetaInfo_t lastFlexMetaInfo;
-    NVM_FlexMetaInfo_t flexMetaInfo;
-    uint32_t destRecordEndAddress;
-#endif
+
     NVM_Status_t status = gNVM_OK_c;
     uint16_t     tableEntryIdx;
     uint32_t     recordSize;
@@ -5238,125 +5901,6 @@ NVM_STATIC NVM_Status_t NvWriteRecord(NVM_TableEntryInfo_t *tblIndexes)
     }
     else
     {
-#if (gNvUseFlexNVM_d == TRUE) /* FlexNVM */
-        recordSize = pNVM_DataTable[tableEntryIdx].ElementsCount * pNVM_DataTable[tableEntryIdx].ElementSize;
-
-        NvGetFlexMetaInfoFromId(tblIndexes->entryId, &flexMetaInfo);
-
-        if (flexMetaInfo.rawValue == gNvFlexGuardValue_c) /* no meta found for this table entry ID */
-        {
-            /* set entry ID */
-            flexMetaInfo.fields.NvDataEntryID = tblIndexes->entryId;
-            /* get last meta info tag address */
-            lastFlexMetaInfoAddress = NvGetFlexLastMetaInfo();
-
-            if (lastFlexMetaInfoAddress < gFlexNvmDriver.ftfxConfig.flexramBlockBase) /* FlexRAM empty */
-            {
-                flexMetaInfo.fields.NvDataOffset = gFlexNvmDriver.ftfxConfig.flexramTotalSize - recordSize;
-                destRecordEndAddress =
-                    gFlexNvmDriver.ftfxConfig.flexramBlockBase + gFlexNvmDriver.ftfxConfig.flexramTotalSize;
-                lastFlexMetaInfoAddress = gFlexNvmDriver.ftfxConfig.flexramBlockBase;
-            }
-            else
-            {
-#if FSL_FEATURE_FLASH_IS_FTFL
-                /* wait for EEPROM system to be ready */
-                while (!(REG_BIT_GET(gFlexNvmDriver.ftfxRegBase + FTFx_SSD_FCNFG_OFFSET, FTFx_SSD_FCNFG_EEERDY)))
-                    ;
-#endif
-                /* read last meta tag */
-                NV_FlashRead(lastFlexMetaInfoAddress, (uint8_t *)&lastFlexMetaInfo, sizeof(NVM_FlexMetaInfo_t));
-                /* compute record destination end address */
-                destRecordEndAddress =
-                    gFlexNvmDriver.ftfxConfig.flexramBlockBase + lastFlexMetaInfo.fields.NvDataOffset;
-                /* compute record offset */
-                flexMetaInfo.fields.NvDataOffset = lastFlexMetaInfo.fields.NvDataOffset - recordSize;
-                /* increment the last meta info address and reused it as address of the current meta info tag */
-                lastFlexMetaInfoAddress += sizeof(NVM_FlexMetaInfo_t);
-            }
-
-#if FSL_FEATURE_FLASH_IS_FTFL
-            /* wait for EEPROM system to be ready */
-            while (!(REG_BIT_GET(gFlexNvmDriver.ftfxRegBase + FTFx_SSD_FCNFG_OFFSET, FTFx_SSD_FCNFG_EEERDY)))
-                ;
-
-            /* write record */
-            if (kStatus_FLASH_Success != EEEWrite(&gFlexNvmDriver, destRecordEndAddress - recordSize, recordSize,
-                                                  ((uint8_t *)(pNVM_DataTable[tableEntryIdx].pData))))
-            {
-                status = gNVM_RecordWriteError_c;
-            }
-            else
-            {
-                /* wait for EEPROM system to be ready */
-                while (!(REG_BIT_GET(gFlexNvmDriver.ftfxRegBase + FTFx_SSD_FCNFG_OFFSET, FTFx_SSD_FCNFG_EEERDY)))
-                    ;
-
-                /* write meta */
-                if (kStatus_FLASH_Success != EEEWrite(&gFlexNvmDriver, lastFlexMetaInfoAddress,
-                                                      sizeof(NVM_FlexMetaInfo_t), (uint8_t *)(&flexMetaInfo.rawValue)))
-                {
-                    status = gNVM_RecordWriteError_c;
-                }
-            }
-#endif /* #if FSL_FEATURE_FLASH_IS_FTFL */
-
-#if FSL_FEATURE_FLASH_IS_FTFE
-            /* write record */
-            if (kStatus_FLASH_Success != FLEXNVM_EepromWrite(&gFlexNvmDriver, destRecordEndAddress - recordSize,
-                                                             ((uint8_t *)(pNVM_DataTable[tableEntryIdx].pData)),
-                                                             recordSize))
-            {
-                status = gNVM_RecordWriteError_c;
-            }
-            else
-            {
-                /* write meta */
-                if (kStatus_FLASH_Success != FLEXNVM_EepromWrite(&gFlexNvmDriver, lastFlexMetaInfoAddress,
-                                                                 (uint8_t *)(&flexMetaInfo.rawValue),
-                                                                 sizeof(NVM_FlexMetaInfo_t)))
-                {
-                    status = gNVM_RecordWriteError_c;
-                }
-            }
-#endif /* #if FSL_FEATURE_FLASH_IS_FTFE */
-        }
-        else /* table entry ID already in FlexRAM, update the corresponding record */
-        {
-#if FSL_FEATURE_FLASH_IS_FTFL
-            /* wait for EEPROM system to be ready */
-            while (!(REG_BIT_GET(gFlexNvmDriver.ftfxRegBase + FTFx_SSD_FCNFG_OFFSET, FTFx_SSD_FCNFG_EEERDY)))
-                ;
-
-            if (kStatus_FLASH_Success !=
-                EEEWrite(&gFlexNvmDriver,
-                         (uint32_t)(gFlexNvmDriver.ftfxConfig.flexramBlockBase + flexMetaInfo.fields.NvDataOffset),
-                         recordSize, ((uint8_t *)(pNVM_DataTable[tableEntryIdx].pData))))
-            {
-                status = gNVM_RecordWriteError_c;
-            }
-#endif /* FSL_FEATURE_FLASH_IS_FTFL */
-
-#if FSL_FEATURE_FLASH_IS_FTFE
-            if (kStatus_FLASH_Success !=
-                FLEXNVM_EepromWrite(
-                    &gFlexNvmDriver,
-                    (uint32_t)(gFlexNvmDriver.ftfxConfig.flexramBlockBase + flexMetaInfo.fields.NvDataOffset),
-                    ((uint8_t *)(pNVM_DataTable[tableEntryIdx].pData)), recordSize))
-            {
-                status = gNVM_RecordWriteError_c;
-            }
-#endif /* FSL_FEATURE_FLASH_IS_FTFE */
-        }
-/* Empty macro when nvm monitoring is not enabled */
-#if (gFsciIncluded_c && (gNvmEnableFSCIRequests_c || gNvmEnableFSCIMonitoring_c))
-        if (gNVM_OK_c == status)
-        {
-            FSCI_MsgNVWriteMonitoring(flexMetaInfo.fields.NvDataEntryID, tblIndexes->elementIndex,
-                                      tblIndexes->saveRestoreAll);
-        }
-#endif
-#else /* No FlexNVM */
         /* make sure i don't process the save if page copy is active */
         if (mNvCopyOperationIsPending)
         {
@@ -5368,24 +5912,24 @@ NVM_STATIC NVM_Status_t NvWriteRecord(NVM_TableEntryInfo_t *tblIndexes)
             /* For data sets not mirrored in ram a table entry is saved separate */
             if (gNVM_MirroredInRam_c != (NVM_DataEntryType_t)pNVM_DataTable[tableEntryIdx].DataEntryType)
             {
-                tblIndexes->saveRestoreAll = FALSE;
+                tblIndexes->op_type = OP_SAVE_SINGLE;
             }
 #endif
 
-            if (tblIndexes->saveRestoreAll)
+            if (tblIndexes->op_type == OP_SAVE_ALL)
             {
                 recordSize =
                     (uint32_t)pNVM_DataTable[tableEntryIdx].ElementSize * pNVM_DataTable[tableEntryIdx].ElementsCount;
                 nvValidationStartByte = gValidationByteAllRecords_c;
-                nvValidationEndByte = gValidationByteAllRecords_c;
-                mirroredSrcAddress = (uint32_t)((uint8_t *)(((uint8_t *)(pNVM_DataTable[tableEntryIdx]).pData)));
+                nvValidationEndByte   = gValidationByteAllRecords_c;
+                mirroredSrcAddress    = (uint32_t)((uint8_t *)(((uint8_t *)(pNVM_DataTable[tableEntryIdx]).pData)));
             }
             else
             {
-                recordSize = pNVM_DataTable[tableEntryIdx].ElementSize;
+                recordSize            = pNVM_DataTable[tableEntryIdx].ElementSize;
                 nvValidationStartByte = gValidationByteSingleRecord_c;
-                nvValidationEndByte = gValidationByteSingleRecord_c;
-                mirroredSrcAddress = (uint32_t)((uint8_t *)(((uint8_t *)(pNVM_DataTable[tableEntryIdx]).pData)) +
+                nvValidationEndByte   = gValidationByteSingleRecord_c;
+                mirroredSrcAddress    = (uint32_t)((uint8_t *)(((uint8_t *)(pNVM_DataTable[tableEntryIdx]).pData)) +
                                                 (tblIndexes->elementIndex * pNVM_DataTable[tableEntryIdx].ElementSize));
             }
             realRecordSize = recordSize;
@@ -5396,7 +5940,7 @@ NVM_STATIC NVM_Status_t NvWriteRecord(NVM_TableEntryInfo_t *tblIndexes)
             {
                 if (NULL == ((void **)pNVM_DataTable[tableEntryIdx].pData)[tblIndexes->elementIndex])
                 {
-                    recordSize = 0;
+                    recordSize     = 0;
                     realRecordSize = 0;
                 }
                 /*if the dataset is allready in flash, ignore it*/
@@ -5404,7 +5948,7 @@ NVM_STATIC NVM_Status_t NvWriteRecord(NVM_TableEntryInfo_t *tblIndexes)
                 {
                     /*it returns OK, because atomic save must not fail, this is not an error*/
                     status = gNVM_OK_c;
-                    ret = TRUE;
+                    ret    = TRUE;
                 }
                 else
                 {
@@ -5432,7 +5976,7 @@ NVM_STATIC NVM_Status_t NvWriteRecord(NVM_TableEntryInfo_t *tblIndexes)
                      * to the other page
                      */
                     mNvCopyOperationIsPending = TRUE;
-                    status = gNVM_PageCopyPending_c;
+                    status                    = gNVM_PageCopyPending_c;
                 }
                 else
                 {
@@ -5446,10 +5990,11 @@ NVM_STATIC NVM_Status_t NvWriteRecord(NVM_TableEntryInfo_t *tblIndexes)
                                                              &metaInfoAddress, &newRecordAddress);
 
                     /* set associated meta info */
+                    FLib_MemSet(&metaInfo, 0xffu, sizeof(NVM_RecordMetaInfo_t));
                     metaInfo.fields.NvValidationStartByte = nvValidationStartByte;
-                    metaInfo.fields.NvValidationEndByte = nvValidationEndByte;
-                    metaInfo.fields.NvmDataEntryID = pNVM_DataTable[tableEntryIdx].DataEntryID;
-                    metaInfo.fields.NvmElementIndex = tblIndexes->elementIndex;
+                    metaInfo.fields.NvValidationEndByte   = nvValidationEndByte;
+                    metaInfo.fields.NvmDataEntryID        = pNVM_DataTable[tableEntryIdx].DataEntryID;
+                    metaInfo.fields.NvmElementIndex       = tblIndexes->elementIndex;
                     metaInfo.fields.NvmRecordOffset =
                         (uint16_t)(newRecordAddress - mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress);
 
@@ -5457,7 +6002,7 @@ NVM_STATIC NVM_Status_t NvWriteRecord(NVM_TableEntryInfo_t *tblIndexes)
                      * caused by FTFx controller */
                     if ((metaInfo.fields.NvmRecordOffset & (uint16_t)0x3) != 0u)
                     {
-                        status = gNVM_AlignamentError_c;
+                        status = gNVM_AlignmentError_c;
                     }
                     else
                     {
@@ -5468,18 +6013,23 @@ NVM_STATIC NVM_Status_t NvWriteRecord(NVM_TableEntryInfo_t *tblIndexes)
                              * to the other page
                              */
                             mNvCopyOperationIsPending = TRUE;
-                            status = gNVM_PageCopyPending_c;
+                            status                    = gNVM_PageCopyPending_c;
                         }
                         else
                         {
-                            status = NvWriteRecordToFlash(tblIndexes, tableEntryIdx, metaInfo, metaInfoAddress,
+                            status = NvWriteRecordToFlash(tblIndexes, tableEntryIdx, &metaInfo, metaInfoAddress,
                                                           newRecordAddress, recordSize, mirroredSrcAddress);
+                            if (gNVM_EccFaultWritingMeta_c == status || gNVM_EccFaultWritingRecord_c == status)
+                            {
+                                mNvCopyOperationIsPending                              = TRUE;
+                                mNvVirtualPageProperty[mNvActivePageId].has_ecc_faults = TRUE;
+                                status                                                 = gNVM_PageCopyPending_c;
+                            }
                         }
                     }
                 }
             }
         }
-#endif /* gNvUseFlexNVM_d */
     }
 
     return status;
@@ -5496,18 +6046,12 @@ NVM_STATIC NVM_Status_t NvWriteRecord(NVM_TableEntryInfo_t *tblIndexes)
  *****************************************************************************/
 NVM_STATIC NVM_Status_t NvRestoreData(NVM_TableEntryInfo_t *tblIdx)
 {
-    NVM_Status_t status = gNVM_MetaNotFound_c;
-#if (gNvUseFlexNVM_d == FALSE) /* no FlexNVM */
+    NVM_Status_t         status   = gNVM_MetaNotFound_c;
     NVM_RecordMetaInfo_t metaInfo = {0};
     uint32_t             metaInfoAddress;
 #if gNvFragmentation_Enabled_d
     uint16_t cnt;
 #endif
-#else
-    NVM_FlexMetaInfo_t flexMetaInfo;
-    uint32_t EERamAddress;
-#endif
-
     uint16_t tableEntryIdx;
 
     tableEntryIdx = NvGetTableEntryIndexFromId(tblIdx->entryId);
@@ -5518,74 +6062,6 @@ NVM_STATIC NVM_Status_t NvRestoreData(NVM_TableEntryInfo_t *tblIdx)
     }
     else
     {
-#if (gNvUseFlexNVM_d == TRUE) /* FlexNVM */
-        /* restore data from EERAM */
-        EERamAddress = gFlexNvmDriver.ftfxConfig.flexramBlockBase;
-
-        do
-        {
-#if FSL_FEATURE_FLASH_IS_FTFL
-            /* wait for EEPROM system to be ready */
-            while (!(REG_BIT_GET(gFlexNvmDriver.ftfxRegBase + FTFx_SSD_FCNFG_OFFSET, FTFx_SSD_FCNFG_EEERDY)))
-                ;
-#endif
-            /* read meta info tag */
-            NV_FlashRead(EERamAddress, (uint8_t *)&flexMetaInfo, sizeof(flexMetaInfo));
-
-            if (flexMetaInfo.rawValue == gNvFlexGuardValue_c) /* end of meta info space */
-            {
-                break;
-            }
-
-            if (tblIdx->entryId == flexMetaInfo.fields.NvDataEntryID)
-            {
-                if (tblIdx->saveRestoreAll)
-                {
-#if FSL_FEATURE_FLASH_IS_FTFL
-                    /* wait for EEPROM system to be ready */
-                    while (!(REG_BIT_GET(gFlexNvmDriver.ftfxRegBase + FTFx_SSD_FCNFG_OFFSET, FTFx_SSD_FCNFG_EEERDY)))
-                        ;
-#endif
-                    /* read all elements */
-                    NV_FlashRead(
-                        (gFlexNvmDriver.ftfxConfig.flexramBlockBase + flexMetaInfo.fields.NvDataOffset),
-                        (uint8_t *)(pNVM_DataTable[tableEntryIdx].pData),
-                        pNVM_DataTable[tableEntryIdx].ElementSize * pNVM_DataTable[tableEntryIdx].ElementsCount);
-                    status = gNVM_OK_c;
-                    break;
-                }
-                else
-                {
-#if FSL_FEATURE_FLASH_IS_FTFL
-                    /* wait for EEPROM system to be ready */
-                    while (!(REG_BIT_GET(gFlexNvmDriver.ftfxRegBase + FTFx_SSD_FCNFG_OFFSET, FTFx_SSD_FCNFG_EEERDY)))
-                        ;
-#endif
-                    /* read element */
-                    NV_FlashRead(gFlexNvmDriver.ftfxConfig.flexramBlockBase + flexMetaInfo.fields.NvDataOffset +
-                                     (tblIdx->elementIndex * pNVM_DataTable[tableEntryIdx].ElementSize),
-                                 (uint8_t *)(((uint8_t *)pNVM_DataTable[tableEntryIdx].pData) +
-                                             (tblIdx->elementIndex * pNVM_DataTable[tableEntryIdx].ElementSize)),
-                                 pNVM_DataTable[tableEntryIdx].ElementSize);
-                    status = gNVM_OK_c;
-                    break;
-                }
-            }
-
-            /* go to next meta tag */
-            EERamAddress += sizeof(flexMetaInfo);
-
-#if FSL_FEATURE_FLASH_IS_FTFL
-        } while (EERamAddress <
-                 (gFlexNvmDriver.ftfxConfig.flexramBlockBase + gFlexNvmDriver.ftfxConfig.flexramTotalSize));
-#endif
-
-#if FSL_FEATURE_FLASH_IS_FTFE
-    }
-    while (EERamAddress < (gFlexNvmDriver.ftfxConfig.flexramBlockBase + gFlexNvmDriver.ftfxConfig.flexramTotalSize))
-        ;
-#endif
-#else /* FlexNVM */
         /* get the last meta information address */
         metaInfoAddress = mNvVirtualPageProperty[mNvActivePageId].NvLastMetaInfoAddress;
         if (metaInfoAddress == gEmptyPageMetaAddress_c)
@@ -5628,7 +6104,7 @@ NVM_STATIC NVM_Status_t NvRestoreData(NVM_TableEntryInfo_t *tblIdx)
 
                     if (metaInfo.fields.NvmDataEntryID == tblIdx->entryId)
                     {
-                        if (tblIdx->saveRestoreAll)
+                        if (tblIdx->op_type == OP_SAVE_ALL)
                         {
 #if gNvFragmentation_Enabled_d
                             /* single save found */
@@ -5636,13 +6112,13 @@ NVM_STATIC NVM_Status_t NvRestoreData(NVM_TableEntryInfo_t *tblIdx)
                                 (0u == maNvRecordsCpyOffsets[metaInfo.fields.NvmElementIndex]))
                             {
                                 maNvRecordsCpyOffsets[metaInfo.fields.NvmElementIndex] = 1;
-                                NV_FlashRead(
-                                    (uint8_t *)mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress +
+                                status                                                 = NV_FlashRead(
+                                    mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress +
                                         metaInfo.fields.NvmRecordOffset,
                                     (uint8_t *)pNVM_DataTable[tableEntryIdx].pData +
                                         metaInfo.fields.NvmElementIndex * pNVM_DataTable[tableEntryIdx].ElementSize,
-                                    pNVM_DataTable[tableEntryIdx].ElementSize);
-                                status = gNVM_OK_c;
+                                    pNVM_DataTable[tableEntryIdx].ElementSize,
+                                    mNvVirtualPageProperty[mNvActivePageId].has_ecc_faults);
                             }
                             /* full save found */
                             else if (metaInfo.fields.NvValidationStartByte == gValidationByteAllRecords_c)
@@ -5654,15 +6130,15 @@ NVM_STATIC NVM_Status_t NvRestoreData(NVM_TableEntryInfo_t *tblIdx)
                                     {
                                         continue;
                                     }
-                                    NV_FlashRead(
-                                        (uint8_t *)mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress +
-                                            metaInfo.fields.NvmRecordOffset +
-                                            cnt * pNVM_DataTable[tableEntryIdx].ElementSize,
-                                        (uint8_t *)pNVM_DataTable[tableEntryIdx].pData +
-                                            cnt * pNVM_DataTable[tableEntryIdx].ElementSize,
-                                        pNVM_DataTable[tableEntryIdx].ElementSize);
+                                    status =
+                                        NV_FlashRead(mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress +
+                                                         metaInfo.fields.NvmRecordOffset +
+                                                         cnt * pNVM_DataTable[tableEntryIdx].ElementSize,
+                                                     (uint8_t *)pNVM_DataTable[tableEntryIdx].pData +
+                                                         cnt * pNVM_DataTable[tableEntryIdx].ElementSize,
+                                                     pNVM_DataTable[tableEntryIdx].ElementSize,
+                                                     mNvVirtualPageProperty[mNvActivePageId].has_ecc_faults);
                                 }
-                                status = gNVM_OK_c;
                                 break;
                             }
                             else
@@ -5677,12 +6153,12 @@ NVM_STATIC NVM_Status_t NvRestoreData(NVM_TableEntryInfo_t *tblIdx)
                                 break;
                             }
 
-                            NV_FlashRead(mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress +
-                                             metaInfo.fields.NvmRecordOffset,
-                                         (uint8_t *)pNVM_DataTable[tableEntryIdx].pData,
-                                         (uint32_t)pNVM_DataTable[tableEntryIdx].ElementsCount *
-                                             (uint32_t)pNVM_DataTable[tableEntryIdx].ElementSize);
-                            status = gNVM_OK_c;
+                            status = NV_FlashRead(mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress +
+                                                      metaInfo.fields.NvmRecordOffset,
+                                                  (uint8_t *)pNVM_DataTable[tableEntryIdx].pData,
+                                                  (uint32_t)pNVM_DataTable[tableEntryIdx].ElementsCount *
+                                                      (uint32_t)pNVM_DataTable[tableEntryIdx].ElementSize,
+                                                  mNvVirtualPageProperty[mNvActivePageId].has_ecc_faults);
                             break;
 #endif
                         }
@@ -5712,14 +6188,14 @@ NVM_STATIC NVM_Status_t NvRestoreData(NVM_TableEntryInfo_t *tblIdx)
 #endif
                                 {
                                     /* restore the element */
-                                    NV_FlashRead(
-                                        (uint8_t *)mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress +
-                                            metaInfo.fields.NvmRecordOffset,
-                                        (uint8_t *)((uint8_t *)pNVM_DataTable[tableEntryIdx].pData +
-                                                    (metaInfo.fields.NvmElementIndex *
-                                                     pNVM_DataTable[tableEntryIdx].ElementSize)),
-                                        pNVM_DataTable[tableEntryIdx].ElementSize);
-                                    status = gNVM_OK_c;
+                                    status =
+                                        NV_FlashRead(mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress +
+                                                         metaInfo.fields.NvmRecordOffset,
+                                                     (uint8_t *)((uint8_t *)pNVM_DataTable[tableEntryIdx].pData +
+                                                                 (metaInfo.fields.NvmElementIndex *
+                                                                  pNVM_DataTable[tableEntryIdx].ElementSize)),
+                                                     pNVM_DataTable[tableEntryIdx].ElementSize,
+                                                     mNvVirtualPageProperty[mNvActivePageId].has_ecc_faults);
                                     break;
                                 }
                             }
@@ -5727,14 +6203,14 @@ NVM_STATIC NVM_Status_t NvRestoreData(NVM_TableEntryInfo_t *tblIdx)
                             if (metaInfo.fields.NvValidationStartByte == gValidationByteAllRecords_c)
                             {
                                 /* restore the single element from the entire table entry record */
-                                NV_FlashRead(
-                                    (uint8_t *)(mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress +
-                                                metaInfo.fields.NvmRecordOffset +
-                                                (tblIdx->elementIndex * pNVM_DataTable[tableEntryIdx].ElementSize)),
-                                    ((uint8_t *)pNVM_DataTable[tableEntryIdx].pData +
-                                     (tblIdx->elementIndex * pNVM_DataTable[tableEntryIdx].ElementSize)),
-                                    pNVM_DataTable[tableEntryIdx].ElementSize);
-                                status = gNVM_OK_c;
+                                status =
+                                    NV_FlashRead((mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress +
+                                                  metaInfo.fields.NvmRecordOffset +
+                                                  (tblIdx->elementIndex * pNVM_DataTable[tableEntryIdx].ElementSize)),
+                                                 ((uint8_t *)pNVM_DataTable[tableEntryIdx].pData +
+                                                  (tblIdx->elementIndex * pNVM_DataTable[tableEntryIdx].ElementSize)),
+                                                 pNVM_DataTable[tableEntryIdx].ElementSize,
+                                                 mNvVirtualPageProperty[mNvActivePageId].has_ecc_faults);
                                 break;
                             }
                         }
@@ -5744,9 +6220,8 @@ NVM_STATIC NVM_Status_t NvRestoreData(NVM_TableEntryInfo_t *tblIdx)
                 }
             }
         }
-#endif /* gNvUseFlexNVM_d */
-}
-return status;
+    }
+    return status;
 }
 
 /******************************************************************************
@@ -5759,7 +6234,7 @@ NVM_STATIC uint16_t NvGetTableEntryIndexFromId(NvTableEntryId_t entryId)
 {
     uint16_t loopCnt = 0;
 
-    while (loopCnt < gNVM_TABLE_entries_c)
+    while (loopCnt < mNVM_DataTableNbEntries)
     {
         if (pNVM_DataTable[loopCnt].DataEntryID == entryId)
         {
@@ -5768,14 +6243,13 @@ NVM_STATIC uint16_t NvGetTableEntryIndexFromId(NvTableEntryId_t entryId)
         /* increment the loop counter */
         loopCnt++;
     }
-    if (gNVM_TABLE_entries_c == loopCnt)
+    if (mNVM_DataTableNbEntries == loopCnt)
     {
         loopCnt = gNvInvalidTableEntryIndex_c;
     }
     return loopCnt;
 }
 
-#if !gFifoOverwriteEnabled_c
 /******************************************************************************
  * Name: NvProcessFirstSaveInQueue
  * Description: processes the first save in the queue so that the queue can accept another entry
@@ -5789,14 +6263,14 @@ NVM_STATIC NVM_Status_t NvProcessFirstSaveInQueue(NVM_TableEntryInfo_t *ptrTblId
 
     if (0U == mNvCriticalSectionFlag)
     {
-        if (NvGetPendingSavesCount(&mNvPendingSavesQueue) != 0u)
+        if (NvIsPendingOperation())
         {
             while (NvPopPendingSave(&mNvPendingSavesQueue, &tblIdx))
             {
                 /* save tblIdx */
                 *ptrTblIdx = tblIdx;
                 if ((gNvCopyAll_c == tblIdx.entryId) && (gNvCopyAll_c == tblIdx.elementIndex) &&
-                    (TRUE == tblIdx.saveRestoreAll))
+                    (OP_SAVE_ALL == tblIdx.op_type))
                 {
                     status = gNVM_AtomicSaveRecursive_c;
                     break;
@@ -5810,16 +6284,17 @@ NVM_STATIC NVM_Status_t NvProcessFirstSaveInQueue(NVM_TableEntryInfo_t *ptrTblId
                     /*MISRA rule 15.7*/
                 }
 
-#if (gNvUseFlexNVM_d == FALSE) /* no FlexNVM */
                 if (NvWriteRecord(&tblIdx) == gNVM_PageCopyPending_c)
                 {
-#if (((defined(gFsciIncluded_c)) && (gFsciIncluded_c > 0U)) && \
-     ((defined(gNvmEnableFSCIMonitoring_c)) && (gNvmEnableFSCIMonitoring_c > 0U)))
-                    FSCI_MsgNVVirtualPageMonitoring(TRUE, gNVM_OK_c);
-                    FSCI_MsgNVVirtualPageMonitoring(FALSE, status = NvCopyPage(gNvCopyAll_c));
-#else
+                    FSCI_NV_VIRT_PAGE_MONITOR(TRUE, gNVM_OK_c);
                     status = NvCopyPage(gNvCopyAll_c);
-#endif
+#if defined gNvSalvageFromEccFault_d && (gNvSalvageFromEccFault_d > 0)
+                    if (gNVM_EccFault_c == status)
+                    {
+                        status = NvCopyPage(gNvCopyAll_c);
+                    }
+#endif /* gNvSalvageFromEccFault_d */
+                    FSCI_NV_VIRT_PAGE_MONITOR(FALSE, status);
                     if (gNVM_OK_c == status)
                     {
                         mNvCopyOperationIsPending = FALSE;
@@ -5841,25 +6316,11 @@ NVM_STATIC NVM_Status_t NvProcessFirstSaveInQueue(NVM_TableEntryInfo_t *ptrTblId
                     status = gNVM_OK_c;
                     break;
                 }
-#else /* FlexNVM */
-                    if (gNVM_OK_c == NvWriteRecord(&tblIdx))
-                    {
-                        status = gNVM_OK_c;
-                        break;
-                    }
-                    else
-                    {
-                        /* return gNVM_SaveRequestRecursive_c to run again */
-                        status = gNVM_SaveRequestRecursive_c;
-                        break;
-                    }
-#endif
             }
         }
     }
     return status;
 }
-#endif
 
 /******************************************************************************
  * Name: NvAddSaveRequestToQueue
@@ -5901,8 +6362,8 @@ NVM_STATIC NVM_Status_t NvAddSaveRequestToQueue(NVM_TableEntryInfo_t *ptrTblIdx)
             {
                 if (nvTblIdx.entryId == mNvPendingSavesQueue.QData[loopIdx].entryId)
                 {
-                    if (mNvPendingSavesQueue.QData[loopIdx].saveRestoreAll ==
-                        TRUE) /* full table entry already queued */
+                    if (mNvPendingSavesQueue.QData[loopIdx].op_type ==
+                        OP_SAVE_ALL) /* full table entry already queued */
                     {
                         /* request is already queued */
                         isQueued = TRUE;
@@ -5910,10 +6371,10 @@ NVM_STATIC NVM_Status_t NvAddSaveRequestToQueue(NVM_TableEntryInfo_t *ptrTblIdx)
                     }
 
                     /* single element from table entry is queued */
-                    if (nvTblIdx.saveRestoreAll == TRUE) /* a full table entry is requested to be saved */
+                    if (nvTblIdx.op_type == OP_SAVE_ALL) /* a full table entry is requested to be saved */
                     {
                         /* update only the flag of the already queued request */
-                        mNvPendingSavesQueue.QData[loopIdx].saveRestoreAll = TRUE;
+                        mNvPendingSavesQueue.QData[loopIdx].op_type = OP_SAVE_ALL;
                         /* request is already queued */
                         isQueued = TRUE;
                         break;
@@ -6006,15 +6467,11 @@ NVM_STATIC void __NvShutdown(void)
     /* wait for all operations to complete */
     while (TRUE)
     {
-#if (gNvUseFlexNVM_d == FALSE) /* no FlexNVM */
         if (((NvGetPendingSavesCount(&mNvPendingSavesQueue)) != 0u) || (mNvCopyOperationIsPending))
-#else
-        if (NvGetPendingSavesCount(&mNvPendingSavesQueue) != 0u)
-#endif
         {
             continue;
         }
-        while (idx < gNVM_TABLE_entries_c)
+        while (idx < mNVM_DataTableNbEntries)
         {
             if (maDatasetInfo[idx].saveNextInterval)
             {
@@ -6035,12 +6492,11 @@ NVM_STATIC void __NvShutdown(void)
  *****************************************************************************/
 NVM_STATIC void NvCompletePendingOperationsUnsafe(void)
 {
-#if (gNvUseFlexNVM_d == FALSE) /* no FlexNVM */
     uint16_t idx = 0;
 
     if (TRUE == mNvModuleInitialized)
     {
-        while (idx < gNVM_TABLE_entries_c)
+        while (idx < mNVM_DataTableNbEntries)
         {
             if ((maDatasetInfo[idx].saveNextInterval) && (maDatasetInfo[idx].ticksToNextSave != 0u))
             {
@@ -6052,162 +6508,163 @@ NVM_STATIC void NvCompletePendingOperationsUnsafe(void)
 
         do
         {
-            __NvIdle();
+            (void)__NvIdle();
         } while ((mNvErasePgCmdStatus.NvErasePending == TRUE) || (mNvCopyOperationIsPending == TRUE) ||
                  (mNvPendingSavesQueue.EntriesCount != 0u));
     }
-#else /* FlexNVM */
-    do
-    {
-        __NvIdle();
-    } while (mNvPendingSavesQueue.EntriesCount != 0U);
-#endif
 }
 
-#if (gNvUseFlexNVM_d == TRUE) /* FlexNVM */
-/******************************************************************************
- * Name: NvGetFlexLastMetaInfo
- * Description: Get FlexRAM last meta information address
- * Parameter(s): -
- * Return: the address of the last valid meta information
- ******************************************************************************/
-NVM_STATIC uint32_t NvGetFlexLastMetaInfo(void)
+#if defined              NV_SIM_ECC_FAULT
+__RAMFUNC NVM_STATIC int NV_FlashReadCheckEccFaults(uint32_t flash_addr, uint8_t *ram_buf, size_t size)
 {
-    uint32_t           address, size;
-    NVM_FlexMetaInfo_t flexMetaInfo;
+    int st = kStatus_HAL_Flash_Success;
 
-#if FSL_FEATURE_FLASH_IS_FTFL
-    address = gFlexNvmDriver.ftfxConfig.flexramBlockBase;
-    size    = gFlexNvmDriver.ftfxConfig.flexramTotalSize;
-#endif
-
-#if FSL_FEATURE_FLASH_IS_FTFE
-    address = gFlexNvmDriver.ftfxConfig.flexramBlockBase;
-    size    = gFlexNvmDriver.ftfxConfig.flexramTotalSize;
-#endif
-
-    while (size)
+    uint32_t sav_cfg;
+    uint8_t *addr       = (uint8_t *)flash_addr;
+    uint8_t *end_addr   = flash_addr + size;
+    uint32_t regPrimask = DisableGlobalIRQ();
+    FLASH_ActivateEccFaultDetection(FMU0, &sav_cfg); /* Do not use FMU0_IRQ though */
+    while (addr < end_addr)
     {
-#if FSL_FEATURE_FLASH_IS_FTFL
-        /* wait for EEPROM system to be ready */
-        while (!(REG_BIT_GET(gFlexNvmDriver.ftfxRegBase + FTFx_SSD_FCNFG_OFFSET, FTFx_SSD_FCNFG_EEERDY)))
-            ;
-#endif
-        /* read meta info tag */
-        NV_FlashRead(address, (uint8_t *)&flexMetaInfo, sizeof(flexMetaInfo));
-        if (flexMetaInfo.rawValue == gNvFlexGuardValue_c)
+        if (NV_ADDR_IN_FAULT_RANGE(addr))
         {
+            NV_SET_ECC_FAULT_INJECTION();
+        }
+        *ram_buf++ = *addr++;
+        if (FMU0->FSTAT & FMU0->FSTAT & FMU_FSTAT_DFDIF_MASK)
+        {
+            FMU0->FSTAT |= FMU_FSTAT_DFDIF_MASK;
+            NV_CLEAR_ECC_FAULT_INJECTION();
+            st = kStatus_HAL_Flash_EccError;
+            __DSB();
             break;
         }
-        address += sizeof(flexMetaInfo);
-        size -= sizeof(flexMetaInfo);
+        addr++;
+        ram_buf++;
     }
-    return address - sizeof(flexMetaInfo);
+    FLASH_DeactivateEccFaultDetect(FMU0, sav_cfg); /* Do not use FMU0_IRQ though */
+
+    EnableGlobalIRQ(regPrimask);
+    return st;
+}
+#endif /* NV_SIM_ECC_FAULT */
+
+NVM_STATIC NVM_Status_t NV_FlashRead(uint32_t flash_addr, uint8_t *ram_buf, size_t size, bool_t check_ecc_fault)
+{
+    NVM_Status_t st = gNVM_OK_c;
+    NOT_USED(check_ecc_fault);
+#if defined gNvSalvageFromEccFault_d && (gNvSalvageFromEccFault_d > 0)
+    if (check_ecc_fault == TRUE)
+    {
+        if (HAL_FlashReadCheckEccFaults(flash_addr, size, ram_buf) == kStatus_HAL_Flash_EccError)
+        {
+            st = gNVM_EccFault_c;
+        }
+    }
+    else
+#endif
+    {
+        /* Ignore HAL_FlashRead return value since always kStatus_HAL_Flash_Success*/
+        (void)HAL_FlashRead(flash_addr, size, ram_buf);
+    }
+    return st;
 }
 
-/******************************************************************************
- * Name: NvGetFlexMetaInfoFromId
- * Description: Get FlexRAM meta information tag from table entry ID
- * Parameter(s): [IN] tblEntryId - table entry ID
- *               [OUT] pMetaInfo - a pointer to a memory location where the
- *                                 meta information tag will be stored
- * Return: -
- ******************************************************************************/
-NVM_STATIC void NvGetFlexMetaInfoFromId(NvTableEntryId_t tblEntryId, NVM_FlexMetaInfo_t *pMetaInfo)
+#if defined             gNvVerifyReadBackAfterProgram_d && (gNvVerifyReadBackAfterProgram_d > 0)
+NVM_STATIC NVM_Status_t NV_VerifyProgram(uint32_t flash_addr, uint8_t *ram_buf, size_t size, bool_t catch_ecc_err)
 {
-    uint32_t           address, size;
-    NVM_FlexMetaInfo_t flexMetaInfo;
-    bool               ret = FALSE;
+    NVM_Status_t st           = gNVM_OK_c;
+    uint32_t     remaining_sz = size;
+    uint32_t     offset       = 0u;
+    uint32_t     read_sz      = PGM_SIZE_BYTE;
+    uint8_t      phrase[PGM_SIZE_BYTE];
 
-#if FSL_FEATURE_FLASH_IS_FTFL
-    address = gFlexNvmDriver.ftfxConfig.flexramBlockBase;
-    size    = gFlexNvmDriver.ftfxConfig.flexramTotalSize;
-#endif
+    NOT_USED(catch_ecc_err);
 
-#if FSL_FEATURE_FLASH_IS_FTFE
-    address = gFlexNvmDriver.ftfxConfig.flexramBlockBase;
-    size    = gFlexNvmDriver.ftfxConfig.flexramTotalSize;
-#endif
-
-    while (size)
+    while (remaining_sz > 0u)
     {
-#if FSL_FEATURE_FLASH_IS_FTFL
-        /* wait for EEPROM system to be ready */
-        while (!(REG_BIT_GET(gFlexNvmDriver.ftfxRegBase + FTFx_SSD_FCNFG_OFFSET, FTFx_SSD_FCNFG_EEERDY)))
-            ;
-#endif
-
-        NV_FlashRead(address, (uint8_t *)&flexMetaInfo, sizeof(flexMetaInfo));
-        if (flexMetaInfo.rawValue == gNvFlexGuardValue_c)
+        uint8_t *read_ptr = &phrase[0];
+        uint32_t addr;
+        if (remaining_sz <= PGM_SIZE_BYTE)
         {
+            read_sz = remaining_sz;
+        }
+        addr = flash_addr + offset;
+#if defined gNvSalvageFromEccFault_d && (gNvSalvageFromEccFault_d > 0)
+        if (TRUE == catch_ecc_err)
+        {
+            if (HAL_FlashReadCheckEccFaults(addr, read_sz, read_ptr) != kStatus_HAL_Flash_Success)
+            {
+                /* HAL_FlashRead mays return kStatus_HAL_Flash_EccError */
+                /* It means that the ECC Fault would have fired need to proceed to erase of active page to salvage  */
+                st = gNVM_EccFault_c;
+                break;
+            }
+        }
+        else
+#endif
+        {
+            if (HAL_FlashRead(addr, read_sz, read_ptr) != kStatus_HAL_Flash_Success)
+            {
+                /* HAL_FlashRead always returns kStatus_HAL_Flash_Success, so not really attainable */
+                /* If the ECC Fault fires we reset directly. On next reset the NVM recovery takes place */
+                st = gNVM_RecordWriteError_c;
+                break;
+            }
+        }
+
+        if (FLib_MemCmp(read_ptr, &ram_buf[offset], read_sz) != TRUE)
+        {
+            st = gNVM_RecordWriteError_c;
             break;
         }
-
-        if (flexMetaInfo.fields.NvDataEntryID == tblEntryId)
-        {
-            pMetaInfo->fields.NvDataEntryID = flexMetaInfo.fields.NvDataEntryID;
-            pMetaInfo->fields.NvDataOffset  = flexMetaInfo.fields.NvDataOffset;
-            ret                             = TRUE;
-            break;
-        }
-
-        address += sizeof(flexMetaInfo);
-        size -= sizeof(flexMetaInfo);
+        offset += read_sz;
+        remaining_sz -= read_sz;
     }
-
-    if (FALSE == ret)
-    {
-        pMetaInfo->rawValue = gNvFlexGuardValue_c;
-    }
+    return st;
 }
+#endif
 
-/******************************************************************************
- * Name: NvCheckNvmTableForFlexRAMUsage
- * Description: Check if the existing NVM table fits within the FlexRAM window
- * Parameter(s): -
- * Return: gNVM_NvTableExceedFlexRAMSize_c - the table exceed the size of
- *                                           FlexRAM window
- *         gNVM_OK_c - the table fits within the size of window FlexRAM window
- ******************************************************************************/
-NVM_STATIC NVM_Status_t NvCheckNvmTableForFlexRAMUsage(void)
+NVM_STATIC NVM_Status_t NV_FlashProgram(uint32_t flash_addr, size_t size, uint8_t *ram_buf, bool_t catch_ecc_faults)
 {
-    uint16_t     loopCnt        = 0;
-    uint32_t     allDatasetSize = 0;
-    NVM_Status_t status         = gNVM_OK_c;
+    NVM_Status_t st = gNVM_OK_c;
+    NOT_USED(catch_ecc_faults);
 
-    while (loopCnt < gNVM_TABLE_entries_c)
+    if (HAL_FlashProgram(flash_addr, size, ram_buf) == kStatus_HAL_Flash_Success)
     {
-        if (gNvInvalidDataEntry_c == pNVM_DataTable[loopCnt].DataEntryID)
-        {
-            loopCnt++;
-            continue;
-        }
-        /* add the record size */
-        allDatasetSize += (pNVM_DataTable[loopCnt].ElementsCount * pNVM_DataTable[loopCnt].ElementSize);
-        /* add the meta size */
-        allDatasetSize += sizeof(NVM_FlexMetaInfo_t);
-        /* increment the loop counter */
-        loopCnt++;
+#if defined gNvVerifyReadBackAfterProgram_d && (gNvVerifyReadBackAfterProgram_d > 0)
+        /* Read back contents right away : this may cause an ECC Fault but better know it at once. */
+        st = NV_VerifyProgram(flash_addr, ram_buf, size, catch_ecc_faults);
+#endif
     }
-
-    /* add the safe guard space (equal to meta size) */
-    allDatasetSize += sizeof(NVM_FlexMetaInfo_t);
-
-#if FSL_FEATURE_FLASH_IS_FTFL
-    if (allDatasetSize > gFlexNvmDriver.ftfxConfig.flexramTotalSize)
-#endif
-
-#if FSL_FEATURE_FLASH_IS_FTFE
-        if (allDatasetSize > gFlexNvmDriver.ftfxConfig.flexramTotalSize)
-#endif
-        {
-            status = gNVM_NvTableExceedFlexRAMSize_c;
-        }
-
-    return status;
+    else
+    {
+        st = gNVM_MetaInfoWriteError_c;
+    }
+    return st;
 }
 
-#endif /* gNvUseFlexNVM_d */
+NVM_STATIC NVM_Status_t NV_FlashProgramUnaligned(uint32_t flash_addr,
+                                                 size_t   size,
+                                                 uint8_t *ram_buf,
+                                                 bool_t   catch_ecc_faults)
+{
+    NVM_Status_t st = gNVM_OK_c;
+    NOT_USED(catch_ecc_faults);
+
+    if (HAL_FlashProgramUnaligned(flash_addr, size, ram_buf) == kStatus_HAL_Flash_Success)
+    {
+#if defined gNvVerifyReadBackAfterProgram_d && (gNvVerifyReadBackAfterProgram_d > 0)
+        /* Read back contents right away : this may cause an ECC Fault but better know it at once. */
+        st = NV_VerifyProgram(flash_addr, ram_buf, size, catch_ecc_faults);
+#endif
+    }
+    else
+    {
+        st = gNVM_RecordWriteError_c;
+    }
+    return st;
+}
 
 #endif /* gNvStorageIncluded_d */
 
@@ -6216,6 +6673,19 @@ NVM_STATIC NVM_Status_t NvCheckNvmTableForFlexRAMUsage(void)
  * Public functions
  *****************************************************************************
  *****************************************************************************/
+void NvSetNvmDataTable(NVM_DataEntry_t *tb_array, uint16_t nb_entries)
+{
+    if ((tb_array == NULL) || (nb_entries == 0u))
+    {
+        pNVM_DataTable          = (NVM_DataEntry_t *)gNVM_TABLE_startAddr_c;
+        mNVM_DataTableNbEntries = gNVM_TABLE_entries_c;
+    }
+    else
+    {
+        pNVM_DataTable          = tb_array;
+        mNVM_DataTableNbEntries = nb_entries;
+    }
+}
 
 /******************************************************************************
  * Name: NvModuleInit
@@ -6305,7 +6775,7 @@ NVM_Status_t NvErase(void **ppData)
  * Name: NvSaveOnIdle
  * Description: Save the data pointed by ptrData on the next call to NvIdle()
  * Parameter(s): [IN] ptrData - pointer to data to be saved
- *               [IN] saveRestoreAll - specify if all the elements from the NVM table
+ *               [IN] saveAll - specify if all the elements from the NVM table
  *                              entry shall be saved
  * Return: gNVM_OK_c - if operation completed successfully
  *         gNVM_Error_c - in case of error(s)
@@ -6386,7 +6856,7 @@ NVM_Status_t NvSaveOnCount(void *ptrData)
 void NvSetMinimumTicksBetweenSaves(NvSaveInterval_t newInterval)
 {
 #if gNvStorageIncluded_d
-    gNvMinimumTicksBetweenSaves = newInterval;
+    mNvMinimumTicksBetweenSaves = newInterval;
 #else
     newInterval = newInterval;
 #endif
@@ -6402,7 +6872,7 @@ void NvSetMinimumTicksBetweenSaves(NvSaveInterval_t newInterval)
 void NvSetCountsBetweenSaves(NvSaveCounter_t newCounter)
 {
 #if gNvStorageIncluded_d
-    gNvCountsBetweenSaves = newCounter;
+    mNvCountsBetweenSaves = newCounter;
 #else
     newCounter  = newCounter;
 #endif
@@ -6499,10 +6969,11 @@ void NvSetCriticalSection(void)
  *              FreeRTOS) to process the pending saves, erase or copy
  *              operations.
  * Parameters: -
- * Return: -
+ * Return: Number of operations executed.
  ******************************************************************************/
-void NvIdle(void)
+int NvIdle(void)
 {
+    int nb_operation = 0;
 #if gNvStorageIncluded_d
     if (mNvModuleInitialized == TRUE)
     {
@@ -6511,10 +6982,11 @@ void NvIdle(void)
             mNvIdleTaskId = OSA_TaskGetCurrentHandle();
         }
         (void)OSA_MutexLock(mNVMMutexId, osaWaitForever_c);
-        __NvIdle();
+        nb_operation = __NvIdle();
         (void)OSA_MutexUnlock(mNVMMutexId);
     }
 #endif
+    return nb_operation;
 } /* NvIdle() */
 /******************************************************************************
  * Name: NvGetNvIdleTaskId
@@ -6562,7 +7034,6 @@ bool_t NvIsDataSetDirty(void *ptrData)
 void NvGetPagesStatistics(NVM_Statistics_t *ptrStat)
 {
 #if gNvStorageIncluded_d
-#if (gNvUseFlexNVM_d == FALSE) /* no FlexNVM */
     if (TRUE == mNvModuleInitialized)
     {
         if (NULL != ptrStat)
@@ -6579,10 +7050,6 @@ void NvGetPagesStatistics(NVM_Statistics_t *ptrStat)
             }
         }
     }
-#else /* FlexNVM */
-    ptrStat->FirstPageEraseCyclesCount = 0;
-    ptrStat->SecondPageEraseCyclesCount = 0;
-#endif
 #else
     ptrStat = ptrStat;
 #endif
@@ -6600,11 +7067,7 @@ void NvGetPagesSize(uint32_t *pPageSize)
     if (NULL != pPageSize)
     {
 #if gNvStorageIncluded_d
-#if (gNvUseFlexNVM_d == FALSE) /* no FlexNVM */
         *pPageSize = mNvVirtualPageProperty[mNvActivePageId].NvTotalPageSize;
-#else /* FlexNVM */
-        *pPageSize = 0U;
-#endif
 #else
         *pPageSize = 0U;
 #endif
@@ -6821,3 +7284,403 @@ void NvEraseSector(uint32_t sectorAddr)
 #endif
 }
 #endif
+
+/*! *********************************************************************************
+ *  \brief Tell if there is a pending NVM operation in the queue
+ *
+ * \return bool Is there a pending operation in the queue
+ ********************************************************************************* */
+bool NvIsPendingOperation(void)
+{
+    bool IsPending = false;
+#if gNvStorageIncluded_d
+    if (NvGetPendingSavesCount(&mNvPendingSavesQueue) != 0U)
+    {
+        IsPending = true;
+    }
+#endif
+    return IsPending;
+}
+
+#define INT_FLASH_SECTOR_SZ_LOG2 13u
+#define INT_FLASH_PHRASE_SZ_LOG2 4u
+
+#define ROUND_FLOOR(_X_, _SHIFT_) (((uint32_t)_X_) & ~(((uint32_t)1u << (_SHIFT_)) - 1u))
+#define NV_SIM_ECC_FAULT          0
+#if defined NV_SIM_ECC_FAULT && (NV_SIM_ECC_FAULT > 0)
+#define NV_ADDR_IN_FAULT_RANGE(addr)                                          \
+    ((addr >= (((uint32_t)NV_STORAGE_START_ADDRESS) + 10 * PGM_SIZE_BYTE)) && \
+     (addr < (((uint32_t)NV_STORAGE_START_ADDRESS) + 11 * PGM_SIZE_BYTE)))
+#define NV_SET_ECC_FAULT_INJECTION()                                   \
+    FMU0->FCTRL |= FMU_FCTRL_FDFD_MASK;                                \
+    while ((FMU0->FCTRL & FMU_FCTRL_FDFD_MASK) != FMU_FCTRL_FDFD_MASK) \
+        ;
+#define NV_CLEAR_ECC_FAULT_INJECTION()                                 \
+    FMU0->FCTRL &= ~FMU_FCTRL_FDFD_MASK;                               \
+    while ((FMU0->FCTRL & FMU_FCTRL_FDFD_MASK) == FMU_FCTRL_FDFD_MASK) \
+    {                                                                  \
+    }
+#else
+#define NV_SET_ECC_FAULT_INJECTION()
+#define NV_CLEAR_ECC_FAULT_INJECTION()
+#endif
+/*
+ * NV_SweepRangeForEccFaults is required to be located in RAM mostly because of the
+ * test mode to simulate ECC faults.
+ */
+#if defined        NV_SIM_ECC_FAULT && (NV_SIM_ECC_FAULT > 0)
+__RAMFUNC uint32_t NV_SweepRangeForEccFaults(uint32_t start_addr, uint32_t end_addr)
+{
+    uint32_t regPrimask = __get_PRIMASK();
+    __disable_irq();
+
+    uint32_t sav_cfg;
+    uint32_t addr = ROUND_FLOOR(start_addr, INT_FLASH_PHRASE_SZ_LOG2);
+    if (FLASH_ActivateEccFaultDetection(FMU0, &sav_cfg) == 0)
+    {
+        while (addr < end_addr)
+        {
+            if (NV_ADDR_IN_FAULT_RANGE(addr))
+            {
+                NV_SET_ECC_FAULT_INJECTION();
+            }
+
+            volatile uint32_t read_val;
+            read_val = *(uint32_t *)addr;
+            if (FMU0->FSTAT & FMU0->FSTAT & FMU_FSTAT_DFDIF_MASK)
+            {
+                FMU0->FSTAT |= FMU_FSTAT_DFDIF_MASK;
+                NV_CLEAR_ECC_FAULT_INJECTION();
+                __DSB();
+                break;
+            }
+            addr += FSL_FEATURE_FLASH_PFLASH_PHRASE_SIZE;
+        }
+        FLASH_DeactivateEccFaultDetection(FMU0, sav_cfg);
+    }
+
+    __set_PRIMASK(regPrimask);
+    return addr;
+}
+#else
+uint32_t NV_SweepRangeForEccFaults(uint32_t start_addr, uint32_t end_addr)
+{
+    uint32_t regPrimask = DisableGlobalIRQ();
+
+    uint32_t flash_addr = ROUND_FLOOR(start_addr, INT_FLASH_PHRASE_SZ_LOG2);
+
+    while (flash_addr < end_addr)
+    {
+        uint32_t read_val;
+        /* Dummy read just to probe ECC error */
+        if (HAL_FlashReadCheckEccFaults(flash_addr, sizeof(uint32_t), (uint8_t *)&read_val) ==
+            kStatus_HAL_Flash_EccError)
+        {
+            break;
+        }
+        flash_addr += FSL_FEATURE_FLASH_PFLASH_PHRASE_SIZE;
+    }
+    EnableGlobalIRQ(regPrimask);
+    return flash_addr;
+}
+#endif
+
+uint16_t Nv_GetFirstMetaOffset(void)
+{
+    return (uint16_t)gNvFirstMetaOffset_c;
+}
+
+uint32_t NvGetTableSizeInFlash(void)
+{
+#if gNvUseExtendedFeatureSet_d
+    return mNvTableSizeInFlash;
+#else
+    return 0u;
+#endif
+}
+
+void NvSetFlashTableversion(uint16_t version)
+{
+#if gNvUseExtendedFeatureSet_d
+    mNvFlashTableVersion = version;
+#else
+    NOT_USED(version);
+#endif
+}
+
+#if defined     gNvDebugEnabled_d && (gNvDebugEnabled_d > 0)
+NVM_STATIC void NvFlashDump(uint8_t *ptr, uint16_t data_size)
+{
+    char message[128];
+    int  lg = 0;
+
+    uint16_t cnt = 0;
+    PRINTF("Data from %x lg=%d\r\n", ptr, data_size);
+    int     remaining_size;
+    uint8_t ram_buf[16u] = {0u};
+    for (remaining_size = data_size; remaining_size > 0;)
+    {
+        uint16_t size;
+        if (remaining_size > 16u)
+        {
+            size = 16u;
+        }
+        else
+        {
+            size = remaining_size;
+        }
+        if (NV_FlashRead((uint32_t)ptr, ram_buf, size, TRUE) != gNVM_OK_c)
+        {
+            lg = sprintf(message, "\r\n[%08x]: xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx", (uint32_t)ptr);
+        }
+        else
+        {
+            lg = 0;
+        }
+        lg += sprintf(&message[lg], "\r\n[%08x]: %02x", (uint32_t)ptr, ram_buf[0]);
+        for (cnt = 1; cnt < size; cnt++)
+        {
+            lg += sprintf(&message[lg], " %02x", ram_buf[cnt]);
+        }
+
+        PRINTF(message);
+
+        ptr += size;
+        remaining_size -= size;
+    }
+    PRINTF("\r\n");
+}
+#endif
+
+void NV_ShowDataEntry(uint8_t *ptr, uint16_t data_size)
+{
+#if defined gNvDebugEnabled_d && (gNvDebugEnabled_d > 0)
+    NvFlashDump(ptr, data_size);
+#else
+    NOT_USED(ptr);
+    NOT_USED(data_size);
+#endif
+}
+
+#if defined gNvDebugEnabled_d && (gNvDebugEnabled_d > 0)
+
+NVM_STATIC void NV_ShowPageMetas(NVM_VirtualPageID_t page_id, bool ecc_checks)
+{
+    char                 message[150];
+    char *               record_type;
+    uint32_t             metaInfoAddress;
+    NVM_RecordMetaInfo_t metaInfo;
+    uint16_t             bytes_to_read = 0u;
+    uint16_t             entry_index;
+
+    NVM_VirtualPageProperties_t *vpage_prop = &mNvVirtualPageProperty[page_id];
+
+    if ((metaInfoAddress = vpage_prop->NvLastMetaInfoAddress) == gEmptyPageMetaAddress_c)
+    {
+        return;
+    }
+    NV_ShowPageTableInfo(page_id, ecc_checks);
+
+    NvFlashDump((uint8_t *)vpage_prop->NvRawSectorStartAddress,
+                vpage_prop->NvLastMetaInfoAddress + sizeof(NVM_RecordMetaInfo_t) - vpage_prop->NvRawSectorStartAddress);
+
+    PRINTF("Most recent to oldest:\r\n");
+
+    while (metaInfoAddress >= (vpage_prop->NvRawSectorStartAddress + gNvFirstMetaOffset_c))
+    {
+        bytes_to_read     = 0u;
+        uint8_t *meta_ptr = (uint8_t *)&metaInfo;
+        (void)NV_FlashRead(metaInfoAddress, (uint8_t *)&metaInfo, sizeof(NVM_RecordMetaInfo_t),
+                           (vpage_prop->has_ecc_faults || ecc_checks));
+
+        int lg = 0;
+        lg += sprintf(message, "Meta @ 0x%x:", metaInfoAddress);
+        for (uint8_t cnt = 0; cnt < sizeof(NVM_RecordMetaInfo_t); cnt++)
+        {
+            lg += sprintf(&message[lg], "%02x ", meta_ptr[cnt]);
+        }
+        PRINTF(message);
+        PRINTF("\r\n");
+
+        if (metaInfo.fields.NvValidationStartByte != metaInfo.fields.NvValidationEndByte)
+        {
+            record_type   = "invalid";
+            bytes_to_read = 0;
+        }
+        else if (metaInfo.fields.NvValidationStartByte == gValidationByteAllRecords_c)
+        {
+            record_type   = "all";
+            bytes_to_read = 0;
+            entry_index   = NvGetTableEntryIndexFromId(metaInfo.fields.NvmDataEntryID);
+            if (entry_index != gNvInvalidTableEntryIndex_c)
+            {
+                bytes_to_read = pNVM_DataTable[entry_index].ElementsCount * pNVM_DataTable[entry_index].ElementSize;
+                assert(bytes_to_read <= 128u);
+            }
+        }
+        else
+        {
+            record_type = "single";
+            entry_index = NvGetTableEntryIndexFromId(metaInfo.fields.NvmDataEntryID);
+            if (entry_index != gNvInvalidTableEntryIndex_c)
+            {
+                bytes_to_read = pNVM_DataTable[entry_index].ElementSize;
+                assert(bytes_to_read <= 128u);
+            }
+        }
+        sprintf(message, "Start=%02x ID=%04x Index=%04x Offset=%04x EndByte=%02X type=%7s\r\n",
+                metaInfo.fields.NvValidationStartByte, metaInfo.fields.NvmDataEntryID, metaInfo.fields.NvmElementIndex,
+                metaInfo.fields.NvmRecordOffset, metaInfo.fields.NvValidationEndByte, record_type);
+        PRINTF(message);
+
+        if (bytes_to_read > 0)
+        {
+            NV_ShowDataEntry((uint8_t *)vpage_prop->NvRawSectorStartAddress + metaInfo.fields.NvmRecordOffset,
+                             bytes_to_read);
+        }
+        metaInfoAddress -= sizeof(NVM_RecordMetaInfo_t);
+    }
+    PRINTF("\r\n");
+}
+
+NVM_STATIC void NV_ShowPageTableInfo(NVM_VirtualPageID_t page_id, bool ecc_checks)
+{
+    NVM_VirtualPageProperties_t *vpage_prop = &mNvVirtualPageProperty[page_id];
+
+    NVM_TableInfo_t tableInfo;
+
+    if (NV_FlashRead(vpage_prop->NvRawSectorStartAddress, (uint8_t *)&tableInfo, sizeof(NVM_TableInfo_t), TRUE) !=
+        gNVM_OK_c)
+    {
+        PRINTF("Detected Ecc error in table info of page %d\r\n", page_id);
+    }
+    else
+    {
+#if gNvUseExtendedFeatureSet_d
+        PRINTF("Table PageCounter=%08x\r\n", tableInfo.fields.NvPageCounter);
+        PRINTF("Table Marker=%04x\r\n", tableInfo.fields.NvTableMarker);
+        PRINTF("Table Version=%04x\r\n", tableInfo.fields.NvTableVersion);
+#else
+        PRINTF("Table PageCounter=%08x %08x\r\n", *(uint32_t *)&tableInfo.fields.NvPageCounter,
+               *(((uint32_t *)&tableInfo.fields.NvPageCounter) + 1));
+#endif
+        PRINTF("Table Padding %02x %02x %02x %02x %02x %02x %02x %02x\r\n", tableInfo.fields.Padding[0],
+               tableInfo.fields.Padding[1], tableInfo.fields.Padding[2], tableInfo.fields.Padding[3],
+               tableInfo.fields.Padding[4], tableInfo.fields.Padding[5], tableInfo.fields.Padding[6],
+               tableInfo.fields.Padding[7]);
+    }
+}
+
+#endif
+
+void NV_MutexLock(void)
+{
+    (void)OSA_MutexLock(mNVMMutexId, osaWaitForever_c);
+}
+
+void NV_MutexUnlock(void)
+{
+    (void)OSA_MutexLock(mNVMMutexId, osaWaitForever_c);
+}
+
+void NV_ShowMetas(void)
+{
+#if defined gNvDebugEnabled_d && (gNvDebugEnabled_d > 0)
+    NV_ShowPageMetas(mNvActivePageId, TRUE);
+#endif
+}
+
+void NV_ShowFlashTable(bool_t active_only)
+{
+#if defined gNvDebugEnabled_d && (gNvDebugEnabled_d > 0)
+    char                         message[128];
+    NVM_VirtualPageID_t          page_id;
+    NVM_VirtualPageProperties_t *vpage_prop;
+    uint32_t                     address;
+    for (page_id = gFirstVirtualPage_c; page_id <= gSecondVirtualPage_c; page_id++)
+    {
+        if (mNvActivePageId != page_id)
+        {
+            if (active_only)
+                continue;
+            else
+            {
+                PRINTF("Page%d\r\n", (int)page_id);
+            }
+        }
+        else
+        {
+            PRINTF("Page%d active\r\n", (int)page_id);
+        }
+        vpage_prop = &mNvVirtualPageProperty[page_id];
+        PRINTF("\r\n\r\n");
+        int lg = 0;
+        for (address = 0; address < vpage_prop->NvTotalPageSize; address++)
+        {
+            if ((address % 32u == 0) && (address != 0))
+            {
+                if (lg != 0)
+                {
+                    PRINTF(message);
+                    lg = 0;
+                }
+                lg = sprintf(message, "\r\n[%08x]: %02x", address,
+                             *(uint8_t *)(address + vpage_prop->NvRawSectorStartAddress));
+            }
+            else
+            {
+                lg += sprintf(&message[lg], "%02X ", *(uint8_t *)(address + vpage_prop->NvRawSectorStartAddress));
+            }
+        }
+        PRINTF("\r\n\r\n");
+    }
+#else
+    NOT_USED(active_only);
+#endif
+}
+
+void NV_ShowRamTable(uint16_t end_id)
+{
+#if defined gNvDebugEnabled_d && (gNvDebugEnabled_d > 0)
+    uint8_t cnt;
+    char    message[150];
+
+    PRINTF("Ram table:\r\n");
+    for (cnt = 0; cnt < mNVM_DataTableNbEntries - 1; cnt++)
+    {
+        NVM_DataEntry_t *pDataEntry = &pNVM_DataTable[cnt];
+        if (pDataEntry->DataEntryID == end_id)
+            break;
+
+        PRINTF("Entry at index %d:\r\n", cnt);
+
+        sprintf(message, "pData = 0x%p, EntriesCount = %3u, EntrySize = %3u, Id = %3u, Data type = %s\r\n",
+                pDataEntry->pData, pDataEntry->ElementsCount, pDataEntry->ElementSize, pDataEntry->DataEntryID,
+                (pDataEntry->DataEntryType == gNVM_MirroredInRam_c ? "mirrored" : "unmirrored"));
+        PRINTF(message);
+
+        if (pDataEntry->DataEntryType == gNVM_MirroredInRam_c)
+        {
+            if (pDataEntry->pData)
+            {
+                NV_ShowDataEntry(pDataEntry->pData, pDataEntry->ElementsCount * pDataEntry->ElementSize);
+            }
+        }
+        else
+        {
+            for (uint8_t cnt2 = 0; cnt2 < pDataEntry->ElementsCount; cnt2++)
+            {
+                sprintf(message, "pData[%d] = 0x%.8lX\r\n", cnt2, (uint32_t)((uint8_t **)pDataEntry->pData)[cnt2]);
+                PRINTF(message);
+                if (((void **)pDataEntry->pData)[cnt2])
+                {
+                    NV_ShowDataEntry(((uint8_t **)pDataEntry->pData)[cnt2], pDataEntry->ElementSize);
+                }
+            }
+        }
+        PRINTF("\r\n");
+    }
+#else
+    NOT_USED(end_id);
+#endif
+}

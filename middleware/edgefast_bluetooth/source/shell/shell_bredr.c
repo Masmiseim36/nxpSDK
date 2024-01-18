@@ -302,7 +302,8 @@ static struct br_l2ch * l2cap_channel_lookup_conn(struct bt_conn *conn)
 	return NULL;
 }
 
-static int l2cap_accept(struct bt_conn *conn, struct bt_l2cap_chan **chan)
+static int l2cap_accept(struct bt_conn *conn, struct bt_l2cap_server *server,
+			struct bt_l2cap_chan **chan)
 {
 	struct br_l2ch *br_l2cap_channel;
 
@@ -473,7 +474,7 @@ static const struct bt_l2cap_chan_ops l2cap_mode_ops = {
         .cfg_rsp        = l2cap_mode_cfg_rsp
 };
 
-static int l2cap_mode_accept(struct bt_conn *conn, struct bt_l2cap_chan **chan)
+static int l2cap_mode_accept(struct bt_conn *conn, struct bt_l2cap_server *server, struct bt_l2cap_chan **chan)
 {
 	struct br_l2ch *br_l2cap_channel;
 

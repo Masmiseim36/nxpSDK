@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: MU: Messaging Unit</title>
+<title>MCUXpresso SDK API Reference Manual: INPUTMUX: Input Multiplexing Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,1031 +99,254 @@ $(document).ready(function(){initNavTree('a00261.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#files">Files</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">MU: Messaging Unit</div>  </div>
+<div class="title">INPUTMUX: Input Multiplexing Driver</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a driver for the MU module of MCUXpresso SDK devices.</p>
-<h1><a class="anchor" id="MUFunc"></a>
-Function description</h1>
-<p>The MU driver provides these functions:</p>
-<ul>
-<li>Functions to initialize the MU module.</li>
-<li>Functions to send and receive messages.</li>
-<li>Functions for MU flags for both MU sides.</li>
-<li>Functions for status flags and interrupts.</li>
-<li>Other miscellaneous functions.</li>
-</ul>
-<h2><a class="anchor" id="MUInit"></a>
-MU initialization</h2>
-<p>The function <a class="el" href="a00261.html#ga59dde6d6ef6bd1016eafe1e6faf7a6d9" title="Initializes the MU module. ">MU_Init()</a> initializes the MU module and enables the MU clock. It should be called before any other MU functions.<br/>
- The function <a class="el" href="a00261.html#ga956ac92cddf9794a9155b346f4db2044" title="De-initializes the MU module. ">MU_Deinit()</a> deinitializes the MU module and disables the MU clock. No MU functions can be called after this function.<br/>
+<p>The MCUXpresso SDK provides a driver for the Input multiplexing (INPUTMUX). <br/>
+It configures the inputs to the pin interrupt block, DMA trigger, and frequency measure function. Once configured, the clock is not needed for the inputmux. <br/>
  </p>
-<h2><a class="anchor" id="MUMsg"></a>
-MU message</h2>
-<p>The MU message must be sent when the transmit register is empty. The MU driver provides blocking API and non-blocking API to send message.<br/>
- The <a class="el" href="a00261.html#gae4e41714bd6cf6e3de866e1aaf5b85a2" title="Writes a message to the TX register. ">MU_SendMsgNonBlocking()</a> function writes a message to the MU transmit register without checking the transmit register status. The upper layer should check that the transmit register is empty before calling this function. This function can be used in the ISR for better performance.<br/>
- The <a class="el" href="a00261.html#gaedd7d1f0418441a61a2587a8db322ecd" title="Blocks to send a message. ">MU_SendMsg()</a> function is a blocking function. It waits until the transmit register is empty and sends the message.<br/>
- Correspondingly, there are blocking and non-blocking APIs for receiving a message. The MU_ReadMsgNonBlocking() function is a non-blocking API. The MU_ReadMsg() function is the blocking API.</p>
-<h2><a class="anchor" id="MUFlags"></a>
-MU flags</h2>
-<p>The MU driver provides 3-bit general purpose flags. When the flags are set on one side, they are reflected on the other side.<br/>
- The MU flags must be set when the previous flags have been updated to the other side. The MU driver provides a non-blocking function and a blocking function. The blocking function <a class="el" href="a00261.html#ga392ac71819def4a3e9d34fd1daf3fff0" title="Blocks setting the 3-bit MU flags reflect on the other MU side. ">MU_SetFlags()</a> waits until previous flags have been updated to the other side and then sets flags. The non-blocking function sets the flags directly. Ensure that the kMU_FlagsUpdatingFlag is not pending before calling this function.<br/>
- The function <a class="el" href="a00261.html#ga4fbbf69b6157a909bcf6bb9523419834" title="Gets the current value of the 3-bit MU flags set by the other side. ">MU_GetFlags()</a> gets the MU flags on the current side.</p>
-<h2><a class="anchor" id="MUStat"></a>
-Status and interrupt</h2>
-<p>The function <a class="el" href="a00261.html#ga90e31d91ebb2a97c4b8ac449bb4e2a4e" title="Gets the MU status flags. ">MU_GetStatusFlags()</a> returns all MU status flags. Use the _mu_status_flags to check for specific flags, for example, to check RX0 and RX1 register full, use the following code:</p>
-<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/mu The receive full flags are cleared automatically after messages are read out. The transmit empty flags are cleared automatically after new messages are written to the transmit register. The general purpose interrupt flags must be cleared manually using the function <a class="el" href="a00261.html#gae9097788e142b8cb891eddfcbfc60c26" title="Clears the specific MU status flags. ">MU_ClearStatusFlags()</a>.<br/>
- Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/mu To enable or disable a specific interrupt, use <a class="el" href="a00261.html#ga5ea7e2b8b70b2f7a44013e9a8dded335" title="Enables the specific MU interrupts. ">MU_EnableInterrupts()</a> and <a class="el" href="a00261.html#gaecadc0cf75fd66e80737b33c0971cbca" title="Disables the specific MU interrupts. ">MU_DisableInterrupts()</a> functions. The interrupts to enable or disable should be passed in as a bit mask of the _mu_interrupt_enable.<br/>
- The <a class="el" href="a00261.html#ga1c78b4336b2f9ef4a4ca8ff22be7116c" title="Triggers interrupts to the other core. ">MU_TriggerInterrupts()</a> function triggers general purpose interrupts and NMI to the other core. The interrupts to trigger are passed in as a bit mask of the _mu_interrupt_trigger. If previously triggered interrupts have not been processed by the other side, this function returns an error.</p>
-<h2><a class="anchor" id="MUMisc"></a>
-MU misc functions</h2>
-<p>The <a class="el" href="a00261.html#ga6eb0767a937aec58348579d118623481" title="Boots the core at B side. ">MU_BootCoreB()</a> and <a class="el" href="a00261.html#gac23b13779f92f3a11b9c5c7c20b93e42" title="Holds the core reset of B side. ">MU_HoldCoreBReset()</a> functions should only be used from A side. They are used to boot the core B or to hold core B in reset.<br/>
- The <a class="el" href="a00261.html#gaa13d5ba37ff0be6dd645ed9b28431cb5" title="Resets the MU for both A side and B side. ">MU_ResetBothSides()</a> function resets MU at both A and B sides. However, only the A side can call this function.<br/>
- If a core enters stop mode, the platform clock of this core is disabled by default. The function <a class="el" href="a00261.html#gaf134175fc2e3adc976bd8e8999124949" title="Enables or disables the clock on the other core. ">MU_SetClockOnOtherCoreEnable()</a> forces the other core's platform clock to remain enabled even after that core has entered a stop mode. In this case, the other core's platform clock keeps running until the current core enters stop mode too.<br/>
- Function <a class="el" href="a00261.html#ga4c9449aca64b03c381ae1b7e1720c61b" title="Gets the power mode of the other core. ">MU_GetOtherCorePowerMode()</a> gets the power mode of the other core. </p>
+<h1><a class="anchor" id="INPUTMUXInit"></a>
+Input Multiplexing Driver operation</h1>
+<p>INPUTMUX_AttachSignal function configures the specified input</p>
+<h1><a class="anchor" id="INPUTMUXTypUC"></a>
+Typical use case</h1>
+<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/inputmux </p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
+Files</h2></td></tr>
+<tr class="memitem:a00181"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00181.html">fsl_inputmux.h</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00102"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00102.html">fsl_inputmux_connections.h</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga227df33dfe2aed994d27887b6cdbe801"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga227df33dfe2aed994d27887b6cdbe801"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#ga227df33dfe2aed994d27887b6cdbe801">SCT0_PMUX_ID</a>&#160;&#160;&#160;0x00U</td></tr>
+<tr class="memdesc:ga227df33dfe2aed994d27887b6cdbe801"><td class="mdescLeft">&#160;</td><td class="mdescRight">Periphinmux IDs. <br/></td></tr>
+<tr class="separator:ga227df33dfe2aed994d27887b6cdbe801"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gac71660d9f7d5674967dfc95204bc9595"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac71660d9f7d5674967dfc95204bc9595"></a>
+typedef enum <a class="el" href="a00261.html#ga8647a33084f60e10de3342dc5323fa97">_inputmux_connection_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#gac71660d9f7d5674967dfc95204bc9595">inputmux_connection_t</a></td></tr>
+<tr class="memdesc:gac71660d9f7d5674967dfc95204bc9595"><td class="mdescLeft">&#160;</td><td class="mdescRight">INPUTMUX connections type. <br/></td></tr>
+<tr class="separator:gac71660d9f7d5674967dfc95204bc9595"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga38f0acc16e7278822bb93556a1eb1689"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga38f0acc16e7278822bb93556a1eb1689"></a>
+typedef enum <a class="el" href="a00261.html#gaa4a0b5e6210c6d1cbc5854724f49a936">_inputmux_signal_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#ga38f0acc16e7278822bb93556a1eb1689">inputmux_signal_t</a></td></tr>
+<tr class="memdesc:ga38f0acc16e7278822bb93556a1eb1689"><td class="mdescLeft">&#160;</td><td class="mdescRight">INPUTMUX signal enable/disable type. <br/></td></tr>
+<tr class="separator:ga38f0acc16e7278822bb93556a1eb1689"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:gae0771a3d173c2b3bf358aff30664f8bf"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#gae0771a3d173c2b3bf358aff30664f8bf">_mu_status_flags</a> { <br/>
-&#160;&#160;<a class="el" href="a00261.html#ggae0771a3d173c2b3bf358aff30664f8bfa8c78ea862685cbf3168dd556137f481b">kMU_Tx0EmptyFlag</a> = (1U &lt;&lt; (MU_SR_TEn_SHIFT + 3U)), 
-<br/>
-&#160;&#160;<a class="el" href="a00261.html#ggae0771a3d173c2b3bf358aff30664f8bfa02c68cfbe97c75fcc1a84d931f5d2e3d">kMU_Tx1EmptyFlag</a> = (1U &lt;&lt; (MU_SR_TEn_SHIFT + 2U)), 
-<br/>
-&#160;&#160;<a class="el" href="a00261.html#ggae0771a3d173c2b3bf358aff30664f8bfa767f1b8e0e39543921f1a140efb9e154">kMU_Tx2EmptyFlag</a> = (1U &lt;&lt; (MU_SR_TEn_SHIFT + 1U)), 
-<br/>
-&#160;&#160;<a class="el" href="a00261.html#ggae0771a3d173c2b3bf358aff30664f8bfa8f0e3eeb71299fce34d2fb31524d223f">kMU_Tx3EmptyFlag</a> = (1U &lt;&lt; (MU_SR_TEn_SHIFT + 0U)), 
-<br/>
-&#160;&#160;<a class="el" href="a00261.html#ggae0771a3d173c2b3bf358aff30664f8bfa40ddf58c102a536275d75e0042920b8f">kMU_Rx0FullFlag</a> = (1U &lt;&lt; (MU_SR_RFn_SHIFT + 3U)), 
-<br/>
-&#160;&#160;<a class="el" href="a00261.html#ggae0771a3d173c2b3bf358aff30664f8bfadd55a6748dfeb9f342ac1467db2b9456">kMU_Rx1FullFlag</a> = (1U &lt;&lt; (MU_SR_RFn_SHIFT + 2U)), 
-<br/>
-&#160;&#160;<a class="el" href="a00261.html#ggae0771a3d173c2b3bf358aff30664f8bfa568e4107a3b60c367e2824a80e0ae210">kMU_Rx2FullFlag</a> = (1U &lt;&lt; (MU_SR_RFn_SHIFT + 1U)), 
-<br/>
-&#160;&#160;<a class="el" href="a00261.html#ggae0771a3d173c2b3bf358aff30664f8bfa67742c950c69e47cbab902efc83a28d4">kMU_Rx3FullFlag</a> = (1U &lt;&lt; (MU_SR_RFn_SHIFT + 0U)), 
-<br/>
-&#160;&#160;<a class="el" href="a00261.html#ggae0771a3d173c2b3bf358aff30664f8bfa569a538edbb6050e2818903c9182aa44">kMU_GenInt0Flag</a> = (1U &lt;&lt; (MU_SR_GIPn_SHIFT + 3U)), 
-<br/>
-&#160;&#160;<a class="el" href="a00261.html#ggae0771a3d173c2b3bf358aff30664f8bfa784232e66cb93c5e307727a579688f5a">kMU_GenInt1Flag</a> = (1U &lt;&lt; (MU_SR_GIPn_SHIFT + 2U)), 
-<br/>
-&#160;&#160;<a class="el" href="a00261.html#ggae0771a3d173c2b3bf358aff30664f8bfa15712a6b86201fbcbd389c66a85fb3d3">kMU_GenInt2Flag</a> = (1U &lt;&lt; (MU_SR_GIPn_SHIFT + 1U)), 
-<br/>
-&#160;&#160;<a class="el" href="a00261.html#ggae0771a3d173c2b3bf358aff30664f8bfa78e94d0880b08c6e4fe44cbc254e6555">kMU_GenInt3Flag</a> = (1U &lt;&lt; (MU_SR_GIPn_SHIFT + 0U)), 
-<br/>
-&#160;&#160;<a class="el" href="a00261.html#ggae0771a3d173c2b3bf358aff30664f8bfad2f4fdc37e185dd77f42ae824a334197">kMU_EventPendingFlag</a> = MU_SR_EP_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00261.html#ggae0771a3d173c2b3bf358aff30664f8bfa2c98f3deffd6aeb55701cf98bbe2936a">kMU_FlagsUpdatingFlag</a> = MU_SR_FUP_MASK
-<br/>
- }</td></tr>
-<tr class="memdesc:gae0771a3d173c2b3bf358aff30664f8bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">MU status flags.  <a href="a00261.html#gae0771a3d173c2b3bf358aff30664f8bf">More...</a><br/></td></tr>
-<tr class="separator:gae0771a3d173c2b3bf358aff30664f8bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabd070b1725280439337373fcd5934931"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#gabd070b1725280439337373fcd5934931">_mu_interrupt_enable</a> { <br/>
-&#160;&#160;<a class="el" href="a00261.html#ggabd070b1725280439337373fcd5934931a168101d14f235b5601e4d87b426338ac">kMU_Tx0EmptyInterruptEnable</a> = (1U &lt;&lt; (MU_CR_TIEn_SHIFT + 3U)), 
-<br/>
-&#160;&#160;<a class="el" href="a00261.html#ggabd070b1725280439337373fcd5934931a818770dd5a82087b90347dc8822e03f8">kMU_Tx1EmptyInterruptEnable</a> = (1U &lt;&lt; (MU_CR_TIEn_SHIFT + 2U)), 
-<br/>
-&#160;&#160;<a class="el" href="a00261.html#ggabd070b1725280439337373fcd5934931a7a4a0c0d7df99a19b2c09ece2458a83f">kMU_Tx2EmptyInterruptEnable</a> = (1U &lt;&lt; (MU_CR_TIEn_SHIFT + 1U)), 
-<br/>
-&#160;&#160;<a class="el" href="a00261.html#ggabd070b1725280439337373fcd5934931a7e01176f783c0895365517dedad4e66e">kMU_Tx3EmptyInterruptEnable</a> = (1U &lt;&lt; (MU_CR_TIEn_SHIFT + 0U)), 
-<br/>
-&#160;&#160;<a class="el" href="a00261.html#ggabd070b1725280439337373fcd5934931a4b7915f891336860a5288404c040627d">kMU_Rx0FullInterruptEnable</a> = (1U &lt;&lt; (MU_CR_RIEn_SHIFT + 3U)), 
-<br/>
-&#160;&#160;<a class="el" href="a00261.html#ggabd070b1725280439337373fcd5934931ab2a2f081c353728fb56f3895e4615670">kMU_Rx1FullInterruptEnable</a> = (1U &lt;&lt; (MU_CR_RIEn_SHIFT + 2U)), 
-<br/>
-&#160;&#160;<a class="el" href="a00261.html#ggabd070b1725280439337373fcd5934931a1e73d223a485610347f2ab818a95c0b7">kMU_Rx2FullInterruptEnable</a> = (1U &lt;&lt; (MU_CR_RIEn_SHIFT + 1U)), 
-<br/>
-&#160;&#160;<a class="el" href="a00261.html#ggabd070b1725280439337373fcd5934931a493732db72b70452f893a1bdbe9b4c10">kMU_Rx3FullInterruptEnable</a> = (1U &lt;&lt; (MU_CR_RIEn_SHIFT + 0U)), 
-<br/>
-&#160;&#160;<a class="el" href="a00261.html#ggabd070b1725280439337373fcd5934931ab695880fd49642db0667884453ce0de5">kMU_GenInt0InterruptEnable</a> = (int)(1U &lt;&lt; (MU_CR_GIEn_SHIFT + 3U)), 
-<br/>
-&#160;&#160;<a class="el" href="a00261.html#ggabd070b1725280439337373fcd5934931a0f9b9c7651fa7770aef0bff12726ea23">kMU_GenInt1InterruptEnable</a> = (1U &lt;&lt; (MU_CR_GIEn_SHIFT + 2U)), 
-<br/>
-&#160;&#160;<a class="el" href="a00261.html#ggabd070b1725280439337373fcd5934931a99744e6b9c80212cee08887bdb8c7e16">kMU_GenInt2InterruptEnable</a> = (1U &lt;&lt; (MU_CR_GIEn_SHIFT + 1U)), 
-<br/>
-&#160;&#160;<a class="el" href="a00261.html#ggabd070b1725280439337373fcd5934931aa961c2b4ea26a5de52d61f819356a37b">kMU_GenInt3InterruptEnable</a> = (1U &lt;&lt; (MU_CR_GIEn_SHIFT + 0U))
+<tr class="memitem:ga8647a33084f60e10de3342dc5323fa97"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#ga8647a33084f60e10de3342dc5323fa97">_inputmux_connection_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00261.html#gga8647a33084f60e10de3342dc5323fa97a6578893c8d3f1a355f3d6a1f134d742a">kINPUTMUX_Sct0PinInp0ToSct0</a> = 0U + (SCT0_PMUX_ID &lt;&lt; PMUX_SHIFT)
+, <br/>
+&#160;&#160;<a class="el" href="a00261.html#gga8647a33084f60e10de3342dc5323fa97a1e042af47b407b5b414e22bab7f3e87d">kINPUTMUX_DebugHaltedToSct0</a> = 23U + (SCT0_PMUX_ID &lt;&lt; PMUX_SHIFT)
+, <br/>
+&#160;&#160;<a class="el" href="a00261.html#gga8647a33084f60e10de3342dc5323fa97a55c96954290ceb81ca5340dc369e8398">kINPUTMUX_GpioPort1Pin31ToPintsel</a> = 63U + (PINTSEL_PMUX_ID &lt;&lt; PMUX_SHIFT)
+, <br/>
+&#160;&#160;<a class="el" href="a00261.html#gga8647a33084f60e10de3342dc5323fa97a308daf03bf35d7d41a71b2b740f01d64">kINPUTMUX_FlexioToDspInterrupt</a> = 40U + (DSP_INT_PMUX_ID &lt;&lt; PMUX_SHIFT)
+, <br/>
+&#160;&#160;<a class="el" href="a00261.html#gga8647a33084f60e10de3342dc5323fa97a470debd589806b4f569a0fc8ac07d440">kINPUTMUX_ClockOutToFreqmeas</a> = 11U + (FREQMEAS_PMUX_ID &lt;&lt; PMUX_SHIFT)
+, <br/>
+&#160;&#160;<a class="el" href="a00261.html#gga8647a33084f60e10de3342dc5323fa97a4fe138568f9ab52e5f90a77fa9b49210">kINPUTMUX_UsbFsToggleToSmartDmaInput</a> = 75U + (SMART_DMA_PMUX_ID &lt;&lt; PMUX_SHIFT)
+, <br/>
+&#160;&#160;<a class="el" href="a00261.html#gga8647a33084f60e10de3342dc5323fa97a51b1f9f4cdacbdd3702e513740a99549">kINPUTMUX_Usb1FrameToggleToTimer0CaptureChannels</a> = 18U + (CT32BIT0_CAP_PMUX_ID &lt;&lt; PMUX_SHIFT)
+, <br/>
+&#160;&#160;<a class="el" href="a00261.html#gga8647a33084f60e10de3342dc5323fa97a2fe1df092eb9829f95bf7608b40ba928">kINPUTMUX_Usb1FrameToggleToTimer1CaptureChannels</a> = 18U + (CT32BIT1_CAP_PMUX_ID &lt;&lt; PMUX_SHIFT)
+, <br/>
+&#160;&#160;<a class="el" href="a00261.html#gga8647a33084f60e10de3342dc5323fa97ac920efa83706e1b4626d54c3a96398bf">kINPUTMUX_Usb1FrameToggleToTimer2CaptureChannels</a> = 18U + (CT32BIT2_CAP_PMUX_ID &lt;&lt; PMUX_SHIFT)
+, <br/>
+&#160;&#160;<a class="el" href="a00261.html#gga8647a33084f60e10de3342dc5323fa97a5b9e39446b7f0a2829a31c76bb276148">kINPUTMUX_Usb1FrameToggleToTimer3CaptureChannels</a> = 18U + (CT32BIT3_CAP_PMUX_ID &lt;&lt; PMUX_SHIFT)
+, <br/>
+&#160;&#160;<a class="el" href="a00261.html#gga8647a33084f60e10de3342dc5323fa97abdf35ff88b3936fe3d7c28177336db05">kINPUTMUX_Usb1FrameToggleToTimer4CaptureChannels</a> = 18U + (CT32BIT4_CAP_PMUX_ID &lt;&lt; PMUX_SHIFT)
+, <br/>
+&#160;&#160;<a class="el" href="a00261.html#gga8647a33084f60e10de3342dc5323fa97a7675b8f2b3d987a0da5da687f9216634">kINPUTMUX_Flexspi1TxToDma0</a> = 26U + (DMA0_ITRIG_PMUX_ID &lt;&lt; PMUX_SHIFT)
+, <br/>
+&#160;&#160;<a class="el" href="a00261.html#gga8647a33084f60e10de3342dc5323fa97a31ff6d3769a999650cf0d66a59854dc1">kINPUTMUX_Flexspi1TxToDma1</a> = 26U + (DMA1_ITRIG_PMUX_ID &lt;&lt; PMUX_SHIFT)
+, <br/>
+&#160;&#160;<a class="el" href="a00261.html#gga8647a33084f60e10de3342dc5323fa97af08e9419f04ab0efe8228e4c0b5acc9c">kINPUTMUX_Dma0OtrigChannel36ToTriginChannels</a> = 36U + (DMA0_OTRIG_PMUX_ID &lt;&lt; PMUX_SHIFT)
 <br/>
  }</td></tr>
-<tr class="memdesc:gabd070b1725280439337373fcd5934931"><td class="mdescLeft">&#160;</td><td class="mdescRight">MU interrupt source to enable.  <a href="a00261.html#gabd070b1725280439337373fcd5934931">More...</a><br/></td></tr>
-<tr class="separator:gabd070b1725280439337373fcd5934931"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga41108bad4d5d228e3832b2739e982084"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#ga41108bad4d5d228e3832b2739e982084">_mu_interrupt_trigger</a> { <br/>
-&#160;&#160;<a class="el" href="a00261.html#gga41108bad4d5d228e3832b2739e982084a910b39bfadd22d831dd4536280f2dac2">kMU_NmiInterruptTrigger</a> = MU_CR_NMI_MASK, 
-<br/>
-&#160;&#160;<a class="el" href="a00261.html#gga41108bad4d5d228e3832b2739e982084a55c2d4c3d2065504f7edb30553c86a53">kMU_GenInt0InterruptTrigger</a> = (1U &lt;&lt; (MU_CR_GIRn_SHIFT + 3U)), 
-<br/>
-&#160;&#160;<a class="el" href="a00261.html#gga41108bad4d5d228e3832b2739e982084af8c229732fcaef64ad86d0111a37e349">kMU_GenInt1InterruptTrigger</a> = (1U &lt;&lt; (MU_CR_GIRn_SHIFT + 2U)), 
-<br/>
-&#160;&#160;<a class="el" href="a00261.html#gga41108bad4d5d228e3832b2739e982084a3e107a42c4bb962e9736c46dc8fb4c20">kMU_GenInt2InterruptTrigger</a> = (1U &lt;&lt; (MU_CR_GIRn_SHIFT + 1U)), 
-<br/>
-&#160;&#160;<a class="el" href="a00261.html#gga41108bad4d5d228e3832b2739e982084a9307f291207c5f5e83bd6baff07234f2">kMU_GenInt3InterruptTrigger</a> = (1U &lt;&lt; (MU_CR_GIRn_SHIFT + 0U))
+<tr class="memdesc:ga8647a33084f60e10de3342dc5323fa97"><td class="mdescLeft">&#160;</td><td class="mdescRight">INPUTMUX connections type.  <a href="a00261.html#ga8647a33084f60e10de3342dc5323fa97">More...</a><br/></td></tr>
+<tr class="separator:ga8647a33084f60e10de3342dc5323fa97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa4a0b5e6210c6d1cbc5854724f49a936"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#gaa4a0b5e6210c6d1cbc5854724f49a936">_inputmux_signal_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00261.html#ggaa4a0b5e6210c6d1cbc5854724f49a936af9eff4ec73dd1f30aa917eb601d6c7f1">kINPUTMUX_Dmac0InputTriggerPint0Ena</a> = 0U + (DMA0_ITRIG_EN0_ID &lt;&lt; ENA_SHIFT)
+, <br/>
+&#160;&#160;<a class="el" href="a00261.html#ggaa4a0b5e6210c6d1cbc5854724f49a936ab921f3049d5f6fe428427bebd68e3bac">kINPUTMUX_Dmac0InputTriggerFlexspi1TxEna</a> = 26U + (DMA0_ITRIG_EN0_ID &lt;&lt; ENA_SHIFT)
+, <br/>
+&#160;&#160;<a class="el" href="a00261.html#ggaa4a0b5e6210c6d1cbc5854724f49a936a35f0d7d056f90d3a131ddce410041b72">kINPUTMUX_Dmac1InputTriggerFlexspi1TxEna</a> = 26U + (DMA1_ITRIG_EN0_ID &lt;&lt; ENA_SHIFT)
+, <br/>
+&#160;&#160;<a class="el" href="a00261.html#ggaa4a0b5e6210c6d1cbc5854724f49a936a09060245e5dd14413a4ad3ba68cf7e4c">kINPUTMUX_HashCryptToDmac0Ch36RequestEna</a> = 4U + ((DMA0_REQ_ENA0_ID + 4) &lt;&lt; ENA_SHIFT)
 <br/>
  }</td></tr>
-<tr class="memdesc:ga41108bad4d5d228e3832b2739e982084"><td class="mdescLeft">&#160;</td><td class="mdescRight">MU interrupt that could be triggered to the other core.  <a href="a00261.html#ga41108bad4d5d228e3832b2739e982084">More...</a><br/></td></tr>
-<tr class="separator:ga41108bad4d5d228e3832b2739e982084"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6d1c262f5437e331a33c12cf26fbc90e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#ga6d1c262f5437e331a33c12cf26fbc90e">mu_msg_reg_index_t</a> </td></tr>
-<tr class="memdesc:ga6d1c262f5437e331a33c12cf26fbc90e"><td class="mdescLeft">&#160;</td><td class="mdescRight">MU message register. <br/></td></tr>
-<tr class="separator:ga6d1c262f5437e331a33c12cf26fbc90e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gaa4a0b5e6210c6d1cbc5854724f49a936"><td class="mdescLeft">&#160;</td><td class="mdescRight">INPUTMUX signal enable/disable type.  <a href="a00261.html#gaa4a0b5e6210c6d1cbc5854724f49a936">More...</a><br/></td></tr>
+<tr class="separator:gaa4a0b5e6210c6d1cbc5854724f49a936"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gae02fecc3b8aab2a9d3f40f07ca7114a4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#gae02fecc3b8aab2a9d3f40f07ca7114a4">INPUTMUX_Init</a> (INPUTMUX_Type *base)</td></tr>
+<tr class="memdesc:gae02fecc3b8aab2a9d3f40f07ca7114a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize INPUTMUX peripheral.  <a href="#gae02fecc3b8aab2a9d3f40f07ca7114a4">More...</a><br/></td></tr>
+<tr class="separator:gae02fecc3b8aab2a9d3f40f07ca7114a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa4f141e3874109e45c2a6f9be027e0ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#gaa4f141e3874109e45c2a6f9be027e0ee">INPUTMUX_AttachSignal</a> (INPUTMUX_Type *base, uint32_t index, <a class="el" href="a00261.html#gac71660d9f7d5674967dfc95204bc9595">inputmux_connection_t</a> connection)</td></tr>
+<tr class="memdesc:gaa4f141e3874109e45c2a6f9be027e0ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attaches a signal.  <a href="#gaa4f141e3874109e45c2a6f9be027e0ee">More...</a><br/></td></tr>
+<tr class="separator:gaa4f141e3874109e45c2a6f9be027e0ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6097bd0adcdc6b8183afa4a6dc6294e3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#ga6097bd0adcdc6b8183afa4a6dc6294e3">INPUTMUX_EnableSignal</a> (INPUTMUX_Type *base, <a class="el" href="a00261.html#ga38f0acc16e7278822bb93556a1eb1689">inputmux_signal_t</a> signal, bool enable)</td></tr>
+<tr class="memdesc:ga6097bd0adcdc6b8183afa4a6dc6294e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/disable a signal.  <a href="#ga6097bd0adcdc6b8183afa4a6dc6294e3">More...</a><br/></td></tr>
+<tr class="separator:ga6097bd0adcdc6b8183afa4a6dc6294e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf84e3b0d7a06af86ea6f1ac0d6edf382"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#gaf84e3b0d7a06af86ea6f1ac0d6edf382">INPUTMUX_Deinit</a> (INPUTMUX_Type *base)</td></tr>
+<tr class="memdesc:gaf84e3b0d7a06af86ea6f1ac0d6edf382"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitialize INPUTMUX peripheral.  <a href="#gaf84e3b0d7a06af86ea6f1ac0d6edf382">More...</a><br/></td></tr>
+<tr class="separator:gaf84e3b0d7a06af86ea6f1ac0d6edf382"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:gac08525378e7d8aaa3e0e6b16e9f76ad3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#gac08525378e7d8aaa3e0e6b16e9f76ad3">FSL_MU_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00240.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 2))</td></tr>
-<tr class="memdesc:gac08525378e7d8aaa3e0e6b16e9f76ad3"><td class="mdescLeft">&#160;</td><td class="mdescRight">MU driver version.  <a href="#gac08525378e7d8aaa3e0e6b16e9f76ad3">More...</a><br/></td></tr>
-<tr class="separator:gac08525378e7d8aaa3e0e6b16e9f76ad3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-MU initialization.</h2></td></tr>
-<tr class="memitem:ga59dde6d6ef6bd1016eafe1e6faf7a6d9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#ga59dde6d6ef6bd1016eafe1e6faf7a6d9">MU_Init</a> (MU_Type *base)</td></tr>
-<tr class="memdesc:ga59dde6d6ef6bd1016eafe1e6faf7a6d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the MU module.  <a href="#ga59dde6d6ef6bd1016eafe1e6faf7a6d9">More...</a><br/></td></tr>
-<tr class="separator:ga59dde6d6ef6bd1016eafe1e6faf7a6d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga956ac92cddf9794a9155b346f4db2044"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#ga956ac92cddf9794a9155b346f4db2044">MU_Deinit</a> (MU_Type *base)</td></tr>
-<tr class="memdesc:ga956ac92cddf9794a9155b346f4db2044"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-initializes the MU module.  <a href="#ga956ac92cddf9794a9155b346f4db2044">More...</a><br/></td></tr>
-<tr class="separator:ga956ac92cddf9794a9155b346f4db2044"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-MU Message</h2></td></tr>
-<tr class="memitem:gae4e41714bd6cf6e3de866e1aaf5b85a2"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#gae4e41714bd6cf6e3de866e1aaf5b85a2">MU_SendMsgNonBlocking</a> (MU_Type *base, uint32_t regIndex, uint32_t msg)</td></tr>
-<tr class="memdesc:gae4e41714bd6cf6e3de866e1aaf5b85a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes a message to the TX register.  <a href="#gae4e41714bd6cf6e3de866e1aaf5b85a2">More...</a><br/></td></tr>
-<tr class="separator:gae4e41714bd6cf6e3de866e1aaf5b85a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaedd7d1f0418441a61a2587a8db322ecd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#gaedd7d1f0418441a61a2587a8db322ecd">MU_SendMsg</a> (MU_Type *base, uint32_t regIndex, uint32_t msg)</td></tr>
-<tr class="memdesc:gaedd7d1f0418441a61a2587a8db322ecd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Blocks to send a message.  <a href="#gaedd7d1f0418441a61a2587a8db322ecd">More...</a><br/></td></tr>
-<tr class="separator:gaedd7d1f0418441a61a2587a8db322ecd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabeb32b60cedae555c659126d75bda806"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#gabeb32b60cedae555c659126d75bda806">MU_ReceiveMsgNonBlocking</a> (MU_Type *base, uint32_t regIndex)</td></tr>
-<tr class="memdesc:gabeb32b60cedae555c659126d75bda806"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads a message from the RX register.  <a href="#gabeb32b60cedae555c659126d75bda806">More...</a><br/></td></tr>
-<tr class="separator:gabeb32b60cedae555c659126d75bda806"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga36b003e10632eed908184ddbfc48df25"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#ga36b003e10632eed908184ddbfc48df25">MU_ReceiveMsg</a> (MU_Type *base, uint32_t regIndex)</td></tr>
-<tr class="memdesc:ga36b003e10632eed908184ddbfc48df25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Blocks to receive a message.  <a href="#ga36b003e10632eed908184ddbfc48df25">More...</a><br/></td></tr>
-<tr class="separator:ga36b003e10632eed908184ddbfc48df25"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-MU Flags</h2></td></tr>
-<tr class="memitem:ga180ad60fda7f03cbcd98543bdb808a43"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#ga180ad60fda7f03cbcd98543bdb808a43">MU_SetFlagsNonBlocking</a> (MU_Type *base, uint32_t flags)</td></tr>
-<tr class="memdesc:ga180ad60fda7f03cbcd98543bdb808a43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the 3-bit MU flags reflect on the other MU side.  <a href="#ga180ad60fda7f03cbcd98543bdb808a43">More...</a><br/></td></tr>
-<tr class="separator:ga180ad60fda7f03cbcd98543bdb808a43"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga392ac71819def4a3e9d34fd1daf3fff0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#ga392ac71819def4a3e9d34fd1daf3fff0">MU_SetFlags</a> (MU_Type *base, uint32_t flags)</td></tr>
-<tr class="memdesc:ga392ac71819def4a3e9d34fd1daf3fff0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Blocks setting the 3-bit MU flags reflect on the other MU side.  <a href="#ga392ac71819def4a3e9d34fd1daf3fff0">More...</a><br/></td></tr>
-<tr class="separator:ga392ac71819def4a3e9d34fd1daf3fff0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4fbbf69b6157a909bcf6bb9523419834"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#ga4fbbf69b6157a909bcf6bb9523419834">MU_GetFlags</a> (MU_Type *base)</td></tr>
-<tr class="memdesc:ga4fbbf69b6157a909bcf6bb9523419834"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the current value of the 3-bit MU flags set by the other side.  <a href="#ga4fbbf69b6157a909bcf6bb9523419834">More...</a><br/></td></tr>
-<tr class="separator:ga4fbbf69b6157a909bcf6bb9523419834"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Status and Interrupt.</h2></td></tr>
-<tr class="memitem:ga90e31d91ebb2a97c4b8ac449bb4e2a4e"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#ga90e31d91ebb2a97c4b8ac449bb4e2a4e">MU_GetStatusFlags</a> (MU_Type *base)</td></tr>
-<tr class="memdesc:ga90e31d91ebb2a97c4b8ac449bb4e2a4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the MU status flags.  <a href="#ga90e31d91ebb2a97c4b8ac449bb4e2a4e">More...</a><br/></td></tr>
-<tr class="separator:ga90e31d91ebb2a97c4b8ac449bb4e2a4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1a04c3768d3a4b611a3b2a5c4e8799eb"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#ga1a04c3768d3a4b611a3b2a5c4e8799eb">MU_GetInterruptsPending</a> (MU_Type *base)</td></tr>
-<tr class="memdesc:ga1a04c3768d3a4b611a3b2a5c4e8799eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the MU IRQ pending status.  <a href="#ga1a04c3768d3a4b611a3b2a5c4e8799eb">More...</a><br/></td></tr>
-<tr class="separator:ga1a04c3768d3a4b611a3b2a5c4e8799eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae9097788e142b8cb891eddfcbfc60c26"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#gae9097788e142b8cb891eddfcbfc60c26">MU_ClearStatusFlags</a> (MU_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:gae9097788e142b8cb891eddfcbfc60c26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the specific MU status flags.  <a href="#gae9097788e142b8cb891eddfcbfc60c26">More...</a><br/></td></tr>
-<tr class="separator:gae9097788e142b8cb891eddfcbfc60c26"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5ea7e2b8b70b2f7a44013e9a8dded335"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#ga5ea7e2b8b70b2f7a44013e9a8dded335">MU_EnableInterrupts</a> (MU_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:ga5ea7e2b8b70b2f7a44013e9a8dded335"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the specific MU interrupts.  <a href="#ga5ea7e2b8b70b2f7a44013e9a8dded335">More...</a><br/></td></tr>
-<tr class="separator:ga5ea7e2b8b70b2f7a44013e9a8dded335"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaecadc0cf75fd66e80737b33c0971cbca"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#gaecadc0cf75fd66e80737b33c0971cbca">MU_DisableInterrupts</a> (MU_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:gaecadc0cf75fd66e80737b33c0971cbca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the specific MU interrupts.  <a href="#gaecadc0cf75fd66e80737b33c0971cbca">More...</a><br/></td></tr>
-<tr class="separator:gaecadc0cf75fd66e80737b33c0971cbca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1c78b4336b2f9ef4a4ca8ff22be7116c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#ga1c78b4336b2f9ef4a4ca8ff22be7116c">MU_TriggerInterrupts</a> (MU_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:ga1c78b4336b2f9ef4a4ca8ff22be7116c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Triggers interrupts to the other core.  <a href="#ga1c78b4336b2f9ef4a4ca8ff22be7116c">More...</a><br/></td></tr>
-<tr class="separator:ga1c78b4336b2f9ef4a4ca8ff22be7116c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga70fb7868a4b493eccf6c7742a9f25302"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#ga70fb7868a4b493eccf6c7742a9f25302">MU_ClearNmi</a> (MU_Type *base)</td></tr>
-<tr class="memdesc:ga70fb7868a4b493eccf6c7742a9f25302"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear non-maskable interrupt (NMI) sent by the other core.  <a href="#ga70fb7868a4b493eccf6c7742a9f25302">More...</a><br/></td></tr>
-<tr class="separator:ga70fb7868a4b493eccf6c7742a9f25302"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-MU misc functions</h2></td></tr>
-<tr class="memitem:ga6eb0767a937aec58348579d118623481"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#ga6eb0767a937aec58348579d118623481">MU_BootCoreB</a> (MU_Type *base, mu_core_boot_mode_t mode)</td></tr>
-<tr class="memdesc:ga6eb0767a937aec58348579d118623481"><td class="mdescLeft">&#160;</td><td class="mdescRight">Boots the core at B side.  <a href="#ga6eb0767a937aec58348579d118623481">More...</a><br/></td></tr>
-<tr class="separator:ga6eb0767a937aec58348579d118623481"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac23b13779f92f3a11b9c5c7c20b93e42"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#gac23b13779f92f3a11b9c5c7c20b93e42">MU_HoldCoreBReset</a> (MU_Type *base)</td></tr>
-<tr class="memdesc:gac23b13779f92f3a11b9c5c7c20b93e42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds the core reset of B side.  <a href="#gac23b13779f92f3a11b9c5c7c20b93e42">More...</a><br/></td></tr>
-<tr class="separator:gac23b13779f92f3a11b9c5c7c20b93e42"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7e679937d4ed822e84f8b2f16feb9415"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#ga7e679937d4ed822e84f8b2f16feb9415">MU_BootOtherCore</a> (MU_Type *base, mu_core_boot_mode_t mode)</td></tr>
-<tr class="memdesc:ga7e679937d4ed822e84f8b2f16feb9415"><td class="mdescLeft">&#160;</td><td class="mdescRight">Boots the other core.  <a href="#ga7e679937d4ed822e84f8b2f16feb9415">More...</a><br/></td></tr>
-<tr class="separator:ga7e679937d4ed822e84f8b2f16feb9415"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaf22232af55418b163983b9c83e72e7f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#gaaf22232af55418b163983b9c83e72e7f">MU_HoldOtherCoreReset</a> (MU_Type *base)</td></tr>
-<tr class="memdesc:gaaf22232af55418b163983b9c83e72e7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds the other core reset.  <a href="#gaaf22232af55418b163983b9c83e72e7f">More...</a><br/></td></tr>
-<tr class="separator:gaaf22232af55418b163983b9c83e72e7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa13d5ba37ff0be6dd645ed9b28431cb5"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#gaa13d5ba37ff0be6dd645ed9b28431cb5">MU_ResetBothSides</a> (MU_Type *base)</td></tr>
-<tr class="memdesc:gaa13d5ba37ff0be6dd645ed9b28431cb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the MU for both A side and B side.  <a href="#gaa13d5ba37ff0be6dd645ed9b28431cb5">More...</a><br/></td></tr>
-<tr class="separator:gaa13d5ba37ff0be6dd645ed9b28431cb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga16044dabe953e6a7deecadbcdb0ba255"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#ga16044dabe953e6a7deecadbcdb0ba255">MU_HardwareResetOtherCore</a> (MU_Type *base, bool waitReset, bool holdReset, mu_core_boot_mode_t bootMode)</td></tr>
-<tr class="memdesc:ga16044dabe953e6a7deecadbcdb0ba255"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hardware reset the other core.  <a href="#ga16044dabe953e6a7deecadbcdb0ba255">More...</a><br/></td></tr>
-<tr class="separator:ga16044dabe953e6a7deecadbcdb0ba255"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf134175fc2e3adc976bd8e8999124949"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#gaf134175fc2e3adc976bd8e8999124949">MU_SetClockOnOtherCoreEnable</a> (MU_Type *base, bool enable)</td></tr>
-<tr class="memdesc:gaf134175fc2e3adc976bd8e8999124949"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables the clock on the other core.  <a href="#gaf134175fc2e3adc976bd8e8999124949">More...</a><br/></td></tr>
-<tr class="separator:gaf134175fc2e3adc976bd8e8999124949"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4c9449aca64b03c381ae1b7e1720c61b"><td class="memItemLeft" align="right" valign="top">static mu_power_mode_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#ga4c9449aca64b03c381ae1b7e1720c61b">MU_GetOtherCorePowerMode</a> (MU_Type *base)</td></tr>
-<tr class="memdesc:ga4c9449aca64b03c381ae1b7e1720c61b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the power mode of the other core.  <a href="#ga4c9449aca64b03c381ae1b7e1720c61b">More...</a><br/></td></tr>
-<tr class="separator:ga4c9449aca64b03c381ae1b7e1720c61b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga166fc4ada71e4fa9e160774700c976d7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga166fc4ada71e4fa9e160774700c976d7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00261.html#ga166fc4ada71e4fa9e160774700c976d7">FSL_INPUTMUX_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00242.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 7))</td></tr>
+<tr class="memdesc:ga166fc4ada71e4fa9e160774700c976d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Group interrupt driver version for SDK. <br/></td></tr>
+<tr class="separator:ga166fc4ada71e4fa9e160774700c976d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gac08525378e7d8aaa3e0e6b16e9f76ad3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FSL_MU_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00240.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 2))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gae0771a3d173c2b3bf358aff30664f8bf"></a>
+<a class="anchor" id="ga8647a33084f60e10de3342dc5323fa97"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00261.html#gae0771a3d173c2b3bf358aff30664f8bf">_mu_status_flags</a></td>
+          <td class="memname">enum <a class="el" href="a00261.html#ga8647a33084f60e10de3342dc5323fa97">_inputmux_connection_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggae0771a3d173c2b3bf358aff30664f8bfa8c78ea862685cbf3168dd556137f481b"></a>kMU_Tx0EmptyFlag</em>&nbsp;</td><td class="fielddoc">
-<p>TX0 empty. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga8647a33084f60e10de3342dc5323fa97a6578893c8d3f1a355f3d6a1f134d742a"></a>kINPUTMUX_Sct0PinInp0ToSct0</em>&nbsp;</td><td class="fielddoc">
+<p>SCT INMUX. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae0771a3d173c2b3bf358aff30664f8bfa02c68cfbe97c75fcc1a84d931f5d2e3d"></a>kMU_Tx1EmptyFlag</em>&nbsp;</td><td class="fielddoc">
-<p>TX1 empty. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga8647a33084f60e10de3342dc5323fa97a1e042af47b407b5b414e22bab7f3e87d"></a>kINPUTMUX_DebugHaltedToSct0</em>&nbsp;</td><td class="fielddoc">
+<p>Pin Interrupt. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae0771a3d173c2b3bf358aff30664f8bfa767f1b8e0e39543921f1a140efb9e154"></a>kMU_Tx2EmptyFlag</em>&nbsp;</td><td class="fielddoc">
-<p>TX2 empty. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga8647a33084f60e10de3342dc5323fa97a55c96954290ceb81ca5340dc369e8398"></a>kINPUTMUX_GpioPort1Pin31ToPintsel</em>&nbsp;</td><td class="fielddoc">
+<p>DSP Interrupt. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae0771a3d173c2b3bf358aff30664f8bfa8f0e3eeb71299fce34d2fb31524d223f"></a>kMU_Tx3EmptyFlag</em>&nbsp;</td><td class="fielddoc">
-<p>TX3 empty. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga8647a33084f60e10de3342dc5323fa97a308daf03bf35d7d41a71b2b740f01d64"></a>kINPUTMUX_FlexioToDspInterrupt</em>&nbsp;</td><td class="fielddoc">
+<p>Frequency measure. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae0771a3d173c2b3bf358aff30664f8bfa40ddf58c102a536275d75e0042920b8f"></a>kMU_Rx0FullFlag</em>&nbsp;</td><td class="fielddoc">
-<p>RX0 full. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga8647a33084f60e10de3342dc5323fa97a470debd589806b4f569a0fc8ac07d440"></a>kINPUTMUX_ClockOutToFreqmeas</em>&nbsp;</td><td class="fielddoc">
+<p>SMARTDMA input mux. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae0771a3d173c2b3bf358aff30664f8bfadd55a6748dfeb9f342ac1467db2b9456"></a>kMU_Rx1FullFlag</em>&nbsp;</td><td class="fielddoc">
-<p>RX1 full. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga8647a33084f60e10de3342dc5323fa97a4fe138568f9ab52e5f90a77fa9b49210"></a>kINPUTMUX_UsbFsToggleToSmartDmaInput</em>&nbsp;</td><td class="fielddoc">
+<p>CTmier0 capture input mux. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae0771a3d173c2b3bf358aff30664f8bfa568e4107a3b60c367e2824a80e0ae210"></a>kMU_Rx2FullFlag</em>&nbsp;</td><td class="fielddoc">
-<p>RX2 full. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga8647a33084f60e10de3342dc5323fa97a51b1f9f4cdacbdd3702e513740a99549"></a>kINPUTMUX_Usb1FrameToggleToTimer0CaptureChannels</em>&nbsp;</td><td class="fielddoc">
+<p>CTmier1 capture input mux. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae0771a3d173c2b3bf358aff30664f8bfa67742c950c69e47cbab902efc83a28d4"></a>kMU_Rx3FullFlag</em>&nbsp;</td><td class="fielddoc">
-<p>RX3 full. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga8647a33084f60e10de3342dc5323fa97a2fe1df092eb9829f95bf7608b40ba928"></a>kINPUTMUX_Usb1FrameToggleToTimer1CaptureChannels</em>&nbsp;</td><td class="fielddoc">
+<p>CTmier2 capture input mux. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae0771a3d173c2b3bf358aff30664f8bfa569a538edbb6050e2818903c9182aa44"></a>kMU_GenInt0Flag</em>&nbsp;</td><td class="fielddoc">
-<p>General purpose interrupt 0 pending. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga8647a33084f60e10de3342dc5323fa97ac920efa83706e1b4626d54c3a96398bf"></a>kINPUTMUX_Usb1FrameToggleToTimer2CaptureChannels</em>&nbsp;</td><td class="fielddoc">
+<p>CTmier3 capture input mux. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae0771a3d173c2b3bf358aff30664f8bfa784232e66cb93c5e307727a579688f5a"></a>kMU_GenInt1Flag</em>&nbsp;</td><td class="fielddoc">
-<p>General purpose interrupt 1 pending. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga8647a33084f60e10de3342dc5323fa97a5b9e39446b7f0a2829a31c76bb276148"></a>kINPUTMUX_Usb1FrameToggleToTimer3CaptureChannels</em>&nbsp;</td><td class="fielddoc">
+<p>CTmier4 capture input mux. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae0771a3d173c2b3bf358aff30664f8bfa15712a6b86201fbcbd389c66a85fb3d3"></a>kMU_GenInt2Flag</em>&nbsp;</td><td class="fielddoc">
-<p>General purpose interrupt 2 pending. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga8647a33084f60e10de3342dc5323fa97abdf35ff88b3936fe3d7c28177336db05"></a>kINPUTMUX_Usb1FrameToggleToTimer4CaptureChannels</em>&nbsp;</td><td class="fielddoc">
+<p>DMA0 ITRIG. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae0771a3d173c2b3bf358aff30664f8bfa78e94d0880b08c6e4fe44cbc254e6555"></a>kMU_GenInt3Flag</em>&nbsp;</td><td class="fielddoc">
-<p>General purpose interrupt 3 pending. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga8647a33084f60e10de3342dc5323fa97a7675b8f2b3d987a0da5da687f9216634"></a>kINPUTMUX_Flexspi1TxToDma0</em>&nbsp;</td><td class="fielddoc">
+<p>DMA1 ITRIG. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae0771a3d173c2b3bf358aff30664f8bfad2f4fdc37e185dd77f42ae824a334197"></a>kMU_EventPendingFlag</em>&nbsp;</td><td class="fielddoc">
-<p>MU event pending. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga8647a33084f60e10de3342dc5323fa97a31ff6d3769a999650cf0d66a59854dc1"></a>kINPUTMUX_Flexspi1TxToDma1</em>&nbsp;</td><td class="fielddoc">
+<p>DMA0 OTRIG. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae0771a3d173c2b3bf358aff30664f8bfa2c98f3deffd6aeb55701cf98bbe2936a"></a>kMU_FlagsUpdatingFlag</em>&nbsp;</td><td class="fielddoc">
-<p>MU flags update is on-going. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga8647a33084f60e10de3342dc5323fa97af08e9419f04ab0efe8228e4c0b5acc9c"></a>kINPUTMUX_Dma0OtrigChannel36ToTriginChannels</em>&nbsp;</td><td class="fielddoc">
+<p>DMA1 OTRIG. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gabd070b1725280439337373fcd5934931"></a>
+<a class="anchor" id="gaa4a0b5e6210c6d1cbc5854724f49a936"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00261.html#gabd070b1725280439337373fcd5934931">_mu_interrupt_enable</a></td>
+          <td class="memname">enum <a class="el" href="a00261.html#gaa4a0b5e6210c6d1cbc5854724f49a936">_inputmux_signal_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggabd070b1725280439337373fcd5934931a168101d14f235b5601e4d87b426338ac"></a>kMU_Tx0EmptyInterruptEnable</em>&nbsp;</td><td class="fielddoc">
-<p>TX0 empty. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaa4a0b5e6210c6d1cbc5854724f49a936af9eff4ec73dd1f30aa917eb601d6c7f1"></a>kINPUTMUX_Dmac0InputTriggerPint0Ena</em>&nbsp;</td><td class="fielddoc">
+<p>DMA0 input trigger source enable. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd070b1725280439337373fcd5934931a818770dd5a82087b90347dc8822e03f8"></a>kMU_Tx1EmptyInterruptEnable</em>&nbsp;</td><td class="fielddoc">
-<p>TX1 empty. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa4a0b5e6210c6d1cbc5854724f49a936ab921f3049d5f6fe428427bebd68e3bac"></a>kINPUTMUX_Dmac0InputTriggerFlexspi1TxEna</em>&nbsp;</td><td class="fielddoc">
+<p>DMA1 input trigger source enable. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd070b1725280439337373fcd5934931a7a4a0c0d7df99a19b2c09ece2458a83f"></a>kMU_Tx2EmptyInterruptEnable</em>&nbsp;</td><td class="fielddoc">
-<p>TX2 empty. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa4a0b5e6210c6d1cbc5854724f49a936a35f0d7d056f90d3a131ddce410041b72"></a>kINPUTMUX_Dmac1InputTriggerFlexspi1TxEna</em>&nbsp;</td><td class="fielddoc">
+<p>DMA0 REQ signal. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd070b1725280439337373fcd5934931a7e01176f783c0895365517dedad4e66e"></a>kMU_Tx3EmptyInterruptEnable</em>&nbsp;</td><td class="fielddoc">
-<p>TX3 empty. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd070b1725280439337373fcd5934931a4b7915f891336860a5288404c040627d"></a>kMU_Rx0FullInterruptEnable</em>&nbsp;</td><td class="fielddoc">
-<p>RX0 full. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd070b1725280439337373fcd5934931ab2a2f081c353728fb56f3895e4615670"></a>kMU_Rx1FullInterruptEnable</em>&nbsp;</td><td class="fielddoc">
-<p>RX1 full. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd070b1725280439337373fcd5934931a1e73d223a485610347f2ab818a95c0b7"></a>kMU_Rx2FullInterruptEnable</em>&nbsp;</td><td class="fielddoc">
-<p>RX2 full. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd070b1725280439337373fcd5934931a493732db72b70452f893a1bdbe9b4c10"></a>kMU_Rx3FullInterruptEnable</em>&nbsp;</td><td class="fielddoc">
-<p>RX3 full. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd070b1725280439337373fcd5934931ab695880fd49642db0667884453ce0de5"></a>kMU_GenInt0InterruptEnable</em>&nbsp;</td><td class="fielddoc">
-<p>General purpose interrupt 0. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd070b1725280439337373fcd5934931a0f9b9c7651fa7770aef0bff12726ea23"></a>kMU_GenInt1InterruptEnable</em>&nbsp;</td><td class="fielddoc">
-<p>General purpose interrupt 1. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd070b1725280439337373fcd5934931a99744e6b9c80212cee08887bdb8c7e16"></a>kMU_GenInt2InterruptEnable</em>&nbsp;</td><td class="fielddoc">
-<p>General purpose interrupt 2. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd070b1725280439337373fcd5934931aa961c2b4ea26a5de52d61f819356a37b"></a>kMU_GenInt3InterruptEnable</em>&nbsp;</td><td class="fielddoc">
-<p>General purpose interrupt 3. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga41108bad4d5d228e3832b2739e982084"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00261.html#ga41108bad4d5d228e3832b2739e982084">_mu_interrupt_trigger</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga41108bad4d5d228e3832b2739e982084a910b39bfadd22d831dd4536280f2dac2"></a>kMU_NmiInterruptTrigger</em>&nbsp;</td><td class="fielddoc">
-<p>NMI interrupt. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga41108bad4d5d228e3832b2739e982084a55c2d4c3d2065504f7edb30553c86a53"></a>kMU_GenInt0InterruptTrigger</em>&nbsp;</td><td class="fielddoc">
-<p>General purpose interrupt 0. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga41108bad4d5d228e3832b2739e982084af8c229732fcaef64ad86d0111a37e349"></a>kMU_GenInt1InterruptTrigger</em>&nbsp;</td><td class="fielddoc">
-<p>General purpose interrupt 1. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga41108bad4d5d228e3832b2739e982084a3e107a42c4bb962e9736c46dc8fb4c20"></a>kMU_GenInt2InterruptTrigger</em>&nbsp;</td><td class="fielddoc">
-<p>General purpose interrupt 2. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga41108bad4d5d228e3832b2739e982084a9307f291207c5f5e83bd6baff07234f2"></a>kMU_GenInt3InterruptTrigger</em>&nbsp;</td><td class="fielddoc">
-<p>General purpose interrupt 3. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa4a0b5e6210c6d1cbc5854724f49a936a09060245e5dd14413a4ad3ba68cf7e4c"></a>kINPUTMUX_HashCryptToDmac0Ch36RequestEna</em>&nbsp;</td><td class="fielddoc">
+<p>DMA1 REQ signal. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga59dde6d6ef6bd1016eafe1e6faf7a6d9"></a>
+<a class="anchor" id="gae02fecc3b8aab2a9d3f40f07ca7114a4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void MU_Init </td>
+          <td class="memname">void INPUTMUX_Init </td>
           <td>(</td>
-          <td class="paramtype">MU_Type *&#160;</td>
+          <td class="paramtype">INPUTMUX_Type *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function enables the MU clock only.</p>
+<p>This function enables the INPUTMUX clock.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga956ac92cddf9794a9155b346f4db2044"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void MU_Deinit </td>
-          <td>(</td>
-          <td class="paramtype">MU_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function disables the MU clock only.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gae4e41714bd6cf6e3de866e1aaf5b85a2"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void MU_SendMsgNonBlocking </td>
-          <td>(</td>
-          <td class="paramtype">MU_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>regIndex</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>msg</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function writes a message to the specific TX register. It does not check whether the TX register is empty or not. The upper layer should make sure the TX register is empty before calling this function. This function can be used in ISR for better performance.</p>
-<div class="fragment"><div class="line">* <span class="keywordflow">while</span> (!(<a class="code" href="a00261.html#ggae0771a3d173c2b3bf358aff30664f8bfa8c78ea862685cbf3168dd556137f481b">kMU_Tx0EmptyFlag</a> &amp; <a class="code" href="a00261.html#ga90e31d91ebb2a97c4b8ac449bb4e2a4e">MU_GetStatusFlags</a>(base))) { }  Wait <span class="keywordflow">for</span> TX0 <span class="keyword">register</span> empty.</div>
-<div class="line">* <a class="code" href="a00261.html#gae4e41714bd6cf6e3de866e1aaf5b85a2">MU_SendMsgNonBlocking</a>(base, kMU_MsgReg0, MSG_VAL);  Write message to the TX0 <span class="keyword">register</span>.</div>
-<div class="line">* </div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
-    <tr><td class="paramname">regIndex</td><td>TX register index, see <a class="el" href="a00261.html#ga6d1c262f5437e331a33c12cf26fbc90e">mu_msg_reg_index_t</a>. </td></tr>
-    <tr><td class="paramname">msg</td><td>Message to send. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaedd7d1f0418441a61a2587a8db322ecd"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void MU_SendMsg </td>
-          <td>(</td>
-          <td class="paramtype">MU_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>regIndex</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>msg</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function waits until the TX register is empty and sends the message.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
-    <tr><td class="paramname">regIndex</td><td>MU message register, see <a class="el" href="a00261.html#ga6d1c262f5437e331a33c12cf26fbc90e">mu_msg_reg_index_t</a> </td></tr>
-    <tr><td class="paramname">msg</td><td>Message to send. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gabeb32b60cedae555c659126d75bda806"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t MU_ReceiveMsgNonBlocking </td>
-          <td>(</td>
-          <td class="paramtype">MU_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>regIndex</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function reads a message from the specific RX register. It does not check whether the RX register is full or not. The upper layer should make sure the RX register is full before calling this function. This function can be used in ISR for better performance.</p>
-<div class="fragment"><div class="line">* uint32_t msg;</div>
-<div class="line">* <span class="keywordflow">while</span> (!(<a class="code" href="a00261.html#ggae0771a3d173c2b3bf358aff30664f8bfa40ddf58c102a536275d75e0042920b8f">kMU_Rx0FullFlag</a> &amp; <a class="code" href="a00261.html#ga90e31d91ebb2a97c4b8ac449bb4e2a4e">MU_GetStatusFlags</a>(base)))</div>
-<div class="line">* {</div>
-<div class="line">* }  Wait <span class="keywordflow">for</span> the RX0 <span class="keyword">register</span> full.</div>
-<div class="line">*</div>
-<div class="line">* msg = <a class="code" href="a00261.html#gabeb32b60cedae555c659126d75bda806">MU_ReceiveMsgNonBlocking</a>(base, kMU_MsgReg0);  Read message from RX0 <span class="keyword">register</span>.</div>
-<div class="line">* </div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
-    <tr><td class="paramname">RX</td><td>register index, see <a class="el" href="a00261.html#ga6d1c262f5437e331a33c12cf26fbc90e">mu_msg_reg_index_t</a>. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The received message. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga36b003e10632eed908184ddbfc48df25"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t MU_ReceiveMsg </td>
-          <td>(</td>
-          <td class="paramtype">MU_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>regIndex</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function waits until the RX register is full and receives the message.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
-    <tr><td class="paramname">regIndex</td><td>MU message register, see <a class="el" href="a00261.html#ga6d1c262f5437e331a33c12cf26fbc90e">mu_msg_reg_index_t</a> </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The received message. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga180ad60fda7f03cbcd98543bdb808a43"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void MU_SetFlagsNonBlocking </td>
-          <td>(</td>
-          <td class="paramtype">MU_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>flags</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function sets the 3-bit MU flags directly. Every time the 3-bit MU flags are changed, the status flag <code>kMU_FlagsUpdatingFlag</code> asserts indicating the 3-bit MU flags are updating to the other side. After the 3-bit MU flags are updated, the status flag <code>kMU_FlagsUpdatingFlag</code> is cleared by hardware. During the flags updating period, the flags cannot be changed. The upper layer should make sure the status flag <code>kMU_FlagsUpdatingFlag</code> is cleared before calling this function.</p>
-<div class="fragment"><div class="line">* <span class="keywordflow">while</span> (<a class="code" href="a00261.html#ggae0771a3d173c2b3bf358aff30664f8bfa2c98f3deffd6aeb55701cf98bbe2936a">kMU_FlagsUpdatingFlag</a> &amp; <a class="code" href="a00261.html#ga90e31d91ebb2a97c4b8ac449bb4e2a4e">MU_GetStatusFlags</a>(base))</div>
-<div class="line">* {</div>
-<div class="line">* }  Wait <span class="keywordflow">for</span> previous MU flags updating.</div>
-<div class="line">*</div>
-<div class="line">* <a class="code" href="a00261.html#ga180ad60fda7f03cbcd98543bdb808a43">MU_SetFlagsNonBlocking</a>(base, 0U);  Set the mU flags.</div>
-<div class="line">* </div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
-    <tr><td class="paramname">flags</td><td>The 3-bit MU flags to set. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga392ac71819def4a3e9d34fd1daf3fff0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void MU_SetFlags </td>
-          <td>(</td>
-          <td class="paramtype">MU_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>flags</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function blocks setting the 3-bit MU flags. Every time the 3-bit MU flags are changed, the status flag <code>kMU_FlagsUpdatingFlag</code> asserts indicating the 3-bit MU flags are updating to the other side. After the 3-bit MU flags are updated, the status flag <code>kMU_FlagsUpdatingFlag</code> is cleared by hardware. During the flags updating period, the flags cannot be changed. This function waits for the MU status flag <code>kMU_FlagsUpdatingFlag</code> cleared and sets the 3-bit MU flags.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
-    <tr><td class="paramname">flags</td><td>The 3-bit MU flags to set. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga4fbbf69b6157a909bcf6bb9523419834"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t MU_GetFlags </td>
-          <td>(</td>
-          <td class="paramtype">MU_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function gets the current 3-bit MU flags on the current side.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>flags Current value of the 3-bit flags. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga90e31d91ebb2a97c4b8ac449bb4e2a4e"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t MU_GetStatusFlags </td>
-          <td>(</td>
-          <td class="paramtype">MU_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function returns the bit mask of the MU status flags. See _mu_status_flags.</p>
-<div class="fragment"><div class="line">* uint32_t flags;</div>
-<div class="line">* flags = <a class="code" href="a00261.html#ga90e31d91ebb2a97c4b8ac449bb4e2a4e">MU_GetStatusFlags</a>(base);  Get all status flags.</div>
-<div class="line">* <span class="keywordflow">if</span> (<a class="code" href="a00261.html#ggae0771a3d173c2b3bf358aff30664f8bfa8c78ea862685cbf3168dd556137f481b">kMU_Tx0EmptyFlag</a> &amp; flags)</div>
-<div class="line">* {</div>
-<div class="line">*     The TX0 <span class="keyword">register</span> is empty. Message can be sent.</div>
-<div class="line">*     <a class="code" href="a00261.html#gae4e41714bd6cf6e3de866e1aaf5b85a2">MU_SendMsgNonBlocking</a>(base, kMU_MsgReg0, MSG0_VAL);</div>
-<div class="line">* }</div>
-<div class="line">* <span class="keywordflow">if</span> (<a class="code" href="a00261.html#ggae0771a3d173c2b3bf358aff30664f8bfa02c68cfbe97c75fcc1a84d931f5d2e3d">kMU_Tx1EmptyFlag</a> &amp; flags)</div>
-<div class="line">* {</div>
-<div class="line">*     The TX1 <span class="keyword">register</span> is empty. Message can be sent.</div>
-<div class="line">*     <a class="code" href="a00261.html#gae4e41714bd6cf6e3de866e1aaf5b85a2">MU_SendMsgNonBlocking</a>(base, kMU_MsgReg1, MSG1_VAL);</div>
-<div class="line">* }</div>
-<div class="line">* </div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Bit mask of the MU status flags, see _mu_status_flags. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga1a04c3768d3a4b611a3b2a5c4e8799eb"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t MU_GetInterruptsPending </td>
-          <td>(</td>
-          <td class="paramtype">MU_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function returns the bit mask of the pending MU IRQs.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Bit mask of the MU IRQs pending. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gae9097788e142b8cb891eddfcbfc60c26"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void MU_ClearStatusFlags </td>
-          <td>(</td>
-          <td class="paramtype">MU_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function clears the specific MU status flags. The flags to clear should be passed in as bit mask. See _mu_status_flags.</p>
-<div class="fragment"><div class="line">* Clear general interrupt 0 and general interrupt 1 pending flags.</div>
-<div class="line">* <a class="code" href="a00261.html#gae9097788e142b8cb891eddfcbfc60c26">MU_ClearStatusFlags</a>(base, <a class="code" href="a00261.html#ggae0771a3d173c2b3bf358aff30664f8bfa569a538edbb6050e2818903c9182aa44">kMU_GenInt0Flag</a> | <a class="code" href="a00261.html#ggae0771a3d173c2b3bf358aff30664f8bfa784232e66cb93c5e307727a579688f5a">kMU_GenInt1Flag</a>);</div>
-<div class="line">* </div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
-    <tr><td class="paramname">mask</td><td>Bit mask of the MU status flags. See _mu_status_flags. The following flags are cleared by hardware, this function could not clear them.<ul>
-<li>kMU_Tx0EmptyFlag</li>
-<li>kMU_Tx1EmptyFlag</li>
-<li>kMU_Tx2EmptyFlag</li>
-<li>kMU_Tx3EmptyFlag</li>
-<li>kMU_Rx0FullFlag</li>
-<li>kMU_Rx1FullFlag</li>
-<li>kMU_Rx2FullFlag</li>
-<li>kMU_Rx3FullFlag</li>
-<li>kMU_EventPendingFlag</li>
-<li>kMU_FlagsUpdatingFlag</li>
-<li>kMU_OtherSideInResetFlag </li>
-</ul>
-</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga5ea7e2b8b70b2f7a44013e9a8dded335"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void MU_EnableInterrupts </td>
-          <td>(</td>
-          <td class="paramtype">MU_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function enables the specific MU interrupts. The interrupts to enable should be passed in as bit mask. See _mu_interrupt_enable.</p>
-<div class="fragment"><div class="line">*    Enable general interrupt 0 and TX0 empty interrupt.</div>
-<div class="line">* <a class="code" href="a00261.html#ga5ea7e2b8b70b2f7a44013e9a8dded335">MU_EnableInterrupts</a>(base, <a class="code" href="a00261.html#ggabd070b1725280439337373fcd5934931ab695880fd49642db0667884453ce0de5">kMU_GenInt0InterruptEnable</a> | <a class="code" href="a00261.html#ggabd070b1725280439337373fcd5934931a168101d14f235b5601e4d87b426338ac">kMU_Tx0EmptyInterruptEnable</a>);</div>
-<div class="line">* </div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
-    <tr><td class="paramname">mask</td><td>Bit mask of the MU interrupts. See _mu_interrupt_enable. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaecadc0cf75fd66e80737b33c0971cbca"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void MU_DisableInterrupts </td>
-          <td>(</td>
-          <td class="paramtype">MU_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function disables the specific MU interrupts. The interrupts to disable should be passed in as bit mask. See _mu_interrupt_enable.</p>
-<div class="fragment"><div class="line">*    Disable general interrupt 0 and TX0 empty interrupt.</div>
-<div class="line">* <a class="code" href="a00261.html#gaecadc0cf75fd66e80737b33c0971cbca">MU_DisableInterrupts</a>(base, <a class="code" href="a00261.html#ggabd070b1725280439337373fcd5934931ab695880fd49642db0667884453ce0de5">kMU_GenInt0InterruptEnable</a> | <a class="code" href="a00261.html#ggabd070b1725280439337373fcd5934931a168101d14f235b5601e4d87b426338ac">kMU_Tx0EmptyInterruptEnable</a>);</div>
-<div class="line">* </div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
-    <tr><td class="paramname">mask</td><td>Bit mask of the MU interrupts. See _mu_interrupt_enable. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga1c78b4336b2f9ef4a4ca8ff22be7116c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> MU_TriggerInterrupts </td>
-          <td>(</td>
-          <td class="paramtype">MU_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function triggers the specific interrupts to the other core. The interrupts to trigger are passed in as bit mask. See <a class="el" href="a00261.html#ga41108bad4d5d228e3832b2739e982084">_mu_interrupt_trigger</a>. The MU should not trigger an interrupt to the other core when the previous interrupt has not been processed by the other core. This function checks whether the previous interrupts have been processed. If not, it returns an error.</p>
-<div class="fragment"><div class="line">* <span class="keywordflow">if</span> (<a class="code" href="a00240.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a> != <a class="code" href="a00261.html#ga1c78b4336b2f9ef4a4ca8ff22be7116c">MU_TriggerInterrupts</a>(base, <a class="code" href="a00261.html#gga41108bad4d5d228e3832b2739e982084a55c2d4c3d2065504f7edb30553c86a53">kMU_GenInt0InterruptTrigger</a> | <a class="code" href="a00261.html#gga41108bad4d5d228e3832b2739e982084a3e107a42c4bb962e9736c46dc8fb4c20">kMU_GenInt2InterruptTrigger</a>))</div>
-<div class="line">* {</div>
-<div class="line">*      Previous general purpose interrupt 0 or general purpose interrupt 2</div>
-<div class="line">*      has not been processed by the other core.</div>
-<div class="line">* }</div>
-<div class="line">* </div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
-    <tr><td class="paramname">mask</td><td>Bit mask of the interrupts to trigger. See _mu_interrupt_trigger. </td></tr>
+    <tr><td class="paramname">base</td><td>Base address of the INPUTMUX peripheral.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td>Interrupts have been triggered successfully. </td></tr>
-    <tr><td class="paramname">kStatus_Fail</td><td>Previous interrupts have not been accepted. </td></tr>
+    <tr><td class="paramname">None.</td><td></td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga70fb7868a4b493eccf6c7742a9f25302"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void MU_ClearNmi </td>
-          <td>(</td>
-          <td class="paramtype">MU_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function clears non-maskable interrupt (NMI) sent by the other core.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga6eb0767a937aec58348579d118623481"></a>
+<a class="anchor" id="gaa4f141e3874109e45c2a6f9be027e0ee"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void MU_BootCoreB </td>
+          <td class="memname">void INPUTMUX_AttachSignal </td>
           <td>(</td>
-          <td class="paramtype">MU_Type *&#160;</td>
+          <td class="paramtype">INPUTMUX_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">mu_core_boot_mode_t&#160;</td>
-          <td class="paramname"><em>mode</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00261.html#gac71660d9f7d5674967dfc95204bc9595">inputmux_connection_t</a>&#160;</td>
+          <td class="paramname"><em>connection</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1132,225 +355,42 @@ MU misc functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function sets the B side core's boot configuration and releases the core from reset.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
-    <tr><td class="paramname">mode</td><td>Core B boot mode. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>Only MU side A can use this function. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gac23b13779f92f3a11b9c5c7c20b93e42"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void MU_HoldCoreBReset </td>
-          <td>(</td>
-          <td class="paramtype">MU_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function causes the core of B side to be held in reset following any reset event.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>Only A side could call this function. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga7e679937d4ed822e84f8b2f16feb9415"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void MU_BootOtherCore </td>
-          <td>(</td>
-          <td class="paramtype">MU_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">mu_core_boot_mode_t&#160;</td>
-          <td class="paramname"><em>mode</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function boots the other core with a boot configuration.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
-    <tr><td class="paramname">mode</td><td>The other core boot mode. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaaf22232af55418b163983b9c83e72e7f"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void MU_HoldOtherCoreReset </td>
-          <td>(</td>
-          <td class="paramtype">MU_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function causes the other core to be held in reset following any reset event.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa13d5ba37ff0be6dd645ed9b28431cb5"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void MU_ResetBothSides </td>
-          <td>(</td>
-          <td class="paramtype">MU_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function resets the MU for both A side and B side. Before reset, it is recommended to interrupt processor B, because this function may affect the ongoing processor B programs.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>For some platforms, only MU side A could use this function, check reference manual for details. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga16044dabe953e6a7deecadbcdb0ba255"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void MU_HardwareResetOtherCore </td>
-          <td>(</td>
-          <td class="paramtype">MU_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>waitReset</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>holdReset</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">mu_core_boot_mode_t&#160;</td>
-          <td class="paramname"><em>bootMode</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function resets the other core, the other core could mask the hardware reset by calling MU_MaskHardwareReset. The hardware reset mask feature is only available for some platforms. This function could be used together with MU_BootOtherCore to control the other core reset workflow.</p>
-<p>Example 1: Reset the other core, and no hold reset </p>
-<div class="fragment"><div class="line">* <a class="code" href="a00261.html#ga16044dabe953e6a7deecadbcdb0ba255">MU_HardwareResetOtherCore</a>(MU_A, <span class="keyword">true</span>, <span class="keyword">false</span>, bootMode);</div>
+<p>This function attaches multiplexed signals from INPUTMUX to target signals. For example, to attach GPIO PORT0 Pin 5 to PINT peripheral, do the following: </p>
+<div class="fragment"><div class="line">*      <a class="code" href="a00261.html#gaa4f141e3874109e45c2a6f9be027e0ee">INPUTMUX_AttachSignal</a>(INPUTMUX, 2, kINPUTMUX_GpioPort0Pin5ToPintsel);</div>
 <div class="line">* </div>
-</div><!-- fragment --><p> In this example, the core at MU side B will reset with the specified boot mode.</p>
-<p>Example 2: Reset the other core and hold it, then boot the other core later. </p>
-<div class="fragment"><div class="line">*  Here the other core enters reset, and the reset is hold</div>
-<div class="line">* <a class="code" href="a00261.html#ga16044dabe953e6a7deecadbcdb0ba255">MU_HardwareResetOtherCore</a>(MU_A, <span class="keyword">true</span>, <span class="keyword">true</span>, modeDontCare);</div>
-<div class="line">*  Current core boot the other core when necessary.</div>
-<div class="line">* <a class="code" href="a00261.html#ga7e679937d4ed822e84f8b2f16feb9415">MU_BootOtherCore</a>(MU_A, bootMode);</div>
-<div class="line">* </div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+</div><!-- fragment --><p> In this example, INTMUX has 8 registers for PINT, PINT_SEL0~PINT_SEL7. With parameter <code>index</code> specified as 2, this function configures register PINT_SEL2.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
-    <tr><td class="paramname">waitReset</td><td>Wait the other core enters reset.<ul>
-<li>true: Wait until the other core enters reset, if the other core has masked the hardware reset, then this function will be blocked.</li>
-<li>false: Don't wait the reset. </li>
-</ul>
-</td></tr>
-    <tr><td class="paramname">holdReset</td><td>Hold the other core reset or not.<ul>
-<li>true: Hold the other core in reset, this function returns directly when the other core enters reset.</li>
-<li>false: Don't hold the other core in reset, this function waits until the other core out of reset. </li>
-</ul>
-</td></tr>
-    <tr><td class="paramname">bootMode</td><td>Boot mode of the other core, if <code>holdReset</code> is true, this parameter is useless. </td></tr>
+    <tr><td class="paramname">base</td><td>Base address of the INPUTMUX peripheral. </td></tr>
+    <tr><td class="paramname">index</td><td>The serial number of destination register in the group of INPUTMUX registers with same name. </td></tr>
+    <tr><td class="paramname">connection</td><td>Applies signal from source signals collection to target signal.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None.</td><td></td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gaf134175fc2e3adc976bd8e8999124949"></a>
+<a class="anchor" id="ga6097bd0adcdc6b8183afa4a6dc6294e3"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void MU_SetClockOnOtherCoreEnable </td>
+          <td class="memname">void INPUTMUX_EnableSignal </td>
           <td>(</td>
-          <td class="paramtype">MU_Type *&#160;</td>
+          <td class="paramtype">INPUTMUX_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00261.html#ga38f0acc16e7278822bb93556a1eb1689">inputmux_signal_t</a>&#160;</td>
+          <td class="paramname"><em>signal</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1364,52 +404,51 @@ MU misc functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<p>This function enables or disables the platform clock on the other core when that core enters a stop mode. If disabled, the platform clock for the other core is disabled when it enters stop mode. If enabled, the platform clock keeps running on the other core in stop mode, until this core also enters stop mode.</p>
+<p>This function gates the INPUTPMUX clock.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
-    <tr><td class="paramname">enable</td><td>Enable or disable the clock on the other core. </td></tr>
+    <tr><td class="paramname">base</td><td>Base address of the INPUTMUX peripheral. </td></tr>
+    <tr><td class="paramname">signal</td><td>Enable signal register id and bit offset. </td></tr>
+    <tr><td class="paramname">enable</td><td>Selects enable or disable.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None.</td><td></td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga4c9449aca64b03c381ae1b7e1720c61b"></a>
+<a class="anchor" id="gaf84e3b0d7a06af86ea6f1ac0d6edf382"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static mu_power_mode_t MU_GetOtherCorePowerMode </td>
+          <td class="memname">void INPUTMUX_Deinit </td>
           <td>(</td>
-          <td class="paramtype">MU_Type *&#160;</td>
+          <td class="paramtype">INPUTMUX_Type *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<p>This function gets the power mode of the other core.</p>
+<p>This function disables the INPUTMUX clock.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
+    <tr><td class="paramname">base</td><td>Base address of the INPUTMUX peripheral.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Power mode of the other core. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">None.</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

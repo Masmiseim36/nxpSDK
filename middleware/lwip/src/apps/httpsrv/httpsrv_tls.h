@@ -54,7 +54,7 @@ typedef struct
 #if defined(MBEDTLS_SSL_CACHE_C)
     mbedtls_ssl_cache_context cache;
 #endif
-} * httpsrv_tls_ctx_t;
+} *httpsrv_tls_ctx_t;
 
 #endif
 

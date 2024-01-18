@@ -55,12 +55,24 @@ extern "C" {
  */
 #define mbedtls_aes_context hashcrypt_handle_t
 
-#elif ((defined(MBEDTLS_MCUX_CSS_AES) && MBEDTLS_MCUX_CSS_AES) || (defined(MBEDTLS_MCUX_ELS_AES) && MBEDTLS_MCUX_ELS_AES)) 
-/* CSS/ELS AES */
+#elif (defined(MBEDTLS_MCUX_ELS_AES) && MBEDTLS_MCUX_ELS_AES) 
+/* ELS AES */
 typedef struct
 {
     uint32_t keyLength;  /*!< AES key length in bytes. */
     uint32_t pKey[32u / (sizeof(uint32_t))];  /*!< CPU word-aligned buffer storing 128/192/256-bit AES key. */
+} mbedtls_aes_context;
+
+#elif defined(MBEDTLS_MCUX_SSS_AES) && MBEDTLS_MCUX_SSS_AES
+/**
+ * \brief          AES context structure
+ */
+#include "sss_crypto.h"
+typedef struct mbedtls_aes_context
+{
+    uint8_t key[32];
+    size_t keySize;
+
 } mbedtls_aes_context;
 
 #if defined(MBEDTLS_CIPHER_MODE_XTS)

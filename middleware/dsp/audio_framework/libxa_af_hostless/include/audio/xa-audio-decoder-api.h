@@ -40,7 +40,7 @@ enum xa_config_param_codec {
     XA_CODEC_CONFIG_PARAM_CHANNELS       = 0x10000 + 0,
     XA_CODEC_CONFIG_PARAM_SAMPLE_RATE    = 0x10000 + 1,
     XA_CODEC_CONFIG_PARAM_PCM_WIDTH      = 0x10000 + 2,
-    XA_CODEC_CONFIG_PARAM_PRODUCED       = 0x10000 + 3   
+    XA_CODEC_CONFIG_PARAM_PRODUCED       = 0x10000 + 3
 };
 
 /* ...ports indices */

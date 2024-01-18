@@ -89,6 +89,10 @@ t_void wlan_reset_connect_state(pmlan_private priv, t_u8 drv_disconnect)
     }
 
 
+#ifdef CONFIG_GTK_REKEY_OFFLOAD
+    (void)__memset(pmadapter, &priv->gtk_rekey, 0, sizeof(priv->gtk_rekey));
+#endif
+
     if (drv_disconnect == MTRUE)
     {
         /* Free Tx and Rx packets, report disconnect to upper layer */

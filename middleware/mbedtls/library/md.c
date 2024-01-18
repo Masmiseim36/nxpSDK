@@ -1,7 +1,7 @@
 /**
  * \file md.c
  *
- * \brief Generic message digest wrapper for mbed TLS
+ * \brief Generic message digest wrapper for Mbed TLS
  *
  * \author Adriaan de Jong <dejong@fox-it.com>
  *
@@ -806,6 +806,8 @@ int mbedtls_md_hmac_reset(mbedtls_md_context_t *ctx)
     return mbedtls_md_update(ctx, ipad, ctx->md_info->block_size);
 }
 
+/* NXP added for HW acceleration */
+#if !defined(MBEDTLS_HMAC_ONE_GO_ALT)
 int mbedtls_md_hmac(const mbedtls_md_info_t *md_info,
                     const unsigned char *key, size_t keylen,
                     const unsigned char *input, size_t ilen,
@@ -839,6 +841,7 @@ cleanup:
 
     return ret;
 }
+#endif /* !MBEDTLS_HMAC_ONE_GO_ALT */
 
 int mbedtls_md_process(mbedtls_md_context_t *ctx, const unsigned char *data)
 {

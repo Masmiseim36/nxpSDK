@@ -7,6 +7,8 @@ if((CONFIG_DEVICE_ID STREQUAL MIMXRT595S) AND CONFIG_USE_driver_common)
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/fsl_smartdma.c
+  ${CMAKE_CURRENT_LIST_DIR}/fsl_smartdma_rt500.c
+  ${CMAKE_CURRENT_LIST_DIR}/fsl_smartdma_mcxn.c
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC

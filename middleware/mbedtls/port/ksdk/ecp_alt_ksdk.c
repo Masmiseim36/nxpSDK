@@ -114,9 +114,10 @@ int ecp_mul_comb(mbedtls_ecp_group *grp,
     if (mbedtls_mpi_size(m) > sizeof(M)) {
         __BKPT(0);
 #if defined(MBEDTLS_THREADING_C)
-        ret = mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_casper_mutex);
-
-#endif /* (MBEDTLS_THREADING_C) */
+    if ((ret = mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_casper_mutex)) != 0) {
+        return ret;
+    }
+#endif
         ret = MBEDTLS_ERR_ECP_BUFFER_TOO_SMALL;
         return ret;
     }
@@ -172,13 +173,7 @@ int mbedtls_ecp_muladd_restartable(mbedtls_ecp_group *grp,
     uint32_t N[CASPER_MAX_ECC_SIZE_BYTES / sizeof(uint32_t)]  = { 0 };
 
     size_t size;
-
     int ret = 0;
-#if defined(MBEDTLS_THREADING_C)
-    if ((ret = mbedtls_mutex_lock(&mbedtls_threading_hwcrypto_casper_mutex)) != 0) {
-        return ret;
-    }
-#endif
 
     /* shortcut for (m == 1) && (n == 1). this case is point addition. */
     /* this shortcut follows original mbedtls_ecp_muladd() implementation */
@@ -186,6 +181,12 @@ int mbedtls_ecp_muladd_restartable(mbedtls_ecp_group *grp,
     if ((mbedtls_mpi_cmp_int(m, 1) == 0) && (mbedtls_mpi_cmp_int(n, 1) == 0)) {
         return ecp_add(grp, R, P, Q);
     }
+
+#if defined(MBEDTLS_THREADING_C)
+    if ((ret = mbedtls_mutex_lock(&mbedtls_threading_hwcrypto_casper_mutex)) != 0) {
+        return ret;
+    }
+#endif
 
     /* Write MbedTLS mpi coordinates into binary buffer */
     size = mbedtls_mpi_size(&grp->P);
@@ -210,9 +211,10 @@ int mbedtls_ecp_muladd_restartable(mbedtls_ecp_group *grp,
     if (mbedtls_mpi_size(m) > sizeof(M)) {
         __BKPT(0);
 #if defined(MBEDTLS_THREADING_C)
-        ret = mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_casper_mutex);
-
-#endif /* (MBEDTLS_THREADING_C) */
+    if ((ret = mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_casper_mutex)) != 0) {
+        return ret;
+    }
+#endif
         ret = MBEDTLS_ERR_ECP_BUFFER_TOO_SMALL;
         return ret;
     }
@@ -228,6 +230,11 @@ int mbedtls_ecp_muladd_restartable(mbedtls_ecp_group *grp,
 
     if (mbedtls_mpi_size(n) > sizeof(N)) {
         __BKPT(0);
+#if defined(MBEDTLS_THREADING_C)
+    if ((ret = mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_casper_mutex)) != 0) {
+        return ret;
+    }
+#endif
         ret = MBEDTLS_ERR_ECP_BUFFER_TOO_SMALL;
         return ret;
     }

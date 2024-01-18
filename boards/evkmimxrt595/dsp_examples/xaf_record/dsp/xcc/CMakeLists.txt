@@ -53,9 +53,7 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DXA_CAPTURER=1")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DXA_DISABLE_EVENT=1")
 
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEVICE_ID=VIT_IMXRT500")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -D__RENAMING__")
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DVIT_DEVICE_ID=VIT_IMXRT500")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DHAVE_XOS")
 
@@ -73,13 +71,15 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFSL_RTOS_XOS=1")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG_CONSOLE_RX_ENABLE=0")
 
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFUSIONDSP=1")
+
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DNNLIB_V2")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O0")
 
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} --xtensa-core=nxp_rt500_RI2021_8_newlib")
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} --xtensa-core=nxp_rt500_RI23_11_newlib")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} --xtensa-system=${XTENSA_SYSTEM}")
 
@@ -143,9 +143,7 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXA_CAPTURER=1")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXA_DISABLE_EVENT=1")
 
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DDEVICE_ID=VIT_IMXRT500")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -D__RENAMING__")
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DVIT_DEVICE_ID=VIT_IMXRT500")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DHAVE_XOS")
 
@@ -163,11 +161,13 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFSL_RTOS_XOS=1")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DDEBUG_CONSOLE_RX_ENABLE=0")
 
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFUSIONDSP=1")
+
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNNLIB_V2")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Os")
 
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} --xtensa-core=nxp_rt500_RI2021_8_newlib")
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} --xtensa-core=nxp_rt500_RI23_11_newlib")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} --xtensa-system=${XTENSA_SYSTEM}")
 
@@ -237,15 +237,19 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mlsp=${ProjDi
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -g")
 
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --xtensa-core=nxp_rt500_RI2021_8_newlib")
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --xtensa-core=nxp_rt500_RI23_11_newlib")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --xtensa-system=${XTENSA_SYSTEM}")
 
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Wl,--orphan-handling=place")
+
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mlsp=${ProjDirPath}/../../../../../../devices/MIMXRT595S/xtensa/min-rt")
 
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --xtensa-core=nxp_rt500_RI2021_8_newlib")
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --xtensa-core=nxp_rt500_RI23_11_newlib")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --xtensa-system=${XTENSA_SYSTEM}")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Wl,--orphan-handling=place")
 
 include_directories(${ProjDirPath}/..)
 
@@ -307,7 +311,7 @@ include_directories(${ProjDirPath}/../../../../../../middleware/dsp/audio_framew
 
 include_directories(${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/test_inp)
 
-include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities)
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/shell)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/voice_seeker/RT595_FusionF1/include)
 
@@ -317,9 +321,9 @@ include_directories(${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/inc
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/voice_seeker/rdsp_utilities_public/include)
+include_directories(${ProjDirPath}/../../../../../../middleware/voice_seeker/RT595_FusionF1/rdsp_utilities_public/include)
 
-include_directories(${ProjDirPath}/../../../../../../middleware/voice_seeker/rdsp_utilities_public/rdsp_memory_utils_public)
+include_directories(${ProjDirPath}/../../../../../../middleware/voice_seeker/RT595_FusionF1/rdsp_utilities_public/rdsp_memory_utils_public)
 
 include_directories(${ProjDirPath}/../../../../../../CMSIS/Core/Include)
 
@@ -423,7 +427,6 @@ add_executable(dsp_xaf_record_fusionf1.elf
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-mem.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-msg.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-msgq.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-msgq1.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-sched.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-component.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-core.h"
@@ -453,6 +456,7 @@ add_executable(dsp_xaf_record_fusionf1.elf
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-sys.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/iss/xf-board.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/host-apf/src/xaf-api.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/host-apf/src/xf-msgq1.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/host-apf/src/xf-proxy.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/host-apf/src/xf-trace.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/xaf-structs.h"
@@ -520,8 +524,6 @@ add_executable(dsp_xaf_record_fusionf1.elf
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/vorbis_dec/xa-vorbis-decoder.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/capturer/xa-capturer-dmic.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/capturer/xa-capturer-i2s.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/client_proxy/client_proxy.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/client_proxy/client_proxy_api.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/vit_pre_proc/vit_pre_proc.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/vit_pre_proc/vit_pre_proc.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/voice_seeker/voice_seeker.c"
@@ -530,10 +532,11 @@ add_executable(dsp_xaf_record_fusionf1.elf
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/sbc_dec/xa-sbc-decoder.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/sbc_enc/xa-sbc-encoder.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/renderer/xa-renderer.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/fsl_shell.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/fsl_shell.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/src/xaf-fio-test.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/src/xaf-mem-test.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/shell/fsl_shell.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/shell/fsl_shell.h"
 "${ProjDirPath}/../../../../../../middleware/voice_seeker/RT595_FusionF1/include/RdspCycleCounter.h"
-"${ProjDirPath}/../../../../../../middleware/voice_seeker/RT595_FusionF1/include/RdspDeviceConfig.h"
 "${ProjDirPath}/../../../../../../middleware/voice_seeker/RT595_FusionF1/include/RdspStatusCodes.h"
 "${ProjDirPath}/../../../../../../middleware/voice_seeker/RT595_FusionF1/include/libVoiceSeekerLight.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/include/NatureDSP_Signal.h"
@@ -569,12 +572,14 @@ add_executable(dsp_xaf_record_fusionf1.elf
 "${ProjDirPath}/../../../../../../middleware/vit/FusionF1/Lib/VIT_Model_ja.h"
 "${ProjDirPath}/../../../../../../middleware/vit/FusionF1/Lib/VIT_Model_ko.h"
 "${ProjDirPath}/../../../../../../middleware/vit/FusionF1/Lib/VIT_Model_tr.h"
-"${ProjDirPath}/../../../../../../middleware/voice_seeker/rdsp_utilities_public/include/RdspPlatforms.h"
-"${ProjDirPath}/../../../../../../middleware/voice_seeker/rdsp_utilities_public/include/RdspTypes.h"
-"${ProjDirPath}/../../../../../../middleware/voice_seeker/rdsp_utilities_public/rdsp_memory_utils_public/RdspMemoryUtilsPublic.h"
-"${ProjDirPath}/../../../../../../middleware/voice_seeker/rdsp_utilities_public/rdsp_memory_utils_public/memcheck.h"
-"${ProjDirPath}/../../../../../../middleware/voice_seeker/rdsp_utilities_public/rdsp_memory_utils_public/RdspMemoryUtilsPublic.c"
-"${ProjDirPath}/../../../../../../middleware/voice_seeker/rdsp_utilities_public/rdsp_memory_utils_public/memcheck.c"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/RT595_FusionF1/rdsp_utilities_public/include/RdspDeviceConfig.h"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/RT595_FusionF1/rdsp_utilities_public/include/RdspPlatforms.h"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/RT595_FusionF1/rdsp_utilities_public/include/RdspTypes.h"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/RT595_FusionF1/rdsp_utilities_public/rdsp_memory_utils_public/RdspMemoryUtilsPublic.h"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/RT595_FusionF1/rdsp_utilities_public/rdsp_memory_utils_public/RdspStackCheck.h"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/RT595_FusionF1/rdsp_utilities_public/rdsp_memory_utils_public/memcheck.h"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/RT595_FusionF1/rdsp_utilities_public/rdsp_memory_utils_public/RdspMemoryUtilsPublic.c"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/RT595_FusionF1/rdsp_utilities_public/rdsp_memory_utils_public/memcheck.c"
 "${ProjDirPath}/../srtm_capturer_pcm_gain_renderer.c"
 "${ProjDirPath}/../srtm_utils.c"
 "${ProjDirPath}/../srtm_utils.h"
@@ -681,7 +686,6 @@ add_executable(dsp_xaf_record_fusionf1.elf
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-mem.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-msg.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-msgq.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-msgq1.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-sched.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-component.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-core.h"
@@ -711,6 +715,7 @@ add_executable(dsp_xaf_record_fusionf1.elf
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-sys.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/iss/xf-board.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/host-apf/src/xaf-api.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/host-apf/src/xf-msgq1.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/host-apf/src/xf-proxy.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/host-apf/src/xf-trace.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/xaf-structs.h"
@@ -778,8 +783,6 @@ add_executable(dsp_xaf_record_fusionf1.elf
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/vorbis_dec/xa-vorbis-decoder.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/capturer/xa-capturer-dmic.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/capturer/xa-capturer-i2s.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/client_proxy/client_proxy.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/client_proxy/client_proxy_api.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/vit_pre_proc/vit_pre_proc.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/vit_pre_proc/vit_pre_proc.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/voice_seeker/voice_seeker.c"
@@ -788,10 +791,11 @@ add_executable(dsp_xaf_record_fusionf1.elf
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/sbc_dec/xa-sbc-decoder.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/sbc_enc/xa-sbc-encoder.c"
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/renderer/xa-renderer.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/fsl_shell.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/fsl_shell.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/src/xaf-fio-test.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/src/xaf-mem-test.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/shell/fsl_shell.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/shell/fsl_shell.h"
 "${ProjDirPath}/../../../../../../middleware/voice_seeker/RT595_FusionF1/include/RdspCycleCounter.h"
-"${ProjDirPath}/../../../../../../middleware/voice_seeker/RT595_FusionF1/include/RdspDeviceConfig.h"
 "${ProjDirPath}/../../../../../../middleware/voice_seeker/RT595_FusionF1/include/RdspStatusCodes.h"
 "${ProjDirPath}/../../../../../../middleware/voice_seeker/RT595_FusionF1/include/libVoiceSeekerLight.h"
 "${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/include/NatureDSP_Signal.h"
@@ -827,12 +831,14 @@ add_executable(dsp_xaf_record_fusionf1.elf
 "${ProjDirPath}/../../../../../../middleware/vit/FusionF1/Lib/VIT_Model_ja.h"
 "${ProjDirPath}/../../../../../../middleware/vit/FusionF1/Lib/VIT_Model_ko.h"
 "${ProjDirPath}/../../../../../../middleware/vit/FusionF1/Lib/VIT_Model_tr.h"
-"${ProjDirPath}/../../../../../../middleware/voice_seeker/rdsp_utilities_public/include/RdspPlatforms.h"
-"${ProjDirPath}/../../../../../../middleware/voice_seeker/rdsp_utilities_public/include/RdspTypes.h"
-"${ProjDirPath}/../../../../../../middleware/voice_seeker/rdsp_utilities_public/rdsp_memory_utils_public/RdspMemoryUtilsPublic.h"
-"${ProjDirPath}/../../../../../../middleware/voice_seeker/rdsp_utilities_public/rdsp_memory_utils_public/memcheck.h"
-"${ProjDirPath}/../../../../../../middleware/voice_seeker/rdsp_utilities_public/rdsp_memory_utils_public/RdspMemoryUtilsPublic.c"
-"${ProjDirPath}/../../../../../../middleware/voice_seeker/rdsp_utilities_public/rdsp_memory_utils_public/memcheck.c"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/RT595_FusionF1/rdsp_utilities_public/include/RdspDeviceConfig.h"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/RT595_FusionF1/rdsp_utilities_public/include/RdspPlatforms.h"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/RT595_FusionF1/rdsp_utilities_public/include/RdspTypes.h"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/RT595_FusionF1/rdsp_utilities_public/rdsp_memory_utils_public/RdspMemoryUtilsPublic.h"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/RT595_FusionF1/rdsp_utilities_public/rdsp_memory_utils_public/RdspStackCheck.h"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/RT595_FusionF1/rdsp_utilities_public/rdsp_memory_utils_public/memcheck.h"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/RT595_FusionF1/rdsp_utilities_public/rdsp_memory_utils_public/RdspMemoryUtilsPublic.c"
+"${ProjDirPath}/../../../../../../middleware/voice_seeker/RT595_FusionF1/rdsp_utilities_public/rdsp_memory_utils_public/memcheck.c"
 "${ProjDirPath}/../srtm_capturer_pcm_gain_renderer.c"
 "${ProjDirPath}/../srtm_utils.c"
 "${ProjDirPath}/../srtm_utils.h"
@@ -852,7 +858,7 @@ target_link_libraries(dsp_xaf_record_fusionf1.elf optimized m)
 target_link_libraries(dsp_xaf_record_fusionf1.elf optimized xos)
 
 
-target_link_libraries(dsp_xaf_record_fusionf1.elf debug ${ProjDirPath}/../../../../../../middleware/vit/FusionF1/Lib/libVIT_Fusion_F1_v04_08_01.a)
+target_link_libraries(dsp_xaf_record_fusionf1.elf debug ${ProjDirPath}/../../../../../../middleware/vit/FusionF1/Lib/libVIT_Fusion_F1_v04_09_00.a)
 
 
 target_link_libraries(dsp_xaf_record_fusionf1.elf debug ${ProjDirPath}/../../../../../../middleware/voice_seeker/RT595_FusionF1/lib/libvoiceseeker_no_aec.a)
@@ -864,7 +870,7 @@ target_link_libraries(dsp_xaf_record_fusionf1.elf debug ${ProjDirPath}/../../../
 target_link_libraries(dsp_xaf_record_fusionf1.elf debug ${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/lib/fusionf1/libxa_nnlib.a)
 
 
-target_link_libraries(dsp_xaf_record_fusionf1.elf optimized ${ProjDirPath}/../../../../../../middleware/vit/FusionF1/Lib/libVIT_Fusion_F1_v04_08_01.a)
+target_link_libraries(dsp_xaf_record_fusionf1.elf optimized ${ProjDirPath}/../../../../../../middleware/vit/FusionF1/Lib/libVIT_Fusion_F1_v04_09_00.a)
 
 
 target_link_libraries(dsp_xaf_record_fusionf1.elf optimized ${ProjDirPath}/../../../../../../middleware/voice_seeker/RT595_FusionF1/lib/libvoiceseeker_no_aec.a)
@@ -879,14 +885,14 @@ TARGET_LINK_LIBRARIES(dsp_xaf_record_fusionf1.elf -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET dsp_xaf_record_fusionf1.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}
 --xtensa-params= -Obinary ${EXECUTABLE_OUTPUT_PATH}/dsp_xaf_record_fusionf1.elf ${EXECUTABLE_OUTPUT_PATH}/../../binary/dsp_reset_${CMAKE_BUILD_TYPE}.bin
---xtensa-core=nxp_rt500_RI2021_8_newlib
+--xtensa-core=nxp_rt500_RI23_11_newlib
 --xtensa-system=${XTENSA_SYSTEM}
 --only-section=.ResetVector.text
 )
 
 ADD_CUSTOM_COMMAND(TARGET dsp_xaf_record_fusionf1.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}
 --xtensa-params= -Obinary ${EXECUTABLE_OUTPUT_PATH}/dsp_xaf_record_fusionf1.elf ${EXECUTABLE_OUTPUT_PATH}/../../binary/dsp_text_${CMAKE_BUILD_TYPE}.bin
---xtensa-core=nxp_rt500_RI2021_8_newlib
+--xtensa-core=nxp_rt500_RI23_11_newlib
 --xtensa-system=${XTENSA_SYSTEM}
 --only-section=.WindowVectors.text
 --only-section=.Level2InterruptVector.text
@@ -904,7 +910,7 @@ ADD_CUSTOM_COMMAND(TARGET dsp_xaf_record_fusionf1.elf POST_BUILD COMMAND ${CMAKE
 
 ADD_CUSTOM_COMMAND(TARGET dsp_xaf_record_fusionf1.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}
 --xtensa-params= -Obinary ${EXECUTABLE_OUTPUT_PATH}/dsp_xaf_record_fusionf1.elf ${EXECUTABLE_OUTPUT_PATH}/../../binary/dsp_data_${CMAKE_BUILD_TYPE}.bin
---xtensa-core=nxp_rt500_RI2021_8_newlib
+--xtensa-core=nxp_rt500_RI23_11_newlib
 --xtensa-system=${XTENSA_SYSTEM}
 --only-section=.clib.rodata
 --only-section=.rtos.rodata

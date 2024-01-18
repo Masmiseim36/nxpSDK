@@ -576,9 +576,11 @@ void wlan_fill_ht_cap_tlv(mlan_private *priv, MrvlIETypes_HTCap_t *pht_cap, t_u1
     /* Set ampdu param */
     SETAMPDU_SIZE(pht_cap->ht_cap.ampdu_param, AMPDU_FACTOR_64K);
 
+#ifdef RW610_SERIES
     SETAMPDU_SPACING(pht_cap->ht_cap.ampdu_param, 0x5);
-
-    // SETAMPDU_SPACING(pht_cap->ht_cap.ampdu_param, 0);
+#else
+    SETAMPDU_SPACING(pht_cap->ht_cap.ampdu_param, pmadapter->hw_mpdu_density);
+#endif
 
     rx_mcs_supp = GET_RXMCSSUPP(pmadapter->usr_dev_mcs_support);
     /* Set MCS for 1x1/2x2 */
@@ -1006,6 +1008,12 @@ t_u32 wlan_cmd_append_11n_tlv(IN mlan_private *pmpriv, IN BSSDescriptor_t *pbss_
         pht_cap->ht_cap.ht_cap_info = wlan_le16_to_cpu(pht_cap->ht_cap.ht_cap_info);
         pht_cap->ht_cap.ht_ext_cap  = wlan_le16_to_cpu(pht_cap->ht_cap.ht_ext_cap);
         wlan_fill_ht_cap_tlv(pmpriv, pht_cap, pbss_desc->bss_band);
+        if (wlan_use_non_default_ht_vht_cap(pbss_desc))
+        {
+            /* Indicate 3 streams in TxBF cap*/
+            pht_cap->ht_cap.tx_bf_cap = ((pht_cap->ht_cap.tx_bf_cap & (~(0x3 << 23))) | (0x2 << 23));
+            pht_cap->ht_cap.tx_bf_cap = ((pht_cap->ht_cap.tx_bf_cap & (~(0x3 << 27))) | (0x2 << 27));
+        }
 
         HEXDUMP("HT_CAPABILITIES IE", (t_u8 *)pht_cap, sizeof(MrvlIETypes_HTCap_t));
         *ppbuffer += sizeof(MrvlIETypes_HTCap_t);
@@ -1104,6 +1112,8 @@ t_u32 wlan_cmd_append_11n_tlv(IN mlan_private *pmpriv, IN BSSDescriptor_t *pbss_
         (void)__memcpy(pmadapter, (t_u8 *)pext_cap + sizeof(MrvlIEtypesHeader_t),
                        (t_u8 *)pbss_desc->pext_cap + sizeof(IEEEtypes_Header_t), pbss_desc->pext_cap->ieee_hdr.len);
 
+        if (pbss_desc && pbss_desc->multi_bssid_ap)
+            SET_EXTCAP_MULTI_BSSID(pext_cap->ext_cap);
 
 #if !defined(SD8801) && !defined(RW610)
         pext_cap->ext_cap.BSS_CoexistSupport = 0x01; /*2040 CoEx support must be always set*/
@@ -1132,6 +1142,10 @@ t_u32 wlan_cmd_append_11n_tlv(IN mlan_private *pmpriv, IN BSSDescriptor_t *pbss_
         }
 #endif
 
+#ifdef CONFIG_11AX
+        SET_EXTCAP_TWT_REQ(pext_cap->ext_cap);
+        pext_cap->ext_cap.TWTResp = 0;
+#endif
         HEXDUMP("Extended Capabilities IE", (t_u8 *)pext_cap, sizeof(MrvlIETypes_ExtCap_t));
         *ppbuffer += sizeof(MrvlIETypes_ExtCap_t);
         ret_len += sizeof(MrvlIETypes_ExtCap_t);
@@ -1286,7 +1300,6 @@ TxBAStreamTbl *wlan_11n_get_txbastream_tbl(mlan_private *priv, t_u8 *ra)
 
     while (ptx_tbl != (TxBAStreamTbl *)(void *)&priv->tx_ba_stream_tbl_ptr)
     {
-        PRINTM(MDAT_D, "get_txbastream_tbl TID %d\n", ptx_tbl->tid);
         DBG_HEXDUMP(MDAT_D, "RA", ptx_tbl->ra, MLAN_MAC_ADDR_LENGTH);
 
         if (!__memcmp(pmadapter, ptx_tbl->ra, ra, MLAN_MAC_ADDR_LENGTH))
@@ -1322,14 +1335,13 @@ void wlan_11n_create_txbastream_tbl(mlan_private *priv, t_u8 *ra, baStatus_e ba_
 
     if (!wlan_11n_get_txbastream_tbl(priv, ra))
     {
-        PRINTM(MDAT_D, "get_txbastream_tbl TID %d\n", tid);
         DBG_HEXDUMP(MDAT_D, "RA", ra, MLAN_MAC_ADDR_LENGTH);
 
         pmadapter->callbacks.moal_malloc(pmadapter->pmoal_handle, sizeof(TxBAStreamTbl), MLAN_MEM_DEF,
                                          (t_u8 **)&newNode);
-        util_init_list((pmlan_linked_list)newNode);
 
         (void)__memset(pmadapter, newNode, 0, sizeof(TxBAStreamTbl));
+        util_init_list((pmlan_linked_list)newNode);
 
         newNode->ba_status   = ba_status;
         newNode->txba_thresh = os_rand_range(5, 5);

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: DSP Driver</title>
+<title>MCUXpresso SDK API Reference Manual: MIPI DSI SMARTDMA driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -100,120 +100,473 @@ $(document).ready(function(){initNavTree('a00020.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">DSP Driver</div>  </div>
+<div class="title">MIPI DSI SMARTDMA driver<div class="ingroups"><a class="el" href="a00262.html">MIPI_DSI: MIPI DSI Host Controller</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>This driver is used for cooperation with DSP. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00343"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#a00343">dsp_copy_image_t</a></td></tr>
-<tr class="memdesc:a00343"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure for DSP copy image to destination address.  <a href="a00020.html#a00343">More...</a><br/></td></tr>
-<tr class="separator:a00343"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00319"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#a00319">_dsi_smartdma_write_mem_transfer</a></td></tr>
+<tr class="memdesc:a00319"><td class="mdescLeft">&#160;</td><td class="mdescRight">The pixel format sent on MIPI DSI data lanes.  <a href="a00020.html#a00319">More...</a><br/></td></tr>
+<tr class="separator:a00319"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00318"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#a00318">_dsi_smartdma_handle</a></td></tr>
+<tr class="memdesc:a00318"><td class="mdescLeft">&#160;</td><td class="mdescRight">MIPI DSI transfer handle structure.  <a href="a00020.html#a00318">More...</a><br/></td></tr>
+<tr class="separator:a00318"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga442ec962a06305495e8d54835cd5964d"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#ga442ec962a06305495e8d54835cd5964d">dsi_smartdma_callback_t</a> )(MIPI_DSI_HOST_Type *base, <a class="el" href="a00020.html#a00318">dsi_smartdma_handle_t</a> *handle, <a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
+<tr class="memdesc:ga442ec962a06305495e8d54835cd5964d"><td class="mdescLeft">&#160;</td><td class="mdescRight">MIPI DSI callback for finished transfer.  <a href="#ga442ec962a06305495e8d54835cd5964d">More...</a><br/></td></tr>
+<tr class="separator:ga442ec962a06305495e8d54835cd5964d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga65ee0550860a2737f547eb1826016179"><td class="memItemLeft" align="right" valign="top">typedef enum <br class="typebreak"/>
+<a class="el" href="a00020.html#gaffa757480055b672331ad52d35306c56">_dsi_smartdma_input_pixel_format</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#ga65ee0550860a2737f547eb1826016179">dsi_smartdma_input_pixel_format_t</a></td></tr>
+<tr class="memdesc:ga65ee0550860a2737f547eb1826016179"><td class="mdescLeft">&#160;</td><td class="mdescRight">The pixel format feed SMARTDMA.  <a href="#ga65ee0550860a2737f547eb1826016179">More...</a><br/></td></tr>
+<tr class="separator:ga65ee0550860a2737f547eb1826016179"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6dd94db15369d94b49f3530201b99c9b"><td class="memItemLeft" align="right" valign="top">typedef enum <br class="typebreak"/>
+<a class="el" href="a00020.html#ga51c20654db7dcbb11cd0f19d5a0a787f">_dsi_smartdma_output_pixel_format</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#ga6dd94db15369d94b49f3530201b99c9b">dsi_smartdma_output_pixel_format_t</a></td></tr>
+<tr class="memdesc:ga6dd94db15369d94b49f3530201b99c9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The pixel format sent on MIPI DSI data lanes.  <a href="#ga6dd94db15369d94b49f3530201b99c9b">More...</a><br/></td></tr>
+<tr class="separator:ga6dd94db15369d94b49f3530201b99c9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab653b530a3ec38f0118d1c9c9dd6dcb1"><td class="memItemLeft" align="right" valign="top">typedef struct <br class="typebreak"/>
+<a class="el" href="a00020.html#a00319">_dsi_smartdma_write_mem_transfer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#gab653b530a3ec38f0118d1c9c9dd6dcb1">dsi_smartdma_write_mem_transfer_t</a></td></tr>
+<tr class="memdesc:gab653b530a3ec38f0118d1c9c9dd6dcb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The pixel format sent on MIPI DSI data lanes.  <a href="#gab653b530a3ec38f0118d1c9c9dd6dcb1">More...</a><br/></td></tr>
+<tr class="separator:gab653b530a3ec38f0118d1c9c9dd6dcb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:gaab9c4d1f523f75e0be719b44497b9819"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#gaab9c4d1f523f75e0be719b44497b9819">dsp_static_vec_sel_t</a> </td></tr>
-<tr class="memdesc:gaab9c4d1f523f75e0be719b44497b9819"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fusion DSP vector table select. <br/></td></tr>
-<tr class="separator:gaab9c4d1f523f75e0be719b44497b9819"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga4863922efe70c56bd3e3290e8fc679cd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#ga4863922efe70c56bd3e3290e8fc679cd">DSP_Init</a> (void)</td></tr>
-<tr class="memdesc:ga4863922efe70c56bd3e3290e8fc679cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializing DSP core.  <a href="#ga4863922efe70c56bd3e3290e8fc679cd">More...</a><br/></td></tr>
-<tr class="separator:ga4863922efe70c56bd3e3290e8fc679cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab5d092e0e49965d552de23d8989b5f27"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#gab5d092e0e49965d552de23d8989b5f27">DSP_SetVecRemap</a> (<a class="el" href="a00020.html#gaab9c4d1f523f75e0be719b44497b9819">dsp_static_vec_sel_t</a> statVecSel, uint32_t remap)</td></tr>
-<tr class="memdesc:gab5d092e0e49965d552de23d8989b5f27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Fusion DSP static vector table remap.  <a href="#gab5d092e0e49965d552de23d8989b5f27">More...</a><br/></td></tr>
-<tr class="separator:gab5d092e0e49965d552de23d8989b5f27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5662406138adcee5605c0cbc289effc7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#ga5662406138adcee5605c0cbc289effc7">DSP_CopyImage</a> (<a class="el" href="a00020.html#a00343">dsp_copy_image_t</a> *dspCopyImage)</td></tr>
-<tr class="memdesc:ga5662406138adcee5605c0cbc289effc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy DSP image to destination address.  <a href="#ga5662406138adcee5605c0cbc289effc7">More...</a><br/></td></tr>
-<tr class="separator:ga5662406138adcee5605c0cbc289effc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabe1b96413237706eee6ce5a5725c47b6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabe1b96413237706eee6ce5a5725c47b6"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#gabe1b96413237706eee6ce5a5725c47b6">DSP_Deinit</a> (void)</td></tr>
-<tr class="memdesc:gabe1b96413237706eee6ce5a5725c47b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializing DSP core. <br/></td></tr>
-<tr class="separator:gabe1b96413237706eee6ce5a5725c47b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga00a8541498d4f96ac12feb198d4bd7c4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga00a8541498d4f96ac12feb198d4bd7c4"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#ga00a8541498d4f96ac12feb198d4bd7c4">DSP_Start</a> (void)</td></tr>
-<tr class="memdesc:ga00a8541498d4f96ac12feb198d4bd7c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start DSP core. <br/></td></tr>
-<tr class="separator:ga00a8541498d4f96ac12feb198d4bd7c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacd10f7bf7c468d5645338b2043e232cc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gacd10f7bf7c468d5645338b2043e232cc"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#gacd10f7bf7c468d5645338b2043e232cc">DSP_Stop</a> (void)</td></tr>
-<tr class="memdesc:gacd10f7bf7c468d5645338b2043e232cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop DSP core. <br/></td></tr>
-<tr class="separator:gacd10f7bf7c468d5645338b2043e232cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaffa757480055b672331ad52d35306c56"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#gaffa757480055b672331ad52d35306c56">_dsi_smartdma_input_pixel_format</a> { <br/>
+&#160;&#160;<a class="el" href="a00020.html#ggaffa757480055b672331ad52d35306c56ab394c612d33e5fc5efce1f38e72b0987">kDSI_SMARTDMA_InputPixelFormatRGB565</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00020.html#ggaffa757480055b672331ad52d35306c56af06b41ebb10171fccc23fb4d83e42ea4">kDSI_SMARTDMA_InputPixelFormatRGB888</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00020.html#ggaffa757480055b672331ad52d35306c56ac1928ed922b6ecbdfc7ee21d020a0019">kDSI_SMARTDMA_InputPixelFormatXRGB8888</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:gaffa757480055b672331ad52d35306c56"><td class="mdescLeft">&#160;</td><td class="mdescRight">The pixel format feed SMARTDMA.  <a href="a00020.html#gaffa757480055b672331ad52d35306c56">More...</a><br/></td></tr>
+<tr class="separator:gaffa757480055b672331ad52d35306c56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga51c20654db7dcbb11cd0f19d5a0a787f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#ga51c20654db7dcbb11cd0f19d5a0a787f">_dsi_smartdma_output_pixel_format</a> { <br/>
+&#160;&#160;<a class="el" href="a00020.html#gga51c20654db7dcbb11cd0f19d5a0a787facba8245a06033ae0f418dd2a416039c2">kDSI_SMARTDMA_OutputPixelFormatRGB565</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00020.html#gga51c20654db7dcbb11cd0f19d5a0a787fa55ded7d1a1c65ef3597fbf0b5f8ba792">kDSI_SMARTDMA_OutputPixelFormatRGB888</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga51c20654db7dcbb11cd0f19d5a0a787f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The pixel format sent on MIPI DSI data lanes.  <a href="a00020.html#ga51c20654db7dcbb11cd0f19d5a0a787f">More...</a><br/></td></tr>
+<tr class="separator:ga51c20654db7dcbb11cd0f19d5a0a787f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga90d07af74388f302e2ad6ae6c97c5447"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#ga90d07af74388f302e2ad6ae6c97c5447">FSL_DSP_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00240.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 1))</td></tr>
-<tr class="memdesc:ga90d07af74388f302e2ad6ae6c97c5447"><td class="mdescLeft">&#160;</td><td class="mdescRight">dsp driver version 2.0.1.  <a href="#ga90d07af74388f302e2ad6ae6c97c5447">More...</a><br/></td></tr>
-<tr class="separator:ga90d07af74388f302e2ad6ae6c97c5447"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0a2c6009a16f7202be1b29dd85267939"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0a2c6009a16f7202be1b29dd85267939"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>FSL_MIPI_DSI_SMARTDMA_DRIVER_VERSION</b>&#160;&#160;&#160;(<a class="el" href="a00242.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 1))</td></tr>
+<tr class="separator:ga0a2c6009a16f7202be1b29dd85267939"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Transactional</h2></td></tr>
+<tr class="memitem:gaf3d9cdc377c8979d3db98755c1fffa49"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#gaf3d9cdc377c8979d3db98755c1fffa49">DSI_TransferCreateHandleSMARTDMA</a> (MIPI_DSI_HOST_Type *base, <a class="el" href="a00020.html#a00318">dsi_smartdma_handle_t</a> *handle, <a class="el" href="a00020.html#ga442ec962a06305495e8d54835cd5964d">dsi_smartdma_callback_t</a> callback, void *userData)</td></tr>
+<tr class="memdesc:gaf3d9cdc377c8979d3db98755c1fffa49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create the MIPI DSI SMARTDMA handle.  <a href="#gaf3d9cdc377c8979d3db98755c1fffa49">More...</a><br/></td></tr>
+<tr class="separator:gaf3d9cdc377c8979d3db98755c1fffa49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaab610e4650782052360353a674deb4f4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#gaab610e4650782052360353a674deb4f4">DSI_TransferWriteMemorySMARTDMA</a> (MIPI_DSI_HOST_Type *base, <a class="el" href="a00020.html#a00318">dsi_smartdma_handle_t</a> *handle, <a class="el" href="a00020.html#gab653b530a3ec38f0118d1c9c9dd6dcb1">dsi_smartdma_write_mem_transfer_t</a> *xfer)</td></tr>
+<tr class="memdesc:gaab610e4650782052360353a674deb4f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write display controller video memory using SMARTDMA.  <a href="#gaab610e4650782052360353a674deb4f4">More...</a><br/></td></tr>
+<tr class="separator:gaab610e4650782052360353a674deb4f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga864b8b8aa3015adf2243336f89244828"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#ga864b8b8aa3015adf2243336f89244828">DSI_TransferAbortSMARTDMA</a> (MIPI_DSI_HOST_Type *base, <a class="el" href="a00020.html#a00318">dsi_smartdma_handle_t</a> *handle)</td></tr>
+<tr class="memdesc:ga864b8b8aa3015adf2243336f89244828"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abort current APB data transfer.  <a href="#ga864b8b8aa3015adf2243336f89244828">More...</a><br/></td></tr>
+<tr class="separator:ga864b8b8aa3015adf2243336f89244828"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00343" id="a00343"></a>
+<a name="a00319" id="a00319"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct dsp_copy_image_t</td>
+          <td class="memname">struct _dsi_smartdma_write_mem_transfer</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>Defines start and destination address for copying image with given size. </p>
-</div>
-</div>
-</div>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga90d07af74388f302e2ad6ae6c97c5447"></a>
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:af01acbfbda7e4a83a2eafa18fddc0d57"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00020.html#ga65ee0550860a2737f547eb1826016179">dsi_smartdma_input_pixel_format_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#af01acbfbda7e4a83a2eafa18fddc0d57">inputFormat</a></td></tr>
+<tr class="memdesc:af01acbfbda7e4a83a2eafa18fddc0d57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input format.  <a href="#af01acbfbda7e4a83a2eafa18fddc0d57">More...</a><br/></td></tr>
+<tr class="separator:af01acbfbda7e4a83a2eafa18fddc0d57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11ffbe06a39e554ed08fe4518fcd6fca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00020.html#ga6dd94db15369d94b49f3530201b99c9b">dsi_smartdma_output_pixel_format_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#a11ffbe06a39e554ed08fe4518fcd6fca">outputFormat</a></td></tr>
+<tr class="memdesc:a11ffbe06a39e554ed08fe4518fcd6fca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output format.  <a href="#a11ffbe06a39e554ed08fe4518fcd6fca">More...</a><br/></td></tr>
+<tr class="separator:a11ffbe06a39e554ed08fe4518fcd6fca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13eed1fe2b28ded52ce31a228fe88c92"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#a13eed1fe2b28ded52ce31a228fe88c92">data</a></td></tr>
+<tr class="memdesc:a13eed1fe2b28ded52ce31a228fe88c92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the data to send.  <a href="#a13eed1fe2b28ded52ce31a228fe88c92">More...</a><br/></td></tr>
+<tr class="separator:a13eed1fe2b28ded52ce31a228fe88c92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf9893a50e1fa38336b6ff05e9e2080d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#aaf9893a50e1fa38336b6ff05e9e2080d">twoDimension</a></td></tr>
+<tr class="memdesc:aaf9893a50e1fa38336b6ff05e9e2080d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether to use 2-dimensional transfer.  <a href="#aaf9893a50e1fa38336b6ff05e9e2080d">More...</a><br/></td></tr>
+<tr class="separator:aaf9893a50e1fa38336b6ff05e9e2080d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0cbb6da7ab2dc17aef0356798abdd6c6"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#a0cbb6da7ab2dc17aef0356798abdd6c6">dataSize</a></td></tr>
+<tr class="memdesc:a0cbb6da7ab2dc17aef0356798abdd6c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The byte count to be write.  <a href="#a0cbb6da7ab2dc17aef0356798abdd6c6">More...</a><br/></td></tr>
+<tr class="separator:a0cbb6da7ab2dc17aef0356798abdd6c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e76ba07993409c7e6194031e70436c0"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#a4e76ba07993409c7e6194031e70436c0">minorLoop</a></td></tr>
+<tr class="memdesc:a4e76ba07993409c7e6194031e70436c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">SRC data transfer byte count in a minor loop, only used in 2-dimensional transfer.  <a href="#a4e76ba07993409c7e6194031e70436c0">More...</a><br/></td></tr>
+<tr class="separator:a4e76ba07993409c7e6194031e70436c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a117051371f74a15100ed04dfc499741c"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#a117051371f74a15100ed04dfc499741c">minorLoopOffset</a></td></tr>
+<tr class="memdesc:a117051371f74a15100ed04dfc499741c"><td class="mdescLeft">&#160;</td><td class="mdescRight">SRC data byte offset added after a minor loop, only used in 2-dimensional transfer.  <a href="#a117051371f74a15100ed04dfc499741c">More...</a><br/></td></tr>
+<tr class="separator:a117051371f74a15100ed04dfc499741c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54f0484b2a34a162d50b5cb67401c28d"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#a54f0484b2a34a162d50b5cb67401c28d">majorLoop</a></td></tr>
+<tr class="memdesc:a54f0484b2a34a162d50b5cb67401c28d"><td class="mdescLeft">&#160;</td><td class="mdescRight">SRC data transfer in a major loop of maw many minor loop is transfered, only used in 2-dimensional transfer.  <a href="#a54f0484b2a34a162d50b5cb67401c28d">More...</a><br/></td></tr>
+<tr class="separator:a54f0484b2a34a162d50b5cb67401c28d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb943a15eb0effe3d6f898962e41b909"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#afb943a15eb0effe3d6f898962e41b909">virtualChannel</a></td></tr>
+<tr class="memdesc:afb943a15eb0effe3d6f898962e41b909"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual channel used in the transfer, current driver always use channel 0, added for future enhancement.  <a href="#afb943a15eb0effe3d6f898962e41b909">More...</a><br/></td></tr>
+<tr class="separator:afb943a15eb0effe3d6f898962e41b909"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72e46e333b7e39f22c27cd9b6405ade4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#a72e46e333b7e39f22c27cd9b6405ade4">disablePixelByteSwap</a></td></tr>
+<tr class="memdesc:a72e46e333b7e39f22c27cd9b6405ade4"><td class="mdescLeft">&#160;</td><td class="mdescRight">If set to true, the pixels are filled to MIPI DSI FIFO directly.  <a href="#a72e46e333b7e39f22c27cd9b6405ade4">More...</a><br/></td></tr>
+<tr class="separator:a72e46e333b7e39f22c27cd9b6405ade4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="af01acbfbda7e4a83a2eafa18fddc0d57"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_DSP_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00240.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 1))</td>
+          <td class="memname"><a class="el" href="a00020.html#ga65ee0550860a2737f547eb1826016179">dsi_smartdma_input_pixel_format_t</a> _dsi_smartdma_write_mem_transfer::inputFormat</td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a11ffbe06a39e554ed08fe4518fcd6fca"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00020.html#ga6dd94db15369d94b49f3530201b99c9b">dsi_smartdma_output_pixel_format_t</a> _dsi_smartdma_write_mem_transfer::outputFormat</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a13eed1fe2b28ded52ce31a228fe88c92"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const uint8_t* _dsi_smartdma_write_mem_transfer::data</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aaf9893a50e1fa38336b6ff05e9e2080d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool _dsi_smartdma_write_mem_transfer::twoDimension</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a0cbb6da7ab2dc17aef0356798abdd6c6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t _dsi_smartdma_write_mem_transfer::dataSize</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>In 2-dimensional transfer, this parameter is ignored. </p>
+
+</div>
+</div>
+<a class="anchor" id="a4e76ba07993409c7e6194031e70436c0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t _dsi_smartdma_write_mem_transfer::minorLoop</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a117051371f74a15100ed04dfc499741c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t _dsi_smartdma_write_mem_transfer::minorLoopOffset</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a54f0484b2a34a162d50b5cb67401c28d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t _dsi_smartdma_write_mem_transfer::majorLoop</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="afb943a15eb0effe3d6f898962e41b909"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t _dsi_smartdma_write_mem_transfer::virtualChannel</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a72e46e333b7e39f22c27cd9b6405ade4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool _dsi_smartdma_write_mem_transfer::disablePixelByteSwap</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>If set to false, the pixel bytes are swapped then filled to MIPI DSI FIFO. For example, when set to false and frame buffer pixel format is RGB565: LSB MSB B0 B1 B2 B3 B4 G0 G1 G2 | G3 G4 G5 R0 R1 R2 R3 R4 Then the pixel filled to DSI FIFO is: LSB MSB G3 G4 G5 R0 R1 R2 R3 R4 | B0 B1 B2 B3 B4 G0 G1 G2 </p>
+
+</div>
+</div>
+
+</div>
+</div>
+<a name="a00318" id="a00318"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct _dsi_smartdma_handle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a42e73e82de98d589af3c373e6f18a3dc"><td class="memItemLeft" align="right" valign="top">MIPI_DSI_HOST_Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#a42e73e82de98d589af3c373e6f18a3dc">dsi</a></td></tr>
+<tr class="memdesc:a42e73e82de98d589af3c373e6f18a3dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">MIPI DSI peripheral.  <a href="#a42e73e82de98d589af3c373e6f18a3dc">More...</a><br/></td></tr>
+<tr class="separator:a42e73e82de98d589af3c373e6f18a3dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4808aacf374fd4a24b72c942a36fb1c0"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#a4808aacf374fd4a24b72c942a36fb1c0">isBusy</a></td></tr>
+<tr class="memdesc:a4808aacf374fd4a24b72c942a36fb1c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">MIPI DSI is busy with data transfer.  <a href="#a4808aacf374fd4a24b72c942a36fb1c0">More...</a><br/></td></tr>
+<tr class="separator:a4808aacf374fd4a24b72c942a36fb1c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad51847574da609cd064bfb85ada7c213"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad51847574da609cd064bfb85ada7c213"></a>
+<a class="el" href="a00020.html#ga442ec962a06305495e8d54835cd5964d">dsi_smartdma_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#ad51847574da609cd064bfb85ada7c213">callback</a></td></tr>
+<tr class="memdesc:ad51847574da609cd064bfb85ada7c213"><td class="mdescLeft">&#160;</td><td class="mdescRight">DSI callback. <br/></td></tr>
+<tr class="separator:ad51847574da609cd064bfb85ada7c213"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf45ec81e6cd256c0257f78042d0639e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abf45ec81e6cd256c0257f78042d0639e"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#abf45ec81e6cd256c0257f78042d0639e">userData</a></td></tr>
+<tr class="memdesc:abf45ec81e6cd256c0257f78042d0639e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback parameter. <br/></td></tr>
+<tr class="separator:abf45ec81e6cd256c0257f78042d0639e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff0075fd974acf3b6d1c52731be9d8d0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#aff0075fd974acf3b6d1c52731be9d8d0">smartdmaStack</a> [16]</td></tr>
+<tr class="memdesc:aff0075fd974acf3b6d1c52731be9d8d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stack for smartdma function.  <a href="#aff0075fd974acf3b6d1c52731be9d8d0">More...</a><br/></td></tr>
+<tr class="separator:aff0075fd974acf3b6d1c52731be9d8d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9121a79a9b7f4f4ce02cebc72857c85e"><td class="memItemLeft" align="right" valign="top">smartdma_dsi_param_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#a9121a79a9b7f4f4ce02cebc72857c85e">param</a></td></tr>
+<tr class="memdesc:a9121a79a9b7f4f4ce02cebc72857c85e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parameter for smartdma function.  <a href="#a9121a79a9b7f4f4ce02cebc72857c85e">More...</a><br/></td></tr>
+<tr class="separator:a9121a79a9b7f4f4ce02cebc72857c85e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97e211e0e9e978965283a2e67408d035"><td class="memItemLeft" align="right" valign="top">smartdma_dsi_2d_param_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00020.html#a97e211e0e9e978965283a2e67408d035">param2d</a></td></tr>
+<tr class="memdesc:a97e211e0e9e978965283a2e67408d035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parameter for 2-dimensional smartdma function.  <a href="#a97e211e0e9e978965283a2e67408d035">More...</a><br/></td></tr>
+<tr class="separator:a97e211e0e9e978965283a2e67408d035"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="a42e73e82de98d589af3c373e6f18a3dc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">MIPI_DSI_HOST_Type* _dsi_smartdma_handle::dsi</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a4808aacf374fd4a24b72c942a36fb1c0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile bool _dsi_smartdma_handle::isBusy</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a9121a79a9b7f4f4ce02cebc72857c85e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">smartdma_dsi_param_t _dsi_smartdma_handle::param</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a97e211e0e9e978965283a2e67408d035"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">smartdma_dsi_2d_param_t _dsi_smartdma_handle::param2d</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aff0075fd974acf3b6d1c52731be9d8d0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t _dsi_smartdma_handle::smartdmaStack[16]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga442ec962a06305495e8d54835cd5964d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* dsi_smartdma_callback_t)(MIPI_DSI_HOST_Type *base, <a class="el" href="a00020.html#a00318">dsi_smartdma_handle_t</a> *handle, <a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>When transfer finished, one of these status values will be passed to the user:</p>
+<ul>
+<li><a class="el" href="a00242.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a> Data transfer finished with no error. </li>
+</ul>
+
+</div>
+</div>
+<a class="anchor" id="ga65ee0550860a2737f547eb1826016179"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00020.html#gaffa757480055b672331ad52d35306c56">_dsi_smartdma_input_pixel_format</a>  <a class="el" href="a00020.html#ga65ee0550860a2737f547eb1826016179">dsi_smartdma_input_pixel_format_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga6dd94db15369d94b49f3530201b99c9b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00020.html#ga51c20654db7dcbb11cd0f19d5a0a787f">_dsi_smartdma_output_pixel_format</a>  <a class="el" href="a00020.html#ga6dd94db15369d94b49f3530201b99c9b">dsi_smartdma_output_pixel_format_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gab653b530a3ec38f0118d1c9c9dd6dcb1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00020.html#a00319">_dsi_smartdma_write_mem_transfer</a>  <a class="el" href="a00020.html#gab653b530a3ec38f0118d1c9c9dd6dcb1">dsi_smartdma_write_mem_transfer_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="gaffa757480055b672331ad52d35306c56"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00020.html#gaffa757480055b672331ad52d35306c56">_dsi_smartdma_input_pixel_format</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaffa757480055b672331ad52d35306c56ab394c612d33e5fc5efce1f38e72b0987"></a>kDSI_SMARTDMA_InputPixelFormatRGB565</em>&nbsp;</td><td class="fielddoc">
+<p>RGB565. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaffa757480055b672331ad52d35306c56af06b41ebb10171fccc23fb4d83e42ea4"></a>kDSI_SMARTDMA_InputPixelFormatRGB888</em>&nbsp;</td><td class="fielddoc">
+<p>RGB888. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaffa757480055b672331ad52d35306c56ac1928ed922b6ecbdfc7ee21d020a0019"></a>kDSI_SMARTDMA_InputPixelFormatXRGB8888</em>&nbsp;</td><td class="fielddoc">
+<p>XRGB8888. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga51c20654db7dcbb11cd0f19d5a0a787f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00020.html#ga51c20654db7dcbb11cd0f19d5a0a787f">_dsi_smartdma_output_pixel_format</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga51c20654db7dcbb11cd0f19d5a0a787facba8245a06033ae0f418dd2a416039c2"></a>kDSI_SMARTDMA_OutputPixelFormatRGB565</em>&nbsp;</td><td class="fielddoc">
+<p>RGB565. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga51c20654db7dcbb11cd0f19d5a0a787fa55ded7d1a1c65ef3597fbf0b5f8ba792"></a>kDSI_SMARTDMA_OutputPixelFormatRGB888</em>&nbsp;</td><td class="fielddoc">
+<p>RGB888. </p>
+</td></tr>
+</table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga4863922efe70c56bd3e3290e8fc679cd"></a>
+<a class="anchor" id="gaf3d9cdc377c8979d3db98755c1fffa49"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void DSP_Init </td>
+          <td class="memname"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DSI_TransferCreateHandleSMARTDMA </td>
           <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Power up DSP Enable DSP clock Reset DSP peripheral </p>
-
-</div>
-</div>
-<a class="anchor" id="gab5d092e0e49965d552de23d8989b5f27"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void DSP_SetVecRemap </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00020.html#gaab9c4d1f523f75e0be719b44497b9819">dsp_static_vec_sel_t</a>&#160;</td>
-          <td class="paramname"><em>statVecSel</em>, </td>
+          <td class="paramtype">MIPI_DSI_HOST_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>remap</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00020.html#a00318">dsi_smartdma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00020.html#ga442ec962a06305495e8d54835cd5964d">dsi_smartdma_callback_t</a>&#160;</td>
+          <td class="paramname"><em>callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>userData</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -221,39 +574,95 @@ Driver version</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">statVecSel</td><td>static vector base address selection </td></tr>
-    <tr><td class="paramname">remap</td><td>static vector remap, valid value from 0x0U to 0xFFFU </td></tr>
+    <tr><td class="paramname">base</td><td>MIPI DSI host peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>Handle pointer. </td></tr>
+    <tr><td class="paramname">callback</td><td>Callback function. </td></tr>
+    <tr><td class="paramname">userData</td><td>User data. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga5662406138adcee5605c0cbc289effc7"></a>
+<a class="anchor" id="gaab610e4650782052360353a674deb4f4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void DSP_CopyImage </td>
+          <td class="memname"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DSI_TransferWriteMemorySMARTDMA </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00020.html#a00343">dsp_copy_image_t</a> *&#160;</td>
-          <td class="paramname"><em>dspCopyImage</em></td><td>)</td>
+          <td class="paramtype">MIPI_DSI_HOST_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="a00020.html#a00318">dsi_smartdma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00020.html#gab653b530a3ec38f0118d1c9c9dd6dcb1">dsi_smartdma_write_mem_transfer_t</a> *&#160;</td>
+          <td class="paramname"><em>xfer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Copy DSP image from source address to destination address with given size.</p>
+<p>Perform data transfer using SMARTDMA, when transfer finished, upper layer could be informed through callback function.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">dspCopyImage</td><td>Structure contains information for DSP copy image to destination address. </td></tr>
+    <tr><td class="paramname">base</td><td>MIPI DSI host peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>pointer to dsi_smartdma_handle_t structure which stores the transfer state. </td></tr>
+    <tr><td class="paramname">xfer</td><td>Pointer to the transfer structure.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Data transfer started successfully. </td></tr>
+    <tr><td class="paramname">kStatus_DSI_Busy</td><td>Failed to start transfer because DSI is busy with pervious transfer. </td></tr>
+    <tr><td class="paramname">kStatus_DSI_NotSupported</td><td>Transfer format not supported. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga864b8b8aa3015adf2243336f89244828"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DSI_TransferAbortSMARTDMA </td>
+          <td>(</td>
+          <td class="paramtype">MIPI_DSI_HOST_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00020.html#a00318">dsi_smartdma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>MIPI DSI host peripheral base address. </td></tr>
+    <tr><td class="paramname">handle</td><td>pointer to dsi_smartdma_handle_t structure which stores the transfer state. </td></tr>
   </table>
   </dd>
 </dl>

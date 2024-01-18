@@ -9,7 +9,7 @@
 #include "includes.h"
 
 #ifdef CONFIG_WPS
-#include "common.h"
+#include "utils/common.h"
 #include "wps_defs.h"
 #include "wps_attr_parse.h"
 

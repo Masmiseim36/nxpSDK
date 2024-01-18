@@ -1,26 +1,31 @@
 var a00051 =
 [
-    [ "mrt_config_t", "a00051.html#a00409", [
-      [ "enableMultiTask", "a00051.html#aa8d8b810ee17770fd48674454f59bb08", null ]
+    [ "_mrt_config", "a00051.html#a00402", [
+      [ "enableMultiTask", "a00051.html#adf44f75ebc1e4c27ed0cf88c03c122d9", null ]
     ] ],
     [ "FSL_MRT_DRIVER_VERSION", "a00051.html#gae39f6122bd73a5156d40291962f7507f", null ],
-    [ "mrt_chnl_t", "a00051.html#gaece5c1972e35dec2efcce98847a09622", [
-      [ "kMRT_Channel_0", "a00051.html#ggaece5c1972e35dec2efcce98847a09622a27e83d437e2798b19c59c2af4d99e1dc", null ],
-      [ "kMRT_Channel_1", "a00051.html#ggaece5c1972e35dec2efcce98847a09622a44b7807f36fe0a21240e721d46d8f9d7", null ],
-      [ "kMRT_Channel_2", "a00051.html#ggaece5c1972e35dec2efcce98847a09622a17597fb66d9b1d3e97b318db79267f52", null ],
-      [ "kMRT_Channel_3", "a00051.html#ggaece5c1972e35dec2efcce98847a09622af57e6e009258a71bc3a2890aedff34b3", null ]
+    [ "mrt_chnl_t", "a00051.html#gaf78437e7a713ae57fd5c12135af514ba", null ],
+    [ "mrt_timer_mode_t", "a00051.html#gaff791fb43331fc1ae8f4e0d9003ac286", null ],
+    [ "mrt_interrupt_enable_t", "a00051.html#ga35fd7f67352e6660946fe980fcd4fc5d", null ],
+    [ "mrt_status_flags_t", "a00051.html#ga42f664094e65ac53728a8bb0dea0d641", null ],
+    [ "mrt_config_t", "a00051.html#gadb656916391d01109e84f6e5d97fd5c3", null ],
+    [ "_mrt_chnl", "a00051.html#ga05660f6ec5e7c0ac6204165d7ab9bf35", [
+      [ "kMRT_Channel_0", "a00051.html#gga05660f6ec5e7c0ac6204165d7ab9bf35a27e83d437e2798b19c59c2af4d99e1dc", null ],
+      [ "kMRT_Channel_1", "a00051.html#gga05660f6ec5e7c0ac6204165d7ab9bf35a44b7807f36fe0a21240e721d46d8f9d7", null ],
+      [ "kMRT_Channel_2", "a00051.html#gga05660f6ec5e7c0ac6204165d7ab9bf35a17597fb66d9b1d3e97b318db79267f52", null ],
+      [ "kMRT_Channel_3", "a00051.html#gga05660f6ec5e7c0ac6204165d7ab9bf35af57e6e009258a71bc3a2890aedff34b3", null ]
     ] ],
-    [ "mrt_timer_mode_t", "a00051.html#gad481f648f1c89a1eab327530d6fef1d0", [
-      [ "kMRT_RepeatMode", "a00051.html#ggad481f648f1c89a1eab327530d6fef1d0a6b415c060dc09ed293ec3dda829cb257", null ],
-      [ "kMRT_OneShotMode", "a00051.html#ggad481f648f1c89a1eab327530d6fef1d0abe4ba0a30bc09f1921a0504eb826b3dc", null ],
-      [ "kMRT_OneShotStallMode", "a00051.html#ggad481f648f1c89a1eab327530d6fef1d0add9f55173bb54f623c955c29c22dd5b2", null ]
+    [ "_mrt_timer_mode", "a00051.html#gae772c3f1dc986d55a787b987f731b389", [
+      [ "kMRT_RepeatMode", "a00051.html#ggae772c3f1dc986d55a787b987f731b389a6b415c060dc09ed293ec3dda829cb257", null ],
+      [ "kMRT_OneShotMode", "a00051.html#ggae772c3f1dc986d55a787b987f731b389abe4ba0a30bc09f1921a0504eb826b3dc", null ],
+      [ "kMRT_OneShotStallMode", "a00051.html#ggae772c3f1dc986d55a787b987f731b389add9f55173bb54f623c955c29c22dd5b2", null ]
     ] ],
-    [ "mrt_interrupt_enable_t", "a00051.html#ga9d2f90ae2c6f99410e2908dac8cc6943", [
-      [ "kMRT_TimerInterruptEnable", "a00051.html#gga9d2f90ae2c6f99410e2908dac8cc6943a2a5e8ee568da2c888093b732f2157ea5", null ]
+    [ "_mrt_interrupt_enable", "a00051.html#ga854d01b9575db5b6f0f7aaad49cf0c7d", [
+      [ "kMRT_TimerInterruptEnable", "a00051.html#gga854d01b9575db5b6f0f7aaad49cf0c7da2a5e8ee568da2c888093b732f2157ea5", null ]
     ] ],
-    [ "mrt_status_flags_t", "a00051.html#ga0bb94508d8cf924c3a6971364377673a", [
-      [ "kMRT_TimerInterruptFlag", "a00051.html#gga0bb94508d8cf924c3a6971364377673aa6942598faf3aef148a850f8850cf01c3", null ],
-      [ "kMRT_TimerRunFlag", "a00051.html#gga0bb94508d8cf924c3a6971364377673aa745c62687191197b48b35dbd1aac40db", null ]
+    [ "_mrt_status_flags", "a00051.html#ga13878b183833475306c8aabb81391a8a", [
+      [ "kMRT_TimerInterruptFlag", "a00051.html#gga13878b183833475306c8aabb81391a8aa6942598faf3aef148a850f8850cf01c3", null ],
+      [ "kMRT_TimerRunFlag", "a00051.html#gga13878b183833475306c8aabb81391a8aa745c62687191197b48b35dbd1aac40db", null ]
     ] ],
     [ "MRT_Init", "a00051.html#ga44091408531a61dfac7c4ee4982be317", null ],
     [ "MRT_Deinit", "a00051.html#ga5d988ee09b604ab28f1b37320ee8d2d9", null ],

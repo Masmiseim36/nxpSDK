@@ -22,8 +22,8 @@
 #ifndef SBTSNOOP_BYTES_PER_LINE_SHIFT
 /* using power of two to allow efficient shift
  * 4 means 16 characters, 5 means 32, ... */
-#define SBTSNOOP_BYTES_PER_LINE_SHIFT   4
-#define SBTSNOOP_BYTES_PER_LINE         (1 << SBTSNOOP_BYTES_PER_LINE_SHIFT)
+#define SBTSNOOP_BYTES_PER_LINE_SHIFT   4u
+#define SBTSNOOP_BYTES_PER_LINE         (1u << SBTSNOOP_BYTES_PER_LINE_SHIFT)
 #endif
 
 /* -------------------------------------------------------------------------- */

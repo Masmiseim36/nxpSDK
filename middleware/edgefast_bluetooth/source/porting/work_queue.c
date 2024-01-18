@@ -15,7 +15,23 @@
 #include "fsl_component_log.h"
 LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 
+
 #define DELAYED_TIMER_INTERVAL   10
+
+struct bt_work_queue {
+    bt_fifo_t fifo;
+	osa_task_handle_t thread;
+    OSA_TASK_HANDLE_DEFINE(threadHandle);
+};
+
+struct bt_delayed_work_queue
+{
+    bt_fifo_t fifo;
+    osa_mutex_handle_t mutex;
+    OSA_MUTEX_HANDLE_DEFINE(mutexHandle);
+    uint32_t                tick;
+};
+
 
 static struct bt_delayed_work_queue g_DelayedWorkQueueHead;
 static struct bt_work_queue s_workQueueHead;
@@ -34,13 +50,9 @@ static OSA_TASK_DEFINE(work_queue_task, CONFIG_WORK_QUEUE_TASK_PRIORITY, 1, CONF
 
 static void work_queue_trigger_delayed_work(void)
 {
-    static struct bt_work work = {NULL, NULL, 0};
-    struct bt_work *work_p = &work;
-    osa_status_t ret;
+    static BT_WORK_DEFINE(dummy, NULL);
 
-    ret = OSA_MsgQPut(s_workQueueHead.queue, &work_p);
-    assert(KOSA_StatusSuccess == ret);
-    (void)ret;
+    bt_fifo_put(&s_workQueueHead.fifo, &dummy.node);
 }
 
 static void work_queue_task(void *param)
@@ -49,7 +61,6 @@ static void work_queue_task(void *param)
     struct bt_work *work = NULL;
     bt_work_handler_t handler;
     uint32_t timeout;
-    osa_status_t ret;
 
     #define DELAY_WORK_TIMER_TASK_DELAY_FACTOR 0
     #define DELAY_WORK_TIMER_TASK_DELAY_TIME                                  \
@@ -60,10 +71,11 @@ static void work_queue_task(void *param)
     timeout = DELAY_WORK_TIMER_TASK_DELAY_TIME;
     do
     {
-        ret = OSA_MsgQGet(work_queue->queue, &work, timeout);
-        if ( KOSA_StatusSuccess == ret )
+        work = bt_fifo_get(&work_queue->fifo, timeout);
+
+        if (NULL != work)
         {
-            BT_INFO("%p, new task delegation\n", work);
+            LOG_INF("%p, new task delegation\n", work);
             handler = work->handler;
 
             /* Reset pending state so it can be resubmitted by handler */
@@ -73,25 +85,35 @@ static void work_queue_task(void *param)
                 if (NULL != handler)
                 {
                     handler(work);
-                    BT_INFO("%p, task delegation excuted\n", work);
+                    LOG_INF("%p, task delegation executed\n", work);
                 }
                 else
                 {
-                    BT_INFO("%p, invalid handler\n", work);
+                    LOG_INF("%p, invalid handler\n", work);
                 }
             }
         }
 
-        /* delay queue time schedulier */
+        /* delay queue time scheduler */
         delayed_work_queue_tick_update(&g_DelayedWorkQueueHead);
-        if (NULL != g_DelayedWorkQueueHead.pending)
+        (void)OSA_MutexLock(g_DelayedWorkQueueHead.mutex, osaWaitForever_c);
+        if (bt_fifo_is_empty(&g_DelayedWorkQueueHead.fifo) > 0)
         {
-            timeout = DELAY_WORK_TIMER_TASK_DELAY_TIME;
+            /*
+             * Wait forever if the delay queue is empty. The task will be waked up
+             * when there is a new node inserted into delay queue.
+             */
+            timeout = osaWaitForever_c;
         }
         else
         {
-            timeout = osaWaitForever_c;
+            /*
+             * Polling the delay queue if the queue is not empty.
+             */
+            timeout = DELAY_WORK_TIMER_TASK_DELAY_TIME;
         }
+        OSA_MutexUnlock(g_DelayedWorkQueueHead.mutex);
+
         /* Make sure we don't hog up the CPU if the FIFO never (or
          * very rarely) gets empty.
          */
@@ -103,7 +125,7 @@ static void delayed_work_queue_init(struct bt_delayed_work_queue *work_queue)
 {
     osa_status_t ret;
 
-    work_queue->pending = NULL;
+    bt_fifo_init(&work_queue->fifo);
     work_queue->tick = 0;
     ret = OSA_MutexCreate((osa_mutex_handle_t)work_queue->mutexHandle);
     if (KOSA_StatusSuccess == ret)
@@ -119,12 +141,7 @@ int bt_work_queue_init(void)
 
     delayed_work_queue_init(&g_DelayedWorkQueueHead);
 
-    ret = OSA_MsgQCreate((osa_msgq_handle_t)s_workQueueHead.queueHandle, CONFIG_WORK_QUEUE_MSG_QUEUE_COUNT, sizeof(void*));
-    assert (KOSA_StatusSuccess == ret);
-    if (KOSA_StatusSuccess == ret)
-    {
-        s_workQueueHead.queue = (osa_msgq_handle_t)s_workQueueHead.queueHandle;
-    }
+    bt_fifo_init(&s_workQueueHead.fifo);
 
     ret = OSA_TaskCreate((osa_task_handle_t)s_workQueueHead.threadHandle, OSA_TASK(work_queue_task), (void *)&s_workQueueHead);
     assert (KOSA_StatusSuccess == ret);
@@ -133,6 +150,11 @@ int bt_work_queue_init(void)
         s_workQueueHead.thread = (osa_task_handle_t)s_workQueueHead.threadHandle;
     }
     return (KOSA_StatusSuccess == ret) ? -1 : 0;
+}
+
+void *bt_work_queue_task_handle(void)
+{
+    return s_workQueueHead.thread;
 }
 
 int bt_work_init(struct bt_work *work, bt_work_handler_t handler)
@@ -150,7 +172,7 @@ static void bt_work_submit_to_queue(struct bt_work_queue *work_queue,
     if (!(work->state & BT_WORK_STATE_PENDING))
     {
         work->state |= BT_WORK_STATE_PENDING;
-        (void)OSA_MsgQPut(work_queue->queue, &work);
+        bt_fifo_put(&work_queue->fifo, &work->node);
     }
 }
 
@@ -175,45 +197,29 @@ void bt_delayed_work_queue_insert_head(struct bt_delayed_work_queue *work_queue,
     work->work.state |= BT_WORK_STATE_DELAY_PENDING;
 
     (void)OSA_MutexLock(work_queue->mutex, osaWaitForever_c);
-    if (NULL == work_queue->pending)
+    if (bt_fifo_is_empty(&work_queue->fifo) > 0)
     {
         work_queue->tick = OSA_TimeGetMsec();
     }
-    work->work.next = work_queue->pending;
-    work_queue->pending = work;
+    bt_fifo_prepend(&work_queue->fifo, &work->work.node);
     work_queue_trigger_delayed_work();
     OSA_MutexUnlock(work_queue->mutex);
 }
 
 void bt_delayed_work_queue_insert_tail(struct bt_delayed_work_queue *work_queue, struct bt_delayed_work *work)
 {
-    struct bt_delayed_work *p;
-    struct bt_delayed_work *q = NULL;
-
     if (0 != (work->work.state & BT_WORK_STATE_DELAY_PENDING))
     {
         return;
     }
     work->work.state |= BT_WORK_STATE_DELAY_PENDING;
 
-    work->work.next = NULL;
-
     (void)OSA_MutexLock(work_queue->mutex, osaWaitForever_c);
-    p = work_queue->pending;
-    while (NULL != p)
-    {
-        q = p;
-        p = (struct bt_delayed_work *)p->work.next;
-    }
-    if (NULL == q)
+    if (bt_fifo_is_empty(&work_queue->fifo) > 0)
     {
         work_queue->tick = OSA_TimeGetMsec();
-        work_queue->pending = work;
     }
-    else
-    {
-        q->work.next = work;
-    }
+    bt_fifo_append(&work_queue->fifo, &work->work.node);
     work_queue_trigger_delayed_work();
     OSA_MutexUnlock(work_queue->mutex);
 }
@@ -229,76 +235,39 @@ void bt_delayed_work_queue_insert_sort(struct bt_delayed_work_queue *work_queue,
     }
     work->work.state |= BT_WORK_STATE_DELAY_PENDING;
 
-    BT_INFO("%p, delay task submit with timeOut %d\n",work, work->timeOut);
-    work->work.next = NULL;
+    LOG_INF("%p, delay task submit with timeOut %d\n",work, work->timeOut);
 
     (void)OSA_MutexLock(work_queue->mutex, osaWaitForever_c);
-    p = work_queue->pending;
-    if (NULL == p)
+    if (bt_fifo_is_empty(&work_queue->fifo) > 0)
     {
         work_queue->tick = OSA_TimeGetMsec();
-        work_queue->pending = work;
     }
-    else
+
+    p = (struct bt_delayed_work *)work_queue->fifo.list.head;
+    while (NULL != p)
     {
-        while (NULL != p)
+        if (p->timeOut <= work->timeOut)
         {
-            if (p->timeOut <= work->timeOut)
-            {
-                q = p;
-                p = (struct bt_delayed_work *)p->work.next;
-            }
-            else
-            {
-                if (NULL == q)
-                {
-                    work->work.next = work_queue->pending;
-                    work_queue->pending = work;
-                }
-                else
-                {
-                    work->work.next = q->work.next;
-                    q->work.next = work;
-                }
-                break;
-            }
+            q = p;
+            p = (struct bt_delayed_work *)p->work.node.next;
         }
-        if (NULL == p)
+        else
         {
-            work->work.next = q->work.next;
-            q->work.next = work;
+            break;
         }
     }
+    bt_fifo_insert(&work_queue->fifo, q, &work->work.node);
     work_queue_trigger_delayed_work();
     OSA_MutexUnlock(work_queue->mutex);
 }
 
 void bt_delayed_work_queue_remove(struct bt_delayed_work_queue *work_queue, struct bt_delayed_work *work)
 {
-    struct bt_delayed_work *p;
-    struct bt_delayed_work *q = NULL;
-
     (void)OSA_MutexLock(work_queue->mutex, osaWaitForever_c);
-    p = work_queue->pending;
-    while ((NULL != p) && (p != work))
+    if (bt_fifo_remove(&work_queue->fifo, &work->work.node) == true)
     {
-        q = p;
-        p = (struct bt_delayed_work *)p->work.next;
+        work->work.state &= ~BT_WORK_STATE_DELAY_PENDING;
     }
-    if (p == work)
-    {
-        if (NULL == q)
-        {
-            work_queue->pending = (struct bt_delayed_work *)p->work.next;
-        }
-        else
-        {
-            q->work.next = p->work.next;
-        }
-        work->work.next = NULL;
-        p->work.state &= ~BT_WORK_STATE_DELAY_PENDING;
-    }
-
     OSA_MutexUnlock(work_queue->mutex);
 }
 
@@ -307,52 +276,27 @@ struct bt_delayed_work *k_delayed_work_queue_remove_head(struct bt_delayed_work_
     struct bt_delayed_work *p;
 
     (void)OSA_MutexLock(work_queue->mutex, osaWaitForever_c);
-    p = work_queue->pending;
-    if (NULL == p)
+    p = bt_fifo_get(&work_queue->fifo, 0);
+    if (NULL != p)
     {
-        work_queue->pending = NULL;
-        OSA_MutexUnlock(work_queue->mutex);
-        return p;
-    }
-    else
-    {
-        work_queue->pending = (struct bt_delayed_work *)p->work.next;
+        p->work.state &= ~BT_WORK_STATE_DELAY_PENDING;
     }
     OSA_MutexUnlock(work_queue->mutex);
-    p->work.state &= ~BT_WORK_STATE_DELAY_PENDING;
     return p;
 }
 
 struct bt_delayed_work *k_delayed_work_queue_remove_tail(struct bt_delayed_work_queue *work_queue)
 {
     struct bt_delayed_work *p;
-    struct bt_delayed_work *q = NULL;
 
     (void)OSA_MutexLock(work_queue->mutex, osaWaitForever_c);
-    p = work_queue->pending;
-    if (NULL == p)
+    p = bt_fifo_peek_tail(&work_queue->fifo);
+    if (NULL != p)
     {
-        OSA_MutexUnlock(work_queue->mutex);
-        return p;
-    }
-    else
-    {
-        while (NULL != p->work.next)
-        {
-            q = p;
-            p = (struct bt_delayed_work *)p->work.next;
-        }
-        if (NULL == q)
-        {
-            work_queue->pending = NULL;
-        }
-        else
-        {
-            q->work.next = NULL;
-        }
+        bt_fifo_remove(&work_queue->fifo, p);
+        p->work.state &= ~BT_WORK_STATE_DELAY_PENDING;
     }
     OSA_MutexUnlock(work_queue->mutex);
-    p->work.state &= ~BT_WORK_STATE_DELAY_PENDING;
     return p;
 }
 
@@ -366,7 +310,7 @@ static void delayed_work_queue_tick_update(struct bt_delayed_work_queue *work_qu
 
     (void)OSA_MutexLock(work_queue->mutex, osaWaitForever_c);
 
-    p = work_queue->pending;
+    p = bt_fifo_peek_head(&work_queue->fifo);
 
     if (NULL != p)
     {
@@ -389,7 +333,7 @@ static void delayed_work_queue_tick_update(struct bt_delayed_work_queue *work_qu
 
             while (NULL != p)
             {
-                q = (struct bt_delayed_work *)p->work.next;
+                q = (struct bt_delayed_work *)p->work.node.next;
                 if (p->timeOut > delta)
                 {
                     p->timeOut -= delta;
@@ -397,14 +341,14 @@ static void delayed_work_queue_tick_update(struct bt_delayed_work_queue *work_qu
                 else
                 {
                     p->timeOut = 0;
-                    BT_INFO("%p, delay task timeout\n",(uint32_t)p);
+                    LOG_INF("%p, delay task timeout\n",(uint32_t)p);
                     bt_delayed_work_queue_remove(work_queue, p);
                     temp = (void *)p;
                     bt_work_submit((struct bt_work *)temp);
                 }
                 p = q;
             }
-        } while(0 != 1);
+        } while(false);
     }
     OSA_MutexUnlock(work_queue->mutex);
 }
@@ -435,7 +379,7 @@ int bt_delayed_work_submit(struct bt_delayed_work *work, int32_t delay)
     }
     else
     {
-        BT_WARN("%p, delay task has been submit %d\n", work, delay);
+        LOG_WRN("%p, delay task has been submit %d\n", work, delay);
     }
 
     return 0;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2020 Cadence Design Systems, Inc.
+ * Copyright (c) 2011-2023 Cadence Design Systems, Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -150,7 +150,7 @@ VOID xa_testbench_error_handler_init(void)
 xa_error_info_struct xa_src_pp_error_info =
 {
     /* The Module Name	*/
-    "Tensilica Audio Sample Rate Converter",
+    "Cadence Audio Sample Rate Converter",
     {
         /* The Class Names	*/
         "API",

@@ -9,7 +9,7 @@
 #ifndef CLI_H
 #define CLI_H
 
-#include "utils/wlist.h"
+#include "utils/dl_list.h"
 
 extern const char *const cli_license;
 extern const char *const cli_full_license;

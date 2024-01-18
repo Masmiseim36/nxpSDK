@@ -7,10 +7,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 /*
-* Comments:
-*
-*   HTTPSRV script functions.
-*/
+ * Comments:
+ *
+ *   HTTPSRV script functions.
+ */
 
 #include "httpsrv.h"
 #include "httpsrv_prv.h"
@@ -71,35 +71,36 @@ void httpsrv_call_cgi(HTTPSRV_CGI_CALLBACK_FN function,
     HTTPSRV_CGI_REQ_STRUCT cgi_param;
     char server_ip[HTTPSRV_ADDR_STR_SIZE];
     char remote_ip[HTTPSRV_ADDR_STR_SIZE];
-    struct sockaddr l_address;
-    struct sockaddr r_address;
+    struct sockaddr_storage l_address;
+    struct sockaddr_storage r_address;
     socklen_t length = sizeof(struct sockaddr);
 
     /* Fill callback parameter */
-    cgi_param.ses_handle = (uint32_t)session;
+    cgi_param.ses_handle     = (uint32_t)session;
     cgi_param.request_method = session->request.method;
-    cgi_param.content_type = (HTTPSRV_CONTENT_TYPE)session->request.content_type;
+    cgi_param.content_type   = (HTTPSRV_CONTENT_TYPE)session->request.content_type;
     cgi_param.content_length = session->request.content_length;
 
-    getsockname(session->sock, &l_address, &length);
-    getpeername(session->sock, &r_address, &length);
+    getsockname(session->sock, (struct sockaddr *)&l_address, &length);
+    getpeername(session->sock, (struct sockaddr *)&r_address, &length);
+
 #if LWIP_IPV6
-    if (l_address.sa_family == AF_INET6)
+    if (l_address.ss_family == AF_INET6)
     {
-        inet_ntop(l_address.sa_family, ((struct sockaddr_in6 *)&l_address)->sin6_addr.s6_addr, server_ip,
+        inet_ntop(l_address.ss_family, ((struct sockaddr_in6 *)&l_address)->sin6_addr.s6_addr, server_ip,
                   sizeof(server_ip));
-        inet_ntop(r_address.sa_family, ((struct sockaddr_in6 *)&r_address)->sin6_addr.s6_addr, remote_ip,
+        inet_ntop(r_address.ss_family, ((struct sockaddr_in6 *)&r_address)->sin6_addr.s6_addr, remote_ip,
                   sizeof(remote_ip));
         cgi_param.server_port = ((struct sockaddr_in6 *)&l_address)->sin6_port;
     }
     else
 #endif
 #if LWIP_IPV4
-    if (l_address.sa_family == AF_INET)
+        if (l_address.ss_family == AF_INET)
     {
-        inet_ntop(l_address.sa_family, &((struct sockaddr_in *)&l_address)->sin_addr.s_addr, server_ip,
+        inet_ntop(l_address.ss_family, &((struct sockaddr_in *)&l_address)->sin_addr.s_addr, server_ip,
                   sizeof(server_ip));
-        inet_ntop(r_address.sa_family, &((struct sockaddr_in *)&r_address)->sin_addr.s_addr, remote_ip,
+        inet_ntop(r_address.ss_family, &((struct sockaddr_in *)&r_address)->sin_addr.s_addr, remote_ip,
                   sizeof(remote_ip));
         cgi_param.server_port = ((struct sockaddr_in *)&l_address)->sin_port;
     }
@@ -108,14 +109,14 @@ void httpsrv_call_cgi(HTTPSRV_CGI_CALLBACK_FN function,
     {
     }
 
-    cgi_param.auth_type = HTTPSRV_AUTH_BASIC;
-    cgi_param.remote_user = session->request.auth.user_id;
-    cgi_param.remote_addr = remote_ip;
-    cgi_param.server_name = server_ip;
-    cgi_param.script_name = name;
-    cgi_param.server_protocol = HTTPSRV_PROTOCOL_STRING;
-    cgi_param.server_software = HTTPSRV_PRODUCT_STRING;
-    cgi_param.query_string = session->request.query;
+    cgi_param.auth_type         = HTTPSRV_AUTH_BASIC;
+    cgi_param.remote_user       = session->request.auth.user_id;
+    cgi_param.remote_addr       = remote_ip;
+    cgi_param.server_name       = server_ip;
+    cgi_param.script_name       = name;
+    cgi_param.server_protocol   = HTTPSRV_PROTOCOL_STRING;
+    cgi_param.server_software   = HTTPSRV_PRODUCT_STRING;
+    cgi_param.query_string      = session->request.query;
     cgi_param.gateway_interface = HTTPSRV_CGI_VERSION_STRING;
 
     /* Call the function */
@@ -143,7 +144,7 @@ void httpsrv_call_ssi(HTTPSRV_SSI_CALLBACK_FN function,
     HTTPSRV_SSI_PARAM_STRUCT ssi_param;
 
     ssi_param.ses_handle = (uint32_t)session;
-    tmp = strchr(name, ':');
+    tmp                  = strchr(name, ':');
     if (tmp != NULL)
     {
         *tmp++ = '\0';
@@ -174,14 +175,14 @@ void httpsrv_script_handler(HTTPSRV_STRUCT *server,
 
         user_function = NULL;
         /*
-        * There are two options:
-        * 1. User set stack size to 0 and script callback will be run from this task.
-        * 2. User set stack size > 0 and script callback will be run in separate task.
-        */
+         * There are two options:
+         * 1. User set stack size to 0 and script callback will be run from this task.
+         * 2. User set stack size > 0 and script callback will be run in separate task.
+         */
         switch (type)
         {
             case HTTPSRV_CGI_CALLBACK:
-                table = (HTTPSRV_FN_LINK_STRUCT *)server->params.cgi_lnk_tbl;
+                table         = (HTTPSRV_FN_LINK_STRUCT *)server->params.cgi_lnk_tbl;
                 user_function = httpsrv_find_callback(table, name);
 
                 /* Option No.1a - Run User CGI function here. */

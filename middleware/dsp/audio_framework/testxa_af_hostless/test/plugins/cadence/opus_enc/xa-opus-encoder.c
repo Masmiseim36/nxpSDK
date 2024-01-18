@@ -130,7 +130,7 @@ static XA_ERRORCODE xa_opus_encoder_init(XA_OPUS_Encoder *d, WORD32 i_idx, pVOID
     case XA_CMD_TYPE_INIT_API_PRE_CONFIG_PARAMS:
         {
             memset(d, 0, sizeof(*d));
-            
+
             /* ...init defaults */
             d->frame_size = 320;
             d->sample_rate = 16000;
@@ -324,7 +324,7 @@ static XA_ERRORCODE xa_opus_encoder_execute(XA_OPUS_Encoder *d, WORD32 i_idx, pV
         WORD32 frame_bytes = d->channels * d->frame_size * (d->pcm_width/8);
 
     	d->produced = 0;
-    	d->consumed = 0; 
+    	d->consumed = 0;
 #if 1
         if(d->input_avail < frame_bytes)
         {
@@ -504,12 +504,13 @@ static XA_ERRORCODE xa_opus_encoder_get_mem_info_size(XA_OPUS_Encoder *d, WORD32
 
     case 2:
         /* ...scratch buffer */
-        *(WORD32 *)pv_value = xa_opus_enc_get_scratch_byte_size();
+        *(WORD32 *)pv_value = xa_opus_enc_get_scratch_byte_size(d->channels, d->sample_rate);
         return XA_NO_ERROR;
 
     default:
         /* ...invalid index */
-        return XF_CHK_ERR(0, XA_API_FATAL_INVALID_CMD_TYPE);
+        TRACE(ERROR, _x("check failed"));
+        return XA_API_FATAL_INVALID_CMD_TYPE;
     }
 
     return XA_NO_ERROR;
@@ -556,7 +557,8 @@ static XA_ERRORCODE xa_opus_encoder_get_mem_info_type(XA_OPUS_Encoder *d, WORD32
 
     default:
         /* ...invalid index */
-        return XF_CHK_ERR(0, XA_API_FATAL_INVALID_CMD_TYPE);
+        TRACE(ERROR, _x("check failed"));
+        return XA_API_FATAL_INVALID_CMD_TYPE;
     }
 }
 
@@ -588,7 +590,8 @@ static XA_ERRORCODE xa_opus_encoder_set_mem_ptr(XA_OPUS_Encoder *d, WORD32 i_idx
 
     default:
         /* ...invalid index */
-        return XF_CHK_ERR(0, XA_API_FATAL_INVALID_CMD_TYPE);
+        TRACE(ERROR, _x("check failed"));
+        return XA_API_FATAL_INVALID_CMD_TYPE;
     }
 
     return XA_NO_ERROR;

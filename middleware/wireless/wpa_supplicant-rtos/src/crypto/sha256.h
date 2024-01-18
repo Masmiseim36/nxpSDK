@@ -9,6 +9,8 @@
 #ifndef SHA256_H
 #define SHA256_H
 
+#include <utils/common.h>
+
 #define SHA256_MAC_LEN 32
 
 int hmac_sha256_vector(const u8 *key, size_t key_len, size_t num_elem, const u8 *addr[], const size_t *len, u8 *mac);

@@ -10,7 +10,7 @@
 #define EAP_I_H
 
 #include "wpabuf.h"
-#include "utils/wlist.h"
+#include "utils/dl_list.h"
 #include "eap_peer/eap.h"
 #include "eap_common/eap_common.h"
 

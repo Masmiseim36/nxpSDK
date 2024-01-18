@@ -16,7 +16,7 @@ Change log:
 #include <mlan_api.h>
 #include "mlan_mbo.h"
 
-#ifdef CONFIG_MBO
+#ifdef CONFIG_DRIVER_MBO
 #define WNM_NOTIFICATION_SIZE 200U
 /********************************************************
                 Local Variables
@@ -164,4 +164,4 @@ void wlan_send_mgmt_wnm_notification(
     os_mem_free(pmgmt_pkt_hdr);
 }
 
-#endif /* CONFIG_MBO */
+#endif /* CONFIG_DRIVER_MBO */

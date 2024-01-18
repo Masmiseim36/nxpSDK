@@ -9,9 +9,10 @@
 #include "mbedtls/build_info.h"
 
 #if defined(ELS) && MBEDTLS_MCUX_ELS
-#include <mcuxClCss.h>               /* Interface to the entire nxpClCss component */
+#include <mcuxClEls.h>               /* Interface to the entire nxpClEls component */
+#include <mcuxClHashModes.h>
 #include <mcuxClMemory.h>
-#include <fsl_css.h>
+#include <mcux_els.h>
 #include <mbedtls/platform.h>
 #include <mbedtls/platform_util.h>
 #include <mbedtls/error.h>
@@ -28,11 +29,13 @@ status_t mbecrypto_mcux_els_init(void)
     if(els_init_is_done == false)
     {
         /* Enable ELS and related clocks */
-        status = CSS_PowerDownWakeupInit(ELS);
+        status = ELS_PowerDownWakeupInit(ELS);
         if (status == kStatus_Success)
         {
             els_init_is_done = true;
         }
+        /* Enable GDET interrupt, input event to ITRC */
+        ELS->ELS_INT_ENABLE |= S50_ELS_INT_ENABLE_GDET_INT_EN_MASK;
     }
     else
     {
@@ -150,9 +153,9 @@ int mbedtls_aes_setkey_dec( mbedtls_aes_context *ctx,
 
 
 /*
- * AES-ECB block en/decryption with CSS
+ * AES-ECB block en/decryption with ELS
  */
-static int mbedtls_internal_aes_css( mbedtls_aes_context *ctx,
+static int mbedtls_internal_aes_els( mbedtls_aes_context *ctx,
                                      const unsigned char *pInput,
                                      unsigned char *pOutput,
                                      mcuxClCss_CipherOption_t cssCipherOption,
@@ -207,14 +210,14 @@ int mbedtls_internal_aes_encrypt( mbedtls_aes_context *ctx,
         .bits.cphsie = MCUXCLCSS_CIPHER_STATE_IN_DISABLE,
         .bits.extkey = MCUXCLCSS_CIPHER_EXTERNAL_KEY };
 
-    /* Initialize CSS */
+    /* Initialize ELS */
     status_t ret_hw_init = mbecrypto_mcux_els_init();
     if( kStatus_Success != ret_hw_init)
     {
         return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
     }
 
-    return mbedtls_internal_aes_css(ctx, input, output, cipherOption, NULL, 16u);
+    return mbedtls_internal_aes_els(ctx, input, output, cipherOption, NULL, 16u);
 }
 
 
@@ -232,14 +235,14 @@ int mbedtls_internal_aes_decrypt( mbedtls_aes_context *ctx,
         .bits.cphsie = MCUXCLCSS_CIPHER_STATE_IN_DISABLE,
         .bits.extkey = MCUXCLCSS_CIPHER_EXTERNAL_KEY };
 
-    /* Initialize CSS */
+    /* Initialize ELS */
     status_t ret_hw_init = mbecrypto_mcux_els_init();
     if(kStatus_Success != ret_hw_init)
     {
         return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
     }
 
-    return mbedtls_internal_aes_css(ctx, input, output, cipherOption, NULL, 16u);
+    return mbedtls_internal_aes_els(ctx, input, output, cipherOption, NULL, 16u);
 }
 
 
@@ -315,14 +318,14 @@ int mbedtls_aes_crypt_cbc( mbedtls_aes_context *ctx,
             }
         }
 
-        /* Initialize CSS */
+        /* Initialize ELS */
         status_t ret_hw_init = mbecrypto_mcux_els_init();
         if( kStatus_Success != ret_hw_init)
         {
             return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
         }
 
-        int retCode = mbedtls_internal_aes_css(ctx, input, output, cipherOption, iv, length);
+        int retCode = mbedtls_internal_aes_els(ctx, input, output, cipherOption, iv, length);
         if (0 != retCode)
         {
             return retCode;
@@ -508,7 +511,7 @@ int mbedtls_aes_crypt_xts( mbedtls_aes_xts_context *ctx,
 }
 #endif /* MBEDTLS_CIPHER_MODE_XTS */
 
-#if defined(MBEDTLS_CIPHER_MODE_CFB)
+#if defined(MBEDTLS_CIPHER_MODE_CFB) /* Not HW accelerated, just a copy */
 /*
  * AES-CFB128 buffer encryption/decryption
  */
@@ -607,7 +610,7 @@ int mbedtls_aes_crypt_cfb8( mbedtls_aes_context *ctx,
 }
 #endif /* MBEDTLS_CIPHER_MODE_CFB */
 
-#if defined(MBEDTLS_CIPHER_MODE_OFB)
+#if defined(MBEDTLS_CIPHER_MODE_OFB) /* Not HW accelerated, just a copy */
 /*
  * AES-OFB (Output Feedback Mode) buffer encryption/decryption
  */
@@ -702,18 +705,18 @@ int mbedtls_aes_crypt_ctr( mbedtls_aes_context *ctx,
             .bits.cphsie = MCUXCLCSS_CIPHER_STATE_IN_ENABLE,
             .bits.extkey = MCUXCLCSS_CIPHER_EXTERNAL_KEY };
 
-        /* Initialize CSS */
+        /* Initialize ELS */
         status_t ret_hw_init = mbecrypto_mcux_els_init();
         if(kStatus_Success != ret_hw_init)
         {
             return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
         }
 
-        /* En/decrypt full block(s) with CSS. */
+        /* En/decrypt full block(s) with ELS. */
         uint32_t remainLengthFullBlock = remainLength & (~ (uint32_t) 15u);
         if (0u != remainLengthFullBlock)
         {
-            int retCode = mbedtls_internal_aes_css(ctx, pInput, pOutput, cipherOption, nonce_counter, remainLengthFullBlock);
+            int retCode = mbedtls_internal_aes_els(ctx, pInput, pOutput, cipherOption, nonce_counter, remainLengthFullBlock);
             if (0 != retCode)
             {
                 /* unexpected error. */
@@ -742,7 +745,7 @@ int mbedtls_aes_crypt_ctr( mbedtls_aes_context *ctx,
             } while (i < 16u);
 
             /* En/decrypt the last block. */
-            int retCode = mbedtls_internal_aes_css(ctx, stream_block, stream_block, cipherOption, nonce_counter, 16u);
+            int retCode = mbedtls_internal_aes_els(ctx, stream_block, stream_block, cipherOption, nonce_counter, 16u);
             if (0 != retCode)
             {
                 /* unexpected error. */
@@ -807,7 +810,7 @@ void mbedtls_sha256_clone( mbedtls_sha256_context *dst,
     SHA256_VALIDATE( dst != NULL );
     SHA256_VALIDATE( src != NULL );
 
-    *dst = *src;
+    memcpy(dst, src, sizeof(*dst));
 }
 
 int mbedtls_sha256_starts (mbedtls_sha256_context *ctx, int is224)
@@ -817,7 +820,7 @@ int mbedtls_sha256_starts (mbedtls_sha256_context *ctx, int is224)
         return MBEDTLS_ERR_ERROR_GENERIC_ERROR;
     }
 
-    /* Initialize CSS */
+    /* Initialize ELS */
     status_t ret_hw_init = mbecrypto_mcux_els_init();
     if(kStatus_Success != ret_hw_init)
     {
@@ -825,22 +828,22 @@ int mbedtls_sha256_starts (mbedtls_sha256_context *ctx, int is224)
     }
 
     mcuxClSession_Descriptor_t session_descriptor;
-    const mcuxClHash_AlgorithmDescriptor_t * pHash_algo;
+    const mcuxClHash_Algo_t* pHash_algo;
 
-    mcuxClHash_Context_t pContext = (mcuxClHash_Context_t)ctx->context;
+    mcuxClHash_Context_t pContext = (mcuxClHash_Context_t) ctx->context;
 
     mcuxClSession_Handle_t session = &session_descriptor;
 
     if(0u == is224)
     {
-        pHash_algo = mcuxClHash_Algorithm_Sha256;
+        pHash_algo = &mcuxClHash_Algorithm_Sha256;
     }
     else
     {
-        pHash_algo = mcuxClHash_Algorithm_Sha224;
+        pHash_algo = &mcuxClHash_Algorithm_Sha224;
     }
-    
-    uint32_t workarea[MCUXCLHASH_COMPUTE_CPU_WA_BUFFER_SIZE_MAX];
+
+    uint32_t workarea[MCUXCLHASH_COMPUTE_CPU_WA_BUFFER_SIZE_MAX/sizeof(uint32_t)];
 
     MCUX_CSSL_FP_FUNCTION_CALL_PROTECTED(restSessionInit, tokenSessionInit, mcuxClSession_init(
             session,
@@ -858,7 +861,7 @@ int mbedtls_sha256_starts (mbedtls_sha256_context *ctx, int is224)
         return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
     }
 
-    MCUX_CSSL_FP_FUNCTION_CALL_PROTECTED(retInit, tokenInit, mcuxClHash_init(session, pContext, pHash_algo));
+    MCUX_CSSL_FP_FUNCTION_CALL_PROTECTED(retInit, tokenInit, mcuxClHash_init(session, pContext, *pHash_algo));
 
     if(MCUX_CSSL_FP_FUNCTION_CALLED(mcuxClHash_init) != tokenInit)
     {
@@ -876,21 +879,15 @@ int mbedtls_sha256_update (mbedtls_sha256_context *ctx,
                                const unsigned char *input,
                                size_t ilen)
 {
-    /* Updated input validation check as per SW implementation*/
-    if((ctx == NULL) || 
-       (ilen != 0 && input == NULL))
+    if(ctx == NULL || (input == NULL && ilen != 0u))
     {
         return MBEDTLS_ERR_ERROR_GENERIC_ERROR;
     }
-  
-    if( ilen == 0 )
-        return( 0 );
-    
-    mcuxClSession_Descriptor_t session_descriptor;
-    mcuxClHash_Context_t pContext = (mcuxClHash_Context_t)ctx->context;
-    mcuxClSession_Handle_t session = &session_descriptor;
 
-    uint32_t workarea[MCUXCLHASH_COMPUTE_CPU_WA_BUFFER_SIZE_MAX];
+    mcuxClSession_Descriptor_t session_descriptor;
+    mcuxClSession_Handle_t session = &session_descriptor;
+    mcuxClHash_Context_t pContext = (mcuxClHash_Context_t) ctx->context;
+    uint32_t workarea[MCUXCLHASH_COMPUTE_CPU_WA_BUFFER_SIZE_MAX/sizeof(uint32_t)];
 
     MCUX_CSSL_FP_FUNCTION_CALL_PROTECTED(restSessionInit, tokenSessionInit, mcuxClSession_init(
             session,
@@ -908,7 +905,10 @@ int mbedtls_sha256_update (mbedtls_sha256_context *ctx,
         return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
     }
 
+
+
     MCUX_CSSL_FP_FUNCTION_CALL_PROTECTED(retUpdate, tokenUpdate, mcuxClHash_process(session, pContext, input, ilen));
+
     if(MCUX_CSSL_FP_FUNCTION_CALLED(mcuxClHash_process) != tokenUpdate)
     {
         return MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;
@@ -921,8 +921,11 @@ int mbedtls_sha256_update (mbedtls_sha256_context *ctx,
     return 0;
 }
 
-int mbedtls_sha256_finish( mbedtls_sha256_context *ctx, unsigned char *output )
+int mbedtls_sha256_finish (mbedtls_sha256_context *ctx,
+                               unsigned char *output)
 {
+    uint32_t outputSize = 0;
+
     if(ctx == NULL || output == NULL)
     {
         return MBEDTLS_ERR_ERROR_GENERIC_ERROR;
@@ -930,9 +933,9 @@ int mbedtls_sha256_finish( mbedtls_sha256_context *ctx, unsigned char *output )
 
     mcuxClSession_Descriptor_t session_descriptor;
     mcuxClSession_Handle_t session = &session_descriptor;
-    mcuxClHash_Context_t pContext = (mcuxClHash_Context_t)ctx->context;
+    mcuxClHash_Context_t pContext = (mcuxClHash_Context_t) ctx->context;
 
-    uint32_t workarea[MCUXCLHASH_COMPUTE_CPU_WA_BUFFER_SIZE_MAX];
+    uint32_t workarea[MCUXCLHASH_COMPUTE_CPU_WA_BUFFER_SIZE_MAX/sizeof(uint32_t)];
 
     MCUX_CSSL_FP_FUNCTION_CALL_PROTECTED(restSessionInit, tokenSessionInit, mcuxClSession_init(
             session,
@@ -950,8 +953,8 @@ int mbedtls_sha256_finish( mbedtls_sha256_context *ctx, unsigned char *output )
         return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
     }
 
-    uint32_t hashOutputSize = 0;
-    MCUX_CSSL_FP_FUNCTION_CALL_PROTECTED(retFinish, tokenFinish, mcuxClHash_finish(session, pContext, output, &hashOutputSize));
+
+    MCUX_CSSL_FP_FUNCTION_CALL_PROTECTED(retFinish, tokenFinish, mcuxClHash_finish(session, pContext, output, &outputSize));
 
     MCUX_CSSL_FP_FUNCTION_CALL_PROTECTED(retCleanup, tokenCleanup, mcuxClSession_cleanup(session));
     MCUX_CSSL_FP_FUNCTION_CALL_PROTECTED(retDestroy, toeknDestroy, mcuxClSession_destroy(session));
@@ -1009,7 +1012,7 @@ void mbedtls_sha512_clone( mbedtls_sha512_context *dst,
     SHA512_VALIDATE( dst != NULL );
     SHA512_VALIDATE( src != NULL );
 
-    *dst = *src;
+    memcpy(dst, src, sizeof(*dst));
 }
 
 int mbedtls_sha512_starts (mbedtls_sha512_context *ctx, int is384)
@@ -1018,8 +1021,8 @@ int mbedtls_sha512_starts (mbedtls_sha512_context *ctx, int is384)
     {
         return MBEDTLS_ERR_ERROR_GENERIC_ERROR;
     }
- 
-    /* Initialize CSS */
+
+    /* Initialize ELS */
     status_t ret_hw_init = mbecrypto_mcux_els_init();
     if(kStatus_Success != ret_hw_init)
     {
@@ -1027,22 +1030,22 @@ int mbedtls_sha512_starts (mbedtls_sha512_context *ctx, int is384)
     }
 
     mcuxClSession_Descriptor_t session_descriptor;
-    const mcuxClHash_AlgorithmDescriptor_t * pHash_algo;
+    const mcuxClHash_Algo_t* pHash_algo;
 
-    mcuxClHash_Context_t pContext = (mcuxClHash_Context_t)ctx->context;
+    mcuxClHash_Context_t pContext = (mcuxClHash_Context_t) ctx->context;
 
     mcuxClSession_Handle_t session = &session_descriptor;
 
     if(0u == is384)
     {
-        pHash_algo = mcuxClHash_Algorithm_Sha512;
+        pHash_algo = &mcuxClHash_Algorithm_Sha512;
     }
     else
     {
-        pHash_algo = mcuxClHash_Algorithm_Sha384;
+        pHash_algo = &mcuxClHash_Algorithm_Sha384;
     }
- 
-    uint32_t workarea[MCUXCLHASH_COMPUTE_CPU_WA_BUFFER_SIZE_MAX];
+
+    uint32_t workarea[MCUXCLHASH_COMPUTE_CPU_WA_BUFFER_SIZE_MAX/sizeof(uint32_t)];
 
     MCUX_CSSL_FP_FUNCTION_CALL_PROTECTED(restSessionInit, tokenSessionInit, mcuxClSession_init(
             session,
@@ -1060,7 +1063,7 @@ int mbedtls_sha512_starts (mbedtls_sha512_context *ctx, int is384)
         return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
     }
 
-    MCUX_CSSL_FP_FUNCTION_CALL_PROTECTED(retInit, tokenInit, mcuxClHash_init(session, pContext, pHash_algo));
+    MCUX_CSSL_FP_FUNCTION_CALL_PROTECTED(retInit, tokenInit, mcuxClHash_init(session, pContext, *pHash_algo));
 
     if(MCUX_CSSL_FP_FUNCTION_CALLED(mcuxClHash_init) != tokenInit)
     {
@@ -1078,7 +1081,7 @@ int mbedtls_sha512_update(mbedtls_sha512_context *ctx,
                                const unsigned char *input,
                                size_t ilen)
 {
-    if(ctx == NULL || input == NULL)
+    if(ctx == NULL || (input == NULL && ilen != 0u))
     {
         return MBEDTLS_ERR_ERROR_GENERIC_ERROR;
     }
@@ -1087,7 +1090,7 @@ int mbedtls_sha512_update(mbedtls_sha512_context *ctx,
     mcuxClSession_Handle_t session = &session_descriptor;
     mcuxClHash_Context_t pContext = (mcuxClHash_Context_t)ctx->context;
 
-    uint32_t workarea[MCUXCLHASH_COMPUTE_CPU_WA_BUFFER_SIZE_MAX];
+    uint32_t workarea[MCUXCLHASH_COMPUTE_CPU_WA_BUFFER_SIZE_MAX/sizeof(uint32_t)];
 
     MCUX_CSSL_FP_FUNCTION_CALL_PROTECTED(restSessionInit, tokenSessionInit, mcuxClSession_init(
             session,
@@ -1106,6 +1109,7 @@ int mbedtls_sha512_update(mbedtls_sha512_context *ctx,
     }
 
     MCUX_CSSL_FP_FUNCTION_CALL_PROTECTED(retUpdate, tokenUpdate, mcuxClHash_process(session, pContext, input, ilen));
+
     if(MCUX_CSSL_FP_FUNCTION_CALLED(mcuxClHash_process) != tokenUpdate)
     {
         return MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;
@@ -1119,8 +1123,10 @@ int mbedtls_sha512_update(mbedtls_sha512_context *ctx,
 }
 
 int mbedtls_sha512_finish(mbedtls_sha512_context *ctx,
-                               unsigned char output[64])
+                               unsigned char *output)
 {
+    uint32_t outputSize = 0;
+
     if(ctx == NULL || output == NULL)
     {
         return MBEDTLS_ERR_ERROR_GENERIC_ERROR;
@@ -1128,9 +1134,9 @@ int mbedtls_sha512_finish(mbedtls_sha512_context *ctx,
 
     mcuxClSession_Descriptor_t session_descriptor;
     mcuxClSession_Handle_t session = &session_descriptor;
-    mcuxClHash_Context_t pContext = (mcuxClHash_Context_t)ctx->context;
+    mcuxClHash_Context_t pContext = (mcuxClHash_Context_t) ctx->context;
 
-    uint32_t workarea[MCUXCLHASH_COMPUTE_CPU_WA_BUFFER_SIZE_MAX];
+    uint32_t workarea[MCUXCLHASH_COMPUTE_CPU_WA_BUFFER_SIZE_MAX/sizeof(uint32_t)];
 
     MCUX_CSSL_FP_FUNCTION_CALL_PROTECTED(restSessionInit, tokenSessionInit, mcuxClSession_init(
             session,
@@ -1148,8 +1154,7 @@ int mbedtls_sha512_finish(mbedtls_sha512_context *ctx,
         return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
     }
 
-    uint32_t hashOutputSize = 0;
-    MCUX_CSSL_FP_FUNCTION_CALL_PROTECTED(retFinish, tokenFinish, mcuxClHash_finish(session, pContext, output, &hashOutputSize));
+    MCUX_CSSL_FP_FUNCTION_CALL_PROTECTED(retFinish, tokenFinish, mcuxClHash_finish(session, pContext, output, &outputSize));
 
     MCUX_CSSL_FP_FUNCTION_CALL_PROTECTED(retCleanup, tokenCleanup, mcuxClSession_cleanup(session));
     MCUX_CSSL_FP_FUNCTION_CALL_PROTECTED(retDestroy, toeknDestroy, mcuxClSession_destroy(session));
@@ -1169,11 +1174,12 @@ int mbedtls_sha512_finish(mbedtls_sha512_context *ctx,
 }
 
 int mbedtls_internal_sha512_process(mbedtls_sha512_context *ctx,
-                                    const unsigned char data[64])
+                                    const unsigned char data[128])
 {
     return 0;
 }
 
 #endif /* MBEDTLS_MCUX_ELS_SHA512 && MBEDTLS_SHA512_ALT && MBEDTLS_SHA512_C */
 
-#endif /* CSS && MBEDTLS_MCUX_ELS */
+
+#endif /* ELS && MBEDTLS_MCUX_ELS */

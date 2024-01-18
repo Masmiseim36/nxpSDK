@@ -1,9 +1,9 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016, 2023 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -20,24 +20,24 @@
 
 #include "lwip/sys.h"
 
-#define HTTPSRV_PRODUCT_STRING "HTTPSRV/0.1 - NXP Embedded Web Server v0.1"
-#define HTTPSRV_PROTOCOL_STRING "HTTP/1.1"
-#define HTTPSRV_CGI_VERSION_STRING "CGI/1.1"
-#define HTTPSRV_VALID (1)
-#define HTTPSRV_INVALID (0)
-#define HTTPSRV_SES_BUF_SIZE_PRV (HTTPSRV_CFG_SES_BUFFER_SIZE)
-#define HTTPSRV_TMP_BUFFER_SIZE (128)
+#define HTTPSRV_PRODUCT_STRING      "HTTPSRV/0.1 - NXP Embedded Web Server v0.1"
+#define HTTPSRV_PROTOCOL_STRING     "HTTP/1.1"
+#define HTTPSRV_CGI_VERSION_STRING  "CGI/1.1"
+#define HTTPSRV_VALID               (1)
+#define HTTPSRV_INVALID             (0)
+#define HTTPSRV_SES_BUF_SIZE_PRV    (HTTPSRV_CFG_SES_BUFFER_SIZE)
+#define HTTPSRV_TMP_BUFFER_SIZE     (128)
 #define HTTPSRV_PLUGIN_NUM_MESSAGES (5)
 
-#define HTTPSRV_FLAG_PROCESS_HEADER (1 << 0)     /* Flag for indication of header processing */
-#define HTTPSRV_FLAG_HAS_HOST (1 << 1)           /* Flag determining if request header has "host" field */
-#define HTTPSRV_FLAG_DO_UPGRADE (1 << 2)         /* Flag indicating if client requested connection upgrade. */
-#define HTTPSRV_FLAG_IS_CACHEABLE (1 << 3)       /* Determines if response is cacheable */
-#define HTTPSRV_FLAG_IS_TRANSCODED (1 << 4)      /* Transcoding flag */
-#define HTTPSRV_FLAG_IS_KEEP_ALIVE (1 << 5)      /* Keep-alive status for the session */
+#define HTTPSRV_FLAG_PROCESS_HEADER     (1 << 0) /* Flag for indication of header processing */
+#define HTTPSRV_FLAG_HAS_HOST           (1 << 1) /* Flag determining if request header has "host" field */
+#define HTTPSRV_FLAG_DO_UPGRADE         (1 << 2) /* Flag indicating if client requested connection upgrade. */
+#define HTTPSRV_FLAG_IS_CACHEABLE       (1 << 3) /* Determines if response is cacheable */
+#define HTTPSRV_FLAG_IS_TRANSCODED      (1 << 4) /* Transcoding flag */
+#define HTTPSRV_FLAG_IS_KEEP_ALIVE      (1 << 5) /* Keep-alive status for the session */
 #define HTTPSRV_FLAG_KEEP_ALIVE_ENABLED (1 << 6) /* Keep-alive enabled/disabled for session */
 #define HTTPSRV_FLAG_HAS_CONTENT_LENGTH (1 << 7) /* Flag signalizing presence of Content-Length in request. */
-#define HTTPSRV_FLAG_HEADER_SENT (1 << 8)        /* Flag signalizing if response header was sent. */
+#define HTTPSRV_FLAG_HEADER_SENT        (1 << 8) /* Flag signalizing if response header was sent. */
 
 /*
 **  Wildcard typedef for CGI/SSI callback prototype
@@ -82,8 +82,8 @@ typedef enum httpsrv_callback_type
 } HTTPSRV_CALLBACK_TYPE;
 
 /*
-* HTTP session state machine status
-*/
+ * HTTP session state machine status
+ */
 typedef enum httpsrv_ses_state
 {
     HTTPSRV_SES_WAIT_REQ,
@@ -105,8 +105,8 @@ typedef enum httpsrv_upgrade_prot
 } HTTPSRV_UPGRADE_PROT;
 
 /*
-* HTTP request parameters
-*/
+ * HTTP request parameters
+ */
 typedef struct httpsrv_req_struct
 {
     HTTPSRV_REQ_METHOD method;       /* Request method (GET, POST, HEAD) */
@@ -121,8 +121,8 @@ typedef struct httpsrv_req_struct
 } HTTPSRV_REQ_STRUCT;
 
 /*
-* HTTP response parameters
-*/
+ * HTTP response parameters
+ */
 typedef struct httpsrv_res_struct
 {
     HTTPSRV_FS_FILE *file;                       /* Handle to a file to send */
@@ -134,8 +134,8 @@ typedef struct httpsrv_res_struct
 } HTTPSRV_RES_STRUCT;
 
 /*
-* HTTP session buffer
-*/
+ * HTTP session buffer
+ */
 typedef struct httpsrv_buffer
 {
     uint32_t offset; /* Write offset */
@@ -148,8 +148,8 @@ typedef struct httpsrv_buffer
 typedef void (*HTTPSRV_SES_FUNC)(void *server, void *session);
 
 /*
-* HTTP session structure
-*/
+ * HTTP session structure
+ */
 typedef struct httpsrv_session_struct
 {
     HTTPSRV_SES_FUNC process_func; /* Session process function */
@@ -159,11 +159,11 @@ typedef struct httpsrv_session_struct
     volatile uint32_t
         time;         /* Session time. Updated when there is some activity in session. Used for timeout detection. */
     uint32_t timeout; /* Session timeout in ms. timeout_time = time + timeout */
-    HTTPSRV_BUFF_STRUCT buffer;       /* Session internal read/write buffer */
-    HTTPSRV_REQ_STRUCT request;       /* Data read from the request */
-    HTTPSRV_RES_STRUCT response;      /* Response data */
-    sys_sem_t lock;                   /* Session lock */
-    volatile sys_thread_t script_tid; /* Session script handler */
+    HTTPSRV_BUFF_STRUCT buffer;        /* Session internal read/write buffer */
+    HTTPSRV_REQ_STRUCT request;        /* Data read from the request */
+    HTTPSRV_RES_STRUCT response;       /* Response data */
+    sys_sem_t lock;                    /* Session lock */
+    volatile sys_thread_t script_tid;  /* Session script handler */
 #if HTTPSRV_CFG_WEBSOCKET_ENABLED
     const WS_PLUGIN_STRUCT *plugin;    /* Plugin to be invoked for session. */
     WS_HANDSHAKE_STRUCT *ws_handshake; /* WebSocket hand-shake */
@@ -193,15 +193,16 @@ typedef struct httpsrv_plugin_msg
 */
 typedef struct httpsrv_struct
 {
-    HTTPSRV_PARAM_STRUCT params;               /* server parameters */
-    volatile int sock;                         /* listening socket*/
-    HTTPSRV_SESSION_STRUCT *volatile *session; /* array of pointers to sessions */
+    HTTPSRV_PARAM_STRUCT params;               /* Server parameters */
+    volatile int sock;                         /* Listening socket */
+    HTTPSRV_SESSION_STRUCT *volatile *session; /* Array of pointers to sessions */
     volatile uint32_t valid;                   /* Any value different than HTTPSRV_VALID means session is invalid */
     volatile sys_thread_t server_tid;          /* Server task ID */
     void *script_msgq;                         /* Message queue for CGI */
     sys_sem_t ses_cnt;                         /* Session counter */
+    sys_sem_t finished;        /* Server finished, field is used after httpsrv_destroy_server is called */
 #if HTTPSRV_CFG_WOLFSSL_ENABLE || HTTPSRV_CFG_MBEDTLS_ENABLE
-    httpsrv_tls_ctx_t   tls_ctx;               /* TLS context.*/
+    httpsrv_tls_ctx_t tls_ctx; /* TLS context */
 #endif
 } HTTPSRV_STRUCT;
 

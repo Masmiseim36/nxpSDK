@@ -13,7 +13,7 @@
 #include "utils/base64.h"
 #include "utils/eloop.h"
 #include "utils/uuid.h"
-#include "utils/wlist.h"
+#include "utils/dl_list.h"
 #include "crypto/crypto.h"
 #include "crypto/sha256.h"
 #include "crypto/random.h"

@@ -15,10 +15,6 @@
 /* --------------------------------------------- Header File Inclusion */
 /* Bluetooth Common Header */
 #include "BT_common.h"
-#include "BT_device_queue.h"
-#include "BT_hci_api.h"
-#include "BT_smp_api.h"
-#include "BT_att_api.h"
 /* GATT DB Interface API Header */
 #include "BT_gatt_db_api.h"
 /* GATT DB Platform Header */

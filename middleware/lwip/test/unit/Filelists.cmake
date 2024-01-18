@@ -24,6 +24,7 @@ set(LWIP_TESTFILES
 	${LWIP_TESTDIR}/core/test_pbuf.c
 	${LWIP_TESTDIR}/core/test_timers.c
 	${LWIP_TESTDIR}/dhcp/test_dhcp.c
+	${LWIP_TESTDIR}/dhcp6/test_dhcp6.c
 	${LWIP_TESTDIR}/etharp/test_etharp.c
 	${LWIP_TESTDIR}/ip4/test_ip4.c
 	${LWIP_TESTDIR}/ip6/test_ip6.c
@@ -31,6 +32,8 @@ set(LWIP_TESTFILES
 	${LWIP_TESTDIR}/mqtt/test_mqtt.c
 	${LWIP_TESTDIR}/tcp/tcp_helper.c
 	${LWIP_TESTDIR}/tcp/test_tcp_oos.c
+	${LWIP_TESTDIR}/tcp/test_tcp_state.c
 	${LWIP_TESTDIR}/tcp/test_tcp.c
 	${LWIP_TESTDIR}/udp/test_udp.c
+	${LWIP_TESTDIR}/ppp/test_pppos.c
 )

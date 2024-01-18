@@ -8,7 +8,9 @@
 
 #include "includes.h"
 
-#include "common.h"
+#ifdef CONFIG_EAP_PEAP
+
+#include "utils/common.h"
 #include "crypto/sha1.h"
 #include "eap_peap_common.h"
 
@@ -95,3 +97,5 @@ int peap_prfplus(int version,
 
     return 0;
 }
+
+#endif /* CONFIG_EAP_PEAP */

@@ -642,7 +642,8 @@ VOID conv2d_std_init_cir_buf(
 }
 
 // Add x_stride (but not more than kernel_width) x (input_height x input_channels) new planes to circular buffer
-VOID conv2d_std_update_cir_buf(
+// Slow version of conv2d_std_update_cir_buf with fewer requirements
+VOID conv2d_std_update_cir_buf_slow(
     WORD32 input_channels,
     WORD32 input_channels_pad,
     WORD32 input_bytewidth,
@@ -739,6 +740,87 @@ VOID conv2d_std_update_cir_buf(
     }
     AE_ADDCIRC16X4_XC((ae_int16x4 *)p_dst, planes_to_keep * input_channels_pad * input_bytewidth);
   }
+  *pp_inp = (VOID *)p_inp;
+}
+
+// Add x_stride (but not more than kernel_width) x (input_height x input_channels) new planes to circular buffer
+VOID conv2d_std_update_cir_buf(
+    WORD32 input_channels,
+    WORD32 input_channels_pad,
+    WORD32 input_bytewidth,
+    WORD32 input_width,
+    WORD32 input_height,
+    WORD32 y_padding,
+    WORD32 y_b_pad,
+    WORD32 x_padding,
+    WORD32 kernel_width,
+    WORD32 x_stride,
+    VOID **pp_inp,
+    WORD32 idx_beg_inp_width_pad,
+    xa_nn_conv_state_t *p_state)
+{
+  if (y_padding != 0 || y_b_pad != 0 || x_padding != 0) {
+    conv2d_std_update_cir_buf_slow(
+      input_channels,
+      input_channels_pad,
+      input_bytewidth,
+      input_width,
+      input_height,
+      y_padding,
+      y_b_pad,
+      x_padding,
+      kernel_width,
+      x_stride,
+      pp_inp,
+      idx_beg_inp_width_pad,
+      p_state
+    );
+    return;
+  }
+
+  WORD32 i,k;
+  WORD8 *p_inp = (WORD8 *)*pp_inp;
+  WORD32 planes_to_add = x_stride > kernel_width ? kernel_width : x_stride;
+  WORD32 planes_to_keep = kernel_width - planes_to_add;
+
+  // Copy 'planes_to_add' planes of data to circular buffer
+  AE_ADDCIRC16X4_XC((ae_int16x4 *)p_state->cir_buf.p_curr, planes_to_add * input_channels_pad * input_bytewidth);
+  WORD8 *p_dst = (WORD8 *)p_state->cir_buf.p_curr;
+  AE_ADDCIRC16X4_XC((ae_int16x4 *)p_dst, planes_to_keep * input_channels_pad * input_bytewidth);
+
+  WORD32 copy_inp_width = planes_to_add;
+  WORD32 to_skip_inp_width = x_stride - planes_to_add;     // Non-zero for x_stride > kernel_width
+
+  int size = input_channels * input_bytewidth;
+  if (size <= 32) {
+    for(i=0;i<input_height;i++)
+    {
+      for(k=0;k<copy_inp_width;k++)
+      {
+        for (int j = 0; j < size; ++j) {
+          p_dst[j] = p_inp[j];
+        }
+        AE_ADDCIRC16X4_XC((ae_int16x4 *)p_dst, input_channels_pad * input_bytewidth);
+        p_inp += input_channels * input_bytewidth;
+      }
+      AE_ADDCIRC16X4_XC((ae_int16x4 *)p_dst, planes_to_keep * input_channels_pad * input_bytewidth);
+      p_inp += (input_width - copy_inp_width) * input_channels * input_bytewidth;
+    }
+  } else {
+    for(i=0;i<input_height;i++)
+    {
+      for(k=0;k<copy_inp_width;k++)
+      {
+        memcpy(p_dst, p_inp, input_channels * input_bytewidth);
+        AE_ADDCIRC16X4_XC((ae_int16x4 *)p_dst, input_channels_pad * input_bytewidth);
+        p_inp += input_channels * input_bytewidth;
+      }
+      AE_ADDCIRC16X4_XC((ae_int16x4 *)p_dst, planes_to_keep * input_channels_pad * input_bytewidth);
+      p_inp += (input_width - copy_inp_width) * input_channels * input_bytewidth;
+    }
+  }
+  p_inp += (-input_height * input_width + copy_inp_width + to_skip_inp_width) * input_channels * input_bytewidth;
+
   *pp_inp = (VOID *)p_inp;
 }
 

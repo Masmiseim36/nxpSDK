@@ -3523,8 +3523,6 @@ static int has_valid_context_buffer(vg_lite_context_t *context)
 {
     if(context == NULL)
         return 0;
-    if(context->context_buffer == NULL)
-        return 0;
 
     return 1;
 }
@@ -7136,12 +7134,10 @@ vg_lite_error_t vg_lite_close(void)
     ctx->init = 0;
 #else
     /* Reset the draw context. */
-    if(tls->t_context.colors){
-        free(ctx->colors[0]);
-        free(ctx->colors[1]);
-        free(ctx->colors[2]);
-        free(ctx->colors[3]);
-    }
+    free(ctx->colors[0]);
+    free(ctx->colors[1]);
+    free(ctx->colors[2]);
+    free(ctx->colors[3]);
 
     _memset(ctx, 0, sizeof(*ctx));
 

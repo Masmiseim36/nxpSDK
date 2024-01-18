@@ -8,7 +8,9 @@
 
 #include "includes.h"
 
-#include "common.h"
+#ifdef CONFIG_EAP_TTLS
+
+#include "utils/common.h"
 #include "crypto/ms_funcs.h"
 #include "crypto/sha1.h"
 #include "crypto/tls.h"
@@ -1869,3 +1871,5 @@ int eap_peer_ttls_register(void)
 
     return eap_peer_method_register(eap);
 }
+
+#endif /* CONFIG_EAP_TTLS */

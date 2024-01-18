@@ -10,7 +10,7 @@
 #define CONFIG_SSID_H
 
 #include "common/defs.h"
-#include "utils/wlist.h"
+#include "utils/dl_list.h"
 #include "eap_peer/eap_config.h"
 
 #define DEFAULT_EAP_WORKAROUND ((unsigned int)-1)
@@ -939,7 +939,6 @@ struct wpa_ssid
     u8 mka_psk_set;
 #endif /* CONFIG_MACSEC */
 
-#ifdef CONFIG_HS20
     int update_identifier;
 
     /**
@@ -954,7 +953,6 @@ struct wpa_ssid
      * roaming_consortium_selection_len - roaming_consortium_selection len
      */
     size_t roaming_consortium_selection_len;
-#endif /* CONFIG_HS20 */
 
     unsigned int wps_run;
 

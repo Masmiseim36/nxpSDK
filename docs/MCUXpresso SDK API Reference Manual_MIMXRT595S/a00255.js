@@ -1,5 +1,7 @@
 var a00255 =
 [
-    [ "HASHCRYPT_SHA_SetCallback", "a00255.html#gaf7a0a7647b12bbfa27490a1ecf84ed75", null ],
-    [ "HASHCRYPT_SHA_UpdateNonBlocking", "a00255.html#ga19c0131424db9a618d164fdb6ffa470e", null ]
+    [ "FSL_FMEAS_DRIVER_VERSION", "a00255.html#ga7e2e250eaaf238c7cb05de6a5fad038b", null ],
+    [ "FMEAS_StartMeasure", "a00255.html#gaf1392245996cea51e17175085a0c3cef", null ],
+    [ "FMEAS_IsMeasureComplete", "a00255.html#ga39ff45995edf620470c1397b1edd83b5", null ],
+    [ "FMEAS_GetFrequency", "a00255.html#gac6ee7be474a37d4c17120b54fc8b856a", null ]
 ];

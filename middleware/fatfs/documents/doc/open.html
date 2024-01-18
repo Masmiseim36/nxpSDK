@@ -86,7 +86,7 @@ Mode flags in POSIX fopen() function corresponds to FatFs mode flags as follows:
 
 <div class="para desc">
 <h4>Description</h4>
-<p>The <tt>f_open</tt> function opens a file and creates a <em>file object</em>. The file object is used for subsequent read/write operations to the file to identify the file. Open file should be closed with <a href="close.html"><tt>f_close</tt></a> function after the session of the file access. If any change to the file is made and not closed prior to power down, media removal or re-mount, or the file can be collapsed.</p>
+<p>The <tt>f_open</tt> function opens a file and creates a <em>file object</em>. The file object is an identifier for subsequent operations to the file. Open file should be closed with <a href="close.html"><tt>f_close</tt></a> function after the session of the file access. If any change to the file has been made and not closed prior to power off, media removal or re-mount, or the file can be collapsed.</p>
 <p>If duplicated file open is needed, read <a href="appnote.html#dup">here</a> carefully. However duplicated open of a file with any write mode flag is always prohibited.</p>
 </div>
 

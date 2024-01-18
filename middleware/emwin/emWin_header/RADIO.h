@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2022  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2023  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.32 - Graphical user interface for embedded applications **
+** emWin V6.34 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2023-09-03
+SUA period:               2011-08-19 - 2024-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : RADIO.h
@@ -146,28 +146,30 @@ GUI_COLOR        RADIO_GetDefaultTextColor (void);
 **********************************************************************
 */
 
-void               RADIO_AddValue     (RADIO_Handle hObj, int Add);
-void               RADIO_Dec          (RADIO_Handle hObj);
-GUI_COLOR          RADIO_GetBkColor   (RADIO_Handle hObj);
-GUI_COLOR          RADIO_GetFocusColor(RADIO_Handle hObj);
-const GUI_FONT *   RADIO_GetFont      (RADIO_Handle hObj);
-const GUI_BITMAP * RADIO_GetImage     (RADIO_Handle hObj, unsigned int Index);
-int                RADIO_GetNumItems  (RADIO_Handle hObj);
-U16                RADIO_GetSpacing   (RADIO_Handle hObj);
-int                RADIO_GetText      (RADIO_Handle hObj, unsigned Index, char * pBuffer, int MaxLen);
-GUI_COLOR          RADIO_GetTextColor (RADIO_Handle hObj);
-int                RADIO_GetUserData  (RADIO_Handle hObj, void * pDest, int NumBytes);
-void               RADIO_Inc          (RADIO_Handle hObj);
-void               RADIO_SetBkColor   (RADIO_Handle hObj, GUI_COLOR Color);
-GUI_COLOR          RADIO_SetFocusColor(RADIO_Handle hObj, GUI_COLOR Color);
-void               RADIO_SetFont      (RADIO_Handle hObj, const GUI_FONT * pFont);
-void               RADIO_SetGroupId   (RADIO_Handle hObj, U8 GroupId);
-void               RADIO_SetImage     (RADIO_Handle hObj, const GUI_BITMAP * pBitmap, unsigned int Index);
-void               RADIO_SetSpacing   (RADIO_Handle hObj, U16 Spacing);
-void               RADIO_SetText      (RADIO_Handle hObj, const char* pText, unsigned Index);
-void               RADIO_SetTextColor (RADIO_Handle hObj, GUI_COLOR Color);
-void               RADIO_SetValue     (RADIO_Handle hObj, int v);
-int                RADIO_SetUserData  (RADIO_Handle hObj, const void * pSrc, int NumBytes);
+void               RADIO_AddValue       (RADIO_Handle hObj, int Add);
+void               RADIO_Dec            (RADIO_Handle hObj);
+GUI_COLOR          RADIO_GetBkColor     (RADIO_Handle hObj);
+GUI_COLOR          RADIO_GetFocusColor  (RADIO_Handle hObj);
+const GUI_FONT *   RADIO_GetFont        (RADIO_Handle hObj);
+const GUI_BITMAP * RADIO_GetImage       (RADIO_Handle hObj, unsigned int Index);
+int                RADIO_GetNumItems    (RADIO_Handle hObj);
+U16                RADIO_GetSpacing     (RADIO_Handle hObj);
+int                RADIO_GetText        (RADIO_Handle hObj, unsigned Index, char * pBuffer, int MaxLen);
+GUI_COLOR          RADIO_GetTextColor   (RADIO_Handle hObj);
+int                RADIO_GetUserData    (RADIO_Handle hObj, void * pDest, int NumBytes);
+void               RADIO_Inc            (RADIO_Handle hObj);
+void               RADIO_SetBkColor     (RADIO_Handle hObj, GUI_COLOR Color);
+GUI_COLOR          RADIO_SetFocusColor  (RADIO_Handle hObj, GUI_COLOR Color);
+void               RADIO_SetFont        (RADIO_Handle hObj, const GUI_FONT * pFont);
+void               RADIO_SetGroupId     (RADIO_Handle hObj, U8 GroupId);
+void               RADIO_SetImage       (RADIO_Handle hObj, const GUI_BITMAP * pBitmap, unsigned int Index);
+void               RADIO_SetReactOnLevel(void);  // Not to be documented
+void               RADIO_SetReactOnTouch(void);  // Not to be documented
+void               RADIO_SetSpacing     (RADIO_Handle hObj, U16 Spacing);
+void               RADIO_SetText        (RADIO_Handle hObj, const char* pText, unsigned Index);
+void               RADIO_SetTextColor   (RADIO_Handle hObj, GUI_COLOR Color);
+void               RADIO_SetValue       (RADIO_Handle hObj, int v);
+int                RADIO_SetUserData    (RADIO_Handle hObj, const void * pSrc, int NumBytes);
 
 /*********************************************************************
 *

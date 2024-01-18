@@ -136,7 +136,7 @@ static int bt_aes_128_encrypt(const uint8_t in[16],
     API_RESULT retval;
     uint8_t status;
 
-    BT_DBG("key %s in %s", bt_hex(key, 16), bt_hex(in, 16));
+    LOG_DBG("key %s in %s", bt_hex(key, 16), bt_hex(in, 16));
 
     sys_memcpy_swap(tmpKey, key, 16);
     sys_memcpy_swap(tmpIn, in, 16);
@@ -184,7 +184,7 @@ static int bt_aes_128_encrypt(const uint8_t in[16],
 
     status = cb_data.status;
     if (status) {
-            BT_WARN("status 0x%02x", status);
+            LOG_WRN("status 0x%02x", status);
             switch (status) {
             case BT_HCI_ERR_CONN_LIMIT_EXCEEDED:
                     return -ECONNREFUSED;
@@ -295,6 +295,9 @@ int prng_init(void)
 int bt_rand(void *buf, size_t len)
 {
     uint32_t rng;
+	if (buf == NULL || len == 0) {
+		return -EINVAL;
+	}
 
     for (size_t index = 0; index < len; index+=sizeof(rng))
     {
@@ -323,8 +326,12 @@ int bt_encrypt_le(const uint8_t key[16], const uint8_t plaintext[16],
 	int err;
 	uint8_t tmpKey[16];
 	uint8_t tmpPlaintext[16];
+        
+	if (key == NULL || plaintext == NULL || enc_data == NULL) {
+		return -EINVAL;
+	}
 
-	BT_DBG("key %s plaintext %s", bt_hex(key, 16), bt_hex(plaintext, 16));
+	LOG_DBG("key %s plaintext %s", bt_hex(key, 16), bt_hex(plaintext, 16));
 
 	sys_memcpy_swap(tmpKey, key, 16);
 	sys_memcpy_swap(tmpPlaintext, plaintext, 16);
@@ -334,11 +341,11 @@ int bt_encrypt_le(const uint8_t key[16], const uint8_t plaintext[16],
 	if (0 == err)
 	{
 		sys_mem_swap(enc_data, 16);
-		BT_DBG("enc_data %s", bt_hex(enc_data, 16));
+		LOG_DBG("enc_data %s", bt_hex(enc_data, 16));
 	}
 	else
 	{
-		BT_ERR("AES 128 Encrypt failed (error %d)", err);
+		LOG_ERR("AES 128 Encrypt failed (error %d)", err);
 	}
 
 	return err;
@@ -347,11 +354,11 @@ int bt_encrypt_le(const uint8_t key[16], const uint8_t plaintext[16],
 int bt_encrypt_be(const uint8_t key[16], const uint8_t plaintext[16],
 		  uint8_t enc_data[16])
 {
-	BT_DBG("key %s plaintext %s", bt_hex(key, 16), bt_hex(plaintext, 16));
+	LOG_DBG("key %s plaintext %s", bt_hex(key, 16), bt_hex(plaintext, 16));
 
 	bt_aes_128_encrypt(plaintext, key, enc_data);
 
-	BT_DBG("enc_data %s", bt_hex(enc_data, 16));
+	LOG_DBG("enc_data %s", bt_hex(enc_data, 16));
 
 	return 0;
 }
@@ -361,13 +368,13 @@ int bt_aes_128_cmac_be(const uint8_t *key, const uint8_t *in, size_t len,
 {
 	bt_aes_128_cmac_state_t state;
 
-	BT_DBG("key %s in %s", bt_hex(key, 16), bt_hex(in, len));
+	LOG_DBG("key %s in %s", bt_hex(key, 16), bt_hex(in, len));
 
 	bt_aes_128_cmac_setup(&state, key);
 	bt_aes_128_cmac_update(&state, in, len);
 	bt_aes_128_cmac_final(out, &state);
 
-	BT_DBG("out %s", bt_hex(out, 16));
+	LOG_DBG("out %s", bt_hex(out, 16));
 
 	return 0;
 }

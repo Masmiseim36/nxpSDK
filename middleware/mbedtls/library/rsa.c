@@ -136,7 +136,7 @@ cleanup:
  * It does *not* make guarantees for consistency of the parameters.
  */
 /* NXP remove static */
-static int rsa_check_context(mbedtls_rsa_context const *ctx, int is_priv,
+int rsa_check_context(mbedtls_rsa_context const *ctx, int is_priv,
                              int blinding_needed)
 {
 #if !defined(MBEDTLS_RSA_NO_CRT)
@@ -1363,7 +1363,8 @@ int mbedtls_rsa_rsaes_oaep_decrypt(mbedtls_rsa_context *ctx,
 {
     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;
     size_t ilen, i, pad_len;
-    unsigned char *p, bad, pad_done;
+    unsigned char *p, pad_done;
+    int bad;
     unsigned char buf[MBEDTLS_MPI_MAX_SIZE];
     unsigned char lhash[MBEDTLS_MD_MAX_SIZE];
     unsigned int hlen;
@@ -1451,9 +1452,8 @@ int mbedtls_rsa_rsaes_oaep_decrypt(mbedtls_rsa_context *ctx,
     p += hlen; /* Skip seed */
 
     /* Check lHash */
-    for (i = 0; i < hlen; i++) {
-        bad |= lhash[i] ^ *p++;
-    }
+    bad |= mbedtls_ct_memcmp(lhash, p, hlen);
+    p += hlen;
 
     /* Get zero-padding len, but always read till end of buffer
      * (minus one, for the 01 byte) */
@@ -2521,7 +2521,7 @@ int mbedtls_rsa_self_test(int verbose)
 
     mbedtls_mpi_init(&K);
 
-#if defined(MBEDTLS_PKCS1_V15) && !defined(MBEDTLS_MCUX_ELE_S400_API)
+#if defined(MBEDTLS_PKCS1_V15) && !defined(MBEDTLS_RSA_KEYGEN_ALT)
 
     mbedtls_rsa_init(&rsa, MBEDTLS_RSA_PKCS_V15, 0);
 
@@ -2591,7 +2591,7 @@ int mbedtls_rsa_self_test(int verbose)
 
        if( verbose != 0 )
         mbedtls_printf( "passed\n");*/
-#if defined(MBEDTLS_PKCS1_V21) && defined(MBEDTLS_MCUX_ELE_S400_API)
+#if defined(MBEDTLS_PKCS1_V21) && defined(MBEDTLS_RSA_KEYGEN_ALT)
     mbedtls_rsa_context rsav2;
 
     mbedtls_rsa_init(&rsav2, MBEDTLS_RSA_PKCS_V21, MBEDTLS_MD_SHA256);
@@ -2629,8 +2629,8 @@ int mbedtls_rsa_self_test(int verbose)
 
        if( verbose != 0 )
         mbedtls_printf( "passed\n");*/
-#endif /* defined(MBEDTLS_PKCS1_V21) && defined(MBEDTLS_MCUX_ELE_S400_API) */
-#endif /* defined(MBEDTLS_PKCS1_V15) && !defined(MBEDTLS_MCUX_ELE_S400_API) */
+#endif /* defined(MBEDTLS_PKCS1_V21) && defined(MBEDTLS_RSA_KEYGEN_ALT) */
+#endif /* defined(MBEDTLS_PKCS1_V15) && !defined(MBEDTLS_RSA_KEYGEN_ALT) */
 
     if (verbose != 0) {
         mbedtls_printf("  PKCS#1 encryption : ");
@@ -2676,7 +2676,7 @@ int mbedtls_rsa_self_test(int verbose)
     if (verbose != 0) {
         mbedtls_printf("passed\n");
     }
-#if defined(MBEDTLS_PKCS1_V21) && defined(MBEDTLS_MCUX_ELE_S400_API)
+#if defined(MBEDTLS_PKCS1_V21) && defined(MBEDTLS_RSA_KEYGEN_ALT)
     if (verbose != 0) {
         mbedtls_printf("  OAEP PKCS#2.1 encryption : ");
     }
@@ -2810,9 +2810,9 @@ int mbedtls_rsa_self_test(int verbose)
         mbedtls_printf("passed\n");
     }
 
-#elif defined(MBEDTLS_MCUX_ELE_S400_API) && defined(MBEDTLS_SHA256_C)
-#endif /* MBEDTLS_SHA1_C */
-#if defined(MBEDTLS_PKCS1_V21) && defined(MBEDTLS_MCUX_ELE_S400_API) && defined(MBEDTLS_SHA256_C)
+#endif /* MBEDTLS_SHA1_C */    
+
+#if defined(MBEDTLS_PKCS1_V21) && defined(MBEDTLS_RSA_KEYGEN_ALT) && defined(MBEDTLS_SHA256_C)
     if (verbose != 0) {
         mbedtls_printf("  PKCS PSS data sign  : ");
     }
@@ -2863,7 +2863,7 @@ int mbedtls_rsa_self_test(int verbose)
 cleanup:
     mbedtls_mpi_free(&K);
     mbedtls_rsa_free(&rsa);
-#if defined(MBEDTLS_PKCS1_V21) && defined(MBEDTLS_MCUX_ELE_S400_API)
+#if defined(MBEDTLS_PKCS1_V21) && defined(MBEDTLS_RSA_KEYGEN_ALT)
     mbedtls_rsa_free(&rsav2);
 #endif /* MBEDTLS_PKCS1_V21 */
 #else /* MBEDTLS_PKCS1_V15 */

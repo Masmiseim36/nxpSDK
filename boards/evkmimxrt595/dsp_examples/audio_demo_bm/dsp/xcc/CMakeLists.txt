@@ -45,7 +45,7 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O0")
 
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} --xtensa-core=nxp_rt500_RI2021_8_newlib")
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} --xtensa-core=nxp_rt500_RI23_11_newlib")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} --xtensa-system=${XTENSA_SYSTEM}")
 
@@ -75,7 +75,7 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DDEBUG_CONSOLE_RX_ENABLE=0"
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Os")
 
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} --xtensa-core=nxp_rt500_RI2021_8_newlib")
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} --xtensa-core=nxp_rt500_RI23_11_newlib")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} --xtensa-system=${XTENSA_SYSTEM}")
 
@@ -107,15 +107,19 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mlsp=${ProjDi
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -g")
 
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --xtensa-core=nxp_rt500_RI2021_8_newlib")
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --xtensa-core=nxp_rt500_RI23_11_newlib")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --xtensa-system=${XTENSA_SYSTEM}")
 
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Wl,--orphan-handling=place")
+
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mlsp=${ProjDirPath}/../../../../../../devices/MIMXRT595S/xtensa/min-rt")
 
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --xtensa-core=nxp_rt500_RI2021_8_newlib")
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --xtensa-core=nxp_rt500_RI23_11_newlib")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --xtensa-system=${XTENSA_SYSTEM}")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Wl,--orphan-handling=place")
 
 include_directories(${ProjDirPath}/..)
 
@@ -131,7 +135,7 @@ include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilitie
 
 include_directories(${ProjDirPath}/../../../../../../components/lists)
 
-include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities)
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/shell)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S)
 
@@ -183,8 +187,8 @@ add_executable(dsp_audio_demo_bm_fusionf1.elf
 "${ProjDirPath}/../../../../../../components/lists/fsl_component_generic_list.h"
 "${ProjDirPath}/../../../../../../components/lists/fsl_component_generic_list.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_iopctl.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/fsl_shell.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/fsl_shell.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/shell/fsl_shell.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/shell/fsl_shell.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_common.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_common.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_common_dsp.c"
@@ -211,14 +215,14 @@ TARGET_LINK_LIBRARIES(dsp_audio_demo_bm_fusionf1.elf -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET dsp_audio_demo_bm_fusionf1.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}
 --xtensa-params= -Obinary ${EXECUTABLE_OUTPUT_PATH}/dsp_audio_demo_bm_fusionf1.elf ${EXECUTABLE_OUTPUT_PATH}/../../binary/dsp_reset_${CMAKE_BUILD_TYPE}.bin
---xtensa-core=nxp_rt500_RI2021_8_newlib
+--xtensa-core=nxp_rt500_RI23_11_newlib
 --xtensa-system=${XTENSA_SYSTEM}
 --only-section=.ResetVector.text
 )
 
 ADD_CUSTOM_COMMAND(TARGET dsp_audio_demo_bm_fusionf1.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}
 --xtensa-params= -Obinary ${EXECUTABLE_OUTPUT_PATH}/dsp_audio_demo_bm_fusionf1.elf ${EXECUTABLE_OUTPUT_PATH}/../../binary/dsp_text_${CMAKE_BUILD_TYPE}.bin
---xtensa-core=nxp_rt500_RI2021_8_newlib
+--xtensa-core=nxp_rt500_RI23_11_newlib
 --xtensa-system=${XTENSA_SYSTEM}
 --only-section=.WindowVectors.text
 --only-section=.Level2InterruptVector.text
@@ -236,7 +240,7 @@ ADD_CUSTOM_COMMAND(TARGET dsp_audio_demo_bm_fusionf1.elf POST_BUILD COMMAND ${CM
 
 ADD_CUSTOM_COMMAND(TARGET dsp_audio_demo_bm_fusionf1.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}
 --xtensa-params= -Obinary ${EXECUTABLE_OUTPUT_PATH}/dsp_audio_demo_bm_fusionf1.elf ${EXECUTABLE_OUTPUT_PATH}/../../binary/dsp_data_${CMAKE_BUILD_TYPE}.bin
---xtensa-core=nxp_rt500_RI2021_8_newlib
+--xtensa-core=nxp_rt500_RI23_11_newlib
 --xtensa-system=${XTENSA_SYSTEM}
 --only-section=.clib.rodata
 --only-section=.rtos.rodata

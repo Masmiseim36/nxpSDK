@@ -46,6 +46,7 @@ uint16_t g_data_nf_last;
 uint16_t g_data_snr_last;
 static struct netif *netif_arr[MAX_INTERFACES_SUPPORTED];
 static t_u8 rfc1042_eth_hdr[MLAN_MAC_ADDR_LENGTH] = {0xaa, 0xaa, 0x03, 0x00, 0x00, 0x00};
+
 /*------------------------------------------------------*/
 static err_t igmp_mac_filter(struct netif *netif, const ip4_addr_t *group, enum netif_mac_filter_action action);
 #ifdef CONFIG_IPV6
@@ -59,7 +60,7 @@ void handle_amsdu_data_packet(t_u8 interface, t_u8 *rcvdata, t_u16 datalen);
 void handle_deliver_packet_above(t_void *rxpd, t_u8 interface, t_void *lwip_pbuf);
 bool wrapper_net_is_ip_or_ipv6(const t_u8 *buffer);
 
-#ifndef CONFIG_WPA_SUPP
+#ifdef MGMT_RX
 static int (*rx_mgmt_callback)(const enum wlan_bss_type bss_type, const wifi_mgmt_frame_t *frame, const size_t len);
 void rx_mgmt_register_callback(int (*rx_mgmt_cb_fn)(const enum wlan_bss_type bss_type,
                                                     const wifi_mgmt_frame_t *frame,
@@ -79,11 +80,23 @@ static void register_interface(struct netif *iface, mlan_bss_type iface_type)
     netif_arr[iface_type] = iface;
 }
 
+#ifdef CONFIG_TX_RX_ZERO_COPY
+void net_tx_zerocopy_process_cb(void *destAddr, void *srcAddr, uint32_t len)
+{
+    outbuf_t *buf    = (outbuf_t *)srcAddr;
+    t_u16 header_len = INTF_HEADER_LEN + sizeof(TxPD) + ETH_HDR_LEN;
+    // coverity[overrun-buffer-arg:SUPPRESS]
+    (void)memcpy((t_u8 *)destAddr, &buf->intf_header[0], header_len);
+    pbuf_copy_partial((struct pbuf *)(buf->buffer), (t_u8 *)destAddr + header_len, (t_u16)(len - header_len), 0);
+}
+#endif
+
 static void deliver_packet_above(struct pbuf *p, int recv_interface)
 {
     err_t lwiperr = ERR_OK;
     /* points to packet payload, which starts with an Ethernet header */
     struct eth_hdr *ethhdr = p->payload;
+    t_u8 retry_cnt         = 1;
 
 
     w_pkt_d("Data RX: Driver=>Kernel, if %d, len %d %d", recv_interface, p->tot_len, p->len);
@@ -103,10 +116,17 @@ static void deliver_packet_above(struct pbuf *p, int recv_interface)
                     ;
                 }
             }
+        retry:
             /* full packet send to tcpip_thread to process */
             lwiperr = netif_arr[recv_interface]->input(p, netif_arr[recv_interface]);
             if (lwiperr != (s8_t)ERR_OK)
             {
+                if (retry_cnt)
+                {
+                    retry_cnt--;
+                    portYIELD();
+                    goto retry;
+                }
                 LINK_STATS_INC(link.proterr);
                 LWIP_DEBUGF(NETIF_DEBUG, ("ethernetif_input: IP input error\n"));
                 (void)pbuf_free(p);
@@ -134,6 +154,38 @@ static void deliver_packet_above(struct pbuf *p, int recv_interface)
             break;
     }
 }
+
+#ifdef CONFIG_TX_RX_ZERO_COPY
+static struct pbuf *gen_pbuf_from_data_for_zerocopy(t_u8 *payload, t_u16 datalen)
+{
+    t_u8 retry_cnt = 3;
+    struct pbuf *p = NULL;
+
+retry:
+    /* We allocate a pbuf chain of pbufs from the pool. */
+    p = pbuf_alloc(PBUF_RAW, datalen, PBUF_POOL);
+    if (p == NULL)
+    {
+        if (retry_cnt)
+        {
+            retry_cnt--;
+            portYIELD();
+            goto retry;
+        }
+        return NULL;
+    }
+
+    /* Reserve space for mlan_buffer */
+    pbuf_header(p, -(s16_t)(sizeof(mlan_buffer)));
+    if (pbuf_take(p, payload, datalen - sizeof(mlan_buffer)) != 0)
+    {
+        (void)pbuf_free(p);
+        p = NULL;
+    }
+
+    return p;
+}
+#endif
 
 static struct pbuf *gen_pbuf_from_data(t_u8 *payload, t_u16 datalen)
 {
@@ -181,12 +233,6 @@ static void process_data_packet(const t_u8 *rcvdata, const t_u16 datalen)
         {
             return;
         }
-
-        if (rxpd->bss_type == MLAN_BSS_ROLE_UAP)
-        {
-            wrapper_wlan_handle_amsdu_rx_packet(rcvdata, datalen);
-            return;
-        }
     }
 
     if (recv_interface == MLAN_BSS_TYPE_STA || recv_interface == MLAN_BSS_TYPE_UAP)
@@ -203,6 +249,7 @@ static void process_data_packet(const t_u8 *rcvdata, const t_u16 datalen)
         pieee_pkt_hdr = (wlan_802_11_header *)(void *)&pmgmt_pkt_hdr->wlan_header;
 
         sub_type = IEEE80211_GET_FC_MGMT_FRAME_SUBTYPE(pieee_pkt_hdr->frm_ctl);
+        // coverity[overrun-local:SUPPRESS]
         category = *((t_u8 *)pieee_pkt_hdr + sizeof(wlan_802_11_header));
         if (sub_type == (t_u16)SUBTYPE_ACTION)
         {
@@ -225,7 +272,14 @@ static void process_data_packet(const t_u8 *rcvdata, const t_u16 datalen)
         payload_len = rxpd->rx_pkt_length;
     }
 
+#ifdef CONFIG_TX_RX_ZERO_COPY
+    u16_t header_len = INTF_HEADER_LEN + rxpd->rx_pkt_offset;
+    payload_len      = rxpd->rx_pkt_length + header_len + sizeof(mlan_buffer);
+    p                = gen_pbuf_from_data_for_zerocopy((t_u8 *)rcvdata, payload_len);
+#else
     p = gen_pbuf_from_data(payload, payload_len);
+#endif
+
     /* If there are no more buffers, we do nothing, so the data is
        lost. We have to go back and read the other ports */
     if (p == NULL)
@@ -238,6 +292,10 @@ static void process_data_packet(const t_u8 *rcvdata, const t_u16 datalen)
 #ifndef CONFIG_WPA_SUPP
     if (rxpd->rx_pkt_type == PKT_TYPE_MGMT_FRAME)
     {
+#ifdef CONFIG_TX_RX_ZERO_COPY
+        /* Skip interface header */
+        pbuf_header(p, -(s16_t)(INTF_HEADER_LEN));
+#endif
         /* Bypass the management frame about Add Block Ack Request or Add Block Ack Response*/
         if (wlan_bypass_802dot11_mgmt_pkt(p->payload) == WM_SUCCESS)
         {
@@ -256,6 +314,7 @@ static void process_data_packet(const t_u8 *rcvdata, const t_u16 datalen)
             }
         }
 #endif
+#ifdef MGMT_RX
         if (rx_mgmt_callback)
         {
             wifi_mgmt_frame_t *frame = (wifi_mgmt_frame_t *)(void *)((uint8_t *)rxpd + rxpd->rx_pkt_offset);
@@ -267,8 +326,16 @@ static void process_data_packet(const t_u8 *rcvdata, const t_u16 datalen)
                 return;
             }
         }
+#endif
         return;
     }
+#endif
+
+#ifdef CONFIG_TX_RX_ZERO_COPY
+    /* Directly use rxpd from pbuf */
+    rxpd = (RxPD *)(void *)((t_u8 *)p->payload + INTF_HEADER_LEN);
+    /* Skip interface header and RxPD */
+    pbuf_header(p, -(s16_t)header_len);
 #endif
 
     /* points to packet payload, which starts with an Ethernet header */
@@ -313,7 +380,6 @@ static void process_data_packet(const t_u8 *rcvdata, const t_u16 datalen)
 #endif
         /* Unicast ARP also need do rx reorder */
         case ETHTYPE_ARP:
-            LINK_STATS_INC(link.recv);
             if (recv_interface == MLAN_BSS_TYPE_STA)
             {
                 int rv = wrapper_wlan_handle_rx_packet(datalen, rxpd, p, payload);
@@ -333,7 +399,6 @@ static void process_data_packet(const t_u8 *rcvdata, const t_u16 datalen)
             p = NULL;
             break;
         case ETHTYPE_EAPOL:
-            LINK_STATS_INC(link.recv);
             deliver_packet_above(p, recv_interface);
             break;
         default:
@@ -365,7 +430,6 @@ void handle_amsdu_data_packet(t_u8 interface, t_u8 *rcvdata, t_u16 datalen)
         LINK_STATS_INC(link.drop);
         return;
     }
-    LINK_STATS_INC(link.recv);
     deliver_packet_above(p, interface);
 }
 
@@ -450,16 +514,19 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p)
     int ret;
     struct ethernetif *ethernetif = netif->state;
     u32_t pkt_len, outbuf_len;
+#ifndef CONFIG_TX_RX_ZERO_COPY
     u16_t uCopied;
+#endif
     t_u8 interface   = ethernetif->interface;
     t_u8 *wmm_outbuf = NULL;
+
 #ifdef CONFIG_WMM
     t_u8 tid                      = 0;
     int retry                     = 0;
     t_u8 ra[MLAN_MAC_ADDR_LENGTH] = {0};
     bool is_tx_pause              = false;
 
-    t_u32 pkt_prio = wifi_wmm_get_pkt_prio(p->payload, &tid);
+    t_u32 pkt_prio = wifi_wmm_get_pkt_prio(p, &tid);
     if (pkt_prio == -WM_FAIL)
     {
         return ERR_MEM;
@@ -477,6 +544,15 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p)
         return ERR_OK;
     }
 
+    if (interface == WLAN_BSS_TYPE_STA)
+    {
+        if (wifi_add_to_bypassq(interface, p->payload, p->len) == WM_SUCCESS)
+        {
+            LINK_STATS_INC(link.xmit);
+            return ERR_OK;
+        }
+    }
+
     wifi_wmm_da_to_ra(p->payload, ra);
 
     do
@@ -484,7 +560,6 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p)
         if (retry != 0)
         {
             send_wifi_driver_tx_data_event(interface);
-            taskYIELD();
         }
         else
         {
@@ -494,10 +569,9 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p)
         wmm_outbuf = wifi_wmm_get_outbuf_enh(&outbuf_len, (mlan_wmm_ac_e)pkt_prio, interface, ra, &is_tx_pause);
         ret        = (wmm_outbuf == NULL) ? true : false;
 
-        if (is_tx_pause == true)
+        if (ret == true && is_tx_pause == true)
         {
-            wifi_wmm_drop_pause_drop(interface);
-            return ERR_MEM;
+            os_thread_sleep(os_msec_to_ticks(1));
         }
 
         retry--;
@@ -524,7 +598,7 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p)
         sizeof(TxPD) + INTF_HEADER_LEN;
 
 #ifndef CONFIG_WMM
-#ifdef LWIP_NETIF_TX_SINGLE_PBUF
+#if LWIP_NETIF_TX_SINGLE_PBUF
     if ((p->len == p->tot_len) && (pbuf_header(p, pkt_len) == 0))
     {
         wmm_outbuf = p->payload;
@@ -535,12 +609,27 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p)
 #endif
 #endif
     {
+#ifdef CONFIG_TX_RX_ZERO_COPY
+        pkt_len += ETH_HDR_LEN;
+        memset(wmm_outbuf, 0x00, pkt_len);
+        /* Save the ethernet header */
+        pbuf_copy_partial(p, ((outbuf_t *)wmm_outbuf)->eth_header, ETH_HDR_LEN, 0);
+        /* Skip ethernet header */
+        pbuf_header(p, -(s16_t)ETH_HDR_LEN);
+        ((outbuf_t *)wmm_outbuf)->buffer = p;
+        /* Save the data payload pointer without ethernet header */
+        ((outbuf_t *)wmm_outbuf)->payload = (t_u8 *)p->payload;
+        pkt_len += p->tot_len;
+        /* Driver will free this pbuf */
+        pbuf_ref(p);
+#else
         memset(wmm_outbuf, 0x00, pkt_len);
 
         uCopied = pbuf_copy_partial(p, wmm_outbuf + pkt_len, p->tot_len, 0);
 
         LWIP_ASSERT("uCopied != p->tot_len", uCopied == p->tot_len);
         pkt_len += p->tot_len;
+#endif
     }
 
     ret = wifi_low_level_output(interface, wmm_outbuf, pkt_len
@@ -550,8 +639,8 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p)
 #endif
     );
 
-#ifdef CONFIG_WMM
-#ifdef LWIP_NETIF_TX_SINGLE_PBUF
+#ifndef CONFIG_WMM
+#if LWIP_NETIF_TX_SINGLE_PBUF
     pkt_len = sizeof(TxPD) + INTF_HEADER_LEN;
 
     pbuf_header(p, -pkt_len);

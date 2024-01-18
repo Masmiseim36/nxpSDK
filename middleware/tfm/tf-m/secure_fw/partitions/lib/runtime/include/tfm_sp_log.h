@@ -33,24 +33,24 @@ extern "C" {
 #endif
 
 #if (TFM_PARTITION_LOG_LEVEL == TFM_PARTITION_LOG_LEVEL_DEBUG)
-#define LOG_DBGFMT(...) tfm_sp_log_printf(__VA_ARGS__) //NXP was printf(), workaround Keil error
+#define LOG_DBGFMT(...) printf(__VA_ARGS__)
 #else
 #define LOG_DBGFMT(...)
 #endif
 
 #if (TFM_PARTITION_LOG_LEVEL >= TFM_PARTITION_LOG_LEVEL_INFO)
-#define LOG_INFFMT(...) tfm_sp_log_printf(__VA_ARGS__)  //NXP was printf(), workaround Keil error
+#define LOG_INFFMT(...) printf(__VA_ARGS__)
 #else
 #define LOG_INFFMT(...)
 #endif
 
 #if (TFM_PARTITION_LOG_LEVEL >= TFM_PARTITION_LOG_LEVEL_ERROR)
-#define LOG_ERRFMT(...) tfm_sp_log_printf(__VA_ARGS__)  //NXP was printf(), workaround Keil error
+#define LOG_ERRFMT(...) printf(__VA_ARGS__)
 #else
 #define LOG_ERRFMT(...)
 #endif
 
-int tfm_sp_log_printf(const char *fmt, ...);   //NXP was printf(), workaround Keil error
+int printf(const char *fmt, ...);
 
 #ifdef __cplusplus
 }

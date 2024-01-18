@@ -105,7 +105,7 @@ SECTIONS
     VENEERS()
 #endif
 
-    .copy.table : ALIGN(4)
+    .copy.table ALIGN(4) :
     {
         __copy_table_start__ = .;
 #ifdef RAM_VECTORS_SUPPORT
@@ -134,7 +134,7 @@ SECTIONS
         __copy_table_end__ = .;
     } > FLASH
 
-    .zero.table : ALIGN(4)
+    .zero.table ALIGN(4) :
     {
         __zero_table_start__ = .;
         LONG (ADDR(.TFM_BSS))
@@ -156,7 +156,7 @@ SECTIONS
      * Sort the partition info by priority to guarantee the initing order.
      * The first loaded partition will be inited at last in SFN model.
      */
-    .TFM_SP_LOAD_LIST : ALIGN(4)
+    .TFM_SP_LOAD_LIST ALIGN(4) :
     {
        KEEP(*(.part_load_priority_lowest))
        KEEP(*(.part_load_priority_low))
@@ -170,10 +170,10 @@ SECTIONS
     . = ALIGN(TFM_LINKER_PSA_ROT_LINKER_CODE_ALIGNMENT);
     Image$$TFM_PSA_CODE_START$$Base = .;
 
-    .TFM_PSA_ROT_LINKER : ALIGN(TFM_LINKER_PSA_ROT_LINKER_CODE_ALIGNMENT)
+    .TFM_PSA_ROT_LINKER ALIGN(TFM_LINKER_PSA_ROT_LINKER_CODE_ALIGNMENT) :
     {
-        *tfm_psa_rot_partition*:*(.text*)
-        *tfm_psa_rot_partition*:*(.rodata*)
+        *tfm_psa_rot_partition*:(SORT_BY_ALIGNMENT(.text*))
+        *tfm_psa_rot_partition*:(SORT_BY_ALIGNMENT(.rodata*))
         *(TFM_*_PSA-ROT_ATTR_FN)
         . = ALIGN(TFM_LINKER_PSA_ROT_LINKER_CODE_ALIGNMENT);
     } > FLASH
@@ -189,7 +189,7 @@ SECTIONS
     /**** APPLICATION RoT RO part (CODE + RODATA) start here */
     Image$$TFM_APP_CODE_START$$Base = .;
 
-    .TFM_APP_ROT_LINKER : ALIGN(TFM_LINKER_APP_ROT_LINKER_CODE_ALIGNMENT)
+    .TFM_APP_ROT_LINKER ALIGN(TFM_LINKER_APP_ROT_LINKER_CODE_ALIGNMENT) :
     {
 // --------- NXP --------------
 // #ifdef TFM_PARTITION_PROTECTED_STORAGE
@@ -224,7 +224,7 @@ SECTIONS
         *load_info_tfm_ipc_client_test.*(.rodata*)
         *(TFM_SP_IPC_CLIENT_TEST_ATTR_FN)
 
-// #ifdef TEST_FRAMEWORK_S
+// #ifdef TFM_S_REG_TEST
         *tfm_secure_client_2.*(.text*)
         *tfm_secure_client_2.*(.rodata*)
         *intermedia_tfm_secure_client_2.*(.text*)
@@ -261,10 +261,10 @@ SECTIONS
 
 #if defined(S_RAM_CODE_START)
     /* Flash drivers code that gets copied from Flash */
-    .ER_CODE_SRAM : ALIGN(4)
+    .ER_CODE_SRAM ALIGN(S_RAM_CODE_START, 4) :
     {
-        *libflash_drivers*:*(.text*)
-        *libflash_drivers*:*(.rodata*)
+        *libflash_drivers*:(SORT_BY_ALIGNMENT(.text*))
+        *libflash_drivers*:(SORT_BY_ALIGNMENT(.rodata*))
         KEEP(*(.ramfunc))
         . = ALIGN(4); /* This alignment is needed to make the section size 4 bytes aligned */
     } > CODE_RAM AT > FLASH
@@ -289,15 +289,49 @@ SECTIONS
     } > FLASH
     __exidx_end = .;
 
-    .ER_TFM_CODE : ALIGN(4)
+    .ER_TFM_CODE ALIGN(4) :
     {
         *startup*(.text*)
-        *libplatform_s*:*(.text*)
-        *libtfm_spm*:*(.text*)
+        *libplatform_s*:(SORT_BY_ALIGNMENT(.text*))
+        *libtfm_spm*:(SORT_BY_ALIGNMENT(.text*))
 
         *libplatform_s*:*(.rodata*)
         *libtfm_spm*:*(.rodata*)
     } > FLASH
+
+    .TFM_UNPRIV_CODE ALIGN(TFM_LINKER_UNPRIV_CODE_ALIGNMENT) :
+    {
+        *(SFN)
+        *(SORT_BY_ALIGNMENT(.text*))
+
+        KEEP(*(.init))
+        KEEP(*(.fini))
+
+        /* .ctors */
+        *crtbegin.o(.ctors)
+        *crtbegin?.o(.ctors)
+        *(EXCLUDE_FILE(*crtend?.o *crtend.o) .ctors)
+        *(SORT(.ctors.*))
+        *(.ctors)
+
+        /* .dtors */
+         *crtbegin.o(.dtors)
+         *crtbegin?.o(.dtors)
+         *(EXCLUDE_FILE(*crtend?.o *crtend.o) .dtors)
+         *(SORT(.dtors.*))
+         *(.dtors)
+
+        *(SORT_BY_ALIGNMENT(.rodata*))
+
+        KEEP(*(.eh_frame*))
+        . = ALIGN(TFM_LINKER_UNPRIV_CODE_ALIGNMENT);
+    } > FLASH
+    Image$$TFM_UNPRIV_CODE_START$$RO$$Base = ADDR(.TFM_UNPRIV_CODE);
+    Image$$TFM_UNPRIV_CODE_END$$RO$$Limit = ADDR(.TFM_UNPRIV_CODE) + SIZEOF(.TFM_UNPRIV_CODE);
+
+#if defined(CONFIG_TFM_USE_TRUSTZONE) && defined(TFM_LINKER_VENEERS_LOCATION_END)
+    VENEERS()
+#endif
 
     /**** Base address of secure data area */
     .tfm_secure_data_start :
@@ -322,7 +356,7 @@ SECTIONS
     /* The code sharing between bootloader and runtime requires to share the
      * global variables.
      */
-    .TFM_SHARED_SYMBOLS : ALIGN(TFM_LINKER_SHARED_SYMBOLS_ALIGNMENT)
+    .TFM_SHARED_SYMBOLS ALIGN(TFM_LINKER_SHARED_SYMBOLS_ALIGNMENT) :
     {
         . += SHARED_SYMBOL_AREA_SIZE;
     } > RAM
@@ -332,12 +366,12 @@ SECTIONS
      * msp_stack is extended until the beginning of RAM, when shared_date
      * was read out by partitions
      */
-    .tfm_bl2_shared_data : ALIGN(TFM_LINKER_BL2_SHARED_DATA_ALIGNMENT)
+    .tfm_bl2_shared_data ALIGN(TFM_LINKER_BL2_SHARED_DATA_ALIGNMENT) :
     {
         . += BOOT_TFM_SHARED_DATA_SIZE;
     } > RAM
 
-    .msp_stack : ALIGN(TFM_LINKER_MSP_STACK_ALIGNMENT)
+    .msp_stack ALIGN(TFM_LINKER_MSP_STACK_ALIGNMENT) :
     {
         . += __msp_stack_size__ - 0x8;
     } > RAM
@@ -355,7 +389,7 @@ SECTIONS
 
 #if defined(ENABLE_HEAP)
     __heap_size__ = S_HEAP_SIZE;
-    .heap : ALIGN(8)
+    .heap ALIGN(8) :
     {
         __end__ = .;
         PROVIDE(end = .);
@@ -367,7 +401,7 @@ SECTIONS
 #endif
 
 #if defined(CONFIG_TFM_PARTITION_META)
-    .TFM_SP_META_PTR : ALIGN(TFM_LINKER_SP_META_PTR_ALIGNMENT)
+    .TFM_SP_META_PTR ALIGN(TFM_LINKER_SP_META_PTR_ALIGNMENT) (NOLOAD):
     {
         *(.bss.SP_META_PTR_SPRTL_INST)
         . = ALIGN(TFM_LINKER_SP_META_PTR_ALIGNMENT);
@@ -380,7 +414,7 @@ SECTIONS
     . = ALIGN(TFM_LINKER_APP_ROT_LINKER_DATA_ALIGNMENT);
     Image$$TFM_APP_RW_STACK_START$$Base = .;
 
-    .TFM_APP_ROT_LINKER_DATA : ALIGN(TFM_LINKER_APP_ROT_LINKER_DATA_ALIGNMENT)
+    .TFM_APP_ROT_LINKER_DATA ALIGN(TFM_LINKER_APP_ROT_LINKER_DATA_ALIGNMENT) :
     {
 // --------- NXP --------------
 // #ifdef TFM_PARTITION_PROTECTED_STORAGE
@@ -402,7 +436,7 @@ SECTIONS
         *load_info_tfm_ipc_client_test.*(.data*)
         *(TFM_SP_IPC_CLIENT_TEST_ATTR_RW)
 
-// #ifdef TEST_FRAMEWORK_S
+// #ifdef TFM_S_REG_TEST
         *tfm_secure_client_2.*(.data*)
         *intermedia_tfm_secure_client_2.*(.data*)
         *load_info_tfm_secure_client_2.*(.data*)
@@ -423,7 +457,7 @@ SECTIONS
     Image$$TFM_APP_ROT_LINKER_DATA$$RW$$Base = ADDR(.TFM_APP_ROT_LINKER_DATA);
     Image$$TFM_APP_ROT_LINKER_DATA$$RW$$Limit = ADDR(.TFM_APP_ROT_LINKER_DATA) + SIZEOF(.TFM_APP_ROT_LINKER_DATA);
 
-    .TFM_APP_ROT_LINKER_BSS : ALIGN(4)
+    .TFM_APP_ROT_LINKER_BSS ALIGN(4) (NOLOAD) :
     {
         start_of_TFM_APP_ROT_LINKER = .;
 // --------- NXP --------------
@@ -459,7 +493,7 @@ SECTIONS
         *load_info_tfm_ipc_client_test.*(COMMON)
         *(TFM_SP_IPC_CLIENT_TEST_ATTR_ZI)
 
-// #ifdef TEST_FRAMEWORK_S
+// #ifdef TFM_S_REG_TEST
         *tfm_secure_client_2.*(.bss)
         *tfm_secure_client_2.*(COMMON)
         *intermedia_tfm_secure_client_2.*(.bss*)
@@ -511,12 +545,12 @@ SECTIONS
      * msp_stack is extended until the beginning of RAM, when shared_date
      * was read out by partitions
      */
-    .tfm_bl2_shared_data : ALIGN(TFM_LINKER_BL2_SHARED_DATA_ALIGNMENT)
+    .tfm_bl2_shared_data ALIGN(TFM_LINKER_BL2_SHARED_DATA_ALIGNMENT) :
     {
         . += BOOT_TFM_SHARED_DATA_SIZE;
     } > RAM AT> RAM
 
-    .msp_stack : ALIGN(TFM_LINKER_MSP_STACK_ALIGNMENT)
+    .msp_stack ALIGN(TFM_LINKER_MSP_STACK_ALIGNMENT) :
     {
         . += __msp_stack_size__;
     } > RAM
@@ -529,19 +563,19 @@ SECTIONS
 
     Image$$TFM_PSA_RW_STACK_START$$Base = .;
 
-    .TFM_PSA_ROT_LINKER_DATA : ALIGN(TFM_LINKER_PSA_ROT_LINKER_DATA_ALIGNMENT)
+    .TFM_PSA_ROT_LINKER_DATA ALIGN(TFM_LINKER_PSA_ROT_LINKER_DATA_ALIGNMENT) :
     {
-        *tfm_psa_rot_partition*:*(.data*)
+        *tfm_psa_rot_partition*:(SORT_BY_ALIGNMENT(.data*))
         *(TFM_*_PSA-ROT_ATTR_RW)
         . = ALIGN(4);
     } > RAM AT> FLASH
     Image$$TFM_PSA_ROT_LINKER_DATA$$RW$$Base = ADDR(.TFM_PSA_ROT_LINKER_DATA);
     Image$$TFM_PSA_ROT_LINKER_DATA$$RW$$Limit = ADDR(.TFM_PSA_ROT_LINKER_DATA) + SIZEOF(.TFM_PSA_ROT_LINKER_DATA);
 
-    .TFM_PSA_ROT_LINKER_BSS : ALIGN(4)
+    .TFM_PSA_ROT_LINKER_BSS ALIGN(4) (NOLOAD) :
     {
         start_of_TFM_PSA_ROT_LINKER = .;
-        *tfm_psa_rot_partition*:*(.bss*)
+        *tfm_psa_rot_partition*:(SORT_BY_ALIGNMENT(.bss*))
         *tfm_psa_rot_partition*:*(COMMON)
         *(TFM_*_PSA-ROT_ATTR_ZI)
         . += (. - start_of_TFM_PSA_ROT_LINKER) ? 0 : 4;
@@ -553,57 +587,23 @@ SECTIONS
     /**** PSA RoT DATA end here */
     Image$$TFM_PSA_RW_STACK_END$$Base = .;
 
-    .TFM_UNPRIV_CODE : ALIGN(TFM_LINKER_UNPRIV_CODE_ALIGNMENT)
-    {
-        *(SFN)
-        *(.text*)
-
-        KEEP(*(.init))
-        KEEP(*(.fini))
-
-        /* .ctors */
-        *crtbegin.o(.ctors)
-        *crtbegin?.o(.ctors)
-        *(EXCLUDE_FILE(*crtend?.o *crtend.o) .ctors)
-        *(SORT(.ctors.*))
-        *(.ctors)
-
-        /* .dtors */
-         *crtbegin.o(.dtors)
-         *crtbegin?.o(.dtors)
-         *(EXCLUDE_FILE(*crtend?.o *crtend.o) .dtors)
-         *(SORT(.dtors.*))
-         *(.dtors)
-
-        *(.rodata*)
-
-        KEEP(*(.eh_frame*))
-        . = ALIGN(TFM_LINKER_UNPRIV_CODE_ALIGNMENT);
-    } > FLASH
-    Image$$TFM_UNPRIV_CODE$$RO$$Base = ADDR(.TFM_UNPRIV_CODE);
-    Image$$TFM_UNPRIV_CODE$$RO$$Limit = ADDR(.TFM_UNPRIV_CODE) + SIZEOF(.TFM_UNPRIV_CODE);
-
-#if defined(CONFIG_TFM_USE_TRUSTZONE) && defined(TFM_LINKER_VENEERS_LOCATION_END)
-    VENEERS()
-#endif
-
 #ifdef RAM_VECTORS_SUPPORT
-    .ramVectors (NOLOAD) : ALIGN(TFM_LINKER_RAM_VECTORS_ALIGNMENT)
+    .ramVectors ALIGN(TFM_LINKER_RAM_VECTORS_ALIGNMENT) (NOLOAD) :
     {
         __ram_vectors_start__ = .;
         KEEP(*(.ram_vectors))
         __ram_vectors_end__   = .;
     } > RAM
-    .TFM_DATA __ram_vectors_end__ : ALIGN(4)
+    .TFM_DATA __ram_vectors_end__ :
 #else
 
-    .TFM_DATA : ALIGN(4)
+    .TFM_DATA ALIGN(4) :
 #endif
     {
         *(CodeQuickAccess)       /* CodeQuickAccess sections */ //NXP
         *(DataQuickAccess)       /* DataQuickAccess sections */ //NXP
 
-        *(.data*)
+        *(SORT_BY_ALIGNMENT(.data*))
 
         . = ALIGN(4);
         /* preinit data */
@@ -632,7 +632,7 @@ SECTIONS
     Image$$ER_TFM_DATA$$RW$$Base = ADDR(.TFM_DATA);
     Image$$ER_TFM_DATA$$RW$$Limit = ADDR(.TFM_DATA) + SIZEOF(.TFM_DATA);
 
-    .TFM_BSS : ALIGN(4)
+    .TFM_BSS ALIGN(4) (NOLOAD) :
     {
         __bss_start__ = .;
 
@@ -652,7 +652,7 @@ SECTIONS
         KEEP(*(.bss.serv_runtime_priority_normal))
         KEEP(*(.bss.serv_runtime_priority_high))
         __service_runtime_end__ = .;
-        *(.bss*)
+        *(SORT_BY_ALIGNMENT(.bss*))
         *(COMMON)
         . = ALIGN(4);
         __bss_end__ = .;

@@ -62,6 +62,7 @@ typedef XA_ERRORCODE  (*xa_codec_setparam_f)(XACodecBase *, WORD32, pVOID p);
 typedef XA_ERRORCODE  (*xa_codec_getparam_f)(XACodecBase *, WORD32, pVOID p);
 
 typedef struct xf_channel_info xf_channel_info_t;
+
 /*******************************************************************************
  * Codec instance structure
  ******************************************************************************/
@@ -89,8 +90,8 @@ struct XACodecBase
 
     /* ...scratch memory pointer */
     void                   *scratch;
-    
-    /* ...scratch memory index of component */    
+
+    /* ...scratch memory index of component */
     int 					scratch_idx;
 
     /* ...codec control state */
@@ -102,7 +103,7 @@ struct XACodecBase
 
     /* ...memory buffer initialization */
     xa_codec_memtab_f       memtab;
- 
+
     /* ...preprocessing function */
     xa_codec_preprocess_f   preprocess;
 
@@ -114,10 +115,10 @@ struct XACodecBase
 
     /* ...configuration parameter retrieval function */
     xa_codec_getparam_f     getparam;
-    
+
     /* ...command-processing table */
     XA_ERRORCODE (* const * command)(XACodecBase *, xf_message_t *);
-    
+
     /* ...command-processing table size */
     UWORD32                 command_num;
 
@@ -134,6 +135,7 @@ struct XACodecBase
 
     /* ...component type */
     xaf_comp_type           comp_type;
+
 };
 
 /*******************************************************************************
@@ -335,16 +337,16 @@ struct XACodecBase
 })
 
 /* ...allocate local memory on specific core */
-#define XMALLOC(p, size, align, core)                                           \
+#define XMALLOC(p, size, align, core, mem_pool_type)                            \
 do                                                                              \
 {                                                                               \
-    if (xf_mm_alloc_buffer((size), (align), (core), (p)) != 0)                  \
+    if (xf_mm_alloc_buffer((size), (align), (core), (p), (mem_pool_type)) != 0) \
     {                                                                           \
         TRACE(ERROR, _x("Failed to allocate %d bytes of memory"), (size));      \
         return XA_API_FATAL_MEM_ALLOC;                                          \
     }                                                                           \
                                                                                 \
-    if (((UWORD32)((p)->addr) & ((align) - 1)) != 0)                                \
+    if (((UWORD32)((p)->addr) & ((align) - 1)) != 0)                            \
     {                                                                           \
         TRACE(ERROR, _x("Invalid %d-algnment: %p"), (align), (p)->addr);        \
         return XA_API_FATAL_MEM_ALIGN;                                          \

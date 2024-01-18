@@ -296,7 +296,7 @@
  *  Minimum Value: 2
  *  Maximum Value: can be anything.
  */
-#define HCI_ISO_DATA_QUEUE_SIZE                         40U
+#define HCI_ISO_DATA_QUEUE_SIZE                         80U
 
 /*
  *  Length of the buffer packet used to enqueue HCI Events/Data received
@@ -578,7 +578,7 @@
 /* ----------------------------------------------------------------------- */
 /* ===================  Generic Attribute Protocol  ====================== */
 /* ----------------------------------------------------------------------- */
-
+#ifndef BT_HAVE_GATT_DB_RECORDS_SORTED_BY_UUID_SIZE
 /**
  * GATT_DB_DYN_MAX_SERVICE_COUNT
  *
@@ -588,6 +588,40 @@
  * Maximum Value: anything
  */
 #define GATT_DB_DYN_MAX_SERVICE_COUNT                  20U
+#else /* BT_HAVE_GATT_DB_RECORDS_SORTED_BY_UUID_SIZE */
+
+/**
+ * GATT_DB_DYN_MAX_16_BIT_SERVICE_COUNT
+ *
+ * Maximum Number of GATT Service - with 16-bit UUID.
+ *
+ * Minimum Value: 1
+ * Maximum Value: anything
+ */
+#define GATT_DB_DYN_MAX_16_BIT_SERVICE_COUNT              15U
+
+/**
+ * GATT_DB_DYN_MAX_128_BIT_SERVICE_COUNT
+ *
+ * Maximum Number of GATT Service - with 128-bit UUID.
+ *
+ * Minimum Value: 1
+ * Maximum Value: anything
+ */
+#define GATT_DB_DYN_MAX_128_BIT_SERVICE_COUNT              5U
+
+ /**
+ * GATT_DB_DYN_MAX_SERVICE_COUNT
+ *
+ * Maximum Number of GATT Services.
+ *
+ * Minimum Value: 1
+ * Maximum Value: anything
+ */
+#define GATT_DB_DYN_MAX_SERVICE_COUNT                  \
+        (GATT_DB_DYN_MAX_16_BIT_SERVICE_COUNT + GATT_DB_DYN_MAX_128_BIT_SERVICE_COUNT)
+
+#endif /* BT_HAVE_GATT_DB_RECORDS_SORTED_BY_UUID_SIZE */
 
 /**
  * GATT_DB_DYN_CHARACTERISTIC_COUNT
@@ -599,6 +633,7 @@
  */
 #define GATT_DB_DYN_CHARACTERISTIC_COUNT               40U
 
+#ifndef BT_HAVE_GATT_DB_RECORDS_SORTED_BY_UUID_SIZE
 /**
  * GATT_DB_DYN_MAX_ATTRIBUTES
  *
@@ -609,6 +644,41 @@
  */
 #define GATT_DB_DYN_MAX_ATTRIBUTES                     80U
 
+#else /* BT_HAVE_GATT_DB_RECORDS_SORTED_BY_UUID_SIZE */
+
+/**
+ * GATT_DB_DYN_MAX_ATTRIBUTES_16_BIT
+ *
+ * Maximum Number of GATT Attributes - corresponding to Services with 16-bit UUID.
+ *
+ * Minimum Value: 1
+ * Maximum Value: anything
+ */
+#define GATT_DB_DYN_MAX_ATTRIBUTES_16_BIT               70U
+
+/**
+ * GATT_DB_DYN_MAX_ATTRIBUTES_128_BIT
+ *
+ * Maximum Number of GATT Attributes - corresponding to Services with 128-bit UUID.
+ *
+ * Minimum Value: 1
+ * Maximum Value: anything
+ */
+#define GATT_DB_DYN_MAX_ATTRIBUTES_128_BIT              10U
+
+/**
+ * GATT_DB_DYN_MAX_ATTRIBUTES
+ *
+ * Maximum Number of GATT Attributes.
+ *
+ * Minimum Value: 1
+ * Maximum Value: anything
+ */
+#define GATT_DB_DYN_MAX_ATTRIBUTES                     \
+        (GATT_DB_DYN_MAX_ATTRIBUTES_16_BIT + GATT_DB_DYN_MAX_ATTRIBUTES_128_BIT)
+
+#endif /* BT_HAVE_GATT_DB_RECORDS_SORTED_BY_UUID_SIZE */
+
 /**
  * GATT_DB_DYN_MAX_TYPE_COUNT
  *
@@ -617,7 +687,7 @@
  * Minimum Value: 1
  * Maximum Value: anything
  */
-#define GATT_DB_DYN_MAX_TYPE_COUNT                     80U
+#define GATT_DB_DYN_MAX_TYPE_COUNT                     150U
 
 /**
  * GATT_DB_DYN_PEER_VALUE_ARRAY_SIZE
@@ -649,7 +719,7 @@
  * Minimum Value: 2
  * Maximum Value: anything
  */
-#define GATT_DB_DYN_UUID_ARRAY_SIZE                    512U
+#define GATT_DB_DYN_UUID_ARRAY_SIZE                    612U
 
 /**
  * GATT_DB_DYN_MAX_PEER_CONFIGURATION
@@ -675,7 +745,6 @@
  */
 #define GATT_VALUE_ARRAY_SIZE                          256U
 #endif /* GATT_DB_DYNAMIC */
-
 
 /* ----------------------------------------------------------------------- */
 /* ====================  Security Manager Protocol  ====================== */
@@ -834,7 +903,7 @@
 #define L2CAP_NUM_BUFFER_ELEMENTS_HWM                   45U
 
 /*
- *  Maximum number of credit based logical channels that L2CAP needs
+ *  Maximum number of [enhanced] credit based logical channels that L2CAP needs
  *  to support. Normally, for each PSM there might be one L2CAP channel. But
  *  there could also be more than one L2CAP channel for a PSM.
  *
@@ -1305,6 +1374,14 @@
 #define BNEP_MAX_NW_TYPE_FILTERS                        10U
 #define BNEP_MAX_MC_ADDR_FILTERS                        10U
 
+/*
+ *  Maximum number of unknown extension headers BNEP to pass on to the upper layer.
+ *
+ *  Minimum Value:  1
+ *  Maximum Value:  As required
+ */
+#define BNEP_MAX_UNKNOW_EXT_HDR                         8U
+
 
 /* ----------------------------------------------------------------------- */
 /* =============================  AVDTP  ================================= */
@@ -1762,7 +1839,7 @@
  *  Minimum Value: 1
  *  Maximum Value: OBEX_MAX_INSTANCES
  */
-#define OPP_NUM_CLIENT_ENTITIES                                 1U
+#define OPP_NUM_CLIENT_ENTITIES                                 3U
 
 
 /*
@@ -2151,6 +2228,15 @@
 #define DUNP_DT_MAX_MODEM_RSP_LEN                       20U
 #define DUNP_DT_MAX_SDP_DATA_LEN                        50U
 #define DUNP_DT_MAX_RFCOMM_DATA                         10U
+
+/*
+ *  Value of the maximum number of DUNP DTs that can connect
+ *  to the DUNP GW simultaneously
+ *
+ *  Minimum Value: 1
+ *  Maximum Value: as required (to be tuned based on requirements)
+ */
+#define DUNP_DT_MAX_GW_CONNECTED                        1U
 
 
 /* ----------------------------------------------------------------------- */

@@ -9,7 +9,7 @@
 #include "includes.h"
 
 #ifdef CONFIG_P2P
-#include "common.h"
+#include "utils/common.h"
 #include "common/defs.h"
 #include "common/ieee802_11_common.h"
 #include "p2p_i.h"

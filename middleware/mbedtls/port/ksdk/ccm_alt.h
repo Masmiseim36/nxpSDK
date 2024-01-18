@@ -88,4 +88,8 @@ typedef struct mbedtls_ccm_context {
 
 #endif /* MBEDTLS_CCM_ALT_H */
 
+#ifdef __cplusplus
+}
+#endif
+
 #endif /* MBEDTLS_CCM_ALT_H */

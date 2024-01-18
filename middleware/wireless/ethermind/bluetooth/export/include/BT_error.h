@@ -165,6 +165,9 @@ typedef UINT16    API_RESULT;
 #define SMP_ERR_ID                              0x2E00U
 /** Error Codes for Attribute Protocol - \ref btle_error_codes_module_att */
 #define ATT_ERR_ID                              0x2F00U
+#ifdef MULTI_PROFILE_FSM_SUPPORT
+#define PROFILE_ERR_ID                          0x3000U
+#endif /* MULTI_PROFILE_FSM_SUPPORT */
 
 /** \} */
 
@@ -794,6 +797,10 @@ typedef UINT16    API_RESULT;
 #define ATT_LCID_DISCONNECTED                          (0x0043U | ATT_ERR_ID)
 #define ATT_CONNECTION_ALREADY_EXISTS                  (0x0044U | ATT_ERR_ID)
 
+#ifdef MULTI_PROFILE_FSM_SUPPORT
+#define PROFILE_INVALID_STATE                          (0x0011U | PROFILE_ERR_ID)
+#define PROFILE_EVENT_OP_ERROR                         (0x0012U | PROFILE_ERR_ID)
+#endif /* MULTI_PROFILE_FSM_SUPPORT */
 /** \} */
 
 /* ======================================= Section 'GATT DB' */
@@ -858,6 +865,8 @@ typedef UINT16    API_RESULT;
 #define GATT_DB_DONOT_RESPOND                    (0x0061U | GATT_DB_ERR_ID)
 /** GATT DB status code to inform Response is already triggered */
 #define GATT_DB_ALREADY_RESPONDED                (0x0062U | GATT_DB_ERR_ID)
+/** GATT DB status code to inform Upper Layer updated Attribute Value */
+#define GATT_DB_UL_UPDATED_ATTR_VAL              (0x0063U | GATT_DB_ERR_ID)
 
 /** \} */
 

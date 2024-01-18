@@ -20,6 +20,8 @@
  * but before starting uAP or making any connection attempts on station
  * interface.
  *
+ * \param[in] state 1: enable, 0: disable
+ *
  * \return -WM_FAIL if operation was failed.
  * \return WM_SUCCESS if operation was successful.
  */
@@ -36,6 +38,8 @@ static inline int wlan_enable_11d(int state)
  * \note This API should be called after WLAN is initialized
  * but before starting uAP or making any connection attempts on station
  * interface.
+ *
+ * \param[in] state 1: enable, 0: disable
  *
  * \return -WM_FAIL if operation was failed.
  * \return WM_SUCCESS if operation was successful.

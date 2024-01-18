@@ -21,6 +21,23 @@ Change log:
 
 
 
+#if !defined(SD8801)
+#define CONFIG_GTK_REKEY_OFFLOAD       1
+#endif
+
+#if defined(SD9177)
+#define CONFIG_TCP_ACK_ENH 1
+#define CONFIG_FW_VDLL     1
+#define CONFIG_WIFI_CAPA   1
+#endif
+
+#ifdef CONFIG_11AX
+#define CONFIG_11K 1
+#define CONFIG_11V 1
+#ifndef CONFIG_WPA_SUPP
+#define CONFIG_DRIVER_MBO 1
+#endif
+#endif
 
 #include "mlan_decl.h"
 #include "mlan_ioctl.h"

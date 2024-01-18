@@ -3,7 +3,7 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-if(CONFIG_USE_component_wifi_bt_module_tx_pwr_limits)
+if(CONFIG_USE_component_wifi_bt_module_tx_pwr_limits AND CONFIG_USE_component_wifi_bt_module_config)
 
 add_config_file(${CMAKE_CURRENT_LIST_DIR}/app_config.h ${CMAKE_CURRENT_LIST_DIR}/. middleware_wifi_template)
 add_config_file(${CMAKE_CURRENT_LIST_DIR}/wifi_config.h ${CMAKE_CURRENT_LIST_DIR}/. middleware_wifi_template)

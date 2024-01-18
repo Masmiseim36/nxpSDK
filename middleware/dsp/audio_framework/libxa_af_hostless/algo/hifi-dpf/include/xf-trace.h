@@ -41,18 +41,18 @@ typedef struct xf_trace_data
 {
     /* ...current write position in tracing buffer */
     char               *p;
-    
+
     /* ...threshold position for buffer submission */
     char               *end;
 
 #if XF_TRACE_REMOTE
     /* ...beginning of non-commited internal tracing buffer */
-    char               *start;    
+    char               *start;
 
     /* ...message queue */
     xf_msg_queue_t      queue;
 #endif
-    
+
 }   xf_trace_data_t;
 
 #else

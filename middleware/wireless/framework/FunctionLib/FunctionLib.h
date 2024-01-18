@@ -150,6 +150,17 @@ bool_t FLib_MemCmpToVal(const void *pAddr, uint8_t val, uint32_t len);
 void FLib_MemSet(void *pData, uint8_t value, uint32_t cBytes);
 
 /*! *********************************************************************************
+ * \brief  This function sets all words in a specified buffer to a set value.
+ *   The memory set is done word per word
+ *
+ * \param[in,out]  pData  Address of the buffer to set.
+ * \param[in]  value  Set value.
+ * \param[in]  cWords Number of words to set in the buffer.
+ *
+ ********************************************************************************** */
+void FLib_MemSet32Aligned(void *pData, uint32_t value, uint32_t cWords);
+
+/*! *********************************************************************************
  * \brief Copy bytes, possibly into the same overlapping memory as it is taken from
  *
  * \param[out] pDst   Pointer to destination memory block
@@ -237,7 +248,7 @@ uint32_t FLib_StrLen(const char *str);
  *         ((n-1) - i) in the same buffer (and vice versa).
  *         Used for endianess conversion of octet strigs.
  *
- * \param[out] pBuf    Pointer to destination memory block to be byte reversed.
+ * \param[out] buf     Pointer to destination memory block to be byte reversed.
  * \param[in]  cBytes  Number of bytes to copy
  *
  * \remarks
@@ -257,9 +268,9 @@ void FLib_ReverseByteOrderInPlace(void *buf, uint32_t cBytes);
  *       to 32bits
  *
  ********************************************************************************** */
-static inline void FLib_MemCpyWord(uint32_t *pDst, void *pSrc)
+static inline void FLib_MemCpyWord(void *pDst, void *pSrc)
 {
-    *pDst = *((uint32_t *)pSrc);
+    *((uint32_t *)pDst) = *((uint32_t *)pSrc);
 }
 /*!
  * @}  end of FunctionLib addtogroup

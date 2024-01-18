@@ -3,42 +3,86 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-if(CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_flatbuffers AND CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_gemmlowp AND CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_ruy)
+if(CONFIG_USE_middleware_eiq_tensorflow_lite_micro_headers AND CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_kissfft)
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+  ${CMAKE_CURRENT_LIST_DIR}/signal/micro/kernels/delay.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/micro/kernels/energy.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/micro/kernels/fft_auto_scale.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/micro/kernels/filter_bank.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/micro/kernels/filter_bank_log.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/micro/kernels/filter_bank_spectral_subtraction.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/micro/kernels/filter_bank_square_root.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/micro/kernels/framer.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/micro/kernels/irfft.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/micro/kernels/overlap_add.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/micro/kernels/pcan.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/micro/kernels/rfft.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/micro/kernels/stacker.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/micro/kernels/window.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/src/circular_buffer.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/src/energy.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/src/fft_auto_scale.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/src/filter_bank.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/src/filter_bank_log.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/src/filter_bank_spectral_subtraction.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/src/filter_bank_square_root.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/src/irfft_float.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/src/irfft_int16.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/src/irfft_int32.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/src/log.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/src/max_abs.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/src/msb_32.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/src/msb_64.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/src/overlap_add.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/src/pcan_argc_fixed.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/src/rfft_float.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/src/rfft_int16.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/src/rfft_int32.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/src/square_root_32.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/src/square_root_64.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/src/window.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/src/kiss_fft_wrappers/kiss_fft_float.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/src/kiss_fft_wrappers/kiss_fft_int16.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/signal/src/kiss_fft_wrappers/kiss_fft_int32.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/core/api/error_reporter.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/core/api/flatbuffer_conversions.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/core/api/op_resolver.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/core/api/tensor_utils.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/core/c/common.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/kernels/kernel_util.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/kernels/internal/common.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/kernels/internal/portable_tensor_utils.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/kernels/internal/quantization_util.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/kernels/internal/tensor_ctypes.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/kernels/internal/tensor_utils.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/kernels/internal/reference/comparisons.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/kernels/internal/reference/portable_tensor_utils.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/all_ops_resolver.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/debug_log.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/fake_micro_context.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/flatbuffer_utils.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/memory_helpers.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/micro_allocation_info.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/micro_allocator.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/micro_context.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/micro_graph.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/micro_interpreter.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/micro_interpreter_context.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/micro_interpreter_graph.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/micro_log.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/micro_op_resolver.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/micro_profiler.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/micro_resource_variable.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/micro_string.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/micro_time.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/micro_utils.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/mock_micro_graph.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/recording_micro_allocator.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/system_setup.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/test_helper_custom_ops.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/test_helpers.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/activations_common.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/add_common.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/add_n.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/arg_min_max.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/assign_variable.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/batch_matmul.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/batch_to_space_nd.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/broadcast_args.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/broadcast_to.cpp
@@ -59,6 +103,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/div.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/elementwise.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/elu.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/embedding_lookup.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/exp.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/expand_dims.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/fill.cpp
@@ -91,12 +136,14 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/quantize_common.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/read_variable.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/reduce_common.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/reshape_common.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/resize_bilinear.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/resize_nearest_neighbor.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/round.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/select.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/shape.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/slice.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/strided_slice_common.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/softmax_common.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/space_to_batch_nd.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/space_to_depth.cpp
@@ -126,54 +173,8 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
   ${CMAKE_CURRENT_LIST_DIR}/.
+  ${CMAKE_CURRENT_LIST_DIR}/third_party/kissfft
 )
-
-if(CONFIG_USE_COMPONENT_CONFIGURATION)
-  message("===>Import configuration from ${CMAKE_CURRENT_LIST_FILE}")
-
-  target_compile_definitions(${MCUX_SDK_PROJECT_NAME} PUBLIC
-    -DTF_LITE_STATIC_MEMORY
-  )
-
-  if(CONFIG_TOOLCHAIN STREQUAL iar)
-    target_compile_options(${MCUX_SDK_PROJECT_NAME} PUBLIC
-      --compiler_language=auto
-      --dlib_config full
-      --enable_restrict
-      --fno-rtti
-      --fno-exceptions
-      --diag_suppress Go003,Pa050,Pa082,Pa084,Pa093,Pe069,Pe111,Pe161,Pe174,Pe177,Pe186,Pe188,Pe550,Pe611,Pe997,Pe1444
-    )
-  endif()
-  if(CONFIG_TOOLCHAIN STREQUAL mdk)
-    target_compile_options(${MCUX_SDK_PROJECT_NAME} PUBLIC
-      -ffp-mode=full
-      -fno-exceptions
-      -std=gnu++11
-      -Wno-c++17-extensions
-    )
-  endif()
-  if(CONFIG_TOOLCHAIN STREQUAL armgcc)
-    target_compile_options(${MCUX_SDK_PROJECT_NAME} PUBLIC
-      -Wall
-      -Wno-strict-aliasing
-      -fno-rtti
-      -fno-exceptions
-      -Wno-sign-compare
-      -Wno-deprecated-declarations
-    )
-  endif()
-  if(CONFIG_TOOLCHAIN STREQUAL mcux)
-    target_compile_options(${MCUX_SDK_PROJECT_NAME} PUBLIC
-      -Wno-strict-aliasing
-      -fno-rtti
-      -fno-exceptions
-      -Wno-sign-compare
-      -Wno-deprecated-declarations
-    )
-  endif()
-
-endif()
 
 else()
 

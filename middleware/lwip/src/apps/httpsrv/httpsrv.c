@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2022 NXP
+ * Copyright 2016-2023 NXP
  * All rights reserved.
  *
  *
@@ -20,7 +20,7 @@
 ** Function for starting the HTTP server
 **
 ** IN:
-**      HTTPSRV_PARAM_STRUCT*   params - server parameters (port, ip, index page etc.)
+**      HTTPSRV_PARAM_STRUCT *params - server parameters (port, ip, index page etc.)
 **
 ** OUT:
 **      none
@@ -36,12 +36,21 @@ uint32_t HTTPSRV_init(HTTPSRV_PARAM_STRUCT *params)
     server = httpsrv_create_server(params);
     if (server)
     {
-        server->valid      = HTTPSRV_VALID;
+        server->valid = HTTPSRV_VALID;
+
+        if (sys_sem_new(&server->finished, 0) != ERR_OK)
+        {
+            httpsrv_destroy_server(server);
+            httpsrv_mem_free(server);
+            return (handle);
+        }
+
         server->server_tid = sys_thread_new(HTTPSRV_SERVER_TASK_NAME, httpsrv_server_task, server,
                                             HTTPSRV_CFG_SERVER_STACK_SIZE, server->params.task_prio);
         if (server->server_tid == NULL)
         {
             httpsrv_destroy_server(server);
+            sys_sem_free(&server->finished);
             httpsrv_mem_free(server);
         }
         else
@@ -75,13 +84,14 @@ void HTTPSRV_release(uint32_t server_h)
         if (server->sock != -1)
         {
             server->valid = HTTPSRV_INVALID;
-            lwip_close(server->sock); /* Ublock select() */
+            lwip_close(server->sock); /* Unblock select() */
         }
 
-        while (server->server_tid) /* Wait for task completition.*/
-        {
-            taskYIELD();
-        }
+        /* Wait for task completion. */
+        (void)sys_sem_wait(&server->finished);
+        LWIP_ASSERT("server->server_tid == 0", server->server_tid == 0);
+        sys_sem_free(&server->finished);
+
         httpsrv_mem_free(server);
     }
 }

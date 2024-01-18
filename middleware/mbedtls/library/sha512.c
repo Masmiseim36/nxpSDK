@@ -84,13 +84,13 @@ void mbedtls_sha512_clone(mbedtls_sha512_context *dst,
 /*
  * SHA-512 context setup
  */
-int mbedtls_sha512_starts_ret( mbedtls_sha512_context *ctx, int is384 )
+int mbedtls_sha512_starts_ret(mbedtls_sha512_context *ctx, int is384)
 {
-    SHA512_VALIDATE_RET( ctx != NULL );
+    SHA512_VALIDATE_RET(ctx != NULL);
 #if !defined(MBEDTLS_SHA512_NO_SHA384)
-    SHA512_VALIDATE_RET( is384 == 0 || is384 == 1 );
+    SHA512_VALIDATE_RET(is384 == 0 || is384 == 1);
 #else
-    SHA512_VALIDATE_RET( is384 == 0 );
+    SHA512_VALIDATE_RET(is384 == 0);
 #endif
 
     ctx->total[0] = 0;

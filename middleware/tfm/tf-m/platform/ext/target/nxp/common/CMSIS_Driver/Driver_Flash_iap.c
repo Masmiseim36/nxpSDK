@@ -433,6 +433,12 @@ static int32_t ARM_Flash_ProgramData(uint32_t addr, const void *data, uint32_t c
     return cnt;
 }
 
+#if defined(__GNUC__)
+/* Enforce O1 optimize level, fails with higher optimization level on armgcc12.3.1 toolchain */
+#pragma GCC push_options
+#pragma GCC optimize("-O1")
+#endif
+
 static int32_t ARM_Flash_EraseSector(uint32_t addr)
 {
     status_t status;
@@ -487,6 +493,10 @@ static int32_t ARM_Flash_EraseSector(uint32_t addr)
     return ARM_DRIVER_OK;
 }
 
+#if defined(__GNUC__)
+/* End of enforcing O1 optimize level for gcc*/
+#pragma GCC pop_options
+#endif
 static ARM_FLASH_STATUS ARM_Flash_GetStatus(void)
 {
     return FlashStatus;

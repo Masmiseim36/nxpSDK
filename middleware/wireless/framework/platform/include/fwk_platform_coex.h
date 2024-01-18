@@ -17,12 +17,10 @@
 /*                                Public types                                */
 /* -------------------------------------------------------------------------- */
 
-typedef enum
-{
-    connBle_c      = 1U << 0,
-    conn802_15_4_c = 1U << 1,
-    connWlan_c     = 1U << 2,
-} controllers_t;
+#define connBle_c      (uint8_t)(1U << 0)
+#define conn802_15_4_c (uint8_t)(1U << 1)
+#define connWlan_c     (uint8_t)(1U << 2)
+#define connAll_c      (connBle_c | conn802_15_4_c | connWlan_c)
 
 /* -------------------------------------------------------------------------- */
 /*                              Public functions                              */
@@ -47,6 +45,13 @@ int PLATFORM_InitControllers(uint8_t controllersMask);
  * \return int >=0 for success, <0 for errors
  */
 int PLATFORM_TerminateControllers(uint8_t controllersMask);
+
+/*!
+ * \brief Returns current states of each Controller
+ *
+ * \return uint8_t mask indicating the state of each Controller
+ */
+uint8_t PLATFORM_GetRunningControllers(void);
 
 #ifdef __cplusplus
 }

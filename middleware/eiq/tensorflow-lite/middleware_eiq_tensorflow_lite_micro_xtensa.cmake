@@ -9,8 +9,10 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/xtensa/add.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/xtensa/add_vision.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/xtensa/conv.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/xtensa/conv_common_xtensa.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/xtensa/conv_hifi.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/xtensa/conv_int16_reference.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/xtensa/conv_int8_int16.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/xtensa/conv_int8_reference.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/xtensa/conv_vision.cpp
   ${CMAKE_CURRENT_LIST_DIR}/tensorflow/lite/micro/kernels/xtensa/depthwise_conv.cpp

@@ -236,9 +236,9 @@ hal_audio_config_t rxSpeakerConfig = {
     .ipConfig      = NULL,
     .srcClock_Hz   = 24576000,
     .sampleRate_Hz = (uint32_t)kHAL_AudioSampleRate8KHz,
-#if defined(WIFI_88W8987_BOARD_AW_CM358MA)
+#if defined(WIFI_88W8987_BOARD_AW_CM358MA) || defined(WIFI_88W8987_BOARD_MURATA_1ZM_M2)
     .frameLength = 22, /* Here is 22 because the bt module will generate 22 bits clock after one clock WS. */
-#elif defined(WIFI_IW416_BOARD_AW_AM510MA) || defined(WIFI_IW416_BOARD_AW_AM510MA)
+#elif defined(WIFI_IW416_BOARD_AW_AM510MA) || defined(WIFI_IW416_BOARD_MURATA_1XK_M2)
     .frameLength = 256, /* Here is 256 because the bt module will generate 256 bits clock after one clock WS. */
 #else
 #endif
@@ -504,13 +504,25 @@ void USB_HostIsrEnable(void)
 int main(void)
 {
     DMA_Type *dmaBases[] = DMA_BASE_PTRS;
-    BOARD_InitBootPins();
+	RESET_ClearPeripheralReset(kHSGPIO0_RST_SHIFT_RSTn);
+    RESET_ClearPeripheralReset(kHSGPIO3_RST_SHIFT_RSTn);
+    RESET_ClearPeripheralReset(kHSGPIO4_RST_SHIFT_RSTn);
+
+	BOARD_InitBootPins();
     BOARD_InitBootClocks();
 
     BOARD_I3C_ReleaseBus();
     BOARD_InitI3CPins();
 
     APP_InitAppDebugConsole();
+
+
+#if defined(WIFI_88W8987_BOARD_MURATA_1ZM_M2)
+    CLOCK_EnableOsc32K(true);               /* Enable 32KHz Oscillator clock */
+    CLOCK_EnableClock(kCLOCK_Rtc);          /* Enable the RTC peripheral clock */
+    RTC->CTRL &= ~RTC_CTRL_SWRESET_MASK;    /* Make sure the reset bit is cleared */
+    RTC->CTRL &= ~RTC_CTRL_RTC_OSC_PD_MASK; /* The RTC Oscillator is powered up */
+#endif
 
     /* Set FlexSPI clock: source AUX0_PLL, divide by 4 */
     BOARD_SetFlexspiClock(FLEXSPI0, 2U, 4U);

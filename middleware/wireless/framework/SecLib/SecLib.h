@@ -13,12 +13,28 @@
 #ifndef SEC_LIB_H
 #define SEC_LIB_H
 
+/*!
+ * @addtogroup SecLib_module
+ * The SecLib_module
+ *
+ * SecLib_module provides APIs a collection of security features.
+ * @{
+ */
+/*!
+ * @addtogroup SecLib
+ * The SecLib main module
+ *
+ * SecLib provides APIs a collection of security features.
+ * @{
+ */
+
 /*! *********************************************************************************
 *************************************************************************************
 * Include
 *************************************************************************************
 ********************************************************************************** */
 #include "EmbeddedTypes.h"
+#include <stdint.h>
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -35,6 +51,8 @@
 #define AES_256_KEY_BYTE_LEN BITLEN2BYTELEN(AES_256_KEY_BITS)
 
 #define AES_128_BLOCK_SIZE 16u /* [bytes] */
+
+#define BLOB_DATA_OVERLAY_BYTE_LEN 24U
 
 /* CCM */
 #define gSecLib_CCM_Encrypt_c 0u
@@ -74,13 +92,6 @@
 /*! Number of bytes in an EIRK */
 #define gSecLibEirkBlobSize_c 16U
 
-/*! Enable or disable S200 blobs SecLib support.
- * 0 - the Bluetooth Keys are available in plaintext
- * 1 - the Bluetooth Keys are not available in plaintext, but in secured blobs */
-#ifndef gSecLibSssUseEncryptedKeys_d
-#define gSecLibSssUseEncryptedKeys_d 0U
-#endif
-
 /*! *********************************************************************************
 *************************************************************************************
 * Public type definitions
@@ -112,21 +123,6 @@ typedef struct
     uint32_t u32register2;
     uint32_t u32register3;
 } tsReg128;
-
-/*!
- * \brief  Type definition for Function prototype for Lowpower callback to be registered to SecLib module
- */
-typedef int32_t (*secLibLowpowerCriticalFunc_t)(int32_t power_mode);
-
-/*!
- * \brief  Type definition for structure for lowpower functions callback structure to be registered to SecLib module
- *     to disallow, allow lowpower during SecLib activity
- */
-typedef struct
-{
-    secLibLowpowerCriticalFunc_t SeclibEnterLowpowerCriticalFunc; /*!< function callback pointer to disable lowpower  */
-    secLibLowpowerCriticalFunc_t SeclibExitLowpowerCriticalFunc;  /*!< function callback pointer to reenable lowpower */
-} Seclib_LowpowerCriticalCBs_t;
 
 /*! The type of the key used in A2B protocol */
 typedef enum
@@ -160,15 +156,6 @@ void SecLib_ReInit(void);
  *
  ********************************************************************************** */
 void SecLib_DeInit(void);
-
-/*! *********************************************************************************
- * \brief  This function performs initialization of the callbacks structure used to
- *       disable lowpower when Seclib is active
- *
- * \param[in]  pfCallback Pointer to the function structure used to allow/disable lowpower .
- *
- ********************************************************************************** */
-void SecLib_SetLowpowerCriticalCb(const Seclib_LowpowerCriticalCBs_t *pfCallback);
 
 /*! *********************************************************************************
  * \brief  This function performs AES-128 encryption on a 16-byte block.
@@ -248,9 +235,9 @@ void AES_128_CBC_Encrypt(
  *
  * \param[in]  pKey Pointer to the location of the 128-bit key.
  *
- * \param[out]  pOutput Pointer to the location to store the ciphered output.
+ * \param[out] pOutput Pointer to the location to store the ciphered output.
  *
- * Return value: size of output buffer (after padding)
+ * \return     uint32_t size of output buffer (after padding)
  *
  ********************************************************************************** */
 uint32_t AES_128_CBC_Encrypt_And_Pad(
@@ -267,9 +254,9 @@ uint32_t AES_128_CBC_Encrypt_And_Pad(
  *
  * \param[in]  pKey Pointer to the location of the 128-bit key.
  *
- * \param[out]  pOutput Pointer to the location to store the ciphered output.
+ * \param[out] pOutput Pointer to the location to store the ciphered output.
  *
- * Return value: size of output buffer (after depadding the 0x80 0x00 ... padding sequence)
+ * \return     uint32_t size of output buffer (after depadding the 0x80 0x00 ... padding sequence)
  *
  ********************************************************************************** */
 uint32_t AES_128_CBC_Decrypt_And_Depad(
@@ -365,7 +352,8 @@ void AES_128_CMAC_LsbFirstInput(const uint8_t *pInput, uint32_t inputLen, const 
  * \param[out]  pOutput Pointer to the location to store the 16-byte pseudo random variable.
  *
  ********************************************************************************** */
-void AES_CMAC_PRF_128(uint8_t *pInput, uint32_t inputLen, uint8_t *pVarKey, uint32_t varKeyLen, uint8_t *pOutput);
+void AES_CMAC_PRF_128(
+    const uint8_t *pInput, uint32_t inputLen, const uint8_t *pVarKey, uint32_t varKeyLen, uint8_t *pOutput);
 
 #if gSecLibAesEaxEnable_d
 /*! *********************************************************************************
@@ -390,15 +378,15 @@ void AES_CMAC_PRF_128(uint8_t *pInput, uint32_t inputLen, uint8_t *pVarKey, uint
  * \param[out]  pTag Pointer to the location to store the 128-bit tag.
  *
  ********************************************************************************** */
-secResultType_t AES_128_EAX_Encrypt(uint8_t *pInput,
-                                    uint32_t inputLen,
-                                    uint8_t *pNonce,
-                                    uint32_t nonceLen,
-                                    uint8_t *pHeader,
-                                    uint8_t  headerLen,
-                                    uint8_t *pKey,
-                                    uint8_t *pOutput,
-                                    uint8_t *pTag);
+secResultType_t AES_128_EAX_Encrypt(const uint8_t *pInput,
+                                    uint32_t       inputLen,
+                                    const uint8_t *pNonce,
+                                    uint32_t       nonceLen,
+                                    const uint8_t *pHeader,
+                                    uint8_t        headerLen,
+                                    const uint8_t *pKey,
+                                    uint8_t *      pOutput,
+                                    uint8_t *      pTag);
 
 /*! *********************************************************************************
  * \brief  This function performs AES-128-EAX decryption on a message block.
@@ -422,15 +410,15 @@ secResultType_t AES_128_EAX_Encrypt(uint8_t *pInput,
  * \param[out]  pTag Pointer to the location to store the 128-bit tag.
  *
  ********************************************************************************** */
-secResultType_t AES_128_EAX_Decrypt(uint8_t *pInput,
-                                    uint32_t inputLen,
-                                    uint8_t *pNonce,
-                                    uint32_t nonceLen,
-                                    uint8_t *pHeader,
-                                    uint8_t  headerLen,
-                                    uint8_t *pKey,
-                                    uint8_t *pOutput,
-                                    uint8_t *pTag);
+secResultType_t AES_128_EAX_Decrypt(const uint8_t *pInput,
+                                    uint32_t       inputLen,
+                                    const uint8_t *pNonce,
+                                    uint32_t       nonceLen,
+                                    const uint8_t *pHeader,
+                                    uint8_t        headerLen,
+                                    const uint8_t *pKey,
+                                    uint8_t *      pOutput,
+                                    uint8_t *      pTag);
 #endif
 
 /*! *********************************************************************************
@@ -461,6 +449,7 @@ secResultType_t AES_128_EAX_Decrypt(uint8_t *pInput,
  *
  * \param[out]  flags       Select encrypt/decrypt operations (gSecLib_CCM_Encrypt_c, gSecLib_CCM_Decrypt_c)
  *
+ * \return      uint8_t     error status.
  ********************************************************************************** */
 uint8_t AES_128_CCM(const uint8_t *pInput,
                     uint16_t       inputLen,
@@ -697,7 +686,8 @@ void SecLib_XorN(uint8_t *      pDst, /* First operand and result of XOR operati
                  uint8_t        n);          /* Number of bytes in input arrays. */
 
 /************************************************************************************
- * \brief Function used to create the mac key and LTK using Bluetooth F5 algorithm
+ * \brief Function used to create the mac key and LTK using Bluetooth F5 algorithm.
+ *        Version using plaintext key.
  *
  * \param  [out] pMacKey 128 bit MacKey output location (pointer)
  * \param  [out] pLtk    128 bit LTK output location (pointer)
@@ -708,7 +698,6 @@ void SecLib_XorN(uint8_t *      pDst, /* First operand and result of XOR operati
  * \param  [in] pA1      48 bit A1 (pointer) (A)
  * \param  [in] a2at     8 bit A2 address type, 0 = Public, 1 = Random
  * \param  [in] pA2      48 bit A2 (pointer) (B)
- * \param  [in] bSecure  use available extra security bus
  *
  * \retval gSecSuccess_c operation succeeded
  * \retval gSecError_c operation failed
@@ -721,11 +710,38 @@ secResultType_t SecLib_GenerateBluetoothF5Keys(uint8_t *      pMacKey,
                                                const uint8_t  a1at,
                                                const uint8_t *pA1,
                                                const uint8_t  a2at,
-                                               const uint8_t *pA2,
-                                               const bool_t   bSecure);
+                                               const uint8_t *pA2);
+
+/************************************************************************************
+ * \brief Function used to create the mac key and LTK using Bluetooth F5 algorithm.
+ *        Version using key blobs and secure bus. Available on EdgeLock only.
+ *
+ * \param  [out] pMacKey 128 bit MacKey output location (pointer)
+ * \param  [out] pLtk    128 bit LTK output location (pointer)
+ * \param  [in] pW       256 bit W (pointer) (DHKey)
+ * \param  [in] pN1      128 bit N1 (pointer) (Na)
+ * \param  [in] pN2      128 bit N2 (pointer) (Nb)
+ * \param  [in] a1at     8 bit A1 address type, 0 = Public, 1 = Random
+ * \param  [in] pA1      48 bit A1 (pointer) (A)
+ * \param  [in] a2at     8 bit A2 address type, 0 = Public, 1 = Random
+ * \param  [in] pA2      48 bit A2 (pointer) (B)
+ *
+ * \retval gSecSuccess_c operation succeeded
+ * \retval gSecError_c operation failed
+ ************************************************************************************/
+secResultType_t SecLib_GenerateBluetoothF5KeysSecure(uint8_t *      pMacKey,
+                                                     uint8_t *      pLtk,
+                                                     const uint8_t *pW,
+                                                     const uint8_t *pN1,
+                                                     const uint8_t *pN2,
+                                                     const uint8_t  a1at,
+                                                     const uint8_t *pA1,
+                                                     const uint8_t  a2at,
+                                                     const uint8_t *pA2);
 
 /************************************************************************************
  * \brief Function used to derive the Bluetooth SKD used in LL encryption
+ *        Available on EdgeLock only.
  *
  * \param  [in] pInSKD   pointer to the received SKD (16-byte array)
  * \param  [in] pLtkBlob pointer to the blob (40-byte array)
@@ -735,10 +751,10 @@ secResultType_t SecLib_GenerateBluetoothF5Keys(uint8_t *      pMacKey,
  * \retval gSecSuccess_c operation succeeded
  * \retval gSecError_c operation failed
  ************************************************************************************/
-secResultType_t SecLib_DeriveBluetoothSKD(const uint8_t *pInSKD,
-                                          const uint8_t *pLtkBlob,
-                                          bool_t         bOpenKey,
-                                          uint8_t *      pOutSKD);
+secResultType_t SecLib_DeriveBluetoothSKDSecure(const uint8_t *pInSKD,
+                                                const uint8_t *pLtkBlob,
+                                                bool_t         bOpenKey,
+                                                uint8_t *      pOutSKD);
 
 /************************************************************************************
  * \brief Converts a plaintext symmetric key into a blob of blobType. Reverses key beforehand.
@@ -752,7 +768,7 @@ secResultType_t SecLib_DeriveBluetoothSKD(const uint8_t *pInSKD,
  * \return gSecSuccess_c or error
  *
  ************************************************************************************/
-secResultType_t SecLib_ObfuscateKey(const uint8_t *pKey, uint8_t *pBlob, const uint8_t blobType);
+secResultType_t SecLib_ObfuscateKeySecure(const uint8_t *pKey, uint8_t *pBlob, const uint8_t blobType);
 
 /************************************************************************************
  * \brief Converts a blob of a symmetric key into the plaintext. Reverses key afterwards.
@@ -764,51 +780,65 @@ secResultType_t SecLib_ObfuscateKey(const uint8_t *pKey, uint8_t *pBlob, const u
  * \return gSecSuccess_c or error
  *
  ************************************************************************************/
-secResultType_t SecLib_DeobfuscateKey(const uint8_t *pBlob, uint8_t *pKey);
+secResultType_t SecLib_DeobfuscateKeySecure(const uint8_t *pBlob, uint8_t *pKey);
 
 /*! *********************************************************************************
  * \brief  This function implements the SMP ah cryptographic toolbox function which calculates the
  *         hash part of a Resolvable Private Address.
+ *         Key kept as blob.
  *
  * \param[out]  pHash  Pointer where the 24 bit hash value will be written.
+ *                     24 bit hash field of a Resolvable Private Address (output)
  *
  * \param[in]  pKey  Pointer to the 128 bit key.
  *
  * \param[in]  pR   Pointer to the 24 bit random value (Prand).
  *                  The most significant bits of this field must be 0b01 for Resolvable Private Addresses.
  *
- * \param[in]  bIsKeyObfuscated   Specify if pKey is in plaintext or obfuscated.
+ * \retval  gSecSuccess_c  All operations were successful.
+ * \retval  gSecError_c The call failed.
+ *
+ ********************************************************************************** */
+secResultType_t SecLib_VerifyBluetoothAhSecure(uint8_t *pHash, const uint8_t *pKey, const uint8_t *pR);
+
+/*! *********************************************************************************
+ * \brief  This function implements the SMP ah cryptographic toolbox function which calculates the
+ *         hash part of a Resolvable Private Address.
+ *         Key kept in plain text.
+ *
+ * \param[out]  pHash  Pointer where the 24 bit hash value will be written.
+ *                     24 bit hash field of a Resolvable Private Address (output)
+ *
+ * \param[in]  pKey  Pointer to the 128 bit key.
+ *
+ * \param[in]  pR   Pointer to the 24 bit random value (Prand).
+ *                  The most significant bits of this field must be 0b01 for Resolvable Private Addresses.
  *
  * \retval  gSecSuccess_c  All operations were successful.
  * \retval  gSecError_c The call failed.
  *
  ********************************************************************************** */
-secResultType_t SecLib_VerifyBluetoothAh(
-    uint8_t *      pHash, /*!< 24 bit hash field of a Resolvable Private Address (output) */
-    const uint8_t *pKey,  /*!< 128 bit key (pointer) */
-    const uint8_t *pR,    /*!< 24 bit random part of a Resolvable private Address */
-    const bool_t   bIsKeyObfuscated);
+secResultType_t SecLib_VerifyBluetoothAh(uint8_t *pHash, const uint8_t *pKey, const uint8_t *pR);
 
-#if defined(gSecLibSssUseEncryptedKeys_d) && (gSecLibSssUseEncryptedKeys_d == 1)
 /************************************************************************************
- * \brief Generates a symmetric key in ELKE blob or plain text form .
+ * \brief Generates a symmetric key in ELKE blob or plain text form.
+ *        Only implemented on EdgeLock.
  *
  * \param[in]  keySize the size of the generated key.
  *
- * \param[in] blobOutput true - blob, false - plain text output.
+ * \param[in] blobOutput true - blob, false - plaintext output.
  *
  * \param[out] pOut   the address of the buffer to store the key.
+ *                    Storage for sss_sscp_object_t key reference
  *
  * \return gSecSuccess_c or error
  *
  ************************************************************************************/
-secResultType_t SecLib_GenerateSymmetricKey(const uint32_t keySize,
-                                            const bool_t   blobOutput, /* 1 - blob, 0 - plaintext */
-                                            void *         pOut        /* Storage for sss_sscp_object_t key reference */
-);
+secResultType_t SecLib_GenerateSymmetricKey(const uint32_t keySize, const bool_t blobOutput, void *pOut);
 
 /************************************************************************************
  * \brief Generates an EIRK blob from an ELKE blob or plain text symmetric key.
+ *        Only implemented on EdgeLock.
  *
  * \param[in]  pIRK pointer to the input IRK key.
  *
@@ -821,14 +851,14 @@ secResultType_t SecLib_GenerateSymmetricKey(const uint32_t keySize,
  * \return gSecSuccess_c or error
  *
  ************************************************************************************/
-secResultType_t SecLib_GenerateBluetoothEIRKBlob(const void * pIRK,
-                                                 const bool_t blobInput,
-                                                 const bool_t generateDKeyIRK,
-                                                 uint8_t *    pOutEIRKblob);
-#endif /* gSecLibSssUseEncryptedKeys_d */
+secResultType_t SecLib_GenerateBluetoothEIRKBlobSecure(const void * pIRK,
+                                                       const bool_t blobInput,
+                                                       const bool_t generateDKeyIRK,
+                                                       uint8_t *    pOutEIRKblob);
 
 /************************************************************************************
  * \brief Generates an E2E blob from an ELKE blob or plain text symmetric key.
+ *        Only implemented on EdgeLock.
  *
  * \param[in]  pKey      pointer to the input key.
  * \param[in]  keyType   input key type.
@@ -837,10 +867,11 @@ secResultType_t SecLib_GenerateBluetoothEIRKBlob(const void * pIRK,
  * \return gSecSuccess_c or error
  *
  ************************************************************************************/
-secResultType_t SecLib_ExportA2BBlob(const void *pKey, const secInputKeyType_t keyType, uint8_t *pOutKey);
+secResultType_t SecLib_ExportA2BBlobSecure(const void *pKey, const secInputKeyType_t keyType, uint8_t *pOutKey);
 
 /************************************************************************************
  * \brief Generates a symmetric key in ELKE blob or plain text form from an E2E blob.
+ *        Only implemented on EdgeLock.
  *
  * \param[in]  pKey      pointer to the input E2E blob.
  * \param[in]  keyType   output key type.
@@ -849,7 +880,14 @@ secResultType_t SecLib_ExportA2BBlob(const void *pKey, const secInputKeyType_t k
  * \return gSecSuccess_c or error
  *
  ************************************************************************************/
-secResultType_t SecLib_ImportA2BBlob(const uint8_t *pKey, const secInputKeyType_t keyType, uint8_t *pOutKey);
+secResultType_t SecLib_ImportA2BBlobSecure(const uint8_t *pKey, const secInputKeyType_t keyType, uint8_t *pOutKey);
+
+/*!
+ * @}  end of SecLib addtogroup
+ */
+/*!
+ * @}  end of SecLib_module addtogroup
+ */
 
 #include "SecLib_ecp256.h"
 

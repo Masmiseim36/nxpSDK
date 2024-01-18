@@ -17,6 +17,8 @@
 #ifndef ELOOP_H
 #define ELOOP_H
 
+#include <utils/common.h>
+
 /**
  * ELOOP_ALL_CTX - eloop_cancel_timeout() magic number to match all timeouts
  */

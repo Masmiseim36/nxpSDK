@@ -12,6 +12,9 @@ endif()
 cmake_minimum_required(VERSION 3.15)
 cmake_policy(SET CMP0079 NEW)
 
+configure_file(${CMAKE_SOURCE_DIR}/interface/include/psa/initial_attestation.h.in
+               ${CMAKE_BINARY_DIR}/generated/interface/include/psa/initial_attestation.h)
+
 add_library(tfm_psa_rot_partition_attestation STATIC)
 
 target_sources(tfm_psa_rot_partition_attestation PRIVATE
@@ -71,6 +74,7 @@ add_library(tfm_attestation_defs INTERFACE)
 target_include_directories(tfm_attestation_defs
     INTERFACE
         .
+        ${CMAKE_BINARY_DIR}/generated/interface/include/
 )
 
 target_link_libraries(tfm_attestation_defs
@@ -86,7 +90,7 @@ target_link_libraries(tfm_partitions
 )
 
 
-target_compile_definitions(tfm_partition_defs
+target_compile_definitions(tfm_config
     INTERFACE
-    TFM_PARTITION_INITIAL_ATTESTATION
+        TFM_PARTITION_INITIAL_ATTESTATION
 )

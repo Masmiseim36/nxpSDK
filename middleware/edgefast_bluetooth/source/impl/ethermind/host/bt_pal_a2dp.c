@@ -585,7 +585,7 @@ static int a2dp_set_a2dp_source_codec_encoder(struct bt_a2dp_codec_state *codec,
         break;
 
     default:
-        BT_DBG("*** SBC Config: Sampling Frequency = Unknown (0x%X)!!\r\n", (codec_ie[0] & 0xF0));
+        LOG_DBG("*** SBC Config: Sampling Frequency = Unknown (0x%X)!!\r\n", (codec_ie[0] & 0xF0));
         return -EIO;
     }
 
@@ -613,7 +613,7 @@ static int a2dp_set_a2dp_source_codec_encoder(struct bt_a2dp_codec_state *codec,
         break;
 
     default:
-        BT_DBG("*** SBC Config: Channel Mode = Unknown (0x%X)!!\r\n",
+        LOG_DBG("*** SBC Config: Channel Mode = Unknown (0x%X)!!\r\n",
         (codec_ie[0] & 0x0F));
         return -EIO;
     }
@@ -638,7 +638,7 @@ static int a2dp_set_a2dp_source_codec_encoder(struct bt_a2dp_codec_state *codec,
         break;
 
     default:
-        BT_DBG("*** SBC Config: Block Length = Unknown (0x%X)!!\r\n",
+        LOG_DBG("*** SBC Config: Block Length = Unknown (0x%X)!!\r\n",
         (codec_ie[1] & 0xF0));
         return -EIO;
     }
@@ -655,7 +655,7 @@ static int a2dp_set_a2dp_source_codec_encoder(struct bt_a2dp_codec_state *codec,
         break;
 
     default:
-        BT_DBG("*** SBC Config: Subbands = Unknown (0x%X)!!\r\n",
+        LOG_DBG("*** SBC Config: Subbands = Unknown (0x%X)!!\r\n",
         (codec_ie[1] & 0x0C));
         return -EIO;
     }
@@ -672,7 +672,7 @@ static int a2dp_set_a2dp_source_codec_encoder(struct bt_a2dp_codec_state *codec,
         break;
 
     default:
-        BT_DBG("*** SBC Config: Allocation Method = Unknown (0x%X)!!\r\n",
+        LOG_DBG("*** SBC Config: Allocation Method = Unknown (0x%X)!!\r\n",
         (codec_ie[1] & 0x03));
         return -EIO;
     }
@@ -688,7 +688,7 @@ static int a2dp_set_a2dp_source_codec_encoder(struct bt_a2dp_codec_state *codec,
     retval = sbc_encoder_init (&sbc_encoder->a2dp_sbc_encoder_io);
     if (API_SUCCESS != retval)
     {
-        BT_DBG("*** Failed to Initialize SBC Encoder: 0x%X\r\n", retval);
+        LOG_DBG("*** Failed to Initialize SBC Encoder: 0x%X\r\n", retval);
         return -EIO;
     }
     return 0;
@@ -862,14 +862,14 @@ static void a2dp_callback_auto_configure(struct bt_a2dp *a2dp)
         /* A2DP Connect */
         if (a2dp->connected_from_peer)
         {
-            BT_DBG("A2DP connect wait ...\r\n");
+            LOG_DBG("A2DP connect wait ...\r\n");
             /* the peer may establish the a2dp connection firstly */
             a2dp->retry_count = A2DP_TRANSFER_RETRY_COUNT;
             a2dp_set_delay_work(a2dp, ep_state, A2DP_EVENT_RETRY_A2DP_CONNECT, 500U);
         }
         else
         {
-            BT_DBG("A2DP connect ...\r\n");
+            LOG_DBG("A2DP connect ...\r\n");
             a2dp->retry_count = A2DP_TRANSFER_RETRY_COUNT;
             ep_state->a2dp = a2dp;
             retval = BT_a2dp_connect
@@ -881,11 +881,11 @@ static void a2dp_callback_auto_configure(struct bt_a2dp *a2dp)
                     );
             if (API_SUCCESS != retval)
             {
-                BT_DBG("BT_a2dp_connect fail 0x%X\r\n", retval);
+                LOG_DBG("BT_a2dp_connect fail 0x%X\r\n", retval);
             }
             else
             {
-                BT_DBG("BT_a2dp_connect success, wait for A2DP_CONNECT_CNF\r\n");
+                LOG_DBG("BT_a2dp_connect success, wait for A2DP_CONNECT_CNF\r\n");
                 //todo: only support sbc codec now.
 #if ((defined(CONFIG_BT_A2DP_SOURCE)) && (CONFIG_BT_A2DP_SOURCE > 0U))
                 a2dp_set_a2dp_source_codec_encoder(ep_state->codec, self_endpoint->codec_id, config->codec_ie);
@@ -927,7 +927,7 @@ static void a2dp_jpl_configure(struct bt_a2dp_sbc_decoder *sbc_decoder, uint8_t*
 
     default:
         /* This should not be reached */
-        BT_DBG("Invalid sampling frequency\r\n");
+        LOG_DBG("Invalid sampling frequency\r\n");
         return;
     }
 
@@ -956,7 +956,7 @@ static void a2dp_jpl_configure(struct bt_a2dp_sbc_decoder *sbc_decoder, uint8_t*
 
     default:
         /* This should not be reached */
-        BT_DBG("Invalid Channel mode\r\n");
+        LOG_DBG("Invalid Channel mode\r\n");
         return;
     }
 
@@ -981,7 +981,7 @@ static void a2dp_jpl_configure(struct bt_a2dp_sbc_decoder *sbc_decoder, uint8_t*
 
     default:
         /* This should not be reached */
-        BT_DBG("Invalid Block Length\r\n");
+        LOG_DBG("Invalid Block Length\r\n");
         return;
     }
 
@@ -998,7 +998,7 @@ static void a2dp_jpl_configure(struct bt_a2dp_sbc_decoder *sbc_decoder, uint8_t*
 
     default:
         /* This should not be reached */
-        BT_DBG("Invalid Subband\r\n");
+        LOG_DBG("Invalid Subband\r\n");
         return;
     }
 
@@ -1015,7 +1015,7 @@ static void a2dp_jpl_configure(struct bt_a2dp_sbc_decoder *sbc_decoder, uint8_t*
 
     default:
         /* This should not be reached */
-        BT_DBG("Invalid Allocation method\r\n");
+        LOG_DBG("Invalid Allocation method\r\n");
         return;
     }
 
@@ -1030,7 +1030,7 @@ static void a2dp_jpl_configure(struct bt_a2dp_sbc_decoder *sbc_decoder, uint8_t*
         ((18 * (SBC_MAX_BLOCK_SIZE * SBC_MAX_SUBBAND)) /
         (codec_param->nrof_blocks * codec_param->nrof_subbands));
 
-    BT_DBG("A2DP Sink Configured\r\n");
+    LOG_DBG("A2DP Sink Configured\r\n");
 
     return;
 }
@@ -1045,7 +1045,7 @@ static API_RESULT jpl_callback_handle
     if ((JPL_UNDERFLOW_IND == event_type) ||
         (JPL_SILENCE_DATA_IND == event_type))
     {
-        BT_DBG("U ");
+        LOG_DBG("U ");
     }
 
     if (jpl_active_ep != NULL)
@@ -1082,54 +1082,54 @@ static int a2dp_handle_avdtp_discover_rsp (struct bt_a2dp *a2dp)
 
         if (API_SUCCESS != retval)
         {
-            BT_DBG("*** FAILED to Decode SEP Information (0x%X)\n", retval);
+            LOG_DBG("*** FAILED to Decode SEP Information (0x%X)\n", retval);
         }
         else
         {
 #if (defined(CONFIG_BT_DEBUG_A2DP) && (CONFIG_BT_DEBUG_A2DP))
-            BT_DBG("Remote SEP Information [%d]:\r\n", sepIndex);
+            LOG_DBG("Remote SEP Information [%d]:\r\n", sepIndex);
 
             /* SEP In Use */
-            BT_DBG("\t    In Use     = %s\r\n",
+            LOG_DBG("\t    In Use     = %s\r\n",
             ((0x1 == sep_info.in_use) ? "Yes" : "No"));
 
             /* SEP Type */
-            BT_DBG("\t    SEP Type   = 0x%X -> ", sep_info.sep_type);
+            LOG_DBG("\t    SEP Type   = 0x%X -> ", sep_info.sep_type);
             switch (sep_info.sep_type)
             {
             case AVDTP_SEP_SOURCE:
-                BT_DBG("Source\r\n");
+                LOG_DBG("Source\r\n");
                 break;
 
             case AVDTP_SEP_SINK:
-                BT_DBG("Sink\r\n");
+                LOG_DBG("Sink\r\n");
                 break;
 
             default:
-                BT_DBG("????\r\n");
+                LOG_DBG("????\r\n");
             }
 
             /* ACP SEID */
-            BT_DBG("\t    ACP SEID   = 0x%X\r\n", sep_info.acp_seid);
+            LOG_DBG("\t    ACP SEID   = 0x%X\r\n", sep_info.acp_seid);
 
             /* Media Type */
-            BT_DBG("\t    Media Type = 0x%X -> ", sep_info.media_type);
+            LOG_DBG("\t    Media Type = 0x%X -> ", sep_info.media_type);
             switch (sep_info.media_type)
             {
             case AVDTP_MEDIA_AUDIO:
-                BT_DBG("Audio\r\n");
+                LOG_DBG("Audio\r\n");
                 break;
 
             case AVDTP_MEDIA_VIDEO:
-                BT_DBG("Video\r\n");
+                LOG_DBG("Video\r\n");
                 break;
 
             case AVDTP_MEDIA_MULTIMEDIA:
-                BT_DBG("Multi\r\n");
+                LOG_DBG("Multi\r\n");
                 break;
 
             default:
-                BT_DBG("????\r\n");
+                LOG_DBG("????\r\n");
             }
 #endif
 
@@ -1140,7 +1140,7 @@ static int a2dp_handle_avdtp_discover_rsp (struct bt_a2dp *a2dp)
                 AVDTP_SET_HANDLE_REMOTE_SEID (a2dp->ethermind_avdtp_handle, sep_info.acp_seid);
 
                 /* AVDTP Get Capabilities */
-                BT_DBG("AVDTP Get Capabilities ... ");
+                LOG_DBG("AVDTP Get Capabilities ... ");
                 a2dp->current_seid_info.id = sep_info.acp_seid;
                 a2dp->current_seid_info.inuse = sep_info.in_use;
                 a2dp->current_seid_info.media_type = sep_info.media_type;
@@ -1165,12 +1165,12 @@ static int a2dp_handle_avdtp_discover_rsp (struct bt_a2dp *a2dp)
 
                 if (API_SUCCESS != retval)
                 {
-                    BT_DBG("BT_avdtp_get_capabilities_req fail 0x%X\r\n", retval);
+                    LOG_DBG("BT_avdtp_get_capabilities_req fail 0x%X\r\n", retval);
                     a2dp_set_delay_work(a2dp, a2dp, A2DP_EVENT_RETRY_GET_CAPS, 500U);
                 }
                 else
                 {
-                    BT_DBG("BT_avdtp_get_capabilities_req success, wait for AVDTP_GET_CAPABILITIES_CNF\r\n");
+                    LOG_DBG("BT_avdtp_get_capabilities_req success, wait for AVDTP_GET_CAPABILITIES_CNF\r\n");
                 }
 
                 return 0;
@@ -1218,7 +1218,7 @@ static API_RESULT a2dp_encode_n_send
 
     if (API_SUCCESS != retval)
     {
-        BT_DBG("SBC Encoder failed - 0x%X\r\n", retval);
+        LOG_DBG("SBC Encoder failed - 0x%X\r\n", retval);
         return retval;
     }
 
@@ -1244,7 +1244,7 @@ static API_RESULT a2dp_encode_n_send
 #endif /* A2DP_SUPPORT_MULTIPLE_MEDIA_FRAME_WRITE */
     if (API_SUCCESS != retval)
     {
-        BT_DBG("A2DP media write failed - 0x%X\r\n", retval);
+        LOG_DBG("A2DP media write failed - 0x%X\r\n", retval);
     }
 
     return retval;
@@ -1391,7 +1391,7 @@ static void a2dp_process_task(osa_task_param_t arg)
 
     if (a2dp_process_queue == NULL)
     {
-        BT_DBG("Failed to create a2dp_process_queue queue.\r\n");
+        LOG_DBG("Failed to create a2dp_process_queue queue.\r\n");
         vTaskDelete(NULL);
     }
 
@@ -1422,7 +1422,7 @@ static void a2dp_process_task(osa_task_param_t arg)
             switch (message.event)
             {
                 case A2DP_EVENT_RETRY_DISCOVER:
-                    BT_DBG("retry discover\r\n");
+                    LOG_DBG("retry discover\r\n");
                     if (a2dp->retry_count > 0U)
                     {
                         a2dp->retry_count--;
@@ -1430,7 +1430,7 @@ static void a2dp_process_task(osa_task_param_t arg)
                                         a2dp->discover_buf, A2DP_MAX_DISCOVER_RESPONSE_LEN);
                         if (API_SUCCESS != retval)
                         {
-                            BT_DBG("a2dp discover request fail: %X\r\n", retval);
+                            LOG_DBG("a2dp discover request fail: %X\r\n", retval);
                             /*  retry */
                             a2dp_set_delay_work(a2dp, a2dp, A2DP_EVENT_RETRY_DISCOVER, 500U);
                         }
@@ -1454,7 +1454,7 @@ static void a2dp_process_task(osa_task_param_t arg)
                     break;
 
                 case A2DP_EVENT_RETRY_GET_CAPS:
-                    BT_DBG("retry get caps\r\n");
+                    LOG_DBG("retry get caps\r\n");
                     if (a2dp->retry_count > 0U)
                     {
                         a2dp->retry_count--;
@@ -1476,12 +1476,12 @@ static void a2dp_process_task(osa_task_param_t arg)
 
                         if (API_SUCCESS != retval)
                         {
-                            BT_DBG("BT_avdtp_get_capabilities_req fail 0x%X\r\n", retval);
+                            LOG_DBG("BT_avdtp_get_capabilities_req fail 0x%X\r\n", retval);
                             a2dp_set_delay_work(a2dp, a2dp, A2DP_EVENT_RETRY_GET_CAPS, 500U);
                         }
                         else
                         {
-                            BT_DBG("BT_avdtp_get_capabilities_req success, wait for AVDTP_GET_CAPABILITIES_CNF\r\n");
+                            LOG_DBG("BT_avdtp_get_capabilities_req success, wait for AVDTP_GET_CAPABILITIES_CNF\r\n");
                         }
                     }
                     else
@@ -1520,11 +1520,11 @@ static void a2dp_process_task(osa_task_param_t arg)
                         {
                             /* don't need retry */
                             a2dp->retry_count = 0U;
-                            BT_DBG("wait peer a2dp connection\r\n");
+                            LOG_DBG("wait peer a2dp connection\r\n");
                         }
                         else
                         {
-                            BT_DBG("retry a2dp connecting\r\n");
+                            LOG_DBG("retry a2dp connecting\r\n");
                             a2dp->retry_count--;
                             retval = BT_a2dp_connect
                                     (
@@ -1535,11 +1535,11 @@ static void a2dp_process_task(osa_task_param_t arg)
                                     );
                             if (API_SUCCESS != retval)
                             {
-                                BT_DBG("BT_a2dp_connect fail 0x%X\r\n", retval);
+                                LOG_DBG("BT_a2dp_connect fail 0x%X\r\n", retval);
                             }
                             else
                             {
-                                BT_DBG("BT_a2dp_connect success, wait for A2DP_CONNECT_CNF\r\n");
+                                LOG_DBG("BT_a2dp_connect success, wait for A2DP_CONNECT_CNF\r\n");
 #if ((defined(CONFIG_BT_A2DP_SOURCE)) && (CONFIG_BT_A2DP_SOURCE > 0U))
                                 a2dp_set_a2dp_source_codec_encoder(ep_state->codec,
                                                                     ep_state->endpoint->codec_id,
@@ -1595,7 +1595,7 @@ static API_RESULT ethermind_a2dp_avdtp_notify_cb
 
     int callbackResult = 0;
 
-    BT_DBG("avdtp cb:%x-%x\r\n", event_type, event_result);
+    LOG_DBG("avdtp cb:%x-%x\r\n", event_type, event_result);
     callbackRet = API_SUCCESS;
     switch (event_type)
     {
@@ -1619,7 +1619,7 @@ static API_RESULT ethermind_a2dp_avdtp_notify_cb
 
             if (a2dp == NULL)
             {
-                BT_DBG("don't find the a2dp instance\r\n");
+                LOG_DBG("don't find the a2dp instance\r\n");
                 return API_FAILURE;
             }
             break;
@@ -1638,7 +1638,7 @@ static API_RESULT ethermind_a2dp_avdtp_notify_cb
 
             if (a2dp == NULL)
             {
-                BT_DBG("don't find the a2dp instance\r\n");
+                LOG_DBG("don't find the a2dp instance\r\n");
                 callbackRet = API_FAILURE;
                 break;
             }
@@ -1665,7 +1665,7 @@ static API_RESULT ethermind_a2dp_avdtp_notify_cb
         case AVDTP_CONNECT_CNF:
             if (API_SUCCESS == event_result)
             {
-                BT_DBG("enter INTERNAL_STATE_AVDTP_CONNECTED\r\n");
+                LOG_DBG("enter INTERNAL_STATE_AVDTP_CONNECTED\r\n");
                 a2dp->connected_from_peer = 0U;
                 a2dp->configured_from_peer = 0U;
                 a2dp->a2dp_state = INTERNAL_STATE_AVDTP_CONNECTED;
@@ -1673,7 +1673,7 @@ static API_RESULT ethermind_a2dp_avdtp_notify_cb
             }
             else
             {
-                BT_DBG("AVDTP_CONNECT_CNF error code:0x%X\r\n", event_result);
+                LOG_DBG("AVDTP_CONNECT_CNF error code:0x%X\r\n", event_result);
                 callbackResult = -EIO;
             }
 
@@ -1700,7 +1700,7 @@ static API_RESULT ethermind_a2dp_avdtp_notify_cb
             {
                 /* retry */
                 a2dp_set_delay_work(a2dp, a2dp, A2DP_EVENT_RETRY_DISCOVER, 500U);
-                BT_DBG("*** Discover RSP Error Code = 0x%X\r\n", event_result);
+                LOG_DBG("*** Discover RSP Error Code = 0x%X\r\n", event_result);
             }
             else
             {
@@ -1740,7 +1740,7 @@ static API_RESULT ethermind_a2dp_avdtp_notify_cb
 
             if (API_SUCCESS != retval)
             {
-                BT_DBG("*** FAILED to Decode SEP Capabilities = 0x%X\r\n", retval);
+                LOG_DBG("*** FAILED to Decode SEP Capabilities = 0x%X\r\n", retval);
 
                 /* Try to get capabilites of next Information element */
                 if (a2dp_handle_avdtp_discover_rsp(a2dp) != 0)
@@ -1953,7 +1953,7 @@ static API_RESULT ethermind_a2dp_notify_cb
     struct bt_a2dp_endpoint_state *ep_state;
     uint8_t index;
 
-    BT_DBG("a2dp cb:%x-%x\r\n", event_type, event_result);
+    LOG_DBG("a2dp cb:%x-%x\r\n", event_type, event_result);
     ep_state = bt_a2dp_get_ethermind_endpoint_state(codec_instance);
     a2dp = ep_state->a2dp;
     if (ep_state == NULL)
@@ -1963,7 +1963,7 @@ static API_RESULT ethermind_a2dp_notify_cb
 
     if ((a2dp == NULL) && (A2DP_CONNECT_IND != event_type) && (A2DP_CONFIGURE_IND != event_type))
     {
-        BT_DBG ("No Matching index found\r\n");
+        LOG_DBG ("No Matching index found\r\n");
         return API_SUCCESS;
     }
 
@@ -1974,9 +1974,9 @@ static API_RESULT ethermind_a2dp_notify_cb
         case A2DP_CONNECT_CNF:
             if (a2dp->auto_configure_enabled)
             {
-                BT_DBG("Received A2DP_CONNECT_CNF\r\n");
-                BT_DBG("    Codec Instance = %d\r\n", codec_instance);
-                BT_DBG("    Event Result   = 0x%X\r\n", event_result);
+                LOG_DBG("Received A2DP_CONNECT_CNF\r\n");
+                LOG_DBG("    Codec Instance = %d\r\n", codec_instance);
+                LOG_DBG("    Event Result   = 0x%X\r\n", event_result);
                 if (API_SUCCESS != event_result)
                 {
                     a2dp_set_delay_work(a2dp, ep_state, A2DP_EVENT_RETRY_A2DP_CONNECT, 500U);
@@ -2059,11 +2059,11 @@ static API_RESULT ethermind_a2dp_notify_cb
                 retval = BT_a2dp_disconnect(ep_state->ethermind_a2dp_codec_index);
                 if (API_SUCCESS != retval)
                 {
-                    BT_DBG("BT_a2dp_disconnect fail 0x%X\r\n", retval);
+                    LOG_DBG("BT_a2dp_disconnect fail 0x%X\r\n", retval);
                 }
                 else
                 {
-                    BT_DBG("BT_a2dp_disconnect success, wait for A2DP_DISCONNECT_CNF\r\n");
+                    LOG_DBG("BT_a2dp_disconnect success, wait for A2DP_DISCONNECT_CNF\r\n");
                 }
 #endif
             }
@@ -2150,11 +2150,11 @@ static API_RESULT ethermind_a2dp_notify_cb
     #if ((defined CONFIG_BT_DEBUG_A2DP) && (CONFIG_BT_DEBUG_A2DP))
                         if (API_SUCCESS != retval)
                         {
-                            BT_DBG("BT_avdtp_disconnect_req fail 0x%X\r\n", retval);
+                            LOG_DBG("BT_avdtp_disconnect_req fail 0x%X\r\n", retval);
                         }
                         else
                         {
-                            BT_DBG("BT_avdtp_disconnect_req success, wait for AVDTP_CONNECT_CNF\r\n");
+                            LOG_DBG("BT_avdtp_disconnect_req success, wait for AVDTP_CONNECT_CNF\r\n");
                         }
     #else
                         (void)retval;
@@ -2246,7 +2246,7 @@ static API_RESULT ethermind_a2dp_notify_cb
                          );
                 if (API_SUCCESS != retval)
                 {
-                    BT_DBG("JPL Add Frames Failed - 0x%X\r\n", retval);
+                    LOG_DBG("JPL Add Frames Failed - 0x%X\r\n", retval);
                 }
             }
             else
@@ -2474,7 +2474,7 @@ int bt_a2dp_init(void)
         }
         else
         {
-            BT_DBG("fail to create a2dp process task\r\n");
+            LOG_DBG("fail to create a2dp process task\r\n");
             return -EIO;
         }
     }
@@ -2717,11 +2717,11 @@ struct bt_a2dp *bt_a2dp_connect(struct bt_conn *conn)
 #if ((defined CONFIG_BT_DEBUG_A2DP) && (CONFIG_BT_DEBUG_A2DP))
     if (API_SUCCESS != retval)
     {
-        BT_DBG("BT_avdtp_connect_req fail 0x%X\r\n", retval);
+        LOG_DBG("BT_avdtp_connect_req fail 0x%X\r\n", retval);
     }
     else
     {
-        BT_DBG("BT_avdtp_connect_req success, wait for AVDTP_CONNECT_CNF\r\n");
+        LOG_DBG("BT_avdtp_connect_req success, wait for AVDTP_CONNECT_CNF\r\n");
     }
 #else
     (void)retval;
@@ -2759,14 +2759,14 @@ int bt_a2dp_disconnect(struct bt_a2dp *a2dp)
     if (API_SUCCESS != retval)
     {
 #if ((defined CONFIG_BT_DEBUG_A2DP) && (CONFIG_BT_DEBUG_A2DP))
-        BT_DBG("BT_avdtp_disconnect_req fail 0x%X\r\n", retval);
+        LOG_DBG("BT_avdtp_disconnect_req fail 0x%X\r\n", retval);
 #endif
         return -EIO;
     }
 #if ((defined CONFIG_BT_DEBUG_A2DP) && (CONFIG_BT_DEBUG_A2DP))
     else
     {
-        BT_DBG("BT_avdtp_disconnect_req success, wait for AVDTP_CONNECT_CNF\r\n");
+        LOG_DBG("BT_avdtp_disconnect_req success, wait for AVDTP_CONNECT_CNF\r\n");
     }
 #endif
 
@@ -2790,17 +2790,17 @@ int bt_a2dp_configure(struct bt_a2dp *a2dp, void (*result_cb)(int err))
     a2dp->auto_configure_enabled = 1U;
     a2dp->configure_cb = result_cb;
 
-    BT_DBG("enter INTERNAL_STATE_AVDTP_CONNECTED\r\n");
+    LOG_DBG("enter INTERNAL_STATE_AVDTP_CONNECTED\r\n");
     a2dp->retry_count = A2DP_TRANSFER_RETRY_COUNT;
     retval = BT_avdtp_discover_req(&a2dp->ethermind_avdtp_handle, a2dp->discover_buf, A2DP_MAX_DISCOVER_RESPONSE_LEN);
     if (API_SUCCESS != retval)
     {
-        BT_DBG("a2dp discover request fail: %X\r\n", retval);
+        LOG_DBG("a2dp discover request fail: %X\r\n", retval);
         a2dp_set_delay_work(a2dp, a2dp, A2DP_EVENT_RETRY_DISCOVER, 500U);
     }
     else
     {
-        BT_DBG("wait AVDTP_DISCOVER_CNF\r\n");
+        LOG_DBG("wait AVDTP_DISCOVER_CNF\r\n");
     }
 
     return 0;
@@ -3203,12 +3203,12 @@ int bt_a2dp_configure_endpoint(struct bt_a2dp *a2dp, struct bt_a2dp_endpoint *en
             );
     if (API_SUCCESS != retval)
     {
-        BT_DBG("BT_a2dp_connect fail 0x%X\r\n", retval);
+        LOG_DBG("BT_a2dp_connect fail 0x%X\r\n", retval);
         return -EINVAL;
     }
     else
     {
-        BT_DBG("BT_a2dp_connect success, wait for A2DP_CONNECT_CNF\r\n");
+        LOG_DBG("BT_a2dp_connect success, wait for A2DP_CONNECT_CNF\r\n");
         //todo: only support sbc codec now.
 #if ((defined(CONFIG_BT_A2DP_SOURCE)) && (CONFIG_BT_A2DP_SOURCE > 0U))
         a2dp_set_a2dp_source_codec_encoder(ep_state->codec, endpoint->codec_id, config->media_config->codec_ie);

@@ -1,6 +1,6 @@
 
 #include "includes.h"
-#include "common.h"
+#include <utils/common.h>
 #include "eloop.h"
 #include "l2_packet.h"
 #include "common/eapol_common.h"
@@ -29,14 +29,16 @@ int l2_packet_get_own_addr(struct l2_packet_data *l2, u8 *addr)
     return 0;
 }
 
+extern int wifi_supp_inject_frame(const unsigned int bss_type, const uint8_t *buff, const size_t len);
+
 int l2_packet_send(struct l2_packet_data *l2, const u8 *dst_addr, u16 proto, const u8 *buf, size_t len)
 {
     unsigned int interface;
 
     if (strstr(l2->ifname, "ml"))
-        interface = WLAN_BSS_TYPE_STA;
+        interface = 0; //WLAN_BSS_TYPE_STA;
     else
-        interface = WLAN_BSS_TYPE_UAP;
+        interface = 1; //WLAN_BSS_TYPE_UAP;
 
     if (l2 == NULL)
     {
@@ -62,10 +64,12 @@ int l2_packet_send(struct l2_packet_data *l2, const u8 *dst_addr, u16 proto, con
         return wifi_supp_inject_frame(interface, buf, len); // TODO Set bss type as per the interface
 }
 
+#ifndef CONFIG_ZEPHYR
 int lwip_hook_unknown_eth_proto(struct pbuf *p, struct netif *iface)
 {
     return -1;
 }
+#endif
 
 struct l2_packet_data *l2_packet_init(const char *ifname,
                                       const u8 *own_addr,
@@ -75,6 +79,9 @@ struct l2_packet_data *l2_packet_init(const char *ifname,
                                       int l2_hdr)
 {
     struct netif *iface = NULL;
+#ifdef CONFIG_ZEPHYR
+    const struct net_linkaddr *link_addr            = NULL;
+#endif
 
     if (strstr(ifname, "ml"))
         p_l2 = (struct l2_packet_data *)&gm_l2;
@@ -83,9 +90,13 @@ struct l2_packet_data *l2_packet_init(const char *ifname,
 
     memset(p_l2, 0x00, sizeof(struct l2_packet_data));
 
+#ifdef CONFIG_ZEPHYR
+    iface = (struct netif *)net_if_get_binding(ifname);
+#else
     LOCK_TCPIP_CORE();
     iface = netif_find(ifname);
     UNLOCK_TCPIP_CORE();
+#endif
 
     if (!iface)
     {
@@ -100,7 +111,11 @@ struct l2_packet_data *l2_packet_init(const char *ifname,
     p_l2->protocol        = protocol;
     p_l2->iface           = iface;
 
+#ifdef CONFIG_ZEPHYR
+    p_l2->ifindex = net_if_get_by_iface((struct net_if *)p_l2->iface);
+#else
     p_l2->ifindex = netif_get_index(iface);
+#endif
 
     if (!p_l2->ifindex)
     {
@@ -108,7 +123,12 @@ struct l2_packet_data *l2_packet_init(const char *ifname,
         return NULL;
     }
 
+#ifdef CONFIG_ZEPHYR
+    link_addr = net_if_get_link_addr((struct net_if *)iface);
+    os_memcpy(p_l2->own_addr, link_addr->addr, link_addr->len);
+#else
     os_memcpy(p_l2->own_addr, iface->hwaddr, iface->hwaddr_len);
+#endif
 
     wpa_printf(MSG_DEBUG, "l2_packet_init: iface %s ifindex %d", p_l2->ifname, p_l2->ifindex);
 

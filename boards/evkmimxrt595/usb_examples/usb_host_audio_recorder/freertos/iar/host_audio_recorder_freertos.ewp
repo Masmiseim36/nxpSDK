@@ -227,6 +227,8 @@
           <state>CPU_MIMXRT595SFFOC_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
+          <state>USB_AUDIO_RECORDER_SDCARD_BUFFER_LENGTH=3072</state>
+          <state>USB_AUDIO_RECORDER_SDCARD_WRITE_LENGTH=1024</state>
           <state>USB_STACK_FREERTOS</state>
           <state>CPU_MIMXRT595SEVKA=1</state>
           <state>USB_STACK_FREERTOS_HEAP_SIZE=16384</state>
@@ -380,6 +382,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/common</state>
@@ -1339,6 +1342,8 @@
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
+          <state>USB_AUDIO_RECORDER_SDCARD_BUFFER_LENGTH=3072</state>
+          <state>USB_AUDIO_RECORDER_SDCARD_WRITE_LENGTH=1024</state>
           <state>USB_STACK_FREERTOS</state>
           <state>CPU_MIMXRT595SEVKA=1</state>
           <state>USB_STACK_FREERTOS_HEAP_SIZE=16384</state>
@@ -1492,6 +1497,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/common</state>
@@ -2451,6 +2457,8 @@
           <state>CPU_MIMXRT595SFFOC_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
+          <state>USB_AUDIO_RECORDER_SDCARD_BUFFER_LENGTH=3072</state>
+          <state>USB_AUDIO_RECORDER_SDCARD_WRITE_LENGTH=1024</state>
           <state>USB_STACK_FREERTOS</state>
           <state>CPU_MIMXRT595SEVKA=1</state>
           <state>USB_STACK_FREERTOS_HEAP_SIZE=16384</state>
@@ -2604,6 +2612,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/common</state>
@@ -3563,6 +3572,8 @@
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
+          <state>USB_AUDIO_RECORDER_SDCARD_BUFFER_LENGTH=3072</state>
+          <state>USB_AUDIO_RECORDER_SDCARD_WRITE_LENGTH=1024</state>
           <state>USB_STACK_FREERTOS</state>
           <state>CPU_MIMXRT595SEVKA=1</state>
           <state>USB_STACK_FREERTOS_HEAP_SIZE=16384</state>
@@ -3716,6 +3727,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos-kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/common</state>
@@ -5019,6 +5031,9 @@
     <name>utilities</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/fsl_assert.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</name>

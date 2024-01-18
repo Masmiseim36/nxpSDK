@@ -10,6 +10,13 @@
  *  Copyright (C) 2021. Mindtree Ltd.
  *  All rights reserved.
  */
+/* LC3_DSP Macro defines LC3 Feature as below,
+ * LC3_DSP = 0 : LC3 NODSP Feature Enabled
+ * LC3_DSP = 1 : LC3 DSP Default Feature Enabled
+ * LC3_DSP = 2 : LC3 DSP OPT Feature Enabled
+ */
+
+#if defined(LC3_DSP) && (LC3_DSP == 1)
 
 #ifndef _H_LC3_API_
 #define _H_LC3_API_
@@ -683,4 +690,4 @@ INT32 LC3_decoder_get_core_context_buffer_size
 /** \} */
 
 #endif /* _H_LC3_API_ */
-
+#endif /* defined(LC3_DSP) && (LC3_DSP == 0) */

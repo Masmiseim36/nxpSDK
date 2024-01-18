@@ -258,8 +258,8 @@ struct net_buf *net_buf_alloc_len(struct net_buf_pool *pool, size_t size,
 {
 	uint32_t alloc_start = OSA_TimeGetMsec();
 	struct net_buf *buf = NULL;
-	unsigned int key;
 	osa_status_t ret;
+	OSA_SR_ALLOC();
 
 	__ASSERT_NO_MSG(pool);
 
@@ -279,7 +279,7 @@ struct net_buf *net_buf_alloc_len(struct net_buf_pool *pool, size_t size,
 	/* We need to lock interrupts temporarily to prevent race conditions
 	 * when accessing pool->uninit_count.
 	 */
-	key = DisableGlobalIRQ();
+	OSA_ENTER_CRITICAL();
 
 	/* If there are uninitialized buffers we're guaranteed to succeed
 	 * with the allocation one way or another.
@@ -296,19 +296,19 @@ struct net_buf *net_buf_alloc_len(struct net_buf_pool *pool, size_t size,
 
             ret = OSA_MsgQGet(pool->free, &buf, osaWaitNone_c);
 			if (KOSA_StatusSuccess == ret) {
-				EnableGlobalIRQ(key);
+				OSA_EXIT_CRITICAL();
 				goto success;
 			}
 		}
 
 		uninit_count = pool->uninit_count--;
-		EnableGlobalIRQ(key);
+		OSA_EXIT_CRITICAL();
 
 		buf = pool_get_uninit(pool, uninit_count);
 		goto success;
 	}
 
-	EnableGlobalIRQ(key);
+	OSA_EXIT_CRITICAL();
 
 #if (defined(CONFIG_NET_BUF_LOG) && (CONFIG_NET_BUF_LOG_LEVEL >= LOG_LEVEL_WRN))
 	if (timeout == osaWaitForever_c) {

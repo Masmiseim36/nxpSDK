@@ -185,7 +185,27 @@ mbedtls_threading_mutex_t mbedtls_threading_hwcrypto_mmcau_mutex;
 #if defined(FSL_FEATURE_SOC_CAU3_COUNT) && (FSL_FEATURE_SOC_CAU3_COUNT > 0)
 /* MUTEX for CAU3 crypto module */
 mbedtls_threading_mutex_t mbedtls_threading_hwcrypto_cau3_mutex;
-#endif
+#endif /* (FSL_FEATURE_SOC_CAU3_COUNT) && (FSL_FEATURE_SOC_CAU3_COUNT > 0) */
+
+#if defined(FSL_FEATURE_SOC_TRNG_COUNT) && (FSL_FEATURE_SOC_TRNG_COUNT > 0)
+/* MUTEX for TRNG module */
+mbedtls_threading_mutex_t mbedtls_threading_hwcrypto_rng_mutex;
+#endif /* defined(FSL_FEATURE_SOC_TRNG_COUNT) && (FSL_FEATURE_SOC_TRNG_COUNT > 0) */
+
+#if defined(FSL_FEATURE_SOC_RNG_COUNT) && (FSL_FEATURE_SOC_RNG_COUNT > 0)
+/* MUTEX for RNG module */
+mbedtls_threading_mutex_t mbedtls_threading_hwcrypto_rng_mutex;
+#endif /* defined(FSL_FEATURE_SOC_RNG_COUNT) && (FSL_FEATURE_SOC_RNG_COUNT > 0) */
+
+#if defined(FSL_FEATURE_SOC_LPC_RNG1_COUNT) && (FSL_FEATURE_SOC_LPC_RNG1_COUNT > 0)
+/* MUTEX for RNG module */
+mbedtls_threading_mutex_t mbedtls_threading_hwcrypto_rng_mutex;
+#endif /* defined(FSL_FEATURE_SOC_LPC_RNG1_COUNT) && (FSL_FEATURE_SOC_LPC_RNG1_COUNT > 0) */
+
+#if defined(FSL_FEATURE_SOC_LPC_RNG_COUNT) && (FSL_FEATURE_SOC_LPC_RNG_COUNT > 0)
+/* MUTEX for RNG module */
+mbedtls_threading_mutex_t mbedtls_threading_hwcrypto_rng_mutex;
+#endif /* defined(FSL_FEATURE_SOC_LPC_RNG_COUNT) && (FSL_FEATURE_SOC_LPC_RNG_COUNT > 0) */
 
 #if defined(MBEDTLS_MCUX_FREERTOS_THREADING_ALT)
 /**
@@ -390,11 +410,25 @@ status_t CRYPTO_InitHardware(void)
         if (TRNG_Init(TRNG0, &trngConfig) != kStatus_Success) {
             return kStatus_Fail;
         }
-
+#if defined(MBEDTLS_THREADING_C)        
+        mbedtls_mutex_init(&mbedtls_threading_hwcrypto_rng_mutex);
+#endif /* THREADING */
+        
 #elif defined(FSL_FEATURE_SOC_RNG_COUNT) && (FSL_FEATURE_SOC_RNG_COUNT > 0)
         RNGA_Init(RNG);
         RNGA_Seed(RNG, SIM->UIDL);
-#endif /* (FSL_FEATURE_SOC_TRNG_COUNT) && (FSL_FEATURE_SOC_TRNG_COUNT > 0) */
+        
+#if defined(MBEDTLS_THREADING_C)        
+        mbedtls_mutex_init(&mbedtls_threading_hwcrypto_rng_mutex);
+#endif /* THREADING */
+
+#elif (defined(FSL_FEATURE_SOC_LPC_RNG1_COUNT) && (FSL_FEATURE_SOC_LPC_RNG1_COUNT > 0)) || \
+      (defined(FSL_FEATURE_SOC_LPC_RNG_COUNT) && (FSL_FEATURE_SOC_LPC_RNG_COUNT > 0))
+#if defined(MBEDTLS_THREADING_C)        
+        mbedtls_mutex_init(&mbedtls_threading_hwcrypto_rng_mutex);
+#endif /* THREADING */
+
+#endif /* (FSL_FEATURE_SOC_TRNG/RNG/LPC_RNG1_COUNT) */
     }
 
     return 0;
@@ -5638,7 +5672,17 @@ int mbedtls_sha1_starts_ret(mbedtls_sha1_context *ctx)
 int mbedtls_internal_sha1_process(mbedtls_sha1_context *ctx, const unsigned char data[64])
 {
     status_t ret = kStatus_Fail;
+#if defined(MBEDTLS_THREADING_C)
+    if (mbedtls_mutex_lock(&mbedtls_threading_hwcrypto_hashcrypt_mutex) != 0) {
+        return MBEDTLS_ERR_THREADING_MUTEX_ERROR;
+    }
+#endif /* MBEDTLS_THREADING_C */
     ret          = HASHCRYPT_SHA_Update(HASHCRYPT, ctx, data, 64);
+#if defined(MBEDTLS_THREADING_C)
+    if (mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_hashcrypt_mutex) != 0) {
+        return MBEDTLS_ERR_THREADING_MUTEX_ERROR;
+    }
+#endif /* MBEDTLS_THREADING_C */
     if (ret != kStatus_Success) {
         return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
     }
@@ -5651,7 +5695,17 @@ int mbedtls_internal_sha1_process(mbedtls_sha1_context *ctx, const unsigned char
 int mbedtls_sha1_update_ret(mbedtls_sha1_context *ctx, const unsigned char *input, size_t ilen)
 {
     status_t ret = kStatus_Fail;
+#if defined(MBEDTLS_THREADING_C)
+    if (mbedtls_mutex_lock(&mbedtls_threading_hwcrypto_hashcrypt_mutex) != 0) {
+        return MBEDTLS_ERR_THREADING_MUTEX_ERROR;
+    }
+#endif /* MBEDTLS_THREADING_C */
     ret          = HASHCRYPT_SHA_Update(HASHCRYPT, ctx, input, ilen);
+#if defined(MBEDTLS_THREADING_C)
+    if (mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_hashcrypt_mutex) != 0) {
+        return MBEDTLS_ERR_THREADING_MUTEX_ERROR;
+    }
+#endif /* MBEDTLS_THREADING_C */
     if (ret != kStatus_Success) {
         return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
     }
@@ -5665,7 +5719,17 @@ int mbedtls_sha1_finish_ret(mbedtls_sha1_context *ctx, unsigned char output[20])
 {
     status_t ret      = kStatus_Fail;
     size_t outputSize = 20;
+#if defined(MBEDTLS_THREADING_C)
+    if (mbedtls_mutex_lock(&mbedtls_threading_hwcrypto_hashcrypt_mutex) != 0) {
+        return MBEDTLS_ERR_THREADING_MUTEX_ERROR;
+    }
+#endif /* MBEDTLS_THREADING_C */
     ret               = HASHCRYPT_SHA_Finish(HASHCRYPT, ctx, output, &outputSize);
+#if defined(MBEDTLS_THREADING_C)
+    if (mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_hashcrypt_mutex) != 0) {
+        return MBEDTLS_ERR_THREADING_MUTEX_ERROR;
+    }
+#endif /* MBEDTLS_THREADING_C */
     if (ret != kStatus_Success) {
         return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
     }
@@ -6414,7 +6478,17 @@ int mbedtls_sha256_starts_ret(mbedtls_sha256_context *ctx, int is224)
 int mbedtls_internal_sha256_process(mbedtls_sha256_context *ctx, const unsigned char data[64])
 {
     status_t ret = kStatus_Fail;
+#if defined(MBEDTLS_THREADING_C)
+    if (mbedtls_mutex_lock(&mbedtls_threading_hwcrypto_hashcrypt_mutex) != 0) {
+        return MBEDTLS_ERR_THREADING_MUTEX_ERROR;
+    }
+#endif /* MBEDTLS_THREADING_C */
     ret          = HASHCRYPT_SHA_Update(HASHCRYPT, ctx, data, 64);
+#if defined(MBEDTLS_THREADING_C)
+    if (mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_hashcrypt_mutex) != 0) {
+        return MBEDTLS_ERR_THREADING_MUTEX_ERROR;
+    }
+#endif /* MBEDTLS_THREADING_C */
     if (ret != kStatus_Success) {
         return MBEDTLS_ERR_SHA256_HW_ACCEL_FAILED;
     }
@@ -6427,7 +6501,17 @@ int mbedtls_internal_sha256_process(mbedtls_sha256_context *ctx, const unsigned 
 int mbedtls_sha256_update_ret(mbedtls_sha256_context *ctx, const unsigned char *input, size_t ilen)
 {
     status_t ret = kStatus_Fail;
+#if defined(MBEDTLS_THREADING_C)
+    if (mbedtls_mutex_lock(&mbedtls_threading_hwcrypto_hashcrypt_mutex) != 0) {
+        return MBEDTLS_ERR_THREADING_MUTEX_ERROR;
+    }
+#endif /* MBEDTLS_THREADING_C */
     ret          = HASHCRYPT_SHA_Update(HASHCRYPT, ctx, input, ilen);
+#if defined(MBEDTLS_THREADING_C)
+    if (mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_hashcrypt_mutex) != 0) {
+        return MBEDTLS_ERR_THREADING_MUTEX_ERROR;
+    }
+#endif /* MBEDTLS_THREADING_C */
     if (ret != kStatus_Success) {
         return MBEDTLS_ERR_SHA256_HW_ACCEL_FAILED;
     }
@@ -6440,8 +6524,18 @@ int mbedtls_sha256_update_ret(mbedtls_sha256_context *ctx, const unsigned char *
 int mbedtls_sha256_finish_ret(mbedtls_sha256_context *ctx, unsigned char output[32])
 {
     status_t ret      = kStatus_Fail;
+#if defined(MBEDTLS_THREADING_C)
+    if (mbedtls_mutex_lock(&mbedtls_threading_hwcrypto_hashcrypt_mutex) != 0) {
+        return MBEDTLS_ERR_THREADING_MUTEX_ERROR;
+    }
+#endif /* MBEDTLS_THREADING_C */
     size_t outputSize = 32;
     ret               = HASHCRYPT_SHA_Finish(HASHCRYPT, ctx, output, &outputSize);
+#if defined(MBEDTLS_THREADING_C)
+    if (mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_hashcrypt_mutex) != 0) {
+        return MBEDTLS_ERR_THREADING_MUTEX_ERROR;
+    }
+#endif /* MBEDTLS_THREADING_C */
     if (ret != kStatus_Success) {
         return MBEDTLS_ERR_SHA256_HW_ACCEL_FAILED;
     }
@@ -6490,11 +6584,29 @@ int mbedtls_hardware_poll(void *data, unsigned char *output, size_t len, size_t 
 {
     status_t result = kStatus_Fail;
 
+#if (defined(FSL_FEATURE_SOC_TRNG_COUNT) && (FSL_FEATURE_SOC_TRNG_COUNT > 0) || \
+    defined(FSL_FEATURE_SOC_RNG_COUNT) && (FSL_FEATURE_SOC_RNG_COUNT > 0) || \
+    defined(FSL_FEATURE_SOC_LPC_RNG1_COUNT) && (FSL_FEATURE_SOC_LPC_RNG1_COUNT > 0) || \
+    defined(FSL_FEATURE_SOC_LPC_RNG_COUNT) && (FSL_FEATURE_SOC_LPC_RNG_COUNT > 0)) && \
+    defined(MBEDTLS_THREADING_C)
+    if (mbedtls_mutex_lock(&mbedtls_threading_hwcrypto_rng_mutex) != 0) {
+        return MBEDTLS_ERR_THREADING_MUTEX_ERROR;
+    }    
+#endif /* FSL_FEATURE_SOC_RNG/LPC_RNG/TRNG */
+    
 #if defined(FSL_FEATURE_SOC_TRNG_COUNT) && (FSL_FEATURE_SOC_TRNG_COUNT > 0)
 #ifndef TRNG0
 #define TRNG0 TRNG
 #endif
-    result = TRNG_GetRandomData(TRNG0, output, len);
+#define MAX_RETRIES 3u
+    for(int retries = 0u; retries < MAX_RETRIES; retries++)
+    {
+        result = TRNG_GetRandomData(TRNG0, output, len);
+        if (result == kStatus_Success)
+        {
+            break;
+        }
+    }
 #elif defined(FSL_FEATURE_SOC_RNG_COUNT) && (FSL_FEATURE_SOC_RNG_COUNT > 0)
     result = RNGA_GetRandomData(RNG, (void *) output, len);
 #elif defined(FSL_FEATURE_SOC_CAAM_COUNT) && (FSL_FEATURE_SOC_CAAM_COUNT > 0) && \
@@ -6534,6 +6646,17 @@ int mbedtls_hardware_poll(void *data, unsigned char *output, size_t len, size_t 
 
     result = status;
 #endif
+
+#if ((defined(FSL_FEATURE_SOC_TRNG_COUNT) && (FSL_FEATURE_SOC_TRNG_COUNT > 0)) || \
+    (defined(FSL_FEATURE_SOC_RNG_COUNT) && (FSL_FEATURE_SOC_RNG_COUNT > 0)) || \
+    (defined(FSL_FEATURE_SOC_LPC_RNG1_COUNT) && (FSL_FEATURE_SOC_LPC_RNG1_COUNT > 0)) || \
+    (defined(FSL_FEATURE_SOC_LPC_RNG_COUNT) && (FSL_FEATURE_SOC_LPC_RNG_COUNT > 0))) && \
+    defined(MBEDTLS_THREADING_C)
+    if (mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_rng_mutex) != 0) {
+        return MBEDTLS_ERR_THREADING_MUTEX_ERROR;
+    }    
+#endif /* FSL_FEATURE_SOC_RNG/LPC_RNG/TRNG */
+
     if (result == kStatus_Success) {
         *olen = len;
         return 0;

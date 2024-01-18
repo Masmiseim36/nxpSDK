@@ -26,6 +26,7 @@
  * Generic audio codec task implementation
  ******************************************************************************/
 
+#ifndef XA_DISABLE_CLASS_AUDIO_CODEC
 #define MODULE_TAG                      CODEC
 
 /*******************************************************************************
@@ -89,7 +90,7 @@ typedef struct XAAudioCodec
 
     /* ...codec output buffer pointer */
     void 					*out_ptr;
-    
+
     /* ...temporary output pointer for audio class component initialization */
     void                   *pinit_output;
 
@@ -97,7 +98,7 @@ typedef struct XAAudioCodec
     UWORD32                 init_output_size;
 
     /***************************************************************************
-     * response message pointer 
+     * response message pointer
      **************************************************************************/
     xf_message_t        *m_response;
 
@@ -189,12 +190,23 @@ static inline XA_ERRORCODE xa_codec_prepare_runtime(XAAudioCodec *codec)
 
     /* ...codec runtime initialization is completed */
     TRACE(INIT, _b("codec[%p] runtime initialized: i=%u, o=%u"), codec, msg->input_length[0], msg->output_length[0]);
-    
+
     /* ...Free temporary output buffer */
     if ( codec->pinit_output != NULL)
     {
-        xf_mem_free(codec->pinit_output, codec->init_output_size, core, 0 );
+        xf_mem_free(codec->pinit_output, codec->init_output_size, core, 0, base->component.mem_pool_type[XAF_MEM_POOL_TYPE_COMP_OUTPUT]);
         codec->pinit_output  = NULL;
+    }
+
+    {
+        /* ...allocate connect buffers */
+        WORD32 err = xf_output_port_route_alloc(&codec->output, msg->output_length[0], base->component.mem_pool_type[XAF_MEM_POOL_TYPE_COMP_OUTPUT]);
+
+        /* ...schedule for processing if input is ready */
+        if ( ((err == 0) || (err==1)) && xf_input_port_ready(&codec->input) && xf_output_port_ready(&codec->output))
+        {
+            xa_base_schedule(base, 0);
+        }
     }
 
     /* ...pass response to caller (push out of output port) */
@@ -236,7 +248,7 @@ static XA_ERRORCODE xa_codec_empty_this_buffer(XACodecBase *base, xf_message_t *
 
         /* ...codec must be in one of these states */
         XF_CHK_ERR(base->state & (XA_BASE_FLAG_RUNTIME_INIT | XA_BASE_FLAG_EXECUTION), XA_API_FATAL_INVALID_CMD);
-        
+
         /* ...schedule data processing if output is ready */
         if (xf_output_port_ready(&codec->output))
         {
@@ -305,18 +317,18 @@ static XA_ERRORCODE xa_codec_fill_this_buffer(XACodecBase *base, xf_message_t *m
         /* ... mark flushing sequence is done */
         xf_output_port_flush_done(&codec->output);
 
-#if 1   //TENA_2379                                                                                                     
+#if 1   //TENA_2379
         if (xf_output_port_unrouting(&codec->output))
-        {   
-            /* ...flushing during port unrouting; complete unroute sequence */                                            
-            xf_output_port_unroute_done(&codec->output);                                                                  
+        {
+            /* ...flushing during port unrouting; complete unroute sequence */
+            xf_output_port_unroute_done(&codec->output, base->component.mem_pool_type[XAF_MEM_POOL_TYPE_COMP_OUTPUT]);
             TRACE(INFO, _b("port is unrouted"));
-        }   
+        }
 #endif
         else if (m->length == XF_MSG_LENGTH_INVALID)
         {
             /* ...complete flushing and unrouting of the outport whose dest no longer exists */
-            xf_output_port_unroute(&codec->output);
+            xf_output_port_unroute(&codec->output, base->component.mem_pool_type[XAF_MEM_POOL_TYPE_COMP_OUTPUT]);
             TRACE(INFO, _b("codec[%p] completed internal unroute of port"), codec);
         }
 
@@ -366,13 +378,13 @@ static XA_ERRORCODE xa_codec_fill_this_buffer(XACodecBase *base, xf_message_t *m
         {
             /* ...reset execution stage */
             base->state = XA_BASE_FLAG_POSTINIT | XA_BASE_FLAG_EXECUTION;
-            
+
             /* ...reset execution runtime */
             XA_API(base, XA_API_CMD_EXECUTE, XA_CMD_TYPE_DO_RUNTIME_INIT, NULL);
 
             /* ...reset produced samples counter */
             codec->produced = 0;
-        
+
             TRACE(INFO, _b("codec[%p] COMPLETED to EXECUTION"), codec);
         }
 
@@ -392,9 +404,9 @@ static XA_ERRORCODE xa_codec_fill_this_buffer(XACodecBase *base, xf_message_t *m
 #if 0
     if (xf_output_port_put(&codec->output, m) && (xf_input_port_ready(&codec->input) || (((base->state & XA_BASE_FLAG_RUNTIME_INIT) && (comp_type != XAF_DECODER)) || ((base->state & XA_BASE_FLAG_RUNTIME_INIT) && (comp_type == XAF_DECODER) && (codec->dec_init_without_inp == 1)))))
 #else
-if (xf_output_port_put(&codec->output, m) && 
-    ( xf_input_port_ready(&codec->input) || 
-     ((base->state & XA_BASE_FLAG_RUNTIME_INIT) && 
+if (xf_output_port_put(&codec->output, m) &&
+    ( xf_input_port_ready(&codec->input) ||
+     ((base->state & XA_BASE_FLAG_RUNTIME_INIT) &&
         ((comp_type != XAF_DECODER) || (codec->dec_init_without_inp == 1))
      )
     )
@@ -432,7 +444,7 @@ static XA_ERRORCODE xa_codec_port_route(XACodecBase *base, xf_message_t *m)
     xf_output_port_t       *port = &codec->output;
     UWORD32                     src = XF_MSG_DST(m->id);
     UWORD32                     dst = cmd->dst;
-    
+
     /* ...command is allowed only in "postinit" state */
     XF_CHK_ERR(base->state & XA_BASE_FLAG_POSTINIT, XA_API_FATAL_INVALID_CMD);
 
@@ -443,14 +455,17 @@ static XA_ERRORCODE xa_codec_port_route(XACodecBase *base, xf_message_t *m)
     XF_CHK_ERR(!xf_output_port_routed(port), XA_API_FATAL_INVALID_CMD_TYPE);
 
     /* ...route output port - allocate queue */
-    XF_CHK_ERR(xf_output_port_route(port, __XF_MSG_ID(dst, src), cmd->alloc_number, cmd->alloc_size, cmd->alloc_align) == 0, XA_API_FATAL_MEM_ALLOC);
+    XF_CHK_ERR(xf_output_port_route(port, __XF_MSG_ID(dst, src), cmd->alloc_number, cmd->alloc_size, cmd->alloc_align, base->component.mem_pool_type[XAF_MEM_POOL_TYPE_COMP_OUTPUT]) == 0, XA_API_FATAL_MEM_ALLOC);
 
     /* ...schedule processing instantly */
-    xa_base_schedule(base, 0);
-    
+    if (xf_input_port_ready(&codec->input) && xf_output_port_ready(&codec->output))
+    {
+        xa_base_schedule(base, 0);
+    }
+
     /* ...pass success result to caller */
     xf_response_ok(m);
-    
+
     return XA_NO_ERROR;
 }
 
@@ -458,7 +473,7 @@ static XA_ERRORCODE xa_codec_port_route(XACodecBase *base, xf_message_t *m)
 static XA_ERRORCODE xa_codec_port_unroute(XACodecBase *base, xf_message_t *m)
 {
     XAAudioCodec           *codec = (XAAudioCodec *) base;
-    
+
     /* ...command is allowed only in "postinit" state */
     XF_CHK_ERR(base->state & XA_BASE_FLAG_POSTINIT, XA_API_FATAL_INVALID_CMD);
 
@@ -484,7 +499,7 @@ static XA_ERRORCODE xa_codec_port_unroute(XACodecBase *base, xf_message_t *m)
         TRACE(INFO, _b("port is idle; instantly unroute"));
 
         /* ...flushing sequence is not needed; command may be satisfied instantly */
-        xf_output_port_unroute(&codec->output);
+        xf_output_port_unroute(&codec->output, base->component.mem_pool_type[XAF_MEM_POOL_TYPE_COMP_OUTPUT]);
 
         /* ...pass response to the proxy */
         xf_response_ok(m);
@@ -512,7 +527,7 @@ static XA_ERRORCODE xa_codec_flush(XACodecBase *base, xf_message_t *m)
     XF_CHK_ERR((m->length == 0) || (m->length == XF_MSG_LENGTH_INVALID), XA_API_FATAL_INVALID_CMD_TYPE);
 
     TRACE(INFO, _b("flush command received"));
-    
+
     /* ...flush command must be addressed to input port */
     if (XF_MSG_DST_PORT(m->id) == 0)
     {
@@ -560,7 +575,7 @@ static XA_ERRORCODE xa_codec_flush(XACodecBase *base, xf_message_t *m)
     else if (xf_output_port_unrouting(&codec->output))
     {
         /* ...flushing during port unrouting; complete unroute sequence */
-        xf_output_port_unroute_done(&codec->output);
+        xf_output_port_unroute_done(&codec->output, base->component.mem_pool_type[XAF_MEM_POOL_TYPE_COMP_OUTPUT]);
 
         TRACE(INFO, _b("port is unrouted"));
     }
@@ -576,7 +591,7 @@ static XA_ERRORCODE xa_codec_flush(XACodecBase *base, xf_message_t *m)
             xf_response(m);
         }
         else
-        {            
+        {
             /* ...response to flushing command received */
             BUG(m != xf_output_port_control_msg(&codec->output), _x("invalid message: %p"), m);
 
@@ -599,10 +614,10 @@ static XA_ERRORCODE xa_codec_port_pause(XACodecBase *base, xf_message_t *m)
 {
     XAAudioCodec *codec = (XAAudioCodec *) base;
     UWORD32           i = XF_MSG_DST_PORT(m->id);
-    
+
     /* ...make sure the buffer is empty */
     XF_CHK_ERR(m->length == 0, XA_API_FATAL_INVALID_CMD_TYPE);
-    
+
     /* ...check destination port is valid */
     XF_CHK_ERR(i <= 2, XA_API_FATAL_INVALID_CMD_TYPE);
 
@@ -636,7 +651,7 @@ static XA_ERRORCODE xa_codec_port_pause(XACodecBase *base, xf_message_t *m)
     if (base->state & XA_BASE_FLAG_COMPLETED)
     {
         TRACE(WARNING, _b("codec[%p] completed, ignore pause command"), codec);
-    
+
         /* ...complete message immediately */
         xf_response_ok(m);
 
@@ -660,10 +675,10 @@ static XA_ERRORCODE xa_codec_port_pause(XACodecBase *base, xf_message_t *m)
     {
         TRACE(INFO, _b("codec[%p]-port[%u] is not active or already paused"), codec, i);
     }
-    
+
     /* ...complete message immediately */
     xf_response_ok(m);
-    
+
     return XA_NO_ERROR;
 }
 
@@ -672,10 +687,10 @@ static XA_ERRORCODE xa_codec_port_resume(XACodecBase *base, xf_message_t *m)
 {
     XAAudioCodec *codec = (XAAudioCodec *) base;
     UWORD32           i = XF_MSG_DST_PORT(m->id);
-    
+
     /* ...make sure the buffer is empty */
     XF_CHK_ERR(m->length == 0, XA_API_FATAL_INVALID_CMD_TYPE);
-    
+
     /* ...check destination port is valid */
     XF_CHK_ERR(i <= 2, XA_API_FATAL_INVALID_CMD_TYPE);
 
@@ -683,7 +698,7 @@ static XA_ERRORCODE xa_codec_port_resume(XACodecBase *base, xf_message_t *m)
     if (base->state & XA_BASE_FLAG_COMPLETED)
     {
         TRACE(WARNING, _b("codec[%p] completed, ignore resume command"), codec);
-    
+
         /* ...complete message immediately */
         xf_response_ok(m);
 
@@ -750,7 +765,7 @@ static XA_ERRORCODE xa_codec_memtab(XACodecBase *base, WORD32 idx, WORD32 type, 
     if (type == XA_MEMTYPE_INPUT)
     {
         /* ...input port specification; allocate internal buffer */
-        XF_CHK_ERR(xf_input_port_init(&codec->input, size, align, core) == 0, XA_API_FATAL_MEM_ALLOC);
+        XF_CHK_ERR(xf_input_port_init(&codec->input, size, align, core, base->component.mem_pool_type[XAF_MEM_POOL_TYPE_COMP_INPUT]) == 0, XA_API_FATAL_MEM_ALLOC);
 
         /* ...save input port index */
         codec->in_idx = idx;
@@ -762,7 +777,7 @@ static XA_ERRORCODE xa_codec_memtab(XACodecBase *base, WORD32 idx, WORD32 type, 
         }
 
         (size ? TRACE(INPUT, _x("set input ptr: %p"), codec->input.buffer) : 0);
-        
+
         /* ...put input port into running state */
         xa_port_clear_flags(&codec->input.flags, XA_CODEC_INP_PORT_PAUSED);
     }
@@ -776,9 +791,9 @@ static XA_ERRORCODE xa_codec_memtab(XACodecBase *base, WORD32 idx, WORD32 type, 
 
         /* ...save output port index */
         codec->out_idx = idx;
-        
+
         /* ...allocate this output buffer only for the codec initialization. This buffer will be freed when initialization is done */
-        XF_CHK_ERR(codec->pinit_output = xf_mem_alloc(size, align, core, 0), XAF_MEMORY_ERR);
+        XF_CHK_ERR(codec->pinit_output = xf_mem_alloc(size, align, core, 0, base->component.mem_pool_type[XAF_MEM_POOL_TYPE_COMP_OUTPUT]), XAF_MEMORY_ERR);
 
         codec->init_output_size = size;
 
@@ -820,7 +835,7 @@ static XA_ERRORCODE xa_codec_preprocess(XACodecBase *base)
     xaf_comp_type comp_type = base->comp_type;
 
     /* ...skip processing if I/O ports are paused */
-    if (xa_port_test_flags(&codec->output.flags, XA_CODEC_OUT_PORT_PAUSED) || 
+    if (xa_port_test_flags(&codec->output.flags, XA_CODEC_OUT_PORT_PAUSED) ||
         xa_port_test_flags(&codec->input.flags, XA_CODEC_INP_PORT_PAUSED))
     {
         //return XA_CODEC_EXEC_PORT_PAUSED;
@@ -886,7 +901,7 @@ static XA_ERRORCODE xa_codec_preprocess(XACodecBase *base)
         XA_API(base, XA_API_CMD_SET_MEM_PTR, codec->out_idx, output);
 
         TRACE(OUTPUT, _x("set output ptr: %p"), output);
-        
+
         /* ...mark output port is setup */
         base->state ^= XA_CODEC_FLAG_OUTPUT_SETUP;
     }
@@ -910,7 +925,7 @@ static XA_ERRORCODE xa_codec_preprocess(XACodecBase *base)
 
             /* ...port is in bypass mode; try to update the buffer pointer, remaining bytes if necessary */
             xf_input_port_fill(&codec->input);
-            
+
             /* ...use input buffer directly; check if there is data available */
             if ((input = xf_input_port_data(&codec->input)) != NULL)
             {
@@ -940,7 +955,7 @@ static XA_ERRORCODE xa_codec_preprocess(XACodecBase *base)
                 /* ...return non-fatal indication to prevent further processing, unless initialization is pending */
                 if (!(base->state & XA_BASE_FLAG_RUNTIME_INIT))
                     return XA_CODEC_EXEC_NO_DATA;
-                
+
                 filled = xf_input_port_level(&codec->input);
             }
         }
@@ -1008,7 +1023,7 @@ static XA_ERRORCODE xa_codec_postprocess(XACodecBase *base, int done)
         {
             /* ...copy output port data onto probe port */
             probe_outptr = xf_copy_probe_data(probe_outptr, 1, produced, codec->out_ptr);
-        
+
             /* ...compute probe data length locally */
             probe_length += produced;
         }
@@ -1079,7 +1094,7 @@ static XA_ERRORCODE xa_codec_postprocess(XACodecBase *base, int done)
             {
                 /* ...flushing sequence is not needed; complete pending zero-length input */
                 xf_input_port_purge(&codec->input);
-                
+
                 /* ...no propagation to output port */
                 TRACE(INFO, _b("codec[%p] playback completed"), codec);
             }
@@ -1118,11 +1133,11 @@ static XA_ERRORCODE xa_codec_postprocess(XACodecBase *base, int done)
         /* ...send output buffer back if initialization was attempted without input */
         if ((codec->dec_init_without_inp) && !xf_input_port_level(&codec->input))
         {
-            xf_message_t *msg = xf_msg_dequeue(&codec->output.queue);   
+            xf_message_t *msg = xf_msg_dequeue(&codec->output.queue);
 
             /* ...complete message with 0 length to indicate initialization is not complete */
             xf_response_data(msg, 0);
-        
+
             /* ...clear output port setup flag */
             base->state &= ~(XA_CODEC_FLAG_OUTPUT_SETUP);
         }
@@ -1205,7 +1220,7 @@ static XA_ERRORCODE (* const xa_codec_cmd[])(XACodecBase *, xf_message_t *) =
     [XF_OPCODE_TYPE(XF_FLUSH)] = xa_codec_flush,
     [XF_OPCODE_TYPE(XF_SET_PARAM_EXT)] = xa_base_set_param_ext,
     [XF_OPCODE_TYPE(XF_GET_PARAM_EXT)] = xa_base_get_param_ext,
-    
+
     [XF_OPCODE_TYPE(XF_PAUSE)] = xa_codec_port_pause,
     [XF_OPCODE_TYPE(XF_RESUME)] = xa_codec_port_resume,
 };
@@ -1263,19 +1278,20 @@ static int xa_audio_codec_destroy(xf_component_t *component, xf_message_t *m)
 {
     XAAudioCodec   *codec = (XAAudioCodec *) component;
     UWORD32             core = xf_component_core(component);
+    XACodecBase *base = &codec->base;
 
     /* ...get the saved command message pointer before the component memory is freed */
     xf_message_t *m_resp = codec->m_response;
 
     /* ...destroy input port */
-    xf_input_port_destroy(&codec->input, core);
+    xf_input_port_destroy(&codec->input, core, base->component.mem_pool_type[XAF_MEM_POOL_TYPE_COMP_INPUT]);
 
     /* ...destroy output port */
-    xf_output_port_destroy(&codec->output, core);
+    xf_output_port_destroy(&codec->output, core, base->component.mem_pool_type[XAF_MEM_POOL_TYPE_COMP_OUTPUT]);
 
     if (codec->probe_enabled)
     {
-    	xf_output_port_destroy(&codec->probe, core);
+    	xf_output_port_destroy(&codec->probe, core, base->component.mem_pool_type[XAF_MEM_POOL_TYPE_COMP_OUTPUT]);
     }
 
     /* ...deallocate all resources */
@@ -1368,3 +1384,5 @@ xf_component_t * xa_audio_codec_factory(UWORD32 core, xa_codec_func_t process, x
 
     return (xf_component_t *) codec;
 }
+
+#endif //XA_DISABLE_CLASS_AUDIO_CODEC

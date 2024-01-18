@@ -30,23 +30,23 @@ FRESULT f_mkfs (
 <dt>path</dt>
 <dd>Pointer to the null-terminated string specifies the <a href="filename.html">logical drive</a> to be formatted. If it does not have a drive number in it, it means to specify the default drive. The logical drive may or may not have been mounted for the format process.</dd>
 <dt>opt</dt>
-<dd>Specifies the format option structure <tt>MKFS_PARM</tt> holding format options. If a null pointer is given, it gives the function all options in default value. The structure has five members described below:<br>
+<dd>Specifies the format option structure <tt>MKFS_PARM</tt> holding format options. If a null pointer is given, it gives the function every option in default value. The structure has five members in order of described below:<br>
 <dl class="par">
 <dt>BYTE fmt</dt>
-<dd>Specifies combination of FAT type flags, <tt>FM_FAT</tt>, <tt>FM_FAT32</tt>, <tt>FM_EXFAT</tt> and bitwise-or of these three, <tt>FM_ANY</tt>. <tt>FM_EXFAT</tt> is ignored when exFAT is not enabled. These flags specify which FAT type to be created on the volume. If two or more types are specified, one out of them will be selected depends on the volume size and <tt class="arg">au_size</tt>. The flag <tt>FM_SFD</tt> specifies to create the volume on the drive in SFD format. The default value is <tt>FM_ANY</tt>.</dd>
-<dt>DWORD au_size</dt>
-<dd>Specifies size of the allocation unit (cluter) in unit of byte. The valid value is power of 2 between sector size and 128 * sector size inclusive for FAT/FAT32 volume, or up to 16 MB for exFAT volume. If a zero (default value) or any invalid value is given, the function uses default allocation unit size depends on the volume size.</dd>
-<dt>UINT n_align</dt>
-<dd>Specifies alignment of the volume data area (file allocation pool, usually erase block boundary of flash memory media) in unit of sector. The valid value for this member is between 1 and 32768 inclusive in power of 2. If a zero (the default value) or any invalid value is given, the function obtains the block size from lower layer with <tt>disk_ioctl</tt> function.</dd>
+<dd>Specifies a combination of FAT type flags, <tt>FM_FAT</tt>, <tt>FM_FAT32</tt>, <tt>FM_EXFAT</tt> and bitwise-or of these three, <tt>FM_ANY</tt>. <tt>FM_EXFAT</tt> is ignored when exFAT is not enabled. These flags specify which type of FAT volume to be created. If two or more types are specified, one out of them will be selected depends on the volume size and <tt class="arg">au_size</tt>. The flag <tt>FM_SFD</tt> specifies to create the volume on the drive in SFD format. The default value is <tt>FM_ANY</tt>.</dd>
 <dt>BYTE n_fat</dt>
 <dd>Specifies number of FAT copies on the FAT/FAT32 volume. Valid value for this member is 1 or 2. The default value (0) and any invaid value gives 1. If the FAT type is exFAT, this member has no effect.</dd>
+<dt>UINT n_align</dt>
+<dd>Specifies alignment of the volume data area (file allocation pool, usually erase block boundary of flash memory media) in unit of sector. The valid value for this member is between 1 and 32768 inclusive in power of 2. If a zero (the default value) or any invalid value is given, the function obtains the block size from lower layer with <tt>disk_ioctl</tt> function.</dd>
+<dt>DWORD au_size</dt>
+<dd>Specifies size of the allocation unit (cluter) in unit of byte. The valid value is power of 2 between sector size and 128 * sector size inclusive for FAT/FAT32 volume, or up to 16 MB for exFAT volume. If a zero (default value) or any invalid value is given, the function uses default allocation unit size depends on the volume size.</dd>
 <dt>UINT n_root</dt>
 <dd>Specifies number of root directory entries on the FAT volume. Valid value for this member is up to 32768 and aligned to sector size / 32. The default value (0) and any invaid value gives 512. If the FAT type is FAT32 or exFAT, this member has no effect.</dd>
 </dl>
 <dt>work</dt>
-<dd>Pointer to the working buffer used for the format process. If a null pointer is given with <tt><a href="config.html#use_lfn">FF_USE_LFN</a> == 3</tt>, the function obtains a memory block for the working buffer in this function.</dd>
+<dd>Pointer to the working buffer used for the format process. If a null pointer is given with <tt><a href="config.html#use_lfn">FF_USE_LFN</a> == 3</tt>, the function uses a <tt>len</tt> bytes of heap memory in this function.</dd>
 <dt>len</dt>
-<dd>Size of the working buffer in unit of byte. It needs to be <tt>FF_MAX_SS</tt> at least. Plenty of working buffer reduces number of write transactions to the drive and the format process will finish quickly.</dd>
+<dd>Size of the working buffer in unit of byte. It needs to be <tt>FF_MAX_SS</tt> at least. Plenty of working buffer reduces number of write transactions to the drive, thus the format process will finish quickly.</dd>
 </dl>
 </div>
 

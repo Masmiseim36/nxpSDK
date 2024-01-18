@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, _DEBUG=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, USB_STACK_FREERTOS_HEAP_SIZE=10240, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SDK_OS_FREE_RTOS, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../evkmimxrt595;../../../../../../components/osa;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/alt_mode;../../../../../../components/i2c;../../../../../../components/lists;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/uart;../../../../../../devices/MIMXRT595S;../../../../../evkmimxrt595/flash_config;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd/phy_interface;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
+              <IncludePath>..;../../../../../evkmimxrt595;../../../../../../components/osa;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/alt_mode;../../../../../../components/i2c;../../../../../../components/lists;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/uart;../../../../../../devices/MIMXRT595S;../../../../../evkmimxrt595/flash_config;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd/phy_interface;../../../../../../devices/MIMXRT595S/utilities;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1117,6 +1117,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>
@@ -1693,7 +1698,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, USB_STACK_FREERTOS_HEAP_SIZE=10240, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SDK_OS_FREE_RTOS, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../evkmimxrt595;../../../../../../components/osa;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/alt_mode;../../../../../../components/i2c;../../../../../../components/lists;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/uart;../../../../../../devices/MIMXRT595S;../../../../../evkmimxrt595/flash_config;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd/phy_interface;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
+              <IncludePath>..;../../../../../evkmimxrt595;../../../../../../components/osa;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/alt_mode;../../../../../../components/i2c;../../../../../../components/lists;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/uart;../../../../../../devices/MIMXRT595S;../../../../../evkmimxrt595/flash_config;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd/phy_interface;../../../../../../devices/MIMXRT595S/utilities;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2478,6 +2483,11 @@
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_assert.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_str.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
@@ -3052,7 +3062,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, _DEBUG=0, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, USB_STACK_FREERTOS_HEAP_SIZE=10240, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SDK_OS_FREE_RTOS, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../evkmimxrt595;../../../../../../components/osa;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/alt_mode;../../../../../../components/i2c;../../../../../../components/lists;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/uart;../../../../../../devices/MIMXRT595S;../../../../../evkmimxrt595/flash_config;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd/phy_interface;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
+              <IncludePath>..;../../../../../evkmimxrt595;../../../../../../components/osa;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/alt_mode;../../../../../../components/i2c;../../../../../../components/lists;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/uart;../../../../../../devices/MIMXRT595S;../../../../../evkmimxrt595/flash_config;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd/phy_interface;../../../../../../devices/MIMXRT595S/utilities;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3837,6 +3847,11 @@
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_assert.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_assert.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_str.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c</FilePath>
@@ -4411,7 +4426,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, USB_STACK_FREERTOS_HEAP_SIZE=10240, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SDK_OS_FREE_RTOS, I2C_RETRY_TIMES=40000, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../evkmimxrt595;../../../../../../components/osa;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/alt_mode;../../../../../../components/i2c;../../../../../../components/lists;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/uart;../../../../../../devices/MIMXRT595S;../../../../../evkmimxrt595/flash_config;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd/phy_interface;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
+              <IncludePath>..;../../../../../evkmimxrt595;../../../../../../components/osa;../../../../../../middleware/usb/pd;../../../../../../middleware/usb/pd/alt_mode;../../../../../../components/i2c;../../../../../../components/lists;../../../../../../components/timer;../../../../../../components/gpio;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/uart;../../../../../../devices/MIMXRT595S;../../../../../evkmimxrt595/flash_config;../../../../../../rtos/freertos/freertos-kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../middleware/usb/pd/ptn5110;../../../../../../middleware/usb/pd/phy_interface;../../../../../../devices/MIMXRT595S/utilities;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../rtos/freertos/freertos-kernel/include;../../../../../../CMSIS/Core/Include;../../../../../../middleware/usb/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5194,6 +5209,11 @@
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT595S/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>

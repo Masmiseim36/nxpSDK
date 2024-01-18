@@ -65,18 +65,18 @@ static void timer_poll_udp_client(TimerHandle_t timer);
 
 /* Report state => string */
 const char *report_type_str[] = {
-    "TCP_DONE_SERVER (RX)",        /* LWIPERF_TCP_DONE_SERVER_RX,*/
-    "TCP_DONE_SERVER (TX)",        /* LWIPERF_TCP_DONE_SERVER_TX,*/
-    "TCP_DONE_CLIENT (TX)",        /* LWIPERF_TCP_DONE_CLIENT_TX,*/
-    "TCP_DONE_CLIENT (RX)",        /* LWIPERF_TCP_DONE_CLIENT_RX,*/
+    "TCP_DONE_SERVER (RX)", /* LWIPERF_TCP_DONE_SERVER_RX,*/
+    "TCP_DONE_SERVER (TX)", /* LWIPERF_TCP_DONE_SERVER_TX,*/
+    "TCP_DONE_CLIENT (TX)", /* LWIPERF_TCP_DONE_CLIENT_TX,*/
+    "TCP_DONE_CLIENT (RX)", /* LWIPERF_TCP_DONE_CLIENT_RX,*/
     "TCP_ABORTED_LOCAL",           /* LWIPERF_TCP_ABORTED_LOCAL, */
     "TCP_ABORTED_LOCAL_DATAERROR", /* LWIPERF_TCP_ABORTED_LOCAL_DATAERROR, */
     "TCP_ABORTED_LOCAL_TXERROR",   /* LWIPERF_TCP_ABORTED_LOCAL_TXERROR, */
     "TCP_ABORTED_REMOTE",          /* LWIPERF_TCP_ABORTED_REMOTE, */
     "UDP_DONE_SERVER (RX)",        /* LWIPERF_UDP_DONE_SERVER_RX, */
-    "UDP_DONE_SERVER (TX)",        /* LWIPERF_UDP_DONE_SERVER_TX, */
-    "UDP_DONE_CLIENT (TX)",        /* LWIPERF_UDP_DONE_CLIENT_TX, */
-    "UDP_DONE_CLIENT (RX)",        /* LWIPERF_UDP_DONE_CLIENT_RX, */
+    "UDP_DONE_SERVER (TX)", /* LWIPERF_UDP_DONE_SERVER_TX, */
+    "UDP_DONE_CLIENT (TX)", /* LWIPERF_UDP_DONE_CLIENT_TX, */
+    "UDP_DONE_CLIENT (RX)", /* LWIPERF_UDP_DONE_CLIENT_RX, */
     "UDP_ABORTED_LOCAL",           /* LWIPERF_UDP_ABORTED_LOCAL, */
     "UDP_ABORTED_LOCAL_DATAERROR", /* LWIPERF_UDP_ABORTED_LOCAL_DATAERROR, */
     "UDP_ABORTED_LOCAL_TXERROR",   /* LWIPERF_UDP_ABORTED_LOCAL_TXERROR, */
@@ -87,6 +87,18 @@ const char *report_type_str[] = {
 #ifdef CONFIG_HOST_SLEEP
 #endif
 #endif
+
+static void iperf_free_ctx_iperf_session(void *arg, enum lwiperf_report_type report_type)
+{
+    struct iperf_test_context *ctx = (struct iperf_test_context *)arg;
+
+    if (!ctx || ctx->server_mode ||
+        (ctx->client_type == LWIPERF_TRADEOFF &&
+         (report_type == LWIPERF_TCP_DONE_CLIENT_TX || report_type == LWIPERF_UDP_DONE_CLIENT_TX)))
+        return;
+
+    ctx->iperf_session = NULL;
+}
 
 /** Prototype of a report function that is called when a session is finished.
     This report function shows the test results. */
@@ -100,6 +112,11 @@ static void lwiperf_report(void *arg,
                            u32_t ms_duration,
                            u32_t bandwidth_kbitpsec)
 {
+    if (arg == NULL)
+    {
+        (void)PRINTF("Unable to print iperf report\r\n");
+        return;
+    }
     (void)PRINTF("-------------------------------------------------\r\n");
     if (report_type < (enum lwiperf_report_type)(sizeof(report_type_str) / sizeof(report_type_str[0])))
     {
@@ -141,7 +158,13 @@ static void lwiperf_report(void *arg,
     {
         (void)PRINTF(" IPERF Report error\r\n");
     }
+    struct iperf_test_context *test_ctx = (struct iperf_test_context *)arg;
+    if (test_ctx->server_mode == 0 && test_ctx->client_type != LWIPERF_DUAL)
+    {
+        os_timer_deactivate(&ptimer);
+    }
     (void)PRINTF("\r\n");
+    iperf_free_ctx_iperf_session(arg, report_type);
 #if defined(CONFIG_WIFI_BLE_COEX_APP) || (CONFIG_WIFI_BLE_COEX_APP == 1)
 #ifdef CONFIG_HOST_SLEEP
 #endif
@@ -153,7 +176,6 @@ static void lwiperf_report(void *arg,
  */
 static void iperf_test_start(void *arg)
 {
-    int rv                         = WM_SUCCESS;
     struct iperf_test_context *ctx = (struct iperf_test_context *)arg;
 #ifdef CONFIG_IPV6
     struct netif *netiftmp  = NULL;
@@ -172,30 +194,7 @@ static void iperf_test_start(void *arg)
 #endif
 #endif
 
-    if (!(ctx->tcp))
-    {
-        if (ctx->client_type == LWIPERF_DUAL)
-        {
-            /* Reducing udp Tx timer interval for rx to be served */
-            rv = os_timer_change(&ptimer, os_msec_to_ticks(2), 0);
-            if (rv != WM_SUCCESS)
-            {
-                (void)PRINTF("Unable to change period in iperf timer for LWIPERF_DUAL\r\n");
-                return;
-            }
-        }
-        else
-        {
-            /* Returning original timer settings of 1 ms interval*/
-            rv = os_timer_change(&ptimer, os_msec_to_ticks(1), 0);
-            if (rv != WM_SUCCESS)
-            {
-                (void)PRINTF("Unable to change period in iperf timer\r\n");
-                return;
-            }
-        }
-        os_timer_activate(&ptimer);
-    }
+    os_timer_activate(&ptimer);
 
     if (ctx->server_mode)
     {
@@ -204,12 +203,12 @@ static void iperf_test_start(void *arg)
 #ifdef CONFIG_IPV6
             if (ipv6)
             {
-                ctx->iperf_session = lwiperf_start_tcp_server(IP6_ADDR_ANY, port, lwiperf_report, NULL);
+                ctx->iperf_session = lwiperf_start_tcp_server(IP6_ADDR_ANY, port, lwiperf_report, ctx);
             }
             else
 #endif
             {
-                ctx->iperf_session = lwiperf_start_tcp_server(IP_ADDR_ANY, port, lwiperf_report, NULL);
+                ctx->iperf_session = lwiperf_start_tcp_server(IP_ADDR_ANY, port, lwiperf_report, ctx);
             }
         }
         else
@@ -233,12 +232,12 @@ static void iperf_test_start(void *arg)
 #ifdef CONFIG_IPV6
             if (ipv6)
             {
-                ctx->iperf_session = lwiperf_start_udp_server(IP6_ADDR_ANY, port, lwiperf_report, NULL);
+                ctx->iperf_session = lwiperf_start_udp_server(IP6_ADDR_ANY, port, lwiperf_report, ctx);
             }
             else
 #endif
             {
-                ctx->iperf_session = lwiperf_start_udp_server(&bind_address, port, lwiperf_report, NULL);
+                ctx->iperf_session = lwiperf_start_udp_server(&bind_address, port, lwiperf_report, ctx);
             }
         }
     }
@@ -273,7 +272,7 @@ static void iperf_test_start(void *arg)
 #else
                                                           0,
 #endif
-                                                          lwiperf_report, 0);
+                                                          lwiperf_report, ctx);
         }
         else
         {
@@ -290,16 +289,16 @@ static void iperf_test_start(void *arg)
 #ifdef CONFIG_IPV6
             if (ipv6)
             {
-                ctx->iperf_session = lwiperf_start_udp_client(netif_ip_addr6(netif_default, 0), port, &server_address,
-                                                              port, ctx->client_type, amount, buffer_len,
-                                                              IPERF_UDP_CLIENT_RATE * udp_rate_factor,
+                ctx->iperf_session =
+                    lwiperf_start_udp_client(&bind_address, port, &server_address, port, ctx->client_type, amount,
+                                             buffer_len, IPERF_UDP_CLIENT_RATE * udp_rate_factor,
 #ifdef CONFIG_WMM
-                                                              qos,
+                                             qos,
 #else
-                                                              0,
+                                             0,
 #endif
 
-                                                              lwiperf_report, NULL);
+                                             lwiperf_report, ctx);
             }
             else
             {
@@ -313,7 +312,7 @@ static void iperf_test_start(void *arg)
                                          0,
 #endif
 
-                                             lwiperf_report, NULL);
+                                             lwiperf_report, ctx);
 #ifdef CONFIG_IPV6
             }
 #endif
@@ -409,7 +408,6 @@ static void TCPClientTradeOff(void)
     (void)tcpip_callback(iperf_test_start, (void *)&ctx);
 }
 
-#ifdef LWIPERF_REVERSE_MODE
 static void TCPClientReverse(void)
 {
     ctx.server_mode = false;
@@ -418,7 +416,6 @@ static void TCPClientReverse(void)
 
     tcpip_callback(iperf_test_start, (void *)&ctx);
 }
-#endif
 
 static void UDPServer(void)
 {
@@ -466,7 +463,6 @@ static void UDPClientTradeOff(void)
     (void)tcpip_callback(iperf_test_start, (void *)&ctx);
 }
 
-#ifdef LWIPERF_REVERSE_MODE
 static void UDPClientReverse(void)
 {
     ctx.server_mode = false;
@@ -475,7 +471,6 @@ static void UDPClientReverse(void)
 
     tcpip_callback(iperf_test_start, (void *)&ctx);
 }
-#endif
 
 /* Display the usage of iperf */
 static void display_iperf_usage(void)
@@ -500,9 +495,7 @@ static void display_iperf_usage(void)
     (void)PRINTF("\t   -c    <host>   run in client mode, connecting to <host>\r\n");
     (void)PRINTF("\t   -d             Do a bidirectional test simultaneously\r\n");
     (void)PRINTF("\t   -r             Do a bidirectional test individually\r\n");
-#ifdef LWIPERF_REVERSE_MODE
     (void)PRINTF("\t   -R             reverse the test (client receives, server sends)\r\n");
-#endif
     (void)PRINTF("\t   -t    #        time in seconds to transmit for (default 10 secs)\r\n");
     (void)PRINTF(
         "\t   -b    #        for UDP, bandwidth to send at in Mbps, default 100Mbps without the parameter\r\n");
@@ -532,9 +525,7 @@ static void cmd_iperf(int argc, char **argv)
         unsigned chost : 1;
         unsigned dual : 1;
         unsigned tradeoff : 1;
-#ifdef LWIPERF_REVERSE_MODE
         unsigned reverse : 1;
-#endif
         unsigned time : 1;
 #ifdef CONFIG_WMM
         unsigned tos : 1;
@@ -684,13 +675,11 @@ static void cmd_iperf(int argc, char **argv)
             arg += 1;
             info.tradeoff = 1;
         }
-#ifdef LWIPERF_REVERSE_MODE
         else if (!info.reverse && string_equal("-R", argv[arg]))
         {
             arg += 1;
             info.reverse = 1;
         }
-#endif
         else if (string_equal("-b", argv[arg]))
         {
             if (arg + 1 >= argc || (get_uint(argv[arg + 1], &udp_rate_factor, strlen(argv[arg + 1])) != 0))
@@ -797,15 +786,11 @@ static void cmd_iperf(int argc, char **argv)
 #endif
          && ((info.bind == 0U) || (info.bhost == 0U))) ||
         (((info.dual != 0U) || (info.tradeoff != 0U)
-#ifdef LWIPERF_REVERSE_MODE
           || (info.reverse != 0U)
-#endif
               ) &&
          (info.client == 0U)) ||
         ((info.dual != 0U) && (info.tradeoff != 0U)) ||
-#ifdef LWIPERF_REVERSE_MODE
         ((info.dual != 0U) && (info.reverse != 0U)) || ((info.tradeoff != 0U) && (info.reverse != 0U)) ||
-#endif
         ((info.dserver != 0U) && (info.server == 0U || info.udp == 0U))
 #ifdef CONFIG_IPV6
         || ((info.ipv6 != 0U) && (info.client != 0U) && ((info.bind == 0U) || (info.bhost == 0U)))
@@ -872,12 +857,10 @@ static void cmd_iperf(int argc, char **argv)
             {
                 UDPClientTradeOff();
             }
-#ifdef LWIPERF_REVERSE_MODE
             else if (info.reverse != 0U)
             {
                 UDPClientReverse();
             }
-#endif
             else
             {
                 UDPClient();
@@ -893,12 +876,10 @@ static void cmd_iperf(int argc, char **argv)
             {
                 TCPClientTradeOff();
             }
-#ifdef LWIPERF_REVERSE_MODE
             else if (info.reverse != 0U)
             {
                 TCPClientReverse();
             }
-#endif
             else
             {
                 TCPClient();

@@ -11,7 +11,7 @@
 #include "includes.h"
 
 #ifdef CONFIG_INTERNAL_DES
-#include "common.h"
+#include "utils/common.h"
 #include "crypto.h"
 #include "des_i.h"
 

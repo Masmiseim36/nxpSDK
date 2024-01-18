@@ -273,7 +273,7 @@
  * \note: This is not used in a static GATT DB i.e. is GATT_DB_DYNAMIC
  * feature is not used.
  */
-#define GATT_DB_CHAR_PEER_SPECIFIC_AUX_PROPERTY        0x00008000
+#define GATT_DB_CHAR_PEER_SPECIFIC_AUX_PROPERTY        0x00008000U
 
 /** No Auxillary Property */
 #define GATT_DB_NO_AUXILLARY_PROPERTY                  0x00U
@@ -1271,7 +1271,7 @@ API_RESULT BT_gatt_db_fetch_handle_value_pair
  *  \param uuid
  *         Identifies the Attribute Type whose Values are requested.
  *
- *  \param handle_value_pair
+ *  \param hvp
  *         On Successful Search, contains Handle Value Pair in Requested Range
  *         and of requested Attribute Type.
  *
@@ -1372,9 +1372,9 @@ API_RESULT BT_gatt_db_get_handle_uuid_pair
  *  is used to formulate the response for Read By Type Request.
  *
  *  \param inst
- *         Identifies the Peer Entity Requesting the Read of Attribute. This is
- *         important so that necessary Security Checks are performed before the
- *         the value is fetched.
+ *         Identifies the Peer Entity Requesting the Read of Attribute through
+ *         \ref ATT_READ_BY_TYPE_REQ procedure. This is important so that
+ *         necessary Security Checks are performed before the value is fetched.
  *
  *  \param range
  *         Requested Range for Handle Attribute Value List.
@@ -1382,7 +1382,7 @@ API_RESULT BT_gatt_db_get_handle_uuid_pair
  *  \param uuid
  *         Identifies the Attribute Type whose Values are requested.
  *
- *  \param handle_value_pair
+ *  \param hvp
  *         On Successful Search, contains Handle Value Pair in Requested Range
  *         and of requested Attribute Type.
  *
@@ -1393,7 +1393,7 @@ API_RESULT BT_gatt_db_get_handle_uuid_pair
  *          succeed.
  */
 #define BT_gatt_db_get_handle_value_pair(inst, range, uuid, hvp)\
-        BT_gatt_db_fetch_handle_value_pair((inst), (range), (uuid), (hvp), (GATT_DB_READ | GATT_DB_PEER_INITIATED))
+        BT_gatt_db_fetch_handle_value_pair((inst), (range), (uuid), (hvp), (GATT_DB_READ_BY_TYPE | GATT_DB_PEER_INITIATED))
 
 /**
  *  \brief To get Handle Attribute Value Pair in the requested Range and of a
@@ -1699,14 +1699,83 @@ API_RESULT BT_gatt_db_peer_session_shutdown_handler
                /* IN */ ATT_HANDLE   * inst
            );
 
+/**
+ *
+ *  \brief Book Keeping of Peer Specific Data on Disconnect or Shutdown.
+ *
+ *  \par Description
+ *  This routine is used for Book Keeping of Peer Specific Data on Disconnect
+ *  or Shutdown. This returns the entire Peer Specific Value table that
+ *  corresponds to a particular peer device.
+ *
+ *  \param [in] bd_addr
+ *         BD Address of the peer for which Book Keeping is to be
+ *         performed.
+ *
+ *  \param [out] peer_val
+ *         Pointer reference place holder for the returned Peer Specific Value.
+ *
+ *  \param [out] peer_val_size
+ *         Length corresponding to the Peer Specific Value returned.
+ *
+ *  \return API_SUCCESS on success or an appropriate error code.
+ */
+API_RESULT BT_gatt_db_get_peer_specific_value
+           (
+               /* IN */  BT_DEVICE_ADDR * addr,
+               /* OUT */ UCHAR          * peer_val,
+               /* OUT */ UINT16         * peer_val_size
+           );
+
+/**
+ *
+ *  \brief Book Keeping of Peer Specific Data on System Boot-up.
+ *
+ *  \par Description
+ *  This routine is used for Book Keeping of Peer Specific Data on System
+ *  Boot-up. This is used to set the entire Peer Specific Value table that
+ *  corresponds to a particular peer device back to its location.
+ *
+ *  \param [in] bd_addr
+ *         BD Address of the peer for which Book Keeping is to be
+ *         performed.
+ *
+ *  \param [in] peer_val
+ *         Pointer reference corresponding to the Peer Specific Value to be
+ *         updated.
+ *
+ *  \param [in] peer_val_size
+ *         Length corresponding to the Peer Specific Value to be updated.
+ *
+ *  \return API_SUCCESS on success or an appropriate error code.
+ *
+ * \note This API is to be used by the application when it is trying to
+ *       restore the database entries with respect to a peer device after
+ *       power-cycle. This is to be used in the following conditions
+ *       1. If persistent storage information is not maintained for bonding and
+ *          peer specific GATT configuration for bonded devices by the Stack.
+ *       2. When the GATT DB and its constituents remain same across power-cycle.
+ *          The GATT DB constituents are deemed same irrespective of its current
+ *          status of Service/Characteristics (enabled, disabled etc.) as what
+ *          might be exposed to the Peer Devices during Discovery.
+ */
+API_RESULT BT_gatt_db_set_peer_specific_value
+           (
+               /* IN */  BT_DEVICE_ADDR * addr,
+               /* IN */ UCHAR           * peer_val,
+               /* IN */ UINT16          peer_val_size
+           );
+
 #ifdef GATT_DB_HASH_SUPPORT
 /**
  *  \brief To calculate the GATT Database Hash characteristic value.
  *
  *  \par Description:
+ *  This API calculates the GATT Database Hash and updates the corresponding
+ *  characteristic value.
  *  This API calculates the GATT Database Hash and provides the calculated
  *  Hash value asynchronously to the application through \ref GATT_DB_HASH_IND
- *  event trough the registred callback.
+ *  event trough the registered callback.
  *  The application could then update the Characteristic Value of
  *  GATT DB Hash Characteristic if present in its Database.
  *

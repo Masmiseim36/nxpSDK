@@ -39,7 +39,7 @@ static int wifi_nxp_wpa_supp_set_mac_addr(void *if_priv, const t_u8 *addr)
     return wifi_nxp_set_mac_addr(addr);
 }
 
-static const rtos_wpa_supp_dev_ops wpa_supp_ops = {
+const rtos_wpa_supp_dev_ops wpa_supp_ops = {
     .init                     = wifi_nxp_wpa_supp_dev_init,
     .deinit                   = wifi_nxp_wpa_supp_dev_deinit,
     .hapd_init                = wifi_nxp_hostapd_dev_init,
@@ -55,6 +55,7 @@ static const rtos_wpa_supp_dev_ops wpa_supp_ops = {
     .authenticate             = wifi_nxp_wpa_supp_authenticate,
     .associate                = wifi_nxp_wpa_supp_associate,
     .set_key                  = wifi_nxp_wpa_supp_set_key,
+    .set_rekey_info           = wifi_nxp_wpa_supp_set_rekey_info,
     .set_supp_port            = wifi_nxp_wpa_set_supp_port,
     .set_country              = wifi_nxp_wpa_supp_set_country,
     .get_country              = wifi_nxp_wpa_supp_get_country,
@@ -74,6 +75,7 @@ static const rtos_wpa_supp_dev_ops wpa_supp_ops = {
     .set_frag                 = wifi_nxp_hostapd_set_frag,
     .stop_ap                  = wifi_nxp_hostapd_stop_ap,
     .set_acl                  = wifi_nxp_hostapd_set_acl,
+    .dpp_listen               = wifi_nxp_wpa_dpp_listen,
 };
 
 static void wifi_nxp_event_proc_scan_start(void *if_ctx)
@@ -86,7 +88,7 @@ static void wifi_nxp_event_proc_scan_abort(void *if_ctx)
     wifi_nxp_wpa_supp_event_proc_scan_abort(if_ctx);
 }
 
-static void wifi_nxp_event_proc_scan_done(void *if_priv)
+static void wifi_nxp_event_proc_scan_done(void *if_priv, int external_scan)
 {
     struct wifi_nxp_ctx_rtos *wifi_if_ctx_rtos = NULL;
 
@@ -97,7 +99,7 @@ static void wifi_nxp_event_proc_scan_done(void *if_priv)
         wifi_e("%s: wifi_if_ctx_rtos is NULL", __func__);
         return;
     }
-    wifi_nxp_wpa_supp_event_proc_scan_done(if_priv, 0);
+    wifi_nxp_wpa_supp_event_proc_scan_done(if_priv, 0, external_scan);
 }
 
 static void wifi_nxp_event_reamin_on_channel(void *if_priv, int cancel_channel)
@@ -131,6 +133,7 @@ static const wifi_nxp_callbk_fns_t supp_callbk_fns = {
     .remain_on_channel_callbk_fn   = wifi_nxp_event_reamin_on_channel,
     .mgmt_rx_callbk_fn             = wifi_nxp_wpa_supp_event_proc_mgmt_rx,
     .eapol_rx_callbk_fn            = wifi_nxp_wpa_supp_event_proc_eapol_rx,
+    .ecsa_complete_callbk_fn       = wifi_nxp_wpa_supp_event_proc_ecsa_complete,
 };
 
 static int g_net_idx = -1;

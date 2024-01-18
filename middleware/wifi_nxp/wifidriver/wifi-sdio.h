@@ -40,6 +40,8 @@
 
 #define SDIO_INBUF_LEN (2048 * 2)
 
+#define SDIO_OUTBUF_LEN 2048U
+
 #if (SDIO_INBUF_LEN % MLAN_SDIO_BLOCK_SIZE)
 #error "Please keep buffer length aligned to SDIO block size"
 #endif /* Sanity check */
@@ -48,7 +50,7 @@
 #error "Please keep buffer length aligned to SDIO block size"
 #endif /* Sanity check */
 
-#define SDIO_PAYLOAD_SIZE 8
+#define SDIO_PAYLOAD_SIZE 16
 
 /*! @brief Data block count accessed in card */
 #define DATA_BLOCK_COUNT (4U)
@@ -77,9 +79,14 @@ extern bool cal_data_valid;
 extern bool mac_addr_valid;
 
 mlan_status sd_wifi_init(enum wlan_type type, const uint8_t *fw_start_addr, const size_t size);
+
+#if defined(CONFIG_WIFI_IND_DNLD)
+mlan_status sd_wifi_reinit(enum wlan_type type, const uint8_t *fw_start_addr, const size_t size, uint8_t fw_reload);
+#endif
+
 mlan_status sd_wifi_post_init(enum wlan_type type);
 
-mlan_status wlan_flush_wmm_pkt(t_u8 pkt_cnt);
+void sd_wifi_reset_ports();
 
 void sd_wifi_deinit(void);
 
@@ -103,20 +110,33 @@ int wifi_send_cmdbuffer(t_u32 tx_blocks, t_u32 len);
  *
  */
 HostCmd_DS_COMMAND *wifi_get_command_buffer(void);
+#ifdef CONFIG_FW_VDLL
+int wifi_send_vdllcmdbuffer(t_u32 tx_blocks, t_u32 len);
+HostCmd_DS_COMMAND *wifi_get_vdllcommand_buffer(void);
+int wlan_send_sdio_vdllcmd(t_u8 *buf, t_u32 tx_blocks, t_u32 buflen);
+#endif
 
 mlan_status wlan_process_int_status(mlan_adapter *pmadapter);
-mlan_status wlan_xmit_pkt(t_u8 *buffer, t_u32 txlen, t_u8 interface);
+mlan_status wlan_xmit_pkt(t_u8 *buffer, t_u32 txlen, t_u8 interface, t_u32 tx_control);
 int raw_process_pkt_hdrs(void *pbuf, t_u32 payloadlen, t_u8 interface);
 uint32_t wifi_get_device_value1(void);
 
 #ifdef CONFIG_WMM
 uint8_t *wifi_wmm_get_sdio_outbuf(uint32_t *outbuf_len, mlan_wmm_ac_e queue);
 mlan_status wlan_xmit_wmm_pkt(t_u8 interface, t_u32 txlen, t_u8 *tx_buf);
+mlan_status wlan_flush_wmm_pkt(t_u8 pkt_cnt);
+mlan_status wlan_xmit_bypass_pkt(t_u8 *buffer, t_u32 txlen, t_u8 interface);
+#ifdef AMSDU_IN_AMPDU
+uint8_t *wifi_get_amsdu_outbuf(uint32_t offset);
+mlan_status wlan_xmit_wmm_amsdu_pkt(mlan_wmm_ac_e ac, t_u8 interface, t_u32 txlen, t_u8 *tx_buf, t_u8 amsdu_cnt);
+#endif
 #endif
 
 void sdio_enable_interrupt(void);
 
-void process_pkt_hdrs(void *pbuf, t_u32 payloadlen, t_u8 interface, t_u8 tid);
+void sdio_disable_interrupt(void);
+
+void process_pkt_hdrs(void *pbuf, t_u32 payloadlen, t_u8 interface, t_u8 tid, t_u32 tx_control);
 
 #ifdef CONFIG_WIFI_FW_DEBUG
 extern void wifi_dump_firmware_info();

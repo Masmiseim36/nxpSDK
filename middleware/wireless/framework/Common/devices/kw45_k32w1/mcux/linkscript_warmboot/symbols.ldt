@@ -21,14 +21,14 @@
                           .               .
                           |               |
                     - - - +---------------+ - - - - - - - -
-                          |               | m_cstack_end
-                          |    CStack     |
-              __base_SRAM |               | m_cstack_start
-                    - - - +---------------+ - - - - - - - -
                           |               | m_interrupts_ram_end
                           | vector table  |
                           |               |
                           |               | m_interrupts_ram_start
+                    - - - +---------------+ - - - - - - - -
+                          |               | m_cstack_end
+                          |    CStack     |
+              __base_SRAM |               | m_cstack_start
                     - - - +---------------+ - - - - - - - -
                           |               | m_warmboot_stack_end
                           |   Warm stack  |
@@ -48,25 +48,28 @@
     m_ram1_end                  = 0x2001BFFF;
     /* This region is used by bootrom when exiting power down modes */
     m_ram1_reserved_start       = m_ram1_start;
-    m_ram1_reserved_end         = 0x20003FFF;
+    m_ram1_reserved_end         = DEFINED(m_ram1_reserved_end) ? m_ram1_reserved_end : 0x20003FFF;
     _RAM_START_                 = m_ram1_start;
     _RAM_END_                   = m_ram1_end;
 
+    /* warmboot stack region */
     m_warmboot_stack_start  = m_ram1_reserved_end + 1;
     m_warmboot_stack_size   = 0x400;
     m_warmboot_stack_end    = m_warmboot_stack_start + m_warmboot_stack_size - 1;
 
-    m_ram_vector_table_start        = m_warmboot_stack_end + 1;
+    /* stack region */
+    m_cstack_start  = DEFINED(m_cstack_start) ? m_cstack_start : m_warmboot_stack_end + 1;
+    __stack_size__  = DEFINED(__stack_size__) ? __stack_size__ : 0x0A00;
+    m_cstack_end    = m_cstack_start + __stack_size__ - 1;
+    _CSTACK_end__   = m_cstack_end;
+
+    /* Ram vector table */
+    m_ram_vector_table_start        = m_cstack_end + 1;
     m_ram_vector_table_size         = 0x400;
     m_ram_vector_table_end          = m_ram_vector_table_start + m_ram_vector_table_size - 1;
     __RAM_VECTOR_TABLE_SIZE_BYTES   = m_ram_vector_table_size;
     __VECTOR_RAM                    = m_ram_vector_table_start;
     __VECTOR_TABLE                  = __base_PROGRAM_FLASH;
-
-    m_cstack_start  = m_ram_vector_table_end + 1;
-    __stack_size__  = DEFINED(__stack_size__) ? __stack_size__ : 0x0A00;
-    m_cstack_end    = m_cstack_start + __stack_size__ - 1;
-    _CSTACK_end__   = m_cstack_end;
 
     __FIRMWARE_END_ADDRESS = DEFINED(gFirmwareTopAddr_c) ? gFirmwareTopAddr_c : __top_SRAM;
     __HEAP_end__ = m_ram1_end;
@@ -79,7 +82,8 @@
     NV_STORAGE_START_ADDRESS = DEFINED(__base_NVM_region) ? __base_NVM_region : 0;
     NV_STORAGE_END_ADDRESS = DEFINED(__top_NVM_region) ? __top_NVM_region : 0;
     NV_STORAGE_SECTOR_SIZE = 0x2000;
-    NV_STORAGE_MAX_SECTORS = (NV_STORAGE_END_ADDRESS - NV_STORAGE_START_ADDRESS) / NV_STORAGE_SECTOR_SIZE;
+    NV_STORAGE_SIZE        = (NV_STORAGE_END_ADDRESS - NV_STORAGE_START_ADDRESS);
+    NV_STORAGE_MAX_SECTORS = (NV_STORAGE_SIZE / NV_STORAGE_SECTOR_SIZE);
     PROD_DATA_BASE_ADDR = __base_PROD_DATA;
 
     m_ram_img_end = DEFINED(gUseNVMLink_d) ? NV_STORAGE_START_ADDRESS - 1 : PROD_DATA_BASE_ADDR - 1;
@@ -87,3 +91,9 @@
     m_ram_img_start = m_ram_img_end - m_max_ram_img_size + 1;
     firmware_ram_upper_limit = m_ram1_end;
     firmware_ram_lower_limit = m_cstack_start;
+
+/******************************************SHARED MEMORY********************************************/
+
+    rpmsg_sh_mem_size        = 0x1800;
+    rpmsg_sh_mem_end         = 0x489C9FFF;
+    rpmsg_sh_mem_start       = rpmsg_sh_mem_end - rpmsg_sh_mem_size + 1;

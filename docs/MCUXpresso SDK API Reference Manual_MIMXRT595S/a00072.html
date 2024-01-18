@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: USART DMA Driver</title>
+<title>MCUXpresso SDK API Reference Manual: USART FreeRTOS Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -103,219 +103,154 @@ $(document).ready(function(){initNavTree('a00072.html','');});
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">USART DMA Driver<div class="ingroups"><a class="el" href="a00250.html">USART: Universal Synchronous/Asynchronous Receiver/Transmitter Driver</a></div></div>  </div>
+<div class="title">USART FreeRTOS Driver<div class="ingroups"><a class="el" href="a00252.html">USART: Universal Synchronous/Asynchronous Receiver/Transmitter Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
 Files</h2></td></tr>
-<tr class="memitem:a00151"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00151.html">fsl_usart_dma.h</a></td></tr>
+<tr class="memitem:a00154"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00154.html">fsl_usart_freertos.h</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00310"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a00310">usart_dma_handle_t</a></td></tr>
-<tr class="memdesc:a00310"><td class="mdescLeft">&#160;</td><td class="mdescRight">UART DMA handle.  <a href="a00072.html#a00310">More...</a><br/></td></tr>
-<tr class="separator:a00310"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00487"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a00487">rtos_usart_config</a></td></tr>
+<tr class="memdesc:a00487"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEX USART configuration structure.  <a href="a00072.html#a00487">More...</a><br/></td></tr>
+<tr class="separator:a00487"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00456"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a00456">_usart_rtos_handle</a></td></tr>
+<tr class="memdesc:a00456"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEX USART FreeRTOS handle.  <a href="a00072.html#a00456">More...</a><br/></td></tr>
+<tr class="separator:a00456"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga60203b058d1ee4f2467d0c10e152ecb1"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ga60203b058d1ee4f2467d0c10e152ecb1">usart_dma_transfer_callback_t</a> )(USART_Type *base, usart_dma_handle_t *handle, <a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
-<tr class="memdesc:ga60203b058d1ee4f2467d0c10e152ecb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">UART transfer callback function.  <a href="#ga60203b058d1ee4f2467d0c10e152ecb1">More...</a><br/></td></tr>
-<tr class="separator:ga60203b058d1ee4f2467d0c10e152ecb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafe53adee4959375e828ab8f7d0c4ace3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafe53adee4959375e828ab8f7d0c4ace3"></a>
+typedef struct <a class="el" href="a00072.html#a00456">_usart_rtos_handle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#gafe53adee4959375e828ab8f7d0c4ace3">usart_rtos_handle_t</a></td></tr>
+<tr class="memdesc:gafe53adee4959375e828ab8f7d0c4ace3"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEX USART FreeRTOS handle. <br/></td></tr>
+<tr class="separator:gafe53adee4959375e828ab8f7d0c4ace3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga4d50b0d6519186dc79dbf56a0ef36c30"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ga4d50b0d6519186dc79dbf56a0ef36c30">FSL_USART_DMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00240.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 6, 0))</td></tr>
-<tr class="memdesc:ga4d50b0d6519186dc79dbf56a0ef36c30"><td class="mdescLeft">&#160;</td><td class="mdescRight">USART dma driver version.  <a href="#ga4d50b0d6519186dc79dbf56a0ef36c30">More...</a><br/></td></tr>
-<tr class="separator:ga4d50b0d6519186dc79dbf56a0ef36c30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga76b62468480f39084a7b0c5785e6a9f2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ga76b62468480f39084a7b0c5785e6a9f2">FSL_USART_FREERTOS_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00242.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 6, 0))</td></tr>
+<tr class="memdesc:ga76b62468480f39084a7b0c5785e6a9f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">USART FreeRTOS driver version.  <a href="#ga76b62468480f39084a7b0c5785e6a9f2">More...</a><br/></td></tr>
+<tr class="separator:ga76b62468480f39084a7b0c5785e6a9f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-DMA transactional</h2></td></tr>
-<tr class="memitem:ga3108003aa0b8bd3ec34b8235041d1466"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ga3108003aa0b8bd3ec34b8235041d1466">USART_TransferCreateHandleDMA</a> (USART_Type *base, usart_dma_handle_t *handle, <a class="el" href="a00072.html#ga60203b058d1ee4f2467d0c10e152ecb1">usart_dma_transfer_callback_t</a> callback, void *userData, <a class="el" href="a00015.html#a00333">dma_handle_t</a> *txDmaHandle, <a class="el" href="a00015.html#a00333">dma_handle_t</a> *rxDmaHandle)</td></tr>
-<tr class="memdesc:ga3108003aa0b8bd3ec34b8235041d1466"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the USART handle which is used in transactional functions.  <a href="#ga3108003aa0b8bd3ec34b8235041d1466">More...</a><br/></td></tr>
-<tr class="separator:ga3108003aa0b8bd3ec34b8235041d1466"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga767c45246b3981930e391837bf627e68"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ga767c45246b3981930e391837bf627e68">USART_TransferSendDMA</a> (USART_Type *base, usart_dma_handle_t *handle, <a class="el" href="a00071.html#a00467">usart_transfer_t</a> *xfer)</td></tr>
-<tr class="memdesc:ga767c45246b3981930e391837bf627e68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends data using DMA.  <a href="#ga767c45246b3981930e391837bf627e68">More...</a><br/></td></tr>
-<tr class="separator:ga767c45246b3981930e391837bf627e68"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4b68b4d54821ef43a671dabf432a48ae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ga4b68b4d54821ef43a671dabf432a48ae">USART_TransferReceiveDMA</a> (USART_Type *base, usart_dma_handle_t *handle, <a class="el" href="a00071.html#a00467">usart_transfer_t</a> *xfer)</td></tr>
-<tr class="memdesc:ga4b68b4d54821ef43a671dabf432a48ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives data using DMA.  <a href="#ga4b68b4d54821ef43a671dabf432a48ae">More...</a><br/></td></tr>
-<tr class="separator:ga4b68b4d54821ef43a671dabf432a48ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9e75a5b85d21c16fe3fb1c2acbecfe83"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ga9e75a5b85d21c16fe3fb1c2acbecfe83">USART_TransferAbortSendDMA</a> (USART_Type *base, usart_dma_handle_t *handle)</td></tr>
-<tr class="memdesc:ga9e75a5b85d21c16fe3fb1c2acbecfe83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the sent data using DMA.  <a href="#ga9e75a5b85d21c16fe3fb1c2acbecfe83">More...</a><br/></td></tr>
-<tr class="separator:ga9e75a5b85d21c16fe3fb1c2acbecfe83"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad31eba091fa591d44443f218c7da1492"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#gad31eba091fa591d44443f218c7da1492">USART_TransferAbortReceiveDMA</a> (USART_Type *base, usart_dma_handle_t *handle)</td></tr>
-<tr class="memdesc:gad31eba091fa591d44443f218c7da1492"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the received data using DMA.  <a href="#gad31eba091fa591d44443f218c7da1492">More...</a><br/></td></tr>
-<tr class="separator:gad31eba091fa591d44443f218c7da1492"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga350224781deacfd5e1f95da262381858"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ga350224781deacfd5e1f95da262381858">USART_TransferGetReceiveCountDMA</a> (USART_Type *base, usart_dma_handle_t *handle, uint32_t *count)</td></tr>
-<tr class="memdesc:ga350224781deacfd5e1f95da262381858"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of bytes that have been received.  <a href="#ga350224781deacfd5e1f95da262381858">More...</a><br/></td></tr>
-<tr class="separator:ga350224781deacfd5e1f95da262381858"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga836de4ddc9a103584f47cd31c78f9277"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ga836de4ddc9a103584f47cd31c78f9277">USART_TransferGetSendCountDMA</a> (USART_Type *base, usart_dma_handle_t *handle, uint32_t *count)</td></tr>
-<tr class="memdesc:ga836de4ddc9a103584f47cd31c78f9277"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of bytes that have been sent.  <a href="#ga836de4ddc9a103584f47cd31c78f9277">More...</a><br/></td></tr>
-<tr class="separator:ga836de4ddc9a103584f47cd31c78f9277"><td class="memSeparator" colspan="2">&#160;</td></tr>
+USART RTOS Operation</h2></td></tr>
+<tr class="memitem:ga304a1b0f3f224c3fa97043015a632aa6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ga304a1b0f3f224c3fa97043015a632aa6">USART_RTOS_Init</a> (<a class="el" href="a00072.html#gafe53adee4959375e828ab8f7d0c4ace3">usart_rtos_handle_t</a> *handle, <a class="el" href="a00070.html#a00455">usart_handle_t</a> *t_handle, const struct <a class="el" href="a00072.html#a00487">rtos_usart_config</a> *cfg)</td></tr>
+<tr class="memdesc:ga304a1b0f3f224c3fa97043015a632aa6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a USART instance for operation in RTOS.  <a href="#ga304a1b0f3f224c3fa97043015a632aa6">More...</a><br/></td></tr>
+<tr class="separator:ga304a1b0f3f224c3fa97043015a632aa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga053c811eb6768cd6949e8e7126f6527a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ga053c811eb6768cd6949e8e7126f6527a">USART_RTOS_Deinit</a> (<a class="el" href="a00072.html#gafe53adee4959375e828ab8f7d0c4ace3">usart_rtos_handle_t</a> *handle)</td></tr>
+<tr class="memdesc:ga053c811eb6768cd6949e8e7126f6527a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes a USART instance for operation.  <a href="#ga053c811eb6768cd6949e8e7126f6527a">More...</a><br/></td></tr>
+<tr class="separator:ga053c811eb6768cd6949e8e7126f6527a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+USART transactional Operation</h2></td></tr>
+<tr class="memitem:gac5ba10a31fbee50135f110fc126db666"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#gac5ba10a31fbee50135f110fc126db666">USART_RTOS_Send</a> (<a class="el" href="a00072.html#gafe53adee4959375e828ab8f7d0c4ace3">usart_rtos_handle_t</a> *handle, uint8_t *buffer, uint32_t length)</td></tr>
+<tr class="memdesc:gac5ba10a31fbee50135f110fc126db666"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends data in the background.  <a href="#gac5ba10a31fbee50135f110fc126db666">More...</a><br/></td></tr>
+<tr class="separator:gac5ba10a31fbee50135f110fc126db666"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa74ca6b91bf6592492b2777efc52fa7e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#gaa74ca6b91bf6592492b2777efc52fa7e">USART_RTOS_Receive</a> (<a class="el" href="a00072.html#gafe53adee4959375e828ab8f7d0c4ace3">usart_rtos_handle_t</a> *handle, uint8_t *buffer, uint32_t length, size_t *received)</td></tr>
+<tr class="memdesc:gaa74ca6b91bf6592492b2777efc52fa7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives data.  <a href="#gaa74ca6b91bf6592492b2777efc52fa7e">More...</a><br/></td></tr>
+<tr class="separator:gaa74ca6b91bf6592492b2777efc52fa7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00310" id="a00310"></a>
+<a name="a00487" id="a00487"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct _usart_dma_handle</td>
+          <td class="memname">struct rtos_usart_config</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:ae9aae3e4298a725621990e5dcf91dc17"><td class="memItemLeft" align="right" valign="top">USART_Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ae9aae3e4298a725621990e5dcf91dc17">base</a></td></tr>
-<tr class="memdesc:ae9aae3e4298a725621990e5dcf91dc17"><td class="mdescLeft">&#160;</td><td class="mdescRight">UART peripheral base address.  <a href="#ae9aae3e4298a725621990e5dcf91dc17">More...</a><br/></td></tr>
-<tr class="separator:ae9aae3e4298a725621990e5dcf91dc17"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abcd58fdcb247711f816f281da46e95e2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00072.html#ga60203b058d1ee4f2467d0c10e152ecb1">usart_dma_transfer_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#abcd58fdcb247711f816f281da46e95e2">callback</a></td></tr>
-<tr class="memdesc:abcd58fdcb247711f816f281da46e95e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function.  <a href="#abcd58fdcb247711f816f281da46e95e2">More...</a><br/></td></tr>
-<tr class="separator:abcd58fdcb247711f816f281da46e95e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a488190d1dcc91ef5878192e2fb3d4c4c"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a488190d1dcc91ef5878192e2fb3d4c4c">userData</a></td></tr>
-<tr class="memdesc:a488190d1dcc91ef5878192e2fb3d4c4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">UART callback function parameter.  <a href="#a488190d1dcc91ef5878192e2fb3d4c4c">More...</a><br/></td></tr>
-<tr class="separator:a488190d1dcc91ef5878192e2fb3d4c4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1e1b9e64b9515c58bee18b74efccc9db"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a1e1b9e64b9515c58bee18b74efccc9db">rxDataSizeAll</a></td></tr>
-<tr class="memdesc:a1e1b9e64b9515c58bee18b74efccc9db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the data to receive.  <a href="#a1e1b9e64b9515c58bee18b74efccc9db">More...</a><br/></td></tr>
-<tr class="separator:a1e1b9e64b9515c58bee18b74efccc9db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa370ed2abb5078e9d0f076e9cb626f3f"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#aa370ed2abb5078e9d0f076e9cb626f3f">txDataSizeAll</a></td></tr>
-<tr class="memdesc:aa370ed2abb5078e9d0f076e9cb626f3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of the data to send out.  <a href="#aa370ed2abb5078e9d0f076e9cb626f3f">More...</a><br/></td></tr>
-<tr class="separator:aa370ed2abb5078e9d0f076e9cb626f3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c666430a9a98cead94c37ae8b29f0c6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00015.html#a00333">dma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a5c666430a9a98cead94c37ae8b29f0c6">txDmaHandle</a></td></tr>
-<tr class="memdesc:a5c666430a9a98cead94c37ae8b29f0c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The DMA TX channel used.  <a href="#a5c666430a9a98cead94c37ae8b29f0c6">More...</a><br/></td></tr>
-<tr class="separator:a5c666430a9a98cead94c37ae8b29f0c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a58634a39c6435f4e48e0f5ac0048dab4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00015.html#a00333">dma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a58634a39c6435f4e48e0f5ac0048dab4">rxDmaHandle</a></td></tr>
-<tr class="memdesc:a58634a39c6435f4e48e0f5ac0048dab4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The DMA RX channel used.  <a href="#a58634a39c6435f4e48e0f5ac0048dab4">More...</a><br/></td></tr>
-<tr class="separator:a58634a39c6435f4e48e0f5ac0048dab4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa3e21045d269a136733d156e00a65c2a"><td class="memItemLeft" align="right" valign="top">volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#aa3e21045d269a136733d156e00a65c2a">txState</a></td></tr>
-<tr class="memdesc:aa3e21045d269a136733d156e00a65c2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX transfer state.  <a href="#aa3e21045d269a136733d156e00a65c2a">More...</a><br/></td></tr>
-<tr class="separator:aa3e21045d269a136733d156e00a65c2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4685f9bce4df0ca019c01a543f2ef832"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4685f9bce4df0ca019c01a543f2ef832"></a>
-volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a4685f9bce4df0ca019c01a543f2ef832">rxState</a></td></tr>
-<tr class="memdesc:a4685f9bce4df0ca019c01a543f2ef832"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX transfer state. <br/></td></tr>
-<tr class="separator:a4685f9bce4df0ca019c01a543f2ef832"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2c11e2f563e88fd7235fd1c04c43695"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac2c11e2f563e88fd7235fd1c04c43695"></a>
+USART_Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ac2c11e2f563e88fd7235fd1c04c43695">base</a></td></tr>
+<tr class="memdesc:ac2c11e2f563e88fd7235fd1c04c43695"><td class="mdescLeft">&#160;</td><td class="mdescRight">USART base address. <br/></td></tr>
+<tr class="separator:ac2c11e2f563e88fd7235fd1c04c43695"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e5bade020ab0937c336700835e0b534"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7e5bade020ab0937c336700835e0b534"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a7e5bade020ab0937c336700835e0b534">srcclk</a></td></tr>
+<tr class="memdesc:a7e5bade020ab0937c336700835e0b534"><td class="mdescLeft">&#160;</td><td class="mdescRight">USART source clock in Hz. <br/></td></tr>
+<tr class="separator:a7e5bade020ab0937c336700835e0b534"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add54d5367186b402624be17d78b85f5c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="add54d5367186b402624be17d78b85f5c"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#add54d5367186b402624be17d78b85f5c">baudrate</a></td></tr>
+<tr class="memdesc:add54d5367186b402624be17d78b85f5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Desired communication speed. <br/></td></tr>
+<tr class="separator:add54d5367186b402624be17d78b85f5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07bf211da1c7475ae952bc3c92d668fe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a07bf211da1c7475ae952bc3c92d668fe"></a>
+<a class="el" href="a00070.html#gafd66e4e7133327cb2a1df4e24d8f4cb6">usart_parity_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a07bf211da1c7475ae952bc3c92d668fe">parity</a></td></tr>
+<tr class="memdesc:a07bf211da1c7475ae952bc3c92d668fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parity setting. <br/></td></tr>
+<tr class="separator:a07bf211da1c7475ae952bc3c92d668fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd3500c39b73d6acbbbf5f4192376dc9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acd3500c39b73d6acbbbf5f4192376dc9"></a>
+<a class="el" href="a00070.html#ga4b8e5ed1a787d428e84a5a550fedc417">usart_stop_bit_count_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#acd3500c39b73d6acbbbf5f4192376dc9">stopbits</a></td></tr>
+<tr class="memdesc:acd3500c39b73d6acbbbf5f4192376dc9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of stop bits to use. <br/></td></tr>
+<tr class="separator:acd3500c39b73d6acbbbf5f4192376dc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ee13e3eb1fe35fc47e6732632305038"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7ee13e3eb1fe35fc47e6732632305038"></a>
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a7ee13e3eb1fe35fc47e6732632305038">buffer</a></td></tr>
+<tr class="memdesc:a7ee13e3eb1fe35fc47e6732632305038"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffer for background reception. <br/></td></tr>
+<tr class="separator:a7ee13e3eb1fe35fc47e6732632305038"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a13bc07966a8b84553e6010d4ea0e34"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0a13bc07966a8b84553e6010d4ea0e34"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a0a13bc07966a8b84553e6010d4ea0e34">buffer_size</a></td></tr>
+<tr class="memdesc:a0a13bc07966a8b84553e6010d4ea0e34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of buffer for background reception. <br/></td></tr>
+<tr class="separator:a0a13bc07966a8b84553e6010d4ea0e34"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="ae9aae3e4298a725621990e5dcf91dc17"></a>
+
+</div>
+</div>
+<a name="a00456" id="a00456"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">USART_Type* usart_dma_handle_t::base</td>
+          <td class="memname">struct _usart_rtos_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="abcd58fdcb247711f816f281da46e95e2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00072.html#ga60203b058d1ee4f2467d0c10e152ecb1">usart_dma_transfer_callback_t</a> usart_dma_handle_t::callback</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a488190d1dcc91ef5878192e2fb3d4c4c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void* usart_dma_handle_t::userData</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a1e1b9e64b9515c58bee18b74efccc9db"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_t usart_dma_handle_t::rxDataSizeAll</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="aa370ed2abb5078e9d0f076e9cb626f3f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_t usart_dma_handle_t::txDataSizeAll</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a5c666430a9a98cead94c37ae8b29f0c6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00015.html#a00333">dma_handle_t</a>* usart_dma_handle_t::txDmaHandle</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a58634a39c6435f4e48e0f5ac0048dab4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00015.html#a00333">dma_handle_t</a>* usart_dma_handle_t::rxDmaHandle</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="aa3e21045d269a136733d156e00a65c2a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">volatile uint8_t usart_dma_handle_t::txState</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:adc027d47fa85140e7b3db5dbb40966dc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adc027d47fa85140e7b3db5dbb40966dc"></a>
+USART_Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#adc027d47fa85140e7b3db5dbb40966dc">base</a></td></tr>
+<tr class="memdesc:adc027d47fa85140e7b3db5dbb40966dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">USART base address. <br/></td></tr>
+<tr class="separator:adc027d47fa85140e7b3db5dbb40966dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91e74bc39d7b39179e7527bce1df602f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a91e74bc39d7b39179e7527bce1df602f"></a>
+<a class="el" href="a00070.html#ga5f095da5c95e5137fd47b284217dbe74">usart_transfer_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a91e74bc39d7b39179e7527bce1df602f">txTransfer</a></td></tr>
+<tr class="memdesc:a91e74bc39d7b39179e7527bce1df602f"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX transfer structure. <br/></td></tr>
+<tr class="separator:a91e74bc39d7b39179e7527bce1df602f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca6f85a82e4bb8b599c7091fc7144c2b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aca6f85a82e4bb8b599c7091fc7144c2b"></a>
+<a class="el" href="a00070.html#ga5f095da5c95e5137fd47b284217dbe74">usart_transfer_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#aca6f85a82e4bb8b599c7091fc7144c2b">rxTransfer</a></td></tr>
+<tr class="memdesc:aca6f85a82e4bb8b599c7091fc7144c2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX transfer structure. <br/></td></tr>
+<tr class="separator:aca6f85a82e4bb8b599c7091fc7144c2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7ac308760bf10b54fa30bd0385843a2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa7ac308760bf10b54fa30bd0385843a2"></a>
+SemaphoreHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#aa7ac308760bf10b54fa30bd0385843a2">rxSemaphore</a></td></tr>
+<tr class="memdesc:aa7ac308760bf10b54fa30bd0385843a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX semaphore for resource sharing. <br/></td></tr>
+<tr class="separator:aa7ac308760bf10b54fa30bd0385843a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f90db802f6c60b1ace2719106332f61"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6f90db802f6c60b1ace2719106332f61"></a>
+SemaphoreHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a6f90db802f6c60b1ace2719106332f61">txSemaphore</a></td></tr>
+<tr class="memdesc:a6f90db802f6c60b1ace2719106332f61"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX semaphore for resource sharing. <br/></td></tr>
+<tr class="separator:a6f90db802f6c60b1ace2719106332f61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe3985cdaa339dcaf71d076962418f50"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abe3985cdaa339dcaf71d076962418f50"></a>
+EventGroupHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#abe3985cdaa339dcaf71d076962418f50">rxEvent</a></td></tr>
+<tr class="memdesc:abe3985cdaa339dcaf71d076962418f50"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX completion event. <br/></td></tr>
+<tr class="separator:abe3985cdaa339dcaf71d076962418f50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add5efe27cd4ea2dca0d9c41cbb80789e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="add5efe27cd4ea2dca0d9c41cbb80789e"></a>
+EventGroupHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#add5efe27cd4ea2dca0d9c41cbb80789e">txEvent</a></td></tr>
+<tr class="memdesc:add5efe27cd4ea2dca0d9c41cbb80789e"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX completion event. <br/></td></tr>
+<tr class="separator:add5efe27cd4ea2dca0d9c41cbb80789e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adab1b63867f17750ac02bc4f1bda8ea7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adab1b63867f17750ac02bc4f1bda8ea7"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#adab1b63867f17750ac02bc4f1bda8ea7">t_state</a></td></tr>
+<tr class="memdesc:adab1b63867f17750ac02bc4f1bda8ea7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transactional state of the underlying driver. <br/></td></tr>
+<tr class="separator:adab1b63867f17750ac02bc4f1bda8ea7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 
 </div>
 </div>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga4d50b0d6519186dc79dbf56a0ef36c30"></a>
+<a class="anchor" id="ga76b62468480f39084a7b0c5785e6a9f2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_USART_DMA_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00240.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 6, 0))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="ga60203b058d1ee4f2467d0c10e152ecb1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef void(* usart_dma_transfer_callback_t)(USART_Type *base, usart_dma_handle_t *handle, <a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
+          <td class="memname">#define FSL_USART_FREERTOS_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00242.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 6, 0))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -323,45 +258,27 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga3108003aa0b8bd3ec34b8235041d1466"></a>
+<a class="anchor" id="ga304a1b0f3f224c3fa97043015a632aa6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> USART_TransferCreateHandleDMA </td>
+          <td class="memname">int USART_RTOS_Init </td>
           <td>(</td>
-          <td class="paramtype">USART_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">usart_dma_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00072.html#gafe53adee4959375e828ab8f7d0c4ace3">usart_rtos_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00072.html#ga60203b058d1ee4f2467d0c10e152ecb1">usart_dma_transfer_callback_t</a>&#160;</td>
-          <td class="paramname"><em>callback</em>, </td>
+          <td class="paramtype"><a class="el" href="a00070.html#a00455">usart_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>t_handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>userData</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00015.html#a00333">dma_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>txDmaHandle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00015.html#a00333">dma_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>rxDmaHandle</em>&#160;</td>
+          <td class="paramtype">const struct <a class="el" href="a00072.html#a00487">rtos_usart_config</a> *&#160;</td>
+          <td class="paramname"><em>cfg</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -372,39 +289,60 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>USART peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>Pointer to usart_dma_handle_t structure. </td></tr>
-    <tr><td class="paramname">callback</td><td>Callback function. </td></tr>
-    <tr><td class="paramname">userData</td><td>User data. </td></tr>
-    <tr><td class="paramname">txDmaHandle</td><td>User-requested DMA handle for TX DMA transfer. </td></tr>
-    <tr><td class="paramname">rxDmaHandle</td><td>User-requested DMA handle for RX DMA transfer. </td></tr>
+    <tr><td class="paramname">handle</td><td>The RTOS USART handle, the pointer to allocated space for RTOS context. </td></tr>
+    <tr><td class="paramname">t_handle</td><td>The pointer to allocated space where to store transactional layer internal state. </td></tr>
+    <tr><td class="paramname">cfg</td><td>The pointer to the parameters required to configure the USART after initialization. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 succeed, others fail. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga053c811eb6768cd6949e8e7126f6527a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int USART_RTOS_Deinit </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00072.html#gafe53adee4959375e828ab8f7d0c4ace3">usart_rtos_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function deinitializes the USART module, sets all register values to reset value, and releases the resources.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>The RTOS USART handle. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga767c45246b3981930e391837bf627e68"></a>
+<a class="anchor" id="gac5ba10a31fbee50135f110fc126db666"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> USART_TransferSendDMA </td>
+          <td class="memname">int USART_RTOS_Send </td>
           <td>(</td>
-          <td class="paramtype">USART_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">usart_dma_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00072.html#gafe53adee4959375e828ab8f7d0c4ace3">usart_rtos_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00071.html#a00467">usart_transfer_t</a> *&#160;</td>
-          <td class="paramname"><em>xfer</em>&#160;</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>length</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -413,47 +351,45 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function sends data using DMA. This is a non-blocking function, which returns right away. When all data is sent, the send callback function is called.</p>
+<p>This function sends data. It is a synchronous API. If the hardware buffer is full, the task is in the blocked state.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>USART peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>USART handle pointer. </td></tr>
-    <tr><td class="paramname">xfer</td><td>USART DMA transfer structure. See <a class="el" href="a00071.html#a00467" title="USART transfer structure. ">usart_transfer_t</a>. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td>if succeed, others failed. </td></tr>
-    <tr><td class="paramname">kStatus_USART_TxBusy</td><td>Previous transfer on going. </td></tr>
-    <tr><td class="paramname">kStatus_InvalidArgument</td><td>Invalid argument. </td></tr>
+    <tr><td class="paramname">handle</td><td>The RTOS USART handle. </td></tr>
+    <tr><td class="paramname">buffer</td><td>The pointer to buffer to send. </td></tr>
+    <tr><td class="paramname">length</td><td>The number of bytes to send. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga4b68b4d54821ef43a671dabf432a48ae"></a>
+<a class="anchor" id="gaa74ca6b91bf6592492b2777efc52fa7e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> USART_TransferReceiveDMA </td>
+          <td class="memname">int USART_RTOS_Receive </td>
           <td>(</td>
-          <td class="paramtype">USART_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">usart_dma_handle_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00072.html#gafe53adee4959375e828ab8f7d0c4ace3">usart_rtos_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00071.html#a00467">usart_transfer_t</a> *&#160;</td>
-          <td class="paramname"><em>xfer</em>&#160;</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>received</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -462,186 +398,13 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function receives data using DMA. This is a non-blocking function, which returns right away. When all data is received, the receive callback function is called.</p>
+<p>This function receives data from USART. It is a synchronous API. If data is immediately available, it is returned immediately and the number of bytes received.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>USART peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>Pointer to usart_dma_handle_t structure. </td></tr>
-    <tr><td class="paramname">xfer</td><td>USART DMA transfer structure. See <a class="el" href="a00071.html#a00467" title="USART transfer structure. ">usart_transfer_t</a>. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td>if succeed, others failed. </td></tr>
-    <tr><td class="paramname">kStatus_USART_RxBusy</td><td>Previous transfer on going. </td></tr>
-    <tr><td class="paramname">kStatus_InvalidArgument</td><td>Invalid argument. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga9e75a5b85d21c16fe3fb1c2acbecfe83"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void USART_TransferAbortSendDMA </td>
-          <td>(</td>
-          <td class="paramtype">USART_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">usart_dma_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function aborts send data using DMA.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>USART peripheral base address </td></tr>
-    <tr><td class="paramname">handle</td><td>Pointer to usart_dma_handle_t structure </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gad31eba091fa591d44443f218c7da1492"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void USART_TransferAbortReceiveDMA </td>
-          <td>(</td>
-          <td class="paramtype">USART_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">usart_dma_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function aborts the received data using DMA.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>USART peripheral base address </td></tr>
-    <tr><td class="paramname">handle</td><td>Pointer to usart_dma_handle_t structure </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga350224781deacfd5e1f95da262381858"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> USART_TransferGetReceiveCountDMA </td>
-          <td>(</td>
-          <td class="paramtype">USART_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">usart_dma_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>count</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function gets the number of bytes that have been received.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>USART peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>USART handle pointer. </td></tr>
-    <tr><td class="paramname">count</td><td>Receive bytes count. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_NoTransferInProgress</td><td>No receive in progress. </td></tr>
-    <tr><td class="paramname">kStatus_InvalidArgument</td><td>Parameter is invalid. </td></tr>
-    <tr><td class="paramname">kStatus_Success</td><td>Get successfully through the parameter <code>count</code>; </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga836de4ddc9a103584f47cd31c78f9277"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> USART_TransferGetSendCountDMA </td>
-          <td>(</td>
-          <td class="paramtype">USART_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">usart_dma_handle_t *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>count</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function gets the number of bytes that have been sent.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>USART peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>USART handle pointer. </td></tr>
-    <tr><td class="paramname">count</td><td>Sent bytes count. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_NoTransferInProgress</td><td>No receive in progress. </td></tr>
-    <tr><td class="paramname">kStatus_InvalidArgument</td><td>Parameter is invalid. </td></tr>
-    <tr><td class="paramname">kStatus_Success</td><td>Get successfully through the parameter <code>count</code>; </td></tr>
+    <tr><td class="paramname">handle</td><td>The RTOS USART handle. </td></tr>
+    <tr><td class="paramname">buffer</td><td>The pointer to buffer where to write received data. </td></tr>
+    <tr><td class="paramname">length</td><td>The number of bytes to receive. </td></tr>
+    <tr><td class="paramname">received</td><td>The pointer to a variable of size_t where the number of received data is filled. </td></tr>
   </table>
   </dd>
 </dl>

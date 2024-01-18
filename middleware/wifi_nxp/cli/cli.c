@@ -12,6 +12,7 @@
  *
  */
 
+#include <stdio.h>
 #include <string.h>
 #include <ctype.h>
 
@@ -25,7 +26,7 @@
 #define PROMPT        "\r\n# "
 #define HALT_MSG      "CLI_HALT"
 #define NUM_BUFFERS   1
-#define MAX_COMMANDS  100U
+#define MAX_COMMANDS  200U
 #define IN_QUEUE_SIZE 4
 
 #define RX_WAIT   OS_WAIT_FOREVER
@@ -54,6 +55,195 @@ static struct
 
 static os_thread_t cli_main_thread;
 static os_thread_stack_define(cli_stack, CONFIG_CLI_STACK_SIZE);
+#ifdef CONFIG_APP_FRM_CLI_HISTORY
+#define MAX_CMDS_IN_HISTORY 20
+static char *cmd_hist_arr[MAX_CMDS_IN_HISTORY];
+static int total_hist_cmds, last_cmd_num;
+static int console_loop_num;
+static bool hist_inited;
+
+static char *cli_strdup(const char *s, int len)
+{
+    char *result = os_mem_alloc(len + 1);
+    int i;
+
+    if (result)
+    {
+        for (i = 0; i < len; i++)
+        {
+
+            result[i] = s[i] == '\0' ? ' ' : s[i];
+        }
+
+        result[len] = '\0';
+    }
+    return result;
+}
+
+static int get_cmd_from_hist(int cmd_no, char *buf, int max_len)
+{
+    if (!hist_inited)
+        return -WM_FAIL;
+
+    if (cmd_no >= MAX_CMDS_IN_HISTORY || cmd_no < 0)
+        return -WM_FAIL;
+
+    if (cmd_hist_arr[cmd_no])
+    {
+        if (strlen(cmd_hist_arr[cmd_no]) >= max_len)
+            return -WM_FAIL;
+
+        if (cmd_hist_arr[cmd_no][0] == (char)(0x20))
+        {
+            (void)PRINTF("");
+            return -WM_FAIL;
+        }
+        else
+        {
+            strncpy(buf, cmd_hist_arr[cmd_no], max_len);
+        }
+        return WM_SUCCESS;
+    }
+
+    return WM_SUCCESS;
+}
+
+static int store_cmd_to_hist(int cmd_no, const char *buf, int len)
+{
+    if (cmd_no >= MAX_CMDS_IN_HISTORY || cmd_no < 0)
+        return -WM_FAIL;
+
+    if (cmd_hist_arr[cmd_no])
+    {
+        if (strcmp(cmd_hist_arr[cmd_no], buf) == 0U)
+            return WM_SUCCESS; /* avoid rewrite. */
+        else if (cmd_hist_arr[cmd_no][0] == (char)(0x20))
+        {
+            return WM_SUCCESS;
+        }
+        else
+        {
+            os_mem_free(cmd_hist_arr[cmd_no]);
+            cmd_hist_arr[cmd_no] = NULL;
+        }
+    }
+
+
+    cmd_hist_arr[cmd_no] = cli_strdup(buf, len); /* ignore failure silently */
+
+#if 0 /* debug only */
+	int i;
+    PRINTF("\r\n");
+	for (i = 0; i < MAX_CMDS_IN_HISTORY; i++)
+		(void)PRINTF("ARR: %s\r\n", cmd_hist_arr[i]);
+#endif
+
+    return WM_SUCCESS;
+}
+
+/* This func has one more goal which is not obvious. To load the values
+   into the ram cache maintained by history handling code in this file. This
+   ensures that history operations are not done in idle thread (console loop)
+*/
+static int get_total_cmds()
+{
+    int cmd_no = 0;
+    return cmd_no;
+}
+
+static int get_next_cmd_num_console()
+{
+    if (!hist_inited)
+        return 0;
+
+    if (console_loop_num < 0)
+        return -1;
+
+    return console_loop_num = ((console_loop_num + 1) % total_hist_cmds);
+}
+
+static int get_prev_cmd_num_console()
+{
+    if (!hist_inited)
+        return 0;
+
+    if (console_loop_num < 0)
+        return -1;
+
+    if ((console_loop_num - 1) < 0)
+        return console_loop_num = total_hist_cmds - 1;
+    else
+        return --console_loop_num;
+}
+
+static int cmd_hist_is_duplicate(const char *cmd)
+{
+    if ((last_cmd_num == -1) || (last_cmd_num == 0))
+        return false; /* No cmds */
+
+    /* Allocate once */
+    static char *tmpbuf;
+    if (!tmpbuf)
+    {
+        tmpbuf = os_mem_alloc(INBUF_SIZE);
+        if (!tmpbuf)
+            return false; /* ignore silently */
+    }
+
+    int rv = get_cmd_from_hist(last_cmd_num, tmpbuf, INBUF_SIZE);
+    if (rv != WM_SUCCESS)
+    {
+        (void)PRINTF("%s: read cmd %d failed\r\n", __func__, last_cmd_num);
+        return false;
+    }
+
+    if (strcmp(tmpbuf, cmd) == 0U)
+    {
+        return true; /* Duplicate */
+    }
+
+    return false;
+}
+
+int cmd_hist_init()
+{
+    console_loop_num = -1;
+    last_cmd_num     = -1;
+
+    hist_inited     = true;
+    total_hist_cmds = get_total_cmds();
+    if (total_hist_cmds >= 0)
+    {
+        last_cmd_num     = total_hist_cmds - 1;
+        console_loop_num = 0;
+    }
+
+    return WM_SUCCESS;
+}
+
+
+static void cmd_hist_add(const char *cmd, int len)
+{
+    if (!hist_inited)
+        return;
+
+    if (!strlen(cmd))
+        return;
+
+    if (cmd_hist_is_duplicate(cmd))
+        return;
+
+    int new_cmd_num = (last_cmd_num + 1) % MAX_CMDS_IN_HISTORY;
+    int rv          = store_cmd_to_hist(new_cmd_num, cmd, len);
+    if (rv != WM_SUCCESS)
+        return;
+
+    if ((new_cmd_num + 1) > total_hist_cmds)
+        total_hist_cmds = new_cmd_num + 1;
+    last_cmd_num     = new_cmd_num;
+    console_loop_num = (new_cmd_num + 1) % total_hist_cmds;
+}
+#endif /* CONFIG_APP_FRM_CLI_HISTORY */
 
 /* Find the command 'name' in the cli commands table.
  * If len is 0 then full match will be performed else upto len bytes.
@@ -119,13 +309,15 @@ static int handle_input(char *handle_inbuf)
     static char *argv[64];
     int argc                          = 0;
     int i                             = 0;
+#ifdef CONFIG_APP_FRM_CLI_HISTORY
+    int len                           = 0;
+#endif
     unsigned int j                    = 0;
     const struct cli_command *command = NULL;
     const char *p;
 
     (void)memset((void *)&argv, 0, sizeof(argv));
     (void)memset(&stat, 0, sizeof(stat));
-
 
     /*
      * Some terminals add CRLF to the input buffer.
@@ -138,9 +330,9 @@ static int handle_input(char *handle_inbuf)
         {
             if (j < (INBUF_SIZE - 1U))
             {
-                (void)memmove((handle_inbuf + j), handle_inbuf + j + 1, (INBUF_SIZE - (unsigned int)i));
+                (void)memmove((handle_inbuf + j), handle_inbuf + j + 1, (INBUF_SIZE - 1 - j));
             }
-            handle_inbuf[INBUF_SIZE] = (char)(0x00);
+            handle_inbuf[INBUF_SIZE - 1] = (char)(0x00);
         }
     }
 
@@ -231,6 +423,10 @@ static int handle_input(char *handle_inbuf)
         (void)PRINTF("\r\n");
     }
 
+#ifdef CONFIG_APP_FRM_CLI_HISTORY
+    len = i - 1;
+#endif
+
     /*
      * Some comamands can allow extensions like foo.a, foo.b and hence
      * compare commands before first dot.
@@ -241,6 +437,10 @@ static int handle_input(char *handle_inbuf)
     {
         return 1;
     }
+
+#ifdef CONFIG_APP_FRM_CLI_HISTORY
+    cmd_hist_add(handle_inbuf, len);
+#endif
 
     command->function(argc, argv);
 
@@ -307,6 +507,13 @@ enum
     EXT_KEY_SECOND_SYMBOL,
 };
 
+#ifdef CONFIG_APP_FRM_CLI_HISTORY
+static void clear_line(unsigned int cnt)
+{
+    while (cnt--)
+        (void)PRINTF("\b \b");
+}
+#endif /* CONFIG_APP_FRM_CLI_HISTORY */
 
 /* Get an input line.
  *
@@ -315,6 +522,9 @@ static int get_input(char *get_inbuf, unsigned int *bp)
 {
     static int state = BASIC_KEY;
     static char second_char;
+#ifdef CONFIG_APP_FRM_CLI_HISTORY
+    int rv = -WM_FAIL;
+#endif /* CONFIG_APP_FRM_CLI_HISTORY */
     if (get_inbuf == NULL)
     {
         return 0;
@@ -339,6 +549,51 @@ static int get_input(char *get_inbuf, unsigned int *bp)
                     return 1;
                 }
             }
+#ifdef CONFIG_APP_FRM_CLI_HISTORY
+            if (second_char == 0x5B)
+            {
+                if (get_inbuf[*bp] == 0x41)
+                {
+                    /* UP key */
+                    clear_line(*bp);
+                    *bp = 0;
+                    rv  = get_cmd_from_hist(get_prev_cmd_num_console(), get_inbuf, INBUF_SIZE);
+                    if (rv == WM_SUCCESS)
+                    {
+                        *bp = strlen(get_inbuf);
+                        (void)PRINTF("%s", get_inbuf);
+                    }
+                    state = BASIC_KEY;
+                    continue;
+                }
+                if (get_inbuf[*bp] == 0x42)
+                {
+                    /* Down key */
+                    clear_line(*bp);
+                    *bp = 0;
+                    rv  = get_cmd_from_hist(get_next_cmd_num_console(), get_inbuf, INBUF_SIZE);
+                    if (rv == WM_SUCCESS)
+                    {
+                        *bp = strlen(get_inbuf);
+                        (void)PRINTF("%s", get_inbuf);
+                    }
+                    state = BASIC_KEY;
+                    continue;
+                }
+                if (get_inbuf[*bp] == 0x44)
+                {
+                    /* Ignoring left key */
+                    state = BASIC_KEY;
+                    continue;
+                }
+                if (get_inbuf[*bp] == 0x43)
+                {
+                    /* Ignoring right key */
+                    state = BASIC_KEY;
+                    continue;
+                }
+            }
+#endif /* CONFIG_APP_FRM_CLI_HISTORY */
         }
 
         if (state == EXT_KEY_FIRST_SYMBOL)
@@ -534,6 +789,7 @@ static void cli_main(os_thread_arg_t data)
     }
     os_thread_self_complete(NULL);
 }
+
 /* Automatically bind an input processor to the console */
 static int cli_install_UART_Tick(void)
 {
@@ -620,12 +876,17 @@ static int cli_start(void)
         return -WM_FAIL;
     }
 
-    ret = os_thread_create(&cli_main_thread, "cli", cli_main, NULL, &cli_stack, OS_PRIO_3);
+    ret = os_thread_create(&cli_main_thread, "cli", cli_main, 0, &cli_stack, OS_PRIO_3);
     if (ret != WM_SUCCESS)
     {
         (void)PRINTF("Error: Failed to create cli thread: %d\r\n", ret);
         return -WM_FAIL;
     }
+
+#ifdef CONFIG_APP_FRM_CLI_HISTORY
+    cmd_hist_init();
+    cmd_hist_add(" ", 1);
+#endif
 
     ret = cli_mem_init();
 
@@ -852,4 +1113,15 @@ int cli_init(void)
         cli_init_done = true;
     }
     return ret;
+}
+
+int cli_deinit(void)
+{
+    /*Remove our built-in commands */
+    if (cli_unregister_commands(&built_ins[0], (int)(sizeof(built_ins) / sizeof(struct cli_command))) != 0)
+    {
+        return -WM_FAIL;
+    }
+
+    return WM_SUCCESS;
 }

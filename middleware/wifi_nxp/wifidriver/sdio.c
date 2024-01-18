@@ -69,6 +69,10 @@ WEAK void set_ioport_inmlan(t_u32 port)
     return;
 }
 
+unsigned int wifi_get_sdio_ioport()
+{
+    return ioport_g;
+}
 uint8_t *wifi_get_sdio_outbuf(uint32_t *outbuf_len)
 {
     *outbuf_len = sizeof(outbuf);
@@ -134,7 +138,7 @@ static void wlan_sdio_init_ioport(void)
     uint32_t resp = 0;
     t_u8 data;
 
-#if defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098) || defined(IW61x)
+#if defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098) || defined(SD9177)
     ioport_g = MEM_PORT;
 
     sdio_io_d("IOPORT : (0x%x)", ioport_g);

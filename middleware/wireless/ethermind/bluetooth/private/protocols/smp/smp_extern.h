@@ -67,6 +67,9 @@ extern DECL_CONST UCHAR smp_lesc_ltk_brle[SMP_LESC_KEYID_SIZE];
 
 extern DECL_CONST UCHAR smp_lesc_lk_salt[SMP_LESC_KEYID_SALT_SIZE];
 extern DECL_CONST UCHAR smp_lesc_ltk_salt[SMP_LESC_KEYID_SALT_SIZE];
+
+/* Runtime enable/disable SMP support on BREDR transport */
+extern UCHAR smp_over_bredr;
 #endif /* SMP_LESC_CROSS_TXP_KEY_GEN */
 #endif /* SMP_LESC */
 
@@ -78,6 +81,9 @@ extern DECL_CONST UCHAR smp_lesc_ltk_salt[SMP_LESC_KEYID_SALT_SIZE];
  */
 extern UINT32   smp_dq_valid_entries;
 #endif /* STORAGE_CHECK_CONSISTENCY_ON_RESTORE */
+
+/* SMP Rand Generation State */
+extern UCHAR smp_rand_state;
 
 #endif /* _H_SMP_EXTERN_ */
 

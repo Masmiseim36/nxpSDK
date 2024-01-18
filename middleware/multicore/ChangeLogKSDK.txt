@@ -2,7 +2,26 @@
 @page middleware_log Middleware Change Log
 
 @section multicore Multicore SDK
-  The current version of Multicore SDK is 2.14.0
+  The current version of Multicore SDK is 2.15.0
+  - 2.15.0
+    - Multicore SDK component versions:
+      - embedded Remote Procedure Call (eRPC) v1.12.0
+      - eRPC generator (erpcgen) v.1.12.0
+      - Multicore Manager (MCMgr) v4.1.5
+      - RPMsg-Lite v5.1.1
+    - New features:
+      - eRPC: Add dynamic/static option for transport init, GitHub PR #361.
+      - eRPC: Fix receive error value for spidev, GitHub PR #363.
+      - eRPC: UartTransport::init adaptation to changed driver.
+      - eRPC: Fix typo in assert, GitHub PR #371.
+      - eRPC,erpcgen: Move enums to enum classes, GitHub PR #379.
+      - eRPC: Fixed rpmsg tty transport to work with serial transport, GitHub PR #373.
+      - eRPC,erpcgen: Winsock2 support, GitHub PR #365.
+      - eRPC,erpcgen: Feature/support multiple clients, GitHub PR #271.
+      - eRPC,erpcgen: Feature/buffer head - Framed transport header data stored in MessageBuffer, GitHub PR #378.
+      - eRPC,erpcgen: Add experimental Java support.
+      - MCMgr: Added notification into MCMGR_EarlyInit and mcmgr_early_init_internal functions to avoid using uninitialized data in their implementations.
+      - RPMsg-Lite: Minor changes in platform and env. layers, minor test code updates.
   - 2.14.0
     - Multicore SDK component versions:
       - embedded Remote Procedure Call (eRPC) v1.11.0

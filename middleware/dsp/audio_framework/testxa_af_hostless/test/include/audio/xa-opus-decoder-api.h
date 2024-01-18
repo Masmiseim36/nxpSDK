@@ -92,7 +92,7 @@ enum xa_error_nonfatal_execute_opus_dec {
 };
 
 
-typedef enum 
+typedef enum
 {
     XA_RAW_OPUS_STREAM = 0,
     XA_OGG_OPUS_STREAM = 1

@@ -26,6 +26,7 @@
  * Generic audio codec task implementation
  ******************************************************************************/
 
+#ifndef XA_DISABLE_CLASS_CAPTURER
 #define MODULE_TAG                      CAPTURER
 
 #if 1 //TENA_2314
@@ -76,7 +77,7 @@ typedef struct XACapturer
     UWORD32                 schedule;
 
     /***************************************************************************
-     * response message pointer 
+     * response message pointer
      **************************************************************************/
     xf_message_t        *m_response;
 
@@ -87,7 +88,7 @@ typedef struct XACapturer
  ******************************************************************************/
 
 /* ...input port setup condition */
-#define XA_CAPTURER_FLAG_INPUT_READY        __XA_BASE_FLAG(1 << 0)
+//#define XA_CAPTURER_FLAG_INPUT_READY        __XA_BASE_FLAG(1 << 0)
 
 /*******************************************************************************
  * Data processing scheduling
@@ -125,6 +126,9 @@ static inline XA_ERRORCODE xa_capturer_prepare_runtime(XACapturer *capturer)
 
     /* ...factor must be a multiple */
     XF_CHK_ERR(((capturer->factor * capturer->sample_size) == factor), XA_CAPTURER_CONFIG_FATAL_RANGE);
+
+    /* ...allocate connect buffers */
+    xf_output_port_route_alloc(&capturer->output, msg->output_length[0], base->component.mem_pool_type[XAF_MEM_POOL_TYPE_COMP_OUTPUT]);
 
     /* ...codec runtime initialization is completed */
     TRACE(INIT, _b("codec[%p] runtime initialized: o=%u"), capturer, msg->output_length[0]);
@@ -197,18 +201,18 @@ static XA_ERRORCODE xa_capturer_fill_this_buffer(XACodecBase *base, xf_message_t
         /* ... mark flushing sequence is done */
         xf_output_port_flush_done(&capturer->output);
 
-#if 1   //TENA_2379                                                                                                     
+#if 1   //TENA_2379
         if (xf_output_port_unrouting(&capturer->output))
-        {   
-            /* ...flushing during port unrouting; complete unroute sequence */                                            
-            xf_output_port_unroute_done(&capturer->output);                                                                  
+        {
+            /* ...flushing during port unrouting; complete unroute sequence */
+            xf_output_port_unroute_done(&capturer->output, base->component.mem_pool_type[XAF_MEM_POOL_TYPE_COMP_OUTPUT]);
             TRACE(INFO, _b("port is unrouted"));
-        }   
+        }
 #endif
         else if (m->length == XF_MSG_LENGTH_INVALID)
         {
             /* ...complete flushing and unrouting of the outport whose dest no longer exists */
-            xf_output_port_unroute(&capturer->output);
+            xf_output_port_unroute(&capturer->output, base->component.mem_pool_type[XAF_MEM_POOL_TYPE_COMP_OUTPUT]);
             TRACE(INFO, _b("capturer[%p] completed internal unroute of port"), capturer);
         }
 
@@ -288,7 +292,7 @@ static XA_ERRORCODE xa_capturer_port_route(XACodecBase *base, xf_message_t *m)
     XF_CHK_ERR(!xf_output_port_routed(port), XA_API_FATAL_INVALID_CMD_TYPE);
 
     /* ...route output port - allocate queue */
-    XF_CHK_ERR(xf_output_port_route(port, __XF_MSG_ID(dst, src), cmd->alloc_number, cmd->alloc_size, cmd->alloc_align) == 0, XA_API_FATAL_MEM_ALLOC);
+    XF_CHK_ERR(xf_output_port_route(port, __XF_MSG_ID(dst, src), cmd->alloc_number, cmd->alloc_size, cmd->alloc_align, base->component.mem_pool_type[XAF_MEM_POOL_TYPE_COMP_OUTPUT]) == 0, XA_API_FATAL_MEM_ALLOC);
 
     /* ...pass success result to caller */
     xf_response_ok(m);
@@ -327,7 +331,7 @@ static XA_ERRORCODE xa_capturer_port_unroute(XACodecBase *base, xf_message_t *m)
         TRACE(INFO, _b("port is idle; instantly unroute"));
 
         /* ...flushing sequence is not needed; command may be satisfied instantly */
-        xf_output_port_unroute(&capturer->output);
+        xf_output_port_unroute(&capturer->output, base->component.mem_pool_type[XAF_MEM_POOL_TYPE_COMP_OUTPUT]);
 
         /* ...pass response to the proxy */
         xf_response_ok(m);
@@ -373,12 +377,12 @@ static XA_ERRORCODE xa_capturer_flush(XACodecBase *base, xf_message_t *m)
         }
 
     }
-    else 
+    else
 #endif
     if (xf_output_port_unrouting(&capturer->output))
     {
         /* ...flushing during port unrouting; complete unroute sequence */
-        xf_output_port_unroute_done(&capturer->output);
+        xf_output_port_unroute_done(&capturer->output, base->component.mem_pool_type[XAF_MEM_POOL_TYPE_COMP_OUTPUT]);
 
         TRACE(INFO, _b("port is unrouted"));
     }
@@ -597,6 +601,7 @@ static int xa_capturer_destroy(xf_component_t *component, xf_message_t *m)
 {
     XACapturer   *capturer = (XACapturer *) component;
     UWORD32             core = xf_component_core(component);
+    XACodecBase *base = &capturer->base;
 
     /* ...get the saved command message pointer before the component memory is freed */
     xf_message_t *m_resp = capturer->m_response;
@@ -605,7 +610,7 @@ static int xa_capturer_destroy(xf_component_t *component, xf_message_t *m)
     //xf_input_port_destroy(&codec->input, core);
 
     /* ...destroy output port */
-    xf_output_port_destroy(&capturer->output, core);
+    xf_output_port_destroy(&capturer->output, core, base->component.mem_pool_type[XAF_MEM_POOL_TYPE_COMP_OUTPUT]);
 
     /* ...deallocate all resources */
     xa_base_destroy(&capturer->base, XF_MM(sizeof(*capturer)), core);
@@ -628,7 +633,7 @@ static int xa_capturer_cleanup(xf_component_t *component, xf_message_t *m)
     XACapturer *capturer = (XACapturer *) component;
     UWORD32             state = XA_CAPTURER_STATE_IDLE;
     XACodecBase    *base = (XACodecBase *) capturer;
-    
+
     XA_API_NORET(base, XA_API_CMD_SET_CONFIG_PARAM, XA_CAPTURER_CONFIG_PARAM_STATE, &state);
 
     /* ...cancel internal scheduling message if needed */
@@ -687,3 +692,5 @@ xf_component_t * xa_capturer_factory(UWORD32 core, xa_codec_func_t process, xaf_
 
     return (xf_component_t *) capturer;
 }
+
+#endif  //XA_DISABLE_CLASS_CAPTURER

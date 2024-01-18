@@ -3,12 +3,11 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-if(CONFIG_USE_middleware_tfmtests_ns AND CONFIG_USE_CMSIS_RTOS2_NonSecure AND ((CONFIG_USE_middleware_tfm_ns_lpcxpresso55s69 AND (CONFIG_BOARD STREQUAL lpcxpresso55s69)) OR (CONFIG_USE_middleware_tfm_ns_lpcxpresso55s16 AND (CONFIG_BOARD STREQUAL lpcxpresso55s16)) OR (CONFIG_USE_middleware_tfm_ns_lpcxpresso55s06 AND (CONFIG_BOARD STREQUAL lpcxpresso55s06)) OR (CONFIG_USE_middleware_tfm_ns_evkmimxrt685 AND (CONFIG_BOARD STREQUAL evkmimxrt685)) OR (CONFIG_USE_middleware_tfm_ns_mimxrt685audevk AND (CONFIG_BOARD STREQUAL mimxrt685audevk)) OR (CONFIG_USE_middleware_tfm_ns_evkmimxrt595 AND (CONFIG_BOARD STREQUAL evkmimxrt595))) AND (CONFIG_USE_middleware_tfm_ns_profile_large OR CONFIG_USE_middleware_tfm_ns_profile_medium OR CONFIG_USE_middleware_tfm_ns_profile_small))
+if(CONFIG_USE_middleware_tfmtests_ns AND CONFIG_USE_CMSIS_RTOS2_NonSecure AND ((CONFIG_USE_middleware_tfm_ns_lpcxpresso55s69 AND (CONFIG_BOARD STREQUAL lpcxpresso55s69)) OR (CONFIG_USE_middleware_tfm_ns_lpcxpresso55s36 AND (CONFIG_BOARD STREQUAL lpcxpresso55s36)) OR (CONFIG_USE_middleware_tfm_ns_lpcxpresso55s16 AND (CONFIG_BOARD STREQUAL lpcxpresso55s16)) OR (CONFIG_USE_middleware_tfm_ns_lpcxpresso55s06 AND (CONFIG_BOARD STREQUAL lpcxpresso55s06)) OR (CONFIG_USE_middleware_tfm_ns_evkmimxrt685 AND (CONFIG_BOARD STREQUAL evkmimxrt685)) OR (CONFIG_USE_middleware_tfm_ns_mimxrt685audevk AND (CONFIG_BOARD STREQUAL mimxrt685audevk)) OR (CONFIG_USE_middleware_tfm_ns_evkmimxrt595 AND (CONFIG_BOARD STREQUAL evkmimxrt595))) AND (CONFIG_USE_middleware_tfm_ns_profile_large OR CONFIG_USE_middleware_tfm_ns_profile_medium OR CONFIG_USE_middleware_tfm_ns_profile_small))
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/platform/ext/common/uart_stdout.c
   ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/common/libc_dummy.c
-  ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/common/CMSIS_Driver/Driver_USART.c
   ${CMAKE_CURRENT_LIST_DIR}/interface/src/os_wrapper/tfm_ns_interface_rtos.c
   ${CMAKE_CURRENT_LIST_DIR}/interface/src/tfm_crypto_api.c
   ${CMAKE_CURRENT_LIST_DIR}/interface/src/tfm_attest_api.c

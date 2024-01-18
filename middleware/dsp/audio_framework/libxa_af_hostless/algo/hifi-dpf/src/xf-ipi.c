@@ -73,7 +73,7 @@ static void xf_ipi_3(void *arg)
 #error "CPU number too high"
 #endif
 
-void (* const xf_ipi_handlers[XF_CFG_CORES_NUM])(void *arg) = 
+void (* const xf_ipi_handlers[XF_CFG_CORES_NUM])(void *arg) =
 {
     xf_ipi_0,
 #if XF_CFG_CORES_NUM > 1

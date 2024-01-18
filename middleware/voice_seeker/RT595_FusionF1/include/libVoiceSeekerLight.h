@@ -67,7 +67,7 @@ typedef struct RETUNE_VOICESEEKER_plugin_s {
  * VoiceSeeker Light
  */
 
-extern void VoiceSeekerLight_GetLibVersion(RETUNE_VOICESEEKERLIGHT_plugin_t* APluginInit, uint32_t* Amajor, uint32_t* Aminor, uint32_t* Apatch);
+extern void VoiceSeekerLight_GetLibVersion(RETUNE_VOICESEEKERLIGHT_plugin_t* APluginInit, rdsp_voiceseekerlight_ver_struct_t* Aversion);
 extern void VoiceSeekerLight_GetConstants(rdsp_voiceseekerlight_constants_t* Avoiceseeker_constants);
 extern void VoiceSeekerLight_GetConfig(RETUNE_VOICESEEKERLIGHT_plugin_t* APluginInit, rdsp_voiceseekerlight_config_t* Acfg);
 extern void VoiceSeekerLight_PrintConfig(RETUNE_VOICESEEKERLIGHT_plugin_t* APluginInit);

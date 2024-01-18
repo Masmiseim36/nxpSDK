@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2022 Cadence Design Systems, Inc.
+ * Copyright (c) 2014-2023 Cadence Design Systems, Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -116,7 +116,15 @@ int profile_frame = 0;
 
 #define XA_MAX_CMD_LINE_LENGTH 1024
 #define XA_MAX_ARGS 50
-#define PARAMFILE "paramfilesimple_encode.txt"
+
+#ifdef CELT_ONLY
+  #define PARAMFILE "paramfilesimple_encode_celt.txt"
+#elif  SILK_ONLY
+  #define PARAMFILE "paramfilesimple_encode_silk.txt"
+#else
+  #define PARAMFILE "paramfilesimple_encode.txt"
+#endif
+
 
 #define OPUS_RAND(seed)                   ((WORD64)(((WORD64)907633515) +  (WORD32)(seed * 196314165)))
 
@@ -138,7 +146,7 @@ extern  xa_error_info_struct xa_testbench_error_info;
 #define MAX_API_FS_KHZ              48
 #define MAX_IO_FILE_NAME_SIZE      1024 
 
-
+#if !defined(CELT_ONLY)
 static const int silk8_test[][4] = {
       {XA_OPUS_MODE_SILK_ONLY, XA_OPUS_BANDWIDTH_NARROWBAND, 960*3, 1},
       {XA_OPUS_MODE_SILK_ONLY, XA_OPUS_BANDWIDTH_NARROWBAND, 960*2, 1},
@@ -171,7 +179,9 @@ static const int silk16_test[][4] = {
       {XA_OPUS_MODE_SILK_ONLY, XA_OPUS_BANDWIDTH_WIDEBAND, 960,   2},
       {XA_OPUS_MODE_SILK_ONLY, XA_OPUS_BANDWIDTH_WIDEBAND, 480,   2}
 };
+#endif
 
+#if !defined(SILK_ONLY) && !defined(CELT_ONLY)
 static const int hybrid24_test[][4] = {
       {XA_OPUS_MODE_SILK_ONLY, XA_OPUS_BANDWIDTH_SUPERWIDEBAND, 960, 1},
       {XA_OPUS_MODE_SILK_ONLY, XA_OPUS_BANDWIDTH_SUPERWIDEBAND, 480, 1},
@@ -185,7 +195,9 @@ static const int hybrid48_test[][4] = {
       {XA_OPUS_MODE_SILK_ONLY, XA_OPUS_BANDWIDTH_FULLBAND, 960, 2},
       {XA_OPUS_MODE_SILK_ONLY, XA_OPUS_BANDWIDTH_FULLBAND, 480, 2}
 };
+#endif /* #if !defined(SILK_ONLY) && !defined(CELT_ONLY) */
 
+#if !defined(SILK_ONLY) 
 static const int celt_test[][4] = {
       {XA_OPUS_MODE_CELT_ONLY, XA_OPUS_BANDWIDTH_FULLBAND,      960, 1},
       {XA_OPUS_MODE_CELT_ONLY, XA_OPUS_BANDWIDTH_SUPERWIDEBAND, 960, 1},
@@ -235,7 +247,7 @@ static const int celt_hq_test[][4] = {
       {XA_OPUS_MODE_CELT_ONLY, XA_OPUS_BANDWIDTH_FULLBAND,      240, 2},
       {XA_OPUS_MODE_CELT_ONLY, XA_OPUS_BANDWIDTH_FULLBAND,      120, 2},
 };
-
+#endif
 
 #ifdef _SYSTEM_IS_BIG_ENDIAN
 /* Function to convert a little endian int16 to a */
@@ -263,34 +275,60 @@ void swap_endian
 
 void print_usage( char* argv[] )
 {
+#if !defined(SILK_ONLY) && !defined(CELT_ONLY)
     printf( "Usage: %s -app:<application> -fs:<sampling rate (8000/12000/16000/24000/48000) Hz> -numch:<channels (1/2)> "
         "-bps:<Recommended: 6000..510000 bits per second>  [options] -ifile:<input file> -ofile:<output file>\n", argv[0]);
     printf( "application: voip | audio | restricted-lowdelay\n" );
+#elif defined(SILK_ONLY)
+    printf( "Usage: %s -fs:<sampling rate (8000/12000/16000/24000/48000) Hz> -numch:<channels (1/2)> "
+        "-bps:<Recommended: 6000..510000 bits per second>  [options] -ifile:<input file> -ofile:<output file>\n", argv[0]);
+#elif defined(CELT_ONLY)
+    printf( "Usage: %s -app:<application> -fs:<sampling rate (8000/12000/16000/24000/48000) Hz> -numch:<channels (1/2)> "
+        "-bps:<Recommended: 6000..510000 bits per second>  [options] -ifile:<input file> -ofile:<output file>\n", argv[0]);
+    printf( "application: audio | restricted-lowdelay\n" );
+#endif /* #if !defined(SILK_ONLY) && !defined(CELT_ONLY) */
     printf( "bps: positive values outside recommended range and -1 (maximum possible bitrate based on other parameters) are also accepted \n" );
     printf( "Options:\n" );
+#if !defined(SILK_ONLY) && !defined(CELT_ONLY)
     printf( "   -force_mode:<hybrid|silk|celt> : forces the encoding mode; default: auto\n" );
+#endif
     printf( "   -cbr:<0/1>                     : enable constant bitrate; default: variable bitrate\n" );
     printf( "   -cvbr:<0/1>                    : enable constrained variable bitrate; default: unconstrained\n" );
+#ifndef SILK_ONLY
     printf( "   -bandwidth:<NB|MB|WB|SWB|FB>   : audio bandwidth (from narrowband to fullband); default: sampling rate\n" );
     printf( "   -framesize:<2.5|5|10|20|40|60|80|100|120> : frame size in ms; default: 20 \n" );
+#else
+    printf( "   -bandwidth:<NB|MB|WB>          : audio bandwidth (from narrowband to wideband); default: sampling rate\n" );
+    printf( "   -framesize:<10|20|40|60|80|100|120> : frame size in ms; default: 20 \n" );
+#endif
     printf( "   -max_payload:<bytes>           : maximum payload size in bytes 1-1500, default: 1500 (values outside range are ignored)\n" );
     printf( "   -complexity:<comp>             : complexity, 0 (lowest) ... 10 (highest); default: 10\n" );
+#ifndef CELT_ONLY
     printf( "   -inbandfec:<0/1>               : enable SILK inband FEC, default: disable\n" );
+#endif
     printf( "   -forcemono:<0/1>               : force mono encoding, even for stereo input, default: disable\n" );
+#ifndef CELT_ONLY
     printf( "   -dtx:<0/1>                     : enable SILK DTX, default:disable\n" );
+#endif
     printf( "   -loss:<perc>                   : uplink loss estimate, in percent (0-100), default: 0 \n" );
     printf( "Options to demonstare ability of dynamic changing parameters:\n" );
     printf( "   -sweep:<bps>                   : sweep bitrate mode, bps - bitrate step\n" );
     printf( "   -sweep_max:<bps>               : max. bitrate in sweep bitrate mode \n" );
     printf( "   -random_framesize:<0/1>        : enable random frame size \n" );
+#ifndef CELT_ONLY
     printf( "   -random_fec:<0/1>              : enable random SILK inband FEC \n" );
     printf( "   -silk8k_test:<0/1>             : enable dynamic changing of frame size and number of channels in SILK mode (8 kHz) according to predefined list \n" );
     printf( "   -silk12k_test:<0/1>            : enable dynamic changing of frame size and number of channels in SILK mode (12 kHz) according to predefined list \n" );
     printf( "   -silk16k_test:<0/1>            : enable dynamic changing of frame size and number of channels in SILK mode (16 kHz) according to predefined list \n" );
+#endif
+#if !defined(SILK_ONLY) && !defined(CELT_ONLY)
     printf( "   -hybrid24k_test:<0/1>          : enable dynamic changing of frame size and number of channels in Hybrid mode (24 kHz) according to predefined list \n" );
     printf( "   -hybrid48k_test:<0/1>          : enable dynamic changing of frame size and number of channels in Hybrid mode (48 kHz) according to predefined list \n" );
+#endif
+#ifndef SILK_ONLY
     printf( "   -celt_test:<0/1>               : enable dynamic changing of frame size, number of channels and bandwidth in CELT mode according to predefined list \n" );
     printf( "   -celt_hq_test:<0/1>            : enable dynamic changing of frame size and number of channels in CELT mode (FB only) according to predefined list \n" );
+#endif
 }
 
 
@@ -319,7 +357,9 @@ void get_new_random_framesize(int *frame_size, int targetRate_bps, int sweep_bps
             *newsize *= 2;
         if (*newsize < enc_control->API_sampleRate/100 && *frame_size >= enc_control->API_sampleRate/100)
         {
+#if !defined(SILK_ONLY) && !defined(CELT_ONLY)
             enc_control->force_mode = XA_OPUS_MODE_CELT_ONLY;
+#endif
             *delayed_celt = 1;
         } 
         else 
@@ -348,7 +388,7 @@ int get_bitrate_for_sweep_mode(int *targetRate_bps, int *sweep_bps, int sweep_mi
 
 int xa_opus_enc_main_process( int argc, char* argv[] )
 {
-    WORD16      counter = 0;
+    WORD16      counter =0;
     WORD32      args =0, totPackets =0;
     WORD16      out_bytes=0;
     char       speechInFileName[ MAX_IO_FILE_NAME_SIZE ] = "NULL", bitOutFileName[ MAX_IO_FILE_NAME_SIZE ] = "NULL";
@@ -456,8 +496,10 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
     args = 1;
     while( args < argc ) 
     {
+#ifndef SILK_ONLY
         if( strncmp( argv[ args ], "-app:",5 ) == 0 )
         {
+#ifndef CELT_ONLY
             if (strcmp(argv[args] + 5, "voip")==0)
                 enc_control.application = XA_OPUS_APPLICATION_VOIP;
             else if (strcmp(argv[args] + 5, "restricted-lowdelay")==0)
@@ -468,9 +510,21 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
                 fprintf(stderr, "unknown application: %s\n", argv[args]);
                 exit(0);
             }
+#else /* #ifndef CELT_ONLY */
+            if (strcmp(argv[args] + 5, "restricted-lowdelay")==0)
+                enc_control.application = XA_OPUS_APPLICATION_RESTRICTED_LOWDELAY;
+            else if (strcmp(argv[args] + 5, "audio")==0) 
+                enc_control.application = XA_OPUS_APPLICATION_AUDIO;
+            else {
+                fprintf(stderr, "unknown application: %s\n", argv[args]);
+                exit(0);
+            }
+#endif /* #ifndef CELT_ONLY */
             args++;
-        } 
-        else if( strncmp( argv[ args ], "-fs:",4 ) == 0 )
+        }
+        else
+#endif /* #ifndef SILK_ONLY */        
+        if( strncmp( argv[ args ], "-fs:",4 ) == 0 )
         {
             sscanf( argv[ args ] + 4, "%d", &enc_control.API_sampleRate );
 			if (enc_control.API_sampleRate != 8000  && enc_control.API_sampleRate != 12000 &&
@@ -497,6 +551,7 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
             sscanf( argv[ args ] + 5, "%d", &enc_control.bitRate );
             args++;
         }
+#if !defined(SILK_ONLY) && !defined(CELT_ONLY)
         else if( strncmp( argv[ args ], "-force_mode:",12) == 0 ) 
         {
             if (strcmp(argv[ args ] + 12, "hybrid")==0)
@@ -513,6 +568,7 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
             }
             args++;
         } 
+#endif /* #if !defined(SILK_ONLY) && !defined(CELT_ONLY) */
         else if( strncmp( argv[ args ], "-cbr:",5) == 0 ) 
         {
             sscanf( argv[ args ] + 5, "%d", &enc_control.cbr );
@@ -541,13 +597,19 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
                 enc_control.bandwidth = XA_OPUS_BANDWIDTH_MEDIUMBAND;
             else if (strcmp(argv[ args ] + 11, "WB")==0)
                 enc_control.bandwidth = XA_OPUS_BANDWIDTH_WIDEBAND;
+#ifndef SILK_ONLY
             else if (strcmp(argv[ args ] + 11, "SWB")==0)
                 enc_control.bandwidth = XA_OPUS_BANDWIDTH_SUPERWIDEBAND;
             else if (strcmp(argv[ args ] + 11, "FB")==0)
                 enc_control.bandwidth = XA_OPUS_BANDWIDTH_FULLBAND;
+#endif
             else {
                 fprintf(stderr, "Unknown bandwidth %s. "
+#ifndef SILK_ONLY
                     "Supported are NB, MB, WB, SWB, FB.\n",
+#else
+                    "Supported are NB, MB, WB.\n",
+#endif
                     argv[ args ] + 11);
                 return EXIT_FAILURE;
             }
@@ -556,11 +618,14 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
         else if( strncmp( argv[ args ], "-framesize:", 11 ) == 0 ) 
         {
             sscanf( argv[ args ] + 11, "%f", &frame_size_ms );
+#ifndef SILK_ONLY
             if (strcmp(argv[ args ] + 11, "2.5")==0)
                 frame_size = enc_control.API_sampleRate/400;
             else if (strcmp(argv[ args ] + 11, "5")==0)
                 frame_size = enc_control.API_sampleRate/200;
-            else if (strcmp(argv[ args ] + 11, "10")==0)
+            else
+#endif
+            if (strcmp(argv[ args ] + 11, "10")==0)
                 frame_size = enc_control.API_sampleRate/100;
             else if (strcmp(argv[ args ] + 11, "20")==0)
                 frame_size = enc_control.API_sampleRate/50;
@@ -576,7 +641,11 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
                 frame_size = 6*enc_control.API_sampleRate/50;
             else {
                 fprintf(stderr, "Unsupported frame size: %s ms. "
+#ifndef SILK_ONLY
                                 "Supported are 2.5, 5, 10, 20, 40, 60, 80, 100, 120.\n",
+#else
+                                "Supported are 10, 20, 40, 60, 80, 100, 120.\n",
+#endif
                                 argv[ args ] + 11);
                 return EXIT_FAILURE;
             }
@@ -585,7 +654,7 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
         else if( strncmp( argv[ args ], "-max_payload:", 13 ) == 0 ) 
         {
             sscanf( argv[ args ] + 13, "%d", &enc_control.max_payload );
-			if (enc_control.max_payload < 0  || enc_control.max_payload > XA_OPUS_MAX_BYTES_ENCODED_PACKET-4)
+			if (enc_control.max_payload <= 0  || enc_control.max_payload > XA_OPUS_MAX_BYTES_ENCODED_PACKET-4)
 			{
 				fprintf(stderr, "Maximum Payload Size not supported: %d, Considered Default: 1500\n", enc_control.max_payload);
 			}
@@ -601,6 +670,7 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
 			}
             args++;
         } 
+#ifndef CELT_ONLY
         else if( strncmp( argv[ args ], "-inbandfec:", 11 ) == 0 ) 
         {
             sscanf( argv[ args ] + 11, "%d", &enc_control.SILK_InBandFEC_enabled );
@@ -611,6 +681,7 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
 			}
             args++;
         } 
+#endif
         else if( strncmp( argv[ args ], "-forcemono:", 11 ) == 0 ) 
         {
             sscanf( argv[ args ] + 11, "%d", &enc_control.force_numChannels);
@@ -621,6 +692,7 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
 			}
             args++;
         } 
+#ifndef CELT_ONLY
         else if( strncmp( argv[ args ], "-dtx:", 5) == 0 ) 
         {
             sscanf( argv[ args ] + 5, "%d", &enc_control.SILK_DTX_enabled);
@@ -631,6 +703,7 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
 			}
             args++;
         } 
+#endif
         else if( strncmp( argv[ args ], "-loss:",6 ) == 0 ) 
         {
             sscanf( argv[ args ] + 6, "%d", &enc_control.packetLossPercentage );
@@ -645,7 +718,7 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
         {
 			if((strlen(argv[ args ])-7) > 1024) 
    			{
-        		printf( "Error: Input file name length too large, max allowed length is 1024\n");
+        		printf( "Error: Input file name length too large, supports less than 1024 characters.\n");
         		exit( 0 );
     		}
             sscanf( argv[ args ] + 7, "%s", speechInFileName );
@@ -655,7 +728,7 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
         {
 		    if((strlen(argv[ args ])-7) > 1024) 
    			{
-        		printf( "Error: Output file name length too large, max allowed length is 1024\n");
+        		printf( "Error: Output file name length too large, supports less than 1024 characters.\n");
         		exit( 0 );
     		}
             sscanf( argv[ args ] + 7, "%s", bitOutFileName );
@@ -681,6 +754,7 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
             }             
             args++;
         } 
+#ifndef CELT_ONLY
         else if( strncmp( argv[ args ], "-random_fec:", 12 ) == 0 ) 
         {
             sscanf( argv[ args ] + 12, "%d", &random_fec );
@@ -730,6 +804,8 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
             nb_modes_in_list = 8;
             args++;
         }
+#endif /* #ifndef CELT_ONLY */
+#if !defined(SILK_ONLY) && !defined(CELT_ONLY)
         else if( strncmp( argv[ args ], "-hybrid24k_test:", 16 ) == 0 )
         {
             int flag;
@@ -756,6 +832,8 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
             nb_modes_in_list = 4;
             args++;
         }
+#endif /* #if !defined(SILK_ONLY) && !defined(CELT_ONLY) */
+#ifndef SILK_ONLY
         else if( strncmp( argv[ args ], "-celt_test:", 11 ) == 0 )
         {
             int flag;
@@ -782,6 +860,7 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
             nb_modes_in_list = 4;
             args++;
         }
+#endif /* #ifndef SILK_ONLY */
         else 
         {
             printf( "Error: unrecognized setting: %s\n\n", argv[ args ] );
@@ -797,10 +876,11 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
 		frame_size_ms = 20;
 	}
      
+#if !defined(SILK_ONLY) && !defined(CELT_ONLY)
     if(enc_control.force_mode == XA_OPUS_MODE_CELT_ONLY)
     {
         if(frame_size > enc_control.API_sampleRate/50)
-            printf("Warning: Incorrect framesize set for CELT mode. Either different framesize or encoding mode will be set.\n\n");
+            printf("Warning: For the framesize set for CELT mode, either repacketization with different framesize will be done or different encoding mode will be set.\n\n");
     }
     if(enc_control.force_mode == XA_OPUS_MODE_HYBRID)
     {
@@ -812,6 +892,7 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
         if(frame_size < enc_control.API_sampleRate/100)
             printf("Warning: Incorrect framesize set for SILK mode. Either different framesize or encoding mode will be set.\n\n");
     }
+#endif /* #if !defined(SILK_ONLY) && !defined(CELT_ONLY) */
 
     targetRate_bps = enc_control.bitRate;
 
@@ -826,7 +907,9 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
     printf("******************* Compiled for %d bit cpu ********* \n", (int)sizeof(void*) * 8 );
     printf( "Input:                                         %s\n",     speechInFileName );
     printf( "Output:                                        %s\n",     bitOutFileName );
+#ifndef SILK_ONLY
     printf( "Application:                                   %d\n",     enc_control.application );
+#endif
     printf( "API sampling rate:                             %d Hz\n",  enc_control.API_sampleRate );
     printf( "API number of channels:                        %d\n",     enc_control.API_numChannels );
     printf( "Target bitrate:                                %d bps\n", enc_control.bitRate );
@@ -836,9 +919,13 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
     printf( "Framesize in ms:                               %1.1f\n",  frame_size_ms );
     printf( "Maximum payload size in bytes:                 %d\n",     enc_control.max_payload );
     printf( "Complexity:                                    %d\n",     enc_control.complexity );
+#ifndef CELT_ONLY
     printf( "Enable SILK inband FEC:                        %d\n",     enc_control.SILK_InBandFEC_enabled );
+#endif
     printf( "Force mono encoding, even for stereo input:    %d\n",     enc_control.force_numChannels );
+#ifndef CELT_ONLY
     printf( "Enable SILK DTX        :                       %d\n",     enc_control.SILK_DTX_enabled );
+#endif
     printf( "Simulate packet loss, in percent:              %d\n",     enc_control.packetLossPercentage );
     
     /* Open files */
@@ -860,18 +947,41 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
     ************************************************************/
 
     handle_size = xa_opus_enc_get_handle_byte_size(enc_control.API_numChannels);
+#ifndef CONFIGURE_MEM_ALLOC
     scratch_size = xa_opus_enc_get_scratch_byte_size();
+#else
+#if defined(CELT_ONLY)
+    scratch_size = xa_opus_enc_get_scratch_byte_size(enc_control.API_numChannels, enc_control.API_sampleRate, enc_control.application);
+#else
+    scratch_size = xa_opus_enc_get_scratch_byte_size(enc_control.API_numChannels, enc_control.API_sampleRate);
+#endif    
+#endif    
+
 #ifdef SCRATCH_ANALYSIS
     /* Extra scratch to avoid scratch overrun */
     scratch_size += 35*1024;
 #endif
+
+#ifndef CONFIGURE_MEM_ALLOC 
     inp_speech_size = XA_OPUS_MAX_BYTES_CHANNEL_PACKET * enc_control.API_numChannels;
+#else
+    if(mode_list!=NULL || random_framesize_enabled)
+      inp_speech_size = sizeof( WORD16 ) * 6 * enc_control.API_sampleRate / 50 * enc_control.API_numChannels;
+    else
+      inp_speech_size = sizeof( WORD16 ) * frame_size * enc_control.API_numChannels;
+#endif    
+
+#ifndef FERRET_WARNINGS
+    // Added buffer to avoid ferret warning in silk_NLSF_del_dec_quant
+    inp_speech_size+=1;
+#endif
+
     enc_speech_size = XA_OPUS_MAX_BYTES_ENCODED_PACKET;
 
     fprintf(stdout, "\nPersistent state size: %d bytes\n", handle_size);
     fprintf(stdout, "Scratch buffer size:   %d bytes\n", scratch_size);
     fprintf(stdout, "Input buffer size:     %d bytes\n", inp_speech_size);
-    fprintf(stdout, "Output buffer size:    %d bytes\n\n", enc_speech_size);
+    fprintf(stdout, "Output buffer size:    %d bytes\n\n", (enc_speech_size+12));
 
     /************************************************************
     *                     Allocate Memory                       *
@@ -910,6 +1020,7 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
 
 #ifdef SCRATCH_ANALYSIS
     scratch_beg = (int)scratch;
+    printf("scratch_beg:%d\n", scratch_beg);
 #endif
     /* Input buffer */
 #ifndef INPUT_PING_PONG
@@ -980,7 +1091,9 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
     if (random_fec && ((seed_fec = OPUS_RAND(seed_fec))%30==0))
     {
        seed_fec = OPUS_RAND(seed_fec);
+#ifndef CELT_ONLY
        enc_control.SILK_InBandFEC_enabled = seed_fec%4==0;
+#endif
     }
 
     if (mode_list!=NULL)
@@ -992,12 +1105,20 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
         mode_switch_time = size/sizeof(WORD16)/enc_control.API_numChannels/nb_modes_in_list;
 
         enc_control.bandwidth     = mode_list[curr_mode][1];
+#if !defined(SILK_ONLY) && !defined(CELT_ONLY)
         enc_control.force_mode   = mode_list[curr_mode][0];
+#endif
         enc_control.force_numChannels = mode_list[curr_mode][3];
         frame_size                = mode_list[curr_mode][2];
     }
 
     totPackets = 0;
+
+#ifdef CONFIGURE_MEM_ALLOC
+    fseek(speechInFile, 0, SEEK_END );
+    int file_length = ftell(speechInFile);
+    fseek(speechInFile, 0, SEEK_SET);
+#endif
 
     while( !stop_processing ) 
     {
@@ -1022,18 +1143,47 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
         /*---------------------------*/
 
         /* Read input from file */
+#ifndef CONFIGURE_MEM_ALLOC
         counter = (WORD16)(fread( inp_speech, sizeof( WORD16 ) * enc_control.API_numChannels, frame_size, speechInFile ));
+        if( (WORD32)counter < frame_size ) 
+        {
+          memset(inp_speech + counter * enc_control.API_numChannels, 0, (frame_size - counter) * sizeof( WORD16 ) * enc_control.API_numChannels );
+          stop_processing = 1;
+        }
+#else
+        int read_size = sizeof( WORD16 ) * enc_control.API_numChannels * frame_size;
+        if(inp_speech_size < read_size)
+        {
+          counter = (WORD16)(fread( inp_speech, 1, inp_speech_size, speechInFile ));
+          if( (WORD32)counter < inp_speech_size) 
+          {
+            memset(inp_speech + counter / sizeof(WORD16), 0, inp_speech_size - counter);
+            stop_processing = 1;
+          }
+          if(stop_processing!=1)
+          {
+            int current_position = ftell(speechInFile);
+            if(file_length<current_position+read_size-inp_speech_size)
+              stop_processing = 1;
+			else
+              fseek(speechInFile, read_size-inp_speech_size, SEEK_CUR);
+          }
+        }
+        else
+        {
+          counter = (WORD16)(fread( inp_speech, sizeof( WORD16 ) * enc_control.API_numChannels, frame_size, speechInFile ));
+          if( (WORD32)counter < frame_size ) 
+          {
+            memset(inp_speech + counter * enc_control.API_numChannels, 0, (frame_size - counter) * sizeof( WORD16 ) * enc_control.API_numChannels );
+            stop_processing = 1;
+          }
+        }
+#endif        
 
 #ifdef _SYSTEM_IS_BIG_ENDIAN
         swap_endian( inp_speech, counter );
 #endif
-
-        if( (WORD32)counter < frame_size ) 
-        {
-            memset(inp_speech + counter * enc_control.API_numChannels, 0, (frame_size - counter) * sizeof( WORD16 ) * enc_control.API_numChannels );
-            stop_processing = 1;
-        }
-
+        
 #ifdef SCRATCH_PING_PONG
         if(scratch == scratch_ping)
         {
@@ -1117,7 +1267,9 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
         if (random_fec && ((seed_fec = OPUS_RAND(seed_fec))%30==0))
         {
            seed_fec = OPUS_RAND(seed_fec);
+#ifndef CELT_ONLY
            enc_control.SILK_InBandFEC_enabled = seed_fec%4==0;
+#endif
         }
 
         /* Processig optional command line parameters: -silk8k_test, -silk12k_test, -silk16k_test, -hybrid24k_test, -hybrid48k_test, -celt_test, -celt_hq_test */
@@ -1131,7 +1283,9 @@ int xa_opus_enc_main_process( int argc, char* argv[] )
         if (mode_list!=NULL)
         {
             enc_control.bandwidth     = mode_list[curr_mode][1];
+#if !defined(SILK_ONLY) && !defined(CELT_ONLY)
             enc_control.force_mode   = mode_list[curr_mode][0];
+#endif
             enc_control.force_numChannels = mode_list[curr_mode][3];
             frame_size                = mode_list[curr_mode][2];
         }

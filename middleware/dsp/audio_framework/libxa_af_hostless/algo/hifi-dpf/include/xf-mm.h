@@ -94,7 +94,7 @@ typedef struct xf_mm_pool
     xf_flx_lock_t       lock;
     /* ...free blocks map sorted by block length */
     rb_tree_t       l_map;
-    
+
     /* ...free blocks map sorted by address of the block */
     rb_tree_t       a_map;
 
@@ -102,8 +102,8 @@ typedef struct xf_mm_pool
     void           *addr;
 
     /* ...length of the pool (multiple of descriptor size); need that? - tbd */
-    UWORD32             size;    
-    
+    UWORD32             size;
+
 }   xf_mm_pool_t;
 
 /* ...descriptor of free memory block */
@@ -111,10 +111,10 @@ typedef struct xf_mm_block
 {
     /* ...rb-tree node in a block-length map */
     rb_node_t       l_node;
-    
+
     /* ...rb-tree node in a block-address map */
     rb_node_t       a_node;
-    
+
 }   xf_mm_block_t;
 
 /* ...next power-of-two calculation */
@@ -137,7 +137,7 @@ typedef UWORD8 xf_mm_item[xf_next_power_of_two(sizeof(xf_mm_block_t))];
 
 /* ...alignement definition */
 #define __xf_mm__  __attribute__((__aligned__(sizeof(xf_mm_item))))
-    
+
 /*******************************************************************************
  * Dynamically allocated buffer
  ******************************************************************************/
@@ -147,10 +147,10 @@ typedef struct xf_mm_buffer
 {
     /* ...allocation address */
     void           *addr;
-    
+
     /* ...length */
     UWORD32             size;
-    
+
 }   __xf_mm__ xf_mm_buffer_t;
 
 /*******************************************************************************

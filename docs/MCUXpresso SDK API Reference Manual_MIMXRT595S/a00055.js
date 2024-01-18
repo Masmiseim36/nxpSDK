@@ -1,21 +1,24 @@
 var a00055 =
 [
-    [ "rtc_datetime_t", "a00055.html#a00419", [
-      [ "year", "a00055.html#a9d9b3f17954a41223c07440f08edaf74", null ],
-      [ "month", "a00055.html#a1621f010a30ff4e06636f08cdcb9a0b0", null ],
-      [ "day", "a00055.html#a6be9f8cd55c5ccc80f6bb3a0fa1a9d0f", null ],
-      [ "hour", "a00055.html#af01da84e5dd15ca3713b29083a6893d2", null ],
-      [ "minute", "a00055.html#aaaeaa89246dcbf7a37b46ad854165285", null ],
-      [ "second", "a00055.html#a35ffc6bb746f813d06f2814c6d5d9d83", null ]
+    [ "_rtc_datetime", "a00055.html#a00409", [
+      [ "year", "a00055.html#aa155139d886c469e6f9398415b1edc46", null ],
+      [ "month", "a00055.html#ade946b33023c232bd0f0a1d09636cf8d", null ],
+      [ "day", "a00055.html#a62c6014b1eaad0c2bacd71bf2c8b58e0", null ],
+      [ "hour", "a00055.html#ad050219d2bdc3d361fb729eaca91778b", null ],
+      [ "minute", "a00055.html#a0095b8527a2dcba7199cbce4f585736a", null ],
+      [ "second", "a00055.html#a2cd2e85b4d09c10bd2049cf3cefca715", null ]
     ] ],
     [ "FSL_RTC_DRIVER_VERSION", "a00055.html#gaea33cb4ca030fb967d99babaec611ff9", null ],
-    [ "rtc_interrupt_enable_t", "a00055.html#gabed8712e00907f44b420d274fd368738", [
-      [ "kRTC_AlarmInterruptEnable", "a00055.html#ggabed8712e00907f44b420d274fd368738abd7ca2093bc2df536c828d8c8ea3dab4", null ],
-      [ "kRTC_WakeupInterruptEnable", "a00055.html#ggabed8712e00907f44b420d274fd368738a85150e978eefb18549c8766d3614f294", null ]
+    [ "rtc_interrupt_enable_t", "a00055.html#gaeb1b859adba89d7257893319b166dfd6", null ],
+    [ "rtc_status_flags_t", "a00055.html#ga07906a0d5dd00ca074b4b5cea7cd1fa1", null ],
+    [ "rtc_datetime_t", "a00055.html#ga1c92d4d0732e176d854c9bd6acfddf54", null ],
+    [ "_rtc_interrupt_enable", "a00055.html#ga0ce98b2ee8ea8a560a84942f64d13f82", [
+      [ "kRTC_AlarmInterruptEnable", "a00055.html#gga0ce98b2ee8ea8a560a84942f64d13f82abd7ca2093bc2df536c828d8c8ea3dab4", null ],
+      [ "kRTC_WakeupInterruptEnable", "a00055.html#gga0ce98b2ee8ea8a560a84942f64d13f82a85150e978eefb18549c8766d3614f294", null ]
     ] ],
-    [ "rtc_status_flags_t", "a00055.html#gaa5edfafe0da586a9411fe4bafe32d9c5", [
-      [ "kRTC_AlarmFlag", "a00055.html#ggaa5edfafe0da586a9411fe4bafe32d9c5a12101de586ebe90b1662305f467d88b2", null ],
-      [ "kRTC_WakeupFlag", "a00055.html#ggaa5edfafe0da586a9411fe4bafe32d9c5a769a7e3c726d0b2fe51b203e312656e3", null ]
+    [ "_rtc_status_flags", "a00055.html#gae3955525f31772c51bf9c70289058b8f", [
+      [ "kRTC_AlarmFlag", "a00055.html#ggae3955525f31772c51bf9c70289058b8fa12101de586ebe90b1662305f467d88b2", null ],
+      [ "kRTC_WakeupFlag", "a00055.html#ggae3955525f31772c51bf9c70289058b8fa769a7e3c726d0b2fe51b203e312656e3", null ]
     ] ],
     [ "RTC_Init", "a00055.html#gaa39b6b86a1f4c82bc8b1cf86366cabc5", null ],
     [ "RTC_Deinit", "a00055.html#ga0f365b0df0c2e61b07a7e178bd0f1581", null ],
@@ -25,6 +28,8 @@ var a00055 =
     [ "RTC_GetAlarm", "a00055.html#ga197e1135863c96d064eb1828a32487b2", null ],
     [ "RTC_EnableWakeupTimer", "a00055.html#ga35e5568341bcfd02ca90a8f8ef5dcc07", null ],
     [ "RTC_GetEnabledWakeupTimer", "a00055.html#ga5f1bd209ad9641a86e1579408ec2c6ad", null ],
+    [ "RTC_EnableSubsecCounter", "a00055.html#gac386a159ffeff836df4db5a59bed8b84", null ],
+    [ "RTC_GetSubsecValue", "a00055.html#gab2d752f81e12da85ebfbcf4122e243d3", null ],
     [ "RTC_SetSecondsTimerMatch", "a00055.html#ga188f38518206b9b8ad1fd51985be4f63", null ],
     [ "RTC_GetSecondsTimerMatch", "a00055.html#gab204de09391b29bb847c62ddf32692c8", null ],
     [ "RTC_SetSecondsTimerCount", "a00055.html#gafe684949b43219d9b8ace6e1b82cf03e", null ],

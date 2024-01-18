@@ -143,9 +143,6 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/algo/kernels/reorg/hifi4/xa_nn_space_to_depth_8.c
   ${CMAKE_CURRENT_LIST_DIR}/algo/kernels/reorg/hifi4/xa_nn_stride_slice_int16.c
   ${CMAKE_CURRENT_LIST_DIR}/algo/kernels/reorg/hifi4/xa_nn_stride_slice_int8.c
-  ${CMAKE_CURRENT_LIST_DIR}/algo/layers/cnn/src/xa_nn_cnn_api.c
-  ${CMAKE_CURRENT_LIST_DIR}/algo/layers/gru/src/xa_nn_gru_api.c
-  ${CMAKE_CURRENT_LIST_DIR}/algo/layers/lstm/src/xa_nn_lstm_api.c
   ${CMAKE_CURRENT_LIST_DIR}/algo/ndsp/hifi4/src/expf_tbl.c
   ${CMAKE_CURRENT_LIST_DIR}/algo/ndsp/hifi4/src/inff_tbl.c
   ${CMAKE_CURRENT_LIST_DIR}/algo/ndsp/hifi4/src/inv2pif_tbl.c

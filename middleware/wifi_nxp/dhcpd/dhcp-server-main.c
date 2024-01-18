@@ -18,8 +18,12 @@
 
 #include "dhcp-priv.h"
 
+#ifndef CONFIG_DHCP_SERVER_STACK_SIZE
+#define CONFIG_DHCP_SERVER_STACK_SIZE 2048
+#endif
+
 static os_thread_t dhcpd_thread;
-static os_thread_stack_define(dhcp_stack, 2048);
+static os_thread_stack_define(dhcp_stack, CONFIG_DHCP_SERVER_STACK_SIZE);
 static bool dhcpd_running;
 /*
  * API

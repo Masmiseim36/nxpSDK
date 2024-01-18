@@ -271,7 +271,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pe111,Pe177,Pe188,Pe546,Pa181,Pe223,Pa084,Pe068</state>
+          <state>Pe111,Pe177,Pe188,Pe546,Pa181,Pe223,Pa084,Pe068,Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -312,7 +312,7 @@
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -431,6 +431,7 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
@@ -1432,7 +1433,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pe111,Pe177,Pe188,Pe546,Pa181,Pe223,Pa084,Pe068</state>
+          <state>Pe111,Pe177,Pe188,Pe546,Pa181,Pe223,Pa084,Pe068,Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1473,7 +1474,7 @@
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -1592,6 +1593,7 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
@@ -2592,7 +2594,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pe111,Pe177,Pe188,Pe546,Pa181,Pe223,Pa084,Pe068</state>
+          <state>Pe111,Pe177,Pe188,Pe546,Pa181,Pe223,Pa084,Pe068,Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -2633,7 +2635,7 @@
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -2752,6 +2754,7 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
@@ -3753,7 +3756,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pe111,Pe177,Pe188,Pe546,Pa181,Pe223,Pa084,Pe068</state>
+          <state>Pe111,Pe177,Pe188,Pe546,Pa181,Pe223,Pa084,Pe068,Pa082,Pa050</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -3794,7 +3797,7 @@
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state>--diag_suppress Pa082,Pa050</state>
+          <state/>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -3913,6 +3916,7 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
@@ -4678,7 +4682,7 @@
   <group>
     <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
+      <name>$PROJ_DIR$/../readme.md</name>
     </file>
   </group>
   <group>
@@ -4998,10 +5002,19 @@
         <name>$PROJ_DIR$/../../../../../middleware/tfm/mbed-crypto/library/aes.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/tfm/mbed-crypto/library/aesce.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/tfm/mbed-crypto/library/aesce.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/tfm/mbed-crypto/library/aesni.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/tfm/mbed-crypto/library/aesni.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/tfm/mbed-crypto/library/alignment.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/tfm/mbed-crypto/library/asn1parse.c</name>
@@ -5032,6 +5045,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/tfm/mbed-crypto/library/bignum_mod_raw.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/tfm/mbed-crypto/library/bignum_mod_raw_invasive.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/tfm/mbed-crypto/library/bn_mul.h</name>
@@ -5265,6 +5281,9 @@
         <name>$PROJ_DIR$/../../../../../middleware/tfm/mbed-crypto/library/psa_crypto_rsa.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/tfm/mbed-crypto/library/psa_crypto_pake.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/tfm/mbed-crypto/library/psa_crypto_se.c</name>
       </file>
       <file>
@@ -5284,6 +5303,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/tfm/mbed-crypto/library/psa_its_file.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/tfm/mbed-crypto/library/psa_util.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/tfm/mbed-crypto/library/ripemd160.c</name>
@@ -5329,9 +5351,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/tfm/mbed-crypto/port/mbedcrypto_mcux_casper.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/tfm/mbed-crypto/port/mbedcrypto_mcux_css.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/tfm/mbed-crypto/port/mbedcrypto_mcux_els.c</name>
@@ -5432,6 +5451,12 @@
           <name>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/val/nspe/val_peripherals.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/val/nspe/val_platform.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/val/nspe/val_platform.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/val/nspe/val_storage.c</name>
         </file>
         <file>
@@ -5515,6 +5540,9 @@
             </group>
             <file>
               <name>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/pal_common.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/targets/common/nspe/pal_weak.c</name>
             </file>
           </group>
         </group>
@@ -6485,6 +6513,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/fsl_assert.h</name>
     </file>
   </group>
   <group>

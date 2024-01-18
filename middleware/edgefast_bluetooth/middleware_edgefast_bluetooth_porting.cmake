@@ -6,8 +6,10 @@ message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 if(CONFIG_USE_middleware_edgefast_bluetooth_pal AND CONFIG_USE_middleware_edgefast_bluetooth_porting_work_queue AND CONFIG_USE_middleware_edgefast_bluetooth_porting_toolchain AND CONFIG_USE_middleware_edgefast_bluetooth_porting_net AND CONFIG_USE_middleware_edgefast_bluetooth_porting_list AND CONFIG_USE_middleware_edgefast_bluetooth_porting_atomic AND CONFIG_USE_component_log AND CONFIG_USE_component_log_backend_debugconsole)
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+  ${CMAKE_CURRENT_LIST_DIR}/source/porting/ring_buffer.c
   ${CMAKE_CURRENT_LIST_DIR}/source/porting/porting.c
   ${CMAKE_CURRENT_LIST_DIR}/source/porting/utf8.c
+  ${CMAKE_CURRENT_LIST_DIR}/source/porting/fifo/fifo.c
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC

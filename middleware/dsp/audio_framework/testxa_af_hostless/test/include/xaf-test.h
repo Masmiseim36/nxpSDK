@@ -37,7 +37,7 @@ typedef struct _xos_error_map_t{
 #else
     int         err;  /* Fix for RG 2017.8 tools' build problem due to renaming of <typedef enum xos_err_t{}xos_err_t> to <enum{}> in xos_errors.h */
 #endif
-    char        *perr; 
+    char        *perr;
 }_XOS_ERR_MAP;
 
 typedef struct _api_err_t{
@@ -95,7 +95,7 @@ typedef struct _api_err_t{
 })
 #endif //((XF_NUM_CFG_CORES == 1) || (XF_CORE_ID == XF_CORE_ID_MASTER))
 
-/* ...check null pointer */ 
+/* ...check null pointer */
 #define TST_CHK_PTR(ptr, func_name)                                                    \
 ({                                                                                     \
     int __ret;                                                                         \

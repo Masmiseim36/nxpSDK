@@ -1,18 +1,18 @@
 var searchData=
 [
-  ['v_5fn',['v_n',['../a00054.html#a580f579beedafb1867cbfae2811d7371',1,'pq_biquad_param_t']]],
-  ['v_5fn_5f1',['v_n_1',['../a00054.html#a078065dc66934bae9862b01102ad6224',1,'pq_biquad_param_t']]],
-  ['valid',['valid',['../a00015.html#a4a97a76d0d7266ee9cc8de82d19e5d81',1,'dma_xfercfg_t::valid()'],['../a00052.html#ac3b63de8b750379ea5624f7d74531be5',1,'otfad_encryption_config_t::valid()']]],
-  ['vbp',['vbp',['../a00047.html#a8537a10d3cc0fef3431d32e5d5d5be55',1,'lcdif_dpi_config_t::vbp()'],['../a00018.html#a26359e9ae0028a971dc6a48430c9655e',1,'dsi_dpi_config_t::vbp()']]],
-  ['vdde0range',['Vdde0Range',['../a00053.html#ab028a393646771ab91ec06036fae2851',1,'power_pad_vrange_t']]],
-  ['vdde1range',['Vdde1Range',['../a00053.html#ad59ee29d625573694a590b9bc5a1758b',1,'power_pad_vrange_t']]],
-  ['vdde2range',['Vdde2Range',['../a00053.html#acd79506cc3e460c5bb4af56b02fecdb4',1,'power_pad_vrange_t']]],
-  ['vdde3range',['Vdde3Range',['../a00053.html#a197bf18cf8d0b9959ce1f26cfb904933',1,'power_pad_vrange_t']]],
-  ['vdde4range',['Vdde4Range',['../a00053.html#a5dd7d999be8e969a83c63495a47baa0a',1,'power_pad_vrange_t']]],
-  ['vendorid',['vendorID',['../a00043.html#a7e1e5b5a46b1420f4d3a52f232e822ba',1,'i3c_device_info_t::vendorID()'],['../a00044.html#ab62d4b9438499941dfbc2c249bbccb67',1,'i3c_slave_config_t::vendorID()'],['../a00042.html#a8e69911fa23be12eb31798c290e581c0',1,'i3c_config_t::vendorID()']]],
-  ['version',['version',['../a00021.html#a084e71b4aa9fc1672bcafd9ec1b6eba9',1,'flexspi_mem_config_block_t::version()'],['../a00058.html#a23b8ed9688825316750d697b524c7d18',1,'sd_card_t::version()']]],
-  ['vfp',['vfp',['../a00047.html#afcf0973035b99a4d719d953f01cf8ec5',1,'lcdif_dpi_config_t::vfp()'],['../a00018.html#ab15a4ea1f0ee6b011eae8f4b613dd9dd',1,'dsi_dpi_config_t::vfp()']]],
-  ['videomode',['videoMode',['../a00018.html#af5421373fe2f019a9c2593c92d58f87c',1,'dsi_dpi_config_t']]],
-  ['virtualchannel',['virtualChannel',['../a00018.html#aed7f73cea1dd587c4f4bcd47d8e1d988',1,'dsi_dpi_config_t::virtualChannel()'],['../a00018.html#a93aa7b6fa356becffcf5112514d47cf4',1,'dsi_transfer_t::virtualChannel()'],['../a00019.html#a12c2f52e89b2cde2f24ef8fa9691115a',1,'dsi_smartdma_write_mem_transfer_t::virtualChannel()']]],
-  ['vsw',['vsw',['../a00047.html#a39eadabac0c953be5236e1d0aa446353',1,'lcdif_dpi_config_t']]]
+  ['v_5fn',['v_n',['../a00054.html#a4f14db59f94d62fc511f3ac34254ae0b',1,'_pq_biquad_param']]],
+  ['v_5fn_5f1',['v_n_1',['../a00054.html#aaf119da02c3a3c2f59db01088939c13c',1,'_pq_biquad_param']]],
+  ['valid',['valid',['../a00016.html#aa6d616697dfdbf2ea0d55ce3d15ae15d',1,'_dma_xfercfg::valid()'],['../a00052.html#a1cb78fa06289056ac14f0fc005a1668a',1,'_otfad_encryption_config::valid()']]],
+  ['vbp',['vbp',['../a00048.html#a180eb81a2a48e0b1aeab9f6c7be38ec8',1,'_lcdif_dpi_config::vbp()'],['../a00019.html#afd0c424c48024603cbd9281fb23cd00f',1,'_dsi_dpi_config::vbp()']]],
+  ['vdde0range',['Vdde0Range',['../a00053.html#aafad8d49fb0beb70c3c7166f744f0973',1,'_power_pad_vrange']]],
+  ['vdde1range',['Vdde1Range',['../a00053.html#a26bc815c50066f061c78127c4f9281f1',1,'_power_pad_vrange']]],
+  ['vdde2range',['Vdde2Range',['../a00053.html#a637326a5426601843845cdc3074c1c01',1,'_power_pad_vrange']]],
+  ['vdde3range',['Vdde3Range',['../a00053.html#a049efd925effd2c9e715250a8b879910',1,'_power_pad_vrange']]],
+  ['vdde4range',['Vdde4Range',['../a00053.html#ad1128dc18c10ac4c602dd2dbbd0ae792',1,'_power_pad_vrange']]],
+  ['vendorid',['vendorID',['../a00044.html#aeda8834144c2eb4fac728521b314526c',1,'_i3c_device_info::vendorID()'],['../a00045.html#ae6f1f557ff3b6329f934a7beae3cb935',1,'_i3c_slave_config::vendorID()'],['../a00043.html#a61a12ef494b7af5a220c8d5e49e62624',1,'_i3c_config::vendorID()']]],
+  ['version',['version',['../a00032.html#a01b045ecafd93aa5cad71bd296b74ed4',1,'_FlexSPIConfig::version()'],['../a00057.html#ad4ece3439221109deec6dfe993de246d',1,'_sd_card::version()']]],
+  ['vfp',['vfp',['../a00048.html#a14c4376ff09e608052579f29b10f50cb',1,'_lcdif_dpi_config::vfp()'],['../a00019.html#acd47b3aee971f742955479087a7b5235',1,'_dsi_dpi_config::vfp()']]],
+  ['videomode',['videoMode',['../a00019.html#ab03f4492432837d78f72142148943395',1,'_dsi_dpi_config']]],
+  ['virtualchannel',['virtualChannel',['../a00019.html#a8dabf8347559868b419f90879fb795b3',1,'_dsi_dpi_config::virtualChannel()'],['../a00019.html#a31e7affb3297549e63d05915a8085f0c',1,'_dsi_transfer::virtualChannel()'],['../a00020.html#afb943a15eb0effe3d6f898962e41b909',1,'_dsi_smartdma_write_mem_transfer::virtualChannel()']]],
+  ['vsw',['vsw',['../a00048.html#a71e518b9f1405607cb0c018b559535a5',1,'_lcdif_dpi_config']]]
 ];

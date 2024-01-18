@@ -41,6 +41,12 @@ enum wifi_event
     WIFI_EVENT_GET_HW_SPEC,
     /** Association */
     WIFI_EVENT_ASSOCIATION,
+#ifdef CONFIG_WPA_SUPP
+#ifdef CONFIG_AUTO_RECONNECT
+    /** Association Notify */
+    WIFI_EVENT_ASSOCIATION_NOTIFY,
+#endif
+#endif
     /** PMK */
     WIFI_EVENT_PMK,
     /** Authentication */
@@ -53,9 +59,15 @@ enum wifi_event
     WIFI_EVENT_LINK_LOSS,
     /* WiFi RSSI Low Event */
     WIFI_EVENT_RSSI_LOW,
+    /** Firmware Hang event */
+    WIFI_EVENT_FW_HANG,
+    /** Firmware Reset event */
+    WIFI_EVENT_FW_RESET,
 #ifdef CONFIG_HOST_SLEEP
     /* Host sleep activated */
     WIFI_EVENT_HS_ACTIVATED,
+    /** HS configuration */
+    WIFI_EVENT_HS_CONFIG,
     /* Sleep confirm done */
     WIFI_EVENT_SLEEP_CONFIRM_DONE,
 #endif
@@ -75,18 +87,18 @@ enum wifi_event
     WIFI_EVENT_SUPPLICANT_PMK,
     /** Sleep */
     WIFI_EVENT_SLEEP,
-    /** Awake */
-    WIFI_EVENT_AWAKE,
     /** IEEE PS */
     WIFI_EVENT_IEEE_PS,
     /** Deep Sleep */
     WIFI_EVENT_DEEP_SLEEP,
     /** WNM ps */
     WIFI_EVENT_WNM_PS,
+    /** IEEE and Deep Sleep */
+    WIFI_EVENT_IEEE_DEEP_SLEEP,
+    /** WNM and Deep Sleep */
+    WIFI_EVENT_WNM_DEEP_SLEEP,
     /** PS Invalid */
     WIFI_EVENT_PS_INVALID,
-    /** HS configuration */
-    WIFI_EVENT_HS_CONFIG,
     /** Error Multicast */
     WIFI_EVENT_ERR_MULTICAST,
     /** error Unicast */
@@ -120,6 +132,12 @@ enum wifi_event
     WIFI_EVENT_REMAIN_ON_CHANNEL,
     /* Event to indicate Management tx status */
     WIFI_EVENT_MGMT_TX_STATUS,
+#ifdef CONFIG_CSI
+    /* Recv csi data */
+    WIFI_EVENT_CSI,
+#endif
+    /** Event to sync region code with connected AP*/
+    WIFI_EVENT_SYNC_REGION_CODE,
     /** Event to indicate end of Wi-Fi events */
     WIFI_EVENT_LAST,
     /* other events can be added after this, however this must

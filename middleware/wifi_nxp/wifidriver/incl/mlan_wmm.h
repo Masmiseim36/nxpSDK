@@ -203,8 +203,27 @@ typedef struct
     mlan_linked_list entry;
     t_u8 intf_header[INTF_HEADER_LEN];
     TxPD tx_pd;
+#ifdef CONFIG_TX_RX_ZERO_COPY
+    t_u8 eth_header[ETH_HDR_LEN];
+#ifdef AMSDU_IN_AMPDU
+    t_u8 llc_header[LLC_SNAP_LEN];
+#endif
+    /* Data payload pointer */
+    t_u8 *payload;
+    /* Packet buffer structure pointer */
+    void *buffer;
+#else
     t_u8 data[WMM_DATA_LEN];
+#endif
 } outbuf_t;
+
+typedef struct
+{
+    mlan_linked_list entry;
+    t_u8 intf_header[INTF_HEADER_LEN];
+    TxPD tx_pd;
+    t_u8 data[1];
+} bypass_outbuf_t;
 
 /* transfer destination address to receive address */
 void wifi_wmm_da_to_ra(uint8_t *da, uint8_t *ra);
@@ -236,6 +255,14 @@ void wifi_wmm_drop_no_media(const uint8_t interface);
 void wifi_wmm_drop_retried_drop(const uint8_t interface);
 void wifi_wmm_drop_pause_drop(const uint8_t interface);
 void wifi_wmm_drop_pause_replaced(const uint8_t interface);
+
+int wifi_bypass_txq_init(void);
+void wifi_bypass_txq_deinit(void);
+void wlan_get_bypass_lock(uint8_t interface);
+void wlan_put_bypass_lock(uint8_t interface);
+void wlan_add_buf_bypass_txq(const uint8_t *buffer, const uint8_t interface);
+t_u8 wlan_bypass_txq_empty(uint8_t interface);
+void wlan_cleanup_bypass_txq(uint8_t interface);
 #endif
 
 #endif /* !_MLAN_WMM_H_ */

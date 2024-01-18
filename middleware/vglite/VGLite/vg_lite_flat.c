@@ -22,6 +22,7 @@
 #include <math.h>
 
 #include "vg_lite_flat.h"
+#include "nxp_support.h"
 
 /*
  * Stop IAR compiler from warning about implicit conversions from float to

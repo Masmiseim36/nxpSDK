@@ -128,11 +128,12 @@ typedef MLAN_PACK_START struct _nxp_wifi_acs_params
     unsigned int hw_mode;
 } MLAN_PACK_END nxp_wifi_acs_params;
 
-#define WIFI_MAX_FRAME_LEN 512U
+#define WIFI_MAX_FRAME_LEN 1500U
 
 typedef MLAN_PACK_START struct _nxp_wifi_frame
 {
     int frame_len;
+    int freq;
     unsigned char frame[WIFI_MAX_FRAME_LEN];
 } MLAN_PACK_END nxp_wifi_frame_t;
 
@@ -368,6 +369,26 @@ typedef MLAN_PACK_START struct _nxp_wifi_sta_info
     size_t ext_capab_len;
 } MLAN_PACK_END nxp_wifi_sta_info_t;
 
+enum chanWidth
+{
+    CHAN_BAND_WIDTH_20_NOHT,
+    CHAN_BAND_WIDTH_20,
+    CHAN_BAND_WIDTH_40,
+    CHAN_BAND_WIDTH_80,
+    CHAN_BAND_WIDTH_80P80,
+    CHAN_BAND_WIDTH_160,
+};
+
+typedef MLAN_PACK_START struct _nxp_wifi_ch_switch_info
+{
+    int center_freq;
+    int ht_enabled;
+    int ch_offset;
+    enum chanWidth ch_width;
+    int center_freq1;
+    int center_freq2;
+} MLAN_PACK_END nxp_wifi_ch_switch_info;
+
 /**
  * struct wifi_nxp_callbk_fns - Callback functions to be invoked by Wi-Fi driver
  * when a paticular event occurs.
@@ -386,7 +407,7 @@ typedef MLAN_PACK_START struct _wifi_nxp_callbk_fns
 
     void (*scan_start_callbk_fn)(void *if_priv);
 
-    void (*scan_done_callbk_fn)(void *if_priv);
+    void (*scan_done_callbk_fn)(void *if_priv, int external_scan);
 
     void (*scan_abort_callbk_fn)(void *if_priv);
 
@@ -413,7 +434,7 @@ typedef MLAN_PACK_START struct _wifi_nxp_callbk_fns
 
     void (*mgmt_tx_status_callbk_fn)(void *if_priv, nxp_wifi_event_mlme_t *mlme_event, unsigned int event_len);
     void (*remain_on_channel_callbk_fn)(void *if_priv, int cancel_channel);
-
+    void (*ecsa_complete_callbk_fn)(void *if_priv, nxp_wifi_ch_switch_info *ch_switch_info);
 } MLAN_PACK_END wifi_nxp_callbk_fns_t;
 
 typedef struct _chan_to_freq_t
@@ -434,7 +455,11 @@ static const chan_to_freq_t chan_to_freq[] = {
     {48, 5240, 1},  {52, 5260, 1},  {56, 5280, 1},  {60, 5300, 1},  {64, 5320, 1},  {100, 5500, 1}, {104, 5520, 1},
     {108, 5540, 1}, {112, 5560, 1}, {116, 5580, 1}, {120, 5600, 1}, {124, 5620, 1}, {128, 5640, 1}, {132, 5660, 1},
     {136, 5680, 1}, {140, 5700, 1}, {144, 5720, 1}, {149, 5745, 1}, {153, 5765, 1}, {157, 5785, 1}, {161, 5805, 1},
+#ifdef CONFIG_UNII4_BAND_SUPPORT
+    {165, 5825, 1}, {169, 5845, 1}, {173, 5865, 1}, {177, 5885, 1},
+#else
     {165, 5825, 1},
+#endif
 };
 /** Convertion from/to frequency/channel */
 /**

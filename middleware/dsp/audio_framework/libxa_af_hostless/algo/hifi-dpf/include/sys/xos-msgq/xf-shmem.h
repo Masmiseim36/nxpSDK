@@ -31,7 +31,7 @@
 #endif
 
 /*******************************************************************************
- * Macros/Constants 
+ * Macros/Constants
  ******************************************************************************/
 
 #define XF_SHMEM_DATA_ALIGNMENT 4096
@@ -45,10 +45,10 @@ struct xf_proxy_host_data
 {
     /* ...command queue */
     xf_proxy_message_t      command[XF_PROXY_MESSAGE_QUEUE_LENGTH];
-    
+
     /* ...writing index into command queue */
     UWORD32                     cmd_write_idx;
-    
+
     /* ...reading index for response queue */
     UWORD32                     rsp_read_idx;
 
@@ -59,21 +59,21 @@ struct xf_proxy_dsp_data
 {
     /* ...response queue */
     xf_proxy_message_t      response[XF_PROXY_MESSAGE_QUEUE_LENGTH];
-    
+
     /* ...writing index into response queue */
     UWORD32                     rsp_write_idx;
-    
+
     /* ...reading index for command queue */
     UWORD32                     cmd_read_idx;
 
 }   __attribute__((__packed__, __aligned__(XF_PROXY_ALIGNMENT)));
 
 /* ...shared memory data */
-typedef struct xf_shmem_data 
+typedef struct xf_shmem_data
 {
     /* ...outgoing data (maintained by App Interface Layer) */
     struct xf_proxy_host_data   remote      __xf_shmem__;
-    
+
     /* ...incoming data (maintained by DSP Interface Layer) */
     struct xf_proxy_dsp_data    local       __xf_shmem__;
 

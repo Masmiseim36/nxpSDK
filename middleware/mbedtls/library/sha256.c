@@ -442,7 +442,6 @@ exit:
     return ret;
 }
 
-
 #if !defined(MBEDTLS_DEPRECATED_REMOVED)
 void mbedtls_sha256(const unsigned char *input,
                     size_t ilen,

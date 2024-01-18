@@ -32,21 +32,21 @@
 
 /* standard memory types */
 /* to be used inter frames */
-#define XA_MEMTYPE_PERSIST				0x00 
+#define XA_MEMTYPE_PERSIST				0x00
 /* read write, to be used intra frames */
-#define XA_MEMTYPE_SCRATCH				0x01 
+#define XA_MEMTYPE_SCRATCH				0x01
 /* read only memory, intra frame */
-#define XA_MEMTYPE_INPUT				0x02 
+#define XA_MEMTYPE_INPUT				0x02
 /* read-write memory, for usable output, intra frame */
-#define XA_MEMTYPE_OUTPUT				0x03 
+#define XA_MEMTYPE_OUTPUT				0x03
 /* readonly memory, inter frame */
-#define XA_MEMTYPE_TABLE				0x04 
+#define XA_MEMTYPE_TABLE				0x04
 /* input buffer before mem tabs allocation */
-#define XA_MEMTYPE_PRE_FRAME_INPUT		0x05 
+#define XA_MEMTYPE_PRE_FRAME_INPUT		0x05
 /* input buffer before mem tabs allocation */
-#define XA_MEMTYPE_PRE_FRAME_SCRATCH	0x06 
+#define XA_MEMTYPE_PRE_FRAME_SCRATCH	0x06
 /* for local variables */
-#define XA_MEMTYPE_AUTO_VAR				0x80 
+#define XA_MEMTYPE_AUTO_VAR				0x80
 
 /* standard memory priorities */
 #define XA_MEMPRIORITY_ANYWHERE			0x00

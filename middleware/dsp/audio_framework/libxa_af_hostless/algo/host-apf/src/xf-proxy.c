@@ -62,7 +62,7 @@
     (int)__ret;                                 \
 })
 
-/* ...check null pointer */ 
+/* ...check null pointer */
 #define XF_CHK_PTR_UNLOCK(proxy, ptr)                       \
 ({                                                          \
     int __ret;                                              \
@@ -93,10 +93,8 @@
  * DSP-ONLY-SOLUTION Global variables, TBD - move
  ******************************************************************************/
 #ifdef HIFI_ONLY_XAF
-#define PROXY_THREAD_STACK_SIZE          8192
 const char proxy_thread_name[] = "proxyListen";
 extern xf_ap_t *xf_g_ap;
-extern XAF_ERR_CODE xaf_malloc(void **buf_ptr, int size, int id); 
 #endif /* HIFI_ONLY_XAF */
 
 /*******************************************************************************
@@ -107,7 +105,7 @@ extern XAF_ERR_CODE xaf_malloc(void **buf_ptr, int size, int id);
 static inline int xf_proxy_cmd_exec(xf_proxy_t *proxy, xf_user_msg_t *msg)
 {
     xf_proxy_msg_t  m;
-    
+
     /* ...send command to DSP Interface Layer */
     m.id = msg->id, m.opcode = msg->opcode, m.length = msg->length, m.error = 0;
 
@@ -134,7 +132,7 @@ static inline int xf_proxy_cmd_exec(xf_proxy_t *proxy, xf_user_msg_t *msg)
 
     /* ...translate address back to virtual space */
     XF_CHK_ERR((msg->buffer = xf_proxy_a2b(proxy, m.address)) != (void *)-1, XAF_INVALIDVAL_ERR);
-    
+
     TRACE(EXEC, _b("proxy[%p]: command done: [%08x:%p:%u:%d]"), proxy, msg->opcode, msg->buffer, msg->length, msg->error);
 
     return 0;
@@ -144,7 +142,7 @@ static inline int xf_proxy_cmd_exec(xf_proxy_t *proxy, xf_user_msg_t *msg)
 static inline xf_msg_id_dtype xf_client_alloc(xf_proxy_t *proxy, xf_handle_t *handle)
 {
     xf_msg_id_dtype     client;
-    
+
     if ((client = proxy->cmap[0].next) != 0)
     {
         /* ...pop client from free clients list */
@@ -161,10 +159,10 @@ static inline xf_msg_id_dtype xf_client_alloc(xf_proxy_t *proxy, xf_handle_t *ha
 static inline void xf_client_free(xf_proxy_t *proxy, xf_handle_t *handle)
 {
     xf_msg_id_dtype     client = handle->client;
-    
+
     /* ...push client into head of the free clients list */
     proxy->cmap[client].next = proxy->cmap[0].next;
-    
+
     /* ...adjust head of free clients */
     proxy->cmap[0].next = client;
 }
@@ -174,7 +172,7 @@ static inline xf_handle_t * xf_client_lookup(xf_proxy_t *proxy, xf_msg_id_dtype 
 {
     /* ...client index must be in proper range */
     BUG(client >= XF_CFG_PROXY_MAX_CLIENTS, _x("Invalid client index: %u"), client);
-    
+
     /* ...check if client index is small */
     if (proxy->cmap[client].next < XF_CFG_PROXY_MAX_CLIENTS)
         return NULL;
@@ -187,24 +185,29 @@ static inline int xf_client_register(xf_proxy_t *proxy, xf_handle_t *handle, xf_
 {
     void           *b = xf_handle_aux(handle);
     xf_user_msg_t   msg;
-    
+
     /* ...set session-id: source is proxy at App Interface Layer, destination is proxy at DSP Interface Layer */
     msg.id = __XF_MSG_ID(__XF_AP_PROXY(proxy->core), __XF_DSP_PROXY(core));
     msg.opcode = XF_REGISTER;
     msg.buffer = b;
-    msg.length = strlen(id) + 1;
+    //msg.length = strlen(id) + 1;
+    msg.length = sizeof(handle->mem_pool_type) + strlen(id) + 1;
+
+    /* ...copy component memory pool IDs */
+    memcpy(b, handle->mem_pool_type, sizeof(handle->mem_pool_type));
 
     /* ...copy component identifier */
-    strncpy(b, id, xf_buffer_length(handle->aux));
+    //strncpy(b, id, xf_buffer_length(handle->aux));
+    strncpy((void *)((UWORD32)b + sizeof(handle->mem_pool_type)), id, strlen(id)+1);
 
     /* ...execute command synchronously */
     XF_CHK_API(xf_proxy_cmd_exec(proxy, &msg));
-    
+
     /* ...check operation is successfull */
     XF_CHK_ERR(msg.opcode == XF_REGISTER, XAF_INVALIDVAL_ERR);
-    
+
     /* ...save received component global client-id */
-    handle->id = XF_MSG_SRC(msg.id);  
+    handle->id = XF_MSG_SRC(msg.id);
 
     TRACE(REG, _b("[%p]=[%s:%u:%u]"), handle, id, XF_PORT_CORE(handle->id), XF_PORT_CLIENT(handle->id));
 
@@ -218,7 +221,7 @@ static inline int xf_client_unregister(xf_proxy_t *proxy, xf_handle_t *handle)
 
     /* ...make sure the client is consistent */
     BUG(proxy->cmap[handle->client].handle != handle, _x("Invalid handle: %p"), handle);
-    
+
     /* ...set message parameters */
     msg.id = __XF_MSG_ID(__XF_AP_PROXY(proxy->core), handle->id);
     msg.opcode = XF_UNREGISTER;
@@ -227,26 +230,39 @@ static inline int xf_client_unregister(xf_proxy_t *proxy, xf_handle_t *handle)
 
     /* ...synchronously execute command on DSP Interface Layer */
     XF_CHK_API(xf_proxy_cmd_exec(proxy, &msg));
-    
+
     /* ...opcode must be XF_UNREGISTER - tbd */
     BUG(msg.opcode != XF_UNREGISTER, _x("Invalid opcode: %X"), msg.opcode);
-    
+
     TRACE(REG, _b("%p[%u:%u] unregistered"), handle, XF_PORT_CORE(handle->id), XF_PORT_CLIENT(handle->id));
 
     return 0;
 }
 
 /* ...allocate shared buffer */
-static inline int xf_proxy_buffer_alloc(xf_proxy_t *proxy, UWORD32 length, void **buffer)
+static inline int xf_proxy_buffer_alloc(xf_proxy_t *proxy, UWORD32 length, void **buffer, xf_pool_type_t mem_pool_type, UWORD32 id, xf_buffer_t *b)
 {
     UWORD32             core = proxy->core;
     xf_user_msg_t   msg;
-    
+
     /* ...prepare command parameters */
     msg.id = __XF_MSG_ID(__XF_AP_PROXY(core), __XF_DSP_PROXY(core));
     msg.opcode = XF_ALLOC;
-    msg.length = length;
-    msg.buffer = NULL;
+
+    if(id == XF_POOL_FRMWK_AUX)
+    {
+        /* ...AUX buffer pool is the 1st to get allocated, hence it doesnt have mem-pool type info (allocated from XAF_MEM_ID_DEV) */
+        msg.length = length;
+        msg.buffer = NULL;
+    }
+    else
+    {
+        msg.length = sizeof(UWORD32)*2;
+        msg.buffer = xf_buffer_data(b);
+
+        ((UWORD32*)msg.buffer)[0] = mem_pool_type;  /* ...memory pool type id       */
+        ((UWORD32*)msg.buffer)[1] = length;         /* ...length to be allocated    */
+    }
 
     /* ...synchronously execute command on DSP Interface Layer */
     XF_CHK_API(xf_proxy_cmd_exec(proxy, &msg));
@@ -259,7 +275,7 @@ static inline int xf_proxy_buffer_alloc(xf_proxy_t *proxy, UWORD32 length, void 
 
     /* ...save output parameter */
     *buffer = msg.buffer;
-    
+
     TRACE(MEM, _b("proxy-%u: allocated [%p:%u]"), core, *buffer, length);
 
     return 0;
@@ -272,11 +288,11 @@ static inline int xf_proxy_cmd_exec_with_lock(xf_proxy_t *proxy, xf_user_msg_t* 
 
     xf_proxy_lock(proxy);
 
-    /* ...synchronously execute command on DSP Interface Layer */    
+    /* ...synchronously execute command on DSP Interface Layer */
     if ((r = xf_proxy_cmd_exec(proxy, msg)) != 0)
     {
         TRACE(ERROR, _x("Command failed: %d"), r);
-    } 
+    }
 
     xf_proxy_unlock(proxy);
 
@@ -284,7 +300,7 @@ static inline int xf_proxy_cmd_exec_with_lock(xf_proxy_t *proxy, xf_user_msg_t* 
 }
 
 /* ...free shared AP-DSP memory */
-static inline int xf_proxy_buffer_free(xf_proxy_t *proxy, void *buffer, UWORD32 length)
+static inline int xf_proxy_buffer_free(xf_proxy_t *proxy, void *buffer, UWORD32 length, xf_pool_type_t mem_pool_type, UWORD32 id, xf_buffer_t *b)
 {
     UWORD32             core = proxy->core;
     xf_user_msg_t   msg;
@@ -292,9 +308,15 @@ static inline int xf_proxy_buffer_free(xf_proxy_t *proxy, void *buffer, UWORD32 
     /* ...prepare command parameters */
     msg.id = __XF_MSG_ID(__XF_AP_PROXY(core), __XF_DSP_PROXY(core));
     msg.opcode = XF_FREE;
-    msg.length = length;
-    msg.buffer = buffer;
-    
+
+    //msg.length = length;
+    //msg.buffer = buffer;
+    msg.length = sizeof(UWORD32)*3;
+    msg.buffer = xf_buffer_data(b);
+    ((UWORD32*)msg.buffer)[0] = mem_pool_type;      /* ...memory pool type id   */
+    ((UWORD32*)msg.buffer)[1] = length;             /* ...length to be freed    */
+    ((UWORD32*)msg.buffer)[2] = (UWORD32)buffer;    /* ...pointer to be freed   */
+
     /* ...synchronously execute command on DSP Interface Layer */
     XF_CHK_API(xf_proxy_cmd_exec(proxy, &msg));
 
@@ -313,7 +335,7 @@ static void * xf_proxy_thread(void *arg)
 {
     xf_proxy_t     *proxy = arg;
     xf_handle_t    *client;
-    int             r;
+    int             r = 0;
     xf_proxy_msg_t  m;
     xf_user_msg_t   msg;
 
@@ -324,20 +346,20 @@ static void * xf_proxy_thread(void *arg)
             BUG(XF_MSG_DST_CORE(m.id) != proxy->core, _x("Invalid session-id: %X (core=%u)"), m.id, proxy->core);
 
             /* ...make sure translation is successful */
-            BUG(msg.buffer == (void *)-1, _x("Invalid buffer address: %08x"), m.address);        
+            BUG(msg.buffer == (void *)-1, _x("Invalid buffer address: %08x"), m.address);
 
             /* ...retrieve information fields */
-            msg.id = XF_MSG_SRC(m.id), msg.opcode = m.opcode, msg.length = m.length, msg.error = m.error ;           
-        
+            msg.id = XF_MSG_SRC(m.id), msg.opcode = m.opcode, msg.length = m.length, msg.error = m.error ;
+
             TRACE(RSP, _b("R[%016llx]:(%08x,%u,%08x,%d)"), (UWORD64)m.id, m.opcode, m.length, m.address, m.error);
 
 #ifndef XA_DISABLE_EVENT
-            if (m.opcode == XF_EVENT)  
+            if (m.opcode == XF_EVENT)
             {
                 /* ...submit the event to application via callback. */
-                xf_g_ap->cdata->cb(xf_g_ap->cdata, XF_MSG_SRC_ID(msg.id), *(UWORD32*)m.address, (void *)m.address, m.length, m.error); 
+                xf_g_ap->cdata->cb(xf_g_ap->cdata, XF_MSG_SRC_ID(msg.id), *(UWORD32*)m.address, (void *)m.address, m.length, m.error);
             }
-            else 
+            else
 #endif
             /* ...lookup component basing on destination port specification */
 #ifdef DELAYED_SYNC_RESPONSE
@@ -379,10 +401,10 @@ int xf_proxy_init(xf_proxy_t *proxy, UWORD32 core)
 {
     UWORD32             i;
     int             r;
-    
+
     /* ...initialize proxy lock */
     __xf_lock_init(&proxy->lock);
-   
+
 #ifdef DELAYED_SYNC_RESPONSE
     /* ...initialize proxy lock for delayed sync response */
     __xf_lock_init(&proxy->lock_delayed_response);
@@ -393,29 +415,29 @@ int xf_proxy_init(xf_proxy_t *proxy, UWORD32 core)
 
     /* ...save proxy core - hmm, too much core identifiers - tbd */
     proxy->core = core;
-    
+
     /* ...line-up all clients into single-linked list */
     for (i = 0; i < XF_CFG_PROXY_MAX_CLIENTS - 1; i++)
     {
         proxy->cmap[i].next = i + 1;
     }
-    
+
     /* ...tail of the list points back to head (list terminator) */
     proxy->cmap[i].next = 0;
     /* ...initialize thread attributes (joinable, with minimal stack) */
 #if defined(HAVE_FREERTOS)
-    if ((r = __xf_thread_create(&proxy->thread, xf_proxy_thread, proxy, proxy_thread_name, NULL, PROXY_THREAD_STACK_SIZE, proxy->proxy_thread_priority)) < 0)
+    if ((r = __xf_thread_create(&proxy->thread, xf_proxy_thread, proxy, proxy_thread_name, NULL, proxy->proxy_thread_stack_size, proxy->proxy_thread_priority)) < 0)
 #else
-    if ((r = __xf_thread_create(&proxy->thread, xf_proxy_thread, proxy, proxy_thread_name, xf_g_ap->proxy_thread_stack, PROXY_THREAD_STACK_SIZE, proxy->proxy_thread_priority)) < 0)
+    if ((r = __xf_thread_create(&proxy->thread, xf_proxy_thread, proxy, proxy_thread_name, xf_g_ap->proxy_thread_stack, proxy->proxy_thread_stack_size, proxy->proxy_thread_priority)) < 0)
 #endif
     {
         TRACE(ERROR, _x("Failed to create polling thread: %d"), r);
         xf_ipc_close(&proxy->ipc, core);
         return r;
     }
-        
+
     TRACE(INIT, _b("proxy-%u[%p] opened"), core, proxy);
-    
+
     return 0;
 }
 
@@ -423,7 +445,7 @@ int xf_proxy_init(xf_proxy_t *proxy, UWORD32 core)
 void xf_proxy_close(xf_proxy_t *proxy)
 {
     UWORD32     core = proxy->core;
-    
+
     /* ...trigger proxy IPC interface close event */
     xf_ipc_close_set_event(&proxy->ipc, core);
 
@@ -455,12 +477,12 @@ void xf_proxy_close(xf_proxy_t *proxy)
 int xf_open(xf_proxy_t *proxy, xf_handle_t *handle, xf_id_t id, UWORD32 core, xf_response_cb response)
 {
     int     r;
-    
+
     /* ...retrieve auxiliary control buffer from proxy - need I */
     XF_CHK_ERR(handle->aux = xf_buffer_get(proxy->aux), XAF_MEMORY_ERR);
 
     /* ...initialize IPC data */
-    XF_CHK_API(xf_ipc_data_init(&handle->ipc));    
+    XF_CHK_API(xf_ipc_data_init(&handle->ipc));
 
     /* ...register client in interlocked fashion */
     xf_proxy_lock(proxy);
@@ -476,7 +498,7 @@ int xf_open(xf_proxy_t *proxy, xf_handle_t *handle, xf_id_t id, UWORD32 core, xf
         TRACE(ERROR, _x("client registering failed"));
         xf_client_free(proxy, handle);
     }
-    
+
     xf_proxy_unlock(proxy);
 
     /* ...if failed, release buffer handle */
@@ -493,7 +515,7 @@ int xf_open(xf_proxy_t *proxy, xf_handle_t *handle, xf_id_t id, UWORD32 core, xf
 
         TRACE(INIT, _b("component[%p]:(id=%s,core=%u) created"), handle, id, core);
     }
-    
+
     return XF_CHK_API(r);
 }
 
@@ -510,10 +532,10 @@ int xf_close(xf_handle_t *handle)
 
     /* ...acquire global proxy lock */
     xf_proxy_lock(proxy);
-    
+
     /* ...unregister component from DSP Interface Layer proxy (ignore result code) */
     ret = xf_client_unregister(proxy, handle);
-    
+
     if(ret < 0)
     {
         /* ...release global proxy lock */
@@ -530,10 +552,10 @@ int xf_close(xf_handle_t *handle)
 
     /* ...destroy IPC data */
     xf_ipc_data_destroy(&handle->ipc);
-    
+
     /* ...clear handle data */
     xf_buffer_put(handle->aux), handle->aux = NULL;
-    
+
     /* ...wipe out proxy pointer */
     handle->proxy = NULL;
 
@@ -549,20 +571,21 @@ int xf_route(xf_handle_t *src, UWORD32 src_port, xf_handle_t *dst, UWORD32 dst_p
     xf_buffer_t            *b;
     xf_route_port_msg_t    *m;
     xf_user_msg_t           msg;
-    int                     r; 
+    int                     r;
 
     /* ...sanity checks - proxy pointers are same */
     XF_CHK_ERR(proxy == dst->proxy, XAF_INVALIDVAL_ERR);
-    
+
     /* ...buffer data is sane */
-    XF_CHK_ERR(num && size && xf_is_power_of_two(align), XAF_INVALIDVAL_ERR);
-    
+    //XF_CHK_ERR(num && size && xf_is_power_of_two(align), XAF_INVALIDVAL_ERR);
+    XF_CHK_ERR(num && xf_is_power_of_two(align), XAF_INVALIDVAL_ERR);
+
     /* ...get control buffer */
     XF_CHK_ERR(b = xf_buffer_get(proxy->aux), XAF_MEMORY_ERR);
 
     /* ...get message buffer */
     m = xf_buffer_data(b);
-    
+
     /* ...fill-in message parameters */
     //m->src = __XF_PORT_SPEC2(src->id, src_port);
     m->dst = __XF_PORT_SPEC2(dst->id, dst_port);
@@ -576,21 +599,21 @@ int xf_route(xf_handle_t *src, UWORD32 src_port, xf_handle_t *dst, UWORD32 dst_p
     msg.length = sizeof(*m);
     msg.buffer = m;
 
-    /* ...synchronously execute command on DSP Interface Layer */    
+    /* ...synchronously execute command on DSP Interface Layer */
     r = xf_proxy_cmd_exec_with_lock(proxy, &msg);
 
     /* ...return buffer to proxy */
     xf_buffer_put(b);
-    
+
     /* ...check command execution is successful */
     XF_CHK_API(r);
 
     /* ...check result is successfull */
     XF_CHK_ERR(msg.opcode == XF_ROUTE, XAF_INVALIDVAL_ERR);
-    
+
     /* ...port binding completed */
     TRACE(GRAPH, _b("[%p]:%u bound to [%p]:%u"), src, src_port, dst, dst_port);
-    
+
     return msg.error;
 }
 
@@ -602,13 +625,13 @@ int xf_unroute(xf_handle_t *src, UWORD32 src_port)
     xf_unroute_port_msg_t  *m;
     xf_user_msg_t           msg;
     int                     r;
-    
+
     /* ...get control buffer */
     XF_CHK_ERR(b = xf_buffer_get(proxy->aux), XAF_MEMORY_ERR);
 
     /* ...get message buffer */
     m = xf_buffer_data(b);
-    
+
     /* ...fill-in message parameters */
     //m->src = __XF_PORT_SPEC2(src->id, src_port);
 
@@ -628,25 +651,25 @@ int xf_unroute(xf_handle_t *src, UWORD32 src_port)
     if ((r = xf_proxy_cmd_exec(proxy, &msg)) != 0)
     {
         TRACE(ERROR, _x("Command failed: %d"), r);
-    } 
+    }
     xf_proxy_unlock_delayed(proxy);
 #else //DELAYED_SYNC_RESPONSE
-    /* ...synchronously execute command on DSP Interface Layer */    
+    /* ...synchronously execute command on DSP Interface Layer */
     r = xf_proxy_cmd_exec_with_lock(proxy, &msg);
 #endif //DELAYED_SYNC_RESPONSE
 
     /* ...return buffer to proxy */
     xf_buffer_put(b);
-    
+
     /* ...check command execution is successfull */
     XF_CHK_API(r);
 
     /* ...check result is successful */
     XF_CHK_ERR(msg.opcode == XF_UNROUTE, XAF_INVALIDVAL_ERR);
- 
+
     /* ...port unbinding completed */
     TRACE(GRAPH, _b("[%p]:%u unbound"), src, src_port);
-   
+
     return msg.error;
 }
 
@@ -657,27 +680,27 @@ int xf_create_event_channel(xf_handle_t *src, UWORD32 src_config_param, xf_handl
     xf_buffer_t            *b;
     xf_event_channel_msg_t *m;
     xf_user_msg_t           msg;
-    int                     r; 
+    int                     r;
 
     /* ...buffer data is sane */
     XF_CHK_ERR(num && xf_is_power_of_two(align), XAF_INVALIDVAL_ERR);
-    
+
     /* ...get control buffer */
     XF_CHK_ERR(b = xf_buffer_get(proxy->aux), XAF_MEMORY_ERR);
 
     /* ...get message buffer */
     m = xf_buffer_data(b);
-    
+
     /* ...fill-in message parameters, port is irrelevant so default value 0 */
     m->src              = __XF_PORT_SPEC2(src->id, 0);
-    m->src_cfg_param    = src_config_param; 
+    m->src_cfg_param    = src_config_param;
 
     if (dst == NULL)
-    {    
+    {
         m->dst          = __XF_AP_PROXY(proxy->core);
     }
     else
-    { 
+    {
         m->dst          = __XF_PORT_SPEC2(dst->id, 0);
     }
 
@@ -692,18 +715,20 @@ int xf_create_event_channel(xf_handle_t *src, UWORD32 src_config_param, xf_handl
     msg.length = sizeof(*m);
     msg.buffer = m;
 
-    /* ...synchronously execute command on DSP Interface Layer */    
+    /* ...synchronously execute command on DSP Interface Layer */
     r = xf_proxy_cmd_exec_with_lock(proxy, &msg);
 
     /* ...return buffer to proxy */
     xf_buffer_put(b);
-    
+
     /* ...check command execution is successful */
     XF_CHK_API(r);
 
     /* ...check result is successfull */
     XF_CHK_ERR(msg.opcode == XF_EVENT_CHANNEL_CREATE, XAF_INVALIDVAL_ERR);
-    
+
+    TRACE(INIT, _b("Event channel created"));
+
     return XAF_NO_ERR;
 }
 
@@ -713,17 +738,17 @@ int xf_delete_event_channel(xf_handle_t *src, UWORD32 src_config_param, xf_handl
     xf_buffer_t                     *b;
     xf_event_channel_delete_msg_t   *m;
     xf_user_msg_t                   msg;
-    int                             r; 
+    int                             r;
 
     /* ...get control buffer */
     XF_CHK_ERR(b = xf_buffer_get(proxy->aux), XAF_MEMORY_ERR);
 
     /* ...get message buffer */
     m = xf_buffer_data(b);
-    
+
     /* ...fill-in message parameters */
     m->src              = __XF_PORT_SPEC2(src->id, 0);
-    m->src_cfg_param    = src_config_param; 
+    m->src_cfg_param    = src_config_param;
     m->dst              = __XF_AP_PROXY(proxy->core);
     m->dst_cfg_param    = dst_config_param;
 
@@ -733,18 +758,18 @@ int xf_delete_event_channel(xf_handle_t *src, UWORD32 src_config_param, xf_handl
     msg.length  = sizeof(*m);
     msg.buffer  = m;
 
-    /* ...synchronously execute command on DSP Interface Layer */    
+    /* ...synchronously execute command on DSP Interface Layer */
     r = xf_proxy_cmd_exec_with_lock(proxy, &msg);
 
     /* ...return buffer to proxy */
     xf_buffer_put(b);
-    
+
     /* ...check command execution is successful */
     XF_CHK_API(r);
 
     /* ...check result is successfull */
     XF_CHK_ERR(msg.opcode == XF_EVENT_CHANNEL_DELETE, XAF_INVALIDVAL_ERR);
-    
+
     return XAF_NO_ERR;
 }
 #endif /* XA_DISABLE_EVENT */
@@ -754,7 +779,7 @@ int xf_command(xf_handle_t *handle, UWORD32 port, UWORD32 opcode, void *buffer, 
 {
     xf_proxy_t     *proxy = handle->proxy;
     xf_proxy_msg_t  msg;
-    
+
     /* ...fill-in message parameters */
     msg.id = __XF_MSG_ID(__XF_AP_CLIENT(proxy->core, handle->client), __XF_PORT_SPEC2(handle->id, port));
     msg.opcode = opcode;
@@ -773,19 +798,19 @@ int xf_pause(xf_handle_t *comp, WORD32 port)
 {
     xf_proxy_t             *proxy = comp->proxy;
     xf_user_msg_t           msg;
-    
+
     /* ...set command parameters */
     msg.id = __XF_MSG_ID(__XF_AP_PROXY(proxy->core), __XF_PORT_SPEC2(comp->id, port));
     msg.opcode = XF_PAUSE;
     msg.length = 0;
     msg.buffer = NULL;
 
-    /* ...synchronously execute command on DSP Interface Layer */    
+    /* ...synchronously execute command on DSP Interface Layer */
     XF_CHK_API(xf_proxy_cmd_exec_with_lock(proxy, &msg));
 
     /* ...check result is successful */
     XF_CHK_ERR(msg.opcode == XF_PAUSE, XAF_INVALIDVAL_ERR);
-    
+
 	return msg.error;
 }
 
@@ -794,19 +819,19 @@ int xf_resume(xf_handle_t *comp, WORD32 port)
 {
     xf_proxy_t             *proxy = comp->proxy;
     xf_user_msg_t           msg;
-    
+
     /* ...set command parameters */
     msg.id = __XF_MSG_ID(__XF_AP_PROXY(proxy->core), __XF_PORT_SPEC2(comp->id, port));
     msg.opcode = XF_RESUME;
     msg.length = 0;
     msg.buffer = NULL;
 
-    /* ...synchronously execute command on DSP Interface Layer */    
+    /* ...synchronously execute command on DSP Interface Layer */
     XF_CHK_API(xf_proxy_cmd_exec_with_lock(proxy, &msg));
 
     /* ...check result is successful */
     XF_CHK_ERR(msg.opcode == XF_RESUME, XAF_INVALIDVAL_ERR);
-    
+
 	return msg.error;
 }
 
@@ -823,11 +848,11 @@ static inline int xf_prepare_ext_config(WORD32 *p_param, WORD32 num_param, void 
     for(i = 0, k = 0; i < num_param; i++, k += 2)
     {
         smsg->desc.id = p_param[k + XA_EXT_CFG_ID_OFFSET];
-        
+
         app_ext_buf   = (xaf_ext_buffer_t *) p_param[k + XA_EXT_CFG_BUF_PTR_OFFSET];
 
         /* ...4 bytes to hold the buffer pointer in smsg */
-        desc_len = sizeof(UWORD32); 
+        desc_len = sizeof(UWORD32);
 
         if (XAF_CHK_EXT_PARAM_FLAG(app_ext_buf->ext_config_flags, XAF_EXT_PARAM_FLAG_OFFSET_ZERO_COPY)) //(zero_copy_flag)
         {
@@ -879,7 +904,7 @@ int xf_set_config_with_lock(xf_handle_t *comp, void *buffer, UWORD32 length, WOR
     xf_user_msg_t           msg;
     UWORD32                 message_size_total;
     WORD32                 i, k;
-    
+
     xf_proxy_lock(proxy);
 
     if(cfg_ext_flag)
@@ -930,7 +955,7 @@ int xf_get_config_with_lock(xf_handle_t *comp, void *buffer, UWORD32 length, WOR
     UWORD32                 message_size_total = 0;
     UWORD32                 desc_len;
     int                     i, k;
-    
+
     xf_proxy_lock(proxy);
 
     if(cfg_ext_flag)
@@ -991,7 +1016,7 @@ int xf_get_config_with_lock(xf_handle_t *comp, void *buffer, UWORD32 length, WOR
 
                 /* ...copy data bytes from internal to external buffer pointer. */
                 memcpy(app_ext_buf->data, xf_ext_buf->data, xf_ext_buf->max_data_size);
-                
+
                 /* ...4 byte alignment is required for accessing next param structure + sizeof(xaf_ext_buffer_t) */
                 desc_len += ((xf_ext_buf->max_data_size + (XAF_4BYTE_ALIGN-1)) & ~(XAF_4BYTE_ALIGN-1)) + sizeof(xaf_ext_buffer_t);
             }
@@ -1031,7 +1056,6 @@ int xf_set_priorities(xf_proxy_t *proxy, UWORD32 core, UWORD32 n_rt_priorities,
         .n_rt_priorities = n_rt_priorities,
         .rt_priority_base = rt_priority_base,
         .bg_priority = bg_priority,
-        .stack_size = STACK_SIZE,
     };
 
     /* ...set session-id: source is proxy at App Interface Layer, destination is proxy at DSP Interface Layer */
@@ -1060,10 +1084,10 @@ int xf_set_priorities(xf_proxy_t *proxy, UWORD32 core, UWORD32 n_rt_priorities,
  ******************************************************************************/
 
 /* ...allocate buffer pool */
-int xf_pool_alloc(xf_proxy_t *proxy, UWORD32 number, UWORD32 length, xf_pool_type_t type, xf_pool_t **pool, WORD32 id)
+int xf_pool_alloc(xf_proxy_t *proxy, UWORD32 number, UWORD32 length, xf_pool_type_t mem_pool_type, xf_pool_t **pool, WORD32 id)
 {
     xf_pool_t      *p;
-    xf_buffer_t    *b;
+    xf_buffer_t    *b = NULL;
     void           *data;
     int             r, ret;
 
@@ -1075,22 +1099,34 @@ int xf_pool_alloc(xf_proxy_t *proxy, UWORD32 number, UWORD32 length, xf_pool_typ
 
     /* ...allocate data structure */
 
-    ret = xaf_malloc((void **)&p, (offset_of(xf_pool_t, buffer) + number * sizeof(xf_buffer_t)), id); 
+    ret = xaf_malloc((void **)&p, (offset_of(xf_pool_t, buffer) + number * sizeof(xf_buffer_t)), id);
     if(ret != XAF_NO_ERR)
         return ret;
 
     XF_CHK_ERR(p, XAF_MEMORY_ERR);
 
+    /* ...get control buffer */
+    if(id != XF_POOL_FRMWK_AUX)
+    {
+        XF_CHK_ERR(b = xf_buffer_get(proxy->aux), XAF_MEMORY_ERR);
+    }
+
     /* ...issue memory pool allocation request to DSP Interface Layer */
     xf_proxy_lock(proxy);
-    r = xf_proxy_buffer_alloc(proxy, number * length, &p->p);
+    r = xf_proxy_buffer_alloc(proxy, number * length, &p->p, mem_pool_type, id, b);
     xf_proxy_unlock(proxy);
-    
+
+    /* ...return buffer to proxy */
+    if(id != XF_POOL_FRMWK_AUX)
+    {
+        xf_buffer_put(b);
+    }
+
     /* ...if operation is failed, do cleanup */
     if (r < 0)
     {
         TRACE(ERROR, _x("failed to allocate buffer: %d"), r);
-        xf_g_ap->xf_mem_free_fxn(p, id);
+        xaf_free((void *)p, id);
         return r;
     }
     else
@@ -1099,13 +1135,13 @@ int xf_pool_alloc(xf_proxy_t *proxy, UWORD32 number, UWORD32 length, xf_pool_typ
         p->number = number, p->length = length;
         p->proxy = proxy;
     }
- 
+
     /* ...create individual buffers and link them into free list */
     for (p->free = b = &p->buffer[0], data = p->p; number > 0; number--, b++)
     {
         /* ...set address of the buffer (no length there) */
         b->address = data;
-            
+
         /* ...file buffer into the free list */
         b->link.next = b + 1;
 
@@ -1117,35 +1153,42 @@ int xf_pool_alloc(xf_proxy_t *proxy, UWORD32 number, UWORD32 length, xf_pool_typ
     b[-1].link.next = NULL;
 
     TRACE(BUFFER, _b("[%p]: pool[%p] created: %u * %u"), proxy, p, p->number, p->length);
-    
+
     /* ...return buffer pointer */
     *pool = p;
-    
+
     return 0;
 }
 
 /* ...buffer pool destruction */
-int xf_pool_free(xf_pool_t *pool, WORD32 id)
+int xf_pool_free(xf_pool_t *pool, WORD32 id, xf_pool_type_t mem_pool_type)
 {
     xf_proxy_t     *proxy = pool->proxy;
     int ret;
+    xf_buffer_t    *b = NULL;
+
+    /* ...get control buffer */
+    XF_CHK_ERR(b = xf_buffer_get(proxy->aux), XAF_MEMORY_ERR);
 
     /* ...check buffers are all freed - tbd */
 
     /* ...use global proxy lock for pool operations protection */
     xf_proxy_lock(proxy);
-    
+
     /* ...release allocated buffer on DSP Interface Layer */
-    ret = xf_proxy_buffer_free(proxy, pool->p, pool->length * pool->number);
+    ret = xf_proxy_buffer_free(proxy, pool->p, pool->length * pool->number, mem_pool_type, id, b);
 
     /* ...release global proxy lock */
     xf_proxy_unlock(proxy);
-    
+
+    /* ...return buffer to proxy */
+    xf_buffer_put(b);
+
     if(ret < 0)
         return ret;
 
     /* ...deallocate pool structure itself */
-    xf_g_ap->xf_mem_free_fxn(pool, id);
+    xaf_free((void *)pool, id);
 
     TRACE(BUFFER, _b("[%p]::pool[%p] destroyed"), proxy, pool);
 
@@ -1159,7 +1202,7 @@ xf_buffer_t * xf_buffer_get(xf_pool_t *pool)
 
     /* ...use global proxy lock for pool operations protection */
     xf_proxy_lock(pool->proxy);
-    
+
     /* ...take buffer from a head of the free list */
     if ((b = pool->free) != NULL)
     {
@@ -1168,9 +1211,13 @@ xf_buffer_t * xf_buffer_get(xf_pool_t *pool)
 
         TRACE(BUFFER, _b("pool[%p]::get[%p]"), pool, b);
     }
+    else
+    {
+        TRACE(ERROR, _x("aux buffer_get failed"));
+    }
 
     xf_proxy_unlock(pool->proxy);
-    
+
     return b;
 }
 
@@ -1178,13 +1225,13 @@ xf_buffer_t * xf_buffer_get(xf_pool_t *pool)
 void xf_buffer_put(xf_buffer_t *buffer)
 {
     xf_pool_t  *pool = buffer->link.pool;
-    
+
     /* ...use global proxy lock for pool operations protection */
     xf_proxy_lock(pool->proxy);
-    
+
     /* ...put buffer back to a pool */
     buffer->link.next = pool->free, pool->free = buffer;
-    
+
     TRACE(BUFFER, _b("pool[%p]::put[%p]"), pool, buffer);
 
     xf_proxy_unlock(pool->proxy);

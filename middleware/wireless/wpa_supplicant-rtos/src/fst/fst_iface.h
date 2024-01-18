@@ -11,7 +11,7 @@
 
 #include "utils/includes.h"
 #include "utils/common.h"
-#include "list.h"
+#include "dl_list.h"
 #include "fst.h"
 
 struct fst_iface

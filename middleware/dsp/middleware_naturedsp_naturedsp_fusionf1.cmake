@@ -3,7 +3,7 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-if((CONFIG_BOARD STREQUAL evkmimxrt595))
+if((CONFIG_BOARD STREQUAL evkmimxrt595 OR CONFIG_BOARD STREQUAL evkmimx8ulp))
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
   ${CMAKE_CURRENT_LIST_DIR}/naturedsp/fusionf1/include

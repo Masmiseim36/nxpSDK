@@ -363,6 +363,7 @@ char *ip6addr_ntoa_r(const ip6_addr_t *addr, char *buf, int buflen);
 
 void ip6_addr_net_by_mask(const ip6_addr_t *addr, ip6_addr_t *net_addr, uint8_t mask);
 
+int ip6_addr_prefix_eq(const ip6_addr_t *addr1, const ip6_addr_t *addr2, uint8_t prefix_len);
 
 #ifdef __cplusplus
 }

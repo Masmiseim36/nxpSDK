@@ -23,6 +23,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/src/utils/crc32.c
   ${CMAKE_CURRENT_LIST_DIR}/src/utils/ip_addr.c
   ${CMAKE_CURRENT_LIST_DIR}/src/utils/block_alloc.c
+  ${CMAKE_CURRENT_LIST_DIR}/freertos/src/wpa_cli.c
   ${CMAKE_CURRENT_LIST_DIR}/wpa_supplicant/config.c
   ${CMAKE_CURRENT_LIST_DIR}/wpa_supplicant/notify.c
   ${CMAKE_CURRENT_LIST_DIR}/wpa_supplicant/bss.c
@@ -99,6 +100,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/src/crypto/md5.c
   ${CMAKE_CURRENT_LIST_DIR}/src/crypto/md5-internal.c
   ${CMAKE_CURRENT_LIST_DIR}/src/crypto/sha1-internal.c
+  ${CMAKE_CURRENT_LIST_DIR}/src/crypto/fips_prf_internal.c
   ${CMAKE_CURRENT_LIST_DIR}/src/crypto/sha256-internal.c
   ${CMAKE_CURRENT_LIST_DIR}/src/crypto/sha1.c
   ${CMAKE_CURRENT_LIST_DIR}/src/crypto/sha256.c
@@ -162,7 +164,11 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/src/eap_peer/eap_mschapv2.c
   ${CMAKE_CURRENT_LIST_DIR}/src/eap_common/chap.c
   ${CMAKE_CURRENT_LIST_DIR}/src/eap_peer/mschapv2.c
+  ${CMAKE_CURRENT_LIST_DIR}/src/eap_peer/eap_fast.c
+  ${CMAKE_CURRENT_LIST_DIR}/src/eap_peer/eap_fast_pac.c
   ${CMAKE_CURRENT_LIST_DIR}/src/eap_peer/eap_gtc.c
+  ${CMAKE_CURRENT_LIST_DIR}/src/eap_common/eap_fast_common.c
+  ${CMAKE_CURRENT_LIST_DIR}/hostapd/hlr_auc_gw.c
   ${CMAKE_CURRENT_LIST_DIR}/hostapd/ctrl_iface.c
   ${CMAKE_CURRENT_LIST_DIR}/hostapd/eap_register.c
   ${CMAKE_CURRENT_LIST_DIR}/src/rsn_supp/wpa_ft.c
@@ -174,26 +180,46 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/src/radius/radius_das.c
   ${CMAKE_CURRENT_LIST_DIR}/src/radius/radius_client.c
   ${CMAKE_CURRENT_LIST_DIR}/src/radius/radius.c
+  ${CMAKE_CURRENT_LIST_DIR}/src/eap_server/eap_sim_db.c
+  ${CMAKE_CURRENT_LIST_DIR}/src/eap_common/eap_sim_common.c
   ${CMAKE_CURRENT_LIST_DIR}/src/eap_server/eap_server_ttls.c
   ${CMAKE_CURRENT_LIST_DIR}/src/eap_server/eap_server_tls_common.c
   ${CMAKE_CURRENT_LIST_DIR}/src/eap_server/eap_server_peap.c
   ${CMAKE_CURRENT_LIST_DIR}/src/eap_server/eap_server_mschapv2.c
   ${CMAKE_CURRENT_LIST_DIR}/src/eap_server/eap_server_md5.c
   ${CMAKE_CURRENT_LIST_DIR}/src/eap_server/eap_server_gtc.c
+  ${CMAKE_CURRENT_LIST_DIR}/src/eap_server/eap_server_fast.c
+  ${CMAKE_CURRENT_LIST_DIR}/src/eap_server/eap_server_sim.c
+  ${CMAKE_CURRENT_LIST_DIR}/src/eap_server/eap_server_aka.c
   ${CMAKE_CURRENT_LIST_DIR}/src/ap/acs.c
   ${CMAKE_CURRENT_LIST_DIR}/src/utils/eloop_freertos.c
+  ${CMAKE_CURRENT_LIST_DIR}/src/crypto/milenage.c
+  ${CMAKE_CURRENT_LIST_DIR}/src/eap_peer/eap_sim.c
+  ${CMAKE_CURRENT_LIST_DIR}/src/eap_peer/eap_aka.c
+  ${CMAKE_CURRENT_LIST_DIR}/wpa_supplicant/dpp_supplicant.c
+  ${CMAKE_CURRENT_LIST_DIR}/wpa_supplicant/interworking.c
+  ${CMAKE_CURRENT_LIST_DIR}/src/common/dpp.c
+  ${CMAKE_CURRENT_LIST_DIR}/src/common/dpp_auth.c
+  ${CMAKE_CURRENT_LIST_DIR}/src/common/dpp_backup.c
+  ${CMAKE_CURRENT_LIST_DIR}/src/common/dpp_crypto.c
+  ${CMAKE_CURRENT_LIST_DIR}/src/common/dpp_pkex.c
+  ${CMAKE_CURRENT_LIST_DIR}/src/common/dpp_reconfig.c
+  ${CMAKE_CURRENT_LIST_DIR}/src/common/dpp_tcp.c
+  ${CMAKE_CURRENT_LIST_DIR}/src/common/gas_server.c
+  ${CMAKE_CURRENT_LIST_DIR}/src/utils/json.c
+  ${CMAKE_CURRENT_LIST_DIR}/src/tls/asn1.c
+  ${CMAKE_CURRENT_LIST_DIR}/src/ap/dpp_hostapd.c
+  ${CMAKE_CURRENT_LIST_DIR}/src/ap/gas_query_ap.c
+  ${CMAKE_CURRENT_LIST_DIR}/src/ap/gas_serv.c
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
   ${CMAKE_CURRENT_LIST_DIR}/.
-  ${CMAKE_CURRENT_LIST_DIR}/hostapd
-  ${CMAKE_CURRENT_LIST_DIR}/wpa_supplicant
-  ${CMAKE_CURRENT_LIST_DIR}/freertos
-  ${CMAKE_CURRENT_LIST_DIR}/freertos/src
   ${CMAKE_CURRENT_LIST_DIR}/src
-  ${CMAKE_CURRENT_LIST_DIR}/src/ap
+  ${CMAKE_CURRENT_LIST_DIR}/src/utils
   ${CMAKE_CURRENT_LIST_DIR}/src/common
   ${CMAKE_CURRENT_LIST_DIR}/src/crypto
+  ${CMAKE_CURRENT_LIST_DIR}/src/ap
   ${CMAKE_CURRENT_LIST_DIR}/src/drivers
   ${CMAKE_CURRENT_LIST_DIR}/src/eap_common
   ${CMAKE_CURRENT_LIST_DIR}/src/eap_peer
@@ -207,9 +233,12 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC
   ${CMAKE_CURRENT_LIST_DIR}/src/radius
   ${CMAKE_CURRENT_LIST_DIR}/src/rsn_supp
   ${CMAKE_CURRENT_LIST_DIR}/src/tls
-  ${CMAKE_CURRENT_LIST_DIR}/src/utils
   ${CMAKE_CURRENT_LIST_DIR}/src/wps
   ${CMAKE_CURRENT_LIST_DIR}/port/mbedtls
+  ${CMAKE_CURRENT_LIST_DIR}/hostapd
+  ${CMAKE_CURRENT_LIST_DIR}/wpa_supplicant
+  ${CMAKE_CURRENT_LIST_DIR}/freertos
+  ${CMAKE_CURRENT_LIST_DIR}/freertos/src
 )
 
 if(CONFIG_USE_COMPONENT_CONFIGURATION)

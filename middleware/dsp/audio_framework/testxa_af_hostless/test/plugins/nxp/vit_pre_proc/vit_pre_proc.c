@@ -154,40 +154,6 @@ extern RETUNE_VOICESEEKERLIGHT_plugin_t vsl;
  * DSP functions
  ******************************************************************************/
 
-//static void CM33_Print(const char* ptr, ...)
-//{
-//	//Create buffer with processed string
-//	static char buf[256];
-//	int message_length;
-//	va_list args;
-//	va_start(args, ptr);
-//	message_length = vsprintf(buf, ptr, args);
-//	va_end(args);
-//
-//	//Create srtm_message for sending string to CM33 side
-//	srtm_message msg = {0};
-//	msg.head.type = SRTM_MessageTypeNotification;
-//	msg.head.majorVersion = SRTM_VERSION_MAJOR;
-//	msg.head.minorVersion = SRTM_VERSION_MINOR;
-//	msg.head.category = SRTM_MessageCategory_AUDIO;
-//	msg.head.command  = SRTM_Print_String;
-//
-//	//Send string to CM33
-//	int pos = 0;
-//	for(int i = 0; i<message_length; i++)
-//	{
-//		msg.param[pos++] = buf[i];
-//		if( ((pos+1)==SRTM_CMD_PARAMS_MAX) || ((i+1)==message_length) )
-//		{
-//			msg.param[pos] = '\0';
-//			pos = 0;
-//			xos_mutex_lock(&dsp.rpmsgMutex);
-//			rpmsg_lite_send(dsp.rpmsg, dsp.ept, MCU_EPT_ADDR, (char *)&msg, sizeof(srtm_message), 100);
-//			xos_mutex_unlock(&dsp.rpmsgMutex);
-//		}
-//	}
-//}
-
 static inline void xa_vit_pre_proc_preinit(vit_pre_proc_t *d)
 {
     /* ...pre-configuration initialization; reset internal data */
@@ -461,8 +427,13 @@ static XA_ERRORCODE xa_vit_pre_proc_set_config_param(vit_pre_proc_t *d, WORD32 i
 
     case XA_VIT_PRE_PROC_CONFIG_PARAM_INPUT_FRAME_SIZE_US:
     case XA_VIT_PRE_PROC_CONFIG_PARAM_OUTPUT_FRAME_SIZE_US:
-        d->frame_size_us = (UWORD32)i_value;
-        return XA_NO_ERROR;
+        {
+            if (i_value != 30000)
+                XF_CHK_ERR(0, XA_VIT_PRE_PROC_CONFIG_NONFATAL_RANGE);
+            else
+                d->frame_size_us = (UWORD32)i_value;
+            return XA_NO_ERROR;
+        }
     default:
         TRACE(ERROR, _x("Invalid parameter: %X"), i_idx);
         return XA_API_FATAL_INVALID_CMD_TYPE;
@@ -886,11 +857,7 @@ VIT_ReturnStatus_en VIT_Initialize(vit_pre_proc_t *d)
 {
     VIT_ReturnStatus_en     VIT_Status;                             /* Function call status */
 
-    pMem = malloc(dsp.size_of_VIT_model + VIT_MODEL_ALIGNMENT);
-    VIT_Model = (PL_UINT8 *)INSTALLOC_ALIGN(pMem);
-    memcpy(VIT_Model, dsp.VITModelCM_33, dsp.size_of_VIT_model);
-
-    VIT_Status = VIT_SetModel(VIT_Model, VIT_MODEL_IN_FAST_MEM);
+    VIT_Status = VIT_SetModel(dsp.VITModelCM_33, VIT_MODEL_IN_SLOW_MEM);
 
     if (VIT_Status != VIT_SUCCESS)
     {
@@ -906,9 +873,9 @@ VIT_ReturnStatus_en VIT_Initialize(vit_pre_proc_t *d)
      *   Configure VIT Instance Parameters
      */
     VITInstParams.SampleRate_Hz            = VIT_SAMPLE_RATE;
-    VITInstParams.SamplesPerFrame          = d->frame_size_us == 10000 ? VIT_SAMPLES_PER_10MS_FRAME : VIT_SAMPLES_PER_30MS_FRAME;
+    VITInstParams.SamplesPerFrame          = VIT_SAMPLES_PER_30MS_FRAME;
     VITInstParams.NumberOfChannel          = NUMBER_OF_CHANNELS;
-    VITInstParams.DeviceId                 = DEVICE_ID;
+    VITInstParams.DeviceId                 = VIT_DEVICE_ID;
     VITInstParams.APIVersion               = VIT_API_VERSION;
 
     /*

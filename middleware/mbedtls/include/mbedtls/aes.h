@@ -81,7 +81,8 @@
 extern "C" {
 #endif
 
-#if !defined(MBEDTLS_AES_ALT)
+/* NXP added MBEDTLS_AES_CTX_ALT */
+#if !(defined(MBEDTLS_AES_ALT) || defined(MBEDTLS_AES_CTX_ALT))
 // Regular implementation
 //
 

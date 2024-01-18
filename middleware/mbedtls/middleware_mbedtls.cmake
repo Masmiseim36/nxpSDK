@@ -3,7 +3,7 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-if(CONFIG_USE_utility_debug_console AND (CONFIG_USE_middleware_mbedtls_port_ksdk))
+if(CONFIG_USE_utility_debug_console AND (CONFIG_USE_middleware_mbedtls_port_ksdk OR CONFIG_USE_middleware_mbedtls_port_els_pkc))
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/library/aes.c
@@ -115,6 +115,12 @@ if(CONFIG_USE_COMPONENT_CONFIGURATION)
   if(CONFIG_TOOLCHAIN STREQUAL iar)
     target_compile_options(${MCUX_SDK_PROJECT_NAME} PUBLIC
       --diag_suppress Pa167,Pe177,Pe191,Pe546
+    )
+  endif()
+  if(CONFIG_TOOLCHAIN STREQUAL armgcc)
+    target_compile_options(${MCUX_SDK_PROJECT_NAME} PUBLIC
+      -fomit-frame-pointer
+      -Wno-unused-function
     )
   endif()
 

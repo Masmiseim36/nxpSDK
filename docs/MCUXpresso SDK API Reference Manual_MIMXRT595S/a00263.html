@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: PINT: Pin Interrupt and Pattern Match Driver</title>
+<title>MCUXpresso SDK API Reference Manual: MU: Messaging Unit</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,215 +99,216 @@ $(document).ready(function(){initNavTree('a00263.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#files">Files</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">PINT: Pin Interrupt and Pattern Match Driver</div>  </div>
+<div class="title">MU: Messaging Unit</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a driver for the Pin Interrupt and Pattern match (PINT).<br/>
- <br/>
-It can configure one or more pins to generate a pin interrupt when the pin or pattern match conditions are met. The pins do not have to be configured as gpio pins however they must be connected to PINT via INPUTMUX. Only the pin interrupt or pattern match function can be active for interrupt generation. If the pin interrupt function is enabled then the pattern match function can be used for wakeup via RXEV. <br/>
-</p>
-<h1><a class="anchor" id="PINTInit"></a>
-Pin Interrupt and Pattern match Driver operation</h1>
-<p><a class="el" href="a00263.html#ga363edbba9536380728e44bd7d1a0e7df" title="Configure PINT peripheral pin interrupt. ">PINT_PinInterruptConfig()</a> function configures the pins for pin interrupt.</p>
-<p><a class="el" href="a00263.html#ga1dc66cd865640c0b60eb128a868eab37" title="Configure PINT pattern match. ">PINT_PatternMatchConfig()</a> function configures the pins for pattern match.</p>
-<h2><a class="anchor" id="PINTPinInterruptTpyUC"></a>
-Pin Interrupt use case</h2>
-<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/pint </p>
-<h2><a class="anchor" id="PINTPatternMatchUC"></a>
-Pattern match use case</h2>
-<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/pint </p>
+<p>The MCUXpresso SDK provides a driver for the MU module of MCUXpresso SDK devices.</p>
+<h1><a class="anchor" id="MUFunc"></a>
+Function description</h1>
+<p>The MU driver provides these functions:</p>
+<ul>
+<li>Functions to initialize the MU module.</li>
+<li>Functions to send and receive messages.</li>
+<li>Functions for MU flags for both MU sides.</li>
+<li>Functions for status flags and interrupts.</li>
+<li>Other miscellaneous functions.</li>
+</ul>
+<h2><a class="anchor" id="MUInit"></a>
+MU initialization</h2>
+<p>The function <a class="el" href="a00263.html#ga59dde6d6ef6bd1016eafe1e6faf7a6d9" title="Initializes the MU module. ">MU_Init()</a> initializes the MU module and enables the MU clock. It should be called before any other MU functions.<br/>
+ The function <a class="el" href="a00263.html#ga956ac92cddf9794a9155b346f4db2044" title="De-initializes the MU module. ">MU_Deinit()</a> deinitializes the MU module and disables the MU clock. No MU functions can be called after this function.<br/>
+ </p>
+<h2><a class="anchor" id="MUMsg"></a>
+MU message</h2>
+<p>The MU message must be sent when the transmit register is empty. The MU driver provides blocking API and non-blocking API to send message.<br/>
+ The <a class="el" href="a00263.html#gae4e41714bd6cf6e3de866e1aaf5b85a2" title="Writes a message to the TX register. ">MU_SendMsgNonBlocking()</a> function writes a message to the MU transmit register without checking the transmit register status. The upper layer should check that the transmit register is empty before calling this function. This function can be used in the ISR for better performance.<br/>
+ The <a class="el" href="a00263.html#gaedd7d1f0418441a61a2587a8db322ecd" title="Blocks to send a message. ">MU_SendMsg()</a> function is a blocking function. It waits until the transmit register is empty and sends the message.<br/>
+ Correspondingly, there are blocking and non-blocking APIs for receiving a message. The MU_ReadMsgNonBlocking() function is a non-blocking API. The MU_ReadMsg() function is the blocking API.</p>
+<h2><a class="anchor" id="MUFlags"></a>
+MU flags</h2>
+<p>The MU driver provides 3-bit general purpose flags. When the flags are set on one side, they are reflected on the other side.<br/>
+ The MU flags must be set when the previous flags have been updated to the other side. The MU driver provides a non-blocking function and a blocking function. The blocking function <a class="el" href="a00263.html#ga392ac71819def4a3e9d34fd1daf3fff0" title="Blocks setting the 3-bit MU flags reflect on the other MU side. ">MU_SetFlags()</a> waits until previous flags have been updated to the other side and then sets flags. The non-blocking function sets the flags directly. Ensure that the kMU_FlagsUpdatingFlag is not pending before calling this function.<br/>
+ The function <a class="el" href="a00263.html#ga4fbbf69b6157a909bcf6bb9523419834" title="Gets the current value of the 3-bit MU flags set by the other side. ">MU_GetFlags()</a> gets the MU flags on the current side.</p>
+<h2><a class="anchor" id="MUStat"></a>
+Status and interrupt</h2>
+<p>The function <a class="el" href="a00263.html#ga90e31d91ebb2a97c4b8ac449bb4e2a4e" title="Gets the MU status flags. ">MU_GetStatusFlags()</a> returns all MU status flags. Use the _mu_status_flags to check for specific flags, for example, to check RX0 and RX1 register full, use the following code:</p>
+<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/mu The receive full flags are cleared automatically after messages are read out. The transmit empty flags are cleared automatically after new messages are written to the transmit register. The general purpose interrupt flags must be cleared manually using the function <a class="el" href="a00263.html#gae9097788e142b8cb891eddfcbfc60c26" title="Clears the specific MU status flags. ">MU_ClearStatusFlags()</a>.<br/>
+ Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/mu To enable or disable a specific interrupt, use <a class="el" href="a00263.html#ga5ea7e2b8b70b2f7a44013e9a8dded335" title="Enables the specific MU interrupts. ">MU_EnableInterrupts()</a> and <a class="el" href="a00263.html#gaecadc0cf75fd66e80737b33c0971cbca" title="Disables the specific MU interrupts. ">MU_DisableInterrupts()</a> functions. The interrupts to enable or disable should be passed in as a bit mask of the _mu_interrupt_enable.<br/>
+ The <a class="el" href="a00263.html#ga1c78b4336b2f9ef4a4ca8ff22be7116c" title="Triggers interrupts to the other core. ">MU_TriggerInterrupts()</a> function triggers general purpose interrupts and NMI to the other core. The interrupts to trigger are passed in as a bit mask of the _mu_interrupt_trigger. If previously triggered interrupts have not been processed by the other side, this function returns an error.</p>
+<h2><a class="anchor" id="MUMisc"></a>
+MU misc functions</h2>
+<p>The MU_BootCoreB() and MU_HoldCoreBReset() functions should only be used from A side. They are used to boot the core B or to hold core B in reset.<br/>
+ The MU_ResetBothSides() function resets MU at both A and B sides. However, only the A side can call this function.<br/>
+ If a core enters stop mode, the platform clock of this core is disabled by default. The function MU_SetClockOnOtherCoreEnable() forces the other core's platform clock to remain enabled even after that core has entered a stop mode. In this case, the other core's platform clock keeps running until the current core enters stop mode too.<br/>
+ Function <a class="el" href="a00263.html#ga4c9449aca64b03c381ae1b7e1720c61b" title="Gets the power mode of the other core. ">MU_GetOtherCorePowerMode()</a> gets the power mode of the other core. </p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
-Files</h2></td></tr>
-<tr class="memitem:a00206"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00206.html">fsl_pint.h</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga262ac9596c0926fbe5f346e0f6aaf9f5"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga262ac9596c0926fbe5f346e0f6aaf9f5">pint_cb_t</a> )(<a class="el" href="a00263.html#ga15da1f70e8d0a05e9d492d01ceca7da8">pint_pin_int_t</a> pintr, uint32_t pmatch_status)</td></tr>
-<tr class="memdesc:ga262ac9596c0926fbe5f346e0f6aaf9f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">PINT Callback function.  <a href="#ga262ac9596c0926fbe5f346e0f6aaf9f5">More...</a><br/></td></tr>
-<tr class="separator:ga262ac9596c0926fbe5f346e0f6aaf9f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa25bd5e99e58a228062020d6bc6f0f64"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa25bd5e99e58a228062020d6bc6f0f64"></a>
+typedef enum <a class="el" href="a00263.html#ga8609846a236f63d7fffe934fde076af1">_mu_msg_reg_index</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gaa25bd5e99e58a228062020d6bc6f0f64">mu_msg_reg_index_t</a></td></tr>
+<tr class="memdesc:gaa25bd5e99e58a228062020d6bc6f0f64"><td class="mdescLeft">&#160;</td><td class="mdescRight">MU message register. <br/></td></tr>
+<tr class="separator:gaa25bd5e99e58a228062020d6bc6f0f64"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga6a17e5c52721f6eb754f54cc72b58c91"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga6a17e5c52721f6eb754f54cc72b58c91">pint_pin_enable_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00263.html#gga6a17e5c52721f6eb754f54cc72b58c91aa48de84b39b48759086f2d7ae0c8091e">kPINT_PinIntEnableNone</a> = 0U, 
+<tr class="memitem:gae0771a3d173c2b3bf358aff30664f8bf"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gae0771a3d173c2b3bf358aff30664f8bf">_mu_status_flags</a> { <br/>
+&#160;&#160;<a class="el" href="a00263.html#ggae0771a3d173c2b3bf358aff30664f8bfa8c78ea862685cbf3168dd556137f481b">kMU_Tx0EmptyFlag</a> = (1U &lt;&lt; (MU_SR_TEn_SHIFT + 3U)), 
 <br/>
-&#160;&#160;<a class="el" href="a00263.html#gga6a17e5c52721f6eb754f54cc72b58c91ae873d30aec2ca54de88c69f55ea42a07">kPINT_PinIntEnableRiseEdge</a> = PINT_PIN_RISE_EDGE, 
+&#160;&#160;<a class="el" href="a00263.html#ggae0771a3d173c2b3bf358aff30664f8bfa02c68cfbe97c75fcc1a84d931f5d2e3d">kMU_Tx1EmptyFlag</a> = (1U &lt;&lt; (MU_SR_TEn_SHIFT + 2U)), 
 <br/>
-&#160;&#160;<a class="el" href="a00263.html#gga6a17e5c52721f6eb754f54cc72b58c91a6f54d55ac52e8e697f83637109560e89">kPINT_PinIntEnableFallEdge</a> = PINT_PIN_FALL_EDGE, 
+&#160;&#160;<a class="el" href="a00263.html#ggae0771a3d173c2b3bf358aff30664f8bfa767f1b8e0e39543921f1a140efb9e154">kMU_Tx2EmptyFlag</a> = (1U &lt;&lt; (MU_SR_TEn_SHIFT + 1U)), 
 <br/>
-&#160;&#160;<a class="el" href="a00263.html#gga6a17e5c52721f6eb754f54cc72b58c91a58ac8e76b409274b7d02ef6e9805dcef">kPINT_PinIntEnableBothEdges</a> = PINT_PIN_BOTH_EDGE, 
+&#160;&#160;<a class="el" href="a00263.html#ggae0771a3d173c2b3bf358aff30664f8bfa8f0e3eeb71299fce34d2fb31524d223f">kMU_Tx3EmptyFlag</a> = (1U &lt;&lt; (MU_SR_TEn_SHIFT + 0U)), 
 <br/>
-&#160;&#160;<a class="el" href="a00263.html#gga6a17e5c52721f6eb754f54cc72b58c91a3bd6a570eee5c1fddd95ef2411b35a7e">kPINT_PinIntEnableLowLevel</a> = PINT_PIN_LOW_LEVEL, 
+&#160;&#160;<a class="el" href="a00263.html#ggae0771a3d173c2b3bf358aff30664f8bfa40ddf58c102a536275d75e0042920b8f">kMU_Rx0FullFlag</a> = (1U &lt;&lt; (MU_SR_RFn_SHIFT + 3U)), 
 <br/>
-&#160;&#160;<a class="el" href="a00263.html#gga6a17e5c52721f6eb754f54cc72b58c91affc9b2756b7642ddb60ea78f4bbbd592">kPINT_PinIntEnableHighLevel</a> = PINT_PIN_HIGH_LEVEL
+&#160;&#160;<a class="el" href="a00263.html#ggae0771a3d173c2b3bf358aff30664f8bfadd55a6748dfeb9f342ac1467db2b9456">kMU_Rx1FullFlag</a> = (1U &lt;&lt; (MU_SR_RFn_SHIFT + 2U)), 
 <br/>
- }</td></tr>
-<tr class="memdesc:ga6a17e5c52721f6eb754f54cc72b58c91"><td class="mdescLeft">&#160;</td><td class="mdescRight">PINT Pin Interrupt enable type.  <a href="a00263.html#ga6a17e5c52721f6eb754f54cc72b58c91">More...</a><br/></td></tr>
-<tr class="separator:ga6a17e5c52721f6eb754f54cc72b58c91"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga15da1f70e8d0a05e9d492d01ceca7da8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga15da1f70e8d0a05e9d492d01ceca7da8">pint_pin_int_t</a> { <a class="el" href="a00263.html#gga15da1f70e8d0a05e9d492d01ceca7da8a5df52c4fbb437e61b638d35cbc550162">kPINT_PinInt0</a> = 0U
- }</td></tr>
-<tr class="memdesc:ga15da1f70e8d0a05e9d492d01ceca7da8"><td class="mdescLeft">&#160;</td><td class="mdescRight">PINT Pin Interrupt type.  <a href="a00263.html#ga15da1f70e8d0a05e9d492d01ceca7da8">More...</a><br/></td></tr>
-<tr class="separator:ga15da1f70e8d0a05e9d492d01ceca7da8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2e05f827d6a43eade4c22e9d75bc5d76"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga2e05f827d6a43eade4c22e9d75bc5d76">pint_pmatch_input_src_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00263.html#gga2e05f827d6a43eade4c22e9d75bc5d76a51f543e6f680df9beb5841231b7b3a96">kPINT_PatternMatchInp0Src</a> = 0U, 
+&#160;&#160;<a class="el" href="a00263.html#ggae0771a3d173c2b3bf358aff30664f8bfa568e4107a3b60c367e2824a80e0ae210">kMU_Rx2FullFlag</a> = (1U &lt;&lt; (MU_SR_RFn_SHIFT + 1U)), 
 <br/>
-&#160;&#160;<a class="el" href="a00263.html#gga2e05f827d6a43eade4c22e9d75bc5d76a6fc5c9dbee30b375feb9ce6c86b224c2">kPINT_PatternMatchInp1Src</a> = 1U, 
+&#160;&#160;<a class="el" href="a00263.html#ggae0771a3d173c2b3bf358aff30664f8bfa67742c950c69e47cbab902efc83a28d4">kMU_Rx3FullFlag</a> = (1U &lt;&lt; (MU_SR_RFn_SHIFT + 0U)), 
 <br/>
-&#160;&#160;<a class="el" href="a00263.html#gga2e05f827d6a43eade4c22e9d75bc5d76a41b057b493937cd87bc212cb2e316f8a">kPINT_PatternMatchInp2Src</a> = 2U, 
+&#160;&#160;<a class="el" href="a00263.html#ggae0771a3d173c2b3bf358aff30664f8bfa569a538edbb6050e2818903c9182aa44">kMU_GenInt0Flag</a> = (1U &lt;&lt; (MU_SR_GIPn_SHIFT + 3U)), 
 <br/>
-&#160;&#160;<a class="el" href="a00263.html#gga2e05f827d6a43eade4c22e9d75bc5d76a6be4432cb9e687d043a2c25c1af48869">kPINT_PatternMatchInp3Src</a> = 3U, 
+&#160;&#160;<a class="el" href="a00263.html#ggae0771a3d173c2b3bf358aff30664f8bfa784232e66cb93c5e307727a579688f5a">kMU_GenInt1Flag</a> = (1U &lt;&lt; (MU_SR_GIPn_SHIFT + 2U)), 
 <br/>
-&#160;&#160;<a class="el" href="a00263.html#gga2e05f827d6a43eade4c22e9d75bc5d76aabc93fc28498f5577939f38e0513304c">kPINT_PatternMatchInp4Src</a> = 4U, 
+&#160;&#160;<a class="el" href="a00263.html#ggae0771a3d173c2b3bf358aff30664f8bfa15712a6b86201fbcbd389c66a85fb3d3">kMU_GenInt2Flag</a> = (1U &lt;&lt; (MU_SR_GIPn_SHIFT + 1U)), 
 <br/>
-&#160;&#160;<a class="el" href="a00263.html#gga2e05f827d6a43eade4c22e9d75bc5d76a78ff6e40ab17d81181284c56b62b77aa">kPINT_PatternMatchInp5Src</a> = 5U, 
+&#160;&#160;<a class="el" href="a00263.html#ggae0771a3d173c2b3bf358aff30664f8bfa78e94d0880b08c6e4fe44cbc254e6555">kMU_GenInt3Flag</a> = (1U &lt;&lt; (MU_SR_GIPn_SHIFT + 0U)), 
 <br/>
-&#160;&#160;<a class="el" href="a00263.html#gga2e05f827d6a43eade4c22e9d75bc5d76a9b2f5abc74e498a599f5c005a6cc911f">kPINT_PatternMatchInp6Src</a> = 6U, 
+&#160;&#160;<a class="el" href="a00263.html#ggae0771a3d173c2b3bf358aff30664f8bfad2f4fdc37e185dd77f42ae824a334197">kMU_EventPendingFlag</a> = MU_SR_EP_MASK, 
 <br/>
-&#160;&#160;<a class="el" href="a00263.html#gga2e05f827d6a43eade4c22e9d75bc5d76a2c93115b816dc676460cfc1be85778f0">kPINT_PatternMatchInp7Src</a> = 7U, 
+&#160;&#160;<a class="el" href="a00263.html#ggae0771a3d173c2b3bf358aff30664f8bfa2c98f3deffd6aeb55701cf98bbe2936a">kMU_FlagsUpdatingFlag</a> = MU_SR_FUP_MASK, 
 <br/>
-&#160;&#160;<a class="el" href="a00263.html#gga2e05f827d6a43eade4c22e9d75bc5d76a1f7f561990336a81a46f22395820907d">kPINT_SecPatternMatchInp0Src</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00263.html#gga2e05f827d6a43eade4c22e9d75bc5d76a8cc05c9aec163085b7a2b4481fdc971d">kPINT_SecPatternMatchInp1Src</a> = 1U
+&#160;&#160;<a class="el" href="a00263.html#ggae0771a3d173c2b3bf358aff30664f8bfa7ee78bc085c8be00c5997fe1a7b5f3d2">kMU_OtherSideInResetFlag</a> = MU_SR_RS_MASK
 <br/>
  }</td></tr>
-<tr class="memdesc:ga2e05f827d6a43eade4c22e9d75bc5d76"><td class="mdescLeft">&#160;</td><td class="mdescRight">PINT Pattern Match bit slice input source type.  <a href="a00263.html#ga2e05f827d6a43eade4c22e9d75bc5d76">More...</a><br/></td></tr>
-<tr class="separator:ga2e05f827d6a43eade4c22e9d75bc5d76"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga048bc24e58d7df40af2a45efaabeea9b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga048bc24e58d7df40af2a45efaabeea9b">pint_pmatch_bslice_t</a> { <a class="el" href="a00263.html#gga048bc24e58d7df40af2a45efaabeea9ba106986aeb5e12c2b76e070def3b37d95">kPINT_PatternMatchBSlice0</a> = 0U
+<tr class="memdesc:gae0771a3d173c2b3bf358aff30664f8bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">MU status flags.  <a href="a00263.html#gae0771a3d173c2b3bf358aff30664f8bf">More...</a><br/></td></tr>
+<tr class="separator:gae0771a3d173c2b3bf358aff30664f8bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabd070b1725280439337373fcd5934931"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gabd070b1725280439337373fcd5934931">_mu_interrupt_enable</a> { <br/>
+&#160;&#160;<a class="el" href="a00263.html#ggabd070b1725280439337373fcd5934931a168101d14f235b5601e4d87b426338ac">kMU_Tx0EmptyInterruptEnable</a> = (1U &lt;&lt; (MU_CR_TIEn_SHIFT + 3U)), 
+<br/>
+&#160;&#160;<a class="el" href="a00263.html#ggabd070b1725280439337373fcd5934931a818770dd5a82087b90347dc8822e03f8">kMU_Tx1EmptyInterruptEnable</a> = (1U &lt;&lt; (MU_CR_TIEn_SHIFT + 2U)), 
+<br/>
+&#160;&#160;<a class="el" href="a00263.html#ggabd070b1725280439337373fcd5934931a7a4a0c0d7df99a19b2c09ece2458a83f">kMU_Tx2EmptyInterruptEnable</a> = (1U &lt;&lt; (MU_CR_TIEn_SHIFT + 1U)), 
+<br/>
+&#160;&#160;<a class="el" href="a00263.html#ggabd070b1725280439337373fcd5934931a7e01176f783c0895365517dedad4e66e">kMU_Tx3EmptyInterruptEnable</a> = (1U &lt;&lt; (MU_CR_TIEn_SHIFT + 0U)), 
+<br/>
+&#160;&#160;<a class="el" href="a00263.html#ggabd070b1725280439337373fcd5934931a4b7915f891336860a5288404c040627d">kMU_Rx0FullInterruptEnable</a> = (1U &lt;&lt; (MU_CR_RIEn_SHIFT + 3U)), 
+<br/>
+&#160;&#160;<a class="el" href="a00263.html#ggabd070b1725280439337373fcd5934931ab2a2f081c353728fb56f3895e4615670">kMU_Rx1FullInterruptEnable</a> = (1U &lt;&lt; (MU_CR_RIEn_SHIFT + 2U)), 
+<br/>
+&#160;&#160;<a class="el" href="a00263.html#ggabd070b1725280439337373fcd5934931a1e73d223a485610347f2ab818a95c0b7">kMU_Rx2FullInterruptEnable</a> = (1U &lt;&lt; (MU_CR_RIEn_SHIFT + 1U)), 
+<br/>
+&#160;&#160;<a class="el" href="a00263.html#ggabd070b1725280439337373fcd5934931a493732db72b70452f893a1bdbe9b4c10">kMU_Rx3FullInterruptEnable</a> = (1U &lt;&lt; (MU_CR_RIEn_SHIFT + 0U)), 
+<br/>
+&#160;&#160;<a class="el" href="a00263.html#ggabd070b1725280439337373fcd5934931ab695880fd49642db0667884453ce0de5">kMU_GenInt0InterruptEnable</a> = (int)(1U &lt;&lt; (MU_CR_GIEn_SHIFT + 3U)), 
+<br/>
+&#160;&#160;<a class="el" href="a00263.html#ggabd070b1725280439337373fcd5934931a0f9b9c7651fa7770aef0bff12726ea23">kMU_GenInt1InterruptEnable</a> = (1U &lt;&lt; (MU_CR_GIEn_SHIFT + 2U)), 
+<br/>
+&#160;&#160;<a class="el" href="a00263.html#ggabd070b1725280439337373fcd5934931a99744e6b9c80212cee08887bdb8c7e16">kMU_GenInt2InterruptEnable</a> = (1U &lt;&lt; (MU_CR_GIEn_SHIFT + 1U)), 
+<br/>
+&#160;&#160;<a class="el" href="a00263.html#ggabd070b1725280439337373fcd5934931aa961c2b4ea26a5de52d61f819356a37b">kMU_GenInt3InterruptEnable</a> = (1U &lt;&lt; (MU_CR_GIEn_SHIFT + 0U))
+<br/>
  }</td></tr>
-<tr class="memdesc:ga048bc24e58d7df40af2a45efaabeea9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">PINT Pattern Match bit slice type.  <a href="a00263.html#ga048bc24e58d7df40af2a45efaabeea9b">More...</a><br/></td></tr>
-<tr class="separator:ga048bc24e58d7df40af2a45efaabeea9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae1e5bfc17515fab76a1deab955203c6a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gae1e5bfc17515fab76a1deab955203c6a">pint_pmatch_bslice_cfg_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00263.html#ggae1e5bfc17515fab76a1deab955203c6aa128703d2c2175a315aaffad869ed6a32">kPINT_PatternMatchAlways</a> = 0U, 
+<tr class="memdesc:gabd070b1725280439337373fcd5934931"><td class="mdescLeft">&#160;</td><td class="mdescRight">MU interrupt source to enable.  <a href="a00263.html#gabd070b1725280439337373fcd5934931">More...</a><br/></td></tr>
+<tr class="separator:gabd070b1725280439337373fcd5934931"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga41108bad4d5d228e3832b2739e982084"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga41108bad4d5d228e3832b2739e982084">_mu_interrupt_trigger</a> { <br/>
+&#160;&#160;<a class="el" href="a00263.html#gga41108bad4d5d228e3832b2739e982084a55c2d4c3d2065504f7edb30553c86a53">kMU_GenInt0InterruptTrigger</a> = (1U &lt;&lt; (MU_CR_GIRn_SHIFT + 3U)), 
 <br/>
-&#160;&#160;<a class="el" href="a00263.html#ggae1e5bfc17515fab76a1deab955203c6aa654c70eeed38b0be2271dc51d7cc04f5">kPINT_PatternMatchStickyRise</a> = 1U, 
+&#160;&#160;<a class="el" href="a00263.html#gga41108bad4d5d228e3832b2739e982084af8c229732fcaef64ad86d0111a37e349">kMU_GenInt1InterruptTrigger</a> = (1U &lt;&lt; (MU_CR_GIRn_SHIFT + 2U)), 
 <br/>
-&#160;&#160;<a class="el" href="a00263.html#ggae1e5bfc17515fab76a1deab955203c6aa9d2a3e9717c34de3a884b695f35a6c37">kPINT_PatternMatchStickyFall</a> = 2U, 
+&#160;&#160;<a class="el" href="a00263.html#gga41108bad4d5d228e3832b2739e982084a3e107a42c4bb962e9736c46dc8fb4c20">kMU_GenInt2InterruptTrigger</a> = (1U &lt;&lt; (MU_CR_GIRn_SHIFT + 1U)), 
 <br/>
-&#160;&#160;<a class="el" href="a00263.html#ggae1e5bfc17515fab76a1deab955203c6aa059c3472509304186252b655cf486d8b">kPINT_PatternMatchStickyBothEdges</a> = 3U, 
-<br/>
-&#160;&#160;<a class="el" href="a00263.html#ggae1e5bfc17515fab76a1deab955203c6aa7dc0770cf7ffe184788c30bd1ac9c515">kPINT_PatternMatchHigh</a> = 4U, 
-<br/>
-&#160;&#160;<a class="el" href="a00263.html#ggae1e5bfc17515fab76a1deab955203c6aa3b4af984526871b66489b0eb294d2df5">kPINT_PatternMatchLow</a> = 5U, 
-<br/>
-&#160;&#160;<a class="el" href="a00263.html#ggae1e5bfc17515fab76a1deab955203c6aab5630ebfbc6e52c9b04f659918c094f2">kPINT_PatternMatchNever</a> = 6U, 
-<br/>
-&#160;&#160;<a class="el" href="a00263.html#ggae1e5bfc17515fab76a1deab955203c6aaac967156901735a43316f7f1c4720328">kPINT_PatternMatchBothEdges</a> = 7U
+&#160;&#160;<a class="el" href="a00263.html#gga41108bad4d5d228e3832b2739e982084a9307f291207c5f5e83bd6baff07234f2">kMU_GenInt3InterruptTrigger</a> = (1U &lt;&lt; (MU_CR_GIRn_SHIFT + 0U))
 <br/>
  }</td></tr>
-<tr class="memdesc:gae1e5bfc17515fab76a1deab955203c6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">PINT Pattern Match configuration type.  <a href="a00263.html#gae1e5bfc17515fab76a1deab955203c6a">More...</a><br/></td></tr>
-<tr class="separator:gae1e5bfc17515fab76a1deab955203c6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gaf043d142dac622bedd50b736b52ac6e9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gaf043d142dac622bedd50b736b52ac6e9">PINT_Init</a> (PINT_Type *base)</td></tr>
-<tr class="memdesc:gaf043d142dac622bedd50b736b52ac6e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize PINT peripheral.  <a href="#gaf043d142dac622bedd50b736b52ac6e9">More...</a><br/></td></tr>
-<tr class="separator:gaf043d142dac622bedd50b736b52ac6e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga363edbba9536380728e44bd7d1a0e7df"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga363edbba9536380728e44bd7d1a0e7df">PINT_PinInterruptConfig</a> (PINT_Type *base, <a class="el" href="a00263.html#ga15da1f70e8d0a05e9d492d01ceca7da8">pint_pin_int_t</a> intr, <a class="el" href="a00263.html#ga6a17e5c52721f6eb754f54cc72b58c91">pint_pin_enable_t</a> enable, <a class="el" href="a00263.html#ga262ac9596c0926fbe5f346e0f6aaf9f5">pint_cb_t</a> callback)</td></tr>
-<tr class="memdesc:ga363edbba9536380728e44bd7d1a0e7df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure PINT peripheral pin interrupt.  <a href="#ga363edbba9536380728e44bd7d1a0e7df">More...</a><br/></td></tr>
-<tr class="separator:ga363edbba9536380728e44bd7d1a0e7df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga12c568c9b7f6d46257dc63505a381701"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga12c568c9b7f6d46257dc63505a381701">PINT_PinInterruptGetConfig</a> (PINT_Type *base, <a class="el" href="a00263.html#ga15da1f70e8d0a05e9d492d01ceca7da8">pint_pin_int_t</a> pintr, <a class="el" href="a00263.html#ga6a17e5c52721f6eb754f54cc72b58c91">pint_pin_enable_t</a> *enable, <a class="el" href="a00263.html#ga262ac9596c0926fbe5f346e0f6aaf9f5">pint_cb_t</a> *callback)</td></tr>
-<tr class="memdesc:ga12c568c9b7f6d46257dc63505a381701"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get PINT peripheral pin interrupt configuration.  <a href="#ga12c568c9b7f6d46257dc63505a381701">More...</a><br/></td></tr>
-<tr class="separator:ga12c568c9b7f6d46257dc63505a381701"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab784e6aea0129b0c90164462bd0dbac5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gab784e6aea0129b0c90164462bd0dbac5">PINT_PinInterruptClrStatus</a> (PINT_Type *base, <a class="el" href="a00263.html#ga15da1f70e8d0a05e9d492d01ceca7da8">pint_pin_int_t</a> pintr)</td></tr>
-<tr class="memdesc:gab784e6aea0129b0c90164462bd0dbac5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear Selected pin interrupt status only when the pin was triggered by edge-sensitive.  <a href="#gab784e6aea0129b0c90164462bd0dbac5">More...</a><br/></td></tr>
-<tr class="separator:gab784e6aea0129b0c90164462bd0dbac5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga99a96e386a822de59ac2d60149ec47f3"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga99a96e386a822de59ac2d60149ec47f3">PINT_PinInterruptGetStatus</a> (PINT_Type *base, <a class="el" href="a00263.html#ga15da1f70e8d0a05e9d492d01ceca7da8">pint_pin_int_t</a> pintr)</td></tr>
-<tr class="memdesc:ga99a96e386a822de59ac2d60149ec47f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Selected pin interrupt status.  <a href="#ga99a96e386a822de59ac2d60149ec47f3">More...</a><br/></td></tr>
-<tr class="separator:ga99a96e386a822de59ac2d60149ec47f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gace94acb3f70964230b2606fdbeb5f58b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gace94acb3f70964230b2606fdbeb5f58b">PINT_PinInterruptClrStatusAll</a> (PINT_Type *base)</td></tr>
-<tr class="memdesc:gace94acb3f70964230b2606fdbeb5f58b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear all pin interrupts status only when pins were triggered by edge-sensitive.  <a href="#gace94acb3f70964230b2606fdbeb5f58b">More...</a><br/></td></tr>
-<tr class="separator:gace94acb3f70964230b2606fdbeb5f58b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab5dbaf58c90b1ef54bcd2c5dba9e178f"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gab5dbaf58c90b1ef54bcd2c5dba9e178f">PINT_PinInterruptGetStatusAll</a> (PINT_Type *base)</td></tr>
-<tr class="memdesc:gab5dbaf58c90b1ef54bcd2c5dba9e178f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get all pin interrupts status.  <a href="#gab5dbaf58c90b1ef54bcd2c5dba9e178f">More...</a><br/></td></tr>
-<tr class="separator:gab5dbaf58c90b1ef54bcd2c5dba9e178f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga055c655c611b5645ce6903557ef809bb"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga055c655c611b5645ce6903557ef809bb">PINT_PinInterruptClrFallFlag</a> (PINT_Type *base, <a class="el" href="a00263.html#ga15da1f70e8d0a05e9d492d01ceca7da8">pint_pin_int_t</a> pintr)</td></tr>
-<tr class="memdesc:ga055c655c611b5645ce6903557ef809bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear Selected pin interrupt fall flag.  <a href="#ga055c655c611b5645ce6903557ef809bb">More...</a><br/></td></tr>
-<tr class="separator:ga055c655c611b5645ce6903557ef809bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaace443444dec2e5b7e3e20cf69c53def"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gaace443444dec2e5b7e3e20cf69c53def">PINT_PinInterruptGetFallFlag</a> (PINT_Type *base, <a class="el" href="a00263.html#ga15da1f70e8d0a05e9d492d01ceca7da8">pint_pin_int_t</a> pintr)</td></tr>
-<tr class="memdesc:gaace443444dec2e5b7e3e20cf69c53def"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get selected pin interrupt fall flag.  <a href="#gaace443444dec2e5b7e3e20cf69c53def">More...</a><br/></td></tr>
-<tr class="separator:gaace443444dec2e5b7e3e20cf69c53def"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga11c44cbe5b42c79b22a3053c85b1e5d0"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga11c44cbe5b42c79b22a3053c85b1e5d0">PINT_PinInterruptClrFallFlagAll</a> (PINT_Type *base)</td></tr>
-<tr class="memdesc:ga11c44cbe5b42c79b22a3053c85b1e5d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear all pin interrupt fall flags.  <a href="#ga11c44cbe5b42c79b22a3053c85b1e5d0">More...</a><br/></td></tr>
-<tr class="separator:ga11c44cbe5b42c79b22a3053c85b1e5d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga58eced039e8c793b7ff148d6cfacde5b"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga58eced039e8c793b7ff148d6cfacde5b">PINT_PinInterruptGetFallFlagAll</a> (PINT_Type *base)</td></tr>
-<tr class="memdesc:ga58eced039e8c793b7ff148d6cfacde5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get all pin interrupt fall flags.  <a href="#ga58eced039e8c793b7ff148d6cfacde5b">More...</a><br/></td></tr>
-<tr class="separator:ga58eced039e8c793b7ff148d6cfacde5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga269af5856a4cfd5d2a171b4777d6884a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga269af5856a4cfd5d2a171b4777d6884a">PINT_PinInterruptClrRiseFlag</a> (PINT_Type *base, <a class="el" href="a00263.html#ga15da1f70e8d0a05e9d492d01ceca7da8">pint_pin_int_t</a> pintr)</td></tr>
-<tr class="memdesc:ga269af5856a4cfd5d2a171b4777d6884a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear Selected pin interrupt rise flag.  <a href="#ga269af5856a4cfd5d2a171b4777d6884a">More...</a><br/></td></tr>
-<tr class="separator:ga269af5856a4cfd5d2a171b4777d6884a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaec7a3986f92f8c11a70a80af1a93a3b6"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gaec7a3986f92f8c11a70a80af1a93a3b6">PINT_PinInterruptGetRiseFlag</a> (PINT_Type *base, <a class="el" href="a00263.html#ga15da1f70e8d0a05e9d492d01ceca7da8">pint_pin_int_t</a> pintr)</td></tr>
-<tr class="memdesc:gaec7a3986f92f8c11a70a80af1a93a3b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get selected pin interrupt rise flag.  <a href="#gaec7a3986f92f8c11a70a80af1a93a3b6">More...</a><br/></td></tr>
-<tr class="separator:gaec7a3986f92f8c11a70a80af1a93a3b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga53dd5706866fa0313689db6e4d9c1a9b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga53dd5706866fa0313689db6e4d9c1a9b">PINT_PinInterruptClrRiseFlagAll</a> (PINT_Type *base)</td></tr>
-<tr class="memdesc:ga53dd5706866fa0313689db6e4d9c1a9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear all pin interrupt rise flags.  <a href="#ga53dd5706866fa0313689db6e4d9c1a9b">More...</a><br/></td></tr>
-<tr class="separator:ga53dd5706866fa0313689db6e4d9c1a9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga08b623f67c277521182f8c9e630037ae"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga08b623f67c277521182f8c9e630037ae">PINT_PinInterruptGetRiseFlagAll</a> (PINT_Type *base)</td></tr>
-<tr class="memdesc:ga08b623f67c277521182f8c9e630037ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get all pin interrupt rise flags.  <a href="#ga08b623f67c277521182f8c9e630037ae">More...</a><br/></td></tr>
-<tr class="separator:ga08b623f67c277521182f8c9e630037ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1dc66cd865640c0b60eb128a868eab37"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga1dc66cd865640c0b60eb128a868eab37">PINT_PatternMatchConfig</a> (PINT_Type *base, <a class="el" href="a00263.html#ga048bc24e58d7df40af2a45efaabeea9b">pint_pmatch_bslice_t</a> bslice, pint_pmatch_cfg_t *cfg)</td></tr>
-<tr class="memdesc:ga1dc66cd865640c0b60eb128a868eab37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure PINT pattern match.  <a href="#ga1dc66cd865640c0b60eb128a868eab37">More...</a><br/></td></tr>
-<tr class="separator:ga1dc66cd865640c0b60eb128a868eab37"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6d4f8e83cec4bc716231c97c2ceb5421"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga6d4f8e83cec4bc716231c97c2ceb5421">PINT_PatternMatchGetConfig</a> (PINT_Type *base, <a class="el" href="a00263.html#ga048bc24e58d7df40af2a45efaabeea9b">pint_pmatch_bslice_t</a> bslice, pint_pmatch_cfg_t *cfg)</td></tr>
-<tr class="memdesc:ga6d4f8e83cec4bc716231c97c2ceb5421"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get PINT pattern match configuration.  <a href="#ga6d4f8e83cec4bc716231c97c2ceb5421">More...</a><br/></td></tr>
-<tr class="separator:ga6d4f8e83cec4bc716231c97c2ceb5421"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga74b3eece6c6eabc38f3194b125ff80d5"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga74b3eece6c6eabc38f3194b125ff80d5">PINT_PatternMatchGetStatus</a> (PINT_Type *base, <a class="el" href="a00263.html#ga048bc24e58d7df40af2a45efaabeea9b">pint_pmatch_bslice_t</a> bslice)</td></tr>
-<tr class="memdesc:ga74b3eece6c6eabc38f3194b125ff80d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get pattern match bit slice status.  <a href="#ga74b3eece6c6eabc38f3194b125ff80d5">More...</a><br/></td></tr>
-<tr class="separator:ga74b3eece6c6eabc38f3194b125ff80d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga567b159bbfa265ed02c4900769ed8fe4"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga567b159bbfa265ed02c4900769ed8fe4">PINT_PatternMatchGetStatusAll</a> (PINT_Type *base)</td></tr>
-<tr class="memdesc:ga567b159bbfa265ed02c4900769ed8fe4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get status of all pattern match bit slices.  <a href="#ga567b159bbfa265ed02c4900769ed8fe4">More...</a><br/></td></tr>
-<tr class="separator:ga567b159bbfa265ed02c4900769ed8fe4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga00d40f5f01c445206f1f800dcc7b6e89"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga00d40f5f01c445206f1f800dcc7b6e89">PINT_PatternMatchResetDetectLogic</a> (PINT_Type *base)</td></tr>
-<tr class="memdesc:ga00d40f5f01c445206f1f800dcc7b6e89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset pattern match detection logic.  <a href="#ga00d40f5f01c445206f1f800dcc7b6e89">More...</a><br/></td></tr>
-<tr class="separator:ga00d40f5f01c445206f1f800dcc7b6e89"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8911d499fb65ffe496c01f65bad9314f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga8911d499fb65ffe496c01f65bad9314f">PINT_PatternMatchEnable</a> (PINT_Type *base)</td></tr>
-<tr class="memdesc:ga8911d499fb65ffe496c01f65bad9314f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable pattern match function.  <a href="#ga8911d499fb65ffe496c01f65bad9314f">More...</a><br/></td></tr>
-<tr class="separator:ga8911d499fb65ffe496c01f65bad9314f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4dd886dc387a64a5cb146ccd7297e1e1"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga4dd886dc387a64a5cb146ccd7297e1e1">PINT_PatternMatchDisable</a> (PINT_Type *base)</td></tr>
-<tr class="memdesc:ga4dd886dc387a64a5cb146ccd7297e1e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable pattern match function.  <a href="#ga4dd886dc387a64a5cb146ccd7297e1e1">More...</a><br/></td></tr>
-<tr class="separator:ga4dd886dc387a64a5cb146ccd7297e1e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf5754b4b1d1436c359dde18101657d4e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gaf5754b4b1d1436c359dde18101657d4e">PINT_PatternMatchEnableRXEV</a> (PINT_Type *base)</td></tr>
-<tr class="memdesc:gaf5754b4b1d1436c359dde18101657d4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable RXEV output.  <a href="#gaf5754b4b1d1436c359dde18101657d4e">More...</a><br/></td></tr>
-<tr class="separator:gaf5754b4b1d1436c359dde18101657d4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga73f0e7280f898bf99fe92b3519878a77"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga73f0e7280f898bf99fe92b3519878a77">PINT_PatternMatchDisableRXEV</a> (PINT_Type *base)</td></tr>
-<tr class="memdesc:ga73f0e7280f898bf99fe92b3519878a77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable RXEV output.  <a href="#ga73f0e7280f898bf99fe92b3519878a77">More...</a><br/></td></tr>
-<tr class="separator:ga73f0e7280f898bf99fe92b3519878a77"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac6b1406205adace6696a1647250ad76d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gac6b1406205adace6696a1647250ad76d">PINT_EnableCallback</a> (PINT_Type *base)</td></tr>
-<tr class="memdesc:gac6b1406205adace6696a1647250ad76d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable callback.  <a href="#gac6b1406205adace6696a1647250ad76d">More...</a><br/></td></tr>
-<tr class="separator:gac6b1406205adace6696a1647250ad76d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gada262638d555d9a503ddcdbed24ec475"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gada262638d555d9a503ddcdbed24ec475">PINT_DisableCallback</a> (PINT_Type *base)</td></tr>
-<tr class="memdesc:gada262638d555d9a503ddcdbed24ec475"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable callback.  <a href="#gada262638d555d9a503ddcdbed24ec475">More...</a><br/></td></tr>
-<tr class="separator:gada262638d555d9a503ddcdbed24ec475"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga78ffa3e09e17db8dc6a9038123ad1c46"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga78ffa3e09e17db8dc6a9038123ad1c46">PINT_Deinit</a> (PINT_Type *base)</td></tr>
-<tr class="memdesc:ga78ffa3e09e17db8dc6a9038123ad1c46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitialize PINT peripheral.  <a href="#ga78ffa3e09e17db8dc6a9038123ad1c46">More...</a><br/></td></tr>
-<tr class="separator:ga78ffa3e09e17db8dc6a9038123ad1c46"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2cb0ee73a24657dd6994cb00b78c3137"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga2cb0ee73a24657dd6994cb00b78c3137">PINT_EnableCallbackByIndex</a> (PINT_Type *base, <a class="el" href="a00263.html#ga15da1f70e8d0a05e9d492d01ceca7da8">pint_pin_int_t</a> pintIdx)</td></tr>
-<tr class="memdesc:ga2cb0ee73a24657dd6994cb00b78c3137"><td class="mdescLeft">&#160;</td><td class="mdescRight">enable callback by pin index.  <a href="#ga2cb0ee73a24657dd6994cb00b78c3137">More...</a><br/></td></tr>
-<tr class="separator:ga2cb0ee73a24657dd6994cb00b78c3137"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad7300bf374c0cdc65fadff76f3ee7e5c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gad7300bf374c0cdc65fadff76f3ee7e5c">PINT_DisableCallbackByIndex</a> (PINT_Type *base, <a class="el" href="a00263.html#ga15da1f70e8d0a05e9d492d01ceca7da8">pint_pin_int_t</a> pintIdx)</td></tr>
-<tr class="memdesc:gad7300bf374c0cdc65fadff76f3ee7e5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">disable callback by pin index.  <a href="#gad7300bf374c0cdc65fadff76f3ee7e5c">More...</a><br/></td></tr>
-<tr class="separator:gad7300bf374c0cdc65fadff76f3ee7e5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga41108bad4d5d228e3832b2739e982084"><td class="mdescLeft">&#160;</td><td class="mdescRight">MU interrupt that could be triggered to the other core.  <a href="a00263.html#ga41108bad4d5d228e3832b2739e982084">More...</a><br/></td></tr>
+<tr class="separator:ga41108bad4d5d228e3832b2739e982084"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8609846a236f63d7fffe934fde076af1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga8609846a236f63d7fffe934fde076af1">_mu_msg_reg_index</a> </td></tr>
+<tr class="memdesc:ga8609846a236f63d7fffe934fde076af1"><td class="mdescLeft">&#160;</td><td class="mdescRight">MU message register. <br/></td></tr>
+<tr class="separator:ga8609846a236f63d7fffe934fde076af1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga2c7d26f7018dc7e75c1e090090628069"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2c7d26f7018dc7e75c1e090090628069"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>FSL_PINT_DRIVER_VERSION</b>&#160;&#160;&#160;(<a class="el" href="a00240.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 11))</td></tr>
-<tr class="separator:ga2c7d26f7018dc7e75c1e090090628069"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac08525378e7d8aaa3e0e6b16e9f76ad3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gac08525378e7d8aaa3e0e6b16e9f76ad3">FSL_MU_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00242.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 3))</td></tr>
+<tr class="memdesc:gac08525378e7d8aaa3e0e6b16e9f76ad3"><td class="mdescLeft">&#160;</td><td class="mdescRight">MU driver version.  <a href="#gac08525378e7d8aaa3e0e6b16e9f76ad3">More...</a><br/></td></tr>
+<tr class="separator:gac08525378e7d8aaa3e0e6b16e9f76ad3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+MU initialization.</h2></td></tr>
+<tr class="memitem:ga59dde6d6ef6bd1016eafe1e6faf7a6d9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga59dde6d6ef6bd1016eafe1e6faf7a6d9">MU_Init</a> (MU_Type *base)</td></tr>
+<tr class="memdesc:ga59dde6d6ef6bd1016eafe1e6faf7a6d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the MU module.  <a href="#ga59dde6d6ef6bd1016eafe1e6faf7a6d9">More...</a><br/></td></tr>
+<tr class="separator:ga59dde6d6ef6bd1016eafe1e6faf7a6d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga956ac92cddf9794a9155b346f4db2044"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga956ac92cddf9794a9155b346f4db2044">MU_Deinit</a> (MU_Type *base)</td></tr>
+<tr class="memdesc:ga956ac92cddf9794a9155b346f4db2044"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-initializes the MU module.  <a href="#ga956ac92cddf9794a9155b346f4db2044">More...</a><br/></td></tr>
+<tr class="separator:ga956ac92cddf9794a9155b346f4db2044"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+MU Message</h2></td></tr>
+<tr class="memitem:gae4e41714bd6cf6e3de866e1aaf5b85a2"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gae4e41714bd6cf6e3de866e1aaf5b85a2">MU_SendMsgNonBlocking</a> (MU_Type *base, uint32_t regIndex, uint32_t msg)</td></tr>
+<tr class="memdesc:gae4e41714bd6cf6e3de866e1aaf5b85a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes a message to the TX register.  <a href="#gae4e41714bd6cf6e3de866e1aaf5b85a2">More...</a><br/></td></tr>
+<tr class="separator:gae4e41714bd6cf6e3de866e1aaf5b85a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaedd7d1f0418441a61a2587a8db322ecd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gaedd7d1f0418441a61a2587a8db322ecd">MU_SendMsg</a> (MU_Type *base, uint32_t regIndex, uint32_t msg)</td></tr>
+<tr class="memdesc:gaedd7d1f0418441a61a2587a8db322ecd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Blocks to send a message.  <a href="#gaedd7d1f0418441a61a2587a8db322ecd">More...</a><br/></td></tr>
+<tr class="separator:gaedd7d1f0418441a61a2587a8db322ecd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabeb32b60cedae555c659126d75bda806"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gabeb32b60cedae555c659126d75bda806">MU_ReceiveMsgNonBlocking</a> (MU_Type *base, uint32_t regIndex)</td></tr>
+<tr class="memdesc:gabeb32b60cedae555c659126d75bda806"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads a message from the RX register.  <a href="#gabeb32b60cedae555c659126d75bda806">More...</a><br/></td></tr>
+<tr class="separator:gabeb32b60cedae555c659126d75bda806"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga36b003e10632eed908184ddbfc48df25"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga36b003e10632eed908184ddbfc48df25">MU_ReceiveMsg</a> (MU_Type *base, uint32_t regIndex)</td></tr>
+<tr class="memdesc:ga36b003e10632eed908184ddbfc48df25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Blocks to receive a message.  <a href="#ga36b003e10632eed908184ddbfc48df25">More...</a><br/></td></tr>
+<tr class="separator:ga36b003e10632eed908184ddbfc48df25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+MU Flags</h2></td></tr>
+<tr class="memitem:ga180ad60fda7f03cbcd98543bdb808a43"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga180ad60fda7f03cbcd98543bdb808a43">MU_SetFlagsNonBlocking</a> (MU_Type *base, uint32_t flags)</td></tr>
+<tr class="memdesc:ga180ad60fda7f03cbcd98543bdb808a43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the 3-bit MU flags reflect on the other MU side.  <a href="#ga180ad60fda7f03cbcd98543bdb808a43">More...</a><br/></td></tr>
+<tr class="separator:ga180ad60fda7f03cbcd98543bdb808a43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga392ac71819def4a3e9d34fd1daf3fff0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga392ac71819def4a3e9d34fd1daf3fff0">MU_SetFlags</a> (MU_Type *base, uint32_t flags)</td></tr>
+<tr class="memdesc:ga392ac71819def4a3e9d34fd1daf3fff0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Blocks setting the 3-bit MU flags reflect on the other MU side.  <a href="#ga392ac71819def4a3e9d34fd1daf3fff0">More...</a><br/></td></tr>
+<tr class="separator:ga392ac71819def4a3e9d34fd1daf3fff0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4fbbf69b6157a909bcf6bb9523419834"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga4fbbf69b6157a909bcf6bb9523419834">MU_GetFlags</a> (MU_Type *base)</td></tr>
+<tr class="memdesc:ga4fbbf69b6157a909bcf6bb9523419834"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the current value of the 3-bit MU flags set by the other side.  <a href="#ga4fbbf69b6157a909bcf6bb9523419834">More...</a><br/></td></tr>
+<tr class="separator:ga4fbbf69b6157a909bcf6bb9523419834"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Status and Interrupt.</h2></td></tr>
+<tr class="memitem:ga90e31d91ebb2a97c4b8ac449bb4e2a4e"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga90e31d91ebb2a97c4b8ac449bb4e2a4e">MU_GetStatusFlags</a> (MU_Type *base)</td></tr>
+<tr class="memdesc:ga90e31d91ebb2a97c4b8ac449bb4e2a4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the MU status flags.  <a href="#ga90e31d91ebb2a97c4b8ac449bb4e2a4e">More...</a><br/></td></tr>
+<tr class="separator:ga90e31d91ebb2a97c4b8ac449bb4e2a4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1a04c3768d3a4b611a3b2a5c4e8799eb"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga1a04c3768d3a4b611a3b2a5c4e8799eb">MU_GetInterruptsPending</a> (MU_Type *base)</td></tr>
+<tr class="memdesc:ga1a04c3768d3a4b611a3b2a5c4e8799eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the MU IRQ pending status.  <a href="#ga1a04c3768d3a4b611a3b2a5c4e8799eb">More...</a><br/></td></tr>
+<tr class="separator:ga1a04c3768d3a4b611a3b2a5c4e8799eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae9097788e142b8cb891eddfcbfc60c26"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gae9097788e142b8cb891eddfcbfc60c26">MU_ClearStatusFlags</a> (MU_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:gae9097788e142b8cb891eddfcbfc60c26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the specific MU status flags.  <a href="#gae9097788e142b8cb891eddfcbfc60c26">More...</a><br/></td></tr>
+<tr class="separator:gae9097788e142b8cb891eddfcbfc60c26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5ea7e2b8b70b2f7a44013e9a8dded335"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga5ea7e2b8b70b2f7a44013e9a8dded335">MU_EnableInterrupts</a> (MU_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:ga5ea7e2b8b70b2f7a44013e9a8dded335"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the specific MU interrupts.  <a href="#ga5ea7e2b8b70b2f7a44013e9a8dded335">More...</a><br/></td></tr>
+<tr class="separator:ga5ea7e2b8b70b2f7a44013e9a8dded335"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaecadc0cf75fd66e80737b33c0971cbca"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#gaecadc0cf75fd66e80737b33c0971cbca">MU_DisableInterrupts</a> (MU_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:gaecadc0cf75fd66e80737b33c0971cbca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the specific MU interrupts.  <a href="#gaecadc0cf75fd66e80737b33c0971cbca">More...</a><br/></td></tr>
+<tr class="separator:gaecadc0cf75fd66e80737b33c0971cbca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1c78b4336b2f9ef4a4ca8ff22be7116c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga1c78b4336b2f9ef4a4ca8ff22be7116c">MU_TriggerInterrupts</a> (MU_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:ga1c78b4336b2f9ef4a4ca8ff22be7116c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Triggers interrupts to the other core.  <a href="#ga1c78b4336b2f9ef4a4ca8ff22be7116c">More...</a><br/></td></tr>
+<tr class="separator:ga1c78b4336b2f9ef4a4ca8ff22be7116c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+MU misc functions</h2></td></tr>
+<tr class="memitem:ga4c9449aca64b03c381ae1b7e1720c61b"><td class="memItemLeft" align="right" valign="top">static mu_power_mode_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00263.html#ga4c9449aca64b03c381ae1b7e1720c61b">MU_GetOtherCorePowerMode</a> (MU_Type *base)</td></tr>
+<tr class="memdesc:ga4c9449aca64b03c381ae1b7e1720c61b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the power mode of the other core.  <a href="#ga4c9449aca64b03c381ae1b7e1720c61b">More...</a><br/></td></tr>
+<tr class="separator:ga4c9449aca64b03c381ae1b7e1720c61b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="ga262ac9596c0926fbe5f346e0f6aaf9f5"></a>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="gac08525378e7d8aaa3e0e6b16e9f76ad3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* pint_cb_t)(<a class="el" href="a00263.html#ga15da1f70e8d0a05e9d492d01ceca7da8">pint_pin_int_t</a> pintr, uint32_t pmatch_status)</td>
+          <td class="memname">#define FSL_MU_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00242.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 3))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -315,333 +316,189 @@ Driver version</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga6a17e5c52721f6eb754f54cc72b58c91"></a>
+<a class="anchor" id="gae0771a3d173c2b3bf358aff30664f8bf"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00263.html#ga6a17e5c52721f6eb754f54cc72b58c91">pint_pin_enable_t</a></td>
+          <td class="memname">enum <a class="el" href="a00263.html#gae0771a3d173c2b3bf358aff30664f8bf">_mu_status_flags</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga6a17e5c52721f6eb754f54cc72b58c91aa48de84b39b48759086f2d7ae0c8091e"></a>kPINT_PinIntEnableNone</em>&nbsp;</td><td class="fielddoc">
-<p>Do not generate Pin Interrupt. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggae0771a3d173c2b3bf358aff30664f8bfa8c78ea862685cbf3168dd556137f481b"></a>kMU_Tx0EmptyFlag</em>&nbsp;</td><td class="fielddoc">
+<p>TX0 empty. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6a17e5c52721f6eb754f54cc72b58c91ae873d30aec2ca54de88c69f55ea42a07"></a>kPINT_PinIntEnableRiseEdge</em>&nbsp;</td><td class="fielddoc">
-<p>Generate Pin Interrupt on rising edge. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae0771a3d173c2b3bf358aff30664f8bfa02c68cfbe97c75fcc1a84d931f5d2e3d"></a>kMU_Tx1EmptyFlag</em>&nbsp;</td><td class="fielddoc">
+<p>TX1 empty. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6a17e5c52721f6eb754f54cc72b58c91a6f54d55ac52e8e697f83637109560e89"></a>kPINT_PinIntEnableFallEdge</em>&nbsp;</td><td class="fielddoc">
-<p>Generate Pin Interrupt on falling edge. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae0771a3d173c2b3bf358aff30664f8bfa767f1b8e0e39543921f1a140efb9e154"></a>kMU_Tx2EmptyFlag</em>&nbsp;</td><td class="fielddoc">
+<p>TX2 empty. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6a17e5c52721f6eb754f54cc72b58c91a58ac8e76b409274b7d02ef6e9805dcef"></a>kPINT_PinIntEnableBothEdges</em>&nbsp;</td><td class="fielddoc">
-<p>Generate Pin Interrupt on both edges. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae0771a3d173c2b3bf358aff30664f8bfa8f0e3eeb71299fce34d2fb31524d223f"></a>kMU_Tx3EmptyFlag</em>&nbsp;</td><td class="fielddoc">
+<p>TX3 empty. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6a17e5c52721f6eb754f54cc72b58c91a3bd6a570eee5c1fddd95ef2411b35a7e"></a>kPINT_PinIntEnableLowLevel</em>&nbsp;</td><td class="fielddoc">
-<p>Generate Pin Interrupt on low level. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae0771a3d173c2b3bf358aff30664f8bfa40ddf58c102a536275d75e0042920b8f"></a>kMU_Rx0FullFlag</em>&nbsp;</td><td class="fielddoc">
+<p>RX0 full. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga6a17e5c52721f6eb754f54cc72b58c91affc9b2756b7642ddb60ea78f4bbbd592"></a>kPINT_PinIntEnableHighLevel</em>&nbsp;</td><td class="fielddoc">
-<p>Generate Pin Interrupt on high level. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae0771a3d173c2b3bf358aff30664f8bfadd55a6748dfeb9f342ac1467db2b9456"></a>kMU_Rx1FullFlag</em>&nbsp;</td><td class="fielddoc">
+<p>RX1 full. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae0771a3d173c2b3bf358aff30664f8bfa568e4107a3b60c367e2824a80e0ae210"></a>kMU_Rx2FullFlag</em>&nbsp;</td><td class="fielddoc">
+<p>RX2 full. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae0771a3d173c2b3bf358aff30664f8bfa67742c950c69e47cbab902efc83a28d4"></a>kMU_Rx3FullFlag</em>&nbsp;</td><td class="fielddoc">
+<p>RX3 full. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae0771a3d173c2b3bf358aff30664f8bfa569a538edbb6050e2818903c9182aa44"></a>kMU_GenInt0Flag</em>&nbsp;</td><td class="fielddoc">
+<p>General purpose interrupt 0 pending. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae0771a3d173c2b3bf358aff30664f8bfa784232e66cb93c5e307727a579688f5a"></a>kMU_GenInt1Flag</em>&nbsp;</td><td class="fielddoc">
+<p>General purpose interrupt 1 pending. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae0771a3d173c2b3bf358aff30664f8bfa15712a6b86201fbcbd389c66a85fb3d3"></a>kMU_GenInt2Flag</em>&nbsp;</td><td class="fielddoc">
+<p>General purpose interrupt 2 pending. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae0771a3d173c2b3bf358aff30664f8bfa78e94d0880b08c6e4fe44cbc254e6555"></a>kMU_GenInt3Flag</em>&nbsp;</td><td class="fielddoc">
+<p>General purpose interrupt 3 pending. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae0771a3d173c2b3bf358aff30664f8bfad2f4fdc37e185dd77f42ae824a334197"></a>kMU_EventPendingFlag</em>&nbsp;</td><td class="fielddoc">
+<p>MU event pending. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae0771a3d173c2b3bf358aff30664f8bfa2c98f3deffd6aeb55701cf98bbe2936a"></a>kMU_FlagsUpdatingFlag</em>&nbsp;</td><td class="fielddoc">
+<p>MU flags update is on-going. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae0771a3d173c2b3bf358aff30664f8bfa7ee78bc085c8be00c5997fe1a7b5f3d2"></a>kMU_OtherSideInResetFlag</em>&nbsp;</td><td class="fielddoc">
+<p>The other side is in reset. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga15da1f70e8d0a05e9d492d01ceca7da8"></a>
+<a class="anchor" id="gabd070b1725280439337373fcd5934931"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00263.html#ga15da1f70e8d0a05e9d492d01ceca7da8">pint_pin_int_t</a></td>
+          <td class="memname">enum <a class="el" href="a00263.html#gabd070b1725280439337373fcd5934931">_mu_interrupt_enable</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga15da1f70e8d0a05e9d492d01ceca7da8a5df52c4fbb437e61b638d35cbc550162"></a>kPINT_PinInt0</em>&nbsp;</td><td class="fielddoc">
-<p>Pin Interrupt 0. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggabd070b1725280439337373fcd5934931a168101d14f235b5601e4d87b426338ac"></a>kMU_Tx0EmptyInterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>TX0 empty. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggabd070b1725280439337373fcd5934931a818770dd5a82087b90347dc8822e03f8"></a>kMU_Tx1EmptyInterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>TX1 empty. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggabd070b1725280439337373fcd5934931a7a4a0c0d7df99a19b2c09ece2458a83f"></a>kMU_Tx2EmptyInterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>TX2 empty. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggabd070b1725280439337373fcd5934931a7e01176f783c0895365517dedad4e66e"></a>kMU_Tx3EmptyInterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>TX3 empty. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggabd070b1725280439337373fcd5934931a4b7915f891336860a5288404c040627d"></a>kMU_Rx0FullInterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>RX0 full. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggabd070b1725280439337373fcd5934931ab2a2f081c353728fb56f3895e4615670"></a>kMU_Rx1FullInterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>RX1 full. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggabd070b1725280439337373fcd5934931a1e73d223a485610347f2ab818a95c0b7"></a>kMU_Rx2FullInterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>RX2 full. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggabd070b1725280439337373fcd5934931a493732db72b70452f893a1bdbe9b4c10"></a>kMU_Rx3FullInterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>RX3 full. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggabd070b1725280439337373fcd5934931ab695880fd49642db0667884453ce0de5"></a>kMU_GenInt0InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>General purpose interrupt 0. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggabd070b1725280439337373fcd5934931a0f9b9c7651fa7770aef0bff12726ea23"></a>kMU_GenInt1InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>General purpose interrupt 1. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggabd070b1725280439337373fcd5934931a99744e6b9c80212cee08887bdb8c7e16"></a>kMU_GenInt2InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>General purpose interrupt 2. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggabd070b1725280439337373fcd5934931aa961c2b4ea26a5de52d61f819356a37b"></a>kMU_GenInt3InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>General purpose interrupt 3. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga2e05f827d6a43eade4c22e9d75bc5d76"></a>
+<a class="anchor" id="ga41108bad4d5d228e3832b2739e982084"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00263.html#ga2e05f827d6a43eade4c22e9d75bc5d76">pint_pmatch_input_src_t</a></td>
+          <td class="memname">enum <a class="el" href="a00263.html#ga41108bad4d5d228e3832b2739e982084">_mu_interrupt_trigger</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga2e05f827d6a43eade4c22e9d75bc5d76a51f543e6f680df9beb5841231b7b3a96"></a>kPINT_PatternMatchInp0Src</em>&nbsp;</td><td class="fielddoc">
-<p>Input source 0. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga41108bad4d5d228e3832b2739e982084a55c2d4c3d2065504f7edb30553c86a53"></a>kMU_GenInt0InterruptTrigger</em>&nbsp;</td><td class="fielddoc">
+<p>General purpose interrupt 0. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga2e05f827d6a43eade4c22e9d75bc5d76a6fc5c9dbee30b375feb9ce6c86b224c2"></a>kPINT_PatternMatchInp1Src</em>&nbsp;</td><td class="fielddoc">
-<p>Input source 1. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga41108bad4d5d228e3832b2739e982084af8c229732fcaef64ad86d0111a37e349"></a>kMU_GenInt1InterruptTrigger</em>&nbsp;</td><td class="fielddoc">
+<p>General purpose interrupt 1. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga2e05f827d6a43eade4c22e9d75bc5d76a41b057b493937cd87bc212cb2e316f8a"></a>kPINT_PatternMatchInp2Src</em>&nbsp;</td><td class="fielddoc">
-<p>Input source 2. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga41108bad4d5d228e3832b2739e982084a3e107a42c4bb962e9736c46dc8fb4c20"></a>kMU_GenInt2InterruptTrigger</em>&nbsp;</td><td class="fielddoc">
+<p>General purpose interrupt 2. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga2e05f827d6a43eade4c22e9d75bc5d76a6be4432cb9e687d043a2c25c1af48869"></a>kPINT_PatternMatchInp3Src</em>&nbsp;</td><td class="fielddoc">
-<p>Input source 3. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga2e05f827d6a43eade4c22e9d75bc5d76aabc93fc28498f5577939f38e0513304c"></a>kPINT_PatternMatchInp4Src</em>&nbsp;</td><td class="fielddoc">
-<p>Input source 4. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga2e05f827d6a43eade4c22e9d75bc5d76a78ff6e40ab17d81181284c56b62b77aa"></a>kPINT_PatternMatchInp5Src</em>&nbsp;</td><td class="fielddoc">
-<p>Input source 5. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga2e05f827d6a43eade4c22e9d75bc5d76a9b2f5abc74e498a599f5c005a6cc911f"></a>kPINT_PatternMatchInp6Src</em>&nbsp;</td><td class="fielddoc">
-<p>Input source 6. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga2e05f827d6a43eade4c22e9d75bc5d76a2c93115b816dc676460cfc1be85778f0"></a>kPINT_PatternMatchInp7Src</em>&nbsp;</td><td class="fielddoc">
-<p>Input source 7. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga2e05f827d6a43eade4c22e9d75bc5d76a1f7f561990336a81a46f22395820907d"></a>kPINT_SecPatternMatchInp0Src</em>&nbsp;</td><td class="fielddoc">
-<p>Input source 0. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga2e05f827d6a43eade4c22e9d75bc5d76a8cc05c9aec163085b7a2b4481fdc971d"></a>kPINT_SecPatternMatchInp1Src</em>&nbsp;</td><td class="fielddoc">
-<p>Input source 1. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga048bc24e58d7df40af2a45efaabeea9b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00263.html#ga048bc24e58d7df40af2a45efaabeea9b">pint_pmatch_bslice_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga048bc24e58d7df40af2a45efaabeea9ba106986aeb5e12c2b76e070def3b37d95"></a>kPINT_PatternMatchBSlice0</em>&nbsp;</td><td class="fielddoc">
-<p>Bit slice 0. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gae1e5bfc17515fab76a1deab955203c6a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00263.html#gae1e5bfc17515fab76a1deab955203c6a">pint_pmatch_bslice_cfg_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggae1e5bfc17515fab76a1deab955203c6aa128703d2c2175a315aaffad869ed6a32"></a>kPINT_PatternMatchAlways</em>&nbsp;</td><td class="fielddoc">
-<p>Always Contributes to product term match. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae1e5bfc17515fab76a1deab955203c6aa654c70eeed38b0be2271dc51d7cc04f5"></a>kPINT_PatternMatchStickyRise</em>&nbsp;</td><td class="fielddoc">
-<p>Sticky Rising edge. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae1e5bfc17515fab76a1deab955203c6aa9d2a3e9717c34de3a884b695f35a6c37"></a>kPINT_PatternMatchStickyFall</em>&nbsp;</td><td class="fielddoc">
-<p>Sticky Falling edge. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae1e5bfc17515fab76a1deab955203c6aa059c3472509304186252b655cf486d8b"></a>kPINT_PatternMatchStickyBothEdges</em>&nbsp;</td><td class="fielddoc">
-<p>Sticky Rising or Falling edge. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae1e5bfc17515fab76a1deab955203c6aa7dc0770cf7ffe184788c30bd1ac9c515"></a>kPINT_PatternMatchHigh</em>&nbsp;</td><td class="fielddoc">
-<p>High level. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae1e5bfc17515fab76a1deab955203c6aa3b4af984526871b66489b0eb294d2df5"></a>kPINT_PatternMatchLow</em>&nbsp;</td><td class="fielddoc">
-<p>Low level. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae1e5bfc17515fab76a1deab955203c6aab5630ebfbc6e52c9b04f659918c094f2"></a>kPINT_PatternMatchNever</em>&nbsp;</td><td class="fielddoc">
-<p>Never contributes to product term match. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggae1e5bfc17515fab76a1deab955203c6aaac967156901735a43316f7f1c4720328"></a>kPINT_PatternMatchBothEdges</em>&nbsp;</td><td class="fielddoc">
-<p>Either rising or falling edge. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga41108bad4d5d228e3832b2739e982084a9307f291207c5f5e83bd6baff07234f2"></a>kMU_GenInt3InterruptTrigger</em>&nbsp;</td><td class="fielddoc">
+<p>General purpose interrupt 3. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gaf043d142dac622bedd50b736b52ac6e9"></a>
+<a class="anchor" id="ga59dde6d6ef6bd1016eafe1e6faf7a6d9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void PINT_Init </td>
+          <td class="memname">void MU_Init </td>
           <td>(</td>
-          <td class="paramtype">PINT_Type *&#160;</td>
+          <td class="paramtype">MU_Type *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function initializes the PINT peripheral and enables the clock.</p>
+<p>This function enables the MU clock only.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None.</td><td></td></tr>
+    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga363edbba9536380728e44bd7d1a0e7df"></a>
+<a class="anchor" id="ga956ac92cddf9794a9155b346f4db2044"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void PINT_PinInterruptConfig </td>
+          <td class="memname">void MU_Deinit </td>
           <td>(</td>
-          <td class="paramtype">PINT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">MU_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00263.html#ga15da1f70e8d0a05e9d492d01ceca7da8">pint_pin_int_t</a>&#160;</td>
-          <td class="paramname"><em>intr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00263.html#ga6a17e5c52721f6eb754f54cc72b58c91">pint_pin_enable_t</a>&#160;</td>
-          <td class="paramname"><em>enable</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00263.html#ga262ac9596c0926fbe5f346e0f6aaf9f5">pint_cb_t</a>&#160;</td>
-          <td class="paramname"><em>callback</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function configures a given pin interrupt.</p>
+<p>This function disables the MU clock only.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral. </td></tr>
-    <tr><td class="paramname">intr</td><td>Pin interrupt. </td></tr>
-    <tr><td class="paramname">enable</td><td>Selects detection logic. </td></tr>
-    <tr><td class="paramname">callback</td><td>Callback.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None.</td><td></td></tr>
+    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga12c568c9b7f6d46257dc63505a381701"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void PINT_PinInterruptGetConfig </td>
-          <td>(</td>
-          <td class="paramtype">PINT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00263.html#ga15da1f70e8d0a05e9d492d01ceca7da8">pint_pin_int_t</a>&#160;</td>
-          <td class="paramname"><em>pintr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00263.html#ga6a17e5c52721f6eb754f54cc72b58c91">pint_pin_enable_t</a> *&#160;</td>
-          <td class="paramname"><em>enable</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00263.html#ga262ac9596c0926fbe5f346e0f6aaf9f5">pint_cb_t</a> *&#160;</td>
-          <td class="paramname"><em>callback</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function returns the configuration of a given pin interrupt.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral. </td></tr>
-    <tr><td class="paramname">pintr</td><td>Pin interrupt. </td></tr>
-    <tr><td class="paramname">enable</td><td>Pointer to store the detection logic. </td></tr>
-    <tr><td class="paramname">callback</td><td>Callback.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None.</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gab784e6aea0129b0c90164462bd0dbac5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void PINT_PinInterruptClrStatus </td>
-          <td>(</td>
-          <td class="paramtype">PINT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00263.html#ga15da1f70e8d0a05e9d492d01ceca7da8">pint_pin_int_t</a>&#160;</td>
-          <td class="paramname"><em>pintr</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function clears the selected pin interrupt status.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral. </td></tr>
-    <tr><td class="paramname">pintr</td><td>Pin interrupt.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None.</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga99a96e386a822de59ac2d60149ec47f3"></a>
+<a class="anchor" id="gae4e41714bd6cf6e3de866e1aaf5b85a2"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -649,16 +506,22 @@ Driver version</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static uint32_t PINT_PinInterruptGetStatus </td>
+          <td class="memname">static void MU_SendMsgNonBlocking </td>
           <td>(</td>
-          <td class="paramtype">PINT_Type *&#160;</td>
+          <td class="paramtype">MU_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00263.html#ga15da1f70e8d0a05e9d492d01ceca7da8">pint_pin_int_t</a>&#160;</td>
-          <td class="paramname"><em>pintr</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>regIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>msg</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -672,107 +535,80 @@ Driver version</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This function returns the selected pin interrupt status.</p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>This function writes a message to the specific TX register. It does not check whether the TX register is empty or not. The upper layer should make sure the TX register is empty before calling this function. This function can be used in ISR for better performance.</p>
+<div class="fragment"><div class="line">* <span class="keywordflow">while</span> (!(<a class="code" href="a00263.html#ggae0771a3d173c2b3bf358aff30664f8bfa8c78ea862685cbf3168dd556137f481b">kMU_Tx0EmptyFlag</a> &amp; <a class="code" href="a00263.html#ga90e31d91ebb2a97c4b8ac449bb4e2a4e">MU_GetStatusFlags</a>(base))) { }  Wait <span class="keywordflow">for</span> TX0 <span class="keyword">register</span> empty.</div>
+<div class="line">* <a class="code" href="a00263.html#gae4e41714bd6cf6e3de866e1aaf5b85a2">MU_SendMsgNonBlocking</a>(base, kMU_MsgReg0, MSG_VAL);  Write message to the TX0 <span class="keyword">register</span>.</div>
+<div class="line">* </div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral. </td></tr>
-    <tr><td class="paramname">pintr</td><td>Pin interrupt.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">status</td><td>= 0 No pin interrupt request. = 1 Selected Pin interrupt request active. </td></tr>
+    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
+    <tr><td class="paramname">regIndex</td><td>TX register index, see <a class="el" href="a00263.html#gaa25bd5e99e58a228062020d6bc6f0f64">mu_msg_reg_index_t</a>. </td></tr>
+    <tr><td class="paramname">msg</td><td>Message to send. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gace94acb3f70964230b2606fdbeb5f58b"></a>
+<a class="anchor" id="gaedd7d1f0418441a61a2587a8db322ecd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void PINT_PinInterruptClrStatusAll </td>
+          <td class="memname">void MU_SendMsg </td>
           <td>(</td>
-          <td class="paramtype">PINT_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function clears the status of all pin interrupts.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None.</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gab5dbaf58c90b1ef54bcd2c5dba9e178f"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t PINT_PinInterruptGetStatusAll </td>
-          <td>(</td>
-          <td class="paramtype">PINT_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function returns the status of all pin interrupts.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">status</td><td>Each bit position indicates the status of corresponding pin interrupt. = 0 No pin interrupt request. = 1 Pin interrupt request active. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga055c655c611b5645ce6903557ef809bb"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PINT_PinInterruptClrFallFlag </td>
-          <td>(</td>
-          <td class="paramtype">PINT_Type *&#160;</td>
+          <td class="paramtype">MU_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00263.html#ga15da1f70e8d0a05e9d492d01ceca7da8">pint_pin_int_t</a>&#160;</td>
-          <td class="paramname"><em>pintr</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>regIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>msg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function waits until the TX register is empty and sends the message.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
+    <tr><td class="paramname">regIndex</td><td>MU message register, see <a class="el" href="a00263.html#gaa25bd5e99e58a228062020d6bc6f0f64">mu_msg_reg_index_t</a>. </td></tr>
+    <tr><td class="paramname">msg</td><td>Message to send. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gabeb32b60cedae555c659126d75bda806"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t MU_ReceiveMsgNonBlocking </td>
+          <td>(</td>
+          <td class="paramtype">MU_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>regIndex</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -786,24 +622,61 @@ Driver version</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This function clears the selected pin interrupt fall flag.</p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>This function reads a message from the specific RX register. It does not check whether the RX register is full or not. The upper layer should make sure the RX register is full before calling this function. This function can be used in ISR for better performance.</p>
+<div class="fragment"><div class="line">* uint32_t msg;</div>
+<div class="line">* <span class="keywordflow">while</span> (!(<a class="code" href="a00263.html#ggae0771a3d173c2b3bf358aff30664f8bfa40ddf58c102a536275d75e0042920b8f">kMU_Rx0FullFlag</a> &amp; <a class="code" href="a00263.html#ga90e31d91ebb2a97c4b8ac449bb4e2a4e">MU_GetStatusFlags</a>(base)))</div>
+<div class="line">* {</div>
+<div class="line">* }  Wait <span class="keywordflow">for</span> the RX0 <span class="keyword">register</span> full.</div>
+<div class="line">*</div>
+<div class="line">* msg = <a class="code" href="a00263.html#gabeb32b60cedae555c659126d75bda806">MU_ReceiveMsgNonBlocking</a>(base, kMU_MsgReg0);  Read message from RX0 <span class="keyword">register</span>.</div>
+<div class="line">* </div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral. </td></tr>
-    <tr><td class="paramname">pintr</td><td>Pin interrupt.</td></tr>
+    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
+    <tr><td class="paramname">regIndex</td><td>RX register index, see <a class="el" href="a00263.html#gaa25bd5e99e58a228062020d6bc6f0f64">mu_msg_reg_index_t</a>. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None.</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>The received message. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gaace443444dec2e5b7e3e20cf69c53def"></a>
+<a class="anchor" id="ga36b003e10632eed908184ddbfc48df25"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t MU_ReceiveMsg </td>
+          <td>(</td>
+          <td class="paramtype">MU_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>regIndex</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function waits until the RX register is full and receives the message.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
+    <tr><td class="paramname">regIndex</td><td>MU message register, see <a class="el" href="a00263.html#gaa25bd5e99e58a228062020d6bc6f0f64">mu_msg_reg_index_t</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The received message. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga180ad60fda7f03cbcd98543bdb808a43"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -811,16 +684,16 @@ Driver version</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static uint32_t PINT_PinInterruptGetFallFlag </td>
+          <td class="memname">static void MU_SetFlagsNonBlocking </td>
           <td>(</td>
-          <td class="paramtype">PINT_Type *&#160;</td>
+          <td class="paramtype">MU_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00263.html#ga15da1f70e8d0a05e9d492d01ceca7da8">pint_pin_int_t</a>&#160;</td>
-          <td class="paramname"><em>pintr</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>flags</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -834,115 +707,184 @@ Driver version</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This function returns the selected pin interrupt fall flag.</p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>This function sets the 3-bit MU flags directly. Every time the 3-bit MU flags are changed, the status flag <code>kMU_FlagsUpdatingFlag</code> asserts indicating the 3-bit MU flags are updating to the other side. After the 3-bit MU flags are updated, the status flag <code>kMU_FlagsUpdatingFlag</code> is cleared by hardware. During the flags updating period, the flags cannot be changed. The upper layer should make sure the status flag <code>kMU_FlagsUpdatingFlag</code> is cleared before calling this function.</p>
+<div class="fragment"><div class="line">* <span class="keywordflow">while</span> (<a class="code" href="a00263.html#ggae0771a3d173c2b3bf358aff30664f8bfa2c98f3deffd6aeb55701cf98bbe2936a">kMU_FlagsUpdatingFlag</a> &amp; <a class="code" href="a00263.html#ga90e31d91ebb2a97c4b8ac449bb4e2a4e">MU_GetStatusFlags</a>(base))</div>
+<div class="line">* {</div>
+<div class="line">* }  Wait <span class="keywordflow">for</span> previous MU flags updating.</div>
+<div class="line">*</div>
+<div class="line">* <a class="code" href="a00263.html#ga180ad60fda7f03cbcd98543bdb808a43">MU_SetFlagsNonBlocking</a>(base, 0U);  Set the mU flags.</div>
+<div class="line">* </div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral. </td></tr>
-    <tr><td class="paramname">pintr</td><td>Pin interrupt.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">flag</td><td>= 0 Falling edge has not been detected. = 1 Falling edge has been detected. </td></tr>
+    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
+    <tr><td class="paramname">flags</td><td>The 3-bit MU flags to set. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga11c44cbe5b42c79b22a3053c85b1e5d0"></a>
+<a class="anchor" id="ga392ac71819def4a3e9d34fd1daf3fff0"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void PINT_PinInterruptClrFallFlagAll </td>
+          <td class="memname">void MU_SetFlags </td>
           <td>(</td>
-          <td class="paramtype">PINT_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function clears the fall flag for all pin interrupts.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None.</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga58eced039e8c793b7ff148d6cfacde5b"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t PINT_PinInterruptGetFallFlagAll </td>
-          <td>(</td>
-          <td class="paramtype">PINT_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function returns the fall flag of all pin interrupts.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">flags</td><td>Each bit position indicates the falling edge detection of the corresponding pin interrupt. 0 Falling edge has not been detected. = 1 Falling edge has been detected. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga269af5856a4cfd5d2a171b4777d6884a"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PINT_PinInterruptClrRiseFlag </td>
-          <td>(</td>
-          <td class="paramtype">PINT_Type *&#160;</td>
+          <td class="paramtype">MU_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00263.html#ga15da1f70e8d0a05e9d492d01ceca7da8">pint_pin_int_t</a>&#160;</td>
-          <td class="paramname"><em>pintr</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>flags</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function blocks setting the 3-bit MU flags. Every time the 3-bit MU flags are changed, the status flag <code>kMU_FlagsUpdatingFlag</code> asserts indicating the 3-bit MU flags are updating to the other side. After the 3-bit MU flags are updated, the status flag <code>kMU_FlagsUpdatingFlag</code> is cleared by hardware. During the flags updating period, the flags cannot be changed. This function waits for the MU status flag <code>kMU_FlagsUpdatingFlag</code> cleared and sets the 3-bit MU flags.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
+    <tr><td class="paramname">flags</td><td>The 3-bit MU flags to set. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga4fbbf69b6157a909bcf6bb9523419834"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t MU_GetFlags </td>
+          <td>(</td>
+          <td class="paramtype">MU_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function gets the current 3-bit MU flags on the current side.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>flags Current value of the 3-bit flags. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga90e31d91ebb2a97c4b8ac449bb4e2a4e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t MU_GetStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">MU_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function returns the bit mask of the MU status flags. See _mu_status_flags.</p>
+<div class="fragment"><div class="line">* uint32_t flags;</div>
+<div class="line">* flags = <a class="code" href="a00263.html#ga90e31d91ebb2a97c4b8ac449bb4e2a4e">MU_GetStatusFlags</a>(base);  Get all status flags.</div>
+<div class="line">* <span class="keywordflow">if</span> (<a class="code" href="a00263.html#ggae0771a3d173c2b3bf358aff30664f8bfa8c78ea862685cbf3168dd556137f481b">kMU_Tx0EmptyFlag</a> &amp; flags)</div>
+<div class="line">* {</div>
+<div class="line">*     The TX0 <span class="keyword">register</span> is empty. Message can be sent.</div>
+<div class="line">*     <a class="code" href="a00263.html#gae4e41714bd6cf6e3de866e1aaf5b85a2">MU_SendMsgNonBlocking</a>(base, kMU_MsgReg0, MSG0_VAL);</div>
+<div class="line">* }</div>
+<div class="line">* <span class="keywordflow">if</span> (<a class="code" href="a00263.html#ggae0771a3d173c2b3bf358aff30664f8bfa02c68cfbe97c75fcc1a84d931f5d2e3d">kMU_Tx1EmptyFlag</a> &amp; flags)</div>
+<div class="line">* {</div>
+<div class="line">*     The TX1 <span class="keyword">register</span> is empty. Message can be sent.</div>
+<div class="line">*     <a class="code" href="a00263.html#gae4e41714bd6cf6e3de866e1aaf5b85a2">MU_SendMsgNonBlocking</a>(base, kMU_MsgReg1, MSG1_VAL);</div>
+<div class="line">* }</div>
+<div class="line">* </div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Bit mask of the MU status flags, see _mu_status_flags. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga1a04c3768d3a4b611a3b2a5c4e8799eb"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t MU_GetInterruptsPending </td>
+          <td>(</td>
+          <td class="paramtype">MU_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function returns the bit mask of the pending MU IRQs.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Bit mask of the MU IRQs pending. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gae9097788e142b8cb891eddfcbfc60c26"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void MU_ClearStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">MU_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -956,24 +898,34 @@ Driver version</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This function clears the selected pin interrupt rise flag.</p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>This function clears the specific MU status flags. The flags to clear should be passed in as bit mask. See _mu_status_flags.</p>
+<div class="fragment"><div class="line">* Clear general interrupt 0 and general interrupt 1 pending flags.</div>
+<div class="line">* <a class="code" href="a00263.html#gae9097788e142b8cb891eddfcbfc60c26">MU_ClearStatusFlags</a>(base, <a class="code" href="a00263.html#ggae0771a3d173c2b3bf358aff30664f8bfa569a538edbb6050e2818903c9182aa44">kMU_GenInt0Flag</a> | <a class="code" href="a00263.html#ggae0771a3d173c2b3bf358aff30664f8bfa784232e66cb93c5e307727a579688f5a">kMU_GenInt1Flag</a>);</div>
+<div class="line">* </div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral. </td></tr>
-    <tr><td class="paramname">pintr</td><td>Pin interrupt.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None.</td><td></td></tr>
+    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
+    <tr><td class="paramname">mask</td><td>Bit mask of the MU status flags. See _mu_status_flags. The following flags are cleared by hardware, this function could not clear them.<ul>
+<li>kMU_Tx0EmptyFlag</li>
+<li>kMU_Tx1EmptyFlag</li>
+<li>kMU_Tx2EmptyFlag</li>
+<li>kMU_Tx3EmptyFlag</li>
+<li>kMU_Rx0FullFlag</li>
+<li>kMU_Rx1FullFlag</li>
+<li>kMU_Rx2FullFlag</li>
+<li>kMU_Rx3FullFlag</li>
+<li>kMU_EventPendingFlag</li>
+<li>kMU_FlagsUpdatingFlag</li>
+<li>kMU_OtherSideInResetFlag </li>
+</ul>
+</td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gaec7a3986f92f8c11a70a80af1a93a3b6"></a>
+<a class="anchor" id="ga5ea7e2b8b70b2f7a44013e9a8dded335"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -981,16 +933,16 @@ Driver version</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static uint32_t PINT_PinInterruptGetRiseFlag </td>
+          <td class="memname">static void MU_EnableInterrupts </td>
           <td>(</td>
-          <td class="paramtype">PINT_Type *&#160;</td>
+          <td class="paramtype">MU_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00263.html#ga15da1f70e8d0a05e9d492d01ceca7da8">pint_pin_int_t</a>&#160;</td>
-          <td class="paramname"><em>pintr</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1004,24 +956,21 @@ Driver version</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This function returns the selected pin interrupt rise flag.</p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>This function enables the specific MU interrupts. The interrupts to enable should be passed in as bit mask. See _mu_interrupt_enable.</p>
+<div class="fragment"><div class="line">*    Enable general interrupt 0 and TX0 empty interrupt.</div>
+<div class="line">* <a class="code" href="a00263.html#ga5ea7e2b8b70b2f7a44013e9a8dded335">MU_EnableInterrupts</a>(base, <a class="code" href="a00263.html#ggabd070b1725280439337373fcd5934931ab695880fd49642db0667884453ce0de5">kMU_GenInt0InterruptEnable</a> | <a class="code" href="a00263.html#ggabd070b1725280439337373fcd5934931a168101d14f235b5601e4d87b426338ac">kMU_Tx0EmptyInterruptEnable</a>);</div>
+<div class="line">* </div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral. </td></tr>
-    <tr><td class="paramname">pintr</td><td>Pin interrupt.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">flag</td><td>= 0 Rising edge has not been detected. = 1 Rising edge has been detected. </td></tr>
+    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
+    <tr><td class="paramname">mask</td><td>Bit mask of the MU interrupts. See _mu_interrupt_enable. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga53dd5706866fa0313689db6e4d9c1a9b"></a>
+<a class="anchor" id="gaecadc0cf75fd66e80737b33c0971cbca"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1029,184 +978,16 @@ Driver version</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void PINT_PinInterruptClrRiseFlagAll </td>
+          <td class="memname">static void MU_DisableInterrupts </td>
           <td>(</td>
-          <td class="paramtype">PINT_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function clears the rise flag for all pin interrupts.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None.</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga08b623f67c277521182f8c9e630037ae"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t PINT_PinInterruptGetRiseFlagAll </td>
-          <td>(</td>
-          <td class="paramtype">PINT_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function returns the rise flag of all pin interrupts.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">flags</td><td>Each bit position indicates the rising edge detection of the corresponding pin interrupt. 0 Rising edge has not been detected. = 1 Rising edge has been detected. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga1dc66cd865640c0b60eb128a868eab37"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void PINT_PatternMatchConfig </td>
-          <td>(</td>
-          <td class="paramtype">PINT_Type *&#160;</td>
+          <td class="paramtype">MU_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00263.html#ga048bc24e58d7df40af2a45efaabeea9b">pint_pmatch_bslice_t</a>&#160;</td>
-          <td class="paramname"><em>bslice</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">pint_pmatch_cfg_t *&#160;</td>
-          <td class="paramname"><em>cfg</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function configures a given pattern match bit slice.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral. </td></tr>
-    <tr><td class="paramname">bslice</td><td>Pattern match bit slice number. </td></tr>
-    <tr><td class="paramname">cfg</td><td>Pointer to bit slice configuration.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None.</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga6d4f8e83cec4bc716231c97c2ceb5421"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void PINT_PatternMatchGetConfig </td>
-          <td>(</td>
-          <td class="paramtype">PINT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00263.html#ga048bc24e58d7df40af2a45efaabeea9b">pint_pmatch_bslice_t</a>&#160;</td>
-          <td class="paramname"><em>bslice</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">pint_pmatch_cfg_t *&#160;</td>
-          <td class="paramname"><em>cfg</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function returns the configuration of a given pattern match bit slice.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral. </td></tr>
-    <tr><td class="paramname">bslice</td><td>Pattern match bit slice number. </td></tr>
-    <tr><td class="paramname">cfg</td><td>Pointer to bit slice configuration.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None.</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga74b3eece6c6eabc38f3194b125ff80d5"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t PINT_PatternMatchGetStatus </td>
-          <td>(</td>
-          <td class="paramtype">PINT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00263.html#ga048bc24e58d7df40af2a45efaabeea9b">pint_pmatch_bslice_t</a>&#160;</td>
-          <td class="paramname"><em>bslice</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1220,339 +1001,35 @@ Driver version</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This function returns the status of selected bit slice.</p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>This function disables the specific MU interrupts. The interrupts to disable should be passed in as bit mask. See _mu_interrupt_enable.</p>
+<div class="fragment"><div class="line">*    Disable general interrupt 0 and TX0 empty interrupt.</div>
+<div class="line">* <a class="code" href="a00263.html#gaecadc0cf75fd66e80737b33c0971cbca">MU_DisableInterrupts</a>(base, <a class="code" href="a00263.html#ggabd070b1725280439337373fcd5934931ab695880fd49642db0667884453ce0de5">kMU_GenInt0InterruptEnable</a> | <a class="code" href="a00263.html#ggabd070b1725280439337373fcd5934931a168101d14f235b5601e4d87b426338ac">kMU_Tx0EmptyInterruptEnable</a>);</div>
+<div class="line">* </div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral. </td></tr>
-    <tr><td class="paramname">bslice</td><td>Pattern match bit slice number.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">status</td><td>= 0 Match has not been detected. = 1 Match has been detected. </td></tr>
+    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
+    <tr><td class="paramname">mask</td><td>Bit mask of the MU interrupts. See _mu_interrupt_enable. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga567b159bbfa265ed02c4900769ed8fe4"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t PINT_PatternMatchGetStatusAll </td>
-          <td>(</td>
-          <td class="paramtype">PINT_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function returns the status of all bit slices.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">status</td><td>Each bit position indicates the match status of corresponding bit slice. = 0 Match has not been detected. = 1 Match has been detected. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga00d40f5f01c445206f1f800dcc7b6e89"></a>
+<a class="anchor" id="ga1c78b4336b2f9ef4a4ca8ff22be7116c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t PINT_PatternMatchResetDetectLogic </td>
+          <td class="memname"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> MU_TriggerInterrupts </td>
           <td>(</td>
-          <td class="paramtype">PINT_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function resets the pattern match detection logic if any of the product term is matching.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">pmstatus</td><td>Each bit position indicates the match status of corresponding bit slice. = 0 Match was detected. = 1 Match was not detected. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga8911d499fb65ffe496c01f65bad9314f"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PINT_PatternMatchEnable </td>
-          <td>(</td>
-          <td class="paramtype">PINT_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function enables the pattern match function.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None.</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga4dd886dc387a64a5cb146ccd7297e1e1"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PINT_PatternMatchDisable </td>
-          <td>(</td>
-          <td class="paramtype">PINT_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function disables the pattern match function.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None.</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaf5754b4b1d1436c359dde18101657d4e"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PINT_PatternMatchEnableRXEV </td>
-          <td>(</td>
-          <td class="paramtype">PINT_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function enables the pattern match RXEV output.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None.</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga73f0e7280f898bf99fe92b3519878a77"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void PINT_PatternMatchDisableRXEV </td>
-          <td>(</td>
-          <td class="paramtype">PINT_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function disables the pattern match RXEV output.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None.</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gac6b1406205adace6696a1647250ad76d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void PINT_EnableCallback </td>
-          <td>(</td>
-          <td class="paramtype">PINT_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function enables the interrupt for the selected PINT peripheral. Although the pin(s) are monitored as soon as they are enabled, the callback function is not enabled until this function is called.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None.</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gada262638d555d9a503ddcdbed24ec475"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void PINT_DisableCallback </td>
-          <td>(</td>
-          <td class="paramtype">PINT_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function disables the interrupt for the selected PINT peripheral. Although the pins are still being monitored but the callback function is not called.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the peripheral.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None.</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga78ffa3e09e17db8dc6a9038123ad1c46"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void PINT_Deinit </td>
-          <td>(</td>
-          <td class="paramtype">PINT_Type *&#160;</td>
-          <td class="paramname"><em>base</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function disables the PINT clock.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the PINT peripheral.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None.</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga2cb0ee73a24657dd6994cb00b78c3137"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void PINT_EnableCallbackByIndex </td>
-          <td>(</td>
-          <td class="paramtype">PINT_Type *&#160;</td>
+          <td class="paramtype">MU_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00263.html#ga15da1f70e8d0a05e9d492d01ceca7da8">pint_pin_int_t</a>&#160;</td>
-          <td class="paramname"><em>pintIdx</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1561,60 +1038,59 @@ Driver version</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function enables callback by pin index instead of enabling all pins.</p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>This function triggers the specific interrupts to the other core. The interrupts to trigger are passed in as bit mask. See <a class="el" href="a00263.html#ga41108bad4d5d228e3832b2739e982084">_mu_interrupt_trigger</a>. The MU should not trigger an interrupt to the other core when the previous interrupt has not been processed by the other core. This function checks whether the previous interrupts have been processed. If not, it returns an error.</p>
+<div class="fragment"><div class="line">* <span class="keywordflow">if</span> (<a class="code" href="a00242.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a> != <a class="code" href="a00263.html#ga1c78b4336b2f9ef4a4ca8ff22be7116c">MU_TriggerInterrupts</a>(base, <a class="code" href="a00263.html#gga41108bad4d5d228e3832b2739e982084a55c2d4c3d2065504f7edb30553c86a53">kMU_GenInt0InterruptTrigger</a> | <a class="code" href="a00263.html#gga41108bad4d5d228e3832b2739e982084a3e107a42c4bb962e9736c46dc8fb4c20">kMU_GenInt2InterruptTrigger</a>))</div>
+<div class="line">* {</div>
+<div class="line">*      Previous general purpose interrupt 0 or general purpose interrupt 2</div>
+<div class="line">*      has not been processed by the other core.</div>
+<div class="line">* }</div>
+<div class="line">* </div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the peripheral. </td></tr>
-    <tr><td class="paramname">pintIdx</td><td>pin index.</td></tr>
+    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
+    <tr><td class="paramname">mask</td><td>Bit mask of the interrupts to trigger. See _mu_interrupt_trigger. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">None.</td><td></td></tr>
+    <tr><td class="paramname">kStatus_Success</td><td>Interrupts have been triggered successfully. </td></tr>
+    <tr><td class="paramname">kStatus_Fail</td><td>Previous interrupts have not been accepted. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gad7300bf374c0cdc65fadff76f3ee7e5c"></a>
+<a class="anchor" id="ga4c9449aca64b03c381ae1b7e1720c61b"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void PINT_DisableCallbackByIndex </td>
+          <td class="memname">static mu_power_mode_t MU_GetOtherCorePowerMode </td>
           <td>(</td>
-          <td class="paramtype">PINT_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">MU_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00263.html#ga15da1f70e8d0a05e9d492d01ceca7da8">pint_pin_int_t</a>&#160;</td>
-          <td class="paramname"><em>pintIdx</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>This function disables callback by pin index instead of disabling all pins.</p>
+<p>This function gets the power mode of the other core.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Base address of the peripheral. </td></tr>
-    <tr><td class="paramname">pintIdx</td><td>pin index.</td></tr>
+    <tr><td class="paramname">base</td><td>MU peripheral base address. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">None.</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>Power mode of the other core. </dd></dl>
 
 </div>
 </div>

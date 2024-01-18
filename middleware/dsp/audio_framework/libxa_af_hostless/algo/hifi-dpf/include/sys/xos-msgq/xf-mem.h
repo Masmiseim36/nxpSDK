@@ -40,7 +40,7 @@ typedef struct xf_mem_info
 } __attribute__((__packed__)) xf_mem_info_t;
 
 #define _MAX(a, b)  (((a) > (b))?(a):(b))
-#define XF_MIN_ALIGNMENT 1 
+#define XF_MIN_ALIGNMENT 1
 #define XF_MAX_ALIGNMENT 4096
 
 /*******************************************************************************
@@ -71,7 +71,7 @@ static inline void xf_shmem_alloc_rmref(UWORD32 core, xf_message_t *m)
  ******************************************************************************/
 
 /* ...allocate aligned memory on particular core specifying if it is shared */
-static inline void * xf_mem_alloc(UWORD32 size, UWORD32 align, UWORD32 core, UWORD32 shared)
+static inline void * xf_mem_alloc(UWORD32 size, UWORD32 align, UWORD32 core, UWORD32 shared, UWORD32 mem_pool_type)
 {
     UWORD32 aligned_size;
     void *ptr, *aligned_ptr;
@@ -80,7 +80,7 @@ static inline void * xf_mem_alloc(UWORD32 size, UWORD32 align, UWORD32 core, UWO
     XF_CHK_ERR(align <= XF_MAX_ALIGNMENT, NULL);
 
     /* ... alignment value should be greater than 0 */
-    align = _MAX(align, XF_MIN_ALIGNMENT); 
+    align = _MAX(align, XF_MIN_ALIGNMENT);
 
     /* ...need extra bytes to store allocation meta data, also size should be properly aligned */
     aligned_size = XF_MM(size + sizeof(xf_mem_info_t) + align-1);
@@ -97,12 +97,23 @@ static inline void * xf_mem_alloc(UWORD32 size, UWORD32 align, UWORD32 core, UWO
     else
 #endif
     {
-        ptr = xf_mm_alloc(&XF_CORE_DATA(core)->local_pool, aligned_size);
+        xf_mm_pool_t *pool = &XF_CORE_DATA(core)->local_pool[mem_pool_type];
+
+        ptr = xf_mm_alloc(pool, aligned_size);
+
+        if(pool->addr == xf_g_dsp->xf_dsp_local_buffer[mem_pool_type])
+        {
+            (*xf_g_dsp->pdsp_comp_buf_size_curr)[mem_pool_type] += aligned_size;
+            if ((*xf_g_dsp->pdsp_comp_buf_size_curr)[mem_pool_type] > (*xf_g_dsp->pdsp_comp_buf_size_peak)[mem_pool_type])
+            {
+                (*xf_g_dsp->pdsp_comp_buf_size_peak)[mem_pool_type] = (*xf_g_dsp->pdsp_comp_buf_size_curr)[mem_pool_type];
+            }
+        }
     }
     if (ptr == NULL) return ptr;
 
     /* ...align the buffer pointer */
-    aligned_ptr = (void *) (((UWORD32)ptr + align-1) & ~(align-1)); 
+    aligned_ptr = (void *) (((UWORD32)ptr + align-1) & ~(align-1));
 
     /* ...store original buffer pointer and allocated size */
     mem_info = (xf_mem_info_t *) ((UWORD32)aligned_ptr+size);
@@ -113,7 +124,7 @@ static inline void * xf_mem_alloc(UWORD32 size, UWORD32 align, UWORD32 core, UWO
 }
 
 /* ...release allocated memory */
-static inline void xf_mem_free(void *p, UWORD32 size, UWORD32 core, UWORD32 shared)
+static inline void xf_mem_free(void *p, UWORD32 size, UWORD32 core, UWORD32 shared, UWORD32 mem_pool_type)
 {
     /* ...fetch alignment metadata and free */
     xf_mem_info_t *mem_info = (xf_mem_info_t *) ((UWORD32)p + size);
@@ -127,7 +138,13 @@ static inline void xf_mem_free(void *p, UWORD32 size, UWORD32 core, UWORD32 shar
     else
 #endif
     {
-        xf_mm_free(&XF_CORE_DATA(core)->local_pool, mem_info->buf_ptr, mem_info->alloc_size);
+        xf_mm_pool_t *pool = &XF_CORE_DATA(core)->local_pool[mem_pool_type];
+
+        xf_mm_free(pool, mem_info->buf_ptr, mem_info->alloc_size);
+        if(pool->addr == xf_g_dsp->xf_dsp_local_buffer[mem_pool_type])
+        {
+            (*xf_g_dsp->pdsp_comp_buf_size_curr)[mem_pool_type] -= mem_info->alloc_size; //TENA-2491
+        }
     }
 
     return;
@@ -136,13 +153,39 @@ static inline void xf_mem_free(void *p, UWORD32 size, UWORD32 core, UWORD32 shar
 /* ...allocate AP-DSP shared memory */
 static inline int xf_shmem_alloc(UWORD32 core, xf_message_t *m)
 {
-    xf_mm_pool_t   *pool = &XF_CORE_DATA(core)->shared_pool;
+    UWORD32 length, mem_pool_type;
+    xf_mm_pool_t   *pool;
 
-    /* ...length is always cache-line aligned */    
-    if ((m->buffer = xf_mm_alloc(pool, XF_ALIGNED(m->length))) != NULL)
+    if(m->buffer)
+    {
+        mem_pool_type = ((UWORD32 *)m->buffer)[0];
+        length = ((UWORD32 *)m->buffer)[1];
+    }
+    else
+    {
+        /* ...1st time allocation for AUX buffer has no message payload as ALLOC request itself is for the buffer to be used as message payload. */
+        /* ...hence only for AUX buffer alloc has NULL payload. */
+        mem_pool_type = XAF_MEM_ID_DEV;
+        length = m->length;
+    }
+
+    pool = &XF_CORE_DATA(core)->shared_pool[mem_pool_type];
+
+    /* ...length is always cache-line aligned */
+    if ((m->buffer = xf_mm_alloc(pool, XF_ALIGNED(length))) != NULL)
     {
         /* ...register allocation address */
         xf_shmem_alloc_addref(core, m);
+
+        /* update the buffer utilization counters for DSP's component and framework buffers */
+        //if(pool->addr == ((xf_shmem_data_t *)(xf_g_dsp->xf_ap_shmem_buffer[mem_pool_type]))->buffer)
+        {
+            (*xf_g_dsp->pdsp_frmwk_buf_size_curr)[mem_pool_type] += XF_ALIGNED(length);
+            if ((*xf_g_dsp->pdsp_frmwk_buf_size_curr)[mem_pool_type] > (*xf_g_dsp->pdsp_frmwk_buf_size_peak)[mem_pool_type])
+            {
+                (*xf_g_dsp->pdsp_frmwk_buf_size_peak)[mem_pool_type] = (*xf_g_dsp->pdsp_frmwk_buf_size_curr)[mem_pool_type];
+            }
+        }
 
         return 0;
     }
@@ -155,10 +198,19 @@ static inline int xf_shmem_alloc(UWORD32 core, xf_message_t *m)
 /* ...free AP-DSP shared memory */
 static inline void xf_shmem_free(UWORD32 core, xf_message_t *m)
 {
-    xf_mm_pool_t   *pool = &XF_CORE_DATA(core)->shared_pool;
+    UWORD32 mem_pool_type = ((UWORD32 *)m->buffer)[0];
+    UWORD32 length = ((UWORD32 *)m->buffer)[1];
+    void *buffer = (void *)((UWORD32 *)m->buffer)[2];
+
+    xf_mm_pool_t   *pool = &XF_CORE_DATA(core)->shared_pool[mem_pool_type];
 
     /* ...length is always cache-line aligned */
-    xf_mm_free(pool, m->buffer, XF_ALIGNED(m->length));
+    xf_mm_free(pool, buffer, XF_ALIGNED(length));
+
+    if(pool->addr == ((xf_shmem_data_t *)(xf_g_dsp->xf_ap_shmem_buffer[mem_pool_type]))->buffer)
+    {
+        (*xf_g_dsp->pdsp_frmwk_buf_size_curr)[mem_pool_type] -= XF_ALIGNED(length); //TENA-2491
+    }
 
     /* ...unregister allocation address */
     xf_shmem_alloc_rmref(core, m);
@@ -168,10 +220,10 @@ static inline void xf_shmem_free(UWORD32 core, xf_message_t *m)
  * Scratch memory management
  ******************************************************************************/
 
-static inline void * xf_scratch_mem_init(UWORD32 core, UWORD32 thread_priority)
+static inline void * xf_scratch_mem_init(UWORD32 core, UWORD32 thread_priority, UWORD32 mem_pool_type)
 {
     /* ...allocate scratch memory from local DSP memory */
-    return xf_mem_alloc(XF_CORE_DATA(core)->worker_thread_scratch_size[thread_priority], XF_CFG_CODEC_SCRATCHMEM_ALIGN, core, 0);
+    return xf_mem_alloc(XF_CORE_DATA(core)->worker_thread_scratch_size[thread_priority], XF_CFG_CODEC_SCRATCHMEM_ALIGN, core, 0, mem_pool_type);
 }
 
 /*******************************************************************************
@@ -179,25 +231,25 @@ static inline void * xf_scratch_mem_init(UWORD32 core, UWORD32 thread_priority)
  ******************************************************************************/
 
 /* ...allocate local buffer */
-static inline int xf_mm_alloc_buffer(UWORD32 size, UWORD32 align, UWORD32 core, xf_mm_buffer_t *b)
+static inline int xf_mm_alloc_buffer(UWORD32 size, UWORD32 align, UWORD32 core, xf_mm_buffer_t *b, UWORD32 mem_pool_type)
 {
     /* ...allocate memory from proper local pool */
     if ((size = XF_MM(size)) != 0)
-        XF_CHK_ERR(b->addr = xf_mem_alloc(size, align, core, 0), XAF_MEMORY_ERR);
+        XF_CHK_ERR(b->addr = xf_mem_alloc(size, align, core, 0, mem_pool_type), XAF_MEMORY_ERR);
     else
         b->addr = NULL;
 
     /* ...save address */
     b->size = size;
-    
+
     return 0;
 }
 
 /* ...free local buffer */
-static inline void  xf_mm_free_buffer(xf_mm_buffer_t *b, UWORD32 core)
+static inline void  xf_mm_free_buffer(xf_mm_buffer_t *b, UWORD32 core, UWORD32 mem_pool_type)
 {
     if (b->addr)
     {
-        xf_mem_free(b->addr, b->size, core, 0);
+        xf_mem_free(b->addr, b->size, core, 0, mem_pool_type);
     }
 }

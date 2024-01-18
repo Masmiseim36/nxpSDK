@@ -42,7 +42,7 @@
  * declared during the autogeneration process. */
 #if defined(PSA_CRYPTO_DRIVER_CC3XX)
 #include "cc3xx_crypto_primitives_private.h"
-#endif /* PSA_CRYPTO_DRIVER_CC3XX */
+#endif /* PSA_CRYPTO_DRIVER_CC3XX */       //NXP TFM
 
 #if defined(MBEDTLS_TEST_LIBTESTDRIVER1)
 #include <libtestdriver1/include/psa/crypto.h>
@@ -53,32 +53,32 @@
 #if defined(MBEDTLS_TEST_LIBTESTDRIVER1) && \
     defined(LIBTESTDRIVER1_MBEDTLS_PSA_BUILTIN_CIPHER)
 typedef libtestdriver1_mbedtls_psa_cipher_operation_t
-        mbedtls_transparent_test_driver_cipher_operation_t;
+    mbedtls_transparent_test_driver_cipher_operation_t;
 
 #define MBEDTLS_TRANSPARENT_TEST_DRIVER_CIPHER_OPERATION_INIT \
-        LIBTESTDRIVER1_MBEDTLS_PSA_CIPHER_OPERATION_INIT
+    LIBTESTDRIVER1_MBEDTLS_PSA_CIPHER_OPERATION_INIT
 #else
 typedef mbedtls_psa_cipher_operation_t
-        mbedtls_transparent_test_driver_cipher_operation_t;
+    mbedtls_transparent_test_driver_cipher_operation_t;
 
 #define MBEDTLS_TRANSPARENT_TEST_DRIVER_CIPHER_OPERATION_INIT \
-        MBEDTLS_PSA_CIPHER_OPERATION_INIT
+    MBEDTLS_PSA_CIPHER_OPERATION_INIT
 #endif /* MBEDTLS_TEST_LIBTESTDRIVER1 &&
           LIBTESTDRIVER1_MBEDTLS_PSA_BUILTIN_CIPHER */
 
 #if defined(MBEDTLS_TEST_LIBTESTDRIVER1) && \
     defined(LIBTESTDRIVER1_MBEDTLS_PSA_BUILTIN_HASH)
 typedef libtestdriver1_mbedtls_psa_hash_operation_t
-        mbedtls_transparent_test_driver_hash_operation_t;
+    mbedtls_transparent_test_driver_hash_operation_t;
 
 #define MBEDTLS_TRANSPARENT_TEST_DRIVER_HASH_OPERATION_INIT \
-        LIBTESTDRIVER1_MBEDTLS_PSA_HASH_OPERATION_INIT
+    LIBTESTDRIVER1_MBEDTLS_PSA_HASH_OPERATION_INIT
 #else
 typedef mbedtls_psa_hash_operation_t
-        mbedtls_transparent_test_driver_hash_operation_t;
+    mbedtls_transparent_test_driver_hash_operation_t;
 
 #define MBEDTLS_TRANSPARENT_TEST_DRIVER_HASH_OPERATION_INIT \
-        MBEDTLS_PSA_HASH_OPERATION_INIT
+    MBEDTLS_PSA_HASH_OPERATION_INIT
 #endif /* MBEDTLS_TEST_LIBTESTDRIVER1 &&
           LIBTESTDRIVER1_MBEDTLS_PSA_BUILTIN_HASH */
 
@@ -88,7 +88,7 @@ typedef struct {
 } mbedtls_opaque_test_driver_cipher_operation_t;
 
 #define MBEDTLS_OPAQUE_TEST_DRIVER_CIPHER_OPERATION_INIT \
-     { 0, MBEDTLS_TRANSPARENT_TEST_DRIVER_CIPHER_OPERATION_INIT }
+    { 0, MBEDTLS_TRANSPARENT_TEST_DRIVER_CIPHER_OPERATION_INIT }
 
 #endif /* PSA_CRYPTO_DRIVER_TEST */
 
@@ -105,7 +105,7 @@ typedef union {
 #if defined(PSA_CRYPTO_DRIVER_TEST)
     mbedtls_transparent_test_driver_hash_operation_t test_driver_ctx;
 #endif
-#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)           //NXP TFM
     cc3xx_hash_operation_t cc3xx_driver_ctx;
 #endif
 } psa_driver_hash_context_t;
@@ -117,7 +117,7 @@ typedef union {
     mbedtls_transparent_test_driver_cipher_operation_t transparent_test_driver_ctx;
     mbedtls_opaque_test_driver_cipher_operation_t opaque_test_driver_ctx;
 #endif
-#if defined(PSA_CRYPTO_DRIVER_CC3XX)
+#if defined(PSA_CRYPTO_DRIVER_CC3XX)          //NXP TFM
     cc3xx_cipher_operation_t cc3xx_driver_ctx;
 #endif
 } psa_driver_cipher_context_t;

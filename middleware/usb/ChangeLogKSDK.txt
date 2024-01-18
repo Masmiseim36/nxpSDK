@@ -2,7 +2,12 @@
 @page middleware_log Middleware Change Log
 
 @section USB USB stack for MCUXpresso SDK
-  The current version of USB stack is 2.9.0.
+  The current version of USB stack is 2.9.1.
+  - 2.9.1
+    - Improvement:
+      - Update EHCI controller driver for basic support of eUSB. 
+      - Replace the hard code in audio cases with macro.
+      - Uniform the Chapter9 for device lite cases.
   - 2.9.0
     - Improvement:
       - Change ROOT2 as enabled by default in device stack.
@@ -31,7 +36,7 @@
       - Update dev_composite_hid_audio_unified_bm demo to suppport independent mute/unmute and volume control.
   - 2.8.1
     - Improvement:
-      - update USB audio demos to use audio component (components\audio).
+      - update USB audio demos to use audio component (components/audio).
       - Add the checking of function call return value.
       - Add audio multiple channels demo (usb_device_composite_audio_multi_ch_unified) on RT600 audio board.
       - Fix audio noise on sync mode and improve overflow/underflow checking method.

@@ -8,7 +8,7 @@
 
 #include "includes.h"
 
-#include "common.h"
+#include <utils/common.h>
 
 #ifdef CONFIG_DEBUG_SYSLOG
 #include <syslog.h>
@@ -204,10 +204,12 @@ void wpa_debug_close_linux_tracing(void)
  *
  * Note: New line '\n' is added to the end of the text when printing to stdout.
  */
+#define WPA_DEBUG_MAX_LINE_LENGTH 256
 void wpa_printf(int level, const char *fmt, ...)
 {
     va_list ap;
 
+    char buffer[WPA_DEBUG_MAX_LINE_LENGTH];
     if (level >= wpa_debug_level)
     {
 #ifdef CONFIG_ANDROID_LOG
@@ -236,8 +238,8 @@ void wpa_printf(int level, const char *fmt, ...)
         if (!wpa_debug_syslog && !out_file)
         {
             va_start(ap, fmt);
-            vsnprintf(NULL, 0, fmt, ap);
-            PRINTF("\r\n");
+            vsnprintf(buffer, sizeof(buffer), fmt, ap);
+            PRINTF("%s\r\n", buffer);
             va_end(ap);
         }
 #endif /* CONFIG_ANDROID_LOG */

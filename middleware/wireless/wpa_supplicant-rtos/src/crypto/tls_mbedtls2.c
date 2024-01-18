@@ -43,7 +43,7 @@
  */
 
 #include "includes.h"
-#include "common.h"
+#include "utils/common.h"
 
 #ifdef CONFIG_WPA_SUPP_CRYPTO
 
@@ -61,7 +61,12 @@
 
 #ifdef MBEDTLS_DEBUG_C
 #define DEBUG_THRESHOLD 4
+#ifdef CONFIG_ZEPHYR
+#include <mbedtls/debug.h>
+#define PRINTF printk
+#else
 #include "fsl_debug_console.h"
+#endif
 #define tls_mbedtls_d(...) PRINTF("tls_mbedtls", ##__VA_ARGS__)
 #else
 #define tls_mbedtls_d(...)
@@ -2369,18 +2374,22 @@ struct wpabuf *tls_connection_decrypt(void *tls_ctx, struct tls_connection *conn
     if (out == NULL)
         return NULL;
 
-    res = mbedtls_ssl_read(&conn->ssl, wpabuf_mhead(out), wpabuf_size(out));
-    if (res < 0)
+    while ((conn->pull_buf) && ((wpabuf_len(conn->pull_buf) - conn->pull_buf_offset) > 0))
     {
-#if 1 /*(seems like a different error if wpabuf_len(in_data) == 0)*/
-        if (res == MBEDTLS_ERR_SSL_WANT_READ)
-            return out;
-#endif
-        elog(res, "mbedtls_ssl_read");
-        wpabuf_free(out);
-        return NULL;
+        res = mbedtls_ssl_read(&conn->ssl, wpabuf_mhead(out), wpabuf_size(out));
+        if (res < 0)
+        {
+            /*(seems like a different error if wpabuf_len(in_data) == 0)*/
+            if (res == MBEDTLS_ERR_SSL_WANT_READ)
+            {
+                return out;
+            }
+            elog(res, "mbedtls_ssl_read");
+            wpabuf_free(out);
+            return NULL;
+        }
+        wpabuf_put(out, res);
     }
-    wpabuf_put(out, res);
 
     return out;
 }
@@ -3195,7 +3204,13 @@ static int tls_mbedtls_verify_cb(void *arg, mbedtls_x509_crt *crt, int depth, ui
         {
             /* check RSA modulus size (public key bitlen) */
             const mbedtls_pk_type_t pk_alg = mbedtls_pk_get_type(&crt->pk);
-            if ((pk_alg == MBEDTLS_PK_RSA || pk_alg == MBEDTLS_PK_RSASSA_PSS) && mbedtls_pk_get_bitlen(&crt->pk) < 3072)
+            if ((pk_alg == MBEDTLS_PK_RSA || pk_alg == MBEDTLS_PK_RSASSA_PSS)
+#ifdef CONFIG_SUITEB192
+                && mbedtls_pk_get_bitlen(&crt->pk) < 3072
+#else
+                && mbedtls_pk_get_bitlen(&crt->pk) < 2048
+#endif
+                )
             {
                 /* hwsim suite_b RSA tests expect 3072
                  *   suite_b_192_rsa_ecdhe_radius_rsa2048_client

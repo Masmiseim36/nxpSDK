@@ -1093,16 +1093,6 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-msgq1.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-msgq1.c</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
       <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-sched.c</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-sched.c</locationURI>
@@ -1386,6 +1376,16 @@
       <name>dsp/audio_framework/libxa_af_hostless/algo/host-apf/src/xaf-api.c</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/host-apf/src/xaf-api.c</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/host-apf/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/host-apf/src/xf-msgq1.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/host-apf/src/xf-msgq1.c</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/libxa_af_hostless/algo/host-apf/src</name>
@@ -2058,26 +2058,6 @@
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/capturer/xa-capturer-i2s.c</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/client_proxy</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/client_proxy/client_proxy.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/client_proxy/client_proxy.c</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/client_proxy</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/client_proxy/client_proxy_api.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/client_proxy/client_proxy_api.h</locationURI>
-    </link>
-    <link>
       <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/vit_pre_proc</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
@@ -2158,6 +2138,26 @@
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/renderer/xa-renderer.c</locationURI>
     </link>
     <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/src/xaf-fio-test.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/src/xaf-fio-test.c</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/src/xaf-mem-test.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/src/xaf-mem-test.c</locationURI>
+    </link>
+    <link>
       <name>utilities</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
@@ -2165,7 +2165,7 @@
     <link>
       <name>utilities/fsl_shell.c</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/utilities/fsl_shell.c</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/utilities/shell/fsl_shell.c</locationURI>
     </link>
     <link>
       <name>utilities</name>
@@ -2175,147 +2175,7 @@
     <link>
       <name>utilities/fsl_shell.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/utilities/fsl_shell.h</locationURI>
-    </link>
-    <link>
-      <name>EAP/EAP_Includes</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>EAP/EAP_Includes/LVC_Types.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/EAP_Includes/LVC_Types.h</locationURI>
-    </link>
-    <link>
-      <name>EAP/Example_Application/CONFIG_HEADER</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_AllEffectOff.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_AllEffectOff.h</locationURI>
-    </link>
-    <link>
-      <name>EAP/Example_Application/CONFIG_HEADER</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_AutoVolumeLeveler.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_AutoVolumeLeveler.h</locationURI>
-    </link>
-    <link>
-      <name>EAP/Example_Application/CONFIG_HEADER</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_ConcertSound.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_ConcertSound.h</locationURI>
-    </link>
-    <link>
-      <name>EAP/Example_Application/CONFIG_HEADER</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_Crossover2waySpeakers.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_Crossover2waySpeakers.h</locationURI>
-    </link>
-    <link>
-      <name>EAP/Example_Application/CONFIG_HEADER</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_CrossoverForSubwoofer.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_CrossoverForSubwoofer.h</locationURI>
-    </link>
-    <link>
-      <name>EAP/Example_Application/CONFIG_HEADER</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_Custom.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_Custom.h</locationURI>
-    </link>
-    <link>
-      <name>EAP/Example_Application/CONFIG_HEADER</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_LoudnessMaximiser.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_LoudnessMaximiser.h</locationURI>
-    </link>
-    <link>
-      <name>EAP/Example_Application/CONFIG_HEADER</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_MusicEnhancerRMSLimiter.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_MusicEnhancerRMSLimiter.h</locationURI>
-    </link>
-    <link>
-      <name>EAP/Example_Application/CONFIG_HEADER</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_MusicEnhancerRMSLimiter_lowMIPS.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_MusicEnhancerRMSLimiter_lowMIPS.h</locationURI>
-    </link>
-    <link>
-      <name>EAP/Example_Application/CONFIG_HEADER</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_TestAllOn.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_TestAllOn.h</locationURI>
-    </link>
-    <link>
-      <name>EAP/Example_Application/CONFIG_HEADER</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_ToneGenerator.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_ToneGenerator.h</locationURI>
-    </link>
-    <link>
-      <name>EAP/Example_Application/CONFIG_HEADER</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_VoiceEnhancer.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_VoiceEnhancer.h</locationURI>
-    </link>
-    <link>
-      <name>EAP/Example_Application/CONFIG_HEADER</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_VoiceEnhancer_lowMIPS.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_VoiceEnhancer_lowMIPS.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/utilities/shell/fsl_shell.h</locationURI>
     </link>
     <link>
       <name>drivers</name>
@@ -2456,16 +2316,6 @@
       <name>drivers/fsl_flexcomm.c</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_flexcomm.c</locationURI>
-    </link>
-    <link>
-      <name>EAP/EAP_Includes</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>EAP/EAP_Includes/EAP16.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/EAP_Includes/EAP16.h</locationURI>
     </link>
     <link>
       <name>utilities</name>

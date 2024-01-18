@@ -27,6 +27,8 @@
 #define MBEDTLS_PRIVATE(x) x
 #endif
 
+#define ENTROPY_MIN_PLATFORM     32
+
 /* hostapd/wpa_supplicant provides forced_memzero(),
  * but prefer mbedtls_platform_zeroize() */
 #define forced_memzero(ptr, sz) mbedtls_platform_zeroize(ptr, sz)
@@ -138,7 +140,7 @@
 #if defined(EAP_SIM) || defined(EAP_SIM_DYNAMIC) || defined(EAP_SERVER_SIM) || defined(EAP_AKA) || \
     defined(EAP_AKA_DYNAMIC) || defined(EAP_SERVER_AKA)
 /* EAP_SIM=y EAP_AKA=y */
-#define CRYPTO_MBEDTLS_FIPS186_2_PRF
+//#define CRYPTO_MBEDTLS_FIPS186_2_PRF
 #endif
 
 #if defined(EAP_FAST) || defined(EAP_FAST_DYNAMIC) || defined(EAP_SERVER_FAST) || defined(EAP_TEAP) || \
@@ -219,11 +221,26 @@ static mbedtls_entropy_context entropy;
 static mbedtls_mpi mpi_sw_A;
 #endif
 
+static int wm_wrap_entropy_poll(void *data, unsigned char *output, size_t len, size_t *olen)
+{
+    ((void)data);
+    os_get_random(output, len);
+    *olen = len;
+    return 0;
+}
+
 __attribute_cold__ __attribute_noinline__ static mbedtls_ctr_drbg_context *ctr_drbg_init(void)
 {
+    const unsigned char *custom_name = (const unsigned char *)"WPA_SUPPLICANT/HOSTAPD";
+    size_t custom_name_len           = os_strlen((const char *)custom_name);
+
     mbedtls_ctr_drbg_init(&ctr_drbg);
     mbedtls_entropy_init(&entropy);
-    if (mbedtls_ctr_drbg_seed(&ctr_drbg, mbedtls_entropy_func, &entropy, NULL, 0))
+
+    mbedtls_entropy_add_source(&entropy, wm_wrap_entropy_poll, NULL, ENTROPY_MIN_PLATFORM,
+                               MBEDTLS_ENTROPY_SOURCE_STRONG);
+
+    if (mbedtls_ctr_drbg_seed(&ctr_drbg, mbedtls_entropy_func, &entropy, custom_name, custom_name_len))
     {
         wpa_printf(MSG_ERROR, "Init of random number generator failed");
         /* XXX: abort? */
@@ -1022,6 +1039,9 @@ int pbkdf2_sha1(const char *passphrase, const u8 *ssid, size_t ssid_len, int ite
 }
 #endif
 
+#ifdef CRYPTO_MBEDTLS_AES
+#ifdef MBEDTLS_AES_C
+
 /*#include "aes.h"*/ /* prototypes also included in "crypto.h" */
 
 static void *aes_crypt_init_mode(const u8 *key, size_t len, int mode)
@@ -1074,6 +1094,8 @@ void aes_decrypt_deinit(void *ctx)
     mbedtls_aes_free(ctx);
     os_free(ctx);
 }
+#endif
+#endif
 
 #include "aes_wrap.h"
 
@@ -1187,6 +1209,9 @@ int omac1_aes_256(const u8 *key, const u8 *data, size_t data_len, u8 *mac)
 
 #endif /* MBEDTLS_CMAC_C */
 
+#ifdef CRYPTO_MBEDTLS_AES
+#ifdef MBEDTLS_AES_C
+
 /* These interfaces can be inefficient when used in loops, as the overhead of
  * initialization each call is large for each block input (e.g. 16 bytes) */
 
@@ -1261,6 +1286,8 @@ int aes_128_cbc_decrypt(const u8 *key, const u8 *iv, u8 *data, size_t data_len)
 
     return aes_128_cbc_oper(key, iv, data, data_len, MBEDTLS_AES_DECRYPT);
 }
+#endif
+#endif
 
 /*
  * Much of the following is documented in crypto.h as for CONFIG_TLS=internal
@@ -2102,7 +2129,7 @@ static int crypto_mbedtls_ike_id_from_ecp_group_id(mbedtls_ecp_group_id grp_id)
 
 #endif /* CRYPTO_MBEDTLS_CRYPTO_ECDH || CRYPTO_MBEDTLS_CRYPTO_EC */
 
-#if defined(CRYPTO_MBEDTLS_CRYPTO_EC_DPP)
+#if defined(CRYPTO_MBEDTLS_CRYPTO_ECDH) || defined(CRYPTO_MBEDTLS_CRYPTO_EC_DPP)
 
 #include <mbedtls/ecp.h>
 #include <mbedtls/pk.h>
@@ -2290,11 +2317,15 @@ void crypto_ec_free_key(struct crypto_key *key)
     os_free(key);
 }
 
-struct crypto_ecdh *crypto_ecdh_init(int group)
+struct crypto_ecdh *crypto_ecdh_init_owe(int group)
 {
     mbedtls_ctr_drbg_context ctr_drbg;
     mbedtls_entropy_context entropy;
     mbedtls_ecdh_context *ctx;
+
+    /* Initialize CTR_DRBG context */
+    mbedtls_ctr_drbg_init(&ctr_drbg);
+    mbedtls_entropy_init(&entropy);
 
     ctx = os_zalloc(sizeof(*ctx));
     if (!ctx)
@@ -2312,10 +2343,6 @@ struct crypto_ecdh *crypto_ecdh_init(int group)
         wpa_printf(MSG_ERROR, "Failed to set up ECDH context with group info");
         goto fail;
     }
-
-    /* Initialize CTR_DRBG context */
-    mbedtls_ctr_drbg_init(&ctr_drbg);
-    mbedtls_entropy_init(&entropy);
 
     /* Seed and setup CTR_DRBG entropy source for future reseeds */
     if (mbedtls_ctr_drbg_seed(&ctr_drbg, mbedtls_entropy_func, &entropy, NULL, 0) != 0)
@@ -2345,6 +2372,16 @@ fail:
     mbedtls_ctr_drbg_free(&ctr_drbg);
     mbedtls_entropy_free(&entropy);
     return NULL;
+}
+
+struct crypto_ecdh *crypto_ecdh_init(int group)
+{
+    mbedtls_pk_context pk;
+    mbedtls_pk_init(&pk);
+    struct crypto_ecdh *ecdh =
+        crypto_mbedtls_keypair_gen(group, &pk) == 0 ? crypto_ecdh_init2(group, (struct crypto_ec_key *)&pk) : NULL;
+    mbedtls_pk_free(&pk);
+    return ecdh;
 }
 
 struct crypto_ecdh *crypto_ecdh_init2(int group, struct crypto_ec_key *own_key)
@@ -2388,7 +2425,7 @@ struct crypto_ecdh *crypto_ecdh_init2(int group, struct crypto_ec_key *own_key)
     return NULL;
 }
 
-struct wpabuf *crypto_ecdh_get_pubkey(struct crypto_ecdh *ecdh, int y)
+struct wpabuf *crypto_ecdh_get_pubkey_owe(struct crypto_ecdh *ecdh, int y)
 {
     struct wpabuf *public_key = NULL;
     uint8_t *buf              = NULL;
@@ -2401,12 +2438,36 @@ struct wpabuf *crypto_ecdh_get_pubkey(struct crypto_ecdh *ecdh, int y)
         wpa_printf(MSG_ERROR, "Memory allocation failed");
         return NULL;
     }
-
     /* Export an MPI into unsigned big endian binary data of fixed size */
     mbedtls_mpi_write_binary(ACCESS_ECDH(&ctx, Q).MBEDTLS_PRIVATE(X), buf, prime_len);
     public_key = wpabuf_alloc_copy(buf, 32);
     os_free(buf);
     return public_key;
+}
+
+struct wpabuf *crypto_ecdh_get_pubkey(struct crypto_ecdh *ecdh, int inc_y)
+{
+    mbedtls_ecp_group *grp = &ecdh->grp;
+    size_t len             = CRYPTO_EC_plen(grp);
+#ifdef MBEDTLS_ECP_MONTGOMERY_ENABLED
+    /* len */
+#endif
+#ifdef MBEDTLS_ECP_SHORT_WEIERSTRASS_ENABLED
+    if (mbedtls_ecp_get_type(grp) == MBEDTLS_ECP_TYPE_SHORT_WEIERSTRASS)
+        len = inc_y ? len * 2 + 1 : len + 1;
+#endif
+    struct wpabuf *buf = wpabuf_alloc(len);
+    if (buf == NULL)
+        return NULL;
+    inc_y = inc_y ? MBEDTLS_ECP_PF_UNCOMPRESSED : MBEDTLS_ECP_PF_COMPRESSED;
+    if (mbedtls_ecp_point_write_binary(grp, &ecdh->Q, inc_y, &len, wpabuf_mhead_u8(buf), len) == 0)
+    {
+        wpabuf_put(buf, len);
+        return buf;
+    }
+
+    wpabuf_free(buf);
+    return NULL;
 }
 
 #if defined(MBEDTLS_ECP_SHORT_WEIERSTRASS_ENABLED)
@@ -2436,7 +2497,7 @@ static int crypto_mbedtls_short_weierstrass_derive_y(mbedtls_ecp_group *grp, mbe
 }
 #endif
 
-struct wpabuf *crypto_ecdh_set_peerkey(struct crypto_ecdh *ecdh, int inc_y, const u8 *key, size_t len)
+struct wpabuf *crypto_ecdh_set_peerkey_owe(struct crypto_ecdh *ecdh, int inc_y, const u8 *key, size_t len)
 {
     uint8_t *secret = 0;
     size_t olen = 0, len_prime = 0;
@@ -2446,8 +2507,6 @@ struct wpabuf *crypto_ecdh_set_peerkey(struct crypto_ecdh *ecdh, int inc_y, cons
     struct crypto_key *pkey  = NULL;
     struct wpabuf *sh_secret = NULL;
     int secret_key           = 0;
-    mbedtls_pk_context *peer = NULL;
-    int len_secret           = 0;
 
     mbedtls_ecdh_context *ctx = (mbedtls_ecdh_context *)ecdh;
 
@@ -2466,7 +2525,6 @@ struct wpabuf *crypto_ecdh_set_peerkey(struct crypto_ecdh *ecdh, int inc_y, cons
     }
     len_prime = ACCESS_ECDH(ctx, grp).pbits / 8;
     bn_x      = crypto_bignum_init_set(key, len);
-
     /* Initialize data for EC point */
     ec_pt = crypto_ec_point_init((struct crypto_ec *)ACCESS_ECDH(&ctx, grp));
     if (!ec_pt)
@@ -2474,7 +2532,6 @@ struct wpabuf *crypto_ecdh_set_peerkey(struct crypto_ecdh *ecdh, int inc_y, cons
         wpa_printf(MSG_ERROR, "Initializing for EC point failed");
         goto cleanup;
     }
-
     if (crypto_ec_point_solve_y_coord((struct crypto_ec *)ACCESS_ECDH(&ctx, grp), ec_pt, bn_x, inc_y) != 0)
     {
         wpa_printf(MSG_ERROR, "Failed to solve for y coordinate");
@@ -2489,12 +2546,12 @@ struct wpabuf *crypto_ecdh_set_peerkey(struct crypto_ecdh *ecdh, int inc_y, cons
         wpa_printf(MSG_ERROR, "Memory allocation failed");
         goto cleanup;
     }
+
     if (crypto_ec_point_to_bin((struct crypto_ec *)ACCESS_ECDH(&ctx, grp), ec_pt, px, py) != 0)
     {
         wpa_printf(MSG_ERROR, "Failed to write EC point value as binary data");
         goto cleanup;
     }
-
     os_memcpy(buf, px, len);
     os_memcpy(buf + len, py, len);
 
@@ -2505,7 +2562,7 @@ struct wpabuf *crypto_ecdh_set_peerkey(struct crypto_ecdh *ecdh, int inc_y, cons
         goto cleanup;
     }
 
-    peer = (mbedtls_pk_context *)pkey;
+    mbedtls_pk_context *peer = (mbedtls_pk_context *)pkey;
 
     /* Setup ECDH context from EC key */
     /* Call to mbedtls_ecdh_get_params() will initialize the context when not LEGACY context */
@@ -2521,7 +2578,7 @@ struct wpabuf *crypto_ecdh_set_peerkey(struct crypto_ecdh *ecdh, int inc_y, cons
         wpa_printf(MSG_ERROR, "Failed to set peer's ECDH context");
         goto cleanup;
     }
-    len_secret = inc_y ? 2 * len : len;
+    int len_secret = inc_y ? 2 * len : len;
     secret         = os_zalloc(len_secret);
     if (!secret)
     {
@@ -2552,7 +2609,89 @@ cleanup:
     return sh_secret;
 }
 
-void crypto_ecdh_deinit(struct crypto_ecdh *ecdh)
+struct wpabuf *crypto_ecdh_set_peerkey(struct crypto_ecdh *ecdh, int inc_y, const u8 *key, size_t len)
+{
+    if (len == 0) /*(invalid peer key)*/
+        return NULL;
+
+    mbedtls_ecp_group *grp = &ecdh->grp;
+
+#if defined(MBEDTLS_ECP_SHORT_WEIERSTRASS_ENABLED)
+    if (mbedtls_ecp_get_type(grp) == MBEDTLS_ECP_TYPE_SHORT_WEIERSTRASS)
+    {
+        /* add header for mbedtls_ecdh_read_public() */
+        u8 buf[256];
+        if (sizeof(buf) - 1 < len)
+            return NULL;
+        buf[0] = (u8)(len);
+        os_memcpy(buf + 1, key, len);
+
+        if (inc_y)
+        {
+            if (!(len & 1))
+            { /*(dpp code/tests does not include tag?!?)*/
+                if (sizeof(buf) - 2 < len)
+                    return NULL;
+                buf[0] = (u8)(1 + len);
+                buf[1] = 0x04;
+                os_memcpy(buf + 2, key, len);
+            }
+            len >>= 1; /*(repurpose len to prime_len)*/
+        }
+        else if (key[0] == 0x02 || key[0] == 0x03)
+        {          /* (inc_y == 0) */
+            --len; /*(repurpose len to prime_len)*/
+
+            /* mbedtls_ecp_point_read_binary() does not currently support
+             * MBEDTLS_ECP_PF_COMPRESSED format (buf[1] = 0x02 or 0x03)
+             * (returns MBEDTLS_ERR_ECP_FEATURE_UNAVAILABLE) */
+
+            /* derive y, amend buf[] with y for UNCOMPRESSED format */
+            if (sizeof(buf) - 2 < len * 2 || len == 0)
+                return NULL;
+            buf[0] = (u8)(1 + len * 2);
+            buf[1] = 0x04;
+            mbedtls_mpi bn;
+            mbedtls_mpi_init(&bn);
+            int ret = mbedtls_mpi_read_binary(&bn, key + 1, len) ||
+                      crypto_mbedtls_short_weierstrass_derive_y(grp, &bn, key[0] & 1) ||
+                      mbedtls_mpi_write_binary(&bn, buf + 2 + len, len);
+            mbedtls_mpi_free(&bn);
+            if (ret != 0)
+                return NULL;
+        }
+
+        if (key[0] == 0) /*(repurpose len to prime_len)*/
+            len = CRYPTO_EC_plen(grp);
+
+        if (mbedtls_ecdh_read_public(&ecdh->ctx, buf, buf[0] + 1))
+            return NULL;
+    }
+#endif
+#if defined(MBEDTLS_ECP_MONTGOMERY_ENABLED)
+    if (mbedtls_ecp_get_type(grp) == MBEDTLS_ECP_TYPE_MONTGOMERY)
+    {
+        if (mbedtls_ecdh_read_public(&ecdh->ctx, key, len))
+            return NULL;
+    }
+#endif
+
+    struct wpabuf *buf = wpabuf_alloc(len);
+    if (buf == NULL)
+        return NULL;
+
+    if (mbedtls_ecdh_calc_secret(&ecdh->ctx, &len, wpabuf_mhead(buf), len, mbedtls_ctr_drbg_random,
+                                 crypto_mbedtls_ctr_drbg()) == 0)
+    {
+        wpabuf_put(buf, len);
+        return buf;
+    }
+
+    wpabuf_clear_free(buf);
+    return NULL;
+}
+
+void crypto_ecdh_deinit_owe(struct crypto_ecdh *ecdh)
 {
     mbedtls_ecdh_context *ctx = (mbedtls_ecdh_context *)ecdh;
     if (!ctx)
@@ -2562,6 +2701,16 @@ void crypto_ecdh_deinit(struct crypto_ecdh *ecdh)
     mbedtls_ecdh_free(ctx);
     os_free(ctx);
     ctx = NULL;
+}
+
+void crypto_ecdh_deinit(struct crypto_ecdh *ecdh)
+{
+    if (ecdh == NULL)
+        return;
+    mbedtls_ecp_point_free(&ecdh->Q);
+    mbedtls_ecp_group_free(&ecdh->grp);
+    mbedtls_ecdh_free(&ecdh->ctx);
+    os_free(ecdh);
 }
 
 size_t crypto_ecdh_prime_len(struct crypto_ecdh *ecdh)
@@ -3062,6 +3211,11 @@ void crypto_ec_point_debug_print(const struct crypto_ec *e, const struct crypto_
         wpa_hexdump(MSG_DEBUG, "y:", y, len);
     }
 }
+#else
+void crypto_ec_point_debug_print(const struct crypto_ec *e, const struct crypto_ec_point *p, const char *title)
+{
+	// Fixing linking error undefined reference to `crypto_ec_point_debug_print'
+}
 #endif
 
 struct crypto_ec_key *crypto_ec_key_parse_priv(const u8 *der, size_t der_len)
@@ -3460,7 +3614,7 @@ struct wpabuf *crypto_ec_key_get_pubkey_point(struct crypto_ec_key *key, int pre
         0)
     {
         if (!prefix) /* Remove 0x04 prefix if requested */
-            os_memmove(wpabuf_mhead(buf), wpabuf_mhead(buf) + 1, --len);
+            os_memmove(wpabuf_mhead(buf), ((u8 *)wpabuf_mhead(buf) + 1), --len);
         wpabuf_put(buf, len);
         return buf;
     }

@@ -1,11 +1,11 @@
 var a00054 =
 [
-    [ "pq_prescale_t", "a00054.html#a00418", [
+    [ "pq_prescale_t", "a00054.html#a00486", [
       [ "inputPrescale", "a00054.html#aaeb2ce65b19c6c83a752e899b9def942", null ],
       [ "outputPrescale", "a00054.html#abd109972c1d75809d38b0b461aba2319", null ],
       [ "outputSaturate", "a00054.html#a9df386ce33fd8233bdccdb744e68cd35", null ]
     ] ],
-    [ "pq_config_t", "a00054.html#a00416", [
+    [ "pq_config_t", "a00054.html#a00485", [
       [ "inputAFormat", "a00054.html#adbf583e02dee6b954bf1a50e64621e64", null ],
       [ "inputAPrescale", "a00054.html#af562376169b59f05ce67208111e41264", null ],
       [ "inputBFormat", "a00054.html#a780fe123c2f494996b4dcb95095f9103", null ],
@@ -17,26 +17,26 @@ var a00054 =
       [ "machineFormat", "a00054.html#aa637fb7118e5803896e33e2417275e9e", null ],
       [ "tmpBase", "a00054.html#a5a883485872c6c229020ad0df0267adc", null ]
     ] ],
-    [ "pq_biquad_param_t", "a00054.html#a00414", [
-      [ "v_n_1", "a00054.html#a078065dc66934bae9862b01102ad6224", null ],
-      [ "v_n", "a00054.html#a580f579beedafb1867cbfae2811d7371", null ],
-      [ "a_1", "a00054.html#a68208deb20e82d04b70ea427d4dfce1d", null ],
-      [ "a_2", "a00054.html#adff204b6e880ad89cf65da41065063e2", null ],
-      [ "b_0", "a00054.html#a1a54145e3ec1dabc779e0363f39944fb", null ],
-      [ "b_1", "a00054.html#a7968ccb44e07689df32bcc87ee2f739d", null ],
-      [ "b_2", "a00054.html#a0f5b79cba289c326aa72bf99d2e32076", null ]
+    [ "_pq_biquad_param", "a00054.html#a00406", [
+      [ "v_n_1", "a00054.html#aaf119da02c3a3c2f59db01088939c13c", null ],
+      [ "v_n", "a00054.html#a4f14db59f94d62fc511f3ac34254ae0b", null ],
+      [ "a_1", "a00054.html#a0294d6d81b0d2c5b53d6763ea8d047e3", null ],
+      [ "a_2", "a00054.html#a7f4c37f230e57a24e3a984afd7460108", null ],
+      [ "b_0", "a00054.html#ad65e27bdf88f6ea7c30c92c0537d59f3", null ],
+      [ "b_1", "a00054.html#a73c759640f99482a26709535c705d530", null ],
+      [ "b_2", "a00054.html#a38328f5095a9ee761ce400c982cfaa81", null ]
     ] ],
-    [ "pq_biquad_state_t", "a00054.html#a00415", [
-      [ "param", "a00054.html#a6e0c4b7d01ba3f7f44d2a988096b4e11", null ],
-      [ "compreg", "a00054.html#a63b7c4782cdd100b9f8c5e26648d7b03", null ]
+    [ "_pq_biquad_state", "a00054.html#a00407", [
+      [ "param", "a00054.html#a39e2fe141d6886d67babeb48991ad6c8", null ],
+      [ "compreg", "a00054.html#afa54ed69791f20458e1fc122b0f67b6a", null ]
     ] ],
-    [ "pq_biquad_cascade_df2_instance", "a00054.html#a00413", [
+    [ "pq_biquad_cascade_df2_instance", "a00054.html#a00484", [
       [ "numStages", "a00054.html#a5e1778feb63d1236c1243e0f500e63ac", null ],
       [ "pState", "a00054.html#a5242f86b4d36fc8ae4639ed144e79226", null ]
     ] ],
-    [ "pq_float_t", "a00054.html#a00417", [
-      [ "floatX", "a00054.html#a22508fdc137ac3fe040aaff8549b3f50", null ],
-      [ "integerX", "a00054.html#ae6024461e02a5fac5d24d73518daa1e0", null ]
+    [ "_pq_float", "a00054.html#a00408", [
+      [ "floatX", "a00054.html#ac574c8fa18841553bfe804b72542647f", null ],
+      [ "integerX", "a00054.html#a08334dab73a2b8ff5f10d8b82cf6b141", null ]
     ] ],
     [ "FSL_POWERQUAD_DRIVER_VERSION", "a00054.html#ga72af34480f792367d5c298f7c7704848", null ],
     [ "PQ_LN_INF", "a00054.html#ga29f880778d56f9c49692d4875661b1ce", null ],
@@ -70,6 +70,9 @@ var a00054 =
     [ "POWERQUAD_MAKE_MATRIX_LEN", "a00054.html#ga4d08cbe0f3c3f9171f629c2bead85055", null ],
     [ "PQ_Q31_2_FLOAT", "a00054.html#ga2c01985168b1d74c55673248ab225b34", null ],
     [ "PQ_Q15_2_FLOAT", "a00054.html#ga78f4a938590926308c2e9f19f97ea54c", null ],
+    [ "pq_biquad_param_t", "a00054.html#gaca4b61c8f0593668a4c477f97e5515c4", null ],
+    [ "pq_biquad_state_t", "a00054.html#gad9ade7136e846a0491374f32fa74650f", null ],
+    [ "pq_float_t", "a00054.html#gae33293b685a7deb685cfd254031dc786", null ],
     [ "pq_computationengine_t", "a00054.html#ga979534aa09c2843284920425e0f8ebf1", [
       [ "kPQ_CP_PQ", "a00054.html#gga979534aa09c2843284920425e0f8ebf1ac81b6902e43682224a56a34cf13b5c9e", null ],
       [ "kPQ_CP_MTX", "a00054.html#gga979534aa09c2843284920425e0f8ebf1a544ccf1951c934dde5b0512ae9a3c832", null ],
@@ -148,6 +151,7 @@ var a00054 =
     [ "PQ_VectorBiquadCascadeDf2Fixed16", "a00054.html#gabeeb1d9cbb1688354a7c0fe0b2a8c353", null ],
     [ "PQ_ArctanFixed", "a00054.html#gaefb8a5b4b929880b99e389b3065253db", null ],
     [ "PQ_ArctanhFixed", "a00054.html#ga424ac03742b4a4a97a3aba92bff4d7e0", null ],
+    [ "PQ_Arctan2Fixed", "a00054.html#ga64cff3b3dd51e1b3973b45f45817ce77", null ],
     [ "PQ_Biquad1Fixed", "a00054.html#gaa1324b993444d429200057a3f84bde20", null ],
     [ "PQ_TransformCFFT", "a00054.html#gab9edea3c6e8bf6b52837303251dd4616", null ],
     [ "PQ_TransformRFFT", "a00054.html#gad3e073a1aa665b8b152677e6de6750de", null ],

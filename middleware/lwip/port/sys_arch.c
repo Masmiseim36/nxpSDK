@@ -32,7 +32,7 @@
 
 /*
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2020,2022 NXP
+ * Copyright 2016-2020,2022-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -77,7 +77,7 @@ void sys_assert(const char *pcMessage)
     LWIP_PLATFORM_DIAG((pcMessage));
 #endif
 #if !NO_SYS
-    portENTER_CRITICAL();
+    (void)sys_arch_protect();
 #endif
     for (;;)
     {
@@ -86,7 +86,7 @@ void sys_assert(const char *pcMessage)
 
 /************************************************************************
  * Generates a pseudo-random number.
- * NOTE: Contrubuted by the FNET project.
+ * NOTE: Contributed by the FNET project.
  *************************************************************************/
 static u32_t _rand_value;
 u32_t lwip_rand(void)

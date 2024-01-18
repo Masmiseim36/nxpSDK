@@ -22,7 +22,7 @@
 /*! \cond DOXY_SKIP_TAG */
 #define gFwkVerMajor_c 6
 #define gFwkVerMinor_c 1
-#define gFwkVerPatch_c 0
+#define gFwkVerPatch_c 8
 #define gFwkBuildNo_c  0
 #define gFwkModuleId_c 0xA3
 /*! \endcond */

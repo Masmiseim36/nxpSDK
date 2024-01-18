@@ -9,6 +9,8 @@
 #ifndef SHA1_H
 #define SHA1_H
 
+#include <utils/common.h>
+
 #define SHA1_MAC_LEN 20
 
 int hmac_sha1_vector(const u8 *key, size_t key_len, size_t num_elem, const u8 *addr[], const size_t *len, u8 *mac);

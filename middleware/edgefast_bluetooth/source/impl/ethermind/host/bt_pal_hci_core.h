@@ -93,6 +93,8 @@ enum {
 	 * of the RPA timeout.
 	 */
 	BT_ADV_RPA_VALID,
+	/* The private random address of the advertiser is being updated. */
+	BT_ADV_RPA_UPDATE,
 	/* The advertiser set is limited by a timeout, or number of advertising
 	 * events, or both.
 	 */
@@ -160,6 +162,11 @@ struct bt_le_ext_adv {
 #endif /* defined(CONFIG_BT_EXT_ADV) */
 
 	struct k_work_delayable	lim_adv_timeout_work;
+
+	/** The options used to set the parameters for this advertising set
+	 * @ref bt_le_adv_param
+	 */
+	uint32_t options;
 };
 
 enum {
@@ -231,6 +238,20 @@ struct bt_le_per_adv_sync {
 
 	/** Flags */
 	ATOMIC_DEFINE(flags, BT_PER_ADV_SYNC_NUM_FLAGS);
+
+#if (defined(CONFIG_BT_PER_ADV_SYNC_RSP) && (CONFIG_BT_PER_ADV_SYNC_RSP > 0))
+	/** Number of subevents */
+	uint8_t num_subevents;
+
+	/** Subevent interval (N * 1.25ms) */
+	uint8_t subevent_interval;
+
+	/** Response slot delay (N * 1.25ms) */
+	uint8_t response_slot_delay;
+
+	/** Response slot spacing (N * 1.25ms) */
+	uint8_t response_slot_spacing;
+#endif /* CONFIG_BT_PER_ADV_SYNC_RSP */
 };
 
 struct bt_dev_le {
@@ -250,6 +271,7 @@ struct bt_dev_le {
 #endif /* CONFIG_BT_CONN */
 #if (defined(CONFIG_BT_ISO) && ((CONFIG_BT_ISO) > 0U))
 	uint16_t		iso_mtu;
+	uint8_t			iso_limit;
 	osa_semaphore_handle_t		iso_pkts;
 	OSA_SEMAPHORE_HANDLE_DEFINE(iso_pkts_handle);
 #endif /* CONFIG_BT_ISO */
@@ -403,6 +425,8 @@ struct _bt_dev {
 	/* Local Identity Resolving Key */
 	uint8_t			irk[CONFIG_BT_ID_MAX][16];
 
+	/* Only 1 RPA per identity */
+	bt_addr_t		rpa[CONFIG_BT_ID_MAX];
 	/* Work used for RPA rotation */
 	struct k_work_delayable rpa_update;
 
@@ -462,7 +486,8 @@ int bt_le_scan_update(bool fast_scan);
 
 int bt_le_create_conn(const struct bt_conn *conn);
 int bt_le_create_conn_cancel(void);
-
+int bt_le_create_conn_synced(const struct bt_conn *conn, const struct bt_le_ext_adv *adv,
+			     uint8_t subevent);
 void bt_br_acl_link_connect_req(bt_addr_t *peer, uint32_t cod);
 
 bool bt_addr_le_is_bonded(uint8_t id, const bt_addr_le_t *addr);
@@ -520,12 +545,15 @@ void bt_hci_le_adv_report(struct net_buf *buf);
 void bt_hci_le_scan_timeout(struct net_buf *buf);
 void bt_hci_le_adv_ext_report(struct net_buf *buf);
 void bt_hci_le_per_adv_sync_established(struct net_buf *buf);
+void bt_hci_le_per_adv_sync_established_v2(struct net_buf *buf);
 void bt_hci_le_per_adv_report(struct net_buf *buf);
+void bt_hci_le_per_adv_report_v2(struct net_buf *buf);
 void bt_hci_le_per_adv_sync_lost(struct net_buf *buf);
 void bt_hci_le_biginfo_adv_report(struct net_buf *buf);
 void bt_hci_le_df_connectionless_iq_report(struct net_buf *buf);
 void bt_hci_le_vs_df_connectionless_iq_report(struct net_buf *buf);
 void bt_hci_le_past_received(struct net_buf *buf);
+void bt_hci_le_past_received_v2(struct net_buf *buf);
 
 /* Adv HCI event handlers */
 void bt_hci_le_adv_set_terminated(struct net_buf *buf);
@@ -557,6 +585,8 @@ struct bt_hci_cmd_le_encrypt_rp_cb
 
 	sys_snode_t node;
 };
+void bt_hci_le_per_adv_subevent_data_request(struct net_buf *buf);
+void bt_hci_le_per_adv_response_report(struct net_buf *buf);
 
 int hci_cmd_le_encrypt_rp_cb_register(struct bt_hci_cmd_le_encrypt_rp_cb *cb);
 int hci_cmd_le_encrypt_rp_cb_unregister(struct bt_hci_cmd_le_encrypt_rp_cb *cb);

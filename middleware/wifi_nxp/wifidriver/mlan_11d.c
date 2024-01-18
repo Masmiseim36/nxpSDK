@@ -36,7 +36,7 @@ typedef struct _region_code_mapping
 
 /** Region code mapping table */
 static const region_code_mapping_t region_code_mapping[] = {
-    {"WW ", 0xaa}, /* World Wide Safe */
+    {"WW ", 0x00}, /* World Wide Safe */
     {"US ", 0x10}, /* US FCC */
     {"CA ", 0x20}, /* IC Canada */
     {"SG ", 0x10}, /* Singapore */
@@ -44,9 +44,8 @@ static const region_code_mapping_t region_code_mapping[] = {
     {"AU ", 0x30}, /* Australia */
     {"KR ", 0x30}, /* Republic Of Korea */
     {"FR ", 0x32}, /* France */
-    {"JP ", 0x40}, /* Japan */
+    {"JP ", 0xFF}, /* Japan */
     {"CN ", 0x50}, /* China */
-    {"JP ", 0xFF}, /* Japan Special */
 };
 
 /** Default Tx power */
@@ -72,8 +71,13 @@ static chan_freq_power_t channel_freq_power_UN_AJ[] = {
     {56, 5280, TX_PWR_DEFAULT},  {60, 5300, TX_PWR_DEFAULT},  {64, 5320, TX_PWR_DEFAULT},  {100, 5500, TX_PWR_DEFAULT},
     {104, 5520, TX_PWR_DEFAULT}, {108, 5540, TX_PWR_DEFAULT}, {112, 5560, TX_PWR_DEFAULT}, {116, 5580, TX_PWR_DEFAULT},
     {120, 5600, TX_PWR_DEFAULT}, {124, 5620, TX_PWR_DEFAULT}, {128, 5640, TX_PWR_DEFAULT}, {132, 5660, TX_PWR_DEFAULT},
-    {136, 5680, TX_PWR_DEFAULT}, {140, 5700, TX_PWR_DEFAULT}, {149, 5745, TX_PWR_DEFAULT}, {153, 5765, TX_PWR_DEFAULT},
-    {157, 5785, TX_PWR_DEFAULT}, {161, 5805, TX_PWR_DEFAULT}, {165, 5825, TX_PWR_DEFAULT},
+    {136, 5680, TX_PWR_DEFAULT}, {140, 5700, TX_PWR_DEFAULT}, {144, 5720, TX_PWR_DEFAULT}, {149, 5745, TX_PWR_DEFAULT},
+    {153, 5765, TX_PWR_DEFAULT}, {157, 5785, TX_PWR_DEFAULT}, {161, 5805, TX_PWR_DEFAULT},
+#ifdef CONFIG_UNII4_BAND_SUPPORT
+    {165, 5825, TX_PWR_DEFAULT}, {169, 5845, TX_PWR_DEFAULT}, {173, 5865, TX_PWR_DEFAULT}, {177, 5885, TX_PWR_DEFAULT},
+#else
+    {165, 5825, TX_PWR_DEFAULT}
+#endif
     /*  {240, 4920, TX_PWR_DEFAULT},
         {244, 4940, TX_PWR_DEFAULT},
         {248, 4960, TX_PWR_DEFAULT},
@@ -90,6 +94,32 @@ static chan_freq_power_t channel_freq_power_UN_AJ[] = {
 ********************************************************/
 
 /**
+ *  @brief This function converts region string to region code
+ *
+ *  @param region_string    Region string
+ *
+ *  @return                 Region code
+ */
+t_u8 region_string_2_region_code(t_u8 *region_string)
+{
+    t_u8 i;
+
+    ENTER();
+
+    for (i = 0; i < ARRAY_SIZE(region_code_mapping); i++)
+    {
+        if (memcmp(region_string, region_code_mapping[i].region, COUNTRY_CODE_LEN - 1) == 0)
+        {
+            LEAVE();
+            return region_code_mapping[i].code;
+        }
+    }
+    /* Default is WW */
+    LEAVE();
+    return region_code_mapping[0].code;
+}
+
+/**
  *  @brief This function converts region string to integer code
  *
  *  @param pmadapter    A pointer to mlan_adapter structure
@@ -98,7 +128,7 @@ static chan_freq_power_t channel_freq_power_UN_AJ[] = {
  *
  *  @return             MLAN_STATUS_SUCCESS or MLAN_STATUS_FAILURE
  */
-static mlan_status wlan_11d_region_2_code(pmlan_adapter pmadapter, t_u8 *region, OUT t_u8 *code)
+mlan_status wlan_11d_region_2_code(pmlan_adapter pmadapter, t_u8 *region, OUT t_u8 *code)
 {
     t_u8 i;
     t_u8 size = sizeof(region_code_mapping) / sizeof(region_code_mapping_t);
@@ -162,7 +192,7 @@ const t_u8 *wlan_11d_code_2_region(pmlan_adapter pmadapter, t_u8 code)
     }
 
     LEAVE();
-    /* Default is US */
+    /* Default is WW */
     return ((const t_u8 *)region_code_mapping[0].region);
 }
 
@@ -518,6 +548,10 @@ static mlan_status wlan_11d_process_country_info(mlan_private *pmpriv, BSSDescri
 
             if (j == parsed_region_chan->no_of_chan && j < MAX_NO_OF_CHAN)
             {
+                if (parsed_region_chan->no_of_chan + num_chan_added >=  MAX_NO_OF_CHAN)
+                {
+                    break;
+                }
                 /*
                  * Channel does not exist in the channel power table,
                  * update this new chan and tx_power to the channel power table
@@ -533,6 +567,10 @@ static mlan_status wlan_11d_process_country_info(mlan_private *pmpriv, BSSDescri
             }
         }
         parsed_region_chan->no_of_chan += (t_u8)num_chan_added;
+        if (parsed_region_chan->no_of_chan > MAX_NO_OF_CHAN)
+        {
+            parsed_region_chan->no_of_chan = MAX_NO_OF_CHAN;
+        }
     }
     else
     {
@@ -867,6 +905,40 @@ mlan_status wlan_cmd_802_11d_domain_info(mlan_private *pmpriv, HostCmd_DS_COMMAN
 }
 
 
+
+/** Region code mapping */
+typedef struct _region_code_t
+{
+    /** Region */
+    t_u8 region[COUNTRY_CODE_LEN];
+} region_code_t;
+
+/**
+ *  @brief This function check cfg80211 special region code.
+ *
+ *  @param region_string         Region string
+ *
+ *  @return     MTRUE/MFALSE
+ */
+t_u8 is_special_region_code(t_u8 *region_string)
+{
+    t_u8 i;
+    region_code_t special_region_code[] = {{"00 "}, {"99 "}, {"98 "}, {"97 "}};
+
+    for (i = 0; i < COUNTRY_CODE_LEN && region_string[i]; i++)
+        region_string[i] = toupper(region_string[i]);
+
+    for (i = 0; i < ARRAY_SIZE(special_region_code); i++)
+    {
+        if (!memcmp(region_string, special_region_code[i].region, COUNTRY_CODE_LEN))
+        {
+            PRINTM(MINFO, "special region code=%s\n", region_string);
+            return MTRUE;
+        }
+    }
+    return MFALSE;
+}
+
 /**
  *  @brief This function parses country information for region channel
  *
@@ -1190,6 +1262,9 @@ mlan_status wlan_11d_create_dnld_countryinfo(mlan_private *pmpriv, t_u16 band)
 #ifdef CONFIG_11AC
                         case BAND_A | BAND_AN | BAND_AAC:
 #endif
+#ifdef CONFIG_11AX
+                        case BAND_A | BAND_AN | BAND_AAC | BAND_AAX:
+#endif
                             break;
                         default:
                             continue_loop = MTRUE;
@@ -1209,6 +1284,9 @@ mlan_status wlan_11d_create_dnld_countryinfo(mlan_private *pmpriv, t_u16 band)
                         case BAND_B | BAND_G | BAND_GN:
 #ifdef CONFIG_11AC
                         case BAND_B | BAND_G | BAND_GN | BAND_GAC:
+#endif
+#ifdef CONFIG_11AX
+                        case BAND_B | BAND_G | BAND_GN | BAND_GAC | BAND_GAX:
 #endif
                             break;
                         default:
@@ -1287,10 +1365,21 @@ mlan_status wlan_11d_parse_dnld_countryinfo(mlan_private *pmpriv, BSSDescriptor_
 
         if (pbss_desc != MNULL)
         {
+            /** Country code */
+            t_u8 country_code[COUNTRY_CODE_LEN];
+            country_code[0] = pbss_desc->country_info.country_code[0];
+            country_code[1] = pbss_desc->country_info.country_code[1];
+            country_code[2] = ' ';
+
+            if (is_special_region_code(country_code))
+            {
+                PRINTM(MINFO, "Skip special region code in CountryIE");
+                LEAVE();
+                return MLAN_STATUS_SUCCESS;
+            }
             /* Parse domain info if available */
             ret = wlan_11d_parse_domain_info(pmadapter, &pbss_desc->country_info, pbss_desc->bss_band,
                                              &bssdesc_region_chan);
-
             if (ret == MLAN_STATUS_SUCCESS)
             {
                 /* Update the channel-power table */

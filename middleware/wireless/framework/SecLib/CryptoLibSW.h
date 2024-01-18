@@ -17,6 +17,8 @@
 * Includes
 *************************************************************************************
 ************************************************************************************/
+#include <stdbool.h>
+
 #include "EmbeddedTypes.h"
 #include "SecLib_ecp256.h"
 
@@ -25,16 +27,6 @@
 * Public type definitions
 *************************************************************************************
 ********************************************************************************** */
-
-typedef enum ecdhStatus_tag
-{
-    gEcdhSuccess_c,
-    gEcdhBadParameters_c,
-    gEcdhOutOfMemory_c,
-    gEcdhRngError_c,
-    gEcdhInvalidState_c,
-    gEcdhInvalidPublicKey_c
-} ecdhStatus_t;
 
 /************************************************************************************
 *************************************************************************************
@@ -72,29 +64,139 @@ uint8_t sw_AES128_CCM(const uint8_t *pInput,
 /* EC_P_256 */
 extern const uint32_t gEcP256_MultiplicationBufferSize_c;
 
-bool_t EcP256_IsPointOnCurve(const uint32_t *X, const uint32_t *Y);
-
 /* SW RNG */
 uint32_t SecLib_set_rng_seed(uint32_t seed);
 uint32_t SecLib_get_random(void);
 
 /* SW ECDH */
-ecdhStatus_t Ecdh_GenerateNewKeys(ecdhPublicKey_t * pOutPublicKey,
-                                  ecdhPrivateKey_t *pOutPrivateKey,
-                                  void *            pMultiplicationBuffer);
+secEcdhStatus_t Ecdh_GenerateNewKeys(ecdhPublicKey_t * pOutPublicKey,
+                                     ecdhPrivateKey_t *pOutPrivateKey,
+                                     void *            pMultiplicationBuffer);
 
-ecdhStatus_t Ecdh_GenerateNewKeysSeg(computeDhKeyParam_t *pDhKeyData);
+secEcdhStatus_t Ecdh_GenerateNewKeysSeg(computeDhKeyParam_t *pDhKeyData);
 
-ecdhStatus_t Ecdh_ComputeDhKey(ecdhPrivateKey_t *pPrivateKey,
-                               ecdhPublicKey_t * pPeerPublicKey,
-                               ecdhDhKey_t *     pOutDhKey,
-                               void *            pMultiplicationBuffer);
-
-ecdhStatus_t Ecdh_ComputeDhKeySeg(computeDhKeyParam_t *pDhKeyData);
+secEcdhStatus_t Ecdh_ComputeDhKeySeg(computeDhKeyParam_t *pDhKeyData);
 
 void Ecdh_ComputeJacobiChunk(uint8_t index, uint8_t stepSize, computeDhKeyParam_t *pData);
 
 void Ecdh_JacobiCompleteMult(computeDhKeyParam_t *pData);
+
+/*! *********************************************************************************
+ * \brief Compute ECDH Diffie Hellman shared secret
+ *
+ *  Internal API calling legacy unaccelerated lib (no DSP extension)
+ *
+ * \param[in]  pPrivateKey   Own ECP256R1 private key (scalar) to be multiplied with
+ *                           peer's public key, results from previous key pair generation.
+ *
+ * \param[in] pPeerPublicKey  pointer on ECP256R1 public key received from peer.
+ *
+ * \param[out] pOutDhKey  pointer on buffer to receive DH shared secret.
+ *
+ * \param[in] pMultiplicationBuffer  pointer on work buffer for multiplication buffer.
+ *
+ * \return  gSecEcdhSuccess_c if success.
+ * Note:    Does not retry if private key is not suitable
+ *
+ ********************************************************************************** */
+secEcdhStatus_t Ecdh_ComputeDhKey(const ecdhPrivateKey_t *pPrivateKey,
+                                  const ecdhPublicKey_t * pPeerPublicKey,
+                                  ecdhDhKey_t *           pOutDhKey,
+                                  void *                  pMultiplicationBuffer);
+
+/*! *********************************************************************************
+ * \brief Compute ECDH Diffie Hellman shared secret
+ *
+ *  Internal API calling DSP extension based UltraFast lib
+ *
+ * \param[in]  pPrivateKey   Own ECP256R1 private key (scalar) to be multiplied with
+ *                           peer's public key, results from previous key pair generation.
+ *
+ * \param[in] pPeerPublicKey  pointer on ECP256R1 public key received from peer.
+ *
+ * \param[out] pOutDhKey  pointer on buffer to receive DH shared secret.
+ *
+ * \param[in] pMultiplicationBuffer  pointer on work buffer for multiplication buffer.
+ *
+ * \return  gSecEcdhSuccess_c if success.
+ * Note:    Does not retry if private key is not suitable
+ *          Same as Ecdh_ComputeDhKey but uses DSP extension.
+ *
+ ********************************************************************************** */
+secEcdhStatus_t Ecdh_ComputeDhKeyUltraFast(const ecdhPrivateKey_t *pPrivateKey,
+                                           const ecdhPublicKey_t * pPeerPublicKey,
+                                           ecdhDhKey_t *           pOutDhKey,
+                                           void *                  pMultiplicationBuffer);
+
+/*! *********************************************************************************
+ * \brief Duplicate ECP256 affine coordinate without endianess modification
+ *
+ *  Internal API
+ *
+ * \param[out] dest pointer on 32 byte storage in RAM location, preferably aligned
+ * \param[in]  src pointer on point coordinate, eith X or Y, can be unaligned or read-only
+ *
+ ********************************************************************************** */
+void ECP256_coordinate_copy(uint8_t dest[SEC_ECP256_COORDINATE_LEN], const uint8_t src[SEC_ECP256_COORDINATE_LEN]);
+
+/*! *********************************************************************************
+ * \brief Duplicate ECP256 affine coordinate swapping its endianess
+ *
+ *  Internal API *
+ *
+ * \param[out] dest pointer on 32 byte storage in RAM location, preferably aligned
+ * \param[in]  src pointer on point coordinate, either X or Y
+ *             must start with in[0] == 0x04
+ *
+ *  \remark   see ECP256_coordinate_copy
+ *
+ ********************************************************************************** */
+void ECP256_coordinate_copy_and_change_endianness(uint8_t       dest_coordinate[SEC_ECP256_COORDINATE_LEN],
+                                                  const uint8_t coordinate[SEC_ECP256_COORDINATE_LEN]);
+
+/*! *********************************************************************************
+ * \brief Inplace endianness change of a P256 coordinate
+ *
+ *  Internal API
+ *
+ * \param[in/out]  src pointer on point coordinate, either X or Y
+ *             must be in RAM
+ *
+ *  \remark   see ECP256_coordinate_copy
+ *
+ ********************************************************************************** */
+void ECP256_coordinate_change_endianness(uint8_t coordinate[SEC_ECP256_COORDINATE_LEN]);
+
+/*! *********************************************************************************
+ * \brief Duplicate ECP256 affine point  keeping its endianess
+ *
+ *  Internal API
+ *
+ * \param[out] dest_XY pointer on 64 byte storage in RAM location, preferably aligned
+ * \param[in]  src pointer on point (might be unaligned and or in read-only)
+ *
+ *  \remark  ECP256_coordinate_copy applied to both coordinates
+ *
+ ********************************************************************************** */
+void ECP256_PointCopy(uint8_t dest_XY[SEC_ECP256_POINT_LEN - 1], const uint8_t *src);
+
+/*! *********************************************************************************
+ * \brief Duplicate ECP256 affine point swapping its endianess
+ *
+ *  Internal API
+ *
+ * \param[out] dest_XY pointer on 64 byte storage in RAM location, preferably aligned
+ * \param[in]  src pointer on point (might be unaligned and or in read-only)
+ *
+ *  \remark  ECP256_coordinate_copy_and_change_endianess applied to both coordinates
+ *
+ ********************************************************************************** */
+void ECP256_PointCopy_and_change_endianness(uint8_t dest_XY[SEC_ECP256_POINT_LEN - 1], const uint8_t *src);
+
+/*
+ *  Internal API for Debug
+ */
+void ECP256_PointDisplay(const char *str, const uint8_t *point);
 
 #ifdef __cplusplus
 }

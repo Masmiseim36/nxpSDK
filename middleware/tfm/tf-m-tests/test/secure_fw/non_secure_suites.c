@@ -98,10 +98,8 @@ static struct test_suite_t test_suites[] = {
 #endif
 
 #ifdef TEST_NS_QCBOR
-#ifndef __IAR_SYSTEMS_ICC__ //NXP IAR is failed on QCBOR tests, this is the known issue.
     /* Non-secure QCBOR library test cases */
     {&register_testsuite_ns_qcbor, 0, 0, 0},
-#endif
 #endif
 
 #ifdef TEST_NS_T_COSE

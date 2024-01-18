@@ -7,6 +7,202 @@
 #  # description: BOARD_Project_Template evkmimxrt595_om13790host
 #  set(CONFIG_USE_BOARD_Project_Template_evkmimxrt595_om13790host true)
 
+#set.middleware.wireless.framework
+#  # description: Middleware wireless framework_sec_lib
+#  set(CONFIG_USE_middleware_wireless_framework_sec_lib true)
+
+#  # description: Middleware wireless framework_platform_common
+#  set(CONFIG_USE_middleware_wireless_framework_platform_common_MIMXRT595S true)
+
+#  # description: Middleware wireless framework_platform_coex
+#  set(CONFIG_USE_middleware_wireless_framework_platform_coex_MIMXRT595S true)
+
+#  # description: Middleware wireless framework_board_lp
+#  set(CONFIG_USE_middleware_wireless_framework_board_lp_MIMXRT595S true)
+
+#  # description: Middleware wireless framework_board_dcdc
+#  set(CONFIG_USE_middleware_wireless_framework_board_dcdc_MIMXRT595S true)
+
+#  # description: Middleware wireless framework_board_platform
+#  set(CONFIG_USE_middleware_wireless_framework_board_platform_MIMXRT595S true)
+
+#  # description: Middleware wireless framework_board_comp
+#  set(CONFIG_USE_middleware_wireless_framework_board_comp_MIMXRT595S true)
+
+#  # description: Middleware wireless framework_board_extflash
+#  set(CONFIG_USE_middleware_wireless_framework_board_extflash_MIMXRT595S true)
+
+#  # description: Middleware wireless framework_lfs_config
+#  set(CONFIG_USE_middleware_wireless_framework_lfs_config_MIMXRT595S true)
+
+#  # description: Middleware wireless framework matter config
+#  set(CONFIG_USE_middleware_wireless_framework_matter_config_MIMXRT595S true)
+
+#  # description: Middleware wireless framework init config
+#  set(CONFIG_USE_middleware_wireless_framework_init_config_MIMXRT595S true)
+
+#  # description: Middleware wireless framework_rpmsg_config
+#  set(CONFIG_USE_middleware_wireless_framework_rpmsg_config true)
+
+#  # description: Middleware wireless framework platform ot coex
+#  set(CONFIG_USE_middleware_wireless_framework_platform_rt_ot_coex true)
+
+#  # description: Middleware wireless framework_cmake
+#  set(CONFIG_USE_middleware_wireless_framework_CMake_MIMXRT595S true)
+
+#  # description: Middleware wireless framework_fsci
+#  set(CONFIG_USE_middleware_wireless_framework_FSCI true)
+
+#  # description: Middleware wireless HWParameter
+#  set(CONFIG_USE_middleware_wireless_HWParameter true)
+
+#  # description: Middleware wireless framework_common
+#  set(CONFIG_USE_middleware_wireless_framework_Common true)
+
+#  # description: Middleware wireless framework_rng
+#  set(CONFIG_USE_middleware_wireless_framework_RNG true)
+
+#  # description: Middleware wireless framework_rng_mbedtls
+#  set(CONFIG_USE_middleware_wireless_framework_RNG_mbedtls true)
+
+#  # description: Middleware wireless framework_sec_lib_cryptolib_src
+#  set(CONFIG_USE_middleware_wireless_framework_sec_lib_cryptolib_src true)
+
+#  # description: Middleware wireless framework_function_lib
+#  set(CONFIG_USE_middleware_wireless_framework_function_lib true)
+
+#  # description: Middleware wireless framework_module_info
+#  set(CONFIG_USE_middleware_wireless_framework_module_info true)
+
+#  # description: Middleware wireless framework_nvm
+#  set(CONFIG_USE_middleware_wireless_framework_NVM true)
+
+#  # description: Middleware wireless framework_nv_fsci
+#  set(CONFIG_USE_middleware_wireless_framework_NV_FSCI true)
+
+#  # description: Middleware wireless framework_otaServerSupport
+#  set(CONFIG_USE_middleware_wireless_framework_OtaServerSupport true)
+
+#  # description: Middleware wireless framework_sbtsnoop_ethermind_port
+#  set(CONFIG_USE_middleware_wireless_framework_sbtsnoop_ethermind_port true)
+
+#  # description: Middleware wireless framework_sbtsnoop_nxp_ble_port
+#  set(CONFIG_USE_middleware_wireless_framework_sbtsnoop_nxp_ble_port true)
+
+#  # description: Middleware wireless framework_fwk_debug
+#  set(CONFIG_USE_middleware_wireless_framework_fwk_debug true)
+
+#  # description: Middleware wireless framework_linkscripts_kw45
+#  set(CONFIG_USE_middleware_wireless_framework_linkscripts_kw45 true)
+
+#  # description: Middleware wireless framework_linkscripts_mcxw34xevk
+#  set(CONFIG_USE_middleware_wireless_framework_linkscripts_mcxw34xevk true)
+
+#  # description: Middleware wireless framework_linkscript_bootloader_kw45
+#  set(CONFIG_USE_middleware_wireless_framework_linkscript_bootloader_kw45 true)
+
+#  # description: Middleware wireless framework_linkscript_warmboot_kw45
+#  set(CONFIG_USE_middleware_wireless_framework_linkscript_warmboot_kw45 true)
+
+#  # description: Middleware wireless HDI
+#  set(CONFIG_USE_middleware_wireless_HDI true)
+
+#  # description: Middleware wireless IPC
+#  set(CONFIG_USE_middleware_wireless_IPC true)
+
+#  # description: Middleware wireless framework_PDM
+#  set(CONFIG_USE_middleware_wireless_framework_PDM true)
+
+#  # description: Middleware wireless framework_PDUM
+#  set(CONFIG_USE_middleware_wireless_framework_PDUM true)
+
+#  # description: Middleware wireless framework_markdown
+#  set(CONFIG_USE_middleware_wireless_framework_markdown true)
+
+#  # description: Middleware wireless framework_SFC
+#  set(CONFIG_USE_middleware_wireless_framework_SFC true)
+
+#  # description: Middleware wireless framework_RF_SFC
+#  set(CONFIG_USE_middleware_wireless_framework_RF_SFC true)
+
+#  # description: Middleware wireless framework_OTW
+#  set(CONFIG_USE_middleware_wireless_framework_OTW true)
+
+#  # description: Middleware wireless framework_FactoryDataProvider
+#  set(CONFIG_USE_middleware_wireless_framework_FactoryDataProvider true)
+
+#  # description: Middleware wireless framework_filesytem
+#  set(CONFIG_USE_middleware_wireless_framework_filesystem true)
+
+#  # description: Middleware wireless fwk_lfs_mflash
+#  set(CONFIG_USE_middleware_wireless_framework_fsabstraction_littlefs true)
+
+#  # description: Middleware wireless framework_platform
+#  set(CONFIG_USE_middleware_wireless_framework_platform_MIMXRT595S true)
+
+#  # description: Middleware wireless framework_platform_flash
+#  set(CONFIG_USE_middleware_wireless_framework_platform_flash_MIMXRT595S true)
+
+#  # description: Middleware wireless framework_platform_extflash
+#  set(CONFIG_USE_middleware_wireless_framework_platform_extflash_MIMXRT595S true)
+
+#  # description: Middleware wireless framework_platform_sensors
+#  set(CONFIG_USE_middleware_wireless_framework_platform_sensors_MIMXRT595S true)
+
+#  # description: Middleware wireless framework_platform_ota
+#  set(CONFIG_USE_middleware_wireless_framework_platform_ota_MIMXRT595S true)
+
+#  # description: Middleware wireless framework_platform_mws
+#  set(CONFIG_USE_middleware_wireless_framework_platform_mws_MIMXRT595S true)
+
+#  # description: Middleware wireless framework_platform_ble
+#  set(CONFIG_USE_middleware_wireless_framework_platform_ble_MIMXRT595S true)
+
+#  # description: Middleware wireless framework_platform_genfsk
+#  set(CONFIG_USE_middleware_wireless_framework_platform_genfsk_MIMXRT595S true)
+
+#  # description: Middleware wireless framework_platform_ot
+#  set(CONFIG_USE_middleware_wireless_framework_platform_ot_MIMXRT595S true)
+
+#  # description: Middleware wireless framework_platform_lowpower
+#  set(CONFIG_USE_middleware_wireless_framework_platform_lowpower_MIMXRT595S true)
+
+#  # description: Middleware wireless framework_platform_lowpower_timer
+#  set(CONFIG_USE_middleware_wireless_framework_platform_lowpower_timer_MIMXRT595S true)
+
+#  # description: Middleware wireless framework_sec_lib_sss
+#  set(CONFIG_USE_middleware_wireless_framework_sec_lib_sss_m33 true)
+
+#  # description: Middleware wireless framework_otaSupport
+#  set(CONFIG_USE_middleware_wireless_framework_OtaSupport true)
+
+#  # description: Middleware wireless framework_sbtsnoop
+#  set(CONFIG_USE_middleware_wireless_framework_sbtsnoop true)
+
+#  # description: FreeRTOS heap for framework mem_manager
+#  set(CONFIG_USE_middleware_wireless_freertos_heap true)
+
+#  # description: Framework FreeRTOS utilities
+#  set(CONFIG_USE_middleware_wireless_framework_freertos_utils true)
+
+#  # description: Middleware wireless framework_lpm
+#  set(CONFIG_USE_middleware_wireless_framework_LPM_MIMXRT595S true)
+
+#  # description: Middleware wireless framework_lpm_systicks
+#  set(CONFIG_USE_middleware_wireless_framework_LPM_systicks_MIMXRT595S true)
+
+#  # description: Middleware wireless framework_lpm_cli
+#  set(CONFIG_USE_middleware_wireless_framework_LPM_cli_MIMXRT595S true)
+
+#  # description: Middleware wireless fsabstraction
+#  set(CONFIG_USE_middleware_wireless_framework_fsabstraction true)
+
+#  # description: Middleware wireless FileCache
+#  set(CONFIG_USE_middleware_wireless_framework_filecache true)
+
+#  # description: Middleware wireless KeyStorage
+#  set(CONFIG_USE_middleware_wireless_framework_keystorage true)
+
 #set.device.MIMXRT595S
 #  # description: Device MIMXRT595S_startup
 #  set(CONFIG_USE_device_MIMXRT595S_startup true)
@@ -31,6 +227,15 @@
 
 #  # description: Wi-Fi module Tx power limits
 #  set(CONFIG_USE_component_wifi_bt_module_tx_pwr_limits true)
+
+#  # description: Wi-Fi and BT module configs
+#  set(CONFIG_USE_component_wifi_bt_module_config true)
+
+#  # description: Component ctimer time stamp adapter
+#  set(CONFIG_USE_component_ctimer_time_stamp_adapter true)
+
+#  # description: Component ostimer time stamp adapter
+#  set(CONFIG_USE_component_ostimer_time_stamp_adapter true)
 
 #  # description: Devices_project_template MIMXRT595S
 #  set(CONFIG_USE_DEVICES_Project_Template_MIMXRT595S true)
@@ -245,6 +450,9 @@
 #  # description: Driver mpi_loader
 #  set(CONFIG_USE_driver_mpi_loader true)
 
+#  # description: Component nvm_adapter
+#  set(CONFIG_USE_component_nvm_adapter true)
+
 #  # description: Component panic
 #  set(CONFIG_USE_component_panic true)
 
@@ -455,6 +663,9 @@
 #  # description: WWDT Driver
 #  set(CONFIG_USE_driver_wwdt true)
 
+#  # description: I2S Bridge Driver
+#  set(CONFIG_USE_driver_i2s_bridge true)
+
 #  # description: SOC MIPI DSI Driver
 #  set(CONFIG_USE_driver_soc_mipi_dsi true)
 
@@ -502,37 +713,6 @@
 
 #  # description: Driver dbi_flexio_smartdma
 #  set(CONFIG_USE_driver_dbi_flexio_smartdma true)
-
-#set.middleware.wifi
-#  # description: NXP WLAN common files
-#  set(CONFIG_USE_middleware_wifi_common_files true)
-
-#  # description: Template configuration file to be edited by user.
-#  set(CONFIG_USE_middleware_wifi_template true)
-
-#  # description: NXP WLAN f/w dnld driver
-#  set(CONFIG_USE_middleware_wifi_fwdnld true)
-
-#  # description: NXP Wi-Fi driver
-#  set(CONFIG_USE_middleware_wifi_wifidriver true)
-
-#  # description: NXP Wi-Fi functionality enables customers to quickly develop applications of interest to add connectivity to different sensors and appliances
-#  set(CONFIG_USE_middleware_wifi true)
-
-#  # description: NXP Wi-Fi SDIO driver
-#  set(CONFIG_USE_middleware_wifi_sdio true)
-
-#  # description: NXP Wi-Fi SDIO driver
-#  set(CONFIG_USE_middleware_wifi_mlan_sdio true)
-
-#  # description: Middlware Wi-Fi CLI
-#  set(CONFIG_USE_middleware_wifi_cli true)
-
-#  # description: Wi-Fi Edgefast Abstraction Layer
-#  set(CONFIG_USE_middleware_edgefast_wifi true)
-
-#  # description: Blocking layer for NXP Wi-Fi
-#  set(CONFIG_USE_middleware_edgefast_wifi_nxp true)
 
 #set.CMSIS
 #  # description: CMSIS-CORE for Cortex-M, ARMv8-M, ARMv8.1-M
@@ -609,24 +789,36 @@
 #  # description: DSP Audio Streamer
 #  set(CONFIG_USE_middleware_dsp_audio_streamer_testxa_af_hostless true)
 
-#set.middleware.eap
-#  # description: eap template
-#  set(CONFIG_USE_middleware_eap_template true)
+#set.middleware.wifi
+#  # description: NXP WLAN common files
+#  set(CONFIG_USE_middleware_wifi_common_files true)
 
-#  # description: EAP example app
-#  set(CONFIG_USE_middleware_eap_exapp true)
+#  # description: NXP Wi-Fi Interface Abstraction Layer
+#  set(CONFIG_USE_middleware_wifi_fwdnld_intf_abs true)
 
-#  # description: Essential Audio Processing library
-#  set(CONFIG_USE_middleware_eap true)
+#  # description: Template configuration file to be edited by user.
+#  set(CONFIG_USE_middleware_wifi_template true)
 
-#  # description: Essential Audio Processing library
-#  set(CONFIG_USE_middleware_eap16_header true)
+#  # description: NXP WLAN f/w dnld driver
+#  set(CONFIG_USE_middleware_wifi_fwdnld true)
 
-#  # description: Essential Audio Processing library
-#  set(CONFIG_USE_middleware_eap32_header true)
+#  # description: NXP Wi-Fi driver
+#  set(CONFIG_USE_middleware_wifi_wifidriver true)
 
-#  # description: Essential Audio Processing library for RT500
-#  set(CONFIG_USE_middleware_eap_fusionf1_lib true)
+#  # description: NXP Wi-Fi functionality enables customers to quickly develop applications of interest to add connectivity to different sensors and appliances
+#  set(CONFIG_USE_middleware_wifi true)
+
+#  # description: NXP Wi-Fi SDIO driver
+#  set(CONFIG_USE_middleware_wifi_sdio true)
+
+#  # description: NXP Wi-Fi SDIO driver
+#  set(CONFIG_USE_middleware_wifi_mlan_sdio true)
+
+#  # description: Middlware Wi-Fi CLI
+#  set(CONFIG_USE_middleware_wifi_cli true)
+
+#  # description: Edgefast Wi-Fi NXP is a blocking layer for Wi-Fi NXP
+#  set(CONFIG_USE_middleware_edgefast_wifi_nxp true)
 
 #set.middleware.emwin
 #  # description: emwin template
@@ -676,23 +868,11 @@
 #  # description: A parser strictly enforcing the ECMA-404 JSON standard, suitable for microcontrollers.
 #  set(CONFIG_USE_middleware_freertos_corejson true)
 
-#  # description: Client library for using the AWS Over-the-air Update service on embedded devices. FreeRTOS port. Unused files.
-#  set(CONFIG_USE_middleware_aws_iot_ota_unused true)
-
-#  # description: Library for using the AWS IoT Jobs service on embedded devices. Unused files.
-#  set(CONFIG_USE_middleware_aws_iot_jobs_unused true)
-
 #  # description: nxp_pkcs11, IoT reference common example component
 #  set(CONFIG_USE_middleware_iot_reference_nxp_pkcs11 true)
 
-#  # description: Client library for using the AWS IoT Device Shadow service on embedded devices. Unused files.
-#  set(CONFIG_USE_middleware_aws_iot_device_shadow_unused true)
-
 #  # description: Client library for using the AWS IoT Device Defender service on embedded devices.
 #  set(CONFIG_USE_middleware_aws_iot_device_defender true)
-
-#  # description: Client library for using the AWS IoT Device Defender service on embedded devices. Unused files.
-#  set(CONFIG_USE_middleware_aws_iot_device_defender_unused true)
 
 #  # description: Template configuration file to be edited by user.
 #  set(CONFIG_USE_middleware_freertos_corepkcs11_template true)
@@ -706,17 +886,14 @@
 #  # description: PKCS #11, mbedtls_utils
 #  set(CONFIG_USE_middleware_freertos_corepkcs11_mbedtls_utils true)
 
-#  # description: Agent for thread-safe use of coreMQTT.
-#  set(CONFIG_USE_middleware_freertos_coremqtt-agent true)
-
 #  # description: Template configuration file to be edited by user.
 #  set(CONFIG_USE_middleware_freertos_coremqtt_template true)
 
 #  # description: Client implementation of the MQTT 3.1.1 specification for embedded devices.
 #  set(CONFIG_USE_middleware_freertos_coremqtt true)
 
-#  # description: Client implementation of the HTTP/1.1 specification for embedded devices.
-#  set(CONFIG_USE_middleware_freertos_corehttp true)
+#  # description: Agent for thread-safe use of coreMQTT.
+#  set(CONFIG_USE_middleware_freertos_coremqtt-agent true)
 
 #  # description: Client library for using the AWS Over-the-air Update service on embedded devices.
 #  set(CONFIG_USE_middleware_aws_iot_ota true)
@@ -879,6 +1056,9 @@
 
 #  # description: RPMsg-Lite XOS environment layer sources
 #  set(CONFIG_USE_middleware_multicore_rpmsg_lite_xos true)
+
+#  # description: RPMsg-Lite Azure RTOS environment sources
+#  set(CONFIG_USE_middleware_multicore_rpmsg_lite_azurertos true)
 
 #  # description: RPMsg-Lite for evkmimxrt595 baremetal application
 #  set(CONFIG_USE_middleware_multicore_rpmsg_lite_evkmimxrt595_bm true)
@@ -1103,6 +1283,9 @@
 #  # description: TFM CMSIS Flash IAP driver
 #  set(CONFIG_USE_middleware_tfm_flash_iap true)
 
+#  # description: TFM CMSIS USART driver
+#  set(CONFIG_USE_middleware_tfm_usart true)
+
 #  # description: TFM Large Profile
 #  set(CONFIG_USE_middleware_tfm_s_profile_large true)
 
@@ -1194,6 +1377,103 @@
 #  # description: Concise Binary Object Representation (CBOR) Library
 #  set(CONFIG_USE_middleware_tinycbor true)
 
+#set.middleware.usb
+#  # description: USB device phydcd config header
+#  set(CONFIG_USE_middleware_usb_phydcd_config_header true)
+
+#  # description: USB device hsdcd config header
+#  set(CONFIG_USE_middleware_usb_hsdcd_config_header true)
+
+#  # description: USB device ip3511hs config header
+#  set(CONFIG_USE_middleware_usb_device_ip3511hs_config_header true)
+
+#  # description: Middleware usb common_header
+#  set(CONFIG_USE_middleware_usb_common_header true)
+
+#  # description: Middleware usb device common_header
+#  set(CONFIG_USE_middleware_usb_device_common_header true)
+
+#  # description: Middleware usb device ip3511hs
+#  set(CONFIG_USE_middleware_usb_device_ip3511hs true)
+
+#  # description: Middleware usb phy
+#  set(CONFIG_USE_middleware_usb_phy true)
+
+#  # description: Middleware usb device stack external
+#  set(CONFIG_USE_middleware_usb_device_stack_external true)
+
+#  # description: Middleware usb device audio external
+#  set(CONFIG_USE_middleware_usb_device_audio_external true)
+
+#  # description: Middleware usb device cdc external
+#  set(CONFIG_USE_middleware_usb_device_cdc_external true)
+
+#  # description: Middleware usb device cdc rndis external
+#  set(CONFIG_USE_middleware_usb_device_cdc_rndis_external true)
+
+#  # description: Middleware usb device hid external
+#  set(CONFIG_USE_middleware_usb_device_hid_external true)
+
+#  # description: Middleware usb device dfu external
+#  set(CONFIG_USE_middleware_usb_device_dfu_external true)
+
+#  # description: Middleware usb device msd external
+#  set(CONFIG_USE_middleware_usb_device_msd_external true)
+
+#  # description: Middleware usb device phdc external
+#  set(CONFIG_USE_middleware_usb_device_phdc_external true)
+
+#  # description: Middleware usb device video external
+#  set(CONFIG_USE_middleware_usb_device_video_external true)
+
+#  # description: Middleware usb device ccid external
+#  set(CONFIG_USE_middleware_usb_device_ccid_external true)
+
+#  # description: Middleware usb device printer external
+#  set(CONFIG_USE_middleware_usb_device_printer_external true)
+
+#  # description: Middleware usb HSDCD (Select manually if needed)
+#  set(CONFIG_USE_middleware_usb_hsdcd true)
+
+#  # description: Middleware usb device controller driver
+#  set(CONFIG_USE_middleware_usb_device_controller_driver true)
+
+#  # description: Middleware usb host ip3516hs
+#  set(CONFIG_USE_middleware_usb_host_ip3516hs true)
+
+#  # description: Middleware usb host audio
+#  set(CONFIG_USE_middleware_usb_host_audio true)
+
+#  # description: Middleware usb host cdc
+#  set(CONFIG_USE_middleware_usb_host_cdc true)
+
+#  # description: Middleware usb host cdc_rndis
+#  set(CONFIG_USE_middleware_usb_host_cdc_rndis true)
+
+#  # description: Middleware usb host hid
+#  set(CONFIG_USE_middleware_usb_host_hid true)
+
+#  # description: Middleware usb host msd
+#  set(CONFIG_USE_middleware_usb_host_msd true)
+
+#  # description: Middleware usb host video
+#  set(CONFIG_USE_middleware_usb_host_video true)
+
+#  # description: Middleware usb host phdc
+#  set(CONFIG_USE_middleware_usb_host_phdc true)
+
+#  # description: Middleware usb host printer
+#  set(CONFIG_USE_middleware_usb_host_printer true)
+
+#  # description: Middleware usb host common_header
+#  set(CONFIG_USE_middleware_usb_host_common_header true)
+
+#  # description: USB host ip3516hs config header
+#  set(CONFIG_USE_middleware_usb_host_ip3516hs_config_header true)
+
+#  # description: Middleware usb host stack
+#  set(CONFIG_USE_middleware_usb_host_stack true)
+
 #set.middleware.usb_pd
 #  # description: USB Type-C PD Stack
 #  set(CONFIG_USE_middleware_usb_pd_config_header true)
@@ -1223,13 +1503,6 @@
 #  # description: Voice intelligent technology library
 #  set(CONFIG_USE_middleware_vit_fusionf1 true)
 
-#set.middleware.voice_seeker
-#  # description: Voice seeker memory utilities
-#  set(CONFIG_USE_middleware_voice_seeker_rdsp_utilities_public true)
-
-#  # description: Voice seeker library for FusionF1
-#  set(CONFIG_USE_middleware_voice_seeker_fusionf1 true)
-
 #set.middleware.vglite
 #  # description: vglite elementary library
 #  set(CONFIG_USE_middleware_vglite_elementary true)
@@ -1255,6 +1528,202 @@
 
 #  # description: LVGL stress demo
 #  set(CONFIG_USE_middleware_lvgl_demo_stress true)
+
+#set.middleware.edgefast_bluetooth
+#  # description: edgefast_bluetooth configuration template for LE audio
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_le_audio_config_template true)
+
+#  # description: edgefast_bluetooth le_audio.cap
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_le_audio_cap true)
+
+#  # description: edgefast_bluetooth le_audio.aics
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_le_audio_aics true)
+
+#  # description: edgefast_bluetooth le_audio.vocs
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_le_audio_vocs true)
+
+#  # description: edgefast_bluetooth le_audio.csis
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_le_audio_csip true)
+
+#  # description: edgefast_bluetooth le_audio.ccid
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_le_audio_ccid true)
+
+#  # description: edgefast_bluetooth le_audio.baps
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_le_audio_bap true)
+
+#  # description: edgefast_bluetooth le_audio.has
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_le_audio_has true)
+
+#  # description: edgefast_bluetooth le_audio.tbs
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_le_audio_tbs true)
+
+#  # description: edgefast_bluetooth le_audio.tmap
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_le_audio_tmap true)
+
+#  # description: edgefast_bluetooth PAL configuration template
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_config_template true)
+
+#  # description: edgefast_bluetooth liblc3codec
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_liblc3codec true)
+
+#  # description: edgefast_bluetooth asrc_sw
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_asrc_sw true)
+
+#  # description: Template configuration file to be edited by user.
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_sdio_template_evkmimxrt595 true)
+
+#  # description: Template configuration file to be edited by user.
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_mcux_linker_template_evkmimxrt595 true)
+
+#  # description: edgefast_bluetooth Abstraction Layer
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_pal true)
+
+#  # description: edgefast_bluetooth HCI
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_common_ethermind_hci true)
+
+#  # description: edgefast_bluetooth HCI UART
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_common_ethermind_hci_uart true)
+
+#  # description: edgefast_bluetooth bt_ble host stack
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_common_ethermind true)
+
+#  # description: edgefast_bluetooth bt_ble host stack
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_common_ethermind_lc3 true)
+
+#  # description: edgefast_bluetooth wifi_nxp controller
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_wifi_nxp_controller_base true)
+
+#  # description: edgefast_bluetooth k32w061 controller
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_k32w061_controller true)
+
+#  # description: edgefast_bluetooth configuration for bt_ble Host stack
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_config_ethermind true)
+
+#  # description: edgefast_bluetooth extension for bt_ble Host stack
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_extension_common_ethermind true)
+
+#  # description: edgefast_bluetooth bt_ble Host stack(including BR and BLE)
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_btble_ethermind_cm33 true)
+
+#  # description: edgefast_bluetooth bt_ble Host stack(including BLE only)
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_ble_ethermind_cm33 true)
+
+#  # description: edgefast_bluetooth bt_ble Host stack(including BR only)
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_br_ethermind_cm33 true)
+
+#  # description: edgefast_bluetooth le_audio.vcs
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_le_audio_vcp true)
+
+#  # description: edgefast_bluetooth le_audio.micp
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_le_audio_micp true)
+
+#  # description: edgefast_bluetooth le_audio.mcs
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_le_audio_mcs true)
+
+#  # description: edgefast_bluetooth le_audio.mcc
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_le_audio_mcc true)
+
+#  # description: edgefast_bluetooth le_audio.mpl
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_le_audio_mpl true)
+
+#  # description: edgefast_bluetooth le_audio.bass
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_le_audio_bass true)
+
+#  # description: edgefast_bluetooth profile hrs
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_profile_hrs true)
+
+#  # description: edgefast_bluetooth profile bas
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_profile_bas true)
+
+#  # description: edgefast_bluetooth profile dis
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_profile_dis true)
+
+#  # description: edgefast_bluetooth profile hts
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_profile_hts true)
+
+#  # description: edgefast_bluetooth profile ias
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_profile_ias true)
+
+#  # description: edgefast_bluetooth profile hps
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_profile_hps true)
+
+#  # description: edgefast_bluetooth profile pxr
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_profile_pxr true)
+
+#  # description: edgefast_bluetooth profile ipsp
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_profile_ipsp true)
+
+#  # description: edgefast_bluetooth profile ots
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_profile_ots true)
+
+#  # description: edgefast_bluetooth profile wu
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_profile_wu true)
+
+#  # description: edgefast_bluetooth profile fmp
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_profile_fmp true)
+
+#  # description: edgefast_bluetooth profile tip
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_profile_tip true)
+
+#  # description: edgefast_bluetooth PAL crypto support for bt_ble Host stack
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_pal_crypto_ethermind true)
+
+#  # description: edgefast_bluetooth PAL platform for bt_ble Host stack
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_pal_platform_ethermind true)
+
+#  # description: edgefast_bluetooth host_msd_fatfs for bt_ble Host stack
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_pal_host_msd_fatfs_ethermind true)
+
+#  # description: edgefast_bluetooth db_gen for bt_ble Host stack
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_pal_db_gen_ethermind true)
+
+#  # description: edgefast_bluetooth porting.atomic
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_porting_atomic true)
+
+#  # description: edgefast_bluetooth porting.list
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_porting_list true)
+
+#  # description: edgefast_bluetooth porting.netbuf
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_porting_net true)
+
+#  # description: edgefast_bluetooth porting.toolchain
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_porting_toolchain true)
+
+#  # description: edgefast_bluetooth porting.work_queue
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_porting_work_queue true)
+
+#  # description: Template configuration file to be edited by user.
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_template true)
+
+#  # description: edgefast_bluetooth porting
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_porting true)
+
+#  # description: edgefast_bluetooth shell
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_shell true)
+
+#  # description: edgefast_bluetooth shell
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_shell_le_audio true)
+
+#  # description: edgefast_bluetooth shell_ble
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_shell_ble true)
+
+#  # description: btble libraries for bt_ble Host stack
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_btble_ethermind_lib_cm33 true)
+
+#  # description: BR libraries for bt_ble Host stack
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_br_ethermind_lib_cm33 true)
+
+#  # description: BLE libraries for bt_ble Host stack
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_ble_ethermind_lib_cm33 true)
+
+#  # description: btble libraries for bt_ble Host stack
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_btble_ethermind_lib_lc3_cm33 true)
+
+#  # description: BR libraries for bt_ble Host stack
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_br_ethermind_lib_lc3_cm33 true)
+
+#  # description: BLE libraries for bt_ble Host stack
+#  set(CONFIG_USE_middleware_edgefast_bluetooth_ble_ethermind_lib_lc3_cm33 true)
 
 #set.middleware.issdk
 #  # description: ISSDK Serial to MQTT bridge application
@@ -1347,26 +1816,7 @@
 #  # description: ISSDK Host Interface Service
 #  set(CONFIG_USE_middleware_issdk_drivers_host true)
 
-#set.middleware.fmstr
-#  # description: Common FreeMASTER driver code.
-#  set(CONFIG_USE_middleware_fmstr true)
-
-#  # description: DO NOT ADD THIS TO PROJECT. This component contains all FreeMASTER driver source code files for SDK distribution purpose. Not suitable for project build.
-#  set(CONFIG_USE_middleware_fmstr_all_files true)
-
-#  # description: FreeMASTER driver code for 32bit platforms, enabling communication between FreeMASTER or FreeMASTER Lite tools and MCU application. Supports Serial, CAN, USB and BDM/JTAG physical interface.
-#  set(CONFIG_USE_middleware_fmstr_platform_gen32le true)
-
-#  # description: FreeMASTER configuration file template. Contains placeholders and TODOs which need to be filled by user or by using Peripherals ConfigTool.
-#  set(CONFIG_USE_middleware_fmstr_npw_cfg_gen32le true)
-
 #set.middleware.eiq
-#  # description: eIQ audio stream from microphone to speaker abstraction
-#  set(CONFIG_USE_middleware_eiq_audio true)
-
-#  # description: Video and audio interface layer
-#  set(CONFIG_USE_middleware_eiq_worker true)
-
 #  # description: Flatbuffers library
 #  set(CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_flatbuffers true)
 
@@ -1382,20 +1832,11 @@
 #  # description: A mixed-radix Fast Fourier Transform library
 #  set(CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_kissfft true)
 
-#  # description: CMSIS-NN library
-#  set(CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_cmsis_nn true)
-
 #  # description: Xtensa HiFi4 NN library
 #  set(CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_xa_nnlib_hifi4 true)
 
-#  # description: Audio capture and play abstract layer
-#  set(CONFIG_USE_middleware_eiq_worker_audio true)
-
-#  # description: Video capture and display abstract layer
-#  set(CONFIG_USE_middleware_eiq_worker_video_evkmimxrt595 true)
-
-#  # description: Video capture and display abstract layer
-#  set(CONFIG_USE_middleware_eiq_gui_printf true)
+#  # description: CMSIS-NN library
+#  set(CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_cmsis_nn true)
 
 #  # description: TensorFlow Lite Micro library with reference kernel implementations
 #  set(CONFIG_USE_middleware_eiq_tensorflow_lite_micro_reference true)
@@ -1403,11 +1844,20 @@
 #  # description: TensorFlow Lite Micro library with CMSIS-NN kernel implementations
 #  set(CONFIG_USE_middleware_eiq_tensorflow_lite_micro_cmsis_nn true)
 
+#  # description: TensorFlow Lite Micro library binary with core specific kernel implementations
+#  set(CONFIG_USE_middleware_eiq_tensorflow_lite_micro_binary true)
+
 #  # description: TensorFlow Lite Micro library with CMSIS-NN and Ethos-U kernel implementations
 #  set(CONFIG_USE_middleware_eiq_tensorflow_lite_micro_cmsis_nn_ethosu true)
 
+#  # description: Xtensa HiFi4 NN library binary
+#  set(CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_xa_nnlib_hifi4_binary true)
+
 #  # description: TensorFlow Lite Micro library with Xtensa HiFi4 DSP kernel implementations
 #  set(CONFIG_USE_middleware_eiq_tensorflow_lite_micro_xtensa true)
+
+#  # description: TensorFlow Lite Micro library header files
+#  set(CONFIG_USE_middleware_eiq_tensorflow_lite_micro_headers true)
 
 #  # description: TensorFlow Lite Micro library
 #  set(CONFIG_USE_middleware_eiq_tensorflow_lite_micro true)
@@ -1415,17 +1865,21 @@
 #  # description: TensorFlow Lite Micro word detection library
 #  set(CONFIG_USE_middleware_eiq_tensorflow_lite_micro_examples_microspeech true)
 
-#  # description: Xtensa HiFi4 NN library binary for i.MX RT595
-#  set(CONFIG_USE_middleware_eiq_tensorflow_lite_micro_third_party_xa_nnlib_hifi4_binary true)
+#set.middleware.fmstr
+#  # description: Common FreeMASTER driver code.
+#  set(CONFIG_USE_middleware_fmstr true)
 
-#set.middleware.wireless.wpa_supplicant
-#  # description: Wpa supplicant rtos
-#  set(CONFIG_USE_middleware_wireless_wpa_supplicant_rtos true)
+#  # description: FreeMASTER driver code for 32bit platforms, enabling communication between FreeMASTER or FreeMASTER Lite tools and MCU application. Supports Serial, CAN, USB and BDM/JTAG physical interface.
+#  set(CONFIG_USE_middleware_fmstr_platform_gen32le true)
 
-#set.middleware.naturedsp_fusionf1
+#  # description: FreeMASTER configuration file template. Contains placeholders and TODOs which need to be filled by user or by using Peripherals ConfigTool.
+#  set(CONFIG_USE_middleware_fmstr_template_cfg_gen32le true)
+
+#set.middleware.codecs_fusionf1
 #  # description: DSP Audio Streamer FusionF1 codecs
 #  set(CONFIG_USE_middleware_dsp_audio_streamer_fusionf1_dec true)
 
+#set.middleware.naturedsp_fusionf1
 #  # description: NatureDSP
 #  set(CONFIG_USE_middleware_naturedsp_naturedsp_fusionf1 true)
 
@@ -1445,6 +1899,14 @@
 #  # description: Crank Storyboard GUI vglite
 #  set(CONFIG_USE_middleware_crank_vglite true)
 
+#set.middleware.wireless.wpa_supplicant
+#  # description: Wpa supplicant rtos
+#  set(CONFIG_USE_middleware_wireless_wpa_supplicant_rtos true)
+
+#set.middleware.corehttp
+#  # description: Client implementation of the HTTP/1.1 specification for embedded devices.
+#  set(CONFIG_USE_middleware_freertos_corehttp true)
+
 #set.middleware.freertos-plus-tcp
 #  # description: Thread safe FreeRTOS TCP/IP stack working on top of the FreeRTOS-Kernel to implement the TCP/IP protocol.
 #  set(CONFIG_USE_middleware_freertos_freertos-plus-tcp true)
@@ -1453,93 +1915,12 @@
 #  # description: HTTP parser in LLVM IR
 #  set(CONFIG_USE_middleware_llhttp true)
 
-#set.middleware.usb
-#  # description: USB device ip3511hs config header
-#  set(CONFIG_USE_middleware_usb_device_ip3511hs_config_header true)
+#set.middleware.voice_seeker
+#  # description: Voice seeker library for FusionF1
+#  set(CONFIG_USE_middleware_voice_seeker_fusionf1 true)
 
-#  # description: Middleware usb common_header
-#  set(CONFIG_USE_middleware_usb_common_header true)
-
-#  # description: Middleware usb device common_header
-#  set(CONFIG_USE_middleware_usb_device_common_header true)
-
-#  # description: Middleware usb device ip3511hs
-#  set(CONFIG_USE_middleware_usb_device_ip3511hs true)
-
-#  # description: Middleware usb phy
-#  set(CONFIG_USE_middleware_usb_phy true)
-
-#  # description: Middleware usb device stack external
-#  set(CONFIG_USE_middleware_usb_device_stack_external true)
-
-#  # description: Middleware usb device audio external
-#  set(CONFIG_USE_middleware_usb_device_audio_external true)
-
-#  # description: Middleware usb device cdc external
-#  set(CONFIG_USE_middleware_usb_device_cdc_external true)
-
-#  # description: Middleware usb device cdc rndis external
-#  set(CONFIG_USE_middleware_usb_device_cdc_rndis_external true)
-
-#  # description: Middleware usb device hid external
-#  set(CONFIG_USE_middleware_usb_device_hid_external true)
-
-#  # description: Middleware usb device dfu external
-#  set(CONFIG_USE_middleware_usb_device_dfu_external true)
-
-#  # description: Middleware usb device msd external
-#  set(CONFIG_USE_middleware_usb_device_msd_external true)
-
-#  # description: Middleware usb device phdc external
-#  set(CONFIG_USE_middleware_usb_device_phdc_external true)
-
-#  # description: Middleware usb device video external
-#  set(CONFIG_USE_middleware_usb_device_video_external true)
-
-#  # description: Middleware usb device ccid external
-#  set(CONFIG_USE_middleware_usb_device_ccid_external true)
-
-#  # description: Middleware usb device printer external
-#  set(CONFIG_USE_middleware_usb_device_printer_external true)
-
-#  # description: Middleware usb device controller driver
-#  set(CONFIG_USE_middleware_usb_device_controller_driver true)
-
-#  # description: Middleware usb host ip3516hs
-#  set(CONFIG_USE_middleware_usb_host_ip3516hs true)
-
-#  # description: Middleware usb host audio
-#  set(CONFIG_USE_middleware_usb_host_audio true)
-
-#  # description: Middleware usb host cdc
-#  set(CONFIG_USE_middleware_usb_host_cdc true)
-
-#  # description: Middleware usb host cdc_rndis
-#  set(CONFIG_USE_middleware_usb_host_cdc_rndis true)
-
-#  # description: Middleware usb host hid
-#  set(CONFIG_USE_middleware_usb_host_hid true)
-
-#  # description: Middleware usb host msd
-#  set(CONFIG_USE_middleware_usb_host_msd true)
-
-#  # description: Middleware usb host video
-#  set(CONFIG_USE_middleware_usb_host_video true)
-
-#  # description: Middleware usb host phdc
-#  set(CONFIG_USE_middleware_usb_host_phdc true)
-
-#  # description: Middleware usb host printer
-#  set(CONFIG_USE_middleware_usb_host_printer true)
-
-#  # description: Middleware usb host common_header
-#  set(CONFIG_USE_middleware_usb_host_common_header true)
-
-#  # description: USB host ip3516hs config header
-#  set(CONFIG_USE_middleware_usb_host_ip3516hs_config_header true)
-
-#  # description: Middleware usb host stack
-#  set(CONFIG_USE_middleware_usb_host_stack true)
+#  # description: Voice seeker memory utilities for RT595_FusionF1
+#  set(CONFIG_USE_middleware_voice_seeker_rdsp_utilities_public_fusionf1 true)
 
 #set.component.osa
 #  # description: Component common_task
@@ -1566,6 +1947,7 @@ list(APPEND CMAKE_MODULE_PATH
   ${CMAKE_CURRENT_LIST_DIR}/../../CMSIS/RTOS2
   ${CMAKE_CURRENT_LIST_DIR}/../../CMSIS/RTOS2/Include
   ${CMAKE_CURRENT_LIST_DIR}/../../boards/evkmimxrt595/crank_storyboard_examples/template
+  ${CMAKE_CURRENT_LIST_DIR}/../../boards/evkmimxrt595/edgefast_bluetooth_examples/template
   ${CMAKE_CURRENT_LIST_DIR}/../../boards/evkmimxrt595/flash_config
   ${CMAKE_CURRENT_LIST_DIR}/../../boards/evkmimxrt595/project_template
   ${CMAKE_CURRENT_LIST_DIR}/../../boards/evkmimxrt595_om13790host/project_template
@@ -1579,6 +1961,7 @@ list(APPEND CMAKE_MODULE_PATH
   ${CMAKE_CURRENT_LIST_DIR}/../../components/codec/wm8904
   ${CMAKE_CURRENT_LIST_DIR}/../../components/common_task
   ${CMAKE_CURRENT_LIST_DIR}/../../components/crc
+  ${CMAKE_CURRENT_LIST_DIR}/../../components/edgefast_wifi
   ${CMAKE_CURRENT_LIST_DIR}/../../components/ektf2k
   ${CMAKE_CURRENT_LIST_DIR}/../../components/flash/mflash
   ${CMAKE_CURRENT_LIST_DIR}/../../components/flash/mflash/mimxrt595
@@ -1601,6 +1984,7 @@ list(APPEND CMAKE_MODULE_PATH
   ${CMAKE_CURRENT_LIST_DIR}/../../components/messaging
   ${CMAKE_CURRENT_LIST_DIR}/../../components/mma8652fc
   ${CMAKE_CURRENT_LIST_DIR}/../../components/mpi_loader
+  ${CMAKE_CURRENT_LIST_DIR}/../../components/nvm
   ${CMAKE_CURRENT_LIST_DIR}/../../components/osa
   ${CMAKE_CURRENT_LIST_DIR}/../../components/panic
   ${CMAKE_CURRENT_LIST_DIR}/../../components/pca9420
@@ -1613,6 +1997,7 @@ list(APPEND CMAKE_MODULE_PATH
   ${CMAKE_CURRENT_LIST_DIR}/../../components/serial_manager
   ${CMAKE_CURRENT_LIST_DIR}/../../components/spi
   ${CMAKE_CURRENT_LIST_DIR}/../../components/ssd1963
+  ${CMAKE_CURRENT_LIST_DIR}/../../components/time_stamp
   ${CMAKE_CURRENT_LIST_DIR}/../../components/timer
   ${CMAKE_CURRENT_LIST_DIR}/../../components/timer_manager
   ${CMAKE_CURRENT_LIST_DIR}/../../components/uart
@@ -1633,7 +2018,6 @@ list(APPEND CMAKE_MODULE_PATH
   ${CMAKE_CURRENT_LIST_DIR}/../../components/wifi_bt_module
   ${CMAKE_CURRENT_LIST_DIR}/../../components/wifi_bt_module/template
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/Crank_Software
-  ${CMAKE_CURRENT_LIST_DIR}/../../middleware/EAP
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/aws_iot/device-defender
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/aws_iot/device-shadow
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/aws_iot/iot-reference
@@ -1650,11 +2034,11 @@ list(APPEND CMAKE_MODULE_PATH
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/aws_iot/ota
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/bm
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/dsp
-  ${CMAKE_CURRENT_LIST_DIR}/../../middleware/edgefast_wifi
+  ${CMAKE_CURRENT_LIST_DIR}/../../middleware/edgefast_bluetooth
+  ${CMAKE_CURRENT_LIST_DIR}/../../middleware/edgefast_bluetooth/lib
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/eiq
-  ${CMAKE_CURRENT_LIST_DIR}/../../middleware/eiq/common/audio
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/eiq/tensorflow-lite
-  ${CMAKE_CURRENT_LIST_DIR}/../../middleware/eiq/tensorflow-lite/third_party/cmsis
+  ${CMAKE_CURRENT_LIST_DIR}/../../middleware/eiq/tensorflow-lite/third_party/cmsis_nn
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/eiq/tensorflow-lite/third_party/kissfft
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/eiq/tensorflow-lite/third_party/xa_nnlib_hifi4
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/emwin
@@ -1683,9 +2067,12 @@ list(APPEND CMAKE_MODULE_PATH
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/usb
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/vglite
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/vit
-  ${CMAKE_CURRENT_LIST_DIR}/../../middleware/voice_seeker
-  ${CMAKE_CURRENT_LIST_DIR}/../../middleware/voice_seeker/rdsp_utilities_public
+  ${CMAKE_CURRENT_LIST_DIR}/../../middleware/voice_seeker/RT595_FusionF1
+  ${CMAKE_CURRENT_LIST_DIR}/../../middleware/voice_seeker/RT595_FusionF1/rdsp_utilities_public
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/wifi_nxp
+  ${CMAKE_CURRENT_LIST_DIR}/../../middleware/wireless
+  ${CMAKE_CURRENT_LIST_DIR}/../../middleware/wireless/ethermind
+  ${CMAKE_CURRENT_LIST_DIR}/../../middleware/wireless/framework
   ${CMAKE_CURRENT_LIST_DIR}/../../middleware/wireless/wpa_supplicant-rtos
   ${CMAKE_CURRENT_LIST_DIR}/../../rtos/freertos/backoffalgorithm
   ${CMAKE_CURRENT_LIST_DIR}/../../rtos/freertos/corehttp
@@ -1701,6 +2088,7 @@ list(APPEND CMAKE_MODULE_PATH
   ${CMAKE_CURRENT_LIST_DIR}/template
   ${CMAKE_CURRENT_LIST_DIR}/utilities
   ${CMAKE_CURRENT_LIST_DIR}/utilities/debug_console_lite
+  ${CMAKE_CURRENT_LIST_DIR}/utilities/shell
 )
 
 include_if_use(BOARD_Project_Template_evkmimxrt595)
@@ -1737,6 +2125,7 @@ include_if_use(component_common_task)
 include_if_use(component_cs42448_adapter.MIMXRT595S)
 include_if_use(component_cs42888_adapter.MIMXRT595S)
 include_if_use(component_ctimer_adapter.MIMXRT595S)
+include_if_use(component_ctimer_time_stamp_adapter.MIMXRT595S)
 include_if_use(component_flexcomm_i2c_adapter.MIMXRT595S)
 include_if_use(component_flexcomm_spi_adapter.MIMXRT595S)
 include_if_use(component_flexspi_nor_flash_adapter_rt595evk.MIMXRT595S)
@@ -1760,11 +2149,13 @@ include_if_use(component_mflash_dummy.MIMXRT595S)
 include_if_use(component_mflash_file.MIMXRT595S)
 include_if_use(component_mflash_rt595.MIMXRT595S)
 include_if_use(component_mrt_adapter.MIMXRT595S)
+include_if_use(component_nvm_adapter.MIMXRT595S)
 include_if_use(component_osa)
 include_if_use(component_osa_bm)
 include_if_use(component_osa_free_rtos)
 include_if_use(component_osa_interface)
 include_if_use(component_ostimer_adapter.MIMXRT595S)
+include_if_use(component_ostimer_time_stamp_adapter.MIMXRT595S)
 include_if_use(component_panic.MIMXRT595S)
 include_if_use(component_power_manager_MIMXRT595S.MIMXRT595S)
 include_if_use(component_power_manager_core.MIMXRT595S)
@@ -1784,6 +2175,7 @@ include_if_use(component_timer_manager.MIMXRT595S)
 include_if_use(component_trng_adapter.MIMXRT595S)
 include_if_use(component_usart_adapter.MIMXRT595S)
 include_if_use(component_usart_dma_adapter.MIMXRT595S)
+include_if_use(component_wifi_bt_module_config.MIMXRT595S)
 include_if_use(component_wifi_bt_module_tx_pwr_limits.MIMXRT595S)
 include_if_use(component_wm8904_adapter.MIMXRT595S)
 include_if_use(device_MIMXRT595S_CMSIS.MIMXRT595S)
@@ -1846,6 +2238,7 @@ include_if_use(driver_ft5406.MIMXRT595S)
 include_if_use(driver_fxos8700cq.MIMXRT595S)
 include_if_use(driver_gt911.MIMXRT595S)
 include_if_use(driver_hashcrypt.MIMXRT595S)
+include_if_use(driver_i2s_bridge.MIMXRT595S)
 include_if_use(driver_i3c.MIMXRT595S)
 include_if_use(driver_iap.MIMXRT595S)
 include_if_use(driver_inputmux.MIMXRT595S)
@@ -1890,15 +2283,11 @@ include_if_use(driver_video-common.MIMXRT595S)
 include_if_use(driver_wm8904.MIMXRT595S)
 include_if_use(driver_wwdt.MIMXRT595S)
 include_if_use(middleware_aws_iot_device_defender)
-include_if_use(middleware_aws_iot_device_defender_unused)
 include_if_use(middleware_aws_iot_device_shadow)
 include_if_use(middleware_aws_iot_device_shadow_template)
-include_if_use(middleware_aws_iot_device_shadow_unused)
 include_if_use(middleware_aws_iot_jobs)
-include_if_use(middleware_aws_iot_jobs_unused)
 include_if_use(middleware_aws_iot_ota)
 include_if_use(middleware_aws_iot_ota_freertos)
-include_if_use(middleware_aws_iot_ota_unused)
 include_if_use(middleware_baremetal.MIMXRT595S)
 include_if_use(middleware_crank_evkmimxrt595)
 include_if_use(middleware_crank_freetype)
@@ -1910,20 +2299,78 @@ include_if_use(middleware_dsp_audio_streamer_libxa_af_hostless)
 include_if_use(middleware_dsp_audio_streamer_testxa_af_hostless)
 include_if_use(middleware_dsp_nn_fusionf1_nn_dsp)
 include_if_use(middleware_dsp_nn_hifi4_nn_dsp)
-include_if_use(middleware_eap)
-include_if_use(middleware_eap16_header)
-include_if_use(middleware_eap32_header)
-include_if_use(middleware_eap_exapp)
-include_if_use(middleware_eap_fusionf1_lib)
-include_if_use(middleware_eap_template)
-include_if_use(middleware_edgefast_wifi)
+include_if_use(middleware_edgefast_bluetooth_asrc_sw)
+include_if_use(middleware_edgefast_bluetooth_ble_ethermind_cm33)
+include_if_use(middleware_edgefast_bluetooth_ble_ethermind_lib_cm33)
+include_if_use(middleware_edgefast_bluetooth_ble_ethermind_lib_lc3_cm33)
+include_if_use(middleware_edgefast_bluetooth_br_ethermind_cm33)
+include_if_use(middleware_edgefast_bluetooth_br_ethermind_lib_cm33)
+include_if_use(middleware_edgefast_bluetooth_br_ethermind_lib_lc3_cm33)
+include_if_use(middleware_edgefast_bluetooth_btble_ethermind_cm33)
+include_if_use(middleware_edgefast_bluetooth_btble_ethermind_lib_cm33)
+include_if_use(middleware_edgefast_bluetooth_btble_ethermind_lib_lc3_cm33)
+include_if_use(middleware_edgefast_bluetooth_common_ethermind)
+include_if_use(middleware_edgefast_bluetooth_common_ethermind_hci)
+include_if_use(middleware_edgefast_bluetooth_common_ethermind_hci_uart)
+include_if_use(middleware_edgefast_bluetooth_common_ethermind_lc3)
+include_if_use(middleware_edgefast_bluetooth_config_ethermind)
+include_if_use(middleware_edgefast_bluetooth_config_template)
+include_if_use(middleware_edgefast_bluetooth_extension_common_ethermind)
+include_if_use(middleware_edgefast_bluetooth_k32w061_controller)
+include_if_use(middleware_edgefast_bluetooth_le_audio_aics)
+include_if_use(middleware_edgefast_bluetooth_le_audio_bap)
+include_if_use(middleware_edgefast_bluetooth_le_audio_bass)
+include_if_use(middleware_edgefast_bluetooth_le_audio_cap)
+include_if_use(middleware_edgefast_bluetooth_le_audio_ccid)
+include_if_use(middleware_edgefast_bluetooth_le_audio_config_template)
+include_if_use(middleware_edgefast_bluetooth_le_audio_csip)
+include_if_use(middleware_edgefast_bluetooth_le_audio_has)
+include_if_use(middleware_edgefast_bluetooth_le_audio_mcc)
+include_if_use(middleware_edgefast_bluetooth_le_audio_mcs)
+include_if_use(middleware_edgefast_bluetooth_le_audio_micp)
+include_if_use(middleware_edgefast_bluetooth_le_audio_mpl)
+include_if_use(middleware_edgefast_bluetooth_le_audio_tbs)
+include_if_use(middleware_edgefast_bluetooth_le_audio_tmap)
+include_if_use(middleware_edgefast_bluetooth_le_audio_vcp)
+include_if_use(middleware_edgefast_bluetooth_le_audio_vocs)
+include_if_use(middleware_edgefast_bluetooth_liblc3codec)
+include_if_use(middleware_edgefast_bluetooth_mcux_linker_template_evkmimxrt595)
+include_if_use(middleware_edgefast_bluetooth_pal)
+include_if_use(middleware_edgefast_bluetooth_pal_crypto_ethermind)
+include_if_use(middleware_edgefast_bluetooth_pal_db_gen_ethermind)
+include_if_use(middleware_edgefast_bluetooth_pal_host_msd_fatfs_ethermind)
+include_if_use(middleware_edgefast_bluetooth_pal_platform_ethermind)
+include_if_use(middleware_edgefast_bluetooth_porting)
+include_if_use(middleware_edgefast_bluetooth_porting_atomic)
+include_if_use(middleware_edgefast_bluetooth_porting_list)
+include_if_use(middleware_edgefast_bluetooth_porting_net)
+include_if_use(middleware_edgefast_bluetooth_porting_toolchain)
+include_if_use(middleware_edgefast_bluetooth_porting_work_queue)
+include_if_use(middleware_edgefast_bluetooth_profile_bas)
+include_if_use(middleware_edgefast_bluetooth_profile_dis)
+include_if_use(middleware_edgefast_bluetooth_profile_fmp)
+include_if_use(middleware_edgefast_bluetooth_profile_hps)
+include_if_use(middleware_edgefast_bluetooth_profile_hrs)
+include_if_use(middleware_edgefast_bluetooth_profile_hts)
+include_if_use(middleware_edgefast_bluetooth_profile_ias)
+include_if_use(middleware_edgefast_bluetooth_profile_ipsp)
+include_if_use(middleware_edgefast_bluetooth_profile_ots)
+include_if_use(middleware_edgefast_bluetooth_profile_pxr)
+include_if_use(middleware_edgefast_bluetooth_profile_tip)
+include_if_use(middleware_edgefast_bluetooth_profile_wu)
+include_if_use(middleware_edgefast_bluetooth_sdio_template_evkmimxrt595)
+include_if_use(middleware_edgefast_bluetooth_shell)
+include_if_use(middleware_edgefast_bluetooth_shell_ble)
+include_if_use(middleware_edgefast_bluetooth_shell_le_audio)
+include_if_use(middleware_edgefast_bluetooth_template)
+include_if_use(middleware_edgefast_bluetooth_wifi_nxp_controller_base)
 include_if_use(middleware_edgefast_wifi_nxp)
-include_if_use(middleware_eiq_audio)
-include_if_use(middleware_eiq_gui_printf)
 include_if_use(middleware_eiq_tensorflow_lite_micro)
+include_if_use(middleware_eiq_tensorflow_lite_micro_binary)
 include_if_use(middleware_eiq_tensorflow_lite_micro_cmsis_nn)
 include_if_use(middleware_eiq_tensorflow_lite_micro_cmsis_nn_ethosu)
 include_if_use(middleware_eiq_tensorflow_lite_micro_examples_microspeech)
+include_if_use(middleware_eiq_tensorflow_lite_micro_headers)
 include_if_use(middleware_eiq_tensorflow_lite_micro_reference)
 include_if_use(middleware_eiq_tensorflow_lite_micro_third_party_cmsis_nn)
 include_if_use(middleware_eiq_tensorflow_lite_micro_third_party_fft2d)
@@ -1934,9 +2381,6 @@ include_if_use(middleware_eiq_tensorflow_lite_micro_third_party_ruy)
 include_if_use(middleware_eiq_tensorflow_lite_micro_third_party_xa_nnlib_hifi4)
 include_if_use(middleware_eiq_tensorflow_lite_micro_third_party_xa_nnlib_hifi4_binary)
 include_if_use(middleware_eiq_tensorflow_lite_micro_xtensa)
-include_if_use(middleware_eiq_worker)
-include_if_use(middleware_eiq_worker_audio)
-include_if_use(middleware_eiq_worker_video_evkmimxrt595)
 include_if_use(middleware_emwin)
 include_if_use(middleware_emwin_template)
 include_if_use(middleware_fatfs)
@@ -1951,9 +2395,8 @@ include_if_use(middleware_fatfs_template_sdspi)
 include_if_use(middleware_fatfs_template_usb)
 include_if_use(middleware_fatfs_usb)
 include_if_use(middleware_fmstr)
-include_if_use(middleware_fmstr_all_files)
-include_if_use(middleware_fmstr_npw_cfg_gen32le)
 include_if_use(middleware_fmstr_platform_gen32le)
+include_if_use(middleware_fmstr_template_cfg_gen32le)
 include_if_use(middleware_freertos-kernel)
 include_if_use(middleware_freertos-kernel_cm33_non_trustzone)
 include_if_use(middleware_freertos-kernel_cm33_trustzone_non_secure)
@@ -2056,6 +2499,7 @@ include_if_use(middleware_mcuboot)
 include_if_use(middleware_mcuboot_bootutil)
 include_if_use(middleware_multicore)
 include_if_use(middleware_multicore_rpmsg_lite)
+include_if_use(middleware_multicore_rpmsg_lite_azurertos)
 include_if_use(middleware_multicore_rpmsg_lite_bm)
 include_if_use(middleware_multicore_rpmsg_lite_evkmimxrt595_bm)
 include_if_use(middleware_multicore_rpmsg_lite_evkmimxrt595_freertos)
@@ -2144,6 +2588,7 @@ include_if_use(middleware_tfm_s_test_ps)
 include_if_use(middleware_tfm_t_cose_mac0_verify)
 include_if_use(middleware_tfm_t_cose_sign1_verify)
 include_if_use(middleware_tfm_unused_files)
+include_if_use(middleware_tfm_usart)
 include_if_use(middleware_tfmtests_ns)
 include_if_use(middleware_tfmtests_ns_test_attestation)
 include_if_use(middleware_tfmtests_ns_test_attestation_asymmetric)
@@ -2179,6 +2624,8 @@ include_if_use(middleware_usb_host_phdc)
 include_if_use(middleware_usb_host_printer)
 include_if_use(middleware_usb_host_stack)
 include_if_use(middleware_usb_host_video)
+include_if_use(middleware_usb_hsdcd)
+include_if_use(middleware_usb_hsdcd_config_header)
 include_if_use(middleware_usb_pd)
 include_if_use(middleware_usb_pd_altmode)
 include_if_use(middleware_usb_pd_common_header)
@@ -2186,21 +2633,88 @@ include_if_use(middleware_usb_pd_compliance_test_report)
 include_if_use(middleware_usb_pd_config_header)
 include_if_use(middleware_usb_pd_phy_ptn5110)
 include_if_use(middleware_usb_phy)
+include_if_use(middleware_usb_phydcd_config_header)
 include_if_use(middleware_vglite)
 include_if_use(middleware_vglite_elementary)
 include_if_use(middleware_vit_fusionf1)
 include_if_use(middleware_vit_fusionf1_models)
 include_if_use(middleware_vit_hifi4_models)
 include_if_use(middleware_voice_seeker_fusionf1)
-include_if_use(middleware_voice_seeker_rdsp_utilities_public)
+include_if_use(middleware_voice_seeker_rdsp_utilities_public_fusionf1)
 include_if_use(middleware_wifi)
 include_if_use(middleware_wifi_cli)
 include_if_use(middleware_wifi_common_files)
 include_if_use(middleware_wifi_fwdnld)
+include_if_use(middleware_wifi_fwdnld_intf_abs)
 include_if_use(middleware_wifi_mlan_sdio)
 include_if_use(middleware_wifi_sdio)
 include_if_use(middleware_wifi_template)
 include_if_use(middleware_wifi_wifidriver)
+include_if_use(middleware_wireless_HDI)
+include_if_use(middleware_wireless_HWParameter)
+include_if_use(middleware_wireless_IPC)
+include_if_use(middleware_wireless_framework_CMake_MIMXRT595S)
+include_if_use(middleware_wireless_framework_Common)
+include_if_use(middleware_wireless_framework_FSCI)
+include_if_use(middleware_wireless_framework_FactoryDataProvider)
+include_if_use(middleware_wireless_framework_LPM_MIMXRT595S)
+include_if_use(middleware_wireless_framework_LPM_cli_MIMXRT595S)
+include_if_use(middleware_wireless_framework_LPM_systicks_MIMXRT595S)
+include_if_use(middleware_wireless_framework_NVM)
+include_if_use(middleware_wireless_framework_NV_FSCI)
+include_if_use(middleware_wireless_framework_OTW)
+include_if_use(middleware_wireless_framework_OtaServerSupport)
+include_if_use(middleware_wireless_framework_OtaSupport)
+include_if_use(middleware_wireless_framework_PDM)
+include_if_use(middleware_wireless_framework_PDUM)
+include_if_use(middleware_wireless_framework_RF_SFC)
+include_if_use(middleware_wireless_framework_RNG)
+include_if_use(middleware_wireless_framework_RNG_mbedtls)
+include_if_use(middleware_wireless_framework_SFC)
+include_if_use(middleware_wireless_framework_board_comp_MIMXRT595S)
+include_if_use(middleware_wireless_framework_board_dcdc_MIMXRT595S)
+include_if_use(middleware_wireless_framework_board_extflash_MIMXRT595S)
+include_if_use(middleware_wireless_framework_board_lp_MIMXRT595S)
+include_if_use(middleware_wireless_framework_board_platform_MIMXRT595S)
+include_if_use(middleware_wireless_framework_filecache)
+include_if_use(middleware_wireless_framework_filesystem)
+include_if_use(middleware_wireless_framework_freertos_utils)
+include_if_use(middleware_wireless_framework_fsabstraction)
+include_if_use(middleware_wireless_framework_fsabstraction_littlefs)
+include_if_use(middleware_wireless_framework_function_lib)
+include_if_use(middleware_wireless_framework_fwk_debug)
+include_if_use(middleware_wireless_framework_init_config_MIMXRT595S)
+include_if_use(middleware_wireless_framework_keystorage)
+include_if_use(middleware_wireless_framework_lfs_config_MIMXRT595S)
+include_if_use(middleware_wireless_framework_linkscript_bootloader_kw45)
+include_if_use(middleware_wireless_framework_linkscript_warmboot_kw45)
+include_if_use(middleware_wireless_framework_linkscripts_kw45)
+include_if_use(middleware_wireless_framework_linkscripts_mcxw34xevk)
+include_if_use(middleware_wireless_framework_markdown)
+include_if_use(middleware_wireless_framework_matter_config_MIMXRT595S)
+include_if_use(middleware_wireless_framework_module_info)
+include_if_use(middleware_wireless_framework_platform_MIMXRT595S)
+include_if_use(middleware_wireless_framework_platform_ble_MIMXRT595S)
+include_if_use(middleware_wireless_framework_platform_coex_MIMXRT595S)
+include_if_use(middleware_wireless_framework_platform_common_MIMXRT595S)
+include_if_use(middleware_wireless_framework_platform_extflash_MIMXRT595S)
+include_if_use(middleware_wireless_framework_platform_flash_MIMXRT595S)
+include_if_use(middleware_wireless_framework_platform_genfsk_MIMXRT595S)
+include_if_use(middleware_wireless_framework_platform_lowpower_MIMXRT595S)
+include_if_use(middleware_wireless_framework_platform_lowpower_timer_MIMXRT595S)
+include_if_use(middleware_wireless_framework_platform_mws_MIMXRT595S)
+include_if_use(middleware_wireless_framework_platform_ot_MIMXRT595S)
+include_if_use(middleware_wireless_framework_platform_ota_MIMXRT595S)
+include_if_use(middleware_wireless_framework_platform_rt_ot_coex)
+include_if_use(middleware_wireless_framework_platform_sensors_MIMXRT595S)
+include_if_use(middleware_wireless_framework_rpmsg_config)
+include_if_use(middleware_wireless_framework_sbtsnoop)
+include_if_use(middleware_wireless_framework_sbtsnoop_ethermind_port)
+include_if_use(middleware_wireless_framework_sbtsnoop_nxp_ble_port)
+include_if_use(middleware_wireless_framework_sec_lib)
+include_if_use(middleware_wireless_framework_sec_lib_cryptolib_src)
+include_if_use(middleware_wireless_framework_sec_lib_sss_m33)
+include_if_use(middleware_wireless_freertos_heap)
 include_if_use(middleware_wireless_wpa_supplicant_rtos)
 include_if_use(utilities_misc_utilities.MIMXRT595S)
 include_if_use(utility_assert.MIMXRT595S)

@@ -16,7 +16,7 @@
 [travis]: https://travis-ci.org/mcu-tools/mcuboot
 [license]: https://github.com/mcu-tools/mcuboot/blob/main/LICENSE
 
-This is MCUboot version 1.9.0
+This is MCUboot version 1.10.0
 
 MCUboot is a secure bootloader for 32-bits microcontrollers. It defines a
 common infrastructure for the bootloader and the system flash layout on
@@ -47,7 +47,7 @@ operating systems and SoCs:
 - [RIOT](docs/readme-riot.md)
 - [Mbed OS](docs/readme-mbed.md)
 - [Espressif](docs/readme-espressif.md)
-- [Cypress/Infineon](boot/cypress/readme.md)
+- [Cypress/Infineon](boot/cypress/README.md)
 
 There are also instructions for the [Simulator](sim/README.rst).
 

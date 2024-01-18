@@ -54,7 +54,7 @@
 /**
  * \defgroup smp_config Configurations
  * \{
- *  This section lists SMP configuration paramters as in specification
+ *  This section lists SMP configuration parameters as in specification
  */
 
 #ifndef SMP_LESC
@@ -64,7 +64,7 @@
 #define SMP_MTU                                     65U
 #endif /* SMP_LESC */
 
-/** SMP L2CAP Flush Timout, set to Infinite as per specification */
+/** SMP L2CAP Flush Timeout, set to Infinite as per specification */
 #define SMP_FLUSH_TIMEOUT                           0xFFFFU
 
 /** SMP L2CAP Quality of Service, set to Best Effort as per specification */
@@ -82,7 +82,7 @@
 /**
  * \defgroup smp_cmds Commands
  * \{
- *  This section lists the commands of SMP protcol defined by specification
+ *  This section lists the commands of SMP protocol defined by specification
  */
 
 /** SMP Pairing Request Command Code */
@@ -100,7 +100,7 @@
 /** SMP Pairing Failed Command Code */
 #define SMP_CODE_PAIRING_FAILED                     0x05U
 
-/** SMP Encryptino Information Command Code */
+/** SMP Encryption Information Command Code */
 #define SMP_CODE_ENCRYPTION_INFORMATION             0x06U
 
 /** SMP Master Identification Command Code */
@@ -361,8 +361,9 @@
 /** 64 Bit signature Message Authentication Code size */
 #define SMP_SIGN_MAC_SIZE                           8U
 /**
- * NOTE: 'TO BE Depricated'
- * Having the old Signature MAC size definition for Appl Backward compatibility.
+ * NOTE: 'TO BE Deprecated'
+ * Having the old Signature MAC size definition for
+ * Application Backward compatibility.
  */
 #define SMP_MAC_SIZE                                SMP_SIGN_MAC_SIZE
 
@@ -406,13 +407,13 @@
 #define SMP_KEY_EXCHANGE_INFO_REQUEST_REPLY         0x84U
 
 #ifdef SMP_LESC
-/** SMP Numeric Comparision generation */
+/** SMP Numeric Comparison generation */
 #define SMP_NKEY_COMP_GEN                           0x85U
 
 /** SMP LESC Key Generation */
 #define SMP_LESC_KEY_GENERATION                     0x86U
 
-/** SMP Numeric Comparision User Confirmation */
+/** SMP Numeric Comparison User Confirmation */
 #define SMP_NKEY_COMP_CNF_USER_REPLY                0x87U
 
 /** SMP PASSKEY Key Press Notification Command */
@@ -496,7 +497,7 @@
 #define SMP_ERROR_DHKEY_CHECK_FAILED                0x0BU
 
 /**
- * Pairing Failed due to Numeric Comparision Failed
+ * Pairing Failed due to Numeric Comparison Failed
  */
 #define SMP_ERROR_NUMERIC_COMPARISON_FAILED         0x0CU
 
@@ -627,7 +628,7 @@
  * an Error Code
  * \param [in] event_data  RAND and EDIV Byte stream as interpreted below
  *        byte[0-7] - 8 octet RAND value
- *        byte[8-9] - 2 octect Encrypted Diversifier
+ *        byte[8-9] - 2 octet Encrypted Diversifier
  * \param [in] event_datalen  0
  *
  * \return \ref API_SUCCESS (always)
@@ -728,7 +729,7 @@
  * \param [in] event  \ref SMP_DATA_SIGNING_COMPLETE
  * \param [in] result  \ref API_SUCCESS on successful procedure completion, else
  * an Error Code
- * \param [in] event_data  Signature byte stream. The last 8 octects represent
+ * \param [in] event_data  Signature byte stream. The last 8 octets represent
  * the generated MAC
  * \param [in] event_datalen  Number of bytes in event_data
  *
@@ -746,7 +747,7 @@
  * \param [in] event  \ref SMP_DATA_SIGNING_COMPLETE
  * \param [in] result  \ref API_SUCCESS on successful procedure completion, else
  * an Error Code
- * \param [in] event_data  Signature byte stream. The last 8 octects represent
+ * \param [in] event_data  Signature byte stream. The last 8 octets represent
  * the generated MAC
  * \param [in] event_datalen  Number of bytes in event_data
  *
@@ -891,22 +892,22 @@
 #define smp_pack_4_byte_param      BT_PACK_LE_4_BYTE
 
 /**
- * This macro can be used to unpack one byte little endian formated parameter.
+ * This macro can be used to unpack one byte little endian formatted parameter.
  */
 #define smp_unpack_1_byte_param    BT_UNPACK_LE_1_BYTE
 
 /**
- * This macro can be used to unpack two byte little endian formated parameter.
+ * This macro can be used to unpack two byte little endian formatted parameter.
  */
 #define smp_unpack_2_byte_param    BT_UNPACK_LE_2_BYTE
 
 /**
- * This macro can be used to unpack three byte little endian formated parameter.
+ * This macro can be used to unpack three byte little endian formatted parameter.
  */
 #define smp_unpack_3_byte_param    BT_UNPACK_LE_3_BYTE
 
 /**
- * This macro can be used to unpack four byte little endian formated parameter.
+ * This macro can be used to unpack four byte little endian formatted parameter.
  */
 #define smp_unpack_4_byte_param    BT_UNPACK_LE_4_BYTE
 
@@ -1013,7 +1014,7 @@ typedef struct _SMP_KEY_DIST
     /** Long Term Key */
     UCHAR enc_info[SMP_LTK_SIZE];
 
-    /** Encrypted Diversifier and Randdom Number */
+    /** Encrypted Diversifier and Random Number */
     UCHAR mid_info[SMP_EDIV_SIZE + SMP_RAND_64B_SIZE];
 
     /** Identity Resolving Key */
@@ -1073,7 +1074,7 @@ typedef struct _SMP_RPA_RESOLV_INFO
 /**
  * \defgroup smp_callback Application Callback
  * \{
- * This section defines the callback through which SMP provides asyncrhonous
+ * This section defines the callback through which SMP provides asynchronous
  * notifications to application/higher layers.
  */
 
@@ -1154,7 +1155,7 @@ extern "C" {
 #endif
 
 /**
- * \cond ignore_this Ignore this block while generating doxygen document
+ * \cond ignore_this Ignore this block while generating Doxygen document
  */
 API_RESULT BT_smp_param_request_reply
            (
@@ -1191,12 +1192,12 @@ API_RESULT BT_smp_register_user_interface
            );
 
 /**
- * \brief To intiate authentication/pairing procedure
+ * \brief To initiate authentication/pairing procedure
  *
  * \par Description:
  *      This API starts authentication/pairing procedure with remote device.
  *      If local device is Master for the link, the pairing request is sent
- *      if the remote device is not authenctiated, LTK is not available or
+ *      if the remote device is not authenticated, LTK is not available or
  *      authentication is requested with higher security requirement.
  *      Otherwise link encryption/re-encryption procedure is initiated.
  *      If local device is Slave for the link, a Security Request is sent.
@@ -1243,7 +1244,7 @@ API_RESULT BT_smp_get_pairing_req_pdu
 	);
 
 /**
- * \brief To intiate encryption procedure
+ * \brief To initiate encryption procedure
  *
  * \par Description:
  *      This API starts encryption procedure with remote device, with given
@@ -1449,7 +1450,7 @@ API_RESULT BT_smp_encrypt
  *
  * \param [in] bd_handle  Pointer to peer device handle as in \ref SMP_BD_HANDLE
  *
- * \param [in] error_code  Pointer to a one octer variable with the SMP defined errorcode
+ * \param [in] error_code  Pointer to a one octet variable with the SMP defined error-code
  *
  * \return API_SUCCESS if Successful else and Error code describing
  * cause of failure.
@@ -1726,6 +1727,25 @@ API_RESULT BT_smp_get_raw_lesc_ltk
                /* OUT */ UCHAR * lesc_ltk
            );
 
+#ifdef SMP_LESC_CROSS_TXP_KEY_GEN
+/**
+ *  \brief To enable or disable cross transport registration
+ *
+ *  \par Description
+ *       This API provides control to application to enable or disable the
+ *       cross transport registration of SMP for the current session. This API should be
+ *       called after BT_ethermind_init() and before BT_bluetooth_on(). The default
+ *       behaviour of this feature is to be enabled.
+ *
+ *  \param [in] state
+ *       Enable (BT_TRUE) or Disable (BT_FALSE)
+ *
+ * \return API_SUCCESS if Successful else and Error code describing
+ * cause of failure.
+ */
+API_RESULT BT_smp_set_cross_transport (UCHAR state);
+#endif /* SMP_LESC_CROSS_TXP_KEY_GEN */
+
 #ifdef HOST_RESOLVE_PVT_ADDR
 /**
  * \brief To resolve a device address with the remote device database in SMP
@@ -1776,7 +1796,7 @@ API_RESULT BT_smp_resolve_device
 
 #ifdef SMP_LESC_CROSS_TXP_KEY_GEN
 /**
- * \brief To get the bluetooth device handle for a given device address
+ * \brief To get the Bluetooth device handle for a given device address
  *        for a given link type
  *
  * \par Description:
@@ -1798,7 +1818,7 @@ API_RESULT BT_smp_resolve_device
 #endif /* SMP_LESC_CROSS_TXP_KEY_GEN */
 
 /**
- * \brief To get the bluetooth device address for a given device handle
+ * \brief To get the Bluetooth device address for a given device handle
  *
  * \par Description:
  *      This API enables the application to query and know the device handle
@@ -1845,7 +1865,7 @@ API_RESULT BT_smp_resolve_device
  *
  * \param [out] peer_dev_hndl  Pointer to the peer device handle as in \ref SMP_BD_HANDLE
  *
- * \return API_SUCCESS on succesful search of Identity Address else API_FAILURE
+ * \return API_SUCCESS on successful search of Identity Address else API_FAILURE
  */
 API_RESULT BT_smp_search_identity_addr
            (

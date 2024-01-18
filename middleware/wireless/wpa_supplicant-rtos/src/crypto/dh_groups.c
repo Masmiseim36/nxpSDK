@@ -8,7 +8,7 @@
 
 #include "includes.h"
 
-#include "common.h"
+#include "utils/common.h"
 #include "crypto.h"
 #include "random.h"
 #include "dh_groups.h"

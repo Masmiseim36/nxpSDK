@@ -3,7 +3,7 @@
  * Copyright 2016 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 /*   This file contains private definitions for websocket protocol */
@@ -29,16 +29,16 @@
 /* Length base64 encoded SHA-1 of GUID concatenated with client key. */
 #define WS_ACCEPT_LENGTH (28)
 
-#define WS_CHAT_PROTOCOL_MASK 0x00000001
+#define WS_CHAT_PROTOCOL_MASK      0x00000001
 #define WS_SUPERCHAT_PROTOCOL_MASK 0x00000002
 
 #define WS_AVAIL_PROTOCOL_STRING "chat"
 
-#define WS_OPCODE_CLOSE (0x8)
-#define WS_OPCODE_PING (0x9)
-#define WS_OPCODE_PONG (0xA)
-#define WS_OPCODE_TEXT (0x1)
-#define WS_OPCODE_BINARY (0x2)
+#define WS_OPCODE_CLOSE        (0x8)
+#define WS_OPCODE_PING         (0x9)
+#define WS_OPCODE_PONG         (0xA)
+#define WS_OPCODE_TEXT         (0x1)
+#define WS_OPCODE_BINARY       (0x2)
 #define WS_OPCODE_CONTINUATION (0x0)
 #define WS_OPCODE_CONTROL_MASK (0x8)
 
@@ -46,57 +46,57 @@
 #define WS_MIN_HEADER_LENGTH (2)
 /* Minimal header size for frame send by client (header+mask) in bytes. */
 #define WS_MIN_CLIENT_HEADER_LENGTH (WS_MIN_HEADER_LENGTH + sizeof(uint32_t))
-#define WS_SERVER_HEADER_LENGTH (4)
+#define WS_SERVER_HEADER_LENGTH     (4)
 /* Maximal header size. */
 #define WS_MAX_CLIENT_HEADER_LENGTH (WS_MIN_CLIENT_HEADER_LENGTH + sizeof(uint64_t))
-#define WS_LENGTH_NON_EXT (125)
-#define WS_LENGTH_EXT16 (126)
-#define WS_LENGTH_EXT64 (127)
+#define WS_LENGTH_NON_EXT           (125)
+#define WS_LENGTH_EXT16             (126)
+#define WS_LENGTH_EXT64             (127)
 #define WS_CONTROL_FRAME_LENGTH_MAX (WS_LENGTH_NON_EXT)
 
-#define WS_CLOSE_OK (1000)
+#define WS_CLOSE_OK         (1000)
 #define WS_CLOSE_GOING_AWAY (1001)
 #define WS_CLOSE_PROT_ERROR (1002)
-#define WS_CLOSE_BAD_DATA (1003)
-#define WS_CLOSE_RESERVED1 (1004)
-#define WS_CLOSE_RESERVED2 (1005)
-#define WS_CLOSE_RESERVED3 (1006)
-#define WS_CLOSE_BAD_TYPE (1007)
-#define WS_CLOSE_POLICY (1008)
-#define WS_CLOSE_TOO_BIG (1009)
-#define WS_CLOSE_EXTENSION (1010)
+#define WS_CLOSE_BAD_DATA   (1003)
+#define WS_CLOSE_RESERVED1  (1004)
+#define WS_CLOSE_RESERVED2  (1005)
+#define WS_CLOSE_RESERVED3  (1006)
+#define WS_CLOSE_BAD_TYPE   (1007)
+#define WS_CLOSE_POLICY     (1008)
+#define WS_CLOSE_TOO_BIG    (1009)
+#define WS_CLOSE_EXTENSION  (1010)
 #define WS_CLOSE_SERVER_ERR (1011)
-#define WS_CLOSE_RESERVED4 (1015)
+#define WS_CLOSE_RESERVED4  (1015)
 
 #define WS_CLOSE_NOT_USED_MIN (0)
 #define WS_CLOSE_NOT_USED_MAX (999)
 #define WS_CLOSE_RESERVED_MIN WS_CLOSE_OK
 #define WS_CLOSE_RESERVED_MAX (2999)
-#define WS_CLOSE_APP_MIN (3000)
-#define WS_CLOSE_APP_MAX (3999)
-#define WS_CLOSE_PRIVATE_MIN (4000)
-#define WS_CLOSE_PRIVATE_MAX (4999)
+#define WS_CLOSE_APP_MIN      (3000)
+#define WS_CLOSE_APP_MAX      (3999)
+#define WS_CLOSE_PRIVATE_MIN  (4000)
+#define WS_CLOSE_PRIVATE_MAX  (4999)
 
-#define WS_FIN_MASK (0x80)
-#define WS_RSV_MASK (0x70)
-#define WS_OPCODE_MASK (0x0F)
+#define WS_FIN_MASK       (0x80)
+#define WS_RSV_MASK       (0x70)
+#define WS_OPCODE_MASK    (0x0F)
 #define WS_MASK_FLAG_MASK (0x80)
-#define WS_LENGTH_MASK (0x7F)
+#define WS_LENGTH_MASK    (0x7F)
 
-#define WS_GET_FIN(x) ((*x & WS_FIN_MASK) >> 7)
-#define WS_GET_RSV(x) ((*x & WS_RSV_MASK) >> 4)
-#define WS_GET_OPCODE(x) (*x & WS_OPCODE_MASK)
+#define WS_GET_FIN(x)       ((*x & WS_FIN_MASK) >> 7)
+#define WS_GET_RSV(x)       ((*x & WS_RSV_MASK) >> 4)
+#define WS_GET_OPCODE(x)    (*x & WS_OPCODE_MASK)
 #define WS_GET_MASK_FLAG(x) ((*x & WS_MASK_FLAG_MASK) >> 7)
-#define WS_GET_LENGTH(x) (*x & WS_LENGTH_MASK)
+#define WS_GET_LENGTH(x)    (*x & WS_LENGTH_MASK)
 
-#define WS_PING_STRING "HTTPSRV-PING-MESSAGE"
-#define WS_MIN(a, b) (((a) < (b)) ? (a) : (b))
+#define WS_PING_STRING  "HTTPSRV-PING-MESSAGE"
+#define WS_MIN(a, b)    (((a) < (b)) ? (a) : (b))
 #define WS_NUM_MESSAGES (5)
-#define WS_DO_DEINIT (HTTPSRV_ERR)
+#define WS_DO_DEINIT    (HTTPSRV_ERR)
 
 #define WS_ERR_PASS (1)
 #define WS_ERR_FAIL (0)
-#define WS_DO_RECV (2)
+#define WS_DO_RECV  (2)
 
 #define WS_SESSION_TASK_NAME "WebSocket Session"
 

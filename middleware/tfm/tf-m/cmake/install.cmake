@@ -79,6 +79,7 @@ if (TFM_PARTITION_CRYPTO)
                         ${INTERFACE_INC_DIR}/psa/crypto_compat.h
                         ${INTERFACE_INC_DIR}/psa/crypto.h
                         ${INTERFACE_INC_DIR}/psa/crypto_client_struct.h
+                        ${INTERFACE_INC_DIR}/psa/crypto_platform.h
                         ${INTERFACE_INC_DIR}/psa/crypto_sizes.h
                         ${INTERFACE_INC_DIR}/psa/crypto_struct.h
                         ${INTERFACE_INC_DIR}/psa/crypto_types.h
@@ -89,7 +90,7 @@ if (TFM_PARTITION_CRYPTO)
 endif()
 
 if (TFM_PARTITION_INITIAL_ATTESTATION)
-    install(FILES       ${INTERFACE_INC_DIR}/psa/initial_attestation.h
+    install(FILES       ${CMAKE_BINARY_DIR}/generated/interface/include/psa/initial_attestation.h
             DESTINATION ${INSTALL_INTERFACE_INC_DIR}/psa)
     install(FILES       ${INTERFACE_INC_DIR}/tfm_attest_defs.h
                         ${INTERFACE_INC_DIR}/tfm_attest_iat_defs.h
@@ -179,17 +180,14 @@ if(BL2)
     if (PLATFORM_DEFAULT_IMAGE_SIGNING)
         install(FILES $<TARGET_OBJECTS:signing_layout_s>
             DESTINATION ${INSTALL_IMAGE_SIGNING_DIR}/layout_files)
-
+        install(FILES ${MCUBOOT_KEY_S}
+            DESTINATION ${INSTALL_IMAGE_SIGNING_DIR}/keys)
         if(MCUBOOT_IMAGE_NUMBER GREATER 1)
             install(FILES $<TARGET_OBJECTS:signing_layout_ns>
                     DESTINATION ${INSTALL_IMAGE_SIGNING_DIR}/layout_files)
-    endif()
-
-        install(FILES ${MCUBOOT_KEY_NS}
-                DESTINATION ${INSTALL_IMAGE_SIGNING_DIR}/keys)
-    else()
-        install(FILES ${MCUBOOT_KEY_S}
-                DESTINATION ${INSTALL_IMAGE_SIGNING_DIR}/keys)
+            install(FILES ${MCUBOOT_KEY_NS}
+                    DESTINATION ${INSTALL_IMAGE_SIGNING_DIR}/keys)
+        endif()
     endif()
 endif()
 
@@ -203,7 +201,4 @@ endif()
 include(${CMAKE_SOURCE_DIR}/lib/ext/tf-m-tests/install.cmake)
 
 ##################### Platform-specific installation ###########################
-
-if (EXISTS ${TARGET_PLATFORM_PATH}/install.cmake)
-    include(${TARGET_PLATFORM_PATH}/install.cmake)
-endif()
+include(${TARGET_PLATFORM_PATH}/install.cmake OPTIONAL)

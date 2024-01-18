@@ -250,7 +250,7 @@ int DSP_Main(void *arg, int wake_value)
 
     /* Send an empty message signaling DSP is ready */
     memset(&msg, 0, sizeof(srtm_message));
-    rpmsg_lite_send(dsp->rpmsg, dsp->ept, MCU_EPT_ADDR, (char*)&msg, sizeof(srtm_message), RL_DONT_BLOCK);
+    rpmsg_lite_send(dsp->rpmsg, dsp->ept, MCU_EPT_ADDR, (char *)&msg, sizeof(srtm_message), RL_DONT_BLOCK);
 
     while (1)
     {

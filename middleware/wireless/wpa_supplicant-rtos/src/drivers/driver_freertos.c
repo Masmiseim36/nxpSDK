@@ -12,6 +12,7 @@
 #include "supp_main.h"
 #include "fsl_os_abstraction.h"
 #include "wm_net.h"
+#include "ap/hostapd.h"
 
 #define SCAN_TIMEOUT   30
 #define SURVEY_TIMEOUT 30
@@ -21,6 +22,10 @@ static void wpa_drv_freertos_event_proc_mgmt_rx(struct freertos_drv_if_ctx *if_c
 static void wpa_drv_freertos_event_proc_eapol_rx(struct freertos_drv_if_ctx *if_ctx, union wpa_event_data *event);
 
 static int wpa_drv_freertos_set_key(void *priv, struct wpa_driver_set_key_params *params);
+
+static void wpa_drv_freertos_event_ecsa_complete(struct freertos_drv_if_ctx *if_ctx, union wpa_event_data *event);
+
+static int wpa_drv_freertos_cancel_remain_on_channel(void *priv);
 
 void wpa_supplicant_event_wrapper(void *ctx, enum wpa_event_type event, union wpa_event_data *data)
 {
@@ -47,7 +52,6 @@ void wpa_supplicant_event_wrapper(void *ctx, enum wpa_event_type event, union wp
     }
     send_wpa_supplicant_event(msg);
 }
-
 void hostapd_event_wrapper(void *ctx, enum wpa_event_type event, union wpa_event_data *data)
 {
     struct wpa_supplicant_event_msg *msg = NULL;
@@ -423,9 +427,13 @@ static void *wpa_drv_freertos_init(void *ctx, const char *ifname, void *global_p
     u8 ext_capab_mask[10]      = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
     unsigned int ext_capab_len = 10;
 
+#ifdef CONFIG_ZEPHYR
+    device = net_if_get_binding(ifname);
+#else
     LOCK_TCPIP_CORE();
     device = netif_find(ifname);
     UNLOCK_TCPIP_CORE();
+#endif
 
     if (!device)
     {
@@ -445,8 +453,12 @@ static void *wpa_drv_freertos_init(void *ctx, const char *ifname, void *global_p
     if_ctx->dev_ctx = device;
     if_ctx->drv_ctx = global_priv;
 
+#ifdef CONFIG_ZEPHYR
+    if_ctx->dev_ops = (struct freertos_wpa_supp_dev_ops *)net_if_get_dev_config((struct netif *)device);
+#else
 #if LWIP_NUM_NETIF_CLIENT_DATA > 0
     if_ctx->dev_ops = netif_get_client_data(device, LWIP_NETIF_CLIENT_DATA_INDEX_MAX);
+#endif
 #endif
 
     if_ctx->extended_capa = os_malloc(ext_capab_len);
@@ -462,6 +474,13 @@ static void *wpa_drv_freertos_init(void *ctx, const char *ifname, void *global_p
     }
 
     if_ctx->extended_capa_len = ext_capab_len;
+
+    /*
+     * There is no driver capability flag for this, so assume it is
+     * supported and disable this on first attempt to use if the driver
+     * rejects the command due to missing support.
+     */
+    if_ctx->set_rekey_offload = 1;
 
     dev_ops = (struct freertos_wpa_supp_dev_ops *)if_ctx->dev_ops;
 
@@ -493,6 +512,7 @@ static void *wpa_drv_freertos_init(void *ctx, const char *ifname, void *global_p
     callbk_fns.signal_change     = wpa_drv_freertos_event_proc_signal_change;
     callbk_fns.mac_changed = wpa_drv_freertos_event_mac_changed;
     callbk_fns.chan_list_changed = wpa_drv_freertos_event_chan_list_changed;
+    callbk_fns.ecsa_complete     = wpa_drv_freertos_event_ecsa_complete;
 
     if_ctx->dev_priv = dev_ops->init(if_ctx, ifname, &callbk_fns);
 
@@ -937,6 +957,8 @@ static int _wpa_drv_freertos_set_key(void *priv,
         goto out;
     }
 
+    ret = 0;
+
 out:
     return ret;
 }
@@ -1018,6 +1040,44 @@ static int wpa_drv_freertos_save_pairwise_key_params(void *priv, struct wpa_driv
     return 0;
 }
 
+static void wpa_drv_freertos_set_rekey_info(void *priv, const u8 *kek, size_t kek_len, const u8 *kck, size_t kck_len, const u8 *replay_ctr)
+{
+    struct freertos_drv_if_ctx *if_ctx              = NULL;
+    const struct freertos_wpa_supp_dev_ops *dev_ops = NULL;
+    int ret                                         = -1;
+
+    if (!priv)
+    {
+        wpa_printf(MSG_ERROR, "%s: Invalid handle", __func__);
+        goto out;
+    }
+
+    if (!kek || !kck || !replay_ctr)
+    {
+        wpa_printf(MSG_ERROR, "%s: Missing mandatory params", __func__);
+        goto out;
+    }
+
+    if_ctx = priv;
+
+    if (!if_ctx->set_rekey_offload)
+        return;
+
+    dev_ops = (struct freertos_wpa_supp_dev_ops *)if_ctx->dev_ops;
+
+    ret = dev_ops->set_rekey_info(if_ctx->dev_priv, kek, kek_len, kck, kck_len, replay_ctr);
+
+    if (ret)
+    {
+        if_ctx->set_rekey_offload = 0;
+        wpa_printf(MSG_ERROR, "%s: set_rekey_info op failed", __func__);
+        goto out;
+    }
+
+out:
+    return;
+}
+
 static int wpa_drv_freertos_set_key(void *priv, struct wpa_driver_set_key_params *params)
 {
     struct freertos_drv_if_ctx *if_ctx              = NULL;
@@ -1094,7 +1154,7 @@ static int wpa_drv_freertos_get_capa(void *priv, struct wpa_driver_capa *capa)
     capa->flags |= WPA_DRIVER_FLAGS_SAE;
     capa->flags |= WPA_DRIVER_FLAGS_AP;
     capa->flags |= WPA_DRIVER_FLAGS_ACS_OFFLOAD;
-    capa->flags |= WPA_DRIVER_FLAGS_DFS_OFFLOAD;
+    //capa->flags |= WPA_DRIVER_FLAGS_DFS_OFFLOAD;
     //capa->flags |= WPA_DRIVER_FLAGS_AP_UAPSD;
     capa->flags |= WPA_DRIVER_FLAGS_INACTIVITY_TIMER;
     capa->flags |= WPA_DRIVER_FLAGS_AP_MLME;
@@ -1105,6 +1165,8 @@ static int wpa_drv_freertos_get_capa(void *priv, struct wpa_driver_capa *capa)
 #endif
     capa->flags |= WPA_DRIVER_FLAGS_HE_CAPABILITIES;
 
+    capa->flags |= WPA_DRIVER_FLAGS_OFFCHANNEL_TX;
+
     capa->flags2 |= WPA_DRIVER_FLAGS2_AP_SME;
 
     capa->rrm_flags |= WPA_DRIVER_FLAGS_SUPPORT_RRM;
@@ -1114,7 +1176,7 @@ static int wpa_drv_freertos_get_capa(void *priv, struct wpa_driver_capa *capa)
     capa->max_scan_ssids       = 1;
     capa->max_sched_scan_ssids = 1;
     capa->sched_scan_supported = 0;
-    capa->max_remain_on_chan   = 2400;
+    capa->max_remain_on_chan   = 5000;
     capa->max_stations         = 32;
     capa->max_acl_mac_addrs    = 32;
 
@@ -1192,6 +1254,9 @@ static int wpa_drv_freertos_set_mac_addr(void *priv, const u8 *addr)
 {
     struct freertos_drv_if_ctx *if_ctx              = NULL;
     const struct freertos_wpa_supp_dev_ops *dev_ops = NULL;
+#ifdef CONFIG_ZEPHYR
+    const struct device *dev                        = NULL;
+#endif
     int ret                                         = -1;
 
     if ((!priv) || (!addr))
@@ -1202,8 +1267,14 @@ static int wpa_drv_freertos_set_mac_addr(void *priv, const u8 *addr)
 
     if_ctx = priv;
 
+#ifdef CONFIG_ZEPHYR
+    dev = net_if_get_device((struct net_if *)if_ctx->dev_ctx);
+    /* TODO: net_if has no num (number of this interface) */
+    wpa_printf(MSG_EXCESSIVE, "set_mac_addr for %c%c to " MACSTR, dev->name[0], dev->name[1], MAC2STR(addr));
+#else
     wpa_printf(MSG_EXCESSIVE, "set_mac_addr for %c%c%d to " MACSTR, if_ctx->dev_ctx->name[0], if_ctx->dev_ctx->name[1],
                if_ctx->dev_ctx->num, MAC2STR(addr));
+#endif
 
     os_memcpy(if_ctx->addr, addr, ETH_ALEN);
 
@@ -1389,7 +1460,58 @@ static int wpa_drv_freertos_send_action(void *priv,
     os_memcpy(hdr->addr2, src, ETH_ALEN);
     os_memcpy(hdr->addr3, bssid, ETH_ALEN);
 
-    return dev_ops->send_mlme(if_ctx->dev_priv, buf, 24 + data_len, 0, freq, no_cck, 1, wait_time, 0);
+    ret = dev_ops->send_mlme(if_ctx->dev_priv, buf, 24 + data_len, 0, freq, no_cck, 1, wait_time, 0);
+
+    os_free(buf);
+
+    return ret;
+}
+
+static void wpa_drv_freertos_send_action_cancel_wait(void *priv)
+{
+    struct freertos_drv_if_ctx *if_ctx              = NULL;
+    struct wpa_supplicant *wpa_s;
+    struct hostapd_data *hapd;
+
+    if (!priv)
+    {
+        wpa_printf(MSG_ERROR, "%s: Invalid handle", __func__);
+        return;
+    }
+
+    if_ctx = priv;
+    if (if_ctx->is_ap)
+    {
+        hapd = if_ctx->hapd;
+        if (!hapd)
+        {
+            wpa_printf(MSG_ERROR, "%s: Invalid hostapd handle", __func__);
+            return;
+        }
+#ifdef CONFIG_DPP
+        if (hapd->dpp_auth && !hapd->dpp_auth_ok_on_ack && hapd->dpp_auth->neg_freq > 0 &&
+            hapd->dpp_auth->curr_freq != hapd->dpp_auth->neg_freq)
+        {
+            wpa_drv_freertos_cancel_remain_on_channel(priv);
+        }
+#endif
+    }
+    else
+    {
+        wpa_s = if_ctx->supp_if_ctx;
+        if (!wpa_s)
+        {
+            wpa_printf(MSG_ERROR, "%s: Invalid wpa_supplicant handle", __func__);
+            return;
+        }
+#ifdef CONFIG_DPP
+        if (wpa_s->dpp_auth && !wpa_s->dpp_auth_ok_on_ack && wpa_s->dpp_auth->neg_freq > 0 &&
+            wpa_s->dpp_auth->curr_freq != wpa_s->dpp_auth->neg_freq)
+        {
+            wpa_drv_freertos_cancel_remain_on_channel(priv);
+        }
+#endif
+    }
 }
 
 static int wpa_drv_freertos_remain_on_channel(void *priv, unsigned int freq, unsigned int duration)
@@ -1482,16 +1604,33 @@ static void wpa_drv_freertos_event_proc_eapol_rx(struct freertos_drv_if_ctx *if_
         wpa_supplicant_event_wrapper(if_ctx->supp_if_ctx, EVENT_EAPOL_RX, event);
 }
 
+static void wpa_drv_freertos_event_ecsa_complete(struct freertos_drv_if_ctx *if_ctx, union wpa_event_data *event)
+{
+#ifdef CONFIG_HOSTAPD
+    if (if_ctx->hapd)
+        hostapd_event_wrapper(if_ctx->hapd, EVENT_CH_SWITCH, event);
+    else
+#endif
+        wpa_supplicant_event_wrapper(if_ctx->supp_if_ctx, EVENT_CH_SWITCH, event);
+}
+
 static void *wpa_drv_freertos_hapd_init(struct hostapd_data *hapd, struct wpa_init_params *params)
 {
     struct freertos_drv_if_ctx *if_ctx              = NULL;
     const struct freertos_wpa_supp_dev_ops *dev_ops = NULL;
     const struct netif *device                      = NULL;
+#ifdef CONFIG_ZEPHYR
+    const struct net_linkaddr *link_addr            = NULL;
+#endif
     struct freertos_hostapd_dev_callbk_fns callbk_fns;
 
+#ifdef CONFIG_ZEPHYR
+    device = net_if_get_binding(params->ifname);
+#else
     LOCK_TCPIP_CORE();
     device = netif_find(params->ifname);
     UNLOCK_TCPIP_CORE();
+#endif
 
     if (!device)
     {
@@ -1512,11 +1651,17 @@ static void *wpa_drv_freertos_hapd_init(struct hostapd_data *hapd, struct wpa_in
     if_ctx->dev_ctx = device;
     if_ctx->drv_ctx = params->global_priv;
 
+#ifdef CONFIG_ZEPHYR
+    if_ctx->dev_ops = (struct freertos_wpa_supp_dev_ops *)net_if_get_dev_config((struct netif *)device);
+    link_addr = net_if_get_link_addr((struct net_if *)device);
+    os_memcpy(params->own_addr, link_addr->addr, link_addr->len);
+#else
 #if LWIP_NUM_NETIF_CLIENT_DATA > 0
     if_ctx->dev_ops = netif_get_client_data(device, LWIP_NETIF_CLIENT_DATA_INDEX_MAX);
 #endif
 
     os_memcpy(params->own_addr, device->hwaddr, device->hwaddr_len);
+#endif
 
     dev_ops = (struct freertos_wpa_supp_dev_ops *)if_ctx->dev_ops;
 
@@ -1537,6 +1682,7 @@ static void *wpa_drv_freertos_hapd_init(struct hostapd_data *hapd, struct wpa_in
     callbk_fns.mgmt_tx_status  = wpa_drv_freertos_event_mgmt_tx_status;
     callbk_fns.mac_changed = wpa_drv_freertos_event_mac_changed;
     callbk_fns.chan_list_changed = wpa_drv_freertos_event_chan_list_changed;
+    callbk_fns.ecsa_complete   = wpa_drv_freertos_event_ecsa_complete;
 
     if_ctx->dev_priv = dev_ops->hapd_init(if_ctx, params->ifname, &callbk_fns);
 
@@ -2618,6 +2764,32 @@ fail:
     return NULL;
 }
 
+static int wpa_drv_freertos_dpp_listen(void *priv, bool enable)
+{
+    struct freertos_drv_if_ctx *if_ctx              = NULL;
+    const struct freertos_wpa_supp_dev_ops *dev_ops = NULL;
+    int status                                      = -1;
+
+    if (!priv)
+    {
+        wpa_printf(MSG_ERROR, "%s: Invalid handle", __func__);
+        goto out;
+    }
+    if_ctx = priv;
+
+    dev_ops = (struct freertos_wpa_supp_dev_ops *)if_ctx->dev_ops;
+
+    status = dev_ops->dpp_listen(if_ctx->dev_priv, enable);
+
+    if (status)
+    {
+        wpa_printf(MSG_ERROR, "%s: set frag threshold failed", __func__);
+    }
+
+out:
+    return status;
+}
+
 const struct wpa_driver_ops wpa_driver_freertos_ops = {
     .name                     = "FreeRTOS",
     .desc                     = "FreeRTOS wpa_supplicant driver",
@@ -2643,9 +2815,11 @@ const struct wpa_driver_ops wpa_driver_freertos_ops = {
     .get_country              = wpa_drv_freertos_get_country,
     .deauthenticate           = wpa_drv_freertos_deauthenticate,
     .set_key                  = wpa_drv_freertos_set_key,
+    .set_rekey_info           = wpa_drv_freertos_set_rekey_info,
     .signal_poll              = wpa_drv_freertos_signal_poll,
     .signal_monitor           = wpa_drv_freertos_signal_monitor,
     .send_action              = wpa_drv_freertos_send_action,
+    .send_action_cancel_wait  = wpa_drv_freertos_send_action_cancel_wait,
     .remain_on_channel        = wpa_drv_freertos_remain_on_channel,
     .cancel_remain_on_channel = wpa_drv_freertos_cancel_remain_on_channel,
     .hapd_init                = wpa_drv_freertos_hapd_init,
@@ -2666,4 +2840,5 @@ const struct wpa_driver_ops wpa_driver_freertos_ops = {
     .deinit_ap       = wpa_drv_freertos_deinit_ap,
     // .set_acl                  = wpa_drv_freertos_set_acl,
     .get_hw_feature_data = wpa_drv_freertos_get_hw_feature_data,
+    .dpp_listen          = wpa_drv_freertos_dpp_listen,
 };

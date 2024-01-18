@@ -1,7 +1,5 @@
 var a00249 =
 [
-    [ "FSL_FMEAS_DRIVER_VERSION", "a00249.html#ga7e2e250eaaf238c7cb05de6a5fad038b", null ],
-    [ "FMEAS_StartMeasure", "a00249.html#gaf1392245996cea51e17175085a0c3cef", null ],
-    [ "FMEAS_IsMeasureComplete", "a00249.html#ga39ff45995edf620470c1397b1edd83b5", null ],
-    [ "FMEAS_GetFrequency", "a00249.html#gac6ee7be474a37d4c17120b54fc8b856a", null ]
+    [ "I2S DMA Driver", "a00041.html", "a00041" ],
+    [ "I2S Driver", "a00040.html", "a00040" ]
 ];

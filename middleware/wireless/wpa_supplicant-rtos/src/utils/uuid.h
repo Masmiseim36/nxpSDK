@@ -9,6 +9,8 @@
 #ifndef UUID_H
 #define UUID_H
 
+#include <utils/common.h>
+
 #define UUID_LEN 16
 
 int uuid_str2bin(const char *str, u8 *bin);

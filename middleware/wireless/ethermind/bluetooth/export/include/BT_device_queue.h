@@ -167,15 +167,6 @@ API_RESULT device_queue_free
                /* IN */ DEVICE_HANDLE    * hndl /* Device to be removed */
            );
 
-#define device_queue_search_br_edr_remote_addr(h,a)\
-        device_queue_search_remote_addr ((h),(a),DQ_BR_LINK)
-
-#define device_queue_search_le_remote_addr(h,a)\
-        device_queue_search_remote_addr ((h),(a),DQ_LE_LINK)
-
-#define device_queue_search_any_remote_addr(h,a)\
-        device_queue_search_remote_addr ((h),(a),DQ_LINK_ANY)
-
 /**
  *  \brief
  *
@@ -196,6 +187,15 @@ API_RESULT device_queue_search_remote_addr
                /* IN */  BT_DEVICE_ADDR      * addr, /* Remote Device to be searched*/
                /* IN */  DEVICE_LINK_TYPE    link_type
            );
+
+#define device_queue_search_br_edr_remote_addr(h,a)\
+        device_queue_search_remote_addr ((h),(a),DQ_BR_LINK)
+
+#define device_queue_search_le_remote_addr(h,a)\
+        device_queue_search_remote_addr ((h),(a),DQ_LE_LINK)
+
+#define device_queue_search_any_remote_addr(h,a)\
+        device_queue_search_remote_addr ((h),(a),DQ_LINK_ANY)
 
 /**
  *  \brief

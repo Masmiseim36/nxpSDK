@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: IOPCTL: Input/Output Pad Controller</title>
+<title>MCUXpresso SDK API Reference Manual: IAP Boot Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,274 +99,141 @@ $(document).ready(function(){initNavTree('a00046.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#files">Files</a> &#124;
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">IOPCTL: Input/Output Pad Controller</div>  </div>
+<div class="title">IAP Boot Driver<div class="ingroups"><a class="el" href="a00259.html">IAP: In Application Programming Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a peripheral driver for the Input/Output Pad Controller.<br/>
- <br/>
-The IOPCTL, working in conjunction with the PIMCTL, enables the chip to share one pad for multiple signals from different peripheral interfaces. <br/>
-</p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
-Files</h2></td></tr>
-<tr class="memitem:a00191"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00191.html">fsl_iopctl.h</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00393"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a00393">iopctl_group_t</a></td></tr>
-<tr class="memdesc:a00393"><td class="mdescLeft">&#160;</td><td class="mdescRight">Array of IOPCTL pin definitions passed to <a class="el" href="a00046.html#ga9a93233b9fd8379492beaa59d77d2817" title="Set all I/O Control pin muxing. ">IOPCTL_SetPinMuxing()</a> must be in this format.  <a href="a00046.html#a00393">More...</a><br/></td></tr>
-<tr class="separator:a00393"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00388"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#a00388">_iap_boot_option</a></td></tr>
+<tr class="memdesc:a00388"><td class="mdescLeft">&#160;</td><td class="mdescRight">IAP boot option.  <a href="a00046.html#a00388">More...</a><br/></td></tr>
+<tr class="separator:a00388"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga3a81cdc1540e69d75b90b36c6f4e8be6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga3a81cdc1540e69d75b90b36c6f4e8be6">IOPCTL_FUNC0</a>&#160;&#160;&#160;0x0</td></tr>
-<tr class="memdesc:ga3a81cdc1540e69d75b90b36c6f4e8be6"><td class="mdescLeft">&#160;</td><td class="mdescRight">IOPCTL function and mode selection definitions.  <a href="#ga3a81cdc1540e69d75b90b36c6f4e8be6">More...</a><br/></td></tr>
-<tr class="separator:ga3a81cdc1540e69d75b90b36c6f4e8be6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3be0abac4aacc603912f7679ad9da005"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3be0abac4aacc603912f7679ad9da005"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga3be0abac4aacc603912f7679ad9da005">IOPCTL_FUNC1</a>&#160;&#160;&#160;0x1</td></tr>
-<tr class="memdesc:ga3be0abac4aacc603912f7679ad9da005"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects pin function 1. <br/></td></tr>
-<tr class="separator:ga3be0abac4aacc603912f7679ad9da005"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga00bc79b76b835cbb3099bb3634453695"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga00bc79b76b835cbb3099bb3634453695"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga00bc79b76b835cbb3099bb3634453695">IOPCTL_FUNC2</a>&#160;&#160;&#160;0x2</td></tr>
-<tr class="memdesc:ga00bc79b76b835cbb3099bb3634453695"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects pin function 2. <br/></td></tr>
-<tr class="separator:ga00bc79b76b835cbb3099bb3634453695"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga79f75bab09c9e0cceecf5e02890aa715"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga79f75bab09c9e0cceecf5e02890aa715"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga79f75bab09c9e0cceecf5e02890aa715">IOPCTL_FUNC3</a>&#160;&#160;&#160;0x3</td></tr>
-<tr class="memdesc:ga79f75bab09c9e0cceecf5e02890aa715"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects pin function 3. <br/></td></tr>
-<tr class="separator:ga79f75bab09c9e0cceecf5e02890aa715"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga89958aba02998166147e7058b39318d5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga89958aba02998166147e7058b39318d5"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga89958aba02998166147e7058b39318d5">IOPCTL_FUNC4</a>&#160;&#160;&#160;0x4</td></tr>
-<tr class="memdesc:ga89958aba02998166147e7058b39318d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects pin function 4. <br/></td></tr>
-<tr class="separator:ga89958aba02998166147e7058b39318d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7a491079af96e090ad8418cf6a4ff4c4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7a491079af96e090ad8418cf6a4ff4c4"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga7a491079af96e090ad8418cf6a4ff4c4">IOPCTL_FUNC5</a>&#160;&#160;&#160;0x5</td></tr>
-<tr class="memdesc:ga7a491079af96e090ad8418cf6a4ff4c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects pin function 5. <br/></td></tr>
-<tr class="separator:ga7a491079af96e090ad8418cf6a4ff4c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae5f31c33ec08872d6d64441f259441f7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae5f31c33ec08872d6d64441f259441f7"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gae5f31c33ec08872d6d64441f259441f7">IOPCTL_FUNC6</a>&#160;&#160;&#160;0x6</td></tr>
-<tr class="memdesc:gae5f31c33ec08872d6d64441f259441f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects pin function 6. <br/></td></tr>
-<tr class="separator:gae5f31c33ec08872d6d64441f259441f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1fa1c2f8302b305372f11f80a5b0018c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1fa1c2f8302b305372f11f80a5b0018c"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga1fa1c2f8302b305372f11f80a5b0018c">IOPCTL_FUNC7</a>&#160;&#160;&#160;0x7</td></tr>
-<tr class="memdesc:ga1fa1c2f8302b305372f11f80a5b0018c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects pin function 7. <br/></td></tr>
-<tr class="separator:ga1fa1c2f8302b305372f11f80a5b0018c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3dc09e184020b7dce03bffeae838b869"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3dc09e184020b7dce03bffeae838b869"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga3dc09e184020b7dce03bffeae838b869">IOPCTL_FUNC8</a>&#160;&#160;&#160;0x8</td></tr>
-<tr class="memdesc:ga3dc09e184020b7dce03bffeae838b869"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects pin function 8. <br/></td></tr>
-<tr class="separator:ga3dc09e184020b7dce03bffeae838b869"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6996519ac0f2944df688be9480497441"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6996519ac0f2944df688be9480497441"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga6996519ac0f2944df688be9480497441">IOPCTL_FUNC9</a>&#160;&#160;&#160;0x9</td></tr>
-<tr class="memdesc:ga6996519ac0f2944df688be9480497441"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects pin function 9. <br/></td></tr>
-<tr class="separator:ga6996519ac0f2944df688be9480497441"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5294da549acea142ee08b8925c218812"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5294da549acea142ee08b8925c218812"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga5294da549acea142ee08b8925c218812">IOPCTL_FUNC10</a>&#160;&#160;&#160;0xA</td></tr>
-<tr class="memdesc:ga5294da549acea142ee08b8925c218812"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects pin function 10. <br/></td></tr>
-<tr class="separator:ga5294da549acea142ee08b8925c218812"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga169626554d3f4bf86d0d7dcdf6b6d954"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga169626554d3f4bf86d0d7dcdf6b6d954"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga169626554d3f4bf86d0d7dcdf6b6d954">IOPCTL_FUNC11</a>&#160;&#160;&#160;0xB</td></tr>
-<tr class="memdesc:ga169626554d3f4bf86d0d7dcdf6b6d954"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects pin function 11. <br/></td></tr>
-<tr class="separator:ga169626554d3f4bf86d0d7dcdf6b6d954"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4101d5c82224b7172cc46a3c98a1d195"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4101d5c82224b7172cc46a3c98a1d195"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga4101d5c82224b7172cc46a3c98a1d195">IOPCTL_FUNC12</a>&#160;&#160;&#160;0xC</td></tr>
-<tr class="memdesc:ga4101d5c82224b7172cc46a3c98a1d195"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects pin function 12. <br/></td></tr>
-<tr class="separator:ga4101d5c82224b7172cc46a3c98a1d195"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga583040dbf62d1e2a5c792c127a99c288"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga583040dbf62d1e2a5c792c127a99c288"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga583040dbf62d1e2a5c792c127a99c288">IOPCTL_FUNC13</a>&#160;&#160;&#160;0xD</td></tr>
-<tr class="memdesc:ga583040dbf62d1e2a5c792c127a99c288"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects pin function 13. <br/></td></tr>
-<tr class="separator:ga583040dbf62d1e2a5c792c127a99c288"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga79a31666588c109e7ae2f9b8da860045"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga79a31666588c109e7ae2f9b8da860045"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga79a31666588c109e7ae2f9b8da860045">IOPCTL_FUNC14</a>&#160;&#160;&#160;0xE</td></tr>
-<tr class="memdesc:ga79a31666588c109e7ae2f9b8da860045"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects pin function 14. <br/></td></tr>
-<tr class="separator:ga79a31666588c109e7ae2f9b8da860045"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaca98fc829323427ec77853426c1e3c0c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaca98fc829323427ec77853426c1e3c0c"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gaca98fc829323427ec77853426c1e3c0c">IOPCTL_FUNC15</a>&#160;&#160;&#160;0xF</td></tr>
-<tr class="memdesc:gaca98fc829323427ec77853426c1e3c0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects pin function 15. <br/></td></tr>
-<tr class="separator:gaca98fc829323427ec77853426c1e3c0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8a5c7260408e2812157e01222b44cce3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8a5c7260408e2812157e01222b44cce3"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga8a5c7260408e2812157e01222b44cce3">IOPCTL_PUPD_EN</a>&#160;&#160;&#160;(0x1 &lt;&lt; 4)</td></tr>
-<tr class="memdesc:ga8a5c7260408e2812157e01222b44cce3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables Pullup / Pulldown. <br/></td></tr>
-<tr class="separator:ga8a5c7260408e2812157e01222b44cce3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaba84a02aa35d76dd1ecd1adddf0ee887"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaba84a02aa35d76dd1ecd1adddf0ee887"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gaba84a02aa35d76dd1ecd1adddf0ee887">IOPCTL_PULLDOWN_EN</a>&#160;&#160;&#160;(0x0 &lt;&lt; 5)</td></tr>
-<tr class="memdesc:gaba84a02aa35d76dd1ecd1adddf0ee887"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects pull-down function. <br/></td></tr>
-<tr class="separator:gaba84a02aa35d76dd1ecd1adddf0ee887"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8c005a51e79252c790ecfe3201ffc8b9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8c005a51e79252c790ecfe3201ffc8b9"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga8c005a51e79252c790ecfe3201ffc8b9">IOPCTL_PULLUP_EN</a>&#160;&#160;&#160;(0x1 &lt;&lt; 5)</td></tr>
-<tr class="memdesc:ga8c005a51e79252c790ecfe3201ffc8b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects pull-up function. <br/></td></tr>
-<tr class="separator:ga8c005a51e79252c790ecfe3201ffc8b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4f2af64e6da930a27f7cf2531e5a9791"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4f2af64e6da930a27f7cf2531e5a9791"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga4f2af64e6da930a27f7cf2531e5a9791">IOPCTL_INBUF_EN</a>&#160;&#160;&#160;(0x1 &lt;&lt; 6)</td></tr>
-<tr class="memdesc:ga4f2af64e6da930a27f7cf2531e5a9791"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables buffer function on input. <br/></td></tr>
-<tr class="separator:ga4f2af64e6da930a27f7cf2531e5a9791"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5b3aedae610d790d08246d179b1a50f8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5b3aedae610d790d08246d179b1a50f8"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga5b3aedae610d790d08246d179b1a50f8">IOPCTL_SLEW_RATE</a>&#160;&#160;&#160;(0x0 &lt;&lt; 7)</td></tr>
-<tr class="memdesc:ga5b3aedae610d790d08246d179b1a50f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slew Rate Control. <br/></td></tr>
-<tr class="separator:ga5b3aedae610d790d08246d179b1a50f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae614810231d55382dafef14c0079cba7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae614810231d55382dafef14c0079cba7"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gae614810231d55382dafef14c0079cba7">IOPCTL_FULLDRIVE_EN</a>&#160;&#160;&#160;(0x1 &lt;&lt; 8)</td></tr>
-<tr class="memdesc:gae614810231d55382dafef14c0079cba7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects full drive. <br/></td></tr>
-<tr class="separator:gae614810231d55382dafef14c0079cba7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabd9743cc71e6ef16f55c9f358b4f745e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabd9743cc71e6ef16f55c9f358b4f745e"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gabd9743cc71e6ef16f55c9f358b4f745e">IOPCTL_ANAMUX_EN</a>&#160;&#160;&#160;(0x1 &lt;&lt; 9)</td></tr>
-<tr class="memdesc:gabd9743cc71e6ef16f55c9f358b4f745e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables analog mux function by setting 0 to bit 7. <br/></td></tr>
-<tr class="separator:gabd9743cc71e6ef16f55c9f358b4f745e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga795aadfc55bce856200f79d36862a5e3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga795aadfc55bce856200f79d36862a5e3"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga795aadfc55bce856200f79d36862a5e3">IOPCTL_PSEDRAIN_EN</a>&#160;&#160;&#160;(0x1 &lt;&lt; 10)</td></tr>
-<tr class="memdesc:ga795aadfc55bce856200f79d36862a5e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables pseudo output drain function. <br/></td></tr>
-<tr class="separator:ga795aadfc55bce856200f79d36862a5e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga33e82ef0078cbd0ee4ef7887e85b7ae5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga33e82ef0078cbd0ee4ef7887e85b7ae5"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga33e82ef0078cbd0ee4ef7887e85b7ae5">IOPCTL_INV_EN</a>&#160;&#160;&#160;(0x1 &lt;&lt; 11)</td></tr>
-<tr class="memdesc:ga33e82ef0078cbd0ee4ef7887e85b7ae5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables invert function on input. <br/></td></tr>
-<tr class="separator:ga33e82ef0078cbd0ee4ef7887e85b7ae5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga55ebb225b1b8f34400e33d99058f4750"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga55ebb225b1b8f34400e33d99058f4750"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga55ebb225b1b8f34400e33d99058f4750">IAP_BOOT_OPTION_TAG</a>&#160;&#160;&#160;(0xEBU)</td></tr>
+<tr class="memdesc:ga55ebb225b1b8f34400e33d99058f4750"><td class="mdescLeft">&#160;</td><td class="mdescRight">IAP boot option tag. <br/></td></tr>
+<tr class="separator:ga55ebb225b1b8f34400e33d99058f4750"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga35f536419bbbbec84ed1f8b26ca454d8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga35f536419bbbbec84ed1f8b26ca454d8"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga35f536419bbbbec84ed1f8b26ca454d8">IAP_BOOT_OPTION_MODE_MASTER</a>&#160;&#160;&#160;(0U)</td></tr>
+<tr class="memdesc:ga35f536419bbbbec84ed1f8b26ca454d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">IAP boot option mode. <br/></td></tr>
+<tr class="separator:ga35f536419bbbbec84ed1f8b26ca454d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga0f3165faa8bb56f7d96ced98e2a6ce41"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00046.html#a00388">_iap_boot_option</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga0f3165faa8bb56f7d96ced98e2a6ce41">iap_boot_option_t</a></td></tr>
+<tr class="memdesc:ga0f3165faa8bb56f7d96ced98e2a6ce41"><td class="mdescLeft">&#160;</td><td class="mdescRight">IAP boot option.  <a href="#ga0f3165faa8bb56f7d96ced98e2a6ce41">More...</a><br/></td></tr>
+<tr class="separator:ga0f3165faa8bb56f7d96ced98e2a6ce41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaa04049e465c8857876ee45e56793436b"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#gaa04049e465c8857876ee45e56793436b">IOPCTL_PinMuxSet</a> (IOPCTL_Type *base, uint8_t port, uint8_t pin, uint32_t modefunc)</td></tr>
-<tr class="memdesc:gaa04049e465c8857876ee45e56793436b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets I/O Pad Control pin mux.  <a href="#gaa04049e465c8857876ee45e56793436b">More...</a><br/></td></tr>
-<tr class="separator:gaa04049e465c8857876ee45e56793436b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9a93233b9fd8379492beaa59d77d2817"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga9a93233b9fd8379492beaa59d77d2817">IOPCTL_SetPinMuxing</a> (IOPCTL_Type *base, const <a class="el" href="a00046.html#a00393">iopctl_group_t</a> *pinArray, uint32_t arrayLength)</td></tr>
-<tr class="memdesc:ga9a93233b9fd8379492beaa59d77d2817"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set all I/O Control pin muxing.  <a href="#ga9a93233b9fd8379492beaa59d77d2817">More...</a><br/></td></tr>
-<tr class="separator:ga9a93233b9fd8379492beaa59d77d2817"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Driver version</h2></td></tr>
-<tr class="memitem:ga3556ca07cddb19994b6b9f9092e54010"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga3556ca07cddb19994b6b9f9092e54010">LPC_IOPCTL_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00240.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 0))</td></tr>
-<tr class="memdesc:ga3556ca07cddb19994b6b9f9092e54010"><td class="mdescLeft">&#160;</td><td class="mdescRight">IOPCTL driver version 2.0.0.  <a href="#ga3556ca07cddb19994b6b9f9092e54010">More...</a><br/></td></tr>
-<tr class="separator:ga3556ca07cddb19994b6b9f9092e54010"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga95df42cf9f599a7d5ed4aa7c4555ebcf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00046.html#ga95df42cf9f599a7d5ed4aa7c4555ebcf">IAP_RunBootLoader</a> (<a class="el" href="a00046.html#ga0f3165faa8bb56f7d96ced98e2a6ce41">iap_boot_option_t</a> *option)</td></tr>
+<tr class="memdesc:ga95df42cf9f599a7d5ed4aa7c4555ebcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invoke into ROM with specified boot parameters.  <a href="#ga95df42cf9f599a7d5ed4aa7c4555ebcf">More...</a><br/></td></tr>
+<tr class="separator:ga95df42cf9f599a7d5ed4aa7c4555ebcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00393" id="a00393"></a>
+<a name="a00388" id="a00388"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct iopctl_group_t</td>
+          <td class="memname">struct _iap_boot_option</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"></div>
-</div>
-</div>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga3556ca07cddb19994b6b9f9092e54010"></a>
+<div class="textblock"></div><h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="ae4d52cbc1a27c2d01b3158193e21edf3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define LPC_IOPCTL_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00240.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 0))</td>
+          <td class="memname">uint32_t _iap_boot_option::bootImageIndex</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ga3a81cdc1540e69d75b90b36c6f4e8be6"></a>
+<a class="anchor" id="a024978c78930bcf2918da163361c5490"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define IOPCTL_FUNC0&#160;&#160;&#160;0x0</td>
+          <td class="memname">uint32_t _iap_boot_option::instance</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>See the User Manual for specific modes and functions supported by the various pins.Selects pin function 0 </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a5abc588ef1997fe9728eb4fe69fd7dba"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t _iap_boot_option::bootInterface</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a4f26e5cdf355a9f1ae83666ed80fa14a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t _iap_boot_option::mode</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>RT600: 0: USART 1: I2C 2: SPI 3: USB HID 4:FlexSPI 7:SD 8:MMC </p>
+
+</div>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga0f3165faa8bb56f7d96ced98e2a6ce41"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00046.html#a00388">_iap_boot_option</a>  <a class="el" href="a00046.html#ga0f3165faa8bb56f7d96ced98e2a6ce41">iap_boot_option_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gaa04049e465c8857876ee45e56793436b"></a>
+<a class="anchor" id="ga95df42cf9f599a7d5ed4aa7c4555ebcf"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">__STATIC_INLINE void IOPCTL_PinMuxSet </td>
+          <td class="memname">void IAP_RunBootLoader </td>
           <td>(</td>
-          <td class="paramtype">IOPCTL_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype"><a class="el" href="a00046.html#ga0f3165faa8bb56f7d96ced98e2a6ce41">iap_boot_option_t</a> *&#160;</td>
+          <td class="paramname"><em>option</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>port</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>pin</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>modefunc</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>: The base of IOPCTL peripheral on the chip </td></tr>
-    <tr><td class="paramname">port</td><td>: Port to mux </td></tr>
-    <tr><td class="paramname">pin</td><td>: Pin to mux </td></tr>
-    <tr><td class="paramname">modefunc</td><td>: OR'ed values of type IOPCTL_* </td></tr>
+    <tr><td class="paramname">option</td><td>Boot parameters. Refer to <a class="el" href="a00046.html#ga0f3165faa8bb56f7d96ced98e2a6ce41" title="IAP boot option. ">iap_boot_option_t</a>. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Nothing </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga9a93233b9fd8379492beaa59d77d2817"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">__STATIC_INLINE void IOPCTL_SetPinMuxing </td>
-          <td>(</td>
-          <td class="paramtype">IOPCTL_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00046.html#a00393">iopctl_group_t</a> *&#160;</td>
-          <td class="paramname"><em>pinArray</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>arrayLength</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>: The base of IOPCTL peripheral on the chip </td></tr>
-    <tr><td class="paramname">pinArray</td><td>: Pointer to array of pin mux selections </td></tr>
-    <tr><td class="paramname">arrayLength</td><td>: Number of entries in pinArray </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Nothing </dd></dl>
 
 </div>
 </div>

@@ -15,6 +15,7 @@
 * Include
 *************************************************************************************
 ************************************************************************************/
+#include <stdbool.h>
 
 #include "FsciCommunication.h"
 #include "FsciInterface.h"
@@ -22,7 +23,6 @@
 #include "FunctionLib.h"
 
 #include "fsl_component_mem_manager.h"
-#include "fsl_component_panic.h"
 #include "fsl_component_timer_manager.h"
 
 #include "fsl_os_abstraction.h"
@@ -32,7 +32,7 @@
 #include "NVM_Interface.h"
 #endif
 
-#if gFsciIncluded_c
+#if defined gFsciIncluded_c && (gFsciIncluded_c != 0)
 /************************************************************************************
 *************************************************************************************
 * Private macros
@@ -65,15 +65,15 @@ static void FSCI_Task(osa_task_param_t argument);
 
 fsci_packetStatus_t FSCI_checkPacket(clientPacket_t *pData, uint16_t bytes, uint8_t *pVIntf);
 
-#if gFsciRxAck_c && gFsciRxAckTimeoutUseTmr_c
+#if defined gFsciRxAckTimeoutUseTmr_c && (gFsciRxAckTimeoutUseTmr_c != 0)
 static void FSCI_RxAckExpireCb(void *param);
 #endif
 
-#if gFsciRxTimeout_c
+#if defined gFsciRxTimeout_c && (gFsciRxTimeout_c != 0)
 static void FSCI_RxRxTimeoutCb(void *param);
 #endif
 
-#if mFsciRxTimeoutUsePolling_c
+#if defined mFsciRxTimeoutUsePolling_c && (mFsciRxTimeoutUsePolling_c != 0)
 static void FSCI_CheckRxTimeoutPolling(void *param);
 #endif
 
@@ -117,12 +117,12 @@ uint32_t gFsciSerialWriteHandle[gFsciMaxInterfaces_c]
 static uint8_t gFsciVirtualInterfaces[gFsciMaxInterfaces_c];
 #endif
 
-#if gFsciHostSupport_c
-#if gFsciHostSyncUseEvent_c && !USE_RTOS
+#if defined gFsciHostSupport_c && (gFsciHostSupport_c != 0)
+#if defined gFsciHostSyncUseEvent_c && (gFsciHostSyncUseEvent_c != 0) && !USE_RTOS
 #undef gFsciHostSyncUseEvent_c
 #endif
 
-#if gFsciHostSyncUseEvent_c
+#if defined  gFsciHostSyncUseEvent_c && (gFsciHostSyncUseEvent_c != 0)
 osaEventId_t gFsciHostSyncRspEventId;
 #endif
 
@@ -154,8 +154,8 @@ static fsciClientPacketInfo_t mFsciClientPacketInfo;
 *************************************************************************************
 ************************************************************************************/
 
-#if gFsciHostSupport_c
-void FSCI_HostSyncLock(uint32_t fsciInstance, opGroup_t OG, opCode_t OC)
+#if defined gFsciHostSupport_c && (gFsciHostSupport_c != 0)
+void        FSCI_HostSyncLock(uint32_t fsciInstance, opGroup_t OG, opCode_t OC)
 {
     OSA_MutexLock(mFsciCommData[fsciInstance].syncHostMutexId, osaWaitForever_c);
     gFsciHostWaitingSyncRsp = TRUE;
@@ -170,7 +170,7 @@ void FSCI_HostSyncUnlock(uint32_t fsciInstance)
     pFsciHostSyncRsp        = NULL;
     OSA_MutexUnlock(mFsciCommData[fsciInstance].syncHostMutexId);
 }
-#endif
+#endif /* gFsciHostSupport_c */
 
 /*! *********************************************************************************
  * \brief  Initialize the serial interface.
@@ -180,92 +180,110 @@ void FSCI_HostSyncUnlock(uint32_t fsciInstance)
  ********************************************************************************** */
 void FSCI_commInit(serial_handle_t *pSerCfg)
 {
+    int      ret = kStatus_Success;
     uint32_t i;
 #if (gFsciMaxVirtualInterfaces_c > 0)
     uint32_t j;
 #endif
     osa_status_t status;
-
-    assert(pSerCfg);
-    FLib_MemSet(mFsciCommData, 0x00, sizeof(mFsciCommData));
-
-#if gFsciHostSupport_c && gFsciHostSyncUseEvent_c
-    if ((gFsciHostSyncRspEventId = OSA_EventCreate(TRUE)) == NULL)
+    do
     {
-        panic(ID_PANIC(0, 0), (uint32_t)FSCI_commInit, 0, 0);
-        return;
-    }
-#endif
-#if gFsciHostSupport_c && !gFsciHostSyncUseEvent_c
-    TMR_TimeStampInit();
-#endif
-    for (i = 0; i < gFsciMaxInterfaces_c; i++)
-    {
+        assert(pSerCfg);
+        FLib_MemSet(mFsciCommData, 0x00, sizeof(mFsciCommData));
+
+#if defined gFsciHostSupport_c && (gFsciHostSupport_c != 0)
+#if defined gFsciHostSyncUseEvent_c && (gFsciHostSyncUseEvent_c != 0)
+        if ((gFsciHostSyncRspEventId = OSA_EventCreate(TRUE)) == NULL)
         {
-            gFsciSerialInterfaces[i] = (serial_handle_t)pSerCfg[i];
+            ret = kStatus_Fail;
+            break;
+        }
+#else  /* gFsciHostSyncUseEvent_c */
+        TMR_TimeStampInit();
+#endif /* gFsciHostSyncUseEvent_c */
+#endif /* gFsciHostSupport_c */
+
+        for (i = 0; i < gFsciMaxInterfaces_c; i++)
+        {
+            serial_handle_t ser_h;
+            ser_h = gFsciSerialInterfaces[i] = (serial_handle_t)pSerCfg[i];
 
             /*open read handle*/
-            (void)SerialManager_OpenReadHandle((serial_handle_t)gFsciSerialInterfaces[i],
-                                               (serial_read_handle_t)gFsciSerialReadHandle[i]);
+            (void)SerialManager_OpenReadHandle(ser_h, (serial_read_handle_t)gFsciSerialReadHandle[i]);
             (void)SerialManager_InstallRxCallback((serial_read_handle_t)gFsciSerialReadHandle[i], FSCI_rxCallback,
                                                   (uint8_t *)i);
 
             /*open write handle*/
-            (void)SerialManager_OpenWriteHandle((serial_handle_t)gFsciSerialInterfaces[i],
-                                                (serial_write_handle_t)gFsciSerialWriteHandle[i]);
+            (void)SerialManager_OpenWriteHandle(ser_h, (serial_write_handle_t)gFsciSerialWriteHandle[i]);
 
-#if gFsciHostSupport_c
-            if ((mFsciCommData[i].syncHostMutexId = OSA_MutexCreate()) == NULL)
+#if defined gFsciHostSupport_c && (gFsciHostSupport_c != 0)
+            if (KOSA_StatusSuccess != OSA_MutexCreate((osa_mutex_handle_t)mFsciCommData[i].syncHostMutexId))
             {
-                panic(ID_PANIC(0, 0), (uint32_t)FSCI_commInit, 0, 0);
+                ret = kStatus_Fail;
                 break;
             }
-#endif
+#endif /* gFsciHostSupport_c */
 
-#if gFsciRxAck_c
-            mFsciCommData[i].syncTxRxAckMutexId = OSA_MutexCreate();
-            assert(mFsciCommData[i].syncTxRxAckMutexId);
-
-#if gFsciRxAckTimeoutUseTmr_c
-            mFsciCommData[i].ackWaitTmr = TMR_AllocateTimer();
-            assert(gTmrInvalidTimerID_c != mFsciCommData[i].ackWaitTmr);
-#else
-            TMR_TimeStampInit();
-#endif
+#if defined gFsciRxAck_c && (gFsciRxAck_c != 0)
+            if (KOSA_StatusSuccess != OSA_MutexCreate((osa_mutex_handle_t)mFsciCommData[i].syncTxRxAckMutexId))
+            {
+                ret = kStatus_Fail;
+                break;
+            }
+#if defined gFsciRxAckTimeoutUseTmr_c && (gFsciRxAckTimeoutUseTmr_c != 0)
+            if (kStatus_TimerSuccess != TM_Open((timer_handle_t)mFsciCommData[i].ackWaitTmr))
+            {
+                ret = kStatus_Fail;
+                break;
+            }
+#else  /* gFsciRxAckTimeoutUseTmr_c */
+            /* Initialization of the timestamp counter done by previous call to TM_Init */
+#endif /* gFsciRxAckTimeoutUseTmr_c */
 
             mFsciCommData[i].txRetryCnt     = mFsciTxRetryCnt_c;
             mFsciCommData[i].ackReceived    = FALSE;
             mFsciCommData[i].ackWaitOngoing = FALSE;
 #endif
 
-#if gFsciRxTimeout_c
-#if mFsciRxTimeoutUsePolling_c
-#else
+#if defined  gFsciRxTimeout_c && (gFsciRxTimeout_c != 0)
+#if !defined mFsciRxTimeoutUsePolling_c || (mFsciRxTimeoutUsePolling_c == 0)
             mFsciCommData[i].rxRestartTmr = MEM_BufferAlloc(TIMER_HANDLE_SIZE);
-            if (kStatus_TimerSuccess != TM_Open(mFsciCommData[i].rxRestartTmr))
+            if (mFsciCommData[i].rxRestartTmr == NULL)
             {
-                panic(ID_PANIC(0, 0), (uint32_t)FSCI_commInit, 0, 0);
+                ret = (int)kStatus_MemAllocError;
                 break;
             }
-#endif
 
+            if (kStatus_TimerSuccess != TM_Open(mFsciCommData[i].rxRestartTmr))
+            {
+                ret = (int)kStatus_TimerSuccess;
+                break;
+            }
+#endif /* !mFsciRxTimeoutUsePolling_c */
             mFsciCommData[i].rxOngoing = FALSE;
-#endif
+#endif /* gFsciRxTimeout_c */
+
+        } /* for */
+        if (i != gFsciMaxInterfaces_c)
+        {
+            ret = kStatus_Fail;
+            break;
         }
-    }
-
 #if defined(gFsciUseDedicatedTask_c) && (gFsciUseDedicatedTask_c == 1)
+        mFsciClientPacketInfo.pFsciPacketToProcess = NULL;
+        mFsciClientPacketInfo.fsciInterface        = mFsciInvalidInterface_c;
 
-    mFsciClientPacketInfo.pFsciPacketToProcess = NULL;
-    mFsciClientPacketInfo.fsciInterface        = mFsciInvalidInterface_c;
-
-    /* Init Fsci task */
-    status = OSA_EventCreate((osa_event_handle_t)mFsciTaskEventId, TRUE);
-    assert(KOSA_StatusSuccess == status);
-    status = OSA_TaskCreate((osa_task_handle_t)gFsciTaskId, OSA_TASK(FSCI_Task), NULL);
-    assert(KOSA_StatusSuccess == status);
-    (void)status;
-#endif
+        /* Init Fsci task */
+        status = OSA_EventCreate((osa_event_handle_t)mFsciTaskEventId, TRUE);
+        assert(KOSA_StatusSuccess == status);
+        status = OSA_TaskCreate((osa_task_handle_t)gFsciTaskId, OSA_TASK(FSCI_Task), NULL);
+        assert(KOSA_StatusSuccess == status);
+        (void)status;
+#endif /* gFsciUseDedicatedTask_c */
+        ret = kStatus_Success;
+    } while (false);
+    assert(ret == kStatus_Success);
+    NOT_USED(ret);
 }
 
 /*! *********************************************************************************
@@ -281,7 +299,7 @@ static void FSCI_Task(osa_task_param_t argument)
     osa_event_flags_t mFsciTaskEventFlags = 0;
 
 #if USE_RTOS
-    while (1)
+    while (true)
 #endif
     {
         (void)OSA_EventWait((osa_event_handle_t)mFsciTaskEventId, osaEventFlagsAll_c, FALSE, osaWaitForever_c,
@@ -313,11 +331,11 @@ void FSCI_receivePacket(void *param)
     uint8_t             virtualInterfaceId;
     uint8_t             c;
 
-#if gFsciRxTimeout_c
+#if defined gFsciRxTimeout_c && (gFsciRxTimeout_c != 0)
     bool_t timerRestartEn = FALSE;
-#if mFsciRxTimeoutUsePolling_c
+#if defined mFsciRxTimeoutUsePolling_c && (mFsciRxTimeoutUsePolling_c != 0)
     FSCI_CheckRxTimeoutPolling(param);
-#endif
+#endif /* mFsciRxTimeoutUsePolling_c */
 #endif /*gFsciRxTimeout_c*/
 
     if (kStatus_SerialManager_Success ==
@@ -326,9 +344,9 @@ void FSCI_receivePacket(void *param)
     {
         while (readBytes != 0u)
         {
-#if gFsciRxTimeout_c
+#if defined gFsciRxTimeout_c && (gFsciRxTimeout_c != 0)
             timerRestartEn = TRUE;
-#endif
+#endif /* gFsciRxTimeout_c */
             /* It is a new packet if pointer is NULL */
             if (NULL == pCommData->pPacketFromClient)
             {
@@ -337,19 +355,19 @@ void FSCI_receivePacket(void *param)
                 {
                     pCommData->pPacketFromClient = (void *)&pCommData->pktHeader;
                     pCommData->bytesReceived++;
-#if gNvStorageIncluded_d
+#if defined gNvStorageIncluded_d && (gNvStorageIncluded_d != 0)
                     NvSetCriticalSection();
 #endif
-#if gFsciRxTimeout_c
+#if defined gFsciRxTimeout_c && (gFsciRxTimeout_c != 0)
                     pCommData->rxOngoing = TRUE;
-#endif
+#endif /* gFsciRxTimeout_c */
                 }
             }
             else
             {
                 pCommData->pPacketFromClient->raw[pCommData->bytesReceived++] = c;
 
-#if gFsciUseEscapeSeq_c
+#if defined gFsciUseEscapeSeq_c && (gFsciUseEscapeSeq_c != 0)
                 FSCI_decodeEscapeSeq(pCommData->pPacketFromClient->raw, pCommData->bytesReceived);
 #endif
 
@@ -366,30 +384,30 @@ void FSCI_receivePacket(void *param)
                     }
                     else
                     {
-#if gNvStorageIncluded_d
+#if defined gNvStorageIncluded_d && (gNvStorageIncluded_d != 0)
                         NvClearCriticalSection();
 #endif
-#if gFsciRxTimeout_c
-#if !mFsciRxTimeoutUsePolling_c
+#if defined  gFsciRxTimeout_c && (gFsciRxTimeout_c != 0)
+#if !defined mFsciRxTimeoutUsePolling_c || (mFsciRxTimeoutUsePolling_c == 0)
                         (void)TM_Stop(pCommData->rxRestartTmr);
-#endif
+#endif /* !mFsciRxTimeoutUsePolling_c */
                         pCommData->rxOngoing = FALSE;
-#endif
+#endif /* gFsciRxTimeout_c */
                     }
                 }
 
                 if (status == PACKET_IS_VALID)
                 {
-#if gNvStorageIncluded_d
+#if defined gNvStorageIncluded_d && (gNvStorageIncluded_d != 0)
                     NvClearCriticalSection();
 #endif
-#if gFsciRxTimeout_c
-#if !mFsciRxTimeoutUsePolling_c
+#if defined  gFsciRxTimeout_c && (gFsciRxTimeout_c != 0)
+#if !defined mFsciRxTimeoutUsePolling_c || (mFsciRxTimeoutUsePolling_c == 0)
                     (void)TM_Stop(pCommData->rxRestartTmr);
 #endif
                     pCommData->rxOngoing = FALSE;
-#endif
-#if gFsciRxAck_c
+#endif /* gFsciRxTimeout_c */
+#if defined gFsciRxAck_c && (gFsciRxAck_c != 0)
                     /* Check for ACK packet */
                     if ((gFSCI_CnfOpcodeGroup_c == pCommData->pktHeader.opGroup) &&
                         ((opCode_t)mFsciMsgAck_c == pCommData->pktHeader.opCode))
@@ -401,7 +419,7 @@ void FSCI_receivePacket(void *param)
                         break;
                     }
                     else
-#endif
+#endif /* gFsciRxAck_c */
                     {
 #if (gFsciMaxVirtualInterfaces_c > 0)
                         mFsciSrcInterface = mFsciInvalidInterface_c;
@@ -417,24 +435,24 @@ void FSCI_receivePacket(void *param)
                         }
 #else
                         mFsciSrcInterface = (uint32_t)param;
-#endif
+#endif /* gFsciMaxVirtualInterfaces_c > 0*/
 
-#if gFsciTxAck_c
+#if defined gFsciTxAck_c && (gFsciTxAck_c != 0)
                         FSCI_Ack(c, mFsciSrcInterface);
 #endif
-#if gFsciHostSupport_c
+#if defined gFsciHostSupport_c && (gFsciHostSupport_c != 0)
                         if (gFsciHostWaitingSyncRsp &&
                             (gFsciHostWaitingOpGroup == pCommData->pPacketFromClient->structured.header.opGroup) &&
                             (gFsciHostWaitingOpCode == pCommData->pPacketFromClient->structured.header.opCode))
                         {
                             /* Save packet to be processed by caller */
                             pFsciHostSyncRsp = pCommData->pPacketFromClient;
-#if gFsciHostSyncUseEvent_c
+#if defined gFsciHostSyncUseEvent_c && (gFsciHostSyncUseEvent_c != 0)
                             OSA_EventSet(gFsciHostSyncRspEventId, gFSCIHost_RspReady_c);
 #endif
                         }
                         else
-#endif
+#endif /* gFsciHostSupport_c */
                         {
                             if (mFsciSrcInterface < gFsciMaxInterfaces_c)
                             {
@@ -509,15 +527,15 @@ void FSCI_receivePacket(void *param)
 
                         pCommData->pPacketFromClient = NULL;
 
-#if gNvStorageIncluded_d
+#if defined gNvStorageIncluded_d && (gNvStorageIncluded_d != 0)
                         NvClearCriticalSection();
 #endif
-#if gFsciRxTimeout_c
-#if !mFsciRxTimeoutUsePolling_c
+#if defined  gFsciRxTimeout_c && (gFsciRxTimeout_c != 0)
+#if !defined mFsciRxTimeoutUsePolling_c || (mFsciRxTimeoutUsePolling_c == 0)
                         (void)TM_Stop(pCommData->rxRestartTmr);
-#endif
+#endif /* !mFsciRxTimeoutUsePolling_c */
                         pCommData->rxOngoing = FALSE;
-#endif
+#endif /* gFsciRxTimeout_c */
                     }
 
                 } /* if (status == FRAMING_ERROR) */
@@ -536,17 +554,17 @@ void FSCI_receivePacket(void *param)
 
         } /* while (j < size) */
 
-#if gFsciRxTimeout_c
+#if defined gFsciRxTimeout_c && (gFsciRxTimeout_c != 0)
         if (timerRestartEn && pCommData->rxOngoing)
         {
-#if mFsciRxTimeoutUsePolling_c
+#if defined mFsciRxTimeoutUsePolling_c && (mFsciRxTimeoutUsePolling_c != 0)
             pCommData->lastRxByteTs = TM_GetTimestamp();
 #else
             (void)TM_InstallCallback(pCommData->rxRestartTmr, FSCI_RxRxTimeoutCb, param);
             (void)TM_Start(pCommData->rxRestartTmr, kTimerModeSingleShot, mFsciRxRestartTimeoutMs_c);
-#endif
+#endif /* mFsciRxTimeoutUsePolling_c */
         }
-#endif
+#endif /* gFsciRxTimeout_c */
     }
 }
 
@@ -942,7 +960,7 @@ inline static void FSCI_rxCallback(void *                             pData,
     FSCI_receivePacket(pData);
 }
 
-#if gFsciRxAck_c && gFsciRxAckTimeoutUseTmr_c
+#if defined gFsciRxAckTimeoutUseTmr_c && (gFsciRxAckTimeoutUseTmr_c != 0)
 /*! *********************************************************************************
  * \brief  This function is the callback of an Ack wait expire for a fsci interface
  *
@@ -959,9 +977,9 @@ static void FSCI_RxAckExpireCb(void *param)
     /* Allow retransmission */
     mFsciCommData[(uint32_t)(uint32_t *)param].ackWaitOngoing = FALSE;
 }
-#endif
+#endif /* gFsciRxAckTimeoutUseTmr_c */
 
-#if gFsciRxTimeout_c
+#if defined gFsciRxTimeout_c && (gFsciRxTimeout_c != 0)
 /*! *********************************************************************************
  * \brief  This function is the callback of an Rx timeout expired for a fsci interface
  *
@@ -974,7 +992,7 @@ static void FSCI_RxRxTimeoutCb(void *param)
     fsciComm_t *pCommData = &mFsciCommData[(uint32_t)(uint32_t *)param];
 
     OSA_InterruptDisable();
-#if gNvStorageIncluded_d
+#if defined gNvStorageIncluded_d && (gNvStorageIncluded_d != 0)
     NvClearCriticalSection();
 #endif
     pCommData->rxOngoing = FALSE;
@@ -994,7 +1012,7 @@ static void FSCI_RxRxTimeoutCb(void *param)
  * \param[in]  param fsci interface
  *
  ********************************************************************************** */
-#if mFsciRxTimeoutUsePolling_c
+#if defined mFsciRxTimeoutUsePolling_c && (mFsciRxTimeoutUsePolling_c != 0)
 static void FSCI_CheckRxTimeoutPolling(void *param)
 {
     fsciComm_t *pCommData = &mFsciCommData[(uint32_t)(uint32_t *)param];
@@ -1014,15 +1032,17 @@ static void FSCI_CheckRxTimeoutPolling(void *param)
 }
 #endif
 
-static void fsci_serial_manager_tx_callback(void *                             callbackParam,
-                                            serial_manager_callback_message_t *message,
-                                            serial_manager_status_t            status)
+#if !defined gFsciRxAck_c || (gFsciRxAck_c == 0)
+static void  fsci_serial_manager_tx_callback(void *                             callbackParam,
+                                             serial_manager_callback_message_t *message,
+                                             serial_manager_status_t            status)
 {
     fsci_serial_manager_tx_t *tx = (fsci_serial_manager_tx_t *)callbackParam;
 
     FSCI_txCallback(tx->txBuffer);
     (void)MEM_BufferFree(tx);
 }
+#endif /* !gFsciRxAck_c */
 
 /*! *********************************************************************************
  * \brief  This function is used to send a FSCI packet to the serial manager
@@ -1034,16 +1054,13 @@ static void fsci_serial_manager_tx_callback(void *                             c
  ********************************************************************************** */
 static void FSCI_SendPacketToSerialManager(uint32_t fsciInterface, uint8_t *pPacket, uint16_t packetLen)
 {
-#if gFsciRxAck_c
+#if defined  gFsciRxAck_c && (gFsciRxAck_c != 0)
+
     fsciComm_t *pCommData = &mFsciCommData[fsciInterface];
-#if !gFsciRxAckTimeoutUseTmr_c
+#if !defined gFsciRxAckTimeoutUseTmr_c || (gFsciRxAckTimeoutUseTmr_c == 0)
     uint64_t ackWaitStartTs;
     uint64_t currentTs;
-#endif
-#endif
-
-#if gFsciRxAck_c
-
+#endif /* gFsciRxAckTimeoutUseTmr_c */
     (void)OSA_MutexLock(pCommData->syncTxRxAckMutexId, osaWaitForever_c);
 
     pCommData->ackReceived = FALSE;
@@ -1051,7 +1068,8 @@ static void FSCI_SendPacketToSerialManager(uint32_t fsciInterface, uint8_t *pPac
 
     while (pCommData->txRetryCnt != 0u)
     {
-        (void)Serial_SyncWrite(gFsciSerialInterfaces[fsciInterface], pPacket, packetLen);
+        (void)SerialManager_WriteBlocking((serial_write_handle_t)gFsciSerialWriteHandle[fsciInterface], pPacket,
+                                          packetLen);
         pCommData->ackWaitOngoing = TRUE;
 
         /* Allow the FSCI interface to receive ACK packet,
@@ -1061,10 +1079,10 @@ static void FSCI_SendPacketToSerialManager(uint32_t fsciInterface, uint8_t *pPac
             pCommData->pPacketFromClient = NULL;
         }
 
-#if gFsciRxAckTimeoutUseTmr_c
+#if defined gFsciRxAckTimeoutUseTmr_c && (gFsciRxAckTimeoutUseTmr_c != 0)
         /* Start timer for ACK wait */
-        TMR_StartSingleShotTimer(pCommData->ackWaitTmr, mFsciRxAckTimeoutMs_c, FSCI_RxAckExpireCb,
-                                 (void *)fsciInterface);
+        (void)TM_InstallCallback(pCommData->ackWaitTmr, FSCI_RxAckExpireCb, (void *)fsciInterface);
+        (void)TM_Start(pCommData->ackWaitTmr, kTimerModeSingleShot, mFsciRxAckTimeoutMs_c);
 
         /* Wait for timer to expire or Ack to be received */
         while (pCommData->ackWaitOngoing && !pCommData->ackReceived)
@@ -1074,18 +1092,18 @@ static void FSCI_SendPacketToSerialManager(uint32_t fsciInterface, uint8_t *pPac
 
         if (pCommData->ackReceived)
         {
-            (void)TMR_StopTimer(pCommData->ackWaitTmr);
+            (void)TM_Stop(pCommData->ackWaitTmr);
             pCommData->ackWaitOngoing = FALSE;
             break;
         }
-#else
+#else  /* gFsciRxAckTimeoutUseTmr_c */
         /* Get initial timestamp and poll until mFsciRxAckTimeoutMs_c has passed */
-        ackWaitStartTs = TMR_GetTimestamp();
+        ackWaitStartTs = TM_GetTimestamp();
 
         while (!pCommData->ackReceived)
         {
             FSCI_receivePacket((uint32_t *)fsciInterface);
-            currentTs = TMR_GetTimestamp();
+            currentTs = TM_GetTimestamp();
             if (((currentTs - ackWaitStartTs) / 1000u) > mFsciRxAckTimeoutMs_c)
             {
                 pCommData->ackWaitOngoing = FALSE;
@@ -1102,14 +1120,14 @@ static void FSCI_SendPacketToSerialManager(uint32_t fsciInterface, uint8_t *pPac
             pCommData->ackWaitOngoing = FALSE;
             break; /* Success */
         }
-#endif
+#endif /* gFsciRxAckTimeoutUseTmr_c */
     }
 
     (void)MEM_BufferFree(pPacket);
 
     (void)OSA_MutexUnlock(pCommData->syncTxRxAckMutexId);
 #else /* gFsciRxAck_c */
-#if gFsciUseBlockingTx_c
+#if defined gFsciUseBlockingTx_c && (gFsciUseBlockingTx_c != 0)
     if (gFsciTxBlocking)
     {
         (void)SerialManager_WriteBlocking((serial_write_handle_t)gFsciSerialWriteHandle[fsciInterface], pPacket,

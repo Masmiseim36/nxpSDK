@@ -14,6 +14,8 @@
 #include <xtensa/xos.h>
 
 #include "xaf-utils-test.h"
+#include "xaf-fio-test.h"
+
 #include "srtm_config_audio.h"
 #if XA_OPUS_ENCODER
 #include "audio/xa-opus-encoder-api.h"
@@ -35,6 +37,9 @@
 #define AUDIO_FRMWK_BUF_SIZE (64 * 1024)
 #define AUDIO_COMP_BUF_SIZE  (256 * 1024)
 
+extern int audio_frmwk_buf_size;
+extern int audio_comp_buf_size;
+
 #define OPUS_ENC_PCM_WIDTH   16
 #define OPUS_ENC_SAMPLE_RATE 16000
 #define OPUS_ENC_NUM_CH      1
@@ -53,7 +58,7 @@
 /*******************************************************************************
  * Commands processing
  ******************************************************************************/
-int srtm_encoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int enc_name)
+int srtm_encoder(dsp_handle_t *dsp, unsigned int *pCmdParams)
 {
     int ret;
     void *p_adev    = NULL;
@@ -72,30 +77,38 @@ int srtm_encoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int enc_n
     xaf_adev_config_t device_config;
     xaf_comp_config_t comp_config;
 
-#if (defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET)
-    dsp->buffer_in.data = (char *)MEMORY_ConvertMemoryMapAddress(pCmdParams[0], kMEMORY_Local2DMA);
-#else
-    dsp->buffer_in.data  = (char *)pCmdParams[0];
-#endif
-    dsp->buffer_in.size = (uint32_t)pCmdParams[1];
+    /* Param 0 Encoder type */
+    /* Param 1 Buffer address with PCM data */
+    /* Param 2 PCM data size */
+    /* Param 3 Buffer address to store encoded data */
+    /* Param 4 Buffer size to store encoded data */
+    /* Param 5 Return parameter, actual read size */
+    /* Param 6 Return parameter, actual write size */
 
 #if (defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET)
-    dsp->buffer_out.data = (char *)MEMORY_ConvertMemoryMapAddress(pCmdParams[2], kMEMORY_Local2DMA);
+    dsp->buffer_in.data = (char *)MEMORY_ConvertMemoryMapAddress(pCmdParams[1], kMEMORY_Local2DMA);
 #else
-    dsp->buffer_out.data = (char *)pCmdParams[2];
+    dsp->buffer_in.data  = (char *)pCmdParams[1];
 #endif
-    dsp->buffer_out.size = (uint32_t)pCmdParams[3];
+    dsp->buffer_in.size = (uint32_t)pCmdParams[2];
+
+#if (defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET)
+    dsp->buffer_out.data = (char *)MEMORY_ConvertMemoryMapAddress(pCmdParams[3], kMEMORY_Local2DMA);
+#else
+    dsp->buffer_out.data = (char *)pCmdParams[3];
+#endif
+    dsp->buffer_out.size = (uint32_t)pCmdParams[4];
 
     dsp->buffer_in.index  = 0;
     dsp->buffer_out.index = 0;
 
-    input_size  = &pCmdParams[4];
-    output_size = &pCmdParams[5];
+    input_size  = &pCmdParams[5];
+    output_size = &pCmdParams[6];
 
-    switch (enc_name)
+    switch (pCmdParams[0])
     {
 #if XA_OPUS_ENCODER
-        case SRTM_Command_OPUS_ENC:
+        case SRTM_Encoder_OPUS:
             param[0]  = XA_OPUS_ENC_CONFIG_PARAM_PCM_WIDTH;
             param[1]  = OPUS_ENC_PCM_WIDTH;
             param[2]  = XA_OPUS_ENC_CONFIG_PARAM_SAMPLE_RATE;
@@ -117,7 +130,7 @@ int srtm_encoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int enc_n
             break;
 #endif
 #if XA_SBC_ENCODER
-        case SRTM_Command_SBC_ENC:
+        case SRTM_Encoder_SBC:
             param[0]  = XA_SBC_ENC_CONFIG_PARAM_SAMP_FREQ;
             param[1]  = SBC_ENC_SAMP_FREQ;
             param[2]  = XA_SBC_ENC_CONFIG_PARAM_BITPOOL;
@@ -135,18 +148,12 @@ int srtm_encoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int enc_n
     }
     xaf_adev_config_default_init(&device_config);
 
-    device_config.pmem_malloc                 = DSP_Malloc;
-    device_config.pmem_free                   = DSP_Free;
-    device_config.audio_component_buffer_size = AUDIO_COMP_BUF_SIZE;
-    device_config.audio_framework_buffer_size = AUDIO_FRMWK_BUF_SIZE;
-
-    ret = xaf_adev_open(&p_adev, &device_config);
-    if (ret != XAF_NO_ERR)
-    {
-        DSP_PRINTF("[DSP Codec] xaf_adev_open failure: %d\r\n", ret);
-        goto error_cleanup;
-    }
-
+    audio_frmwk_buf_size = AUDIO_FRMWK_BUF_SIZE;
+    audio_comp_buf_size = AUDIO_COMP_BUF_SIZE;
+    device_config.audio_component_buffer_size[XAF_MEM_ID_COMP] = AUDIO_COMP_BUF_SIZE;
+    device_config.audio_framework_buffer_size[XAF_MEM_ID_DEV] = AUDIO_FRMWK_BUF_SIZE;
+    device_config.core = XF_CORE_ID;
+    TST_CHK_API_ADEV_OPEN(p_adev, device_config, "[DSP Codec] Audio Device Open\r\n");
     DSP_PRINTF("[DSP Codec] Audio Device Ready\r\n");
 
     /* Create encoder component
@@ -275,12 +282,7 @@ int srtm_encoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int enc_n
     }
     p_encoder = NULL;
 
-    ret = xaf_adev_close(p_adev, XAF_ADEV_NORMAL_CLOSE);
-    if (ret != XAF_NO_ERR)
-    {
-        DSP_PRINTF("[DSP Codec] xaf_adev_close failure: %d\r\n", ret);
-        goto error_cleanup;
-    }
+    TST_CHK_API_ADEV_CLOSE(p_adev, XAF_ADEV_NORMAL_CLOSE, device_config, "xaf_adev_close");
     p_adev = NULL;
 
     DSP_PRINTF("[DSP Codec] Audio device closed\r\n\r\n");
@@ -294,15 +296,7 @@ int srtm_encoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int enc_n
 error_cleanup:
     if (p_adev != NULL)
     {
-        ret = xaf_adev_close(p_adev, XAF_ADEV_FORCE_CLOSE);
-        if (ret != XAF_NO_ERR)
-        {
-            DSP_PRINTF("[DSP Codec] xaf_adev_close failure: %d\r\n", ret);
-        }
-        else
-        {
-            DSP_PRINTF("[DSP Codec] Audio device closed\r\n\r\n");
-        }
+        TST_CHK_API_ADEV_CLOSE(p_adev, XAF_ADEV_FORCE_CLOSE, device_config, "xaf_adev_close");
     }
 
     /* Report the size of the input and encoded output buffer */

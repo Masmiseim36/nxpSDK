@@ -66,7 +66,7 @@ static void LinkStatusChangeCallback(bool linkState)
     }
 }
 
-int initNetwork()
+int initNetwork(void)
 {
     int result;
 

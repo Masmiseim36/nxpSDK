@@ -12,7 +12,7 @@
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2021 NXP
+**     Copyright 2016-2021,2023 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -22,21 +22,6 @@
 **
 ** ###################################################################
 */
-/* NVM */
-/* By default, the NVM is not used. */
-if (!isdefinedsymbol(gUseNVMLink_d)) {
-    define symbol gUseNVMLink_d = 0;
-}
-
-if (!isdefinedsymbol(gEraseNVMLink_d)) {
-    define symbol gEraseNVMLink_d = 0;
-}
-
-if (!isdefinedsymbol(gNVMSectorCountLink_d)) {
-    define symbol gNVMSectorCountLink_d = 4;
-}
-/* NVM */
-/* flash layout */
 
 /* USB BDT size */
 define symbol usb_bdt_size             = 0x0;
@@ -56,6 +41,9 @@ if (isdefinedsymbol(__heap_size__)) {
 /* The SRAM region [0x10000-0x1BFFF] is reserved for ROM code. */
 /* The SRAM region [0x0-0xFFFF], [0x1C000-0x1FFFF] are reserved for app-specific use cases. */
 /* The SRAM region [0x20000-0x7FFFF] is reserved for Non-cached shared memory between M33 and DSP. */
+/* The SRAM region [0x80000-0x27FFFF] is reserved for DSP code and data. */
+
+define symbol LITTLEFS_REGION_SIZE             = 0x00800000;
 
 define symbol __ram_vector_table_size__        =  isdefinedsymbol(__ram_vector_table__) ? 0x00000180 : 0;
 define symbol __ram_vector_table_offset__      =  isdefinedsymbol(__ram_vector_table__) ? 0x0000017F : 0;
@@ -64,10 +52,7 @@ define symbol m_interrupts_start               = 0x08001000;
 define symbol m_interrupts_end                 = 0x0800117F;
 
 define symbol m_text_start                     = 0x08001180;
-define symbol _ROM_END_                        = 0x0B7FFFFF;
-/* NOTE: Flash in range 0x0B800000 - 0x0BFFFFFF is reserved for litteFS data */
-
-/*define symbol m_text_end                       = 0x081FFFFF;*/
+define symbol m_text_end                       = 0x0BFFFFFF - LITTLEFS_REGION_SIZE;
 
 define symbol m_interrupts_ram_start           = 0x20080000;
 define symbol m_interrupts_ram_end             = 0x20080000 + __ram_vector_table_offset__;
@@ -83,33 +68,13 @@ define symbol m_boot_flash_conf_start          = 0x08000400;
 define exported symbol __VECTOR_TABLE          = m_interrupts_start;
 define exported symbol __VECTOR_RAM            = isdefinedsymbol(__ram_vector_table__) ? m_interrupts_ram_start : m_interrupts_start;
 define exported symbol __RAM_VECTOR_TABLE_SIZE = __ram_vector_table_size__;
-define symbol STORAGE_AREA_LENGTH  = 0x10000;
 
-define symbol STORAGE_AREA_SIZE  = STORAGE_AREA_LENGTH;
-define symbol STORAGE_AREA_START = _ROM_END_ - STORAGE_AREA_SIZE + 1;
-define symbol m_text_end         = STORAGE_AREA_START -1;
-/*** NVM Configuration Start ***/
-if (isdefinedsymbol(gUseNVMLink_d))
-{
-  define exported symbol NVM_AREA_START = STORAGE_AREA_START;
-  
-  define exported symbol NV_STORAGE_SECTOR_SIZE = 0x1000;  /* 4k flash sector size */
-  define exported symbol NV_STORAGE_MAX_SECTORS = gNVMSectorCountLink_d;
-  define exported symbol NVM_AREA_SIZE = NV_STORAGE_SECTOR_SIZE * NV_STORAGE_MAX_SECTORS;
-  if (NVM_AREA_SIZE > STORAGE_AREA_SIZE)
-  {
-    error "Required NVM storage area is biger than STORAGE_AREA_SIZE";
-  }
-  define exported symbol NV_STORAGE_END_ADDRESS = NVM_AREA_START + NVM_AREA_SIZE - 1;
-  define exported symbol NV_STORAGE_START_ADDRESS = NVM_AREA_START;
-}
-/*** NVM Configuration End ***/
+/* NOTE: The last LITTLEFS_REGION_SIZE Flash( in range (m_text_end + 1) ~ (m_text_end + LITTLEFS_REGION_SIZE)) is reserved for litteFS data */
 
 /*** littleFS configuration Start ***/
-define exported symbol EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS = _ROM_END_ + 1;
-define exported symbol EDGEFAST_BT_LITTLEFS_STORAGE_END_ADDRESS =  (0x0BFFFFFF);
-define exported symbol EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE = 0x1000;  /* 4k flash sector size */
-define exported symbol EDGEFAST_BT_LITTLEFS_STORAGE_MAX_SECTORS = (EDGEFAST_BT_LITTLEFS_STORAGE_END_ADDRESS + 1 - EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS) / EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE;
+define exported symbol EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS = m_text_end + 1;
+define exported symbol EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE   = 0x1000;  /* 4k flash sector size */
+define exported symbol EDGEFAST_BT_LITTLEFS_STORAGE_MAX_SECTORS   = LITTLEFS_REGION_SIZE / EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE;
 /*** littleFS configuration End ***/
 
 define memory mem with size = 4G;
@@ -119,7 +84,6 @@ define region TEXT_region             = mem:[from m_interrupts_start to m_interr
 define region m_interrupts_ram_region = mem:[from m_interrupts_ram_start to m_interrupts_ram_end];
 define region DATA_region             = mem:[from m_data_start to m_data_end - __size_cstack__];
 define region CSTACK_region           = mem:[from m_data_end-__size_cstack__ + 1 to m_data_end];
-
 
 define block CSTACK    with alignment = 8, size = __size_cstack__   { };
 define block HEAP      with alignment = 8, size = __size_heap__     { };
@@ -134,14 +98,13 @@ define region USB_SRAM_region = mem:[from m_usb_sram_start + usb_bdt_size to m_u
 initialize by copy { readwrite, section .textrw, section CodeQuickAccess, section DataQuickAccess,
   /* Place in RAM flash and performance dependent functions */
   object fsl_adapter_flexspi_nor_flash.o,
-  object NV_Flash.o,
   object mflash_drv.o,
   object  fsl_cache.o,
   object fsl_flexspi.o,};
 
 do not initialize  { section .noinit, section m_usb_bdt, section m_usb_global  };
 
-keep{section .flash_conf, section NVM_ADAPTER_TABLE };
+keep{section .flash_conf };
 place at address mem: m_boot_flash_conf_start    { readonly section .flash_conf };
 place at address mem: m_interrupts_start    { readonly section .intvec };
 define block ._bt_gatt_service_static with fixed order { readonly section ._bt_gatt_service_static*};

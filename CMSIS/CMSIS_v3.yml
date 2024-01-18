@@ -2153,8 +2153,13 @@ set.CMSIS_DSP_Lib:
       scr:
         - scr.CMSIS
       cmsis_pack:
+        external_pack: true
         vendor: ARM
-        supported: false
+        pack_root:
+          pack_type: SWP
+          pack_name: CMSIS_DSP
+          pack_version: 1.0.0
+          pack_url: http://www.keil.com/pack/
       kex_package:
         kex_web_ui:
           ui_category: CMSIS DSP Lib
@@ -2175,7 +2180,7 @@ scr.CMSIS:
     Description: Vendor-independent hardware abstraction layer for microcontrollers
           that are based on Arm Cortex processors, distributed by ARM. cores
     Location: CMSIS/
-    Origin: NXP (Apache License 2.0)  
+    Origin: ARM (Apache-2.0) - https://github.com/ARM-software/CMSIS_5/releases/tag/5.8.0
 
 license.CMSIS:
   section-type: license

@@ -8,7 +8,7 @@
 
 #include "includes.h"
 
-#include "common.h"
+#include "utils/common.h"
 #include "crypto/aes_wrap.h"
 #include "crypto/sha384.h"
 #include "crypto/random.h"

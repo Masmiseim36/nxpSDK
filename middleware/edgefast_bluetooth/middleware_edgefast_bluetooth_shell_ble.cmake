@@ -3,7 +3,7 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-if(CONFIG_USE_middleware_edgefast_bluetooth_pal AND CONFIG_USE_component_common_task AND ((CONFIG_USE_middleware_edgefast_bluetooth_ble_ethermind_cm7f AND (CONFIG_CORE STREQUAL cm7f)) OR (CONFIG_USE_middleware_edgefast_bluetooth_ble_ethermind_cm4f AND (CONFIG_CORE STREQUAL cm4f))))
+if(CONFIG_USE_middleware_edgefast_bluetooth_pal AND CONFIG_USE_component_common_task AND ((CONFIG_USE_middleware_edgefast_bluetooth_ble_ethermind_cm7f AND (CONFIG_CORE STREQUAL cm7f)) OR (CONFIG_USE_middleware_edgefast_bluetooth_ble_ethermind_cm4f AND (CONFIG_CORE STREQUAL cm4f)) OR (CONFIG_USE_middleware_edgefast_bluetooth_ble_ethermind_cm33 AND (CONFIG_CORE STREQUAL cm33) AND (CONFIG_DSP STREQUAL DSP))))
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/source/shell/shell_bt.c

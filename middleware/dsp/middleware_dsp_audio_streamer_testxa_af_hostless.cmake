@@ -17,13 +17,14 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/audio_framework/testxa_af_hostless/test/plugins/cadence/vorbis_dec/xa-vorbis-decoder.c
   ${CMAKE_CURRENT_LIST_DIR}/audio_framework/testxa_af_hostless/test/plugins/nxp/capturer/xa-capturer-dmic.c
   ${CMAKE_CURRENT_LIST_DIR}/audio_framework/testxa_af_hostless/test/plugins/nxp/capturer/xa-capturer-i2s.c
-  ${CMAKE_CURRENT_LIST_DIR}/audio_framework/testxa_af_hostless/test/plugins/nxp/client_proxy/client_proxy.c
   ${CMAKE_CURRENT_LIST_DIR}/audio_framework/testxa_af_hostless/test/plugins/nxp/vit_pre_proc/vit_pre_proc.c
   ${CMAKE_CURRENT_LIST_DIR}/audio_framework/testxa_af_hostless/test/plugins/nxp/voice_seeker/voice_seeker.c
   ${CMAKE_CURRENT_LIST_DIR}/audio_framework/testxa_af_hostless/test/plugins/nxp/pcm_stereo/xa-pcm-stereo.c
   ${CMAKE_CURRENT_LIST_DIR}/audio_framework/testxa_af_hostless/test/plugins/nxp/sbc_dec/xa-sbc-decoder.c
   ${CMAKE_CURRENT_LIST_DIR}/audio_framework/testxa_af_hostless/test/plugins/nxp/sbc_enc/xa-sbc-encoder.c
   ${CMAKE_CURRENT_LIST_DIR}/audio_framework/testxa_af_hostless/test/plugins/nxp/renderer/xa-renderer.c
+  ${CMAKE_CURRENT_LIST_DIR}/audio_framework/testxa_af_hostless/test/src/xaf-fio-test.c
+  ${CMAKE_CURRENT_LIST_DIR}/audio_framework/testxa_af_hostless/test/src/xaf-mem-test.c
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC

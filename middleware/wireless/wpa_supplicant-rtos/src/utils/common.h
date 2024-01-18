@@ -9,7 +9,9 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+#ifndef CONFIG_ZEPHYR
 #include "fsl_debug_console.h"
+#endif
 
 #if defined(__linux__) || defined(__GLIBC__)
 #include <endian.h>
@@ -120,7 +122,7 @@ typedef int64_t s64;
 typedef int32_t s32;
 typedef int16_t s16;
 typedef int8_t s8;
-#define WPA_TYPES_DEFINED
+//#define WPA_TYPES_DEFINED
 #endif /* !WPA_TYPES_DEFINED */
 
 #include "os.h"
@@ -130,9 +132,11 @@ typedef int8_t s8;
  */
 #if defined(__GNUC__)
 #pragma GCC diagnostic ignored "-Wformat"
+#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
+#pragma GCC diagnostic ignored "-Wunused-variable"
 #elif defined(__ICCARM__)
 #pragma diag_suppress = Pa039,Pe188,Pa082,pe186,Pa050,Pe815,Pe550,Pe177
-#pragma diag_warning = Pe111,Pa182,Pe177,Pe167,Pe513,Pe815,Pe852,Pe1153
+//#pragma diag_warning = Pe111,Pa182,Pe167,Pe513,Pe815,Pe852,Pe1153
 #elif defined(__CC_ARM) || defined(__ARMCC_VERSION)
 #pragma diag_suppress 265
 #endif
@@ -547,7 +551,10 @@ void int_array_concat(int **res, const int *a);
 void int_array_sort_unique(int *a);
 void int_array_add_unique(int **res, int a);
 
-// char *inet_ntoa(struct in_addr in);
+#ifdef CONFIG_ZEPHYR
+#include <zephyr/net/net_ip.h>
+char *inet_ntoa(struct in_addr in);
+#endif
 
 void str_clear_free(char *str);
 void bin_clear_free(void *bin, size_t len);

@@ -5,6 +5,7 @@
 
 /*
  * Copyright (c) 2017 Simon Goldschmidt <goldsimon@gmx.de>
+ * Copyright 2023 NXP
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -32,12 +33,15 @@
  * This file is part of the lwIP TCP/IP stack.
  *
  * Author: Simon Goldschmidt <goldsimon@gmx.de>
- *
  */
 #ifndef LWIP_HDR_PROT_DHCP6_H
 #define LWIP_HDR_PROT_DHCP6_H
 
 #include "lwip/opt.h"
+
+#if LWIP_IPV6_DHCP6_STATEFUL
+#include "lwip/ip6.h"
+#endif
 
 #ifdef __cplusplus
 extern "C" {
@@ -66,12 +70,93 @@ PACK_STRUCT_END
 #  include "arch/epstruct.h"
 #endif
 
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/bpstruct.h"
+#endif
+PACK_STRUCT_BEGIN
+/** minimum set of fields of any DHCPv6 message */
+struct dhcp6_option_header
+{
+  PACK_STRUCT_FIELD(u16_t option_code);
+  PACK_STRUCT_FIELD(u16_t option_len);
+  /* options follow */
+} PACK_STRUCT_STRUCT;
+PACK_STRUCT_END
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/epstruct.h"
+#endif
+
+#if LWIP_IPV6_DHCP6_STATEFUL
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/bpstruct.h"
+#endif
+PACK_STRUCT_BEGIN
+struct dhcp6_option_ia_address
+{
+    PACK_STRUCT_FLD_S(ip6_addr_p_t address);
+    PACK_STRUCT_FIELD(u32_t preferred);
+    PACK_STRUCT_FIELD(u32_t valid);
+} PACK_STRUCT_STRUCT;
+PACK_STRUCT_END
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/epstruct.h"
+#endif
+#endif  /* LWIP_IPV6_DHCP6_STATEFUL */
+
+#if LWIP_IPV6_DHCP6_PD
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/bpstruct.h"
+#endif
+PACK_STRUCT_BEGIN
+/** minimum set of fields of any DHCPv6 message */
+struct dhcp6_option_ia_pd
+{
+  PACK_STRUCT_FIELD(u32_t preferred);
+  PACK_STRUCT_FIELD(u32_t valid);
+  PACK_STRUCT_FLD_8(u8_t prefix_length);
+  PACK_STRUCT_FLD_S(ip6_addr_p_t prefix);
+  /* options follows */
+} PACK_STRUCT_STRUCT;
+PACK_STRUCT_END
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/epstruct.h"
+#endif
+#endif /* LWIP_IPV6_DHCP6_PD */
+
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/bpstruct.h"
+#endif
+PACK_STRUCT_BEGIN
+/** minimum set of fields of any DHCPv6 message */
+struct dhcp6_option_ia /*TODO*/
+{
+  PACK_STRUCT_FIELD(u32_t ia_id);
+  PACK_STRUCT_FIELD(u32_t t1);
+  PACK_STRUCT_FIELD(u32_t t2);
+  /* options follow */
+} PACK_STRUCT_STRUCT;
+PACK_STRUCT_END
+#ifdef PACK_STRUCT_USE_INCLUDES
+#  include "arch/epstruct.h"
+#endif
+
 
 /* DHCP6 client states */
 typedef enum {
-  DHCP6_STATE_OFF               = 0,
-  DHCP6_STATE_STATELESS_IDLE    = 1,
-  DHCP6_STATE_REQUESTING_CONFIG = 2
+  DHCP6_STATE_OFF = 0,
+  DHCP6_STATE_IDLE,
+
+  DHCP6_STATE_STATELESS=64,
+  DHCP6_STATE_SL_REQUESTING_CONFIG,
+
+  DHCP6_STATE_STATEFULL=128,
+  DHCP6_STATE_SF_INIT_DELAY,
+  DHCP6_STATE_SF_SOLICITING,
+  DHCP6_STATE_SF_REQUESTING,
+  DHCP6_STATE_SF_BOUND,
+  DHCP6_STATE_SF_RENEWING,
+  DHCP6_STATE_SF_REBINDING,
+  DHCP6_STATE_SF_RELEASING
 } dhcp6_state_enum_t;
 
 /* DHCPv6 message types */
@@ -128,8 +213,36 @@ typedef enum {
 /* More options see https://www.iana.org/assignments/dhcpv6-parameters/dhcpv6-parameters.xhtml */
 #define DHCP6_OPTION_DNS_SERVERS    23 /* RFC 3646 */
 #define DHCP6_OPTION_DOMAIN_LIST    24 /* RFC 3646 */
+#define DHCP6_OPTION_IA_PD          25 /*	RFC3633 RFC8415 */
+#define DHCP6_OPTION_IAPREFIX       26 /*	RFC3633 RFC8415 */
 #define DHCP6_OPTION_SNTP_SERVERS   31 /* RFC 4075 */
 
+
+/* DHCP default parametters */
+#define DHCP6_PAR_SOL_MAX_DELAY     1 /*[s] Max delay of first Solicit */
+#define DHCP6_PAR_SOL_TIMEOUT       1 /*[s] Initial Solicit timeout */
+#define DHCP6_PAR_SOL_MAX_RT      120 /*[s] Max Solicit timeout value */
+#define DHCP6_PAR_REQ_TIMEOUT       1 /*[s] Initial Request timeout */
+#define DHCP6_PAR_REQ_MAX_RT       30 /*[s] Max Request timeout value */
+#define DHCP6_PAR_REQ_MAX_RC       10 /*    Max Request retry attempts */
+#define DHCP6_PAR_CNF_MAX_DELAY     1 /*[s] Max delay of first Confirm */
+#define DHCP6_PAR_CNF_TIMEOUT       1 /*[s] Initial Confirm timeout */
+#define DHCP6_PAR_CNF_MAX_RT        4 /*[s] Max Confirm timeout */
+#define DHCP6_PAR_CNF_MAX_RD       10 /*[s] Max Confirm duration */
+#define DHCP6_PAR_REN_TIMEOUT      10 /*[s] Initial Renew timeout */
+#define DHCP6_PAR_REN_MAX_RT      600 /*[s] Max Renew timeout value */
+#define DHCP6_PAR_REB_TIMEOUT      10 /*[s] Initial Rebind timeout */
+#define DHCP6_PAR_REB_MAX_RT      600 /*[s] Max Rebind timeout value */
+#define DHCP6_PAR_INF_MAX_DELAY     1 /*[s] Max delay of first Information-request */
+#define DHCP6_PAR_INF_TIMEOUT       1 /*[s] Initial Information-request timeout */
+#define DHCP6_PAR_INF_MAX_RT      120 /*[s] Max Information-request timeout value */
+#define DHCP6_PAR_REL_TIMEOUT       1 /*[s] Initial Release timeout */
+#define DHCP6_PAR_REL_MAX_RC        5 /*    MAX Release attempts */
+#define DHCP6_PAR_DEC_TIMEOUT       1 /*[s] Initial Decline timeout */
+#define DHCP6_PAR_DEC_MAX_RC        5 /*    Max Decline attempts */
+#define DHCP6_PAR_REC_TIMEOUT       2 /*[s] Initial Reconfigure timeout */
+#define DHCP6_PAR_REC_MAX_RC        8 /*    Max Reconfigure attempts */
+#define DHCP6_PAR_HOP_COUNT_LIMIT  32 /*    Max hop count in a Relay-forward message */
 
 #ifdef __cplusplus
 }

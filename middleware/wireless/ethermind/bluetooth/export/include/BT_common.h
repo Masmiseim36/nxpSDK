@@ -486,6 +486,48 @@
         BT_assert(0 == ret);                                             \
     }
 
+#ifdef BT_CLEAN_SHUTDOWN
+/*
+ *  Macro to De-Initialize Mutex.
+ *  To be used in void function as it returns no error.
+ */
+#define BT_MUTEX_DEINIT_VOID(mutex, MODULE)                                 \
+    {                                                                       \
+        INT32 ret;                                                          \
+        ret = BT_thread_mutex_deinit(&(mutex));                             \
+        {                                                                   \
+            COMMON_ERR(                                                     \
+            BT_MODULE_ID_##MODULE,                                          \
+            "FAILED to De-Initialize Mutex in " #MODULE ".\n");             \
+        }                                                                   \
+        BT_assert(0 == ret);                                                \
+    }
+
+/*
+ *  Macro to De-Initialize Mutex.
+ *  It returns an error if mutex de-initialization fails.
+ */
+#define BT_MUTEX_DEINIT(mutex, MODULE)                                      \
+    {                                                                       \
+        INT32 ret;                                                          \
+        ret = BT_thread_mutex_deinit(&(mutex));                             \
+        {                                                                   \
+            COMMON_ERR(                                                     \
+            BT_MODULE_ID_##MODULE,                                          \
+            "FAILED to De-Initialize Mutex in " #MODULE ".\n");             \
+        }                                                                   \
+        BT_assert(0 == ret);                                                \
+    }
+
+#else /* BT_CLEAN_SHUTDOWN */
+/*
+ *  Macro to De-Initialize Mutex.
+ */
+#define BT_MUTEX_DEINIT_VOID(mutex, MODULE)
+#define BT_MUTEX_DEINIT(mutex, MODULE)
+
+#endif /* BT_CLEAN_SHUTDOWN */
+
 /*
  *  Macro to Initialize Conditional Variable.
  *  To be used in void function as it returns no error.
@@ -519,6 +561,49 @@
         }                                                                \
         BT_assert(0 == ret);                                             \
     }
+
+#ifdef BT_CLEAN_SHUTDOWN
+/*
+ *  Macro to De-Initialize Conditional Variable.
+ *  To be used in void function as it returns no error.
+ */
+#define BT_COND_DEINIT_VOID(cond, MODULE)                                       \
+    {                                                                           \
+        INT32 ret;                                                              \
+        ret = BT_thread_cond_deinit(&(cond));                                   \
+        {                                                                       \
+            COMMON_ERR(                                                         \
+            BT_MODULE_ID_##MODULE,                                              \
+            "FAILED to De-Initialize Conitional Variable in " #MODULE ".\n");   \
+        }                                                                       \
+        BT_assert(0 == ret);                                                    \
+    }
+
+/*
+ *  Macro to De-Initialize Conditional Variable.
+ *  It returns an error if conditional variable initialization fails.
+ */
+#define BT_COND_DEINIT(cond, MODULE)                                            \
+    {                                                                           \
+        INT32 ret;                                                              \
+        ret = BT_thread_cond_deinit(&(cond));                                   \
+        {                                                                       \
+            COMMON_ERR(                                                         \
+            BT_MODULE_ID_##MODULE,                                              \
+            "FAILED to De-Initialize Conitional Variable in " #MODULE ".\n");   \
+        }                                                                       \
+        BT_assert(0 == ret);                                                    \
+    }
+
+#else /* BT_CLEAN_SHUTDOWN */
+/*
+ *  Macro to De-Initialize Conditional Variable.
+ *  To be used in void function as it returns no error.
+ */
+#define BT_COND_DEINIT_VOID(cond, MODULE)
+#define BT_COND_DEINIT(cond, MODULE)
+
+#endif /* BT_CLEAN_SHUTDOWN */
 
 /*
  *  Locks the Module Specific Mutex which prevents any global variable being
@@ -589,59 +674,6 @@
         }                                                                \
         BT_assert(0 == ret);                                             \
     }
-
-#define BT_MUTEX_DEINIT(mutex, MODULE)                                   \
-    {                                                                    \
-        INT32 ret;                                                       \
-        ret = BT_thread_mutex_deinit(&(mutex));                          \
-        if (0 > ret)                                                     \
-        {                                                                \
-            COMMON_ERR(\
-                BT_MODULE_ID_##MODULE, \
-            "FAILED to De-Initialize Mutex in " #MODULE ".\n");          \
-        }                                                                \
-        BT_assert(0 == ret);                                             \
-    }
-
-#define BT_MUTEX_DEINIT_VOID(mutex, MODULE)                              \
-    {                                                                    \
-        INT32 ret;                                                       \
-        ret = BT_thread_mutex_deinit(&(mutex));                          \
-        if (0 > ret)                                                     \
-        {                                                                \
-            COMMON_ERR(\
-                BT_MODULE_ID_##MODULE, \
-            "FAILED to De-Initialize Mutex in " #MODULE ".\n");          \
-        }                                                                \
-        BT_assert(0 == ret);                                             \
-    }
-
-#define BT_COND_DEINIT(mutex, MODULE)                                    \
-    {                                                                    \
-        INT32 ret;                                                       \
-        ret = BT_thread_cond_deinit(&(mutex));                           \
-        if (0 > ret)                                                     \
-        {                                                                \
-            COMMON_ERR(\
-                BT_MODULE_ID_##MODULE, \
-            "FAILED to De-Initialize CondV in " #MODULE ".\n");          \
-        }                                                                \
-        BT_assert(0 == ret);                                             \
-    }
-
-#define BT_COND_DEINIT_VOID(mutex, MODULE)                               \
-    {                                                                    \
-        INT32 ret;                                                       \
-        ret = BT_thread_cond_deinit(&(mutex));                           \
-        if (0 > ret)                                                     \
-        {                                                                \
-            COMMON_ERR(\
-                BT_MODULE_ID_##MODULE, \
-            "FAILED to De-Initialize CondV in " #MODULE ".\n");          \
-        }                                                                \
-        BT_assert(0 == ret);                                             \
-    }
-
 #else  /* BT_DISABLE_MUTEX */
 
 /* Macro to define a Mutex Variable */
@@ -669,6 +701,18 @@
 #define BT_MUTEX_INIT(mutex, MODULE)
 
 /*
+ *  Macro to De-Initialize Mutex.
+ *  To be used in void function as it returns no error.
+ */
+#define BT_MUTEX_DEINIT_VOID(mutex, MODULE)
+
+/*
+ *  Macro to De-Initialize Mutex.
+ *  It returns an error if mutex de-initialization fails.
+ */
+#define BT_MUTEX_DEINIT(mutex, MODULE
+
+/*
  *  Macro to Initialize Conditional Variable.
  *  To be used in void function as it returns no error.
  */
@@ -679,6 +723,18 @@
  *  It returns an error if conditional variable initialization fails.
  */
 #define BT_COND_INIT(cond, MODULE)
+
+/*
+ *  Macro to De-Initialize Conditional Variable.
+ *  To be used in void function as it returns no error.
+ */
+#define BT_COND_DEINIT_VOID(cond, MODULE)
+
+/*
+ *  Macro to De-Initialize Conditional Variable.
+ *  It returns an error if conditional variable initialization fails.
+ */
+#define BT_COND_DEINIT(cond, MODULE)
 
 /*
  *  Locks the Module Specific Mutex which prevents any global variable being
@@ -890,8 +946,8 @@
 #define BT_MODULE_BIT_MASK_MAP_PL             0x00200000U
 #define BT_MODULE_BIT_MASK_HFP_PL             0x00400000U
 #define BT_MODULE_BIT_MASK_GEN_PL             0x00800000U
-#define BT_MODULE_BIT_MASK_HPS_PL             0x01000000U
-#define BT_MODULE_BIT_MASK_HTTPS_PL           0x02000000U
+#define BT_MODULE_BIT_MASK_ANALYZER           0x01000000U
+
 /* Module ID */
 #define BT_MODULE_ID_STORAGE                  (BT_MODULE_PAGE_3 | BT_MODULE_BIT_MASK_STORAGE)
 #define BT_MODULE_ID_STATUS                   (BT_MODULE_PAGE_3 | BT_MODULE_BIT_MASK_STATUS)
@@ -917,16 +973,26 @@
 #define BT_MODULE_ID_MAP_PL                   (BT_MODULE_PAGE_3 | BT_MODULE_BIT_MASK_MAP_PL)
 #define BT_MODULE_ID_HFP_PL                   (BT_MODULE_PAGE_3 | BT_MODULE_BIT_MASK_HFP_PL)
 #define BT_MODULE_ID_GEN_PL                   (BT_MODULE_PAGE_3 | BT_MODULE_BIT_MASK_GEN_PL)
+#define BT_MODULE_ID_ANALYZER                 (BT_MODULE_PAGE_3 | BT_MODULE_BIT_MASK_ANALYZER)
 
+/** Global module state values */
 #define BT_MODULE_STATE_INVALID               0x00U
 #define BT_MODULE_STATE_INITIALIZED           0x01U
 
+#ifndef BT_CLEAN_SHUTDOWN
+#define BT_MODULE_STATE_SHUTDOWN              0x02
+#else /* BT_CLEAN_SHUTDOWN */
+#define BT_MODULE_STATE_SHUTDOWN              BT_MODULE_STATE_INVALID
+#endif /* BT_CLEAN_SHUTDOWN */
+
+/** Define/Declare global module state */
 #define BT_DEFINE_MODULE_STATE(module_name) UINT8 g_bt_##module_name = BT_MODULE_STATE_INVALID;
 #define BT_DECLARE_MODULE_STATE(module_name) extern UINT8 g_bt_##module_name;
 
-/* Set init or deinit */
+/** Define/Declare global module state */
 #define BT_SET_MODULE_STATE(module_name, s) g_bt_##module_name = BT_MODULE_STATE_##s;
 #define IF_BT_MODULE_STATE(module_name, s) if(g_bt_##module_name == BT_MODULE_STATE_##s)
+#define IFN_BT_MODULE_STATE(module_name, s) if(g_bt_##module_name != BT_MODULE_STATE_##s)
 
 /* -------------------------------------------- Structures/Data Types */
 
@@ -1002,6 +1068,7 @@ typedef struct _BT_ERROR_MSG
     UINT16  length;
 
 } BT_ERROR_MSG;
+
 #endif /* BT_SUPPORT_ERR_IND_CALLBACK */
 /** \} */
 

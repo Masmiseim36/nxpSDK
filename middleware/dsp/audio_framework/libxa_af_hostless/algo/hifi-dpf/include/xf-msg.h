@@ -228,7 +228,7 @@ static inline xf_message_t * xf_msg_queue_head(xf_msg_queue_t *queue)
 /* ...check if message belongs to a pool */
 static inline int xf_msg_from_pool(xf_msg_pool_t *pool, xf_message_t *m)
 {
-    return (UWORD32)((__xf_message_t*)m - pool->p) < pool->n;   
+    return (UWORD32)((__xf_message_t*)m - pool->p) < pool->n;
 }
 
 /*******************************************************************************
@@ -248,7 +248,7 @@ extern void xf_msg_cancel(xf_message_t *m);
 extern void xf_msg_complete(xf_message_t *m);
 
 /* ...allocate message pool on specific core */
-extern int  xf_msg_pool_init(xf_msg_pool_t *pool, UWORD32 n, UWORD32 core, UWORD32 shared);
+extern int  xf_msg_pool_init(xf_msg_pool_t *pool, UWORD32 n, UWORD32 core, UWORD32 shared, UWORD32 mem_pool_type);
 
 /* ...allocate message from a pool (no concurrent access from other cores) */
 extern xf_message_t * xf_msg_pool_get(xf_msg_pool_t *pool);
@@ -257,7 +257,7 @@ extern xf_message_t * xf_msg_pool_get(xf_msg_pool_t *pool);
 extern void xf_msg_pool_put(xf_msg_pool_t *pool, xf_message_t *m);
 
 /* ...destroy message pool */
-extern void xf_msg_pool_destroy(xf_msg_pool_t *pool, UWORD32 core, UWORD32 shared);
+extern void xf_msg_pool_destroy(xf_msg_pool_t *pool, UWORD32 core, UWORD32 shared, UWORD32 mem_pool_type);
 
 /* ...indicate whether pool of free messages is empty */
 extern int  xf_message_pool_empty(void);

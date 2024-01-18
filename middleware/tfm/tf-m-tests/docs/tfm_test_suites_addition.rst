@@ -224,11 +224,9 @@ registered if the macro is defined.
 
 .. code-block:: cmake
 
-    if (TEST_FRAMEWORK_S)
-        # ...
-        if (TEST_S_<TEST_NAME>)
-            add_library(tfm_test_suite_<test_name>_s STATIC EXCLUDE_FROM_ALL)
-        endif()
+    # ...
+    if (TEST_S_<TEST_NAME>)
+        add_library(tfm_test_suite_<test_name>_s STATIC EXCLUDE_FROM_ALL)
     endif()
 
 ************************************

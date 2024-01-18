@@ -26,7 +26,7 @@ target_link_libraries(tfm_test_framework_common
         tfm_log_interface
 )
 
-if(TEST_FRAMEWORK_S OR TEST_FRAMEWORK_NS)
+if(TFM_S_REG_TEST OR TFM_NS_REG_TEST)
     add_subdirectory(secure_fw)
 endif()
 

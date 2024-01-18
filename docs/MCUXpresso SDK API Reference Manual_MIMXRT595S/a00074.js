@@ -1,32 +1,32 @@
 var a00074 =
 [
-    [ "wm8904_fll_config_t", "a00074.html#a00483", [
-      [ "source", "a00074.html#a8f428fb7c12a19ade6f5e1256eb2d3ab", null ],
-      [ "refClock_HZ", "a00074.html#ad5031f45aa290813407c23fde9362395", null ],
-      [ "outputClock_HZ", "a00074.html#ab58ab790fa57e24806ef762dc9cbbbae", null ]
+    [ "_wm8904_fll_config", "a00074.html#a00474", [
+      [ "source", "a00074.html#acd1893af138f8930e299dd0165f7365f", null ],
+      [ "refClock_HZ", "a00074.html#af56788ee19ffa213d446cfdd2112cc88", null ],
+      [ "outputClock_HZ", "a00074.html#a9ac3339d53ed40e1b38289b38da0ad5b", null ]
     ] ],
-    [ "wm8904_audio_format_t", "a00074.html#a00481", [
-      [ "fsRatio", "a00074.html#ae347b1f33c3ffb4ada81e4f92f411078", null ],
-      [ "sampleRate", "a00074.html#a70e2ebf219579d09e01e1be2260eef85", null ],
-      [ "bitWidth", "a00074.html#a796424731fc3253256f504201023c0c8", null ]
+    [ "_wm8904_audio_format", "a00074.html#a00472", [
+      [ "fsRatio", "a00074.html#acf5584e50a37985a4c67eaa1e60c4529", null ],
+      [ "sampleRate", "a00074.html#a34b5336619af2af0bd1ec193a783e10f", null ],
+      [ "bitWidth", "a00074.html#aac71348f709ef4c68a77246b6b64aded", null ]
     ] ],
-    [ "wm8904_config_t", "a00074.html#a00482", [
-      [ "master", "a00074.html#a1aabe6eeed1fdd3e9f52237c546c84b0", null ],
-      [ "sysClkSource", "a00074.html#a425f10e0fb06972de639c70355365993", null ],
-      [ "fll", "a00074.html#a4a1ff0eefd3d6487397e623427c911e0", null ],
-      [ "protocol", "a00074.html#ab6a4b4e11e265b297c46097d48a356a6", null ],
-      [ "format", "a00074.html#a2d2ffaa9970fecbcc786b1135897fbc2", null ],
-      [ "mclk_HZ", "a00074.html#a3284cfd6fa81bc7610562aa68adbf3e0", null ],
-      [ "recordSource", "a00074.html#a5f922ef2784e6fb094a93a6df148c09b", null ],
-      [ "recordChannelLeft", "a00074.html#a78355f35f695846c7ea432ae8032fe38", null ],
-      [ "recordChannelRight", "a00074.html#aabbc01920e4a355547b87a74d5cdd8d6", null ],
-      [ "playSource", "a00074.html#a19d6bdccef4eac2e3761d91f15f05464", null ],
-      [ "slaveAddress", "a00074.html#a8b64f19353f3640c5a7a405ee5e12288", null ],
-      [ "i2cConfig", "a00074.html#ae4fc1a1b270220bf34ae6b240ab0c2a6", null ]
+    [ "_wm8904_config", "a00074.html#a00473", [
+      [ "master", "a00074.html#a3002bf273401d5acf56d52ed4758bf8b", null ],
+      [ "sysClkSource", "a00074.html#a58fefd5003e0c52e3e952e34e61ca0d7", null ],
+      [ "fll", "a00074.html#ab81f69f9a086c901b64a457292738ae1", null ],
+      [ "protocol", "a00074.html#a140662a4691d9273703f1cba06e37243", null ],
+      [ "format", "a00074.html#ac636c33f3935a3f67b13091811a54a5a", null ],
+      [ "mclk_HZ", "a00074.html#a157c102183d9a22a72569490262b72f4", null ],
+      [ "recordSource", "a00074.html#a33cdc9449df406a9a387fbe8226f1e4e", null ],
+      [ "recordChannelLeft", "a00074.html#a60d0772d7678efa5e8a9b832f5e1302d", null ],
+      [ "recordChannelRight", "a00074.html#aa3109c85be5a4d4a28c3fc8f56e42cb8", null ],
+      [ "playSource", "a00074.html#a288de7954fc861119c29758ea821cc7a", null ],
+      [ "slaveAddress", "a00074.html#a51239e833d148213d753c213812c28c7", null ],
+      [ "i2cConfig", "a00074.html#aac3bf4469272deafad20bed728cac172", null ]
     ] ],
-    [ "wm8904_handle_t", "a00074.html#a00484", [
-      [ "config", "a00074.html#a70c31d1408f2812d276e3410d6a7e559", null ],
-      [ "i2cHandle", "a00074.html#a191e10654e7aea123e3f9dbd453c9140", null ]
+    [ "_wm8904_handle", "a00074.html#a00475", [
+      [ "config", "a00074.html#abbb260194036e2a15990455505f9f321", null ],
+      [ "i2cHandle", "a00074.html#ad0b206e760692bc5c4be9c85d0e6169b", null ]
     ] ],
     [ "FSL_WM8904_DRIVER_VERSION", "a00074.html#ga17671af372090b6f2ff6e80740db010f", null ],
     [ "WM8904_I2C_HANDLER_SIZE", "a00074.html#ga0d28de0ef67d9ce369d9b504e1c470f5", null ],
@@ -34,58 +34,70 @@ var a00074 =
     [ "WM8904_RESET", "a00074.html#gacc2471cbdc3834bb3ba2aa5121b83204", null ],
     [ "WM8904_I2C_ADDRESS", "a00074.html#ga059e5e02f8230019f8963d17da9c94f7", null ],
     [ "WM8904_I2C_BITRATE", "a00074.html#ga669db956fbb73a4012c2d9d6420cb9a5", null ],
-    [ "WM8904_MAP_HEADPHONE_LINEOUT_MAX_VOLUME", "a00074.html#ga9f3e00fa79eadd30de38244f81cfd0b4", [
+    [ "WM8904_MAP_HEADPHONE_LINEOUT_MAX_VOLUME", "a00074.html#ga9f3e00fa79eadd30de38244f81cfd0b4", null ],
+    [ "wm8904_module_t", "a00074.html#gaedfb8348c7cc57904dc1b2ed700badaa", null ],
+    [ "wm8904_timeslot_t", "a00074.html#gaef411681b5491b10d90fee587e90df06", null ],
+    [ "wm8904_protocol_t", "a00074.html#ga2a413e4f14e8ce7983db074e92a36d30", null ],
+    [ "wm8904_fs_ratio_t", "a00074.html#ga7da3eb89f9302f175c396080ec81f09e", null ],
+    [ "wm8904_sample_rate_t", "a00074.html#ga79db28cad66733393e01cffbbab4667b", null ],
+    [ "wm8904_bit_width_t", "a00074.html#ga0a3137164677c18b24566687f2ac4cb9", null ],
+    [ "wm8904_sys_clk_source_t", "a00074.html#gac71b5ce186b7db16902618b56be9ccaf", null ],
+    [ "wm8904_fll_clk_source_t", "a00074.html#ga3e0c0f9c8adb4b8464c13fd1b549ea11", null ],
+    [ "wm8904_fll_config_t", "a00074.html#ga121b13e42e01469fb2a493e69c862076", null ],
+    [ "wm8904_audio_format_t", "a00074.html#ga371f298ecaca01bc08f4844137e587d5", null ],
+    [ "wm8904_config_t", "a00074.html#ga66b834bd2db2191ab7f015df22cd0cfa", null ],
+    [ "wm8904_handle_t", "a00074.html#ga9bc4aab241462a0eaec8909907df054d", [
       [ "kStatus_WM8904_Success", "a00074.html#ggafb24d298ddd4bc4ff61aa333f07a574aa03a24c85da6ad8ade40a1b65e3fe412d", null ],
       [ "kStatus_WM8904_Fail", "a00074.html#ggafb24d298ddd4bc4ff61aa333f07a574aa308468c62731df5419b43963180ba395", null ],
       [ "kWM8904_LRCPolarityNormal", "a00074.html#gga39b4e25c4e8f5fed29720be17a532fa8ae5516cbb720017fc8406c52ce3ff7a8f", null ],
       [ "kWM8904_LRCPolarityInverted", "a00074.html#gga39b4e25c4e8f5fed29720be17a532fa8a69f5636caba8bec89801f2008d892699", null ]
     ] ],
-    [ "wm8904_module_t", "a00074.html#gaac74e063c4d9702b9339280e49f9ddeb", [
-      [ "kWM8904_ModuleADC", "a00074.html#ggaac74e063c4d9702b9339280e49f9ddebad45dffeddeff7951c7ba5ba22c2c64c1", null ],
-      [ "kWM8904_ModuleDAC", "a00074.html#ggaac74e063c4d9702b9339280e49f9ddeba2a70743ccb6b90e9220bed43f0594d6d", null ],
-      [ "kWM8904_ModulePGA", "a00074.html#ggaac74e063c4d9702b9339280e49f9ddeba346748d28086757836377319baff4321", null ],
-      [ "kWM8904_ModuleHeadphone", "a00074.html#ggaac74e063c4d9702b9339280e49f9ddeba64ba7c82128bf262b2f01c2384c0c74b", null ],
-      [ "kWM8904_ModuleLineout", "a00074.html#ggaac74e063c4d9702b9339280e49f9ddebae658043c1b0e877bd27878ded626dca1", null ]
+    [ "_wm8904_module", "a00074.html#ga55b31e0605d3a95694624032034b7495", [
+      [ "kWM8904_ModuleADC", "a00074.html#gga55b31e0605d3a95694624032034b7495ad45dffeddeff7951c7ba5ba22c2c64c1", null ],
+      [ "kWM8904_ModuleDAC", "a00074.html#gga55b31e0605d3a95694624032034b7495a2a70743ccb6b90e9220bed43f0594d6d", null ],
+      [ "kWM8904_ModulePGA", "a00074.html#gga55b31e0605d3a95694624032034b7495a346748d28086757836377319baff4321", null ],
+      [ "kWM8904_ModuleHeadphone", "a00074.html#gga55b31e0605d3a95694624032034b7495a64ba7c82128bf262b2f01c2384c0c74b", null ],
+      [ "kWM8904_ModuleLineout", "a00074.html#gga55b31e0605d3a95694624032034b7495ae658043c1b0e877bd27878ded626dca1", null ]
     ] ],
-    [ "wm8904_timeslot_t", "a00074.html#ga0add26d2596014e1ca343bcca33b0ef2", [
-      [ "kWM8904_TimeSlot0", "a00074.html#gga0add26d2596014e1ca343bcca33b0ef2a969787cc305faedbe9596a0a9babe2b7", null ],
-      [ "kWM8904_TimeSlot1", "a00074.html#gga0add26d2596014e1ca343bcca33b0ef2a10393572c9d554db894f4146b8db81e8", null ]
+    [ "_wm8904_timeslot", "a00074.html#gaff0dc8a308ace2e0c52e1a905ecfad13", [
+      [ "kWM8904_TimeSlot0", "a00074.html#ggaff0dc8a308ace2e0c52e1a905ecfad13a969787cc305faedbe9596a0a9babe2b7", null ],
+      [ "kWM8904_TimeSlot1", "a00074.html#ggaff0dc8a308ace2e0c52e1a905ecfad13a10393572c9d554db894f4146b8db81e8", null ]
     ] ],
-    [ "wm8904_protocol_t", "a00074.html#gaacd0c8d51fd8be9a9b8d8d0fa635d1b2", [
-      [ "kWM8904_ProtocolI2S", "a00074.html#ggaacd0c8d51fd8be9a9b8d8d0fa635d1b2ad45a6a2b0b9c4223f42c1f5c4798b516", null ],
-      [ "kWM8904_ProtocolLeftJustified", "a00074.html#ggaacd0c8d51fd8be9a9b8d8d0fa635d1b2a5b2b6fd6f23692eebd4edcf4d21cfc14", null ],
-      [ "kWM8904_ProtocolRightJustified", "a00074.html#ggaacd0c8d51fd8be9a9b8d8d0fa635d1b2a44c66dbdb2081f480a0c8e5f34574503", null ],
-      [ "kWM8904_ProtocolPCMA", "a00074.html#ggaacd0c8d51fd8be9a9b8d8d0fa635d1b2a2dabdd07bcb14b60d11cbf0a96dc9e74", null ],
-      [ "kWM8904_ProtocolPCMB", "a00074.html#ggaacd0c8d51fd8be9a9b8d8d0fa635d1b2a425d8770d5c656085b080377cc67406d", null ]
+    [ "_wm8904_protocol", "a00074.html#ga0febe68dc371791ebce695ce072c27d1", [
+      [ "kWM8904_ProtocolI2S", "a00074.html#gga0febe68dc371791ebce695ce072c27d1ad45a6a2b0b9c4223f42c1f5c4798b516", null ],
+      [ "kWM8904_ProtocolLeftJustified", "a00074.html#gga0febe68dc371791ebce695ce072c27d1a5b2b6fd6f23692eebd4edcf4d21cfc14", null ],
+      [ "kWM8904_ProtocolRightJustified", "a00074.html#gga0febe68dc371791ebce695ce072c27d1a44c66dbdb2081f480a0c8e5f34574503", null ],
+      [ "kWM8904_ProtocolPCMA", "a00074.html#gga0febe68dc371791ebce695ce072c27d1a2dabdd07bcb14b60d11cbf0a96dc9e74", null ],
+      [ "kWM8904_ProtocolPCMB", "a00074.html#gga0febe68dc371791ebce695ce072c27d1a425d8770d5c656085b080377cc67406d", null ]
     ] ],
-    [ "wm8904_fs_ratio_t", "a00074.html#gaf283608f7bdd52d3c158654d27d9d1fa", [
-      [ "kWM8904_FsRatio64X", "a00074.html#ggaf283608f7bdd52d3c158654d27d9d1faa86b907685431f678a498b5fb3128c70b", null ],
-      [ "kWM8904_FsRatio128X", "a00074.html#ggaf283608f7bdd52d3c158654d27d9d1faafea5d8933231066b0fd02c0a3fd8f231", null ],
-      [ "kWM8904_FsRatio192X", "a00074.html#ggaf283608f7bdd52d3c158654d27d9d1faa38db993aa5b0d2b8d2dce19fc9211980", null ],
-      [ "kWM8904_FsRatio256X", "a00074.html#ggaf283608f7bdd52d3c158654d27d9d1faa2b20ac0c1500e8b53c4053e160acdf3f", null ],
-      [ "kWM8904_FsRatio384X", "a00074.html#ggaf283608f7bdd52d3c158654d27d9d1faad79487ab68071057f91125b74aad634d", null ],
-      [ "kWM8904_FsRatio512X", "a00074.html#ggaf283608f7bdd52d3c158654d27d9d1faaa54ba72c70e144571f0b7e1460502ae1", null ],
-      [ "kWM8904_FsRatio768X", "a00074.html#ggaf283608f7bdd52d3c158654d27d9d1faaad130da7e1889267ed02dfd8bb71e74d", null ],
-      [ "kWM8904_FsRatio1024X", "a00074.html#ggaf283608f7bdd52d3c158654d27d9d1faa71f3e4c9e23e6f3de7d60f055ee5441a", null ],
-      [ "kWM8904_FsRatio1408X", "a00074.html#ggaf283608f7bdd52d3c158654d27d9d1faa944e73f1367bd1acc7c180ea38f4ff87", null ],
-      [ "kWM8904_FsRatio1536X", "a00074.html#ggaf283608f7bdd52d3c158654d27d9d1faaba19a023e017d10578094a116c6cd682", null ]
+    [ "_wm8904_fs_ratio", "a00074.html#gad1aa839a1b847c093c56f8a2e2123838", [
+      [ "kWM8904_FsRatio64X", "a00074.html#ggad1aa839a1b847c093c56f8a2e2123838a86b907685431f678a498b5fb3128c70b", null ],
+      [ "kWM8904_FsRatio128X", "a00074.html#ggad1aa839a1b847c093c56f8a2e2123838afea5d8933231066b0fd02c0a3fd8f231", null ],
+      [ "kWM8904_FsRatio192X", "a00074.html#ggad1aa839a1b847c093c56f8a2e2123838a38db993aa5b0d2b8d2dce19fc9211980", null ],
+      [ "kWM8904_FsRatio256X", "a00074.html#ggad1aa839a1b847c093c56f8a2e2123838a2b20ac0c1500e8b53c4053e160acdf3f", null ],
+      [ "kWM8904_FsRatio384X", "a00074.html#ggad1aa839a1b847c093c56f8a2e2123838ad79487ab68071057f91125b74aad634d", null ],
+      [ "kWM8904_FsRatio512X", "a00074.html#ggad1aa839a1b847c093c56f8a2e2123838aa54ba72c70e144571f0b7e1460502ae1", null ],
+      [ "kWM8904_FsRatio768X", "a00074.html#ggad1aa839a1b847c093c56f8a2e2123838aad130da7e1889267ed02dfd8bb71e74d", null ],
+      [ "kWM8904_FsRatio1024X", "a00074.html#ggad1aa839a1b847c093c56f8a2e2123838a71f3e4c9e23e6f3de7d60f055ee5441a", null ],
+      [ "kWM8904_FsRatio1408X", "a00074.html#ggad1aa839a1b847c093c56f8a2e2123838a944e73f1367bd1acc7c180ea38f4ff87", null ],
+      [ "kWM8904_FsRatio1536X", "a00074.html#ggad1aa839a1b847c093c56f8a2e2123838aba19a023e017d10578094a116c6cd682", null ]
     ] ],
-    [ "wm8904_sample_rate_t", "a00074.html#ga0961ba21100dc7a655d1c7b9105c9c7c", [
-      [ "kWM8904_SampleRate8kHz", "a00074.html#gga0961ba21100dc7a655d1c7b9105c9c7ca530d7f9873bf42d23665583995629f3b", null ],
-      [ "kWM8904_SampleRate12kHz", "a00074.html#gga0961ba21100dc7a655d1c7b9105c9c7ca14fdab3a406b2b9e53a7109483a9ad83", null ],
-      [ "kWM8904_SampleRate16kHz", "a00074.html#gga0961ba21100dc7a655d1c7b9105c9c7ca5c70725c6a1cc0318225581f06af2f55", null ],
-      [ "kWM8904_SampleRate24kHz", "a00074.html#gga0961ba21100dc7a655d1c7b9105c9c7ca21a80944bc87cb364ea286cd71ae882a", null ],
-      [ "kWM8904_SampleRate32kHz", "a00074.html#gga0961ba21100dc7a655d1c7b9105c9c7caf93bfb917098f153d089abc16029f3ec", null ],
-      [ "kWM8904_SampleRate48kHz", "a00074.html#gga0961ba21100dc7a655d1c7b9105c9c7ca8d98f4d49c3a61e815189305c6f680df", null ],
-      [ "kWM8904_SampleRate11025Hz", "a00074.html#gga0961ba21100dc7a655d1c7b9105c9c7ca99ed183a0676137963be23a5da68e80e", null ],
-      [ "kWM8904_SampleRate22050Hz", "a00074.html#gga0961ba21100dc7a655d1c7b9105c9c7caca7cdad981b6b91bfbb705196127e354", null ],
-      [ "kWM8904_SampleRate44100Hz", "a00074.html#gga0961ba21100dc7a655d1c7b9105c9c7caaba91ba437b7e467649941cfc70dc6bc", null ]
+    [ "_wm8904_sample_rate", "a00074.html#gaa1ac766d524206084dcd66d000dca597", [
+      [ "kWM8904_SampleRate8kHz", "a00074.html#ggaa1ac766d524206084dcd66d000dca597a530d7f9873bf42d23665583995629f3b", null ],
+      [ "kWM8904_SampleRate12kHz", "a00074.html#ggaa1ac766d524206084dcd66d000dca597a14fdab3a406b2b9e53a7109483a9ad83", null ],
+      [ "kWM8904_SampleRate16kHz", "a00074.html#ggaa1ac766d524206084dcd66d000dca597a5c70725c6a1cc0318225581f06af2f55", null ],
+      [ "kWM8904_SampleRate24kHz", "a00074.html#ggaa1ac766d524206084dcd66d000dca597a21a80944bc87cb364ea286cd71ae882a", null ],
+      [ "kWM8904_SampleRate32kHz", "a00074.html#ggaa1ac766d524206084dcd66d000dca597af93bfb917098f153d089abc16029f3ec", null ],
+      [ "kWM8904_SampleRate48kHz", "a00074.html#ggaa1ac766d524206084dcd66d000dca597a8d98f4d49c3a61e815189305c6f680df", null ],
+      [ "kWM8904_SampleRate11025Hz", "a00074.html#ggaa1ac766d524206084dcd66d000dca597a99ed183a0676137963be23a5da68e80e", null ],
+      [ "kWM8904_SampleRate22050Hz", "a00074.html#ggaa1ac766d524206084dcd66d000dca597aca7cdad981b6b91bfbb705196127e354", null ],
+      [ "kWM8904_SampleRate44100Hz", "a00074.html#ggaa1ac766d524206084dcd66d000dca597aaba91ba437b7e467649941cfc70dc6bc", null ]
     ] ],
-    [ "wm8904_bit_width_t", "a00074.html#ga609d8e48737411bb75104561a3e12fcb", [
-      [ "kWM8904_BitWidth16", "a00074.html#gga609d8e48737411bb75104561a3e12fcba84685c358f789580fe39f403bb528b97", null ],
-      [ "kWM8904_BitWidth20", "a00074.html#gga609d8e48737411bb75104561a3e12fcbab5853165387f45b748b51d54ff409eb9", null ],
-      [ "kWM8904_BitWidth24", "a00074.html#gga609d8e48737411bb75104561a3e12fcbab5115ccd61e5628a4c45b62f421adb14", null ],
-      [ "kWM8904_BitWidth32", "a00074.html#gga609d8e48737411bb75104561a3e12fcba67723a1ace69d9a3c4b3260d0267f064", null ],
+    [ "_wm8904_bit_width", "a00074.html#gaa196d3faca7026f08075b2189a69d33c", [
+      [ "kWM8904_BitWidth16", "a00074.html#ggaa196d3faca7026f08075b2189a69d33ca84685c358f789580fe39f403bb528b97", null ],
+      [ "kWM8904_BitWidth20", "a00074.html#ggaa196d3faca7026f08075b2189a69d33cab5853165387f45b748b51d54ff409eb9", null ],
+      [ "kWM8904_BitWidth24", "a00074.html#ggaa196d3faca7026f08075b2189a69d33cab5115ccd61e5628a4c45b62f421adb14", null ],
+      [ "kWM8904_BitWidth32", "a00074.html#ggaa196d3faca7026f08075b2189a69d33ca67723a1ace69d9a3c4b3260d0267f064", null ],
       [ "kWM8904_RecordSourceDifferentialLine", "a00074.html#gga34df7cc7f69a8ec535eec8a524dcbaf9ad1ae8cd45ddb94ede2eb79a395bb3a4b", null ],
       [ "kWM8904_RecordSourceLineInput", "a00074.html#gga34df7cc7f69a8ec535eec8a524dcbaf9a9bd1f0fa8e1c63b2663f4684b2a14a4b", null ],
       [ "kWM8904_RecordSourceDifferentialMic", "a00074.html#gga34df7cc7f69a8ec535eec8a524dcbaf9a09761699c85a0851b6b91c79159e31c3", null ],
@@ -105,12 +117,12 @@ var a00074 =
       [ "kWM8904_PlaySourcePGA", "a00074.html#gga7ada2556f3c386db5f31969fb6d4d002add917546ca87f478fdb41d5f7eb025e1", null ],
       [ "kWM8904_PlaySourceDAC", "a00074.html#gga7ada2556f3c386db5f31969fb6d4d002ac7dd8875a90d60b902557742eac3bb0a", null ]
     ] ],
-    [ "wm8904_sys_clk_source_t", "a00074.html#ga79bd55f95ec1478e3fd71adce4698cb4", [
-      [ "kWM8904_SysClkSourceMCLK", "a00074.html#gga79bd55f95ec1478e3fd71adce4698cb4a1965dfdc68cb897b5800a3dfd9f0e2bf", null ],
-      [ "kWM8904_SysClkSourceFLL", "a00074.html#gga79bd55f95ec1478e3fd71adce4698cb4a730c849443dba64fc83062570d00d5df", null ]
+    [ "_wm8904_sys_clk_source", "a00074.html#ga1597fc81f98b95c1d6b5ac972d91c268", [
+      [ "kWM8904_SysClkSourceMCLK", "a00074.html#gga1597fc81f98b95c1d6b5ac972d91c268a1965dfdc68cb897b5800a3dfd9f0e2bf", null ],
+      [ "kWM8904_SysClkSourceFLL", "a00074.html#gga1597fc81f98b95c1d6b5ac972d91c268a730c849443dba64fc83062570d00d5df", null ]
     ] ],
-    [ "wm8904_fll_clk_source_t", "a00074.html#ga2de42e280d7292a29e41e9fc37c33dd6", [
-      [ "kWM8904_FLLClkSourceMCLK", "a00074.html#gga2de42e280d7292a29e41e9fc37c33dd6a5fb91b0be337b66663e60c71afd46339", null ]
+    [ "_wm8904_fll_clk_source", "a00074.html#ga19d8cc8f961d7d05b7228e5fb6b8e500", [
+      [ "kWM8904_FLLClkSourceMCLK", "a00074.html#gga19d8cc8f961d7d05b7228e5fb6b8e500a5fb91b0be337b66663e60c71afd46339", null ]
     ] ],
     [ "WM8904_WriteRegister", "a00074.html#gaac9d2958054bab83fc6aeb39bf13e28a", null ],
     [ "WM8904_ReadRegister", "a00074.html#ga99b0ee20329e00d41738f7719ecc5516", null ],

@@ -25,7 +25,7 @@
 #warning "WARNING: TM_ENABLE_TIME_STAMP is disabled, no timestamp will be available"
 #endif
 
-#define sbtsnoop_log_printf(...)            PRINTF(__VA_ARGS__)
+#define sbtsnoop_log_printf(...)            (void)PRINTF(__VA_ARGS__)
 #define sbtsnoop_log_scanf(...)             (void)SCANF((char *)__VA_ARGS__)
 #define sbtsnoop_get_us_timestamp           TM_GetTimestamp
 #define UINT32                              uint32_t

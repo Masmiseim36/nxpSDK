@@ -623,8 +623,8 @@ static UWORD32 xa_hw_renderer_submit(XARenderer *d, void *b, UWORD32 n)
         if (d->output)
         {
             memcpy(d->output, b, bytes_write);
-            d->bytes_produced = bytes_write;
         }
+        d->bytes_produced = bytes_write;
 
         buffer_available -= d->frame_size;
 
@@ -1158,7 +1158,7 @@ static XA_ERRORCODE xa_renderer_get_output_bytes(XARenderer *d, WORD32 i_idx, pV
     XF_CHK_ERR(d->state & XA_RENDERER_FLAG_POSTINIT_DONE, XA_API_FATAL_INVALID_CMD_TYPE);
 
     /* ...output buffer must exist */
-    XF_CHK_ERR(d->output, XA_RENDERER_EXEC_NONFATAL_OUTPUT);
+//    XF_CHK_ERR(d->output, XA_RENDERER_EXEC_NONFATAL_OUTPUT);
 
     /* ...return number of produced bytes */
     *(WORD32 *)pv_value = d->bytes_produced;

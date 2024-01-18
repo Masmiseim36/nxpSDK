@@ -21,14 +21,20 @@
     NV_STORAGE_START_ADDRESS = DEFINED(__base_NVM_region) ? __base_NVM_region : 0;
     NV_STORAGE_END_ADDRESS = DEFINED(__top_NVM_region) ? __top_NVM_region : 0;
     NV_STORAGE_SECTOR_SIZE = 0x2000;
-    NV_STORAGE_MAX_SECTORS = (NV_STORAGE_END_ADDRESS - NV_STORAGE_START_ADDRESS) / NV_STORAGE_SECTOR_SIZE;
+    NV_STORAGE_SIZE        = (NV_STORAGE_END_ADDRESS - NV_STORAGE_START_ADDRESS);
+    NV_STORAGE_MAX_SECTORS = (NV_STORAGE_SIZE / NV_STORAGE_SECTOR_SIZE);
+
 
     PROD_DATA_BASE_ADDR = __base_PROD_DATA;
     m_warmboot_stack_end = DEFINED(__top_WARMBOOT_STACK) ? __top_WARMBOOT_STACK : 0;
     m_ram_img_end = DEFINED(gUseNVMLink_d) ? NV_STORAGE_START_ADDRESS - 1 : PROD_DATA_BASE_ADDR - 1;
     m_max_ram_img_size = DEFINED(gRamImageSizeInFlash_c) ? gRamImageSizeInFlash_c : 0x0;
     m_ram_img_start = m_ram_img_end - m_max_ram_img_size + 1;
-    m_hadmbuff_start = __base_RAM_VECTOR_TABLE + 0x400;
-    m_hadmbuff_size  = 0x2000;
     firmware_ram_upper_limit = __CSTACK_end__;
     firmware_ram_lower_limit = __VECTOR_RAM;
+
+/******************************************SHARED MEMORY********************************************/
+
+    rpmsg_sh_mem_size        = 0x1800;
+    rpmsg_sh_mem_end         = 0x489C9FFF;
+    rpmsg_sh_mem_start       = rpmsg_sh_mem_end - rpmsg_sh_mem_size + 1;

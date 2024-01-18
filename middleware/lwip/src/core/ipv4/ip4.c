@@ -106,7 +106,7 @@
 /** The IP header ID of the next outgoing IP packet */
 static u16_t ip_id;
 
-#if LWIP_MULTICAST_TX_OPTIONS
+#if LWIP_MULTICAST_TX_OPTIONS && !LWIP_SINGLE_NETIF
 /** The default netif used for multicast */
 static struct netif *ip4_default_multicast_netif;
 
@@ -118,7 +118,7 @@ ip4_set_default_multicast_netif(struct netif *default_multicast_netif)
 {
   ip4_default_multicast_netif = default_multicast_netif;
 }
-#endif /* LWIP_MULTICAST_TX_OPTIONS */
+#endif /* LWIP_MULTICAST_TX_OPTIONS && !LWIP_SINGLE_NETIF */
 
 #ifdef LWIP_HOOK_IP4_ROUTE_SRC
 /**
@@ -337,7 +337,7 @@ ip4_forward(struct pbuf *p, struct ip_hdr *iphdr, struct netif *inp)
   }
 
   /* Take care of setting checksums to 0 for checksum offload netifs */
-  if (CHECKSUM_GEN_IP || NETIF_CHECKSUM_ENABLED(inp, NETIF_CHECKSUM_GEN_IP)) {
+  if (!CHECKSUM_GEN_IP || (LWIP_CHECKSUM_CTRL_PER_NETIF && !NETIF_CHECKSUM_ENABLED(inp, NETIF_CHECKSUM_GEN_IP))) {
     IPH_CHKSUM_SET(iphdr, 0);
   }
   switch (IPH_PROTO(iphdr)) {
@@ -346,21 +346,21 @@ ip4_forward(struct pbuf *p, struct ip_hdr *iphdr, struct netif *inp)
   case IP_PROTO_UDPLITE:
 #endif
   case IP_PROTO_UDP:
-    if (CHECKSUM_GEN_UDP || NETIF_CHECKSUM_ENABLED(inp, NETIF_CHECKSUM_GEN_UDP)) {
+    if (!CHECKSUM_GEN_UDP || (LWIP_CHECKSUM_CTRL_PER_NETIF && !NETIF_CHECKSUM_ENABLED(inp, NETIF_CHECKSUM_GEN_UDP))) {
       ((struct udp_hdr *)((u8_t *)iphdr + IPH_HL_BYTES(iphdr)))->chksum = 0;
     }
     break;
 #endif
 #if LWIP_TCP
   case IP_PROTO_TCP:
-    if (CHECKSUM_GEN_TCP || NETIF_CHECKSUM_ENABLED(inp, NETIF_CHECKSUM_GEN_TCP)) {
+    if (!CHECKSUM_GEN_TCP || (LWIP_CHECKSUM_CTRL_PER_NETIF && !NETIF_CHECKSUM_ENABLED(inp, NETIF_CHECKSUM_GEN_TCP))) {
       ((struct tcp_hdr *)((u8_t *)iphdr + IPH_HL_BYTES(iphdr)))->chksum = 0;
     }
     break;
 #endif
 #if LWIP_ICMP
   case IP_PROTO_ICMP:
-    if (CHECKSUM_GEN_ICMP || NETIF_CHECKSUM_ENABLED(inp, NETIF_CHECKSUM_GEN_ICMP)) {
+    if (!CHECKSUM_GEN_ICMP || (LWIP_CHECKSUM_CTRL_PER_NETIF && !NETIF_CHECKSUM_ENABLED(inp, NETIF_CHECKSUM_GEN_ICMP))) {
       ((struct icmp_hdr *)((u8_t *)iphdr + IPH_HL_BYTES(iphdr)))->chksum = 0;
     }
     break;
@@ -1021,7 +1021,7 @@ ip4_output_if_opt_src(struct pbuf *p, const ip4_addr_t *src, const ip4_addr_t *d
 #endif /* !LWIP_HAVE_LOOPIF */
      ) {
     /* Packet to self, enqueue it for loopback */
-    LWIP_DEBUGF(IP_DEBUG, ("netif_loop_output()"));
+    LWIP_DEBUGF(IP_DEBUG, ("netif_loop_output()\n"));
     return netif_loop_output(netif, p);
   }
 #if LWIP_MULTICAST_TX_OPTIONS

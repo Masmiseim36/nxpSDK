@@ -8,7 +8,7 @@
 
 #include "includes.h"
 
-#include "common.h"
+#include "utils/common.h"
 #include "eloop.h"
 #include "state_machine.h"
 #include "common/eapol_common.h"

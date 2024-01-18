@@ -8,7 +8,7 @@
 
 #include "includes.h"
 
-#include "common.h"
+#include "utils/common.h"
 #include "utils/const_time.h"
 #include "crypto/crypto.h"
 #include "crypto/sha256.h"

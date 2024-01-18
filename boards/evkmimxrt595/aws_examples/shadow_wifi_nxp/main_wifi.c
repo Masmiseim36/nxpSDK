@@ -33,7 +33,15 @@
 #include "clock_config.h"
 #include "board.h"
 
+#if defined(MBEDTLS_MCUX_ELE_S400_API)
+#include "ele_mbedtls.h"
+#elif defined(MBEDTLS_MCUX_ELS_PKC_API)
+#include "platform_hw_ip.h"
+#include "els_pkc_mbedtls.h"
+#else
 #include "ksdk_mbedtls.h"
+#endif
+
 #include "mflash_file.h"
 #include "kvstore.h"
 
@@ -126,23 +134,24 @@ void APP_InitAppDebugConsole(void)
  */
 int main(void)
 {
+    RESET_ClearPeripheralReset(kHSGPIO0_RST_SHIFT_RSTn);
+    RESET_ClearPeripheralReset(kHSGPIO3_RST_SHIFT_RSTn);
+    RESET_ClearPeripheralReset(kHSGPIO4_RST_SHIFT_RSTn);
+
     BOARD_InitBootPins();
+    BOARD_InitPinsM2();
     BOARD_InitBootClocks();
     APP_InitAppDebugConsole();
-
-    /* Define the init structure for the OSPI reset pin*/
-    gpio_pin_config_t reset_config = {
-        kGPIO_DigitalOutput,
-        1,
-    };
-
-    /* Init output OSPI reset pin. */
-    GPIO_PortInit(GPIO, BOARD_FLASH_RESET_GPIO_PORT);
-    GPIO_PinInit(GPIO, BOARD_FLASH_RESET_GPIO_PORT, BOARD_FLASH_RESET_GPIO_PIN, &reset_config);
 
     /* Make sure casper ram buffer has power up */
     POWER_DisablePD(kPDRUNCFG_PPD_CASPER_SRAM);
     POWER_ApplyPD();
+
+    /* Configure 32K OSC clock. */
+    CLOCK_EnableOsc32K(true);               /* Enable 32KHz Oscillator clock */
+    CLOCK_EnableClock(kCLOCK_Rtc);          /* Enable the RTC peripheral clock */
+    RTC->CTRL &= ~RTC_CTRL_SWRESET_MASK;    /* Make sure the reset bit is cleared */
+    RTC->CTRL &= ~RTC_CTRL_RTC_OSC_PD_MASK; /* The RTC Oscillator is powered up */
 
     if (CRYPTO_InitHardware() != 0)
     {

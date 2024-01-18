@@ -1,96 +1,96 @@
 var a00073 =
 [
-    [ "usdhc_adma2_descriptor_t", "a00073.html#a00468", [
-      [ "attribute", "a00073.html#a3c14a6798aa0951a5fd9d20799b97710", null ],
-      [ "address", "a00073.html#a67e47312b77e17d14af7020546d5e7fe", null ]
+    [ "_usdhc_adma2_descriptor", "a00073.html#a00458", [
+      [ "attribute", "a00073.html#ac8f97a290b2f5e9937e88795eec0a001", null ],
+      [ "address", "a00073.html#a69172ba416454a536c77dc1074b06504", null ]
     ] ],
-    [ "usdhc_capability_t", "a00073.html#a00471", [
-      [ "sdVersion", "a00073.html#a59d9dc7b7e718afe5483858ce7223a60", null ],
-      [ "mmcVersion", "a00073.html#a16eb57f98ef71d02a355996d83dc2f42", null ],
-      [ "maxBlockLength", "a00073.html#aadc0a197cc72a6e8c128562cf3a38c83", null ],
-      [ "maxBlockCount", "a00073.html#a26b8e1098cd43ce51e0679af3b9f135f", null ],
-      [ "flags", "a00073.html#ac91446f846420c73846d4f45a0b848c2", null ]
+    [ "_usdhc_capability", "a00073.html#a00461", [
+      [ "sdVersion", "a00073.html#a35c7c7da415a380ddb11fd08e026cb23", null ],
+      [ "mmcVersion", "a00073.html#af5cab8519cc27ef2358cb28dd64f89cf", null ],
+      [ "maxBlockLength", "a00073.html#a3b84319e271c6c60e78410f537e9d152", null ],
+      [ "maxBlockCount", "a00073.html#ab674f4bd011eed393515645a7e6f3fa2", null ],
+      [ "flags", "a00073.html#ac44c553a76dd725538bf7ce6d100147c", null ]
     ] ],
-    [ "usdhc_boot_config_t", "a00073.html#a00470", [
-      [ "ackTimeoutCount", "a00073.html#adf9eeaba4b051d1223c46f93f8f18e96", null ],
-      [ "bootMode", "a00073.html#a50b1b5c218a7c616deeb45ca5bbe1cfc", null ],
-      [ "blockCount", "a00073.html#adc0abf994260a86a70f0d0b8d6f59879", null ],
-      [ "blockSize", "a00073.html#a06292fab760f0c6bf1ec43b0f69c9b6c", null ],
-      [ "enableBootAck", "a00073.html#a1e037ed69b459760bd8d5759b29ec9a1", null ],
-      [ "enableAutoStopAtBlockGap", "a00073.html#a3274c01f43dab0ac60d9242fd0db1fe2", null ]
+    [ "_usdhc_boot_config", "a00073.html#a00460", [
+      [ "ackTimeoutCount", "a00073.html#a79df70567dacee2087fc543966e6e9eb", null ],
+      [ "bootMode", "a00073.html#aae67d3d96944d79f4ed3bf62d14cc21d", null ],
+      [ "blockCount", "a00073.html#ad904c2a08b88cbfad8e89090133da48b", null ],
+      [ "blockSize", "a00073.html#a4b759cb290c0541147b96450906d2010", null ],
+      [ "enableBootAck", "a00073.html#a92854c4f1b7c8304ecd948b99439887c", null ],
+      [ "enableAutoStopAtBlockGap", "a00073.html#a1e7ad78f291fb441868f770387877f4a", null ]
     ] ],
-    [ "usdhc_config_t", "a00073.html#a00473", [
-      [ "dataTimeout", "a00073.html#ace34d5f555e421402c6ee83c5d0948ee", null ],
-      [ "endianMode", "a00073.html#ab7957be109e6e0caf0d30625b7242f99", null ],
-      [ "readWatermarkLevel", "a00073.html#a3686b109101d95cb08d26b71eb4fa13d", null ],
-      [ "writeWatermarkLevel", "a00073.html#a4463e093ea5574a7a2ee2df6a8c67513", null ],
-      [ "readBurstLen", "a00073.html#ace767db0bcc5a27216bca7d5e269aae6", null ],
-      [ "writeBurstLen", "a00073.html#a31b413461fc916297277672f4407a931", null ]
+    [ "_usdhc_config", "a00073.html#a00463", [
+      [ "dataTimeout", "a00073.html#afc78d1607a1c18f466eba0e52a6bc9c7", null ],
+      [ "endianMode", "a00073.html#a77b424584bbc6468714dabf8f0198f65", null ],
+      [ "readWatermarkLevel", "a00073.html#a7c0872e5571f79cbf7ae8398abd778f9", null ],
+      [ "writeWatermarkLevel", "a00073.html#ac6b0458bbbacf8ce003f9f5a4110c0ab", null ],
+      [ "readBurstLen", "a00073.html#a41ca7e77ed310c21fec2af45fbef594e", null ],
+      [ "writeBurstLen", "a00073.html#a454b9f33a2b593d0675e207aac026b3e", null ]
     ] ],
-    [ "usdhc_command_t", "a00073.html#a00472", [
-      [ "index", "a00073.html#a9b3f2ad2e7fbcb302d67944a5325a3f1", null ],
-      [ "argument", "a00073.html#a1565644f8ea71272a2c40e76a71a29ff", null ],
-      [ "type", "a00073.html#a85dc70afc4ad886c87a2cc5533c29010", null ],
-      [ "responseType", "a00073.html#ade1607852ad4a7d3dec4c52c36077e49", null ],
-      [ "response", "a00073.html#adf29cf7b297465411990f527aaaf7557", null ],
-      [ "responseErrorFlags", "a00073.html#afe3122f0c11538ad6cce2f32c908faa1", null ],
-      [ "flags", "a00073.html#ae7c8445329649435af51f83c9de8da01", null ]
+    [ "_usdhc_command", "a00073.html#a00462", [
+      [ "index", "a00073.html#a914d0454e07720f0f714d8a110c3d883", null ],
+      [ "argument", "a00073.html#abc02b7f83f5f7764cd4ae74ab626bf69", null ],
+      [ "type", "a00073.html#a2b0f1d56e6fa07ff08ea9741c4e87004", null ],
+      [ "responseType", "a00073.html#a2a1db7b59b47b882508b0dc6bd01e8db", null ],
+      [ "response", "a00073.html#aaff9ce1d46bd1766f289539e51e40e49", null ],
+      [ "responseErrorFlags", "a00073.html#a95a12b505e8755d50cd68a5df50de2d1", null ],
+      [ "flags", "a00073.html#aea0bb86f7c9d12b2214e70e77a1fbcb7", null ]
     ] ],
-    [ "usdhc_adma_config_t", "a00073.html#a00469", [
-      [ "dmaMode", "a00073.html#a1346aa3fd0093530b201c56d2337b5df", null ],
-      [ "burstLen", "a00073.html#a47ab3bfe3a559f6f6d25745189b49d03", null ],
-      [ "admaTable", "a00073.html#a63f3879873a7a6265ac416a605848274", null ],
-      [ "admaTableWords", "a00073.html#a4c0297334fde7de8c664b35ed352f7e4", null ]
+    [ "_usdhc_adma_config", "a00073.html#a00459", [
+      [ "dmaMode", "a00073.html#a6ef0d9636e38d5a561a7d9a023db58bd", null ],
+      [ "burstLen", "a00073.html#a39f0aaf64672213508869aa38d6779fd", null ],
+      [ "admaTable", "a00073.html#a411e5de2175fc2f68b1f1e5c7f372d88", null ],
+      [ "admaTableWords", "a00073.html#a42567c5231537a35059ad37962fd8fa6", null ]
     ] ],
-    [ "usdhc_scatter_gather_data_list_t", "a00073.html#a00476", null ],
-    [ "usdhc_scatter_gather_data_t", "a00073.html#a00477", [
-      [ "enableAutoCommand12", "a00073.html#a20c1ebd1c85baa7129176840f2bf1fc9", null ],
-      [ "enableAutoCommand23", "a00073.html#ad6e3d64e6c3380b86742e565a718c9da", null ],
-      [ "enableIgnoreError", "a00073.html#a58dba1c12c5575c3c4e4185e205de68b", null ],
-      [ "dataDirection", "a00073.html#a9ebfc05ba05be6b6ce15cfb82d642861", null ],
-      [ "dataType", "a00073.html#a922b0140e1258fc2666e39e7d21df834", null ],
-      [ "blockSize", "a00073.html#af1d7646d3bf2ac550a81537a37f1add0", null ],
-      [ "sgData", "a00073.html#a5230497d132ea46a2342862f26a5cc22", null ]
+    [ "_usdhc_scatter_gather_data_list", "a00073.html#a00468", null ],
+    [ "_usdhc_scatter_gather_data", "a00073.html#a00467", [
+      [ "enableAutoCommand12", "a00073.html#a7892d945f008a2fc38b7e514cd1e89b5", null ],
+      [ "enableAutoCommand23", "a00073.html#a7cb22effec3fa81a8c9eb7616d257f11", null ],
+      [ "enableIgnoreError", "a00073.html#ad787aa6d6b2b3bac1d7b81f600acf8d2", null ],
+      [ "dataDirection", "a00073.html#a60039829ab168a0eddc2eca6066ebb8e", null ],
+      [ "dataType", "a00073.html#a00988689af16535184450b1e41e66dd4", null ],
+      [ "blockSize", "a00073.html#a47e52c364bd1a221cadd09a908e0d51a", null ],
+      [ "sgData", "a00073.html#a685f27f5c5165c1a7d1d8841dae61dc6", null ]
     ] ],
-    [ "usdhc_scatter_gather_transfer_t", "a00073.html#a00478", [
-      [ "data", "a00073.html#af53f5cb59cbf53b7d68d058537922c84", null ],
-      [ "command", "a00073.html#a3d03108960d44f57db7103c35bd5b1df", null ]
+    [ "_usdhc_scatter_gather_transfer", "a00073.html#a00469", [
+      [ "data", "a00073.html#aceed891e72a3e3c92618bea333b0400e", null ],
+      [ "command", "a00073.html#a3b85d2475400717d0c5d9f99cc6486de", null ]
     ] ],
-    [ "usdhc_data_t", "a00073.html#a00474", [
-      [ "enableAutoCommand12", "a00073.html#a1fd43ec0d07238455d1fe9c49e73b44f", null ],
-      [ "enableAutoCommand23", "a00073.html#acdbb2d8cbbda290c9ab211c58ec396dc", null ],
-      [ "enableIgnoreError", "a00073.html#a06d9bde53b59991116731dd68c62560b", null ],
-      [ "dataType", "a00073.html#a86fc872ab8b9a8eaddb6b8e89086bde4", null ],
-      [ "blockSize", "a00073.html#aae19d3e162a8e9a3fb7f1d2c25d34027", null ],
-      [ "blockCount", "a00073.html#a8008705444c98d76ae91778ac4993825", null ],
-      [ "rxData", "a00073.html#ad0a4dacf75dabc71b4fde45ed63695fb", null ],
-      [ "txData", "a00073.html#a8c38d38dcd33249fc8322aea44aaa36b", null ]
+    [ "_usdhc_data", "a00073.html#a00464", [
+      [ "enableAutoCommand12", "a00073.html#ab783936ad1aeb10bd5dacd6b4d72af67", null ],
+      [ "enableAutoCommand23", "a00073.html#aa9dd9873eac5f9609b73c94fb905ab93", null ],
+      [ "enableIgnoreError", "a00073.html#a450e6999dbb3718e9d9fb92855528bb3", null ],
+      [ "dataType", "a00073.html#a321b334830130426b44b43a03b783424", null ],
+      [ "blockSize", "a00073.html#a5ad82386ffce4c6e51ab04e8239b5ad4", null ],
+      [ "blockCount", "a00073.html#a9399cad78821f48ccce16b297dc9e85b", null ],
+      [ "rxData", "a00073.html#a8417ba619b26bd9c5b10b45c5fb2bba1", null ],
+      [ "txData", "a00073.html#af7e0dbbf8b07cd7b8292b88d62fc1509", null ]
     ] ],
-    [ "usdhc_transfer_t", "a00073.html#a00480", [
-      [ "data", "a00073.html#af5a228d071aeee597eddac24d8054918", null ],
-      [ "command", "a00073.html#aff86d4696f5a240cdf22299287f8df84", null ]
+    [ "_usdhc_transfer", "a00073.html#a00470", [
+      [ "data", "a00073.html#a3993f446652be226d0fd02afae9aef54", null ],
+      [ "command", "a00073.html#ad16be45f22cfcebc880d9956c1926a51", null ]
     ] ],
-    [ "usdhc_transfer_callback_t", "a00073.html#a00479", [
-      [ "CardInserted", "a00073.html#a81250c3d428ec2bb1343fc1d3077b215", null ],
-      [ "CardRemoved", "a00073.html#a0c93d7232ea193f443c06412927f946a", null ],
-      [ "SdioInterrupt", "a00073.html#a3a0f799d9f6acf6549a42d4c7b505789", null ],
-      [ "BlockGap", "a00073.html#aa9d557af27a31c5be26ce8e8e4338302", null ],
-      [ "TransferComplete", "a00073.html#ac4ec65cb0c5d255eced167ac9d8ddd02", null ],
-      [ "ReTuning", "a00073.html#afbf2feb6cd56da33c47722d54dcc2c88", null ]
+    [ "_usdhc_transfer_callback", "a00073.html#a00471", [
+      [ "CardInserted", "a00073.html#a936bec433aa4616b72b9eef73603e639", null ],
+      [ "CardRemoved", "a00073.html#abfec5de9bbdd70c476fa80bd52e9fdc2", null ],
+      [ "SdioInterrupt", "a00073.html#aa109c6b1751d8c73b8b5c82823a4ef37", null ],
+      [ "BlockGap", "a00073.html#ab97062240ff6196b7422dca5dc1ee069", null ],
+      [ "TransferComplete", "a00073.html#ac105dd9a174faf7fbaa617b0614f6920", null ],
+      [ "ReTuning", "a00073.html#a1fe7c1ef21e1cd7ee65ba060dbd617ec", null ]
     ] ],
-    [ "usdhc_handle_t", "a00073.html#a00312", [
-      [ "data", "a00073.html#a1339a99e40fabfd34f47e82f27cb2d09", null ],
-      [ "command", "a00073.html#a170ac6f4eea7a78bc44a96245c175913", null ],
-      [ "transferredWords", "a00073.html#ad6ebee53893ba048bd077c58b583643c", null ],
-      [ "callback", "a00073.html#acbb85944773d6b2f65a1e82b06d72f12", null ],
-      [ "userData", "a00073.html#af19daa704f2c6081584f03dba7d8d7ef", null ]
+    [ "_usdhc_handle", "a00073.html#a00465", [
+      [ "data", "a00073.html#a088a9948817235f3273b798079a1d89f", null ],
+      [ "command", "a00073.html#a40590588dbc721ab543ea97afdc71879", null ],
+      [ "transferredWords", "a00073.html#a84cbbf839c2f4dc77d50360a060ba312", null ],
+      [ "callback", "a00073.html#ae89ba7c4222627bd7fc54d2d03ff6148", null ],
+      [ "userData", "a00073.html#aeab07b56ce031a9a1afcda28c61a86db", null ]
     ] ],
-    [ "usdhc_host_t", "a00073.html#a00475", [
-      [ "base", "a00073.html#af4b9afbd2f344d962cad34b3c5e53dca", null ],
-      [ "sourceClock_Hz", "a00073.html#a09d0d482636c704b9e9f77dbde06822c", null ],
-      [ "config", "a00073.html#a18dd05c8b4bdfbddab5eeb43c8092c82", null ],
-      [ "capability", "a00073.html#a505db9c1ce7245203db8028c6d9fdcc3", null ],
-      [ "transfer", "a00073.html#ae32ad1de6cebcf269cfadfb5ffab8a6f", null ]
+    [ "_usdhc_host", "a00073.html#a00466", [
+      [ "base", "a00073.html#a1f2c5698caf733afbea99c9c30dac62a", null ],
+      [ "sourceClock_Hz", "a00073.html#ad6859f330ab15f2550e65eae34a6c4d8", null ],
+      [ "config", "a00073.html#aa9e019e3755db9c9ea70d73c985280df", null ],
+      [ "capability", "a00073.html#ab8ae767812d8b3926856f60976ed9aaa", null ],
+      [ "transfer", "a00073.html#a2373b3bae3ce81fb05034e64391b2706", null ]
     ] ],
     [ "FSL_USDHC_DRIVER_VERSION", "a00073.html#ga8454e1474c1b4821ef49da1cc979f68d", null ],
     [ "USDHC_MAX_BLOCK_COUNT", "a00073.html#ga7e3f842ea9a46b5712a7ff3d22e82cb0", null ],
@@ -107,8 +107,30 @@ var a00073 =
     [ "USDHC_ADMA2_DESCRIPTOR_LENGTH_SHIFT", "a00073.html#ga01d62d0d1e4ca33477c5ec841f2b700c", null ],
     [ "USDHC_ADMA2_DESCRIPTOR_LENGTH_MASK", "a00073.html#gaedf02c8bee5b43d41e1f5998cdd42a94", null ],
     [ "USDHC_ADMA2_DESCRIPTOR_MAX_LENGTH_PER_ENTRY", "a00073.html#gabbf6df5f19474a256940c12b455119d1", null ],
+    [ "usdhc_transfer_direction_t", "a00073.html#gaca922dbc34af87cc33d642c0b72001d2", null ],
+    [ "usdhc_data_bus_width_t", "a00073.html#gac3c133c9ca7c044a14e1da903248c1e7", null ],
+    [ "usdhc_endian_mode_t", "a00073.html#ga7ccc78fbbf44bac597aa5d361116a6fb", null ],
+    [ "usdhc_dma_mode_t", "a00073.html#ga4151ae624575f41bab0cb6662731150f", null ],
+    [ "usdhc_boot_mode_t", "a00073.html#ga50bdde98e4b32082fc19eaeb3767d1fc", null ],
+    [ "usdhc_card_command_type_t", "a00073.html#gad091b49433c9aa6928a1e1fe8d95086f", null ],
+    [ "usdhc_card_response_type_t", "a00073.html#ga88c37ad8200cab5f6235e8f012d5bff7", null ],
+    [ "usdhc_burst_len_t", "a00073.html#ga902afa3880a7aa2f487ecf2215c6402f", null ],
     [ "usdhc_adma1_descriptor_t", "a00073.html#gaeaf8981c77f59c815328efb192f39bae", null ],
-    [ "usdhc_transfer_function_t", "a00073.html#gae5d7e4ca4e99c90277352ad3ab9d8b6e", [
+    [ "usdhc_adma2_descriptor_t", "a00073.html#ga535e29adaba545782708401a595bd45e", null ],
+    [ "usdhc_capability_t", "a00073.html#gacc1650ece59b23fb23b928aef023ac02", null ],
+    [ "usdhc_boot_config_t", "a00073.html#ga8d530edea32e305c7d6b3b8fe51c8e7e", null ],
+    [ "usdhc_config_t", "a00073.html#gae636689d6c6fc621d1264777175e9dbb", null ],
+    [ "usdhc_command_t", "a00073.html#ga15baf2d0a9a650db585623d32280dd40", null ],
+    [ "usdhc_adma_config_t", "a00073.html#ga875c8c26d36cf283fa5a82762a8f5b37", null ],
+    [ "usdhc_scatter_gather_data_list_t", "a00073.html#ga30b5d158905d0c0ec929d42fadcdb20f", null ],
+    [ "usdhc_scatter_gather_data_t", "a00073.html#ga0628b4fa2c1b372b88bb9a9e937fb085", null ],
+    [ "usdhc_scatter_gather_transfer_t", "a00073.html#ga3e23807d87de1a4cceed0174b851fcec", null ],
+    [ "usdhc_data_t", "a00073.html#ga1620b869f89e0cd50a511d2e44f7178d", null ],
+    [ "usdhc_transfer_t", "a00073.html#ga1f4def6a4bacac5d31ee1081c26e44f0", null ],
+    [ "usdhc_handle_t", "a00073.html#gaab782b80a4d401f314a7eb13c65ffd4e", null ],
+    [ "usdhc_transfer_callback_t", "a00073.html#gad8d1439fe726fa8ba3afdf774c3fc2e4", null ],
+    [ "usdhc_transfer_function_t", "a00073.html#gae5d7e4ca4e99c90277352ad3ab9d8b6e", null ],
+    [ "usdhc_host_t", "a00073.html#gaa8513207d28237cf3f64825d67b15c64", [
       [ "kStatus_USDHC_BusyTransferring", "a00073.html#gga2f80701c36e79c0640d91c788feee0b3ab647450b0d14cfc8bea53007c24ea035", null ],
       [ "kStatus_USDHC_PrepareAdmaDescriptorFailed", "a00073.html#gga2f80701c36e79c0640d91c788feee0b3a043bcf9c52410d7c1d7294362b206312", null ],
       [ "kStatus_USDHC_SendCommandFailed", "a00073.html#gga2f80701c36e79c0640d91c788feee0b3a4a4dfbc03518862fadc4571d2f7b6ad8", null ],
@@ -242,53 +264,53 @@ var a00073 =
       [ "kUSDHC_ForceEventTuningError", "a00073.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aaa646b97394c59396c183b6bf1b7d29cf", null ],
       [ "kUSDHC_ForceEventsAll", "a00073.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aa3049ee9a4cbb4734eff250be09e5104f", null ]
     ] ],
-    [ "usdhc_transfer_direction_t", "a00073.html#gab81b8edc7ebad46ff68fd451c378e9c7", [
-      [ "kUSDHC_TransferDirectionReceive", "a00073.html#ggab81b8edc7ebad46ff68fd451c378e9c7a9f875b8623b4b28736254fadf3537cd8", null ],
-      [ "kUSDHC_TransferDirectionSend", "a00073.html#ggab81b8edc7ebad46ff68fd451c378e9c7a97151757a2075d4efe9277a0b46f77b4", null ]
+    [ "_usdhc_transfer_direction", "a00073.html#gae8c78fb5c0396d397980422d80d04a85", [
+      [ "kUSDHC_TransferDirectionReceive", "a00073.html#ggae8c78fb5c0396d397980422d80d04a85a9f875b8623b4b28736254fadf3537cd8", null ],
+      [ "kUSDHC_TransferDirectionSend", "a00073.html#ggae8c78fb5c0396d397980422d80d04a85a97151757a2075d4efe9277a0b46f77b4", null ]
     ] ],
-    [ "usdhc_data_bus_width_t", "a00073.html#gaae51c2895e574c53f16f14e546deef34", [
-      [ "kUSDHC_DataBusWidth1Bit", "a00073.html#ggaae51c2895e574c53f16f14e546deef34a7fa8827db5c442bab7dab1e94d5903c7", null ],
-      [ "kUSDHC_DataBusWidth4Bit", "a00073.html#ggaae51c2895e574c53f16f14e546deef34a190450cb925c6ba59386d3eb3f41d3e0", null ],
-      [ "kUSDHC_DataBusWidth8Bit", "a00073.html#ggaae51c2895e574c53f16f14e546deef34a513529a853e081590b01aa420ad8c8b0", null ]
+    [ "_usdhc_data_bus_width", "a00073.html#gab1d17b112bd21def9b389fd23f25de1e", [
+      [ "kUSDHC_DataBusWidth1Bit", "a00073.html#ggab1d17b112bd21def9b389fd23f25de1ea7fa8827db5c442bab7dab1e94d5903c7", null ],
+      [ "kUSDHC_DataBusWidth4Bit", "a00073.html#ggab1d17b112bd21def9b389fd23f25de1ea190450cb925c6ba59386d3eb3f41d3e0", null ],
+      [ "kUSDHC_DataBusWidth8Bit", "a00073.html#ggab1d17b112bd21def9b389fd23f25de1ea513529a853e081590b01aa420ad8c8b0", null ]
     ] ],
-    [ "usdhc_endian_mode_t", "a00073.html#ga75d303f499f9abf2fb05eadc48312f00", [
-      [ "kUSDHC_EndianModeBig", "a00073.html#gga75d303f499f9abf2fb05eadc48312f00acc048f819005289e43803bc8f9268cd1", null ],
-      [ "kUSDHC_EndianModeHalfWordBig", "a00073.html#gga75d303f499f9abf2fb05eadc48312f00aeadc4f7c80805fea0a95dd9c84ee5d79", null ],
-      [ "kUSDHC_EndianModeLittle", "a00073.html#gga75d303f499f9abf2fb05eadc48312f00a60f7e4bc9c7ba00a1e7448bbf07de4a2", null ]
+    [ "_usdhc_endian_mode", "a00073.html#gad328a6b49096215da4c6e33b7dc4ecd9", [
+      [ "kUSDHC_EndianModeBig", "a00073.html#ggad328a6b49096215da4c6e33b7dc4ecd9acc048f819005289e43803bc8f9268cd1", null ],
+      [ "kUSDHC_EndianModeHalfWordBig", "a00073.html#ggad328a6b49096215da4c6e33b7dc4ecd9aeadc4f7c80805fea0a95dd9c84ee5d79", null ],
+      [ "kUSDHC_EndianModeLittle", "a00073.html#ggad328a6b49096215da4c6e33b7dc4ecd9a60f7e4bc9c7ba00a1e7448bbf07de4a2", null ]
     ] ],
-    [ "usdhc_dma_mode_t", "a00073.html#ga80ab01ec4b713e6fcce2acb34f014425", [
-      [ "kUSDHC_DmaModeSimple", "a00073.html#gga80ab01ec4b713e6fcce2acb34f014425a41d888fed32e22e0370fa26ddca81987", null ],
-      [ "kUSDHC_DmaModeAdma1", "a00073.html#gga80ab01ec4b713e6fcce2acb34f014425afafbe04d01edb1f06c1a2207644947cf", null ],
-      [ "kUSDHC_DmaModeAdma2", "a00073.html#gga80ab01ec4b713e6fcce2acb34f014425af2d53477205a6f7fd59bcbd1a18feaad", null ],
-      [ "kUSDHC_ExternalDMA", "a00073.html#gga80ab01ec4b713e6fcce2acb34f014425ae4e9e4a3add1cbcaf8058701cbc9a8f3", null ],
+    [ "_usdhc_dma_mode", "a00073.html#ga655bf7ba20aa46fb1ef36ae7a0f524bc", [
+      [ "kUSDHC_DmaModeSimple", "a00073.html#gga655bf7ba20aa46fb1ef36ae7a0f524bca41d888fed32e22e0370fa26ddca81987", null ],
+      [ "kUSDHC_DmaModeAdma1", "a00073.html#gga655bf7ba20aa46fb1ef36ae7a0f524bcafafbe04d01edb1f06c1a2207644947cf", null ],
+      [ "kUSDHC_DmaModeAdma2", "a00073.html#gga655bf7ba20aa46fb1ef36ae7a0f524bcaf2d53477205a6f7fd59bcbd1a18feaad", null ],
+      [ "kUSDHC_ExternalDMA", "a00073.html#gga655bf7ba20aa46fb1ef36ae7a0f524bcae4e9e4a3add1cbcaf8058701cbc9a8f3", null ],
       [ "kUSDHC_StopAtBlockGapFlag", "a00073.html#ggad63240694c6dc2a28c24bfc2db90ad7aa2d79172948de03bb82c051bf99ab3784", null ],
       [ "kUSDHC_ReadWaitControlFlag", "a00073.html#ggad63240694c6dc2a28c24bfc2db90ad7aacb2a4f0e1fc6c2aec84aad866170d6a6", null ],
       [ "kUSDHC_InterruptAtBlockGapFlag", "a00073.html#ggad63240694c6dc2a28c24bfc2db90ad7aa6be8eef0b03f88c3bca54dd26f890205", null ],
       [ "kUSDHC_ReadDoneNo8CLK", "a00073.html#ggad63240694c6dc2a28c24bfc2db90ad7aaba5dcc020cfeafccbea941ed1e609faa", null ],
       [ "kUSDHC_ExactBlockNumberReadFlag", "a00073.html#ggad63240694c6dc2a28c24bfc2db90ad7aae9f7772ce09649b9b43b428a63900ab1", null ]
     ] ],
-    [ "usdhc_boot_mode_t", "a00073.html#ga279cafc81d9eeb2eb67bd6894d6fbc83", [
-      [ "kUSDHC_BootModeNormal", "a00073.html#gga279cafc81d9eeb2eb67bd6894d6fbc83af806092e5cd793193eca2e71cc5408b8", null ],
-      [ "kUSDHC_BootModeAlternative", "a00073.html#gga279cafc81d9eeb2eb67bd6894d6fbc83ae5a26cde985a48ab974087a48f4e5bbc", null ]
+    [ "_usdhc_boot_mode", "a00073.html#ga0f86e0ad03f789058e9570280e68f693", [
+      [ "kUSDHC_BootModeNormal", "a00073.html#gga0f86e0ad03f789058e9570280e68f693af806092e5cd793193eca2e71cc5408b8", null ],
+      [ "kUSDHC_BootModeAlternative", "a00073.html#gga0f86e0ad03f789058e9570280e68f693ae5a26cde985a48ab974087a48f4e5bbc", null ]
     ] ],
-    [ "usdhc_card_command_type_t", "a00073.html#ga5dd0c5acd7ade88abe40f367bd1cb0d3", [
-      [ "kCARD_CommandTypeNormal", "a00073.html#gga5dd0c5acd7ade88abe40f367bd1cb0d3ae24ab83bd6c0959918366bee522417f9", null ],
-      [ "kCARD_CommandTypeSuspend", "a00073.html#gga5dd0c5acd7ade88abe40f367bd1cb0d3a635a0b0c8ce3312236ca7a2d1ce159f5", null ],
-      [ "kCARD_CommandTypeResume", "a00073.html#gga5dd0c5acd7ade88abe40f367bd1cb0d3a5c6154a2bf09464d521d21c874fc76a7", null ],
-      [ "kCARD_CommandTypeAbort", "a00073.html#gga5dd0c5acd7ade88abe40f367bd1cb0d3aa3909c9f96f6ec9fa625efe84ecfb5c9", null ],
-      [ "kCARD_CommandTypeEmpty", "a00073.html#gga5dd0c5acd7ade88abe40f367bd1cb0d3a7256621cca37c52f1640f9c48100007d", null ]
+    [ "_usdhc_card_command_type", "a00073.html#gabb5e59bff92920cdc8b353ab5ef1c002", [
+      [ "kCARD_CommandTypeNormal", "a00073.html#ggabb5e59bff92920cdc8b353ab5ef1c002ae24ab83bd6c0959918366bee522417f9", null ],
+      [ "kCARD_CommandTypeSuspend", "a00073.html#ggabb5e59bff92920cdc8b353ab5ef1c002a635a0b0c8ce3312236ca7a2d1ce159f5", null ],
+      [ "kCARD_CommandTypeResume", "a00073.html#ggabb5e59bff92920cdc8b353ab5ef1c002a5c6154a2bf09464d521d21c874fc76a7", null ],
+      [ "kCARD_CommandTypeAbort", "a00073.html#ggabb5e59bff92920cdc8b353ab5ef1c002aa3909c9f96f6ec9fa625efe84ecfb5c9", null ],
+      [ "kCARD_CommandTypeEmpty", "a00073.html#ggabb5e59bff92920cdc8b353ab5ef1c002a7256621cca37c52f1640f9c48100007d", null ]
     ] ],
-    [ "usdhc_card_response_type_t", "a00073.html#ga964a0eb4916c518302b35f1fddba7aec", [
-      [ "kCARD_ResponseTypeNone", "a00073.html#gga964a0eb4916c518302b35f1fddba7aeca5d49d4b2f8a98053ee48d5012acf9ed2", null ],
-      [ "kCARD_ResponseTypeR1", "a00073.html#gga964a0eb4916c518302b35f1fddba7aeca74964391f7a0126c628c74baeafa518b", null ],
-      [ "kCARD_ResponseTypeR1b", "a00073.html#gga964a0eb4916c518302b35f1fddba7aeca7e8a8155761b6f1511f498ce53e07ccf", null ],
-      [ "kCARD_ResponseTypeR2", "a00073.html#gga964a0eb4916c518302b35f1fddba7aecac4895a8c8ba120c3732db68b89f96953", null ],
-      [ "kCARD_ResponseTypeR3", "a00073.html#gga964a0eb4916c518302b35f1fddba7aecad1f920acb2d8a5a28bff976cae7aff46", null ],
-      [ "kCARD_ResponseTypeR4", "a00073.html#gga964a0eb4916c518302b35f1fddba7aeca8298df9537021d76ecfe0a026c4c3fdd", null ],
-      [ "kCARD_ResponseTypeR5", "a00073.html#gga964a0eb4916c518302b35f1fddba7aeca9c1b4e62f3f81d7d23ec127c3a4a213f", null ],
-      [ "kCARD_ResponseTypeR5b", "a00073.html#gga964a0eb4916c518302b35f1fddba7aecae08443bb563fccdaba2fc81737292fb1", null ],
-      [ "kCARD_ResponseTypeR6", "a00073.html#gga964a0eb4916c518302b35f1fddba7aeca1a659f655dbc1e029fd601f496e81bb5", null ],
-      [ "kCARD_ResponseTypeR7", "a00073.html#gga964a0eb4916c518302b35f1fddba7aeca3e8c6d2dc60235e4134e3a46789bebd1", null ],
+    [ "_usdhc_card_response_type", "a00073.html#gaa1af705e3d3f1de564bae478bcdffc49", [
+      [ "kCARD_ResponseTypeNone", "a00073.html#ggaa1af705e3d3f1de564bae478bcdffc49a5d49d4b2f8a98053ee48d5012acf9ed2", null ],
+      [ "kCARD_ResponseTypeR1", "a00073.html#ggaa1af705e3d3f1de564bae478bcdffc49a74964391f7a0126c628c74baeafa518b", null ],
+      [ "kCARD_ResponseTypeR1b", "a00073.html#ggaa1af705e3d3f1de564bae478bcdffc49a7e8a8155761b6f1511f498ce53e07ccf", null ],
+      [ "kCARD_ResponseTypeR2", "a00073.html#ggaa1af705e3d3f1de564bae478bcdffc49ac4895a8c8ba120c3732db68b89f96953", null ],
+      [ "kCARD_ResponseTypeR3", "a00073.html#ggaa1af705e3d3f1de564bae478bcdffc49ad1f920acb2d8a5a28bff976cae7aff46", null ],
+      [ "kCARD_ResponseTypeR4", "a00073.html#ggaa1af705e3d3f1de564bae478bcdffc49a8298df9537021d76ecfe0a026c4c3fdd", null ],
+      [ "kCARD_ResponseTypeR5", "a00073.html#ggaa1af705e3d3f1de564bae478bcdffc49a9c1b4e62f3f81d7d23ec127c3a4a213f", null ],
+      [ "kCARD_ResponseTypeR5b", "a00073.html#ggaa1af705e3d3f1de564bae478bcdffc49ae08443bb563fccdaba2fc81737292fb1", null ],
+      [ "kCARD_ResponseTypeR6", "a00073.html#ggaa1af705e3d3f1de564bae478bcdffc49a1a659f655dbc1e029fd601f496e81bb5", null ],
+      [ "kCARD_ResponseTypeR7", "a00073.html#ggaa1af705e3d3f1de564bae478bcdffc49a3e8c6d2dc60235e4134e3a46789bebd1", null ],
       [ "kUSDHC_Adma1DescriptorValidFlag", "a00073.html#gga7859c0a3efa8b1c360f5c2376baf051ead888849f485c288a6ddf5f4fd3d03cd1", null ],
       [ "kUSDHC_Adma1DescriptorEndFlag", "a00073.html#gga7859c0a3efa8b1c360f5c2376baf051ea6769a56e79c873e381fc8c67fd21272c", null ],
       [ "kUSDHC_Adma1DescriptorInterrupFlag", "a00073.html#gga7859c0a3efa8b1c360f5c2376baf051ea0ec2348be1c435cde4652f77b287713a", null ],
@@ -310,10 +332,10 @@ var a00073 =
       [ "kUSDHC_AdmaDescriptorSingleFlag", "a00073.html#ggabe974f22edeef8189603ba75fd90ff3ca23b5daafb6c69ec16a9173ef22a11047", null ],
       [ "kUSDHC_AdmaDescriptorMultipleFlag", "a00073.html#ggabe974f22edeef8189603ba75fd90ff3ca5fea03d67e238ed69ce1c4de4be212ef", null ]
     ] ],
-    [ "usdhc_burst_len_t", "a00073.html#ga3118a74fe727a49f3788650dc2846cfb", [
-      [ "kUSDHC_EnBurstLenForINCR", "a00073.html#gga3118a74fe727a49f3788650dc2846cfba9a8dc018d9ef4207726444eca500e717", null ],
-      [ "kUSDHC_EnBurstLenForINCR4816", "a00073.html#gga3118a74fe727a49f3788650dc2846cfba33cec723877e47a2a7372b18ac22730d", null ],
-      [ "kUSDHC_EnBurstLenForINCR4816WRAP", "a00073.html#gga3118a74fe727a49f3788650dc2846cfba4fb0869cc697f44788943f627cff6ece", null ],
+    [ "_usdhc_burst_len", "a00073.html#ga906a1e6d4261d26c3d5ce4578eac60b8", [
+      [ "kUSDHC_EnBurstLenForINCR", "a00073.html#gga906a1e6d4261d26c3d5ce4578eac60b8a9a8dc018d9ef4207726444eca500e717", null ],
+      [ "kUSDHC_EnBurstLenForINCR4816", "a00073.html#gga906a1e6d4261d26c3d5ce4578eac60b8a33cec723877e47a2a7372b18ac22730d", null ],
+      [ "kUSDHC_EnBurstLenForINCR4816WRAP", "a00073.html#gga906a1e6d4261d26c3d5ce4578eac60b8a4fb0869cc697f44788943f627cff6ece", null ],
       [ "kUSDHC_TransferDataNormal", "a00073.html#gga1b70d876770ccff427513794d6b0b2a7a164653cbe055499b7a3c57dc8d234a1b", null ],
       [ "kUSDHC_TransferDataTuning", "a00073.html#gga1b70d876770ccff427513794d6b0b2a7a58fc81ac815ad001333a2681f3ef8410", null ],
       [ "kUSDHC_TransferDataBoot", "a00073.html#gga1b70d876770ccff427513794d6b0b2a7a98b240c63dfb85bef0e98cb71f0b5009", null ],
@@ -356,7 +378,27 @@ var a00073 =
     [ "USDHC_EnableMmcBoot", "a00073.html#gac56d8684ce76439140fad880a858fdd2", null ],
     [ "USDHC_SetForceEvent", "a00073.html#ga39530e535a1645701e6910f41d571142", null ],
     [ "UDSHC_SelectVoltage", "a00073.html#ga9c799070ca0a2983b3d4fd31dd004f35", null ],
+    [ "USDHC_RequestTuningForSDR50", "a00073.html#ga0929df0c3b1ec09eda9ece79cdd2c98f", null ],
+    [ "USDHC_RequestReTuning", "a00073.html#ga09844401cb87381e3c6c64d2858dca3f", null ],
+    [ "USDHC_EnableAutoTuning", "a00073.html#ga94e49b22691cf3b621bc2aaec11b27f2", null ],
+    [ "USDHC_SetRetuningTimer", "a00073.html#ga5fe6e2ee59e8c6a9df48dd920843555e", null ],
+    [ "USDHC_EnableAutoTuningForCmdAndData", "a00073.html#gaccd9d1c039bee16ea0928e1b6abefc4b", null ],
+    [ "USDHC_EnableManualTuning", "a00073.html#ga60e3f18c143d9cd3f32f7fc0026c1046", null ],
+    [ "USDHC_GetTuningDelayStatus", "a00073.html#gafc6d6d7d692e9ec504bbbe1578135cb0", null ],
+    [ "USDHC_SetTuningDelay", "a00073.html#ga2da74019817aeb32803bee80a6bd7215", null ],
+    [ "USDHC_AdjustDelayForManualTuning", "a00073.html#ga76ddc18e837f7f690f8cddd326b9ef0a", null ],
+    [ "USDHC_SetStandardTuningCounter", "a00073.html#ga42a3eb82c16a07e3819e702242ed1ac2", null ],
+    [ "USDHC_EnableStandardTuning", "a00073.html#ga841ed47d826511232495fbc0c632b84f", null ],
+    [ "USDHC_GetExecuteStdTuningStatus", "a00073.html#gae8b32268c75c546dfc93677cb1fcb64a", null ],
+    [ "USDHC_CheckStdTuningResult", "a00073.html#gaf7b5eb6632ffbf906b091001423cd9de", null ],
+    [ "USDHC_CheckTuningError", "a00073.html#ga604d526917cbc043d1249e33811bc011", null ],
     [ "USDHC_EnableDDRMode", "a00073.html#ga619d59a6f1c981f25a5e61727a84d7fd", null ],
+    [ "USDHC_EnableHS400Mode", "a00073.html#ga2ea68d8d34f74e769ca0fabd83854741", null ],
+    [ "USDHC_ResetStrobeDLL", "a00073.html#ga14662aa00af99d6f3b42f8ae1d958209", null ],
+    [ "USDHC_EnableStrobeDLL", "a00073.html#ga30fa902486cf8a9b8e52592f38ab30d5", null ],
+    [ "USDHC_ConfigStrobeDLL", "a00073.html#gae5efae46dc031469b8b4a79a1f8c2020", null ],
+    [ "USDHC_SetStrobeDllOverride", "a00073.html#ga179a58f5746f744869c618bd5399dda9", null ],
+    [ "USDHC_GetStrobeDLLStatus", "a00073.html#ga7732b251eb87d7d76a139793ccc67f71", null ],
     [ "USDHC_SetDataConfig", "a00073.html#ga1ef85b2a508720a5aaed5d78a2f977ad", null ],
     [ "USDHC_TransferCreateHandle", "a00073.html#gaf06af82b1a8c156a1c321f13a6f0b5c9", null ],
     [ "USDHC_TransferNonBlocking", "a00073.html#gad0d1766645305f64b582ed100f78b30c", null ],

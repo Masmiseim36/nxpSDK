@@ -1516,6 +1516,17 @@ struct wmm_tspec_element
     le16 medium_time;
 } STRUCT_PACKED;
 
+#ifdef CONFIG_FREERTOS
+/* Access Categories / ACI to AC coding */
+enum wmm_ac
+{
+    WMM_AC_BK  = 0 /* Background */,
+    WMM_AC_BE  = 1 /* Best Effort */,
+    WMM_AC_VI  = 2 /* Video */,
+    WMM_AC_VO  = 3 /* Voice */,
+    WMM_AC_NUM = 4
+};
+#else
 /* Access Categories / ACI to AC coding */
 enum wmm_ac
 {
@@ -1525,6 +1536,7 @@ enum wmm_ac
     WMM_AC_VO  = 3 /* Voice */,
     WMM_AC_NUM = 4
 };
+#endif
 
 #define HS20_INDICATION_OUI_TYPE          16
 #define HS20_ANQP_OUI_TYPE                17

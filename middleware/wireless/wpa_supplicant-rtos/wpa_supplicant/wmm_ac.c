@@ -10,7 +10,7 @@
 #include "includes.h"
 
 #include "utils/common.h"
-#include "utils/wlist.h"
+#include "utils/dl_list.h"
 #include "utils/eloop.h"
 #include "common/ieee802_11_common.h"
 #include "wpa_supplicant_i.h"
@@ -20,8 +20,13 @@
 
 static void wmm_ac_addts_req_timeout(void *eloop_ctx, void *timeout_ctx);
 
+#ifdef CONFIG_FREERTOS
+static const enum wmm_ac up_to_ac[8] = {WMM_AC_BE, WMM_AC_BK, WMM_AC_BK, WMM_AC_BE,
+                                        WMM_AC_VI, WMM_AC_VI, WMM_AC_VO, WMM_AC_VO};
+#else
 static const enum wmm_ac up_to_ac[8] = {WMM_AC_BK, WMM_AC_BE, WMM_AC_BE, WMM_AC_BK,
                                         WMM_AC_VI, WMM_AC_VI, WMM_AC_VO, WMM_AC_VO};
+#endif
 
 static inline u8 wmm_ac_get_tsid(const struct wmm_tspec_element *tspec)
 {

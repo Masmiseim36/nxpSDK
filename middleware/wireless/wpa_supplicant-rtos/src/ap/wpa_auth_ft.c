@@ -11,7 +11,7 @@
 #ifdef CONFIG_AP
 #include "utils/common.h"
 #include "utils/eloop.h"
-#include "utils/wlist.h"
+#include "utils/dl_list.h"
 #include "common/ieee802_11_defs.h"
 #include "common/ieee802_11_common.h"
 #include "common/ocv.h"

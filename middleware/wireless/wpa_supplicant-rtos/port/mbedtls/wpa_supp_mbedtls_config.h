@@ -35,7 +35,24 @@
 /**************************** KSDK ********************************************/
 
 #include "fsl_device_registers.h"
+#ifdef CONFIG_ZEPHYR
+#include <zephyr/kernel.h>
+#else
 #include "fsl_debug_console.h"
+
+#if defined(USE_RTOS) && defined(SDK_OS_FREE_RTOS)
+#include "FreeRTOS.h"
+
+void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
+
+#define MBEDTLS_PLATFORM_MEMORY
+#define MBEDTLS_PLATFORM_STD_CALLOC pvPortCalloc
+#define MBEDTLS_PLATFORM_STD_FREE vPortFree
+
+#endif /* USE_RTOS*/
+#endif /* CONFIG_ZEPHYR */
+
+#undef FSL_FEATURE_SOC_DCP_COUNT
 
 /* Enable LTC use in library if there is LTC on chip. */
 #if defined(FSL_FEATURE_SOC_LTC_COUNT) && (FSL_FEATURE_SOC_LTC_COUNT > 0)
@@ -202,7 +219,7 @@
  * You can comment this macro if you provide your own alternate implementation.
  *
  */
-#if defined(USE_RTOS) && defined(SDK_OS_FREE_RTOS)
+#if defined(USE_RTOS) && defined(SDK_OS_FREE_RTOS) && !defined(SD9177)
 #define MBEDTLS_FREESCALE_FREERTOS_CALLOC_ALT
 #endif
 
@@ -361,7 +378,7 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
 /* More info: https://tls.mbed.org/kb/how-to/reduce-mbedtls-memory-and-storage-footprint */
 #define MBEDTLS_ECP_FIXED_POINT_OPTIM 1 /* To reduce peak memory usage */
 #define MBEDTLS_AES_ROM_TABLES
-#define MBEDTLS_SSL_MAX_CONTENT_LEN (1024 * 4) /* Reduce SSL frame buffer. */
+#define MBEDTLS_SSL_MAX_CONTENT_LEN (1024 * 8) /* Reduce SSL frame buffer. */
 #define MBEDTLS_MPI_WINDOW_SIZE 1
 #define MBEDTLS_ECP_WINDOW_SIZE 2
 #define MBEDTLS_MPI_MAX_SIZE 512 /* Maximum number of bytes for usable MPIs. */
@@ -1139,7 +1156,7 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
 //#define MBEDTLS_ECP_DP_SECP224K1_ENABLED
 //#define MBEDTLS_ECP_DP_SECP256K1_ENABLED
 //#define MBEDTLS_ECP_DP_BP256R1_ENABLED
-//#define MBEDTLS_ECP_DP_BP384R1_ENABLED
+#define MBEDTLS_ECP_DP_BP384R1_ENABLED
 //#define MBEDTLS_ECP_DP_BP512R1_ENABLED
 /* Montgomery curves (supporting ECP) */
 //#define MBEDTLS_ECP_DP_CURVE25519_ENABLED
@@ -2357,7 +2374,7 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
  *
  * Comment this macro to disable support for truncated HMAC in SSL
  */
-#define MBEDTLS_SSL_TRUNCATED_HMAC
+//#define MBEDTLS_SSL_TRUNCATED_HMAC
 
 /**
  * \def MBEDTLS_SSL_TRUNCATED_HMAC_COMPAT
@@ -2753,7 +2770,7 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
  *            it, and considering stronger ciphers instead.
  *
  */
-#define MBEDTLS_ARC4_C
+//#define MBEDTLS_ARC4_C
 
 /**
  * \def MBEDTLS_ASN1_PARSE_C
@@ -3310,7 +3327,7 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
  *            it, and considering stronger message digests instead.
  *
  */
-#define MBEDTLS_MD4_C
+//#define MBEDTLS_MD4_C
 
 /**
  * \def MBEDTLS_MD5_C
@@ -3684,7 +3701,26 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
  * This module adds support for SHA-224 and SHA-256.
  * This module is required for the SSL/TLS 1.2 PRF function.
  */
+#define MBEDTLS_SHA224_C
 #define MBEDTLS_SHA256_C
+
+/**
+ * \def MBEDTLS_SHA384_C
+ *
+ * Enable the SHA-384 cryptographic hash algorithm.
+ *
+ * Requires: MBEDTLS_SHA512_C
+ *
+ * Module:  library/sha512.c
+ * Caller:  library/md.c
+ *          library/psa_crypto_hash.c
+ *          library/ssl_tls.c
+ *          library/ssl*_client.c
+ *          library/ssl*_server.c
+ *
+ * Comment to disable SHA-384
+ */
+#define MBEDTLS_SHA384_C
 
 /**
  * \def MBEDTLS_SHA512_C

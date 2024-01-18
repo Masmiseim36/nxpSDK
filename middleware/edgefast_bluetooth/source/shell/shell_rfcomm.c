@@ -249,7 +249,7 @@ SHELL_STATIC_SUBCMD_SET_CREATE(rfcomm_cmds,
 	SHELL_SUBCMD_SET_END
 );
 
-static shell_status_t cmd_rfcomm(shell_handle_t shell, int32_t argc, char **argv)
+static shell_status_t cmd_rfcomm(shell_handle_t shell, int32_t argc, char *argv[])
 {
 	if (argc == 1) {
 		shell_help(shell);

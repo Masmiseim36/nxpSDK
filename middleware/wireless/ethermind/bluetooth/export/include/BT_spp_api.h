@@ -133,7 +133,7 @@ extern "C" {
  */
 API_RESULT BT_spp_init
            (
-               /* IN */  SPP_APPL_EVENT_NOTIFY_CB    application_cb_ptr
+               /* IN */  SPP_APPL_EVENT_NOTIFY_CB   application_cb_ptr
            );
 
 /**

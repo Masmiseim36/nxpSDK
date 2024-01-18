@@ -9,6 +9,7 @@
  */
 
 #include <wlan.h>
+
 #include <cli.h>
 
 static void test_wfa_wlan_version(int argc, char **argv)
@@ -31,14 +32,12 @@ static void test_wfa_wlan_version(int argc, char **argv)
 
 static void test_wlan_version(int argc, char **argv)
 {
-#if SDK_DEBUGCONSOLE != DEBUGCONSOLE_DISABLE
     char *version_str;
 
     version_str = wlan_get_firmware_version_ext();
 
     (void)PRINTF("WLAN Driver Version   : %s\r\n", WLAN_DRV_VERSION);
     (void)PRINTF("WLAN Firmware Version : %s\r\n", version_str);
-#endif
 }
 
 static void test_wlan_get_mac_address(int argc, char **argv)
@@ -88,6 +87,23 @@ int wlan_wfa_basic_cli_init(void)
     return WLAN_ERROR_NONE;
 }
 
+int wlan_wfa_basic_cli_deinit(void)
+{
+    unsigned int i;
+
+    for (i = 0; i < sizeof(wlan_wfa_basic_commands) / sizeof(struct cli_command); i++)
+    {
+        if (cli_unregister_command(&wlan_wfa_basic_commands[i]) != 0)
+        {
+            return WLAN_ERROR_ACTION;
+        }
+    }
+
+    wlan_wfa_basic_cli_init_done = false;
+
+    return WLAN_ERROR_NONE;
+}
+
 int wlan_basic_cli_init(void)
 {
     unsigned int i;
@@ -100,6 +116,21 @@ int wlan_basic_cli_init(void)
     for (i = 0; i < sizeof(wlan_basic_commands) / sizeof(struct cli_command); i++)
     {
         if (cli_register_command(&wlan_basic_commands[i]) != 0)
+        {
+            return WLAN_ERROR_ACTION;
+        }
+    }
+
+    return WLAN_ERROR_NONE;
+}
+
+int wlan_basic_cli_deinit(void)
+{
+    unsigned int i;
+
+    for (i = 0; i < sizeof(wlan_basic_commands) / sizeof(struct cli_command); i++)
+    {
+        if (cli_unregister_command(&wlan_basic_commands[i]) != 0)
         {
             return WLAN_ERROR_ACTION;
         }

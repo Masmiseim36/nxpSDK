@@ -26,7 +26,7 @@
 #ifdef XAF_PROFILE
 #include "xaf-api.h"
 /* Common clock structures and functions */
-typedef enum 
+typedef enum
 {
     CLK_SELN_WALL,   // Total time elapsed
     CLK_SELN_THREAD  // Time elapsed in this thread

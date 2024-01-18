@@ -1,6 +1,6 @@
 ---
 __variable__:
-  mbedtls_version: 2.28.3
+  mbedtls_version: 2.28.5
 middleware.mbedtls.template:
   section-type: component
   __requires__:
@@ -52,9 +52,19 @@ middleware.mbedtls.port.ele_s400:
     - source: port/ele_s400/aes_alt.c
     - source: port/ele_s400/ccm_alt.h
     - source: port/ele_s400/ccm_alt.c
+    - source: port/ele_s400/gcm_alt.h
+    - source: port/ele_s400/gcm_alt.c
     - source: port/ele_s400/rsa_alt.h
     - source: port/ele_s400/rsa_alt.c
     - source: port/ele_s400/threading_alt.h
+    - source: port/ele_s400/ecdsa_alt.h
+    - source: port/ele_s400/ecdsa_alt.c
+    - source: port/ele_s400/pk_alt.c
+    - source: port/ele_s400/sha256_alt.c
+    - source: port/ele_s400/sha256_alt.h
+    - source: port/ele_s400/sha512_alt.c
+    - source: port/ele_s400/sha512_alt.h
+    - source: port/ele_s400/hmac_alt.c
   component_info:
     common:
       description: mbedTLS port library for ELE S40x
@@ -213,7 +223,7 @@ middleware.mbedtls.port.css_pkc:
     common:
       description: mbedTLS port library for PKC
       type: middleware
-      version: 2.26.0
+      version: "${mbedtls_version}"
       change_log: "./ChangeLogKSDK.txt"
       component_bundle: bundles.mbedtls
       user_visible: true
@@ -259,7 +269,7 @@ middleware.mbedtls.port.css:
     common:
       description: mbedTLS port library for CSS
       type: middleware
-      version: 2.26.0
+      version: "${mbedtls_version}"
       change_log: "./ChangeLogKSDK.txt"
       component_bundle: bundles.mbedtls
       user_visible: true
@@ -277,7 +287,7 @@ middleware.mbedtls.port.els_pkc.devices:
 middleware.mbedtls.port.sssapi:
   section-type: component
   __requires__:
-  - middleware.mbedtls.ui_control middleware.mbedtls.port.sssapi.devices middleware.mbedtls middleware.secure-subsystem.snt.port_kw45_k4w1
+  - middleware.mbedtls.ui_control middleware.mbedtls.port.sssapi.devices middleware.mbedtls middleware.secure-subsystem.elemu.port_kw45_k4w1
   configuration:
     tools:
       __common__:
@@ -286,7 +296,7 @@ middleware.mbedtls.port.sssapi:
   contents:
     cc-define:
       MBEDTLS_NXP_SSSAPI:
-      MBEDTLS_NXP_SENTINEL200:
+      MBEDTLS_NXP_ELE200:
       MBEDTLS_CONFIG_FILE: '"sssapi_mbedtls_config.h"'
     repo_base_path: middleware/mbedtls
     project_base_path: mbedtls
@@ -774,7 +784,7 @@ middleware.mbedtls.ui_control:
   - driver.trng.support
   - driver.rnga.support
   - driver.rng.support
-  - driver.snt.support
+  - driver.elemu.support
   - middleware.mmcau.ui_control
   - component.css_pkc.ui_control
   - component.ele_crypto.ui_control

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2020 Cadence Design Systems, Inc.
+ * Copyright (c) 2011-2023 Cadence Design Systems, Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -126,7 +126,7 @@ typedef struct _user_config
     int         reset;
 #ifdef ASRC_ENABLE
     int         enable_asrc;
-    int         drift_asrc;
+    long long   drift_asrc;
 #endif /* #ifdef ASRC_ENABLE */
 } user_config ;
 
@@ -163,7 +163,7 @@ void print_usage(void)
     printf("\nUsage         : xa_sample_rate_converter -ifile:<input filename>  -ofile:<output filename> -inrate:<input samplerate>");
     printf(" -outrate:<output sample rate> -insize:<input chunk size>  -ch:<number of input channels> -pcmwidth:<width of pcm sample in bytes>"); 
 #ifdef POLYPHASE_CUBIC_INTERPOLATION
-    printf(" -enable_cubic:<enable cubic interploation>");
+    printf(" -enable_cubic:<enable cubic interpolation>");
 #endif /* #ifdef POLYPHASE_CUBIC_INTERPOLATION */
     printf(" -reset:<reset value>");
 #ifdef ASRC_ENABLE
@@ -173,23 +173,24 @@ void print_usage(void)
 
     printf("\t input file name                      : Complete path for the input file\n");
     printf("\t output file name                     : Complete path for the output file\n");
-    printf("\t input sample rate                    : samples per second in the input stream (default = 48000)\n");
+    printf("\t input sample rate                    : samples per second in the input stream. In case of raw pcm input files, the user must provide this information (default = 48000)\n");
     printf("\t                                        Expected value is a standard audio sample rate between 8 kHz to 192 kHz, 384kHz* \n");
     printf("\t output sample rate                   : required samples per second in the output stream (default = 48000)\n");
     printf("\t                                        Expected value is a standard audio sample rate between 8 kHz to 192 kHz, 384kHz**\n");
     printf("\t input chunk size                     : Number of pcm samples in the input buffer (default = 512)\n");
-    printf("\t                                        Input chunk size can be from 1 to 512 \n");
-    printf("\t number of channels in the input file : in case of raw pcm input files, the user must provide this information (default = 2)\n");
-    printf("\t pcm width                            : in case of raw pcm input files, the user must provide this information (default = 3 bytes)\n");
+    printf("\t                                        Input chunk size can be from 4 to 512 \n");
+    printf("\t number of channels in the input file : in case of raw pcm input files, the user must provide this information Range: 1-24 (default = 2)\n");
+    printf("\t pcm width                            : in case of raw pcm input files, the user must provide this information Pcmwidth should be 2 or 3 bytes(default = 3 bytes)\n");
 #ifdef POLYPHASE_CUBIC_INTERPOLATION
     printf("\t enable_cubic interpolation           : Enable or disable cubic interpolation(default = 0, cubic interpolation is disabled by default )\n");
     printf("\t                                        For the current library, any value other than 0 or 1 is invalid\n");
 #endif /* #ifdef POLYPHASE_CUBIC_INTERPOLATION */
-    printf("\t reset value                          : To enable run time init, this value must be equal to frame_count when reset needs to be done (default = 0)\n");
+    printf("\t reset value                          : To enable run time init, this value must be equal to frame_count when reset needs to be done. Multiple frame_count values are not allowed (default = 0)\n");
 #ifdef ASRC_ENABLE
     printf("\t enable asrc                          : Enable or disable asrc (default = 0, asrc is disabled by default )\n");
     printf("\t                                        For the current library, any value other than 0 or 1 is invalid\n");
     printf("\t asrc drift value                     : drift apply to 1 output sample. This value must be between the ranges -0.04 to 0.04 (default = 0) with step of 0.000001 \n");
+    printf("\t In case of wave input files, input sample rate, number of channels and pcm width are read from wave header\n");
 #endif /* #ifdef ASRC_ENABLE */   
 
 #if defined(USE_SRCPLUS_LIBRARY) || defined(USE_SRC384KHZ_TRIMMED_LIBRARY)
@@ -283,7 +284,7 @@ XA_ERRORCODE read_user_config (user_config *puser_config, int argc, char **argv)
 
                 }
 
-                puser_config->drift_asrc = ( int)( (drift_float)*  ( (long long)1 << 31) ); /* converting drift_float to Q31 fixed value */
+                puser_config->drift_asrc = ( long long)( (drift_float)*  ( (long long)1 << 31) ); /* converting drift_float to Q31 fixed value */
             }
 #endif /* #ifdef ASRC_ENABLE */
             else
@@ -319,6 +320,71 @@ XA_ERRORCODE read_user_config (user_config *puser_config, int argc, char **argv)
     }
 
     return XA_NO_ERROR;
+}
+
+int read_from_wave_file(
+    FILE *fp_in,
+    pVOID pin,
+    int bufsize,
+    int channels,
+    int bytes_per_sample,
+    int curr_index,
+    int total_length)
+{
+    int insize= 0, ret_val, val, index = 0;
+
+    /* Assumes interleaved input */
+    if(bytes_per_sample == TWO_BYTES_PER_SAMPLE)
+    {
+        /* 16 bit pcm */
+        pWORD16 pin_16bitpcm=(WORD16 *)pin;  
+        index = 0;
+
+        while(channels*bufsize > index)
+        {
+            ret_val = fread(&val,TWO_BYTES_PER_SAMPLE,1,fp_in);
+
+            curr_index++;
+
+            if (curr_index > total_length)
+                break;
+
+            pin_16bitpcm[index] = val;
+            ++index;
+
+            insize += ret_val;
+            
+        }
+
+    }/* if */
+    else
+    {
+        /* 24 bit pcm */
+        pWORD32 pin_24bitpcm=(WORD32 *)pin;
+
+        index = 0;
+        while(channels*bufsize > index)
+        {
+            ret_val = fread(&val,THREE_BYTES_PER_SAMPLE,1,fp_in);
+
+            curr_index++;
+
+            if (curr_index > total_length)
+                break;
+
+            /* Make the input sample MSB aligned */
+            val <<= 8;
+
+            pin_24bitpcm[index] = val;
+            ++index;
+
+            insize += ret_val;
+            
+        }
+
+    }
+
+    return insize/channels;
 }
 
 /* Read interleaved input pcm samples */
@@ -500,7 +566,7 @@ int xa_src_pp_main_process (int argc, char **argv)
 
     /* Display the Tensilica identification message */
     fprintf(stdout, "\n%s LIB version : %s  API version : %s\n", pb_process_name, pb_lib_version, pb_api_version);
-    fprintf(stdout, "Tensilica, Inc. http://www.tensilica.com\n\n");
+    fprintf(stdout, "Cadence, Inc. https://www.cadence.com\n\n");
 #endif  //DISPLAY_MESSAGE
 
     /* ******************************************************************/
@@ -874,13 +940,28 @@ int xa_src_pp_main_process (int argc, char **argv)
     /* ******************************************************************/
     total_inp_samples = 0;
     total_out_samples = 0;
+
+    int total_length;
+    int curr_sample = 0;
+    if(is_wave)
+    {
+        total_length = wave_info.length / def_user_config.bytes_per_sample;
+    }
+
     while(1)
     {
 #ifdef PROFILE
         WORD32 samples_per_channel;
 #endif
-        insize = read_from_file(fp_in, ppin_buffer, bufsize, def_user_config.channels,def_user_config.bytes_per_sample);
-       
+        if(is_wave)
+        {
+            insize = read_from_wave_file(fp_in, ppin_buffer, bufsize, def_user_config.channels,def_user_config.bytes_per_sample, curr_sample, total_length);
+            curr_sample += (insize*def_user_config.channels);
+        }
+        else
+        {
+            insize = read_from_file(fp_in, ppin_buffer, bufsize, def_user_config.channels,def_user_config.bytes_per_sample);
+        }
         total_inp_samples += insize;
 
 #ifdef PROFILE
@@ -950,7 +1031,7 @@ int xa_src_pp_main_process (int argc, char **argv)
             {
                 break;
             }
-            def_user_config.drift_asrc = ( int)( (drift_float_runtime)*  ( (long long)1 << 31) ); /* converting drift_float to Q31 fixed value */
+            def_user_config.drift_asrc = ( long long)( (drift_float_runtime)*  ( (long long)1 << 31) ); /* converting drift_float to Q31 fixed value */
 
             err_code = (*p_xa_process_api)(xa_process_handle,
                                           XA_API_CMD_SET_CONFIG_PARAM,

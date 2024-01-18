@@ -41,8 +41,8 @@
 
 #define NOTIF_EVT_RPMSG_RECEIVED_DATA (1 << 0)
 #define NOTIF_EVT                     (NOTIF_EVT_RPMSG_RECEIVED_DATA)
-#define DSP_THREAD_STACK_SIZE (10 * 1024)
-#define DSP_THREAD_PRIORITY   (XOS_MAX_PRIORITY - 3)
+#define DSP_MAIN_THREAD_STACK_SIZE (20 * 1024)
+#define DSP_MAIN_THREAD_PRIORITY   (XOS_MAX_PRIORITY - 3)
 
 /*******************************************************************************
  * Prototypes
@@ -55,7 +55,7 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s);
  ******************************************************************************/
 
 dsp_handle_t dsp;
-static uint8_t dsp_thread_stack[DSP_THREAD_STACK_SIZE];
+static uint8_t dsp_main_thread_stack[DSP_MAIN_THREAD_STACK_SIZE];
 
 /*******************************************************************************
  * Code
@@ -291,12 +291,6 @@ int main(void)
     BOARD_InitClock();
     BOARD_InitDebugConsole();
 
-#ifdef XA_CLIENT_PROXY
-    /* Dummy I2S init for EAP */
-    i2s_config_t s_TxConfig;
-    I2S_TxGetDefaultConfig(&s_TxConfig);
-    I2S_TxInit(I2S1, &s_TxConfig);
-#endif
     /* Iniitalize DMA1 which will be shared by capturer and renderer. */
     DMA_Init(DMA1);
 
@@ -308,8 +302,8 @@ int main(void)
     /* SEMA42 init */
     SEMA42_Init(APP_SEMA42);
 
-    xos_thread_create(&thread_main, NULL, DSP_Main, &dsp, "DSP Main", dsp_thread_stack, DSP_THREAD_STACK_SIZE,
-                      DSP_THREAD_PRIORITY, 0, 0);
+    xos_thread_create(&thread_main, NULL, DSP_Main, &dsp, "DSP Main", dsp_main_thread_stack, DSP_MAIN_THREAD_STACK_SIZE,
+                      DSP_MAIN_THREAD_PRIORITY, 0, 0);
 
     /* Start XOS scheduler - does not return */
     xos_start(0);

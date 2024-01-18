@@ -81,6 +81,9 @@ TLV_INFO_SIZE = 4
 TLV_INFO_MAGIC = 0x6907
 TLV_PROT_INFO_MAGIC = 0x6908
 
+TLV_VENDOR_RES_MIN = 0x00a0
+TLV_VENDOR_RES_MAX = 0xfffe
+
 STRUCT_ENDIAN_DICT = {
         'little': '<',
         'big':    '>'
@@ -111,7 +114,12 @@ class TLV():
         """
         e = STRUCT_ENDIAN_DICT[self.endian]
         if isinstance(kind, int):
-            buf = struct.pack(e + 'BBH', kind, 0, len(payload))
+            if not TLV_VENDOR_RES_MIN <= kind <= TLV_VENDOR_RES_MAX:
+                msg = "Invalid custom TLV type value '0x{:04x}', allowed " \
+                      "value should be between 0x{:04x} and 0x{:04x}".format(
+                      kind, TLV_VENDOR_RES_MIN, TLV_VENDOR_RES_MAX)
+                raise click.UsageError(msg)
+            buf = struct.pack(e + 'HH', kind, len(payload))
         else:
             buf = struct.pack(e + 'BBH', TLV_VALUES[kind], 0, len(payload))
         self.buf += buf
@@ -164,13 +172,13 @@ class Image():
                 0x35, 0x52, 0x50, 0x0f,
                 0x2c, 0xb6, 0x79, 0x80, ])
         else:
-            align_lsb = self.max_align & 0x00ff
-            align_msb = (self.max_align & 0xff00) >> 8
-            self.boot_magic = bytes([
-                align_lsb, align_msb, 0x2d, 0xe1,
-                0x5d, 0x29, 0x41, 0x0b,
-                0x8d, 0x77, 0x67, 0x9c,
-                0x11, 0x0f, 0x1f, 0x8a, ])
+            lsb = self.max_align & 0x00ff
+            msb = (self.max_align & 0xff00) >> 8
+            align = bytes([msb, lsb]) if self.endian == "big" else bytes([lsb, msb])
+            self.boot_magic = align + bytes([0x2d, 0xe1,
+                                            0x5d, 0x29, 0x41, 0x0b,
+                                            0x8d, 0x77, 0x67, 0x9c,
+                                            0x11, 0x0f, 0x1f, 0x8a, ])
 
         if security_counter == 'auto':
             # Security counter has not been explicitly provided,
@@ -243,12 +251,11 @@ class Image():
                                                   self.enctlv_len)
                 trailer_addr = (self.base_addr + self.slot_size) - trailer_size
                 if self.confirm and not self.overwrite_only:
-                    magic_size = 16
-                    magic_align_size = align_up(magic_size, self.max_align)
+                    magic_align_size = align_up(len(self.boot_magic), self.max_align)
                     image_ok_idx = -(magic_align_size + self.max_align)
-                    flag = bytearray([self.erased_val] * magic_align_size)
+                    flag = bytearray([self.erased_val] * self.max_align)
                     flag[0] = 0x01 # image_ok = 0x01
-                    h.puts(trailer_addr + image_ok_idx, bytes(flag))
+                    h.puts(trailer_addr + trailer_size + image_ok_idx, bytes(flag))
                 h.puts(trailer_addr + (trailer_size - len(self.boot_magic)),
                        bytes(self.boot_magic))
             h.tofile(path, 'hex')
@@ -305,12 +312,19 @@ class Image():
         return cipherkey, ciphermac, pubk
 
     def create(self, key, public_key_format, enckey, dependencies=None,
-               sw_type=None, custom_tlvs=None, encrypt_keylen=128, clear=False):
+               sw_type=None, custom_tlvs=None, encrypt_keylen=128, clear=False, fixed_sig=None, pub_key=None, vector_to_sign=None):
         self.enckey = enckey
 
         # Calculate the hash of the public key
         if key is not None:
             pub = key.get_public_bytes()
+            sha = hashlib.sha256()
+            sha.update(pub)
+            pubbytes = sha.digest()
+        elif pub_key is not None:
+            if hasattr(pub_key, 'sign'):
+                print(os.path.basename(__file__) + ": sign the payload")
+            pub = pub_key.get_public_bytes()
             sha = hashlib.sha256()
             sha.update(pub)
             pubbytes = sha.digest()
@@ -428,20 +442,39 @@ class Image():
 
         tlv.add('SHA256', digest)
 
-        if key is not None:
+        if vector_to_sign == 'payload':
+            # Stop amending data to the image
+            # Just keep data vector which is expected to be signed
+            print(os.path.basename(__file__) + ': export payload')
+            return
+        elif vector_to_sign == 'digest':
+            self.payload = digest
+            print(os.path.basename(__file__) + ': export digest')
+            return
+
+        if key is not None or fixed_sig is not None:
             if public_key_format == 'hash':
                 tlv.add('KEYHASH', pubbytes)
             else:
                 tlv.add('PUBKEY', pub)
 
-            # `sign` expects the full image payload (sha256 done internally),
-            # while `sign_digest` expects only the digest of the payload
+            if key is not None and fixed_sig is None:
+                # `sign` expects the full image payload (sha256 done internally),
+                # while `sign_digest` expects only the digest of the payload
 
-            if hasattr(key, 'sign'):
-                sig = key.sign(bytes(self.payload))
+                if hasattr(key, 'sign'):
+                    print(os.path.basename(__file__) + ": sign the payload")
+                    sig = key.sign(bytes(self.payload))
+                else:
+                    print(os.path.basename(__file__) + ": sign the digest")
+                    sig = key.sign_digest(digest)
+                tlv.add(key.sig_tlv(), sig)
+                self.signature = sig
+            elif fixed_sig is not None and key is None:
+                tlv.add(pub_key.sig_tlv(), fixed_sig['value'])
+                self.signature = fixed_sig['value']
             else:
-                sig = key.sign_digest(digest)
-            tlv.add(key.sig_tlv(), sig)
+                raise click.UsageError("Can not sign using key and provide fixed-signature at the same time")
 
         # At this point the image was hashed + signed, we can remove the
         # protected TLVs from the payload (will be re-added later)
@@ -485,6 +518,9 @@ class Image():
         self.payload += tlv.get()
 
         self.check_trailer()
+
+    def get_signature(self):
+        return self.signature
 
     def add_header(self, enckey, protected_tlv_size, aes_length=128):
         """Install the image header."""

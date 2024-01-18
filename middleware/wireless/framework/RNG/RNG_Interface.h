@@ -14,10 +14,6 @@
 #include "EmbeddedTypes.h"
 #include <stddef.h>
 
-#ifndef gRngUseMutex_c
-#define gRngUseMutex_c TRUE
-#endif
-
 /*! *********************************************************************************
 *************************************************************************************
 * Public macros
@@ -68,6 +64,15 @@ extern "C" {
  *
  ********************************************************************************** */
 uint8_t RNG_Init(void);
+
+/*! *********************************************************************************
+ * \brief  Reinitialize the RNG Software Module
+ *         Depending on RNG HW module, reinitialization function may be required after
+ *         wake up from power down (S200 case in particular).
+ *
+ * \return  none
+ ********************************************************************************** */
+void RNG_ReInit(void);
 
 /*! *********************************************************************************
  * \brief  Read a random number from the HW RNG module.

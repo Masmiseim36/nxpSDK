@@ -18,7 +18,7 @@ Change log:
 #ifndef _MLAN_MBO_H
 #define _MLAN_MBO_H
 
-#ifdef CONFIG_MBO
+#ifdef CONFIG_DRIVER_MBO
 /** MBO attributes ID */
 enum MBO_ATTRIB_ID
 {

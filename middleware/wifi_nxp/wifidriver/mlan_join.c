@@ -327,6 +327,11 @@ static int wlan_update_rsn_ie(mlan_private *pmpriv,
     t_u8 oui[4] = {0x00, 0x0f, 0xac, 0x00};
 
     /* AKM Perference Order:
+       (12) AKM_SUITE_TYPE_1X_SUITEB_FT_SHA384  = 13
+       (11) AKM_SUITE_TYPE_1X_SUITEB_SHA384  = 12
+       (10) AKM_SUITE_TYPE_1X_SUITEB_SHA256  = 11
+       (9) AKM_SUITE_TYPE_1X_FT  = 3
+       (8) AKM_SUITE_TYPE_1X_SHA256  = 5
        (7) AKM_SUITE_TYPE_1X         = 1
        (6) AKM_SUITE_TYPE_FT_SAE     = 9   //Not supported in esupp
        (5) AKM_SUITE_TYPE_SAE        = 8
@@ -338,7 +343,7 @@ static int wlan_update_rsn_ie(mlan_private *pmpriv,
     */
     t_u8 akm_type_selected;
     t_u8 akm_type_id        = 0;
-    t_u8 akm_preference[19] = {0, 7, 1, 0, 3, 0, 2, 0, 5, 6, 0, 8, 9, 0, 0, 0, 0, 0, 4};
+    t_u8 akm_preference[19] = {0, 7, 1, 9, 3, 8, 2, 0, 5, 6, 0, 10, 11, 12, 0, 0, 0, 0, 4};
 
     int ap_mfpc = 0, ap_mfpr = 0, ret = MLAN_STATUS_SUCCESS;
 
@@ -427,11 +432,23 @@ static int wlan_update_rsn_ie(mlan_private *pmpriv,
             {
                 *akm_type = AssocAgentAuth_Open;
             }
+            else if (akm_type_id == 3)
+            {
+                *akm_type = AssocAgentAuth_Open;
+            }
+            else if (akm_type_id == 5)
+            {
+                *akm_type = AssocAgentAuth_Open;
+            }
             else if (akm_type_id == 11)
             {
                 *akm_type = AssocAgentAuth_Open;
             }
             else if (akm_type_id == 12)
+            {
+                *akm_type = AssocAgentAuth_Open;
+            }
+            else if (akm_type_id == 13)
             {
                 *akm_type = AssocAgentAuth_Open;
             }
@@ -471,15 +488,14 @@ static int wlan_update_rsn_ie(mlan_private *pmpriv,
         {
             if (ptr[3] < sizeof(akm_preference))
             {
-                if ((*akm_type == AssocAgentAuth_Open) && (ptr[3] == 6))
+#ifdef CONFIG_11R
+                if ((*akm_type == AssocAgentAuth_FastBss_Skip) && (ptr[3] == 13))
                 {
                     break;
                 }
-                else if ((*akm_type == AssocAgentAuth_Open) && (ptr[3] == 2))
-                {
-                    break;
-                }
-                else if ((*akm_type == AssocAgentAuth_Open) && (ptr[3] == 1))
+                else
+#endif
+                if ((*akm_type == AssocAgentAuth_Open) && (ptr[3] == 12))
                 {
                     break;
                 }
@@ -487,10 +503,40 @@ static int wlan_update_rsn_ie(mlan_private *pmpriv,
                 {
                     break;
                 }
-                else if ((*akm_type == AssocAgentAuth_Open) && (ptr[3] == 12))
+#ifdef CONFIG_11R
+                else if ((*akm_type == AssocAgentAuth_FastBss_Skip) && (ptr[3] == 3))
                 {
                     break;
                 }
+#endif
+                else if ((*akm_type == AssocAgentAuth_Open) && (ptr[3] == 5))
+                {
+                    break;
+                }
+                else if ((*akm_type == AssocAgentAuth_Open) && (ptr[3] == 1))
+                {
+                    break;
+                }
+#ifdef CONFIG_11R
+                else if ((*akm_type == AssocAgentAuth_FastBss) && (ptr[3] == 9))
+                {
+                    break;
+                }
+                else if ((*akm_type == AssocAgentAuth_FastBss_Skip) && (ptr[3] == 9))
+                {
+                    break;
+                }
+#endif
+                else if ((*akm_type == AssocAgentAuth_Wpa3Sae) && (ptr[3] == 8))
+                {
+                    break;
+                }
+#ifdef CONFIG_OWE
+                else if ((*akm_type == AssocAgentAuth_Owe) && (ptr[3] == 18))
+                {
+                    break;
+                }
+#endif
 #ifdef CONFIG_11R
                 else if ((*akm_type == AssocAgentAuth_FastBss) && (ptr[3] == 4))
                 {
@@ -505,26 +551,14 @@ static int wlan_update_rsn_ie(mlan_private *pmpriv,
                     break;
                 }
 #endif
-                else if ((*akm_type == AssocAgentAuth_Wpa3Sae) && (ptr[3] == 8))
+                if ((*akm_type == AssocAgentAuth_Open) && (ptr[3] == 6))
                 {
                     break;
                 }
-#ifdef CONFIG_11R
-                else if ((*akm_type == AssocAgentAuth_FastBss) && (ptr[3] == 9))
+                else if ((*akm_type == AssocAgentAuth_Open) && (ptr[3] == 2))
                 {
                     break;
                 }
-                else if ((*akm_type == AssocAgentAuth_FastBss_Skip) && (ptr[3] == 9))
-                {
-                    break;
-                }
-#endif
-#ifdef CONFIG_OWE
-                else if ((*akm_type == AssocAgentAuth_Owe) && (ptr[3] == 18))
-                {
-                    break;
-                }
-#endif
             }
             ptr += AKM_SUITE_LEN;
         }
@@ -627,12 +661,13 @@ t_u8 wlan_ft_akm_is_used(mlan_private *pmpriv, t_u8 *rsn_ie)
 {
     t_u8 *temp;
     t_u16 count;
-    t_u16 pairwise_cipher_count = 0;
-    t_u16 akm_suite_count       = 0;
-    t_u8 found                  = 0;
-    t_u8 rsn_ft_1x_oui[4]       = {0x00, 0x0f, 0xac, 0x03};
-    t_u8 rsn_ft_psk_oui[4]      = {0x00, 0x0f, 0xac, 0x04};
-    t_u8 rsn_ft_sae_oui[4]      = {0x00, 0x0f, 0xac, 0x09};
+    t_u16 pairwise_cipher_count  = 0;
+    t_u16 akm_suite_count        = 0;
+    t_u8 found                   = 0;
+    t_u8 rsn_ft_1x_oui[4]        = {0x00, 0x0f, 0xac, 0x03};
+    t_u8 rsn_ft_psk_oui[4]       = {0x00, 0x0f, 0xac, 0x04};
+    t_u8 rsn_ft_sae_oui[4]       = {0x00, 0x0f, 0xac, 0x09};
+    t_u8 rsn_ft_1x_sha384_oui[4] = {0x00, 0x0f, 0xac, 0x0d};
 
     ENTER();
 
@@ -671,7 +706,8 @@ t_u8 wlan_ft_akm_is_used(mlan_private *pmpriv, t_u8 *rsn_ie)
     {
         if (__memcmp(pmpriv->adapter, temp, rsn_ft_1x_oui, sizeof(rsn_ft_1x_oui)) == 0 ||
             __memcmp(pmpriv->adapter, temp, rsn_ft_psk_oui, sizeof(rsn_ft_psk_oui)) == 0 ||
-            __memcmp(pmpriv->adapter, temp, rsn_ft_sae_oui, sizeof(rsn_ft_sae_oui)) == 0)
+            __memcmp(pmpriv->adapter, temp, rsn_ft_sae_oui, sizeof(rsn_ft_sae_oui)) == 0 ||
+            __memcmp(pmpriv->adapter, temp, rsn_ft_1x_sha384_oui, sizeof(rsn_ft_1x_sha384_oui)) == 0)
         {
             found = 1;
             break;
@@ -777,7 +813,7 @@ mlan_status wlan_cmd_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
 #ifdef CONFIG_11R
     t_u8 ft_akm = 0;
 #endif
-#ifdef CONFIG_MBO
+#ifdef CONFIG_DRIVER_MBO
     t_u8 oper_class = 1;
 #endif
 
@@ -948,7 +984,11 @@ mlan_status wlan_cmd_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
             if (prsn_ie_tlv->header.len <= (sizeof(pmpriv->wpa_ie) - 2))
             {
                 (void)__memcpy(pmadapter, prsn_ie_tlv->rsn_ie, &pmpriv->wpa_ie[2], prsn_ie_tlv->header.len);
-                if (pmpriv->sec_info.wpa2_enabled)
+                if (pmpriv->sec_info.wpa2_enabled
+#ifdef CONFIG_WPA_SUPP_DPP
+                    && pmpriv->is_dpp_connect == MFALSE
+#endif
+                )
                 {
                     akm_type             = pauth_tlv ? wlan_le16_to_cpu(pauth_tlv->auth_type) : AssocAgentAuth_Auto;
                     t_u16 rsn_ie_tlv_len = prsn_ie_tlv->header.len;
@@ -1040,11 +1080,20 @@ mlan_status wlan_cmd_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
     }
 #endif
 
+#ifdef CONFIG_11AX
+    if ((IS_FW_SUPPORT_11AX(pmadapter)) && (!pbss_desc->disable_11n) &&
+        wlan_11ax_bandconfig_allowed(pmpriv, pbss_desc->bss_band))
+        wlan_cmd_append_11ax_tlv(pmpriv, pbss_desc, &pos);
+#endif
 
     (void)wlan_wmm_process_association_req(pmpriv, &pos, &pbss_desc->wmm_ie, pbss_desc->pht_cap);
 
 #ifdef CONFIG_11R
+#ifdef CONFIG_WPA_SUPP
+    if (pmpriv->md_ie_len != 0U)
+#else
     if (ft_akm == 1U)
+#endif
     {
         wlan_cmd_append_pass_through_ie(pmpriv, (IEEEtypes_Generic_t *)(void *)pmpriv->md_ie, &pos);
     }
@@ -1063,7 +1112,7 @@ mlan_status wlan_cmd_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
         pos += sizeof(host_mlme_tlv->header) + host_mlme_tlv->header.len;
     }
 
-#ifdef CONFIG_MBO
+#ifdef CONFIG_DRIVER_MBO
     wlan_get_curr_global_oper_class(pmpriv, pbss_desc->phy_param_set.ds_param_set.current_chan, BW_20MHZ, &oper_class);
     wlan_add_supported_oper_class_ie(pmpriv, &pos, oper_class);
 #endif
@@ -1264,6 +1313,12 @@ mlan_status wlan_ret_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
 
     pmpriv->curr_bss_params.band = (t_u8)pbss_desc->bss_band;
 
+    if (!pmpriv->adapter->country_ie_ignore)
+    {
+        wifi_event_completion(WIFI_EVENT_SYNC_REGION_CODE, WIFI_EVENT_REASON_SUCCESS,
+                              pbss_desc->country_info.country_code);
+    }
+
 
     if (pbss_desc->wmm_ie.vend_hdr.element_id == WMM_IE)
     {
@@ -1440,4 +1495,30 @@ t_u8 wlan_band_to_radio_type(IN t_u8 band)
 
     LEAVE();
     return ret_radio_type;
+}
+
+bool wlan_use_non_default_ht_vht_cap(IN BSSDescriptor_t *pbss_desc)
+{
+    /* If connect to 11ax or non-brcm AP, still use default HT/VHT cap */
+    if (
+#ifdef CONFIG_11AX
+        pbss_desc->phe_cap ||
+#endif
+        (!pbss_desc->brcm_ie_exist && !pbss_desc->epigram_ie_exist))
+        return false;
+
+    /* In HT cap, check if "Transmit Null Data Packet" is set to 0,
+     * In VHT cap, check if "Number of Sounding Dimensions" is set to 3,
+     * If both are true, do not use default HT/VHT cap */
+    if ((pbss_desc->pht_cap && (((pbss_desc->ht_cap_saved.ht_cap.tx_bf_cap >> 4) & 0x1) == 0x0))
+#ifdef CONFIG_11AC
+        && (!pbss_desc->pvht_cap ||
+            (pbss_desc->pvht_cap && (GET_VHTCAP_NUMSNDDM(pbss_desc->vht_cap_saved.vht_cap.vht_cap_info) == 0x2)))
+#endif
+    )
+    {
+        return true;
+    }
+
+    return false;
 }

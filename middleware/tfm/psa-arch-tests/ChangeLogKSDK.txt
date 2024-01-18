@@ -2,9 +2,12 @@
 @page middleware_log Middleware Change Log
  
 @section psa-arch-tests Arm Platform Security Architecture Test Suite for MCUXpresso SDK
-  The current version is based on psa-arch-tests v1.4, released 2022-10-28 (cf8bd7191219df9bdef387abcd750f0709283f98) on https://github.com/ARM-software/psa-arch-tests
+  The current version is based on psa-arch-tests v1.4, released 2023-07-07 (16ec358fc12b0ae87e9d0133c9c53abee03e4f2d) on https://github.com/ARM-software/psa-arch-tests
 
-  - 1.4_rev1
+  - 1.4 Rev2
+    - Ported psa-arch-tests v1.4 to MCUXpresso SDK. Based on the 2023-07-07 snapshot(16ec358fc12b0ae87e9d0133c9c53abee03e4f2d)
+
+  - 1.4 Rev1
     - Ported psa-arch-tests v1.4 to MCUXpresso SDK. Based on the 2022-10-28 snapshot(cf8bd7191219df9bdef387abcd750f0709283f98)
 
   - 1.4
@@ -19,10 +22,10 @@
   - 1.1
     - Ported psa-arch-tests v1.1 to MCUXpresso SDK. Based on the 2021-24-03 snapshot(b0635d9af8ba031e5d74614b2f0a811993dc122e).
 
-  - 1.0_rev2
+  - 1.0 Rev2
     - Ported psa-arch-tests v1.0 to MCUXpresso SDK. Based on the 2020-10-06 snapshot(a6b3351d36875a75d1b0e7eaacd975fc8304b789).
 
-  - 1.0_rev1
+  - 1.0 Rev1
     - Ported psa-arch-tests v1.0 to MCUXpresso SDK. Based on the 2020-08-10 snapshot(656685b76e33f16ae2417ca5559771d51e4a63f2).
 
   - 1.0

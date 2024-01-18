@@ -8,7 +8,7 @@
 
 #include "includes.h"
 
-#include "common.h"
+#include "utils/common.h"
 #include "eloop.h"
 #include "config.h"
 #include "eapol_supp/eapol_supp_sm.h"

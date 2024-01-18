@@ -120,7 +120,7 @@
  * \{
  * Describes Structures defined by the module.
  */
-typedef MCAP_HANDLE  HDP_HANDLE ;
+typedef MCAP_HANDLE  HDP_HANDLE;
 
 typedef MCAP_EVENT_NTF_CB  HDP_EVENT_NTF_CB;
 
@@ -128,9 +128,9 @@ typedef MCAP_L2CAP_CONFIG_CB  HDP_L2CAP_CONFIG_CB;
 
 typedef MCAP_MEP  HDP_MEP;
 
-typedef MCAP_MD_PARAMS  HDP_MD_PARAMS ;
+typedef MCAP_MD_PARAMS  HDP_MD_PARAMS;
 
-typedef MCAP_MC_CONNECT_PARAMS  HDP_MC_CONNECT_PARAMS ;
+typedef MCAP_MC_CONNECT_PARAMS  HDP_MC_CONNECT_PARAMS;
 /** \} */
 /** \} */
 /* --------------------------------------------- Macros */
@@ -237,40 +237,40 @@ typedef MCAP_MC_CONNECT_PARAMS  HDP_MC_CONNECT_PARAMS ;
         MCAP_UNPACK_8_BYTES(dst,src)
 
 #define HDP_WRITE_TIMESTAMP_CLOCK_INSTANT(dst,val)            \
-        MCAP_WRITE_TIMESTAMP_CLOCK_INSTANT(dst,val);
+        MCAP_WRITE_TIMESTAMP_CLOCK_INSTANT(dst,val)
 
 #define HDP_WRITE_TIMESTAMP_REQUIRED_ACCURACY(dst,val)        \
-        MCAP_WRITE_TIMESTAMP_REQUIRED_ACCURACY(dst,val);
+        MCAP_WRITE_TIMESTAMP_REQUIRED_ACCURACY(dst,val)
 
 #define HDP_WRITE_BLUETOOTH_CLOCK_ACCESS_RESOLUTION(dst,val)  \
-        MCAP_WRITE_BLUETOOTH_CLOCK_ACCESS_RESOLUTION(dst,val);
+        MCAP_WRITE_BLUETOOTH_CLOCK_ACCESS_RESOLUTION(dst,val)
 
 #define HDP_WRITE_SYNC_LEAD_TIME(dst,val)                     \
-        MCAP_WRITE_SYNC_LEAD_TIME(dst,val);
+        MCAP_WRITE_SYNC_LEAD_TIME(dst,val)
 
 #define HDP_WRITE_TIMESTAMP_NATIVE_RESOLUTION(dst,val)        \
-        MCAP_WRITE_TIMESTAMP_NATIVE_RESOLUTION(dst,val);
+        MCAP_WRITE_TIMESTAMP_NATIVE_RESOLUTION(dst,val)
 
 #define HDP_WRITE_TIMESTAMP_NATIVE_ACCURACY(dst,val)          \
-        MCAP_WRITE_TIMESTAMP_NATIVE_ACCURACY(dst,val);
+        MCAP_WRITE_TIMESTAMP_NATIVE_ACCURACY(dst,val)
 
 #define HDP_WRITE_TIMESTAMP_UPDATE_INFORMATION(dst,val)       \
-        MCAP_WRITE_TIMESTAMP_UPDATE_INFORMATION(dst,val);
+        MCAP_WRITE_TIMESTAMP_UPDATE_INFORMATION(dst,val)
 
 #define HDP_WRITE_BLUETOOTH_CLOCK_SYNC_TIME(dst,val)          \
-        MCAP_WRITE_BLUETOOTH_CLOCK_SYNC_TIME(dst,val);
+        MCAP_WRITE_BLUETOOTH_CLOCK_SYNC_TIME(dst,val)
 
 #define HDP_WRITE_TIMESTAMP_SYNC_TIME(dst,val)                \
-        MCAP_WRITE_TIMESTAMP_SYNC_TIME(dst,val);
+        MCAP_WRITE_TIMESTAMP_SYNC_TIME(dst,val)
 
 #define HDP_WRITE_TIMESTAMP_SAMPLE_ACCURACY(dst,val)          \
-        MCAP_WRITE_TIMESTAMP_SAMPLE_ACCURACY(dst,val);
+        MCAP_WRITE_TIMESTAMP_SAMPLE_ACCURACY(dst,val)
 
 #define BT_hdp_set_timestamp (handle,timestamp)               \
-        BT_mcap_set_timestamp (handle,timestamp);
+        BT_mcap_set_timestamp (handle,timestamp)
 
 #define BT_hdp_get_timestamp (handle,timestamp)               \
-        BT_mcap_get_timestamp (handle,timestamp);
+        BT_mcap_get_timestamp (handle,timestamp)
 
 #endif /* HDP_CLOCK_SYNC */
 /** \} */
@@ -286,113 +286,113 @@ typedef MCAP_MC_CONNECT_PARAMS  HDP_MC_CONNECT_PARAMS ;
  *  \brief To register Application End Point with HDP
  */
 #define BT_hdp_register(mep_info,mep_id)                      \
-        BT_mcap_register_mep(mep_info,mep_id);
+        BT_mcap_register_mep(mep_info,mep_id)
 
 
 /**
  *  \brief To initiate control channel connection with a remote device
  */
 #define BT_hdp_mc_connect_req(mcap_handle,mc_params)          \
-        BT_mcap_mc_connect_req(mcap_handle,mc_params);
+        BT_mcap_mc_connect_req(mcap_handle,mc_params)
 
 
 /**
  *  \brief To disconnect control channel connection with a remote device
  */
 #define BT_hdp_mc_disconnect_req(mcap_handle)                 \
-        BT_mcap_mc_disconnect_req(mcap_handle);
+        BT_mcap_mc_disconnect_req(mcap_handle)
 
 
 /**
  *  \brief To create data channel associated with a remote device.
  */
 #define BT_hdp_md_create_req(mcap_handle,md_params)           \
-        BT_mcap_md_create_req(mcap_handle,md_params);
+        BT_mcap_md_create_req(mcap_handle,md_params)
 
 
 /**
  *  \brief To reconnect data channel associated with a remote device.
  */
 #define BT_hdp_md_reconnect_req(mcap_handle,rem_data_ch_psm)  \
-        BT_mcap_md_reconnect_req(mcap_handle,rem_data_ch_psm);
+        BT_mcap_md_reconnect_req(mcap_handle,rem_data_ch_psm)
 
 
 /**
  *  \brief To abort data channel associated with a remote device.
  */
 #define BT_hdp_md_abort_req(mcap_handle)                      \
-        BT_mcap_md_abort_req(mcap_handle);
+        BT_mcap_md_abort_req(mcap_handle)
 
 
 /**
  *  \brief To disconnect data channel associated with a remote device.
  */
 #define BT_hdp_md_disconnect_req(mcap_handle)                 \
-        BT_mcap_md_disconnect_req(mcap_handle);
+        BT_mcap_md_disconnect_req(mcap_handle)
 
 
 /**
  *  \brief To delete data channel associated with a remote device.
  */
 #define BT_hdp_md_delete_req(mcap_handle)                     \
-        BT_mcap_md_delete_req(mcap_handle);
+        BT_mcap_md_delete_req(mcap_handle)
 
 
 /**
  *  \brief To delete all data channel chnls associated with a Control Chnl
  */
 #define BT_hdp_md_delete_all_req(mcap_handle)                 \
-        BT_mcap_md_delete_all_req(mcap_handle);
+        BT_mcap_md_delete_all_req(mcap_handle)
 
 
 /**
  *  \brief To send data on the data channel associated with a remote device.
  */
 #define BT_hdp_md_write(mcap_handle,data,data_len)            \
-        BT_mcap_md_write(mcap_handle,data,data_len);
+        BT_mcap_md_write(mcap_handle,data,data_len)
 
 
 /**
  *  \brief To send the response to remote device data chnl create request
  */
 #define BT_hdp_md_create_rsp(mcap_handle,rsp_code,rsp_params,rsp_len)  \
-        BT_mcap_md_create_rsp(mcap_handle,rsp_code,rsp_params,rsp_len);
+        BT_mcap_md_create_rsp(mcap_handle,rsp_code,rsp_params,rsp_len)
 
 
 /**
  *  \brief To send the response to remote device for data chnl reconnect request
  */
 #define BT_hdp_md_reconnect_rsp(mcap_handle,rsp_code)          \
-        BT_mcap_md_reconnect_rsp(mcap_handle,rsp_code);
+        BT_mcap_md_reconnect_rsp(mcap_handle,rsp_code)
 
 
 /**
  *  \brief Routine to send the response for control channel connect req
  */
 #define BT_hdp_mc_connect_rsp(mcap_handle,rsp_code)            \
-        BT_mcap_mc_connect_rsp(mcap_handle,rsp_code);
+        BT_mcap_mc_connect_rsp(mcap_handle,rsp_code)
 
 
 #ifdef HDP_CLOCK_SYNC
 
 #define BT_hdp_sync_cap_req(handle,req_accuracy)               \
-        BT_mcap_sync_cap_req(handle,req_accuracy);
+        BT_mcap_sync_cap_req(handle,req_accuracy)
 
 
 #define BT_hdp_sync_cap_rsp(handle,rsp_code,rsp_params)        \
-        BT_mcap_sync_cap_rsp(handle,rsp_code,rsp_params);
+        BT_mcap_sync_cap_rsp(handle,rsp_code,rsp_params)
 
 
 #define BT_hdp_sync_set_req(handle,req_params)                 \
-        BT_mcap_sync_set_req(handle,req_params);
+        BT_mcap_sync_set_req(handle,req_params)
 
 
 #define BT_hdp_sync_set_rsp(handle,rsp_code,rsp_params)        \
-        BT_mcap_sync_set_rsp(handle,rsp_code,rsp_params);
+        BT_mcap_sync_set_rsp(handle,rsp_code,rsp_params)
 
 
 #define BT_hdp_sync_info_ind(handle,params)                    \
-        BT_mcap_sync_info_ind(handle,params);
+        BT_mcap_sync_info_ind(handle,params)
 
 #endif /* HDP_CLOCK_SYNC */
 /** \} */

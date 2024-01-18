@@ -11,7 +11,7 @@
 
 #ifdef CONFIG_INTERNAL_AES_UNWRAP
 
-#include "common.h"
+#include "utils/common.h"
 #include "aes.h"
 #include "aes_wrap.h"
 

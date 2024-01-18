@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: I2C FreeRTOS Driver</title>
+<title>MCUXpresso SDK API Reference Manual: I2C DMA Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.14.0</span>
+   &#160;<span id="projectnumber">Rev 2.15.000</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,80 +99,247 @@ $(document).ready(function(){initNavTree('a00037.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">I2C FreeRTOS Driver<div class="ingroups"><a class="el" href="a00244.html">I2C: Inter-Integrated Circuit Driver</a></div></div>  </div>
+<div class="title">I2C DMA Driver<div class="ingroups"><a class="el" href="a00246.html">I2C: Inter-Integrated Circuit Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00377"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#a00377">i2c_rtos_handle_t</a></td></tr>
-<tr class="memdesc:a00377"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C FreeRTOS handle.  <a href="a00037.html#a00377">More...</a><br/></td></tr>
-<tr class="separator:a00377"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00364"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#a00364">_i2c_master_dma_handle</a></td></tr>
+<tr class="memdesc:a00364"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C master dma transfer structure.  <a href="a00037.html#a00364">More...</a><br/></td></tr>
+<tr class="separator:a00364"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gaefcede72c4058dbbc616ebbfd775f1a5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaefcede72c4058dbbc616ebbfd775f1a5"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#gaefcede72c4058dbbc616ebbfd775f1a5">I2C_MAX_DMA_TRANSFER_COUNT</a>&#160;&#160;&#160;1024</td></tr>
+<tr class="memdesc:gaefcede72c4058dbbc616ebbfd775f1a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum lenght of single DMA transfer (determined by capability of the DMA engine) <br/></td></tr>
+<tr class="separator:gaefcede72c4058dbbc616ebbfd775f1a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gab13fb9488effeb728350d3bf8d6c784a"><td class="memItemLeft" align="right" valign="top">typedef struct <br class="typebreak"/>
+<a class="el" href="a00037.html#a00364">_i2c_master_dma_handle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#gab13fb9488effeb728350d3bf8d6c784a">i2c_master_dma_handle_t</a></td></tr>
+<tr class="memdesc:gab13fb9488effeb728350d3bf8d6c784a"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C master dma handle typedef.  <a href="#gab13fb9488effeb728350d3bf8d6c784a">More...</a><br/></td></tr>
+<tr class="separator:gab13fb9488effeb728350d3bf8d6c784a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac464cb9c433f4447f0e3f0f47722793a"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#gac464cb9c433f4447f0e3f0f47722793a">i2c_master_dma_transfer_callback_t</a> )(I2C_Type *base, <a class="el" href="a00037.html#gab13fb9488effeb728350d3bf8d6c784a">i2c_master_dma_handle_t</a> *handle, <a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
+<tr class="memdesc:gac464cb9c433f4447f0e3f0f47722793a"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C master dma transfer callback typedef.  <a href="#gac464cb9c433f4447f0e3f0f47722793a">More...</a><br/></td></tr>
+<tr class="separator:gac464cb9c433f4447f0e3f0f47722793a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadab16a94d6fd8c8d5030d0b2a8a78f9f"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#gadab16a94d6fd8c8d5030d0b2a8a78f9f">flexcomm_i2c_dma_master_irq_handler_t</a> )(I2C_Type *base, <a class="el" href="a00037.html#gab13fb9488effeb728350d3bf8d6c784a">i2c_master_dma_handle_t</a> *handle)</td></tr>
+<tr class="memdesc:gadab16a94d6fd8c8d5030d0b2a8a78f9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typedef for master dma handler.  <a href="#gadab16a94d6fd8c8d5030d0b2a8a78f9f">More...</a><br/></td></tr>
+<tr class="separator:gadab16a94d6fd8c8d5030d0b2a8a78f9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga8a57a810d1c6632d3bf7dd2ea4e76ae5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#ga8a57a810d1c6632d3bf7dd2ea4e76ae5">FSL_I2C_FREERTOS_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00240.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 8))</td></tr>
-<tr class="memdesc:ga8a57a810d1c6632d3bf7dd2ea4e76ae5"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C FreeRTOS driver version 2.0.8.  <a href="#ga8a57a810d1c6632d3bf7dd2ea4e76ae5">More...</a><br/></td></tr>
-<tr class="separator:ga8a57a810d1c6632d3bf7dd2ea4e76ae5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2abc151af9c3437ca8da73905887d962"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#ga2abc151af9c3437ca8da73905887d962">FSL_I2C_DMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00242.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 1))</td></tr>
+<tr class="memdesc:ga2abc151af9c3437ca8da73905887d962"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C DMA driver version.  <a href="#ga2abc151af9c3437ca8da73905887d962">More...</a><br/></td></tr>
+<tr class="separator:ga2abc151af9c3437ca8da73905887d962"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-I2C RTOS Operation</h2></td></tr>
-<tr class="memitem:ga2d8b0de9d5d807257ac91df157233cae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#ga2d8b0de9d5d807257ac91df157233cae">I2C_RTOS_Init</a> (<a class="el" href="a00037.html#a00377">i2c_rtos_handle_t</a> *handle, I2C_Type *base, const <a class="el" href="a00035.html#a00376">i2c_master_config_t</a> *masterConfig, uint32_t srcClock_Hz)</td></tr>
-<tr class="memdesc:ga2d8b0de9d5d807257ac91df157233cae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes I2C.  <a href="#ga2d8b0de9d5d807257ac91df157233cae">More...</a><br/></td></tr>
-<tr class="separator:ga2d8b0de9d5d807257ac91df157233cae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabe3dc27604637a77cba04967097defb2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#gabe3dc27604637a77cba04967097defb2">I2C_RTOS_Deinit</a> (<a class="el" href="a00037.html#a00377">i2c_rtos_handle_t</a> *handle)</td></tr>
-<tr class="memdesc:gabe3dc27604637a77cba04967097defb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the I2C.  <a href="#gabe3dc27604637a77cba04967097defb2">More...</a><br/></td></tr>
-<tr class="separator:gabe3dc27604637a77cba04967097defb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0b090779ab62f02149066a2325feb868"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#ga0b090779ab62f02149066a2325feb868">I2C_RTOS_Transfer</a> (<a class="el" href="a00037.html#a00377">i2c_rtos_handle_t</a> *handle, i2c_master_transfer_t *transfer)</td></tr>
-<tr class="memdesc:ga0b090779ab62f02149066a2325feb868"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs I2C transfer.  <a href="#ga0b090779ab62f02149066a2325feb868">More...</a><br/></td></tr>
-<tr class="separator:ga0b090779ab62f02149066a2325feb868"><td class="memSeparator" colspan="2">&#160;</td></tr>
+I2C Block DMA Transfer Operation</h2></td></tr>
+<tr class="memitem:ga83d8463e42b12e7b797a3f928f51b3cb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#ga83d8463e42b12e7b797a3f928f51b3cb">I2C_MasterTransferCreateHandleDMA</a> (I2C_Type *base, <a class="el" href="a00037.html#gab13fb9488effeb728350d3bf8d6c784a">i2c_master_dma_handle_t</a> *handle, <a class="el" href="a00037.html#gac464cb9c433f4447f0e3f0f47722793a">i2c_master_dma_transfer_callback_t</a> callback, void *userData, <a class="el" href="a00016.html#gac4a65788d7e5762d16a41a50b2cd7956">dma_handle_t</a> *dmaHandle)</td></tr>
+<tr class="memdesc:ga83d8463e42b12e7b797a3f928f51b3cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Init the I2C handle which is used in transactional functions.  <a href="#ga83d8463e42b12e7b797a3f928f51b3cb">More...</a><br/></td></tr>
+<tr class="separator:ga83d8463e42b12e7b797a3f928f51b3cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8643ea43510b8d97b94db05766444cd2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#ga8643ea43510b8d97b94db05766444cd2">I2C_MasterTransferDMA</a> (I2C_Type *base, <a class="el" href="a00037.html#gab13fb9488effeb728350d3bf8d6c784a">i2c_master_dma_handle_t</a> *handle, <a class="el" href="a00036.html#ga7edd253f4df51a13bd0a6a0461b9f93a">i2c_master_transfer_t</a> *xfer)</td></tr>
+<tr class="memdesc:ga8643ea43510b8d97b94db05766444cd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a master dma non-blocking transfer on the I2C bus.  <a href="#ga8643ea43510b8d97b94db05766444cd2">More...</a><br/></td></tr>
+<tr class="separator:ga8643ea43510b8d97b94db05766444cd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4bf5fbe48e6776cbd6ef017b6785f745"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#ga4bf5fbe48e6776cbd6ef017b6785f745">I2C_MasterTransferGetCountDMA</a> (I2C_Type *base, <a class="el" href="a00037.html#gab13fb9488effeb728350d3bf8d6c784a">i2c_master_dma_handle_t</a> *handle, size_t *count)</td></tr>
+<tr class="memdesc:ga4bf5fbe48e6776cbd6ef017b6785f745"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get master transfer status during a dma non-blocking transfer.  <a href="#ga4bf5fbe48e6776cbd6ef017b6785f745">More...</a><br/></td></tr>
+<tr class="separator:ga4bf5fbe48e6776cbd6ef017b6785f745"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga209877e924b049c835adc6bfb8690f5a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#ga209877e924b049c835adc6bfb8690f5a">I2C_MasterTransferAbortDMA</a> (I2C_Type *base, <a class="el" href="a00037.html#gab13fb9488effeb728350d3bf8d6c784a">i2c_master_dma_handle_t</a> *handle)</td></tr>
+<tr class="memdesc:ga209877e924b049c835adc6bfb8690f5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abort a master dma non-blocking transfer in a early time.  <a href="#ga209877e924b049c835adc6bfb8690f5a">More...</a><br/></td></tr>
+<tr class="separator:ga209877e924b049c835adc6bfb8690f5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00377" id="a00377"></a>
+<a name="a00364" id="a00364"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct i2c_rtos_handle_t</td>
+          <td class="memname">struct _i2c_master_dma_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a7bea8caaad98edc94b9d6bb5161bda77"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7bea8caaad98edc94b9d6bb5161bda77"></a>
-I2C_Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#a7bea8caaad98edc94b9d6bb5161bda77">base</a></td></tr>
-<tr class="memdesc:a7bea8caaad98edc94b9d6bb5161bda77"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C base address. <br/></td></tr>
-<tr class="separator:a7bea8caaad98edc94b9d6bb5161bda77"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a14a4eb4501e50ef62dfb3729e0881525"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a14a4eb4501e50ef62dfb3729e0881525"></a>
-i2c_master_handle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#a14a4eb4501e50ef62dfb3729e0881525">drv_handle</a></td></tr>
-<tr class="memdesc:a14a4eb4501e50ef62dfb3729e0881525"><td class="mdescLeft">&#160;</td><td class="mdescRight">A handle of the underlying driver, treated as opaque by the RTOS layer. <br/></td></tr>
-<tr class="separator:a14a4eb4501e50ef62dfb3729e0881525"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a78159621d4e8e5d635a5034840e9b061"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a78159621d4e8e5d635a5034840e9b061"></a>
-<a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#a78159621d4e8e5d635a5034840e9b061">async_status</a></td></tr>
-<tr class="memdesc:a78159621d4e8e5d635a5034840e9b061"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transactional state of the underlying driver. <br/></td></tr>
-<tr class="separator:a78159621d4e8e5d635a5034840e9b061"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae4cc25f447861379d70d2e6a2807baf8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae4cc25f447861379d70d2e6a2807baf8"></a>
-SemaphoreHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#ae4cc25f447861379d70d2e6a2807baf8">mutex</a></td></tr>
-<tr class="memdesc:ae4cc25f447861379d70d2e6a2807baf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">A mutex to lock the handle during a transfer. <br/></td></tr>
-<tr class="separator:ae4cc25f447861379d70d2e6a2807baf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac7effed01f2bad89936114e26b96e3e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aac7effed01f2bad89936114e26b96e3e"></a>
-SemaphoreHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#aac7effed01f2bad89936114e26b96e3e">semaphore</a></td></tr>
-<tr class="memdesc:aac7effed01f2bad89936114e26b96e3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">A semaphore to notify and unblock task when the transfer ends. <br/></td></tr>
-<tr class="separator:aac7effed01f2bad89936114e26b96e3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf2dd6330c4a4b44666360169af28f86"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#abf2dd6330c4a4b44666360169af28f86">state</a></td></tr>
+<tr class="memdesc:abf2dd6330c4a4b44666360169af28f86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer state machine current state.  <a href="#abf2dd6330c4a4b44666360169af28f86">More...</a><br/></td></tr>
+<tr class="separator:abf2dd6330c4a4b44666360169af28f86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a479aa70d46951dae640df929c057194c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a479aa70d46951dae640df929c057194c"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#a479aa70d46951dae640df929c057194c">transferCount</a></td></tr>
+<tr class="memdesc:a479aa70d46951dae640df929c057194c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates progress of the transfer. <br/></td></tr>
+<tr class="separator:a479aa70d46951dae640df929c057194c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6956179b40f0dc18da0feaa64c27d71"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#ac6956179b40f0dc18da0feaa64c27d71">remainingBytesDMA</a></td></tr>
+<tr class="memdesc:ac6956179b40f0dc18da0feaa64c27d71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remaining byte count to be transferred using DMA.  <a href="#ac6956179b40f0dc18da0feaa64c27d71">More...</a><br/></td></tr>
+<tr class="separator:ac6956179b40f0dc18da0feaa64c27d71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab970cef0db268a603c5b280d828df5e"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#aab970cef0db268a603c5b280d828df5e">buf</a></td></tr>
+<tr class="memdesc:aab970cef0db268a603c5b280d828df5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffer pointer for current state.  <a href="#aab970cef0db268a603c5b280d828df5e">More...</a><br/></td></tr>
+<tr class="separator:aab970cef0db268a603c5b280d828df5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f4fd13448f10135df6556455b83ba36"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#a7f4fd13448f10135df6556455b83ba36">checkAddrNack</a></td></tr>
+<tr class="memdesc:a7f4fd13448f10135df6556455b83ba36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether to check the nack signal is detected during addressing.  <a href="#a7f4fd13448f10135df6556455b83ba36">More...</a><br/></td></tr>
+<tr class="separator:a7f4fd13448f10135df6556455b83ba36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a807eb5953a432d8457f5efb5b61eb9b3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00016.html#gac4a65788d7e5762d16a41a50b2cd7956">dma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#a807eb5953a432d8457f5efb5b61eb9b3">dmaHandle</a></td></tr>
+<tr class="memdesc:a807eb5953a432d8457f5efb5b61eb9b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The DMA handler used.  <a href="#a807eb5953a432d8457f5efb5b61eb9b3">More...</a><br/></td></tr>
+<tr class="separator:a807eb5953a432d8457f5efb5b61eb9b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad112ce7fc4ee03a99a8f3fb51af7c675"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00036.html#ga7edd253f4df51a13bd0a6a0461b9f93a">i2c_master_transfer_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#ad112ce7fc4ee03a99a8f3fb51af7c675">transfer</a></td></tr>
+<tr class="memdesc:ad112ce7fc4ee03a99a8f3fb51af7c675"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy of the current transfer info.  <a href="#ad112ce7fc4ee03a99a8f3fb51af7c675">More...</a><br/></td></tr>
+<tr class="separator:ad112ce7fc4ee03a99a8f3fb51af7c675"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58daa68f3e57c9e636ebb95821a61b48"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00037.html#gac464cb9c433f4447f0e3f0f47722793a">i2c_master_dma_transfer_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#a58daa68f3e57c9e636ebb95821a61b48">completionCallback</a></td></tr>
+<tr class="memdesc:a58daa68f3e57c9e636ebb95821a61b48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function called after dma transfer finished.  <a href="#a58daa68f3e57c9e636ebb95821a61b48">More...</a><br/></td></tr>
+<tr class="separator:a58daa68f3e57c9e636ebb95821a61b48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a099b697ee634b5f7989d49a1aa1ef035"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#a099b697ee634b5f7989d49a1aa1ef035">userData</a></td></tr>
+<tr class="memdesc:a099b697ee634b5f7989d49a1aa1ef035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback parameter passed to callback function.  <a href="#a099b697ee634b5f7989d49a1aa1ef035">More...</a><br/></td></tr>
+<tr class="separator:a099b697ee634b5f7989d49a1aa1ef035"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-
-</div>
-</div>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga8a57a810d1c6632d3bf7dd2ea4e76ae5"></a>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="abf2dd6330c4a4b44666360169af28f86"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_I2C_FREERTOS_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00240.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 8))</td>
+          <td class="memname">uint8_t _i2c_master_dma_handle::state</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ac6956179b40f0dc18da0feaa64c27d71"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t _i2c_master_dma_handle::remainingBytesDMA</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aab970cef0db268a603c5b280d828df5e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t* _i2c_master_dma_handle::buf</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a7f4fd13448f10135df6556455b83ba36"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool _i2c_master_dma_handle::checkAddrNack</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a807eb5953a432d8457f5efb5b61eb9b3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00016.html#gac4a65788d7e5762d16a41a50b2cd7956">dma_handle_t</a>* _i2c_master_dma_handle::dmaHandle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ad112ce7fc4ee03a99a8f3fb51af7c675"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00036.html#ga7edd253f4df51a13bd0a6a0461b9f93a">i2c_master_transfer_t</a> _i2c_master_dma_handle::transfer</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a58daa68f3e57c9e636ebb95821a61b48"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00037.html#gac464cb9c433f4447f0e3f0f47722793a">i2c_master_dma_transfer_callback_t</a> _i2c_master_dma_handle::completionCallback</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a099b697ee634b5f7989d49a1aa1ef035"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* _i2c_master_dma_handle::userData</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+
+</div>
+</div>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga2abc151af9c3437ca8da73905887d962"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FSL_I2C_DMA_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00242.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 1))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="gab13fb9488effeb728350d3bf8d6c784a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00037.html#a00364">_i2c_master_dma_handle</a> <a class="el" href="a00037.html#gab13fb9488effeb728350d3bf8d6c784a">i2c_master_dma_handle_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gac464cb9c433f4447f0e3f0f47722793a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* i2c_master_dma_transfer_callback_t)(I2C_Type *base, <a class="el" href="a00037.html#gab13fb9488effeb728350d3bf8d6c784a">i2c_master_dma_handle_t</a> *handle, <a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="gadab16a94d6fd8c8d5030d0b2a8a78f9f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* flexcomm_i2c_dma_master_irq_handler_t)(I2C_Type *base, <a class="el" href="a00037.html#gab13fb9488effeb728350d3bf8d6c784a">i2c_master_dma_handle_t</a> *handle)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -180,93 +347,39 @@ SemaphoreHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga2d8b0de9d5d807257ac91df157233cae"></a>
+<a class="anchor" id="ga83d8463e42b12e7b797a3f928f51b3cb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2C_RTOS_Init </td>
+          <td class="memname">void I2C_MasterTransferCreateHandleDMA </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00037.html#a00377">i2c_rtos_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">I2C_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00035.html#a00376">i2c_master_config_t</a> *&#160;</td>
-          <td class="paramname"><em>masterConfig</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>srcClock_Hz</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function initializes the I2C module and the related RTOS context.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>The RTOS I2C handle, the pointer to an allocated space for RTOS context. </td></tr>
-    <tr><td class="paramname">base</td><td>The pointer base address of the I2C instance to initialize. </td></tr>
-    <tr><td class="paramname">masterConfig</td><td>Configuration structure to set-up I2C in master mode. </td></tr>
-    <tr><td class="paramname">srcClock_Hz</td><td>Frequency of input clock of the I2C module. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>status of the operation. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gabe3dc27604637a77cba04967097defb2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2C_RTOS_Deinit </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00037.html#a00377">i2c_rtos_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>handle</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function deinitializes the I2C module and the related RTOS context.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">handle</td><td>The RTOS I2C handle. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga0b090779ab62f02149066a2325feb868"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00240.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2C_RTOS_Transfer </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00037.html#a00377">i2c_rtos_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00037.html#gab13fb9488effeb728350d3bf8d6c784a">i2c_master_dma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">i2c_master_transfer_t *&#160;</td>
-          <td class="paramname"><em>transfer</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00037.html#gac464cb9c433f4447f0e3f0f47722793a">i2c_master_dma_transfer_callback_t</a>&#160;</td>
+          <td class="paramname"><em>callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>userData</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00016.html#gac4a65788d7e5762d16a41a50b2cd7956">dma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>dmaHandle</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -275,15 +388,139 @@ SemaphoreHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="e
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function performs an I2C transfer according to data given in the transfer structure.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">handle</td><td>The RTOS I2C handle. </td></tr>
-    <tr><td class="paramname">transfer</td><td>Structure specifying the transfer parameters. </td></tr>
+    <tr><td class="paramname">base</td><td>I2C peripheral base address </td></tr>
+    <tr><td class="paramname">handle</td><td>pointer to i2c_master_dma_handle_t structure </td></tr>
+    <tr><td class="paramname">callback</td><td>pointer to user callback function </td></tr>
+    <tr><td class="paramname">userData</td><td>user param passed to the callback function </td></tr>
+    <tr><td class="paramname">dmaHandle</td><td>DMA handle pointer </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>status of the operation. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga8643ea43510b8d97b94db05766444cd2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2C_MasterTransferDMA </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00037.html#gab13fb9488effeb728350d3bf8d6c784a">i2c_master_dma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00036.html#ga7edd253f4df51a13bd0a6a0461b9f93a">i2c_master_transfer_t</a> *&#160;</td>
+          <td class="paramname"><em>xfer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>I2C peripheral base address </td></tr>
+    <tr><td class="paramname">handle</td><td>pointer to i2c_master_dma_handle_t structure </td></tr>
+    <tr><td class="paramname">xfer</td><td>pointer to transfer structure of i2c_master_transfer_t </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_Success</td><td>Sucessully complete the data transmission. </td></tr>
+    <tr><td class="paramname">kStatus_I2C_Busy</td><td>Previous transmission still not finished. </td></tr>
+    <tr><td class="paramname">kStatus_I2C_Timeout</td><td>Transfer error, wait signal timeout. </td></tr>
+    <tr><td class="paramname">kStatus_I2C_ArbitrationLost</td><td>Transfer error, arbitration lost. </td></tr>
+    <tr><td class="paramname">kStataus_I2C_Nak</td><td>Transfer error, receive Nak during transfer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga4bf5fbe48e6776cbd6ef017b6785f745"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00242.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> I2C_MasterTransferGetCountDMA </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00037.html#gab13fb9488effeb728350d3bf8d6c784a">i2c_master_dma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>I2C peripheral base address </td></tr>
+    <tr><td class="paramname">handle</td><td>pointer to i2c_master_dma_handle_t structure </td></tr>
+    <tr><td class="paramname">count</td><td>Number of bytes transferred so far by the non-blocking transaction. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga209877e924b049c835adc6bfb8690f5a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void I2C_MasterTransferAbortDMA </td>
+          <td>(</td>
+          <td class="paramtype">I2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00037.html#gab13fb9488effeb728350d3bf8d6c784a">i2c_master_dma_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>handle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>I2C peripheral base address </td></tr>
+    <tr><td class="paramname">handle</td><td>pointer to i2c_master_dma_handle_t structure </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

@@ -1,22 +1,24 @@
 var a00052 =
 [
-    [ "otfad_encryption_config_t", "a00052.html#a00411", [
-      [ "valid", "a00052.html#ac3b63de8b750379ea5624f7d74531be5", null ],
-      [ "AESdecryption", "a00052.html#af3b269b47f488c714d5eb1ad437d7256", null ],
-      [ "readOnly", "a00052.html#a1d3e2eb36d914a36177a9da94b8e2d58", null ],
-      [ "contextIndex", "a00052.html#a5070e3bdeacf35ab6193b802e2018bed", null ],
-      [ "startAddr", "a00052.html#a5ff083c0b5489ee6d8b5a04e64368daf", null ],
-      [ "endAddr", "a00052.html#a68bcebd88fbdfaf8520e351beb35299d", null ],
-      [ "key", "a00052.html#a97f159aa4d63c763126f1622446d2dd9", null ],
-      [ "counter", "a00052.html#a0fcc7e04b556eeefa09a33c64886fc88", null ]
+    [ "_otfad_encryption_config", "a00052.html#a00404", [
+      [ "valid", "a00052.html#a1cb78fa06289056ac14f0fc005a1668a", null ],
+      [ "AESdecryption", "a00052.html#acb19041cc58492f8a017804a4df4dce8", null ],
+      [ "readOnly", "a00052.html#a9b1429dd23d029a4f2836f8339c55b9e", null ],
+      [ "contextIndex", "a00052.html#ac51567d3c9f496bcecedd3e5cfe328f4", null ],
+      [ "startAddr", "a00052.html#ab87136c486c1734105d8d43fa946be43", null ],
+      [ "endAddr", "a00052.html#ac828c03229990cbc659bca3ff7ac80ec", null ],
+      [ "key", "a00052.html#a6427bccbb63e1f833102933d8e4940a2", null ],
+      [ "counter", "a00052.html#af4a4171419d04f3e330ddd5781432cec", null ]
     ] ],
-    [ "otfad_config_t", "a00052.html#a00410", [
-      [ "forceSVM", "a00052.html#a16643b191f1894c6fc34ed9962901cda", null ],
-      [ "forceLDM", "a00052.html#ac3387ca22cc5f1bae397650f2f19255a", null ],
-      [ "restrictedRegAccess", "a00052.html#a6b97e383ed84409188ed2bd96217b735", null ],
-      [ "enableOTFAD", "a00052.html#ae9ecf4b2fc829d31f9fbe2ffa0e0ebd5", null ]
+    [ "_otfad_config", "a00052.html#a00403", [
+      [ "forceSVM", "a00052.html#a74de234f0a7a7e7f1b292878cb823dfc", null ],
+      [ "forceLDM", "a00052.html#acfe2b6482b0a8e35e6562b2ed10d3b9d", null ],
+      [ "restrictedRegAccess", "a00052.html#a2865c0afcc93d19ad54ec6f440ca46bf", null ],
+      [ "enableOTFAD", "a00052.html#a5506b60d77173b44913cc06390b753ea", null ]
     ] ],
-    [ "FSL_OTFAD_DRIVER_VERSION", "a00052.html#ga20f3f7f4a4d28843e4dcba42fe074de4", [
+    [ "FSL_OTFAD_DRIVER_VERSION", "a00052.html#ga20f3f7f4a4d28843e4dcba42fe074de4", null ],
+    [ "otfad_encryption_config_t", "a00052.html#ga828408bc7f3f0b2dfda7411a0c94b8e7", null ],
+    [ "otfad_config_t", "a00052.html#ga98b90973600f36ddd230dcad13200323", [
       [ "kStatus_OTFAD_ResRegAccessMode", "a00052.html#ggafa9be5679ab03d785820f2474c5ccc6eab86672f372b394bddf19bc570929597c", null ],
       [ "kStatus_OTFAD_AddressError", "a00052.html#ggafa9be5679ab03d785820f2474c5ccc6eada2a68470d9b60529fde6beab292e72f", null ],
       [ "kStatus_OTFAD_RegionOverlap", "a00052.html#ggafa9be5679ab03d785820f2474c5ccc6ea94765e8e9e448cfa441e2134f87a842f", null ],

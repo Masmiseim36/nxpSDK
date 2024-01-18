@@ -8,7 +8,7 @@
 
 #include "includes.h"
 
-#include "common.h"
+#include "utils/common.h"
 #include "utils/ip_addr.h"
 
 const char *hostapd_ip_txt(const struct hostapd_ip_addr *addr, char *buf, size_t buflen)

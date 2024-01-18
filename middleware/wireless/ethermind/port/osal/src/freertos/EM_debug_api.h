@@ -3,7 +3,7 @@
  *  \file EM_debug_api.h
  *
  *  This Header File contains the APIs and the ADTs exported by the
- *  EtherMind Debug Library for Linux (User-mode).
+ *  EtherMind Debug Library for FreeRTOS.
  */
 
 /*

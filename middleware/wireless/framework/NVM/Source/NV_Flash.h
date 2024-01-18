@@ -1,6 +1,6 @@
 /*! *********************************************************************************
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2017, 2023 NXP
  * All rights reserved.
  *
  * \file
@@ -194,23 +194,28 @@ typedef enum NVM_VirtualPageID_tag
 {
     gFirstVirtualPage_c = 0,
     gSecondVirtualPage_c,
-    gVirtualPageNone_c
+    gVirtualPageNone_c,
 } NVM_VirtualPageID_t;
 
+#define gVirtualPageNb_c (uint8_t) gVirtualPageNone_c
 /*
  * Name: NVM_VirtualPageProperties_t
  * Description: virtual page properties type definition
  */
 typedef struct NVM_VirtualPageProperties_tag
 {
-    uint32_t NvRawSectorStartAddress;
-    uint32_t NvRawSectorEndAddress;
-    uint8_t  NvRawSectorsCount;
-    uint32_t NvTotalPageSize;
-    uint32_t NvLastMetaInfoAddress;
+    uint32_t NvRawSectorStartAddress; /*< Virtual page start address in flash */
+    uint32_t NvRawSectorEndAddress;   /*< Virtual page end address in flash */
+    uint8_t  NvRawSectorsCount;       /*< Number of flash sectors contituting one virtual page  */
+    uint32_t NvTotalPageSize;         /*< Virtual page size in bytes - number of flash sector times sector size */
+    uint32_t NvLastMetaInfoAddress;   /*< Most recent record meta information written to flash */
 #if gUnmirroredFeatureSet_d
-    uint32_t NvLastMetaUnerasedInfoAddress;
+    uint32_t NvLastMetaUnerasedInfoAddress; /*< Frontier above which page is still in blank state */
 #endif
+    bool_t has_ecc_faults;  /*< ECC fault were discovered in page at initialization :
+                             *  can be true only when gNvSalvageFromEccFault_d is defined */
+    uint32_t CounterTop;    /*< Virtual Page version number read at bottom of page */
+    uint32_t CounterBottom; /*< Virtual Page version number read at top of page */
 } NVM_VirtualPageProperties_t;
 
 typedef struct NVM_ErasePageCmdStatus_tag
@@ -220,6 +225,14 @@ typedef struct NVM_ErasePageCmdStatus_tag
     uint32_t            NvSectorAddress;
 } NVM_ErasePageCmdStatus_t;
 
+typedef enum
+{
+    OP_NONE,
+    OP_SAVE_ALL,
+    OP_SAVE_SINGLE,
+    OP_ERASE_NEXT_PART,
+} eNvFlashOp_t;
+
 /*
  * Name: NVM_TableEntryInfo_t
  * Description: table entry indexes type definition
@@ -228,7 +241,7 @@ typedef struct NVM_TableEntryInfo_tag
 {
     NvTableEntryId_t entryId;
     uint16_t         elementIndex;
-    bool_t           saveRestoreAll;
+    eNvFlashOp_t     op_type;
 } NVM_TableEntryInfo_t;
 
 /*
@@ -242,22 +255,6 @@ typedef struct NVM_SaveQueue_tag
     uint16_t             Tail;                              /* write index */
     uint16_t             EntriesCount;                      /* entries count */
 } NVM_SaveQueue_t;
-
-/*
- * Name: NVM_FlexMetaInfo_t
- * Description: FlexNVM meta information type definition
- */
-#if gNvUseFlexNVM_d
-typedef union NVM_FlexMetaInfo_tag
-{
-    uint32_t rawValue;
-    struct
-    {
-        uint16_t NvDataEntryID;
-        uint16_t NvDataOffset;
-    } fields;
-} NVM_FlexMetaInfo_t;
-#endif
 
 /*****************************************************************************
  ******************************************************************************

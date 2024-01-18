@@ -9,7 +9,7 @@
 #include "includes.h"
 
 #ifdef CONFIG_WPS
-#include "common.h"
+#include "utils/common.h"
 #include "crypto/sha256.h"
 #include "wps_i.h"
 

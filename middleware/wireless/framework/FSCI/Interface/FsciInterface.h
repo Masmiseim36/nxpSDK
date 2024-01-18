@@ -224,7 +224,6 @@ typedef enum
 } gFsciStatus_t;
 
 /*!
- * \PACKED_STRUCT clientPacketHdr_t
  * \brief Data type definition for format of packet header exchanged between the external client and FSCI
  */
 typedef PACKED_STRUCT clientPacketHdr_tag
@@ -237,7 +236,6 @@ typedef PACKED_STRUCT clientPacketHdr_tag
 clientPacketHdr_t;
 
 /*!
- * \PACKED_STRUCT clientPacketStructured_t
  * \brief Data type definition for format of packets exchanged between the external client and FSCI.
  *
  * \details The terminal checksum is actually stored at payload[len].

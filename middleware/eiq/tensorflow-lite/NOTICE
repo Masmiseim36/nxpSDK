@@ -2,3 +2,7 @@ This product includes Cadence HiFi4 Neural Network (NN) Library for devices with
 Xtensa core (i.MX RT685 and i.MX RT595), which is available under a proprietary
 license (see third_party/xa_nnlib_hifi4/license.txt) at
 https://github.com/foss-xtensa/nnlib-hifi4.
+
+This product includes NXP eIQ Neutron NPU driver and firmware for devices with
+eIQ Neutron NPU (MCX-N9xx and MCX-N5xx), which is available under a proprietary
+license (see ../../../LA_OPT_NXP_Software_License.txt) in third_party/neutron.

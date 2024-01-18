@@ -82,11 +82,11 @@ void FLib_MemCpy(void *pDst, const void *pSrc, uint32_t cBytes)
 #if gUseToolchainMemFunc_d
     (void)memcpy(pDst, pSrc, cBytes);
 #else
-    while (cBytes)
+    while (cBytes != 0U)
     {
-        *((uint8_t *)pDst) = *((uint8_t *)pSrc);
+        *((uint8_t *)pDst) = *((const uint8_t *)pSrc);
         pDst               = ((uint8_t *)pDst) + 1;
-        pSrc               = ((uint8_t *)pSrc) + 1;
+        pSrc               = ((const uint8_t *)pSrc) + 1;
         cBytes--;
     }
 #endif
@@ -309,14 +309,14 @@ bool_t FLib_MemCmp(const void *pData1, /* IN: First memory block to compare */
 #else
     while (cBytes != 0UL)
     {
-        if (*((uint8_t *)pData1) != *((const uint8_t *)pData2))
+        if (*((const uint8_t *)pData1) != *((const uint8_t *)pData2))
         {
             status = FALSE;
             break;
         }
 
-        pData2 = (uint8_t *)pData2 + 1U;
-        pData1 = (uint8_t *)pData1 + 1U;
+        pData2 = (const uint8_t *)pData2 + 1U;
+        pData1 = (const uint8_t *)pData1 + 1U;
         cBytes--;
     }
 #endif
@@ -384,6 +384,28 @@ void FLib_MemSet(void *pData, uint8_t value, uint32_t cBytes)
         ((uint8_t *)pData)[--cBytes] = value;
     }
 #endif
+}
+
+/*! *********************************************************************************
+ * \brief  This function sets all words in a specified buffer to a set value.
+ *
+ * \param[in,out]  pData  Address of the buffer to set.
+ *
+ * \param[in]  value  Set value.
+ *
+ * \param[in]  cWords Number of words to set in the buffer.
+ *
+ * \post
+ *
+ * \remarks
+ *
+ ********************************************************************************** */
+void FLib_MemSet32Aligned(void *pData, uint32_t value, uint32_t cWords)
+{
+    while (cWords != 0UL)
+    {
+        ((uint32_t *)pData)[--cWords] = value;
+    }
 }
 
 /*! *********************************************************************************
@@ -577,14 +599,14 @@ void FLib_ReverseByteOrderInPlace(void *buf, uint32_t cBytes)
     else
     {
         uint8_t  tmpU8;
-        uint8_t *st  = buf;
-        uint8_t *end = &st[cBytes - 1u];
-        i            = cBytes / 2u;
+        uint8_t *st    = buf;
+        uint8_t *l_end = &st[cBytes - 1u];
+        i              = cBytes / 2u;
         while (i > 0u)
         {
-            tmpU8  = *end;
-            *end-- = *st;
-            *st++  = tmpU8;
+            tmpU8    = *l_end;
+            *l_end-- = *st;
+            *st++    = tmpU8;
             i--;
         }
     }

@@ -78,7 +78,7 @@ extern int      xf_set_priorities(xf_proxy_t *proxy, UWORD32 core, UWORD32 n_rt_
 
 /* ...shared buffers operations */
 extern int      xf_pool_alloc(xf_proxy_t *proxy, UWORD32 number, UWORD32 length, xf_pool_type_t type, xf_pool_t **pool, WORD32 id);
-extern int     xf_pool_free(xf_pool_t *pool, WORD32 id);
+extern int      xf_pool_free(xf_pool_t *pool, WORD32 id, xf_pool_type_t mem_pool_type);
 extern xf_buffer_t * xf_buffer_get(xf_pool_t *pool);
 extern void     xf_buffer_put(xf_buffer_t *buffer);
 
@@ -91,3 +91,7 @@ extern void     xf_proxy_close(xf_proxy_t *proxy);
 extern int xf_create_event_channel(xf_handle_t *src, UWORD32 src_config_param, xf_handle_t *dst, UWORD32 dst_config_param, UWORD32 num, UWORD32 size, UWORD32 align);
 extern int xf_delete_event_channel(xf_handle_t *src, UWORD32 src_config_param, xf_handle_t *dst, UWORD32 dst_config_param);
 #endif
+
+/* ...memory alloc/free functions for internal requirements of App i/f layer */
+extern XAF_ERR_CODE xaf_malloc(void **buf_ptr, int size, int pool_id);
+extern void xaf_free(void *buf, int pool_id);

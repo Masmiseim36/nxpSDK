@@ -50,5 +50,5 @@
 /* ...size of the local memory pool (in bytes) */
 #define XF_CFG_LOCAL_IPC_POOL_SIZE      (1024 << 10)
 
-/* ...scratch memory is 8-bytes aligned */
-#define XF_CFG_CODEC_SCRATCHMEM_ALIGN   8
+/* ...scratch memory is 16-bytes aligned */
+#define XF_CFG_CODEC_SCRATCHMEM_ALIGN   16

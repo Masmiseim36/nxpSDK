@@ -16,7 +16,7 @@ Currently MCUboot works with the following operating systems and SoCs:
 - [Apache NuttX](https://nuttx.apache.org/)
 - [RIOT](https://www.riot-os.org/)
 - [Mbed OS](https://os.mbed.com/)
-- [Espressif IDF](https://idf.espressif.com/)
+- [Espressif](https://www.espressif.com/)
 - [Cypress/Infineon](https://www.cypress.com/)
 
 RIOT is supported only as a boot target. We will accept any new port
@@ -38,15 +38,16 @@ The MCUboot documentation is composed of the following pages:
 - [Encrypted images](encrypted_images.md)
 - [imgtool](imgtool.md) - image signing and key management
 - [ECDSA](ecdsa.md) - information about ECDSA signature formats
+- [Serial Recovery](serial_recovery.md) - MCUmgr as the serial recovery protocol
 - Usage instructions:
   - [Zephyr](readme-zephyr.md)
   - [Apache Mynewt](readme-mynewt.md)
   - [Apache NuttX](readme-nuttx.md)
   - [RIOT](readme-riot.md)
   - [Mbed OS](readme-mbed.md)
-  - [Espressif IDF](readme-espressif.md)
-  - [Cypress/Infineon](../boot/cypress/readme.md)
-  - [Simulator](../sim/README.rst)
+  - [Espressif](readme-espressif.md)
+  - [Cypress/Infineon](https://github.com/mcu-tools/mcuboot/tree/main/boot/cypress/README.md)
+  - [Simulator](https://github.com/mcu-tools/mcuboot/tree/main/sim/README.rst)
 - Testing
   - [Zephyr](testplan-zephyr.md) - Zephyr test plan
   - [Apache Mynewt](testplan-mynewt.md) - Apache Mynewt test plan

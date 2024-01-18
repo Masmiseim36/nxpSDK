@@ -1,50 +1,70 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2021-2023 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "BT_common.h"
 #include "fsl_common.h"
-
-#if (defined(WIFI_IW416_BOARD_AW_AM457_USD) || defined(WIFI_IW61x_BOARD_RD_USD) || \
+#include "fwdnld_intf_abs.h"
+#ifdef CONFIG_BT_IND_DNLD
+#include "wifi_bt_config.h"
+#include "fw_loader_uart.h"
+#endif
+#if (defined(WIFI_IW416_BOARD_AW_AM457_USD) || defined(WIFI_IW612_BOARD_RD_USD) || \
      defined(WIFI_IW416_BOARD_AW_AM510_USD) || defined(WIFI_IW416_BOARD_AW_AM510MA) || \
      defined(WIFI_88W8987_BOARD_AW_CM358_USD) || defined(WIFI_88W8987_BOARD_AW_CM358MA) || \
      defined(WIFI_IW416_BOARD_MURATA_1XK_USD) || defined(WIFI_IW416_BOARD_MURATA_1XK_M2) || \
      defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD) || defined (WIFI_88W8987_BOARD_MURATA_1ZM_M2) || \
-     defined (WIFI_IW61x_BOARD_MURATA_2EL_USD) || defined (WIFI_IW61x_BOARD_MURATA_2EL_M2))
+	 defined(WIFI_IW611_BOARD_MURATA_2DL_USD) || defined (WIFI_IW611_BOARD_MURATA_2DL_M2) || \
+     defined(WIFI_AW611_BOARD_UBX_JODY_W5_USD) || defined (WIFI_AW611_BOARD_UBX_JODY_W5_M2) || \
+	 defined (WIFI_IW612_BOARD_MURATA_2EL_USD) || defined (WIFI_IW612_BOARD_MURATA_2EL_M2) )
 
 #ifndef CONTROLLER_INIT_ESCAPE
-#if defined(SD8978)
-#include "sduartIW416_wlan_bt.h"
-#elif defined(SD8987)
-#include "sduart8987_wlan_bt.h"
-#elif defined(IW61x)
-#ifndef BT_THIRDPARTY_SUPPORT
-    #if ( defined (WIFI_IW61x_BOARD_MURATA_2EL_USD) || defined (WIFI_IW61x_BOARD_MURATA_2EL_M2) )
-    #include "sduart_nw61x_se.h" /*secure FC firmware*/
-    #else
-    #include "sduart_nw61x.h" /*non-secure FC firmware*/
-    #endif /* ( defined (WIFI_IW61x_BOARD_MURATA_2EL_USD) || defined (WIFI_IW61x_BOARD_MURATA_2EL_M2) )*/
-#endif
+#ifdef CONFIG_BT_IND_DNLD
+#if defined(SD8978) /*RB3P*/
+#include "uartIW416_bt.h"
+#elif defined(SD8987) /*CA2*/
+#include "uart8987_bt.h"
+#elif defined(SD9177) /*FC*/
+#if defined (WIFI_IW612_BOARD_RD_USD)
+#include "uart_nw61x.h" /*non-secured FC firmware*/
 #else
-#error The Wi-Fi module is unsupported
-#endif
+#include "uart_nw61x_se.h" /*secured FC firmware*/
+#endif /*defined (WIFI_IW612_BOARD_RD_USD)*/
+#else
+#error Controller module is unsupported
+#endif /*defined(SD8978)*/
+#else
+#if defined(SD8978) /*RB3P*/
+#include "sduartIW416_wlan_bt.h"
+#elif defined(SD8987) /*CA2*/
+#include "sduart8987_wlan_bt.h"
+#elif defined(SD9177) /*FC*/
+#if defined (WIFI_IW612_BOARD_RD_USD)
+#include "sduart_nw61x.h" /*non-secured FC firmware*/
+#else
+#include "sduart_nw61x_se.h" /*secured FC firmware*/
+#endif /*defined (WIFI_IW612_BOARD_RD_USD)*/
+#else
+#error Controller module is unsupported
+#endif /*defined(SD8978)*/
+#endif /*CONFIG_BT_IND_DNLD*/
 #endif /* CONTROLLER_INIT_ESCAPE */
-#include "sdio.h"
-#include "firmware_dnld.h"
 
+#include "sdio.h"
+#include "controller.h"
+#include "firmware_dnld.h"
 #include "fsl_adapter_uart.h"
 #include "fsl_os_abstraction.h"
-
-#include "controller.h"
 #include "controller_hci_uart.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BT_OP(ogf, ocf)                         ((ocf) | ((ogf) << 10))
-#define BT_OGF_VS                               0x3f
+#define BT_OP(ogf, ocf) ((ocf) | ((ogf) << 10))
+#define BT_OGF_VS       0x3f
 
 /* Weak function. */
 #if defined(__GNUC__)
@@ -71,24 +91,34 @@ static UART_HANDLE_DEFINE(s_controllerHciUartHandle);
 
 __WEAK_FUNC int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config);
 
-#ifndef BT_THIRDPARTY_SUPPORT
 /* Initialize the platform */
 void controller_init(void)
 {
 #ifndef CONTROLLER_INIT_ESCAPE
     int result;
-    /* Download firmware */
+    void *intf = NULL;
+    (void) result;
+#ifdef CONFIG_BT_IND_DNLD
+    /* BTonly firmware download over UART */
+    BOARD_WIFI_BT_Enable(true);
+    intf = uart_init_interface();
+    assert(intf != NULL);
+    result = firmware_download(bt_fw_bin, bt_fw_bin_len, intf, 0);
+    assert(result == FWDNLD_INTF_SUCCESS);
+#else
+    /* Combo firmware download over SDIO */
     result = sdio_init();
-    assert(WM_SUCCESS == result);
+    assert(API_SUCCESS == result);
+    intf = fwdnld_intf_init(FWDNLD_INTF_SDIO, NULL);
+    assert(intf != NULL);
     result = sdio_ioport_init();
-    assert(WM_SUCCESS == result);
-    result = firmware_download(wlan_fw_bin, wlan_fw_bin_len);
-    assert(WM_SUCCESS == result);
-    (void)result;
-#endif
+    assert(API_SUCCESS == result);
+    result = firmware_download(wlan_fw_bin, wlan_fw_bin_len, intf, 0);
+    assert(API_SUCCESS == result);
+#endif /*CONFIG_BT_IND_DNLD*/
+#endif /*CONTROLLER_INIT_ESCAPE*/
     controller_hci_uart_init();
 }
-#endif
 
 __WEAK_FUNC int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
@@ -98,7 +128,7 @@ __WEAK_FUNC int controller_hci_uart_get_configuration(controller_hci_uart_config
 static void controller_hci_uart_init(void)
 {
     uint16_t *opcode;
-    uint8_t  *param_len;
+    uint8_t *param_len;
     hal_uart_config_t config;
     controller_hci_uart_config_t hciUartConfig;
     uint8_t sendingBuffer[8];
@@ -109,9 +139,10 @@ static void controller_hci_uart_init(void)
     memset(recvBuffer, 0, sizeof(recvBuffer));
     memset(&hciUartConfig, 0, sizeof(hciUartConfig));
     memset(&config, 0, sizeof(config));
-#if (defined(WIFI_IW416_BOARD_AW_AM457_USD) || defined(WIFI_IW416_BOARD_AW_AM510_USD) || defined(WIFI_IW416_BOARD_AW_AM510MA) || \
-     defined(WIFI_IW416_BOARD_MURATA_1XK_USD) || defined(WIFI_IW416_BOARD_MURATA_1XK_M2) || \
-     defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD) || defined (WIFI_88W8987_BOARD_MURATA_1ZM_M2))
+#if (defined(WIFI_IW416_BOARD_AW_AM457_USD) || defined(WIFI_IW416_BOARD_AW_AM510_USD) ||      \
+     defined(WIFI_IW416_BOARD_AW_AM510MA) || defined(WIFI_IW416_BOARD_MURATA_1XK_USD) ||      \
+     defined(WIFI_IW416_BOARD_MURATA_1XK_M2) || defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD) || \
+     defined(WIFI_88W8987_BOARD_MURATA_1ZM_M2))
     /*delay to make sure controller is ready to receive command*/
     OSA_TimeDelay(100);
 #endif
@@ -139,18 +170,14 @@ static void controller_hci_uart_init(void)
 #endif
 
     /* Initialize UART with Adapter */
-    error = HAL_UartInit
-          (
-              (hal_uart_handle_t)s_controllerHciUartHandle,
-              &config
-          );
+    error = HAL_UartInit((hal_uart_handle_t)s_controllerHciUartHandle, &config);
     /* Check if Assert or Log and return? */
     assert(kStatus_HAL_UartSuccess == error);
-    sendingBuffer[0] = 0x01;
-    opcode = (uint16_t *)&sendingBuffer[1];
-    param_len = &sendingBuffer[3];
-    *opcode                                   = (uint16_t)BT_OP(BT_OGF_VS, 0x09);
-    *param_len                                = sizeof(hciUartConfig.runningBaudrate);
+    sendingBuffer[0]                   = 0x01;
+    opcode                             = (uint16_t *)&sendingBuffer[1];
+    param_len                          = &sendingBuffer[3];
+    *opcode                            = (uint16_t)BT_OP(BT_OGF_VS, 0x09);
+    *param_len                         = sizeof(hciUartConfig.runningBaudrate);
     *((uint32_t *)(&sendingBuffer[4])) = hciUartConfig.runningBaudrate;
     /*delay to make sure controller is ready to receive command*/
     OSA_TimeDelay(60);

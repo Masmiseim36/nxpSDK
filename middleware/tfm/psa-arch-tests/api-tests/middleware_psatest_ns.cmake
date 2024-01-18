@@ -11,11 +11,13 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/val/nspe/val_dispatcher.c
   ${CMAKE_CURRENT_LIST_DIR}/val/nspe/val_interfaces.c
   ${CMAKE_CURRENT_LIST_DIR}/val/nspe/val_peripherals.c
+  ${CMAKE_CURRENT_LIST_DIR}/val/nspe/val_platform.c
   ${CMAKE_CURRENT_LIST_DIR}/val/nspe/val_storage.c
   ${CMAKE_CURRENT_LIST_DIR}/val/common/val_target.c
   ${CMAKE_CURRENT_LIST_DIR}/platform/drivers/nvmem/pal_nvmem.c
   ${CMAKE_CURRENT_LIST_DIR}/platform/targets/tgt_dev_apis_nxp/nspe/pal_driver_intf.c
   ${CMAKE_CURRENT_LIST_DIR}/platform/targets/tgt_dev_apis_nxp/nspe/target_database.c
+  ${CMAKE_CURRENT_LIST_DIR}/platform/targets/common/nspe/pal_weak.c
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PUBLIC

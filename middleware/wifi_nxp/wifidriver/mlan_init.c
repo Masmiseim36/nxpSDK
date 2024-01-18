@@ -27,15 +27,15 @@ Change log:
         Global Variables
 ********************************************************/
 
-/* We are allocating BSS list globally as we need heap for other purposes */
-static BSSDescriptor_t BSS_List[MRVDRV_MAX_BSSID_LIST];
-
 //_IOBUFS_ALIGNED(SDIO_DMA_ALIGNMENT)
-#if defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098) || defined(IW61x)
+#if defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098) || defined(SD9177)
 static t_u8 mp_regs_buffer[MAX_MP_REGS + DMA_ALIGNMENT];
 #elif defined(SD8801)
 SDK_ALIGN(uint8_t mp_regs_buffer[MAX_MP_REGS], BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZE);
 #endif
+
+/* We are allocating BSS list globally as we need heap for other purposes */
+SDK_ALIGN(BSSDescriptor_t BSS_List[MRVDRV_MAX_BSSID_LIST], 32);
 
 /********************************************************
         Local Functions
@@ -59,10 +59,16 @@ mlan_status wlan_allocate_adapter(pmlan_adapter pmadapter)
     // fixme: this function will need during migration of legacy code.
     t_u8 chan_2g_size = 14;
 #ifdef CONFIG_5GHz_SUPPORT
+#ifdef CONFIG_UNII4_BAND_SUPPORT
+    t_u8 chan_5g_size = 34;
+#else
     t_u8 chan_5g_size    = 31;
+#endif
 #endif
 
     t_u32 buf_size;
+
+    (void)__memset(MNULL, &BSS_List, 0x00, sizeof(BSS_List));
 
     pmadapter->pscan_table = BSS_List;
     pmadapter->num_in_chan_stats = chan_2g_size;
@@ -82,7 +88,7 @@ mlan_status wlan_allocate_adapter(pmlan_adapter pmadapter)
        /* wmsdk: Use a statically allocated DMA aligned buffer */
 #if defined(SD8801)
     pmadapter->mp_regs = mp_regs_buffer;
-#elif defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098) || defined(IW61x)
+#elif defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098) || defined(SD9177)
     pmadapter->mp_regs = (t_u8 *)ALIGN_ADDR(mp_regs_buffer, DMA_ALIGNMENT);
 // mp_regs_buffer;
 #endif
@@ -140,6 +146,9 @@ mlan_status wlan_init_priv(pmlan_private priv)
         HostCmd_ACT_MAC_RTS_CTS_ENABLE | HostCmd_ACT_MAC_RX_ON | HostCmd_ACT_MAC_TX_ON |
         HostCmd_ACT_MAC_ETHERNETII_ENABLE;
 
+#ifdef CONFIG_GTK_REKEY_OFFLOAD
+    (void)__memset(pmadapter, &priv->gtk_rekey, 0, sizeof(priv->gtk_rekey));
+#endif
     (void)__memset(pmadapter, &priv->curr_bss_params, 0, sizeof(priv->curr_bss_params));
     priv->listen_interval = MLAN_DEFAULT_LISTEN_INTERVAL;
     wlan_11d_priv_init(priv);
@@ -149,6 +158,7 @@ mlan_status wlan_init_priv(pmlan_private priv)
     (void)__memset(pmadapter, &priv->uap_state_chan_cb, 0, sizeof(priv->uap_state_chan_cb));
     priv->num_drop_pkts = 0;
 
+    priv->wpa_is_gtk_set = MFALSE;
 
     priv->tx_bf_cap = 0;
     priv->wmm_required = MTRUE;
@@ -192,9 +202,9 @@ mlan_status wlan_init_priv(pmlan_private priv)
     priv->uap_host_based  = MFALSE;
 
 #ifdef CONFIG_WPA_SUPP
+    reset_ie_index();
     priv->default_scan_ies_len = 0;
-
-    priv->probe_req_index = -1;
+    priv->probe_req_index      = -1;
 #ifdef CONFIG_WPA_SUPP_AP
     priv->beacon_vendor_index = -1;
     priv->beacon_index        = 0;
@@ -202,6 +212,11 @@ mlan_status wlan_init_priv(pmlan_private priv)
     priv->assocresp_index     = 2;
     priv->beacon_wps_index    = 3;
 #endif
+#endif
+    priv->enable_tcp_ack_enh = MTRUE;
+
+#ifdef CONFIG_WPA_SUPP_DPP
+    priv->is_dpp_connect = MFALSE;
 #endif
 
     LEAVE();
@@ -229,7 +244,7 @@ t_void wlan_init_adapter(pmlan_adapter pmadapter)
 #if defined(SD8801)
     pmadapter->curr_rd_port = 1;
     pmadapter->curr_wr_port = 1;
-#elif defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098) || defined(IW61x)
+#elif defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098) || defined(SD9177)
     pmadapter->curr_rd_port = 0;
     pmadapter->curr_wr_port = 0;
 #endif
@@ -257,15 +272,33 @@ t_void wlan_init_adapter(pmlan_adapter pmadapter)
     pmadapter->scan_probes = DEFAULT_PROBES;
 
 
-    pmadapter->scan_chan_gap = 0;
-
     /* fixme: enable this later when required */
     pmadapter->multiple_dtim         = MRVDRV_DEFAULT_MULTIPLE_DTIM;
     pmadapter->local_listen_interval = 0; /* default value in firmware
                                              will be used */
 
-    pmadapter->delay_to_ps      = DELAY_TO_PS_DEFAULT;
-    pmadapter->enhanced_ps_mode = PS_MODE_AUTO;
+    pmadapter->delay_to_ps       = DELAY_TO_PS_DEFAULT;
+    pmadapter->enhanced_ps_mode  = PS_MODE_AUTO;
+    pmadapter->bcn_miss_time_out = DEFAULT_BCN_MISS_TIMEOUT;
+
+#ifdef CONFIG_HOST_SLEEP
+    pmadapter->is_hs_configured          = MFALSE;
+    pmadapter->mgmt_filter[0].action     = 0;        /* discard and not wakeup host */
+    pmadapter->mgmt_filter[0].type       = 0xff;     /* management frames */
+    pmadapter->mgmt_filter[0].frame_mask = 0x1400;   /* Frame-Mask bits :
+                                                        : Bit 0 - Association Request
+                                                        : Bit 1 - Association Response
+                                                        : Bit 2 - Re-Association Request
+                                                        : Bit 3 - Re-Association Response
+                                                        : Bit 4 - Probe Request
+                                                        : Bit 5 - Probe Response
+                                                        : Bit 8 - Beacon Frames
+                                                        : Bit 10 - Disassociation
+                                                        : Bit 11 - Authentication
+                                                        : Bit 12 - Deauthentication
+                                                        : Bit 13 - Action Frames
+                                                     */
+#endif
 
     pmadapter->hw_dot_11n_dev_cap     = 0;
     pmadapter->hw_dev_mcs_support     = 0;
@@ -279,11 +312,12 @@ t_void wlan_init_adapter(pmlan_adapter pmadapter)
     pmadapter->hw_dot_11ac_mcs_support   = 0;
     pmadapter->usr_dot_11ac_opermode_bw  = 0;
     pmadapter->usr_dot_11ac_opermode_nss = 0;
-#ifdef CONFIG_WIFI_CAPA
     pmadapter->usr_dot_11n_enable = MFALSE;
 #ifdef CONFIG_11AC
     pmadapter->usr_dot_11ac_enable = MFALSE;
 #endif
+#ifdef CONFIG_11AX
+    pmadapter->usr_dot_11ax_enable = MFALSE;
 #endif
 
     /* Initialize 802.11d */
@@ -302,9 +336,8 @@ t_void wlan_init_adapter(pmlan_adapter pmadapter)
     (void)__memset(pmadapter, &pmadapter->region_channel, 0, sizeof(pmadapter->region_channel));
     pmadapter->region_code = MRVDRV_DEFAULT_REGION_CODE;
     (void)__memcpy(pmadapter, pmadapter->country_code, MRVDRV_DEFAULT_COUNTRY_CODE, COUNTRY_CODE_LEN);
-    pmadapter->bcn_miss_time_out  = DEFAULT_BCN_MISS_TIMEOUT;
     pmadapter->adhoc_awake_period = 0;
-    pmadapter->ps_state = PS_STATE_AWAKE;
+    pmadapter->ps_state           = PS_STATE_AWAKE;
     return;
 }
 
@@ -352,15 +385,14 @@ mlan_status wlan_init_lock_list(IN pmlan_adapter pmadapter)
             }
 #endif
 
+            util_init_list_head((t_void *)pmadapter->pmoal_handle, &priv->tx_ba_stream_tbl_ptr, MTRUE,
+                                pmadapter->callbacks.moal_init_lock);
             ret = (mlan_status)os_mutex_create(&priv->tx_ba_stream_tbl_lock, "Tx BA tbl lock", OS_MUTEX_INHERIT);
             if (ret != MLAN_STATUS_SUCCESS)
             {
                 wifi_e("Create Tx BA tbl sem failed");
                 return ret;
             }
-
-            util_init_list_head((t_void *)pmadapter->pmoal_handle, &priv->tx_ba_stream_tbl_ptr, MTRUE,
-                                pmadapter->callbacks.moal_init_lock);
             util_init_list_head((t_void *)pmadapter->pmoal_handle, &priv->rx_reorder_tbl_ptr, MTRUE,
                                 pmadapter->callbacks.moal_init_lock);
             util_scalar_init((t_void *)pmadapter->pmoal_handle, &priv->wmm.tx_pkts_queued, 0,

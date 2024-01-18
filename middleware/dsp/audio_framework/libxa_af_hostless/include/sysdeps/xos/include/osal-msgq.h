@@ -29,24 +29,23 @@
 /*******************************************************************************
  * External Definitions
  ******************************************************************************/
-extern XAF_ERR_CODE xaf_malloc(void **buf_ptr, int size, int id);
-extern void xaf_free(void *buf_ptr, int id);
-
 typedef struct {
     XosMsgQueue queue;
 } *xf_msgq_t;
 
-/* ...open proxy interface on proper DSP partition */
-static inline xf_msgq_t __xf_msgq_create(size_t n_items, size_t item_size)
+
+static inline int __xf_msgq_get_size(size_t n_items, size_t item_size)
 {
     xf_msgq_t q;
+    return (sizeof(*q) + XOS_MSGQ_SIZE(n_items, item_size));
+}
 
-    xaf_malloc((void **)&q, (sizeof(*q) + XOS_MSGQ_SIZE(n_items, item_size)), XAF_MEM_ID_DEV);
-    if (!q)
-        return NULL;
-    if (xos_msgq_create(&q->queue, n_items, item_size, 0) == XOS_OK)
+/* ...open proxy interface on proper DSP partition */
+static inline xf_msgq_t __xf_msgq_create(size_t n_items, size_t item_size, void *pbuf)
+{
+    xf_msgq_t q = (xf_msgq_t )pbuf;
+    if (xos_msgq_create(&q->queue, (uint16_t)n_items, (uint32_t)item_size, (uint16_t)0) == XOS_OK)
         return q;
-    xaf_free(q, XAF_MEM_ID_DEV);
     return NULL;
 }
 
@@ -54,7 +53,6 @@ static inline xf_msgq_t __xf_msgq_create(size_t n_items, size_t item_size)
 static inline void __xf_msgq_destroy(xf_msgq_t q)
 {
     xos_msgq_delete(&q->queue);
-    xaf_free(q, XAF_MEM_ID_DEV);
 }
 
 static inline int __xf_msgq_send(xf_msgq_t q, const void *data, size_t sz)
@@ -67,7 +65,7 @@ static inline int __xf_msgq_send(xf_msgq_t q, const void *data, size_t sz)
 static inline int __xf_msgq_recv_blocking(xf_msgq_t q, void *data, size_t sz)
 {
     int ret = xos_msgq_get(&q->queue, data);
-    
+
     if ( ret == XOS_OK )
     {
         ret = XAF_NO_ERR;
@@ -76,14 +74,14 @@ static inline int __xf_msgq_recv_blocking(xf_msgq_t q, void *data, size_t sz)
     {
         ret = XAF_RTOS_ERR;
     }
-    
+
     return  ret;
 }
 
 static inline int __xf_msgq_recv(xf_msgq_t q, void *data, size_t sz)
 {
     int ret = xos_msgq_get_timeout(&q->queue, data, xos_msecs_to_cycles(MAXIMUM_TIMEOUT));
-    
+
     if ( ret == XOS_OK )
     {
         ret = XAF_NO_ERR;
@@ -91,12 +89,12 @@ static inline int __xf_msgq_recv(xf_msgq_t q, void *data, size_t sz)
     else if ( ret == XOS_ERR_TIMEOUT )
     {
         ret = XAF_TIMEOUT_ERR;
-    } 
+    }
     else
     {
         ret = XAF_RTOS_ERR;
     }
-    
+
     return  ret;
 }
 

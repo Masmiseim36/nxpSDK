@@ -48,6 +48,8 @@ typedef struct _hostcmd_cfg
 
 typedef struct
 {
+    const uint8_t *fw_start_addr;
+    size_t size;
     os_thread_t wm_wifi_main_thread;
     os_thread_t wm_wifi_core_thread;
     os_thread_t wm_wifi_scan_thread;
@@ -55,6 +57,7 @@ typedef struct
     /** Thread handle for sending data */
     os_thread_t wm_wifi_driver_tx;
 #endif
+    os_thread_t wm_wifi_powersave_thread;
     os_queue_t *wlc_mgr_event_queue;
 
     void (*data_intput_callback)(const uint8_t interface, const uint8_t *buffer, const uint16_t len);
@@ -75,6 +78,8 @@ typedef struct
     os_queue_t io_events;
 
     os_queue_pool_t io_events_queue_data;
+    os_queue_t powersave_queue;
+    os_queue_pool_t powersave_queue_data;
 
     mcast_filter *start_list;
 
@@ -170,6 +175,7 @@ typedef struct
     nxp_wifi_event_mlme_t mgmt_rx;
     nxp_wifi_event_eapol_mlme_t eapol_rx;
     bool wpa_supp_scan;
+    bool external_scan;
 #ifdef CONFIG_HOSTAPD
     bool hostapd_op;
 #endif
@@ -252,6 +258,12 @@ bool is_split_scan_complete(void);
  * Waits for Command processing to complete and waits for command response
  */
 int wifi_wait_for_cmdresp(void *cmd_resp_priv);
+#ifdef CONFIG_FW_VDLL
+/**
+ * Waits for Command processing to complete and waits for command response for VDLL
+ */
+int wifi_wait_for_vdllcmdresp(void *cmd_resp_priv);
+#endif
 /**
  * Register an event queue
  *
@@ -287,12 +299,15 @@ void bus_deregister_data_input_funtion(void);
  */
 int wifi_get_command_lock(void);
 
+int wifi_put_command_resp_sem(void);
+
 /*
  * @internal
  *
  *
  */
 int wifi_put_command_lock(void);
+
 
 /*
  * Process the command reponse received from the firmware.
@@ -325,6 +340,11 @@ mlan_status wrapper_moal_mfree(t_void *pmoal_handle, t_u8 *pbuf);
 int wifi_sdio_lock(void);
 void wifi_sdio_unlock(void);
 
+#ifdef CONFIG_WIFI_IND_RESET
+int wifi_ind_reset_lock(void);
+void wifi_ind_reset_unlock(void);
+#endif
+
 mlan_status wrapper_wlan_cmd_mgmt_ie(int bss_type, void *buffer, unsigned int len, t_u16 action);
 
 /**
@@ -354,6 +374,9 @@ void wifi_setup_channel_info(void *channels, int num_channels, t_u8 band);
 int wifi_setup_vht_cap(t_u32 *vht_capab, t_u8 *vht_mcs_set, t_u8 band);
 #endif
 
+#ifdef CONFIG_11AX
+int wifi_setup_he_cap(nxp_wifi_he_capabilities *he_cap, t_u8 band);
+#endif
 int wifi_nxp_send_assoc(nxp_wifi_assoc_info_t *assoc_info);
 int wifi_nxp_send_mlme(unsigned int bss_type, int channel, unsigned int wait_time, const t_u8 *data, size_t data_len);
 int wifi_remain_on_channel(const bool status, const uint8_t channel, const uint32_t duration);

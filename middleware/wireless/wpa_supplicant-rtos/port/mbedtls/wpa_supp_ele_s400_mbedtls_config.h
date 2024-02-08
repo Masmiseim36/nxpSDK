@@ -160,6 +160,16 @@
  */
 //#define MBEDTLS_HAVE_TIME_DATE
 
+
+#include "FreeRTOS.h"
+
+void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
+
+#define MBEDTLS_PLATFORM_MEMORY
+#define MBEDTLS_PLATFORM_STD_CALLOC pvPortCalloc
+#define MBEDTLS_PLATFORM_STD_FREE vPortFree
+
+
 /**
  * \def MBEDTLS_PLATFORM_MEMORY
  *
@@ -376,7 +386,7 @@
  *            digests and ciphers instead.
  *
  */
-#define MBEDTLS_AES_ALT
+//#define MBEDTLS_AES_ALT
 //#define MBEDTLS_ARIA_ALT
 //#define MBEDTLS_CAMELLIA_ALT
 #define MBEDTLS_CCM_ALT

@@ -1569,6 +1569,30 @@ void USDHC_EnableAutoTuningForCmdAndData(USDHC_Type *base)
 
     base->VEND_SPEC2 |= USDHC_VEND_SPEC2_TUNING_CMD_EN_MASK;
     busWidth = (base->PROT_CTRL & USDHC_PROT_CTRL_DTW_MASK) >> USDHC_PROT_CTRL_DTW_SHIFT;
+
+#if defined(USDHC_VEND_SPEC2_TUNING_BIT_EN_MASK) && USDHC_VEND_SPEC2_TUNING_BIT_EN_MASK
+    /* 1bit data width */
+    if (busWidth == kUSDHC_DataBusWidth1Bit)
+    {
+        base->VEND_SPEC2 &= ~USDHC_VEND_SPEC2_TUNING_BIT_EN_MASK;
+        base->VEND_SPEC2 |= USDHC_VEND_SPEC2_TUNING_BIT_EN(2U);
+    }
+    /* 4bit data width */
+    else if (busWidth == kUSDHC_DataBusWidth4Bit)
+    {
+        base->VEND_SPEC2 &= ~USDHC_VEND_SPEC2_TUNING_BIT_EN_MASK;
+        base->VEND_SPEC2 |= USDHC_VEND_SPEC2_TUNING_BIT_EN(0U);
+    }
+    /* 8bit data width */
+    else if (busWidth == kUSDHC_DataBusWidth8Bit)
+    {
+        base->VEND_SPEC2 &= ~USDHC_VEND_SPEC2_TUNING_BIT_EN_MASK;
+        base->VEND_SPEC2 |= USDHC_VEND_SPEC2_TUNING_BIT_EN(1U);
+    }
+    else
+    {
+    }
+#else
     if (busWidth == kUSDHC_DataBusWidth1Bit)
     {
         base->VEND_SPEC2 &= ~USDHC_VEND_SPEC2_TUNING_8bit_EN_MASK;
@@ -1587,6 +1611,7 @@ void USDHC_EnableAutoTuningForCmdAndData(USDHC_Type *base)
     else
     {
     }
+#endif
 }
 #endif /* FSL_FEATURE_USDHC_HAS_SDR50_MODE */
 

@@ -74,6 +74,7 @@ middleware.mbedtls.port.ele_s400:
     allOf:
     - driver.s3mu
     - component.ele_crypto
+    - middleware.mbedtls
 middleware.mbedtls.port.ele_s400_ecc_opaque:
   section-type: component
   contents:
@@ -119,11 +120,12 @@ middleware.mbedtls.port.ele_s400_ecc_opaque:
     taxonomy:
       csub: ele_s400
       belong_to: mbedtls
-    display_name: mbedtls_ele_s400
+    display_name: mbedtls_ele_s400_ecc_opaque
   dependency:
     allOf:
     - driver.s3mu
     - component.ele_crypto
+    - middleware.mbedtls
 middleware.mbedtls.els_pkc.config:
   section-type: component
   contents:
@@ -159,6 +161,7 @@ middleware.mbedtls.port.els_pkc:
     - repo_relative_path: port/pkc
     files:
     - source: port/pkc/els_pkc_mbedtls_config.h
+    - source: port/pkc/els_pkc_mbedtls_thread_config.h
     - source: port/pkc/ecc_alt.c
     - source: port/pkc/ecc_alt.h
     - source: port/pkc/ecdh_alt.c
@@ -186,17 +189,25 @@ middleware.mbedtls.port.els_pkc:
     display_name: mbedtls_pkc
   dependency:
     allOf:
-    - device:
-      - RW610
-      - RW612
-      - LPC55S36
-      - MCXN546
-      - MCXN547
-      - MCXN946
-      - MCXN947
     - middleware.mbedtls.port.els
     - component.els_pkc
     - middleware.mbedtls.els_pkc.config
+    - anyOf:
+        - allOf:
+          - driver.trng
+          - device:
+            - RW610
+            - RW612
+            - MCXN546
+            - MCXN547
+            - MCXN946
+            - MCXN947
+        - allOf:
+          - device:
+            - LPC55S36
+            - MCXN235
+            - MCXN236
+
 middleware.mbedtls.port.els:
   section-type: component
   contents:

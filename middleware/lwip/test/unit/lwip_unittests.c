@@ -76,7 +76,6 @@ int main(void)
   SRunner *sr;
   size_t i;
   suite_getter_fn* suites[] = {
-    dhcp6_suite,
     ip4_suite,
     ip6_suite,
     udp_suite,
@@ -91,6 +90,7 @@ int main(void)
     timers_suite,
     etharp_suite,
     dhcp_suite,
+    dhcp6_suite,
     mdns_suite,
     mqtt_suite,
     sockets_suite

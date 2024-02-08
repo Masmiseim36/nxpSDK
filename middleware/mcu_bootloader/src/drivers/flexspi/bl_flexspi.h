@@ -388,7 +388,7 @@ extern "C"
     extern status_t flexspi_get_max_supported_freq(uint32_t instance, uint32_t *freq, uint32_t clkMode);
 
     extern void flexspi_sw_delay_us(uint64_t us);
-#ifdef MIMXRT1189_cm33_SERIES
+#if (defined(MIMXRT1189_cm33_SERIES) || defined(MIMXRT1187_cm33_SERIES))
     extern void flexspi_update_padsetting(uint32_t instance, flexspi_mem_config_t *config, uint32_t padSetting);
 #else
     extern void flexspi_update_padsetting(flexspi_mem_config_t *config, uint32_t driveStrength);

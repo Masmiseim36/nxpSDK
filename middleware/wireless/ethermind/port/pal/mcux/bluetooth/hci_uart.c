@@ -30,9 +30,6 @@
 #include "fsl_adapter_uart.h"
 
 #include "controller_hci_uart.h"
-#ifdef LE_AUDIO_ENABLE_APP_SPECIFIC_CODE
-#include "leaudio_pl.h"
-#endif /*LE_AUDIO_ENABLE_APP_SPECIFIC_CODE*/
 
 #ifdef BT_UART
 
@@ -858,6 +855,15 @@ DECL_STATIC BT_THREAD_RETURN_TYPE hci_uart_read_task (BT_THREAD_ARGS args)
 #endif /* 0 */
 }
 
+#ifdef LE_AUDIO_CT_CG_TIME_DBG
+static UCHAR isIsoStarted1 = 0;
+
+UCHAR isIsoStarted (void)
+{
+	return isIsoStarted1;
+}
+#endif
+
 #ifdef HCI_UART_COLLECT_AND_WR_COMPLETE_PKT
 /** HCI-UART Send Data */
 API_RESULT hci_uart_send_data
@@ -866,6 +872,15 @@ API_RESULT hci_uart_send_data
     static UINT32 total_len = 0U;
     static UINT32 cur_len = 0U;
     static UCHAR acl_data_pkt = BT_FALSE;
+
+#ifdef LE_AUDIO_CT_CG_TIME_DBG
+    static uint32_t startTime2;
+    static uint32_t endTime2;
+    static uint8_t firstTime2 = 1;
+
+    static int isoDataCount = 0;
+	#define TICKS_TO_MSEC(tick) ((uint32_t)((uint64_t)(tick)*1000uL / (uint64_t)configTICK_RATE_HZ))
+#endif
 
     if (0x1U != hci_uart_state)
     {
@@ -883,17 +898,29 @@ API_RESULT hci_uart_send_data
             acl_data_pkt = BT_TRUE;
             total_len = (((UINT32)(buf[3U]) << 8U) | (UINT32)(buf[2U])) + 5U;
         }
+#ifdef LE_AUDIO_CT_CG_TIME_DBG
+        else if (HCI_ISO_DATA_PACKET == type)
+        {
+        	isIsoStarted1 = 1;
+        	isoDataCount++;
+
+			if (firstTime2) {
+				startTime2 = OSA_TimeGetMsec();
+				firstTime2 = 0;
+			} else {
+				endTime2 = OSA_TimeGetMsec();
+				//if (TICKS_TO_MSEC(endTime2 - startTime2) > 10)
+				{
+					printf("tx1=%dms, count:%d\n", TICKS_TO_MSEC(endTime2 - startTime2), isoDataCount);
+				}
+				startTime2 = endTime2;
+			}
+        }
+#endif
         else
         {
             total_len = (UINT32)length + 1U;
         }
-
-#ifdef LE_AUDIO_ENABLE_APP_SPECIFIC_CODE
-        if (HCI_ISO_DATA_PACKET == type)
-        {
-        	le_audio_pl_iso_tx_delay ();
-        }
-#endif /*LE_AUDIO_ENABLE_APP_SPECIFIC_CODE*/
 
         if (HCI_UART_WR_BUF_SIZE < total_len)
         {

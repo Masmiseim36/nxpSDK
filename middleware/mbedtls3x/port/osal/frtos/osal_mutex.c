@@ -15,9 +15,12 @@
  */
 int mcux_mutex_init(mcux_mutex_t *mutex)
 {
-    mutex = xSemaphoreCreateMutex();
-
     if (!mutex)
+        return -1;
+
+    *mutex = xSemaphoreCreateMutex();
+
+    if (!*mutex)
         return -1;
 
     return 0;
@@ -29,7 +32,11 @@ int mcux_mutex_init(mcux_mutex_t *mutex)
  */
 int mcux_mutex_free(mcux_mutex_t *mutex)
 {
-    vSemaphoreDelete(mutex);
+    if (!mutex)
+        return -1;
+
+    vSemaphoreDelete(*mutex);
+
     return 0;
 }
 
@@ -40,6 +47,9 @@ int mcux_mutex_free(mcux_mutex_t *mutex)
  */
 int mcux_mutex_lock(mcux_mutex_t *mutex)
 {
+    if (!mutex)
+        return -1;
+
     return (xSemaphoreTake(*mutex, portMAX_DELAY) ? 0 : -1);
 }
 
@@ -50,7 +60,8 @@ int mcux_mutex_lock(mcux_mutex_t *mutex)
  */
 int mcux_mutex_unlock(mcux_mutex_t *mutex)
 {
+    if (!mutex)
+        return -1;
+
     return (xSemaphoreGive(*mutex) ? 0 : -1);
 }
-
-#endif /* defined(MBEDTLS_MCUX_FREERTOS_THREADING_ALT) */

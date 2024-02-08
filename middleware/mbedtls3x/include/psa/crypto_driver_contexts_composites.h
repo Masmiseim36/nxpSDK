@@ -46,6 +46,10 @@
 #include <libtestdriver1/include/psa/crypto.h>
 #endif
 
+#if defined(PSA_CRYPTO_DRIVER_ELS_PKC)
+#include "els_pkc_crypto_composites.h"
+#endif
+
 #if defined(PSA_CRYPTO_DRIVER_TEST)
 #if defined(MBEDTLS_TEST_LIBTESTDRIVER1) && \
     defined(LIBTESTDRIVER1_MBEDTLS_PSA_BUILTIN_MAC)
@@ -130,6 +134,10 @@ typedef union {
     mbedtls_transparent_test_driver_mac_operation_t transparent_test_driver_ctx;
     mbedtls_opaque_test_driver_mac_operation_t opaque_test_driver_ctx;
 #endif
+#if defined(PSA_CRYPTO_DRIVER_ELS_PKC)
+    els_pkc_transparent_mac_operation_t transparent_els_pkc_driver_ctx;
+    els_pkc_opaque_mac_operation_t opaque_els_pkc_driver_ctx;
+#endif
 } psa_driver_mac_context_t;
 
 typedef union {
@@ -137,6 +145,10 @@ typedef union {
     mbedtls_psa_aead_operation_t mbedtls_ctx;
 #if defined(PSA_CRYPTO_DRIVER_TEST)
     mbedtls_transparent_test_driver_aead_operation_t transparent_test_driver_ctx;
+#endif
+#if defined(PSA_CRYPTO_DRIVER_ELS_PKC)
+    els_pkc_transparent_aead_operation_t transparent_els_pkc_driver_ctx;
+    els_pkc_opaque_aead_operation_t opaque_els_pkc_driver_ctx;
 #endif
 } psa_driver_aead_context_t;
 

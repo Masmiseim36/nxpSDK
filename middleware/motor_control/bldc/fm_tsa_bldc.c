@@ -73,7 +73,6 @@ FMSTR_TSA_RW_VAR(g_sM1Drive.ui16FastCtrlLoopFreq, FMSTR_TSA_UINT16) /* M1 Fast C
 /* g_sM1Drive.sFaultThresholds definitions */
 FMSTR_TSA_RW_VAR(g_sM1Drive.sFaultThresholds.f16UDcBusOver, FMSTR_TSA_FRAC16)  /* Fault Threshold U DcBusOver */
 FMSTR_TSA_RW_VAR(g_sM1Drive.sFaultThresholds.f16UDcBusUnder, FMSTR_TSA_FRAC16) /* Fault Threshold U DcBusUnder */
-FMSTR_TSA_RW_VAR(g_sM1Drive.sFaultThresholds.f16IDcBusOver, FMSTR_TSA_FRAC16)  /* Fault Threshold I DcBusOver */
 
 /* g_sM1Drive.sCtrlBLDC DC-bus current measurement */
 FMSTR_TSA_RW_VAR(g_sM1Drive.sCtrlBLDC.sIDcBusFilter.sFltCoeff.f32B0, FMSTR_TSA_FRAC32) /* IDC-bus B0 filter */

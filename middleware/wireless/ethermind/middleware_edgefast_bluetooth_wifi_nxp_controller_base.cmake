@@ -3,7 +3,7 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-if(CONFIG_USE_middleware_edgefast_bluetooth_common_ethermind AND CONFIG_USE_middleware_wifi_fwdnld AND ((CONFIG_USE_middleware_edgefast_bluetooth_sdio_template_evkmimxrt1040 AND (CONFIG_BOARD STREQUAL evkmimxrt1040)) OR (CONFIG_USE_middleware_edgefast_bluetooth_sdio_template_evkcmimxrt1060 AND (CONFIG_BOARD STREQUAL evkcmimxrt1060)) OR (CONFIG_USE_middleware_edgefast_bluetooth_sdio_template_mimxrt685audevk AND (CONFIG_BOARD STREQUAL mimxrt685audevk)) OR (CONFIG_USE_middleware_edgefast_bluetooth_sdio_template_evkmimxrt595 AND (CONFIG_BOARD STREQUAL evkmimxrt595)) OR (CONFIG_USE_middleware_edgefast_bluetooth_sdio_template_evkbmimxrt1170 AND (CONFIG_BOARD STREQUAL evkbmimxrt1170))))
+if(CONFIG_USE_middleware_edgefast_bluetooth_common_ethermind AND CONFIG_USE_middleware_wifi_fwdnld AND ((CONFIG_USE_middleware_edgefast_bluetooth_sdio_template_evkmimxrt1180 AND (CONFIG_BOARD STREQUAL evkmimxrt1180))))
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/port/pal/mcux/bluetooth/controller/controller_wifi_nxp.c

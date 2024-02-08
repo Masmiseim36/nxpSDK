@@ -202,12 +202,12 @@ static void _FMSTR_S32K3XX_EnableTransmitCompleteInterrupt(FMSTR_BOOL enable)
     if(enable)
     {
         /* Enable interrupt */
-        FMSTR_SETBIT(fmstr_LPUARTBaseAddr, FMSTR_LPUART_STAT_OFFSET, FMSTR_LPUART_CTRL_TCIE);
+        FMSTR_SETBIT(fmstr_LPUARTBaseAddr, FMSTR_LPUART_CTRL_OFFSET, FMSTR_LPUART_CTRL_TCIE);
     }
     else
     {
         /* Disable interrupt */
-        FMSTR_CLRBIT(fmstr_LPUARTBaseAddr, FMSTR_LPUART_STAT_OFFSET, FMSTR_LPUART_CTRL_TCIE);
+        FMSTR_CLRBIT(fmstr_LPUARTBaseAddr, FMSTR_LPUART_CTRL_OFFSET, FMSTR_LPUART_CTRL_TCIE);
     }
 }
 

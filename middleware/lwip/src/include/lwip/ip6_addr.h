@@ -103,11 +103,11 @@ typedef struct ip6_addr ip6_addr_t;
                                     (dest).addr[3] = (src).addr[3]; \
                                     ip6_addr_copy_zone((dest), (src)); }while(0)
 /** Safely copy one IPv6 address to another (src may be NULL) */
-#define ip6_addr_set(dest, src) do{(dest)->addr[0] = ((void *)src) == NULL ? 0 : (src)->addr[0]; \
-                                   (dest)->addr[1] = ((void *)src) == NULL ? 0 : (src)->addr[1]; \
-                                   (dest)->addr[2] = ((void *)src) == NULL ? 0 : (src)->addr[2]; \
-                                   (dest)->addr[3] = ((void *)src) == NULL ? 0 : (src)->addr[3]; \
-                                   ip6_addr_set_zone((dest), ((void *)src) == NULL ? IP6_NO_ZONE : ip6_addr_zone(src)); }while(0)
+#define ip6_addr_set(dest, src) do{(dest)->addr[0] = ((const void *)src) == NULL ? 0 : (src)->addr[0]; \
+                                   (dest)->addr[1] = ((const void *)src) == NULL ? 0 : (src)->addr[1]; \
+                                   (dest)->addr[2] = ((const void *)src) == NULL ? 0 : (src)->addr[2]; \
+                                   (dest)->addr[3] = ((const void *)src) == NULL ? 0 : (src)->addr[3]; \
+                                   ip6_addr_set_zone((dest), ((const void *)src) == NULL ? IP6_NO_ZONE : ip6_addr_zone(src)); }while(0)
 
 /** Copy packed IPv6 address to unpacked IPv6 address; zone is not set */
 #define ip6_addr_copy_from_packed(dest, src) do{(dest).addr[0] = (src).addr[0]; \

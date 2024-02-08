@@ -268,20 +268,12 @@ void *uart_init_interface(void)
     static fw_download_setting_t fw_download_setting = {
         .uartConfig =
             {
-#if defined(CPU_MIMXRT1176DVMAA_cm7) && defined(WIFI_BT_USE_M2_INTERFACE)
-                LPUART2,                /*FW download UART port address*/
-#else
                 BOARD_BT_UART_BASEADDR, /*FW download UART port address*/
-#endif /*defined(CPU_MIMXRT1176DVMAA_cm7) && defined(WIFI_BT_USE_M2_INTERFACE)*/
                 0,                      /*BT UART clock frequency */
                 115200U,                /*initial baud-rate for boot-loader*/
                 3000000U,               /*secondary baud-rate for boot-loader*/
                 0U,                     /*UART parity bits*/
-#if defined(CPU_MIMXRT1176DVMAA_cm7) && defined(WIFI_BT_USE_M2_INTERFACE)
-                2U,                     /*UART Instance*/
-#else
                 BOARD_BT_UART_INSTANCE, /*UART Instance*/
-#endif /*defined(CPU_MIMXRT1176DVMAA_cm7) && defined(WIFI_BT_USE_M2_INTERFACE)*/
                 1U,                     /*UART stop bits*/
                 true,                   /*enableTx*/
                 true,                   /*enableRx*/
@@ -292,11 +284,7 @@ void *uart_init_interface(void)
         false, /*wait4HdrSig*/
         false  /*isFwDownloadRetry*/
     };
-#if defined(CPU_MIMXRT1176DVMAA_cm7) && defined(WIFI_BT_USE_M2_INTERFACE)
-    fw_download_setting.uartConfig.uartClkFreq = CLOCK_GetRootClockFreq(kCLOCK_Root_Lpuart2);
-#else
     fw_download_setting.uartConfig.uartClkFreq = BOARD_BT_UART_CLK_FREQ;
-#endif /*defined(CPU_MIMXRT1176DVMAA_cm7) && defined(WIFI_BT_USE_M2_INTERFACE)*/
     uartIntf.intf_s.intf_specific              = &fw_download_setting;
     uartIntf.intf_s.fwdnld_intf_send           = uart_fw_download;
     uartIntf.intf_s.fwdnld_intf_prepare        = uart_fw_download_prep;
@@ -2262,8 +2250,6 @@ static fw_download_uart_status_e fw_upload_ChangeTimeout(void)
                             else
                             {
                                 bRetVal = TRUE;
-                                cmd7_change_timeout_len      = HDR_LEN;
-                                fwDownloadConfig.wait4HdrSig = false;
                                 status  = FW_DOWNLOAD_UART_SUCCESS;
                             }
                         }
@@ -2284,7 +2270,7 @@ static fw_download_uart_status_e fw_upload_ChangeTimeout(void)
             }
             if (uiProVer == VER1)
             {
-                status = FW_DOWNLOAD_UART_SUCCESS;
+                status = 1;
                 break;
             }
         }
@@ -2332,11 +2318,19 @@ static fw_download_uart_status_e fw_upload_firmwareDownload(const unsigned char 
         fwDownloadConfig.wait4HdrSig = true;
         status                       = fw_upload_ChangeTimeout();
         PRINT("\nfw_upload_ChangeTimeout() ret %d hdr %d\n", status, fwDownloadConfig.wait4HdrSig);
-        if (status != FW_DOWNLOAD_UART_SUCCESS)
+        if (status == FW_DOWNLOAD_UART_SUCCESS)
+        {
+            cmd7_change_timeout_len      = HDR_LEN;
+            fwDownloadConfig.wait4HdrSig = false;
+        }
+        else if (status == 1)
+        {
+            // do nothing
+        }
+        else
         {
             return status;
         }
-
         if (fwDownloadConfig.uartConfig.isSecondaryBaudRateReq != 0)
         {
             PRINT("change baud-rate req to %d\n", fwDownloadConfig.uartConfig.secondaryBaudRate);

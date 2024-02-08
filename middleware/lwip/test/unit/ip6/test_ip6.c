@@ -142,7 +142,7 @@ START_TEST(test_ip6_ll_addr)
 
   /* test with link-local address */
   netif_create_ip6_linklocal_address(&test_netif6, 1);
-  test_ip6_ll_addr_iter(3 + LWIP_IPV6_DUP_DETECT_ATTEMPTS + LWIP_IPV6_MLD, 3);
+  test_ip6_ll_addr_iter(3 + LWIP_IPV6_DUP_DETECT_ATTEMPTS, 3);
 }
 END_TEST
 

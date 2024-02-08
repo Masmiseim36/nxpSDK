@@ -537,9 +537,9 @@ static int32_t httpsrv_set_params(HTTPSRV_STRUCT *server, HTTPSRV_PARAM_STRUCT *
         }
 #endif
         /* Server must run with lower priority than TCP/IP task. */
-        if (params->task_prio > TCPIP_THREAD_PRIO)
+        if (server->params.task_prio > TCPIP_THREAD_PRIO)
         {
-            params->task_prio = TCPIP_THREAD_PRIO;
+            server->params.task_prio = TCPIP_THREAD_PRIO;
         }
     }
 

@@ -283,6 +283,7 @@ static int
 clock_gettime(int clk_id, struct timespec *tp)
 {
   u32_t now = sys_now();
+  LWIP_UNUSED_ARG(clk_id);
 
   tp->tv_sec = now / 1000;
   tp->tv_nsec = (now % 1000) * 1000000;
@@ -689,8 +690,8 @@ lwiperf_tcp_recv(void *arg, struct tcp_pcb *tpcb, struct pbuf *p, err_t err)
     LWIP_PLATFORM_DIAG(("New TCP client (settings flags 0x%x)\n", lwip_ntohl(conn->settings.base.flags)));
     if ((conn->settings.base.flags & PP_HTONL(LWIPERF_FLAGS_EXTEND)) &&
         (conn->settings.eflags & PP_HTONL(LWIPERF_EFLAGS_REVERSE))) {
-      LWIP_PLATFORM_DIAG(("client requested server to transmit data\n"));
       err_t err2 = lwiperf_tx_start_reverse(conn);
+      LWIP_PLATFORM_DIAG(("client requested server to transmit data\n"));
       if (err2 != ERR_OK) {
         lwiperf_tcp_close(conn, LWIPERF_TCP_ABORTED_LOCAL_TXERROR);
         pbuf_free(p);
@@ -699,8 +700,8 @@ lwiperf_tcp_recv(void *arg, struct tcp_pcb *tpcb, struct pbuf *p, err_t err)
     } else if (conn->settings.base.flags & PP_HTONL(LWIPERF_FLAGS_ANSWER_TEST)) {
       if (conn->settings.base.flags & PP_HTONL(LWIPERF_FLAGS_ANSWER_NOW)) {
         /* client requested parallel transmission test */
-        LWIP_PLATFORM_DIAG(("client requested parallel transmission test\n"));
         err_t err2 = lwiperf_tx_start_passive(conn);
+        LWIP_PLATFORM_DIAG(("client requested parallel transmission test\n"));
         if (err2 != ERR_OK) {
           lwiperf_tcp_close(conn, LWIPERF_TCP_ABORTED_LOCAL_TXERROR);
           pbuf_free(p);
@@ -1048,17 +1049,17 @@ static void
 lwip_udp_conn_report(lwiperf_state_udp_t *conn, enum lwiperf_report_type report_type)
 {
   if ((conn != NULL) && (conn->report_fn != NULL)) {
+    ip_addr_t *local_ip = NULL;
+    u16_t local_port = 0u;
+
     u32_t now, duration_ms, bandwidth_kbitpsec;
     now = sys_now();
     duration_ms = now - conn->time_started;
     if (duration_ms == 0) {
       bandwidth_kbitpsec = 0;
     } else {
-      bandwidth_kbitpsec = (u32_t)((8ull * conn->bytes_transferred) / duration_ms);
+      bandwidth_kbitpsec = (u32_t)(((u64_t)8 * conn->bytes_transferred) / duration_ms);
     }
-
-    ip_addr_t *local_ip = NULL;
-    u16_t local_port = 0u;
 
     if (conn->pcb != NULL) {
       local_ip = &(conn->pcb->local_ip);
@@ -1115,6 +1116,9 @@ lwiperf_udp_close(lwiperf_state_udp_t *conn, enum lwiperf_report_type report_typ
 static void
 lwiperf_udp_send_report(lwiperf_state_udp_t *conn)
 {
+    lwiperf_state_udp_t *s = (lwiperf_state_udp_t *)conn->base.related_master_state;
+    struct pbuf *q = conn->reported;
+
     if (lwiperf_list_find(&conn->base) == NULL) {
       /*
        * Connection is no longer valid. This can happen if lwiperf_abort
@@ -1125,8 +1129,6 @@ lwiperf_udp_send_report(lwiperf_state_udp_t *conn)
       return;
     }
 
-    lwiperf_state_udp_t *s = (lwiperf_state_udp_t *)conn->base.related_master_state;
-    struct pbuf *q = conn->reported;
     LWIP_ASSERT("no report buffer!", q != NULL);
     udp_sendto(s->pcb, q, &conn->remote_addr, conn->remote_port);
     conn->report_count++;
@@ -1164,19 +1166,19 @@ static void
 lwiperf_udp_set_client_rate(lwiperf_state_udp_t *c, s32_t rate, u32_t buf_len)
 {
   /* compute delay for bandwidth restriction, constrained to [0,1]s in microseconds */
-  c->delay_target = (uint32_t)((buf_len * 8 * 1000000ull) / rate);
-  LWIP_PLATFORM_DIAG(("Ideal frame delay: %lu us\n", c->delay_target));
+  c->delay_target = (uint32_t)((buf_len * 8 * (u64_t)1000000) / rate);
+  LWIP_PLATFORM_DIAG(("Ideal frame delay: %u us\n", c->delay_target));
   /* truncate the delay according to clock resolution, may result in a higher bitrate */
   c->delay_target = (c->delay_target / CLOCK_RESOLUTION_US) * CLOCK_RESOLUTION_US;
   if (c->delay_target == 0u) {
     /* bitrate is high - have to send more than 1 frame per CLOCK_RESOLUTION_US
      * period, may result in a lower bitrate and/or a higher jitter */
     c->delay_target = CLOCK_RESOLUTION_US;
-    c->frames_per_delay = CLOCK_RESOLUTION_US / (uint32_t)((buf_len * 8 * 1000000ull) / rate);
+    c->frames_per_delay = CLOCK_RESOLUTION_US / (uint32_t)((buf_len * 8 * (u64_t)1000000) / rate);
   } else {
     c->frames_per_delay = 1u;
   }
-  LWIP_PLATFORM_DIAG(("Send %u frame(s) once per %lu us\n", c->frames_per_delay, c->delay_target));
+  LWIP_PLATFORM_DIAG(("Send %u frame(s) once per %u us\n", c->frames_per_delay, c->delay_target));
 }
 
 /** Try to send more data on an iperf udp session */
@@ -1188,7 +1190,7 @@ lwiperf_udp_client_send_more(lwiperf_state_udp_t *conn)
   struct timespec ts, dt;
   err_t err;
   int ending = 0;
-  int i;
+  u32_t i;
 
   LWIP_ASSERT("conn invalid", (conn != NULL) && !conn->base.tcp && ((conn->base.server == 0) || (conn->base.reverse)));
 
@@ -1473,8 +1475,8 @@ lwiperf_udp_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p,
         LWIP_PLATFORM_DIAG(("Received report from server (0x%x).\n", lwip_ntohl(hdr->flags)));
         /*LWIP_PLATFORM_DIAG(("Stop %ld.%03ld sec, ", ntohl(hdr->stop_sec), ntohl(hdr->stop_usec)/1000));
           LWIP_PLATFORM_DIAG(("Total %ldKB, ", ntohl(hdr->total_len2)/1024));*/
-        LWIP_PLATFORM_DIAG(("Jitter %ld.%03ld, ", ntohl(hdr->jitter1), ntohl(hdr->jitter2)));
-        LWIP_PLATFORM_DIAG(("Lost %ld/%ld datagrams, OoO %ld\n",
+        LWIP_PLATFORM_DIAG(("Jitter %u.%03u, ", ntohl(hdr->jitter1), ntohl(hdr->jitter2)));
+        LWIP_PLATFORM_DIAG(("Lost %u/%u datagrams, OoO %u\n",
                             ntohl(hdr->error_cnt), ntohl(hdr->datagrams), ntohl(hdr->outorder_cnt)));
         conn->bytes_transferred = (((u64_t)ntohl(hdr->total_len1)) << 32) + ntohl(hdr->total_len2);
       }
@@ -1542,9 +1544,11 @@ lwiperf_udp_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p,
       /* check if reverse test requested */
       if ((conn->settings.base.flags & PP_HTONL(LWIPERF_FLAGS_EXTEND)) &&
           (conn->settings.eflags & PP_HTONL(LWIPERF_EFLAGS_REVERSE))) {
+        err_t err2;
+
         LWIP_PLATFORM_DIAG(("client requested server to transmit data\n"));
         conn->base.reverse = 1;
-        err_t err2 = lwiperf_udp_tx_reverse_start(conn);
+        err2 = lwiperf_udp_tx_reverse_start(conn);
         if (err2 != ERR_OK) {
           lwiperf_udp_close(conn, LWIPERF_UDP_ABORTED_LOCAL_TXERROR);
         }
@@ -1554,8 +1558,8 @@ lwiperf_udp_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p,
       } else if (conn->settings.base.flags & PP_HTONL(LWIPERF_FLAGS_ANSWER_TEST)) {
         if (conn->settings.base.flags & PP_HTONL(LWIPERF_FLAGS_ANSWER_NOW)) {
           /* client requested parallel transmission test */
-          LWIP_PLATFORM_DIAG(("client requested parallel transmission test\n"));
           err_t err2 = lwiperf_udp_tx_start(conn);
+          LWIP_PLATFORM_DIAG(("client requested parallel transmission test\n"));
           if (err2 != ERR_OK) {
             lwiperf_udp_close(conn, LWIPERF_UDP_ABORTED_LOCAL_TXERROR);
             pbuf_free(p);
@@ -1596,17 +1600,18 @@ lwiperf_udp_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p,
     }
   } else if ((conn) && (conn->settings.base.flags & htonl(LWIPERF_FLAGS_EXTEND)) && (conn->settings.eflags & htonl(LWIPERF_EFLAGS_REVERSE))) {
     LWIP_PLATFORM_DIAG(("Jitter %ld.%03ld, ", conn->jitter / 1000000, conn->jitter % 1000000));
-    LWIP_PLATFORM_DIAG(("Lost %ld/%ld datagrams, OoO %ld\n",
+    LWIP_PLATFORM_DIAG(("Lost %u/%u datagrams, OoO %u\n",
                          conn->udp_rx_lost, conn->udp_rx_total_pkt, conn->udp_rx_outorder));
     lwiperf_udp_close(conn, LWIPERF_UDP_DONE_CLIENT_RX);
   } else {
     if (conn && conn->have_settings_buf && !conn->report_count) {
       lwiperf_udp_report_t *hdr;
       u32_t now, duration_ms;
+      struct pbuf *q;
       now = sys_now();
       duration_ms = now - conn->time_started;
       /* Copy packet and send report back. */
-      struct pbuf *q = pbuf_clone(PBUF_TRANSPORT, PBUF_POOL, p);
+      q = pbuf_clone(PBUF_TRANSPORT, PBUF_POOL, p);
       if (q != NULL)
       {
         pkt = (struct UDP_datagram *)q->payload;
@@ -1626,8 +1631,8 @@ lwiperf_udp_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p,
         LWIP_PLATFORM_DIAG(("Sending report back to client (0x%x).\n", hdr->flags));
         /*LWIP_PLATFORM_DIAG(("Stop %ld.%03ld sec, ", ntohl(hdr->stop_sec), ntohl(hdr->stop_usec)/1000));
           LWIP_PLATFORM_DIAG(("Total %ldKB, ", ntohl(hdr->total_len2)/1024));*/
-        LWIP_PLATFORM_DIAG(("Jitter %ld.%03ld, ", ntohl(hdr->jitter1), ntohl(hdr->jitter2)));
-        LWIP_PLATFORM_DIAG(("Lost %ld/%ld datagrams, OoO %ld\n",
+        LWIP_PLATFORM_DIAG(("Jitter %u.%03u, ", ntohl(hdr->jitter1), ntohl(hdr->jitter2)));
+        LWIP_PLATFORM_DIAG(("Lost %u/%u datagrams, OoO %u\n",
                             ntohl(hdr->error_cnt), ntohl(hdr->datagrams), ntohl(hdr->outorder_cnt)));
         /* Store report buffer in conn structure */
         conn->reported     = q;
@@ -1763,7 +1768,7 @@ lwiperf_start_udp_client(const ip_addr_t *local_addr, u16_t local_port,
     * So when bind ipv6, use IP6_ADDR_ANY
     */
 #if LWIP_IPV6
-    s = lwiperf_start_udp_server(
+    s = (lwiperf_state_udp_t *)lwiperf_start_udp_server(
       local_addr ? (IP_IS_V6(local_addr) ? IP6_ADDR_ANY : local_addr) : IP_ADDR_ANY, local_port,
       report_fn, report_arg);
 #elif LWIP_IPV4
@@ -1814,7 +1819,7 @@ lwiperf_start_udp_client(const ip_addr_t *local_addr, u16_t local_port,
     c->settings.base.remote_port = lwip_htonl(sport);
   }
   if (type == LWIPERF_REVERSE) {
-    c->frames_per_delay = 1; // workaround to send settings in lwiperf_udp_client_send_more() once
+    c->frames_per_delay = 1; /* workaround to send settings in lwiperf_udp_client_send_more() once */
   } else {
     lwiperf_udp_set_client_rate(c, rate, buf_len);
   }

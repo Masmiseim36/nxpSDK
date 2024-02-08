@@ -8,6 +8,13 @@
   The development versions (X.Y.Z.dev) do not refer to a single source code snapshots. To avoid ambiguity,
   change log below contains SHA-1 hashes of GIT commits used when importing the code into the SDK.
 
+  - 2.2.0_rev11
+    - New features:
+      - NETC adaptation layer: Possible to disable IPv4/TCP/UDP checksum validation done in HW.
+      - EtherCAT EoE(Ethernet over EtherCAT) driver is added to lwip.
+    - Bug fixes:
+      - src/apps/httpsrv/httpsrv_supp.c: Fixed performing of the HTTP server task priority limitation.
+
   - 2.2.0_rev10
     - New features:
       - Ported lwIP 2.2.0 (2023-09-25, branch: master, SHA-1: 0a0452b2c39bdd91e252aef045c115f88f6ca773, tag: STABLE-2_2_0_RELEASE) to MCUXpresso SDK.

@@ -1242,6 +1242,12 @@ psa_status_t psa_destroy_key(mbedtls_svc_key_id_t key)
         overall_status = PSA_ERROR_NOT_PERMITTED;
         goto exit;
     }
+    
+    psa_key_attributes_t attributes = {
+        .core = slot->attr
+    };
+    status = psa_driver_wrapper_destroy_key(&attributes,
+                                            slot->key.data, slot->key.bytes);
 
 #if defined(MBEDTLS_PSA_CRYPTO_SE_C)
     driver = psa_get_se_driver_entry(slot->attr.lifetime);

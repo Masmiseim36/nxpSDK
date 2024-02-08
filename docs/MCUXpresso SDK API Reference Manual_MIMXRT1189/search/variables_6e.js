@@ -1,0 +1,26 @@
+var searchData=
+[
+  ['nakallrequest',['nakAllRequest',['../a00023.html#a4302cc872a697850efa15f3e0ef2de7f',1,'i3c_slave_config_t::nakAllRequest()'],['../a00020.html#a53c9d81367d3da27cc54b4923a50a432',1,'i3c_config_t::nakAllRequest()']]],
+  ['nbytes',['nbytes',['../a00028.html#a71e19bdaa2d6ed8e95d4b25497a45149',1,'_lpi2c_master_edma_handle::nbytes()'],['../a00032.html#a6cb0ef8b643f0c8da471897277a79e11',1,'_lpspi_master_edma_handle::nbytes()'],['../a00032.html#ac4304fd510994667fcc72cf37ef1345a',1,'_lpspi_slave_edma_handle::nbytes()'],['../a00035.html#a7ffb3be259d932a6a9f7e86aed4cc790',1,'_lpuart_edma_handle::nbytes()'],['../a00054.html#a061d53e53af802d59eca8bc3171297ce',1,'sai_edma_handle::nbytes()']]],
+  ['ndor',['ndor',['../a00041.html#accb9fd2cef1eb58f0937451b6803c032',1,'netc_tb_rp_cfge_t']]],
+  ['needexitnocmdmode',['needExitNoCmdMode',['../a00017.html#ad7d4a91907e6f084ce2027e6290698a6',1,'flexspi_nor_config_t']]],
+  ['needrestorenocmdmode',['needRestoreNoCmdMode',['../a00017.html#a7653a17acc4e4952defa540923c3f414',1,'flexspi_nor_config_t']]],
+  ['nextchanedgemode',['nextChanEdgeMode',['../a00066.html#a700c20e23231ba39cf5413dde606d5fb',1,'tpm_dual_edge_capture_param_t']]],
+  ['nointeralalign',['noInteralAlign',['../a00038.html#a306fbd3a3215259f9b380f8e8423f172',1,'mmc_card_t::noInteralAlign()'],['../a00055.html#a089143022f4fcf62251935db4ee7e996',1,'sd_card_t::noInteralAlign()']]],
+  ['nointernalalign',['noInternalAlign',['../a00056.html#aa3a92263c58ded5911a0c0bce688352f',1,'_sdio_card']]],
+  ['noisefilteradjustment',['noiseFilterAdjustment',['../a00048.html#aa9df6cdbf47ef4eaf06f29bff548a8bd',1,'pdm_hwvad_noise_filter_t']]],
+  ['noisegain',['noiseGain',['../a00048.html#ade6a68f4d654916e434895fea2479757',1,'pdm_hwvad_noise_filter_t']]],
+  ['nonsecureprivr',['nonsecurePrivR',['../a00067.html#aaf49281105db00456c3519aef4d06941',1,'trdc_memory_access_control_config_t']]],
+  ['nonsecureprivw',['nonsecurePrivW',['../a00067.html#afa85f3afb384b91ba782b86d8cd44bd0',1,'trdc_memory_access_control_config_t']]],
+  ['nonsecureprivx',['nonsecurePrivX',['../a00067.html#ac724452cb605348ade0c5b45523b38a8',1,'trdc_memory_access_control_config_t']]],
+  ['nonsecureusrr',['nonsecureUsrR',['../a00067.html#ae85c0b219826d30f49ed4b8759e7c6f7',1,'trdc_memory_access_control_config_t']]],
+  ['nonsecureusrw',['nonsecureUsrW',['../a00067.html#a356c2d64c1f53870f718a56aecad756c',1,'trdc_memory_access_control_config_t']]],
+  ['nonsecureusrx',['nonsecureUsrX',['../a00067.html#a9c71c515495b9dff79231c1b598f249a',1,'trdc_memory_access_control_config_t']]],
+  ['notifytype',['notifyType',['../a00047.html#a2ca3b1a52e315e072a8ab48fcc1dd62a',1,'notifier_notification_block_t']]],
+  ['npf',['npf',['../a00041.html#a0eda441b5d659f9bc37178eb310d3b1e',1,'netc_cmd_bd_t']]],
+  ['nseenable',['nseEnable',['../a00067.html#a916d262eec0aaebf1eb4d65b3957fa24',1,'trdc_mrc_region_descriptor_config_t::nseEnable()'],['../a00067.html#ac0e2df4e5be4e039759ec602a047eeae',1,'trdc_mbc_memory_block_config_t::nseEnable()']]],
+  ['numbytes',['numBytes',['../a00042.html#a0ba4de00c08a84d814445f8476c8f312',1,'netc_isi_kc_rule_t']]],
+  ['numentries',['numEntries',['../a00041.html#aa409005a0db247b36dce3dccf7076a4c',1,'netc_tb_sgcl_gcl_t::numEntries()'],['../a00041.html#a6aece9fe25cfe3a75a1ca54df4891c98',1,'netc_tb_tgs_gcl_t::numEntries()']]],
+  ['numerator',['numerator',['../a00010.html#a7cdf80b89c5dc408bcace6cd2e7096e5',1,'clock_audio_pll_config_t']]],
+  ['nummatched',['numMatched',['../a00041.html#a779e60b02500ca05e0a2f6e1fa5bc6e3',1,'netc_cmd_bd_t']]]
+];

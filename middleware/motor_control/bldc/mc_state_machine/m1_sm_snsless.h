@@ -64,7 +64,6 @@ typedef enum _m1_run_substate_t
 /*! @brief Device fault thresholds */
 typedef struct _mcdef_fault_thresholds_t
 {
-    frac16_t f16IDcBusOver;  /* DC bus over current level */
     frac16_t f16UDcBusOver;  /* DC bus over voltage level */
     frac16_t f16UDcBusUnder; /* DC bus under voltage level */
 } mcdef_fault_thresholds_t;

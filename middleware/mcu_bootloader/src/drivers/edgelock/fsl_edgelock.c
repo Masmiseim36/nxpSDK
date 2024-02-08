@@ -539,13 +539,13 @@ status_t EDGELOCK_ForwardLifecycleUpdate(SxMU_Type *base, uint16_t lifeCycle)
  * @param pFuseWords[out] Read fuse value word count.
  * @return 0 for success, otherwise return error code.
  */
-status_t EDGELOCK_ReadCommonFuse(SxMU_Type *base, uint8_t fuseId, uint32_t *pFuseValue, uint32_t *pFuseWords)
+status_t EDGELOCK_ReadCommonFuse(SxMU_Type *base, uint32_t fuseId, uint32_t *pFuseValue, uint32_t *pFuseWords)
 {
     status_t status;
 
     read_common_fuse_message_packet_t cmdMsg = {
         .msg.header.U = EDGELOCK_CMD_HEADER_READ_COMMON_FUSE,
-        .fuseId = fuseId,
+        .fuseId = (uint16_t)fuseId,
     };
     read_common_fuse_response_packet_t respMsg = { 0 };
 

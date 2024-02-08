@@ -49,6 +49,12 @@
 #define MBEDTLS_MCUX_USE_PKC 
 #endif
 
+/* Eanble usage of TRNG as entropy seeding source based upon Platform TRNG support and configurability*/
+#if defined(MCUX_ENABLE_TRNG_AS_ENTROPY_SEED) && \
+    (defined(FSL_FEATURE_SOC_TRNG_COUNT) && (FSL_FEATURE_SOC_TRNG_COUNT > 0))
+#define MBEDTLS_MCUX_USE_TRNG_AS_ENTROPY_SEED
+#endif
+
 /* Uncomment to enable HW acceleration, Comment to disable HW acceleration, use SW only */
 
 /* Enable ELS */

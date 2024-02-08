@@ -113,6 +113,8 @@ hal_timer_status_t HAL_TimerInit(hal_timer_handle_t halTimerHandle, hal_timer_co
     irqId                   = mLptmrIrqId[halTimerState->instance];
 
     LPTMR_GetDefaultConfig(&lptmrConfig);
+
+    /* If the lptmr does not want to use the default clock source, clockSrcSelect need to be configured by users. */
     lptmrConfig.prescalerClockSource = (lptmr_prescaler_clock_select_t)halTimerConfig->clockSrcSelect;
 
 #if (defined(LPTMR_USE_FREE_RUNNING) && (LPTMR_USE_FREE_RUNNING > 0))
@@ -175,23 +177,45 @@ void HAL_TimerInstallCallback(hal_timer_handle_t halTimerHandle, hal_timer_callb
 uint32_t HAL_TimerGetMaxTimeout(hal_timer_handle_t halTimerHandle)
 {
     uint32_t reserveCount;
+    uint64_t retValue;
+    uint32_t reserveMs = 4U;
     assert(halTimerHandle);
     hal_timer_handle_struct_t *halTimerState = halTimerHandle;
-    reserveCount                             = (uint32_t)MSEC_TO_COUNT((4), (halTimerState->timerClock_Hz));
-    if (reserveCount < MSEC_TO_COUNT((1), (halTimerState->timerClock_Hz)))
-    {
-        return 1000;
-    }
-    return (uint32_t)COUNT_TO_USEC(((uint64_t)0xFFFFFFFF - (uint64_t)reserveCount),
-                                   (uint64_t)halTimerState->timerClock_Hz);
+    reserveCount                             = (uint32_t)MSEC_TO_COUNT((reserveMs), (halTimerState->timerClock_Hz));
+
+    retValue = COUNT_TO_USEC(((uint64_t)0xFFFFFFFF - (uint64_t)reserveCount), (uint64_t)halTimerState->timerClock_Hz);
+    return (uint32_t)((retValue > 0xFFFFFFFFU) ? (0xFFFFFFFFU - reserveMs * 1000U) : (uint32_t)retValue);
 }
 /* return micro us */
 uint32_t HAL_TimerGetCurrentTimerCount(hal_timer_handle_t halTimerHandle)
 {
     assert(halTimerHandle);
     hal_timer_handle_struct_t *halTimerState = halTimerHandle;
-    return (uint32_t)COUNT_TO_USEC((uint64_t)LPTMR_GetCurrentTimerCount(s_LptmrBase[halTimerState->instance]),
-                                   halTimerState->timerClock_Hz);
+    uint32_t flags                           = LPTMR_GetStatusFlags(s_LptmrBase[halTimerState->instance]);
+    uint32_t count                           = 0U;
+
+#if !(defined(LPTMR_USE_FREE_RUNNING) && (LPTMR_USE_FREE_RUNNING > 0))
+    if (flags != 0U)
+    {
+        /* If HAL_TimerGetCurrentTimerCount is called from masked interrupt
+         * context, then it's possible the TCF flag is set, meaning the CNT
+         * register is reset. In such case, the current count value is not
+         * correct. We need to add the current compare value to the count
+         * This is true only when TFC is not set (not free running) */
+        count =
+            (uint32_t)COUNT_TO_USEC((uint64_t)s_LptmrBase[halTimerState->instance]->CMR, halTimerState->timerClock_Hz);
+        count += (uint32_t)COUNT_TO_USEC((uint64_t)LPTMR_GetCurrentTimerCount(s_LptmrBase[halTimerState->instance]),
+                                         halTimerState->timerClock_Hz);
+        LPTMR_ClearStatusFlags(s_LptmrBase[halTimerState->instance], flags);
+    }
+    else
+#endif /* LPTMR_USE_FREE_RUNNING */
+    {
+        count = (uint32_t)COUNT_TO_USEC((uint64_t)LPTMR_GetCurrentTimerCount(s_LptmrBase[halTimerState->instance]),
+                                        halTimerState->timerClock_Hz);
+    }
+
+    return count;
 }
 
 hal_timer_status_t HAL_TimerUpdateTimeout(hal_timer_handle_t halTimerHandle, uint32_t timeout)
@@ -202,12 +226,13 @@ hal_timer_status_t HAL_TimerUpdateTimeout(hal_timer_handle_t halTimerHandle, uin
 #endif
     assert(halTimerHandle);
     hal_timer_handle_struct_t *halTimerState = halTimerHandle;
-    halTimerState->timeout                   = timeout;
+    halTimerState->timeout                   = timeout + 1U;
     tickCount = (uint32_t)USEC_TO_COUNT(halTimerState->timeout, halTimerState->timerClock_Hz);
     if ((tickCount < 1U) || (tickCount > 0xfffffff0U))
     {
         return kStatus_HAL_TimerOutOfRanger;
     }
+    tickCount += 1U;
 #if (defined(LPTMR_USE_FREE_RUNNING) && (LPTMR_USE_FREE_RUNNING > 0))
     totalCount = (uint64_t)tickCount + (uint64_t)LPTMR_GetCurrentTimerCount(s_LptmrBase[halTimerState->instance]);
     if (totalCount > 0xffffffff)

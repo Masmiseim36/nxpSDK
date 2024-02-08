@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<workspace>
+  <batchBuild>
+    <batchDefinition>
+      <name>all</name>
+      <member>
+        <project>host_video_camera_freertos_cm33</project>
+        <configuration>hyperram_debug</configuration>
+      </member>
+      <member>
+        <project>host_video_camera_freertos_cm33</project>
+        <configuration>hyperram_release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>hyperram_debug</name>
+      <member>
+        <project>host_video_camera_freertos_cm33</project>
+        <configuration>hyperram_debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>hyperram_release</name>
+      <member>
+        <project>host_video_camera_freertos_cm33</project>
+        <configuration>hyperram_release</configuration>
+      </member>
+    </batchDefinition>
+  </batchBuild>
+  <project>
+    <path>$WS_DIR$/host_video_camera_freertos_cm33.ewp</path>
+  </project>
+</workspace>

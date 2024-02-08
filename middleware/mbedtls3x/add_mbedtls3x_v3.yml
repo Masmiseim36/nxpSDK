@@ -15,6 +15,7 @@ middleware.mbedtls3x.template:
       target_file:
       - mcux_mbedtls_config.h
       - mcux_mbedtls_accelerator_config.h
+      - mcux_psa_defines.h
     files:
     - source: port/mcux_mbedtls_config.h
       attribute: config
@@ -45,6 +46,10 @@ middleware.mbedtls3x.port.config:
     files:
     - source: port/mcux_mbedtls_config.h
     - source: port/mcux_mbedtls_accelerator_config.h
+    - source: port/mcux_psa_defines.h
+    configuration:
+      cc-define:
+        MBEDTLS_CONFIG_FILE: '"mcux_mbedtls_config.h"'
   belong_to: set.middleware.mbedtls3x
   section_info:
     description: mbedTLS port library common files for MCUX
@@ -57,6 +62,32 @@ middleware.mbedtls3x.port.config:
       belong_to: mbedtls3x
     display_name: mbedtls3x_config
 
+middleware.mbedtls3x.port.psa_crypto_config:
+  section-type: component
+  contents:
+    repo_base_path: middleware/mbedtls3x
+    project_base_path: mbedtls3x
+    cc-include:
+    - repo_relative_path: port
+    files:
+    - source: port/mcux_mbedtls_psa_crypto_config.h
+    - source: port/mcux_mbedtls_accelerator_config.h
+    - source: port/mcux_psa_defines.h
+    configuration:
+      cc-define:
+        MBEDTLS_CONFIG_FILE: '"mcux_mbedtls_psa_crypto_config.h"'
+  belong_to: set.middleware.mbedtls3x
+  section_info:
+    description: mbedTLS port library common files for MCUX
+    type: middleware
+    version: "${mbedtls3x_version}"
+    user_visible: never
+    full_name: MbedTLS MCUX SDK port psa_crypto only config layer
+    taxonomy:
+      csub: psa_crypto_config
+      belong_to: mbedtls3x
+    display_name: mbedtls3x_psa_crypto_config
+    
 middleware.mbedtls3x.port.osal:
   section-type: component
   contents:
@@ -162,12 +193,17 @@ middleware.mbedtls3x.port.rng:
           - driver.trng
           - device:
             - MIMXRT685S
+            - RW610
+            - RW612
         - not:
             device:
               - LPC55S16
               - MIMXRT685S
+              - RW610
+              - RW612
+              - MIMXRT1189
 
-middleware.mbedtls3x.port.ele_s400:
+middleware.mbedtls3x.port.ele_s4xx_rng:
   section-type: component
   contents:
     repo_base_path: middleware/mbedtls3x
@@ -191,7 +227,7 @@ middleware.mbedtls3x.port.ele_s400:
         FSL_FEATURE_SOC_ELE_S4XX:
   belong_to: set.middleware.mbedtls3x
   section_info:
-    description: mbedTLS port library for ELE S40x
+    description: mbedTLS port library for ELE S4xx with only RNG ALT Function
     type: middleware
     version: "${mbedtls3x_version}"
     user_visible: always
@@ -199,16 +235,18 @@ middleware.mbedtls3x.port.ele_s400:
     taxonomy:
       csub: ele_s4xx
       belong_to: mbedtls3x
-    display_name: mbedtls3x_ele_s4xx
+    display_name: mbedtls3x_ele_s4xx_rng
   dependency:
     allOf:
-    - middleware.mbedtls3x.port.config
+    - middleware.mbedtls3x.crypto
+    - middleware.mbedtls3x.port.psa_crypto_config
+    - middleware.mbedtls3x.port.ele_s4xx_rng
     - middleware.mbedtls3x.port.osal
     - middleware.mbedtls3x.port.osal.baremetal
     - driver.s3mu
     - component.ele_crypto
 
-middleware.mbedtls3x.port.ele_s4xx_psa:
+middleware.mbedtls3x.port.ele_s4xx_psa_transparent:
   section-type: component
   contents:
     repo_base_path: middleware/mbedtls3x
@@ -221,6 +259,9 @@ middleware.mbedtls3x.port.ele_s4xx_psa:
     - source: port/ele_s4xx/ele_s4xx_crypto_primitives.h
     - source: port/ele_s4xx/src/transparent/mcux_psa_s4xx_init.c
     - source: port/ele_s4xx/include/transparent/mcux_psa_s4xx_init.h
+
+    - source: port/ele_s4xx/src/transparent/mcux_psa_s4xx_key_generation.c
+    - source: port/ele_s4xx/include/transparent/mcux_psa_s4xx_key_generation.h
 
     - source: port/ele_s4xx/src/transparent/mcux_psa_s4xx_hash.c
     - source: port/ele_s4xx/include/transparent/mcux_psa_s4xx_hash.h
@@ -244,24 +285,23 @@ middleware.mbedtls3x.port.ele_s4xx_psa:
         PSA_CRYPTO_DRIVER_ELE_S4XX:
   belong_to: set.middleware.mbedtls3x
   section_info:
-    description: mbedTLS port library for ELE S40x
+    description: PSA ELE S4xx transparent driver wrapper
     type: middleware
     version: "${mbedtls3x_version}"
-    user_visible: always
+    user_visible: never
     full_name: MbedTLS 3x MCUX SDK port layer via ELE S4XX
     taxonomy:
       csub: ele_s4xx_psa
       belong_to: mbedtls3x
-    display_name: mbedtls3x_ele_s4xx_psa_transparent
+    display_name: mbedtls3x_ele_s4xx_psa
   dependency:
     allOf:
-    - middleware.mbedtls3x.port.config
+    - middleware.mbedtls3x.port.psa_crypto_config
     - middleware.mbedtls3x.port.osal
     - middleware.mbedtls3x.port.osal.baremetal
-    - middleware.mbedtls3x.port.ele_s400
+    - middleware.mbedtls3x.port.ele_s4xx_rng
     - driver.s3mu
     - component.ele_crypto
-    - middleware.mbedtls3x.port.ele_s4xx_psa_opaque
 
 middleware.mbedtls3x.port.ele_s4xx_sd_nvm_mgr:
   section-type: component
@@ -278,7 +318,7 @@ middleware.mbedtls3x.port.ele_s4xx_sd_nvm_mgr:
         PSA_ELE_S4XX_SD_NVM_MANAGER:
   belong_to: set.middleware.mbedtls3x
   section_info:
-    description: mbedTLS port library for ELE S40x
+    description: NVM manager for ELE S4xx with storage on SD FATFS
     type: middleware
     version: "${mbedtls3x_version}"
     user_visible: never
@@ -334,23 +374,115 @@ middleware.mbedtls3x.port.ele_s4xx_psa_opaque:
         PSA_CRYPTO_DRIVER_ELE_S4XX:
   belong_to: set.middleware.mbedtls3x
   section_info:
-    description: mbedTLS port library for ELE S40x
+    description: PSA Opaque driver wrappers for ELE S4XX opaque
+    type: middleware
+    version: "${mbedtls3x_version}"
+    user_visible: never
+    full_name: MbedTLS 3x MCUX SDK port layer via ELE S4XX
+    taxonomy:
+      csub: ele_s4xx_psa_opaque
+      belong_to: mbedtls3x
+    display_name: mbedtls3x_ele_s4xx_psa_opaque
+  dependency:
+    allOf:
+    - driver.s3mu
+    - component.ele_crypto
+    - middleware.mbedtls3x.port.psa_crypto_config
+    - middleware.mbedtls3x.port.osal
+    - middleware.mbedtls3x.port.osal.baremetal
+    - middleware.mbedtls3x.port.ele_s4xx_rng
+
+middleware.mbedtls3x.port.ele_s4xx_psa:
+  section-type: component
+  contents:
+    repo_base_path: middleware/mbedtls3x
+    project_base_path: mbedtls3x
+    configuration:
+      cc-define:
+        PSA_CRYPTO_DRIVER_ELE_S4XX:
+  belong_to: set.middleware.mbedtls3x
+  section_info:
+    description: PSA crypto driver for ELE S4XX
     type: middleware
     version: "${mbedtls3x_version}"
     user_visible: always
     full_name: MbedTLS 3x MCUX SDK port layer via ELE S4XX
     taxonomy:
-      csub: ele_s4xx_psa_opaque
+      csub: ele_s4xx_psa
       belong_to: mbedtls3x
-    display_name: mbedtls3x_ele_s4xx_psa_transparent
+    display_name: mbedtls3x_ele_s4xx_psa
   dependency:
     allOf:
     - driver.s3mu
     - component.ele_crypto
+    - middleware.mbedtls3x.port.psa_crypto_config
+    - middleware.mbedtls3x.crypto
+    - middleware.mbedtls3x.port.ele_s4xx_rng
+    - middleware.mbedtls3x.port.ele_s4xx_psa_opaque
+    - middleware.mbedtls3x.port.ele_s4xx_psa_transparent
+    - anyOf:
+      - middleware.mbedtls3x.port.osal.baremetal
+      - middleware.mbedtls3x.port.osal.frtos
+
+middleware.mbedtls3x.port.ele_s4xx_psa_with_persistent_storage:
+  section-type: component
+  contents:
+    repo_base_path: middleware/mbedtls3x
+    project_base_path: mbedtls3x
+    configuration:
+      cc-define:
+        PSA_CRYPTO_DRIVER_ELE_S4XX:
+  belong_to: set.middleware.mbedtls3x
+  section_info:
+    description: PSA crypto driver for ELE S4XX with Persistent Storage on SD card FATFS
+    type: middleware
+    version: "${mbedtls3x_version}"
+    user_visible: always
+    full_name: MbedTLS 3x MCUX SDK port layer via ELE S4XX
+    taxonomy:
+      csub: ele_s4xx_psa
+      belong_to: mbedtls3x
+    display_name: mbedtls3x_ele_s4xx_psa_persistent_storage
+  dependency:
+    allOf:
+    - driver.s3mu
+    - component.ele_crypto
+    - middleware.mbedtls3x.crypto
+    - middleware.mbedtls3x.port.psa_crypto_config
+    - middleware.mbedtls3x.port.ele_s4xx_rng
+    - middleware.mbedtls3x.port.ele_s4xx_psa_opaque
+    - middleware.mbedtls3x.port.ele_s4xx_psa_transparent
+    - middleware.mbedtls3x.port.ele_s4xx_sd_nvm_mgr
+    - middleware.mbedtls3x.crypto_storage_fatfs
+    - anyOf:
+      - middleware.mbedtls3x.port.osal.baremetal
+      - middleware.mbedtls3x.port.osal.frtos
+
+middleware.mbedtls3x.port.tfm:
+  section-type: component
+  contents:
+    repo_base_path: middleware/mbedtls3x
+    project_base_path: mbedtls3x
+    cc-include:
+    - repo_relative_path: port/tfm
+    files:
+    - source: port/tfm/entropy_poll_alt.c
+    - source: library/psa_crypto_client.c
+  belong_to: set.middleware.mbedtls3x
+  section_info:
+    description: mbedTLS port library for use in TFM NS
+    type: middleware
+    version: "${mbedtls3x_version}"
+    user_visible: never
+    full_name: MbedTLS 3x MCUX SDK TFM port layer
+    taxonomy:
+      csub: tfm
+      belong_to: mbedtls3x
+    display_name: mbedtls3x_tfm
+  dependency:
+    allOf:
     - middleware.mbedtls3x.port.config
-    - middleware.mbedtls3x.port.osal
-    - middleware.mbedtls3x.port.osal.baremetal
-    - middleware.mbedtls3x.port.ele_s400
+    - middleware.mbedtls3x.no_psa
 
 middleware.mbedtls3x.tests:
   section-type: component
@@ -393,7 +525,7 @@ middleware.mbedtls3x.tests:
     taxonomy:
       csub: tests
       belong_to: mbedtls3x
-    display_name: mbedtls3x_ele_testsuite
+    display_name: mbedtls3x_tests
 
 middleware.mbedtls3x.crypto_storage_default:
   section-type: component
@@ -411,7 +543,7 @@ middleware.mbedtls3x.crypto_storage_default:
     description: PSA ITS simulator over stdio files.
     type: middleware
     version: "${mbedtls3x_version}"
-    user_visible: always
+    user_visible: never
     full_name: MbedTLS open source Crypto library
     taxonomy:
       csub: crypto_storage_default
@@ -429,8 +561,10 @@ middleware.mbedtls3x.crypto_storage_fatfs:
     cc-include:
     - repo_relative_path: include
     - repo_relative_path: library
+    - repo_relative_path: port/psa_its
     files:
     - source: port/psa_its/psa_its_fatfs.c
+    - source: port/psa_its/psa_its_fatfs.h
     - source: library/psa_crypto_its.h
     configuration:
       cc-define:
@@ -440,7 +574,7 @@ middleware.mbedtls3x.crypto_storage_fatfs:
     description: PSA ITS simulator over fatfs files.
     type: middleware
     version: "${mbedtls3x_version}"
-    user_visible: always
+    user_visible: never
     full_name: MbedTLS open source Crypto library
     taxonomy:
       csub: crypto_storage_fatfs
@@ -457,7 +591,36 @@ middleware.mbedtls3x.crypto_storage_fatfs:
     - middleware.fatfs.sd
     - middleware.fatfs
 
-middleware.mbedtls3x.crypto:
+middleware.mbedtls3x.crypto_storage_ram:
+  section-type: component
+  contents:
+    repo_base_path: middleware/mbedtls3x
+    project_base_path: mbedtls3x
+    cc-include:
+    - repo_relative_path: include
+    - repo_relative_path: library
+    files:
+    - source: port/psa_its/psa_its_ram.c
+    - source: library/psa_crypto_its.h
+    configuration:
+      cc-define:
+        MBEDTLS_PSA_ITS_RAM:
+  belong_to: set.middleware.mbedtls3x
+  section_info:
+    description: PSA ITS simulator over objects in RAM.
+    type: middleware
+    version: "${mbedtls3x_version}"
+    user_visible: never
+    full_name: MbedTLS open source Crypto library
+    taxonomy:
+      csub: crypto_storage_ram
+      belong_to: mbedtls3x
+    display_name: mbedtls3x_crypto_storage_ram
+  dependency:
+    allOf:
+    - middleware.mbedtls3x.crypto
+
+middleware.mbedtls3x.crypto.no_psa:
   section-type: component
   contents:
     repo_base_path: middleware/mbedtls3x
@@ -507,7 +670,6 @@ middleware.mbedtls3x.crypto:
     - source: include/mbedtls/md.h
     - source: include/mbedtls/md5.h
     - source: include/mbedtls/memory_buffer_alloc.h
-    - source: include/mbedtls/net_sockets.h
     - source: include/mbedtls/nist_kw.h
     - source: include/mbedtls/oid.h
     - source: include/mbedtls/pem.h
@@ -627,6 +789,39 @@ middleware.mbedtls3x.crypto:
     - source: library/platform.c
     - source: library/platform_util.c
     - source: library/poly1305.c
+    - source: library/ripemd160.c
+    - source: library/rsa.c
+    - source: library/rsa_alt_helpers.c
+    - source: library/rsa_alt_helpers.h
+    - source: library/sha1.c
+    - source: library/sha3.c
+    - source: library/sha256.c
+    - source: library/sha512.c
+    - source: library/threading.c
+    - source: library/timing.c
+    - source: library/version.c
+    - source: library/version_features.c
+  belong_to: set.middleware.mbedtls3x
+  section_info:
+    description: mbedTLS crypto library without PSA
+    type: middleware
+    version: "${mbedtls3x_version}"
+    user_visible: never
+    full_name: MbedTLS open source Crypto library without PSA
+    taxonomy:
+      csub: crypto_no_psa
+      belong_to: mbedtls3x
+    display_name: mbedtls3x_crypto_no_psa
+
+middleware.mbedtls3x.crypto:
+  section-type: component
+  contents:
+    repo_base_path: middleware/mbedtls3x
+    project_base_path: mbedtls3x
+    cc-include:
+    - repo_relative_path: include
+    - repo_relative_path: library
+    files:
     - source: library/psa_crypto.c
     - source: library/psa_crypto_aead.c
     - source: library/psa_crypto_aead.h
@@ -661,18 +856,6 @@ middleware.mbedtls3x.crypto:
     - source: library/psa_crypto_storage.h
     - source: library/psa_util.c
     - source: library/psa_util_internal.h
-    - source: library/ripemd160.c
-    - source: library/rsa.c
-    - source: library/rsa_alt_helpers.c
-    - source: library/rsa_alt_helpers.h
-    - source: library/sha1.c
-    - source: library/sha3.c
-    - source: library/sha256.c
-    - source: library/sha512.c
-    - source: library/threading.c
-    - source: library/timing.c
-    - source: library/version.c
-    - source: library/version_features.c
   belong_to: set.middleware.mbedtls3x
   section_info:
     description: mbedTLS crypto library
@@ -684,6 +867,9 @@ middleware.mbedtls3x.crypto:
       csub: crypto
       belong_to: mbedtls3x
     display_name: mbedtls3x_crypto
+  dependency:
+    allOf:
+    - middleware.mbedtls3x.crypto.no_psa
 
 middleware.mbedtls3x.x509:
   section-type: component
@@ -720,7 +906,7 @@ middleware.mbedtls3x.x509:
       belong_to: mbedtls3x
     display_name: mbedtls3x_x509
 
-middleware.mbedtls3x.ssl:
+middleware.mbedtls3x.ssl.no_psa:
   section-type: component
   contents:
     repo_base_path: middleware/mbedtls3x
@@ -734,6 +920,7 @@ middleware.mbedtls3x.ssl:
     - source: include/mbedtls/ssl_ciphersuites.h
     - source: include/mbedtls/ssl_cookie.h
     - source: include/mbedtls/ssl_ticket.h
+    - source: include/mbedtls/net_sockets.h
     - source: library/debug.c
     - source: library/mps_common.h
     - source: library/mps_error.h
@@ -763,6 +950,30 @@ middleware.mbedtls3x.ssl:
     - source: library/ssl_tls13_server.c
   belong_to: set.middleware.mbedtls3x
   section_info:
+    description: mbedTLS SSL library without PSA
+    type: middleware
+    version: "${mbedtls3x_version}"
+    user_visible: never
+    full_name: MbedTLS open source SSL library without PSA
+    taxonomy:
+      csub: ssl_no_psa
+      belong_to: mbedtls3x
+    display_name: mbedtls3x_ssl_no_psa
+  dependency:
+    allOf:
+    - middleware.mbedtls3x.crypto.no_psa
+    - middleware.mbedtls3x.x509
+
+middleware.mbedtls3x.ssl:
+  section-type: component
+  contents:
+    repo_base_path: middleware/mbedtls3x
+    project_base_path: mbedtls3x
+    cc-include:
+    - repo_relative_path: include
+    - repo_relative_path: library
+  belong_to: set.middleware.mbedtls3x
+  section_info:
     description: mbedTLS SSL library
     type: middleware
     version: "${mbedtls3x_version}"
@@ -774,7 +985,58 @@ middleware.mbedtls3x.ssl:
     display_name: mbedtls3x_ssl
   dependency:
     allOf:
+    - middleware.mbedtls3x.ssl.no_psa
     - middleware.mbedtls3x.crypto
+    - middleware.mbedtls3x.x509
+
+middleware.mbedtls3x.header_files_only:
+  section-type: component
+  contents:
+    repo_base_path: middleware/mbedtls3x
+    project_base_path: mbedtls3x
+    cc-include:
+    - repo_relative_path: include
+    - repo_relative_path: library
+    files:
+    - source: include/mbedtls/*.h
+    - source: include/psa/*.h
+    - source: library/*.h
+  belong_to: set.middleware.mbedtls3x
+  section_info:
+    description: mbedTLS SSL library header files
+    type: middleware
+    version: "${mbedtls3x_version}"
+    user_visible: never
+    full_name: MbedTLS open source SSL library header files
+    taxonomy:
+      csub: header_files_only
+      belong_to: mbedtls3x
+    display_name: mbedtls3x_header_files_only
+
+middleware.mbedtls3x.no_psa:
+  section-type: component
+  contents:
+    repo_base_path: middleware/mbedtls3x
+    project_base_path: mbedtls3x
+    cc-include:
+    - repo_relative_path: include
+    - repo_relative_path: library
+  belong_to: set.middleware.mbedtls3x
+  section_info:
+    description: mbedTLS library v3.x without PSA
+    type: middleware
+    version: "${mbedtls3x_version}"
+    user_visible: never
+    full_name: MbedTLS open source SSL library without PSA
+    taxonomy:
+      csub: mbedtls3x_no_psa
+      belong_to: mbedtls3x
+    display_name: mbedtls3x_no_psa
+  dependency:
+    allOf:
+    - middleware.mbedtls3x.template
+    - middleware.mbedtls3x.crypto.no_psa
+    - middleware.mbedtls3x.ssl.no_psa
     - middleware.mbedtls3x.x509
 
 middleware.mbedtls3x:
@@ -791,7 +1053,7 @@ middleware.mbedtls3x:
     type: middleware
     version: "${mbedtls3x_version}"
     user_visible: always
-    full_name: MbedTLS open source SSL library
+    full_name: MbedTLS open source SSL library (Crypto, SSL/TLS, X.509)
     taxonomy:
       csub: mbedtls3x
       belong_to: mbedtls3x
@@ -1030,6 +1292,8 @@ set.middleware.mbedtls3x:
       - evkmimxrt1180
       - evkmimxrt685
       - mimxrt685audevk
+      - rdrw612bga
+      - rdrw612qfn
 
 license.mbedtls3x_license:
   section-type: license

@@ -3338,7 +3338,7 @@ status_t flexspi_nor_get_config(uint32_t instance, flexspi_nor_config_t *config,
             // Change the Pad Drive Strength
             if (option->option1.B.drive_strength)
             {
-#ifdef MIMXRT1189_cm33_SERIES
+#if (defined(MIMXRT1189_cm33_SERIES) || defined(MIMXRT1187_cm33_SERIES))
                 flexspi_update_padsetting(instance, &config->memConfig, option->option1.B.drive_strength);
 #else
                 flexspi_update_padsetting(&config->memConfig, option->option1.B.drive_strength);

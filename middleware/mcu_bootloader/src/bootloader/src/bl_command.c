@@ -160,7 +160,11 @@ const command_handler_entry_t g_commandHandlerTable[] = {
     { 0 },
 #endif                                                // BL_FEATURE_FLASH_SECURITY
     { handle_get_property, NULL },                    // kCommandTag_GetProperty = 0x07
+#if (defined(BL_FETAURE_RECV_SB) && (BL_FETAURE_RECV_SB == 1))
     { handle_receive_sb_file, handle_data_consumer }, // kCommandTag_ReceiveSbFile = 0x08
+#else
+    { 0 },
+#endif
     { handle_execute, NULL },                         // kCommandTag_Execute = 0x09
     { handle_call, NULL },                            // kCommandTag_Call = 0x0a
     { handle_reset, NULL },                           // kCommandTag_Reset = 0x0b

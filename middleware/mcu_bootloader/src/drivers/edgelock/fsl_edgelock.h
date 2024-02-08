@@ -286,7 +286,7 @@ extern "C"
      * @param pFuseWords[out] Read fuse value word count.
      * @return 0 for success, otherwise return error code.
      */
-    status_t EDGELOCK_ReadCommonFuse(SxMU_Type *base, uint8_t fuseId, uint32_t *pFuseValue, uint32_t *pFuseWords);
+    status_t EDGELOCK_ReadCommonFuse(SxMU_Type *base, uint32_t fuseId, uint32_t *pFuseValue, uint32_t *pFuseWords);
 
     /*!
      * @brief Get Edgelock firmware version.
@@ -338,7 +338,7 @@ extern "C"
      * @param fuseWords Fuse value word count.
      * @return 0 for success, otherwise return error code.
      */
-    status_t EDGELOCK_ReadFuse(SxMU_Type *base, uint8_t fuseId, uint32_t *pFuseValue, uint32_t fuseWords);
+    status_t EDGELOCK_ReadFuse(SxMU_Type *base, uint32_t fuseId, uint32_t *pFuseValue, uint32_t fuseWords);
 
     /*!
      * @brief Start TRNG.

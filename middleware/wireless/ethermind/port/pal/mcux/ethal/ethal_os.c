@@ -165,7 +165,6 @@ INT32 EM_thread_delete
     ret = OSA_TaskDestroy(thread);
     if (KOSA_StatusSuccess == ret)
     {
-        EM_free_mem((thread));
         return 0;
     }
     else
@@ -273,7 +272,6 @@ INT32 EM_thread_mutex_deinit
         ret = OSA_MutexDestroy((*mutex));
         if (KOSA_StatusSuccess == ret)
         {
-            EM_free_mem((*mutex));
             return 0;
         }
     }
@@ -431,7 +429,6 @@ INT32 EM_thread_cond_deinit
 
         if (KOSA_StatusSuccess == ret)
         {
-            EM_free_mem((*cond));
             return 0;
         }
     }
@@ -868,18 +865,5 @@ void vApplicationStackOverflowHook
 
     for(;;) {}
 }
-/**
- *  \fn vApplicationMallocFailedHook
- *
- *  \brief Handle Malloc failure
- *   Abstracted local time pointer to hold the system local time
- *
- *  \return None
- */
-void vApplicationMallocFailedHook( void )
-{
-    printf("Error: RTOS-HEAP-MALLOC failed to allocate memory, Free Memory: %d\n", xPortGetFreeHeapSize());
-    taskDISABLE_INTERRUPTS();
-    for(;;) {}
-}
+
 #endif /* EM_ENABLE_PAL_OS */

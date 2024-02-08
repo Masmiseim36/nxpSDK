@@ -1,0 +1,25 @@
+var searchData=
+[
+  ['u16pfoversampleratio',['u16pfOverSampleRatio',['../a00064.html#a9da8fafc107131163cfe7bdd76feb900',1,'sinc_channel_conv_option_t']]],
+  ['u32highlimitthreshold',['u32HighLimitThreshold',['../a00064.html#aa14d7fb424e580e747f41cc8d99677d6',1,'sinc_channel_protection_option_t']]],
+  ['u32lowlimitthreshold',['u32LowLimitThreshold',['../a00064.html#ae1de7f9b6d3d37f8b496da0a6370955f',1,'sinc_channel_protection_option_t']]],
+  ['u32pfbiasvalue',['u32pfBiasValue',['../a00064.html#a7a7fe163379bcccabc90598d70ae3001',1,'sinc_channel_conv_option_t']]],
+  ['u8fifowatermark',['u8FifoWaterMark',['../a00064.html#a59aad4719cf7a981701a759c86f4ead6',1,'sinc_channel_config_t']]],
+  ['u8pfshiftbitsnum',['u8pfShiftBitsNum',['../a00064.html#a851ddb3226d63197ac8228c5a3189e2a',1,'sinc_channel_conv_option_t']]],
+  ['u8scdlimitthreshold',['u8ScdLimitThreshold',['../a00064.html#a01633e9f3d4aa69bc4032e6e1555c717',1,'sinc_channel_protection_option_t']]],
+  ['uhsausize',['uhsAuSize',['../a00037.html#a2c4de6b50d23ee9b48d9d150fcc16fcd',1,'sd_status_t']]],
+  ['uhsspeedgrade',['uhsSpeedGrade',['../a00037.html#a6cc825664732275578762e431ab7d90e',1,'sd_status_t']]],
+  ['unicastframe',['unicastFrame',['../a00045.html#aca584a4695e8c461496b1676defd9f2e',1,'netc_port_phy_mac_traffic_statistic_t::unicastFrame()'],['../a00045.html#a139fcfcbf1cd45b9596d56c326586bfb',1,'netc_port_pseudo_mac_traffic_statistic_t::unicastFrame()']]],
+  ['unicastmacfilt',['unicastMacFilt',['../a00043.html#a5425ac56e7ae9db3021b35dc09018c78',1,'netc_enetc_port_discard_statistic_t']]],
+  ['unicastvlanfilt',['unicastVlanFilt',['../a00043.html#aa0e09d24acf564119e2f02654e4ef9cd',1,'netc_enetc_port_discard_statistic_t']]],
+  ['unmcastrpentryid',['unMcastRpEntryID',['../a00046.html#a4986c8f15e83d15d544a43e157e370ee',1,'netc_swt_port_bridge_config_t']]],
+  ['unucastrpentryid',['unUcastRpEntryID',['../a00046.html#a164782e38ed99a1b57f584a2d314b1e0',1,'netc_swt_port_bridge_config_t']]],
+  ['updateactions',['updateActions',['../a00041.html#a4509ccdae58f9b926b338f6fa6d09a7a',1,'netc_tb_common_header_t']]],
+  ['useglobaltimebase',['useGlobalTimeBase',['../a00066.html#a399049f665e74d4a49610a2e2b7621de',1,'tpm_config_t']]],
+  ['useoutervlantag',['useOuterVlanTag',['../a00039.html#a64dc4f35de626e801d57f3ff84790f62',1,'netc_si_l2vf_config_t']]],
+  ['userdata',['userData',['../a00008.html#ae8eeee4619341acc1d48a8efe95201f0',1,'_asrc_handle::userData()'],['../a00009.html#a11b756293e4f1a50ce1f4864dbc2e5f6',1,'_asrc_edma_handle::userData()'],['../a00014.html#a6af5d18677d40167da0d0219cb3bed01',1,'edma_handle_t::userData()'],['../a00015.html#ab6e0932c11eba224663bec6ead9f5e78',1,'_flexcan_handle::userData()'],['../a00016.html#a39db7f929a1fc22a199ccaf739fa6f6c',1,'_flexspi_handle::userData()'],['../a00019.html#aa6b49e4c9a9a7384bf94217687a76b0b',1,'_i3c_master_handle::userData()'],['../a00023.html#a8d4d3fa4219c24442c1f478837cf87ea',1,'_i3c_slave_handle::userData()'],['../a00022.html#a11b843bd180e448bb900ea82ce06ac65',1,'_i3c_master_edma_handle::userData()'],['../a00024.html#aca9d406a8ef88f83c9466c6a53caacaa',1,'_i3c_slave_edma_handle::userData()'],['../a00027.html#a6891adb76d1887f61142ecc89815dcd4',1,'_lpi2c_master_handle::userData()'],['../a00029.html#aa394f46d8677c977aa39b64fb0c353ce',1,'_lpi2c_slave_handle::userData()'],['../a00028.html#a732af16fd6652ebe44a6ec8584644f87',1,'_lpi2c_master_edma_handle::userData()'],['../a00031.html#ad06b10280d203a26ee97ad860360cb3b',1,'_lpspi_master_handle::userData()'],['../a00031.html#afc8a4565bdde97f5a7db4e6e64dd430a',1,'_lpspi_slave_handle::userData()'],['../a00032.html#a314643d8584c345051a7e389ad68cd32',1,'_lpspi_master_edma_handle::userData()'],['../a00032.html#ae4827ac81285a661d014146716aa3889',1,'_lpspi_slave_edma_handle::userData()'],['../a00034.html#ad9f3989cffe26d3ca63d381da36024be',1,'_lpuart_handle::userData()'],['../a00035.html#ac699f5a5123647eefb2aebb1b1a35c4a',1,'_lpuart_edma_handle::userData()'],['../a00048.html#a1e2468882ba36fdf414fb068d5f6c294',1,'_pdm_handle::userData()'],['../a00053.html#a593e606183fad166fae74bd5e5cc70b5',1,'_sai_handle::userData()'],['../a00054.html#af8526618ff18f03496d39a9003a02d6a',1,'sai_edma_handle::userData()'],['../a00068.html#af19daa704f2c6081584f03dba7d8d7ef',1,'_usdhc_handle::userData()'],['../a00047.html#a5e90e1dafbe97f2ea5187530ee04af0a',1,'notifier_handle_t::userData()'],['../a00037.html#a3496699d8427e00d35f299b744116f1a',1,'sd_detect_card_t::userData()'],['../a00037.html#a12f82505cb7f8ebd5c8a3be3adf7b660',1,'sdio_card_int_t::userData()']]],
+  ['userfunction',['userFunction',['../a00047.html#a4f6589fa386e93c40c52ed292da4f47f',1,'notifier_handle_t']]],
+  ['userpartitionblocks',['userPartitionBlocks',['../a00038.html#aaf035e6ccfee3bd92ef690d2aff5254d',1,'mmc_card_t']]],
+  ['userwp',['userWP',['../a00037.html#a9cb3b77ae5002d9d9eb737285206e19f',1,'mmc_extended_csd_t']]],
+  ['usrparam',['usrParam',['../a00038.html#ad1054b9eecc0633e8ca70ba164918b2a',1,'mmc_card_t::usrParam()'],['../a00055.html#ab4566720b02d4de772cd3cbcb54eaafb',1,'sd_card_t::usrParam()'],['../a00056.html#a85fb84502cfbe41a1264c1dfbe4ae37f',1,'_sdio_card::usrParam()']]]
+];

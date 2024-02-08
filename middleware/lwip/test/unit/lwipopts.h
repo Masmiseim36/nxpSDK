@@ -54,6 +54,11 @@
 /* Enable DHCP to test it */
 #define LWIP_DHCP                       1
 
+/* Enable DHCP6 to test it */
+#define LWIP_IPV6_DHCP6                 1
+#define LWIP_IPV6_DHCP6_STATEFUL        1
+#define LWIP_IPV6_DHCP6_PD              1
+
 /* Enable DNS, with random source port to avoid alloc in dns_init */
 #define LWIP_DNS                        1
 #define LWIP_DNS_SECURE (LWIP_DNS_SECURE_RAND_XID | LWIP_DNS_SECURE_RAND_SRC_PORT)
@@ -90,5 +95,12 @@
 
 /* Check lwip_stats.mem.illegal instead of asserting */
 #define LWIP_MEM_ILLEGAL_FREE(msg)      /* to nothing */
+
+/* Allow iperf UDP reverse server */
+#define SO_REUSE                        1
+
+#define LWIP_HAVE_SLIPIF                0
+
+#define LWIP_DHCP_DOES_ACD_CHECK        1
 
 #endif /* LWIP_HDR_LWIPOPTS_H */

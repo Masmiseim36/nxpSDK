@@ -7,7 +7,6 @@
 #define __SOEM__PORT__
 
 #include "osal.h"
-#include "fsl_phy.h"
 
 #define SOEM_IF_PORT_MAXNUM  2
 #define SOEM_IF_NAME_MAXLEN  9

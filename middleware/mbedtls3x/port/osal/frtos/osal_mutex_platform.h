@@ -18,6 +18,6 @@
 #include "FreeRTOS.h"
 #include "semphr.h"
 
-typedef SemaphoreHandle_t mcu_mutex_t;
+typedef SemaphoreHandle_t mcux_mutex_t;
 
 #endif /* OSAL_MUTEX_PLATFORM_H */

@@ -207,7 +207,7 @@ status_t bootloader_property_init(void)
     defined(MIMXRT1166_cm7_SERIES)
     propertyStore->UniqueDeviceId.uid[0] = OCOTP->FUSEN[16].FUSE;
     propertyStore->UniqueDeviceId.uid[1] = OCOTP->FUSEN[17].FUSE;
-#elif defined(MIMXRT1189_cm33_SERIES)
+#elif (defined(MIMXRT1189_cm33_SERIES) || defined(MIMXRT1187_cm33_SERIES))
     propertyStore->UniqueDeviceId.uid[0] = OCOTP_FSB->OTP_SHADOW_PARTA[48];
     propertyStore->UniqueDeviceId.uid[1] = OCOTP_FSB->OTP_SHADOW_PARTA[49];
     propertyStore->UniqueDeviceId.uid[2] = OCOTP_FSB->OTP_SHADOW_PARTA[50];

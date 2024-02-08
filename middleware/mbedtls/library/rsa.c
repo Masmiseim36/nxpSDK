@@ -2506,6 +2506,9 @@ int mbedtls_rsa_self_test(int verbose)
 #if defined(MBEDTLS_PKCS1_V15)
     size_t len;
     mbedtls_rsa_context rsa;
+#if defined(MBEDTLS_PKCS1_V21) && defined(MBEDTLS_RSA_KEYGEN_ALT)
+    mbedtls_rsa_context rsav2 = { 0 };
+#endif /* MBEDTLS_PKCS1_V21 */
     unsigned char rsa_plaintext[PT_LEN];
     unsigned char rsa_decrypted[PT_LEN];
     unsigned char rsa_ciphertext[KEY_LEN];
@@ -2592,8 +2595,6 @@ int mbedtls_rsa_self_test(int verbose)
        if( verbose != 0 )
         mbedtls_printf( "passed\n");*/
 #if defined(MBEDTLS_PKCS1_V21) && defined(MBEDTLS_RSA_KEYGEN_ALT)
-    mbedtls_rsa_context rsav2;
-
     mbedtls_rsa_init(&rsav2, MBEDTLS_RSA_PKCS_V21, MBEDTLS_MD_SHA256);
 
     if (verbose != 0) {
@@ -2810,7 +2811,7 @@ int mbedtls_rsa_self_test(int verbose)
         mbedtls_printf("passed\n");
     }
 
-#endif /* MBEDTLS_SHA1_C */    
+#endif /* MBEDTLS_SHA1_C */
 
 #if defined(MBEDTLS_PKCS1_V21) && defined(MBEDTLS_RSA_KEYGEN_ALT) && defined(MBEDTLS_SHA256_C)
     if (verbose != 0) {

@@ -265,7 +265,6 @@ static void M1_StateInitFast(void)
     g_sM1Drive.f32UBemfIntegThreshold  = M1_INTEG_TRH;
 
     /* fault thresholds */
-    g_sM1Drive.sFaultThresholds.f16IDcBusOver  = M1_I_DCB_OVERCURRENT;
     g_sM1Drive.sFaultThresholds.f16UDcBusOver  = M1_U_DCB_OVERVOLTAGE;
     g_sM1Drive.sFaultThresholds.f16UDcBusUnder = M1_U_DCB_UNDERVOLTAGE;
 

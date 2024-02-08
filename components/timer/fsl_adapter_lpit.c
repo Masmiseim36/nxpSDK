@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2019, 2023 NXP
  * All rights reserved.
  *
  *
@@ -48,13 +48,22 @@ static void HAL_TimerInterruptHandle(uint8_t instance)
         halTimerState->callback(halTimerState->callbackParam);
     }
 }
-
+#if defined(LPIT0)
 void LPIT0_IRQHandler(void);
 void LPIT0_IRQHandler(void)
 {
     HAL_TimerInterruptHandle(0);
     SDK_ISR_EXIT_BARRIER;
 }
+#endif
+#if defined(LPIT1)
+void LPIT1_IRQHandler(void);
+void LPIT1_IRQHandler(void)
+{
+    HAL_TimerInterruptHandle(1);
+    SDK_ISR_EXIT_BARRIER;
+}
+#endif
 /************************************************************************************
 *************************************************************************************
 * Public functions
@@ -132,14 +141,14 @@ void HAL_TimerInstallCallback(hal_timer_handle_t halTimerHandle, hal_timer_callb
 uint32_t HAL_TimerGetMaxTimeout(hal_timer_handle_t halTimerHandle)
 {
     uint32_t reserveCount;
+    uint64_t retValue;
+    uint32_t reserveMs = 4U;
     assert(halTimerHandle);
     hal_timer_handle_struct_t *halTimerState = halTimerHandle;
-    reserveCount                             = (uint32_t)MSEC_TO_COUNT((4), (halTimerState->timerClock_Hz));
-    if (reserveCount < MSEC_TO_COUNT((1), (halTimerState->timerClock_Hz)))
-    {
-        return 1000;
-    }
-    return (uint32_t)COUNT_TO_USEC(((uint64_t)0xFFFFFFFFUL - (uint64_t)reserveCount), halTimerState->timerClock_Hz);
+    reserveCount                             = (uint32_t)MSEC_TO_COUNT((reserveMs), (halTimerState->timerClock_Hz));
+
+    retValue = COUNT_TO_USEC(((uint64_t)0xFFFFFFFF - (uint64_t)reserveCount), (uint64_t)halTimerState->timerClock_Hz);
+    return (uint32_t)((retValue > 0xFFFFFFFFU) ? (0xFFFFFFFFU - reserveMs * 1000U) : (uint32_t)retValue);
 }
 /* return micro us */
 uint32_t HAL_TimerGetCurrentTimerCount(hal_timer_handle_t halTimerHandle)

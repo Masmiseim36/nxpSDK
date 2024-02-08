@@ -41,6 +41,15 @@
 #define MBEDTLS_MCUX_ENTROPY (1)
 #endif
 #endif
+      
+/*
+ * For ELE_S4XX, crypto storage can be defined if NVM nased SD manager is present 
+ * and ITS is implemented over FATFS.
+ */      
+#if (defined(FSL_FEATURE_SOC_ELE_S4XX) && defined(PSA_CRYPTO_DRIVER_ELE_S4XX) &&                \
+     defined(PSA_ELE_S4XX_SD_NVM_MANAGER) && defined(MBEDTLS_PSA_ITS_FILE_FATFS))
+#define MBEDTLS_PSA_CRYPTO_STORAGE_C
+#endif      
 
 /* ======== Define ALT functions ====================================== */
 

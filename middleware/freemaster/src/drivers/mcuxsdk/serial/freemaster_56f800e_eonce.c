@@ -310,7 +310,9 @@ static void _FMSTR_56F800E_EOnCE_EnableTransmitInterrupt(FMSTR_BOOL enable)
 
 static void _FMSTR_56F800E_EOnCE_EnableTransmitCompleteInterrupt(FMSTR_BOOL enable)
 {
-    /* no such interrupt, see how TDF is tested. */
+    /* No such interrupt exists, the transmit interrupt will inform us about 
+     * the last transmission completion. */
+    _FMSTR_56F800E_EOnCE_EnableTransmitInterrupt(enable);
 }
 
 /******************************************************************************

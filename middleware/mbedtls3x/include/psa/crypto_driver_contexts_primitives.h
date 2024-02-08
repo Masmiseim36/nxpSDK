@@ -49,6 +49,10 @@
 #include "ele_s4xx_crypto_primitives.h"
 #endif
 
+#if defined(PSA_CRYPTO_DRIVER_ELS_PKC)
+#include "els_pkc_crypto_primitives.h"
+#endif
+
 #if defined(PSA_CRYPTO_DRIVER_TEST)
 
 #if defined(MBEDTLS_TEST_LIBTESTDRIVER1) && \
@@ -110,6 +114,9 @@ typedef union {
 #if defined(PSA_CRYPTO_DRIVER_ELE_S4XX)
     ele_s4xx_hash_operation_t ele_driver_ctx;
 #endif
+#if defined(PSA_CRYPTO_DRIVER_ELS_PKC)
+    els_pkc_hash_operation_t els_pkc_driver_ctx;
+#endif
 } psa_driver_hash_context_t;
 
 typedef union {
@@ -118,6 +125,10 @@ typedef union {
 #if defined(PSA_CRYPTO_DRIVER_TEST)
     mbedtls_transparent_test_driver_cipher_operation_t transparent_test_driver_ctx;
     mbedtls_opaque_test_driver_cipher_operation_t opaque_test_driver_ctx;
+#endif
+#if defined(PSA_CRYPTO_DRIVER_ELS_PKC)
+    els_pkc_transparent_cipher_operation_t transparent_els_pkc_driver_ctx;
+    els_pkc_opaque_cipher_operation_t opaque_els_pkc_driver_ctx;
 #endif
 } psa_driver_cipher_context_t;
 

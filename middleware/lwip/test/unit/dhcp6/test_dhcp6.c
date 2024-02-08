@@ -317,6 +317,7 @@ static void dhcp6_setup(void)
 
   reset_client_id();
   allow_override_client_id = 0;
+  lwip_sys_now = 0;
 
   netif_add(&net_test, NULL, NULL, NULL, &net_test, testif_init, ethernet_input);
   netif_set_link_up(&net_test);
@@ -741,7 +742,7 @@ static err_t output_ip6_chk_solicit(struct netif *netif, struct pbuf *p, const i
   fail_if(found_oro_requests & OPT_DNS_SRV,
           "LWIP_DHCP6_MAX_DNS_SERVERS is 0 but DNS server option found in solicitation");
 #endif
-#if LWIP_DHCP6_MAX_DNS_SERVERS
+#if LWIP_DHCP6_GET_NTP_SRV
   fail_unless(found_oro_requests & OPT_SNTP_SRV);
 #endif
 
@@ -835,7 +836,7 @@ static err_t output_ip6_chk_request(struct netif *netif, struct pbuf *p, const i
           "LWIP_DHCP6_MAX_DNS_SERVERS is 0 but DNS server option found in request");
 #endif
 
-#if LWIP_DHCP6_MAX_DNS_SERVERS
+#if LWIP_DHCP6_GET_NTP_SRV
   fail_unless(found_oro_requests & OPT_SNTP_SRV);
 #endif
 
@@ -1125,12 +1126,12 @@ START_TEST(test_dhcp6_stateful)
           "LWIP_DHCP6_MAX_DNS_SERVERS is 0 but DNS server 0 was changed by dhcp client");
 #endif
 
-#if LWIP_DHCP6_MAX_DNS_SERVERS
+#if LWIP_DHCP6_GET_NTP_SRV
   fail_if(ip6_addr_isany(&sntp_getserver(0)->u_addr.ip6));
   fail_if(sntp_getserver(0)->u_addr.ip6.zone == IP6_WRONG_ZONE);
 #else
   fail_unless(ip6_addr_isany(&sntp_getserver(0)->u_addr.ip6),
-              "DHCP6 client sets SNTP server but LWIP_DHCP6_MAX_DNS_SERVERS is disabled.");
+              "DHCP6 client sets SNTP server but LWIP_DHCP6_GET_NTP_SRV is disabled.");
 #endif
 
   /* Wait 5s */
@@ -1181,12 +1182,12 @@ START_TEST(test_dhcp6_stateful)
               "LWIP_DHCP6_MAX_DNS_SERVERS is 0 but DNS server 0 was changed by dhcp client");
 #endif
 
-#if LWIP_DHCP6_MAX_DNS_SERVERS
+#if LWIP_DHCP6_GET_NTP_SRV
   fail_if(ip6_addr_isany(&sntp_getserver(0)->u_addr.ip6));
   fail_if(sntp_getserver(0)->u_addr.ip6.zone == IP6_WRONG_ZONE);
 #else
   fail_unless(ip6_addr_isany(&sntp_getserver(0)->u_addr.ip6),
-              "DHCP6 client sets SNTP server but LWIP_DHCP6_MAX_DNS_SERVERS is disabled.");
+              "DHCP6 client sets SNTP server but LWIP_DHCP6_GET_NTP_SRV is disabled.");
 #endif
 
   pkt_release_cnt = 0;
@@ -1324,8 +1325,8 @@ START_TEST(test_dhcp6_stateful_solicit_req_resend)
   fail_if(ip6_addr_isany(netif_ip6_addr(&net_test, 1)));
   fail_unless(netif_ip6_addr_pref_life(&net_test, 1) == 375);
 
-  /* Wait 375s */
-  for(i=0; i<375*2; i++) tick_500ms_lwip();
+  /* Wait 374s */
+  for(i=0; i<374*2; i++) tick_500ms_lwip();
 
   /* prepare to get renew */
   pkt_renew_cnt = 0;
@@ -1354,11 +1355,13 @@ START_TEST(test_dhcp6_stateful_solicit_req_resend)
   /* prepare to get solicitation again */
   pkt_solicit_cnt = 0;
   reset_client_id();
+  allow_override_client_id = 1;
   net_test.output_ip6 = &output_ip6_chk_solicit;
 
   /* Move in time */
   tick_500ms_lwip();
-  fail_unless(pkt_solicit_cnt == 1);
+  tick_500ms_lwip();
+  fail_unless(pkt_solicit_cnt > 0);
 
   fail_unless(ip6_addr_isinvalid(netif_ip6_addr_state(&net_test, 1)),
               "addr in state %s, but should be invalid (valid time = %u)",
@@ -1420,8 +1423,8 @@ START_TEST(test_dhcp6_stateful_refuse)
   fail_if(ip6_addr_isany(netif_ip6_addr(&net_test, 1)));
   fail_unless(netif_ip6_addr_pref_life(&net_test, 1) == 375);
 
-  /* Wait 375s */
-  for(i=0; i<375*2; i++) tick_500ms_lwip();
+  /* Wait 374s */
+  for(i=0; i<374*2; i++) tick_500ms_lwip();
 
   /* prepare to get renew */
   pkt_renew_cnt = 0;
@@ -1491,7 +1494,7 @@ START_TEST(test_dhcp6_stateful_custom_client_id)
 
   fail_unless(pkt_solicit_cnt == 1);
   fail_unless(pkt_client_id_len == sizeof(pkt_client_id_custom_duid) + 4);
-  fail_if(memcmp(pkt_client_id_custom_duid, &pkt_client_id[4], pkt_client_id_len) != 0);
+  fail_if(memcmp(pkt_client_id_custom_duid, &pkt_client_id[4], sizeof(pkt_client_id_custom_duid)) != 0);
 
   /* Clean up */
   net_test.output_ip6 = &output_ip6_chk_no_send; /* In soliciting state we shouldn't send anything on disable */

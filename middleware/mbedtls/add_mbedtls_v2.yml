@@ -124,6 +124,7 @@ middleware.mbedtls.port.els_pkc:
     - repo_relative_path: port/pkc
     files:
     - source: port/pkc/els_pkc_mbedtls_config.h
+    - source: port/pkc/els_pkc_mbedtls_thread_config.h
     - source: port/pkc/ecc_alt.c
     - source: port/pkc/ecc_alt.h
     - source: port/pkc/ecdh_alt.c
@@ -141,7 +142,7 @@ middleware.mbedtls.port.els_pkc:
       change_log: "./ChangeLogKSDK.txt"
       component_bundle: bundles.mbedtls
       user_visible: true
-      manifest_name: mbedtls_pkc
+      manifest_name: mbedtls_els_pkc
       full_name: MbedTLS MCUX SDK port layer via PKC
 middleware.mbedtls.port.els:
   section-type: component
@@ -190,7 +191,7 @@ middleware.mbedtls.port.els:
       version: "${mbedtls_version}"
       change_log: "./ChangeLogKSDK.txt"
       component_bundle: bundles.mbedtls
-      user_visible: true
+      user_visible: false
       manifest_name: mbedtls_els
       full_name: MbedTLS MCUX SDK port layer via ELS
 middleware.mbedtls.port.css_pkc:

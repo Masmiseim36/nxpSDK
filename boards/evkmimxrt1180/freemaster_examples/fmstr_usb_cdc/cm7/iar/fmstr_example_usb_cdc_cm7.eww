@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<workspace>
+  <batchBuild>
+    <batchDefinition>
+      <name>all</name>
+      <member>
+        <project>fmstr_example_usb_cdc_cm7</project>
+        <configuration>hyperram_debug</configuration>
+      </member>
+      <member>
+        <project>fmstr_example_usb_cdc_cm7</project>
+        <configuration>hyperram_release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>hyperram_debug</name>
+      <member>
+        <project>fmstr_example_usb_cdc_cm7</project>
+        <configuration>hyperram_debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>hyperram_release</name>
+      <member>
+        <project>fmstr_example_usb_cdc_cm7</project>
+        <configuration>hyperram_release</configuration>
+      </member>
+    </batchDefinition>
+  </batchBuild>
+  <project>
+    <path>$WS_DIR$/fmstr_example_usb_cdc_cm7.ewp</path>
+  </project>
+</workspace>

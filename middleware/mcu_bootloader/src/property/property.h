@@ -43,8 +43,12 @@ enum _available_commands
         | HAS_CMD(kCommandTag_FlashSecurityDisable)
 #endif // BL_FEATURE_ERASEALL_UNSECURE
         | HAS_CMD(kCommandTag_GetProperty) | HAS_CMD(kCommandTag_Execute) | HAS_CMD(kCommandTag_Reset) |
-        HAS_CMD(kCommandTag_SetProperty) | HAS_CMD(kCommandTag_ReadMemory) | HAS_CMD(kCommandTag_FillMemory) |
-        HAS_CMD(kCommandTag_ReceiveSbFile) | HAS_CMD(kCommandTag_Call)
+        HAS_CMD(kCommandTag_SetProperty) | HAS_CMD(kCommandTag_ReadMemory) | HAS_CMD(kCommandTag_FillMemory)
+#if (defined(BL_FETAURE_RECV_SB) && (BL_FETAURE_RECV_SB == 1))
+        | HAS_CMD(kCommandTag_ReceiveSbFile) | HAS_CMD(kCommandTag_Call)
+#else
+        | HAS_CMD(kCommandTag_Call)
+#endif
 #if BL_FEATURE_ERASEALL_UNSECURE
         | HAS_CMD(kCommandTag_FlashEraseAllUnsecure)
 #endif // BL_FEATURE_ERASEALL_UNSECURE

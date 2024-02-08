@@ -146,11 +146,14 @@ START_TEST(test_ip4_frag)
   err_t err;
   LWIP_UNUSED_ARG(_i);
 
-  linkoutput_ctr = 0;
-
   /* Verify that 8000 byte payload is split into six packets */
   fail_unless(data != NULL);
   test_netif_add();
+
+  /* Reset counters after add because add issues reports. */
+  linkoutput_ctr = 0;
+  linkoutput_byte_ctr = 0;
+
   test_netif.output = arpless_output;
   err = ip4_output_if_src(data, &test_ipaddr, ip_2_ip4(&peer_ip),
                           16, 0, IP_PROTO_UDP, &test_netif);
@@ -241,9 +244,10 @@ START_TEST(test_127_0_0_1)
   struct pbuf* p;
   LWIP_UNUSED_ARG(_i);
 
+  test_netif_add();
+
   linkoutput_ctr = 0;
 
-  test_netif_add();
   netif_set_down(netif_get_loopif());
 
   IP4_ADDR(&localhost, 127, 0, 0, 1);
@@ -284,9 +288,10 @@ START_TEST(test_ip4_icmp_replylen_short)
   const int icmp_len = IP_HLEN + sizeof(struct icmp_hdr);
   LWIP_UNUSED_ARG(_i);
 
+  test_netif_add();
+
   linkoutput_ctr = 0;
 
-  test_netif_add();
   test_netif.output = arpless_output;
   p = pbuf_alloc(PBUF_IP, sizeof(unknown_proto), PBUF_RAM);
   pbuf_take(p, unknown_proto, sizeof(unknown_proto));
@@ -312,9 +317,10 @@ START_TEST(test_ip4_icmp_replylen_first_8)
   const int unreach_len = IP_HLEN + 8;
   LWIP_UNUSED_ARG(_i);
 
+  test_netif_add();
+
   linkoutput_ctr = 0;
 
-  test_netif_add();
   test_netif.output = arpless_output;
   p = pbuf_alloc(PBUF_IP, sizeof(unknown_proto), PBUF_RAM);
   pbuf_take(p, unknown_proto, sizeof(unknown_proto));

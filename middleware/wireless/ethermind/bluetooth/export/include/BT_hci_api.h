@@ -2507,28 +2507,6 @@ API_RESULT BT_hci_iso_write_pdu
                UINT16     packet_len
            );
 #endif /* HCI_SUPPORT_ISO_WRITE_PDU */
-
-/**
- *  API_RESULT BT_hci_iso_queue_flush:
- *  API to flush existing iso packets
- *
- *  \param
- *  @return:
- */
-void BT_hci_iso_queue_flush(void);
-
-/**
- *  API_RESULT BT_hci_iso_queue_info:
- *  API to provide iso-queue-count details
- *
- *  \param (OUT) iso_queue_count: iso-queue-count
- *  @return: API_RESULT
- *           API_SUCCESS : On successful registration of the callback pointer.
- */
-API_RESULT BT_hci_iso_queue_info
-           (
-               UINT16 *iso_queue_count
-           );
 #endif /* HCI_ISO_DATA */
 
 /* ------------------------------------------------------------------------- */

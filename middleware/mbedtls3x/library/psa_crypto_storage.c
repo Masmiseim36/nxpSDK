@@ -29,7 +29,7 @@
 #include "psa_crypto_storage.h"
 #include "mbedtls/platform_util.h"
 
-#if defined(MBEDTLS_PSA_ITS_FILE_C) || defined(MBEDTLS_PSA_ITS_FILE_FATFS)
+#if defined(MBEDTLS_PSA_ITS_FILE_C) || defined(MBEDTLS_PSA_ITS_FILE_FATFS) || defined (MBEDTLS_PSA_ITS_RAM)
 #include "psa_crypto_its.h"
 #else /* Native ITS implementation */
 #include "psa/error.h"

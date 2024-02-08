@@ -216,7 +216,9 @@ void FMSTR_ProcessSerial(void)
             /* Enable UART Transfer Complete interrupt in case of interrupt mode of communication. */
             if (FMSTR_SERIAL_DRV.IsTransmitterActive() != FMSTR_FALSE)
             {
-                /* Enable Trasmit complete interrupt */
+                /* Disable Transmit Register Empty interrupt -> no more data to transmit */
+                 FMSTR_SERIAL_DRV.EnableTransmitInterrupt(FMSTR_FALSE);
+                /* Enable Transmission complete interrupt */
                 FMSTR_SERIAL_DRV.EnableTransmitCompleteInterrupt(FMSTR_TRUE);
             }
 #endif

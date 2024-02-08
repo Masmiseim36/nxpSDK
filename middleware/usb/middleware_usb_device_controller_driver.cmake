@@ -3,7 +3,7 @@
 include_guard(GLOBAL)
 message("${CMAKE_CURRENT_LIST_FILE} component is included.")
 
-if(CONFIG_USE_component_osa AND (CONFIG_USE_middleware_usb_device_khci OR CONFIG_USE_middleware_usb_device_ehci OR CONFIG_USE_middleware_usb_device_ip3511fs OR CONFIG_USE_middleware_usb_device_ip3511hs))
+if(CONFIG_USE_component_osa AND (CONFIG_USE_middleware_usb_device_ehci))
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/device/usb_device_dci.c

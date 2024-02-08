@@ -1,12 +1,12 @@
 /*
-	* Copyright 2023 NXP
+	* Copyright 2024 NXP
 	*
 	* SPDX-License-Identifier: BSD-3-Clause
 */
 
 /*
     * FILE NAME: ../boards/lpcxpresso55s36/mc_pmsm/pmsm_enc/m1_pmsm_appconfig.h
-    * DATE: Tue Apr 25 2023, 08:21:46
+    * DATE: Tue Jan 02 2024, 09:11:52
 */
 
 /*
@@ -37,7 +37,8 @@
         "parametersFreewheelDuration": 1.5,
         "parametersScalarUqMin": 1,
         "parametersAlignVoltage": 1.2,
-        "parametersAlignDuration": 1
+        "parametersAlignDuration": 1,
+        "parametersScalarVHzRatio": 100
     },
     "currentLoop": {
         "currentLoopSampleTime": 0.0001,
@@ -88,8 +89,8 @@
 }
 */
 
-#ifndef __M1_PMSM_APPCONFIG_H 
-#define __M1_PMSM_APPCONFIG_H 
+#ifndef __M1_PMSM_APPCONFIG_H
+#define __M1_PMSM_APPCONFIG_H
 
 /* PARAMETERS*/
 #define M1_MOTOR_PP (4)

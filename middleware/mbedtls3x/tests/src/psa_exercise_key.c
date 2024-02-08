@@ -248,6 +248,13 @@ static int exercise_aead_key(mbedtls_svc_key_id_t key,
     PSA_ASSERT(psa_get_key_attributes(key, &attributes));
     key_type = psa_get_key_type(&attributes);
     nonce_length = PSA_AEAD_NONCE_LENGTH(key_type, alg);
+    
+    /* For ELE 4XX HSM , for CCM we only support nonce length as 12 */
+#if defined(PSA_ELE_S4XX_SD_NVM_MANAGER)
+    if (alg == PSA_ALG_CCM) {
+        nonce_length = 12u;
+    }
+#endif
 
     if (usage & PSA_KEY_USAGE_ENCRYPT) {
         PSA_ASSERT(psa_aead_encrypt(key, alg,

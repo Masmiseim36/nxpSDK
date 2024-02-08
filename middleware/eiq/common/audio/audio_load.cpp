@@ -1,15 +1,14 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2021-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include <stdio.h>
-
-#include "demo_config.h"
 #include "audio.h"
 #include "audio_data.h"
+#include "demo_config.h"
+#include "fsl_debug_console.h"
 #include "kws_mfcc.hpp"
 
 int s_staticCount = 0;
@@ -21,7 +20,7 @@ status_t AUDIO_GetSpectralSample(uint8_t* dstData, size_t size)
     /* Two static samples only */
     if (s_staticCount == 1)
     {
-        printf(EOL "Static data processing:" EOL);
+        PRINTF(EOL "Static data processing:" EOL);
         AUDIO_PreprocessSample(off_sample_data, NUM_FRAMES);
         s_kws.store_features(dstData);
     }
@@ -32,8 +31,8 @@ status_t AUDIO_GetSpectralSample(uint8_t* dstData, size_t size)
     }
     else
     {
-        printf(EOL "Microphone data processing:" EOL);
-        printf("Microphone input is currently not supported on this device" EOL);
+        PRINTF(EOL "Microphone data processing:" EOL);
+        PRINTF("Microphone input is currently not supported on this device" EOL);
         for (;;)
             ;
     }

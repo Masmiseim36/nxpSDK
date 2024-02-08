@@ -62,7 +62,7 @@ status_t keyblob_update(keyblob_info_t *key_info)
                 case kDekSize_edgelockDUK:
                     dek_size = BL_FEATURE_KEYBLOB_OTFAD_KEY_DATA_SIZE * BL_FEATURE_KEYBLOB_OTFAD_KEY_NUM * 8;
                     break;
-#ifdef MIMXRT1189_cm33_SERIES
+#if (defined(MIMXRT1189_cm33_SERIES) || defined(MIMXRT1187_cm33_SERIES))
                 case kDekSize_edgelockIEE:
                     dek_size = BL_FEATURE_KEYBLOB_IEE_KEY_DATA_SIZE * 8;
                     break;

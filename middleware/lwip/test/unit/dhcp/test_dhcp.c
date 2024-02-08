@@ -204,6 +204,7 @@ static err_t testif_init(struct netif *netif)
 static void dhcp_setup(void)
 {
   txpacket = 0;
+  tick = 0;
   lwip_check_ensure_no_alloc(SKIP_POOL(MEMP_SYS_TIMEOUT));
 }
 
